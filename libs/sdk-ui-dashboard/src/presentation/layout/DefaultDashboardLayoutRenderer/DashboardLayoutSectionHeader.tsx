@@ -1,7 +1,8 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import { DashboardLayoutSectionHeaderDescription } from "./DashboardLayoutSectionHeaderDescription.js";
+import { HeaderExportData } from "../../export/index.js";
 
 /**
  * @alpha
@@ -9,6 +10,7 @@ import { DashboardLayoutSectionHeaderDescription } from "./DashboardLayoutSectio
 export interface IDashboardLayoutSectionHeaderProps {
     title?: string;
     description?: string;
+    exportData?: HeaderExportData;
 
     /**
      * This prop is here to allow rendering row hotspots in gdc-dashboards edit mode
@@ -28,7 +30,7 @@ export interface IDashboardLayoutSectionHeaderProps {
 }
 
 export const DashboardLayoutSectionHeader: React.FC<IDashboardLayoutSectionHeaderProps> = (props) => {
-    const { title, description, renderBeforeHeader, renderHeader } = props;
+    const { title, description, renderBeforeHeader, renderHeader, exportData } = props;
 
     return (
         <div className="gd-fluid-layout-row-header s-fluid-layout-row-header">
@@ -37,7 +39,7 @@ export const DashboardLayoutSectionHeader: React.FC<IDashboardLayoutSectionHeade
                 {renderHeader ?? (
                     <div className="gd-row-header-view">
                         {title ? (
-                            <div className="gd-row-header-title-wrapper">
+                            <div className="gd-row-header-title-wrapper" {...exportData?.title}>
                                 <span className="title">
                                     <Typography tagName="h2" className="s-fluid-layout-row-title">
                                         {title}
@@ -46,7 +48,10 @@ export const DashboardLayoutSectionHeader: React.FC<IDashboardLayoutSectionHeade
                             </div>
                         ) : null}
                         {description ? (
-                            <DashboardLayoutSectionHeaderDescription description={description} />
+                            <DashboardLayoutSectionHeaderDescription
+                                description={description}
+                                exportData={exportData?.description}
+                            />
                         ) : null}
                     </div>
                 )}

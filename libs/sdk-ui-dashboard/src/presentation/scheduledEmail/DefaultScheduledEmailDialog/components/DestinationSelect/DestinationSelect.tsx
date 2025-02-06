@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -47,9 +47,11 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
         return items.find((item) => item.id === selectedItemId);
     }, [items, selectedItemId]);
 
+    const accessibilityValue = "schedule.destination";
+
     return (
         <div className="gd-input-component gd-destination-field s-gd-notifications-channels-dialog-destination">
-            <label className="gd-label">
+            <label htmlFor={accessibilityValue} className="gd-label">
                 <FormattedMessage id="dialogs.schedule.email.destination" />
             </label>
             {items.length === 0 ? (
@@ -69,6 +71,7 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
                     className="gd-notifications-channels-dialog-destination s-gd-notifications-channels-dialog-destination"
                     renderButton={({ toggleDropdown }) => (
                         <DropdownButton
+                            id={accessibilityValue}
                             value={selectedItem?.title}
                             onClick={toggleDropdown}
                             className="gd-notifications-channels-dialog-destination-button"

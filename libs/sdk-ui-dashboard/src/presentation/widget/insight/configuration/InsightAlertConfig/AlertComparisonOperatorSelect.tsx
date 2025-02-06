@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React, { useRef } from "react";
 import { Dropdown, Button, List, SingleSelectListItem, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 import {
@@ -77,6 +77,9 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                                 iconLeft={selectedComparisonItem?.icon ?? selectedRelativeItem?.icon}
                                 iconRight={`gd-icon-navigate${isOpen ? "up" : "down"}`}
                                 onClick={toggleDropdown}
+                                ariaLabel={intl.formatMessage({
+                                    id: "insightAlert.config.accessbility.dropdown",
+                                })}
                             >
                                 {intl.formatMessage({
                                     id: selectedComparisonItem?.title ?? selectedRelativeItem?.title,

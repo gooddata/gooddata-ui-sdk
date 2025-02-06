@@ -36,6 +36,7 @@ import {
     selectCrossFilteringSelectedPointsByWidgetRef,
     useWidgetFilters,
 } from "../../../../../model/index.js";
+
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
 import { IDashboardInsightProps } from "../../types.js";
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills.js";
@@ -44,6 +45,7 @@ import { DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH } from "../../../../constants/i
 import { IntlWrapper } from "../../../../localization/index.js";
 import { InsightBody } from "../../InsightBody.js";
 import { useHandlePropertiesPushData } from "./useHandlePropertiesPushData.js";
+import { useVisualizationExportData } from "../../../../export/index.js";
 
 const selectCommonDashboardInsightProps = createSelector(
     [selectLocale, selectSettings, selectColorPalette],
@@ -82,6 +84,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         onExportReady,
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
+        exportData,
     } = props;
 
     const ref = widgetRef(widget);
@@ -152,17 +155,17 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         error: filtersError,
     } = useWidgetFilters(widget, insight);
 
+    /**
+     * Filters hash for hooks dependencies
+     * We use stringified value to avoid setting equal filters. This prevents cascading cache invalidation
+     * and expensive re-renders down the line. The stringification is worth it as the filters are usually
+     * pretty small thus saving more time than it is taking.
+     */
+    const filtersForInsightHash = stringify(filtersForInsight);
+
     const insightWithAddedFilters = useMemo(
         () => insightSetFilters(insight, filtersForInsight),
-        [
-            insight,
-            /**
-             * We use stringified value to avoid setting equal filters. This prevents cascading cache invalidation
-             * and expensive re-renders down the line. The stringification is worth it as the filters are usually
-             * pretty small thus saving more time than it is taking.
-             */
-            stringify(filtersForInsight),
-        ],
+        [insight, filtersForInsightHash],
     );
 
     const insightWithAddedWidgetProperties = useResolveDashboardInsightProperties({
@@ -206,6 +209,12 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
 
     const effectiveError = filtersError ?? visualizationError;
 
+    useEffect(() => {
+        // need reset custom error when filters changed
+        // one of custom error is no data
+        setVisualizationError(undefined);
+    }, [filtersForInsightHash]);
+
     // CSS
     const insightPositionStyle: CSSProperties = useMemo(() => {
         return {
@@ -226,22 +235,27 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     const visualizationProperties = insightProperties(insightWithAddedWidgetProperties);
     const isZoomable = visualizationProperties?.controls?.zoomInsight;
 
-    return (
-        <div className={cx("visualization-content", { "in-edit-mode": isInEditMode })}>
-            <div
-                className={cx("gd-visualization-content", { zoomable: isZoomable })}
-                style={insightPositionStyle}
-            >
-                <IntlWrapper locale={locale}>
-                    {filtersStatus === "running" || isVisualizationLoading ? <LoadingComponent /> : null}
-                    {effectiveError ? (
-                        <CustomError
-                            error={effectiveError}
-                            isCustomWidgetHeightEnabled={!!settings?.enableKDWidgetCustomHeight}
-                            height={clientHeight}
-                            width={clientWidth}
-                        />
-                    ) : null}
+    // we need wait with insight rendering until filters are successfully resolved
+    // loading of insight is initiated after filters are successful, until then show loading component
+    // if filter status is success and visualization is loading, render both loading and insight
+    const loading = filtersStatus === "running" || isVisualizationLoading;
+
+    const exportDataVis = useVisualizationExportData(exportData, loading, !!effectiveError);
+
+    const renderComponent = () => {
+        if (effectiveError) {
+            return (
+                <CustomError
+                    error={effectiveError}
+                    isCustomWidgetHeightEnabled={!!settings?.enableKDWidgetCustomHeight}
+                    height={clientHeight}
+                    width={clientWidth}
+                />
+            );
+        } else {
+            return (
+                <>
+                    {loading ? <LoadingComponent /> : null}
                     {filtersStatus === "success" ? (
                         <div className="insight-view-visualization" style={insightWrapperStyle}>
                             <InsightBody
@@ -267,7 +281,23 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                             />
                         </div>
                     ) : null}
-                </IntlWrapper>
+                </>
+            );
+        }
+    };
+
+    return (
+        <div
+            className={cx("visualization-content", {
+                "in-edit-mode": isInEditMode,
+            })}
+            {...exportDataVis}
+        >
+            <div
+                className={cx("gd-visualization-content", { zoomable: isZoomable })}
+                style={insightPositionStyle}
+            >
+                <IntlWrapper locale={locale}>{renderComponent()}</IntlWrapper>
             </div>
         </div>
     );

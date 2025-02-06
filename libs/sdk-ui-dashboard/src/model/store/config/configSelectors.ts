@@ -873,3 +873,13 @@ export const selectEnableCriticalContentPerformanceOptimizations: DashboardSelec
         return state.settings?.enableCriticalContentPerformanceOptimizations ?? false;
     },
 );
+
+/**
+ * @internal
+ */
+export const selectEnableSlideshowExports: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableSlideshowExports ?? false;
+    },
+);

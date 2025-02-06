@@ -120,14 +120,6 @@ platformSwitch = "cloud"
 # Enable syntax highlighting and copy buttons on code blocks with Prism
 prism_syntax_highlighting = true
 
-[[params.header]]
-[[params.header.main]]
-name = "Slack"
-type = "button"
-icon = "icons/slack.svg"
-url = "https://www.gooddata.com/slack/"
-class = "gd-docs-header-nav__cta gd-docs-header-nav__slack"
-
 # User interface configuration
 [params.ui]
 # Enable to show the side bar menu in its compact state.

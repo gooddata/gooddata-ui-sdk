@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 export * from "./componentDefinition/index.js";
 export * from "./dashboard/index.js";
@@ -19,4 +19,5 @@ export * from "./widget/index.js";
 export * from "./shareDialog/index.js";
 export * from "./insightList/index.js";
 export * from "./cancelEditDialog/index.js";
+export * from "./export/index.js";
 export { translations } from "./localization/index.js";

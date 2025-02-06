@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     IAnalyticalBackend,
     IBackendCapabilities,
@@ -28,6 +28,7 @@ import {
     IAutomationsQuery,
     IAutomationsQueryResult,
     AutomationType,
+    IAttributeWithReferences,
 } from "@gooddata/sdk-backend-spi";
 import {
     AttributesDecoratorFactory,
@@ -106,6 +107,7 @@ type AttributeCacheEntry = {
     displayForms: LRUCache<string, Promise<IAttributeDisplayFormMetadataObject>>;
     attributesByDisplayForms: LRUCache<string, Promise<IAttributeMetadataObject>>;
     attributeElementResults?: LRUCache<string, Promise<IElementsQueryResult>>;
+    dataSetsMeta: LRUCache<string, Promise<IMetadataObject>>;
 };
 
 type AutomationCacheEntry = {
@@ -304,10 +306,26 @@ class WithCatalogCaching extends DecoratedWorkspaceCatalogFactory {
         let catalog = cache.get(cacheKey);
 
         if (!catalog) {
-            catalog = super.load().catch((e) => {
-                cache.delete(cacheKey);
-                throw e;
-            });
+            catalog = super
+                .load()
+                .then((catalog) => {
+                    catalog.attributes().forEach((catalogAttribute) => {
+                        catalogAttribute.displayForms.forEach((displayForm) => {
+                            this.cacheAttributeByDisplayForm(displayForm.ref, catalogAttribute.attribute);
+                        });
+                        if (catalogAttribute.dataSet) {
+                            this.cacheAttributeDataSetMeta(
+                                catalogAttribute.attribute.ref,
+                                catalogAttribute.dataSet,
+                            );
+                        }
+                    });
+                    return catalog;
+                })
+                .catch((e) => {
+                    cache.delete(cacheKey);
+                    throw e;
+                });
 
             cache.set(cacheKey, catalog);
         }
@@ -317,6 +335,45 @@ class WithCatalogCaching extends DecoratedWorkspaceCatalogFactory {
 
     protected createNew = (decorated: IWorkspaceCatalogFactory): IWorkspaceCatalogFactory => {
         return new WithCatalogCaching(decorated, this.ctx);
+    };
+
+    ///
+    /// Caching of individual catalog objects
+    ///
+    private cacheAttributeByDisplayForm = (displayFormRef: ObjRef, attribute: IAttributeMetadataObject) => {
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).attributesByDisplayForms;
+
+        const idCacheKey = isIdentifierRef(displayFormRef) ? displayFormRef.identifier : undefined;
+
+        let cacheItem = idCacheKey && cache.get(idCacheKey);
+
+        if (!cacheItem) {
+            cacheItem = new Promise<IAttributeMetadataObject>((resolve) => resolve(attribute));
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
+    };
+
+    private cacheAttributeDataSetMeta = (attributeRef: ObjRef, dataSet: IMetadataObject) => {
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).dataSetsMeta;
+
+        const idCacheKey = isIdentifierRef(attributeRef) ? attributeRef.identifier : undefined;
+
+        let cacheItem = idCacheKey && cache.get(idCacheKey);
+
+        if (!cacheItem) {
+            cacheItem = new Promise<IMetadataObject>((resolve) => resolve(dataSet));
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
     };
 
     private getOrCreateWorkspaceEntry = (workspace: string): CatalogCacheEntry => {
@@ -541,6 +598,9 @@ function getOrCreateAttributeCache(ctx: CachingContext, workspace: string): Attr
 
     if (!cacheEntry) {
         cacheEntry = {
+            dataSetsMeta: new LRUCache<string, Promise<IMetadataObject>>({
+                max: ctx.config.maxAttributesPerWorkspace!,
+            }),
             displayForms: new LRUCache<string, Promise<IAttributeDisplayFormMetadataObject>>({
                 max: ctx.config.maxAttributeDisplayFormsPerWorkspace!,
             }),
@@ -772,6 +832,154 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
 
             if (uriCacheKey) {
                 cache.set(uriCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
+    };
+
+    getAttributeDatasetMeta = async (ref: ObjRef): Promise<IMetadataObject> => {
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).dataSetsMeta;
+
+        const idCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
+
+        let cacheItem = idCacheKey && cache.get(idCacheKey);
+
+        if (!cacheItem) {
+            // eslint-disable-next-line sonarjs/no-identical-functions
+            cacheItem = super.getAttributeDatasetMeta(ref).catch((e) => {
+                if (idCacheKey) {
+                    cache.delete(idCacheKey);
+                }
+                throw e;
+            });
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
+    };
+
+    public async getAttributesWithReferences(refs: ObjRef[]): Promise<IAttributeWithReferences[]> {
+        const attributeByDfCache = getOrCreateAttributeCache(
+            this.ctx,
+            this.workspace,
+        ).attributesByDisplayForms;
+        const dataSetByAttributeCache = getOrCreateAttributeCache(this.ctx, this.workspace).dataSetsMeta;
+
+        // grab a reference to the cache results as soon as possible in case they would get evicted while loading the ones with missing data in cache
+        // then would might not be able to call cache.get again and be guaranteed to get the data
+        const refsWithCacheResults: { ref: ObjRef; cacheHit?: Promise<IAttributeWithReferences> }[] = [];
+
+        for (const ref of refs) {
+            // First, get attribute cached by display form if available
+            const attrCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
+            const attrCacheHit = attrCacheKey ? attributeByDfCache.get(attrCacheKey) : undefined;
+            const attributeFromCache = attrCacheHit ? await attrCacheHit : undefined;
+
+            // If attribute was cached, try to get dataSet by attribute from cache
+            const dataSetCacheKey =
+                attributeFromCache && isIdentifierRef(attributeFromCache.ref)
+                    ? attributeFromCache.ref.identifier
+                    : undefined;
+            const dataSetCacheHit = dataSetCacheKey
+                ? dataSetByAttributeCache.get(dataSetCacheKey)
+                : undefined;
+            const dataSetFromCache = dataSetCacheHit ? await dataSetCacheHit : undefined;
+
+            // If both attribute and dataSet were cached, consider it as a cacheHit of attribute with references
+            const cacheHit =
+                attributeFromCache && dataSetFromCache
+                    ? Promise.resolve({
+                          attribute: attributeFromCache,
+                          dataSet: dataSetFromCache,
+                      } as IAttributeWithReferences)
+                    : undefined;
+
+            refsWithCacheResults.push({ ref, cacheHit });
+        }
+
+        const [withCacheHits, withoutCacheHits] = partition(
+            refsWithCacheResults,
+            ({ cacheHit }) => !!cacheHit,
+        );
+
+        const refsToLoad = withoutCacheHits.map((item) => item.ref);
+
+        const [alreadyInCache, loadedFromServer] = await Promise.all([
+            // await the stuff from cache, we need the data available (we cannot just return the promises)
+            Promise.all(withCacheHits.map((item) => item.cacheHit!)),
+            // load items not in cache using the bulk operation
+            refsToLoad.length > 0
+                ? this.decorated.getAttributesWithReferences(refsToLoad)
+                : Promise.resolve([]),
+        ]);
+
+        // save newly loaded to cache for future reference
+        loadedFromServer.forEach((loaded) => {
+            // Cache attribute by display form refs
+            loaded.attribute.displayForms.forEach((displayForm) => {
+                this.cacheAttributeByDisplayForm(displayForm.ref, loaded.attribute);
+            });
+
+            // Cache dataSet by attribute ref
+            if (loaded.dataSet) {
+                this.cacheAttributeDataSetMeta(loaded.attribute.ref, loaded.dataSet);
+            }
+        });
+
+        const loadedRefs = loadedFromServer.flatMap((item) =>
+            item.attribute.displayForms.map((df) => df.ref),
+        );
+        const outputRefs = this.ctx.capabilities.allowsInconsistentRelations
+            ? skipMissingReferences(refs, refsToLoad, loadedRefs)
+            : refs;
+
+        // reconstruct the original ordering
+        const candidates = [...loadedFromServer, ...alreadyInCache];
+
+        return outputRefs.map((ref) => {
+            const match = candidates.find((item) =>
+                item.attribute.displayForms.some((df) => areObjRefsEqual(ref, df.ref)),
+            );
+            // if this bombs, some data got lost in the process
+            invariant(match);
+            return match;
+        });
+    }
+
+    private cacheAttributeByDisplayForm = (displayFormRef: ObjRef, attribute: IAttributeMetadataObject) => {
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).attributesByDisplayForms;
+
+        const idCacheKey = isIdentifierRef(displayFormRef) ? displayFormRef.identifier : undefined;
+
+        let cacheItem = idCacheKey && cache.get(idCacheKey);
+
+        if (!cacheItem) {
+            cacheItem = new Promise<IAttributeMetadataObject>((resolve) => resolve(attribute));
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
+    };
+
+    private cacheAttributeDataSetMeta = (attributeRef: ObjRef, dataSet: IMetadataObject) => {
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).dataSetsMeta;
+
+        const idCacheKey = isIdentifierRef(attributeRef) ? attributeRef.identifier : undefined;
+
+        let cacheItem = idCacheKey && cache.get(idCacheKey);
+
+        if (!cacheItem) {
+            cacheItem = new Promise<IMetadataObject>((resolve) => resolve(dataSet));
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
             }
         }
 
@@ -1326,8 +1534,8 @@ export const RecommendedCachingConfiguration: CachingConfiguration = {
     maxSecuritySettingsOrgUrls: 100,
     maxSecuritySettingsOrgUrlsAge: 300_000, // 5 minutes
     maxAttributeWorkspaces: 1,
-    maxAttributeDisplayFormsPerWorkspace: 100,
-    maxAttributesPerWorkspace: 100,
+    maxAttributeDisplayFormsPerWorkspace: 500,
+    maxAttributesPerWorkspace: 500,
     maxAttributeElementResultsPerWorkspace: 100,
     maxWorkspaceSettings: 1,
     maxAutomationsWorkspaces: 1,

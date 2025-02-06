@@ -1,11 +1,10 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     ICatalogAttribute,
     ICatalogDateDataset,
-    ICatalogMeasure,
     INotificationChannelMetadataObject,
     IWorkspaceUser,
 } from "@gooddata/sdk-model";
@@ -13,6 +12,7 @@ import { AlertAttribute, AlertMetric } from "../../types.js";
 
 import { EditAlert } from "./EditAlert.js";
 import { IExecutionResultEnvelope } from "../../../../../model/index.js";
+import { IMeasureFormatMap } from "./utils/getters.js";
 
 interface ICreateAlertProps {
     canManageAttributes: boolean;
@@ -29,7 +29,7 @@ interface ICreateAlertProps {
     attributes: AlertAttribute[];
     maxAutomationsReached: boolean;
     maxAutomationsRecipients: number;
-    catalogMeasures: ICatalogMeasure[];
+    measureFormatMap: IMeasureFormatMap;
     catalogAttributes: ICatalogAttribute[];
     catalogDateDatasets: ICatalogDateDataset[];
 }
@@ -49,7 +49,7 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
     attributes,
     maxAutomationsReached,
     maxAutomationsRecipients,
-    catalogMeasures,
+    measureFormatMap,
     catalogAttributes,
     catalogDateDatasets,
 }) => {
@@ -70,7 +70,7 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
             attributes={attributes}
             maxAutomationsReached={maxAutomationsReached}
             maxAutomationsRecipients={maxAutomationsRecipients}
-            catalogMeasures={catalogMeasures}
+            measureFormatMap={measureFormatMap}
             catalogAttributes={catalogAttributes}
             catalogDateDatasets={catalogDateDatasets}
         />

@@ -415,10 +415,15 @@ export function calculateWidgetMinHeight(
     currentSize: IDashboardLayoutSize | undefined,
     insightMap: ObjRefMap<IInsight>,
     settings: ISettings,
+    isExportMode?: boolean,
 ): number | undefined {
     let widgetType: AnalyticalWidgetType;
     let content: IInsight | IKpi;
     const widget = layoutItem.widget;
+
+    if (isExportMode) {
+        return undefined;
+    }
 
     if (isWidget(widget)) {
         widgetType = getWidgetType(widget);

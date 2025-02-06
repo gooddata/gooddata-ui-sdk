@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import React, { CSSProperties } from "react";
 import {
     IDashboardLayout,
     IDashboardWidget,
@@ -12,6 +12,8 @@ import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
+import { CommonExportDataAttributes, HeaderExportData } from "../../export/index.js";
+import { DashboardFocusObject } from "../../../model/index.js";
 
 /**
  * Default props provided to {@link IDashboardLayoutSectionKeyGetter}.
@@ -93,6 +95,16 @@ export interface IDashboardLayoutSectionRenderProps<TWidget = IDashboardWidget> 
      * Is section with borders. Default true.
      */
     showBorders?: boolean;
+
+    /**
+     * Data for section export in export mode.
+     */
+    exportData?: CommonExportDataAttributes;
+
+    /**
+     * Export styles for export mode.
+     */
+    exportStyles?: CSSProperties;
 }
 
 /**
@@ -131,6 +143,11 @@ export interface IDashboardLayoutSectionHeaderRenderProps<TWidget = IDashboardWi
      * Default renderer of the section header - can be used as a fallback for custom sectionHeaderRenderer.
      */
     DefaultSectionHeaderRenderer: IDashboardLayoutSectionHeaderRenderer<TWidget>;
+
+    /**
+     * Data for header export in export mode.
+     */
+    exportData?: HeaderExportData;
 }
 
 /**
@@ -213,6 +230,11 @@ export interface IDashboardLayoutItemRenderProps<TWidget = IDashboardWidget> {
      * Zero-based index of the row in which the item is rendered,
      */
     rowIndex: number;
+
+    /**
+     * Dashboard render mode
+     */
+    renderMode?: RenderMode;
 }
 
 /**
@@ -407,6 +429,11 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
     renderMode?: RenderMode;
 
     /**
+     * Dashboard focus object.
+     */
+    focusObject?: DashboardFocusObject;
+
+    /**
      * The size of layout item in which the layout is nested. Undefined, when the layout is the root layout.
      */
     parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
@@ -415,6 +442,14 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
      * The path to the layout item in which the section is nested. Undefined if the layout is a root layout.
      */
     parentLayoutPath: ILayoutItemPath | undefined;
+
+    /**
+     * Transformer for export layout
+     */
+    exportTransformer?: <TWidget>(
+        layout: IDashboardLayout<TWidget>,
+        focusObject?: DashboardFocusObject,
+    ) => IDashboardLayout<TWidget> | undefined;
 }
 
 /**

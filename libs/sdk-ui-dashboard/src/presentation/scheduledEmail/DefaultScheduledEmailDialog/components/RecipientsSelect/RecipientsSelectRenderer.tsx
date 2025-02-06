@@ -196,7 +196,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                     className,
                 )}
             >
-                <label className="gd-label">
+                <label htmlFor="form.destination" className="gd-label">
                     <FormattedMessage id="dialogs.schedule.email.to.label" />
                 </label>
                 <div ref={this.recipientRef} className="gd-input s-gd-recipients-value">
@@ -512,9 +512,14 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             return this.renderEmptyContainer();
         }
 
+        const props: InputProps<IAutomationRecipient> = {
+            ...inputProps,
+            id: "form.destination",
+        };
+
         return (
             <div className="gd-recipient-input s-gd-recipient-input">
-                <Input {...inputProps} />
+                <Input {...props} />
             </div>
         );
     };

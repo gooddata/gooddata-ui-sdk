@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
@@ -39,6 +39,7 @@ export const ViewModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualiz
         onExportReady,
         onLoadingChanged,
         screen,
+        exportData,
     } = props;
 
     const [activeVisualizationId, setActiveVisualizationId] = React.useState(initialActiveVisualizationId);
@@ -63,6 +64,7 @@ export const ViewModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualiz
                 onExportReady={onExportReady}
                 onLoadingChanged={onLoadingChanged}
                 onActiveVisualizationChange={setActiveVisualizationId}
+                exportData={exportData}
             />
         );
     }
@@ -90,6 +92,7 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
     onError,
     onExportReady,
     onLoadingChanged,
+    exportData,
 }) => {
     const intl = useIntl();
     const visType = insightVisualizationType(insight) as VisType;
@@ -171,6 +174,12 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
         [InsightMenuComponentProvider, insight, activeVisualization],
     );
 
+    const accessibilityWidgetDescription = settings.enableDescriptions
+        ? activeVisualization.configuration?.description?.source === "widget" || !insight
+            ? activeVisualization.description
+            : insight.insight.summary
+        : "";
+
     return (
         <DashboardItem
             className={cx(
@@ -179,8 +188,10 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
                 getVisTypeCssClass(activeVisualization.type, visType),
             )}
             screen={screen}
+            description={accessibilityWidgetDescription}
         >
             <DashboardItemVisualization
+                isExport={!!exportData}
                 renderHeadline={(clientHeight, clientWidth) => (
                     <VisualizationSwitcherNavigationHeader
                         widget={widget}
@@ -190,6 +201,7 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
                         onActiveVisualizationChange={(activeVisualizationId) =>
                             onActiveVisualizationChange(activeVisualizationId)
                         }
+                        exportData={exportData?.title}
                     />
                 )}
                 renderBeforeVisualization={() => (
@@ -236,6 +248,7 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
                         onLoadingChanged={onLoadingChanged}
                         clientHeight={clientHeight}
                         clientWidth={clientWidth}
+                        exportData={exportData?.widget}
                     />
                 )}
             </DashboardItemVisualization>

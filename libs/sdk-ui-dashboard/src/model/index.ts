@@ -16,6 +16,7 @@ export type {
     DashboardContext,
     ObjectAvailabilityConfig,
     DashboardConfig,
+    DashboardExportSlideConfig,
     DashboardFocusObject,
     DashboardModelCustomizationFns,
     DashboardTransformFn,
@@ -29,6 +30,8 @@ export type {
     IResolvedFilterValues,
     WidgetsOverlayFn,
     IDashboardWidgetOverlay,
+    PrivateDashboardContext,
+    DashboardLayoutExportTransformFn,
 } from "./types/commonTypes.js";
 export type {
     ICustomWidget,

@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import { IInsightWidget, IVisualizationSwitcherWidget, objRefToString, widgetRef } from "@gooddata/sdk-model";
 
@@ -8,6 +8,7 @@ import { ItemsWrapper, Overlay, ShortenedText } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import { useDashboardUserInteraction } from "../../../../model/index.js";
+import { CommonExportDataAttributes } from "../../../export/index.js";
 
 interface IVisualizationSwitcherNavigationHeaderProps {
     clientWidth: number | undefined;
@@ -15,6 +16,7 @@ interface IVisualizationSwitcherNavigationHeaderProps {
     activeVisualization: IInsightWidget;
     widget: IVisualizationSwitcherWidget;
     onActiveVisualizationChange: (visualizationId: string) => void;
+    exportData?: CommonExportDataAttributes;
 }
 
 const alignPoints = [
@@ -34,6 +36,7 @@ export const VisualizationSwitcherNavigationHeader: React.FC<IVisualizationSwitc
     clientHeight,
     activeVisualization,
     onActiveVisualizationChange,
+    exportData,
 }) => {
     const userInteraction = useDashboardUserInteraction();
 
@@ -63,6 +66,7 @@ export const VisualizationSwitcherNavigationHeader: React.FC<IVisualizationSwitc
                 isOpen={isOpen}
                 toggleDropdown={toggleDropdown}
                 clientHeight={clientHeight}
+                exportData={exportData}
             />
 
             {isOpen ? (
@@ -110,16 +114,17 @@ type VisualizationSwitcherNavigationHeaderButtonProps = {
     toggleDropdown: () => void;
     className: string;
     clientHeight?: number;
+    exportData?: CommonExportDataAttributes;
 };
 
 const VisualizationSwitcherNavigationHeaderButton: React.FC<
     VisualizationSwitcherNavigationHeaderButtonProps
-> = ({ isOpen, toggleDropdown, title, className, clientHeight }) => {
+> = ({ isOpen, toggleDropdown, title, className, clientHeight, exportData }) => {
     const classNames = cx("gd-visualization-switcher-widget-header", className, {
         "is-open": isOpen,
     });
     return (
-        <div className={classNames} onClick={toggleDropdown}>
+        <div className={classNames} onClick={toggleDropdown} {...exportData}>
             <DashboardItemHeadline clientHeight={clientHeight} title={title} />
         </div>
     );

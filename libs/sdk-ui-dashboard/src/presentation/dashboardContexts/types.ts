@@ -1,4 +1,6 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import { ComponentType } from "react";
+import { ILoadingProps } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     CustomDashboardInsightComponent,
@@ -15,10 +17,14 @@ import {
     CustomDashboardNestedLayoutComponent,
 } from "../widget/types.js";
 import { DashboardConfig, ExtendedDashboardWidget } from "../../model/index.js";
+import { CustomTitleComponent, CustomTopBarComponent, ITitleProps, ITopBarProps } from "../topBar/types.js";
 import {
     CustomDashboardAttributeFilterComponent,
     CustomDashboardDateFilterComponent,
+    CustomFilterBarComponent,
+    IFilterBarProps,
 } from "../filterBar/types.js";
+import { CustomDashboardLayoutComponent, IDashboardLayoutProps } from "../layout/types.js";
 import { RenderMode } from "../../types.js";
 import {
     IInsight,
@@ -34,7 +40,6 @@ import {
     IVisualizationSwitcherWidget,
     IDashboardLayout,
 } from "@gooddata/sdk-model";
-import { ComponentType } from "react";
 
 /**
  * @public
@@ -210,6 +215,56 @@ export type AttributeFilterComponentProvider = (
  * @public
  */
 export type OptionalAttributeFilterComponentProvider = OptionalProvider<AttributeFilterComponentProvider>;
+
+/**
+ * @public
+ */
+export type TopBarComponentProvider = (props: ITopBarProps) => CustomTopBarComponent;
+
+/**
+ * @public
+ */
+export type OptionalTopBarComponentProvider = OptionalProvider<TopBarComponentProvider>;
+
+/**
+ * @public
+ */
+export type FilterBarComponentProvider = (props: IFilterBarProps) => CustomFilterBarComponent;
+
+/**
+ * @public
+ */
+export type OptionalTitleComponentProvider = OptionalProvider<TitleComponentProvider>;
+
+/**
+ * @public
+ */
+export type TitleComponentProvider = (props: ITitleProps) => CustomTitleComponent;
+
+/**
+ * @public
+ */
+export type OptionalFilterBarComponentProvider = OptionalProvider<FilterBarComponentProvider>;
+
+/**
+ * @public
+ */
+export type OptionalLayoutComponentProvider = OptionalProvider<LayoutComponentProvider>;
+
+/**
+ * @public
+ */
+export type LayoutComponentProvider = (props: IDashboardLayoutProps) => CustomDashboardLayoutComponent;
+
+/**
+ * @public
+ */
+export type OptionalLoadingComponentProvider = OptionalProvider<LoadingComponentProvider>;
+
+/**
+ * @public
+ */
+export type LoadingComponentProvider = (props: ILoadingProps) => ComponentType<ILoadingProps>;
 
 /**
  * @alpha

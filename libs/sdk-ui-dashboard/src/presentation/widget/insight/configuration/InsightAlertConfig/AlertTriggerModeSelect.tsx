@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
 import { Dropdown, Button, List, SingleSelectListItem, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
@@ -22,12 +22,14 @@ const options: {
 ];
 
 export interface IAlertTriggerModeSelectProps {
+    id: string;
     selectedTriggerMode: IAlertTriggerMode;
     onTriggerModeChange: (triggerMode: IAlertTriggerMode) => void;
     overlayPositionType?: OverlayPositionType;
 }
 
 export const AlertTriggerModeSelect = ({
+    id,
     selectedTriggerMode,
     onTriggerModeChange,
     overlayPositionType,
@@ -42,6 +44,7 @@ export const AlertTriggerModeSelect = ({
                 renderButton={({ isOpen, toggleDropdown }) => {
                     return (
                         <Button
+                            id={id}
                             onClick={toggleDropdown}
                             iconRight={isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
                             size="small"

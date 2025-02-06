@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { useState } from "react";
 import cx from "classnames";
@@ -19,14 +19,16 @@ const DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
 ];
 
 const AttachmentItem: React.FC<{
+    id: string;
     format: AttachmentType;
     checked: boolean;
     disabled?: boolean;
     onChange: () => void;
     className?: string;
-}> = ({ format, checked, onChange, className, disabled }) => (
+}> = ({ id, format, checked, onChange, className, disabled }) => (
     <label className="gd-notifications-channels-attachment-checkbox input-checkbox-label">
         <input
+            id={id}
             type="checkbox"
             className="input-checkbox"
             disabled={disabled}
@@ -44,32 +46,46 @@ const AttachmentItem: React.FC<{
 );
 
 export const AttachmentDashboard: React.FC<{
+    id: string;
     pdfSelected: boolean;
     disabled?: boolean;
     onSelectionChange: () => void;
 }> = (props) => {
-    const { pdfSelected, disabled, onSelectionChange } = props;
+    const { pdfSelected, disabled, id, onSelectionChange } = props;
 
     return (
-        <AttachmentItem format="PDF" disabled={disabled} checked={pdfSelected} onChange={onSelectionChange} />
+        <AttachmentItem
+            id={id}
+            format="PDF"
+            disabled={disabled}
+            checked={pdfSelected}
+            onChange={onSelectionChange}
+        />
     );
 };
 
 export const AttachmentWidgets: React.FC<{
+    id: string;
     csvSelected: boolean;
     xlsxSelected: boolean;
     settings: IExportDefinitionVisualizationObjectSettings;
     onSelectionChange: (format: WidgetAttachmentType) => void;
     onSettingsChange: (obj: IExportDefinitionVisualizationObjectSettings) => void;
 }> = (props) => {
-    const { csvSelected, xlsxSelected, settings, onSelectionChange, onSettingsChange } = props;
+    const { id, csvSelected, xlsxSelected, settings, onSelectionChange, onSettingsChange } = props;
     const intl = useIntl();
     const [mergeHeaders, setMergeHeaders] = useState(settings.mergeHeaders);
 
     return (
         <>
-            <AttachmentItem format="CSV" checked={csvSelected} onChange={() => onSelectionChange("CSV")} />
             <AttachmentItem
+                id={id}
+                format="CSV"
+                checked={csvSelected}
+                onChange={() => onSelectionChange("CSV")}
+            />
+            <AttachmentItem
+                id={id}
                 format="XLSX"
                 checked={xlsxSelected}
                 onChange={() => onSelectionChange("XLSX")}

@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
 import { call, select, put } from "redux-saga/effects";
@@ -20,12 +20,10 @@ import {
     SetFilterViewAsDefault,
     reloadFilterViews,
     changeFilterContextSelection,
-    removeAttributeFilters,
 } from "../../commands/index.js";
 import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 import { selectFilterViews, filterViewsActions } from "../../store/filterViews/index.js";
-import { drillActions } from "../../store/drill/index.js";
 import {
     filterViewCreationSucceeded,
     filterViewCreationFailed,
@@ -38,6 +36,7 @@ import {
 } from "../../events/filters.js";
 import { loadFilterViews } from "../dashboard/initializeDashboardHandler/loadFilterViews.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
+import { resetCrossFiltering } from "./common.js";
 
 function createFilterView(
     ctx: DashboardContext,
@@ -118,14 +117,6 @@ export function* deleteFilterViewHandler(ctx: DashboardContext, cmd: DeleteFilte
 function* findFilterView(ref: ObjRef) {
     const filterViews: ReturnType<typeof selectFilterViews> = yield select(selectFilterViews);
     return filterViews.find((filterView) => areObjRefsEqual(filterView.ref, ref));
-}
-
-function* resetCrossFiltering(cmd: ApplyFilterView) {
-    const virtualFilters: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiers> = yield select(
-        selectCrossFilteringFiltersLocalIdentifiers,
-    );
-    yield put(removeAttributeFilters(virtualFilters, cmd.correlationId));
-    yield put(drillActions.resetCrossFiltering());
 }
 
 export function* applyFilterViewHandler(ctx: DashboardContext, cmd: ApplyFilterView): SagaIterator<void> {

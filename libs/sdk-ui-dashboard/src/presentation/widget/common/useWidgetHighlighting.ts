@@ -5,6 +5,7 @@ import {
     selectDashboardUserAutomations,
     selectFocusObject,
     selectIsDashboardExecuted,
+    selectIsInExportMode,
     selectWidgets,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -17,12 +18,20 @@ const selectIsWidgetHighlighted = (widget: IWidget) =>
         selectDashboardUserAutomations,
         selectIsDashboardExecuted,
         selectWidgets,
-        (dashboardFocusObject, automations, dashboardExecuted, widgets) => {
+        selectIsInExportMode,
+        (dashboardFocusObject, automations, dashboardExecuted, widgets, isInExportMode) => {
+            if (isInExportMode) {
+                return false;
+            }
+
             const { automationId, widgetId, visualizationId } = dashboardFocusObject;
 
-            const isAutomationContext =
-                !!automationId &&
-                automations?.some((a) => a.id === automationId && a.metadata?.widget === widget.identifier);
+            const matchedAutomation = automations?.find((a) => a.id === automationId);
+            const isAutomationWidget = matchedAutomation?.metadata?.widget === widget.identifier;
+            const isAutomationVisualizationSwitcher =
+                isVisualizationSwitcherWidget(widget) &&
+                widget.visualizations.some((v) => v.identifier === matchedAutomation?.metadata?.widget);
+            const isAutomationContext = isAutomationWidget || isAutomationVisualizationSwitcher;
 
             const isCurrentWidget = widget.identifier === widgetId;
             const isWidgetInsideVisualizationSwitcher =

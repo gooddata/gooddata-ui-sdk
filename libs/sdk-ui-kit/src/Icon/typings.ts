@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 /**
  * Color in format supported by SVG
@@ -17,4 +17,5 @@ export interface IIconProps {
     height?: number;
     color?: Color;
     colorPalette?: { [key: string]: Color | undefined };
+    ariaHidden?: boolean;
 }

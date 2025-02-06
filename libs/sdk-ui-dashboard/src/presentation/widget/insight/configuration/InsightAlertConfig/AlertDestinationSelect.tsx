@@ -1,9 +1,10 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
 import { Dropdown, Button, List, SingleSelectListItem, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { DROPDOWN_ITEM_HEIGHT } from "./constants.js";
 import { INotificationChannelMetadataObject } from "@gooddata/sdk-model";
+import { useIntl } from "react-intl";
 
 export interface IAlertDestinationSelectProps {
     selectedDestination: string;
@@ -18,6 +19,7 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
     destinations,
     overlayPositionType,
 }: IAlertDestinationSelectProps) => {
+    const intl = useIntl();
     const selectedOption = destinations.find((o) => o.id === selectedDestination);
 
     return (
@@ -27,6 +29,7 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
                 renderButton={({ isOpen, toggleDropdown }) => {
                     return (
                         <Button
+                            ariaLabel={intl.formatMessage({ id: "alert.accessibility.destination.label" })}
                             onClick={toggleDropdown}
                             iconRight={isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
                             size="small"

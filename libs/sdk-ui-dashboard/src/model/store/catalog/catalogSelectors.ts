@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import flatMap from "lodash/flatMap.js";
 import {
@@ -135,6 +135,20 @@ export const selectHasCatalogDateDatasets: DashboardSelector<boolean> = createSe
     selectCatalogDateDatasets,
     negate(isEmpty),
 );
+
+/**
+ * @alpha
+ */
+export const selectCatalogIsLoaded: DashboardSelector<boolean> = createSelector(selectSelf, (state) => {
+    return [
+        state.attributes,
+        state.measures,
+        state.dateDatasets,
+        state.facts,
+        state.attributeHierarchies,
+        state.dateHierarchyTemplates,
+    ].every((item) => item !== undefined);
+});
 
 /**
  * @public

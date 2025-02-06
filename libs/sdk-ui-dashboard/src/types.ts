@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import {
     IAbsoluteDateFilter,
@@ -204,7 +204,7 @@ export interface IMenuButtonItemsVisibility {
 /**
  * @beta
  */
-export type RenderMode = "view" | "edit";
+export type RenderMode = "view" | "edit" | "export";
 
 /**
  * @public

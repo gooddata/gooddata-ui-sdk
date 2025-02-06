@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "mixins";
 @use "variables";
 @use "layout";
@@ -66,12 +66,20 @@ $gd-message-padding-vertical: 4px;
     @extend %gd-message-link;
 
     position: relative;
-    top: 1px;
     padding: 2px;
     margin-left: 10px;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    height: 20px;
 
     @include mixins.active-states-and-self {
         text-decoration: none;
+    }
+
+    &::before {
+        color: variables.$gd-color-text-light;
+        font-size: 14px;
     }
 }
 

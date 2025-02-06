@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IDashboardReferences } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
     ObjRef,
@@ -9,6 +9,7 @@ import {
     ISeparators,
     IEntitlementDescriptor,
     Identifier,
+    IDashboardLayout,
 } from "@gooddata/sdk-model";
 import { ILocale } from "@gooddata/sdk-ui";
 import keys from "lodash/keys.js";
@@ -240,6 +241,39 @@ export interface DashboardConfig {
      * @remarks Only provide one of the focus properties at a time.
      */
     focusObject?: DashboardFocusObject;
+
+    /**
+     * @alpha
+     *
+     * Specify the slide configuration for the dashboard. This sizes will be used in export mode as size
+     * of the slide where visualization will be fit and rendered.
+     *
+     */
+    slideConfig?: DashboardExportSlideConfig;
+
+    /**
+     * @alpha
+     *
+     * Dashboard referenced objects.
+     * If provided, initialization of the dashboard avoid additional requests to resolve them.
+     */
+    references?: IDashboardReferences;
+}
+
+/**
+ * @alpha
+ *
+ * Specifies the size of the slide where visualization will be fit and rendered.
+ */
+export interface DashboardExportSlideConfig {
+    /**
+     * Preferred width of slide in export mode.
+     */
+    width: number;
+    /**
+     * Preferred height of slide in export mode.
+     */
+    height: number;
 }
 
 /**
@@ -288,7 +322,7 @@ export interface DashboardFocusObject {
  */
 export type ResolvedDashboardConfig = Omit<
     Required<DashboardConfig>,
-    "mapboxToken" | "exportId" | "focusObject"
+    "mapboxToken" | "exportId" | "focusObject" | "slideConfig" | "references"
 > &
     DashboardConfig;
 
@@ -406,6 +440,13 @@ export type DashboardTransformFn = (
 /**
  * @public
  */
+export type DashboardLayoutExportTransformFn = <TWidget>(
+    layout: IDashboardLayout<TWidget>,
+) => IDashboardLayout<TWidget> | undefined;
+
+/**
+ * @public
+ */
 export interface DashboardModelCustomizationFns {
     /**
      * Provide a function that will be used during dashboard initialization of an existing dashboard.
@@ -418,6 +459,18 @@ export interface DashboardModelCustomizationFns {
      *    dashboard will be used as-is.
      */
     existingDashboardTransformFn?: DashboardTransformFn;
+
+    /**
+     * Provide a function that will be used during dashboard export initialization of an existing dashboard.
+     *
+     * @remarks
+     * This function will be called after the dashboard is loaded from backend transformed by another plugins
+     * and before is rendered to the export. This will be not stored in the state.
+     *
+     *  - If the function is not defined, results in an error or returns `undefined`, then the original
+     *  dashboard export transformation will be used as-is.
+     */
+    existingExportTransformFn?: DashboardLayoutExportTransformFn;
 }
 
 /**

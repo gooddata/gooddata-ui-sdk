@@ -4,8 +4,7 @@ import { FormattedMessage, defineMessages } from "react-intl";
 import cx from "classnames";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
-import { BaseDraggableLayoutItem, DraggableItemType } from "../../../dragAndDrop/types.js";
-import { getDashboardLayoutItemHeightForGrid } from "../../../../_staging/layout/sizing.js";
+import { DraggableItemType } from "../../../dragAndDrop/types.js";
 import { useEmptyContentHandlers } from "./useEmptyContentHandlers.js";
 import { useDashboardItemPathAndSize } from "../../../dashboard/components/DashboardItemPathAndSizeContext.js";
 
@@ -56,17 +55,12 @@ export const EmptyNestedLayoutDropZone: React.FC = () => {
         sectionIndex: 0,
     };
 
-    const { item, itemType, canDrop, isOver, dropRef } = useEmptyContentHandlers(sectionPath);
-
-    const { gridHeight } = (item as BaseDraggableLayoutItem)?.size || {};
+    const { itemType, canDrop, isOver, dropRef } = useEmptyContentHandlers(sectionPath);
 
     const widgetCategory = widgetCategoryMapping[itemType];
 
     return (
         <div
-            style={{
-                minHeight: gridHeight ? getDashboardLayoutItemHeightForGrid(gridHeight) : undefined,
-            }}
             className={cx("drag-info-placeholder", "dash-item", {
                 [`type-${widgetCategory}`]: !!widgetCategory,
                 "type-none": !widgetCategory,

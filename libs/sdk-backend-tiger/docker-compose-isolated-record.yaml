@@ -11,6 +11,7 @@ services:
         environment:
             - HOST=https://backend-mock:8442
             - TIGER_API_TOKEN
+            - UPDATE_SNAPSHOTS
         depends_on:
             - backend-mock
 

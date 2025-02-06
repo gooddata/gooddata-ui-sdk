@@ -10,7 +10,6 @@ import {
     IAutomationRecipient,
     ICatalogAttribute,
     ICatalogDateDataset,
-    ICatalogMeasure,
     INotificationChannelMetadataObject,
     isAutomationExternalUserRecipient,
     isAutomationUnknownUserRecipient,
@@ -38,12 +37,13 @@ import {
     convertCurrentUserToWorkspaceUser,
 } from "../../../../../../_staging/automation/index.js";
 import { isEmail } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/utils/validate.js";
+import { IMeasureFormatMap } from "../utils/getters.js";
 
 export interface IUseEditAlertProps {
     metrics: AlertMetric[];
     attributes: AlertAttribute[];
     alert: IAutomationMetadataObject;
-    catalogMeasures: ICatalogMeasure[];
+    measureFormatMap: IMeasureFormatMap;
     catalogAttributes: ICatalogAttribute[];
     catalogDateDatasets: ICatalogDateDataset[];
     destinations: INotificationChannelMetadataObject[];
@@ -57,7 +57,7 @@ export const useEditAlert = ({
     alert,
     onCreate,
     onUpdate,
-    catalogMeasures,
+    measureFormatMap,
     destinations,
 }: IUseEditAlertProps) => {
     const [viewMode, setViewMode] = useState<"edit" | "configuration">("edit");
@@ -78,9 +78,9 @@ export const useEditAlert = ({
 
     const changeMeasure = useCallback(
         (measure: AlertMetric) => {
-            setUpdatedAlert((alert) => transformAlertByMetric(metrics, alert, measure, catalogMeasures));
+            setUpdatedAlert((alert) => transformAlertByMetric(metrics, alert, measure, measureFormatMap));
         },
-        [catalogMeasures, metrics],
+        [measureFormatMap, metrics],
     );
 
     const changeAttribute = useCallback(
@@ -121,11 +121,11 @@ export const useEditAlert = ({
                     measure,
                     relativeOperator,
                     arithmeticOperator,
-                    catalogMeasures,
+                    measureFormatMap,
                 ),
             );
         },
-        [catalogMeasures, metrics],
+        [measureFormatMap, metrics],
     );
 
     const changeValue = useCallback((value: number) => {
@@ -181,12 +181,12 @@ export const useEditAlert = ({
                     measure,
                     relativeOperatorValue,
                     arithmeticOperator,
-                    catalogMeasures,
+                    measureFormatMap,
                     comparisonType,
                 ),
             );
         },
-        [catalogMeasures, metrics],
+        [measureFormatMap, metrics],
     );
 
     const changeRecipients = useCallback((recipients: IAutomationRecipient[]) => {

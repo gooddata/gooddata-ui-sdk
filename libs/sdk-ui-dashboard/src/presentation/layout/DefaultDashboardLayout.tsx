@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import {
     ObjRef,
@@ -12,18 +12,20 @@ import { LRUCache } from "lru-cache";
 import max from "lodash/max.js";
 
 import {
+    ExtendedDashboardWidget,
     useDashboardSelector,
     selectIsExport,
     selectIsLayoutEmpty,
     selectLayout,
-    ExtendedDashboardWidget,
     selectInsightsMap,
     selectEnableWidgetCustomHeight,
     selectRenderMode,
     selectEnableFlexibleLayout,
+    selectFocusObject,
 } from "../../model/index.js";
 import { isInitialPlaceholderWidget } from "../../widgets/index.js";
 import { DefaultFlexibleDashboardLayout } from "../flexibleLayout/index.js";
+import { useDashboardCustomizationsContext } from "../dashboardContexts/index.js";
 
 import { DashboardLayoutWidget } from "./DashboardLayoutWidget.js";
 import { IDashboardLayoutProps } from "./types.js";
@@ -102,6 +104,8 @@ const LegacyDefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element
     const insights = useDashboardSelector(selectInsightsMap);
     const isExport = useDashboardSelector(selectIsExport);
     const renderMode = useDashboardSelector(selectRenderMode);
+    const dashboardFocusObject = useDashboardSelector(selectFocusObject);
+    const { existingExportTransformFn } = useDashboardCustomizationsContext();
 
     const getInsightByRef = useCallback(
         (insightRef: ObjRef): IInsight | undefined => {
@@ -161,7 +165,9 @@ const LegacyDefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element
                 enableCustomHeight={enableWidgetCustomHeight}
                 sectionRenderer={renderModeAwareDashboardLayoutSectionRenderer}
                 sectionHeaderRenderer={renderModeAwareDashboardLayoutSectionHeaderRenderer}
+                exportTransformer={existingExportTransformFn}
                 renderMode={renderMode}
+                focusObject={dashboardFocusObject}
             />
             {!!shouldRenderSectionHotspot && (
                 <SectionHotspot index={transformedLayout.sections.length} targetPosition="below" />

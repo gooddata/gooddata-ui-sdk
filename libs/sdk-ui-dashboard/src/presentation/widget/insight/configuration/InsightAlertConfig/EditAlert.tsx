@@ -5,7 +5,6 @@ import {
     IAutomationMetadataObjectDefinition,
     INotificationChannelMetadataObject,
     ICatalogAttribute,
-    ICatalogMeasure,
     IWorkspaceUser,
     ICatalogDateDataset,
 } from "@gooddata/sdk-model";
@@ -39,6 +38,7 @@ import {
     getAlertMeasure,
     getAlertRelativeOperator,
     getValueSuffix,
+    IMeasureFormatMap,
 } from "./utils/getters.js";
 import { AlertAttributeSelect } from "./AlertAttributeSelect.js";
 import { translateGranularity } from "./utils/granularity.js";
@@ -72,7 +72,7 @@ interface IEditAlertProps {
     users: IWorkspaceUser[];
     measures: AlertMetric[];
     attributes: AlertAttribute[];
-    catalogMeasures: ICatalogMeasure[];
+    measureFormatMap: IMeasureFormatMap;
     catalogAttributes: ICatalogAttribute[];
     catalogDateDatasets: ICatalogDateDataset[];
     onClose: () => void;
@@ -100,7 +100,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     maxAutomationsReached = false,
     maxAutomationsRecipients,
     overlayPositionType,
-    catalogMeasures,
+    measureFormatMap,
     catalogAttributes,
     catalogDateDatasets,
     canManageAttributes,
@@ -136,7 +136,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         alert,
         onCreate,
         onUpdate,
-        catalogMeasures,
+        measureFormatMap,
         catalogAttributes,
         catalogDateDatasets,
         destinations,
@@ -167,6 +167,8 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         selectedValue,
     );
 
+    const accessibilityValue = "alert.measure";
+
     return viewMode === "edit" ? (
         <DashboardInsightSubmenuContainer
             title={
@@ -180,15 +182,17 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
             <div className="gd-edit-alert">
                 <div className="gd-edit-alert__form">
                     <div className="gd-edit-alert__form-content">
-                        <div className="gd-edit-alert__measure-label">
+                        <label htmlFor={accessibilityValue} className="gd-edit-alert__measure-label">
                             <FormattedMessage id="insightAlert.config.when" />
-                        </div>
+                        </label>
                         <AlertMeasureSelect
+                            id={accessibilityValue}
                             selectedMeasure={selectedMeasure}
                             onMeasureChange={changeMeasure}
                             measures={measures}
                             overlayPositionType={overlayPositionType}
                         />
+
                         {Boolean(canManageAttributes) && (
                             <>
                                 <AlertAttributeSelect
@@ -279,6 +283,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             }}
                             type="number"
                             suffix={getValueSuffix(updatedAlert.alert)}
+                            ariaLabel={intl.formatMessage({ id: "insightAlert.config.accessbility.input" })}
                         />
                         <AlertComparisonPeriodSelect
                             measure={selectedMeasure}

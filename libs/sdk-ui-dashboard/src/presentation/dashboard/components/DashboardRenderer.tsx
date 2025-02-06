@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import {
     BackendProvider,
     WorkspaceProvider,
@@ -19,7 +19,6 @@ import {
     DashboardComponentsProvider,
     DashboardConfigProvider,
 } from "../../dashboardContexts/index.js";
-import { DefaultFilterBar } from "../../filterBar/index.js";
 import { DefaultDashboardLayout } from "../../layout/index.js";
 import { DefaultSaveAsDialog } from "../../saveAs/index.js";
 import {
@@ -32,8 +31,8 @@ import {
     DefaultButtonBar,
     DefaultMenuButton,
     DefaultSaveButton,
-    DefaultTopBar,
     RenderModeAwareTitle,
+    RenderModeAwareTopBar,
 } from "../../topBar/index.js";
 import { HiddenToolbar } from "../../toolbar/index.js";
 import { defaultDashboardThemeModifier } from "../defaultDashboardThemeModifier.js";
@@ -50,6 +49,7 @@ import {
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
 import { DASHBOARD_OVERLAYS_Z_INDEX } from "../../constants/index.js";
 import { DashboardItemPathAndSizeProvider } from "./DashboardItemPathAndSizeContext.js";
+import { RenderModeAwareFilterBar } from "../../filterBar/index.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_Z_INDEX);
 /**
@@ -106,6 +106,10 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                             <ExportDialogContextProvider>
                                 <DashboardCustomizationsProvider
                                     insightMenuItemsProvider={props.insightMenuItemsProvider}
+                                    existingExportTransformFn={
+                                        props.customizationFns?.existingExportTransformFn
+                                    }
+                                    slideConfig={props.config?.slideConfig}
                                 >
                                     <DashboardComponentsProvider
                                         ErrorComponent={props.ErrorComponent ?? DefaultError}
@@ -125,7 +129,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         WidgetComponentProvider={widgetProvider}
                                         ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBar}
                                         MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButton}
-                                        TopBarComponent={props.TopBarComponent ?? DefaultTopBar}
+                                        TopBarComponent={props.TopBarComponent ?? RenderModeAwareTopBar}
                                         ToolbarComponent={props.ToolbarComponent ?? HiddenToolbar}
                                         TitleComponent={props.TitleComponent ?? RenderModeAwareTitle}
                                         ScheduledEmailDialogComponent={
@@ -150,7 +154,9 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         }
                                         DashboardAttributeFilterComponentProvider={attributeFilterProvider}
                                         DashboardDateFilterComponentProvider={dateFilterProvider}
-                                        FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBar}
+                                        FilterBarComponent={
+                                            props.FilterBarComponent ?? RenderModeAwareFilterBar
+                                        }
                                         SidebarComponent={
                                             props.SidebarComponent ?? RenderModeAwareDashboardSidebar
                                         }

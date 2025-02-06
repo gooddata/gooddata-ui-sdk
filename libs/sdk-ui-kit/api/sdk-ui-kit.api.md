@@ -820,6 +820,8 @@ export interface IAppHeaderProps {
     // (undocumented)
     helpRedirectUrl?: string;
     // (undocumented)
+    isAccessibilityCompliant?: boolean;
+    // (undocumented)
     logoHref?: string;
     // (undocumented)
     logoTitle?: string;
@@ -1293,6 +1295,8 @@ export interface IDatePickerOwnProps {
     date?: Date;
     // (undocumented)
     dateFormat?: string;
+    // (undocumented)
+    id?: string;
     // (undocumented)
     locale?: string;
     // (undocumented)
@@ -2138,6 +2142,8 @@ export interface IHyperlinkProps {
 
 // @internal (undocumented)
 export interface IIconProps {
+    // (undocumented)
+    ariaHidden?: boolean;
     // (undocumented)
     className?: string;
     // (undocumented)
@@ -3033,6 +3039,7 @@ export class Input extends React_2.PureComponent<InputPureProps, InputState> {
         onBlur: (...args: any[]) => void;
         onFocus: (...args: any[]) => void;
         placeholder: string;
+        ariaLabel: string;
         prefix: string;
         readonly: boolean;
         suffix: string;
@@ -3077,6 +3084,7 @@ export class InputPure extends React_2.PureComponent<InputPureProps> implements 
         onBlur: (...args: any[]) => void;
         onFocus: (...args: any[]) => void;
         placeholder: string;
+        ariaLabel: string;
         prefix: string;
         readonly: boolean;
         suffix: string;
@@ -3116,6 +3124,10 @@ export class InputPure extends React_2.PureComponent<InputPureProps> implements 
 
 // @internal (undocumented)
 export interface InputPureProps extends IDomNativeProps {
+    // (undocumented)
+    accessibilityType?: string;
+    // (undocumented)
+    ariaLabel?: string;
     // (undocumented)
     className: string;
     // (undocumented)
@@ -3196,6 +3208,7 @@ export class InputWithNumberFormat extends React_2.PureComponent<InputWithNumber
         onBlur: (...args: any[]) => void;
         onFocus: (...args: any[]) => void;
         placeholder: string;
+        ariaLabel: string;
         prefix: string;
         readonly: boolean;
         suffix: string;
@@ -4037,6 +4050,8 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)
+    isSavingActionInProgress?: boolean;
+    // (undocumented)
     itemToColorPreview: (itemContent: T) => string[];
     // (undocumented)
     locale?: string;
@@ -4170,6 +4185,8 @@ export interface ITextAreaWithSubmitState {
 export interface ITimepickerOwnProps {
     // (undocumented)
     className?: string;
+    // (undocumented)
+    id?: string;
     // (undocumented)
     locale?: string;
     // (undocumented)

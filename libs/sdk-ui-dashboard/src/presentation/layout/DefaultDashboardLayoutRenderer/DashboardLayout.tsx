@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IDashboardLayout, ScreenSize } from "@gooddata/sdk-model";
 import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
@@ -12,6 +12,10 @@ import {
 } from "react-grid-system";
 import { DashboardLayoutFacade } from "../../../_staging/dashboard/legacyFluidLayout/facade/layout.js";
 import { DASHBOARD_LAYOUT_GRID_CONFIGURATION } from "../../constants/index.js";
+import { layoutTransformer } from "../../../_staging/slideshow/index.js";
+import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
+import { emptyDOMRect } from "../../constants.js";
+
 import { DashboardLayoutSection } from "./DashboardLayoutSection.js";
 import {
     IDashboardLayoutRenderProps,
@@ -24,7 +28,6 @@ import {
     getResizedItemPositions,
     unifyDashboardLayoutItemHeights,
 } from "./utils/sizing.js";
-import { emptyDOMRect } from "../../constants.js";
 
 setConfiguration(DASHBOARD_LAYOUT_GRID_CONFIGURATION);
 
@@ -57,18 +60,29 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         className,
         debug,
         onMouseLeave,
+        exportTransformer,
         enableCustomHeight,
         renderMode = "view",
+        focusObject,
     } = props;
 
     const layoutRef = React.useRef<HTMLDivElement>(null);
 
     const { layoutFacade, resizedItemPositions } = useMemo(() => {
         const updatedLayout = removeHeights(layout, !!enableCustomHeight);
-        const layoutFacade = DashboardLayoutFacade.for(unifyDashboardLayoutItemHeights(updatedLayout));
-        const resizedItemPositions = getResizedItemPositions(layout, layoutFacade.raw());
+
+        const exportMode = renderMode === "export";
+        let unifiedLayout = unifyDashboardLayoutItemHeights(updatedLayout);
+        if (exportMode) {
+            unifiedLayout =
+                exportTransformer?.(unifiedLayout, focusObject) ??
+                layoutTransformer<TWidget>(unifiedLayout, focusObject);
+        }
+
+        const layoutFacade = DashboardLayoutFacade.for(unifiedLayout);
+        const resizedItemPositions = exportMode ? [] : getResizedItemPositions(layout, layoutFacade.raw());
         return { layoutFacade, resizedItemPositions };
-    }, [layout, enableCustomHeight]);
+    }, [layout, enableCustomHeight, exportTransformer, renderMode, focusObject]);
 
     const sectionRendererWrapped = useCallback<IDashboardLayoutSectionRenderer<TWidget>>(
         (renderProps) =>
@@ -112,11 +126,14 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         [debug, resizedItemPositions, widgetRenderer],
     );
 
+    const slideStyles = useSlideSizeStyle(renderMode, "root");
+
     return (
         <div
             className={cx("gd-fluidlayout-container", "s-fluid-layout-container", "gd-dashboards", className)}
             onMouseLeave={onMouseLeave}
             ref={layoutRef}
+            style={slideStyles}
         >
             <ScreenClassProvider useOwnWidth={false}>
                 <ScreenClassRender

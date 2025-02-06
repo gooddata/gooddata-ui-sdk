@@ -37,4 +37,4 @@ fi
 
 echo "Run tests in Docker"
 cd "$(dirname "$0")/.."
-docker-compose -f ./$COMPOSE_FILE  -p sdk-ui-tests-e2e-$BUILD_ID up --abort-on-container-exit --exit-code-from integrated-tests --force-recreate --always-recreate-deps --renew-anon-volumes
+docker compose -f ./$COMPOSE_FILE  -p sdk-ui-tests-e2e-$BUILD_ID up --abort-on-container-exit --exit-code-from integrated-tests --force-recreate --always-recreate-deps --renew-anon-volumes

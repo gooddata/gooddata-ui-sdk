@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
@@ -28,6 +28,17 @@ const selectExecutionResultEntities = adapterSelectors.selectEntities;
  * @alpha
  */
 export const selectExecutionResult = adapterSelectors.selectById;
+
+/**
+ * @alpha
+ */
+export const selectHasSomeExecutionResult: DashboardSelector<boolean> = createSelector(
+    selectExecutionResultEntities,
+    (executionResults): boolean => {
+        // Empty results can be resolved as error, so consider error also as resolved
+        return Object.values(executionResults).filter((e) => !!e?.executionResult || !!e?.error).length >= 1;
+    },
+);
 
 /**
  * @alpha

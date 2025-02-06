@@ -8984,6 +8984,9 @@ function isDashboardPluginLink(pluginLink: unknown): pluginLink is IDashboardPlu
 export function isDashboardPluginsItem(dashboardPlugin: unknown): dashboardPlugin is JsonApiDashboardPluginOutWithLinks;
 
 // @public (undocumented)
+export function isDataSetItem(dataSet: unknown): dataSet is JsonApiDatasetOutWithLinks;
+
+// @public (undocumented)
 function isFilterContext(filterContext: unknown): filterContext is IFilterContext;
 
 // @public (undocumented)
@@ -8991,6 +8994,9 @@ function isFilterContext_2(filterContext: unknown): filterContext is IFilterCont
 
 // @public (undocumented)
 export function isFilterContextData(filterContext: unknown): filterContext is JsonApiFilterContextIn;
+
+// @public (undocumented)
+export function isLabelItem(label: unknown): label is JsonApiLabelOutWithLinks;
 
 // @internal (undocumented)
 export function isLiveFeatures(features: ILiveFeatures | IStaticFeatures | undefined): features is ILiveFeatures;
@@ -9081,9 +9087,17 @@ interface ITotalItem {
 // @public (undocumented)
 export interface IUserProfile {
     // (undocumented)
+    deployment?: string;
+    // (undocumented)
+    email?: string;
+    // (undocumented)
     entitlements: ApiEntitlement[];
     // (undocumented)
     features?: ILiveFeatures | IStaticFeatures;
+    // (undocumented)
+    firstName?: string;
+    // (undocumented)
+    lastName?: string;
     // (undocumented)
     links: {
         user: string;
@@ -17181,6 +17195,8 @@ export interface PositiveAttributeFilterPositiveAttributeFilter {
 export interface ProfileApiInterface {
     // (undocumented)
     getCurrent: () => Promise<IUserProfile>;
+    // (undocumented)
+    getCurrentWithDetails: () => Promise<IUserProfile>;
 }
 
 // @public

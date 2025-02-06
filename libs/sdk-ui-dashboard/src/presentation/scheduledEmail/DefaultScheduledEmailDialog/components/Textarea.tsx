@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import * as React from "react";
 import cx from "classnames";
 interface ITextareaOwnProps {
@@ -7,6 +7,7 @@ interface ITextareaOwnProps {
     hasWarning: boolean;
     label: string;
     maxlength?: number;
+    id?: string;
     placeholder: string;
     value: string;
     rows: number;
@@ -31,14 +32,17 @@ export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState
     }
 
     public render() {
-        const { className, label, maxlength, placeholder, value, rows } = this.props;
+        const { id, className, label, maxlength, placeholder, value, rows } = this.props;
         const classNames = cx(`gd-input-component gd-textarea-component ${className}`);
 
         return (
             <div className={classNames}>
-                <label className="gd-label">{label}</label>
+                <label htmlFor={id} className="gd-label">
+                    {label}
+                </label>
                 <label className="gd-input">
                     <textarea
+                        id={id}
                         className={this.getTextareaClassNames()}
                         maxLength={maxlength}
                         placeholder={placeholder}

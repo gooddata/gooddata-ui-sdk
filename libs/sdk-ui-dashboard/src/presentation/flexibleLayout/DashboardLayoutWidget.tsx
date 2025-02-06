@@ -28,6 +28,7 @@ import {
     selectWidgetsOverlayState,
     selectWidgetsModification,
     selectSectionModification,
+    selectIsInExportMode,
     selectIsExport,
     useWidgetSelection,
     isExtendedDashboardLayoutWidget,
@@ -62,6 +63,7 @@ import { DashboardItemPathAndSizeProvider } from "../dashboard/components/Dashbo
 import { shouldShowRowEndDropZone } from "./dragAndDrop/draggableWidget/RowEndHotspot.js";
 import { HoverDetector } from "./dragAndDrop/Resize/HoverDetector.js";
 import { useWidthValidation } from "./DefaultDashboardLayoutRenderer/useItemWidthValidation.js";
+import { useWidgetExportData } from "../export/index.js";
 
 /**
  * Tests in KD require widget index for css selectors.
@@ -105,6 +107,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const insights = useDashboardSelector(selectInsightsMap);
     const settings = useDashboardSelector(selectSettings);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const isExportMode = useDashboardSelector(selectIsInExportMode);
     const isExport = useDashboardSelector(selectIsExport);
     const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
 
@@ -119,6 +122,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const isRichText = isRichTextWidget(widget);
     const isRichTextWidgetInEditState = isSelected && isRichText;
     const isNestedLayout = isExtendedDashboardLayoutWidget(widget);
+    const exportData = useWidgetExportData(widget);
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
@@ -137,8 +141,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
 
     const currentSize = item.size()[screen]!;
-    const minHeight = calculateWidgetMinHeight(item.raw(), currentSize, insights, settings);
-
+    const minHeight = calculateWidgetMinHeight(item.raw(), currentSize, insights, settings, isExportMode);
     const height =
         currentSize.heightAsRatio && !currentSize.gridHeight
             ? getDashboardLayoutItemHeightForRatioAndScreen(currentSize, screen)
@@ -244,6 +247,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                             ErrorComponent={ErrorComponent}
                             LoadingComponent={LoadingComponent}
                             rowIndex={rowIndex}
+                            exportData={exportData}
                         />
                     </HoverDetector>
                 </DashboardItemPathAndSizeProvider>
@@ -254,6 +258,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                         reachedWidthLimit={widthLimitReached}
                         reachedHeightLimit={heightLimitReached}
                         isOverNestedLayout={isNestedLayout}
+                        isInFirstRow={rowIndex === 0}
                     />
                 ) : null}
                 {canShowHotspot && !isAnyPlaceholderWidget(widget) ? (

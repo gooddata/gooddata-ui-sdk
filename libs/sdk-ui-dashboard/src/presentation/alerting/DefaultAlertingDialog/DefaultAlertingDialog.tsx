@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import React from "react";
 import {
@@ -39,7 +39,7 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
         users,
         supportedMeasures,
         supportedAttributes,
-        catalogMeasures,
+        measureFormatMap,
         catalogAttributes,
         catalogDateDatasets,
         canManageAttributes,
@@ -91,7 +91,7 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
                         }}
                         onClose={onCancel}
                         overlayPositionType="fixed"
-                        catalogMeasures={catalogMeasures}
+                        measureFormatMap={measureFormatMap}
                         catalogAttributes={catalogAttributes}
                         catalogDateDatasets={catalogDateDatasets}
                         maxAutomationsRecipients={maxAutomationsRecipients}

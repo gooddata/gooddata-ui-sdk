@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
@@ -30,6 +30,7 @@ import {
 import { IParentWithConnectingAttributes } from "../../types/attributeFilterTypes.js";
 import { AddDateFilterPayload } from "../../commands/index.js";
 import { generateFilterLocalIdentifier } from "../_infra/generators.js";
+import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 
 type FilterContextReducer<A extends Action> = CaseReducer<FilterContextState, A>;
 
@@ -123,6 +124,16 @@ const addAttributeFilterDisplayForm: FilterContextReducer<
         );
     }
     state.attributeFilterDisplayForms.push(action.payload);
+};
+
+//
+//
+//
+
+const setPreloadedAttributesWithReferences: FilterContextReducer<
+    PayloadAction<IAttributeWithReferences[]>
+> = (state, action) => {
+    state.attributesWithReferences = action.payload;
 };
 
 //
@@ -675,4 +686,5 @@ export const filterContextReducers = {
     changeAttributeTitle,
     changeSelectionMode,
     changeLimitingItems,
+    setPreloadedAttributesWithReferences,
 };

@@ -2,6 +2,7 @@
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { UnexpectedSdkError, useWorkspace } from "@gooddata/sdk-ui";
+import { isAlertNotification } from "@gooddata/sdk-model";
 
 import { useCallback, useMemo, useState } from "react";
 import { useOrganization } from "../@staging/OrganizationContext/OrganizationContext.js";
@@ -124,7 +125,7 @@ export function useNotifications({ workspace, refreshInterval, itemsPerPage }: I
             return notifications;
         }
 
-        return notifications.map((notification) => {
+        return notifications.filter(isAlertNotification).map((notification) => {
             if (markedAsReadNotifications.includes(notification.id)) {
                 return { ...notification, isRead: true };
             }
@@ -138,6 +139,7 @@ export function useNotifications({ workspace, refreshInterval, itemsPerPage }: I
         }
 
         return unreadNotifications
+            .filter(isAlertNotification)
             .map((notification) => {
                 if (markedAsReadNotifications.includes(notification.id)) {
                     return { ...notification, isRead: true };
@@ -146,6 +148,14 @@ export function useNotifications({ workspace, refreshInterval, itemsPerPage }: I
             })
             .filter((x) => !x.isRead);
     }, [unreadNotifications, markedAsReadNotifications]);
+
+    /**
+     * Generally, we filter out notifications that are not of type alert and here we prepare
+     * the correction of the total count of unread notifications retrieved from the server.
+     */
+    const numberOfInvalidUnreadNotifications = useMemo(() => {
+        return unreadNotifications.filter((notification) => !isAlertNotification(notification)).length;
+    }, [unreadNotifications]);
 
     return {
         notifications: effectiveNotifications,
@@ -160,7 +170,10 @@ export function useNotifications({ workspace, refreshInterval, itemsPerPage }: I
         unreadNotificationsHasNextPage: unreadNotificationsHasNextPage,
         unreadNotificationsLoadNextPage: unreadNotificationsLoadNextPage,
         unreadNotificationsReset,
-        unreadNotificationsCount: Math.max(0, unreadNotificationsCount - markedAsReadNotifications.length),
+        unreadNotificationsCount: Math.max(
+            0,
+            unreadNotificationsCount - markedAsReadNotifications.length - numberOfInvalidUnreadNotifications,
+        ),
         markNotificationAsRead,
         markAllNotificationsAsRead,
     };

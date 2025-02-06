@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 /**
  * Mocking FeatureHub request to remove dependency on it
@@ -30,6 +30,14 @@ beforeEach(() => {
                         type: "BOOLEAN",
                         value: true,
                         strategies: [],
+                    },
+                    {
+                        id: "cfcd98dd-00ff-465b-8bb6-c65f69306afe",
+                        key: "enableCriticalContentPerformanceOptimizations",
+                        l: false,
+                        version: 4,
+                        type: "BOOLEAN",
+                        value: true,
                     },
                 ],
             },

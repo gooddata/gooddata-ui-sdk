@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { v4 as uuid } from "uuid";
 import debounce from "lodash/debounce.js";
@@ -40,6 +40,7 @@ const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-day_outside";
  * @internal
  */
 export interface IDatePickerOwnProps {
+    id?: string;
     date?: Date; // date value used to initialize date picker
     className?: string; // optional css applied to outer div
     placeholder?: string;
@@ -363,7 +364,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
 
     public render(): React.ReactNode {
         const { inputValue, selectedDate, monthDate, isOpen } = this.state;
-        const { placeholder, intl, tabIndex } = this.props;
+        const { id, placeholder, intl, tabIndex } = this.props;
 
         const classNamesProps: ClassNames = {
             root: this.getOverlayWrapperClasses(),
@@ -377,6 +378,8 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
                 onClick={this.handleWrapperClick}
             >
                 <input
+                    id={id}
+                    aria-label={intl.formatMessage({ id: "datePicker.accessibility.label" })}
                     onKeyDown={this.onKeyDown}
                     tabIndex={tabIndex}
                     onClick={() => this.setState({ isOpen: true })}

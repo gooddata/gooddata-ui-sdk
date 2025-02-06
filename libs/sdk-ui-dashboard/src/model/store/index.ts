@@ -104,6 +104,7 @@ export {
     selectFocusObject,
     selectEnableDashboardDescriptionDynamicHeight,
     selectEnableCriticalContentPerformanceOptimizations,
+    selectEnableSlideshowExports,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -170,6 +171,7 @@ export {
     selectCanAddMoreFilters,
     selectIsAttributeFilterDependentByLocalIdentifier,
     selectFilterContextDateFilterByDataSet,
+    selectPreloadedAttributesWithReferences,
 } from "./filterContext/filterContextSelectors.js";
 export type { IImplicitDrillWithPredicates } from "./widgetDrills/widgetDrillSelectors.js";
 export {
@@ -249,6 +251,7 @@ export {
 } from "./insights/insightsSelectors.js";
 export type { CatalogState } from "./catalog/catalogState.js";
 export {
+    selectCatalogIsLoaded,
     selectAttributesWithDrillDown,
     selectCatalogAttributes,
     selectCatalogAttributeDisplayForms,
@@ -336,6 +339,7 @@ export {
     selectIsExecutionResultExportableToCsvByRef,
     selectIsExecutionResultExportableToXlsxByRef,
     selectIsExecutionResultReadyForExportByRef,
+    selectHasSomeExecutionResult,
 } from "./executionResults/executionResultsSelectors.js";
 export type { IExecutionResultEnvelope } from "./executionResults/types.js";
 export type { UiState, InvalidCustomUrlDrillParameterInfo, FilterViewDialogMode } from "./ui/uiState.js";
@@ -389,6 +393,7 @@ export { uiActions } from "./ui/index.js";
 export type { RenderModeState } from "./renderMode/renderModeState.js";
 export {
     selectIsInEditMode,
+    selectIsInExportMode,
     selectIsInViewMode,
     selectRenderMode,
 } from "./renderMode/renderModeSelectors.js";

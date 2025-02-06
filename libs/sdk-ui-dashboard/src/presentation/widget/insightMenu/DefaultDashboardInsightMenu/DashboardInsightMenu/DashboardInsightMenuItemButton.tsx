@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { ReactNode } from "react";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, IAlignPoint, Item } from "@gooddata/sdk-ui-kit";
@@ -20,7 +20,7 @@ export const DashboardInsightMenuItemButton: React.FC<
             subMenu={submenu}
         >
             <span className={cx({ "gd-icon-wrapper": icon && typeof icon !== "string" })}>
-                {icon ? typeof icon === "string" ? <i className={icon} /> : icon : null}
+                {icon ? typeof icon === "string" ? <i aria-hidden={true} className={icon} /> : icon : null}
                 {itemName}
             </span>
         </Item>,

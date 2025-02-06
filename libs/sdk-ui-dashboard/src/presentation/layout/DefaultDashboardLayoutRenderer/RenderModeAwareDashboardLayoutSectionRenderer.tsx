@@ -1,8 +1,9 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import { renderModeAware } from "../../componentDefinition/index.js";
 import { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer.js";
 import { EditableDashboardLayoutSectionRenderer } from "./EditableDashboardLayoutSectionRenderer.js";
+import { ExportableDashboardLayoutSectionRenderer } from "./ExportableDashboardLayoutSectionRenderer.js";
 import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
 
 /**
@@ -13,4 +14,5 @@ import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
 export const renderModeAwareDashboardLayoutSectionRenderer = renderModeAware({
     view: DashboardLayoutSectionRenderer,
     edit: EditableDashboardLayoutSectionRenderer,
+    export: ExportableDashboardLayoutSectionRenderer,
 }) as IDashboardLayoutSectionRenderer<unknown>;

@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { ISettings } from "@gooddata/sdk-model";
 
 import { TigerSettingsType, TigerOrgSettingsType } from "../../types/index.js";
@@ -34,13 +34,14 @@ export function mapTypeToKey(
             return "separators";
         case "organizationSetting":
             return "organizationSetting";
+        case "DATE_FILTER_CONFIG":
+            return "dateFilterConfig";
         // These cases are intentionally not mapped to maintain an exhaustive check.
         // This ensures we're notified when new properties are added, allowing us to decide if they need mapping.
         case "METADATA_LOCALE":
         case "OPERATOR_OVERRIDES":
         case "TIMEZONE_VALIDATION_ENABLED":
         case "ENABLE_FILE_ANALYTICS":
-        case "DATE_FILTER_CONFIG":
         case undefined:
             return fallback;
         default:

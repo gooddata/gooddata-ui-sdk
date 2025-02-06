@@ -1,0 +1,162 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ContainerSwitcherSlideTransformer > section with 1 switcher and rich text 1`] = `
+[
+  {
+    "items": [
+      {
+        "size": {
+          "xl": {
+            "gridHeight": 22,
+            "gridWidth": 12,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "sections": [
+            {
+              "items": [
+                {
+                  "size": {
+                    "xl": {
+                      "gridHeight": 4,
+                      "gridWidth": 8,
+                    },
+                  },
+                  "type": "IDashboardLayoutItem",
+                  "widget": {
+                    "size": {
+                      "xl": {
+                        "gridHeight": 4,
+                        "gridWidth": 4,
+                      },
+                    },
+                    "type": "IDashboardLayoutItem",
+                    "widget": {
+                      "drills": [],
+                      "identifier": "test1",
+                      "insight": {
+                        "identifier": "test1",
+                        "type": "insight",
+                      },
+                      "ref": {
+                        "identifier": "test1",
+                        "type": "insight",
+                      },
+                      "type": "insight",
+                    },
+                  },
+                },
+                {
+                  "size": {
+                    "xl": {
+                      "gridHeight": 4,
+                      "gridWidth": 4,
+                    },
+                  },
+                  "type": "IDashboardLayoutItem",
+                  "widget": {
+                    "content": "This is rich text",
+                    "description": "",
+                    "drills": [],
+                    "identifier": "",
+                    "ignoreDashboardFilters": false,
+                    "ref": {
+                      "identifier": "",
+                      "type": "insight",
+                    },
+                    "title": "",
+                    "type": "richText",
+                    "uri": "",
+                  },
+                },
+              ],
+              "type": "IDashboardLayoutSection",
+            },
+          ],
+          "type": "IDashboardLayout",
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+  {
+    "items": [
+      {
+        "size": {
+          "xl": {
+            "gridHeight": 22,
+            "gridWidth": 12,
+          },
+        },
+        "type": "IDashboardLayoutItem",
+        "widget": {
+          "sections": [
+            {
+              "items": [
+                {
+                  "size": {
+                    "xl": {
+                      "gridHeight": 4,
+                      "gridWidth": 8,
+                    },
+                  },
+                  "type": "IDashboardLayoutItem",
+                  "widget": {
+                    "size": {
+                      "xl": {
+                        "gridHeight": 4,
+                        "gridWidth": 4,
+                      },
+                    },
+                    "type": "IDashboardLayoutItem",
+                    "widget": {
+                      "drills": [],
+                      "identifier": "test2",
+                      "insight": {
+                        "identifier": "test2",
+                        "type": "insight",
+                      },
+                      "ref": {
+                        "identifier": "test2",
+                        "type": "insight",
+                      },
+                      "type": "insight",
+                    },
+                  },
+                },
+                {
+                  "size": {
+                    "xl": {
+                      "gridHeight": 4,
+                      "gridWidth": 4,
+                    },
+                  },
+                  "type": "IDashboardLayoutItem",
+                  "widget": {
+                    "content": "This is rich text",
+                    "description": "",
+                    "drills": [],
+                    "identifier": "",
+                    "ignoreDashboardFilters": false,
+                    "ref": {
+                      "identifier": "",
+                      "type": "insight",
+                    },
+                    "title": "",
+                    "type": "richText",
+                    "uri": "",
+                  },
+                },
+              ],
+              "type": "IDashboardLayoutSection",
+            },
+          ],
+          "type": "IDashboardLayout",
+        },
+      },
+    ],
+    "type": "IDashboardLayoutSection",
+  },
+]
+`;

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { all, call, put } from "redux-saga/effects";
 import includes from "lodash/includes.js";
@@ -24,6 +24,7 @@ import {
 import { PromiseFnReturnType } from "../../../types/sagas.js";
 import { sanitizeUnfinishedFeatureSettings } from "./sanitizeUnfinishedFeatureSettings.js";
 import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError.js";
+import { loadAutomationsData } from "../common/loadAutomationsData.js";
 
 function loadDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfigsQueryResult | undefined> {
     const { backend, workspace } = ctx;
@@ -50,6 +51,7 @@ function loadSettingsForCurrentUser(ctx: DashboardContext): Promise<IUserWorkspa
     return backend.workspace(workspace).settings().getSettingsForCurrentUser();
 }
 
+///
 async function loadCustomDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfig | undefined> {
     const { backend, workspace } = ctx;
 
@@ -77,8 +79,10 @@ function loadColorPalette(ctx: DashboardContext): Promise<IColorPalette> {
 }
 
 function* resolveDateFilterConfig(ctx: DashboardContext, config: DashboardConfig, cmd: InitializeDashboard) {
-    if (config.dateFilterConfig !== undefined) {
+    if (config.dateFilterConfig) {
         return config.dateFilterConfig;
+    } else if (config?.settings?.dateFilterConfig) {
+        return config.settings.dateFilterConfig;
     }
 
     const customDateFilterConfig: PromiseFnReturnType<typeof loadCustomDateFilterConfig> = yield call(
@@ -227,5 +231,27 @@ function applyConfigDefaults<T extends DashboardConfig>(config: T) {
         disableCrossFiltering: config.disableCrossFiltering ?? false,
         disableUserFilterReset: config.disableUserFilterReset ?? false,
         widgetsOverlay: config.widgetsOverlay ?? {},
+    };
+}
+
+/**
+ * Resolves dashboard config
+ */
+export function* resolveDashboardConfigAndFeatureFlagDependentCalls(
+    ctx: DashboardContext,
+    cmd: InitializeDashboard,
+): SagaIterator<{
+    resolvedConfig: ResolvedDashboardConfig;
+    additionalData: {
+        notificationChannelsCount: number;
+        workspaceAutomationsCount: number;
+    };
+}> {
+    const resolvedConfig = yield call(resolveDashboardConfig, ctx, cmd);
+    const additionalData = yield call(loadAutomationsData, ctx, resolvedConfig.settings);
+
+    return {
+        resolvedConfig,
+        additionalData,
     };
 }

@@ -1079,6 +1079,7 @@ export interface IBucket {
 // @public
 export interface ICatalogAttribute extends IGroupableCatalogItemBase {
     attribute: IAttributeMetadataObject;
+    dataSet?: IDataSetMetadataObject;
     defaultDisplayForm: IAttributeDisplayFormMetadataObject;
     displayForms: IAttributeDisplayFormMetadataObject[];
     geoPinDisplayForms: IAttributeDisplayFormMetadataObject[];
@@ -1243,6 +1244,7 @@ export type ICustomSmtpDestinationConfiguration = {
 // @alpha
 export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+    readonly dataSets?: IDataSetMetadataObject[];
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     readonly disableCrossFiltering?: boolean;
@@ -3310,6 +3312,8 @@ export interface ISettings {
     ADCatalogGroupsExpanded?: boolean;
     ADMeasureValueFilterNullAsZeroOption?: string;
     alertDefault?: IAlertDefault;
+    // @alpha
+    dateFilterConfig?: IDateFilterConfig;
     disableKpiDashboardHeadlineUnderline?: boolean;
     // @beta
     earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
@@ -3420,6 +3424,7 @@ export interface ISettings {
     enableSeparateTotalLabels?: boolean;
     // (undocumented)
     enableSingleStoreDataSource?: boolean;
+    enableSlideshowExports?: boolean;
     enableSmtp?: boolean;
     // (undocumented)
     enableSnowflakeKeyPairAuthentication?: boolean;
@@ -4077,7 +4082,9 @@ export interface ITotalLocatorItemBody {
 // @public
 export interface IUser {
     authenticationId?: string;
+    deployment?: string;
     email?: string;
+    entitlements?: IEntitlementDescriptor[];
     firstName?: string;
     fullName?: string;
     lastName?: string;

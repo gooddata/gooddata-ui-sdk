@@ -214,7 +214,6 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     flex: 1 1 auto;
     flex-direction: column;
     justify-content: flex-start;
-    max-width: 99.999%; /* 100% has issue in IE (wrong kpi width) */
 }
 
 .dash-item-content {
@@ -256,6 +255,11 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         left: 50%;
         display: block;
         border-radius: inherit;
+    }
+
+    &.is-export {
+        padding: 0;
+        border-width: 0;
     }
 }
 
@@ -312,22 +316,24 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     }
 }
 
-.item-headline {
-    position: relative;
+.item-headline,
+.item-headline-inner {
     display: inline-block;
-    width: 100%;
-    max-height: (variables.$item-headline-lineHeight + variables.$item-headline-padding-vertical) * 2;
+    vertical-align: middle;
     font-size: 17px;
     line-height: variables.$item-headline-lineHeight;
-    vertical-align: middle;
+}
+
+.item-headline {
+    position: relative;
+    width: 100%;
+    max-height: (variables.$item-headline-lineHeight + variables.$item-headline-padding-vertical) * 2;
     text-align: variables.$gd-dashboards-content-widget-title-textAlign;
     color: variables.$gd-dashboards-content-widget-title-color;
 }
 
 .item-headline-inner {
-    display: inline-block;
     overflow: hidden;
-    vertical-align: middle;
 }
 
 .viz-zoom-out {

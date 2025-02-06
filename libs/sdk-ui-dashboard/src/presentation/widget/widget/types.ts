@@ -12,6 +12,7 @@ import {
 
 import { IDashboardFilter, OnFiredDashboardDrillEvent, ILayoutItemPath } from "../../../types.js";
 import { ExtendedDashboardWidget } from "../../../model/index.js";
+import { WidgetExportData } from "../../export/index.js";
 
 /**
  * Dashboard widget props.
@@ -150,6 +151,13 @@ export interface IDashboardWidgetProps {
      * Once the flexible layout is the only one supported, it can be set as required.
      */
     rowIndex?: number;
+
+    /**
+     * Data attributes for export mode to be added to the widget.
+     *
+     * @alpha
+     */
+    exportData?: WidgetExportData;
 }
 
 ///

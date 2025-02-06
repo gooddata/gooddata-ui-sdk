@@ -9,6 +9,7 @@ import {
 import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { DashboardLayoutItemRenderer } from "./DashboardLayoutItemRenderer.js";
 import { DashboardLayoutWidgetRenderer } from "./DashboardLayoutWidgetRenderer.js";
+import { RenderMode } from "../../../types.js";
 
 /**
  * @alpha
@@ -18,6 +19,7 @@ export interface IDashboardLayoutItemProps<TWidget> {
     itemRenderer?: IDashboardLayoutItemRenderer<TWidget>;
     widgetRenderer: IDashboardLayoutWidgetRenderer<TWidget>;
     rowIndex: number;
+    renderMode: RenderMode;
 }
 
 const defaultItemRenderer: IDashboardLayoutItemRenderer<unknown> = (props) => (

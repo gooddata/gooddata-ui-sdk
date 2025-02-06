@@ -19,6 +19,16 @@
         "comment": "A global semantic search button label in the main menu",
         "limit": 0
     },
+    "gs.header.logo.title.accessibility": {
+        "value": "Application logo",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.header.href.accessibility": {
+        "value": "Go to homepage",
+        "comment": "",
+        "limit": 0
+    },
     "gs.header.notifications": {
         "value": "Notifications",
         "comment": "A global notifications button label in the main menu",
@@ -52,6 +62,11 @@
     "gs.list.search.placeholder": {
         "value": "Search…",
         "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "gs.list.acessibility.search.label": {
+        "value": "Search attribute values",
+        "comment": "",
         "limit": 0
     },
     "gs.list.notAvailableAbbreviation": {
@@ -3411,6 +3426,21 @@
     "recurrence.cron.tooltip": {
         "value": "Use the unix-cron string format. <a>Learn more</a>",
         "comment": "Do not translate html tags <a>, </a>. Do not translate 'unix-cron' as it is a name of specific tech.",
+        "limit": 0
+    },
+    "message.accessibility.dismiss.notification": {
+        "value": "Dismiss notification",
+        "comment": "",
+        "limit": 0
+    },
+    "datePicker.accessibility.label": {
+        "value": "Select starting date",
+        "comment": "",
+        "limit": 0
+    },
+    "timePicker.accessibility.label": {
+        "value": "Select starting time",
+        "comment": "",
         "limit": 0
     }
 }

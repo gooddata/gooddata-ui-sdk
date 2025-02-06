@@ -19,13 +19,13 @@ import {
 import { DashboardInsight } from "../../insight/index.js";
 import { useInsightExport } from "../../common/index.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
-import { InsightWidgetDescriptionTrigger } from "../../description/InsightWidgetDescriptionTrigger.js";
 
 import { useInsightMenu } from "./useInsightMenu.js";
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { useAlertingAndScheduling } from "./useAlertingAndScheduling.js";
 import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
+import { useInsightWidgetDescriptionComponent } from "../../description/InsightWidgetDescriptionComponentProvider.js";
 
 export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsightWidgetProps, "insight">> = (
     props,
@@ -38,7 +38,16 @@ export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsig
  */
 const DefaultDashboardInsightWidgetCore: React.FC<
     IDefaultDashboardInsightWidgetProps & { insight?: IInsight }
-> = ({ widget, insight, screen, onError, onExportReady, onLoadingChanged, dashboardItemClasses }) => {
+> = ({
+    widget,
+    insight,
+    screen,
+    onError,
+    onExportReady,
+    onLoadingChanged,
+    dashboardItemClasses,
+    exportData,
+}) => {
     const intl = useIntl();
     const settings = useDashboardSelector(selectSettings);
 
@@ -123,6 +132,13 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     );
 
     const { elementRef, highlighted } = useWidgetHighlighting(widget);
+    const { InsightWidgetDescriptionComponent } = useInsightWidgetDescriptionComponent();
+
+    const accessibilityWidgetDescription = settings.enableDescriptions
+        ? widget.configuration?.description?.source === "widget" || !insight
+            ? widget.description
+            : insight.insight.summary
+        : "";
 
     return (
         <DashboardItem
@@ -135,20 +151,28 @@ const DefaultDashboardInsightWidgetCore: React.FC<
             )}
             screen={screen}
             ref={elementRef}
+            description={accessibilityWidgetDescription}
+            exportData={exportData?.section}
         >
             <DashboardItemVisualization
+                isExport={!!exportData}
                 renderHeadline={(clientHeight) =>
                     !widget.configuration?.hideTitle && (
-                        <DashboardItemHeadline title={widget.title} clientHeight={clientHeight} />
+                        <DashboardItemHeadline
+                            title={widget.title}
+                            clientHeight={clientHeight}
+                            exportData={exportData?.title}
+                        />
                     )
                 }
                 renderBeforeVisualization={() => (
                     <div className="gd-absolute-row">
                         {settings?.enableDescriptions ? (
-                            <InsightWidgetDescriptionTrigger
+                            <InsightWidgetDescriptionComponent
                                 insight={insight}
                                 widget={widget}
                                 screen={screen}
+                                exportData={exportData?.description}
                             />
                         ) : null}
                         <InsightMenuButtonComponent
@@ -187,6 +211,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                         onError={onError}
                         ErrorComponent={ErrorComponent}
                         LoadingComponent={LoadingComponent}
+                        exportData={exportData?.widget}
                     />
                 )}
             </DashboardItemVisualization>

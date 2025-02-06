@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { combineReducers, configureStore, EnhancedStore, Middleware } from "@reduxjs/toolkit";
 import defaultReduxSaga, { Saga, SagaIterator, Task } from "redux-saga";
 import { enableBatching } from "redux-batched-actions";
@@ -292,10 +292,11 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
     const queryProcessing = createQueryProcessingModule(
         mergeQueryServices(AllQueryServices, config.queryServices),
     );
+    const privateContext = config.privateContext ?? {};
     const sagaMiddleware = createSagaMiddleware({
         context: {
             dashboardContext: config.dashboardContext,
-            privateContext: config.privateContext ?? {},
+            privateContext,
         },
     });
 

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import {
@@ -16,9 +16,10 @@ import {
     selectFilterContextDateFilterByDataSet,
 } from "../../../store/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
-import { canApplyDateFilter, dispatchFilterContextChanged } from "../common.js";
+import { canApplyDateFilter, dispatchFilterContextChanged, resetCrossFiltering } from "../common.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
+import { selectIsCrossFiltering } from "../../../store/drill/drillSelectors.js";
 
 export function* changeDateFilterSelectionHandler(
     ctx: DashboardContext,
@@ -59,6 +60,11 @@ export function* changeDateFilterSelectionHandler(
     const affectedFilter: ReturnType<typeof selectFilterContextDateFilter> = cmd.payload.dataSet
         ? yield select(selectFilterContextDateFilterByDataSet(cmd.payload.dataSet))
         : yield select(selectFilterContextDateFilter);
+
+    const isCrossFiltering = yield select(selectIsCrossFiltering);
+    if (isCrossFiltering) {
+        yield call(resetCrossFiltering, cmd);
+    }
 
     yield dispatchDashboardEvent(
         dateFilterChanged(ctx, affectedFilter, cmd.payload.dateFilterOptionLocalId, cmd.correlationId),

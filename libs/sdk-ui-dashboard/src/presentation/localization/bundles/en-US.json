@@ -1386,7 +1386,7 @@
         "limit": 0
     },
     "controlButtons.options.tooltip": {
-        "value": "More options",
+        "value": "More actions",
         "comment": "",
         "limit": 0
     },
@@ -3202,6 +3202,21 @@
     "insightAlert.config.selectAttribute": {
         "value": "All",
         "comment": "Label of attribute select dropdown",
+        "limit": 0
+    },
+    "insightAlert.config.accessbility.input": {
+        "value": "Condition value",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.accessbility.dropdown": {
+        "value": "Condition type",
+        "comment": "",
+        "limit": 0
+    },
+    "alert.accessibility.destination.label": {
+        "value": "Select how to send the alert",
+        "comment": "",
         "limit": 0
     },
     "granularity.this_keyword": {

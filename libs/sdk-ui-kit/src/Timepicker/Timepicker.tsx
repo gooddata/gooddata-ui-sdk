@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import moment from "moment";
@@ -25,6 +25,7 @@ export { normalizeTime, formatTime };
 export interface ITimepickerOwnProps {
     time: Date | null;
     className?: string;
+    id?: string;
     maxVisibleItemsCount?: number;
     onChange?: (selectedTime: Date) => void;
     overlayPositionType?: OverlayPositionType;
@@ -133,7 +134,7 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
     };
 
     public render() {
-        const { overlayPositionType, maxVisibleItemsCount, overlayZIndex } = this.props;
+        const { id, overlayPositionType, maxVisibleItemsCount, overlayZIndex, intl } = this.props;
         const { dropdownWidth, selectedTime } = this.state;
         const time = {
             h: selectedTime.getHours(),
@@ -155,10 +156,12 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
                     ]}
                     renderButton={({ openDropdown, isOpen }) => (
                         <DropdownButton
+                            id={id}
                             value={formatTime(time.h, time.m, this.props.timeFormat)}
                             isOpen={isOpen}
                             onClick={openDropdown}
                             iconLeft="gd-icon-timer"
+                            ariaLabel={intl.formatMessage({ id: "timePicker.accessibility.label" })}
                         />
                     )}
                     renderBody={({ closeDropdown, isMobile }) => (

@@ -27,6 +27,6 @@ if [[ "$GITHUB_ACTIONS" != "true" ]]; then
 fi
 
 PROJECT_NAME=tiger-sdk-ui-tests-e2e-${EXECUTOR_NUMBER}
-NO_COLOR=1 docker-compose -f docker-compose-isolated.yaml -p "$PROJECT_NAME" up \
+NO_COLOR=1 docker compose -f docker-compose-isolated.yaml -p "$PROJECT_NAME" up \
   --abort-on-container-exit --exit-code-from isolated-tests \
   --force-recreate --always-recreate-deps --renew-anon-volumes --no-color

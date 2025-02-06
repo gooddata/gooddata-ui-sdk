@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { Component, createRef } from "react";
 import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -87,7 +87,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     }
 
     public render() {
-        const { logoUrl, logoTitle, workspacePicker } = this.props;
+        const { workspacePicker, isAccessibilityCompliant } = this.props;
 
         this.createStyles();
 
@@ -99,15 +99,10 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
 
         return (
             <div className={this.getClassNames()} ref={this.nodeRef}>
-                <a href={this.props.logoHref} onClick={this.props.onLogoClick} className={logoLinkClassName}>
-                    <img
-                        src={logoUrl}
-                        title={logoTitle}
-                        onLoad={this.measureChildren}
-                        onError={this.measureChildren}
-                        alt=""
-                    />
-                </a>
+                {isAccessibilityCompliant
+                    ? this.renderAccessibilityLogo(logoLinkClassName)
+                    : this.renderLogo(logoLinkClassName)}
+
                 {workspacePicker}
                 {this.renderNav()}
             </div>
@@ -121,6 +116,50 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     public componentWillUnmount() {
         window.removeEventListener("resize", this.resizeHandler);
         removeFromDom(this.stylesheet);
+    }
+
+    private renderLogo(logoLinkClassName: string) {
+        const { logoUrl, logoTitle } = this.props;
+        return (
+            <a href={this.props.logoHref} onClick={this.props.onLogoClick} className={logoLinkClassName}>
+                <img
+                    src={logoUrl}
+                    title={logoTitle}
+                    onLoad={this.measureChildren}
+                    onError={this.measureChildren}
+                    alt=""
+                />
+            </a>
+        );
+    }
+
+    private renderAccessibilityLogo(logoLinkClassName: string) {
+        const { logoUrl, logoTitle, intl } = this.props;
+
+        const logoHrefAccesibilityText = intl.formatMessage({
+            id: "gs.header.href.accessibility",
+        });
+        const imageAltAccessibilityText = intl.formatMessage({
+            id: "gs.header.logo.title.accessibility",
+        });
+
+        return (
+            <a
+                aria-label={logoHrefAccesibilityText}
+                title={logoHrefAccesibilityText}
+                href={this.props.logoHref}
+                onClick={this.props.onLogoClick}
+                className={logoLinkClassName}
+            >
+                <img
+                    src={logoUrl}
+                    title={logoTitle}
+                    onLoad={this.measureChildren}
+                    onError={this.measureChildren}
+                    alt={imageAltAccessibilityText}
+                />
+            </a>
+        );
     }
 
     private getClassNames = () => {
