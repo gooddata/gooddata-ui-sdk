@@ -106,7 +106,7 @@
         "@gooddata/stylelint-config": "^5.0.0",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.36.0",
-        "@testing-library/dom": "~9.2.0",
+        "@testing-library/dom": "~9.3.0",
         "@testing-library/react": "^14.0.0",
         "@testing-library/user-event": "^14.4.2",
         "@types/codemirror": "^5.60.7",
