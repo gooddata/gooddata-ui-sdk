@@ -397,11 +397,6 @@ export interface ISettings {
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
 
     /**
-     * Enable workspaces hierarchy view in Home UI.
-     */
-    enableWorkspacesHierarchyView?: boolean;
-
-    /**
      * Enable multiple data sources to be used in a single workspace.
      */
     enableMultipleDataSourcesInWorkspace?: boolean;
@@ -505,11 +500,6 @@ export interface ISettings {
      * Enable multiple data sources to be used in a single workspace.
      */
     enableDashboardFilterViews?: boolean;
-
-    /**
-     * Enable configuration workspace hierarchy settings in Home UI.
-     */
-    enableWorkspaceHierarchySettings?: boolean;
 
     /**
      * Enables ignore cross-filtering in widgets on dashboard.
