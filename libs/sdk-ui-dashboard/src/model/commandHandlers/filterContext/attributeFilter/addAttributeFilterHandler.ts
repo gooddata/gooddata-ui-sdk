@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { invariant } from "ts-invariant";
@@ -41,6 +41,7 @@ import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../../sto
 export function* addAttributeFilterHandler(
     ctx: DashboardContext,
     cmd: AddAttributeFilter,
+    type: "normal" | "crossfilter" = "normal",
 ): SagaIterator<void> {
     const {
         displayForm,
@@ -72,7 +73,7 @@ export function* addAttributeFilterHandler(
             ? displayForm
             : undefined;
 
-    if (!isUnderFilterCountLimit) {
+    if (!isUnderFilterCountLimit && type !== "crossfilter") {
         throw invalidArgumentsProvided(
             ctx,
             cmd,
