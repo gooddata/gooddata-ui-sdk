@@ -23,6 +23,7 @@ import { createMemoizedSelector } from "../_infra/selectors.js";
 import compact from "lodash/compact.js";
 import isEmpty from "lodash/isEmpty.js";
 import { selectSupportsCircularDependencyInFilters } from "../backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectCrossFilteringFiltersLocalIdentifiers } from "../drill/drillSelectors.js";
 import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 
 const selectSelf = createSelector(
@@ -471,8 +472,12 @@ const MAX_DRAGGABLE_FILTERS_COUNT = 30;
 export const selectCanAddMoreAttributeFilters: DashboardSelector<boolean> = createSelector(
     selectFilterContextAttributeFilters,
     selectFilterContextDateFiltersWithDimension,
-    (attributeFilters, dateFiltersWithDimension) => {
-        return attributeFilters.length + dateFiltersWithDimension.length < MAX_DRAGGABLE_FILTERS_COUNT;
+    selectCrossFilteringFiltersLocalIdentifiers,
+    (attributeFilters, dateFiltersWithDimension, crossFilters) => {
+        return (
+            attributeFilters.length + dateFiltersWithDimension.length - crossFilters.length <
+            MAX_DRAGGABLE_FILTERS_COUNT
+        );
     },
 );
 
