@@ -62,7 +62,7 @@
         "@types/inquirer": "^8.2.6",
         "@types/lodash": "^4.14.202",
         "@types/node": "^18.17.6",
-        "@types/prettier": "~1.18.2",
+        "@types/prettier": "~1.19.0",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
         "@typescript-eslint/parser": "^5.57.1",
         "dependency-cruiser": "^13.0.3",
