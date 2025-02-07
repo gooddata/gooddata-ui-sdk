@@ -51,16 +51,13 @@ export function createDefaultAlert(
         alert: {
             trigger,
             condition,
-            execution: {
-                ...execution,
-                ...transformAlertExecutionByMetric(
-                    metrics,
-                    { alert: { execution, condition, trigger } },
-                    condition,
-                    measure,
-                    undefined,
-                ),
-            },
+            ...transformAlertExecutionByMetric(
+                metrics,
+                { alert: { execution, condition, trigger } },
+                condition,
+                measure,
+                undefined,
+            ),
         },
         recipients: [currentUser],
     };
