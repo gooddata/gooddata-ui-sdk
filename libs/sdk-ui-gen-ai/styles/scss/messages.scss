@@ -184,7 +184,8 @@
         height: 250px;
 
         &--headline {
-            height: 50px;
+            height: auto;
+            min-height: 50px;
         }
     }
 
