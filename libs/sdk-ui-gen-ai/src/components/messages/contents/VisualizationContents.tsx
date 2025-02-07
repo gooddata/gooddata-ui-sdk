@@ -18,7 +18,6 @@ import { FormattedMessage } from "react-intl";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 const VIS_HEIGHT = 250;
-const HEADLINE_HEIGHT = 50;
 
 export type VisualizationContentsProps = {
     content: VisualizationContents;
@@ -67,34 +66,6 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
             <MarkdownComponent allowMarkdown={useMarkdown}>{content.text}</MarkdownComponent>
             {visualization ? (
                 <div className="gd-gen-ai-chat__visualization">
-                    {config.allowCreateVisualization ? (
-                        <div onClick={handleButtonClick} className="gd-gen-ai-chat__visualization__save">
-                            <BubbleHoverTrigger
-                                tagName="div"
-                                className="gd-gen-ai-chat__visualization__save__bubble"
-                            >
-                                {visualization.savedVisualizationId ? (
-                                    <Icon.Edit width={18} height={18} color="#fff" />
-                                ) : (
-                                    <Icon.Save width={18} height={18} color="#fff" />
-                                )}
-                                <Bubble alignPoints={[{ align: "bc tc", offset: { x: 0, y: 8 } }]}>
-                                    {visualization.savedVisualizationId ? (
-                                        <FormattedMessage id={"gd.gen-ai.button.edit"} />
-                                    ) : (
-                                        <FormattedMessage id={"gd.gen-ai.button.save"} />
-                                    )}
-                                </Bubble>
-                            </BubbleHoverTrigger>
-                        </div>
-                    ) : null}
-                    {saveDialogOpen ? (
-                        <VisualizationSaveDialog
-                            onClose={() => setSaveDialogOpen(false)}
-                            visualization={visualization}
-                            messageId={messageId}
-                        />
-                    ) : null}
                     <div
                         className={cx(
                             "gd-gen-ai-chat__visualization__wrapper",
@@ -127,6 +98,34 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
                             {visualization.title}
                         </MarkdownComponent>
                     </div>
+                    {config.allowCreateVisualization ? (
+                        <div onClick={handleButtonClick} className="gd-gen-ai-chat__visualization__save">
+                            <BubbleHoverTrigger
+                                tagName="div"
+                                className="gd-gen-ai-chat__visualization__save__bubble"
+                            >
+                                {visualization.savedVisualizationId ? (
+                                    <Icon.Edit width={18} height={18} color="#fff" />
+                                ) : (
+                                    <Icon.Save width={18} height={18} color="#fff" />
+                                )}
+                                <Bubble alignPoints={[{ align: "bc tc", offset: { x: 0, y: 8 } }]}>
+                                    {visualization.savedVisualizationId ? (
+                                        <FormattedMessage id={"gd.gen-ai.button.edit"} />
+                                    ) : (
+                                        <FormattedMessage id={"gd.gen-ai.button.save"} />
+                                    )}
+                                </Bubble>
+                            </BubbleHoverTrigger>
+                        </div>
+                    ) : null}
+                    {saveDialogOpen ? (
+                        <VisualizationSaveDialog
+                            onClose={() => setSaveDialogOpen(false)}
+                            visualization={visualization}
+                            messageId={messageId}
+                        />
+                    ) : null}
                 </div>
             ) : null}
             {showSuggestions && visualization?.suggestions?.length ? (
@@ -219,7 +218,6 @@ const renderTable = (metrics: IMeasure[], dimensions: IAttribute[], filters: IFi
 
 const renderHeadline = (metrics: IMeasure[], _dimensions: IAttribute[], filters: IFilter[]) => (
     <Headline
-        height={HEADLINE_HEIGHT}
         primaryMeasure={metrics[0]}
         secondaryMeasures={[metrics[1], metrics[2]].filter(Boolean)}
         filters={filters}
