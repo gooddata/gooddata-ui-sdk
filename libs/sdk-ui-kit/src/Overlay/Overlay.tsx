@@ -183,6 +183,12 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         afterOverlayClosed();
     }
 
+    // replace with useImperativeHandle hook if the component is refactored to fn component
+    public getRefs = () => ({
+        overlayRef: this.overlayRef.current,
+        containerRef: this.containerRef.current,
+    });
+
     public render() {
         // Need stop propagation of events from Portal thats new behavior of react 16
         // https://github.com/facebook/react/issues/11387
@@ -199,6 +205,10 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
                         onClick={this.props.onClick}
                         onMouseOver={this.props.onMouseOver}
                         onMouseUp={this.props.onMouseUp}
+                        tabIndex={this.props.tabIndex}
+                        role={this.props.role}
+                        id={this.props.id}
+                        onBlur={this.props.onBlur}
                     >
                         {this.renderMask()}
                         <div
@@ -308,14 +318,22 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     };
 
     private createPortalNode(): void {
+        let parentNode = document.querySelector(".gd-portals");
+        if (!parentNode) {
+            parentNode = document.createElement("div");
+            parentNode.classList.add("gd-portals");
+            document.body.appendChild(parentNode);
+        }
+
         this.portalNode = document.createElement("div");
-        document.body.appendChild(this.portalNode);
+        parentNode.prepend(this.portalNode);
     }
 
     private removePortalNodeAfterAllTreeUnmount(): void {
         setTimeout(() => {
-            if (this.portalNode && document.body.contains(this.portalNode)) {
-                document.body.removeChild(this.portalNode);
+            const parentNode = document.querySelector(".gd-portals");
+            if (this.portalNode && parentNode && parentNode.contains(this.portalNode)) {
+                parentNode.removeChild(this.portalNode);
             }
             this.portalNode = null;
         });
@@ -424,6 +442,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
             this.props.closeOnEscape &&
             e.keyCode === ENUM_KEY_CODE.KEY_CODE_ESCAPE
         ) {
+            console.log("escape overlay");
             this.props.onClose();
         }
     }

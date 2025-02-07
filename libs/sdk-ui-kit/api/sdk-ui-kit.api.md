@@ -194,21 +194,39 @@ export class BubbleHoverTrigger extends BubbleTrigger<IBubbleHoverTriggerProps> 
 // @internal (undocumented)
 export class BubbleTrigger<P extends IBubbleTriggerProps> extends React_2.PureComponent<P, IBubbleTriggerState> {
     // (undocumented)
+    bubbleRef: React_2.RefObject<HTMLDivElement>;
+    // (undocumented)
+    cancelClose: () => void;
+    // (undocumented)
     protected changeBubbleVisibility(active: boolean): void;
+    // (undocumented)
+    closeBubble: () => void;
+    // (undocumented)
+    closeTimeout: number | null;
+    // (undocumented)
+    componentDidUpdate(_prevProps: IBubbleTriggerProps, prevState: IBubbleTriggerState): void;
     // (undocumented)
     static defaultProps: IBubbleTriggerProps;
     // (undocumented)
     protected eventListeners(): any;
     // (undocumented)
+    handleKeyDown: (e: React_2.KeyboardEvent) => void;
+    // (undocumented)
     render(): React_2.JSX.Element;
     // (undocumented)
     readonly state: Readonly<IBubbleTriggerState>;
+    // (undocumented)
+    triggerRef: React_2.RefObject<HTMLButtonElement>;
 }
 
 // @internal (undocumented)
 export class Button extends React_2.Component<IButtonProps> {
     // (undocumented)
     buttonNode: HTMLElement;
+    // (undocumented)
+    componentDidMount(): void;
+    // (undocumented)
+    componentDidUpdate(prevProps: Readonly<IButtonProps>): void;
     // (undocumented)
     static defaultProps: {
         className: string;
@@ -335,6 +353,8 @@ export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
 
 // @internal (undocumented)
 export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
+    // (undocumented)
+    componentDidMount(): void;
     // (undocumented)
     static defaultProps: IConfirmDialogBaseProps;
     // (undocumented)
@@ -1016,6 +1036,8 @@ export interface IBubbleTriggerProps {
     // (undocumented)
     eventsOnBubble?: boolean;
     // (undocumented)
+    isInteractive?: boolean;
+    // (undocumented)
     onBubbleClose?: () => void;
     // (undocumented)
     onBubbleOpen?: () => void;
@@ -1053,6 +1075,8 @@ export interface IBucketItemDescriptors {
 export interface IButtonProps {
     // (undocumented)
     ariaLabel?: string;
+    // (undocumented)
+    autoFocus?: boolean;
     // (undocumented)
     children?: ReactNode;
     // (undocumented)
@@ -1194,6 +1218,8 @@ export const Icon: Record<string, React_2.FC<IIconProps>>;
 
 // @internal (undocumented)
 export interface IConfirmDialogBaseProps extends IDialogBaseProps {
+    // (undocumented)
+    autoFocus?: boolean;
     // (undocumented)
     cancelButtonText?: string;
     // (undocumented)
