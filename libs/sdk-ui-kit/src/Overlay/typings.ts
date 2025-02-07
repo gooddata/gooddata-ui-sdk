@@ -1,6 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import { IAlignPoint } from "../typings/positioning.js";
 import { Alignment, OverlayPositionType } from "../typings/overlay.js";
+import { AriaRole } from "react";
 
 /**
  * @internal
@@ -53,6 +54,13 @@ export interface IOverlayProps<T> {
     onMouseOver?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     onMouseUp?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     zIndex?: number | undefined;
+
+    // consider hiding these props to some sort of accessibility prop object or rename
+    tabIndex?: number | undefined;
+    role?: AriaRole | undefined;
+    id?: string | undefined;
+    // onBlur to accessibility config as well?
+    onBlur?: React.FocusEventHandler<HTMLDivElement>;
 }
 
 /**

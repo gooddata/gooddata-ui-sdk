@@ -1,5 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { createRef } from "react";
 import keys from "lodash/keys.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import isEqual from "lodash/isEqual.js";
@@ -78,6 +78,11 @@ export interface IBubbleProps {
     overlayClassName?: string;
     children?: React.ReactNode;
     overlayPositionType?: OverlayPositionType;
+
+    // TODO accessibility config encapsulation?
+    isInteractive?: boolean;
+    id?: string;
+    onBlur?: React.FocusEventHandler<HTMLDivElement>;
 }
 
 /**
@@ -115,6 +120,8 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
     static identifier = "Bubble";
     arrowOffsets: ArrowOffsets;
     arrowDirections: ArrowDirections;
+
+    private overlayRef = createRef<Overlay>();
 
     constructor(props: IBubbleProps) {
         super(props);
@@ -181,11 +188,17 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
         }, this);
     }
 
+    // replace with useImperativeHandle hook if the component is refactored to fn component
+    public getRefs = () => {
+        return this.overlayRef.current.getRefs();
+    };
+
     render() {
         const arrowStyle = result(this.props, "arrowStyle", {});
 
         return (
             <Overlay
+                ref={this.overlayRef}
                 className={this.props.overlayClassName}
                 alignTo={this.props.alignTo}
                 onAlign={this.onAlign}
@@ -197,6 +210,10 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
                 ignoreClicksOnByClass={this.props.ignoreClicksOnByClass}
                 onClose={this.props.onClose}
                 positionType={this.props.overlayPositionType}
+                tabIndex={this.props.isInteractive ? -1 : undefined}
+                role="tooltip"
+                id={this.props.id}
+                onBlur={this.props.onBlur}
             >
                 <div
                     onMouseEnter={this.props.onMouseEnter}
