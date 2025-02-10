@@ -44,7 +44,7 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
                                 },
                             )}
                         >
-                            {selectedOption?.title}
+                            {selectedOption?.title ?? " - "}
                         </Button>
                     );
                 }}
