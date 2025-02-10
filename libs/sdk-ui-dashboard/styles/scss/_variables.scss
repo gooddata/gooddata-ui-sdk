@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:color";
 @use "@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables" as bubble-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
@@ -97,6 +97,9 @@ $gd-dashboards-title-backgroundColor: var(
 );
 
 // configuration panel
+$gd-configuration-alert-content-height: 400px;
+$gd-configuration-alert-bubble-height: 500px;
+
 $gd-configuration-bubble-height: 450px;
 $gd-configuration-bubble-width: 251px;
 $gd-configuration-bubble-borders-width: 2px;

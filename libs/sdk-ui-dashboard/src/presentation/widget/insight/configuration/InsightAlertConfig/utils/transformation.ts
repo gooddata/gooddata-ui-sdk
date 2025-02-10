@@ -77,7 +77,6 @@ export function transformAlertByMetric(
 
         return {
             ...alert,
-            title: getMeasureTitle(measure.measure) ?? "",
             alert: {
                 ...alert.alert!,
                 condition,
@@ -107,7 +106,6 @@ export function transformAlertByMetric(
 
     return {
         ...alert,
-        title: getMeasureTitle(measure.measure) ?? "",
         alert: {
             ...alert.alert!,
             condition,
@@ -306,6 +304,22 @@ export function transformAlertByValue(
                 right: value,
             },
         },
+    };
+}
+
+/**
+ * This function transforms alert by title. It changes title of alert.
+ * @param alert - alert to transform
+ * @param title - title of alert
+ */
+export function transformAlertByTitle(
+    alert: IAutomationMetadataObject,
+    title: string | undefined,
+): IAutomationMetadataObject {
+    return {
+        ...alert,
+        title: title ?? "",
+        description: "",
     };
 }
 
