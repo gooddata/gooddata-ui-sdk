@@ -72,20 +72,25 @@ export const prepareExecution = (vis: IGenAIVisualization) => {
 
 const convertFilter = (data: GenAIFilter): IFilter | false => {
     if (isPositiveAttributeFilter(data)) {
-        return newPositiveAttributeFilter(data.using, { values: data.include });
+        return newPositiveAttributeFilter(idRef(data.using, "attribute"), { values: data.include });
     }
 
     if (isNegativeAttributeFilter(data)) {
-        return newNegativeAttributeFilter(data.using, { values: data.exclude });
+        return newNegativeAttributeFilter(idRef(data.using, "attribute"), { values: data.exclude });
     }
 
     if (isRelativeDateFilter(data)) {
-        return newRelativeDateFilter(data.using, granularityMap[data.granularity], data.from, data.to);
+        return newRelativeDateFilter(
+            idRef(data.using, "dataSet"),
+            granularityMap[data.granularity],
+            data.from,
+            data.to,
+        );
     }
 
     if (isAbsoluteDateFilter(data)) {
         return newAbsoluteDateFilter(
-            data.using,
+            idRef(data.using, "dataSet"),
             data.from ??
                 (() => {
                     const date = new Date();
