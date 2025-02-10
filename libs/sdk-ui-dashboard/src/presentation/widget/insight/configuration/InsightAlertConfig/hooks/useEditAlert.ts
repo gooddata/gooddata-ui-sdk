@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import {
     IAlertComparisonOperator,
@@ -14,6 +14,7 @@ import {
     isAutomationExternalUserRecipient,
     isAutomationUnknownUserRecipient,
     isAutomationUserRecipient,
+    ISeparators,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import { isAlertRecipientsValid, isAlertValueDefined } from "../utils/guards.js";
@@ -23,6 +24,7 @@ import {
     transformAlertByDestination,
     transformAlertByMetric,
     transformAlertByRelativeOperator,
+    transformAlertByTitle,
     transformAlertByValue,
 } from "../utils/transformation.js";
 import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../../types.js";
@@ -37,7 +39,7 @@ import {
     convertCurrentUserToWorkspaceUser,
 } from "../../../../../../_staging/automation/index.js";
 import { isEmail } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/utils/validate.js";
-import { IMeasureFormatMap } from "../utils/getters.js";
+import { getDescription, IMeasureFormatMap } from "../utils/getters.js";
 
 export interface IUseEditAlertProps {
     metrics: AlertMetric[];
@@ -47,6 +49,7 @@ export interface IUseEditAlertProps {
     catalogAttributes: ICatalogAttribute[];
     catalogDateDatasets: ICatalogDateDataset[];
     destinations: INotificationChannelMetadataObject[];
+    separators?: ISeparators;
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
     onUpdate?: (alert: IAutomationMetadataObject) => void;
 }
@@ -59,6 +62,7 @@ export const useEditAlert = ({
     onUpdate,
     measureFormatMap,
     destinations,
+    separators,
 }: IUseEditAlertProps) => {
     const [viewMode, setViewMode] = useState<"edit" | "configuration">("edit");
     const [updatedAlert, setUpdatedAlert] = useState<IAutomationMetadataObject>(alert);
@@ -130,6 +134,10 @@ export const useEditAlert = ({
 
     const changeValue = useCallback((value: number) => {
         setUpdatedAlert((alert) => transformAlertByValue(alert, value));
+    }, []);
+
+    const changeTitle = useCallback((value: string | undefined) => {
+        setUpdatedAlert((alert) => transformAlertByTitle(alert, value));
     }, []);
 
     const changeDestination = useCallback(
@@ -213,12 +221,20 @@ export const useEditAlert = ({
     );
 
     const createAlert = useCallback(() => {
-        onCreate?.(updatedAlert);
-    }, [onCreate, updatedAlert]);
+        const title = updatedAlert.title || getDescription(intl, metrics, updatedAlert, separators);
+        onCreate?.({
+            ...updatedAlert,
+            title,
+        });
+    }, [intl, metrics, onCreate, separators, updatedAlert]);
 
     const updateAlert = useCallback(() => {
-        onUpdate?.(updatedAlert as IAutomationMetadataObject);
-    }, [onUpdate, updatedAlert]);
+        const title = updatedAlert.title || getDescription(intl, metrics, updatedAlert, separators);
+        onUpdate?.({
+            ...updatedAlert,
+            title,
+        } as IAutomationMetadataObject);
+    }, [intl, metrics, onUpdate, separators, updatedAlert]);
 
     const isValueDefined = isAlertValueDefined(updatedAlert.alert);
     const isRecipientsValid = isAlertRecipientsValid(updatedAlert);
@@ -233,6 +249,14 @@ export const useEditAlert = ({
                   isAutomationUserRecipient(v) ? isEmail(v.email ?? "") : true,
               )
             : true;
+
+    useEffect(() => {
+        const genTitle = getDescription(intl, metrics, updatedAlert, separators);
+        const setTitle = updatedAlert.title;
+        if (genTitle === setTitle) {
+            changeTitle("");
+        }
+    }, [changeTitle, intl, metrics, separators, updatedAlert]);
 
     const canSubmit =
         isValueDefined &&
@@ -256,6 +280,7 @@ export const useEditAlert = ({
         changeMeasure,
         changeAttribute,
         changeValue,
+        changeTitle,
         changeDestination,
         changeComparisonType,
         changeRecipients,

@@ -1,10 +1,8 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
-import { IntlShape, useIntl } from "react-intl";
-import { IAutomationMetadataObject, ISeparators } from "@gooddata/sdk-model";
-import { ClientFormatterFacade } from "@gooddata/number-formatter";
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { Icon } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
 import {
@@ -14,13 +12,11 @@ import {
 } from "../../../../../model/index.js";
 import { gdColorNegative } from "../../../../constants/colors.js";
 
-import { getAlertThreshold, getOperatorTitle, getValueSuffix } from "./utils/getters.js";
 import { useAlertValidation } from "./hooks/useAlertValidation.js";
 import { AlertActionsDropdown } from "./AlertActionsDropdown.js";
 
 interface IAlertsListItemProps {
     alert: IAutomationMetadataObject;
-    separators?: ISeparators;
     onEditAlert: (alert: IAutomationMetadataObject) => void;
     onPauseAlert: (alert: IAutomationMetadataObject) => void;
     onDeleteAlert: (alert: IAutomationMetadataObject) => void;
@@ -29,16 +25,13 @@ interface IAlertsListItemProps {
 
 export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
     alert,
-    separators,
     onEditAlert,
     onPauseAlert,
     onDeleteAlert,
     onResumeAlert,
 }) => {
     const theme = useTheme();
-    const intl = useIntl();
     const isPaused = alert.alert?.trigger?.state === "PAUSED";
-    const description = getDescription(intl, alert, separators);
     const { isValid } = useAlertValidation(alert);
     const currentUser = useDashboardSelector(selectCurrentUser);
     const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
@@ -66,8 +59,16 @@ export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
                     )}
                 </div>
                 <div className="gd-alerts-list-item__details">
-                    <div className="gd-alerts-list-item__title">{alert.title}</div>
-                    <div className="gd-alerts-list-item__description">{description}</div>
+                    <BubbleHoverTrigger tagName="div" showDelay={500} hideDelay={0}>
+                        <div className="gd-alerts-list-item__title">{alert.title}</div>
+                        <Bubble
+                            className="bubble-primary"
+                            alignPoints={[{ align: "bc tc" }]}
+                            arrowOffsets={{ "bc tc": [10, 0] }}
+                        >
+                            {alert.title}
+                        </Bubble>
+                    </BubbleHoverTrigger>
                 </div>
             </div>
             <div className="gd-alerts-list-item__actions">
@@ -84,13 +85,3 @@ export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
         </div>
     );
 };
-
-function getDescription(intl: IntlShape, alert: IAutomationMetadataObject, separators?: ISeparators): string {
-    const valueSuffix = getValueSuffix(alert.alert) ?? "";
-    const title = getOperatorTitle(intl, alert.alert);
-    const threshold = getAlertThreshold(alert.alert);
-    const convertedValue = ClientFormatterFacade.convertValue(threshold);
-    const { formattedValue } = ClientFormatterFacade.formatValue(convertedValue, undefined, separators);
-
-    return `${title} ${formattedValue}${valueSuffix}`;
-}

@@ -3049,6 +3049,21 @@
         "comment": "Tooltip for alert trigger configuration",
         "limit": 0
     },
+    "insightAlert.config.action": {
+        "value": "Action",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.name": {
+        "value": "Name",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.accessibility.title": {
+        "value": "Custom name of the alert",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
     "insightAlert.config.when": {
         "value": "When",
         "comment": "Title of the section in insight configuration",

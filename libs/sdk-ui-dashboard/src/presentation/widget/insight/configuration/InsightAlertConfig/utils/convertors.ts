@@ -46,7 +46,7 @@ export function createDefaultAlert(
 
     return {
         type: "automation",
-        title: getMeasureTitle(measure.measure),
+        title: "",
         notificationChannel: notificationChannelId,
         alert: {
             trigger,

@@ -26,8 +26,10 @@ import {
     ObjRef,
     isMeasureGroupDescriptor,
     IMeasureDescriptor,
+    ISeparators,
 } from "@gooddata/sdk-model";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { IntlShape } from "react-intl";
 
 import { AlertAttribute, AlertMetric, AlertMetricComparator } from "../../../types.js";
@@ -38,7 +40,6 @@ import {
     DEFAULT_MEASURE_FORMAT,
     RELATIVE_OPERATORS,
 } from "../constants.js";
-
 import { isChangeOperator, isDifferenceOperator } from "./guards.js";
 
 export type IMeasureFormatMap = { [key: string]: string };
@@ -406,4 +407,22 @@ export function getMeasureFormatsFromExecution(execResult: IExecutionResult | un
     }
 
     return {};
+}
+
+export function getDescription(
+    intl: IntlShape,
+    measures: AlertMetric[],
+    alert?: IAutomationMetadataObject,
+    separators?: ISeparators,
+): string {
+    const selectedMeasure = getAlertMeasure(measures, alert?.alert);
+
+    const name = selectedMeasure ? getMeasureTitle(selectedMeasure.measure) ?? "" : "";
+    const valueSuffix = getValueSuffix(alert?.alert) ?? "";
+    const title = getOperatorTitle(intl, alert?.alert);
+    const threshold = getAlertThreshold(alert?.alert);
+    const convertedValue = ClientFormatterFacade.convertValue(threshold);
+    const { formattedValue } = ClientFormatterFacade.formatValue(convertedValue, undefined, separators);
+
+    return [name, title, `${formattedValue}${valueSuffix}`].filter(Boolean).join(" ");
 }

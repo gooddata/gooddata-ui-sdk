@@ -1,6 +1,6 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
-import { IAutomationMetadataObject, ISeparators } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { AddButton, SeparatorLine } from "@gooddata/sdk-ui-kit";
 import { AlertsListItem } from "./AlertsListItem.js";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
@@ -9,7 +9,6 @@ import Skeleton from "react-loading-skeleton";
 
 interface IAlertsListProps {
     isLoading: boolean;
-    separators?: ISeparators;
     alerts: IAutomationMetadataObject[];
     onCreateAlert: () => void;
     onEditAlert: (alert: IAutomationMetadataObject) => void;
@@ -24,7 +23,6 @@ interface IAlertsListProps {
 
 export const AlertsList: React.FC<IAlertsListProps> = ({
     isLoading,
-    separators,
     alerts,
     onCreateAlert,
     onEditAlert,
@@ -56,7 +54,6 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
                                         <AlertsListItem
                                             key={alert.id}
                                             alert={alert}
-                                            separators={separators}
                                             onEditAlert={onEditAlert}
                                             onPauseAlert={onPauseAlert}
                                             onResumeAlert={onResumeAlert}

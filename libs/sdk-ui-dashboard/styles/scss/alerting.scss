@@ -1,7 +1,9 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "react-loading-skeleton/dist/skeleton.css";
+
+@use "variables" as dashboard-variables;
 
 //
 // Alerts list
@@ -120,14 +122,14 @@
     text-overflow: ellipsis;
     color: kit-variables.$gd-color-text;
     font-weight: 700;
-}
-
-.gd-alerts-list-item__description {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: kit-variables.$gd-color-state-blank;
-    font-weight: 400;
-    white-space: nowrap;
+    max-height: 32px;
+    margin-right: -10px;
+    //stylelint-disable-next-line value-no-vendor-prefix
+    display: -webkit-box;
+    //stylelint-disable-next-line value-no-vendor-prefix
+    -webkit-box-orient: vertical;
+    //stylelint-disable-next-line value-no-vendor-prefix
+    -webkit-line-clamp: 2;
 }
 
 //
@@ -142,8 +144,13 @@
 
 .gd-edit-alert__form {
     padding: 10px 10px 0 10px;
-    max-height: 350px;
+    max-height: dashboard-variables.$gd-configuration-alert-content-height;
     overflow: auto;
+}
+
+.gd-edit-alert__destination-label,
+.gd-edit-alert__title-label {
+    margin-bottom: 5px;
 }
 
 .gd-edit-alert__measure-label {
@@ -180,6 +187,10 @@
     }
 }
 
+.gd-edit-alert__title-input {
+    margin-bottom: 20px;
+}
+
 .gd-edit-alert__buttons {
     padding: 10px;
     display: flex;
@@ -198,6 +209,7 @@
 
 .gd-edit-alert__recipients {
     flex-direction: column;
+    margin-bottom: 10px;
 
     > label {
         font-size: 12px;
@@ -377,15 +389,6 @@
     padding-left: 5px;
     // stylelint-disable-next-line declaration-no-important
     width: 100% !important;
-
-    &:not(&--open, &:hover, &:active, &:focus) {
-        box-shadow: none;
-        border-color: transparent;
-    }
-
-    &:not(&--open, &:active, &:focus) {
-        background: transparent;
-    }
 }
 
 //
