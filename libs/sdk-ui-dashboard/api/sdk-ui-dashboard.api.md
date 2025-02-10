@@ -1575,6 +1575,8 @@ export interface DashboardConfig {
     disableDefaultDrills?: boolean;
     disableUserFilterReset?: boolean;
     enableFilterValuesResolutionInDrillEvents?: boolean;
+    // @alpha
+    entitlements?: IEntitlementDescriptor[];
     // @internal
     exportId?: string;
     // @beta
@@ -7243,7 +7245,7 @@ export interface ResolveAsyncRenderPayload {
 }
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "focusObject" | "slideConfig" | "references"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "focusObject" | "slideConfig" | "references" | "entitlements"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
