@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 export type {
     IDashboardInsightProps,
     CustomDashboardInsightComponent,
@@ -16,7 +16,6 @@ export type {
     IInsightMenuItemButton,
     IInsightMenuItemSeparator,
 } from "./insightMenu/types.js";
-export type { IDashboardKpiProps, CustomDashboardKpiComponent } from "./kpi/types.js";
 export type { IDashboardWidgetProps, CustomDashboardWidgetComponent } from "./widget/types.js";
 export type { CustomDashboardRichTextComponent, IDashboardRichTextProps } from "../widget/richText/types.js";
 export type {

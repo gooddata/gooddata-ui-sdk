@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useMemo } from "react";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
@@ -13,7 +13,6 @@ import { LoadingDashboardPlaceholderWidget } from "../../dragAndDrop/index.js";
 import {
     isInitialPlaceholderWidget,
     isInsightPlaceholderWidget,
-    isKpiPlaceholderWidget,
     isLoadingPlaceholderWidget,
 } from "../../../widgets/index.js";
 import { EmptyDashboardDropZone as FlexibleEmptyDashboardDropZone } from "../../flexibleLayout/dragAndDrop/draggableWidget/EmptyDashboardDropZone.js";
@@ -31,8 +30,7 @@ const MissingWidget: React.FC = () => {
  * @internal
  */
 export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
-    const { WidgetComponentProvider, KpiWidgetComponentSet, InsightWidgetComponentSet } =
-        useDashboardComponentsContext();
+    const { WidgetComponentProvider, InsightWidgetComponentSet } = useDashboardComponentsContext();
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
     const {
         widget,
@@ -66,10 +64,6 @@ export const DashboardWidget = (props: IDashboardWidgetProps): JSX.Element => {
 
         if (isLoadingPlaceholderWidget(widget)) {
             return LoadingDashboardPlaceholderWidget;
-        }
-
-        if (isKpiPlaceholderWidget(widget) && KpiWidgetComponentSet.creating) {
-            return KpiWidgetComponentSet.creating.CreatingPlaceholderComponent!;
         }
 
         if (isInsightPlaceholderWidget(widget) && InsightWidgetComponentSet.creating) {

@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { createContext, useContext } from "react";
 import {
     ErrorComponent,
@@ -32,7 +32,6 @@ import {
     InsightMenuButtonComponentProvider,
     InsightMenuComponentProvider,
     InsightMenuTitleComponentProvider,
-    KpiComponentProvider,
     RichTextComponentProvider,
     VisualizationSwitcherComponentProvider,
     VisualizationSwitcherToolbarComponentProvider,
@@ -44,7 +43,6 @@ import {
     DashboardLayoutWidgetComponentSet,
     DateFilterComponentSet,
     InsightWidgetComponentSet,
-    KpiWidgetComponentSet,
     RichTextWidgetComponentSet,
     VisualizationSwitcherWidgetComponentSet,
 } from "../componentDefinition/types.js";
@@ -65,7 +63,6 @@ interface IDashboardComponentsContext {
     InsightMenuComponentProvider: InsightMenuComponentProvider;
     InsightMenuTitleComponentProvider: InsightMenuTitleComponentProvider;
     VisualizationSwitcherToolbarComponentProvider: VisualizationSwitcherToolbarComponentProvider;
-    KpiComponentProvider: KpiComponentProvider;
     RichTextComponentProvider: RichTextComponentProvider;
     VisualizationSwitcherComponentProvider: VisualizationSwitcherComponentProvider;
     ButtonBarComponent: CustomButtonBarComponent;
@@ -84,7 +81,6 @@ interface IDashboardComponentsContext {
     FilterBarComponent: CustomFilterBarComponent;
     SidebarComponent: CustomSidebarComponent;
     InsightWidgetComponentSet: InsightWidgetComponentSet;
-    KpiWidgetComponentSet: KpiWidgetComponentSet;
     RichTextWidgetComponentSet: RichTextWidgetComponentSet;
     VisualizationSwitcherWidgetComponentSet: VisualizationSwitcherWidgetComponentSet;
     DashboardLayoutWidgetComponentSet: DashboardLayoutWidgetComponentSet;
@@ -113,7 +109,6 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     InsightMenuButtonComponentProvider: ThrowMissingComponentError("InsightMenuButtonComponent"),
     InsightMenuComponentProvider: ThrowMissingComponentError("InsightMenuComponent"),
     InsightMenuTitleComponentProvider: ThrowMissingComponentError("InsightMenuTitleComponent"),
-    KpiComponentProvider: ThrowMissingComponentError("KpiComponent"),
     RichTextComponentProvider: ThrowMissingComponentError("RichTextComponent"),
     VisualizationSwitcherComponentProvider: ThrowMissingComponentError("VisualizationSwitcherComponent"),
     WidgetComponentProvider: ThrowMissingComponentError("WidgetComponent"),
@@ -137,7 +132,6 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     FilterBarComponent: ThrowMissingComponentError("FilterBarComponent"),
     SidebarComponent: ThrowMissingComponentError("SidebarComponent"),
     InsightWidgetComponentSet: null as any, // TODO how to throw here
-    KpiWidgetComponentSet: null as any, // TODO how to throw here
     RichTextWidgetComponentSet: null as any, // TODO how to throw here
     VisualizationSwitcherWidgetComponentSet: null as any, // TODO how to throw here
     DashboardLayoutWidgetComponentSet: null as any, // TODO how to throw here

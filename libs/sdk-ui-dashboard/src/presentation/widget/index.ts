@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 export type {
     IUseCustomWidgetExecutionDataViewConfig,
     IUseCustomWidgetInsightDataViewConfig,
@@ -15,8 +15,6 @@ export {
 
 export * from "./insight/index.js";
 export * from "./insightMenu/index.js";
-export * from "./kpi/index.js";
-export * from "./kpiPlaceholder/index.js";
 export * from "./richText/index.js";
 export * from "./visualizationSwitcher/index.js";
 export * from "./dashboardLayout/index.js";

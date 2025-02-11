@@ -171,7 +171,6 @@ import { IDashboardDrillEvent as IDashboardDrillEvent_2 } from '../../../types.j
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardFilterView } from '@gooddata/sdk-model';
 import { IDashboardInsightProps as IDashboardInsightProps_2 } from './types.js';
-import { IDashboardKpiProps as IDashboardKpiProps_2 } from './types.js';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem } from '@gooddata/sdk-model';
 import { IDashboardLayoutProps as IDashboardLayoutProps_2 } from './types.js';
@@ -1244,9 +1243,6 @@ export type CustomDashboardInsightMenuComponent = ComponentType<IDashboardInsigh
 // @internal (undocumented)
 export type CustomDashboardInsightMenuTitleComponent = ComponentType<IDashboardInsightMenuTitleProps>;
 
-// @public (undocumented)
-export type CustomDashboardKpiComponent = ComponentType<IDashboardKpiProps>;
-
 // @alpha (undocumented)
 export type CustomDashboardLayoutComponent = ComponentType<IDashboardLayoutProps>;
 
@@ -2309,9 +2305,6 @@ export interface DashboardInsightWidgetVisPropertiesChangedPayload {
 // @beta
 export type DashboardItemDefinition = ExtendedDashboardItem<ExtendedDashboardWidget | IWidgetDefinition | ICustomWidgetDefinition> | StashedDashboardItemsId;
 
-// @internal (undocumented)
-export const DashboardKpi: (props: IDashboardKpiProps) => JSX.Element;
-
 // @beta
 export interface DashboardKpiWidgetChanged extends IDashboardEvent {
     // (undocumented)
@@ -3188,15 +3181,6 @@ export const DefaultDashboardInsightMenuButton: (props: IDashboardInsightMenuBut
 
 // @internal (undocumented)
 export const DefaultDashboardInsightMenuTitle: CustomDashboardInsightMenuTitleComponent;
-
-// @internal (undocumented)
-export const DefaultDashboardKpi: ComponentType<IDashboardKpiProps_2>;
-
-// @internal (undocumented)
-export function DefaultDashboardKpiComponentSetFactory(kpiProvider: KpiComponentProvider): KpiWidgetComponentSet;
-
-// @internal (undocumented)
-export const DefaultDashboardKpiPlaceholderWidget: CustomDashboardWidgetComponent;
 
 // @alpha (undocumented)
 export const DefaultDashboardLayout: (props: IDashboardLayoutProps) => JSX.Element;
@@ -4200,7 +4184,6 @@ export interface IDashboardCustomComponentProps {
     InsightMenuComponentProvider?: OptionalInsightMenuComponentProvider;
     // @internal
     InsightMenuTitleComponentProvider?: OptionalInsightMenuTitleComponentProvider;
-    KpiComponentProvider?: OptionalKpiComponentProvider;
     // @alpha
     LayoutComponent?: CustomDashboardLayoutComponent;
     // @alpha
@@ -4247,7 +4230,6 @@ export interface IDashboardCustomizer {
     filterBar(): IFilterBarCustomizer;
     filters(): IFiltersCustomizer;
     insightWidgets(): IDashboardInsightCustomizer;
-    kpiWidgets(): IDashboardKpiCustomizer;
     layout(): IDashboardLayoutCustomizer;
     loading(): ILoadingCustomizer;
     richTextWidgets(): IRichTextCustomizer;
@@ -4439,32 +4421,6 @@ export interface IDashboardInsightProps {
     // @internal (undocumented)
     pushData?: (data: IPushData) => void;
     widget: IInsightWidget;
-    // @alpha
-    workspace?: string;
-}
-
-// @public
-export interface IDashboardKpiCustomizer {
-    withCustomDecorator(providerFactory: (next: KpiComponentProvider) => OptionalKpiComponentProvider): IDashboardKpiCustomizer;
-    withCustomProvider(provider: OptionalKpiComponentProvider): IDashboardKpiCustomizer;
-}
-
-// @public
-export interface IDashboardKpiProps {
-    alert?: IWidgetAlert;
-    // @alpha
-    backend?: IAnalyticalBackend;
-    // @alpha
-    ErrorComponent?: React_2.ComponentType<IErrorProps>;
-    kpiWidget: IKpiWidget;
-    // @alpha
-    LoadingComponent?: React_2.ComponentType<ILoadingProps>;
-    // @alpha
-    onDrill?: OnFiredDashboardDrillEvent;
-    // @alpha
-    onError?: OnError;
-    // @alpha
-    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
     // @alpha
     workspace?: string;
 }
@@ -5834,8 +5790,6 @@ export interface ISidebarProps {
     // @internal
     InsightWidgetComponentSet?: InsightWidgetComponentSet;
     // @internal
-    KpiWidgetComponentSet?: KpiWidgetComponentSet;
-    // @internal
     RichTextWidgetComponentSet?: RichTextWidgetComponentSet;
     // @internal
     VisualizationSwitcherWidgetComponentSet?: VisualizationSwitcherWidgetComponentSet;
@@ -6092,9 +6046,6 @@ export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<"kp
     alreadyHasAlert: boolean;
 }>;
 
-// @public (undocumented)
-export type KpiComponentProvider = (kpi: IKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
-
 // @internal (undocumented)
 export type KpiDraggableComponent = {
     DraggingComponent?: KpiDraggingComponent;
@@ -6126,9 +6077,6 @@ export interface KpiWidgetComparison {
     comparisonDirection?: IKpiComparisonDirection;
     comparisonType?: IKpiComparisonTypeComparison;
 }
-
-// @internal
-export type KpiWidgetComponentSet = CustomComponentBase<IDashboardKpiProps, Parameters<KpiComponentProvider>> & DraggableComponent & CreatableByDragComponent & CreatablePlaceholderComponent<IDashboardWidgetProps> & ConfigurableWidget<IKpiWidget>;
 
 // @public (undocumented)
 export type LayoutComponentProvider = (props: IDashboardLayoutProps) => CustomDashboardLayoutComponent;
@@ -6540,9 +6488,6 @@ export type OptionalInsightMenuComponentProvider = OptionalProvider<InsightMenuC
 
 // @internal (undocumented)
 export type OptionalInsightMenuTitleComponentProvider = OptionalProvider<InsightMenuTitleComponentProvider>;
-
-// @public (undocumented)
-export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider>;
 
 // @public (undocumented)
 export type OptionalLayoutComponentProvider = OptionalProvider<LayoutComponentProvider>;

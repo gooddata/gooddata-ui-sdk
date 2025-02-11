@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { useWidgetSelection } from "../../../model/index.js";
 import { CreationPanel } from "./CreationPanel.js";
@@ -14,7 +14,6 @@ export const SidebarConfigurationPanel: React.FC<Omit<ISidebarProps, "DefaultSid
         configurationPanelClassName,
         WrapCreatePanelItemWithDragComponent,
         WrapInsightListItemWithDragComponent,
-        KpiWidgetComponentSet,
         AttributeFilterComponentSet,
         InsightWidgetComponentSet,
         RichTextWidgetComponentSet,
@@ -31,7 +30,6 @@ export const SidebarConfigurationPanel: React.FC<Omit<ISidebarProps, "DefaultSid
                     className={configurationPanelClassName}
                     WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}
                     WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
-                    KpiWidgetComponentSet={KpiWidgetComponentSet}
                     AttributeFilterComponentSet={AttributeFilterComponentSet}
                     InsightWidgetComponentSet={InsightWidgetComponentSet}
                     RichTextWidgetComponentSet={RichTextWidgetComponentSet}

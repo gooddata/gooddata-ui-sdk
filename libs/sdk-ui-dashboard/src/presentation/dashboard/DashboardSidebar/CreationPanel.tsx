@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useMemo } from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import compact from "lodash/compact.js";
@@ -25,7 +25,6 @@ import {
 import {
     AttributeFilterComponentSet,
     InsightWidgetComponentSet,
-    KpiWidgetComponentSet,
     RichTextWidgetComponentSet,
     VisualizationSwitcherWidgetComponentSet,
     DashboardLayoutWidgetComponentSet,
@@ -35,7 +34,6 @@ interface ICreationPanelProps {
     className?: string;
     WrapCreatePanelItemWithDragComponent?: IWrapCreatePanelItemWithDragComponent;
     WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;
-    KpiWidgetComponentSet?: KpiWidgetComponentSet;
     AttributeFilterComponentSet?: AttributeFilterComponentSet;
     InsightWidgetComponentSet?: InsightWidgetComponentSet;
     RichTextWidgetComponentSet?: RichTextWidgetComponentSet;
@@ -53,7 +51,6 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
     const isAnalyticalDesignerEnabled = useDashboardSelector(selectIsAnalyticalDesignerEnabled);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const settings = useDashboardSelector(selectSettings);
-    const KpiWidgetComponentSet = props.KpiWidgetComponentSet!;
     const AttributeFilterComponentSet = props.AttributeFilterComponentSet!;
     const InsightWidgetComponentSet = props.InsightWidgetComponentSet!;
     const RichTextWidgetComponentSet = props.RichTextWidgetComponentSet!;
@@ -63,7 +60,6 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
     const addItemPanelItems = useMemo(() => {
         const items = compact([
             InsightWidgetComponentSet.creating,
-            supportsKpis && KpiWidgetComponentSet.creating,
             AttributeFilterComponentSet.creating,
             enableFlexibleLayout && DashboardLayoutWidgetComponentSet.creating,
             enableVisualizationSwitcher && VisualizationSwitcherWidgetComponentSet.creating,
@@ -80,7 +76,6 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
         });
     }, [
         AttributeFilterComponentSet,
-        KpiWidgetComponentSet,
         InsightWidgetComponentSet,
         RichTextWidgetComponentSet,
         VisualizationSwitcherWidgetComponentSet,

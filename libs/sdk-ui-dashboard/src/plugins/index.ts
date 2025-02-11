@@ -7,7 +7,6 @@ export type {
     IDashboardEventHandling,
     IDashboardCustomizer,
     IDashboardInsightCustomizer,
-    IDashboardKpiCustomizer,
     IDashboardLayoutCustomizer,
     IDashboardContentCustomizer,
     IDashboardWidgetCustomizer,
