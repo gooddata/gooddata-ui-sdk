@@ -31,7 +31,7 @@ import {
 } from "../../../../model/index.js";
 import { normalizeTime } from "@gooddata/sdk-ui-kit";
 import { WidgetAttachmentType } from "../types.js";
-import { toModifiedISOString } from "../../DefaultScheduledEmailManagementDialog/utils.js";
+import { toModifiedISOStringWithTimezone } from "../../DefaultScheduledEmailManagementDialog/utils.js";
 import {
     areAutomationsEqual,
     convertCurrentUserToAutomationRecipient,
@@ -128,7 +128,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
             schedule: {
                 ...(s.schedule ?? {}),
                 cron: cronExpression,
-                firstRun: toModifiedISOString(startDate ?? new Date()),
+                firstRun: toModifiedISOStringWithTimezone(startDate ?? new Date(), timezone),
             },
         }));
     };
@@ -524,7 +524,10 @@ function newAutomationMetadataObjectDefinition({
         description: undefined,
         tags: [],
         schedule: {
-            firstRun: toModifiedISOString(normalizedFirstRun),
+            firstRun: toModifiedISOStringWithTimezone(
+                normalizedFirstRun,
+                timezone ?? getUserTimezone().identifier,
+            ),
             timezone: timezone ?? getUserTimezone().identifier,
             cron,
         },
