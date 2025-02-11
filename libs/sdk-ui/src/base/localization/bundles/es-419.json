@@ -614,7 +614,7 @@
     "recurrence.starts": "Comienza el",
     "recurrence.repeats": "Repite",
     "recurrence.types.hourly": "Por hora",
-    "recurrence.types.daily": "Diario",
+    "recurrence.types.daily": "A diario",
     "recurrence.types.weekly": "Semanalmente el {day}",
     "recurrence.types.monthly.last": "Mensualmente en el último {day}",
     "recurrence.types.monthly": "Mensualmente el {week, select, 1 {primer} 2 {segundo} 3 {tercer} 4 {cuarto} other {último}} {day}",

@@ -192,7 +192,7 @@
     "properties.canvas.dataPoints.hide": "hide",
     "properties.yaxis.title": "Y-axis",
     "properties.axis.labels": "labels",
-    "properties.axis.rotation": "Spin",
+    "properties.axis.rotation": "Rotation",
     "properties.axis.format": "Format",
     "properties.axis.format.inherit": "inherit",
     "properties.axis.format.info.inherit._measure": "The format is inherited from the first measure in the visualisation.",

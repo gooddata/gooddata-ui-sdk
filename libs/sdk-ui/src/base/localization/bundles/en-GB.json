@@ -437,7 +437,7 @@
     "catalog.attribute.tooltip.hierarchy.title": "Hierarchy",
     "visualizationConfig.interactions.section.title": "Interactions",
     "visualizationConfig.interactions.section.drilldown": "Drill down",
-    "workspaceHierarchy.lockedInsight": "Only Administrators can save alterations to this visualisation.",
+    "workspaceHierarchy.lockedInsight": "Only Administrators can save changes to this visualisation.",
     "workspaceHierarchy.inheritedInsight": "You cannot amend or remove this visualisation.{br}It is centrally controlled and certified.",
     "userManagement.workspace.noMatchingItems": "No matching workspaces.",
     "userManagement.workspace.searchPlaceholder": "Search workspaces",
