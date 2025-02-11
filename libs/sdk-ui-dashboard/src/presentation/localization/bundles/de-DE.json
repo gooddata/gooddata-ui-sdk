@@ -20,7 +20,7 @@
     "filterBar.showAll": "Alle anzeigen",
     "filterBar.showLess": "Weniger anzeigen",
     "options.menu.export.PDF": "Nach PDF exportieren",
-    "options.menu.schedule.email": "E-Mailing planen",
+    "options.menu.schedule.email": "Export planen",
     "options.menu.delete": "Löschen",
     "dialogs.export.cells": "ZELLEN",
     "dialogs.export.filters": "KONTEXT DER VISUALISIERUNG",
