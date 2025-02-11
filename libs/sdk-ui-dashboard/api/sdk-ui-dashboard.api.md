@@ -2923,8 +2923,6 @@ export interface DashboardState {
     insights: EntityState<IInsight>;
     // @alpha (undocumented)
     layout: LayoutState;
-    // (undocumented)
-    legacyDashboards: LegacyDashboardsState;
     // @beta (undocumented)
     listedDashboards: EntityState<IListedDashboard>;
     // @beta (undocumented)
@@ -6162,12 +6160,6 @@ export interface LayoutState extends UndoEnhancedState<DashboardLayoutCommands> 
     stash: LayoutStash;
 }
 
-// @public (undocumented)
-export interface LegacyDashboardsState {
-    // @alpha (undocumented)
-    legacyDashboards?: ILegacyDashboard[];
-}
-
 // @internal
 export interface LoadAllWorkspaceUsers extends IDashboardCommand {
     // (undocumented)
@@ -8299,9 +8291,6 @@ export const selectLayout: DashboardSelector<IDashboardLayout<ExtendedDashboardW
 
 // @alpha
 export const selectLayoutHasAnalyticalWidgets: DashboardSelector<boolean>;
-
-// @alpha
-export const selectLegacyDashboards: DashboardSelector<ILegacyDashboard[]>;
 
 // @alpha
 export const selectListedDashboards: (state: DashboardState) => IListedDashboard[];

@@ -40,7 +40,6 @@ import { drillSliceReducer } from "./drill/index.js";
 import { uiSliceReducer } from "./ui/index.js";
 import { getDashboardContext } from "./_infra/contexts.js";
 import { RenderMode } from "../../types.js";
-import { legacyDashboardsSliceReducer } from "./legacyDashboards/index.js";
 import { renderModeSliceReducer } from "./renderMode/index.js";
 import { dashboardPermissionsSliceReducer } from "./dashboardPermissions/index.js";
 import { defaultImport } from "default-import";
@@ -323,7 +322,6 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         listedDashboards: listedDashboardsSliceReducer,
         accessibleDashboards: accessibleDashboardsSliceReducer,
         inaccessibleDashboards: inaccessibleDashboardsSliceReducer,
-        legacyDashboards: legacyDashboardsSliceReducer,
         executionResults: executionResultsSliceReducer,
         renderMode: renderModeSliceReducer,
         ui: uiSliceReducer,

@@ -17,7 +17,6 @@ import { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilit
 import { IDrillTargets } from "./drillTargets/drillTargetsTypes.js";
 import { IExecutionResultEnvelope } from "./executionResults/types.js";
 import { UiState } from "./ui/uiState.js";
-import { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState.js";
 import { RenderModeState } from "./renderMode/renderModeState.js";
 import { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState.js";
 import { IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes.js";
@@ -72,7 +71,6 @@ export interface DashboardState {
     meta: DashboardMetaState;
     /** @beta */
     drill: DrillState;
-    legacyDashboards: LegacyDashboardsState;
     // Entities
     /** @beta */
     insights: EntityState<IInsight>;

@@ -185,7 +185,6 @@ export {
     selectImplicitDrillsToUrlByWidgetRef,
     selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
 } from "./widgetDrills/widgetDrillSelectors.js";
-export { selectLegacyDashboards } from "./legacyDashboards/legacyDashboardsSelectors.js";
 
 export type { UndoEnhancedState, UndoEntry } from "./_infra/undoEnhancer.js";
 export type { LayoutState, LayoutStash } from "./layout/layoutState.js";
@@ -398,7 +397,6 @@ export {
     selectRenderMode,
 } from "./renderMode/renderModeSelectors.js";
 export { renderModeActions } from "./renderMode/index.js";
-export type { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState.js";
 
 export { queryAndWaitFor } from "./_infra/queryAndWaitFor.js";
 export { dispatchAndWaitFor } from "./_infra/dispatchAndWaitFor.js";
