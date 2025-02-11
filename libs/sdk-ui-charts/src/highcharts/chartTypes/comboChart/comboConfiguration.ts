@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
 import { LINE_WIDTH } from "../lineChart/lineConfiguration.js";
 import { IChartConfig } from "../../../interfaces/index.js";
@@ -125,5 +125,13 @@ export function getComboConfiguration(
             },
             ...series,
         },
+
+        xAxis: [
+            {
+                labels: {
+                    distance: 7,
+                },
+            },
+        ],
     };
 }
