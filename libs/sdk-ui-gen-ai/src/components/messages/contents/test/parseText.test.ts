@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { describe, it, expect } from "vitest";
 import { replaceLinks } from "../replaceLinks";
@@ -13,14 +13,14 @@ describe("parseText", () => {
     it.each([
         [
             "Hello, {visualization.foo} and {dashboard.bar}!",
-            "Hello, [Foo](/analyze/#/baz/foo/edit) and [Bar](/dashboards/#/workspace/qux/dashboard/bar)!",
+            "Hello, [Foo](/analyze/#/wsid/foo/edit) and [Bar](/dashboards/#/workspace/wsid/dashboard/bar)!",
         ],
-        ["{visualization.foo}", "[Foo](/analyze/#/baz/foo/edit)"],
-        ["{dashboard.bar} test", "[Bar](/dashboards/#/workspace/qux/dashboard/bar) test"],
-        ["test {dashboard.bar}", "test [Bar](/dashboards/#/workspace/qux/dashboard/bar)"],
+        ["{visualization.foo}", "[Foo](/analyze/#/wsid/foo/edit)"],
+        ["{dashboard.bar} test", "[Bar](/dashboards/#/workspace/wsid/dashboard/bar) test"],
+        ["test {dashboard.bar}", "test [Bar](/dashboards/#/workspace/wsid/dashboard/bar)"],
         ["Test test", "Test test"],
         ["{foo.bar}", "{foo.bar}"],
     ] as [string, string][])("should parse %s", (text: string, expected: string) => {
-        expect(replaceLinks(text, foundObjects)).toEqual(expected);
+        expect(replaceLinks(text, foundObjects, "wsid")).toEqual(expected);
     });
 });
