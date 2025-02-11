@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 /**
  * Types of objects that we can navigate to in UI.
@@ -6,6 +6,7 @@
  */
 export type UIPathObjectTypes =
     | "dashboard"
+    | "dashboardVisualization"
     | "visualization"
     | "metric"
     | "dataset"
@@ -21,10 +22,17 @@ export type UIPathObjectTypes =
  *  - gdc-ui would need to inject the URL between the data is loaded and the render
  * @internal
  */
-export const getUIPath = (objectType: UIPathObjectTypes, objectId: string, workspaceId: string): string => {
+export const getUIPath = (
+    objectType: UIPathObjectTypes,
+    objectId: string,
+    workspaceId: string,
+    visualizationId?: string,
+): string => {
     switch (objectType) {
         case "dashboard":
             return `/dashboards/#/workspace/${workspaceId}/dashboard/${objectId}`;
+        case "dashboardVisualization":
+            return `/dashboards/#/workspace/${workspaceId}/dashboard/${objectId}?visualizationId=${visualizationId}`;
         case "visualization":
             return `/analyze/#/${workspaceId}/${objectId}/edit`;
         case "metric":
