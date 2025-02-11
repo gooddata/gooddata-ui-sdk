@@ -4,9 +4,16 @@ import { spawn, all, call, put, SagaReturnType } from "redux-saga/effects";
 import { InitializeDashboard } from "../../../commands/dashboard.js";
 import { DashboardInitialized, dashboardInitialized } from "../../../events/dashboard.js";
 import { loadingActions } from "../../../store/loading/index.js";
-import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes.js";
+import {
+    DashboardContext,
+    ResolvedDashboardConfig,
+    PrivateDashboardContext,
+} from "../../../types/commonTypes.js";
 import { IDashboardWithReferences, walkLayout, IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
-import { resolveDashboardConfigAndFeatureFlagDependentCalls } from "./resolveDashboardConfig.js";
+import {
+    resolveColorPalette,
+    resolveDashboardConfigAndFeatureFlagDependentCalls,
+} from "./resolveDashboardConfig.js";
 import { configActions } from "../../../store/config/index.js";
 import { entitlementsActions } from "../../../store/entitlements/index.js";
 import { PromiseFnReturnType } from "../../../types/sagas.js";
@@ -184,6 +191,7 @@ function* loadExistingDashboard(
     const { backend } = ctx;
     const privateCtx: PrivateDashboardContext = yield call(getPrivateContext);
     const { usesStrictAccessControl } = backend.capabilities;
+    const cmdConfig = cmd.payload?.config ?? {};
 
     const calls = [
         call(loadDashboardFromBackend, ctx, privateCtx, dashboardRef, !!cmd.payload.persistedDashboard),
@@ -198,6 +206,7 @@ function* loadExistingDashboard(
         call(loadDashboardPermissions, ctx),
         call(loadDateHierarchyTemplates, ctx),
         call(loadFilterViews, ctx),
+        call(resolveColorPalette, ctx, cmdConfig),
     ];
 
     if (!usesStrictAccessControl) {
@@ -220,6 +229,7 @@ function* loadExistingDashboard(
         dashboardPermissions,
         dateHierarchyTemplates,
         filterViews,
+        colorPalette,
         accessibleDashboards,
     ]: [
         PromiseFnReturnType<typeof loadDashboardFromBackend>,
@@ -234,21 +244,27 @@ function* loadExistingDashboard(
         PromiseFnReturnType<typeof loadDashboardPermissions>,
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
         PromiseFnReturnType<typeof loadFilterViews>,
+        PromiseFnReturnType<typeof resolveColorPalette>,
         PromiseFnReturnType<typeof loadAccessibleDashboardList>,
     ] = yield all(calls);
+
+    const resolvedConfig: ResolvedDashboardConfig = {
+        ...config,
+        colorPalette,
+    };
 
     const {
         dashboard: loadedDashboard,
         references: { insights },
     } = dashboardWithReferences;
 
-    const dashboard = applyDefaultFilterView(loadedDashboard, filterViews, config.settings);
+    const dashboard = applyDefaultFilterView(loadedDashboard, filterViews, resolvedConfig.settings);
 
     const effectiveDateFilterConfig: DateFilterMergeResult = yield call(
         mergeDateFilterConfigWithOverrides,
         ctx,
         cmd,
-        config.dateFilterConfig!,
+        resolvedConfig.dateFilterConfig!,
         dashboard.dateFilterConfig,
     );
 
@@ -257,7 +273,7 @@ function* loadExistingDashboard(
         ctx,
         dashboard,
         insights,
-        config.settings,
+        resolvedConfig.settings,
         effectiveDateFilterConfig.config,
         catalog ? catalog.dateDatasets() : [],
         catalog ? createDisplayFormMapFromCatalog(catalog) : createDisplayFormMap([], []),
@@ -326,6 +342,7 @@ function* initializeNewDashboard(
     cmd: InitializeDashboard,
 ): SagaIterator<DashboardLoadResult> {
     const { backend } = ctx;
+    const cmdConfig = cmd.payload?.config ?? {};
 
     const [
         {
@@ -340,6 +357,7 @@ function* initializeNewDashboard(
         accessibleDashboards,
         legacyDashboards,
         dateHierarchyTemplates,
+        colorPalette,
     ]: [
         SagaReturnType<typeof resolveDashboardConfigAndFeatureFlagDependentCalls>,
         SagaReturnType<typeof resolvePermissions>,
@@ -350,6 +368,7 @@ function* initializeNewDashboard(
         PromiseFnReturnType<typeof loadAccessibleDashboardList>,
         PromiseFnReturnType<typeof loadLegacyDashboards>,
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
+        PromiseFnReturnType<typeof resolveColorPalette>,
     ] = yield all([
         call(resolveDashboardConfigAndFeatureFlagDependentCalls, ctx, cmd),
         call(resolvePermissions, ctx, cmd),
@@ -360,13 +379,19 @@ function* initializeNewDashboard(
         call(loadAccessibleDashboardList, ctx),
         call(loadLegacyDashboards, ctx),
         call(loadDateHierarchyTemplates, ctx),
+        call(resolveColorPalette, ctx, cmdConfig),
         call(loadFilterViews, ctx),
     ]);
+
+    const resolvedConfig: ResolvedDashboardConfig = {
+        ...config,
+        colorPalette,
+    };
 
     const batch: BatchAction = batchActions(
         [
             backendCapabilitiesActions.setBackendCapabilities(backend.capabilities),
-            configActions.setConfig(config),
+            configActions.setConfig(resolvedConfig),
             entitlementsActions.setEntitlements(entitlements),
             userActions.setUser(user),
             permissionsActions.setPermissions(permissions),

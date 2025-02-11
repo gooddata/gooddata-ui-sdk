@@ -43,7 +43,6 @@ exports[`initialize dashboard handler > for any dashboard > should resolve confi
 {
   "allowCreateInsightRequest": false,
   "allowUnfinishedFeatures": false,
-  "colorPalette": [],
   "dateFilterConfig": {
     "absoluteForm": {
       "from": Any<String>,
