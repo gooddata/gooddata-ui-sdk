@@ -15,7 +15,12 @@ import {
 import { stripUserAndWorkspaceProps } from "../../../../_staging/settings/conversion.js";
 import { InitializeDashboard } from "../../../commands/index.js";
 import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
-import { DashboardConfig, DashboardContext, ResolvedDashboardConfig } from "../../../types/commonTypes.js";
+import {
+    DashboardConfig,
+    DashboardContext,
+    isResolvedConfig,
+    ResolvedDashboardConfig,
+} from "../../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../../types/sagas.js";
 import { sanitizeUnfinishedFeatureSettings } from "./sanitizeUnfinishedFeatureSettings.js";
 import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError.js";
@@ -129,7 +134,7 @@ function resolveUserSettings(ctx: DashboardContext, config: DashboardConfig): Pr
     }));
 }
 
-export function resolveColorPalette(ctx: DashboardContext, config: DashboardConfig): Promise<IColorPalette> {
+function resolveColorPalette(ctx: DashboardContext, config: DashboardConfig): Promise<IColorPalette> {
     if (config.colorPalette) {
         return Promise.resolve(config.colorPalette);
     }
@@ -145,12 +150,25 @@ export function resolveColorPalette(ctx: DashboardContext, config: DashboardConf
 export function* resolveDashboardConfig(
     ctx: DashboardContext,
     cmd: InitializeDashboard,
-): SagaIterator<Partial<ResolvedDashboardConfig>> {
+): SagaIterator<ResolvedDashboardConfig> {
     const {
         payload: { config = {} },
     } = cmd;
 
     yield put(dateFilterConfigActions.clearDateFilterConfigValidationWarning());
+
+    if (isResolvedConfig(config)) {
+        /*
+         * Config coming in props is fully specified. There is nothing to do. Bail out immediately.
+         */
+        if (config.allowUnfinishedFeatures || !config.settings) {
+            return applyConfigDefaults(config);
+        }
+        return {
+            ...applyConfigDefaults(config),
+            settings: sanitizeUnfinishedFeatureSettings(config.settings),
+        };
+    }
 
     /*
      * Resolve the config values. The resolve* functions will take value from config if it is defined,
@@ -160,37 +178,28 @@ export function* resolveDashboardConfig(
      * for the current user in the context of the workspace.
      */
 
-    const [dateFilterConfig, settings]: [
+    const [dateFilterConfig, settings, colorPalette]: [
         PromiseFnReturnType<typeof resolveDateFilterConfig>,
         PromiseFnReturnType<typeof resolveUserSettings>,
-    ] = yield all([call(resolveDateFilterConfig, ctx, config, cmd), call(resolveUserSettings, ctx, config)]);
+        PromiseFnReturnType<typeof resolveColorPalette>,
+    ] = yield all([
+        call(resolveDateFilterConfig, ctx, config, cmd),
+        call(resolveUserSettings, ctx, config),
+        call(resolveColorPalette, ctx, config),
+    ]);
 
-    const { config: composedConfig, configValidation } = composeDateFilterConfig(
-        config,
+    const [validDateFilterConfig, configValidation] = getValidDateFilterConfig(
         dateFilterConfig,
-        settings,
+        settings.settings,
     );
 
     if (configValidation !== "Valid") {
         yield call(onDateFilterConfigValidationError, ctx, configValidation, cmd.correlationId);
     }
 
-    return composedConfig;
-}
-
-function composeDateFilterConfig(
-    config: DashboardConfig,
-    dateFilterConfig: PromiseFnReturnType<typeof resolveDateFilterConfig>,
-    settings: PromiseFnReturnType<typeof resolveUserSettings>,
-) {
-    const [validDateFilterConfig, configValidation] = getValidDateFilterConfig(
-        dateFilterConfig,
-        settings.settings,
-    );
-
     const configWithDefaults = applyConfigDefaults(config);
 
-    const resultingConfig = {
+    return {
         ...configWithDefaults,
         locale: settings.locale,
         separators: settings.separators,
@@ -198,12 +207,8 @@ function composeDateFilterConfig(
         settings: configWithDefaults.allowUnfinishedFeatures
             ? settings.settings
             : sanitizeUnfinishedFeatureSettings(settings.settings),
+        colorPalette,
         mapboxToken: config.mapboxToken,
-    };
-
-    return {
-        config: resultingConfig,
-        configValidation,
     };
 }
 
@@ -243,8 +248,6 @@ export function* resolveDashboardConfigAndFeatureFlagDependentCalls(
     };
 }> {
     const resolvedConfig = yield call(resolveDashboardConfig, ctx, cmd);
-
-    // these really need resolved config before initiating requests
     const additionalData = yield call(loadAutomationsData, ctx, resolvedConfig.settings);
 
     return {
