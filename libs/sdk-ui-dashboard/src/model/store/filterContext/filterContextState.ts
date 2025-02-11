@@ -18,6 +18,13 @@ export interface FilterContextState {
     filterContextDefinition?: IFilterContextDefinition;
 
     /**
+     * For "apply all" filter bar mode, this contains the filter context definition that is applied to the dashboard,
+     * and should be used for the executions.
+     * @beta
+     */
+    appliedFilterContextDefinition?: IFilterContextDefinition;
+
+    /**
      * Filter context definition contains the original dashboard filters stored on the backend.
      * @beta
      */
@@ -56,6 +63,7 @@ export interface FilterContextState {
 
 export const filterContextInitialState: FilterContextState = {
     filterContextDefinition: undefined,
+    appliedFilterContextDefinition: undefined,
     filterContextIdentity: undefined,
     attributeFilterDisplayForms: undefined,
     attributesWithReferences: undefined,

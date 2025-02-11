@@ -25,6 +25,7 @@ import isEmpty from "lodash/isEmpty.js";
 import { selectSupportsCircularDependencyInFilters } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../drill/drillSelectors.js";
 import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
+import isEqual from "lodash/isEqual.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -90,6 +91,16 @@ export const selectFilterContextDefinition: DashboardSelector<IFilterContextDefi
         return filterContextState.filterContextDefinition!;
     },
 );
+
+export const selectAppliedFilterContextDefinition: DashboardSelector<IFilterContextDefinition> =
+    createSelector(selectSelf, (filterContextState) => {
+        invariant(
+            filterContextState.appliedFilterContextDefinition,
+            "attempting to access uninitialized filter context state",
+        );
+
+        return filterContextState.appliedFilterContextDefinition!;
+    });
 
 /**
  * Selects dashboard's filter context identity.
@@ -176,6 +187,19 @@ export const selectAttributeFilterDisplayFormsMap: DashboardSelector<
 export const selectFilterContextFilters: DashboardSelector<FilterContextItem[]> = createSelector(
     selectFilterContextDefinition,
     (filterContext): FilterContextItem[] => filterContext.filters,
+);
+
+export const selectAppliedFilterContextFilters: DashboardSelector<FilterContextItem[]> = createSelector(
+    selectAppliedFilterContextDefinition,
+    (filterContext): FilterContextItem[] => filterContext.filters,
+);
+
+export const selectCanApplyFilterContext: DashboardSelector<boolean> = createSelector(
+    selectFilterContextDefinition,
+    selectAppliedFilterContextDefinition,
+    (filterContextDefinition, appliedFilterContextDefinition) => {
+        return !isEqual(filterContextDefinition, appliedFilterContextDefinition);
+    },
 );
 
 /**

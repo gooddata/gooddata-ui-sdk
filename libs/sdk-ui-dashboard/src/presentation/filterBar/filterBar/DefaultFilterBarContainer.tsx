@@ -1,5 +1,5 @@
-// (C) 2021-2024 GoodData Corporation
-import React, { useRef } from "react";
+// (C) 2021-2025 GoodData Corporation
+import React, { useCallback, useRef } from "react";
 import DefaultMeasure from "react-measure";
 import cx from "classnames";
 import { createSelector } from "@reduxjs/toolkit";
@@ -14,6 +14,8 @@ import {
     useDashboardSelector,
     selectEnableFilterViews,
     selectEnableFlexibleLayout,
+    selectCanApplyFilterContext,
+    useDashboardDispatch,
 } from "../../../model/index.js";
 
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
@@ -24,6 +26,9 @@ import { FiltersConfigurationPanel } from "./FiltersConfigurationPanel.js";
 import { FilterViews } from "./filterViews/FilterViews.js";
 import { BulletsBar as FlexibleBulletsBar } from "../../flexibleLayout/dragAndDrop/Resize/BulletsBar/BulletsBar.js";
 import { BulletsBar as FluidBulletsBar } from "../../layout/dragAndDrop/Resize/BulletsBar/BulletsBar.js";
+import { UiButton } from "@gooddata/sdk-ui-kit";
+// TODO: this should be proper dashboard command
+import { filterContextActions } from "../../../model/store/filterContext/index.js";
 
 const selectShowFiltersConfigurationPanel = createSelector(
     selectIsInEditMode,
@@ -52,6 +57,12 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
     const showFiltersConfigurationPanel = useDashboardSelector(selectShowFiltersConfigurationPanel);
     const isFilterViewsFeatureFlagEnabled = useDashboardSelector(selectEnableFilterViews);
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
+    const canApplyFilterContext = useDashboardSelector(selectCanApplyFilterContext);
+    const dispatch = useDashboardDispatch();
+
+    const applyFilterContext = useCallback(() => {
+        dispatch(filterContextActions.applyFilterContext());
+    }, [dispatch]);
 
     return (
         <div className="dash-filters-wrapper s-gd-dashboard-filter-bar" ref={dropRef}>
@@ -65,6 +76,13 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                 <AllFiltersContainer setCalculatedRows={setCalculatedRows}>{children}</AllFiltersContainer>
                 <FiltersRows rows={rows} />
                 <div className="filter-bar-configuration">
+                    <UiButton
+                        // TODO: use react-intl to translate this
+                        label="Apply"
+                        variant="primary"
+                        isDisabled={!canApplyFilterContext}
+                        onClick={applyFilterContext}
+                    />
                     {isFilterViewsFeatureFlagEnabled ? <FilterViews /> : null}
                     {showFiltersConfigurationPanel ? <FiltersConfigurationPanel /> : null}
                 </div>
