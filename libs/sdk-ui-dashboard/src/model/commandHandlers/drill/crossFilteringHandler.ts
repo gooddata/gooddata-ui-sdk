@@ -61,7 +61,8 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
     const crossFilteringItemByWidget: ReturnType<ReturnType<typeof selectCrossFilteringItemByWidgetRef>> =
         yield select(selectCrossFilteringItemByWidgetRef(widgetRef));
 
-    const filtersCount = currentFilters.length;
+    //default date filter is not included in currentFilters so we need to add 1 to the length
+    const filtersCount = currentFilters.length + 1;
     const drillIntersectionFilters = convertIntersectionToAttributeFilters(
         cmd.payload.drillEvent.drillContext.intersection ?? [],
         dateDataSetsAttributesRefs,
