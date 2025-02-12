@@ -3126,7 +3126,7 @@
                         "type": "number",
                         "description": "Score, above which we return found objects. Below this score objects are not relevant.",
                         "format": "double",
-                        "default": 0.4
+                        "default": 0.45
                     }
                 }
             },

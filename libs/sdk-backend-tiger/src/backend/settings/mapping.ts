@@ -42,6 +42,7 @@ export function mapTypeToKey(
         case "OPERATOR_OVERRIDES":
         case "TIMEZONE_VALIDATION_ENABLED":
         case "ENABLE_FILE_ANALYTICS":
+        case "JIT_PROVISIONING":
         case undefined:
             return fallback;
         default:
