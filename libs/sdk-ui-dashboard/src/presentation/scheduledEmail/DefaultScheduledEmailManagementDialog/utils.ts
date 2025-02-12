@@ -65,6 +65,11 @@ function getTimezoneOffsetInISOFormat(date: Date, timeZone: string) {
 
 function getTimezoneOffset(date: Date, timeZone: string) {
     const iso = getTimezoneOffsetInISOFormat(date, timeZone);
+
+    if (iso === "Z" || !iso) {
+        return 0;
+    }
+
     const [hoursStr, minutesStr] = iso.split(":");
 
     const hours = parseInt(hoursStr);
