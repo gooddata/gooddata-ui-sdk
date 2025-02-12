@@ -127,6 +127,7 @@ export enum TigerFeaturesNames {
     EnableAmplitudeTracker = "enableAmplitudeTracker",
     EnableCriticalContentPerformanceOptimizations = "enableCriticalContentPerformanceOptimizations",
     EnableSlideshowExports = "enableSlideshowExports",
+    EnableRawExports = "enableRawExports",
 }
 
 export type ITigerFeatureFlags = {
@@ -217,6 +218,7 @@ export type ITigerFeatureFlags = {
     enableAmplitudeTracker: typeof FeatureFlagsValues["enableAmplitudeTracker"][number];
     enableCriticalContentPerformanceOptimizations: typeof FeatureFlagsValues["enableCriticalContentPerformanceOptimizations"][number];
     enableSlideshowExports: typeof FeatureFlagsValues["enableSlideshowExports"][number];
+    enableRawExports: typeof FeatureFlagsValues["enableRawExports"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -307,6 +309,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAmplitudeTracker: false,
     enableCriticalContentPerformanceOptimizations: false,
     enableSlideshowExports: false,
+    enableRawExports: false,
 };
 
 export const FeatureFlagsValues = {
@@ -401,4 +404,5 @@ export const FeatureFlagsValues = {
     enableAmplitudeTracker: [true, false] as const,
     enableCriticalContentPerformanceOptimizations: [true, false] as const,
     enableSlideshowExports: [true, false] as const,
+    enableRawExports: [true, false] as const,
 };

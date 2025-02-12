@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2025 GoodData Corporation
 
 /* eslint-disable */
 /**
@@ -23,6 +23,492 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // prettier-ignore
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base.js';
+
+/**
+ * Top level executable entity. Combination of [A]ttributes, [F]ilters & [M]etrics.
+ * @export
+ * @interface AFM
+ */
+export interface AFM {
+    /**
+     * Attributes to be used in the computation.
+     * @type {Array<AttributeItem>}
+     * @memberof AFM
+     */
+    attributes: Array<AttributeItem>;
+    /**
+     * Various filter types to filter the execution result.
+     * @type {Array<FilterDefinition>}
+     * @memberof AFM
+     */
+    filters: Array<FilterDefinition>;
+    /**
+     * Metrics to be computed.
+     * @type {Array<MeasureItem>}
+     * @memberof AFM
+     */
+    measures: Array<MeasureItem>;
+    /**
+     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
+     * @type {Array<MeasureItem>}
+     * @memberof AFM
+     */
+    auxMeasures?: Array<MeasureItem>;
+}
+/**
+ * A datetime filter specifying exact from and to values.
+ * @export
+ * @interface AbsoluteDateFilter
+ */
+export interface AbsoluteDateFilter {
+    /**
+     *
+     * @type {AbsoluteDateFilterAbsoluteDateFilter}
+     * @memberof AbsoluteDateFilter
+     */
+    absoluteDateFilter: AbsoluteDateFilterAbsoluteDateFilter;
+}
+/**
+ *
+ * @export
+ * @interface AbsoluteDateFilterAbsoluteDateFilter
+ */
+export interface AbsoluteDateFilterAbsoluteDateFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof AbsoluteDateFilterAbsoluteDateFilter
+     */
+    from: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AbsoluteDateFilterAbsoluteDateFilter
+     */
+    to: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AbsoluteDateFilterAbsoluteDateFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof AbsoluteDateFilterAbsoluteDateFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {AfmObjectIdentifierDataset}
+     * @memberof AbsoluteDateFilterAbsoluteDateFilter
+     */
+    dataset: AfmObjectIdentifierDataset;
+}
+/**
+ * @type AbstractMeasureValueFilter
+ * @export
+ */
+export type AbstractMeasureValueFilter =
+    | ComparisonMeasureValueFilter
+    | RangeMeasureValueFilter
+    | RankingFilter;
+
+/**
+ * @type AfmIdentifier
+ * Reference to the attribute label to which the filter should be applied.
+ * @export
+ */
+export type AfmIdentifier = AfmLocalIdentifier | AfmObjectIdentifier;
+
+/**
+ *
+ * @export
+ * @interface AfmLocalIdentifier
+ */
+export interface AfmLocalIdentifier {
+    /**
+     *
+     * @type {string}
+     * @memberof AfmLocalIdentifier
+     */
+    localIdentifier: string;
+}
+/**
+ * ObjectIdentifier with `identifier` wrapper. This serves to distinguish MD object identifiers in AFM request from local identifiers.
+ * @export
+ * @interface AfmObjectIdentifier
+ */
+export interface AfmObjectIdentifier {
+    /**
+     *
+     * @type {AfmObjectIdentifierIdentifier}
+     * @memberof AfmObjectIdentifier
+     */
+    identifier: AfmObjectIdentifierIdentifier;
+}
+/**
+ * Reference to the date attribute to use.
+ * @export
+ * @interface AfmObjectIdentifierAttribute
+ */
+export interface AfmObjectIdentifierAttribute {
+    /**
+     *
+     * @type {AfmObjectIdentifierAttributeIdentifier}
+     * @memberof AfmObjectIdentifierAttribute
+     */
+    identifier: AfmObjectIdentifierAttributeIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface AfmObjectIdentifierAttributeIdentifier
+ */
+export interface AfmObjectIdentifierAttributeIdentifier {
+    /**
+     *
+     * @type {string}
+     * @memberof AfmObjectIdentifierAttributeIdentifier
+     */
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AfmObjectIdentifierAttributeIdentifier
+     */
+    type: AfmObjectIdentifierAttributeIdentifierTypeEnum;
+}
+
+export const AfmObjectIdentifierAttributeIdentifierTypeEnum = {
+    ATTRIBUTE: "attribute",
+} as const;
+
+export type AfmObjectIdentifierAttributeIdentifierTypeEnum =
+    typeof AfmObjectIdentifierAttributeIdentifierTypeEnum[keyof typeof AfmObjectIdentifierAttributeIdentifierTypeEnum];
+
+/**
+ * Reference to the metric, fact or attribute object to use for the metric.
+ * @export
+ * @interface AfmObjectIdentifierCore
+ */
+export interface AfmObjectIdentifierCore {
+    /**
+     *
+     * @type {AfmObjectIdentifierCoreIdentifier}
+     * @memberof AfmObjectIdentifierCore
+     */
+    identifier: AfmObjectIdentifierCoreIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface AfmObjectIdentifierCoreIdentifier
+ */
+export interface AfmObjectIdentifierCoreIdentifier {
+    /**
+     *
+     * @type {string}
+     * @memberof AfmObjectIdentifierCoreIdentifier
+     */
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AfmObjectIdentifierCoreIdentifier
+     */
+    type: AfmObjectIdentifierCoreIdentifierTypeEnum;
+}
+
+export const AfmObjectIdentifierCoreIdentifierTypeEnum = {
+    ATTRIBUTE: "attribute",
+    LABEL: "label",
+    FACT: "fact",
+    METRIC: "metric",
+} as const;
+
+export type AfmObjectIdentifierCoreIdentifierTypeEnum =
+    typeof AfmObjectIdentifierCoreIdentifierTypeEnum[keyof typeof AfmObjectIdentifierCoreIdentifierTypeEnum];
+
+/**
+ * Reference to the date dataset to which the filter should be applied.
+ * @export
+ * @interface AfmObjectIdentifierDataset
+ */
+export interface AfmObjectIdentifierDataset {
+    /**
+     *
+     * @type {AfmObjectIdentifierDatasetIdentifier}
+     * @memberof AfmObjectIdentifierDataset
+     */
+    identifier: AfmObjectIdentifierDatasetIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface AfmObjectIdentifierDatasetIdentifier
+ */
+export interface AfmObjectIdentifierDatasetIdentifier {
+    /**
+     *
+     * @type {string}
+     * @memberof AfmObjectIdentifierDatasetIdentifier
+     */
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AfmObjectIdentifierDatasetIdentifier
+     */
+    type: AfmObjectIdentifierDatasetIdentifierTypeEnum;
+}
+
+export const AfmObjectIdentifierDatasetIdentifierTypeEnum = {
+    DATASET: "dataset",
+} as const;
+
+export type AfmObjectIdentifierDatasetIdentifierTypeEnum =
+    typeof AfmObjectIdentifierDatasetIdentifierTypeEnum[keyof typeof AfmObjectIdentifierDatasetIdentifierTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface AfmObjectIdentifierIdentifier
+ */
+export interface AfmObjectIdentifierIdentifier {
+    /**
+     *
+     * @type {string}
+     * @memberof AfmObjectIdentifierIdentifier
+     */
+    type: AfmObjectIdentifierIdentifierTypeEnum;
+    /**
+     *
+     * @type {string}
+     * @memberof AfmObjectIdentifierIdentifier
+     */
+    id: string;
+}
+
+export const AfmObjectIdentifierIdentifierTypeEnum = {
+    ANALYTICAL_DASHBOARD: "analyticalDashboard",
+    ATTRIBUTE: "attribute",
+    DASHBOARD_PLUGIN: "dashboardPlugin",
+    DATASET: "dataset",
+    FACT: "fact",
+    LABEL: "label",
+    METRIC: "metric",
+    PROMPT: "prompt",
+    VISUALIZATION_OBJECT: "visualizationObject",
+    FILTER_CONTEXT: "filterContext",
+} as const;
+
+export type AfmObjectIdentifierIdentifierTypeEnum =
+    typeof AfmObjectIdentifierIdentifierTypeEnum[keyof typeof AfmObjectIdentifierIdentifierTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface AfmObjectIdentifierLabel
+ */
+export interface AfmObjectIdentifierLabel {
+    /**
+     *
+     * @type {AfmObjectIdentifierLabelIdentifier}
+     * @memberof AfmObjectIdentifierLabel
+     */
+    identifier: AfmObjectIdentifierLabelIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface AfmObjectIdentifierLabelIdentifier
+ */
+export interface AfmObjectIdentifierLabelIdentifier {
+    /**
+     *
+     * @type {string}
+     * @memberof AfmObjectIdentifierLabelIdentifier
+     */
+    type: AfmObjectIdentifierLabelIdentifierTypeEnum;
+    /**
+     *
+     * @type {string}
+     * @memberof AfmObjectIdentifierLabelIdentifier
+     */
+    id: string;
+}
+
+export const AfmObjectIdentifierLabelIdentifierTypeEnum = {
+    LABEL: "label",
+} as const;
+
+export type AfmObjectIdentifierLabelIdentifierTypeEnum =
+    typeof AfmObjectIdentifierLabelIdentifierTypeEnum[keyof typeof AfmObjectIdentifierLabelIdentifierTypeEnum];
+
+/**
+ * Metric representing arithmetics between other metrics.
+ * @export
+ * @interface ArithmeticMeasureDefinition
+ */
+export interface ArithmeticMeasureDefinition {
+    /**
+     *
+     * @type {ArithmeticMeasureDefinitionArithmeticMeasure}
+     * @memberof ArithmeticMeasureDefinition
+     */
+    arithmeticMeasure: ArithmeticMeasureDefinitionArithmeticMeasure;
+}
+/**
+ *
+ * @export
+ * @interface ArithmeticMeasureDefinitionArithmeticMeasure
+ */
+export interface ArithmeticMeasureDefinitionArithmeticMeasure {
+    /**
+     * List of metrics to apply arithmetic operation by chosen operator.
+     * @type {Array<AfmLocalIdentifier>}
+     * @memberof ArithmeticMeasureDefinitionArithmeticMeasure
+     */
+    measureIdentifiers: Array<AfmLocalIdentifier>;
+    /**
+     * Arithmetic operator describing operation between metrics.
+     * @type {string}
+     * @memberof ArithmeticMeasureDefinitionArithmeticMeasure
+     */
+    operator: ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum;
+}
+
+export const ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = {
+    SUM: "SUM",
+    DIFFERENCE: "DIFFERENCE",
+    MULTIPLICATION: "MULTIPLICATION",
+    RATIO: "RATIO",
+    CHANGE: "CHANGE",
+} as const;
+
+export type ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum =
+    typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum[keyof typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
+
+/**
+ * @type AttributeFilter
+ * Abstract filter definition type attributes
+ * @export
+ */
+export type AttributeFilter = NegativeAttributeFilter | PositiveAttributeFilter;
+
+/**
+ * Filter on specific set of label values.
+ * @export
+ * @interface AttributeFilterElements
+ */
+export interface AttributeFilterElements {
+    /**
+     * Set of label values.
+     * @type {Array<string>}
+     * @memberof AttributeFilterElements
+     */
+    values: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface AttributeItem
+ */
+export interface AttributeItem {
+    /**
+     * Local identifier of the attribute. This can be used to reference the attribute in other parts of the execution definition.
+     * @type {string}
+     * @memberof AttributeItem
+     */
+    localIdentifier: string;
+    /**
+     *
+     * @type {AfmObjectIdentifierLabel}
+     * @memberof AttributeItem
+     */
+    label: AfmObjectIdentifierLabel;
+    /**
+     * Indicates whether to show all values of given attribute even if the data bound to those values is not available.
+     * @type {boolean}
+     * @memberof AttributeItem
+     */
+    showAllValues?: boolean;
+}
+/**
+ * Filter the result by comparing specified metric to given constant value, using given comparison operator.
+ * @export
+ * @interface ComparisonMeasureValueFilter
+ */
+export interface ComparisonMeasureValueFilter {
+    /**
+     *
+     * @type {ComparisonMeasureValueFilterComparisonMeasureValueFilter}
+     * @memberof ComparisonMeasureValueFilter
+     */
+    comparisonMeasureValueFilter: ComparisonMeasureValueFilterComparisonMeasureValueFilter;
+}
+/**
+ *
+ * @export
+ * @interface ComparisonMeasureValueFilterComparisonMeasureValueFilter
+ */
+export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
+    /**
+     * References to the attributes to be used when filtering.
+     * @type {Array<AfmIdentifier>}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    dimensionality?: Array<AfmIdentifier>;
+    /**
+     * A value that will be substituted for null values in the metric for the comparisons.
+     * @type {number}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    treatNullValuesAs?: number;
+    /**
+     *
+     * @type {string}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    operator: ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    value: number;
+    /**
+     *
+     * @type {string}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {AfmIdentifier}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    measure: AfmIdentifier;
+}
+
+export const ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = {
+    GREATER_THAN: "GREATER_THAN",
+    GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO",
+    LESS_THAN: "LESS_THAN",
+    LESS_THAN_OR_EQUAL_TO: "LESS_THAN_OR_EQUAL_TO",
+    EQUAL_TO: "EQUAL_TO",
+    NOT_EQUAL_TO: "NOT_EQUAL_TO",
+} as const;
+
+export type ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum =
+    typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum[keyof typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
 
 /**
  * Custom label object override.
@@ -76,6 +562,13 @@ export interface CustomOverride {
     metrics?: { [key: string]: CustomMetric };
 }
 /**
+ * @type DateFilter
+ * Abstract filter definition type for dates.
+ * @export
+ */
+export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
+
+/**
  *
  * @export
  * @interface ExportResponse
@@ -87,6 +580,173 @@ export interface ExportResponse {
      * @memberof ExportResponse
      */
     exportResult: string;
+}
+/**
+ * @type FilterDefinition
+ * Abstract filter definition type
+ * @export
+ */
+export type FilterDefinition =
+    | AbsoluteDateFilter
+    | ComparisonMeasureValueFilter
+    | InlineFilterDefinition
+    | NegativeAttributeFilter
+    | PositiveAttributeFilter
+    | RangeMeasureValueFilter
+    | RankingFilter
+    | RelativeDateFilter;
+
+/**
+ * @type FilterDefinitionForSimpleMeasure
+ * Abstract filter definition type for simple metric.
+ * @export
+ */
+export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
+
+/**
+ * Filter in form of direct MAQL query.
+ * @export
+ * @interface InlineFilterDefinition
+ */
+export interface InlineFilterDefinition {
+    /**
+     *
+     * @type {InlineFilterDefinitionInline}
+     * @memberof InlineFilterDefinition
+     */
+    inline: InlineFilterDefinitionInline;
+}
+/**
+ *
+ * @export
+ * @interface InlineFilterDefinitionInline
+ */
+export interface InlineFilterDefinitionInline {
+    /**
+     * MAQL query representing the filter.
+     * @type {string}
+     * @memberof InlineFilterDefinitionInline
+     */
+    filter: string;
+    /**
+     *
+     * @type {string}
+     * @memberof InlineFilterDefinitionInline
+     */
+    localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof InlineFilterDefinitionInline
+     */
+    applyOnResult?: boolean;
+}
+/**
+ * Metric defined by the raw MAQL query.
+ * @export
+ * @interface InlineMeasureDefinition
+ */
+export interface InlineMeasureDefinition {
+    /**
+     *
+     * @type {InlineMeasureDefinitionInline}
+     * @memberof InlineMeasureDefinition
+     */
+    inline: InlineMeasureDefinitionInline;
+}
+/**
+ *
+ * @export
+ * @interface InlineMeasureDefinitionInline
+ */
+export interface InlineMeasureDefinitionInline {
+    /**
+     * MAQL query defining the metric.
+     * @type {string}
+     * @memberof InlineMeasureDefinitionInline
+     */
+    maql: string;
+}
+/**
+ * @type MeasureDefinition
+ * Abstract metric definition type
+ * @export
+ */
+export type MeasureDefinition =
+    | ArithmeticMeasureDefinition
+    | InlineMeasureDefinition
+    | PopMeasureDefinition
+    | SimpleMeasureDefinition;
+
+/**
+ * Metric is a quantity that is calculated from the data.
+ * @export
+ * @interface MeasureItem
+ */
+export interface MeasureItem {
+    /**
+     * Local identifier of the metric. This can be used to reference the metric in other parts of the execution definition.
+     * @type {string}
+     * @memberof MeasureItem
+     */
+    localIdentifier: string;
+    /**
+     *
+     * @type {MeasureDefinition}
+     * @memberof MeasureItem
+     */
+    definition: MeasureDefinition;
+}
+/**
+ * @type MeasureValueFilter
+ * Abstract filter definition type filtering by the value of the metric.
+ * @export
+ */
+export type MeasureValueFilter = ComparisonMeasureValueFilter | RangeMeasureValueFilter;
+
+/**
+ * Filter able to limit element values by label and related selected negated elements.
+ * @export
+ * @interface NegativeAttributeFilter
+ */
+export interface NegativeAttributeFilter {
+    /**
+     *
+     * @type {NegativeAttributeFilterNegativeAttributeFilter}
+     * @memberof NegativeAttributeFilter
+     */
+    negativeAttributeFilter: NegativeAttributeFilterNegativeAttributeFilter;
+}
+/**
+ *
+ * @export
+ * @interface NegativeAttributeFilterNegativeAttributeFilter
+ */
+export interface NegativeAttributeFilterNegativeAttributeFilter {
+    /**
+     *
+     * @type {AttributeFilterElements}
+     * @memberof NegativeAttributeFilterNegativeAttributeFilter
+     */
+    notIn: AttributeFilterElements;
+    /**
+     *
+     * @type {string}
+     * @memberof NegativeAttributeFilterNegativeAttributeFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof NegativeAttributeFilterNegativeAttributeFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {AfmIdentifier}
+     * @memberof NegativeAttributeFilterNegativeAttributeFilter
+     */
+    label: AfmIdentifier;
 }
 /**
  * Custom CSS styles for the table. (PDF, HTML)
@@ -126,6 +786,413 @@ export interface PdfTableStyleProperty {
      */
     value: string;
 }
+/**
+ * Combination of the date data set to use and how many periods ago to calculate the previous period for.
+ * @export
+ * @interface PopDataset
+ */
+export interface PopDataset {
+    /**
+     *
+     * @type {AfmObjectIdentifierDataset}
+     * @memberof PopDataset
+     */
+    dataset: AfmObjectIdentifierDataset;
+    /**
+     * Number of periods ago to calculate the previous period for.
+     * @type {number}
+     * @memberof PopDataset
+     */
+    periodsAgo: number;
+}
+/**
+ * Previous period type of metric.
+ * @export
+ * @interface PopDatasetMeasureDefinition
+ */
+export interface PopDatasetMeasureDefinition {
+    /**
+     *
+     * @type {PopDatasetMeasureDefinitionPreviousPeriodMeasure}
+     * @memberof PopDatasetMeasureDefinition
+     */
+    previousPeriodMeasure: PopDatasetMeasureDefinitionPreviousPeriodMeasure;
+}
+/**
+ *
+ * @export
+ * @interface PopDatasetMeasureDefinitionPreviousPeriodMeasure
+ */
+export interface PopDatasetMeasureDefinitionPreviousPeriodMeasure {
+    /**
+     *
+     * @type {AfmLocalIdentifier}
+     * @memberof PopDatasetMeasureDefinitionPreviousPeriodMeasure
+     */
+    measureIdentifier: AfmLocalIdentifier;
+    /**
+     * Specification of which date data sets to use for determining the period to calculate the previous period for.
+     * @type {Array<PopDataset>}
+     * @memberof PopDatasetMeasureDefinitionPreviousPeriodMeasure
+     */
+    dateDatasets: Array<PopDataset>;
+}
+/**
+ * Combination of the date attribute to use and how many periods ago to calculate the PoP for.
+ * @export
+ * @interface PopDate
+ */
+export interface PopDate {
+    /**
+     *
+     * @type {AfmObjectIdentifierAttribute}
+     * @memberof PopDate
+     */
+    attribute: AfmObjectIdentifierAttribute;
+    /**
+     * Number of periods ago to calculate the previous period for.
+     * @type {number}
+     * @memberof PopDate
+     */
+    periodsAgo: number;
+}
+/**
+ * Period over period type of metric.
+ * @export
+ * @interface PopDateMeasureDefinition
+ */
+export interface PopDateMeasureDefinition {
+    /**
+     *
+     * @type {PopDateMeasureDefinitionOverPeriodMeasure}
+     * @memberof PopDateMeasureDefinition
+     */
+    overPeriodMeasure: PopDateMeasureDefinitionOverPeriodMeasure;
+}
+/**
+ *
+ * @export
+ * @interface PopDateMeasureDefinitionOverPeriodMeasure
+ */
+export interface PopDateMeasureDefinitionOverPeriodMeasure {
+    /**
+     *
+     * @type {AfmLocalIdentifier}
+     * @memberof PopDateMeasureDefinitionOverPeriodMeasure
+     */
+    measureIdentifier: AfmLocalIdentifier;
+    /**
+     * Attributes to use for determining the period to calculate the PoP for.
+     * @type {Array<PopDate>}
+     * @memberof PopDateMeasureDefinitionOverPeriodMeasure
+     */
+    dateAttributes: Array<PopDate>;
+}
+/**
+ * @type PopMeasureDefinition
+ * @export
+ */
+export type PopMeasureDefinition = PopDatasetMeasureDefinition | PopDateMeasureDefinition;
+
+/**
+ * Filter able to limit element values by label and related selected elements.
+ * @export
+ * @interface PositiveAttributeFilter
+ */
+export interface PositiveAttributeFilter {
+    /**
+     *
+     * @type {PositiveAttributeFilterPositiveAttributeFilter}
+     * @memberof PositiveAttributeFilter
+     */
+    positiveAttributeFilter: PositiveAttributeFilterPositiveAttributeFilter;
+}
+/**
+ *
+ * @export
+ * @interface PositiveAttributeFilterPositiveAttributeFilter
+ */
+export interface PositiveAttributeFilterPositiveAttributeFilter {
+    /**
+     *
+     * @type {AttributeFilterElements}
+     * @memberof PositiveAttributeFilterPositiveAttributeFilter
+     */
+    in: AttributeFilterElements;
+    /**
+     *
+     * @type {string}
+     * @memberof PositiveAttributeFilterPositiveAttributeFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof PositiveAttributeFilterPositiveAttributeFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {AfmIdentifier}
+     * @memberof PositiveAttributeFilterPositiveAttributeFilter
+     */
+    label: AfmIdentifier;
+}
+/**
+ * Filter the result by comparing specified metric to given range of values.
+ * @export
+ * @interface RangeMeasureValueFilter
+ */
+export interface RangeMeasureValueFilter {
+    /**
+     *
+     * @type {RangeMeasureValueFilterRangeMeasureValueFilter}
+     * @memberof RangeMeasureValueFilter
+     */
+    rangeMeasureValueFilter: RangeMeasureValueFilterRangeMeasureValueFilter;
+}
+/**
+ *
+ * @export
+ * @interface RangeMeasureValueFilterRangeMeasureValueFilter
+ */
+export interface RangeMeasureValueFilterRangeMeasureValueFilter {
+    /**
+     * References to the attributes to be used when filtering.
+     * @type {Array<AfmIdentifier>}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    dimensionality?: Array<AfmIdentifier>;
+    /**
+     * A value that will be substituted for null values in the metric for the comparisons.
+     * @type {number}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    treatNullValuesAs?: number;
+    /**
+     *
+     * @type {string}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    operator: RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    from: number;
+    /**
+     *
+     * @type {number}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    to: number;
+    /**
+     *
+     * @type {string}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {AfmIdentifier}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    measure: AfmIdentifier;
+}
+
+export const RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = {
+    BETWEEN: "BETWEEN",
+    NOT_BETWEEN: "NOT_BETWEEN",
+} as const;
+
+export type RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum =
+    typeof RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum[keyof typeof RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
+
+/**
+ * Filter the result on top/bottom N values according to given metric(s).
+ * @export
+ * @interface RankingFilter
+ */
+export interface RankingFilter {
+    /**
+     *
+     * @type {RankingFilterRankingFilter}
+     * @memberof RankingFilter
+     */
+    rankingFilter: RankingFilterRankingFilter;
+}
+/**
+ *
+ * @export
+ * @interface RankingFilterRankingFilter
+ */
+export interface RankingFilterRankingFilter {
+    /**
+     * References to the attributes to be used when filtering.
+     * @type {Array<AfmIdentifier>}
+     * @memberof RankingFilterRankingFilter
+     */
+    dimensionality?: Array<AfmIdentifier>;
+    /**
+     * References to the metrics to be used when filtering.
+     * @type {Array<AfmIdentifier>}
+     * @memberof RankingFilterRankingFilter
+     */
+    measures: Array<AfmIdentifier>;
+    /**
+     * The type of ranking to use, TOP or BOTTOM.
+     * @type {string}
+     * @memberof RankingFilterRankingFilter
+     */
+    operator: RankingFilterRankingFilterOperatorEnum;
+    /**
+     * Number of top/bottom values to filter.
+     * @type {number}
+     * @memberof RankingFilterRankingFilter
+     */
+    value: number;
+    /**
+     *
+     * @type {string}
+     * @memberof RankingFilterRankingFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof RankingFilterRankingFilter
+     */
+    applyOnResult?: boolean;
+}
+
+export const RankingFilterRankingFilterOperatorEnum = {
+    TOP: "TOP",
+    BOTTOM: "BOTTOM",
+} as const;
+
+export type RankingFilterRankingFilterOperatorEnum =
+    typeof RankingFilterRankingFilterOperatorEnum[keyof typeof RankingFilterRankingFilterOperatorEnum];
+
+/**
+ * Export request object describing the export properties and overrides for raw exports.
+ * @export
+ * @interface RawExportRequest
+ */
+export interface RawExportRequest {
+    /**
+     * Requested resulting file type.
+     * @type {string}
+     * @memberof RawExportRequest
+     */
+    format: RawExportRequestFormatEnum;
+    /**
+     *
+     * @type {AFM}
+     * @memberof RawExportRequest
+     */
+    execution: AFM;
+    /**
+     * Filename of downloaded file without extension.
+     * @type {string}
+     * @memberof RawExportRequest
+     */
+    fileName: string;
+}
+
+export const RawExportRequestFormatEnum = {
+    ARROW_FILE: "ARROW_FILE",
+    ARROW_STREAM: "ARROW_STREAM",
+    CSV: "CSV",
+} as const;
+
+export type RawExportRequestFormatEnum =
+    typeof RawExportRequestFormatEnum[keyof typeof RawExportRequestFormatEnum];
+
+/**
+ * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension.
+ * @export
+ * @interface RelativeDateFilter
+ */
+export interface RelativeDateFilter {
+    /**
+     *
+     * @type {RelativeDateFilterRelativeDateFilter}
+     * @memberof RelativeDateFilter
+     */
+    relativeDateFilter: RelativeDateFilterRelativeDateFilter;
+}
+/**
+ *
+ * @export
+ * @interface RelativeDateFilterRelativeDateFilter
+ */
+export interface RelativeDateFilterRelativeDateFilter {
+    /**
+     * Date granularity specifying particular date attribute in given dimension.
+     * @type {string}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    granularity: RelativeDateFilterRelativeDateFilterGranularityEnum;
+    /**
+     * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
+     * @type {number}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    from: number;
+    /**
+     * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
+     * @type {number}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    to: number;
+    /**
+     *
+     * @type {string}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {AfmObjectIdentifierDataset}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    dataset: AfmObjectIdentifierDataset;
+}
+
+export const RelativeDateFilterRelativeDateFilterGranularityEnum = {
+    MINUTE: "MINUTE",
+    HOUR: "HOUR",
+    DAY: "DAY",
+    WEEK: "WEEK",
+    MONTH: "MONTH",
+    QUARTER: "QUARTER",
+    YEAR: "YEAR",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+} as const;
+
+export type RelativeDateFilterRelativeDateFilterGranularityEnum =
+    typeof RelativeDateFilterRelativeDateFilterGranularityEnum[keyof typeof RelativeDateFilterRelativeDateFilterGranularityEnum];
+
 /**
  * Additional settings.
  * @export
@@ -170,6 +1237,65 @@ export interface Settings {
     pdfTopRightContent?: string;
 }
 /**
+ * Metric defined by referencing a MAQL metric or an LDM fact object with aggregation.
+ * @export
+ * @interface SimpleMeasureDefinition
+ */
+export interface SimpleMeasureDefinition {
+    /**
+     *
+     * @type {SimpleMeasureDefinitionMeasure}
+     * @memberof SimpleMeasureDefinition
+     */
+    measure: SimpleMeasureDefinitionMeasure;
+}
+/**
+ *
+ * @export
+ * @interface SimpleMeasureDefinitionMeasure
+ */
+export interface SimpleMeasureDefinitionMeasure {
+    /**
+     *
+     * @type {AfmObjectIdentifierCore}
+     * @memberof SimpleMeasureDefinitionMeasure
+     */
+    item: AfmObjectIdentifierCore;
+    /**
+     * Definition of aggregation type of the metric.
+     * @type {string}
+     * @memberof SimpleMeasureDefinitionMeasure
+     */
+    aggregation?: SimpleMeasureDefinitionMeasureAggregationEnum;
+    /**
+     * If true, compute the percentage of given metric values (broken down by AFM attributes) to the total (not broken down).
+     * @type {boolean}
+     * @memberof SimpleMeasureDefinitionMeasure
+     */
+    computeRatio?: boolean;
+    /**
+     * Metrics can be filtered by attribute filters with the same interface as ones for global AFM. Note that only one DateFilter is allowed.
+     * @type {Array<FilterDefinitionForSimpleMeasure>}
+     * @memberof SimpleMeasureDefinitionMeasure
+     */
+    filters?: Array<FilterDefinitionForSimpleMeasure>;
+}
+
+export const SimpleMeasureDefinitionMeasureAggregationEnum = {
+    SUM: "SUM",
+    COUNT: "COUNT",
+    AVG: "AVG",
+    MIN: "MIN",
+    MAX: "MAX",
+    MEDIAN: "MEDIAN",
+    RUNSUM: "RUNSUM",
+    APPROXIMATE_COUNT: "APPROXIMATE_COUNT",
+} as const;
+
+export type SimpleMeasureDefinitionMeasureAggregationEnum =
+    typeof SimpleMeasureDefinitionMeasureAggregationEnum[keyof typeof SimpleMeasureDefinitionMeasureAggregationEnum];
+
+/**
  * Export request object describing the export properties and overrides for tabular exports.
  * @export
  * @interface TabularExportRequest
@@ -212,7 +1338,7 @@ export interface TabularExportRequest {
      */
     visualizationObject?: string;
     /**
-     * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given. (HTML/PDF only)
+     * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given.
      * @type {Array<object>}
      * @memberof TabularExportRequest
      */
@@ -274,6 +1400,50 @@ export interface VisualExportRequest {
 export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create dashboard tabular export request
+         * @param {string} workspaceId
+         * @param {string} dashboardId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDashboardExportRequest: async (
+            workspaceId: string,
+            dashboardId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("createDashboardExportRequest", "workspaceId", workspaceId);
+            // verify required parameter 'dashboardId' is not null or undefined
+            assertParamExists("createDashboardExportRequest", "dashboardId", dashboardId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/analyticalDashboards/{dashboardId}/export/tabular`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"dashboardId"}}`, encodeURIComponent(String(dashboardId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create visual - pdf export request
          * @param {string} workspaceId
@@ -319,6 +1489,58 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(visualExportRequest !== undefined ? visualExportRequest : {})
                 : visualExportRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create raw export request
+         * @param {string} workspaceId
+         * @param {RawExportRequest} rawExportRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createRawExport: async (
+            workspaceId: string,
+            rawExportRequest: RawExportRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("createRawExport", "workspaceId", workspaceId);
+            // verify required parameter 'rawExportRequest' is not null or undefined
+            assertParamExists("createRawExport", "rawExportRequest", rawExportRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/raw`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof rawExportRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(rawExportRequest !== undefined ? rawExportRequest : {})
+                : rawExportRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -464,6 +1686,49 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRawExport: async (
+            workspaceId: string,
+            exportId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getRawExport", "workspaceId", workspaceId);
+            // verify required parameter 'exportId' is not null or undefined
+            assertParamExists("getRawExport", "exportId", exportId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/raw/{exportId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
          * @summary Retrieve exported files
          * @param {string} workspaceId
@@ -517,6 +1782,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = ActionsApiAxiosParamCreator(configuration);
     return {
         /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create dashboard tabular export request
+         * @param {string} workspaceId
+         * @param {string} dashboardId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createDashboardExportRequest(
+            workspaceId: string,
+            dashboardId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createDashboardExportRequest(
+                workspaceId,
+                dashboardId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create visual - pdf export request
          * @param {string} workspaceId
@@ -532,6 +1817,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createPdfExport(
                 workspaceId,
                 visualExportRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create raw export request
+         * @param {string} workspaceId
+         * @param {RawExportRequest} rawExportRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createRawExport(
+            workspaceId: string,
+            rawExportRequest: RawExportRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createRawExport(
+                workspaceId,
+                rawExportRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -597,6 +1902,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getRawExport(
+            workspaceId: string,
+            exportId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRawExport(
+                workspaceId,
+                exportId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
          * @summary Retrieve exported files
          * @param {string} workspaceId
@@ -631,6 +1956,25 @@ export const ActionsApiFactory = function (
     const localVarFp = ActionsApiFp(configuration);
     return {
         /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create dashboard tabular export request
+         * @param {ActionsApiCreateDashboardExportRequestRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDashboardExportRequest(
+            requestParameters: ActionsApiCreateDashboardExportRequestRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ExportResponse> {
+            return localVarFp
+                .createDashboardExportRequest(
+                    requestParameters.workspaceId,
+                    requestParameters.dashboardId,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create visual - pdf export request
          * @param {ActionsApiCreatePdfExportRequest} requestParameters Request parameters.
@@ -647,6 +1991,21 @@ export const ActionsApiFactory = function (
                     requestParameters.visualExportRequest,
                     options,
                 )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create raw export request
+         * @param {ActionsApiCreateRawExportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createRawExport(
+            requestParameters: ActionsApiCreateRawExportRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ExportResponse> {
+            return localVarFp
+                .createRawExport(requestParameters.workspaceId, requestParameters.rawExportRequest, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -699,6 +2058,21 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {ActionsApiGetRawExportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRawExport(
+            requestParameters: ActionsApiGetRawExportRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .getRawExport(requestParameters.workspaceId, requestParameters.exportId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
          * @summary Retrieve exported files
          * @param {ActionsApiGetTabularExportRequest} requestParameters Request parameters.
@@ -723,6 +2097,19 @@ export const ActionsApiFactory = function (
  */
 export interface ActionsApiInterface {
     /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly.An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create dashboard tabular export request
+     * @param {ActionsApiCreateDashboardExportRequestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    createDashboardExportRequest(
+        requestParameters: ActionsApiCreateDashboardExportRequestRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ExportResponse>;
+
+    /**
      * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
      * @summary Create visual - pdf export request
      * @param {ActionsApiCreatePdfExportRequest} requestParameters Request parameters.
@@ -732,6 +2119,19 @@ export interface ActionsApiInterface {
      */
     createPdfExport(
         requestParameters: ActionsApiCreatePdfExportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ExportResponse>;
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create raw export request
+     * @param {ActionsApiCreateRawExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    createRawExport(
+        requestParameters: ActionsApiCreateRawExportRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ExportResponse>;
 
@@ -775,6 +2175,19 @@ export interface ActionsApiInterface {
     ): AxiosPromise<void>;
 
     /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary (EXPERIMENTAL) Retrieve exported files
+     * @param {ActionsApiGetRawExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getRawExport(
+        requestParameters: ActionsApiGetRawExportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
      * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
      * @summary Retrieve exported files
      * @param {ActionsApiGetTabularExportRequest} requestParameters Request parameters.
@@ -786,6 +2199,27 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiGetTabularExportRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
+}
+
+/**
+ * Request parameters for createDashboardExportRequest operation in ActionsApi.
+ * @export
+ * @interface ActionsApiCreateDashboardExportRequestRequest
+ */
+export interface ActionsApiCreateDashboardExportRequestRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiCreateDashboardExportRequest
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiCreateDashboardExportRequest
+     */
+    readonly dashboardId: string;
 }
 
 /**
@@ -807,6 +2241,27 @@ export interface ActionsApiCreatePdfExportRequest {
      * @memberof ActionsApiCreatePdfExport
      */
     readonly visualExportRequest: VisualExportRequest;
+}
+
+/**
+ * Request parameters for createRawExport operation in ActionsApi.
+ * @export
+ * @interface ActionsApiCreateRawExportRequest
+ */
+export interface ActionsApiCreateRawExportRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiCreateRawExport
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {RawExportRequest}
+     * @memberof ActionsApiCreateRawExport
+     */
+    readonly rawExportRequest: RawExportRequest;
 }
 
 /**
@@ -873,6 +2328,27 @@ export interface ActionsApiGetMetadataRequest {
 }
 
 /**
+ * Request parameters for getRawExport operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetRawExportRequest
+ */
+export interface ActionsApiGetRawExportRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetRawExport
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetRawExport
+     */
+    readonly exportId: string;
+}
+
+/**
  * Request parameters for getTabularExport operation in ActionsApi.
  * @export
  * @interface ActionsApiGetTabularExportRequest
@@ -901,6 +2377,27 @@ export interface ActionsApiGetTabularExportRequest {
  */
 export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly.An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create dashboard tabular export request
+     * @param {ActionsApiCreateDashboardExportRequestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public createDashboardExportRequest(
+        requestParameters: ActionsApiCreateDashboardExportRequestRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .createDashboardExportRequest(
+                requestParameters.workspaceId,
+                requestParameters.dashboardId,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
      * @summary Create visual - pdf export request
      * @param {ActionsApiCreatePdfExportRequest} requestParameters Request parameters.
@@ -914,6 +2411,23 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     ) {
         return ActionsApiFp(this.configuration)
             .createPdfExport(requestParameters.workspaceId, requestParameters.visualExportRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create raw export request
+     * @param {ActionsApiCreateRawExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public createRawExport(
+        requestParameters: ActionsApiCreateRawExportRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .createRawExport(requestParameters.workspaceId, requestParameters.rawExportRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -970,6 +2484,20 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary (EXPERIMENTAL) Retrieve exported files
+     * @param {ActionsApiGetRawExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getRawExport(requestParameters: ActionsApiGetRawExportRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .getRawExport(requestParameters.workspaceId, requestParameters.exportId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
      * @summary Retrieve exported files
      * @param {ActionsApiGetTabularExportRequest} requestParameters Request parameters.
@@ -988,11 +2516,367 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
 }
 
 /**
+ * RawExportApi - axios parameter creator
+ * @export
+ */
+export const RawExportApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create raw export request
+         * @param {string} workspaceId
+         * @param {RawExportRequest} rawExportRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createRawExport: async (
+            workspaceId: string,
+            rawExportRequest: RawExportRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("createRawExport", "workspaceId", workspaceId);
+            // verify required parameter 'rawExportRequest' is not null or undefined
+            assertParamExists("createRawExport", "rawExportRequest", rawExportRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/raw`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof rawExportRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(rawExportRequest !== undefined ? rawExportRequest : {})
+                : rawExportRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRawExport: async (
+            workspaceId: string,
+            exportId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getRawExport", "workspaceId", workspaceId);
+            // verify required parameter 'exportId' is not null or undefined
+            assertParamExists("getRawExport", "exportId", exportId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/raw/{exportId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    };
+};
+
+/**
+ * RawExportApi - functional programming interface
+ * @export
+ */
+export const RawExportApiFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = RawExportApiAxiosParamCreator(configuration);
+    return {
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create raw export request
+         * @param {string} workspaceId
+         * @param {RawExportRequest} rawExportRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createRawExport(
+            workspaceId: string,
+            rawExportRequest: RawExportRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createRawExport(
+                workspaceId,
+                rawExportRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getRawExport(
+            workspaceId: string,
+            exportId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRawExport(
+                workspaceId,
+                exportId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    };
+};
+
+/**
+ * RawExportApi - factory interface
+ * @export
+ */
+export const RawExportApiFactory = function (
+    configuration?: Configuration,
+    basePath?: string,
+    axios?: AxiosInstance,
+) {
+    const localVarFp = RawExportApiFp(configuration);
+    return {
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create raw export request
+         * @param {RawExportApiCreateRawExportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createRawExport(
+            requestParameters: RawExportApiCreateRawExportRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ExportResponse> {
+            return localVarFp
+                .createRawExport(requestParameters.workspaceId, requestParameters.rawExportRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {RawExportApiGetRawExportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRawExport(
+            requestParameters: RawExportApiGetRawExportRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .getRawExport(requestParameters.workspaceId, requestParameters.exportId, options)
+                .then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * RawExportApi - interface
+ * @export
+ * @interface RawExportApi
+ */
+export interface RawExportApiInterface {
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create raw export request
+     * @param {RawExportApiCreateRawExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RawExportApiInterface
+     */
+    createRawExport(
+        requestParameters: RawExportApiCreateRawExportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ExportResponse>;
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary (EXPERIMENTAL) Retrieve exported files
+     * @param {RawExportApiGetRawExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RawExportApiInterface
+     */
+    getRawExport(
+        requestParameters: RawExportApiGetRawExportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+}
+
+/**
+ * Request parameters for createRawExport operation in RawExportApi.
+ * @export
+ * @interface RawExportApiCreateRawExportRequest
+ */
+export interface RawExportApiCreateRawExportRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof RawExportApiCreateRawExport
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {RawExportRequest}
+     * @memberof RawExportApiCreateRawExport
+     */
+    readonly rawExportRequest: RawExportRequest;
+}
+
+/**
+ * Request parameters for getRawExport operation in RawExportApi.
+ * @export
+ * @interface RawExportApiGetRawExportRequest
+ */
+export interface RawExportApiGetRawExportRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof RawExportApiGetRawExport
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof RawExportApiGetRawExport
+     */
+    readonly exportId: string;
+}
+
+/**
+ * RawExportApi - object-oriented interface
+ * @export
+ * @class RawExportApi
+ * @extends {BaseAPI}
+ */
+export class RawExportApi extends BaseAPI implements RawExportApiInterface {
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create raw export request
+     * @param {RawExportApiCreateRawExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RawExportApi
+     */
+    public createRawExport(
+        requestParameters: RawExportApiCreateRawExportRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return RawExportApiFp(this.configuration)
+            .createRawExport(requestParameters.workspaceId, requestParameters.rawExportRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary (EXPERIMENTAL) Retrieve exported files
+     * @param {RawExportApiGetRawExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RawExportApi
+     */
+    public getRawExport(requestParameters: RawExportApiGetRawExportRequest, options?: AxiosRequestConfig) {
+        return RawExportApiFp(this.configuration)
+            .getRawExport(requestParameters.workspaceId, requestParameters.exportId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
  * TabularExportApi - axios parameter creator
  * @export
  */
 export const TabularExportApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create dashboard tabular export request
+         * @param {string} workspaceId
+         * @param {string} dashboardId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDashboardExportRequest: async (
+            workspaceId: string,
+            dashboardId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("createDashboardExportRequest", "workspaceId", workspaceId);
+            // verify required parameter 'dashboardId' is not null or undefined
+            assertParamExists("createDashboardExportRequest", "dashboardId", dashboardId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/analyticalDashboards/{dashboardId}/export/tabular`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"dashboardId"}}`, encodeURIComponent(String(dashboardId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create tabular export request
@@ -1099,6 +2983,26 @@ export const TabularExportApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = TabularExportApiAxiosParamCreator(configuration);
     return {
         /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create dashboard tabular export request
+         * @param {string} workspaceId
+         * @param {string} dashboardId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createDashboardExportRequest(
+            workspaceId: string,
+            dashboardId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createDashboardExportRequest(
+                workspaceId,
+                dashboardId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create tabular export request
          * @param {string} workspaceId
@@ -1153,6 +3057,25 @@ export const TabularExportApiFactory = function (
     const localVarFp = TabularExportApiFp(configuration);
     return {
         /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly.An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create dashboard tabular export request
+         * @param {TabularExportApiCreateDashboardExportRequestRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDashboardExportRequest(
+            requestParameters: TabularExportApiCreateDashboardExportRequestRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ExportResponse> {
+            return localVarFp
+                .createDashboardExportRequest(
+                    requestParameters.workspaceId,
+                    requestParameters.dashboardId,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create tabular export request
          * @param {TabularExportApiCreateTabularExportRequest} requestParameters Request parameters.
@@ -1196,6 +3119,19 @@ export const TabularExportApiFactory = function (
  */
 export interface TabularExportApiInterface {
     /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly.An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create dashboard tabular export request
+     * @param {TabularExportApiCreateDashboardExportRequestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TabularExportApiInterface
+     */
+    createDashboardExportRequest(
+        requestParameters: TabularExportApiCreateDashboardExportRequestRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ExportResponse>;
+
+    /**
      * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
      * @summary Create tabular export request
      * @param {TabularExportApiCreateTabularExportRequest} requestParameters Request parameters.
@@ -1220,6 +3156,27 @@ export interface TabularExportApiInterface {
         requestParameters: TabularExportApiGetTabularExportRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
+}
+
+/**
+ * Request parameters for createDashboardExportRequest operation in TabularExportApi.
+ * @export
+ * @interface TabularExportApiCreateDashboardExportRequestRequest
+ */
+export interface TabularExportApiCreateDashboardExportRequestRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof TabularExportApiCreateDashboardExportRequest
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof TabularExportApiCreateDashboardExportRequest
+     */
+    readonly dashboardId: string;
 }
 
 /**
@@ -1271,6 +3228,27 @@ export interface TabularExportApiGetTabularExportRequest {
  * @extends {BaseAPI}
  */
 export class TabularExportApi extends BaseAPI implements TabularExportApiInterface {
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly.An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create dashboard tabular export request
+     * @param {TabularExportApiCreateDashboardExportRequestRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TabularExportApi
+     */
+    public createDashboardExportRequest(
+        requestParameters: TabularExportApiCreateDashboardExportRequestRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return TabularExportApiFp(this.configuration)
+            .createDashboardExportRequest(
+                requestParameters.workspaceId,
+                requestParameters.dashboardId,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
      * @summary Create tabular export request

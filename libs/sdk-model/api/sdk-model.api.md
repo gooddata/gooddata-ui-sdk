@@ -3413,6 +3413,7 @@ export interface ISettings {
     // (undocumented)
     enablePixelPerfectExperience?: boolean;
     enablePushpinGeoChart?: boolean;
+    enableRawExports?: boolean;
     enableRenamingMeasureToMetric?: boolean;
     // (undocumented)
     enableRenamingProjectToWorkspace?: boolean;

@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { tigerExecutionClientFactory } from "./execution.js";
 import { tigerExecutionResultClientFactory } from "./executionResult.js";
 import {
@@ -41,11 +41,13 @@ import {
     ExportActionsCustomMetric,
     ExportActionsCustomLabel,
     TabularExportActionsRequestFormatEnum,
+    RawExportActionsRequestFormatEnum,
     ExportActionsSettings,
     ExportActionsPdfTableStyle,
     ExportActionsPdfTableStyleProperty,
     ExportActionsCustomOverride,
     TabularExportActionsRequest,
+    RawExportActionsRequest,
 } from "./export.js";
 import {
     ScanModelConfiguration,
@@ -120,6 +122,7 @@ export type {
     ExportActionsPdfTableStyle,
     ExportActionsCustomOverride,
     TabularExportActionsRequest,
+    RawExportActionsRequest,
     ResultActionsApiInterface,
     ExportActionsPdfTableStyleProperty,
     AutomationActionsApiInterface,
@@ -186,6 +189,7 @@ export {
     ScanModelConfiguration,
     ScanModelBaseApi,
     TabularExportActionsRequestFormatEnum,
+    RawExportActionsRequestFormatEnum,
 };
 
 export interface ITigerClient {

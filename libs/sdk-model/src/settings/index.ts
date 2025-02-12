@@ -584,6 +584,11 @@ export interface ISettings {
     enableSlideshowExports?: boolean;
 
     /**
+     * Enable insights export of raw data when limit is reached.
+     */
+    enableRawExports?: boolean;
+
+    /**
      * Date filter configuration.
      * @alpha
      */
