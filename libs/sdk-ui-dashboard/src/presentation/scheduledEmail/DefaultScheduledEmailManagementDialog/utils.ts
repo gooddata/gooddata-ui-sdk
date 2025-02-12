@@ -12,7 +12,7 @@ export const toModifiedISOString = (date: Date) => {
  * In order to match backend format, we need to remove milliseconds from the date and also convert it to UTC
  * based on the provided timezone.
  */
-export const toModifiedISOStringWithTimezone = (date: Date, timezone?: string) => {
+export const toModifiedISOStringToTimezone = (date: Date, timezone?: string) => {
     if (timezone) {
         const offset = getTimezoneOffsetInISOFormat(date, timezone);
 
@@ -27,14 +27,48 @@ export const toModifiedISOStringWithTimezone = (date: Date, timezone?: string) =
             date.getSeconds().toString().padStart(2, "0"),
         ].join(":");
         const string = `${stringDate}T${stringTime}${offset}`;
+        const dateUpdated = new Date(string);
 
-        return toModifiedISOString(new Date(string));
+        return {
+            date: dateUpdated,
+            iso: toModifiedISOString(dateUpdated),
+        };
     }
-    return toModifiedISOString(date);
+    return {
+        date,
+        iso: toModifiedISOString(date),
+    };
+};
+
+export const toModifiedISOStringFromTimezone = (date: Date, fromTimezone: string, toTimezone?: string) => {
+    if (fromTimezone && toTimezone) {
+        const offsetFrom = getTimezoneOffset(date, fromTimezone);
+        const offsetTo = getTimezoneOffset(date, toTimezone);
+        const dateUpdated = new Date(date.getTime() + offsetFrom - offsetTo);
+
+        return {
+            date: dateUpdated,
+            iso: toModifiedISOString(dateUpdated),
+        };
+    }
+    return {
+        date,
+        iso: toModifiedISOString(date),
+    };
 };
 
 function getTimezoneOffsetInISOFormat(date: Date, timeZone: string) {
     const str = date.toLocaleString("en-US", { timeZone, timeZoneName: "longOffset" });
     const tmz = str.split(" ").pop() ?? "Z";
     return tmz.replace("GMT", "");
+}
+
+function getTimezoneOffset(date: Date, timeZone: string) {
+    const iso = getTimezoneOffsetInISOFormat(date, timeZone);
+    const [hoursStr, minutesStr] = iso.split(":");
+
+    const hours = parseInt(hoursStr);
+    const minutes = parseInt(minutesStr);
+
+    return (hours * 60 + minutes) * 60 * 1000;
 }
