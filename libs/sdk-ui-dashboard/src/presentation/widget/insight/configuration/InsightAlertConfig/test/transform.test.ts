@@ -1267,7 +1267,7 @@ describe("alert transforms", () => {
                 decimal: ",",
                 thousand: ".",
             });
-            expect(res).toBe("insightAlert.config.comparisonOperator.greaterThanOrEquals 0,00");
+            expect(res).toBe("Insightalert.config.comparisonoperator.greaterthanorequals 0,00");
         });
 
         it("getDescription - relative", () => {
@@ -1275,7 +1275,7 @@ describe("alert transforms", () => {
                 decimal: ",",
                 thousand: ".",
             });
-            expect(res).toBe("insightAlert.config.changeOperator.increasesBy 0,00%");
+            expect(res).toBe("Insightalert.config.changeoperator.increasesby 0,00%");
         });
 
         it("getDescription - relative with filter", () => {
@@ -1283,7 +1283,7 @@ describe("alert transforms", () => {
                 decimal: ",",
                 thousand: ".",
             });
-            expect(res).toBe("insightAlert.config.changeOperator.increasesBy 0,00%");
+            expect(res).toBe("Insightalert.config.changeoperator.increasesby 0,00%");
         });
     });
 
