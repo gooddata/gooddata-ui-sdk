@@ -419,10 +419,12 @@ export function getDescription(
 
     const name = selectedMeasure ? getMeasureTitle(selectedMeasure.measure) ?? "" : "";
     const valueSuffix = getValueSuffix(alert?.alert) ?? "";
-    const title = getOperatorTitle(intl, alert?.alert);
+    const title = getOperatorTitle(intl, alert?.alert).toLowerCase();
     const threshold = getAlertThreshold(alert?.alert);
     const convertedValue = ClientFormatterFacade.convertValue(threshold);
     const { formattedValue } = ClientFormatterFacade.formatValue(convertedValue, undefined, separators);
 
-    return [name, title, `${formattedValue}${valueSuffix}`].filter(Boolean).join(" ");
+    const description = [name, title, `${formattedValue}${valueSuffix}`].filter(Boolean).join(" ");
+
+    return description[0].toUpperCase() + description.slice(1);
 }
