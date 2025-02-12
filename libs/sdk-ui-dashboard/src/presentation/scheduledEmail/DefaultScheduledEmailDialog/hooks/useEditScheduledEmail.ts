@@ -31,7 +31,10 @@ import {
 } from "../../../../model/index.js";
 import { normalizeTime } from "@gooddata/sdk-ui-kit";
 import { WidgetAttachmentType } from "../types.js";
-import { toModifiedISOStringWithTimezone } from "../../DefaultScheduledEmailManagementDialog/utils.js";
+import {
+    toModifiedISOStringFromTimezone,
+    toModifiedISOStringToTimezone,
+} from "../../DefaultScheduledEmailManagementDialog/utils.js";
 import {
     areAutomationsEqual,
     convertCurrentUserToAutomationRecipient,
@@ -128,7 +131,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
             schedule: {
                 ...(s.schedule ?? {}),
                 cron: cronExpression,
-                firstRun: toModifiedISOStringWithTimezone(startDate ?? new Date(), timezone),
+                firstRun: toModifiedISOStringToTimezone(startDate ?? new Date(), timezone).iso,
             },
         }));
     };
@@ -333,9 +336,17 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
             }) ?? true,
     };
 
-    const startDate = parseISO(
-        editedAutomation.schedule?.firstRun ?? normalizeTime(new Date(), undefined, 60).toISOString(),
-    );
+    let startDate: Date;
+    if (editedAutomation.schedule?.firstRun) {
+        const { iso } = toModifiedISOStringFromTimezone(
+            parseISO(editedAutomation.schedule.firstRun),
+            editedAutomation.schedule.timezone ?? getUserTimezone().identifier,
+            getUserTimezone().identifier,
+        );
+        startDate = parseISO(iso);
+    } else {
+        startDate = normalizeTime(parseISO(new Date().toISOString()), undefined, 60);
+    }
 
     const selectedNotificationChannel = notificationChannels.find(
         (channel) => channel.id === editedAutomation.notificationChannel,
@@ -500,8 +511,12 @@ function newAutomationMetadataObjectDefinition({
     dashboardFilters?: FilterContextItem[];
     widgetFilters?: IFilter[];
 }): IAutomationMetadataObjectDefinition {
-    const firstRun = parseISO(new Date().toISOString());
-    const normalizedFirstRun = normalizeTime(firstRun, undefined, 60);
+    const normalizedFirstRun = normalizeTime(parseISO(new Date().toISOString()), undefined, 60);
+    const { iso: firstRun } = toModifiedISOStringToTimezone(
+        normalizedFirstRun,
+        timezone ?? getUserTimezone().identifier,
+    );
+
     const cron = getDefaultCronExpression(normalizedFirstRun);
     const exportDefinition =
         widget && insight
@@ -524,11 +539,8 @@ function newAutomationMetadataObjectDefinition({
         description: undefined,
         tags: [],
         schedule: {
-            firstRun: toModifiedISOStringWithTimezone(
-                normalizedFirstRun,
-                timezone ?? getUserTimezone().identifier,
-            ),
             timezone: timezone ?? getUserTimezone().identifier,
+            firstRun,
             cron,
         },
         details: {
