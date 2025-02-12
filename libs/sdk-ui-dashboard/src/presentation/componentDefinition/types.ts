@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { ComponentType } from "react";
 import {
     IDashboardAttributeFilterProps,
@@ -7,7 +7,6 @@ import {
 } from "../filterBar/types.js";
 import {
     IDashboardInsightProps,
-    IDashboardKpiProps,
     IDashboardRichTextProps,
     IDashboardVisualizationSwitcherProps,
     IDashboardWidgetProps,
@@ -29,7 +28,6 @@ import {
     AttributeFilterComponentProvider,
     DateFilterComponentProvider,
     InsightComponentProvider,
-    KpiComponentProvider,
     RichTextComponentProvider,
     WidgetComponentProvider,
     VisualizationSwitcherComponentProvider,
@@ -38,7 +36,6 @@ import {
 import {
     IDashboardLayout,
     IInsightWidget,
-    IKpiWidget,
     IRichTextWidget,
     IVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
@@ -369,19 +366,6 @@ export type DateFilterComponentSet = CustomComponentBase<
     DraggableComponent &
     CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> & // placeholder is shared with AF
     CreatableByDragComponent;
-
-/**
- * Definition of KPI widget
- * @internal
- */
-export type KpiWidgetComponentSet = CustomComponentBase<
-    IDashboardKpiProps,
-    Parameters<KpiComponentProvider>
-> &
-    DraggableComponent &
-    CreatableByDragComponent &
-    CreatablePlaceholderComponent<IDashboardWidgetProps> &
-    ConfigurableWidget<IKpiWidget>;
 
 /**
  * Definition of Insight widget

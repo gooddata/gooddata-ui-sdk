@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { FC, useMemo } from "react";
 import { XYCoord } from "react-dnd";
 
@@ -29,7 +29,6 @@ export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (p
     const {
         AttributeFilterComponentSet,
         InsightWidgetComponentSet,
-        KpiWidgetComponentSet,
         DateFilterComponentSet,
         RichTextWidgetComponentSet,
         VisualizationSwitcherWidgetComponentSet,
@@ -40,7 +39,6 @@ export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (p
             attributeFilter: AttributeFilterComponentSet.dragging.DraggingComponent,
             dateFilter: DateFilterComponentSet.dragging.DraggingComponent,
             insight: InsightWidgetComponentSet.dragging.DraggingComponent,
-            kpi: KpiWidgetComponentSet.dragging.DraggingComponent,
             richText: RichTextWidgetComponentSet.dragging.DraggingComponent,
             visualizationSwitcher: VisualizationSwitcherWidgetComponentSet.dragging.DraggingComponent,
             dashboardLayout: DashboardLayoutWidgetComponentSet.dragging.DraggingComponent,
@@ -48,7 +46,6 @@ export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (p
         [
             AttributeFilterComponentSet.dragging.DraggingComponent,
             InsightWidgetComponentSet.dragging.DraggingComponent,
-            KpiWidgetComponentSet.dragging.DraggingComponent,
             DateFilterComponentSet.dragging.DraggingComponent,
             RichTextWidgetComponentSet.dragging.DraggingComponent,
             VisualizationSwitcherWidgetComponentSet.dragging.DraggingComponent,

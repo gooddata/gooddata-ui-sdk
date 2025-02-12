@@ -49,8 +49,6 @@ import {
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
 import { accessibleDashboardsActions } from "../../../store/accessibleDashboards/index.js";
 import { loadAccessibleDashboardList } from "./loadAccessibleDashboardList.js";
-import { loadLegacyDashboards } from "./loadLegacyDashboards.js";
-import { legacyDashboardsActions } from "../../../store/legacyDashboards/index.js";
 import uniqBy from "lodash/uniqBy.js";
 import { loadDashboardPermissions } from "./loadDashboardPermissions.js";
 import { dashboardPermissionsActions } from "../../../store/dashboardPermissions/index.js";
@@ -194,7 +192,6 @@ function* loadExistingDashboard(
         call(loadDashboardAlerts, ctx),
         call(loadUser, ctx),
         call(loadDashboardList, ctx),
-        call(loadLegacyDashboards, ctx),
         call(loadDashboardPermissions, ctx),
         call(loadDateHierarchyTemplates, ctx),
         call(loadFilterViews, ctx),
@@ -216,7 +213,6 @@ function* loadExistingDashboard(
         alerts,
         user,
         listedDashboards,
-        legacyDashboards,
         dashboardPermissions,
         dateHierarchyTemplates,
         filterViews,
@@ -230,7 +226,6 @@ function* loadExistingDashboard(
         PromiseFnReturnType<typeof loadDashboardAlerts>,
         PromiseFnReturnType<typeof loadUser>,
         PromiseFnReturnType<typeof loadDashboardList>,
-        PromiseFnReturnType<typeof loadLegacyDashboards>,
         PromiseFnReturnType<typeof loadDashboardPermissions>,
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
         PromiseFnReturnType<typeof loadFilterViews>,
@@ -300,7 +295,6 @@ function* loadExistingDashboard(
             }),
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards || listedDashboards),
-            legacyDashboardsActions.setLegacyDashboards(legacyDashboards),
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
             renderModeActions.setRenderMode(config.initialRenderMode),
             dashboardPermissionsActions.setDashboardPermissions(dashboardPermissions),
@@ -338,7 +332,6 @@ function* initializeNewDashboard(
         user,
         listedDashboards,
         accessibleDashboards,
-        legacyDashboards,
         dateHierarchyTemplates,
     ]: [
         SagaReturnType<typeof resolveDashboardConfigAndFeatureFlagDependentCalls>,
@@ -348,7 +341,6 @@ function* initializeNewDashboard(
         PromiseFnReturnType<typeof loadUser>,
         PromiseFnReturnType<typeof loadDashboardList>,
         PromiseFnReturnType<typeof loadAccessibleDashboardList>,
-        PromiseFnReturnType<typeof loadLegacyDashboards>,
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
     ] = yield all([
         call(resolveDashboardConfigAndFeatureFlagDependentCalls, ctx, cmd),
@@ -358,7 +350,6 @@ function* initializeNewDashboard(
         call(loadUser, ctx),
         call(loadDashboardList, ctx),
         call(loadAccessibleDashboardList, ctx),
-        call(loadLegacyDashboards, ctx),
         call(loadDateHierarchyTemplates, ctx),
         call(loadFilterViews, ctx),
     ]);
@@ -380,7 +371,6 @@ function* initializeNewDashboard(
             }),
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards),
-            legacyDashboardsActions.setLegacyDashboards(legacyDashboards),
             executionResultsActions.clearAllExecutionResults(),
             ...actionsToInitializeNewDashboard(config.dateFilterConfig),
             dateFilterConfigActions.setDateFilterConfig({
