@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { IDashboard, IDashboardDefinition, IAccessControlAware } from "@gooddata/sdk-model";
 import { BatchAction, batchActions } from "redux-batched-actions";
@@ -24,7 +24,6 @@ import {
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { selectDateFilterConfigOverrides } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
-import { alertsActions } from "../../store/alerts/index.js";
 import { savingActions } from "../../store/saving/index.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
@@ -184,7 +183,6 @@ function* saveAs(
     const batch = batchActions(
         [
             metaActions.setMeta({ dashboard: dashboardWithUser }),
-            alertsActions.setAlerts([]),
             filterContextActions.updateFilterContextIdentity({
                 filterContextIdentity: dashboardFilterContextIdentity(dashboardWithUser),
             }),
