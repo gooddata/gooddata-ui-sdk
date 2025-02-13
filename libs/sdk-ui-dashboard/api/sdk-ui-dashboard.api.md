@@ -7820,6 +7820,9 @@ export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean>;
 // @internal
 export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<boolean>;
 
+// @internal (undocumented)
+export const selectEnableDashboardFiltersApplyModes: DashboardSelector<boolean>;
+
 // @internal
 export const selectEnableDrilledTooltip: DashboardSelector<boolean>;
 

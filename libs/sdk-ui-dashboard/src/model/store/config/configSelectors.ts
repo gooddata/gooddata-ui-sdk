@@ -883,3 +883,13 @@ export const selectEnableSlideshowExports: DashboardSelector<boolean> = createSe
         return state.settings?.enableSlideshowExports ?? false;
     },
 );
+
+/**
+ * @internal
+ */
+export const selectEnableDashboardFiltersApplyModes: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardFiltersApplyModes ?? false;
+    },
+);
