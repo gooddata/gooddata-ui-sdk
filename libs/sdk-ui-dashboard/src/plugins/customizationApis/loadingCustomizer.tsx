@@ -132,6 +132,7 @@ export class DefaultLoadingCustomizer implements ILoadingCustomizer {
     private readonly logger: IDashboardCustomizationLogger;
     private readonly mutationContext: CustomizerMutationsContext;
     private state: ILoadingCustomizerState;
+    private updated = false;
 
     constructor(
         logger: IDashboardCustomizationLogger,
@@ -146,6 +147,7 @@ export class DefaultLoadingCustomizer implements ILoadingCustomizer {
     public withCustomProvider = (provider: OptionalLoadingComponentProvider): ILoadingCustomizer => {
         this.state.addCustomProvider(provider);
         this.mutationContext.loading = union(this.mutationContext.loading, ["provider"]);
+        this.updated = true;
 
         return this;
     };
@@ -174,16 +176,19 @@ export class DefaultLoadingCustomizer implements ILoadingCustomizer {
         // this currently registered one
         this.state.switchRootProvider(newRootProvider);
         this.mutationContext.loading = union(this.mutationContext.loading, ["decorator"]);
+        this.updated = true;
 
         return this;
     }
 
     getCustomizerResult = (): ILoadingCustomizerResult => {
         return {
-            LoadingComponent: (props) => {
-                const Comp = this.state.getRootProvider()(props);
-                return <Comp {...props} />;
-            },
+            LoadingComponent: this.updated
+                ? (props) => {
+                      const Comp = this.state.getRootProvider()(props);
+                      return <Comp {...props} />;
+                  }
+                : undefined,
         };
     };
 

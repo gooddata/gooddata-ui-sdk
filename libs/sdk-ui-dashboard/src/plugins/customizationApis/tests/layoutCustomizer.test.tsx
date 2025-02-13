@@ -9,7 +9,6 @@ import { createCustomizerMutationsContext, CustomizerMutationsContext } from "..
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger";
 import { IDashboardLayoutProps } from "../../../presentation";
-import { invariant } from "ts-invariant";
 import { render } from "@testing-library/react";
 import { EMPTY_MUTATIONS } from "./utils";
 
@@ -36,17 +35,19 @@ const EmptyDashboard: IDashboard<ExtendedDashboardWidget> = {
 function renderToHtml(customizer: DefaultLayoutCustomizer) {
     const provider = customizer.getCustomizerResult();
     const Component = provider.LayoutComponent;
+
+    // Component can be null if no override
+    if (!Component) {
+        return null;
+    }
+
     const props: IDashboardLayoutProps = {
         onDrill: () => {},
         onError: () => {},
         onFiltersChange: () => {},
     };
 
-    // this should not happen; if it does something is seriously hosed in the customizer
-    invariant(Component);
-
     const { container } = render(<Component {...props} />);
-
     return container.innerHTML;
 }
 
