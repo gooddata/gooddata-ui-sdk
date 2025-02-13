@@ -84,6 +84,10 @@ const setFilterContext: FilterContextReducer<PayloadAction<SetFilterContextPaylo
     state.attributeFilterDisplayForms = attributeFilterDisplayForms;
 };
 
+const applyFilterContext: FilterContextReducer<PayloadAction<void>> = (state) => {
+    state.appliedFilterContextDefinition = state.filterContextDefinition;
+};
+
 //
 //
 //
@@ -687,4 +691,5 @@ export const filterContextReducers = {
     changeSelectionMode,
     changeLimitingItems,
     setPreloadedAttributesWithReferences,
+    applyFilterContext,
 };
