@@ -38,7 +38,7 @@ import {
     convertCurrentUserToAutomationRecipient,
     convertCurrentUserToWorkspaceUser,
 } from "../../../../../../_staging/automation/index.js";
-import { isEmail } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/utils/validate.js";
+import { isEmail } from "../../../../../scheduledEmail/utils/validate.js";
 import { getDescription, IMeasureFormatMap } from "../utils/getters.js";
 
 export interface IUseEditAlertProps {

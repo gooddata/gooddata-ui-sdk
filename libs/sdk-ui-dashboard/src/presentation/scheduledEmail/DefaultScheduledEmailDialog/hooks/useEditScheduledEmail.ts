@@ -17,8 +17,6 @@ import {
     isAutomationExternalUserRecipient,
     isAutomationUnknownUserRecipient,
 } from "@gooddata/sdk-model";
-import parseISO from "date-fns/parseISO/index.js";
-import { getUserTimezone } from "../utils/timezone.js";
 import {
     useDashboardSelector,
     selectDashboardTitle,
@@ -29,12 +27,7 @@ import {
     selectUsers,
     selectEnableExternalRecipients,
 } from "../../../../model/index.js";
-import { normalizeTime } from "@gooddata/sdk-ui-kit";
 import { WidgetAttachmentType } from "../types.js";
-import {
-    toModifiedISOStringFromTimezone,
-    toModifiedISOStringToTimezone,
-} from "../../DefaultScheduledEmailManagementDialog/utils.js";
 import {
     areAutomationsEqual,
     convertCurrentUserToAutomationRecipient,
@@ -49,7 +42,13 @@ import {
 import { invariant } from "ts-invariant";
 import { useIntl } from "react-intl";
 import { useScheduleValidation } from "./useScheduleValidation.js";
-import { isEmail } from "../utils/validate.js";
+import {
+    toModifiedISOStringToTimezone,
+    toNormalizedFirstRunAndCron,
+    toNormalizedStartDate,
+} from "../../utils/date.js";
+import { isEmail } from "../../utils/validate.js";
+import { getUserTimezone } from "../../utils/timezone.js";
 
 export interface IUseEditScheduledEmailProps {
     scheduledExportToEdit?: IAutomationMetadataObject;
@@ -336,17 +335,10 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
             }) ?? true,
     };
 
-    let startDate: Date;
-    if (editedAutomation.schedule?.firstRun) {
-        const { iso } = toModifiedISOStringFromTimezone(
-            parseISO(editedAutomation.schedule.firstRun),
-            editedAutomation.schedule.timezone ?? getUserTimezone().identifier,
-            getUserTimezone().identifier,
-        );
-        startDate = parseISO(iso);
-    } else {
-        startDate = normalizeTime(parseISO(new Date().toISOString()), undefined, 60);
-    }
+    const startDate = toNormalizedStartDate(
+        editedAutomation.schedule?.firstRun,
+        editedAutomation.schedule?.timezone,
+    );
 
     const selectedNotificationChannel = notificationChannels.find(
         (channel) => channel.id === editedAutomation.notificationChannel,
@@ -511,13 +503,7 @@ function newAutomationMetadataObjectDefinition({
     dashboardFilters?: FilterContextItem[];
     widgetFilters?: IFilter[];
 }): IAutomationMetadataObjectDefinition {
-    const normalizedFirstRun = normalizeTime(parseISO(new Date().toISOString()), undefined, 60);
-    const { iso: firstRun } = toModifiedISOStringToTimezone(
-        normalizedFirstRun,
-        timezone ?? getUserTimezone().identifier,
-    );
-
-    const cron = getDefaultCronExpression(normalizedFirstRun);
+    const { firstRun, cron } = toNormalizedFirstRunAndCron(timezone);
     const exportDefinition =
         widget && insight
             ? newWidgetExportDefinitionMetadataObjectDefinition({
@@ -554,8 +540,4 @@ function newAutomationMetadataObjectDefinition({
     };
 
     return automation;
-}
-
-export function getDefaultCronExpression(date: Date) {
-    return `0 0 ${date.getHours()} ? * *`;
 }

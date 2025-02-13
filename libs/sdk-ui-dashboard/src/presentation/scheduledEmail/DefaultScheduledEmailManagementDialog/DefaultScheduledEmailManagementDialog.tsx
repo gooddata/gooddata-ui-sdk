@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import React, { useCallback, useState } from "react";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
@@ -19,7 +19,7 @@ import {
     selectIsWhiteLabeled,
 } from "../../../model/index.js";
 import { messages } from "../../../locales.js";
-import { isMobileView } from "../DefaultScheduledEmailDialog/utils/responsive.js";
+import { isMobileView } from "../utils/responsive.js";
 
 /**
  * @alpha
