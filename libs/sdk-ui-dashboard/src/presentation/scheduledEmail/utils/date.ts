@@ -1,4 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
+import { normalizeTime } from "@gooddata/sdk-ui-kit";
+import parseISO from "date-fns/parseISO/index.js";
+
+import { getUserTimezone } from "./timezone.js";
+import { getDefaultCronExpression } from "./cron.js";
 
 /**
  * In order to match backend format, we need to remove milliseconds from the date.
@@ -40,6 +45,10 @@ export const toModifiedISOStringToTimezone = (date: Date, timezone?: string) => 
     };
 };
 
+/**
+ * In order to match backend format, we need to remove milliseconds from the date and also convert it to UTC
+ * based on the provided from timezone and to timezone.
+ */
 export const toModifiedISOStringFromTimezone = (date: Date, fromTimezone: string, toTimezone?: string) => {
     if (fromTimezone && toTimezone) {
         const offsetFrom = getTimezoneOffset(date, fromTimezone);
@@ -57,16 +66,56 @@ export const toModifiedISOStringFromTimezone = (date: Date, fromTimezone: string
     };
 };
 
-function getTimezoneOffsetInISOFormat(date: Date, timeZone: string) {
-    const str = date.toLocaleString("en-US", { timeZone, timeZoneName: "longOffset" });
-    const tmz = str.split(" ").pop() ?? "Z";
-    return tmz.replace("GMT", "");
+export function toNormalizedFirstRunAndCron(timezone?: string) {
+    const normalizedFirstRun = normalizeTime(parseISO(new Date().toISOString()), undefined, 60);
+    const { iso: firstRun } = toModifiedISOStringToTimezone(
+        normalizedFirstRun,
+        timezone ?? getUserTimezone().identifier,
+    );
+    const cron = getDefaultCronExpression(normalizedFirstRun);
+
+    return {
+        firstRunDate: normalizedFirstRun,
+        firstRun,
+        cron,
+    };
 }
 
-function getTimezoneOffset(date: Date, timeZone: string) {
+export function toNormalizedStartDate(firstRun?: string, timezone?: string) {
+    if (firstRun) {
+        const { iso } = toModifiedISOStringFromTimezone(
+            parseISO(firstRun),
+            timezone ?? getUserTimezone().identifier,
+            getUserTimezone().identifier,
+        );
+        return parseISO(iso);
+    }
+    return normalizeTime(parseISO(new Date().toISOString()), undefined, 60);
+}
+
+const UTC_OFFSET = "Z";
+
+function getTimezoneOffsetInISOFormat(date: Date, timeZone: string) {
+    const str = date.toLocaleString("en-US", { timeZone, timeZoneName: "longOffset" });
+    const tmz = str.split(" ").pop() ?? UTC_OFFSET;
+    const offset = tmz.replace("GMT", "");
+
+    //UTC offset
+    if (offset === UTC_OFFSET) {
+        return UTC_OFFSET;
+    }
+    //GMT offset
+    if (offset === "") {
+        return UTC_OFFSET;
+    }
+    //GMT offset with minutes
+    return offset;
+}
+
+export function getTimezoneOffset(date: Date, timeZone: string) {
     const iso = getTimezoneOffsetInISOFormat(date, timeZone);
 
-    if (iso === "Z" || !iso) {
+    if (iso === UTC_OFFSET) {
         return 0;
     }
 

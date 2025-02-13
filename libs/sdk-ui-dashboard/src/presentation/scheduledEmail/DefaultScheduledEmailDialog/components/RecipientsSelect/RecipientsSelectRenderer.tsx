@@ -32,9 +32,9 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
-import { isEmail } from "../../utils/validate.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../../constants/index.js";
-import { matchRecipient } from "../../utils/users.js";
+import { isEmail } from "../../../utils/validate.js";
+import { matchRecipient } from "../../../utils/users.js";
 
 const MAXIMUM_RECIPIENTS_RECEIVE = 60;
 const DELAY_TIME = 500;

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 const EMAIL_REGEX =
     // disabling as there are issues with the regex but we rather not touch it...
