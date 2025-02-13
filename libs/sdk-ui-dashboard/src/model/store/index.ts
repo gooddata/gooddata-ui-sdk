@@ -286,13 +286,6 @@ export {
 } from "./drill/drillSelectors.js";
 export type { DrillState } from "./drill/drillState.js";
 export type { ICrossFilteringItem } from "./drill/types.js";
-export type { AlertsState } from "./alerts/alertsState.js";
-export {
-    selectAlerts,
-    selectAlertByWidgetRef,
-    selectAlertsMap,
-    selectAlertByRef,
-} from "./alerts/alertsSelectors.js";
 export type { UserState } from "./user/userState.js";
 export { selectCurrentUser, selectCurrentUserRef } from "./user/userSelectors.js";
 export type { DashboardMetaState, DashboardDescriptor } from "./meta/metaState.js";

@@ -16,7 +16,6 @@ import { configSliceReducer } from "./config/index.js";
 import { entitlementsSliceReducer } from "./entitlements/index.js";
 import { dateFilterConfigSliceReducer } from "./dateFilterConfig/index.js";
 import { permissionsSliceReducer } from "./permissions/index.js";
-import { alertsSliceReducer } from "./alerts/index.js";
 import { catalogSliceReducer } from "./catalog/index.js";
 import { call, fork } from "redux-saga/effects";
 import { userSliceReducer } from "./user/index.js";
@@ -313,7 +312,6 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         attributeFilterConfigs: attributeFilterConfigsSliceReducer,
         dateFilterConfigs: dateFilterConfigsSliceReducer,
         insights: insightsSliceReducer,
-        alerts: alertsSliceReducer,
         drillTargets: drillTargetsReducer,
         catalog: catalogSliceReducer,
         user: userSliceReducer,

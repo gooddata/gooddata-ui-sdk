@@ -15,9 +15,7 @@ import { DateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mer
 import { resolvePermissions } from "./resolvePermissions.js";
 import { permissionsActions } from "../../../store/permissions/index.js";
 import { loadCatalog } from "./loadCatalog.js";
-import { loadDashboardAlerts } from "./loadDashboardAlerts.js";
 import { catalogActions } from "../../../store/catalog/index.js";
-import { alertsActions } from "../../../store/alerts/index.js";
 import { BatchAction, batchActions } from "redux-batched-actions";
 import { loadUser } from "./loadUser.js";
 import { userActions } from "../../../store/user/index.js";
@@ -189,7 +187,6 @@ function* loadExistingDashboard(
         call(resolvePermissions, ctx, cmd),
         call(resolveEntitlements, ctx, cmd),
         call(decideAndLoadFullCatalog, ctx, cmd),
-        call(loadDashboardAlerts, ctx),
         call(loadUser, ctx),
         call(loadDashboardList, ctx),
         call(loadDashboardPermissions, ctx),
@@ -210,7 +207,6 @@ function* loadExistingDashboard(
         permissions,
         entitlements,
         catalog,
-        alerts,
         user,
         listedDashboards,
         dashboardPermissions,
@@ -223,7 +219,6 @@ function* loadExistingDashboard(
         SagaReturnType<typeof resolvePermissions>,
         PromiseFnReturnType<typeof resolveEntitlements>,
         PromiseFnReturnType<typeof decideAndLoadFullCatalog>,
-        PromiseFnReturnType<typeof loadDashboardAlerts>,
         PromiseFnReturnType<typeof loadUser>,
         PromiseFnReturnType<typeof loadDashboardList>,
         PromiseFnReturnType<typeof loadDashboardPermissions>,
@@ -281,7 +276,6 @@ function* loadExistingDashboard(
             permissionsActions.setPermissions(permissions),
             catalogActions.setCatalogItems(catalogPayload),
             ...initActions,
-            alertsActions.setAlerts(alerts),
             dateFilterConfigActions.setDateFilterConfig({
                 dateFilterConfig: dashboard.dateFilterConfig,
                 effectiveDateFilterConfig: effectiveDateFilterConfig.config,

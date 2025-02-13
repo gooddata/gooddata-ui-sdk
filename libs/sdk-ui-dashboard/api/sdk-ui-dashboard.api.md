@@ -4,7 +4,6 @@
 
 ```ts
 
-/// <reference types="lodash" />
 /// <reference types="react" />
 
 import { AccessGranularPermission } from '@gooddata/sdk-model';
@@ -261,12 +260,10 @@ import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationSizeInfo } from '@gooddata/sdk-ui-ext';
 import { IVisualizationSwitcherWidget } from '@gooddata/sdk-model';
 import { IWidget } from '@gooddata/sdk-model';
-import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { LocalIdRef } from '@gooddata/sdk-model';
-import { MemoizedFunction } from 'lodash';
 import { MessageDescriptor } from 'react-intl';
 import { MouseEvent as MouseEvent_2 } from 'react';
 import { ObjectType } from '@gooddata/sdk-model';
@@ -474,9 +471,6 @@ export type AlertingDisabledReason = "noDestinations" | "oldWidget" | "disabledO
 
 // @internal (undocumented)
 export const AlertingManagementDialog: (props: IAlertingManagementDialogProps) => JSX.Element;
-
-// @internal (undocumented)
-export type AlertsState = EntityState<IWidgetAlert>;
 
 // @internal
 export type AllQueryCacheReducers<TQuery extends IDashboardQuery, TResult> = {
@@ -2878,8 +2872,6 @@ export interface DashboardSharingChangedPayload {
 export interface DashboardState {
     // @beta (undocumented)
     accessibleDashboards: EntityState<IListedDashboard>;
-    // @beta (undocumented)
-    alerts: EntityState<IWidgetAlert>;
     // @alpha (undocumented)
     attributeFilterConfigs: AttributeFilterConfigsState;
     // @alpha (undocumented)
@@ -7399,18 +7391,6 @@ export const selectActiveSectionIndex: DashboardSelector<number | undefined>;
 
 // @alpha (undocumented)
 export const selectAdhocDateHierarchies: DashboardSelector<ICatalogDateAttributeHierarchy[]>;
-
-// @alpha
-export const selectAlertByRef: ((ref: ObjRef) => (state: DashboardState) => IWidgetAlert | undefined) & MemoizedFunction;
-
-// @alpha
-export const selectAlertByWidgetRef: ((widgetRef: ObjRef) => (state: DashboardState) => IWidgetAlert | undefined) & MemoizedFunction;
-
-// @alpha
-export const selectAlerts: (state: DashboardState) => IWidgetAlert[];
-
-// @internal
-export const selectAlertsMap: DashboardSelector<ObjRefMap<IWidgetAlert>>;
 
 // @alpha
 export const selectAllAnalyticalWidgets: DashboardSelector<IWidget[]>;

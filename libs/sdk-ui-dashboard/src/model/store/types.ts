@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { AnyAction, Dispatch, EntityState } from "@reduxjs/toolkit";
-import { IInsight, IWidgetAlert, IListedDashboard } from "@gooddata/sdk-model";
+import { IInsight, IListedDashboard } from "@gooddata/sdk-model";
 import { LoadingState } from "./loading/loadingState.js";
 import { SavingState } from "./saving/savingState.js";
 import { FilterContextState } from "./filterContext/filterContextState.js";
@@ -74,8 +74,6 @@ export interface DashboardState {
     // Entities
     /** @beta */
     insights: EntityState<IInsight>;
-    /** @beta */
-    alerts: EntityState<IWidgetAlert>;
     /** @alpha */
     drillTargets: EntityState<IDrillTargets>;
     /** @beta */
