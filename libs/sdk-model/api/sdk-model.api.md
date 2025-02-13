@@ -3352,6 +3352,7 @@ export interface ISettings {
     enableCsvUploader?: boolean;
     enableCustomColorPicker?: boolean;
     enableDashboardDescriptionDynamicHeight?: boolean;
+    enableDashboardFiltersApplyModes?: boolean;
     enableDashboardFilterViews?: boolean;
     enableDashboardFlexibleLayout?: boolean;
     enableDataSampling?: boolean;

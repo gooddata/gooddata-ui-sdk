@@ -105,6 +105,7 @@ export {
     selectEnableDashboardDescriptionDynamicHeight,
     selectEnableCriticalContentPerformanceOptimizations,
     selectEnableSlideshowExports,
+    selectEnableDashboardFiltersApplyModes,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
