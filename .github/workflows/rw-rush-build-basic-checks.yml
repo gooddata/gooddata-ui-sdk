@@ -123,3 +123,10 @@ jobs:
       - name: Rush test-isolated-ci
         run: |
           node common/scripts/install-run-rush.js test-isolated-ci --impacted-by git:origin/${TARGET_BRANCH}
+      - name: Archive the artifacts
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: unit-test-artifacts
+          path: |
+            libs/*/ci/results/test-results.xml
