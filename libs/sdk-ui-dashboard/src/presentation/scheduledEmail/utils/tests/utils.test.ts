@@ -8,8 +8,10 @@ import {
     toModifiedISOString,
     toNormalizedFirstRunAndCron,
     toNormalizedStartDate,
+    toModifiedISOStringToTimezone,
     getTimezoneOffset,
 } from "../date";
+import { getUserTimezone } from "../timezone";
 
 const toHours = -3600000;
 
@@ -33,9 +35,15 @@ describe("toNormalizedFirstRunAndCron", () => {
     it("no zone", () => {
         const res = toNormalizedFirstRunAndCron();
 
-        const iso = isoDate(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours() - offset, 0);
-        const cron = cronDaily(res.firstRunDate.getHours());
-
+        const iso = isoDate(
+            now.getFullYear(),
+            now.getMonth(),
+            now.getDate(),
+            offset ? now.getHours() + 1 : now.getHours(),
+            0,
+        );
+        const dt = toModifiedISOStringToTimezone(res.normalizedFirstRun, getUserTimezone().identifier);
+        const cron = cronDaily(dt.date.getHours());
         expect(res.firstRun).toEqual(iso);
         expect(res.cron).toEqual(cron);
     });
@@ -45,13 +53,14 @@ describe("toNormalizedFirstRunAndCron", () => {
         const res = toNormalizedFirstRunAndCron("Africa/Abidjan");
 
         const iso = isoDate(
-            res.firstRunDate.getFullYear(),
-            res.firstRunDate.getMonth(),
-            res.firstRunDate.getDate(),
-            res.firstRunDate.getHours() + timezoneOffset,
+            res.normalizedFirstRun.getFullYear(),
+            res.normalizedFirstRun.getMonth(),
+            res.normalizedFirstRun.getDate(),
+            res.normalizedFirstRun.getHours() + timezoneOffset,
             0,
         );
-        const cron = cronDaily(res.firstRunDate.getHours());
+        const dt = toModifiedISOStringToTimezone(res.normalizedFirstRun, getUserTimezone().identifier);
+        const cron = cronDaily(dt.date.getHours());
         expect(res.firstRun).toEqual(iso);
         expect(res.cron).toEqual(cron);
     });
@@ -61,13 +70,14 @@ describe("toNormalizedFirstRunAndCron", () => {
         const res = toNormalizedFirstRunAndCron("Indian/Mauritius");
 
         const iso = isoDate(
-            res.firstRunDate.getFullYear(),
-            res.firstRunDate.getMonth(),
-            res.firstRunDate.getDate(),
-            res.firstRunDate.getHours() + timezoneOffset,
+            res.normalizedFirstRun.getFullYear(),
+            res.normalizedFirstRun.getMonth(),
+            res.normalizedFirstRun.getDate(),
+            res.normalizedFirstRun.getHours() + timezoneOffset,
             0,
         );
-        const cron = cronDaily(res.firstRunDate.getHours());
+        const dt = toModifiedISOStringToTimezone(res.normalizedFirstRun, getUserTimezone().identifier);
+        const cron = cronDaily(dt.date.getHours());
 
         expect(res.firstRun).toEqual(iso);
         expect(res.cron).toEqual(cron);
@@ -78,13 +88,14 @@ describe("toNormalizedFirstRunAndCron", () => {
         const res = toNormalizedFirstRunAndCron("America/Nassau");
 
         const iso = isoDate(
-            res.firstRunDate.getFullYear(),
-            res.firstRunDate.getMonth(),
-            res.firstRunDate.getDate(),
-            res.firstRunDate.getHours() + timezoneOffset,
+            res.normalizedFirstRun.getFullYear(),
+            res.normalizedFirstRun.getMonth(),
+            res.normalizedFirstRun.getDate(),
+            res.normalizedFirstRun.getHours() + timezoneOffset,
             0,
         );
-        const cron = cronDaily(res.firstRunDate.getHours());
+        const dt = toModifiedISOStringToTimezone(res.normalizedFirstRun, getUserTimezone().identifier);
+        const cron = cronDaily(dt.date.getHours());
 
         expect(res.firstRun).toEqual(iso);
         expect(res.cron).toEqual(cron);

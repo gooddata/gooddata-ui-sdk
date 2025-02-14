@@ -72,10 +72,16 @@ export function toNormalizedFirstRunAndCron(timezone?: string) {
         normalizedFirstRun,
         timezone ?? getUserTimezone().identifier,
     );
-    const cron = getDefaultCronExpression(normalizedFirstRun);
+
+    // We need to calculate the relative time zones difference to get the correct cron expression
+    const isoUrl = parseISO(firstRun);
+    const offsetFrom = getTimezoneOffset(isoUrl, timezone ?? getUserTimezone().identifier);
+    const offsetTo = getTimezoneOffset(isoUrl, getUserTimezone().identifier);
+    const firstRunDate = new Date(isoUrl.getTime() + offsetFrom - offsetTo);
+    const cron = getDefaultCronExpression(firstRunDate);
 
     return {
-        firstRunDate: normalizedFirstRun,
+        normalizedFirstRun,
         firstRun,
         cron,
     };
