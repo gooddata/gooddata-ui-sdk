@@ -169,6 +169,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with chan
   "withDateFormat": [Function],
   "withDimensions": [Function],
   "withExecConfig": [Function],
+  "withSignal": [Function],
   "withSorting": [Function],
 }
 `;
@@ -312,6 +313,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with chan
   "withDateFormat": [Function],
   "withDimensions": [Function],
   "withExecConfig": [Function],
+  "withSignal": [Function],
   "withSorting": [Function],
 }
 `;
@@ -455,6 +457,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with chan
   "withDateFormat": [Function],
   "withDimensions": [Function],
   "withExecConfig": [Function],
+  "withSignal": [Function],
   "withSorting": [Function],
 }
 `;
@@ -598,6 +601,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with diff
   "withDateFormat": [Function],
   "withDimensions": [Function],
   "withExecConfig": [Function],
+  "withSignal": [Function],
   "withSorting": [Function],
 }
 `;
@@ -741,6 +745,7 @@ exports[`ComparisonProvider > createExecution > Should build execution with rati
   "withDateFormat": [Function],
   "withDimensions": [Function],
   "withExecConfig": [Function],
+  "withSignal": [Function],
   "withSorting": [Function],
 }
 `;

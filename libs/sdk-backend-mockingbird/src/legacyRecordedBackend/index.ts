@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IExecutionResult as ILegacyExecutionResult,
@@ -445,6 +445,9 @@ function recordedPreparedExecution(
                 console.warn("Backend does not support data sampling, result will be not affected");
             }
             return executionFactory.forDefinition(definition);
+        },
+        withSignal(_signal: AbortSignal): IPreparedExecution {
+            return recordedPreparedExecution(definition, executionFactory, recordings);
         },
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {

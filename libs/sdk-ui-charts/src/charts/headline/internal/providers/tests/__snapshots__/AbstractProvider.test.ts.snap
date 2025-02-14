@@ -104,6 +104,7 @@ exports[`AbstractProvider > createExecution > execution should be created 1`] = 
   "withDateFormat": [Function],
   "withDimensions": [Function],
   "withExecConfig": [Function],
+  "withSignal": [Function],
   "withSorting": [Function],
 }
 `;
@@ -212,6 +213,7 @@ exports[`AbstractProvider > createExecution > execution should be created withou
   "withDateFormat": [Function],
   "withDimensions": [Function],
   "withExecConfig": [Function],
+  "withSignal": [Function],
   "withSorting": [Function],
 }
 `;

@@ -454,6 +454,8 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     // (undocumented)
     fingerprint(): string;
     // (undocumented)
+    readonly signal?: AbortSignal;
+    // (undocumented)
     withBuckets(...buckets: IBucket[]): IPreparedExecution;
     // (undocumented)
     withDateFormat(dateFormat: string): IPreparedExecution;
@@ -461,6 +463,8 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
     // (undocumented)
     withExecConfig(config: IExecutionConfig): IPreparedExecution;
+    // (undocumented)
+    withSignal(signal: AbortSignal): IPreparedExecution;
     // (undocumented)
     withSorting(...items: ISortItem[]): IPreparedExecution;
 }
