@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import { describe, it, expect } from "vitest";
 
@@ -17,7 +17,14 @@ import {
     IScheduleEmailRepeatFrequencyDayOfWeek,
     IScheduleEmailRepeatTime,
 } from "../../interfaces.js";
-import { getDate, getDay, getMonth, getWeek, getYear } from "../datetime.js";
+import {
+    getDate,
+    getDay,
+    getMonth,
+    getWeek,
+    getYear,
+    isLastOccurrenceOfWeekdayInMonth,
+} from "../datetime.js";
 
 describe("repeat string generator", () => {
     const now = new Date(2019, 10, 10, 10, 30, 0, 0);
@@ -57,6 +64,30 @@ describe("repeat string generator", () => {
                 "0:1*2:4:10:30:0",
                 REPEAT_TYPES.MONTHLY,
                 { month: { dayOfWeek: { day: 4, week: 2 }, type: REPEAT_EXECUTE_ON.DAY_OF_WEEK } },
+                undefined,
+            ],
+            [
+                "0:1*3:2:10:30:0",
+                REPEAT_TYPES.MONTHLY,
+                { month: { dayOfWeek: { day: 2, week: 3 }, type: REPEAT_EXECUTE_ON.DAY_OF_WEEK } },
+                undefined,
+            ],
+            [
+                "0:1*4:2:10:30:0",
+                REPEAT_TYPES.MONTHLY,
+                { month: { dayOfWeek: { day: 2, week: 4 }, type: REPEAT_EXECUTE_ON.DAY_OF_WEEK } },
+                undefined,
+            ],
+            [
+                "0:1*-1:2:10:30:0",
+                REPEAT_TYPES.MONTHLY,
+                { month: { dayOfWeek: { day: 2, week: -1 }, type: REPEAT_EXECUTE_ON.DAY_OF_WEEK } },
+                undefined,
+            ],
+            [
+                "0:1*-1:2:10:30:0",
+                REPEAT_TYPES.MONTHLY,
+                { month: { dayOfWeek: { day: 2, week: -1 }, type: REPEAT_EXECUTE_ON.DAY_OF_WEEK } },
                 undefined,
             ],
             ["0:0:0:1*10:30:0", REPEAT_TYPES.CUSTOM, { day: undefined }, undefined],
@@ -231,5 +262,24 @@ describe("repeat string parser", () => {
                 });
             },
         );
+    });
+});
+
+describe("check if is last occurrence of weekday in month", () => {
+    describe("isLastOccurrenceOfWeekdayInMonth", () => {
+        type Scenario = [dateString: string, expectedResult: boolean];
+
+        const scenarios: Scenario[] = [
+            ["2025-02-23", true],
+            ["2025-02-28", true],
+            ["2025-03-31", true],
+            ["2025-03-16", false],
+            ["2025-03-24", false],
+            ["2025-03-25", true],
+        ];
+
+        it.each(scenarios)("should return %s if the date is %s", (dateString, expectedResult) => {
+            expect(isLastOccurrenceOfWeekdayInMonth(new Date(dateString))).toBe(expectedResult);
+        });
     });
 });

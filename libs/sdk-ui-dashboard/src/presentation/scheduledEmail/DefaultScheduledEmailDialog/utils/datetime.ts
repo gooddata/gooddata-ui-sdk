@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isDate from "lodash/isDate.js";
 import format from "date-fns/format/index.js";
 
@@ -48,6 +48,9 @@ export function getDay(date: Date): number {
 }
 
 export function getWeek(date: Date): number {
+    if (isLastOccurrenceOfWeekdayInMonth(date)) {
+        return -1;
+    }
     return Math.ceil(date.getDate() / 7);
 }
 
@@ -57,4 +60,10 @@ export function getMonth(date: Date): number {
 
 export function getYear(date: Date): number {
     return date.getFullYear();
+}
+
+export function isLastOccurrenceOfWeekdayInMonth(date: Date): boolean {
+    const nextWeek = new Date(date);
+    nextWeek.setDate(nextWeek.getDate() + 7);
+    return nextWeek.getMonth() !== date.getMonth();
 }
