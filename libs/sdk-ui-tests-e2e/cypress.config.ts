@@ -7,6 +7,7 @@ import axios from "axios";
 import readPdf from "./cypress/plugins/readPdf";
 import parseXlsx from "./cypress/plugins/parseXlsx";
 import removePassingTestVideosPlugin from "./cypress/plugins/removePassingTestVideos";
+import installLogsPrinter from "cypress-terminal-report/src/installLogsPrinter";
 
 export default defineConfig({
     e2e: {
@@ -35,6 +36,13 @@ export default defineConfig({
             });
             readPdf(on, _config);
             parseXlsx(on, _config);
+            installLogsPrinter(on, {
+                outputRoot: "cypress/results/",
+                specRoot: "cypress/integration",
+                outputTarget: {
+                    "logs|txt": "txt",
+                },
+            });
             return _config;
         },
         viewportWidth: 1400,
