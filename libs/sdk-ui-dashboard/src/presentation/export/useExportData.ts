@@ -16,12 +16,19 @@ import { useMemo } from "react";
 export const useSectionExportData = (firstLevel: boolean): SectionExportData | undefined => {
     const isExportMode = useDashboardSelector(selectIsInExportMode);
 
-    if (!isExportMode || !firstLevel) {
+    if (!isExportMode) {
         return undefined;
     }
 
+    if (firstLevel) {
+        return {
+            section: { "data-export-type": "section" },
+            title: { "data-export-type": "section-title" },
+            description: { "data-export-type": "section-description" },
+        };
+    }
+
     return {
-        section: { "data-export-type": "section" },
         title: { "data-export-type": "section-title" },
         description: { "data-export-type": "section-description" },
     };
