@@ -8,19 +8,16 @@ It means the client is generated based on code on running backend api and stored
 
 1. You need to install Java runtime environment (because openapi-generator is a java based tool).
 
-2. Maybe you will need to add execution priviledges to the script file:
-   `chmod +x ./scripts/generate.js`
-
-3. The script expects env variable `BASE_URL`
+2. The script expects env variable `BASE_URL`
    Usually you want to use staging: `BASE_URL=https://staging.dev-latest.stg11.panther.intgdc.com`
    Create a file named `.env` in this directory based on `.env.template` file.
    The script then loads variables from this file automatically.
 
-4. run `npm run generate-client`.
+3. run `npm run generate-client`.
 
-5. run `rush build`
+4. run `rush build`
 
-6. Sometimes you need to add missing exports to `/src/index.ts` and rerun `rush build`
+5. Sometimes you need to add missing exports to `/src/index.ts` and rerun `rush build`
 
 ## License
 
