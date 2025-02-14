@@ -657,5 +657,12 @@
     "dialogs.schedule.email.user.invalid.external": "Este usuario no cuenta con acceso al panel de control.",
     "dialogs.schedule.email.user.used.external": "El correo electrónico “{email}” no pertenece a este espacio de trabajo. El destinatario puede recibir datos sensibles.",
     "dialogs.schedule.email.user.warning.external": "Esta dirección de correo electrónico no pertenece a este espacio de trabajo. Es posible que el destinatario reciba datos confidenciales.",
-    "dialogs.schedule.email.user.guest": "(invitado)"
+    "dialogs.schedule.email.user.guest": "(invitado)",
+    "dialogs.schedule.email.user.unknown": "Se trata de un usuario desconocido y no puede ser añadido como destinatario.",
+    "dialogs.schedule.email.user.notMe": "Este usuario no está autorizado. Sólo puede haber usted como destinatario.",
+    "dropzone.widget.last.in.container.row.desc": "Soltar en el <b>contenedor existente</b>.",
+    "nestedLayout.emptyDropZone.active.message": "<b>Soltar aquí</b>{br}para añadir al contenedor",
+    "insightAlert.config.accessbility.input": "Valor de la condición",
+    "insightAlert.config.accessbility.dropdown": "Tipo de condición",
+    "alert.accessibility.destination.label": "Seleccione cómo enviar la alerta"
 }

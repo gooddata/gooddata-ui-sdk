@@ -658,5 +658,11 @@
     "userManagement.workspace.granularPermission.manage.description": "Permite a los usuarios acceder, editar o eliminar el modelo lógico de datos y métricas, así como acceder a todos los cuadros de mando y editar sus permisos sin limitaciones.",
     "userManagement.workspace.granularPermission.warning": "<b>Precaución:</b> Esta acción eliminará cualquier combinación redundante.",
     "userManagement.workspace.permission.and": "y",
-    "gs.header.notifications": "Notificaciones"
+    "gs.header.notifications": "Notificaciones",
+    "gs.header.logo.title.accessibility": "Logotipo de la aplicación",
+    "gs.header.href.accessibility": "Ir a la página de inicio",
+    "gs.list.acessibility.search.label": "Buscar valores de atributos",
+    "message.accessibility.dismiss.notification": "Notificación de despido",
+    "datePicker.accessibility.label": "Seleccione la fecha de inicio",
+    "timePicker.accessibility.label": "Seleccione la hora de inicio"
 }

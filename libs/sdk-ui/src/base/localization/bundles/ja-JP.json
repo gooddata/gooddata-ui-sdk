@@ -658,5 +658,11 @@
     "userManagement.workspace.granularPermission.manage.description": "ユーザーは、論理データモデルおよびメトリクスの編集、削除、すべてのダッシュボードへのアクセスおよびダッシュボードの権限の編集を制限なく行うことができます。",
     "userManagement.workspace.granularPermission.warning": "<b>注意:</b> このアクションにより、冗長な組み合わせが削除されます。",
     "userManagement.workspace.permission.and": "および",
-    "gs.header.notifications": "お知らせ"
+    "gs.header.notifications": "お知らせ",
+    "gs.header.logo.title.accessibility": "アプリケーションロゴ",
+    "gs.header.href.accessibility": "ホームページへ",
+    "gs.list.acessibility.search.label": "検索属性値",
+    "message.accessibility.dismiss.notification": "解雇通知",
+    "datePicker.accessibility.label": "開始日を選択",
+    "timePicker.accessibility.label": "開始時間の選択"
 }

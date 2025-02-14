@@ -657,5 +657,12 @@
     "dialogs.schedule.email.user.invalid.external": "This user does not have access to the Dashboard.",
     "dialogs.schedule.email.user.used.external": "The email “{email}” does not belong to this workspace. The recipient may receive sensitive data.",
     "dialogs.schedule.email.user.warning.external": "This email address does not belong to this workspace. The recipient may receive sensitive data.",
-    "dialogs.schedule.email.user.guest": "(guest)"
+    "dialogs.schedule.email.user.guest": "(guest)",
+    "dialogs.schedule.email.user.unknown": "This user is unknown and cannot be added as a recipient.",
+    "dialogs.schedule.email.user.notMe": "This user is not permitted. Only you can be the recipient.",
+    "dropzone.widget.last.in.container.row.desc": "Drop to the <b>existing container</b>",
+    "nestedLayout.emptyDropZone.active.message": "<b>Drop here</b>{br}to add to the container",
+    "insightAlert.config.accessbility.input": "Condition value",
+    "insightAlert.config.accessbility.dropdown": "Condition type",
+    "alert.accessibility.destination.label": "Select how to send the alert"
 }

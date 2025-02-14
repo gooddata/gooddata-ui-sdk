@@ -657,5 +657,12 @@
     "dialogs.schedule.email.user.invalid.external": "Cet utilisateur n'a pas accès au tableau de bord.",
     "dialogs.schedule.email.user.used.external": "L'email “{email}” n'appartient pas à cet espace de travail. Le destinataire peut recevoir des données sensibles.",
     "dialogs.schedule.email.user.warning.external": "Cette adresse électronique ne fait pas partie de cet espace de travail. Le destinataire recevra peut-être des données sensibles.",
-    "dialogs.schedule.email.user.guest": "(invité)"
+    "dialogs.schedule.email.user.guest": "(invité)",
+    "dialogs.schedule.email.user.unknown": "Il s'agit d'un utilisateur inconnu qui ne peut pas être ajouté comme destinataire.",
+    "dialogs.schedule.email.user.notMe": "Cet utilisateur n'est pas autorisé. Le destinataire ne peut être que vous.",
+    "dropzone.widget.last.in.container.row.desc": "Déposer dans le <b>conteneur existant</b>",
+    "nestedLayout.emptyDropZone.active.message": "<b>Déposer ici</b>{br}pour ajouter au conteneur",
+    "insightAlert.config.accessbility.input": "Valeur de la condition",
+    "insightAlert.config.accessbility.dropdown": "Type de condition",
+    "alert.accessibility.destination.label": "Sélectionner le mode d'envoi de l'alerte"
 }
