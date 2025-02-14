@@ -1105,13 +1105,14 @@ export interface IPermissionsAssignment {
 }
 
 // @public
-export interface IPreparedExecution {
+export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
     readonly definition: IExecutionDefinition;
     equals(other: IPreparedExecution): boolean;
     execute(): Promise<IExecutionResult>;
     // @internal
     explain<T extends ExplainType | undefined>(config: ExplainConfig<T>): IExplainProvider<typeof config["explainType"]>;
     fingerprint(): string;
+    readonly signal?: AbortSignal;
     // @internal
     withBuckets(...buckets: IBucket[]): IPreparedExecution;
     withDateFormat(dateFormat: string): IPreparedExecution;

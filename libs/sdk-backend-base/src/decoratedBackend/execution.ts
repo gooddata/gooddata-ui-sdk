@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IDataView,
     IForecastView,
@@ -96,9 +96,11 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
  */
 export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     public readonly definition: IExecutionDefinition;
+    public readonly signal?: AbortSignal;
 
     protected constructor(protected readonly decorated: IPreparedExecution) {
         this.definition = decorated.definition;
+        this.signal = decorated.signal;
     }
 
     public equals(other: IPreparedExecution): boolean {
@@ -107,6 +109,10 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
 
     public execute(): Promise<IExecutionResult> {
         return this.decorated.execute();
+    }
+
+    public withSignal(signal: AbortSignal): IPreparedExecution {
+        return this.createNew(this.decorated.withSignal(signal));
     }
 
     public explain<T extends ExplainType | undefined>(

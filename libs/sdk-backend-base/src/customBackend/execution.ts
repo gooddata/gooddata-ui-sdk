@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import { AbstractExecutionFactory } from "../toolkit/execution.js";
 import {
@@ -111,6 +111,10 @@ class CustomPreparedExecution implements IPreparedExecution {
 
     public withExecConfig = (config: IExecutionConfig): IPreparedExecution => {
         return this.executionFactory.forDefinition(defWithExecConfig(this.definition, config));
+    };
+
+    public withSignal = (_signal: AbortSignal): IPreparedExecution => {
+        throw new NotSupported("Cancelling is not supported by the custom backend.");
     };
 
     public equals = (other: IPreparedExecution): boolean => {
