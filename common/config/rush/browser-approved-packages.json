@@ -147,6 +147,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@gooddata/sdk-ui-charts",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-dashboard",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -164,10 +168,6 @@
     },
     {
       "name": "@gooddata/sdk-ui-geo",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-charts",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
@@ -527,6 +527,14 @@
       "allowedCategories": [ "examples", "tools" ]
     },
     {
+      "name": "chalk",
+      "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "chokidar",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "circular-dependency-plugin",
       "allowedCategories": [ "examples", "production" ]
     },
@@ -588,6 +596,10 @@
     },
     {
       "name": "cypress-real-events",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "cypress-terminal-report",
       "allowedCategories": [ "production" ]
     },
     {
@@ -761,14 +773,6 @@
     {
       "name": "http-status-codes",
       "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "chalk",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "chokidar",
-      "allowedCategories": [ "tools" ]
     },
     {
       "name": "immer",
@@ -1027,16 +1031,16 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "recharts",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "redux-batched-actions",
       "allowedCategories": [ "production" ]
     },
     {
       "name": "redux-saga",
       "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "recharts",
-      "allowedCategories": [ "examples" ]
     },
     {
       "name": "require-from-string",
@@ -1095,11 +1099,11 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-config-prettier",
+      "name": "stylelint-checkstyle-formatter",
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-checkstyle-formatter",
+      "name": "stylelint-config-prettier",
       "allowedCategories": [ "production" ]
     },
     {

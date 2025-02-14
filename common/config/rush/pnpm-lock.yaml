@@ -4660,6 +4660,9 @@ importers:
       cypress-real-events:
         specifier: ^1.7.6
         version: 1.11.0(cypress@13.17.0)
+      cypress-terminal-report:
+        specifier: ^7.1.0
+        version: 7.1.0(cypress@13.17.0)
       dependency-cruiser:
         specifier: ^13.0.3
         version: 13.1.5
@@ -13917,6 +13920,10 @@ packages:
     resolution: {integrity: sha512-FemMreK9xNyL8gQevsdRMrvO4lFCkQP7qbuktn1q8ndcNk1+0mz7lgE7b/sNvbhVgY4w6tMN1FDp6aADjqw2rw==}
     dev: true
 
+  /compare-versions@6.1.1:
+    resolution: {integrity: sha512-4hm4VPpIecmlg59CHXnRDnqGplJFrbLG4aFEl5vl6cK1u76ws3LLvX7ikFnTDl5vo39sjWD6AaDPYodJp/NNHg==}
+    dev: true
+
   /component-emitter@1.3.1:
     resolution: {integrity: sha512-T0+barUSQRTUQASh8bx02dl+DhF54GtIDY13Y3m9oWTklKbb3Wv974meRpeZ3lp1JpLVECWWNHC4vaG2XHXouQ==}
     dev: true
@@ -14370,6 +14377,20 @@ packages:
       cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x || ^13.x
     dependencies:
       cypress: 13.17.0
+    dev: true
+
+  /cypress-terminal-report@7.1.0(cypress@13.17.0):
+    resolution: {integrity: sha512-CBXxY19HNX2VFcZ0uifomzs0kuYKCTb2pPgJmluiHI5XHvvbHPFufHAAacM8z/pSOtHoovo/WU+fxE5KcZ8C4Q==}
+    engines: {node: '>= 12'}
+    peerDependencies:
+      cypress: '>=10.0.0'
+    dependencies:
+      chalk: 4.1.2
+      compare-versions: 6.1.1
+      cypress: 13.17.0
+      fs-extra: 10.1.0
+      process: 0.11.10
+      superstruct: 0.14.2
     dev: true
 
   /cypress@13.17.0:
@@ -22734,6 +22755,10 @@ packages:
     resolution: {integrity: sha512-IiOea5kJ9iqzD2t7QJq/cREyLHTtSmUT6gQsweojg9WH2sYJqZK9SswTu6jrscO6D1G5v5vYZ9ru/eq85lXeZQ==}
     dependencies:
       kdbush: 4.0.2
+
+  /superstruct@0.14.2:
+    resolution: {integrity: sha512-nPewA6m9mR3d6k7WkZ8N8zpTWfenFH3q9pA2PkuiZxINr9DKB2+40wEQf0ixn8VaGuJ78AB6iWOtStI+/4FKZQ==}
+    dev: true
 
   /supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}

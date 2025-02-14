@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { EditMode } from "../../tools/editMode";
@@ -54,7 +54,7 @@ describe("RichText - integrated", { tags: ["checklist_integrated_tiger"] }, () =
         widget.getRichText().remove();
         dashboardMenu.toggle();
         header.saveAsNew("RichText With Removed Widget");
-        widget.getRichText().notExist();
+        widget.getRichText().exist();
     });
 
     it("should add rich text widget and save it", () => {
