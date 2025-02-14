@@ -2,7 +2,6 @@
 import React from "react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render } from "@testing-library/react";
-import { invariant } from "ts-invariant";
 
 import { ITitleProps } from "../../../presentation/index.js";
 import { DefaultTitleCustomizer } from "../titleCustomizer";
@@ -18,16 +17,18 @@ import { EMPTY_MUTATIONS } from "./utils";
 function renderToHtml(customizer: DefaultTitleCustomizer) {
     const provider = customizer.getCustomizerResult();
     const Component = provider.TitleComponent;
+
+    // Component can be null if no override
+    if (!Component) {
+        return null;
+    }
+
     const props: ITitleProps = {
         title: "Title",
         onTitleChanged: () => {},
     };
 
-    // this should not happen; if it does something is seriously hosed in the customizer
-    invariant(Component);
-
     const { container } = render(<Component {...props} />);
-
     return container.innerHTML;
 }
 

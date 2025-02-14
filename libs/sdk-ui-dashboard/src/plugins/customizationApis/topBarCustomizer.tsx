@@ -136,6 +136,7 @@ export class DefaultTopBarCustomizer implements ITopBarCustomizer {
     private readonly logger: IDashboardCustomizationLogger;
     private readonly mutationContext: CustomizerMutationsContext;
     private state: ITopBarCustomizerState;
+    private updated = false;
 
     constructor(
         logger: IDashboardCustomizationLogger,
@@ -150,6 +151,7 @@ export class DefaultTopBarCustomizer implements ITopBarCustomizer {
     public withCustomProvider = (provider: OptionalTopBarComponentProvider): ITopBarCustomizer => {
         this.state.addCustomProvider(provider);
         this.mutationContext.topBar = union(this.mutationContext.topBar, ["provider"]);
+        this.updated = true;
 
         return this;
     };
@@ -178,16 +180,19 @@ export class DefaultTopBarCustomizer implements ITopBarCustomizer {
         // this currently registered one
         this.state.switchRootProvider(newRootProvider);
         this.mutationContext.topBar = union(this.mutationContext.topBar, ["decorator"]);
+        this.updated = true;
 
         return this;
     }
 
     getCustomizerResult = (): ITopBarCustomizerResult => {
         return {
-            TopBarComponent: (props) => {
-                const Comp = this.state.getRootProvider()(props);
-                return <Comp {...props} />;
-            },
+            TopBarComponent: this.updated
+                ? (props) => {
+                      const Comp = this.state.getRootProvider()(props);
+                      return <Comp {...props} />;
+                  }
+                : undefined,
         };
     };
 

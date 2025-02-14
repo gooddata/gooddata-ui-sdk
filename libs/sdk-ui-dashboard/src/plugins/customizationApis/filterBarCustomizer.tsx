@@ -147,6 +147,7 @@ export class DefaultFilterBarCustomizer implements IFilterBarCustomizer {
     private readonly logger: IDashboardCustomizationLogger;
     private readonly mutationContext: CustomizerMutationsContext;
     private state: IFilterBarCustomizerState;
+    private updated = false;
 
     constructor(
         logger: IDashboardCustomizationLogger,
@@ -167,6 +168,7 @@ export class DefaultFilterBarCustomizer implements IFilterBarCustomizer {
     public withCustomProvider = (provider: OptionalFilterBarComponentProvider): IFilterBarCustomizer => {
         this.state.addCustomProvider(provider);
         this.mutationContext.filterBar = union(this.mutationContext.filterBar, ["provider"]);
+        this.updated = true;
 
         return this;
     };
@@ -195,22 +197,27 @@ export class DefaultFilterBarCustomizer implements IFilterBarCustomizer {
         // this currently registered one
         this.state.switchRootProvider(newRootProvider);
         this.mutationContext.filterBar = union(this.mutationContext.filterBar, ["decorator"]);
+        this.updated = true;
 
         return this;
     }
 
     getCustomizerResult = (): IFilterBarCustomizerResult => {
+        const hidden = this.state.getRenderingMode() === "hidden";
+        const updated = this.updated;
+
         return {
             // if rendering mode is "hidden", explicitly replace the component with HiddenFilterBar,
             // otherwise do nothing to allow the default or any custom component provided by the embedding application
             // to kick in
-            FilterBarComponent:
-                this.state.getRenderingMode() === "hidden"
-                    ? HiddenFilterBar
-                    : (props) => {
-                          const Comp = this.state.getRootProvider()(props);
-                          return <Comp {...props} />;
-                      },
+            FilterBarComponent: hidden
+                ? HiddenFilterBar
+                : updated
+                ? (props) => {
+                      const Comp = this.state.getRootProvider()(props);
+                      return <Comp {...props} />;
+                  }
+                : undefined,
         };
     };
 

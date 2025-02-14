@@ -2,7 +2,6 @@
 import React from "react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render } from "@testing-library/react";
-import { invariant } from "ts-invariant";
 
 import { ITopBarProps } from "../../../presentation/index.js";
 import { DefaultTopBarCustomizer } from "../topBarCustomizer";
@@ -18,6 +17,12 @@ import { EMPTY_MUTATIONS } from "./utils";
 function renderToHtml(customizer: DefaultTopBarCustomizer) {
     const provider = customizer.getCustomizerResult();
     const Component = provider.TopBarComponent;
+
+    // Component can be null if no override
+    if (!Component) {
+        return null;
+    }
+
     const props: ITopBarProps = {
         titleProps: {
             title: "Title",
@@ -66,11 +71,7 @@ function renderToHtml(customizer: DefaultTopBarCustomizer) {
         },
     };
 
-    // this should not happen; if it does something is seriously hosed in the customizer
-    invariant(Component);
-
     const { container } = render(<Component {...props} />);
-
     return container.innerHTML;
 }
 
