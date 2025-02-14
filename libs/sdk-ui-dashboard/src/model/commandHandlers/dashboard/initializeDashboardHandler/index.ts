@@ -222,7 +222,7 @@ function* loadExistingDashboard(
         PromiseFnReturnType<typeof resolveEntitlements>,
         PromiseFnReturnType<typeof decideAndLoadFullCatalog>,
         PromiseFnReturnType<typeof loadUser>,
-        PromiseFnReturnType<typeof loadDashboardList>,
+        PromiseFnReturnType<typeof decideAndLoadDashboardsList>,
         PromiseFnReturnType<typeof loadDashboardPermissions>,
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
         PromiseFnReturnType<typeof loadFilterViews>,
@@ -339,7 +339,7 @@ function* initializeNewDashboard(
         PromiseFnReturnType<typeof resolveEntitlements>,
         PromiseFnReturnType<typeof loadCatalog>,
         PromiseFnReturnType<typeof loadUser>,
-        PromiseFnReturnType<typeof decideAndLoadDashboardsList>,
+        PromiseFnReturnType<typeof loadDashboardList>,
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
     ] = yield all([
         call(resolveDashboardConfigAndFeatureFlagDependentCalls, ctx, cmd),
@@ -347,17 +347,10 @@ function* initializeNewDashboard(
         call(resolveEntitlements, ctx, cmd),
         call(loadCatalog, ctx, cmd),
         call(loadUser, ctx),
-        call(decideAndLoadDashboardsList, ctx, cmd),
+        call(loadDashboardList, ctx),
         call(loadDateHierarchyTemplates, ctx),
         call(loadFilterViews, ctx),
     ]);
-
-    const dashboardsListActions = cmd.payload.config?.settings?.enableCriticalContentPerformanceOptimizations
-        ? []
-        : [
-              listedDashboardsActions.setListedDashboards(listedDashboards),
-              accessibleDashboardsActions.setAccessibleDashboards(listedDashboards),
-          ];
 
     const batch: BatchAction = batchActions(
         [
@@ -374,7 +367,8 @@ function* initializeNewDashboard(
                 attributeHierarchies: catalog.attributeHierarchies(),
                 dateHierarchyTemplates: dateHierarchyTemplates,
             }),
-            ...dashboardsListActions,
+            listedDashboardsActions.setListedDashboards(listedDashboards),
+            accessibleDashboardsActions.setAccessibleDashboards(listedDashboards),
             executionResultsActions.clearAllExecutionResults(),
             ...actionsToInitializeNewDashboard(config.dateFilterConfig),
             dateFilterConfigActions.setDateFilterConfig({
