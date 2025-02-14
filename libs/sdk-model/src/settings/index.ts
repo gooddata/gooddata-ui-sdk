@@ -599,6 +599,11 @@ export interface ISettings {
      */
     dateFilterConfig?: IDateFilterConfig;
 
+    /**
+     * Enable execution cancelling.
+     */
+    enableExecutionCancelling?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
