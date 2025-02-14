@@ -46,7 +46,6 @@ import {
 } from "../../../../_staging/catalog/displayFormMap.js";
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
 import { accessibleDashboardsActions } from "../../../store/accessibleDashboards/index.js";
-import { loadAccessibleDashboardList } from "./loadAccessibleDashboardList.js";
 import uniqBy from "lodash/uniqBy.js";
 import { loadDashboardPermissions } from "./loadDashboardPermissions.js";
 import { dashboardPermissionsActions } from "../../../store/dashboardPermissions/index.js";
@@ -172,6 +171,15 @@ function* decideAndLoadFullCatalog(ctx: DashboardContext, cmd: InitializeDashboa
     return fullCatalog;
 }
 
+function* decideAndLoadDashboardsList(ctx: DashboardContext, cmd: InitializeDashboard) {
+    if (cmd.payload.config?.settings?.enableCriticalContentPerformanceOptimizations) {
+        return null;
+    }
+
+    const dashboardsList: PromiseFnReturnType<typeof loadDashboardList> = yield call(loadDashboardList, ctx);
+    return dashboardsList;
+}
+
 function* loadExistingDashboard(
     ctx: DashboardContext,
     cmd: InitializeDashboard,
@@ -179,7 +187,6 @@ function* loadExistingDashboard(
 ): SagaIterator<DashboardLoadResult> {
     const { backend } = ctx;
     const privateCtx: PrivateDashboardContext = yield call(getPrivateContext);
-    const { usesStrictAccessControl } = backend.capabilities;
 
     const calls = [
         call(loadDashboardFromBackend, ctx, privateCtx, dashboardRef, !!cmd.payload.persistedDashboard),
@@ -188,15 +195,11 @@ function* loadExistingDashboard(
         call(resolveEntitlements, ctx, cmd),
         call(decideAndLoadFullCatalog, ctx, cmd),
         call(loadUser, ctx),
-        call(loadDashboardList, ctx),
+        call(decideAndLoadDashboardsList, ctx, cmd),
         call(loadDashboardPermissions, ctx),
         call(loadDateHierarchyTemplates, ctx),
         call(loadFilterViews, ctx),
     ];
-
-    if (!usesStrictAccessControl) {
-        calls.push(call(loadAccessibleDashboardList, ctx));
-    }
 
     const [
         dashboardWithReferences,
@@ -212,7 +215,6 @@ function* loadExistingDashboard(
         dashboardPermissions,
         dateHierarchyTemplates,
         filterViews,
-        accessibleDashboards,
     ]: [
         PromiseFnReturnType<typeof loadDashboardFromBackend>,
         SagaReturnType<typeof resolveDashboardConfigAndFeatureFlagDependentCalls>,
@@ -224,7 +226,6 @@ function* loadExistingDashboard(
         PromiseFnReturnType<typeof loadDashboardPermissions>,
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
         PromiseFnReturnType<typeof loadFilterViews>,
-        PromiseFnReturnType<typeof loadAccessibleDashboardList>,
     ] = yield all(calls);
 
     const {
@@ -267,6 +268,13 @@ function* loadExistingDashboard(
             : {}),
     };
 
+    const dashboardsListActions = cmd.payload.config?.settings?.enableCriticalContentPerformanceOptimizations
+        ? []
+        : [
+              listedDashboardsActions.setListedDashboards(listedDashboards),
+              accessibleDashboardsActions.setAccessibleDashboards(listedDashboards),
+          ];
+
     const batch: BatchAction = batchActions(
         [
             backendCapabilitiesActions.setBackendCapabilities(backend.capabilities),
@@ -287,8 +295,7 @@ function* loadExistingDashboard(
             dateFilterConfigsActions.setDateFilterConfigs({
                 dateFilterConfigs: dashboard.dateFilterConfigs,
             }),
-            listedDashboardsActions.setListedDashboards(listedDashboards),
-            accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards || listedDashboards),
+            ...dashboardsListActions,
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
             renderModeActions.setRenderMode(config.initialRenderMode),
             dashboardPermissionsActions.setDashboardPermissions(dashboardPermissions),
@@ -325,7 +332,6 @@ function* initializeNewDashboard(
         catalog,
         user,
         listedDashboards,
-        accessibleDashboards,
         dateHierarchyTemplates,
     ]: [
         SagaReturnType<typeof resolveDashboardConfigAndFeatureFlagDependentCalls>,
@@ -333,8 +339,7 @@ function* initializeNewDashboard(
         PromiseFnReturnType<typeof resolveEntitlements>,
         PromiseFnReturnType<typeof loadCatalog>,
         PromiseFnReturnType<typeof loadUser>,
-        PromiseFnReturnType<typeof loadDashboardList>,
-        PromiseFnReturnType<typeof loadAccessibleDashboardList>,
+        PromiseFnReturnType<typeof decideAndLoadDashboardsList>,
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
     ] = yield all([
         call(resolveDashboardConfigAndFeatureFlagDependentCalls, ctx, cmd),
@@ -342,11 +347,17 @@ function* initializeNewDashboard(
         call(resolveEntitlements, ctx, cmd),
         call(loadCatalog, ctx, cmd),
         call(loadUser, ctx),
-        call(loadDashboardList, ctx),
-        call(loadAccessibleDashboardList, ctx),
+        call(decideAndLoadDashboardsList, ctx, cmd),
         call(loadDateHierarchyTemplates, ctx),
         call(loadFilterViews, ctx),
     ]);
+
+    const dashboardsListActions = cmd.payload.config?.settings?.enableCriticalContentPerformanceOptimizations
+        ? []
+        : [
+              listedDashboardsActions.setListedDashboards(listedDashboards),
+              accessibleDashboardsActions.setAccessibleDashboards(listedDashboards),
+          ];
 
     const batch: BatchAction = batchActions(
         [
@@ -363,8 +374,7 @@ function* initializeNewDashboard(
                 attributeHierarchies: catalog.attributeHierarchies(),
                 dateHierarchyTemplates: dateHierarchyTemplates,
             }),
-            listedDashboardsActions.setListedDashboards(listedDashboards),
-            accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards),
+            ...dashboardsListActions,
             executionResultsActions.clearAllExecutionResults(),
             ...actionsToInitializeNewDashboard(config.dateFilterConfig),
             dateFilterConfigActions.setDateFilterConfig({
@@ -419,12 +429,29 @@ export function* preloadAttributeFiltersData(ctx: DashboardContext, dashboard: I
     yield put(filterContextActions.setPreloadedAttributesWithReferences(attributesWithReferences));
 }
 
+export function* requestDashboardsList(ctx: DashboardContext) {
+    const listedDashboards: PromiseFnReturnType<typeof loadDashboardList> = yield call(
+        loadDashboardList,
+        ctx,
+    );
+    const dashboardsListActions = batchActions([
+        listedDashboardsActions.setListedDashboards(listedDashboards),
+        accessibleDashboardsActions.setAccessibleDashboards(listedDashboards),
+    ]);
+
+    yield put(dashboardsListActions);
+}
+
 function* advancedLoader(
     ctx: DashboardContext,
     cmd: InitializeDashboard,
     dashboard?: IDashboard,
 ): SagaIterator {
-    yield all([call(requestCatalog, ctx, cmd), call(preloadAttributeFiltersData, ctx, dashboard!)]);
+    yield all([
+        call(requestCatalog, ctx, cmd),
+        call(preloadAttributeFiltersData, ctx, dashboard!),
+        call(requestDashboardsList, ctx),
+    ]);
 }
 
 export function* initializeDashboardHandler(ctx: DashboardContext, cmd: InitializeDashboard): SagaIterator {
