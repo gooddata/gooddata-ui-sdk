@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import {
     IAnalyticalBackend,
@@ -76,9 +76,11 @@ class NormalizingPreparedExecution extends DecoratedPreparedExecution {
 
     public execute = (): Promise<IExecutionResult> => {
         const normalizationState = Normalizer.normalize(this.definition);
-        const normalizedExecution = this.originalExecutionFactory.forDefinition(
-            normalizationState.normalized,
-        );
+        let normalizedExecution = this.originalExecutionFactory.forDefinition(normalizationState.normalized);
+
+        if (this.decorated.signal) {
+            normalizedExecution = normalizedExecution.withSignal(this.decorated.signal);
+        }
 
         this.config.normalizationStatus?.(normalizationState);
 

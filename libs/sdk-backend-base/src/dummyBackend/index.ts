@@ -494,6 +494,9 @@ function dummyPreparedExecution(
         withBuckets(...buckets: IBucket[]) {
             return executionFactory.forDefinition(defWithBuckets(definition, ...buckets));
         },
+        withSignal(_signal: AbortSignal): IPreparedExecution {
+            return dummyPreparedExecution(definition, executionFactory, config);
+        },
         execute(): Promise<IExecutionResult> {
             return Promise.resolve(dummyExecutionResult(definition, executionFactory, config));
         },
