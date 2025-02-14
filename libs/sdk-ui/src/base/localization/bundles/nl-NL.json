@@ -658,5 +658,11 @@
     "userManagement.workspace.granularPermission.manage.description": "Hiermee kunnen gebruikers het logische datamodel en de statistieken openen, bewerken of verwijderen, en hebben ze toegang tot alle dashboards en kunnen ze hun dashboardtoestemmingen zonder beperkingen bewerken.",
     "userManagement.workspace.granularPermission.warning": "<b>Voorzichtig:</b> Deze actie verwijdert overbodige combinaties.",
     "userManagement.workspace.permission.and": "en",
-    "gs.header.notifications": "Meldingen"
+    "gs.header.notifications": "Meldingen",
+    "gs.header.logo.title.accessibility": "Toepassingslogo",
+    "gs.header.href.accessibility": "Ga naar de startpagina",
+    "gs.list.acessibility.search.label": "Waarden van eigenschappen zoeken",
+    "message.accessibility.dismiss.notification": "Kennisgeving verwijderen",
+    "datePicker.accessibility.label": "Selecteer begindatum",
+    "timePicker.accessibility.label": "Selecteer starttijd"
 }

@@ -658,5 +658,11 @@
     "userManagement.workspace.granularPermission.manage.description": "Permet aux utilisateurs de modifier ou de supprimer le modèle de données logique et les métriques, ainsi que d'accéder à tous les tableaux de bord et de modifier leurs autorisations de tableau de bord sans limitations.",
     "userManagement.workspace.granularPermission.warning": "<b>Attention :</b> cette action supprimera toutes les combinaisons redondantes.",
     "userManagement.workspace.permission.and": "et",
-    "gs.header.notifications": "Notifications"
+    "gs.header.notifications": "Notifications",
+    "gs.header.logo.title.accessibility": "Logo de l'application",
+    "gs.header.href.accessibility": "Aller à la page d'accueil",
+    "gs.list.acessibility.search.label": "Valeurs des attributs de recherche",
+    "message.accessibility.dismiss.notification": "Rejeter la notification",
+    "datePicker.accessibility.label": "Sélectionner la date de début",
+    "timePicker.accessibility.label": "Sélectionner l'heure de début"
 }

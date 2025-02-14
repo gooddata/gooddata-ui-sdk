@@ -658,5 +658,11 @@
     "userManagement.workspace.granularPermission.manage.description": "Käyttäjät voivat muokata tai poistaa loogista tietomallia ja mittareita sekä käyttää kaikkia dashboardeja ja muokata dashboardin käyttöoikeuksia rajoituksetta.",
     "userManagement.workspace.granularPermission.warning": "<b>Varoitus:</b> Tämä toiminto poistaa kaikki tarpeettomat yhdistelmät.",
     "userManagement.workspace.permission.and": "ja",
-    "gs.header.notifications": "Ilmoitukset"
+    "gs.header.notifications": "Ilmoitukset",
+    "gs.header.logo.title.accessibility": "Sovelluksen logo",
+    "gs.header.href.accessibility": "Siirry kotisivulle",
+    "gs.list.acessibility.search.label": "Hae määritteiden arvoja",
+    "message.accessibility.dismiss.notification": "Hylkää ilmoitus",
+    "datePicker.accessibility.label": "Valitse aloituspäivä",
+    "timePicker.accessibility.label": "Valitse aloitusaika"
 }

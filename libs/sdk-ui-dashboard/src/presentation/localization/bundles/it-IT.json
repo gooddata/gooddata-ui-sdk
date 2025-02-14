@@ -657,5 +657,12 @@
     "dialogs.schedule.email.user.invalid.external": "Questo utente non ha accesso al dashboard.",
     "dialogs.schedule.email.user.used.external": "L'e-mail “{email}” non appartiene a questo spazio di lavoro. Il destinatario potrebbe ricevere dati sensibili.",
     "dialogs.schedule.email.user.warning.external": "Questo indirizzo e-mail non appartiene a quest'area di lavoro. Il destinatario potrebbe ricevere dati sensibili.",
-    "dialogs.schedule.email.user.guest": "(ospite)"
+    "dialogs.schedule.email.user.guest": "(ospite)",
+    "dialogs.schedule.email.user.unknown": "Questo e un utente sconosciuto che non può essere aggiunto come destinatario.",
+    "dialogs.schedule.email.user.notMe": "Questo utente non è autorizzato. Solo tu puoi essere il destinatario.",
+    "dropzone.widget.last.in.container.row.desc": "Trascina nel <b>contenitore esistente</b>",
+    "nestedLayout.emptyDropZone.active.message": "<b>Trascina qui</b>{br}per aggiungere al contenitore",
+    "insightAlert.config.accessbility.input": "Valore della condizione",
+    "insightAlert.config.accessbility.dropdown": "Tipo di condizione",
+    "alert.accessibility.destination.label": "Seleziona la modalità di invio dell'avviso"
 }

@@ -657,5 +657,12 @@
     "dialogs.schedule.email.user.invalid.external": "Deze gebruiker heeft geen toegang tot het dashboard.",
     "dialogs.schedule.email.user.used.external": "De e-mail “{email}” hoort niet bij deze werkruimte. De ontvanger kan gevoelige gegevens ontvangen.",
     "dialogs.schedule.email.user.warning.external": "Het e-mailadres hoort niet bij deze werkruimte. De ontvanger ontvangt mogelijk vertrouwelijke gegevens.",
-    "dialogs.schedule.email.user.guest": "(gast)"
+    "dialogs.schedule.email.user.guest": "(gast)",
+    "dialogs.schedule.email.user.unknown": "Dit is een onbekende gebruiker en kan niet worden toegevoegd als ontvanger.",
+    "dialogs.schedule.email.user.notMe": "Deze gebruiker is niet toegestaan. Alleen jij kunt ontvanger zijn.",
+    "dropzone.widget.last.in.container.row.desc": "Laat het los boven de <b>bestaande container</b>",
+    "nestedLayout.emptyDropZone.active.message": "<b>Laat het hier los</b>{br}om toe te voegen aan de container",
+    "insightAlert.config.accessbility.input": "Conditiewaarde",
+    "insightAlert.config.accessbility.dropdown": "Type aandoening",
+    "alert.accessibility.destination.label": "Selecteer hoe u de waarschuwing wilt verzenden"
 }

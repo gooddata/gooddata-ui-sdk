@@ -658,5 +658,11 @@
     "userManagement.workspace.granularPermission.manage.description": "Ermöglicht Benutzern das Bearbeiten oder Löschen des logischen Datenmodells und der Metriken sowie den uneingeschränkten Zugriff auf alle Dashboards und das Bearbeiten ihrer Dashboard-Berechtigungen.",
     "userManagement.workspace.granularPermission.warning": "<b>Achtung:</b> Mit dieser Aktion werden alle redundanten Kombinationen entfernt.",
     "userManagement.workspace.permission.and": "und",
-    "gs.header.notifications": "Benachrichtigungen"
+    "gs.header.notifications": "Benachrichtigungen",
+    "gs.header.logo.title.accessibility": "Logo der Anwendung",
+    "gs.header.href.accessibility": "Zur Startseite",
+    "gs.list.acessibility.search.label": "Attributwerte suchen",
+    "message.accessibility.dismiss.notification": "Benachrichtigung schließen",
+    "datePicker.accessibility.label": "Startdatum auswählen",
+    "timePicker.accessibility.label": "Startzeit auswählen"
 }

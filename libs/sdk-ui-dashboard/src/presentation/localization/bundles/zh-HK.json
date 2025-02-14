@@ -657,5 +657,12 @@
     "dialogs.schedule.email.user.invalid.external": "此用戶無權訪問控制面板。",
     "dialogs.schedule.email.user.used.external": "電子郵件“{email}”不屬於此工作區。 接收者可能會收到敏感數據。",
     "dialogs.schedule.email.user.warning.external": "此電子郵件地址唔屬於此工作區。 接收者可能會收到敏感數據。",
-    "dialogs.schedule.email.user.guest": "（遊客）"
+    "dialogs.schedule.email.user.guest": "（遊客）",
+    "dialogs.schedule.email.user.unknown": "這是一名未知用戶，無法添加為收件人。",
+    "dialogs.schedule.email.user.notMe": "此用戶不被允許。 收件人僅能只有您。",
+    "dropzone.widget.last.in.container.row.desc": "拖放到 <b>現有容器</b>",
+    "nestedLayout.emptyDropZone.active.message": "<b>拖放到此處</b>{br}添加到容器",
+    "insightAlert.config.accessbility.input": "條件值",
+    "insightAlert.config.accessbility.dropdown": "條件類型",
+    "alert.accessibility.destination.label": "選擇發送提醒的方式"
 }

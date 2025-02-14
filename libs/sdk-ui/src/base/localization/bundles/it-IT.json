@@ -658,5 +658,11 @@
     "userManagement.workspace.granularPermission.manage.description": "Consente agli utenti di modificare o eliminare il modello logico dei dati e le metriche, nonché di accedere a tutti i pannelli di controllo e di modificare le autorizzazioni dei pannelli di controllo senza limitazioni.",
     "userManagement.workspace.granularPermission.warning": "<b>Attenzione:</b> Questa azione rimuove tutte le combinazioni ridondanti.",
     "userManagement.workspace.permission.and": "e",
-    "gs.header.notifications": "Notifiche"
+    "gs.header.notifications": "Notifiche",
+    "gs.header.logo.title.accessibility": "Logo dell'applicazione",
+    "gs.header.href.accessibility": "Vai alla homepage",
+    "gs.list.acessibility.search.label": "Valori degli attributi di ricerca",
+    "message.accessibility.dismiss.notification": "Ignora notifica",
+    "datePicker.accessibility.label": "Seleziona la data di inizio",
+    "timePicker.accessibility.label": "Seleziona l'ora di inizio"
 }

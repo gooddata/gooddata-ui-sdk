@@ -658,5 +658,11 @@
     "userManagement.workspace.granularPermission.manage.description": "Permite que os utilizadores possam editar ou excluir o modelo de dados lógicos e as métricas, acessar todos os painéis e editar as suas permissões de painel sem limitações.",
     "userManagement.workspace.granularPermission.warning": "<b>Cuidado:</b> Esta ação removerá todas as combinações redundantes.",
     "userManagement.workspace.permission.and": "e",
-    "gs.header.notifications": "Notificações"
+    "gs.header.notifications": "Notificações",
+    "gs.header.logo.title.accessibility": "Logotipo do aplicativo",
+    "gs.header.href.accessibility": "Ir para a página inicial",
+    "gs.list.acessibility.search.label": "Valores de atributo de pesquisa",
+    "message.accessibility.dismiss.notification": "Ignorar notificação",
+    "datePicker.accessibility.label": "Selecione a data de início",
+    "timePicker.accessibility.label": "Selecione a hora de início"
 }
