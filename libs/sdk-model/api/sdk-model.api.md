@@ -3367,6 +3367,7 @@ export interface ISettings {
     enableEarlyAccessFeaturesRollout?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
+    enableExecutionCancelling?: boolean;
     enableExternalRecipients?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
