@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IExecutionFactory,
@@ -32,6 +32,7 @@ import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpe
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { downloadFile } from "../../../utils/downloadFile.js";
+import { TigerCancellationConverter } from "../../../cancelation/index.js";
 
 export class TigerPreparedExecution implements IPreparedExecution {
     private _fingerprint: string | undefined;
@@ -41,6 +42,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
         public readonly definition: IExecutionDefinition,
         private readonly executionFactory: IExecutionFactory,
         private readonly dateFormatter: DateFormatter,
+        public readonly signal?: AbortSignal,
     ) {}
 
     public async execute(): Promise<IExecutionResult> {
@@ -49,17 +51,23 @@ export class TigerPreparedExecution implements IPreparedExecution {
         const afmExecution = toAfmExecution(this.definition);
 
         return this.authCall((client) =>
-            client.execution.computeReport({
-                workspaceId: this.definition.workspace,
-                afmExecution,
-            }),
+            client.execution.computeReport(
+                {
+                    workspaceId: this.definition.workspace,
+                    afmExecution,
+                },
+                { ...new TigerCancellationConverter(this.signal ?? null).forAxios() },
+            ),
         ).then((response) => {
+            const resultCancelToken = response.headers["X-Gdc-Cancel-Token"];
             return new TigerExecutionResult(
                 this.authCall,
                 this.definition,
                 this.executionFactory,
                 response.data,
                 this.dateFormatter,
+                this.signal,
+                resultCancelToken,
             );
         });
     }
@@ -99,19 +107,37 @@ export class TigerPreparedExecution implements IPreparedExecution {
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-        return this.executionFactory.forDefinition(defWithDimensions(this.definition, ...dimsOrGen));
+        return this.propagateSignal(
+            this.executionFactory.forDefinition(defWithDimensions(this.definition, ...dimsOrGen)),
+        );
     }
 
     public withBuckets(...buckets: IBucket[]): IPreparedExecution {
-        return this.executionFactory.forDefinition(defWithBuckets(this.definition, ...buckets));
+        return this.propagateSignal(
+            this.executionFactory.forDefinition(defWithBuckets(this.definition, ...buckets)),
+        );
     }
 
     public withSorting(...items: ISortItem[]): IPreparedExecution {
-        return this.executionFactory.forDefinition(defWithSorting(this.definition, items));
+        return this.propagateSignal(
+            this.executionFactory.forDefinition(defWithSorting(this.definition, items)),
+        );
+    }
+
+    public withSignal(signal: AbortSignal): IPreparedExecution {
+        return new TigerPreparedExecution(
+            this.authCall,
+            this.definition,
+            this.executionFactory,
+            this.dateFormatter,
+            signal,
+        );
     }
 
     public withDateFormat(dateFormat: string): IPreparedExecution {
-        return this.executionFactory.forDefinition(defWithDateFormat(this.definition, dateFormat));
+        return this.propagateSignal(
+            this.executionFactory.forDefinition(defWithDateFormat(this.definition, dateFormat)),
+        );
     }
 
     public fingerprint(): string {
@@ -123,7 +149,17 @@ export class TigerPreparedExecution implements IPreparedExecution {
     }
 
     public withExecConfig(config: IExecutionConfig): IPreparedExecution {
-        return this.executionFactory.forDefinition(defWithExecConfig(this.definition, config));
+        return this.propagateSignal(
+            this.executionFactory.forDefinition(defWithExecConfig(this.definition, config)),
+        );
+    }
+
+    private propagateSignal(exec: IPreparedExecution): IPreparedExecution {
+        if (this.signal) {
+            return exec.withSignal(this.signal);
+        }
+
+        return exec;
     }
 
     public equals(other: IPreparedExecution): boolean {
