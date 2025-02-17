@@ -162,7 +162,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     const { isResultLoading, getAttributeValues, getMetricValue } =
         useAttributeValuesFromExecResults(execResult);
 
-    const { value, setTouched } = useThresholdValue(
+    const { value, onChange, onBlur } = useThresholdValue(
         changeValue,
         getMetricValue,
         isNewAlert,
@@ -279,13 +279,8 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             isSmall
                             autofocus
                             value={value}
-                            onChange={(e, event) => {
-                                changeValue(e !== "" ? parseFloat(e as string) : undefined!);
-                                // Set touched state when user changes the value
-                                if (event) {
-                                    setTouched(true);
-                                }
-                            }}
+                            onChange={onChange}
+                            onBlur={onBlur}
                             type="number"
                             suffix={getValueSuffix(updatedAlert.alert)}
                             ariaLabel={intl.formatMessage({ id: "insightAlert.config.accessbility.input" })}
