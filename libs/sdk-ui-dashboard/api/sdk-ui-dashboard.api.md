@@ -299,6 +299,12 @@ import { VisualizationProperties } from '@gooddata/sdk-model';
 import { WeekStart } from '@gooddata/sdk-model';
 import { WritableDraft } from 'immer/dist/internal.js';
 
+// @alpha (undocumented)
+export interface AccessibleDashboardsState extends EntityState<IListedDashboard> {
+    // (undocumented)
+    isLoaded: boolean;
+}
+
 // @beta (undocumented)
 export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
 
@@ -2871,7 +2877,7 @@ export interface DashboardSharingChangedPayload {
 // @public
 export interface DashboardState {
     // @beta (undocumented)
-    accessibleDashboards: EntityState<IListedDashboard>;
+    accessibleDashboards: AccessibleDashboardsState;
     // @alpha (undocumented)
     attributeFilterConfigs: AttributeFilterConfigsState;
     // @alpha (undocumented)

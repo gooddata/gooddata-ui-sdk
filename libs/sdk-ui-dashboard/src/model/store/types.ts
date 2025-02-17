@@ -27,6 +27,7 @@ import { AutomationsState } from "./automations/automationsState.js";
 import { UsersState } from "./users/usersState.js";
 import { FilterViewsState } from "./filterViews/filterViewsState.js";
 import { ExecutedState } from "./executed/executedState.js";
+import { AccessibleDashboardsState } from "./accessibleDashboards/index.js";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -79,7 +80,7 @@ export interface DashboardState {
     /** @beta */
     listedDashboards: EntityState<IListedDashboard>;
     /** @beta */
-    accessibleDashboards: EntityState<IListedDashboard>;
+    accessibleDashboards: AccessibleDashboardsState;
     /** @alpha */
     inaccessibleDashboards: EntityState<IInaccessibleDashboard>;
     dashboardPermissions: DashboardPermissionsState;

@@ -62,7 +62,10 @@ import {
     selectIsDisabledCrossFiltering,
 } from "../config/configSelectors.js";
 import flatMap from "lodash/flatMap.js";
-import { selectAccessibleDashboardsMap } from "../accessibleDashboards/accessibleDashboardsSelectors.js";
+import {
+    selectAccessibleDashboardsMap,
+    selectAccessibleDashboardsLoaded,
+} from "../accessibleDashboards/accessibleDashboardsSelectors.js";
 import { selectInsightByWidgetRef, selectInsightsMap } from "../insights/insightsSelectors.js";
 import { DashboardSelector } from "../types.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
@@ -630,19 +633,22 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (
 ) => DashboardSelector<IImplicitDrillWithPredicates[]> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
         selectCatalogIsLoaded,
+        selectAccessibleDashboardsLoaded,
         selectValidConfiguredDrillsByWidgetRef(ref),
         selectImplicitDrillsDownByWidgetRef(ref),
         selectImplicitDrillsToUrlByWidgetRef(ref),
         selectCrossFilteringByWidgetRef(ref),
         (
             catalogIsLoaded,
+            accessibleDashboardsLoaded,
             configuredDrills,
             implicitDrillDownDrills,
             implicitDrillToUrlDrills,
             crossFiltering,
         ) => {
-            // disable drilling until catalog is fully loaded
-            return catalogIsLoaded
+            // disable drilling until all necessary items are loaded (catalog, dash list, ...)
+            const drillActive = catalogIsLoaded && accessibleDashboardsLoaded;
+            return drillActive
                 ? compact([
                       ...configuredDrills,
                       ...implicitDrillDownDrills,
