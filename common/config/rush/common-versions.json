@@ -25,12 +25,6 @@
         "tslib": "^2.5.0",
         "typescript": "5.3.3",
 
-        // https://github.com/browserslist/update-db#readme
-        // wa can not run npx update-browserslist-db@latest or upd caniuse-lite
-        // When we got build warnings about browserslist, we should update this package here set preferred version to the latest
-        // https://gooddata.atlassian.net/browse/STL-594
-        "browserslist": "^4.23.1",
-
         // we need correct peer dependency for heroku package in sdk-examples
         "@opentelemetry/api":"1.4.1",
         "csstype":"3.1.2"
