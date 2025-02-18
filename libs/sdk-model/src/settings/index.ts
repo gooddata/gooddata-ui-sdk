@@ -31,6 +31,13 @@ export interface ISettings {
      * @alpha
      */
     openAiConfig?: IOpenAiConfig;
+
+    /**
+     * Represents configuration for Dashboard Filters Apply Mode
+     * @alpha
+     */
+    dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
+
     /**
      * Indicates current platform edition.
      */
@@ -690,6 +697,13 @@ export interface IOpenAiConfig {
      */
     token: string;
 }
+
+/**
+ * Week start day
+ *
+ * @public
+ */
+export type DashboardFiltersApplyMode = { mode: "INDIVIDUAL" } | { mode: "ALL_AT_ONCE" };
 
 /**
  * Week start day

@@ -454,6 +454,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setTheme: () => Promise.resolve(),
                 setColorPalette: () => Promise.resolve(),
                 setOpenAiConfig: () => Promise.resolve(),
+                setDashboardFiltersApplyMode: () => Promise.resolve(),
                 setAlertDefault: () => Promise.resolve(),
                 deleteTheme: () => Promise.resolve(),
                 deleteColorPalette: () => Promise.resolve(),
