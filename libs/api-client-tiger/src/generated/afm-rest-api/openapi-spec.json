@@ -2972,7 +2972,7 @@
                 }
             },
             "SearchResult": {
-                "required": ["relationships", "results"],
+                "required": ["reasoning", "relationships", "results"],
                 "type": "object",
                 "properties": {
                     "results": {
@@ -2986,6 +2986,10 @@
                         "items": {
                             "$ref": "#/components/schemas/SearchRelationshipObject"
                         }
+                    },
+                    "reasoning": {
+                        "type": "string",
+                        "description": "If something is not working properly this field will contain explanation."
                     }
                 }
             },

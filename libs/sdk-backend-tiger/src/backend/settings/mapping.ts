@@ -30,6 +30,8 @@ export function mapTypeToKey(
             return "showHiddenCatalogItems";
         case "OPENAI_CONFIG":
             return "openAiConfig";
+        case "DASHBOARD_FILTERS_APPLY_MODE":
+            return "dashboardFiltersApplyMode";
         case "SEPARATORS":
             return "separators";
         case "organizationSetting":

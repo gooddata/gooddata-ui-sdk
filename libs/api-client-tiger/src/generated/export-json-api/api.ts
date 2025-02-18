@@ -1296,6 +1296,46 @@ export type SimpleMeasureDefinitionMeasureAggregationEnum =
     typeof SimpleMeasureDefinitionMeasureAggregationEnum[keyof typeof SimpleMeasureDefinitionMeasureAggregationEnum];
 
 /**
+ * Export request object describing the export properties and metadata for slideshow PDF exports.
+ * @export
+ * @interface SlideshowExportRequest
+ */
+export interface SlideshowExportRequest {
+    /**
+     * Requested resulting file type.
+     * @type {string}
+     * @memberof SlideshowExportRequest
+     */
+    format: SlideshowExportRequestFormatEnum;
+    /**
+     * File name to be used for retrieving the pdf document.
+     * @type {string}
+     * @memberof SlideshowExportRequest
+     */
+    fileName: string;
+    /**
+     * Dashboard identifier
+     * @type {string}
+     * @memberof SlideshowExportRequest
+     */
+    dashboardId: string;
+    /**
+     * Metadata definition in free-form JSON format.
+     * @type {object}
+     * @memberof SlideshowExportRequest
+     */
+    metadata?: object | null;
+}
+
+export const SlideshowExportRequestFormatEnum = {
+    PDF: "PDF",
+    PPTX: "PPTX",
+} as const;
+
+export type SlideshowExportRequestFormatEnum =
+    typeof SlideshowExportRequestFormatEnum[keyof typeof SlideshowExportRequestFormatEnum];
+
+/**
  * Export request object describing the export properties and overrides for tabular exports.
  * @export
  * @interface TabularExportRequest
@@ -1548,6 +1588,58 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. A slideshow export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create slideshow export request
+         * @param {string} workspaceId
+         * @param {SlideshowExportRequest} slideshowExportRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createSlideshowExport: async (
+            workspaceId: string,
+            slideshowExportRequest: SlideshowExportRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("createSlideshowExport", "workspaceId", workspaceId);
+            // verify required parameter 'slideshowExportRequest' is not null or undefined
+            assertParamExists("createSlideshowExport", "slideshowExportRequest", slideshowExportRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/slideshow`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof slideshowExportRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(slideshowExportRequest !== undefined ? slideshowExportRequest : {})
+                : slideshowExportRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create tabular export request
          * @param {string} workspaceId
@@ -1686,6 +1778,50 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slideshow endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMetadata1: async (
+            workspaceId: string,
+            exportId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getMetadata1", "workspaceId", workspaceId);
+            // verify required parameter 'exportId' is not null or undefined
+            assertParamExists("getMetadata1", "exportId", exportId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/export/slideshow/{exportId}/metadata`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
          * @summary (EXPERIMENTAL) Retrieve exported files
          * @param {string} workspaceId
@@ -1703,6 +1839,49 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             // verify required parameter 'exportId' is not null or undefined
             assertParamExists("getRawExport", "exportId", exportId);
             const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/raw/{exportId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSlideshowExport: async (
+            workspaceId: string,
+            exportId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getSlideshowExport", "workspaceId", workspaceId);
+            // verify required parameter 'exportId' is not null or undefined
+            assertParamExists("getSlideshowExport", "exportId", exportId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/slideshow/{exportId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1842,6 +2021,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. A slideshow export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create slideshow export request
+         * @param {string} workspaceId
+         * @param {SlideshowExportRequest} slideshowExportRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createSlideshowExport(
+            workspaceId: string,
+            slideshowExportRequest: SlideshowExportRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createSlideshowExport(
+                workspaceId,
+                slideshowExportRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create tabular export request
          * @param {string} workspaceId
@@ -1902,6 +2101,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slideshow endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMetadata1(
+            workspaceId: string,
+            exportId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMetadata1(
+                workspaceId,
+                exportId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
          * @summary (EXPERIMENTAL) Retrieve exported files
          * @param {string} workspaceId
@@ -1915,6 +2134,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getRawExport(
+                workspaceId,
+                exportId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSlideshowExport(
+            workspaceId: string,
+            exportId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSlideshowExport(
                 workspaceId,
                 exportId,
                 options,
@@ -2009,6 +2248,25 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. A slideshow export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create slideshow export request
+         * @param {ActionsApiCreateSlideshowExportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createSlideshowExport(
+            requestParameters: ActionsApiCreateSlideshowExportRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ExportResponse> {
+            return localVarFp
+                .createSlideshowExport(
+                    requestParameters.workspaceId,
+                    requestParameters.slideshowExportRequest,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create tabular export request
          * @param {ActionsApiCreateTabularExportRequest} requestParameters Request parameters.
@@ -2058,6 +2316,21 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slideshow endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * @param {ActionsApiGetMetadata1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMetadata1(
+            requestParameters: ActionsApiGetMetadata1Request,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .getMetadata1(requestParameters.workspaceId, requestParameters.exportId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
          * @summary (EXPERIMENTAL) Retrieve exported files
          * @param {ActionsApiGetRawExportRequest} requestParameters Request parameters.
@@ -2070,6 +2343,21 @@ export const ActionsApiFactory = function (
         ): AxiosPromise<void> {
             return localVarFp
                 .getRawExport(requestParameters.workspaceId, requestParameters.exportId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {ActionsApiGetSlideshowExportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSlideshowExport(
+            requestParameters: ActionsApiGetSlideshowExportRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .getSlideshowExport(requestParameters.workspaceId, requestParameters.exportId, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -2136,6 +2424,19 @@ export interface ActionsApiInterface {
     ): AxiosPromise<ExportResponse>;
 
     /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. A slideshow export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create slideshow export request
+     * @param {ActionsApiCreateSlideshowExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    createSlideshowExport(
+        requestParameters: ActionsApiCreateSlideshowExportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ExportResponse>;
+
+    /**
      * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
      * @summary Create tabular export request
      * @param {ActionsApiCreateTabularExportRequest} requestParameters Request parameters.
@@ -2175,6 +2476,19 @@ export interface ActionsApiInterface {
     ): AxiosPromise<void>;
 
     /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slideshow endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+     * @summary (EXPERIMENTAL) Retrieve metadata context
+     * @param {ActionsApiGetMetadata1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getMetadata1(
+        requestParameters: ActionsApiGetMetadata1Request,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
      * @summary (EXPERIMENTAL) Retrieve exported files
      * @param {ActionsApiGetRawExportRequest} requestParameters Request parameters.
@@ -2184,6 +2498,19 @@ export interface ActionsApiInterface {
      */
     getRawExport(
         requestParameters: ActionsApiGetRawExportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary (EXPERIMENTAL) Retrieve exported files
+     * @param {ActionsApiGetSlideshowExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getSlideshowExport(
+        requestParameters: ActionsApiGetSlideshowExportRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
@@ -2265,6 +2592,27 @@ export interface ActionsApiCreateRawExportRequest {
 }
 
 /**
+ * Request parameters for createSlideshowExport operation in ActionsApi.
+ * @export
+ * @interface ActionsApiCreateSlideshowExportRequest
+ */
+export interface ActionsApiCreateSlideshowExportRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiCreateSlideshowExport
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {SlideshowExportRequest}
+     * @memberof ActionsApiCreateSlideshowExport
+     */
+    readonly slideshowExportRequest: SlideshowExportRequest;
+}
+
+/**
  * Request parameters for createTabularExport operation in ActionsApi.
  * @export
  * @interface ActionsApiCreateTabularExportRequest
@@ -2328,6 +2676,27 @@ export interface ActionsApiGetMetadataRequest {
 }
 
 /**
+ * Request parameters for getMetadata1 operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetMetadata1Request
+ */
+export interface ActionsApiGetMetadata1Request {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetMetadata1
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetMetadata1
+     */
+    readonly exportId: string;
+}
+
+/**
  * Request parameters for getRawExport operation in ActionsApi.
  * @export
  * @interface ActionsApiGetRawExportRequest
@@ -2344,6 +2713,27 @@ export interface ActionsApiGetRawExportRequest {
      *
      * @type {string}
      * @memberof ActionsApiGetRawExport
+     */
+    readonly exportId: string;
+}
+
+/**
+ * Request parameters for getSlideshowExport operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetSlideshowExportRequest
+ */
+export interface ActionsApiGetSlideshowExportRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetSlideshowExport
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetSlideshowExport
      */
     readonly exportId: string;
 }
@@ -2432,6 +2822,27 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. A slideshow export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create slideshow export request
+     * @param {ActionsApiCreateSlideshowExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public createSlideshowExport(
+        requestParameters: ActionsApiCreateSlideshowExportRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .createSlideshowExport(
+                requestParameters.workspaceId,
+                requestParameters.slideshowExportRequest,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
      * @summary Create tabular export request
      * @param {ActionsApiCreateTabularExportRequest} requestParameters Request parameters.
@@ -2484,6 +2895,20 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slideshow endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+     * @summary (EXPERIMENTAL) Retrieve metadata context
+     * @param {ActionsApiGetMetadata1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getMetadata1(requestParameters: ActionsApiGetMetadata1Request, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .getMetadata1(requestParameters.workspaceId, requestParameters.exportId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
      * @summary (EXPERIMENTAL) Retrieve exported files
      * @param {ActionsApiGetRawExportRequest} requestParameters Request parameters.
@@ -2494,6 +2919,23 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     public getRawExport(requestParameters: ActionsApiGetRawExportRequest, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration)
             .getRawExport(requestParameters.workspaceId, requestParameters.exportId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary (EXPERIMENTAL) Retrieve exported files
+     * @param {ActionsApiGetSlideshowExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getSlideshowExport(
+        requestParameters: ActionsApiGetSlideshowExportRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .getSlideshowExport(requestParameters.workspaceId, requestParameters.exportId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -2823,6 +3265,459 @@ export class RawExportApi extends BaseAPI implements RawExportApiInterface {
     public getRawExport(requestParameters: RawExportApiGetRawExportRequest, options?: AxiosRequestConfig) {
         return RawExportApiFp(this.configuration)
             .getRawExport(requestParameters.workspaceId, requestParameters.exportId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
+ * SlideshowExportApi - axios parameter creator
+ * @export
+ */
+export const SlideshowExportApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. A slideshow export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create slideshow export request
+         * @param {string} workspaceId
+         * @param {SlideshowExportRequest} slideshowExportRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createSlideshowExport: async (
+            workspaceId: string,
+            slideshowExportRequest: SlideshowExportRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("createSlideshowExport", "workspaceId", workspaceId);
+            // verify required parameter 'slideshowExportRequest' is not null or undefined
+            assertParamExists("createSlideshowExport", "slideshowExportRequest", slideshowExportRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/slideshow`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof slideshowExportRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(slideshowExportRequest !== undefined ? slideshowExportRequest : {})
+                : slideshowExportRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slideshow endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMetadata1: async (
+            workspaceId: string,
+            exportId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getMetadata1", "workspaceId", workspaceId);
+            // verify required parameter 'exportId' is not null or undefined
+            assertParamExists("getMetadata1", "exportId", exportId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/export/slideshow/{exportId}/metadata`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSlideshowExport: async (
+            workspaceId: string,
+            exportId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getSlideshowExport", "workspaceId", workspaceId);
+            // verify required parameter 'exportId' is not null or undefined
+            assertParamExists("getSlideshowExport", "exportId", exportId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/slideshow/{exportId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    };
+};
+
+/**
+ * SlideshowExportApi - functional programming interface
+ * @export
+ */
+export const SlideshowExportApiFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = SlideshowExportApiAxiosParamCreator(configuration);
+    return {
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. A slideshow export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create slideshow export request
+         * @param {string} workspaceId
+         * @param {SlideshowExportRequest} slideshowExportRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createSlideshowExport(
+            workspaceId: string,
+            slideshowExportRequest: SlideshowExportRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createSlideshowExport(
+                workspaceId,
+                slideshowExportRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slideshow endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMetadata1(
+            workspaceId: string,
+            exportId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMetadata1(
+                workspaceId,
+                exportId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSlideshowExport(
+            workspaceId: string,
+            exportId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSlideshowExport(
+                workspaceId,
+                exportId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    };
+};
+
+/**
+ * SlideshowExportApi - factory interface
+ * @export
+ */
+export const SlideshowExportApiFactory = function (
+    configuration?: Configuration,
+    basePath?: string,
+    axios?: AxiosInstance,
+) {
+    const localVarFp = SlideshowExportApiFp(configuration);
+    return {
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. A slideshow export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create slideshow export request
+         * @param {SlideshowExportApiCreateSlideshowExportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createSlideshowExport(
+            requestParameters: SlideshowExportApiCreateSlideshowExportRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ExportResponse> {
+            return localVarFp
+                .createSlideshowExport(
+                    requestParameters.workspaceId,
+                    requestParameters.slideshowExportRequest,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slideshow endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * @param {SlideshowExportApiGetMetadata1Request} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMetadata1(
+            requestParameters: SlideshowExportApiGetMetadata1Request,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .getMetadata1(requestParameters.workspaceId, requestParameters.exportId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {SlideshowExportApiGetSlideshowExportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSlideshowExport(
+            requestParameters: SlideshowExportApiGetSlideshowExportRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .getSlideshowExport(requestParameters.workspaceId, requestParameters.exportId, options)
+                .then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * SlideshowExportApi - interface
+ * @export
+ * @interface SlideshowExportApi
+ */
+export interface SlideshowExportApiInterface {
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. A slideshow export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create slideshow export request
+     * @param {SlideshowExportApiCreateSlideshowExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SlideshowExportApiInterface
+     */
+    createSlideshowExport(
+        requestParameters: SlideshowExportApiCreateSlideshowExportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ExportResponse>;
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slideshow endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+     * @summary (EXPERIMENTAL) Retrieve metadata context
+     * @param {SlideshowExportApiGetMetadata1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SlideshowExportApiInterface
+     */
+    getMetadata1(
+        requestParameters: SlideshowExportApiGetMetadata1Request,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary (EXPERIMENTAL) Retrieve exported files
+     * @param {SlideshowExportApiGetSlideshowExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SlideshowExportApiInterface
+     */
+    getSlideshowExport(
+        requestParameters: SlideshowExportApiGetSlideshowExportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+}
+
+/**
+ * Request parameters for createSlideshowExport operation in SlideshowExportApi.
+ * @export
+ * @interface SlideshowExportApiCreateSlideshowExportRequest
+ */
+export interface SlideshowExportApiCreateSlideshowExportRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof SlideshowExportApiCreateSlideshowExport
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {SlideshowExportRequest}
+     * @memberof SlideshowExportApiCreateSlideshowExport
+     */
+    readonly slideshowExportRequest: SlideshowExportRequest;
+}
+
+/**
+ * Request parameters for getMetadata1 operation in SlideshowExportApi.
+ * @export
+ * @interface SlideshowExportApiGetMetadata1Request
+ */
+export interface SlideshowExportApiGetMetadata1Request {
+    /**
+     *
+     * @type {string}
+     * @memberof SlideshowExportApiGetMetadata1
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof SlideshowExportApiGetMetadata1
+     */
+    readonly exportId: string;
+}
+
+/**
+ * Request parameters for getSlideshowExport operation in SlideshowExportApi.
+ * @export
+ * @interface SlideshowExportApiGetSlideshowExportRequest
+ */
+export interface SlideshowExportApiGetSlideshowExportRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof SlideshowExportApiGetSlideshowExport
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof SlideshowExportApiGetSlideshowExport
+     */
+    readonly exportId: string;
+}
+
+/**
+ * SlideshowExportApi - object-oriented interface
+ * @export
+ * @class SlideshowExportApi
+ * @extends {BaseAPI}
+ */
+export class SlideshowExportApi extends BaseAPI implements SlideshowExportApiInterface {
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. A slideshow export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create slideshow export request
+     * @param {SlideshowExportApiCreateSlideshowExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SlideshowExportApi
+     */
+    public createSlideshowExport(
+        requestParameters: SlideshowExportApiCreateSlideshowExportRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SlideshowExportApiFp(this.configuration)
+            .createSlideshowExport(
+                requestParameters.workspaceId,
+                requestParameters.slideshowExportRequest,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slideshow endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+     * @summary (EXPERIMENTAL) Retrieve metadata context
+     * @param {SlideshowExportApiGetMetadata1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SlideshowExportApi
+     */
+    public getMetadata1(
+        requestParameters: SlideshowExportApiGetMetadata1Request,
+        options?: AxiosRequestConfig,
+    ) {
+        return SlideshowExportApiFp(this.configuration)
+            .getMetadata1(requestParameters.workspaceId, requestParameters.exportId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary (EXPERIMENTAL) Retrieve exported files
+     * @param {SlideshowExportApiGetSlideshowExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SlideshowExportApi
+     */
+    public getSlideshowExport(
+        requestParameters: SlideshowExportApiGetSlideshowExportRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SlideshowExportApiFp(this.configuration)
+            .getSlideshowExport(requestParameters.workspaceId, requestParameters.exportId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 }

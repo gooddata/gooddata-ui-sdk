@@ -314,6 +314,11 @@ export type {
     ActionsApiCreateTabularExportRequest,
     ActionsApiGetTabularExportRequest,
     ExportResponse,
+    ActionsApiCreateSlideshowExportRequest,
+    ActionsApiGetMetadata1Request,
+    ActionsApiGetSlideshowExportRequest,
+    SlideshowExportRequest,
+    SlideshowExportRequestFormatEnum,
 } from "./generated/export-json-api/api.js";
 
 export type {
