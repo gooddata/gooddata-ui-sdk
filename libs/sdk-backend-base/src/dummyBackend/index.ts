@@ -131,6 +131,7 @@ import {
     ISeparators,
     INotificationChannelMetadataObject,
     IAlertDefault,
+    type DashboardFiltersApplyMode,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -988,6 +989,14 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     setWeekStart(_weekStart: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setDashboardFiltersApplyMode(_dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void> {
+        return Promise.resolve();
+    }
+
+    deleteDashboardFiltersApplyMode(): Promise<void> {
         return Promise.resolve();
     }
 

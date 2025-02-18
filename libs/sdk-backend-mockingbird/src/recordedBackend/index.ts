@@ -255,6 +255,12 @@ function recordedWorkspace(
                 async setWeekStart(): Promise<void> {
                     return Promise.resolve();
                 },
+                async setDashboardFiltersApplyMode(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async deleteDashboardFiltersApplyMode(): Promise<void> {
+                    return Promise.resolve();
+                },
                 async setColorPalette(): Promise<void> {
                     return Promise.resolve();
                 },

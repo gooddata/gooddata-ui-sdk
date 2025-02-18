@@ -1,10 +1,10 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     IUserWorkspaceSettings,
     IWorkspaceSettings,
     IWorkspaceSettingsService,
 } from "@gooddata/sdk-backend-spi";
-import { IAlertDefault, ISeparators } from "@gooddata/sdk-model";
+import { IAlertDefault, ISeparators, type DashboardFiltersApplyMode } from "@gooddata/sdk-model";
 
 /**
  * @alpha
@@ -42,6 +42,14 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
 
     async setWeekStart(weekStart: string): Promise<void> {
         return this.decorated.setWeekStart(weekStart);
+    }
+
+    async setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void> {
+        return this.decorated.setDashboardFiltersApplyMode(dashboardFiltersApplyMode);
+    }
+
+    async deleteDashboardFiltersApplyMode(): Promise<void> {
+        return this.decorated.deleteDashboardFiltersApplyMode();
     }
 
     async setTheme(themeId: string): Promise<void> {

@@ -1492,11 +1492,15 @@ export interface IWorkspaceSettings extends ISettings {
 // @public
 export interface IWorkspaceSettingsService {
     deleteColorPalette(): Promise<void>;
+    // @alpha
+    deleteDashboardFiltersApplyMode(): Promise<void>;
     deleteTheme(): Promise<void>;
     getSettings(): Promise<IWorkspaceSettings>;
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
     setAlertDefault(value: IAlertDefault): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
+    // @alpha
+    setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
     setSeparators(separators: ISeparators): Promise<void>;

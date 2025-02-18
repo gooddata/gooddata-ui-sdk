@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import { IAlertDefault, ISeparators } from "@gooddata/sdk-model";
+// (C) 2019-2025 GoodData Corporation
+import { IAlertDefault, ISeparators, type DashboardFiltersApplyMode } from "@gooddata/sdk-model";
 import { IWorkspaceSettings, IUserWorkspaceSettings } from "../../common/settings.js";
 
 /**
@@ -76,6 +76,25 @@ export interface IWorkspaceSettingsService {
      * @returns promise
      */
     setWeekStart(weekStart: string): Promise<void>;
+
+    /**
+     * Sets DashboardFiltersApplyMode configuration for workspace. Default is taken from organization setting.
+     *
+     * @param dashboardFiltersApplyMode - describes new mode for applying dashboard filters.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
+
+    /**
+     * Clears DashboardFiltersApplyMode configuration for workspace
+     * so default value from organization is used.
+     *
+     * @returns promise
+     * @alpha
+     */
+    deleteDashboardFiltersApplyMode(): Promise<void>;
 
     /**
      * Sets color palette for current workspace.
