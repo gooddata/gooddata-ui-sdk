@@ -223,6 +223,8 @@ $gd-message-padding-vertical: 4px;
             font-size: 13px;
             text-decoration: underline;
             padding-left: 5px;
+            background-color: transparent;
+            border: none;
 
             &.warning {
                 color: rgba($color: variables.$gd-color-warning-label, $alpha: 1);
