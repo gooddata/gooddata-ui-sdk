@@ -699,7 +699,9 @@ export interface IOpenAiConfig {
 }
 
 /**
- * Week start day
+ * Values of Dashboard Filters Apply Mode setting. Used for organization and workspace.
+ * INDIVIDUAL mean that each filter has its own apply button.
+ * ALL_AT_ONCE mean that there is a single apply button for all dashboard filters.
  *
  * @public
  */
