@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { useMemo } from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 import { Dropdown, DropdownList, DropdownButton, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
@@ -45,7 +45,7 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
                     id,
                     title: intl.formatMessage(localizationKey, {
                         day: getIntlDayName(intl, startDate),
-                        week: getWeek(startDate),
+                        week: getWeek(startDate) === -1 ? "other" : getWeek(startDate),
                     }),
                 };
             },
