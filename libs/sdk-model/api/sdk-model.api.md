@@ -326,6 +326,13 @@ export const DashboardDateFilterConfigModeValues: Record<Uppercase<DashboardDate
 export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): ObjRef;
 
 // @public
+export type DashboardFiltersApplyMode = {
+    mode: "INDIVIDUAL";
+} | {
+    mode: "ALL_AT_ONCE";
+};
+
+// @public
 export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 
 // @public
@@ -3314,6 +3321,8 @@ export interface ISettings {
     ADCatalogGroupsExpanded?: boolean;
     ADMeasureValueFilterNullAsZeroOption?: string;
     alertDefault?: IAlertDefault;
+    // @alpha
+    dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
     // @alpha
     dateFilterConfig?: IDateFilterConfig;
     disableKpiDashboardHeadlineUnderline?: boolean;

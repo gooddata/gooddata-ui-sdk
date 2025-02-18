@@ -58,6 +58,7 @@ import { DashboardDrillToLegacyDashboardResolved as DashboardDrillToLegacyDashbo
 import { DashboardExportToPdfRequested as DashboardExportToPdfRequested_2 } from '../events/dashboard.js';
 import { DashboardExportToPdfResolved as DashboardExportToPdfResolved_2 } from '../events/dashboard.js';
 import { DashboardFilterContextChanged as DashboardFilterContextChanged_2 } from '../events/filters.js';
+import { DashboardFiltersApplyMode } from '@gooddata/sdk-model';
 import { DashboardInitialized as DashboardInitialized_2 } from '../events/dashboard.js';
 import { DashboardInsightWidgetChanged as DashboardInsightWidgetChanged_2 } from '../events/insight.js';
 import { DashboardInsightWidgetDescriptionChanged as DashboardInsightWidgetDescriptionChanged_2 } from '../events/insight.js';
@@ -7626,6 +7627,9 @@ export const selectCurrentUserRef: DashboardSelector<ObjRef>;
 // @public
 export const selectDashboardDescription: DashboardSelector<string>;
 
+// @alpha
+export const selectDashboardFiltersApplyMode: DashboardSelector<DashboardFiltersApplyMode>;
+
 // @public
 export const selectDashboardId: DashboardSelector<string | undefined>;
 
@@ -7806,7 +7810,7 @@ export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean>;
 // @internal
 export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<boolean>;
 
-// @internal (undocumented)
+// @internal
 export const selectEnableDashboardFiltersApplyModes: DashboardSelector<boolean>;
 
 // @internal

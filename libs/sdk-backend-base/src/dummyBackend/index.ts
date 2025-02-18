@@ -131,6 +131,7 @@ import {
     ISeparators,
     INotificationChannelMetadataObject,
     IAlertDefault,
+    type DashboardFiltersApplyMode,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -835,6 +836,7 @@ class DummyOrganization implements IOrganization {
             setTheme: () => Promise.resolve(),
             setColorPalette: () => Promise.resolve(),
             setOpenAiConfig: () => Promise.resolve(),
+            setDashboardFiltersApplyMode: () => Promise.resolve(),
             deleteTheme: () => Promise.resolve(),
             deleteColorPalette: () => Promise.resolve(),
             getSettings: () => Promise.resolve({}),
@@ -987,6 +989,14 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     setWeekStart(_weekStart: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setDashboardFiltersApplyMode(_dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void> {
+        return Promise.resolve();
+    }
+
+    deleteDashboardFiltersApplyMode(): Promise<void> {
         return Promise.resolve();
     }
 

@@ -31,6 +31,13 @@ export interface ISettings {
      * @alpha
      */
     openAiConfig?: IOpenAiConfig;
+
+    /**
+     * Represents configuration for Dashboard Filters Apply Mode
+     * @alpha
+     */
+    dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
+
     /**
      * Indicates current platform edition.
      */
@@ -690,6 +697,15 @@ export interface IOpenAiConfig {
      */
     token: string;
 }
+
+/**
+ * Values of Dashboard Filters Apply Mode setting. Used for organization and workspace.
+ * INDIVIDUAL mean that each filter has its own apply button.
+ * ALL_AT_ONCE mean that there is a single apply button for all dashboard filters.
+ *
+ * @public
+ */
+export type DashboardFiltersApplyMode = { mode: "INDIVIDUAL" } | { mode: "ALL_AT_ONCE" };
 
 /**
  * Week start day

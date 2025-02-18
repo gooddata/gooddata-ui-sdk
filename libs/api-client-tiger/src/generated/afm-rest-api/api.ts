@@ -3159,6 +3159,12 @@ export interface SearchResult {
      * @memberof SearchResult
      */
     relationships: Array<SearchRelationshipObject>;
+    /**
+     * If something is not working properly this field will contain explanation.
+     * @type {string}
+     * @memberof SearchResult
+     */
+    reasoning: string;
 }
 /**
  *
