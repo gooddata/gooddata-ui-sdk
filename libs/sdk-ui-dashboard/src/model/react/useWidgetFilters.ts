@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { useEffect, useMemo, useState } from "react";
 import {
     areObjRefsEqual,
@@ -19,6 +19,7 @@ import {
     selectFilterContextFilters,
     selectIsInEditMode,
     selectCrossFilteringFiltersLocalIdentifiersByWidgetRef,
+    selectAppliedFilterContextFilters,
 } from "../../model/store/index.js";
 import { safeSerializeObjRef } from "../../_staging/metadata/safeSerializeObjRef.js";
 import { FilterableDashboardWidget } from "../types/layoutTypes.js";
@@ -126,7 +127,8 @@ export function useWidgetFilters(
  * @param widget - widget to get the non-ignored filters for
  */
 function useNonIgnoredFilters(widget: FilterableDashboardWidget | undefined | null) {
-    const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
+    // TODO: make selector that takes into the account used filter mode
+    const dashboardFilters = useDashboardSelector(selectAppliedFilterContextFilters);
     const crossFilteringLocalIdentifiersForThisWidget = useDashboardSelector(
         selectCrossFilteringFiltersLocalIdentifiersByWidgetRef(widget?.ref),
     );

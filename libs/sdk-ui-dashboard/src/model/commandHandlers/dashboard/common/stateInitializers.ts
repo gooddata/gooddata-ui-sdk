@@ -64,6 +64,7 @@ export function actionsToInitializeNewDashboard(
             filterContextDefinition: createDefaultFilterContext(dateFilterConfig),
             attributeFilterDisplayForms: [],
         }),
+        filterContextActions.applyFilterContext(),
         layoutActions.setLayout(EmptyDashboardLayout),
         insightsActions.setInsights([]),
         metaActions.setMeta({}),
@@ -278,6 +279,7 @@ export function* actionsToInitializeExistingDashboard(
             filterContextIdentity,
             attributeFilterDisplayForms,
         }),
+        filterContextActions.applyFilterContext(),
         layoutActions.setLayout(dashboardLayout),
         metaActions.setMeta({
             dashboard: persistedDashboard ?? dashboard,
