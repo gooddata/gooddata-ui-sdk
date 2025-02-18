@@ -1,6 +1,7 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useState, useCallback } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { v4 as uuid } from "uuid";
 import noop from "lodash/noop.js";
 import cx from "classnames";
 
@@ -109,15 +110,23 @@ const MessageWithShowMore: React.FC<MessageWithShowMoreProps> = ({
     });
     const showMoreLinkClassNames = cx("gd-message-text-showmorelink", "s-message-text-showmorelink", type);
 
+    const accessibilityId = uuid();
     return (
         <div className="gd-message-text-showmore">
             <Typography tagName="p" className="gd-message-text-header">
                 <MessageElement message={message} type="span" />
-                <span className={showMoreLinkClassNames} onClick={handleShowMore}>
+                <button
+                    aria-expanded={shouldShowMore ? "false" : "true"}
+                    aria-controls={accessibilityId}
+                    className={showMoreLinkClassNames}
+                    onClick={handleShowMore}
+                >
                     {shouldShowMore ? showMore : showLess}
-                </span>
+                </button>
             </Typography>
-            <div className={contentClassNames}>{errorDetail}</div>
+            <div id={accessibilityId} className={contentClassNames}>
+                {errorDetail}
+            </div>
         </div>
     );
 };

@@ -173,8 +173,6 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         selectedValue,
     );
 
-    const accessibilityValue = "alert.measure";
-
     return viewMode === "edit" ? (
         <DashboardInsightSubmenuContainer
             title={
@@ -188,7 +186,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
             <div className="gd-edit-alert">
                 <div className="gd-edit-alert__form">
                     <div className="gd-edit-alert__form-content">
-                        <label htmlFor={accessibilityValue} className="gd-edit-alert__measure-label">
+                        <label htmlFor="alert.measure" className="gd-edit-alert__measure-label">
                             <FormattedMessage id="insightAlert.config.when" />
                         </label>
                         <AlertMeasureSelect
@@ -196,6 +194,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             onMeasureChange={changeMeasure}
                             measures={measures}
                             overlayPositionType={overlayPositionType}
+                            id="alert.measure"
                         />
 
                         {Boolean(canManageAttributes) && (
@@ -302,12 +301,13 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                         {destinations.length > 1 && (
                             <>
                                 <label
-                                    htmlFor={accessibilityValue}
+                                    htmlFor="alert.destination"
                                     className="gd-edit-alert__destination-label"
                                 >
                                     <FormattedMessage id="insightAlert.config.action" />
                                 </label>
                                 <AlertDestinationSelect
+                                    id="alert.destination"
                                     selectedDestination={updatedAlert.notificationChannel!}
                                     onDestinationChange={changeDestination}
                                     destinations={destinations}
@@ -329,11 +329,11 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             notificationChannels={destinations}
                             notificationChannelId={updatedAlert.notificationChannel}
                         />
-                        <label htmlFor={accessibilityValue} className="gd-edit-alert__title-label">
+                        <label htmlFor="alert.title" className="gd-edit-alert__title-label">
                             <FormattedMessage id="insightAlert.config.name" />
                         </label>
                         <AlertTitle
-                            id={accessibilityValue}
+                            id="alert.title"
                             measures={measures}
                             alert={updatedAlert}
                             separators={separators}
