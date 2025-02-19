@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     ICustomGridOptions,
     TableAgGridCallbacks,
@@ -115,7 +115,10 @@ export function createGridOptions(
 
         // infinite scrolling model
         rowModelType: "infinite",
-        serverSideStoreType: "partial",
+
+        //STL-1137
+        //replaced by suppressServerSideInfiniteScroll in version 31 than removed in version 31.1 with no replacement
+        //serverSideStoreType: "partial",
         paginationPageSize: effectivePageSize,
         cacheOverflowSize: effectivePageSize,
         cacheBlockSize: effectivePageSize,

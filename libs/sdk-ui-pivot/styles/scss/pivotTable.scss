@@ -1,9 +1,11 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:color";
 @use "sass:meta";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+
+@import "ag-grid-community/styles/ag-theme-balham.css";
 
 $custom-foreground-color: var(--gd-table-valueColor, kit-variables.$gd-color-text);
 $custom-secondary-foreground-color: var(--gd-table-valueColor, kit-variables.$gd-color-text);
@@ -69,8 +71,6 @@ $subtotal-odd-background-color: var(
     var(--gd-palette-complementary-1-from-theme, rgba(176, 190, 202, 0.1))
 );
 
-@use "@ag-grid-community/all-modules/dist/styles/ag-theme-balham/sass/ag-theme-balham-mixin" as ag-balham;
-
 .gd-table-component {
     &.gd-table-header-hide {
         .ag-header-row {
@@ -78,13 +78,14 @@ $subtotal-odd-background-color: var(
         }
     }
 
-    @include meta.load-css("@ag-grid-community/all-modules/dist/styles/ag-grid");
+    @include meta.load-css("ag-grid-community/styles/ag-grid.css");
 
     // TODO really calculate disabled-foreground-color and chip-background-color, now here only because of foreground-color being a CSS variable
     // TODO really calculate modal-overlay-background-color, now here only because of background-color being a CSS variable
     // we must use the borders-critical: true with border-color: transparent so that the positioning of headers is the same as in ag-grid 22
     .ag-theme-balham {
-        @include ag-balham.ag-theme-balham(
+        // TODO: IMJ-STL-1137
+        /* @include ag-balham.ag-theme-balham(
             (
                 borders: false,
                 borders-critical: true,
@@ -112,7 +113,7 @@ $subtotal-odd-background-color: var(
                 header-cell-hover-background-color: $header-hover-background-color,
                 suppress-css-var-overrides: true,
             )
-        );
+        );*/
 
         .ag-filter-toolpanel-header,
         .ag-filter-toolpanel-search,

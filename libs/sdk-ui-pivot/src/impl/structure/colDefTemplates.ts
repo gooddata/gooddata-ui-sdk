@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import { ColDef, ValueFormatterParams } from "@ag-grid-community/all-modules";
+// (C) 2007-2025 GoodData Corporation
+import { ColDef, ValueFormatterParams } from "ag-grid-community";
 import { IMeasureDescriptor, ISeparators } from "@gooddata/sdk-model";
 import { TableFacade } from "../tableFacade.js";
 import { ICorePivotTableProps } from "../../publicTypes.js";

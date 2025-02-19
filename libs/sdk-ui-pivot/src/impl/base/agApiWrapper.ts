@@ -1,5 +1,5 @@
-// (C) 2007-2023 GoodData Corporation
-import { GridApi } from "@ag-grid-community/all-modules";
+// (C) 2007-2025 GoodData Corporation
+import { GridApi } from "ag-grid-community";
 
 function getHeaderHeight(gridApi: GridApi): number {
     return (gridApi as any)?.ctrlsService?.gridHeaderCtrl?.eGui?.clientHeight ?? 0;

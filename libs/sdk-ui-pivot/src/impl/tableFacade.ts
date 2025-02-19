@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { TableDescriptor } from "./structure/tableDescriptor.js";
 import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
@@ -24,7 +24,7 @@ import {
 } from "./resizing/columnSizing.js";
 import { IResizedColumns, UIClick } from "../columnWidths.js";
 import { AgGridDatasource, createAgGridDatasource } from "./data/dataSource.js";
-import { Column, ColumnApi, GridApi } from "@ag-grid-community/all-modules";
+import { Column, GridApi } from "ag-grid-community";
 import { defFingerprint, ISortItem } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import { IntlShape } from "react-intl";
@@ -119,7 +119,7 @@ export class TableFacade {
      * that the columnApi is also defined.
      * @internal
      */
-    private columnApi: ColumnApi | undefined;
+    private columnApi: GridApi | undefined;
     private destroyed: boolean = false;
 
     private onPageLoadedCallback: ((dv: DataViewFacade, newResult: boolean) => void) | undefined;
@@ -157,13 +157,13 @@ export class TableFacade {
         this.config = props.config;
     }
 
-    public finishInitialization = (gridApi: GridApi, columnApi: ColumnApi): void => {
+    public finishInitialization = (gridApi: GridApi, columnApi: GridApi): void => {
         invariant(this.gridApi === undefined);
         invariant(this.agGridDataSource);
 
         this.gridApi = gridApi;
         this.columnApi = columnApi;
-        this.gridApi.setDatasource(this.agGridDataSource);
+        this.gridApi.updateGridOptions({ datasource: this.agGridDataSource });
     };
 
     public refreshData = (): void => {
@@ -175,7 +175,7 @@ export class TableFacade {
 
         // make ag-grid refresh data
         // see: https://www.ag-grid.com/javascript-grid-infinite-scrolling/#changing-the-datasource
-        gridApi.setDatasource(this.agGridDataSource);
+        gridApi.updateGridOptions({ datasource: this.agGridDataSource });
     };
 
     /**
@@ -320,7 +320,7 @@ export class TableFacade {
 
         invariant(this.columnApi);
 
-        const columns = this.columnApi.getAllColumns();
+        const columns = this.columnApi.getAllGridColumns();
         invariant(columns);
         this.resetColumnsWidthToDefault(resizingConfig, columns);
         this.clearFittedColumns();
@@ -346,7 +346,7 @@ export class TableFacade {
     private setFittedColumns = () => {
         invariant(this.columnApi);
 
-        const columns = this.columnApi.getAllColumns();
+        const columns = this.columnApi.getAllGridColumns();
         invariant(columns);
 
         columns.forEach((col) => {
@@ -380,7 +380,7 @@ export class TableFacade {
         if (resizingConfig.growToFit) {
             this.growToFit(resizingConfig); // calls resetColumnsWidthToDefault internally too
         } else {
-            const columns = this.columnApi.getAllColumns();
+            const columns = this.columnApi.getAllGridColumns();
             invariant(columns);
             this.resetColumnsWidthToDefault(resizingConfig, columns);
         }
@@ -416,7 +416,7 @@ export class TableFacade {
                 isColumnAutoresizeEnabled(resizingConfig.columnAutoresizeOption) &&
                 this.shouldPerformAutoresize()
             ) {
-                const columns = this.columnApi!.getAllColumns();
+                const columns = this.columnApi!.getAllGridColumns();
                 invariant(columns);
                 this.resetColumnsWidthToDefault(resizingConfig, columns);
             }
@@ -552,7 +552,7 @@ export class TableFacade {
         column.getColDef().suppressSizeToFit = false;
 
         if (this.isColumnAutoResized(id)) {
-            this.columnApi?.setColumnWidth(column, this.autoResizedColumns[id].width);
+            this.columnApi?.setColumnWidths([{ key: column, newWidth: this.autoResizedColumns[id].width }]);
             return;
         }
 
@@ -560,7 +560,7 @@ export class TableFacade {
         this.resizedColumnsStore.addToManuallyResizedColumn(column, true);
     };
 
-    private autoresizeColumnsByColumnId = (columnApi: ColumnApi, columnIds: string[]) => {
+    private autoresizeColumnsByColumnId = (columnApi: GridApi, columnIds: string[]) => {
         setColumnMaxWidth(columnApi, columnIds, AUTO_SIZED_MAX_WIDTH);
 
         columnApi.autoSizeColumns(columnIds);
@@ -604,14 +604,14 @@ export class TableFacade {
 
     private getAllMeasureOrAnyTotalColumns = () => {
         invariant(this.columnApi);
-        const columns = this.columnApi.getAllColumns();
+        const columns = this.columnApi.getAllGridColumns();
         invariant(columns);
         return columns.filter((col) => isMeasureOrAnyColumnTotal(col));
     };
 
     private getAllMeasureColumns = () => {
         invariant(this.columnApi);
-        const columns = this.columnApi.getAllColumns();
+        const columns = this.columnApi.getAllGridColumns();
         invariant(columns);
         return columns.filter((col) => isMeasureColumn(col));
     };
@@ -646,6 +646,7 @@ export class TableFacade {
      */
     private sizeColumnsToFitWithoutColumnReset(resizingConfig: ColumnResizingConfig): void {
         invariant(this.columnApi);
+        const localApi = this.columnApi;
         const source = "sizeColumnsToFit";
         const gridWidth = resizingConfig.clientWidth;
         // avoid divide by zero
@@ -676,7 +677,8 @@ export class TableFacade {
             if (availablePixels <= 0) {
                 // no width, set everything to minimum
                 colsToSpread.forEach(function (column) {
-                    column.setMinimum(source);
+                    const min = column.getMinWidth();
+                    localApi.setColumnWidths([{ key: column, newWidth: min }]);
                 });
             } else {
                 const scale = availablePixels / this.getWidthOfColsInList(colsToSpread);
@@ -688,19 +690,33 @@ export class TableFacade {
                     const column = colsToSpread[i];
                     const newWidth = Math.round(column.getActualWidth() * scale);
                     if (newWidth < column.getMinWidth()!) {
-                        column.setMinimum(source);
+                        //column.setMinimum(source);
+                        const min = column.getMinWidth();
+                        localApi.setColumnWidths([{ key: column, newWidth: min }], true, source);
+
                         moveToNotSpread(column);
                         finishedResizing = false;
                     } else if (column.isGreaterThanMax(newWidth)) {
-                        column.setActualWidth(column.getMaxWidth()!, source);
+                        //column.setActualWidth(column.getMaxWidth()!, source);
+                        localApi.setColumnWidths(
+                            [{ key: column, newWidth: column.getMaxWidth()! }],
+                            true,
+                            source,
+                        );
                         moveToNotSpread(column);
                         finishedResizing = false;
                     } else {
                         const onLastCol = i === 0;
                         if (onLastCol) {
-                            column.setActualWidth(pixelsForLastCol, source);
+                            //column.setActualWidth(pixelsForLastCol, source);
+                            localApi.setColumnWidths(
+                                [{ key: column, newWidth: pixelsForLastCol }],
+                                true,
+                                source,
+                            );
                         } else {
-                            column.setActualWidth(newWidth, source);
+                            //column.setActualWidth(newWidth, source);
+                            localApi.setColumnWidths([{ key: column, newWidth: newWidth }], true, source);
                         }
                     }
                     pixelsForLastCol -= newWidth;
@@ -933,7 +949,7 @@ export class TableFacade {
     public setTooltipFields = (): void => {
         invariant(this.columnApi);
 
-        const columns = this.columnApi.getAllColumns();
+        const columns = this.columnApi.getAllGridColumns();
         invariant(columns);
         columns.forEach((col) => {
             const colDef = col.getColDef();

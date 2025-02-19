@@ -3917,15 +3917,6 @@ importers:
 
   ../../libs/sdk-ui-pivot:
     dependencies:
-      '@ag-grid-community/all-modules':
-        specifier: 27.3.0
-        version: 27.3.0
-      '@ag-grid-community/core':
-        specifier: 27.3.0
-        version: 27.3.0
-      '@ag-grid-community/react':
-        specifier: 27.3.0
-        version: 27.3.0(@ag-grid-community/core@27.3.0)(react-dom@18.2.0)(react@18.2.0)
       '@gooddata/number-formatter':
         specifier: ^1.0.6
         version: 1.0.6
@@ -3947,6 +3938,12 @@ importers:
       '@gooddata/sdk-ui-vis-commons':
         specifier: workspace:*
         version: link:../sdk-ui-vis-commons
+      ag-grid-community:
+        specifier: 33.1.0
+        version: 33.1.0
+      ag-grid-react:
+        specifier: 33.1.0
+        version: 33.1.0(react-dom@18.2.0)(react@18.2.0)
       classnames:
         specifier: ^2.3.1
         version: 2.3.2
@@ -12423,6 +12420,28 @@ packages:
     resolution: {integrity: sha512-4B/qKCfeE/ODUaAUpSwfzazo5x29WD4r3vXiWsB7I2mSDAihwEqKO+g8GELZUQSSAo5e1XTYh3ZVfLyxBc12nA==}
     engines: {node: '>= 10.0.0'}
     dev: true
+
+  /ag-charts-types@11.1.0:
+    resolution: {integrity: sha512-9cu2vJuFZNrhf7o5USG5n/meTIJKhJfTIds5ziRV+FI3mT1QZME2nchu4WQnoIE8gft9ACkuhtCUgOyW44A2iQ==}
+    dev: false
+
+  /ag-grid-community@33.1.0:
+    resolution: {integrity: sha512-xPEgNjRuudfimbGytoDttjlgAjz/N+muq7Tgw2GTMuUeSG0z54kBObvJxhezOEEashVMKBpqb/YhzIE6e+opqQ==}
+    dependencies:
+      ag-charts-types: 11.1.0
+    dev: false
+
+  /ag-grid-react@33.1.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-YB/t6U+P7HPcGY+ukJiVYtQNbDsNVVocDITPANsy21pfh5ojvoNfKEdieC904IPTdgjSMTpNDQJogBzTpMLTCA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    dependencies:
+      ag-grid-community: 33.1.0
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /agent-base@5.1.1:
     resolution: {integrity: sha512-TMeqbNl2fMW0nMjTEPOwe3J/PRFP4vqeoNuQMG0HlMrtm5QxKqdvAkZ1pRBQ/ulIyDD5Yq0nJ7YbdD8ey0TO3g==}

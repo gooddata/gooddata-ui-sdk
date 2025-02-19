@@ -1,7 +1,7 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { ITotal, IMeasureDescriptorItem } from "@gooddata/sdk-model";
-import { ICellRendererParams } from "@ag-grid-community/all-modules";
+import { ICellRendererParams } from "ag-grid-community";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { isSomeTotal } from "../data/dataSourceUtils.js";

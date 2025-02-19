@@ -491,6 +491,14 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "ag-grid-community",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "ag-grid-react",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "async",
       "allowedCategories": [ "production" ]
     },

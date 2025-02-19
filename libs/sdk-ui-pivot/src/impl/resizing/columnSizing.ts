@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { invariant, InvariantError } from "ts-invariant";
 import omit from "lodash/omit.js";
 import omitBy from "lodash/omitBy.js";
@@ -17,7 +17,7 @@ import {
     COLUMN_TOTAL_CLASS,
 } from "../base/constants.js";
 
-import { ColDef, Column, ColumnApi, GridApi } from "@ag-grid-community/all-modules";
+import { ColDef, Column, GridApi } from "ag-grid-community";
 import {
     ColumnWidth,
     ColumnWidthItem,
@@ -74,7 +74,7 @@ export const SORT_ICON_WIDTH = 12;
 const COLUMN_RESIZE_CHUNK_SIZE = 50;
 
 // Data for the setColumnWidths bulk operation
-type ColumnsResizeSpec = Parameters<ColumnApi["setColumnWidths"]>[0][0];
+type ColumnsResizeSpec = Parameters<GridApi["setColumnWidths"]>[0][0];
 
 //
 //
@@ -654,13 +654,13 @@ export function updateColumnDefinitionsWithWidths(
 
 export function syncSuppressSizeToFitOnColumns(
     resizedColumnsStore: ResizedColumnsStore,
-    columnApi: ColumnApi,
+    columnApi: GridApi,
 ): void {
     if (!columnApi) {
         return;
     }
 
-    const columns = columnApi.getAllColumns();
+    const columns = columnApi.getAllGridColumns();
 
     columns?.forEach((col) => {
         const resizedColumn = resizedColumnsStore.getManuallyResizedColumn(col);
@@ -675,7 +675,7 @@ export function isColumnAutoResized(autoResizedColumns: IResizedColumns, resized
 }
 
 export function resetColumnsWidthToDefault(
-    columnApi: ColumnApi,
+    columnApi: GridApi,
     columns: Column[],
     resizedColumnsStore: ResizedColumnsStore,
     autoResizedColumns: IResizedColumns,
@@ -702,12 +702,12 @@ export function resetColumnsWidthToDefault(
 }
 
 export function resizeAllMeasuresColumns(
-    columnApi: ColumnApi,
+    columnApi: GridApi,
     resizedColumnsStore: ResizedColumnsStore,
     column: Column,
 ): void {
     const columnWidth = column.getActualWidth();
-    const allColumns = columnApi.getAllColumns();
+    const allColumns = columnApi.getAllGridColumns();
 
     const resizeData = allColumns?.filter(isMeasureOrAnyColumnTotal).map((col): ColumnsResizeSpec => {
         return {
@@ -725,11 +725,11 @@ export function resizeAllMeasuresColumns(
 
 export function resizeWeakMeasureColumns(
     tableDescriptor: TableDescriptor,
-    columnApi: ColumnApi,
+    columnApi: GridApi,
     resizedColumnsStore: ResizedColumnsStore,
     column: Column,
 ): void {
-    const allColumns = columnApi.getAllColumns();
+    const allColumns = columnApi.getAllGridColumns();
 
     resizedColumnsStore.addWeekMeasureColumn(column);
 
@@ -738,7 +738,13 @@ export function resizeWeakMeasureColumns(
         const weakColumnWidth = resizedColumnsStore.getMatchedWeakMeasuresColumnWidth(colDesc);
 
         if (isMeasureColumn(col) && weakColumnWidth) {
-            columnApi.setColumnWidth(col, weakColumnWidth.measureColumnWidthItem.width.value);
+            //todo: STL-1137 set it in once
+            const colW = {
+                key: col,
+                newWidth: weakColumnWidth.measureColumnWidthItem.width.value,
+            };
+
+            columnApi.setColumnWidths([colW]);
             col.getColDef().suppressSizeToFit = true;
         }
     });
@@ -768,7 +774,7 @@ interface CalculateColumnWidthsConfig {
     clientWidth?: number;
     groupingProvider?: IGroupingProvider;
     gridApi: GridApi;
-    columnApi: ColumnApi;
+    columnApi: GridApi;
 }
 
 export function getMaxWidth(
@@ -827,7 +833,7 @@ function collectWidths(
     font: string,
     rowIndex: number,
 ): void {
-    const { context, gridApi, columnApi } = config;
+    const { context, gridApi } = config;
 
     const col = config.tableDescriptor.getCol(column);
     const colDef = column.getColDef();
@@ -842,7 +848,7 @@ function collectWidths(
                 value: text,
                 column,
                 colDef,
-                columnApi,
+                // TODO: STL-1137 columnApi,
                 api: gridApi,
                 node: null,
                 context: undefined,
@@ -1050,11 +1056,11 @@ function getRowDataFont(
  * Ag-Grid API set desired column sizes (it *mutates* pivot table columns data).
  */
 export async function autoresizeAllColumns(
-    columnApi: ColumnApi | null,
+    columnApi: GridApi | null,
     autoResizedColumns: IResizedColumns,
 ): Promise<void> {
     if (columnApi) {
-        const columns = columnApi.getPrimaryColumns();
+        const columns = columnApi.getAllGridColumns().filter((col) => col.isPrimary());
 
         // Resizing large number of columns is performance-intensive, so split the processing
         // to async chunks to not block main thread until the whole resizing is completed.
@@ -1090,7 +1096,7 @@ export async function autoresizeAllColumns(
 export function getAutoResizedColumns(
     tableDescriptor: TableDescriptor | null,
     gridApi: GridApi | null,
-    columnApi: ColumnApi | null,
+    columnApi: GridApi | null,
     execution: IExecutionResult | null,
     resizingConfig: ColumnResizingConfig,
     resizedColumnsStore: ResizedColumnsStore,
@@ -1103,7 +1109,7 @@ export function getAutoResizedColumns(
 ): IResizedColumns {
     const { containerRef, columnAutoresizeOption, clientWidth } = resizingConfig;
     if (tableDescriptor && gridApi && columnApi && execution && containerRef) {
-        const columns = columnApi.getPrimaryColumns() ?? [];
+        const columns = (columnApi.getAllGridColumns() ?? []).filter((col) => col.isPrimary());
         const { headerFont, rowFont, subtotalFont, totalFont, subtotalColumnFont, totalColumnFont } =
             getTableFonts(containerRef);
         const canvas = document.createElement("canvas");
