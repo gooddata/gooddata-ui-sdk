@@ -9,7 +9,7 @@ import {
     IMeasure,
 } from "@gooddata/sdk-model";
 
-import { getAlertThreshold } from "../utils/getters.js";
+import { getAlertThreshold, getMeasureFormat } from "../utils/getters.js";
 import { AlertAttribute, AlertMetric } from "../../../types.js";
 
 export function useThresholdValue(
@@ -47,7 +47,7 @@ export function useThresholdValue(
             const val = getMetricValue(selectedMeasure?.measure, selectedAttribute?.attribute, selectedValue);
             if (val !== undefined) {
                 changeValue(val);
-                setValue(convertValue(String(val)));
+                setValue(convertValue(String(val), selectedMeasure?.measure.measure.format));
             }
         }
     }, [
@@ -76,11 +76,11 @@ export function useThresholdValue(
 
     const onBlur = useCallback(
         (event: React.FocusEvent<HTMLInputElement>) => {
-            const val = convertValue(event.target.value);
+            const val = convertValue(event.target.value, getMeasureFormat(selectedMeasure?.measure));
             changeValue(val!);
             setValue(val);
         },
-        [changeValue],
+        [changeValue, selectedMeasure?.measure],
     );
 
     return {
@@ -90,14 +90,17 @@ export function useThresholdValue(
     };
 }
 
-function convertValue(value: string): number | undefined {
-    const convertedValue = ClientFormatterFacade.convertValue(value);
-    const { formattedValue } = ClientFormatterFacade.formatValue(convertedValue, undefined, {
-        decimal: ".",
-        thousand: "",
-    });
-
-    return parseFormattedNumber(formattedValue);
+function convertValue(value: string, format?: string): number | undefined {
+    try {
+        const convertedValue = ClientFormatterFacade.convertValue(value);
+        const { formattedValue } = ClientFormatterFacade.formatValue(convertedValue, format, {
+            decimal: ".",
+            thousand: "",
+        });
+        return parseFormattedNumber(formattedValue);
+    } catch {
+        return parseFormattedNumber(value);
+    }
 }
 
 function parseFormattedNumber(formattedNumber: string): number | undefined {

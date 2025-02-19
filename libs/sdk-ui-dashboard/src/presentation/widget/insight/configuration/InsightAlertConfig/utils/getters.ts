@@ -421,10 +421,22 @@ export function getDescription(
     const valueSuffix = getValueSuffix(alert?.alert) ?? "";
     const title = getOperatorTitle(intl, alert?.alert).toLowerCase();
     const threshold = getAlertThreshold(alert?.alert);
-    const convertedValue = ClientFormatterFacade.convertValue(threshold);
-    const { formattedValue } = ClientFormatterFacade.formatValue(convertedValue, undefined, separators);
+    const formattedValue = formatValue(threshold, getMeasureFormat(selectedMeasure?.measure), separators);
 
     const description = [name, title, `${formattedValue}${valueSuffix}`].filter(Boolean).join(" ");
 
     return description[0].toUpperCase() + description.slice(1);
+}
+
+function formatValue(value: string | number | undefined, format?: string, separators?: ISeparators) {
+    try {
+        const convertedValue = ClientFormatterFacade.convertValue(value);
+        if (convertedValue !== null && isNaN(convertedValue)) {
+            return "";
+        }
+        const { formattedValue } = ClientFormatterFacade.formatValue(convertedValue, format, separators);
+        return formattedValue;
+    } catch {
+        return String(value);
+    }
 }
