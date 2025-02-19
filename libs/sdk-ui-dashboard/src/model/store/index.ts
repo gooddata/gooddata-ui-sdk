@@ -319,6 +319,7 @@ export {
 } from "./listedDashboards/listedDashboardsSelectors.js";
 export {
     selectAccessibleDashboards,
+    selectAccessibleDashboardsLoaded,
     selectAccessibleDashboardsMap,
 } from "./accessibleDashboards/accessibleDashboardsSelectors.js";
 export {

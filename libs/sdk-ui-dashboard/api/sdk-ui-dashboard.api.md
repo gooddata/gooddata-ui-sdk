@@ -7388,6 +7388,9 @@ export interface SectionSlidesTransformerFunction<TWidget> {
 export const selectAccessibleDashboards: (state: DashboardState) => IListedDashboard[];
 
 // @alpha
+export const selectAccessibleDashboardsLoaded: DashboardSelector<boolean>;
+
+// @alpha
 export const selectAccessibleDashboardsMap: DashboardSelector<ObjRefMap<IListedDashboard>>;
 
 // @internal
