@@ -18,21 +18,20 @@ The whole process essentially boils down to five steps:
 
 For detailed instructions, read the [Integrate into an Existing Application](./cn_and_cloud_integration/) article.
 
-
 You might be interested in:
-- How to [authenticate to GoodData.CN and Cloud](./cn_and_cloud_authentication/)
-- How to deal with [Cross origin issues](./cross_origin_issues/)
 
-
+-   How to [authenticate to GoodData.CN and Cloud](./cn_and_cloud_authentication/)
+-   How to deal with [Cross origin issues](./cross_origin_issues/)
 
 ### GoodData.CN and Cloud authentication
 
-The [GoodData.CN](https://www.gooddata.com/docs/cloud-native/) and [GoodData Cloud](https://www.gooddata.com/docs/cloud/) authentication process uses API Token authentication for CLI applications and context deferred authentication or [JWT authentication](https://jwt.io/introduction) for UI applications. API Token authentication is suitable for development and CLI applications, but not recommended for UI applications due to security concerns. 
+The [GoodData.CN](https://www.gooddata.com/docs/cloud-native/) and [GoodData Cloud](https://www.gooddata.com/docs/cloud/) authentication process uses API Token authentication for CLI applications and context deferred authentication or [JWT authentication](https://jwt.io/introduction) for UI applications. API Token authentication is suitable for development and CLI applications, but not recommended for UI applications due to security concerns.
 
 Context deferred authentication is designed for use with SSO providers in UI applications and resolves authentication exceptions accordingly. Functions like `createTigerAuthenticationUrl`, `createTigerDeauthenticationUrl`, and `redirectToTigerAuthentication` are provided to assist in the authentication process.
 
-For further details, please refer to the [GoodData.CN and Cloud Authentication](./cn_and_cloud_authentication/) article.
+If your UI application runs in a Federated Identity Management context, you can use the `createRedirectToTigerAuthenticationWithParams` function to generate a `redirectToTigerAuthentication` handler parametrized by the current user's identity provider ID.
 
+For further details, please refer to the [GoodData.CN and Cloud Authentication](./cn_and_cloud_authentication/) article.
 
 ### Cross origin issues
 

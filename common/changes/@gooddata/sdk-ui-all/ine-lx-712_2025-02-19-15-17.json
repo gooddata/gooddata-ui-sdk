@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "New helper factory createRedirectToTigerAuthenticationWithParams to create a parametrized redirectToTigerAuthentication handler. Useful in Federated Identity Management context.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}
