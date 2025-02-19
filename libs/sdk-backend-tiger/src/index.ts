@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 /**
  * This package provides the Analytical Backend implementation for GoodData Cloud and GoodData.CN.
  *
@@ -61,7 +61,12 @@ export type {
     ReadCsvFileManifestsResponse,
 } from "@gooddata/api-client-tiger";
 export { ApiEntitlementNameEnum } from "@gooddata/api-client-tiger";
-export type { SetJwtCallback, JwtIsAboutToExpireHandler } from "./auth.js";
+export type {
+    SetJwtCallback,
+    JwtIsAboutToExpireHandler,
+    IRedirectToTigerAuthenticationParams,
+    RedirectToTigerAuthenticationHandler,
+} from "./auth.js";
 export {
     ContextDeferredAuthProvider,
     TigerTokenAuthProvider,
@@ -69,6 +74,7 @@ export {
     TigerAuthProviderBase,
     createTigerAuthenticationUrl,
     redirectToTigerAuthentication,
+    createRedirectToTigerAuthenticationWithParams,
 } from "./auth.js";
 
 export type {

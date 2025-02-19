@@ -77,7 +77,12 @@ export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
 }
 
 // @public
-export function createTigerAuthenticationUrl(backend: IAnalyticalBackend, authenticationFlow: AuthenticationFlow, location: Location): string;
+export function createRedirectToTigerAuthenticationWithParams(params: IRedirectToTigerAuthenticationParams): RedirectToTigerAuthenticationHandler;
+
+// @public
+export function createTigerAuthenticationUrl(backend: IAnalyticalBackend, authenticationFlow: AuthenticationFlow, location: Location, additionalParams?: {
+    externalProviderId?: string;
+}): string;
 
 // @internal (undocumented)
 export type DataSourceDefinition = JsonApiDataSourceInDocument;
@@ -314,6 +319,12 @@ export { ImportCsvResponse }
 // @internal (undocumented)
 export type INotificationChannel = Omit<JsonApiNotificationChannelOut, "type">;
 
+// @public
+export interface IRedirectToTigerAuthenticationParams {
+    // (undocumented)
+    externalProviderId: string;
+}
+
 // @alpha (undocumented)
 export const isTigerCompatibleType: (obj: unknown) => obj is TigerObjectType;
 
@@ -365,6 +376,9 @@ export { ReadCsvFileManifestsResponse }
 
 // @public
 export function redirectToTigerAuthentication(context: IAuthenticationContext, error: NotAuthenticated): void;
+
+// @public
+export type RedirectToTigerAuthenticationHandler = (context: IAuthenticationContext, error: NotAuthenticated) => void;
 
 // @internal (undocumented)
 export interface ScanRequest {
