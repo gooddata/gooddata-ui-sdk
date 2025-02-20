@@ -124,6 +124,11 @@ import { OrganizationPermissionAssignment } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 
 // @public
+export class AbortError extends AnalyticalBackendError {
+    constructor(message: string);
+}
+
+// @public
 export abstract class AnalyticalBackendError extends Error {
     protected constructor(message: string, abeType: string, cause?: Error | undefined);
     // (undocumented)
@@ -145,6 +150,7 @@ export const AnalyticalBackendErrorTypes: {
     LIMIT_REACHED: string;
     CONTRACT_EXPIRED: string;
     TIMEOUT_ERROR: string;
+    ABORT: string;
 };
 
 // @public
@@ -625,11 +631,11 @@ export interface IEntitlements {
 
 // @public
 export interface IExecutionFactory {
-    forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
-    forDefinition(def: IExecutionDefinition): IPreparedExecution;
-    forInsight(insightDefinition: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
-    forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution;
-    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
+    forBuckets(buckets: IBucket[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
+    forDefinition(def: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution;
+    forInsight(insightDefinition: IInsightDefinition, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
+    forInsightByRef(insight: IInsight, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
 }
 
 // @public
@@ -647,6 +653,7 @@ export interface IExecutionResult {
     // @beta
     readForecastAll(config: IForecastConfig): Promise<IForecastResult>;
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
+    readonly signal?: AbortSignal;
     transform(): IPreparedExecution;
 }
 
@@ -1123,6 +1130,14 @@ export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
     withExecConfig(config: IExecutionConfig): IPreparedExecution;
     withSorting(...items: ISortItem[]): IPreparedExecution;
 }
+
+// @public
+export interface IPreparedExecutionOptions {
+    signal?: AbortSignal;
+}
+
+// @public
+export function isAbortError(obj: unknown): obj is AbortError;
 
 // @public
 export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackendError;
@@ -1633,7 +1648,7 @@ export class NotSupported extends AnalyticalBackendError {
 }
 
 // @public
-export function prepareExecution(backend: IAnalyticalBackend, definition: IExecutionDefinition): IPreparedExecution;
+export function prepareExecution(backend: IAnalyticalBackend, definition: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution;
 
 // @public
 export class ProtectedDataError extends AnalyticalBackendError {

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
@@ -114,6 +114,7 @@ export function toCoreXirrProps(props: IXirrProps): ICoreChartProps {
         ...newProps,
         execution: createExecution(buckets, props),
         exportTitle: props.exportTitle || "Xirr",
+        enableExecutionCancelling: props.config?.enableExecutionCancelling ?? false,
     };
 }
 

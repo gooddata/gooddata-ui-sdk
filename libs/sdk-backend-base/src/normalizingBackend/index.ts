@@ -18,6 +18,7 @@ import {
     IAnomalyDetectionResult,
     IClusteringConfig,
     IClusteringResult,
+    IPreparedExecutionOptions,
 } from "@gooddata/sdk-backend-spi";
 import { decoratedBackend } from "../decoratedBackend/index.js";
 import { DecoratedExecutionFactory, DecoratedPreparedExecution } from "../decoratedBackend/execution.js";
@@ -38,11 +39,15 @@ class WithNormalizationExecutionFactory extends DecoratedExecutionFactory {
         super(decorated);
     }
 
-    forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
+    forInsightByRef(
+        insight: IInsight,
+        filters?: IFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution {
         const isFallbackAllowed = this.config.executeByRefMode === "fallback";
 
         if (isFallbackAllowed) {
-            return this.forInsight(insight, filters);
+            return this.forInsight(insight, filters, options);
         }
 
         throw new NotSupported(
@@ -52,7 +57,7 @@ class WithNormalizationExecutionFactory extends DecoratedExecutionFactory {
     }
 
     protected wrap = (original: IPreparedExecution): IPreparedExecution => {
-        return new NormalizingPreparedExecution(original, this.decorated, this.config);
+        return new NormalizingPreparedExecution(original, this.decorated, this.config, original.signal);
     };
 }
 
@@ -70,17 +75,17 @@ class NormalizingPreparedExecution extends DecoratedPreparedExecution {
         decorated: IPreparedExecution,
         private readonly originalExecutionFactory: IExecutionFactory,
         private readonly config: NormalizationConfig,
+        public readonly signal: AbortSignal | undefined,
     ) {
-        super(decorated);
+        super(decorated, signal);
     }
 
     public execute = (): Promise<IExecutionResult> => {
         const normalizationState = Normalizer.normalize(this.definition);
-        let normalizedExecution = this.originalExecutionFactory.forDefinition(normalizationState.normalized);
-
-        if (this.decorated.signal) {
-            normalizedExecution = normalizedExecution.withSignal(this.decorated.signal);
-        }
+        const normalizedExecution = this.originalExecutionFactory.forDefinition(
+            normalizationState.normalized,
+            { signal: this.signal },
+        );
 
         this.config.normalizationStatus?.(normalizationState);
 
@@ -89,8 +94,13 @@ class NormalizingPreparedExecution extends DecoratedPreparedExecution {
         });
     };
 
-    protected createNew = (decorated: IPreparedExecution): IPreparedExecution => {
-        return new NormalizingPreparedExecution(decorated, this.originalExecutionFactory, this.config);
+    protected createNew = (decorated: IPreparedExecution, signal?: AbortSignal): IPreparedExecution => {
+        return new NormalizingPreparedExecution(
+            decorated,
+            this.originalExecutionFactory,
+            this.config,
+            signal,
+        );
     };
 }
 

@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { IDataView } from "../workspace/execution/index.js";
 
@@ -19,6 +19,7 @@ export const AnalyticalBackendErrorTypes = {
     LIMIT_REACHED: "LR",
     CONTRACT_EXPIRED: "CE",
     TIMEOUT_ERROR: "TE",
+    ABORT: "AB",
 };
 
 /**
@@ -140,6 +141,17 @@ export class NotSupported extends AnalyticalBackendError {
 export class NotImplemented extends AnalyticalBackendError {
     constructor(message: string) {
         super(message, AnalyticalBackendErrorTypes.NOT_IMPLEMENTED);
+    }
+}
+
+/**
+ * This exception is thrown when the request is canceled.
+ *
+ * @public
+ */
+export class AbortError extends AnalyticalBackendError {
+    constructor(message: string) {
+        super(message, AnalyticalBackendErrorTypes.ABORT);
     }
 }
 
@@ -318,4 +330,13 @@ export function isLimitReached(obj: unknown): obj is LimitReached {
  */
 export function isContractExpired(obj: unknown): obj is ContractExpired {
     return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.CONTRACT_EXPIRED;
+}
+
+/**
+ * Type guard checking whether input is an instance of {@link AbortError}
+ *
+ * @public
+ */
+export function isAbortError(obj: unknown): obj is AbortError {
+    return isAnalyticalBackendError(obj) && obj.abeType === AnalyticalBackendErrorTypes.ABORT;
 }

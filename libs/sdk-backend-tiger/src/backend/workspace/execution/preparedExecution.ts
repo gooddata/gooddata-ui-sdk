@@ -8,6 +8,7 @@ import {
     IExplainProvider,
     ExplainType,
     NoDataError,
+    IPreparedExecutionOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -42,7 +43,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
         public readonly definition: IExecutionDefinition,
         private readonly executionFactory: IExecutionFactory,
         private readonly dateFormatter: DateFormatter,
-        public readonly signal?: AbortSignal,
+        public readonly options?: IPreparedExecutionOptions,
     ) {}
 
     public async execute(): Promise<IExecutionResult> {
@@ -56,17 +57,17 @@ export class TigerPreparedExecution implements IPreparedExecution {
                     workspaceId: this.definition.workspace,
                     afmExecution,
                 },
-                { ...new TigerCancellationConverter(this.signal ?? null).forAxios() },
+                { ...new TigerCancellationConverter(this.options?.signal ?? null).forAxios() },
             ),
         ).then((response) => {
-            const resultCancelToken = response.headers["X-Gdc-Cancel-Token"];
+            const resultCancelToken = response?.headers["X-Gdc-Cancel-Token"];
             return new TigerExecutionResult(
                 this.authCall,
                 this.definition,
                 this.executionFactory,
                 response.data,
                 this.dateFormatter,
-                this.signal,
+                this.options?.signal,
                 resultCancelToken,
             );
         });
@@ -107,21 +108,18 @@ export class TigerPreparedExecution implements IPreparedExecution {
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-        return this.propagateSignal(
-            this.executionFactory.forDefinition(defWithDimensions(this.definition, ...dimsOrGen)),
+        return this.executionFactory.forDefinition(
+            defWithDimensions(this.definition, ...dimsOrGen),
+            this.options,
         );
     }
 
     public withBuckets(...buckets: IBucket[]): IPreparedExecution {
-        return this.propagateSignal(
-            this.executionFactory.forDefinition(defWithBuckets(this.definition, ...buckets)),
-        );
+        return this.executionFactory.forDefinition(defWithBuckets(this.definition, ...buckets), this.options);
     }
 
     public withSorting(...items: ISortItem[]): IPreparedExecution {
-        return this.propagateSignal(
-            this.executionFactory.forDefinition(defWithSorting(this.definition, items)),
-        );
+        return this.executionFactory.forDefinition(defWithSorting(this.definition, items), this.options);
     }
 
     public withSignal(signal: AbortSignal): IPreparedExecution {
@@ -130,13 +128,14 @@ export class TigerPreparedExecution implements IPreparedExecution {
             this.definition,
             this.executionFactory,
             this.dateFormatter,
-            signal,
+            { ...this.options, signal },
         );
     }
 
     public withDateFormat(dateFormat: string): IPreparedExecution {
-        return this.propagateSignal(
-            this.executionFactory.forDefinition(defWithDateFormat(this.definition, dateFormat)),
+        return this.executionFactory.forDefinition(
+            defWithDateFormat(this.definition, dateFormat),
+            this.options,
         );
     }
 
@@ -149,17 +148,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
     }
 
     public withExecConfig(config: IExecutionConfig): IPreparedExecution {
-        return this.propagateSignal(
-            this.executionFactory.forDefinition(defWithExecConfig(this.definition, config)),
-        );
-    }
-
-    private propagateSignal(exec: IPreparedExecution): IPreparedExecution {
-        if (this.signal) {
-            return exec.withSignal(this.signal);
-        }
-
-        return exec;
+        return this.executionFactory.forDefinition(defWithExecConfig(this.definition, config), this.options);
     }
 
     public equals(other: IPreparedExecution): boolean {

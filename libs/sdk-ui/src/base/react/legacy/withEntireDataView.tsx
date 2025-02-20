@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IClusteringConfig,
@@ -99,6 +99,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         public static defaultProps = InnerComponent.defaultProps || {};
 
         private hasUnmounted: boolean = false;
+        private abortController: AbortController;
 
         /**
          * Fingerprint of the last execution definition the initialize was called with.
@@ -118,6 +119,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             this.onLoadingChanged = this.onLoadingChanged.bind(this);
             this.onDataTooLarge = this.onDataTooLarge.bind(this);
             this.onNegativeValues = this.onNegativeValues.bind(this);
+            this.abortController = new AbortController();
         }
 
         public componentDidMount() {
@@ -155,6 +157,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                 !isEqual(this.props.forecastConfig, nextProps.forecastConfig) ||
                 !isEqual(this.props.clusteringConfig, nextProps.clusteringConfig)
             ) {
+                this.refreshAbortController();
                 this.initDataLoading(
                     nextProps.execution,
                     nextProps.forecastConfig,
@@ -167,6 +170,14 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             this.hasUnmounted = true;
             this.onLoadingChanged = noop;
             this.onError = noop;
+            this.refreshAbortController();
+        }
+
+        private refreshAbortController() {
+            if (this.props.enableExecutionCancelling) {
+                this.abortController.abort();
+                this.abortController = new AbortController();
+            }
         }
 
         private onLoadingChanged(loadingState: ILoadingState) {
@@ -210,10 +221,14 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         }
 
         private async initDataLoading(
-            execution: IPreparedExecution,
+            originalExecution: IPreparedExecution,
             forecastConfig?: IForecastConfig,
             clusteringConfig?: IClusteringConfig,
         ) {
+            let execution = originalExecution;
+            if (this.props.enableExecutionCancelling) {
+                execution = execution.withSignal(this.abortController.signal);
+            }
             const { onExportReady, pushData, exportTitle } = this.props;
             this.onLoadingChanged({ isLoading: true });
             this.setState({ dataView: null });

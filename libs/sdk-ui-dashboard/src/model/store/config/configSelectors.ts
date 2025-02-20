@@ -909,3 +909,13 @@ export const selectDashboardFiltersApplyMode: DashboardSelector<DashboardFilters
         return state.settings?.dashboardFiltersApplyMode ?? { mode: "INDIVIDUAL" };
     },
 );
+
+/**
+ * @internal
+ */
+export const selectEnableExecutionCancelling: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableExecutionCancelling ?? false;
+    },
+);

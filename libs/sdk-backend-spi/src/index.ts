@@ -27,6 +27,7 @@ export type { IUserService } from "./user/index.js";
 export type { IUserSettingsService } from "./user/settings/index.js";
 
 export type {
+    IPreparedExecutionOptions,
     IExecutionFactory,
     IPreparedExecution,
     IExecutionResult,
@@ -120,6 +121,7 @@ export {
     NotAuthenticated,
     LimitReached,
     ContractExpired,
+    AbortError,
     isAnalyticalBackendError,
     isNoDataError,
     isDataTooLargeError,
@@ -132,6 +134,7 @@ export {
     isLimitReached,
     isContractExpired,
     AnalyticalBackendErrorTypes,
+    isAbortError,
 } from "./errors/index.js";
 
 export type { IPagedResource } from "./common/paging.js";

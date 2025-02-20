@@ -1,6 +1,6 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IPreparedExecution, IPreparedExecutionOptions } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { TigerPreparedExecution } from "./preparedExecution.js";
 import { AbstractExecutionFactory, AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
@@ -19,7 +19,7 @@ export class TigerExecution extends AbstractExecutionFactory {
         super(workspace);
     }
 
-    public forDefinition(def: IExecutionDefinition): IPreparedExecution {
-        return new TigerPreparedExecution(this.authCall, def, this, this.dateFormatter);
+    public forDefinition(def: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution {
+        return new TigerPreparedExecution(this.authCall, def, this, this.dateFormatter, options);
     }
 }

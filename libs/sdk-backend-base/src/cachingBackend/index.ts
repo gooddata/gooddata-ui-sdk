@@ -29,6 +29,7 @@ import {
     IAutomationsQueryResult,
     AutomationType,
     IAttributeWithReferences,
+    isAbortError,
 } from "@gooddata/sdk-backend-spi";
 import {
     AttributesDecoratorFactory,
@@ -138,28 +139,70 @@ type CachingContext = {
 //
 
 class WithExecutionCaching extends DecoratedPreparedExecution {
-    constructor(decorated: IPreparedExecution, private readonly ctx: CachingContext) {
-        super(decorated);
+    constructor(
+        decorated: IPreparedExecution,
+        private readonly ctx: CachingContext,
+        signal?: AbortSignal | undefined,
+    ) {
+        super(decorated, signal);
     }
 
     public execute = async (): Promise<IExecutionResult> => {
         const cacheKey = this.fingerprint();
         const cache = this.ctx.caches.execution!;
         let cacheEntry = cache.get(cacheKey);
+        // We need to delete the execution cache entry also if the result is cancelled,
+        // to avoid 404 on result next time it's called
+        // because cancel token provided from the backend was already used and we need
+        // to retrieve the new one.
+        const deleteExecutionCacheEntry = () => {
+            cache.delete(cacheKey);
+        };
 
-        if (!cacheEntry) {
-            const result = super
-                .execute()
-                .then((res) => {
-                    return new WithExecutionResultCaching(res, this.createNew, this.ctx);
-                })
-                .catch((e) => {
-                    cache.delete(cacheKey);
+        // If there is no cache entry and abort signal is provided,
+        // we need cache execution only after successful resolution,
+        // because running execution can be cancelled.
+        if (this.signal) {
+            if (!cacheEntry) {
+                try {
+                    const result = await super.execute().then((res) => {
+                        return new WithExecutionResultCaching(
+                            res,
+                            this.createNew,
+                            this.ctx,
+                            deleteExecutionCacheEntry,
+                            this.signal,
+                        );
+                    });
+
+                    cacheEntry = { result: Promise.resolve(result) };
+                    cache.set(cacheKey, cacheEntry);
+                } catch (e) {
+                    deleteExecutionCacheEntry();
                     throw e;
-                });
+                }
+            }
+        } else {
+            if (!cacheEntry) {
+                const result = super
+                    .execute()
+                    .then((res) => {
+                        return new WithExecutionResultCaching(
+                            res,
+                            this.createNew,
+                            this.ctx,
+                            deleteExecutionCacheEntry,
+                            undefined,
+                        );
+                    })
+                    .catch((e) => {
+                        deleteExecutionCacheEntry();
+                        throw e;
+                    });
 
-            cacheEntry = { result };
-            cache.set(cacheKey, cacheEntry);
+                cacheEntry = { result };
+                cache.set(cacheKey, cacheEntry);
+            }
         }
 
         return new DefinitionSanitizingExecutionResult(
@@ -170,7 +213,7 @@ class WithExecutionCaching extends DecoratedPreparedExecution {
     };
 
     protected createNew = (decorated: IPreparedExecution): IPreparedExecution => {
-        return new WithExecutionCaching(decorated, this.ctx);
+        return new WithExecutionCaching(decorated, this.ctx, this.signal);
     };
 }
 
@@ -232,16 +275,33 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         decorated: IExecutionResult,
         wrapper: PreparedExecutionWrapper,
         private readonly ctx: CachingContext,
+        private deleteExecutionCacheEntry: () => void,
+        public readonly signal: AbortSignal | undefined,
     ) {
-        super(decorated, wrapper);
+        super(decorated, wrapper, signal);
 
         if (cachingEnabled(this.ctx.config.maxResultWindows)) {
             this.windows = new LRUCache({ max: this.ctx.config.maxResultWindows! });
         }
     }
 
-    public readAll = (): Promise<IDataView> => {
-        if (!this.allData) {
+    public readAll = async (): Promise<IDataView> => {
+        if (!this.allData && this.signal) {
+            try {
+                const allData = await super.readAll();
+                this.allData = Promise.resolve(allData);
+            } catch (err) {
+                // If result was canceled, we need to delete also the execution cache entry,
+                // to avoid 404 on result next time it's called,
+                // because cancel token provided from the backend was already used and we need
+                // to retrieve the new one.
+                if (isAbortError(err)) {
+                    this.deleteExecutionCacheEntry();
+                }
+                this.allData = undefined;
+                throw err;
+            }
+        } else if (!this.allData) {
             this.allData = super.readAll().catch((e) => {
                 this.allData = undefined;
                 throw e;
@@ -1203,7 +1263,10 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
 
 function cachedExecutions(ctx: CachingContext): ExecutionDecoratorFactory {
     return (original: IExecutionFactory) =>
-        new DecoratedExecutionFactory(original, (execution) => new WithExecutionCaching(execution, ctx));
+        new DecoratedExecutionFactory(
+            original,
+            (execution) => new WithExecutionCaching(execution, ctx, execution.signal),
+        );
 }
 
 function cachedCatalog(ctx: CachingContext): CatalogDecoratorFactory {

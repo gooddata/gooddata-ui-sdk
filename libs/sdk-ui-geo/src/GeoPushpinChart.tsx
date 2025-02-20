@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import compact from "lodash/compact.js";
 import omit from "lodash/omit.js";
@@ -116,6 +116,7 @@ function GeoPushpinChartInner(props: GeoPushpinChartPropsUnion): JSX.Element {
                             intl={translationProps.intl}
                             execution={execution}
                             exportTitle={exportTitle || "GeoPushpinChart"}
+                            enableExecutionCancelling={props.config?.enableExecutionCancelling ?? false}
                             {...newProps}
                         />
                     );

@@ -107,6 +107,7 @@ export {
     selectEnableSlideshowExports,
     selectEnableDashboardFiltersApplyModes,
     selectDashboardFiltersApplyMode,
+    selectEnableExecutionCancelling,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {

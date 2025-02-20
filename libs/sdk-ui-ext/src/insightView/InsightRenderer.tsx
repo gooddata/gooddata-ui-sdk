@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useCallback, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 // eslint-disable-next-line react/no-deprecated
@@ -134,6 +134,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
                 forceDisableDrillOnAxes: config.forceDisableDrillOnAxes,
                 isInEditMode: config.isInEditMode,
                 isExportMode: config.isExportMode,
+                enableExecutionCancelling: config.enableExecutionCancelling,
             },
             executionConfig: this.props.execConfig,
             customVisualizationConfig: config,
