@@ -60,13 +60,12 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         deleteExistingAlert,
     } = useInsightWidgetAlerting({ closeInsightWidgetMenu: onClose, widget });
 
-    let content = null;
+    let content;
     if (isLoading || viewMode === "list") {
         content = (
             <AlertsList
                 isLoading={isLoading}
                 alerts={alerts}
-                separators={separators}
                 onCreateAlert={initiateAlertCreation}
                 onEditAlert={initiateAlertEditing}
                 onPauseAlert={pauseExistingAlert}
@@ -85,6 +84,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 canManageComparison={canManageComparison}
                 execResult={execResult}
                 alert={editingAlert}
+                separators={separators}
                 hasAlerts={hasAlerts}
                 destinations={destinations}
                 users={users ?? []}
@@ -106,6 +106,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 canManageComparison={canManageComparison}
                 execResult={execResult}
                 alert={creatingAlert}
+                separators={separators}
                 measures={supportedMeasures}
                 attributes={supportedAttributes}
                 hasAlerts={hasAlerts}

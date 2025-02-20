@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { AnyAction, Dispatch, EntityState } from "@reduxjs/toolkit";
-import { IInsight, IWidgetAlert, IListedDashboard } from "@gooddata/sdk-model";
+import { IInsight, IListedDashboard } from "@gooddata/sdk-model";
 import { LoadingState } from "./loading/loadingState.js";
 import { SavingState } from "./saving/savingState.js";
 import { FilterContextState } from "./filterContext/filterContextState.js";
@@ -17,7 +17,6 @@ import { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilit
 import { IDrillTargets } from "./drillTargets/drillTargetsTypes.js";
 import { IExecutionResultEnvelope } from "./executionResults/types.js";
 import { UiState } from "./ui/uiState.js";
-import { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState.js";
 import { RenderModeState } from "./renderMode/renderModeState.js";
 import { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState.js";
 import { IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes.js";
@@ -28,6 +27,7 @@ import { AutomationsState } from "./automations/automationsState.js";
 import { UsersState } from "./users/usersState.js";
 import { FilterViewsState } from "./filterViews/filterViewsState.js";
 import { ExecutedState } from "./executed/executedState.js";
+import { AccessibleDashboardsState } from "./accessibleDashboards/index.js";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -72,18 +72,15 @@ export interface DashboardState {
     meta: DashboardMetaState;
     /** @beta */
     drill: DrillState;
-    legacyDashboards: LegacyDashboardsState;
     // Entities
     /** @beta */
     insights: EntityState<IInsight>;
-    /** @beta */
-    alerts: EntityState<IWidgetAlert>;
     /** @alpha */
     drillTargets: EntityState<IDrillTargets>;
     /** @beta */
     listedDashboards: EntityState<IListedDashboard>;
     /** @beta */
-    accessibleDashboards: EntityState<IListedDashboard>;
+    accessibleDashboards: AccessibleDashboardsState;
     /** @alpha */
     inaccessibleDashboards: EntityState<IInaccessibleDashboard>;
     dashboardPermissions: DashboardPermissionsState;

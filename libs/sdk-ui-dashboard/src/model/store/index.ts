@@ -105,6 +105,8 @@ export {
     selectEnableDashboardDescriptionDynamicHeight,
     selectEnableCriticalContentPerformanceOptimizations,
     selectEnableSlideshowExports,
+    selectEnableDashboardFiltersApplyModes,
+    selectDashboardFiltersApplyMode,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -185,7 +187,6 @@ export {
     selectImplicitDrillsToUrlByWidgetRef,
     selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
 } from "./widgetDrills/widgetDrillSelectors.js";
-export { selectLegacyDashboards } from "./legacyDashboards/legacyDashboardsSelectors.js";
 
 export type { UndoEnhancedState, UndoEntry } from "./_infra/undoEnhancer.js";
 export type { LayoutState, LayoutStash } from "./layout/layoutState.js";
@@ -287,13 +288,6 @@ export {
 } from "./drill/drillSelectors.js";
 export type { DrillState } from "./drill/drillState.js";
 export type { ICrossFilteringItem } from "./drill/types.js";
-export type { AlertsState } from "./alerts/alertsState.js";
-export {
-    selectAlerts,
-    selectAlertByWidgetRef,
-    selectAlertsMap,
-    selectAlertByRef,
-} from "./alerts/alertsSelectors.js";
 export type { UserState } from "./user/userState.js";
 export { selectCurrentUser, selectCurrentUserRef } from "./user/userSelectors.js";
 export type { DashboardMetaState, DashboardDescriptor } from "./meta/metaState.js";
@@ -325,6 +319,7 @@ export {
 } from "./listedDashboards/listedDashboardsSelectors.js";
 export {
     selectAccessibleDashboards,
+    selectAccessibleDashboardsLoaded,
     selectAccessibleDashboardsMap,
 } from "./accessibleDashboards/accessibleDashboardsSelectors.js";
 export {
@@ -398,7 +393,6 @@ export {
     selectRenderMode,
 } from "./renderMode/renderModeSelectors.js";
 export { renderModeActions } from "./renderMode/index.js";
-export type { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState.js";
 
 export { queryAndWaitFor } from "./_infra/queryAndWaitFor.js";
 export { dispatchAndWaitFor } from "./_infra/dispatchAndWaitFor.js";
@@ -444,3 +438,5 @@ export { selectFilterViews, selectFilterViewsAreLoading } from "./filterViews/in
 
 export type { ExecutedState } from "./executed/executedState.js";
 export { selectIsDashboardExecuted } from "./executed/executedSelectors.js";
+
+export type { AccessibleDashboardsState } from "./accessibleDashboards/index.js";

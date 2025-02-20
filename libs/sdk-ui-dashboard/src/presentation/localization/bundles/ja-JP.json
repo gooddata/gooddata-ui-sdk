@@ -657,5 +657,12 @@
     "dialogs.schedule.email.user.invalid.external": "このユーザーはダッシュボードにアクセスできません。",
     "dialogs.schedule.email.user.used.external": "電子メール “{email}” はこのワークスペースに属していません。受信者は機密データを受信する可能性があります。",
     "dialogs.schedule.email.user.warning.external": "このメールアドレスはワークスペースに属していません。受信者は機密データを受け取る可能性があります。",
-    "dialogs.schedule.email.user.guest": "(ゲスト）"
+    "dialogs.schedule.email.user.guest": "(ゲスト）",
+    "dialogs.schedule.email.user.unknown": "これは不明なユーザーであり、受信者として追加できません。",
+    "dialogs.schedule.email.user.notMe": "このユーザーは許可されていません。受信者はあなただけです。",
+    "dropzone.widget.last.in.container.row.desc": "<b>既存のコンテナ</b>にドロップする",
+    "nestedLayout.emptyDropZone.active.message": "<b>ここにドロップ</b>{br}してコンテナに追加する",
+    "insightAlert.config.accessbility.input": "コンディション値",
+    "insightAlert.config.accessbility.dropdown": "コンディションタイプ",
+    "alert.accessibility.destination.label": "アラートの送信方法を選択"
 }

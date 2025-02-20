@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
 
@@ -108,6 +108,8 @@ import { ThumbsUp } from "./icons/ThumbsUp.js";
 import { ThumbsDown } from "./icons/ThumbsDown.js";
 import { SmallDragHandle } from "./icons/SmallDragHandle.js";
 import { Header } from "./icons/Header.js";
+import { Save } from "./icons/Save.js";
+import { Edit } from "./icons/Edit.js";
 
 /**
  * @internal
@@ -218,6 +220,8 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     ThumbsDown,
     SmallDragHandle,
     Header,
+    Save,
+    Edit,
 };
 
 export type { IRowsIconProps, IColumnsIconProps };

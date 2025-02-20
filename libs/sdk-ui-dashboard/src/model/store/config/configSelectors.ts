@@ -6,6 +6,7 @@ import {
     ISettings,
     PlatformEdition,
     WeekStart,
+    type DashboardFiltersApplyMode,
 } from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardSelector, DashboardState } from "../types.js";
@@ -881,5 +882,30 @@ export const selectEnableSlideshowExports: DashboardSelector<boolean> = createSe
     selectConfig,
     (state) => {
         return state.settings?.enableSlideshowExports ?? false;
+    },
+);
+
+/**
+ * Feature flag
+ * @internal
+ */
+export const selectEnableDashboardFiltersApplyModes: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardFiltersApplyModes ?? false;
+    },
+);
+
+/**
+ * Setting of dashboard filters apply mode. The value is resolved in the following order:
+ * If set on workspace level, workspace setting is used.
+ * If not set on workspace level, organization setting is used.
+ * If none of them are set, INDIVIDIAL mode is default.
+ * @alpha
+ */
+export const selectDashboardFiltersApplyMode: DashboardSelector<DashboardFiltersApplyMode> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.dashboardFiltersApplyMode ?? { mode: "INDIVIDUAL" };
     },
 );

@@ -6,6 +6,7 @@ import {
     ICatalogAttribute,
     ICatalogDateDataset,
     INotificationChannelMetadataObject,
+    ISeparators,
     IWorkspaceUser,
 } from "@gooddata/sdk-model";
 import { AlertAttribute, AlertMetric } from "../../types.js";
@@ -32,6 +33,7 @@ interface ICreateAlertProps {
     measureFormatMap: IMeasureFormatMap;
     catalogAttributes: ICatalogAttribute[];
     catalogDateDatasets: ICatalogDateDataset[];
+    separators?: ISeparators;
 }
 
 export const CreateAlert: React.FC<ICreateAlertProps> = ({
@@ -52,6 +54,7 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
     measureFormatMap,
     catalogAttributes,
     catalogDateDatasets,
+    separators,
 }) => {
     return (
         <EditAlert
@@ -73,6 +76,7 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
             measureFormatMap={measureFormatMap}
             catalogAttributes={catalogAttributes}
             catalogDateDatasets={catalogDateDatasets}
+            separators={separators}
         />
     );
 };

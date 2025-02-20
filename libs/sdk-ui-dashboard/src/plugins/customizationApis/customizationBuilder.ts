@@ -15,7 +15,6 @@ import {
     IDashboardContentCustomizer,
     IDashboardCustomizer,
     IDashboardInsightCustomizer,
-    IDashboardKpiCustomizer,
     IDashboardLayoutCustomizer,
     IDashboardWidgetCustomizer,
     IFilterBarCustomizer,
@@ -30,7 +29,6 @@ import { IDashboardExtensionProps } from "../../presentation/index.js";
 import { DefaultInsightCustomizer } from "./insightCustomizer.js";
 import { DashboardCustomizationLogger } from "./customizationLogging.js";
 import { IDashboardPluginContract_V1 } from "../plugin.js";
-import { DefaultKpiCustomizer } from "./kpiCustomizer.js";
 import { DefaultWidgetCustomizer } from "./widgetCustomizer.js";
 import { DefaultLayoutCustomizer } from "./layoutCustomizer.js";
 import { DefaultFilterBarCustomizer } from "./filterBarCustomizer.js";
@@ -51,10 +49,6 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
     private readonly mutations = createCustomizerMutationsContext();
     private readonly logger: DashboardCustomizationLogger = new DashboardCustomizationLogger();
     private readonly insightCustomizer: DefaultInsightCustomizer = new DefaultInsightCustomizer(
-        this.logger,
-        this.mutations,
-    );
-    private readonly kpiCustomizer: DefaultKpiCustomizer = new DefaultKpiCustomizer(
         this.logger,
         this.mutations,
     );
@@ -95,7 +89,6 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
 
     private sealCustomizers = (): void => {
         this.insightCustomizer.sealCustomizer();
-        this.kpiCustomizer.sealCustomizer();
         this.widgetCustomizer.sealCustomizer();
         this.filtersCustomizer.sealCustomizer();
         this.layoutCustomizer.sealCustomizer();
@@ -113,10 +106,6 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
 
     public insightWidgets = (): IDashboardInsightCustomizer => {
         return this.insightCustomizer;
-    };
-
-    public kpiWidgets = (): IDashboardKpiCustomizer => {
-        return this.kpiCustomizer;
     };
 
     public customWidgets = (): IDashboardWidgetCustomizer => {
@@ -188,7 +177,6 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
         const props: IDashboardExtensionProps = {
             InsightComponentProvider: this.insightCustomizer.getInsightProvider(),
             InsightBodyComponentProvider: this.insightCustomizer.getInsightBodyComponentProvider(),
-            KpiComponentProvider: this.kpiCustomizer.getKpiProvider(),
             DashboardContentComponentProvider: this.dashboardContentCustomizer.getDashboardContentProvider(),
             WidgetComponentProvider: this.widgetCustomizer.getWidgetComponentProvider(),
             DashboardAttributeFilterComponentProvider: this.filtersCustomizer

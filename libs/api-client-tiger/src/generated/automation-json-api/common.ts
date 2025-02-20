@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2025 GoodData Corporation
 
 /* tslint:disable */
 /* eslint-disable */

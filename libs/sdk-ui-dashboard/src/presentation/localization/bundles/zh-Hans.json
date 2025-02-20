@@ -657,5 +657,12 @@
     "dialogs.schedule.email.user.invalid.external": "此用户无权访问仪表板。",
     "dialogs.schedule.email.user.used.external": "电子邮件 “{email} ”不属于此工作区。收件人可能会收到敏感数据。",
     "dialogs.schedule.email.user.warning.external": "此电子邮件地址不属于此工作区。收件人可能会收到敏感数据。",
-    "dialogs.schedule.email.user.guest": "（客人）"
+    "dialogs.schedule.email.user.guest": "（客人）",
+    "dialogs.schedule.email.user.unknown": "这是未知用户，无法添加为收件人。",
+    "dialogs.schedule.email.user.notMe": "不允许此用户接收。只能有您可以作为收件人。",
+    "dropzone.widget.last.in.container.row.desc": "放至<b>现有容器</b>",
+    "nestedLayout.emptyDropZone.active.message": "<b>放至这里</b>{br}添加到容器中",
+    "insightAlert.config.accessbility.input": "条件值",
+    "insightAlert.config.accessbility.dropdown": "条件类型",
+    "alert.accessibility.destination.label": "选择如何发送警报"
 }

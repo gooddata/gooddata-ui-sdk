@@ -1,6 +1,6 @@
-// (C) 2020-2024 GoodData Corporation
-import { useCallback, useMemo } from "react";
+// (C) 2020-2025 GoodData Corporation
 import isEqual from "lodash/isEqual.js";
+import { useCallback, useMemo } from "react";
 import {
     useDashboardSelector,
     useDashboardDispatch,
@@ -11,6 +11,7 @@ import {
     selectIsInEditMode,
     selectEnableKPIDashboardDrillFromAttribute,
     selectCatalogIsLoaded,
+    selectAccessibleDashboardsLoaded,
 } from "../../../../../model/index.js";
 import { OnWidgetDrill } from "../../../../drill/types.js";
 import {
@@ -43,7 +44,8 @@ export const useDashboardInsightDrills = ({
     const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widget.ref));
     const isDrillFromAttributeEnabled = useDashboardSelector(selectEnableKPIDashboardDrillFromAttribute);
     const disableDrillDownOnWidget = insight.insight.properties.controls?.disableDrillDown;
-    const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
+    const catalogIsLoaded = useDashboardSelector(selectCatalogIsLoaded);
+    const accessibleDashboardsLoaded = useDashboardSelector(selectAccessibleDashboardsLoaded);
 
     const onPushData = useCallback(
         (data: IPushData): void => {
@@ -99,9 +101,10 @@ export const useDashboardInsightDrills = ({
           }
         : undefined;
 
-    // disable all drills until catalog is loaded
+    // disable all drills until necessary items are loaded
+    const drillActive = catalogIsLoaded && accessibleDashboardsLoaded;
     return {
-        drillableItems: isCatalogLoaded ? drillableItems : [],
+        drillableItems: drillActive ? drillableItems : [],
         onPushData,
         onDrill,
     };

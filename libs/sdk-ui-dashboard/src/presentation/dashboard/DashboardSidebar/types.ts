@@ -1,10 +1,9 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { ComponentType } from "react";
 import {
     AttributeFilterComponentSet,
     DashboardLayoutWidgetComponentSet,
     InsightWidgetComponentSet,
-    KpiWidgetComponentSet,
     RichTextWidgetComponentSet,
     VisualizationSwitcherWidgetComponentSet,
 } from "../../componentDefinition/index.js";
@@ -43,14 +42,6 @@ export interface ISidebarProps {
      * @internal
      */
     WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;
-
-    /**
-     * Kpi widget component set.
-     * Do not set or override this property, it's injected by the Dashboard.
-     *
-     * @internal
-     */
-    KpiWidgetComponentSet?: KpiWidgetComponentSet;
 
     /**
      * Attribute filter component set.

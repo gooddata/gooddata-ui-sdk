@@ -1,22 +1,26 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
-const getFoundObjectLink = (obj: ISemanticSearchResultItem) => {
+const getFoundObjectLink = (obj: ISemanticSearchResultItem, workspaceId: string) => {
     switch (obj.type) {
         case "visualization":
-            return `/analyze/#/${obj.workspaceId}/${obj.id}/edit`;
+            return `/analyze/#/${workspaceId}/${obj.id}/edit`;
         case "dashboard":
-            return `/dashboards/#/workspace/${obj.workspaceId}/dashboard/${obj.id}`;
+            return `/dashboards/#/workspace/${workspaceId}/dashboard/${obj.id}`;
         case "metric":
-            return `/metrics/#/${obj.workspaceId}/metric/${obj.id}`;
+            return `/metrics/#/${workspaceId}/metric/${obj.id}`;
         default:
             return null;
     }
 };
 
 const rx = /\{[^}][^.}]*\.[^}]+\}/g;
-export const replaceLinks = (text: string, foundObjects: ISemanticSearchResultItem[]): string => {
+export const replaceLinks = (
+    text: string,
+    foundObjects: ISemanticSearchResultItem[],
+    workspaceId: string,
+): string => {
     return text.replace(rx, (chunk) => {
         const [objectType, ...objectIdChunks] = chunk.replace("{", "").replace("}", "").split(".");
         const objectId = objectIdChunks.join(".");
@@ -27,7 +31,7 @@ export const replaceLinks = (text: string, foundObjects: ISemanticSearchResultIt
             return chunk;
         }
 
-        const href = getFoundObjectLink(obj);
+        const href = getFoundObjectLink(obj, workspaceId);
 
         if (!href) {
             return chunk;

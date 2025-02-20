@@ -4,7 +4,7 @@ import {
     IWorkspaceSettingsService,
     IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
-import { IAlertDefault, ISeparators, ISettings } from "@gooddata/sdk-model";
+import { IAlertDefault, ISeparators, ISettings, type DashboardFiltersApplyMode } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../../types/index.js";
 import { getOrganizationTier, TigerFeaturesService } from "../../features/index.js";
@@ -82,6 +82,16 @@ export class TigerWorkspaceSettings
 
     public async setWeekStart(weekStart: string): Promise<void> {
         return this.setSetting("WEEK_START", { value: weekStart });
+    }
+
+    public async setDashboardFiltersApplyMode(
+        dashboardFiltersApplyMode: DashboardFiltersApplyMode,
+    ): Promise<void> {
+        return this.setSetting("DASHBOARD_FILTERS_APPLY_MODE", dashboardFiltersApplyMode);
+    }
+
+    public async deleteDashboardFiltersApplyMode(): Promise<void> {
+        return this.deleteSettingByType("DASHBOARD_FILTERS_APPLY_MODE");
     }
 
     public async setTheme(activeThemeId: string): Promise<void> {

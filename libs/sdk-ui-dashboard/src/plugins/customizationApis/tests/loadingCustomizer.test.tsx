@@ -3,7 +3,6 @@ import React from "react";
 import { ILoadingProps } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render } from "@testing-library/react";
-import { invariant } from "ts-invariant";
 
 import { DefaultLoadingCustomizer } from "../loadingCustomizer";
 import { CustomizerMutationsContext, createCustomizerMutationsContext } from "../types";
@@ -18,15 +17,17 @@ import { EMPTY_MUTATIONS } from "./utils";
 function renderToHtml(customizer: DefaultLoadingCustomizer) {
     const provider = customizer.getCustomizerResult();
     const Component = provider.LoadingComponent;
+
+    if (!Component) {
+        return null;
+    }
+
     const props: ILoadingProps = {
         imageWidth: 100,
         imageHeight: 100,
         width: 100,
         height: 100,
     };
-
-    // this should not happen; if it does something is seriously hosed in the customizer
-    invariant(Component);
 
     const { container } = render(<Component {...props} />);
 

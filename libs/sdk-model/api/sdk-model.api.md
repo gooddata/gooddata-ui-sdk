@@ -326,6 +326,13 @@ export const DashboardDateFilterConfigModeValues: Record<Uppercase<DashboardDate
 export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): ObjRef;
 
 // @public
+export type DashboardFiltersApplyMode = {
+    mode: "INDIVIDUAL";
+} | {
+    mode: "ALL_AT_ONCE";
+};
+
+// @public
 export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 
 // @public
@@ -2023,6 +2030,8 @@ export interface IGenAIVisualization {
     filters?: GenAIFilter[];
     id: string;
     metrics: IGenAIVisualizationMetric[];
+    savedVisualizationId?: string;
+    saving?: boolean;
     suggestions?: IGenAISuggestion[];
     title: string;
     visualizationType: GenAIVisualizationType;
@@ -3313,6 +3322,8 @@ export interface ISettings {
     ADMeasureValueFilterNullAsZeroOption?: string;
     alertDefault?: IAlertDefault;
     // @alpha
+    dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
+    // @alpha
     dateFilterConfig?: IDateFilterConfig;
     disableKpiDashboardHeadlineUnderline?: boolean;
     // @beta
@@ -3350,6 +3361,7 @@ export interface ISettings {
     enableCsvUploader?: boolean;
     enableCustomColorPicker?: boolean;
     enableDashboardDescriptionDynamicHeight?: boolean;
+    enableDashboardFiltersApplyModes?: boolean;
     enableDashboardFilterViews?: boolean;
     enableDashboardFlexibleLayout?: boolean;
     enableDataSampling?: boolean;
@@ -3364,6 +3376,7 @@ export interface ISettings {
     enableEarlyAccessFeaturesRollout?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
+    enableExecutionCancelling?: boolean;
     enableExternalRecipients?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
@@ -3411,6 +3424,7 @@ export interface ISettings {
     // (undocumented)
     enablePixelPerfectExperience?: boolean;
     enablePushpinGeoChart?: boolean;
+    enableRawExports?: boolean;
     enableRenamingMeasureToMetric?: boolean;
     // (undocumented)
     enableRenamingProjectToWorkspace?: boolean;
@@ -3437,8 +3451,6 @@ export interface ISettings {
     enableWaterfallChart?: boolean;
     enableWeekFilters?: boolean;
     enableWidgetIdentifiersRollout?: boolean;
-    enableWorkspaceHierarchySettings?: boolean;
-    enableWorkspacesHierarchyView?: boolean;
     formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;
     // (undocumented)

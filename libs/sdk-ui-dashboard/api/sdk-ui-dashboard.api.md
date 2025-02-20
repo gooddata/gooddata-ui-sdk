@@ -4,7 +4,6 @@
 
 ```ts
 
-/// <reference types="lodash" />
 /// <reference types="react" />
 
 import { AccessGranularPermission } from '@gooddata/sdk-model';
@@ -59,6 +58,7 @@ import { DashboardDrillToLegacyDashboardResolved as DashboardDrillToLegacyDashbo
 import { DashboardExportToPdfRequested as DashboardExportToPdfRequested_2 } from '../events/dashboard.js';
 import { DashboardExportToPdfResolved as DashboardExportToPdfResolved_2 } from '../events/dashboard.js';
 import { DashboardFilterContextChanged as DashboardFilterContextChanged_2 } from '../events/filters.js';
+import { DashboardFiltersApplyMode } from '@gooddata/sdk-model';
 import { DashboardInitialized as DashboardInitialized_2 } from '../events/dashboard.js';
 import { DashboardInsightWidgetChanged as DashboardInsightWidgetChanged_2 } from '../events/insight.js';
 import { DashboardInsightWidgetDescriptionChanged as DashboardInsightWidgetDescriptionChanged_2 } from '../events/insight.js';
@@ -138,6 +138,7 @@ import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeElements } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeFilterBaseProps } from '@gooddata/sdk-ui-filters';
+import type { IAttributeFilterButtonProps } from '@gooddata/sdk-ui-filters';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IAttributeWithReferences } from '@gooddata/sdk-backend-spi';
@@ -170,7 +171,6 @@ import { IDashboardDrillEvent as IDashboardDrillEvent_2 } from '../../../types.j
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardFilterView } from '@gooddata/sdk-model';
 import { IDashboardInsightProps as IDashboardInsightProps_2 } from './types.js';
-import { IDashboardKpiProps as IDashboardKpiProps_2 } from './types.js';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem } from '@gooddata/sdk-model';
 import { IDashboardLayoutProps as IDashboardLayoutProps_2 } from './types.js';
@@ -261,12 +261,10 @@ import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationSizeInfo } from '@gooddata/sdk-ui-ext';
 import { IVisualizationSwitcherWidget } from '@gooddata/sdk-model';
 import { IWidget } from '@gooddata/sdk-model';
-import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { LocalIdRef } from '@gooddata/sdk-model';
-import { MemoizedFunction } from 'lodash';
 import { MessageDescriptor } from 'react-intl';
 import { MouseEvent as MouseEvent_2 } from 'react';
 import { ObjectType } from '@gooddata/sdk-model';
@@ -301,6 +299,12 @@ import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 import { WeekStart } from '@gooddata/sdk-model';
 import { WritableDraft } from 'immer/dist/internal.js';
+
+// @alpha (undocumented)
+export interface AccessibleDashboardsState extends EntityState<IListedDashboard> {
+    // (undocumented)
+    isLoaded: boolean;
+}
 
 // @beta (undocumented)
 export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
@@ -474,9 +478,6 @@ export type AlertingDisabledReason = "noDestinations" | "oldWidget" | "disabledO
 
 // @internal (undocumented)
 export const AlertingManagementDialog: (props: IAlertingManagementDialogProps) => JSX.Element;
-
-// @internal (undocumented)
-export type AlertsState = EntityState<IWidgetAlert>;
 
 // @internal
 export type AllQueryCacheReducers<TQuery extends IDashboardQuery, TResult> = {
@@ -1243,9 +1244,6 @@ export type CustomDashboardInsightMenuComponent = ComponentType<IDashboardInsigh
 // @internal (undocumented)
 export type CustomDashboardInsightMenuTitleComponent = ComponentType<IDashboardInsightMenuTitleProps>;
 
-// @public (undocumented)
-export type CustomDashboardKpiComponent = ComponentType<IDashboardKpiProps>;
-
 // @alpha (undocumented)
 export type CustomDashboardLayoutComponent = ComponentType<IDashboardLayoutProps>;
 
@@ -1574,6 +1572,8 @@ export interface DashboardConfig {
     disableDefaultDrills?: boolean;
     disableUserFilterReset?: boolean;
     enableFilterValuesResolutionInDrillEvents?: boolean;
+    // @alpha
+    entitlements?: IEntitlementDescriptor[];
     // @internal
     exportId?: string;
     // @beta
@@ -2306,9 +2306,6 @@ export interface DashboardInsightWidgetVisPropertiesChangedPayload {
 // @beta
 export type DashboardItemDefinition = ExtendedDashboardItem<ExtendedDashboardWidget | IWidgetDefinition | ICustomWidgetDefinition> | StashedDashboardItemsId;
 
-// @internal (undocumented)
-export const DashboardKpi: (props: IDashboardKpiProps) => JSX.Element;
-
 // @beta
 export interface DashboardKpiWidgetChanged extends IDashboardEvent {
     // (undocumented)
@@ -2881,9 +2878,7 @@ export interface DashboardSharingChangedPayload {
 // @public
 export interface DashboardState {
     // @beta (undocumented)
-    accessibleDashboards: EntityState<IListedDashboard>;
-    // @beta (undocumented)
-    alerts: EntityState<IWidgetAlert>;
+    accessibleDashboards: AccessibleDashboardsState;
     // @alpha (undocumented)
     attributeFilterConfigs: AttributeFilterConfigsState;
     // @alpha (undocumented)
@@ -2920,8 +2915,6 @@ export interface DashboardState {
     insights: EntityState<IInsight>;
     // @alpha (undocumented)
     layout: LayoutState;
-    // (undocumented)
-    legacyDashboards: LegacyDashboardsState;
     // @beta (undocumented)
     listedDashboards: EntityState<IListedDashboard>;
     // @beta (undocumented)
@@ -3187,15 +3180,6 @@ export const DefaultDashboardInsightMenuButton: (props: IDashboardInsightMenuBut
 
 // @internal (undocumented)
 export const DefaultDashboardInsightMenuTitle: CustomDashboardInsightMenuTitleComponent;
-
-// @internal (undocumented)
-export const DefaultDashboardKpi: ComponentType<IDashboardKpiProps_2>;
-
-// @internal (undocumented)
-export function DefaultDashboardKpiComponentSetFactory(kpiProvider: KpiComponentProvider): KpiWidgetComponentSet;
-
-// @internal (undocumented)
-export const DefaultDashboardKpiPlaceholderWidget: CustomDashboardWidgetComponent;
 
 // @alpha (undocumented)
 export const DefaultDashboardLayout: (props: IDashboardLayoutProps) => JSX.Element;
@@ -4122,6 +4106,8 @@ export interface IDashboardAttributeFilterPlaceholderProps {
 
 // @public (undocumented)
 export interface IDashboardAttributeFilterProps {
+    // @alpha
+    AttributeFilterComponent?: ComponentType<IAttributeFilterButtonProps>;
     autoOpen?: boolean;
     displayAsLabel?: ObjRef;
     filter: IDashboardAttributeFilter;
@@ -4197,7 +4183,6 @@ export interface IDashboardCustomComponentProps {
     InsightMenuComponentProvider?: OptionalInsightMenuComponentProvider;
     // @internal
     InsightMenuTitleComponentProvider?: OptionalInsightMenuTitleComponentProvider;
-    KpiComponentProvider?: OptionalKpiComponentProvider;
     // @alpha
     LayoutComponent?: CustomDashboardLayoutComponent;
     // @alpha
@@ -4244,7 +4229,6 @@ export interface IDashboardCustomizer {
     filterBar(): IFilterBarCustomizer;
     filters(): IFiltersCustomizer;
     insightWidgets(): IDashboardInsightCustomizer;
-    kpiWidgets(): IDashboardKpiCustomizer;
     layout(): IDashboardLayoutCustomizer;
     loading(): ILoadingCustomizer;
     richTextWidgets(): IRichTextCustomizer;
@@ -4436,32 +4420,6 @@ export interface IDashboardInsightProps {
     // @internal (undocumented)
     pushData?: (data: IPushData) => void;
     widget: IInsightWidget;
-    // @alpha
-    workspace?: string;
-}
-
-// @public
-export interface IDashboardKpiCustomizer {
-    withCustomDecorator(providerFactory: (next: KpiComponentProvider) => OptionalKpiComponentProvider): IDashboardKpiCustomizer;
-    withCustomProvider(provider: OptionalKpiComponentProvider): IDashboardKpiCustomizer;
-}
-
-// @public
-export interface IDashboardKpiProps {
-    alert?: IWidgetAlert;
-    // @alpha
-    backend?: IAnalyticalBackend;
-    // @alpha
-    ErrorComponent?: React_2.ComponentType<IErrorProps>;
-    kpiWidget: IKpiWidget;
-    // @alpha
-    LoadingComponent?: React_2.ComponentType<ILoadingProps>;
-    // @alpha
-    onDrill?: OnFiredDashboardDrillEvent;
-    // @alpha
-    onError?: OnError;
-    // @alpha
-    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
     // @alpha
     workspace?: string;
 }
@@ -5831,8 +5789,6 @@ export interface ISidebarProps {
     // @internal
     InsightWidgetComponentSet?: InsightWidgetComponentSet;
     // @internal
-    KpiWidgetComponentSet?: KpiWidgetComponentSet;
-    // @internal
     RichTextWidgetComponentSet?: RichTextWidgetComponentSet;
     // @internal
     VisualizationSwitcherWidgetComponentSet?: VisualizationSwitcherWidgetComponentSet;
@@ -6089,9 +6045,6 @@ export type KpiAlertDialogOpenedPayload = UserInteractionPayloadWithDataBase<"kp
     alreadyHasAlert: boolean;
 }>;
 
-// @public (undocumented)
-export type KpiComponentProvider = (kpi: IKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
-
 // @internal (undocumented)
 export type KpiDraggableComponent = {
     DraggingComponent?: KpiDraggingComponent;
@@ -6124,9 +6077,6 @@ export interface KpiWidgetComparison {
     comparisonType?: IKpiComparisonTypeComparison;
 }
 
-// @internal
-export type KpiWidgetComponentSet = CustomComponentBase<IDashboardKpiProps, Parameters<KpiComponentProvider>> & DraggableComponent & CreatableByDragComponent & CreatablePlaceholderComponent<IDashboardWidgetProps> & ConfigurableWidget<IKpiWidget>;
-
 // @public (undocumented)
 export type LayoutComponentProvider = (props: IDashboardLayoutProps) => CustomDashboardLayoutComponent;
 
@@ -6155,12 +6105,6 @@ export interface LayoutState extends UndoEnhancedState<DashboardLayoutCommands> 
     screen: ScreenSize | undefined;
     // (undocumented)
     stash: LayoutStash;
-}
-
-// @public (undocumented)
-export interface LegacyDashboardsState {
-    // @alpha (undocumented)
-    legacyDashboards?: ILegacyDashboard[];
 }
 
 // @internal
@@ -6543,9 +6487,6 @@ export type OptionalInsightMenuComponentProvider = OptionalProvider<InsightMenuC
 
 // @internal (undocumented)
 export type OptionalInsightMenuTitleComponentProvider = OptionalProvider<InsightMenuTitleComponentProvider>;
-
-// @public (undocumented)
-export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider>;
 
 // @public (undocumented)
 export type OptionalLayoutComponentProvider = OptionalProvider<LayoutComponentProvider>;
@@ -7240,7 +7181,7 @@ export interface ResolveAsyncRenderPayload {
 }
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "focusObject" | "slideConfig" | "references"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "focusObject" | "slideConfig" | "references" | "entitlements"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
@@ -7447,6 +7388,9 @@ export interface SectionSlidesTransformerFunction<TWidget> {
 export const selectAccessibleDashboards: (state: DashboardState) => IListedDashboard[];
 
 // @alpha
+export const selectAccessibleDashboardsLoaded: DashboardSelector<boolean>;
+
+// @alpha
 export const selectAccessibleDashboardsMap: DashboardSelector<ObjRefMap<IListedDashboard>>;
 
 // @internal
@@ -7457,18 +7401,6 @@ export const selectActiveSectionIndex: DashboardSelector<number | undefined>;
 
 // @alpha (undocumented)
 export const selectAdhocDateHierarchies: DashboardSelector<ICatalogDateAttributeHierarchy[]>;
-
-// @alpha
-export const selectAlertByRef: ((ref: ObjRef) => (state: DashboardState) => IWidgetAlert | undefined) & MemoizedFunction;
-
-// @alpha
-export const selectAlertByWidgetRef: ((widgetRef: ObjRef) => (state: DashboardState) => IWidgetAlert | undefined) & MemoizedFunction;
-
-// @alpha
-export const selectAlerts: (state: DashboardState) => IWidgetAlert[];
-
-// @internal
-export const selectAlertsMap: DashboardSelector<ObjRefMap<IWidgetAlert>>;
 
 // @alpha
 export const selectAllAnalyticalWidgets: DashboardSelector<IWidget[]>;
@@ -7698,6 +7630,9 @@ export const selectCurrentUserRef: DashboardSelector<ObjRef>;
 // @public
 export const selectDashboardDescription: DashboardSelector<string>;
 
+// @alpha
+export const selectDashboardFiltersApplyMode: DashboardSelector<DashboardFiltersApplyMode>;
+
 // @public
 export const selectDashboardId: DashboardSelector<string | undefined>;
 
@@ -7877,6 +7812,9 @@ export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<boolean>;
+
+// @internal
+export const selectEnableDashboardFiltersApplyModes: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableDrilledTooltip: DashboardSelector<boolean>;
@@ -8294,9 +8232,6 @@ export const selectLayout: DashboardSelector<IDashboardLayout<ExtendedDashboardW
 
 // @alpha
 export const selectLayoutHasAnalyticalWidgets: DashboardSelector<boolean>;
-
-// @alpha
-export const selectLegacyDashboards: DashboardSelector<ILegacyDashboard[]>;
 
 // @alpha
 export const selectListedDashboards: (state: DashboardState) => IListedDashboard[];

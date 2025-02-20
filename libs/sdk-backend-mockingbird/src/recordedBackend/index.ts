@@ -255,6 +255,12 @@ function recordedWorkspace(
                 async setWeekStart(): Promise<void> {
                     return Promise.resolve();
                 },
+                async setDashboardFiltersApplyMode(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async deleteDashboardFiltersApplyMode(): Promise<void> {
+                    return Promise.resolve();
+                },
                 async setColorPalette(): Promise<void> {
                     return Promise.resolve();
                 },
@@ -454,6 +460,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setTheme: () => Promise.resolve(),
                 setColorPalette: () => Promise.resolve(),
                 setOpenAiConfig: () => Promise.resolve(),
+                setDashboardFiltersApplyMode: () => Promise.resolve(),
                 setAlertDefault: () => Promise.resolve(),
                 deleteTheme: () => Promise.resolve(),
                 deleteColorPalette: () => Promise.resolve(),

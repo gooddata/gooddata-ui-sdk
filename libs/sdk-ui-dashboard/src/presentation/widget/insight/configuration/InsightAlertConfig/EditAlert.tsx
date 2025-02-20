@@ -7,6 +7,7 @@ import {
     ICatalogAttribute,
     IWorkspaceUser,
     ICatalogDateDataset,
+    ISeparators,
 } from "@gooddata/sdk-model";
 import {
     Bubble,
@@ -41,6 +42,7 @@ import {
     IMeasureFormatMap,
 } from "./utils/getters.js";
 import { AlertAttributeSelect } from "./AlertAttributeSelect.js";
+import { AlertTitle } from "./AlertTitle.js";
 import { translateGranularity } from "./utils/granularity.js";
 import { useAttributeValuesFromExecResults } from "./hooks/useAttributeValuesFromExecResults.js";
 import { useThresholdValue } from "./hooks/useThresholdValue.js";
@@ -82,6 +84,7 @@ interface IEditAlertProps {
     maxAutomationsReached?: boolean;
     maxAutomationsRecipients: number;
     overlayPositionType?: OverlayPositionType;
+    separators?: ISeparators;
 }
 
 export const EditAlert: React.FC<IEditAlertProps> = ({
@@ -105,6 +108,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     catalogDateDatasets,
     canManageAttributes,
     canManageComparison,
+    separators,
 }) => {
     const {
         defaultUser,
@@ -119,6 +123,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         changeRelativeOperator,
         changeMeasure,
         changeAttribute,
+        changeTitle,
         changeValue,
         changeDestination,
         changeComparisonType,
@@ -132,6 +137,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         updateAlert,
     } = useEditAlert({
         metrics: measures,
+        separators,
         attributes,
         alert,
         onCreate,
@@ -156,7 +162,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     const { isResultLoading, getAttributeValues, getMetricValue } =
         useAttributeValuesFromExecResults(execResult);
 
-    const { value, setTouched } = useThresholdValue(
+    const { value, onChange, onBlur } = useThresholdValue(
         changeValue,
         getMetricValue,
         isNewAlert,
@@ -166,8 +172,6 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         selectedAttribute,
         selectedValue,
     );
-
-    const accessibilityValue = "alert.measure";
 
     return viewMode === "edit" ? (
         <DashboardInsightSubmenuContainer
@@ -182,15 +186,15 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
             <div className="gd-edit-alert">
                 <div className="gd-edit-alert__form">
                     <div className="gd-edit-alert__form-content">
-                        <label htmlFor={accessibilityValue} className="gd-edit-alert__measure-label">
+                        <label htmlFor="alert.measure" className="gd-edit-alert__measure-label">
                             <FormattedMessage id="insightAlert.config.when" />
                         </label>
                         <AlertMeasureSelect
-                            id={accessibilityValue}
                             selectedMeasure={selectedMeasure}
                             onMeasureChange={changeMeasure}
                             measures={measures}
                             overlayPositionType={overlayPositionType}
+                            id="alert.measure"
                         />
 
                         {Boolean(canManageAttributes) && (
@@ -274,13 +278,8 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             isSmall
                             autofocus
                             value={value}
-                            onChange={(e, event) => {
-                                changeValue(e !== "" ? parseFloat(e as string) : undefined!);
-                                // Set touched state when user changes the value
-                                if (event) {
-                                    setTouched(true);
-                                }
-                            }}
+                            onChange={onChange}
+                            onBlur={onBlur}
                             type="number"
                             suffix={getValueSuffix(updatedAlert.alert)}
                             ariaLabel={intl.formatMessage({ id: "insightAlert.config.accessbility.input" })}
@@ -300,12 +299,21 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             canManageComparison={canManageComparison}
                         />
                         {destinations.length > 1 && (
-                            <AlertDestinationSelect
-                                selectedDestination={updatedAlert.notificationChannel!}
-                                onDestinationChange={changeDestination}
-                                destinations={destinations}
-                                overlayPositionType={overlayPositionType}
-                            />
+                            <>
+                                <label
+                                    htmlFor="alert.destination"
+                                    className="gd-edit-alert__destination-label"
+                                >
+                                    <FormattedMessage id="insightAlert.config.action" />
+                                </label>
+                                <AlertDestinationSelect
+                                    id="alert.destination"
+                                    selectedDestination={updatedAlert.notificationChannel!}
+                                    onDestinationChange={changeDestination}
+                                    destinations={destinations}
+                                    overlayPositionType={overlayPositionType}
+                                />
+                            </>
                         )}
                         <RecipientsSelect
                             loggedUser={defaultUser}
@@ -320,6 +328,18 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             className="gd-edit-alert__recipients"
                             notificationChannels={destinations}
                             notificationChannelId={updatedAlert.notificationChannel}
+                        />
+                        <label htmlFor="alert.title" className="gd-edit-alert__title-label">
+                            <FormattedMessage id="insightAlert.config.name" />
+                        </label>
+                        <AlertTitle
+                            id="alert.title"
+                            measures={measures}
+                            alert={updatedAlert}
+                            separators={separators}
+                            onChange={(e) => {
+                                changeTitle(e !== "" ? String(e) : undefined);
+                            }}
                         />
                     </div>
                     {warningMessage ? <Message type="warning">{warningMessage}</Message> : null}

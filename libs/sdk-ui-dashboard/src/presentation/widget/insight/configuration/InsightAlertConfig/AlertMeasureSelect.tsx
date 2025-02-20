@@ -10,7 +10,7 @@ import { getMeasureTitle } from "./utils/getters.js";
 import { DROPDOWN_ITEM_HEIGHT } from "./constants.js";
 
 export interface IAlertMetricSelectProps {
-    id: string;
+    id?: string;
     selectedMeasure: AlertMetric | undefined;
     onMeasureChange: (measure: AlertMetric) => void;
     measures: AlertMetric[];

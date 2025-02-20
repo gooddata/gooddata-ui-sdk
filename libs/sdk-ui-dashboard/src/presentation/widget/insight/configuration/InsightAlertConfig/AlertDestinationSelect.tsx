@@ -7,6 +7,7 @@ import { INotificationChannelMetadataObject } from "@gooddata/sdk-model";
 import { useIntl } from "react-intl";
 
 export interface IAlertDestinationSelectProps {
+    id: string;
     selectedDestination: string;
     onDestinationChange: (destinationId: string) => void;
     destinations: INotificationChannelMetadataObject[];
@@ -14,6 +15,7 @@ export interface IAlertDestinationSelectProps {
 }
 
 export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
+    id,
     selectedDestination,
     onDestinationChange,
     destinations,
@@ -29,6 +31,7 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
                 renderButton={({ isOpen, toggleDropdown }) => {
                     return (
                         <Button
+                            id={id}
                             ariaLabel={intl.formatMessage({ id: "alert.accessibility.destination.label" })}
                             onClick={toggleDropdown}
                             iconRight={isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
@@ -44,7 +47,7 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
                                 },
                             )}
                         >
-                            {selectedOption?.title}
+                            {selectedOption?.title ?? " - "}
                         </Button>
                     );
                 }}

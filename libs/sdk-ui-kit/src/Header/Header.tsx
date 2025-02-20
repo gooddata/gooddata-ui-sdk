@@ -87,7 +87,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     }
 
     public render() {
-        const { workspacePicker, isAccessibilityCompliant } = this.props;
+        const { workspacePicker, isAccessibilityCompliant, intl } = this.props;
 
         this.createStyles();
 
@@ -97,15 +97,23 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
             "gd-header-shrink": this.state.responsiveMode,
         });
 
+        const applicationHeaderAccessibilityLabel = intl.formatMessage({
+            id: "gs.header.accessibility.label",
+        });
+
         return (
-            <div className={this.getClassNames()} ref={this.nodeRef}>
+            <header
+                aria-label={applicationHeaderAccessibilityLabel}
+                className={this.getClassNames()}
+                ref={this.nodeRef}
+            >
                 {isAccessibilityCompliant
                     ? this.renderAccessibilityLogo(logoLinkClassName)
                     : this.renderLogo(logoLinkClassName)}
 
                 {workspacePicker}
                 {this.renderNav()}
-            </div>
+            </header>
         );
     }
 

@@ -70,9 +70,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
         dashboardContentProvider,
         insightMenuProvider,
         insightMenuTitleProvider,
-        kpiProvider,
         insightWidgetComponentSet,
-        kpiWidgetComponentSet,
         attributeFilterComponentSet,
         dateFilterComponentSet,
         richTextProvider,
@@ -123,7 +121,6 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         VisualizationSwitcherToolbarComponentProvider={
                                             visualizationSwitcherToolbarComponentProvider
                                         }
-                                        KpiComponentProvider={kpiProvider}
                                         RichTextComponentProvider={richTextProvider}
                                         VisualizationSwitcherComponentProvider={visualizationSwitcherProvider}
                                         WidgetComponentProvider={widgetProvider}
@@ -161,7 +158,6 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                             props.SidebarComponent ?? RenderModeAwareDashboardSidebar
                                         }
                                         InsightWidgetComponentSet={insightWidgetComponentSet}
-                                        KpiWidgetComponentSet={kpiWidgetComponentSet}
                                         RichTextWidgetComponentSet={richTextWidgetComponentSet}
                                         VisualizationSwitcherWidgetComponentSet={
                                             visualizationSwitcherWidgetComponentSet

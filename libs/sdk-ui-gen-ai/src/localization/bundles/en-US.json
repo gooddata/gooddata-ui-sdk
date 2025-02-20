@@ -108,5 +108,35 @@
         "value": "Send",
         "comment": "",
         "limit": 0
+    },
+    "gd.gen-ai.button.save": {
+        "value": "Save",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.button.cancel": {
+        "value": "Cancel",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.button.edit": {
+        "value": "Edit",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.save-dialog.label": {
+        "value": "Name",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.save-dialog.title": {
+        "value": "Name your visualization",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.save-dialog.description": {
+        "value": "Give your new visualization a new descriptive name, so it's easier to find it later on.",
+        "comment": "",
+        "limit": 0
     }
 }

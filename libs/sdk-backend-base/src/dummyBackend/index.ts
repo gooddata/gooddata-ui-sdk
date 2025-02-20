@@ -131,6 +131,7 @@ import {
     ISeparators,
     INotificationChannelMetadataObject,
     IAlertDefault,
+    type DashboardFiltersApplyMode,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -494,6 +495,9 @@ function dummyPreparedExecution(
         withBuckets(...buckets: IBucket[]) {
             return executionFactory.forDefinition(defWithBuckets(definition, ...buckets));
         },
+        withSignal(_signal: AbortSignal): IPreparedExecution {
+            return dummyPreparedExecution(definition, executionFactory, config);
+        },
         execute(): Promise<IExecutionResult> {
             return Promise.resolve(dummyExecutionResult(definition, executionFactory, config));
         },
@@ -832,6 +836,7 @@ class DummyOrganization implements IOrganization {
             setTheme: () => Promise.resolve(),
             setColorPalette: () => Promise.resolve(),
             setOpenAiConfig: () => Promise.resolve(),
+            setDashboardFiltersApplyMode: () => Promise.resolve(),
             deleteTheme: () => Promise.resolve(),
             deleteColorPalette: () => Promise.resolve(),
             getSettings: () => Promise.resolve({}),
@@ -984,6 +989,14 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     setWeekStart(_weekStart: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setDashboardFiltersApplyMode(_dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void> {
+        return Promise.resolve();
+    }
+
+    deleteDashboardFiltersApplyMode(): Promise<void> {
         return Promise.resolve();
     }
 

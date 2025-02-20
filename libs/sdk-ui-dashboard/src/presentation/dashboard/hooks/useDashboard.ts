@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback, useMemo } from "react";
 import { idRef, IdentifierRef, UriRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -15,9 +15,7 @@ import {
     DefaultDashboardInsightMenu,
     DefaultInsightBody,
     DefaultDashboardInsight,
-    DefaultDashboardKpi,
     DefaultDashboardInsightComponentSetFactory,
-    DefaultDashboardKpiComponentSetFactory,
     DefaultDashboardInsightMenuTitle,
     DefaultDashboardRichText,
     DefaultDashboardRichTextComponentSetFactory,
@@ -36,7 +34,6 @@ import {
     InsightBodyComponentProvider,
     InsightMenuButtonComponentProvider,
     InsightMenuComponentProvider,
-    KpiComponentProvider,
     DateFilterComponentProvider,
     InsightMenuTitleComponentProvider,
     DashboardContentComponentProvider,
@@ -50,7 +47,6 @@ import {
     DashboardLayoutWidgetComponentSet,
     DateFilterComponentSet,
     InsightWidgetComponentSet,
-    KpiWidgetComponentSet,
     RichTextWidgetComponentSet,
     VisualizationSwitcherWidgetComponentSet,
 } from "../../componentDefinition/index.js";
@@ -69,10 +65,8 @@ interface IUseDashboardResult {
     insightMenuButtonProvider: InsightMenuButtonComponentProvider;
     insightMenuProvider: InsightMenuComponentProvider;
     insightMenuTitleProvider: InsightMenuTitleComponentProvider;
-    kpiProvider: KpiComponentProvider;
     dashboardContentProvider: DashboardContentComponentProvider;
     insightWidgetComponentSet: InsightWidgetComponentSet;
-    kpiWidgetComponentSet: KpiWidgetComponentSet;
     attributeFilterComponentSet: AttributeFilterComponentSet;
     dateFilterComponentSet: DateFilterComponentSet;
     richTextProvider: RichTextComponentProvider;
@@ -96,7 +90,6 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         InsightMenuComponentProvider,
         InsightMenuTitleComponentProvider,
         InsightComponentSetProvider,
-        KpiComponentProvider,
         DashboardContentComponentProvider,
         RichTextComponentProvider,
         VisualizationSwitcherComponentProvider,
@@ -181,14 +174,6 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         [InsightMenuTitleComponentProvider],
     );
 
-    const kpiProvider = useCallback<KpiComponentProvider>(
-        (kpi, widget) => {
-            const userSpecified = KpiComponentProvider?.(kpi, widget);
-            return userSpecified ?? DefaultDashboardKpi;
-        },
-        [KpiComponentProvider],
-    );
-
     const visualizationSwitcherToolbarComponentProvider =
         useCallback<VisualizationSwitcherToolbarComponentProvider>(
             (widget) => {
@@ -208,10 +193,6 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
             ? InsightComponentSetProvider(defaultComponentSet)
             : defaultComponentSet;
     }, [InsightComponentSetProvider, insightProvider]);
-
-    const kpiWidgetComponentSet = useMemo<KpiWidgetComponentSet>(() => {
-        return DefaultDashboardKpiComponentSetFactory(kpiProvider);
-    }, [kpiProvider]);
 
     const attributeFilterComponentSet = useMemo<AttributeFilterComponentSet>(() => {
         return DefaultDashboardAttributeFilterComponentSetFactory(attributeFilterProvider);
@@ -273,10 +254,8 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         insightMenuButtonProvider,
         insightMenuProvider,
         insightMenuTitleProvider,
-        kpiProvider,
         dashboardContentProvider,
         insightWidgetComponentSet,
-        kpiWidgetComponentSet,
         attributeFilterComponentSet,
         dateFilterComponentSet,
         richTextProvider,

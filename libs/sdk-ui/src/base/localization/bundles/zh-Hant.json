@@ -658,5 +658,11 @@
     "userManagement.workspace.granularPermission.manage.description": "允許使用者可以無限制地編輯或刪除邏輯資料模型和指標，以及存取所有儀表板並編輯其儀表板權限。",
     "userManagement.workspace.granularPermission.warning": "<b>注意：</b>此操作將刪除所有多餘的組合。",
     "userManagement.workspace.permission.and": "和",
-    "gs.header.notifications": "通知"
+    "gs.header.notifications": "通知",
+    "gs.header.logo.title.accessibility": "應用程式標誌",
+    "gs.header.href.accessibility": "前往首頁",
+    "gs.list.acessibility.search.label": "搜尋屬性值",
+    "message.accessibility.dismiss.notification": "解除通知",
+    "datePicker.accessibility.label": "選擇開始日期",
+    "timePicker.accessibility.label": "選擇開始時間"
 }

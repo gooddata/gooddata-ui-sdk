@@ -46,21 +46,18 @@ export function createDefaultAlert(
 
     return {
         type: "automation",
-        title: getMeasureTitle(measure.measure),
+        title: "",
         notificationChannel: notificationChannelId,
         alert: {
             trigger,
             condition,
-            execution: {
-                ...execution,
-                ...transformAlertExecutionByMetric(
-                    metrics,
-                    { alert: { execution, condition, trigger } },
-                    condition,
-                    measure,
-                    undefined,
-                ),
-            },
+            ...transformAlertExecutionByMetric(
+                metrics,
+                { alert: { execution, condition, trigger } },
+                condition,
+                measure,
+                undefined,
+            ),
         },
         recipients: [currentUser],
     };

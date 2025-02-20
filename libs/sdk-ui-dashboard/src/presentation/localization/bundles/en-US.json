@@ -358,51 +358,6 @@
         "comment": "",
         "limit": 0
     },
-    "filters.allTime.previousPeriod": {
-        "value": "prev. period",
-        "comment": "",
-        "limit": 0
-    },
-    "filters.allTime.lastYear": {
-        "value": "prev. year",
-        "comment": "",
-        "limit": 0
-    },
-    "filters.minute.previousPeriod": {
-        "value": "prev. minute",
-        "comment": "",
-        "limit": 0
-    },
-    "filters.hour.previousPeriod": {
-        "value": "prev. hour",
-        "comment": "",
-        "limit": 0
-    },
-    "filters.day.previousPeriod": {
-        "value": "prev. {n, plural, one {day} other {#d}}",
-        "comment": "In '{n, plural, one {DAY} other {#D}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#d}', wrong '{#d.}').",
-        "limit": 0
-    },
-    "filters.week.previousPeriod": {
-        "value": "prev. {n, plural, one {week} other {#w}}",
-        "comment": "In '{n, plural, one {WEEK} other {#W}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#w}', wrong '{#w.}').",
-        "limit": 0
-    },
-    "filters.month.previousPeriod": {
-        "value": "prev. {n, plural, one {month} other {#m}}",
-        "comment": "In '{n, plural, one {MONTH} other {#M}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#m}', wrong '{#m.}').",
-        "limit": 0
-    },
-    "filters.quarter.previousPeriod": {
-        "value": "prev. {n, plural, one {quarter} other {#q}}",
-        "comment": "In '{n, plural, one {QUARTER} other {#Q}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#q}', wrong '{#q.}').",
-        "limit": 0
-    },
-    "filters.year.previousPeriod": {
-        "value": "prev. {n, plural, one {year} other {#y}}",
-        "comment": "In '{n, plural, one {YEAR} other {#Y}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#y}', wrong '{#y.}').",
-        "limit": 0
-    },
     "filters.alertMessage.relativePreset": {
         "value": "in {calendarIcon} {range}",
         "comment": "Don't translate placeholders '{calendarIcon}', '{range}'.",
@@ -491,16 +446,6 @@
     "filters.configurationPanel.filterViews.toggle.tooltip": {
         "value": "<p>Allows users to save filters state as a personal views they can return to later.</p><p>Only the user who saved the view can access it and set it as their default view.</p>",
         "comment": "Filters Configuration - tooltip for toggle that disables or enables filter views. Do not translate <p> and </p> tags.",
-        "limit": 0
-    },
-    "kpi.noData": {
-        "value": "No data for current filter settings. Try changing the filters.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiPop.change": {
-        "value": "change",
-        "comment": "",
         "limit": 0
     },
     "dialogs.schedule.email.attachments.label": {
@@ -863,151 +808,6 @@
         "comment": "",
         "limit": 0
     },
-    "kpi.alertBox.title": {
-        "value": "Set an alert on KPI change",
-        "comment": "",
-        "limit": 0
-    },
-    "kpi.alertBox.example": {
-        "value": "e.g.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpi.alertBox.unverifiedEmail": {
-        "value": "Sorry, you can't set an alert. Make sure your email is verified. If that doesn't help, ask your administrator to update your permissions.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpi.alertBox.disabledInReadOnly": {
-        "value": "Alerting is disabled in the read-only mode",
-        "comment": "",
-        "limit": 0
-    },
-    "kpi.error.view": {
-        "value": "KPI cannot be displayed. Contact your administrator to fix the KPI definition.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.delete": {
-        "value": "Delete",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.deleting": {
-        "value": "Deleting…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "kpiAlertDialog.emailMe": {
-        "value": "Email me",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.emailMeWhen": {
-        "value": "{emailMe} when this KPI is",
-        "comment": "Don't translate placeholder '{emailMe}'.",
-        "limit": 0
-    },
-    "kpiAlertDialog.emailInfo": {
-        "value": "Email will be sent to {userEmail}",
-        "comment": "Don't translate placeholder '{userEmail}'.",
-        "limit": 0
-    },
-    "kpiAlertDialog.invalidNumber": {
-        "value": "<strong>This number is not valid.</strong>{br}Double-check it and try again.",
-        "comment": "Do not translate HTML markup enclosed in <>.",
-        "limit": 0
-    },
-    "kpiAlertDialog.filtersDiffer": {
-        "value": "KPI is now filtered differently than when the alert was set up.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.filtersApply": {
-        "value": "Apply alert filters to dashboard",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.savingFailed": {
-        "value": "Saving alert failed. Please try again.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.deleteingFailed": {
-        "value": "Deleting alert failed. Please try again.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.brokenAlert": {
-        "value": "Broken alert",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.brokenAlertAppeal": {
-        "value": "To see correct KPI value, update the filters in this alert. You can also remove the alert.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.brokenAlertDefaultDateLabel": {
-        "value": "Date",
-        "comment": "Label used in broken alert dialog in case no other date label is found.",
-        "limit": 0
-    },
-    "kpiAlertDialog.removedFilters": {
-        "value": "Filters removed from dashboard",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.ignoredFilters": {
-        "value": "Filters ignored for this kpi",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.updateTitle": {
-        "value": "Update",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.updateBrokenTitle": {
-        "value": "Update filters",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.updatingTitle": {
-        "value": "Updating…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "kpiAlertDialog.updateBrokenFailed": {
-        "value": "Updating filters failed. Please try again.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.setTitle": {
-        "value": "Set alert",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.settingTitle": {
-        "value": "Setting…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "kpiAlertDialog.threshold.above": {
-        "value": "above",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.threshold.below": {
-        "value": "below",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.withAttributeFilters": {
-        "value": "{numFilters} more {numFilters, select, 1 {filter} other {filters}} applied",
-        "comment": "Don't translate placeholder '{numFilters}'. In '{numFilters, select, 1 {FILTER} other {FILTERS}}' translate only uppercase words.",
-        "limit": 0
-    },
     "messages.exportResultError": {
         "value": "Failed to export the data. Try again later.",
         "comment": "Error dialog. Exporting visualization to the file fails.",
@@ -1066,11 +866,6 @@
     },
     "visualization.execute_protected_report.text": {
         "value": "Contact your administrator.",
-        "comment": "",
-        "limit": 0
-    },
-    "visualization.alert_not_supported": {
-        "value": "Alerts are not supported for the static date period",
         "comment": "",
         "limit": 0
     },
@@ -1380,11 +1175,6 @@
         "comment": "Add description component placeholder text",
         "limit": 0
     },
-    "error": {
-        "value": "Error",
-        "comment": "",
-        "limit": 0
-    },
     "controlButtons.options.tooltip": {
         "value": "More actions",
         "comment": "",
@@ -1570,21 +1360,6 @@
         "comment": "",
         "limit": 0
     },
-    "addPanel.kpi.tooltip.no_measures._measure": {
-        "value": "The Key Performance Indicator requires a calculated measure.",
-        "comment": "",
-        "limit": 0
-    },
-    "addPanel.kpi.tooltip.no_measures._metric": {
-        "value": "The Key Performance Indicator requires a metric.",
-        "comment": "",
-        "limit": 0
-    },
-    "addPanel.kpi.tooltip.no_measures.link": {
-        "value": "Learn more",
-        "comment": "",
-        "limit": 0
-    },
     "visualizationsList.dragToAdd": {
         "value": "Drag to add",
         "comment": "",
@@ -1656,96 +1431,6 @@
         "comment": "Label of widget configuration section",
         "limit": 0
     },
-    "configurationPanel.comparison": {
-        "value": "Comparison",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.compareWith": {
-        "value": "Compare with",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.increasingNumberIs": {
-        "value": "Increasing number is",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.comparisonTypeItems.previousPeriod": {
-        "value": "Previous period",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.comparisonTypeItems.samePeriodInPreviousYear": {
-        "value": "Same period in previous year",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.comparisonTypeItems.noComparison": {
-        "value": "No comparison",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.comparisonDirectionItems.green": {
-        "value": "Green",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.comparisonDirectionItems.red": {
-        "value": "Red",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.unlistedMetric._measure": {
-        "value": "Unlisted measure",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.unlistedMetric._metric": {
-        "value": "Unlisted metric",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.unlistedMetricIconTitle._measure": {
-        "value": "This measure is hidden. Only you can see it.",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.unlistedMetricIconTitle._metric": {
-        "value": "This metric is hidden. Only you can see it.",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.selectMeasurePlaceholder._measure": {
-        "value": "Select measure…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "configurationPanel.selectMeasurePlaceholder._metric": {
-        "value": "Select metric…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "configurationPanel.selectComparisonPlaceholder": {
-        "value": "Select comparison…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "configurationPanel.selectComparisonDirectionPlaceholder": {
-        "value": "Select positive/negative",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.measure._measure": {
-        "value": "Measure",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.measure._metric": {
-        "value": "Metric",
-        "comment": "",
-        "limit": 0
-    },
     "configurationPanel.filterBy": {
         "value": "Filter by",
         "comment": "",
@@ -1802,26 +1487,6 @@
     "configurationPanel.unrelatedKpiDateInfo": {
         "value": "\"{dateDataSet}\" can no longer be applied to the kpi. Select a different dimension or edit the kpi.",
         "comment": "Don't translate placeholder '{dateDataSet}' and keep '\"' characters as are.",
-        "limit": 0
-    },
-    "configurationPanel.breakAlertWarning": {
-        "value": "\n            Users have set up {numAlerts} {numAlerts, select, 1 {alert} other {alerts}}\n            for this KPI. Modifying the KPI will affect {numAlerts, select, 1 {this alert} other {these alerts}}.\n        ",
-        "comment": "Don't translate placeholder '{numAlerts}'. Translate only uppercase '{numAlerts, select, 1 {ALERT} other {ALERTS}}'",
-        "limit": 0
-    },
-    "configurationPanel.drillIntoDashboard": {
-        "value": "Drill into dashboard",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.noLinkableDashboards": {
-        "value": "No dashboard to link to",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.selectDashboard": {
-        "value": "Select a dashboard",
-        "comment": "",
         "limit": 0
     },
     "configurationPanel.interactions": {
@@ -1946,11 +1611,6 @@
         "comment": "Title of the dropdown, when no values are selected and all attributes are ignored.",
         "limit": 0
     },
-    "configurationPanel.unlistedDashboardTab": {
-        "value": "Unlisted dashboard",
-        "comment": "",
-        "limit": 0
-    },
     "configurationPanel.visualprops.sectionTitle": {
         "value": "Title",
         "comment": "",
@@ -1961,7 +1621,6 @@
         "comment": "",
         "limit": 0
     },
-
     "configurationPanel.visualprops.sectionDescription": {
         "value": "Description",
         "comment": "",
@@ -1983,16 +1642,6 @@
         "translate": false,
         "limit": 0
     },
-    "configurationPanel.visualprops.inheritKpiDescriptionHelp._metric": {
-        "value": "Inherit the description from the metric.",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.visualprops.inheritKpiDescriptionHelp._measure": {
-        "value": "Inherit the description from the measure.",
-        "comment": "",
-        "limit": 0
-    },
     "configurationPanel.visualprops.customDescription": {
         "value": "Custom",
         "comment": "",
@@ -2007,11 +1656,6 @@
         "value": "Add a custom description for this instance of the report.",
         "comment": "",
         "translate": false,
-        "limit": 0
-    },
-    "configurationPanel.visualprops.customKpiDescriptionHelp": {
-        "value": "Add a custom description.",
-        "comment": "",
         "limit": 0
     },
     "configurationPanel.visualprops.noneDescription": {
@@ -2056,7 +1700,6 @@
         "comment": "",
         "limit": 0
     },
-
     "configurationPanel.drillIntoUrl.defaultButtonValue": {
         "value": "Choose URL",
         "comment": "Default value of 'Drill into URL' dropdown button before a value is selected.",
@@ -3047,6 +2690,21 @@
     "insightAlert.config.trigger.tooltip": {
         "value": "How often to trigger the alert when the condition is met.",
         "comment": "Tooltip for alert trigger configuration",
+        "limit": 0
+    },
+    "insightAlert.config.action": {
+        "value": "Action",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.name": {
+        "value": "Name",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.accessibility.title": {
+        "value": "Custom name of the alert",
+        "comment": "Title of the section in insight configuration",
         "limit": 0
     },
     "insightAlert.config.when": {

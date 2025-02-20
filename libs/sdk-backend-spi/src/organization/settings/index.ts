@@ -1,6 +1,13 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import { ISettings, IWhiteLabeling, IOpenAiConfig, IAlertDefault, ISeparators } from "@gooddata/sdk-model";
+import {
+    ISettings,
+    IWhiteLabeling,
+    IOpenAiConfig,
+    IAlertDefault,
+    ISeparators,
+    type DashboardFiltersApplyMode,
+} from "@gooddata/sdk-model";
 
 /**
  * This service provides access to organization settings
@@ -99,6 +106,16 @@ export interface IOrganizationSettingsService {
      * @alpha
      */
     setOpenAiConfig(config: IOpenAiConfig): Promise<void>;
+
+    /**
+     * Sets DashboardFiltersApplyMode configuration for organization.
+     *
+     * @param dashboardFiltersApplyMode - describes new mode for applying dashboard filters.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
 
     /**
      * Deletes theme from organization settings returning workspace styling to default.

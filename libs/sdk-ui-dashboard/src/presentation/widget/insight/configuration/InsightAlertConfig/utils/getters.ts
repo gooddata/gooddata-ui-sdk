@@ -26,8 +26,10 @@ import {
     ObjRef,
     isMeasureGroupDescriptor,
     IMeasureDescriptor,
+    ISeparators,
 } from "@gooddata/sdk-model";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { IntlShape } from "react-intl";
 
 import { AlertAttribute, AlertMetric, AlertMetricComparator } from "../../../types.js";
@@ -38,7 +40,6 @@ import {
     DEFAULT_MEASURE_FORMAT,
     RELATIVE_OPERATORS,
 } from "../constants.js";
-
 import { isChangeOperator, isDifferenceOperator } from "./guards.js";
 
 export type IMeasureFormatMap = { [key: string]: string };
@@ -406,4 +407,36 @@ export function getMeasureFormatsFromExecution(execResult: IExecutionResult | un
     }
 
     return {};
+}
+
+export function getDescription(
+    intl: IntlShape,
+    measures: AlertMetric[],
+    alert?: IAutomationMetadataObject,
+    separators?: ISeparators,
+): string {
+    const selectedMeasure = getAlertMeasure(measures, alert?.alert);
+
+    const name = selectedMeasure ? getMeasureTitle(selectedMeasure.measure) ?? "" : "";
+    const valueSuffix = getValueSuffix(alert?.alert) ?? "";
+    const title = getOperatorTitle(intl, alert?.alert).toLowerCase();
+    const threshold = getAlertThreshold(alert?.alert);
+    const formattedValue = formatValue(threshold, getMeasureFormat(selectedMeasure?.measure), separators);
+
+    const description = [name, title, `${formattedValue}${valueSuffix}`].filter(Boolean).join(" ");
+
+    return description[0].toUpperCase() + description.slice(1);
+}
+
+function formatValue(value: string | number | undefined, format?: string, separators?: ISeparators) {
+    try {
+        const convertedValue = ClientFormatterFacade.convertValue(value);
+        if (convertedValue !== null && isNaN(convertedValue)) {
+            return "";
+        }
+        const { formattedValue } = ClientFormatterFacade.formatValue(convertedValue, format, separators);
+        return formattedValue;
+    } catch {
+        return String(value);
+    }
 }

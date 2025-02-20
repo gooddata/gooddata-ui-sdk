@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     ITigerClient,
@@ -41,6 +41,7 @@ import {
 import { resolveCustomOverride } from "./utils.js";
 import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
 import { transformForecastResult } from "../../../convertors/fromBackend/afm/forecast.js";
+import { TigerCancellationConverter } from "../../../cancelation/index.js";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 const DEFAULT_POLL_DELAY = 5000;
@@ -77,6 +78,8 @@ export class TigerExecutionResult implements IExecutionResult {
         private readonly executionFactory: IExecutionFactory,
         readonly execResponse: AfmExecutionResponse,
         private readonly dateFormatter: DateFormatter,
+        private readonly signal?: AbortSignal,
+        private readonly resultCancelToken?: string,
     ) {
         this.dimensions = transformResultDimensions(
             execResponse.executionResponse.dimensions,
@@ -90,10 +93,13 @@ export class TigerExecutionResult implements IExecutionResult {
     public async readAll(): Promise<IDataView> {
         const executionResultPromise = this.authCall((client) =>
             client.executionResult
-                .retrieveResult({
-                    workspaceId: this.workspace,
-                    resultId: this.resultId,
-                })
+                .retrieveResult(
+                    {
+                        workspaceId: this.workspace,
+                        resultId: this.resultId,
+                    },
+                    this.enrichClientWithCancelOptions(),
+                )
                 .then(({ data }) => data),
         );
 
@@ -106,20 +112,26 @@ export class TigerExecutionResult implements IExecutionResult {
 
         const forecast = await this.authCall((client) =>
             client.smartFunctions
-                .forecast({
-                    forecastRequest: forecastConfig,
-                    workspaceId: workspace,
-                    resultId: resultId,
-                })
+                .forecast(
+                    {
+                        forecastRequest: forecastConfig,
+                        workspaceId: workspace,
+                        resultId: resultId,
+                    },
+                    this.enrichClientWithCancelOptions(),
+                )
                 .then(({ data }) => data),
         );
 
         return this.authCall((client) =>
             client.smartFunctions
-                .forecastResult({
-                    workspaceId: workspace,
-                    resultId: forecast.links.executionResult,
-                })
+                .forecastResult(
+                    {
+                        workspaceId: workspace,
+                        resultId: forecast.links.executionResult,
+                    },
+                    this.enrichClientWithCancelOptions(),
+                )
                 .then(({ data }) => data),
         );
     }
@@ -130,20 +142,26 @@ export class TigerExecutionResult implements IExecutionResult {
         const sensitivity = config.sensitivity;
 
         const anomalyDetection = await this.authCall((client) =>
-            client.smartFunctions.anomalyDetection({
-                anomalyDetectionRequest: {
-                    sensitivity,
+            client.smartFunctions.anomalyDetection(
+                {
+                    anomalyDetectionRequest: {
+                        sensitivity,
+                    },
+                    resultId,
+                    workspaceId,
                 },
-                resultId,
-                workspaceId,
-            }),
+                this.enrichClientWithCancelOptions(),
+            ),
         );
 
         const anomalyResult = await this.authCall((client) =>
-            client.smartFunctions.anomalyDetectionResult({
-                resultId: anomalyDetection.data.links.executionResult,
-                workspaceId: this.workspace,
-            }),
+            client.smartFunctions.anomalyDetectionResult(
+                {
+                    resultId: anomalyDetection.data.links.executionResult,
+                    workspaceId: this.workspace,
+                },
+                this.enrichClientWithCancelOptions(),
+            ),
         );
 
         return anomalyResult.data;
@@ -156,21 +174,27 @@ export class TigerExecutionResult implements IExecutionResult {
         const threshold = clusteringConfig.threshold ? { threshold: clusteringConfig.threshold } : {};
 
         const clustering = await this.authCall((client) =>
-            client.smartFunctions.clustering({
-                clusteringRequest: {
-                    numberOfClusters,
-                    ...threshold,
+            client.smartFunctions.clustering(
+                {
+                    clusteringRequest: {
+                        numberOfClusters,
+                        ...threshold,
+                    },
+                    resultId,
+                    workspaceId,
                 },
-                resultId,
-                workspaceId,
-            }),
+                this.enrichClientWithCancelOptions(),
+            ),
         );
 
         const clusteringResult = await this.authCall((client) =>
-            client.smartFunctions.clusteringResult({
-                resultId: clustering.data.links.executionResult,
-                workspaceId: this.workspace,
-            }),
+            client.smartFunctions.clusteringResult(
+                {
+                    resultId: clustering.data.links.executionResult,
+                    workspaceId: this.workspace,
+                },
+                this.enrichClientWithCancelOptions(),
+            ),
         );
 
         const { attribute, clusters, xcoord, ycoord } = clusteringResult.data;
@@ -189,12 +213,15 @@ export class TigerExecutionResult implements IExecutionResult {
 
         const executionResultPromise = this.authCall((client) =>
             client.executionResult
-                .retrieveResult({
-                    workspaceId: this.workspace,
-                    resultId: this.resultId,
-                    limit: saneSize,
-                    offset: saneOffset,
-                })
+                .retrieveResult(
+                    {
+                        workspaceId: this.workspace,
+                        resultId: this.resultId,
+                        limit: saneSize,
+                        offset: saneOffset,
+                    },
+                    this.enrichClientWithCancelOptions(),
+                )
                 .then(({ data }) => data),
         );
 
@@ -202,7 +229,11 @@ export class TigerExecutionResult implements IExecutionResult {
     }
 
     public transform(): IPreparedExecution {
-        return this.executionFactory.forDefinition(this.definition);
+        const updatedExec = this.executionFactory.forDefinition(this.definition);
+        if (this.signal) {
+            return updatedExec.withSignal(this.signal);
+        }
+        return updatedExec;
     }
 
     public async export(options: IExportConfig): Promise<IExportResult> {
@@ -309,6 +340,22 @@ export class TigerExecutionResult implements IExecutionResult {
         throw new TimeoutError(
             `Export timeout for export id "${payload.exportId}" in workspace "${payload.workspaceId}"`,
         );
+    }
+
+    private enrichClientWithCancelOptions() {
+        const signalCancelToken = this.signal ? new TigerCancellationConverter(this.signal).forAxios() : {};
+        const resultCancelToken = this.resultCancelToken
+            ? {
+                  headers: {
+                      "X-Gdc-Cancel-Token": this.resultCancelToken,
+                  },
+              }
+            : {};
+
+        return {
+            ...signalCancelToken,
+            ...resultCancelToken,
+        };
     }
 }
 

@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IAttributeOrMeasure,
     IBucket,
@@ -16,6 +16,7 @@ import {
     IResultWarning,
 } from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "./export.js";
+import { ICancelable } from "../../cancelation/index.js";
 
 /**
  * @beta
@@ -240,11 +241,16 @@ export interface IExplainProvider<T extends ExplainType | undefined> {
  *
  * @public
  */
-export interface IPreparedExecution {
+export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
     /**
      * Definition of the execution accumulated to so far.
      */
     readonly definition: IExecutionDefinition;
+
+    /**
+     * Signal to abort the execution.
+     */
+    readonly signal?: AbortSignal;
 
     /**
      * Changes sorting of the resulting data. Any sorting settings accumulated so far WILL be wiped out.

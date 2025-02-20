@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { all, put, call, select } from "redux-saga/effects";
 import { IDashboardAttributeFilter, areObjRefsEqual, isDashboardAttributeFilter } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../types/commonTypes.js";
@@ -50,7 +50,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
     );
     const dateDataSetsAttributesRefs = dateAttributes.map((dateAttribute) => dateAttribute.attribute.ref);
 
-    const currentVirtualFiltersLocalIdentifiers: ReturnType<
+    let currentVirtualFiltersLocalIdentifiers: ReturnType<
         typeof selectCrossFilteringFiltersLocalIdentifiers
     > = yield select(selectCrossFilteringFiltersLocalIdentifiers);
     const currentVirtualFilters = currentVirtualFiltersLocalIdentifiers.map((localIdentifier) => {
@@ -61,7 +61,8 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
     const crossFilteringItemByWidget: ReturnType<ReturnType<typeof selectCrossFilteringItemByWidgetRef>> =
         yield select(selectCrossFilteringItemByWidgetRef(widgetRef));
 
-    const filtersCount = currentFilters.length;
+    //default date filter is not included in currentFilters so we need to add 1 to the length
+    const filtersCount = currentFilters.length + 1;
     const drillIntersectionFilters = convertIntersectionToAttributeFilters(
         cmd.payload.drillEvent.drillContext.intersection ?? [],
         dateDataSetsAttributesRefs,
@@ -131,6 +132,9 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
             ctx,
             removeAttributeFilters(currentVirtualFiltersLocalIdentifiers),
         );
+        // Reset virtual filters local identifiers because we are removing all virtual filters
+        // in the previous call
+        currentVirtualFiltersLocalIdentifiers = [];
     }
 
     // Handle new cross-filtering state
@@ -166,6 +170,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
                           drillIntersectionFilters[index].primaryLabel,
                           vf.attributeFilter.title,
                       ),
+                      "crossfilter",
                   )
                 : call(
                       changeAttributeFilterSelectionHandler,

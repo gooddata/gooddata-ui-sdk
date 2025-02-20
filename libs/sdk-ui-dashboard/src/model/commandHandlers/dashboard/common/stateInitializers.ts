@@ -23,7 +23,6 @@ import {
     IDataSetMetadataObject,
 } from "@gooddata/sdk-model";
 
-import { alertsActions } from "../../../store/alerts/index.js";
 import { filterContextActions } from "../../../store/filterContext/index.js";
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
 import { layoutActions } from "../../../store/layout/index.js";
@@ -61,7 +60,6 @@ export function actionsToInitializeNewDashboard(
     dateFilterConfig: IDateFilterConfig,
 ): Array<PayloadAction<any>> {
     return [
-        alertsActions.setAlerts([]),
         filterContextActions.setFilterContext({
             filterContextDefinition: createDefaultFilterContext(dateFilterConfig),
             attributeFilterDisplayForms: [],

@@ -30,6 +30,8 @@ export function mapTypeToKey(
             return "showHiddenCatalogItems";
         case "OPENAI_CONFIG":
             return "openAiConfig";
+        case "DASHBOARD_FILTERS_APPLY_MODE":
+            return "dashboardFiltersApplyMode";
         case "SEPARATORS":
             return "separators";
         case "organizationSetting":
@@ -42,6 +44,7 @@ export function mapTypeToKey(
         case "OPERATOR_OVERRIDES":
         case "TIMEZONE_VALIDATION_ENABLED":
         case "ENABLE_FILE_ANALYTICS":
+        case "JIT_PROVISIONING":
         case undefined:
             return fallback;
         default:

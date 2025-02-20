@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     AuthenticationFlow,
     IAnalyticalBackend,
@@ -294,12 +294,16 @@ export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
  * @param backend - an instance of analytical backend
  * @param authenticationFlow - details about the tiger authentication flow
  * @param location - current location
+ * @param additionalParams - additional params used in the authentication URL
  * @public
  */
 export function createTigerAuthenticationUrl(
     backend: IAnalyticalBackend,
     authenticationFlow: AuthenticationFlow,
     location: Location,
+    additionalParams?: {
+        externalProviderId?: string;
+    },
 ): string {
     let host = `${location.protocol}//${location.host}`;
     let returnAddress = `${location.pathname ?? ""}${location.search ?? ""}${location.hash ?? ""}`;
@@ -312,9 +316,18 @@ export function createTigerAuthenticationUrl(
         returnAddress = location.href;
     }
 
-    return `${host}${authenticationFlow.loginUrl}?${
-        authenticationFlow.returnRedirectParam
-    }=${encodeURIComponent(returnAddress)}`;
+    const baseUrl = `${host}${authenticationFlow.loginUrl}`;
+
+    const params = {
+        [authenticationFlow.returnRedirectParam]: returnAddress,
+        ...(additionalParams ?? {}),
+    };
+
+    const paramsString = Object.entries(params)
+        .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+        .join("&");
+
+    return `${baseUrl}?${paramsString}`;
 }
 
 /**
@@ -350,6 +363,16 @@ export function createTigerDeauthenticationUrl(
 }
 
 /**
+ * Type of handler that will redirect the browser to the location where Tiger authentication flow will start.
+ *
+ * @public
+ */
+export type RedirectToTigerAuthenticationHandler = (
+    context: IAuthenticationContext,
+    error: NotAuthenticated,
+) => void;
+
+/**
  * Given authentication context and the authentication error, this implementation of `NotAuthenticatedHandler`
  * will redirect current window to location where Tiger authentication flow will start.
  *
@@ -370,7 +393,7 @@ export function redirectToTigerAuthentication(
     error: NotAuthenticated,
 ): void {
     if (!error.authenticationFlow) {
-        console.error("Analytical Backend did not provide detail where to start authentication flow. ");
+        console.error("Analytical Backend did not provide detail where to start authentication flow.");
 
         return;
     }
@@ -380,4 +403,40 @@ export function redirectToTigerAuthentication(
         error.authenticationFlow,
         window.location,
     );
+}
+
+/**
+ * Additional params for redirect API call, eg. the external provider ID to be used for authentication
+ * @public
+ */
+export interface IRedirectToTigerAuthenticationParams {
+    externalProviderId: string;
+}
+
+/**
+ * Factory to create a redirectToTigerAuthentication function with a specific params, eg. externalProviderId.
+ *
+ * @param params - additional params for redirect call, eg. the external provider ID to be used in the authentication URL
+ * @returns {@link RedirectToTigerAuthenticationHandler}  - a function that redirects to Tiger authentication with the specified params
+ * @public
+ */
+export function createRedirectToTigerAuthenticationWithParams(
+    params: IRedirectToTigerAuthenticationParams,
+): RedirectToTigerAuthenticationHandler {
+    return function redirectToTigerAuthentication(
+        context: IAuthenticationContext,
+        error: NotAuthenticated,
+    ): void {
+        if (!error.authenticationFlow) {
+            console.error("Analytical Backend did not provide detail where to start authentication flow.");
+            return;
+        }
+
+        window.location.href = createTigerAuthenticationUrl(
+            context.backend,
+            error.authenticationFlow,
+            window.location,
+            params,
+        );
+    };
 }

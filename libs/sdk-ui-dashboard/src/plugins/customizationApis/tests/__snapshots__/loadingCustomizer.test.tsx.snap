@@ -2,19 +2,6 @@
 
 exports[`loading customizer > loading rendering mode > should render with decorator 1`] = `"<div>Decorator</div>"`;
 
-exports[`loading customizer > loading rendering mode > should render with default 1`] = `
-"<div class="s-loading" style="text-align: center; display: flex; vertical-align: middle; flex-direction: column; align-content: center; justify-content: center; flex: 1 0 auto; height: 100px; width: 100px;"><svg style="max-height: 100%; max-width: 100%; flex: 0 1 auto; width: 100px; height: 100px;" version="1.1" x="0px" y="0px" viewBox="0 0 36 8"><style>
-                        @keyframes GDC-pop {
-                            0%,
-                            80%,
-                            100% {
-                                transform: scale(0);
-                            }
-                            40% {
-                                transform: scale(1);
-                            }
-                        }
-                    </style><g style="transform-origin: 4px 4px; animation: GDC-pop 1.4s infinite; animation-delay: -0.5599999999999999s; fill: var(--gd-palette-complementary-6, #94a1ad);"><circle cx="4" cy="4" r="4"></circle></g><g style="transform-origin: 18px 4px; animation: GDC-pop 1.4s infinite; animation-delay: -0.27999999999999997s; fill: var(--gd-palette-complementary-6, #94a1ad);"><circle cx="18" cy="4" r="4"></circle></g><g style="transform-origin: 32px 4px; animation: GDC-pop 1.4s infinite; animation-delay: 0; fill: var(--gd-palette-complementary-6, #94a1ad);"><circle cx="32" cy="4" r="4"></circle></g></svg></div>"
-`;
+exports[`loading customizer > loading rendering mode > should render with default 1`] = `null`;
 
 exports[`loading customizer > loading rendering mode > should render with provider 1`] = `"<div>Provider</div>"`;

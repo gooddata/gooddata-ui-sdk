@@ -7,7 +7,6 @@ import {
     CustomDashboardInsightMenuButtonComponent,
     CustomDashboardInsightMenuComponent,
     CustomDashboardInsightMenuTitleComponent,
-    CustomDashboardKpiComponent,
     CustomDashboardWidgetComponent,
     CustomInsightBodyComponent,
     IInsightMenuItem,
@@ -29,9 +28,7 @@ import { RenderMode } from "../../types.js";
 import {
     IInsight,
     IDashboardAttributeFilter,
-    IKpiWidget,
     IInsightWidget,
-    IKpi,
     IDashboardDateFilter,
     ObjRef,
     IDashboard,
@@ -133,16 +130,6 @@ export type InsightMenuItemsProvider = (
     closeMenu: () => void,
     renderMode: RenderMode,
 ) => IInsightMenuItem[];
-
-/**
- * @public
- */
-export type KpiComponentProvider = (kpi: IKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
-
-/**
- * @public
- */
-export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider>;
 
 /**
  * @public

@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 @use "sass:color";
 @use "variables" as variables;
@@ -178,9 +178,15 @@
     border: 1px solid kit-variables.$is-focused-background;
     background: kit-variables.$gd-color-white;
     border-radius: 8px;
+    position: relative;
 
     &__wrapper {
         height: 250px;
+
+        &--headline {
+            height: auto;
+            min-height: 50px;
+        }
     }
 
     &__title {
@@ -197,6 +203,37 @@
         .gd-button + .gd-button {
             margin-left: 0;
         }
+    }
+
+    &__save-dialog {
+        width: 400px;
+
+        .gd-dialog-content p {
+            margin-bottom: 1em;
+        }
+    }
+
+    &__save {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0.5em;
+        right: 0.5em;
+        cursor: pointer;
+        opacity: 0.8;
+        background: kit-variables.$gd-color-text;
+        border-radius: 3px;
+        height: 35px;
+        width: 40px;
+    }
+
+    &:hover &__save {
+        display: flex;
+    }
+
+    &__save__bubble {
+        display: flex;
     }
 }
 

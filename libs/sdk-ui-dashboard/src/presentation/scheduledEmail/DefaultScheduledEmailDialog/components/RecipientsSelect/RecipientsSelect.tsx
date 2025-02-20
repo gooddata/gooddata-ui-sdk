@@ -9,7 +9,7 @@ import {
 import sortBy from "lodash/sortBy.js";
 
 import { convertUserToAutomationRecipient } from "../../../../../_staging/automation/index.js";
-import { createUser, matchUser } from "../../utils/users.js";
+import { createUser, matchUser } from "../../../utils/users.js";
 
 import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer.js";
 

@@ -19,7 +19,7 @@ import noop from "lodash/noop.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
-const defaultAlignPoints: IAlignPoint[] = [{ align: "br tr" }, { align: "tr bl" }];
+const defaultAlignPoints: IAlignPoint[] = [{ align: "br tr" }, { align: "tr bl" }, { align: "cr cl" }];
 
 const defaultArrowOffsets: ArrowOffsets = {
     "br tr": [0, 0],

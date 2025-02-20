@@ -132,6 +132,7 @@ export class DefaultTitleCustomizer implements ITitleCustomizer {
     private readonly logger: IDashboardCustomizationLogger;
     private readonly mutationContext: CustomizerMutationsContext;
     private state: ITitleCustomizerState;
+    private updated = false;
 
     constructor(
         logger: IDashboardCustomizationLogger,
@@ -146,6 +147,7 @@ export class DefaultTitleCustomizer implements ITitleCustomizer {
     public withCustomProvider = (provider: OptionalTitleComponentProvider): ITitleCustomizer => {
         this.state.addCustomProvider(provider);
         this.mutationContext.title = union(this.mutationContext.title, ["provider"]);
+        this.updated = true;
 
         return this;
     };
@@ -174,16 +176,19 @@ export class DefaultTitleCustomizer implements ITitleCustomizer {
         // this currently registered one
         this.state.switchRootProvider(newRootProvider);
         this.mutationContext.title = union(this.mutationContext.title, ["decorator"]);
+        this.updated = true;
 
         return this;
     }
 
     getCustomizerResult = (): ITitleCustomizerResult => {
         return {
-            TitleComponent: (props) => {
-                const Comp = this.state.getRootProvider()(props);
-                return <Comp {...props} />;
-            },
+            TitleComponent: this.updated
+                ? (props) => {
+                      const Comp = this.state.getRootProvider()(props);
+                      return <Comp {...props} />;
+                  }
+                : undefined,
         };
     };
 

@@ -98,6 +98,7 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
     private readonly mutationContext: CustomizerMutationsContext;
     private readonly fluidLayoutTransformations: FluidLayoutCustomizationFn[] = [];
     private readonly exportLayoutTransformations: ExportLayoutCustomizationFn[] = [];
+    private updated = false;
     private sealed = false;
     private state: ILayoutCustomizerState;
 
@@ -150,6 +151,7 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
 
         this.state.addCustomProvider(provider);
         this.mutationContext.layout = union(this.mutationContext.layout, ["provider"]);
+        this.updated = true;
 
         return this;
     };
@@ -186,16 +188,19 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
         // this currently registered one
         this.state.switchRootProvider(newRootProvider);
         this.mutationContext.layout = union(this.mutationContext.layout, ["decorator"]);
+        this.updated = true;
 
         return this;
     }
 
     getCustomizerResult = (): ILayoutCustomizerResult => {
         return {
-            LayoutComponent: (props) => {
-                const Comp = this.state.getRootProvider()(props);
-                return <Comp {...props} />;
-            },
+            LayoutComponent: this.updated
+                ? (props) => {
+                      const Comp = this.state.getRootProvider()(props);
+                      return <Comp {...props} />;
+                  }
+                : undefined,
         };
     };
 

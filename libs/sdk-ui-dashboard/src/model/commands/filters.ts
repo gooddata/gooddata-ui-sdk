@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     absoluteDateFilterValues,
     filterAttributeElements,
@@ -305,6 +305,8 @@ export interface AddAttributeFilter extends IDashboardCommand {
  * @param mode - specify the visibility mode of attribute filter
  * @param initialSelection - specify the initial selection of attribute elements
  * @param initialIsNegativeSelection - specify if the initial selection of attribute elements is a negative one
+ * @param localIdentifier - local identifier
+ * @param primaryDisplayForm - specify the primary display form of attribute filter
  * @param title - specify custom title of attribute filter
  * @beta
  */

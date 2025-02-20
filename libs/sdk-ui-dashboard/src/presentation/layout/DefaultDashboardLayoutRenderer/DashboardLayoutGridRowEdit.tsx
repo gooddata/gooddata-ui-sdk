@@ -13,6 +13,7 @@ import {
 import { HeightResizerHotspot } from "../dragAndDrop/Resize/HeightResizerHotspot.js";
 import { useIsDraggingWidget } from "../../dragAndDrop/index.js";
 import { ExtendedDashboardWidget } from "../../../model/index.js";
+import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
 
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) => item.index().toString();
 
@@ -35,6 +36,8 @@ export function DashboardLayoutGridRowEdit<TWidget>(
     } = props;
 
     const isDraggingWidget = useIsDraggingWidget();
+    const exportStyles = useSlideSizeStyle(renderMode, "nested");
+
     const rowItems = useMemo(
         () =>
             items.map((item) => (
@@ -74,7 +77,7 @@ export function DashboardLayoutGridRowEdit<TWidget>(
     );
 
     return (
-        <Row className="gd-fluidlayout-row s-gd-fluid-layout-row">
+        <Row className="gd-fluidlayout-row s-gd-fluid-layout-row" style={exportStyles}>
             {gridRowRenderer
                 ? gridRowRenderer({
                       children: extendedRows,

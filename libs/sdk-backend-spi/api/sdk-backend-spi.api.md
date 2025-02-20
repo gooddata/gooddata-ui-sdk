@@ -7,6 +7,7 @@
 import { AccessGranteeDetail } from '@gooddata/sdk-model';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
+import { DashboardFiltersApplyMode } from '@gooddata/sdk-model';
 import { DataValue } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { FilterContextItem } from '@gooddata/sdk-model';
@@ -996,6 +997,8 @@ export interface IOrganizationSettingsService {
     getSettings(): Promise<ISettings>;
     setAlertDefault(value: IAlertDefault): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
+    // @alpha
+    setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
     // @alpha
@@ -1105,13 +1108,14 @@ export interface IPermissionsAssignment {
 }
 
 // @public
-export interface IPreparedExecution {
+export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
     readonly definition: IExecutionDefinition;
     equals(other: IPreparedExecution): boolean;
     execute(): Promise<IExecutionResult>;
     // @internal
     explain<T extends ExplainType | undefined>(config: ExplainConfig<T>): IExplainProvider<typeof config["explainType"]>;
     fingerprint(): string;
+    readonly signal?: AbortSignal;
     // @internal
     withBuckets(...buckets: IBucket[]): IPreparedExecution;
     withDateFormat(dateFormat: string): IPreparedExecution;
@@ -1488,11 +1492,15 @@ export interface IWorkspaceSettings extends ISettings {
 // @public
 export interface IWorkspaceSettingsService {
     deleteColorPalette(): Promise<void>;
+    // @alpha
+    deleteDashboardFiltersApplyMode(): Promise<void>;
     deleteTheme(): Promise<void>;
     getSettings(): Promise<IWorkspaceSettings>;
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
     setAlertDefault(value: IAlertDefault): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
+    // @alpha
+    setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
     setSeparators(separators: ISeparators): Promise<void>;

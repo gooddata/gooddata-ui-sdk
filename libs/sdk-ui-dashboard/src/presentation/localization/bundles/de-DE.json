@@ -657,5 +657,12 @@
     "dialogs.schedule.email.user.invalid.external": "Dieser Benutzer hat keinen Zugriff auf das Dashboard.",
     "dialogs.schedule.email.user.used.external": "Die E-Mail-Adresse “{email}” ist nicht bei diesem Workspace registriert. Der Empfänger könnte sensible Daten erhalten.",
     "dialogs.schedule.email.user.warning.external": "Diese E-Mail-Adresse ist nicht bei diesem Workspace registriert. Der Empfänger könnte sensible Daten erhalten.",
-    "dialogs.schedule.email.user.guest": "(Gast)"
+    "dialogs.schedule.email.user.guest": "(Gast)",
+    "dialogs.schedule.email.user.unknown": "Dies ist ein unbekannter Benutzer - kann nicht als Empfänger hinzugefügt werden.",
+    "dialogs.schedule.email.user.notMe": "Dieser Benutzer hat keine Befugnis. Es kann nur Sie als Empfänger geben.",
+    "dropzone.widget.last.in.container.row.desc": "Ablegen in den <b>vorhandenen Container</b>",
+    "nestedLayout.emptyDropZone.active.message": "<b>Hier ablegen</b>{br}, um zum Container hinzuzufügen",
+    "insightAlert.config.accessbility.input": "Bedingungswert",
+    "insightAlert.config.accessbility.dropdown": "Bedingungsart",
+    "alert.accessibility.destination.label": "Auswählen, wie die Warnung gesendet werden soll"
 }

@@ -657,5 +657,12 @@
     "dialogs.schedule.email.user.invalid.external": "Tällä käyttäjällä ei ole pääsyä ohjauspaneeliin.",
     "dialogs.schedule.email.user.used.external": "Sähköpostiosoite “{email}” ei kuulu tähän työtilaan. Vastaanottaja saattaa saada arkaluonteisia tietoja.",
     "dialogs.schedule.email.user.warning.external": "Tämä sähköpostiosoite ei kuulu tähän työtilaan. Vastaanottaja saattaa vastaanottaa arkaluonteisia tietoja.",
-    "dialogs.schedule.email.user.guest": "(vieras)"
+    "dialogs.schedule.email.user.guest": "(vieras)",
+    "dialogs.schedule.email.user.unknown": "Tämä on tuntematon käyttäjä, eikä häntä voi lisätä vastaanottajaksi.",
+    "dialogs.schedule.email.user.notMe": "Tämä käyttäjä ei ole sallittu. Vastaanottajana voit olla vain sinä.",
+    "dropzone.widget.last.in.container.row.desc": "Pudota <b>olemassa olevaan säilöön</b>",
+    "nestedLayout.emptyDropZone.active.message": "<b>Pudota tänne</b>{br} lisättäväksi säiliöön",
+    "insightAlert.config.accessbility.input": "Kuntoarvo",
+    "insightAlert.config.accessbility.dropdown": "Kuntotyyppi",
+    "alert.accessibility.destination.label": "Valitse hälytyksen lähetystapa"
 }

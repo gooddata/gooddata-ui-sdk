@@ -258,6 +258,13 @@ export interface DashboardConfig {
      * If provided, initialization of the dashboard avoid additional requests to resolve them.
      */
     references?: IDashboardReferences;
+
+    /**
+     * @alpha
+     *
+     * Entitlements for the user who is rendering the dashboard
+     */
+    entitlements?: IEntitlementDescriptor[];
 }
 
 /**
@@ -322,7 +329,7 @@ export interface DashboardFocusObject {
  */
 export type ResolvedDashboardConfig = Omit<
     Required<DashboardConfig>,
-    "mapboxToken" | "exportId" | "focusObject" | "slideConfig" | "references"
+    "mapboxToken" | "exportId" | "focusObject" | "slideConfig" | "references" | "entitlements"
 > &
     DashboardConfig;
 

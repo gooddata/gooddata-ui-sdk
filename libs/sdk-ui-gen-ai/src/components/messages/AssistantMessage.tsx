@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import cx from "classnames";
@@ -46,6 +46,7 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
                     isComplete={Boolean(message.complete || message.cancelled)}
                     isCancelled={message.cancelled}
                     isLastMessage={isLast}
+                    messageId={message.localId}
                 />
                 {message.complete ? (
                     <div

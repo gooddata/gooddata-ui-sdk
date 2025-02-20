@@ -27,7 +27,6 @@ function renderToHtml(customizer: DefaultFilterBarCustomizer) {
     invariant(Component);
 
     const { container } = render(<Component {...props} />);
-
     return container.innerHTML;
 }
 
@@ -48,13 +47,13 @@ describe("filter bar customizer", () => {
     describe("filter bar rendering mode", () => {
         it("should return undefined if no mode was explicitly set", () => {
             const actual = Customizer.getCustomizerResult();
-            expect(actual.FilterBarComponent).toBeInstanceOf(Function);
+            expect(actual.FilterBarComponent).toBe(undefined);
         });
 
         it("should return undefined if mode: default was explicitly set", () => {
             Customizer.setRenderingMode("default");
             const actual = Customizer.getCustomizerResult();
-            expect(actual.FilterBarComponent).toBeInstanceOf(Function);
+            expect(actual.FilterBarComponent).toBe(undefined);
         });
 
         it("should return HiddenFilterBar if mode: hidden set using the setter", () => {

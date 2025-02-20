@@ -1,5 +1,6 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
+import { createIntlMock } from "@gooddata/sdk-ui";
 import {
     IAutomationAlertRelativeCondition,
     IAutomationMetadataObject,
@@ -24,6 +25,7 @@ import {
     getAlertMeasure,
     getAlertRelativeOperator,
     getAlertThreshold,
+    getDescription,
     getValueSuffix,
 } from "../utils/getters.js";
 import {
@@ -40,6 +42,8 @@ import {
 } from "../../../types.js";
 
 describe("alert transforms", () => {
+    const mockIntl = createIntlMock();
+
     const base: IAutomationMetadataObject = {
         id: "alertId",
         title: "alertTitle",
@@ -517,7 +521,7 @@ describe("alert transforms", () => {
             const res = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
             expect(res).toEqual({
                 ...baseComparison,
-                title: "metric1",
+                title: "alertTitle",
                 alert: {
                     ...baseComparison.alert,
                     condition: {
@@ -540,7 +544,7 @@ describe("alert transforms", () => {
             const res = transformAlertByMetric(allMetrics, baseComparison, previousPeriodMetric);
             expect(res).toEqual({
                 ...baseComparison,
-                title: "metric2",
+                title: "alertTitle",
                 alert: {
                     ...baseComparison.alert,
                     condition: {
@@ -563,7 +567,7 @@ describe("alert transforms", () => {
             const res = transformAlertByMetric(allMetrics, baseRelative, simpleMetric1);
             expect(res).toEqual({
                 ...baseComparison,
-                title: "metric1",
+                title: "alertTitle",
                 alert: {
                     ...baseComparison.alert,
                     condition: {
@@ -587,7 +591,7 @@ describe("alert transforms", () => {
             const res = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             expect(res).toEqual({
                 ...baseRelative,
-                title: "metric2",
+                title: "alertTitle",
                 alert: {
                     ...baseRelative.alert,
                     condition: {
@@ -618,7 +622,7 @@ describe("alert transforms", () => {
             const res = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric1);
             expect(res).toEqual({
                 ...baseRelative,
-                title: "metric2",
+                title: "alertTitle",
                 alert: {
                     ...baseRelative.alert,
                     condition: {
@@ -652,7 +656,7 @@ describe("alert transforms", () => {
             const res = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric2);
             expect(res).toEqual({
                 ...baseRelative,
-                title: "metric2",
+                title: "alertTitle",
                 alert: {
                     ...baseRelative.alert,
                     condition: {
@@ -686,7 +690,7 @@ describe("alert transforms", () => {
             const res = transformAlertByMetric(allMetrics, baseComparison, arithmeticMetric1);
             expect(res).toEqual({
                 ...baseComparison,
-                title: "metricArt",
+                title: "alertTitle",
                 alert: {
                     ...baseComparison.alert,
                     condition: {
@@ -1256,6 +1260,30 @@ describe("alert transforms", () => {
             const res = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
             const comp = getAlertComparison(simpleMetric1, res.alert);
             expect(comp).toEqual(undefined);
+        });
+
+        it("getDescription - basic", () => {
+            const res = getDescription(mockIntl, [], baseComparison, {
+                decimal: ",",
+                thousand: ".",
+            });
+            expect(res).toBe("Insightalert.config.comparisonoperator.greaterthanorequals 0,00");
+        });
+
+        it("getDescription - relative", () => {
+            const res = getDescription(mockIntl, [], baseRelative, {
+                decimal: ",",
+                thousand: ".",
+            });
+            expect(res).toBe("Insightalert.config.changeoperator.increasesby 0,00%");
+        });
+
+        it("getDescription - relative with filter", () => {
+            const res = getDescription(mockIntl, [], baseRelativeWithFilter, {
+                decimal: ",",
+                thousand: ".",
+            });
+            expect(res).toBe("Insightalert.config.changeoperator.increasesby 0,00%");
         });
     });
 

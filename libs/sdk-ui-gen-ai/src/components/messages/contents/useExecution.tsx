@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import {
@@ -49,34 +49,48 @@ const typeMap: { [key in GenAIMetricType]: ObjectType } = {
 
 export const useExecution = (vis?: IGenAIVisualization) => {
     return React.useMemo(() => {
-        const dimensions = vis?.dimensionality?.map((d) => newAttribute(d.id)) ?? [];
-        const metrics =
-            vis?.metrics?.map((md) => newMeasure(idRef(md.id, typeMap[md.type]), measureBuilder(md))) ?? [];
+        if (!vis) {
+            return {
+                metrics: [],
+                dimensions: [],
+                filters: [],
+            };
+        }
 
-        return {
-            metrics,
-            dimensions,
-            filters: (vis?.filters?.map(convertFilter).filter(Boolean) as IFilter[]) ?? [],
-        };
+        return prepareExecution(vis);
     }, [vis]);
+};
+
+export const prepareExecution = (vis: IGenAIVisualization) => {
+    const dimensions = vis.dimensionality?.map((d) => newAttribute(d.id)) ?? [];
+    const metrics =
+        vis.metrics?.map((md) => newMeasure(idRef(md.id, typeMap[md.type]), measureBuilder(md))) ?? [];
+    const filters = (vis.filters?.map(convertFilter).filter(Boolean) as IFilter[]) ?? [];
+
+    return { metrics, dimensions, filters };
 };
 
 const convertFilter = (data: GenAIFilter): IFilter | false => {
     if (isPositiveAttributeFilter(data)) {
-        return newPositiveAttributeFilter(data.using, { values: data.include });
+        return newPositiveAttributeFilter(idRef(data.using, "displayForm"), { values: data.include });
     }
 
     if (isNegativeAttributeFilter(data)) {
-        return newNegativeAttributeFilter(data.using, { values: data.exclude });
+        return newNegativeAttributeFilter(idRef(data.using, "displayForm"), { values: data.exclude });
     }
 
     if (isRelativeDateFilter(data)) {
-        return newRelativeDateFilter(data.using, granularityMap[data.granularity], data.from, data.to);
+        return newRelativeDateFilter(
+            idRef(data.using, "dataSet"),
+            granularityMap[data.granularity],
+            data.from,
+            data.to,
+        );
     }
 
     if (isAbsoluteDateFilter(data)) {
         return newAbsoluteDateFilter(
-            data.using,
+            idRef(data.using, "dataSet"),
             data.from ??
                 (() => {
                     const date = new Date();

@@ -6,7 +6,6 @@ import {
     isInsightWidget,
     isDashboardWidget,
     widgetRef,
-    isKpiWidget,
     isRichTextWidget,
     isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
@@ -28,7 +27,6 @@ import {
 import { IDashboardWidgetProps } from "./types.js";
 import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef.js";
 
-import { DefaultDashboardKpiWidget } from "./DefaultDashboardKpiWidget.js";
 import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js";
 import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/index.js";
 import { RenderModeAwareDashboardVisualizationSwitcherWidget } from "./VisualizationSwitcherWidget/RenderModeAwareDashboardVisualizationSwitcherWidget.js";
@@ -51,8 +49,6 @@ const WidgetComponent: React.FC<IWidgetComponentOwnProps & WidgetComponentAdditi
     rowIndex,
     parentLayoutPath,
     screen,
-    onFiltersChange,
-    onError,
     exportData,
 }) => {
     const dashboardItemClasses = parentLayoutPath
@@ -69,16 +65,6 @@ const WidgetComponent: React.FC<IWidgetComponentOwnProps & WidgetComponentAdditi
                 screen={screen}
                 dashboardItemClasses={dashboardItemClassNames}
                 exportData={exportData}
-            />
-        );
-    } else if (isKpiWidget(widget)) {
-        return (
-            <DefaultDashboardKpiWidget
-                kpiWidget={widget}
-                screen={screen}
-                dashboardItemClasses={dashboardItemClassNames}
-                onFiltersChange={onFiltersChange}
-                onError={onError}
             />
         );
     } else if (isRichTextWidget(widget)) {

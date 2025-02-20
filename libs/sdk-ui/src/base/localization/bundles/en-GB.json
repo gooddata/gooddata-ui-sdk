@@ -437,7 +437,7 @@
     "catalog.attribute.tooltip.hierarchy.title": "Hierarchy",
     "visualizationConfig.interactions.section.title": "Interactions",
     "visualizationConfig.interactions.section.drilldown": "Drill down",
-    "workspaceHierarchy.lockedInsight": "Only Administrators can save alterations to this visualisation.",
+    "workspaceHierarchy.lockedInsight": "Only Administrators can save changes to this visualisation.",
     "workspaceHierarchy.inheritedInsight": "You cannot amend or remove this visualisation.{br}It is centrally controlled and certified.",
     "userManagement.workspace.noMatchingItems": "No matching workspaces.",
     "userManagement.workspace.searchPlaceholder": "Search workspaces",
@@ -658,5 +658,11 @@
     "userManagement.workspace.granularPermission.manage.description": "Allows users can to, edit or delete the logical data model and metrics, and access all dashboards and edit their dashboard permissions without limitations.",
     "userManagement.workspace.granularPermission.warning": "<b>Warning:</b> This action will get rid of any unnecessary combinations.",
     "userManagement.workspace.permission.and": "and",
-    "gs.header.notifications": "Notifications"
+    "gs.header.notifications": "Notifications",
+    "gs.header.logo.title.accessibility": "Application logo",
+    "gs.header.href.accessibility": "Go to homepage",
+    "gs.list.acessibility.search.label": "Search attribute values",
+    "message.accessibility.dismiss.notification": "Dismiss notification",
+    "datePicker.accessibility.label": "Select starting date",
+    "timePicker.accessibility.label": "Select starting time"
 }

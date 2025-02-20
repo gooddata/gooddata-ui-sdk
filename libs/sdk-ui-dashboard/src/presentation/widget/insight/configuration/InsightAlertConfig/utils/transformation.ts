@@ -77,7 +77,6 @@ export function transformAlertByMetric(
 
         return {
             ...alert,
-            title: getMeasureTitle(measure.measure) ?? "",
             alert: {
                 ...alert.alert!,
                 condition,
@@ -107,7 +106,6 @@ export function transformAlertByMetric(
 
     return {
         ...alert,
-        title: getMeasureTitle(measure.measure) ?? "",
         alert: {
             ...alert.alert!,
             condition,
@@ -310,6 +308,22 @@ export function transformAlertByValue(
 }
 
 /**
+ * This function transforms alert by title. It changes title of alert.
+ * @param alert - alert to transform
+ * @param title - title of alert
+ */
+export function transformAlertByTitle(
+    alert: IAutomationMetadataObject,
+    title: string | undefined,
+): IAutomationMetadataObject {
+    return {
+        ...alert,
+        title: title ?? "",
+        description: "",
+    };
+}
+
+/**
  * This function transforms alert by notification channel. It changes notification channel in alert.
  * @param alert - alert to transform
  * @param notificationChannel - selected notification channel
@@ -377,21 +391,20 @@ export function transformAlertExecutionByMetric(
             addedFilters.push(localIdentifier);
         }
 
+        const measures = [measure.measure, periodMeasure.measure];
+        const auxMeasures = [
+            ...collectAllRelatedMeasures(metrics, measure.measure),
+            ...collectAllRelatedMeasures(metrics, periodMeasure.measure),
+            ...collectAllRelatedMeasuresFromFilters(metrics, originalFilters),
+        ];
+
         return {
             execution: {
                 attributes: [],
                 ...execution,
                 filters: [...originalFilters],
-                measures: [measure.measure, periodMeasure.measure],
-                auxMeasures: [
-                    ...collectAllRelatedMeasures(metrics, measure.measure),
-                    ...collectAllRelatedMeasures(metrics, periodMeasure.measure),
-                    ...collectAllRelatedMeasuresFromFilters(
-                        metrics,
-                        [measure.measure, periodMeasure.measure],
-                        originalFilters,
-                    ),
-                ],
+                measures,
+                auxMeasures: filterMeasures(auxMeasures, measures),
             },
             metadata: {
                 ...alert.metadata,
@@ -400,16 +413,19 @@ export function transformAlertExecutionByMetric(
         };
     }
 
+    const measures = [measure.measure];
+    const auxMeasures = [
+        ...collectAllRelatedMeasures(metrics, measure.measure),
+        ...collectAllRelatedMeasuresFromFilters(metrics, originalFilters),
+    ];
+
     return {
         execution: {
             attributes: [],
             ...execution,
             filters: [...originalFilters],
-            measures: [measure.measure],
-            auxMeasures: [
-                ...collectAllRelatedMeasures(metrics, measure.measure),
-                ...collectAllRelatedMeasuresFromFilters(metrics, [measure.measure], originalFilters),
-            ],
+            measures,
+            auxMeasures: filterMeasures(auxMeasures, measures),
         },
         metadata: {
             ...alert.metadata,
@@ -535,35 +551,35 @@ function collectAllRelatedMeasures(metrics: AlertMetric[], measure: AlertMetric[
     return [];
 }
 
-function collectAllRelatedMeasuresFromFilters(
-    metrics: AlertMetric[],
-    alreadyUsed: IMeasure[],
-    filters: IFilter[],
-): IMeasure[] {
+function collectAllRelatedMeasuresFromFilters(metrics: AlertMetric[], filters: IFilter[]): IMeasure[] {
     return filters.reduce<IMeasure[]>((acc, filter) => {
         if (isRankingFilter(filter)) {
             const measure = filter.rankingFilter.measure;
-            collectMeasure(metrics, alreadyUsed, measure, acc);
+            collectMeasure(metrics, measure, acc);
         }
         if (isMeasureValueFilter(filter)) {
             const measure = filter.measureValueFilter.measure;
-            collectMeasure(metrics, alreadyUsed, measure, acc);
+            collectMeasure(metrics, measure, acc);
         }
 
         return acc;
     }, []);
 }
 
-function collectMeasure(
-    metrics: AlertMetric[],
-    alreadyUsed: IMeasure[],
-    measure: ObjRefInScope,
-    acc: IMeasure[],
-) {
+function collectMeasure(metrics: AlertMetric[], measure: ObjRefInScope, acc: IMeasure[]) {
     if (isLocalIdRef(measure)) {
         const related = metrics.find((m) => m.measure.measure.localIdentifier === measure.localIdentifier);
-        if (related && !alreadyUsed.includes(related.measure)) {
+        if (related) {
             acc.push(related.measure);
         }
     }
+}
+
+function filterMeasures(auxMeasures: IMeasure[], measures: IMeasure[]): IMeasure[] {
+    return auxMeasures.filter((m, index, arr) => {
+        if (measures.includes(m)) {
+            return false;
+        }
+        return arr.indexOf(m) === index;
+    });
 }

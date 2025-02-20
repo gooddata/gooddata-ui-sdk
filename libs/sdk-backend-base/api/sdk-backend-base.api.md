@@ -7,6 +7,7 @@
 import { AttributeModifications } from '@gooddata/sdk-model';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
+import { DashboardFiltersApplyMode } from '@gooddata/sdk-model';
 import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { ErrorConverter } from '@gooddata/sdk-backend-spi';
@@ -454,6 +455,8 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     // (undocumented)
     fingerprint(): string;
     // (undocumented)
+    readonly signal?: AbortSignal;
+    // (undocumented)
     withBuckets(...buckets: IBucket[]): IPreparedExecution;
     // (undocumented)
     withDateFormat(dateFormat: string): IPreparedExecution;
@@ -461,6 +464,8 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
     // (undocumented)
     withExecConfig(config: IExecutionConfig): IPreparedExecution;
+    // (undocumented)
+    withSignal(signal: AbortSignal): IPreparedExecution;
     // (undocumented)
     withSorting(...items: ISortItem[]): IPreparedExecution;
 }
@@ -608,6 +613,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     deleteColorPalette(): Promise<void>;
     // (undocumented)
+    deleteDashboardFiltersApplyMode(): Promise<void>;
+    // (undocumented)
     deleteTheme(): Promise<void>;
     // (undocumented)
     getSettings(): Promise<IWorkspaceSettings>;
@@ -617,6 +624,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     setAlertDefault(value: IAlertDefault): Promise<void>;
     // (undocumented)
     setColorPalette(colorPaletteId: string): Promise<void>;
+    // (undocumented)
+    setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
     // (undocumented)
     setDateFormat(dateFormat: string): Promise<void>;
     // (undocumented)

@@ -97,7 +97,7 @@
     "dialogs.schedule.email.repeats.frequencies.month": "{n, plural, one {mes} other {meses}}",
     "dialogs.schedule.email.repeats.frequencies.week": "{n, plural, one {semana} other {semanas}}",
     "dialogs.schedule.email.repeats.types.custom": "Personalizado",
-    "dialogs.schedule.email.repeats.types.daily": "Diario",
+    "dialogs.schedule.email.repeats.types.daily": "A diario",
     "dialogs.schedule.email.repeats.types.monthly": "Mensualmente el {week, select, 1 {primer} 2 {segundo} 3 {tercer} 4 {cuarto} other {último}} {day}",
     "dialogs.schedule.email.repeats.types.weekly": "Semanalmente el {day}",
     "dialogs.schedule.email.subject.label": "Asunto:",
@@ -657,5 +657,12 @@
     "dialogs.schedule.email.user.invalid.external": "Este usuario no tiene acceso al panel de control.",
     "dialogs.schedule.email.user.used.external": "El correo electrónico “{email}” no pertenece a este espacio de trabajo. El destinatario puede recibir datos sensibles.",
     "dialogs.schedule.email.user.warning.external": "Esta dirección de correo electrónico no pertenece a este espacio de trabajo. Es posible que el destinatario reciba datos confidenciales.",
-    "dialogs.schedule.email.user.guest": "(invitado)"
+    "dialogs.schedule.email.user.guest": "(invitado)",
+    "dialogs.schedule.email.user.unknown": "Este es un usuario desconocido y no es posible agregarlo como destinatario",
+    "dialogs.schedule.email.user.notMe": "Este usuario no está autorizado. Solo tú puedes ser el destinatario.",
+    "dropzone.widget.last.in.container.row.desc": "Soltar en el <b>contenedor existente</b>.",
+    "nestedLayout.emptyDropZone.active.message": "<b>Suelta aquí</b>{br}para agregarlo al contenedor",
+    "insightAlert.config.accessbility.input": "Valor de la condición",
+    "insightAlert.config.accessbility.dropdown": "Tipo de condición",
+    "alert.accessibility.destination.label": "Seleccionar cómo enviar la alerta"
 }
