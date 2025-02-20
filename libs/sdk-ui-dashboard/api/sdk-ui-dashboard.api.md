@@ -7822,6 +7822,9 @@ export const selectEnableDrilledTooltip: DashboardSelector<boolean>;
 // @internal
 export const selectEnableDuplicatedLabelValuesInAttributeFilter: DashboardSelector<boolean>;
 
+// @internal (undocumented)
+export const selectEnableExecutionCancelling: DashboardSelector<boolean>;
+
 // @internal
 export const selectEnableExternalRecipients: DashboardSelector<boolean>;
 

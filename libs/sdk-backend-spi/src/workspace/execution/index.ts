@@ -92,6 +92,18 @@ export interface IClusteringResult {
 }
 
 /**
+ * Additional options for the prepared execution.
+ *
+ * @public
+ */
+export interface IPreparedExecutionOptions {
+    /**
+     * Signal to abort the execution or its result.
+     */
+    signal?: AbortSignal;
+}
+
+/**
  * Execution factory provides several methods to create a prepared execution from different types
  * of inputs.
  *
@@ -111,9 +123,10 @@ export interface IExecutionFactory {
      * generated dimensions.
      *
      * @param def - execution definition
+     * @param options - additional options for the prepared execution
      * @returns new prepared execution
      */
-    forDefinition(def: IExecutionDefinition): IPreparedExecution;
+    forDefinition(def: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution;
 
     /**
      * Prepares a new execution for a list of attributes and measures, filtered using the
@@ -124,9 +137,14 @@ export interface IExecutionFactory {
      * pre-filled dimensions created using the {@link @gooddata/sdk-model#defaultDimensionsGenerator}.
      *
      * @param items - list of attributes and measures, must not be empty
+     * @param options - additional options for the prepared execution
      * @param filters - list of filters, may not be provided
      */
-    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
+    forItems(
+        items: IAttributeOrMeasure[],
+        filters?: INullableFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution;
 
     /**
      * Prepares a new execution for a list of buckets.
@@ -146,8 +164,13 @@ export interface IExecutionFactory {
      *
      * @param buckets - list of buckets with attributes and measures, must be non empty, must have at least one attr or measure
      * @param filters - optional, may not be provided, may contain null or undefined values which must be ignored
+     * @param options - additional options for the prepared execution
      */
-    forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
+    forBuckets(
+        buckets: IBucket[],
+        filters?: INullableFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution;
 
     /**
      * Prepares a new execution for the provided insight.
@@ -165,8 +188,13 @@ export interface IExecutionFactory {
      *
      * @param insightDefinition - insight definition to create execution for, must have buckets which must have some attributes or measures in them
      * @param filters - optional, may not be provided, may contain null or undefined values which must be ignored
+     * @param options - additional options for the prepared execution
      */
-    forInsight(insightDefinition: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
+    forInsight(
+        insightDefinition: IInsightDefinition,
+        filters?: INullableFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution;
 
     /**
      * Prepares new, by-reference execution for an existing insight.
@@ -184,8 +212,13 @@ export interface IExecutionFactory {
      *
      * @param insight - saved insight
      * @param filters - optional list of filters to merge with filters already defined in the insight, may contain null or undefined values which must be ignored
+     * @param options - additional options for the prepared execution
      */
-    forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution;
+    forInsightByRef(
+        insight: IInsight,
+        filters?: INullableFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution;
 }
 
 /**
@@ -239,6 +272,11 @@ export interface IExplainProvider<T extends ExplainType | undefined> {
  * The contract for creating these new instances is that the new prepared execution MUST be created using the
  * execution factory that created current execution.
  *
+ * Note that even though the prepared executions are immutable, the abort signal itself is stateful
+ * and is always propagated through the whole immutable chain.
+ * If you don't want to cancel multiple executions simultaneously via single abort signal,
+ * you need to set it on the outermost execution only, just before calling the execute method.
+ *
  * @public
  */
 export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
@@ -248,7 +286,7 @@ export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
     readonly definition: IExecutionDefinition;
 
     /**
-     * Signal to abort the execution.
+     * Abort signal to cancel the execution or its result.
      */
     readonly signal?: AbortSignal;
 
@@ -349,6 +387,15 @@ export interface IExecutionResult {
      * Description of shape of the data.
      */
     readonly dimensions: IDimensionDescriptor[];
+
+    /**
+     * Abort signal to cancel the result retrieval.
+     *
+     * Note that the abort signal is shared with the prepared execution that created this result,
+     * so if you cancel the result and want to retrieve it later again,
+     * you should always create also a new execution for it.
+     */
+    readonly signal?: AbortSignal;
 
     /**
      * Asynchronously reads all data for this result into a single data view.

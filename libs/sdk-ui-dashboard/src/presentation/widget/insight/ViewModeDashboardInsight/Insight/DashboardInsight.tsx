@@ -35,6 +35,7 @@ import {
     selectIsInEditMode,
     selectCrossFilteringSelectedPointsByWidgetRef,
     useWidgetFilters,
+    selectEnableExecutionCancelling,
 } from "../../../../../model/index.js";
 
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
@@ -57,13 +58,21 @@ const selectCommonDashboardInsightProps = createSelector(
 );
 
 const selectChartConfig = createSelector(
-    [selectMapboxToken, selectSeparators, selectDrillableItems, selectIsExport, selectIsInEditMode],
-    (mapboxToken, separators, drillableItems, isExportMode, isInEditMode) => ({
+    [
+        selectMapboxToken,
+        selectSeparators,
+        selectDrillableItems,
+        selectIsExport,
+        selectIsInEditMode,
+        selectEnableExecutionCancelling,
+    ],
+    (mapboxToken, separators, drillableItems, isExportMode, isInEditMode, enableExecutionCancelling) => ({
         mapboxToken,
         separators,
         forceDisableDrillOnAxes: !drillableItems?.length, // to keep in line with KD, enable axes drilling only if using explicit drills
         isExportMode,
         isInEditMode,
+        enableExecutionCancelling,
     }),
 );
 

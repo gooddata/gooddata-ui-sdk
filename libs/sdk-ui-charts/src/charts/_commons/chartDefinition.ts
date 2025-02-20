@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket } from "@gooddata/sdk-model";
 import omit from "lodash/omit.js";
@@ -69,6 +69,7 @@ export const getCoreChartProps =
             ...propOverrides,
             execution,
             exportTitle,
+            enableExecutionCancelling: props.config?.enableExecutionCancelling ?? false,
         };
 
         return omit(coreChartProps, NON_CORE_PROPS);

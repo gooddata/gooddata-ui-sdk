@@ -61,6 +61,7 @@ exports[`Headline > with drilling on single measure > should create expected pro
   "drillableItems": [
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -131,6 +132,7 @@ exports[`Headline > with drilling on single measure with underlining disabled > 
   "drillableItems": [
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -226,6 +228,7 @@ exports[`Headline > with drilling on two measures > should create expected props
     [Function],
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -324,6 +327,7 @@ exports[`Headline > with drilling on two measures with underlining disabled > sh
     [Function],
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -391,6 +395,7 @@ exports[`Headline > with multi measures with drilling on single measure > should
   "drillableItems": [
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -461,6 +466,7 @@ exports[`Headline > with multi measures with drilling on single measure with und
   "drillableItems": [
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -583,6 +589,7 @@ exports[`Headline > with multi measures with drilling on three measures > should
     [Function],
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "secondaryMeasures": [
@@ -736,6 +743,7 @@ exports[`Headline > with multi measures with drilling on three measures with und
     [Function],
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "secondaryMeasures": [
@@ -864,6 +872,7 @@ exports[`Headline > with multi measures with drilling on two measures > should c
     [Function],
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "secondaryMeasures": [
@@ -980,6 +989,7 @@ exports[`Headline > with multi measures with drilling on two measures with under
     [Function],
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "secondaryMeasures": [
@@ -1059,6 +1069,7 @@ exports[`Headline > with multi measures with only primary measure > should creat
 
 exports[`Headline > with multi measures with only primary measure > should create expected props for core chart 1`] = `
 {
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -1176,6 +1187,7 @@ exports[`Headline > with multi measures with three measures > should create expe
 
 exports[`Headline > with multi measures with three measures > should create expected props for core chart 1`] = `
 {
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "secondaryMeasures": [
@@ -1300,6 +1312,7 @@ exports[`Headline > with multi measures with two measures > should create expect
       "enabled": false,
     },
   },
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -1400,6 +1413,7 @@ exports[`Headline > with multi measures with two measures one PoP > should creat
       "enabled": false,
     },
   },
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "secondaryMeasures": [
@@ -1517,6 +1531,7 @@ exports[`Headline > with multi measures with two measures with german separators
       "thousand": ".",
     },
   },
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -1581,6 +1596,7 @@ exports[`Headline > with single measure > should create expected execution defin
 
 exports[`Headline > with single measure > should create expected props for core chart 1`] = `
 {
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -1672,6 +1688,7 @@ exports[`Headline > with two measures > should create expected execution definit
 
 exports[`Headline > with two measures > should create expected props for core chart 1`] = `
 {
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -1767,6 +1784,7 @@ exports[`Headline > with two measures one PoP > should create expected execution
 
 exports[`Headline > with two measures one PoP > should create expected props for core chart 1`] = `
 {
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -1864,6 +1882,7 @@ exports[`Headline > with two measures with german separators > should create exp
       "thousand": ".",
     },
   },
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",

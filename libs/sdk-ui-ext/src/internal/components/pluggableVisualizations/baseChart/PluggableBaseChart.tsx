@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IBackendCapabilities, IDataView, IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     IColorMappingItem,
@@ -276,6 +276,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
         this.renderFun(
             <BaseChart
+                enableExecutionCancelling={
+                    fullConfig.enableExecutionCancelling ??
+                    this.featureFlags.enableExecutionCancelling ??
+                    false
+                }
                 execution={execution}
                 afterRender={this.afterRender}
                 drillableItems={drillableItems}
@@ -416,6 +421,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             separators: config.separators,
             colorPalette: config.colorPalette,
             forceDisableDrillOnAxes: config.forceDisableDrillOnAxes,
+            enableExecutionCancelling: config.enableExecutionCancelling,
             ...supportedControls,
             colorMapping: validColorMapping?.length > 0 ? validColorMapping : null,
             ...customVisualizationConfig,

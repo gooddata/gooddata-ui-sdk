@@ -673,6 +673,8 @@ export interface IDataSliceCollection extends Iterable<IDataSlice> {
 export interface IDataVisualizationProps extends IVisualizationProps, IVisualizationCallbacks {
     // @beta
     clusteringConfig?: IClusteringConfig;
+    // @internal
+    enableExecutionCancelling?: boolean;
     execution: IPreparedExecution;
     // @beta
     forecastConfig?: IForecastConfig;

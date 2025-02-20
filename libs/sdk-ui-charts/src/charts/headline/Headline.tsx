@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useEffect, useState } from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket, IMeasure, INullableFilter, newBucket } from "@gooddata/sdk-model";
@@ -143,6 +143,7 @@ export function toCoreHeadlineProps(props: IHeadlineProps, enableNewHeadline: bo
         headlineTransformation: provider.getHeadlineTransformationComponent(),
         execution: createExecution(provider, buckets, props),
         exportTitle: props.exportTitle || "Headline",
+        enableExecutionCancelling: props.config?.enableExecutionCancelling ?? false,
     };
 }
 

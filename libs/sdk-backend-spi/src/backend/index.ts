@@ -1,7 +1,7 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import { IExecutionDefinition } from "@gooddata/sdk-model";
-import { IPreparedExecution } from "../workspace/execution/index.js";
+import { IPreparedExecution, IPreparedExecutionOptions } from "../workspace/execution/index.js";
 import { IWorkspacesQueryFactory, IAnalyticalWorkspace } from "../workspace/index.js";
 import { IUserService } from "../user/index.js";
 import { NotAuthenticated } from "../errors/index.js";
@@ -304,6 +304,7 @@ export interface IAuthenticationContext {
 export function prepareExecution(
     backend: IAnalyticalBackend,
     definition: IExecutionDefinition,
+    options?: IPreparedExecutionOptions,
 ): IPreparedExecution {
-    return backend.workspace(definition.workspace).execution().forDefinition(definition);
+    return backend.workspace(definition.workspace).execution().forDefinition(definition, options);
 }

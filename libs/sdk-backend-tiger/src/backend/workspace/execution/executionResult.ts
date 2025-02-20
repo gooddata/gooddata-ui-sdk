@@ -78,7 +78,7 @@ export class TigerExecutionResult implements IExecutionResult {
         private readonly executionFactory: IExecutionFactory,
         readonly execResponse: AfmExecutionResponse,
         private readonly dateFormatter: DateFormatter,
-        private readonly signal?: AbortSignal,
+        public readonly signal?: AbortSignal,
         private readonly resultCancelToken?: string,
     ) {
         this.dimensions = transformResultDimensions(
@@ -229,11 +229,7 @@ export class TigerExecutionResult implements IExecutionResult {
     }
 
     public transform(): IPreparedExecution {
-        const updatedExec = this.executionFactory.forDefinition(this.definition);
-        if (this.signal) {
-            return updatedExec.withSignal(this.signal);
-        }
-        return updatedExec;
+        return this.executionFactory.forDefinition(this.definition, { signal: this.signal });
     }
 
     public async export(options: IExportConfig): Promise<IExportResult> {
