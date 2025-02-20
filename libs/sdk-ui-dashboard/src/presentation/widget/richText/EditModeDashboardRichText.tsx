@@ -1,10 +1,12 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useEffect, useMemo, useState } from "react";
 import {
     changeRichTextWidgetContent,
     eagerRemoveSectionItemByWidgetRef,
+    selectIsWhiteLabeled,
     uiActions,
     useDashboardDispatch,
+    useDashboardSelector,
     useWidgetSelection,
 } from "../../../model/index.js";
 import { IDashboardRichTextProps } from "./types.js";
@@ -31,6 +33,7 @@ const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_FILTE
 export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({ widget, clientWidth }) => {
     const { isSelected } = useWidgetSelection(widgetRef(widget));
     const previousIsSelected = usePrevious(isSelected);
+    const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const intl = useIntl();
 
     const dispatch = useDashboardDispatch();
@@ -74,7 +77,7 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({ w
             {isRichTextEditing ? (
                 <div className="gd-rich-text-widget-footer">
                     <div className="gd-rich-text-footer-options">
-                        {typeof clientWidth !== "undefined" && clientWidth > 250 ? (
+                        {!isWhiteLabeled && typeof clientWidth !== "undefined" && clientWidth > 250 ? (
                             <a
                                 className="gd-button-link-dimmed gd-icon-circle-question"
                                 href="https://www.gooddata.com/docs/cloud/create-dashboards/rich-text/"
