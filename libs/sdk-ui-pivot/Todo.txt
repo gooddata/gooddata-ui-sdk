@@ -1,0 +1,16 @@
+Problems:
+
+Sort any column failed
+
+Cannot read properties of undefined (reading 'setLeftValues')
+http://localhost:9001/?path=/story/01-stories-from-test-scenarios-pivottable-auto-resizing--with-two-measures-grand-totals-and-subtotals-with-auto-resizing-and-grow-to-fit
+
+Warning in console:
+main.esm.mjs:797 AG Grid: rowData is not supported with the 'infinite' row model. It is only valid with: clientSide.
+
+
+Visual problems:
+
+Positions of label in jointed cells
+
+Position of resizer

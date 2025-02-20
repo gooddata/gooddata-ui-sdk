@@ -1,9 +1,0 @@
-Unknow methods
-
-GridApi/ColumnsApi
-getPrimaryColumns
-setPinnedBottomRowData
-setDatasource
-
-Column
-column.setMinimum(source);

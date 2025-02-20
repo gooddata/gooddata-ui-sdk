@@ -7,7 +7,10 @@ import {
     GridReadyEvent,
     SortChangedEvent,
     PinnedRowDataChangedEvent,
+    ModuleRegistry,
+    provideGlobalGridOptions,
 } from "ag-grid-community";
+
 import { v4 as uuidv4 } from "uuid";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { AgGridReact } from "ag-grid-react";
@@ -57,6 +60,12 @@ import { TableFacadeInitializer } from "./impl/tableFacadeInitializer.js";
 import { ICorePivotTableState, InternalTableState } from "./tableState.js";
 import { isColumnAutoresizeEnabled } from "./impl/resizing/columnSizing.js";
 import cloneDeep from "lodash/cloneDeep.js";
+
+// Register all Community features
+ModuleRegistry.registerModules([AllCommunityModule]);
+
+// Mark all grids as using legacy themes
+provideGlobalGridOptions({ theme: "legacy" });
 
 const DEFAULT_COLUMN_WIDTH = 200;
 const WATCHING_TABLE_RENDERED_INTERVAL = 500;
