@@ -1,5 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
-import { IDashboardBaseProps, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
+// (C) 2021-2025 GoodData Corporation
+import { DashboardItem, IDashboardBaseProps, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
 import { IClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
 import { IDashboard, ObjRef } from "@gooddata/sdk-model";
 
@@ -129,6 +129,12 @@ export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
      * Default allowUnfinishedFeatures is `alwaysPrevent`.
      */
     allowUnfinishedFeatures?: "staticOnly" | "alwaysAllow" | "alwaysPrevent";
+
+    /**
+     * List of ad-hoc items to render in the dashboard. These items are not part of the dashboard
+     * definition and are not persisted, it will be rendered into empty layout.
+     */
+    adhocItems?: DashboardItem[];
 }
 
 /**

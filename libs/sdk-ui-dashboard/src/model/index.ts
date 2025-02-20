@@ -14,6 +14,9 @@
 
 export type {
     DashboardContext,
+    DashboardItem,
+    DashboardItemVisualization,
+    DashboardItemVisualizationContent,
     ObjectAvailabilityConfig,
     DashboardConfig,
     DashboardExportSlideConfig,
@@ -32,6 +35,8 @@ export type {
     IDashboardWidgetOverlay,
     PrivateDashboardContext,
     DashboardLayoutExportTransformFn,
+    isDashboardItemVisualization,
+    isDashboardItemVisualizationContent,
 } from "./types/commonTypes.js";
 export type {
     ICustomWidget,

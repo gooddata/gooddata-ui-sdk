@@ -352,6 +352,16 @@ function* initializeNewDashboard(
         call(loadFilterViews, ctx),
     ]);
 
+    const { initActions, dashboard, insights }: SagaReturnType<typeof actionsToInitializeNewDashboard> =
+        yield call(
+            actionsToInitializeNewDashboard,
+            ctx,
+            config.settings,
+            config.dateFilterConfig,
+            catalog ? catalog.dateDatasets() : [],
+            catalog ? createDisplayFormMapFromCatalog(catalog) : createDisplayFormMap([], []),
+        );
+
     const batch: BatchAction = batchActions(
         [
             backendCapabilitiesActions.setBackendCapabilities(backend.capabilities),
@@ -370,7 +380,7 @@ function* initializeNewDashboard(
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(listedDashboards),
             executionResultsActions.clearAllExecutionResults(),
-            ...actionsToInitializeNewDashboard(config.dateFilterConfig),
+            ...initActions,
             dateFilterConfigActions.setDateFilterConfig({
                 dateFilterConfig: undefined,
                 effectiveDateFilterConfig: config.dateFilterConfig,
@@ -390,7 +400,7 @@ function* initializeNewDashboard(
         ],
         "@@GDC.DASH/BATCH.INIT.NEW",
     );
-    const event = dashboardInitialized(ctx, undefined, [], config, permissions, cmd.correlationId);
+    const event = dashboardInitialized(ctx, dashboard, insights, config, permissions, cmd.correlationId);
 
     return {
         batch,
