@@ -671,6 +671,7 @@ export class TableFacade {
             colsToNotSpread.push(column);
         }
 
+        const cws: any[] = [];
         while (!finishedResizing) {
             finishedResizing = true;
             const availablePixels = gridWidth - this.getWidthOfColsInList(colsToNotSpread);
@@ -678,7 +679,7 @@ export class TableFacade {
                 // no width, set everything to minimum
                 colsToSpread.forEach(function (column) {
                     const min = column.getMinWidth();
-                    localApi.setColumnWidths([{ key: column, newWidth: min }]);
+                    cws.push({ key: column, newWidth: min });
                 });
             } else {
                 const scale = availablePixels / this.getWidthOfColsInList(colsToSpread);
@@ -692,31 +693,23 @@ export class TableFacade {
                     if (newWidth < column.getMinWidth()!) {
                         //column.setMinimum(source);
                         const min = column.getMinWidth();
-                        localApi.setColumnWidths([{ key: column, newWidth: min }], true, source);
+                        cws.push({ key: column, newWidth: min });
 
                         moveToNotSpread(column);
                         finishedResizing = false;
                     } else if (column.isGreaterThanMax(newWidth)) {
                         //column.setActualWidth(column.getMaxWidth()!, source);
-                        localApi.setColumnWidths(
-                            [{ key: column, newWidth: column.getMaxWidth()! }],
-                            true,
-                            source,
-                        );
+                        cws.push({ key: column, newWidth: column.getMaxWidth()! });
                         moveToNotSpread(column);
                         finishedResizing = false;
                     } else {
                         const onLastCol = i === 0;
                         if (onLastCol) {
                             //column.setActualWidth(pixelsForLastCol, source);
-                            localApi.setColumnWidths(
-                                [{ key: column, newWidth: pixelsForLastCol }],
-                                true,
-                                source,
-                            );
+                            cws.push({ key: column, newWidth: pixelsForLastCol });
                         } else {
                             //column.setActualWidth(newWidth, source);
-                            localApi.setColumnWidths([{ key: column, newWidth: newWidth }], true, source);
+                            cws.push({ key: column, newWidth: newWidth });
                         }
                     }
                     pixelsForLastCol -= newWidth;
@@ -724,8 +717,12 @@ export class TableFacade {
             }
         }
         // DANGER: using ag-grid internals
-        (this.columnApi as any).columnModel.setLeftValues(source);
-        (this.columnApi as any).columnModel.updateBodyWidths();
+        setTimeout(() => {
+            localApi.setColumnWidths(cws, true, source);
+            //        (this.columnApi as any).refreshCells();
+        }, 1);
+        //        (this.columnApi as any).columnModel.setLeftValues(source);
+        //        (this.columnApi as any).columnModel.updateBodyWidths();
     }
 
     private getWidthOfColsInList(columnList: Column[]) {
