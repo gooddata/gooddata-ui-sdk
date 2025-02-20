@@ -26,6 +26,7 @@ import {
     getAlertRelativeOperator,
     getAlertThreshold,
     getDescription,
+    getSubtitle,
     getValueSuffix,
 } from "../utils/getters.js";
 import {
@@ -1284,6 +1285,22 @@ describe("alert transforms", () => {
                 thousand: ".",
             });
             expect(res).toBe("Insightalert.config.changeoperator.increasesby 0,00%");
+        });
+
+        it("getSubtitle - basic", () => {
+            const res = getSubtitle(mockIntl, "Name", baseComparison, {
+                decimal: ",",
+                thousand: ".",
+            });
+            expect(res).toBe("insightAlert.config.comparisonOperator.greaterThanOrEquals 0,00 • Name");
+        });
+
+        it("getSubtitle - relative with filter", () => {
+            const res = getSubtitle(mockIntl, "Name", baseRelativeWithFilter, {
+                decimal: ",",
+                thousand: ".",
+            });
+            expect(res).toBe("insightAlert.config.changeOperator.increasesBy 0,00% • Name");
         });
     });
 
