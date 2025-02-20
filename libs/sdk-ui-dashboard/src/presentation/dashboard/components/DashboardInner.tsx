@@ -9,6 +9,7 @@ import {
     selectCatalogIsLoaded,
     useDashboardAutomations,
     selectEnableFlexibleLayout,
+    selectAccessibleDashboardsLoaded,
 } from "../../../model/index.js";
 import { DashboardHeader } from "../DashboardHeader/DashboardHeader.js";
 import { IDashboardProps } from "../types.js";
@@ -35,6 +36,7 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
     const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
+    const accessibleDashboardsLoaded = useDashboardSelector(selectAccessibleDashboardsLoaded);
 
     const headerRef = useRef(null);
     const layoutRef = useRef(null);
@@ -69,6 +71,7 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
                 className={cx("component-root", {
                     "sdk-edit-mode-on": isEditMode,
                     "catalog-is-loaded": isCatalogLoaded,
+                    "accessible-dashboards-loaded": accessibleDashboardsLoaded,
                 })}
             >
                 <DragLayerComponent />
