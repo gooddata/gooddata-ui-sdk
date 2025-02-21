@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ResetDashboard } from "../../commands/index.js";
 import { SagaIterator } from "redux-saga";
@@ -109,6 +109,8 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             displayForms,
         );
     } else {
+        const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
+
         /*
          * For dashboard that is not persisted, the dashboard component is reset to an 'empty' state.
          */
@@ -116,7 +118,23 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             selectDateFilterConfig,
         );
 
-        batch = actionsToInitializeNewDashboard(dateFilterConfig);
+        const dateDataSets: ReturnType<typeof selectCatalogDateDatasets> = yield select(
+            selectCatalogDateDatasets,
+        );
+
+        const displayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
+            selectAllCatalogDisplayFormsMap,
+        );
+
+        const { initActions }: SagaReturnType<typeof actionsToInitializeNewDashboard> = yield call(
+            actionsToInitializeNewDashboard,
+            ctx,
+            settings,
+            dateFilterConfig,
+            dateDataSets,
+            displayForms,
+        );
+        batch = initActions;
     }
 
     return {

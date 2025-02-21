@@ -306,6 +306,7 @@ export {
     selectPersistedDashboard,
     selectDashboardLockStatus,
     selectIsNewDashboard,
+    selectIsNewDashboardWithContent,
     selectIsDashboardDirty,
     selectIsDashboardPrivate,
     selectDashboardWorkingDefinition,

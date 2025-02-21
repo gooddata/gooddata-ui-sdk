@@ -1582,6 +1582,7 @@ export interface DashboardConfig {
     hideSaveAsNewButton?: boolean;
     // @internal
     hideShareButton?: boolean;
+    initialContent?: DashboardItem[];
     initialRenderMode?: RenderMode;
     isEmbedded?: boolean;
     isExport?: boolean;
@@ -2303,8 +2304,21 @@ export interface DashboardInsightWidgetVisPropertiesChangedPayload {
     readonly ref: ObjRef;
 }
 
+// @public
+export type DashboardItem = DashboardItemVisualization | DashboardItemVisualizationContent;
+
 // @beta
 export type DashboardItemDefinition = ExtendedDashboardItem<ExtendedDashboardWidget | IWidgetDefinition | ICustomWidgetDefinition> | StashedDashboardItemsId;
+
+// @public
+export type DashboardItemVisualization = {
+    visualization: ObjRef;
+};
+
+// @public
+export type DashboardItemVisualizationContent = {
+    visualizationContent: IInsight;
+};
 
 // @beta
 export interface DashboardKpiWidgetChanged extends IDashboardEvent {
@@ -2657,6 +2671,7 @@ export type DashboardLayoutWidgetComponentSet = CustomComponentBase<IDashboardNe
 // @beta (undocumented)
 export interface DashboardMetaState {
     descriptor?: DashboardDescriptor;
+    initialContent?: boolean;
     persistedDashboard?: IDashboard;
 }
 
@@ -5587,6 +5602,12 @@ export const isDashboardInsightWidgetVisConfigurationChanged: (obj: unknown) => 
 // @beta
 export const isDashboardInsightWidgetVisPropertiesChanged: (obj: unknown) => obj is DashboardInsightWidgetVisPropertiesChanged;
 
+// @public
+export function isDashboardItemVisualization(item: unknown): item is DashboardItemVisualization;
+
+// @public
+export function isDashboardItemVisualizationContent(item: unknown): item is DashboardItemVisualizationContent;
+
 // @beta
 export const isDashboardKpiWidgetChanged: (obj: unknown) => obj is DashboardKpiWidgetChanged;
 
@@ -7181,7 +7202,7 @@ export interface ResolveAsyncRenderPayload {
 }
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "focusObject" | "slideConfig" | "references" | "entitlements"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
@@ -8172,6 +8193,9 @@ export const selectIsLayoutEmpty: DashboardSelector<boolean>;
 
 // @internal
 export const selectIsNewDashboard: DashboardSelector<boolean>;
+
+// @internal
+export const selectIsNewDashboardWithContent: DashboardSelector<boolean>;
 
 // @public
 export const selectIsReadOnly: DashboardSelector<boolean>;
