@@ -408,6 +408,7 @@ export interface IAttributeFilterCoreProps {
     locale?: ILocale;
     onApply?: OnApplyCallbackType;
     onError?: (error: GoodDataSdkError) => void;
+    onSelect?: OnSelectCallbackType;
     parentFilterOverAttribute?: ParentFilterOverAttributeType;
     parentFilters?: AttributeFiltersOrPlaceholders;
     // @internal (undocumented)
@@ -1219,6 +1220,9 @@ export type OnLoadNextElementsPageStartCallbackPayload = CallbackPayloadWithCorr
 
 // @public
 export type OnLoadNextElementsPageSuccessCallbackPayload = CallbackPayloadWithCorrelation<ILoadElementsResult>;
+
+// @public (undocumented)
+export type OnSelectCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode, selectionTitles?: IAttributeElement[], displayAsLabel?: ObjRef) => void;
 
 // @public
 export type OnSelectionChangedCallbackPayload<T> = {

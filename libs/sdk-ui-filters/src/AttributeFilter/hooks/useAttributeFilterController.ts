@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback, useEffect, useRef, useState } from "react";
 import isEqual from "lodash/isEqual.js";
 import debounce from "lodash/debounce.js";
@@ -24,7 +24,7 @@ import {
 import { useBackendStrict, useWorkspaceStrict, GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/index.js";
-import { IAttributeFilterCoreProps, OnApplyCallbackType } from "../types.js";
+import { IAttributeFilterCoreProps, OnApplyCallbackType, OnSelectCallbackType } from "../types.js";
 import { useResolveFilterInput } from "./useResolveFilterInput.js";
 import { useResolveParentFiltersInput } from "./useResolveParentFiltersInput.js";
 import { useResolveDependentDateFiltersInput } from "./useResolveDependentDateFiltersInput.js";
@@ -84,6 +84,7 @@ export const useAttributeFilterController = (
         validateElementsBy,
         resetOnParentFilterChange = true,
         onApply,
+        onSelect,
         onError,
 
         hiddenElements,
@@ -159,6 +160,7 @@ export const useAttributeFilterController = (
             limitingValidationItems: validateElementsBy,
             limit: elementsOptions?.limit,
             onApply,
+            onSelect,
             setConnectedPlaceholderValue,
             resetOnParentFilterChange,
             selectionMode,
@@ -173,6 +175,7 @@ export const useAttributeFilterController = (
         handler,
         {
             onApply,
+            onSelect,
             setConnectedPlaceholderValue,
             selectionMode,
             shouldReloadElements,
@@ -269,6 +272,7 @@ function useInitOrReload(
         limit?: number;
         setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
         onApply: OnApplyCallbackType;
+        onSelect: OnSelectCallbackType;
         resetOnParentFilterChange: boolean;
         selectionMode: DashboardAttributeFilterSelectionMode;
         setShouldReloadElements: (value: boolean) => void;
@@ -287,6 +291,7 @@ function useInitOrReload(
         resetOnParentFilterChange,
         setConnectedPlaceholderValue,
         onApply,
+        onSelect,
         selectionMode,
         setShouldReloadElements,
         displayAsLabel,
@@ -354,6 +359,7 @@ function useInitOrReload(
             filterChanged,
             setConnectedPlaceholderValue,
             onApply,
+            onSelect,
             selectionMode,
             setShouldReloadElements,
             limitingValidationItems,
@@ -377,6 +383,7 @@ function useInitOrReload(
         resetOnParentFilterChange,
         handler,
         onApply,
+        onSelect,
         setConnectedPlaceholderValue,
         selectionMode,
         supportsKeepingDependentFiltersSelection,
@@ -446,6 +453,7 @@ type UpdateFilterProps = {
     filterChanged: boolean;
     setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
     onApply: OnApplyCallbackType;
+    onSelect: OnSelectCallbackType;
     selectionMode: DashboardAttributeFilterSelectionMode;
     setShouldReloadElements: (value: boolean) => void;
     limitingValidationItems: ObjRef[];
@@ -538,6 +546,7 @@ function updateAutomaticResettingFilter(
         filterChanged,
         setConnectedPlaceholderValue,
         onApply,
+        onSelect,
         selectionMode,
         displayAsLabel,
     }: UpdateFilterProps,
@@ -564,6 +573,7 @@ function updateAutomaticResettingFilter(
         setConnectedPlaceholderValue(nextFilter);
 
         const displayAsLabel = handler.getDisplayAsLabel();
+        onSelect?.(nextFilter, isInverted, selectionMode, [], displayAsLabel);
         onApply?.(nextFilter, isInverted, selectionMode, [], displayAsLabel);
 
         return "init-parent";
@@ -617,6 +627,7 @@ function useCallbacks(
     props: {
         setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
         onApply: OnApplyCallbackType;
+        onSelect: OnSelectCallbackType;
         selectionMode: DashboardAttributeFilterSelectionMode;
         shouldReloadElements: boolean;
         setShouldReloadElements: (value: boolean) => void;
@@ -630,7 +641,8 @@ function useCallbacks(
     enableDuplicatedLabelValuesInAttributeFilter: boolean,
 ) {
     const {
-        onApply: onApplyInput,
+        onApply: onApplyInputCallback,
+        onSelect: onSelectInputCallback,
         setConnectedPlaceholderValue,
         selectionMode,
         shouldReloadElements,
@@ -640,6 +652,47 @@ function useCallbacks(
         limitingAttributeFilters,
         limitingDateFilters,
     } = props;
+
+    const handlerState = useAttributeFilterHandlerState(handler);
+
+    const onSelectionChange = useCallback(
+        (onSelectionChangeInputCallback: OnApplyCallbackType | OnSelectCallbackType) => {
+            const nextFilter = handler.getFilter();
+            const isInverted = handler.getCommittedSelection()?.isInverted;
+
+            if (enableDuplicatedLabelValuesInAttributeFilter) {
+                const displayAsLabel = handler.getDisplayAsLabel();
+                const { attribute } = handlerState;
+                if (!isPrimaryLabelUsed(nextFilter, attribute.data?.displayForms)) {
+                    const primaryDisplayForm = attribute.data?.displayForms.find((df) => df.isPrimary);
+                    if (!primaryDisplayForm) {
+                        throw new Error("No primary display form found.");
+                    }
+                    const primaryLabelRef = primaryDisplayForm.ref;
+                    const filterUsingPrimaryLabel = replaceFilterDisplayForm(nextFilter, primaryLabelRef);
+                    onSelectionChangeInputCallback?.(
+                        filterUsingPrimaryLabel,
+                        isInverted,
+                        selectionMode,
+                        handler.getElementsByKey(handler.getWorkingSelection().keys),
+                        displayAsLabel,
+                    );
+                } else {
+                    onSelectionChangeInputCallback?.(
+                        nextFilter,
+                        isInverted,
+                        selectionMode,
+                        handler.getElementsByKey(handler.getWorkingSelection().keys),
+                        displayAsLabel,
+                    );
+                }
+            } else {
+                onSelectionChangeInputCallback?.(nextFilter, isInverted, selectionMode);
+            }
+        },
+        [handler, enableDuplicatedLabelValuesInAttributeFilter, handlerState, selectionMode],
+    );
+
     const onSelect = useCallback(
         (selectedItems: IAttributeElement[], isInverted: boolean) => {
             const attributeFilter = handler.getFilter();
@@ -650,8 +703,16 @@ function useCallbacks(
             );
             const irrelevantKeysObj = selectionMode === "single" ? { irrelevantKeys: [] } : {};
             handler.changeSelection({ keys, isInverted, ...irrelevantKeysObj });
+
+            onSelectionChange(onSelectInputCallback);
         },
-        [handler, selectionMode, enableDuplicatedLabelValuesInAttributeFilter],
+        [
+            handler,
+            selectionMode,
+            onSelectionChange,
+            onSelectInputCallback,
+            enableDuplicatedLabelValuesInAttributeFilter,
+        ],
     );
 
     // Rule is not working with debounce
@@ -697,53 +758,11 @@ function useCallbacks(
         supportsShowingFilteredElements,
     ]);
 
-    const handlerState = useAttributeFilterHandlerState(handler);
-
     const onApply = useCallback(() => {
         handler.commitSelection();
-        const nextFilter = handler.getFilter();
-        const isInverted = handler.getCommittedSelection()?.isInverted;
-
-        setConnectedPlaceholderValue(nextFilter);
-
-        const displayAsLabel = handler.getDisplayAsLabel();
-
-        if (enableDuplicatedLabelValuesInAttributeFilter) {
-            const { attribute } = handlerState;
-            if (!isPrimaryLabelUsed(nextFilter, attribute.data?.displayForms)) {
-                const primaryDisplayForm = attribute.data?.displayForms.find((df) => df.isPrimary);
-                if (!primaryDisplayForm) {
-                    throw new Error("No primary display form found.");
-                }
-                const primaryLabelRef = primaryDisplayForm.ref;
-                const filterUsingPrimaryLabel = replaceFilterDisplayForm(nextFilter, primaryLabelRef);
-                onApplyInput?.(
-                    filterUsingPrimaryLabel,
-                    isInverted,
-                    selectionMode,
-                    handler.getElementsByKey(handler.getWorkingSelection().keys),
-                    displayAsLabel,
-                );
-            } else {
-                onApplyInput?.(
-                    nextFilter,
-                    isInverted,
-                    selectionMode,
-                    handler.getElementsByKey(handler.getWorkingSelection().keys),
-                    displayAsLabel,
-                );
-            }
-        } else {
-            onApplyInput?.(nextFilter, isInverted, selectionMode);
-        }
-    }, [
-        onApplyInput,
-        setConnectedPlaceholderValue,
-        handler,
-        selectionMode,
-        enableDuplicatedLabelValuesInAttributeFilter,
-        handlerState,
-    ]);
+        setConnectedPlaceholderValue(handler.getFilter());
+        onSelectionChange(onApplyInputCallback);
+    }, [handler, setConnectedPlaceholderValue, onSelectionChange, onApplyInputCallback]);
 
     const onOpen = useCallback(() => {
         if (shouldReloadElements) {
