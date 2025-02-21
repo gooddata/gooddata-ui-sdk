@@ -7219,6 +7219,11 @@ export function revertLastLayoutChange(correlationId?: string): UndoLayoutChange
 // @public (undocumented)
 export type RichTextComponentProvider = (widget: IRichTextWidget) => CustomDashboardRichTextComponent;
 
+// @alpha
+export type RichTextDataAttributes = {
+    "data-export-content-type"?: "markdown";
+};
+
 // @internal (undocumented)
 export type RichTextDraggableComponent = {
     DraggingComponent?: RichTextDraggingComponent;
@@ -7237,6 +7242,11 @@ export type RichTextDraggableListItem = BaseDraggableLayoutItem & {
 
 // @internal (undocumented)
 export type RichTextDraggingComponent = ComponentType<IRichTextDraggingComponentProps>;
+
+// @alpha
+export type RichTextExportData = {
+    markdown?: RichTextDataAttributes;
+};
 
 // @internal
 export type RichTextWidgetComponentSet = CustomComponentBase<IDashboardRichTextProps, Parameters<RichTextComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> & ConfigurableWidget<IRichTextWidget>;
@@ -9799,6 +9809,9 @@ export const useParentFilters: (filter: IDashboardAttributeFilter) => UseParentF
 
 // @public
 export type UseParentFiltersResult = Pick<IAttributeFilterBaseProps, "parentFilters" | "parentFilterOverAttribute">;
+
+// @alpha (undocumented)
+export const useRichTextExportData: () => RichTextExportData | undefined;
 
 // @beta (undocumented)
 export type UserInteractionPayload = UserInteractionPayloadWithData | BareUserInteractionPayload;

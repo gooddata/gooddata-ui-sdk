@@ -69,6 +69,27 @@ export type WidgetExportData = HeaderExportData & {
 };
 
 /**
+ * Data attributes for export mode to be added to the rich text widget.
+ *
+ * @alpha
+ */
+export type RichTextDataAttributes = {
+    "data-export-content-type"?: "markdown";
+};
+
+/**
+ * Data attributes for export mode to be added to the rich text widget and its components.
+ *
+ * When customizing a rich text widget component, spread these properties in the element intended
+ * for export.
+ *
+ * @alpha
+ */
+export type RichTextExportData = {
+    markdown?: RichTextDataAttributes;
+};
+
+/**
  * Data attributes for export mode to be added to the layout section header and its components.
  *
  * @alpha
