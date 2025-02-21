@@ -1,14 +1,19 @@
 // (C) 2025 GoodData Corporation
 
 import { insightVisualizationType } from "@gooddata/sdk-model";
+import { useMemo } from "react";
 import {
     ExtendedDashboardWidget,
     selectInsightByWidgetRef,
     selectIsInExportMode,
     useDashboardSelector,
 } from "../../model/index.js";
-import { SectionExportData, WidgetExportData, WidgetExportDataAttributes } from "./types.js";
-import { useMemo } from "react";
+import {
+    RichTextExportData,
+    SectionExportData,
+    WidgetExportData,
+    WidgetExportDataAttributes,
+} from "./types.js";
 
 /**
  * @alpha
@@ -54,6 +59,21 @@ export const useWidgetExportData = (widget: ExtendedDashboardWidget): WidgetExpo
         },
         title: { "data-export-type": "widget-title" },
         description: { "data-export-type": "widget-description" },
+    };
+};
+
+/**
+ * @alpha
+ */
+export const useRichTextExportData = (): RichTextExportData | undefined => {
+    const isExportMode = useDashboardSelector(selectIsInExportMode);
+
+    if (!isExportMode) {
+        return undefined;
+    }
+
+    return {
+        markdown: { "data-export-content-type": "markdown" },
     };
 };
 
