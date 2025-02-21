@@ -1,16 +1,27 @@
 Problems:
+Double click reset column in some tables works 3but here not
+http://localhost:9001/?path=/story/01-stories-from-test-scenarios-pivottable-manual-resizing-combined-with-column-autoresize--simple-table-with-custom-attribute-column-size
 
-Sort any column failed
+Resize with shit should resize all same columns
 
-Cannot read properties of undefined (reading 'setLeftValues')
-http://localhost:9001/?path=/story/01-stories-from-test-scenarios-pivottable-auto-resizing--with-two-measures-grand-totals-and-subtotals-with-auto-resizing-and-grow-to-fit
+This story failed completely
+http://localhost:9001/?path=/story/04-stories-for-pluggable-vis-pivottable-auto-resizing--with-column-attributes-only-and-auto-resizing
 
-Warning in console:
-main.esm.mjs:797 AG Grid: rowData is not supported with the 'infinite' row model. It is only valid with: clientSide.
+Failed screens
+BACKSTOP ERROR: Reference file not found /src/reference/storybook_02_Custom_Test_Stories_Pivot_Table_-_auto-resizing_of_visible_columns_-_scrolled_right_0__0_desktop.png
+^^^ strange this stroy is not visible in storybook
+
+Reference file not found /src/reference/storybook_04_Stories_For_Pluggable_Vis_PivotTable_auto-resizing_-_with_column_attributes_only_and_auto-resizing_0__0_desktop.png
+
 
 
 Visual problems:
-
 Positions of label in jointed cells
+Position of resizer and resizer is visible only on most bottom headers
 
-Position of resizer
+In containers with defined width is table cut by 100px its possible to see it in this screen
+filename: storybook_04_Stories_For_Pluggable_Vis_PivotTable_grouping_-_single_measure_pivot_with_grouping_sorted_by_first_row_attr_0_document_0_desktop.png
+KD Full size etc, there is invisible scroll area and last row is scrolled out
+
+
+
