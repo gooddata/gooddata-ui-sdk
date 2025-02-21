@@ -23,7 +23,7 @@ export function* changeAttributeFilterSelectionHandler(
     ctx: DashboardContext,
     cmd: ChangeAttributeFilterSelection,
 ): SagaIterator<void> {
-    const { elements, filterLocalId, selectionType } = cmd.payload;
+    const { elements, filterLocalId, selectionType, isWorkingSelectionChange } = cmd.payload;
 
     // validate filterLocalId
     const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
@@ -38,6 +38,7 @@ export function* changeAttributeFilterSelectionHandler(
             elements,
             filterLocalId,
             negativeSelection: selectionType === "NOT_IN",
+            isWorkingSelectionChange,
         }),
     );
 
@@ -60,6 +61,7 @@ export function* changeAttributeFilterSelectionHandler(
                             uris: [],
                         },
                         negativeSelection: true,
+                        isWorkingSelectionChange,
                     }),
                 ),
             ),
@@ -70,10 +72,12 @@ export function* changeAttributeFilterSelectionHandler(
     const isCurrentFilterCrossFiltering = yield select(
         selectIsFilterFromCrossFilteringByLocalIdentifier(filterLocalId),
     );
-    if (isCrossFiltering && !isCurrentFilterCrossFiltering) {
+    if (isCrossFiltering && !isCurrentFilterCrossFiltering && !isWorkingSelectionChange) {
         yield call(resetCrossFiltering, cmd);
     }
 
-    yield dispatchDashboardEvent(attributeFilterSelectionChanged(ctx, changedFilter, cmd.correlationId));
-    yield call(dispatchFilterContextChanged, ctx, cmd);
+    if (!isWorkingSelectionChange) {
+        yield dispatchDashboardEvent(attributeFilterSelectionChanged(ctx, changedFilter, cmd.correlationId));
+        yield call(dispatchFilterContextChanged, ctx, cmd);
+    }
 }

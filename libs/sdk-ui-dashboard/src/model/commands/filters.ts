@@ -488,6 +488,11 @@ export interface ChangeAttributeFilterSelectionPayload {
      * Selection type. Either 'IN' for positive selection or 'NOT_IN' for negative selection (All except selected items).
      */
     readonly selectionType: AttributeFilterSelectionType;
+    /**
+     * Determines if this command should change working (staged for application) filters or applied filters (used to compute data).
+     * Default is false - command changes applied filters.
+     */
+    readonly isWorkingSelectionChange?: boolean;
 }
 
 /**
@@ -532,6 +537,8 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
  * @param selectionType - selection type. either 'IN' or 'NOT_IN'
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
+ * @param isWorkingSelectionChange - Determines if this command should change working (staged for application) filters or applied filters (used to compute data).
+ *  Default is false - command changes applied filters.
  *
  * @public
  */
@@ -540,6 +547,7 @@ export function changeAttributeFilterSelection(
     elements: IAttributeElements,
     selectionType: AttributeFilterSelectionType,
     correlationId?: string,
+    isWorkingSelectionChange?: boolean,
 ): ChangeAttributeFilterSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION",
@@ -548,6 +556,7 @@ export function changeAttributeFilterSelection(
             filterLocalId,
             elements,
             selectionType,
+            isWorkingSelectionChange,
         },
     };
 }

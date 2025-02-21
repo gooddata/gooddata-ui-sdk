@@ -12,10 +12,18 @@ import {
  */
 export interface FilterContextState {
     /**
-     * Filter context definition contains the actual filters to use. Filter context definition is present
+     * Filter context definition contains the actual filters to use. They are applied and used to compute insights data.
+     * Filter context definition is present.
      * @beta
      */
     filterContextDefinition?: IFilterContextDefinition;
+
+    /**
+     * Contains staged filters state which are not applied by the user yet.
+     * They are used to show selected values in filters and when user requests, they are applied to the filterContextDefinition (above).
+     * @alpha
+     */
+    workingFilterContextDefinition?: IFilterContextDefinition;
 
     /**
      * Filter context definition contains the original dashboard filters stored on the backend.
@@ -56,6 +64,7 @@ export interface FilterContextState {
 
 export const filterContextInitialState: FilterContextState = {
     filterContextDefinition: undefined,
+    workingFilterContextDefinition: undefined,
     filterContextIdentity: undefined,
     attributeFilterDisplayForms: undefined,
     attributesWithReferences: undefined,

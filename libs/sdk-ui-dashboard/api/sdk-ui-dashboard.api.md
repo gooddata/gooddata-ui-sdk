@@ -706,12 +706,13 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
 }
 
 // @public
-export function changeAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string): ChangeAttributeFilterSelection;
+export function changeAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string, isWorkingSelectionChange?: boolean): ChangeAttributeFilterSelection;
 
 // @public
 export interface ChangeAttributeFilterSelectionPayload {
     readonly elements: IAttributeElements;
     readonly filterLocalId: string;
+    readonly isWorkingSelectionChange?: boolean;
     readonly selectionType: AttributeFilterSelectionType;
 }
 
@@ -3711,6 +3712,8 @@ export interface FilterContextState {
     filterContextIdentity?: IDashboardObjectIdentity;
     // @beta
     originalFilterContextDefinition?: IFilterContextDefinition;
+    // @alpha
+    workingFilterContextDefinition?: IFilterContextDefinition;
 }
 
 // @public
@@ -4113,7 +4116,7 @@ export interface IDashboardAttributeFilterProps {
     filter: IDashboardAttributeFilter;
     isDraggable?: boolean;
     onClose?: () => void;
-    onFilterChanged: (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef) => void;
+    onFilterChanged: (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef, isWorkingSelectionChange?: boolean) => void;
     // @alpha
     readonly?: boolean;
 }

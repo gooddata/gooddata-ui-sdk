@@ -435,6 +435,20 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                         displayAsLabel,
                     );
                 }}
+                onSelect={(newFilter, isInverted, selectionMode, selectionTitles, displayAsLabel) => {
+                    onFilterChanged(
+                        attributeFilterToDashboardAttributeFilter(
+                            newFilter,
+                            filter.attributeFilter.localIdentifier,
+                            filter.attributeFilter.title,
+                            selectionTitles,
+                            isInverted,
+                            selectionMode,
+                        ),
+                        displayAsLabel,
+                        true,
+                    );
+                }}
                 parentFilters={parentFilters}
                 dependentDateFilters={dependentDateFilters}
                 parentFilterOverAttribute={parentFilterOverAttribute}

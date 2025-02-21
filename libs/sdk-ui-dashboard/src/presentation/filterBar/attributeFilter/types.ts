@@ -20,8 +20,13 @@ export interface IDashboardAttributeFilterProps {
      *
      * @param filter - new attribute filter value.
      * @param displayAsLabel - label used for presentation of attribute filter elements in UI
+     * @param isWorkingSelectionChange - if the change is to applied (application of filters) or unapplied filters (filters staged before application).
      */
-    onFilterChanged: (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef) => void;
+    onFilterChanged: (
+        filter: IDashboardAttributeFilter,
+        displayAsLabel?: ObjRef,
+        isWorkingSelectionChange?: boolean,
+    ) => void;
 
     /**
      * Callback to be called, when user closes filter dropdown

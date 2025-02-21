@@ -78,6 +78,8 @@ const setFilterContext: FilterContextReducer<PayloadAction<SetFilterContextPaylo
         filters: filters,
     };
 
+    state.workingFilterContextDefinition = { ...state.filterContextDefinition };
+
     state.originalFilterContextDefinition = originalFilterContextDefinition;
 
     state.filterContextIdentity = filterContextIdentity;
@@ -218,24 +220,27 @@ export interface IUpdateAttributeFilterSelectionPayload {
     readonly filterLocalId: string;
     readonly elements: IAttributeElements;
     readonly negativeSelection: boolean;
+    readonly isWorkingSelectionChange?: boolean;
 }
 
 const updateAttributeFilterSelection: FilterContextReducer<
     PayloadAction<IUpdateAttributeFilterSelectionPayload>
 > = (state, action) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const { elements, filterLocalId, negativeSelection, isWorkingSelectionChange } = action.payload;
+    const filterContextDefinition = isWorkingSelectionChange
+        ? state.workingFilterContextDefinition
+        : state.filterContextDefinition;
+    invariant(filterContextDefinition, "Attempt to edit uninitialized filter context");
 
-    const { elements, filterLocalId, negativeSelection } = action.payload;
-
-    const existingFilterIndex = state.filterContextDefinition.filters.findIndex(
+    const existingFilterIndex = filterContextDefinition.filters.findIndex(
         (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
     );
 
     invariant(existingFilterIndex >= 0, "Attempt to update non-existing filter");
 
-    state.filterContextDefinition.filters[existingFilterIndex] = {
+    filterContextDefinition.filters[existingFilterIndex] = {
         attributeFilter: {
-            ...(state.filterContextDefinition.filters[existingFilterIndex] as IDashboardAttributeFilter)
+            ...(filterContextDefinition.filters[existingFilterIndex] as IDashboardAttributeFilter)
                 .attributeFilter,
             attributeElements: elements,
             negativeSelection,

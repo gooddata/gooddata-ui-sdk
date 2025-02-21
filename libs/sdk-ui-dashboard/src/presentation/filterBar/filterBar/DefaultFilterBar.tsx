@@ -73,7 +73,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
 
     const dispatch = useDashboardDispatch();
     const onAttributeFilterChanged = useCallback(
-        (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef) => {
+        (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef, isWorkingSelectionChange?: boolean) => {
             const convertedFilter = supportElementUris
                 ? filter
                 : convertDashboardAttributeFilterElementsValuesToUris(filter);
@@ -113,6 +113,8 @@ export const useFilterBarProps = (): IFilterBarProps => {
                     localIdentifier!,
                     attributeElements,
                     negativeSelection ? "NOT_IN" : "IN",
+                    undefined,
+                    isWorkingSelectionChange,
                 ),
             );
         },
