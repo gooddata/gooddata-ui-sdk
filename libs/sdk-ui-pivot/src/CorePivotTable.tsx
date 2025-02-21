@@ -1,16 +1,19 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     AgGridEvent,
-    AllCommunityModules,
+    AllCommunityModule,
     BodyScrollEvent,
     ColumnResizedEvent,
     GridReadyEvent,
     SortChangedEvent,
     PinnedRowDataChangedEvent,
-} from "@ag-grid-community/all-modules";
+    ModuleRegistry,
+    provideGlobalGridOptions,
+} from "ag-grid-community";
+
 import { v4 as uuidv4 } from "uuid";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { AgGridReact } from "@ag-grid-community/react";
+import { AgGridReact } from "ag-grid-react";
 import React from "react";
 import { injectIntl } from "react-intl";
 import cx from "classnames";
@@ -57,6 +60,12 @@ import { TableFacadeInitializer } from "./impl/tableFacadeInitializer.js";
 import { ICorePivotTableState, InternalTableState } from "./tableState.js";
 import { isColumnAutoresizeEnabled } from "./impl/resizing/columnSizing.js";
 import cloneDeep from "lodash/cloneDeep.js";
+
+// Register all Community features
+ModuleRegistry.registerModules([AllCommunityModule]);
+
+// Mark all grids as using legacy themes
+provideGlobalGridOptions({ theme: "legacy" });
 
 const DEFAULT_COLUMN_WIDTH = 200;
 const WATCHING_TABLE_RENDERED_INTERVAL = 500;
@@ -564,7 +573,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
                     style={style}
                     ref={this.setContainerRef}
                 >
-                    <AgGridReact {...this.internal.gridOptions} modules={AllCommunityModules} />
+                    <AgGridReact {...this.internal.gridOptions} modules={[AllCommunityModule]} />
                     {shouldRenderLoadingOverlay ? this.renderLoading() : null}
                 </div>
             </div>
@@ -578,7 +587,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     private onGridReady = (event: GridReadyEvent) => {
         invariant(this.internal.table);
 
-        this.internal.table.finishInitialization(event.api, event.columnApi);
+        this.internal.table.finishInitialization(event.api, event.api);
         this.updateDesiredHeight();
 
         if (this.getGroupRows()) {
@@ -681,7 +690,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             return;
         }
 
-        const sortItems = this.internal.table.createSortItems(event.columnApi.getAllColumns()!);
+        const sortItems = this.internal.table.createSortItems(event.api.getAllGridColumns()!);
 
         // Changing sort may cause subtotals to no longer be reasonably placed - remove them if that is the case
         // This applies only to totals in ATTRIBUTE bucket, column totals are not affected by sorting

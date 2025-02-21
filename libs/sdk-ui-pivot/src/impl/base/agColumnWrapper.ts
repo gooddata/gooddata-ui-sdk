@@ -1,8 +1,8 @@
-// (C) 2007-2021 GoodData Corporation
-import { ColumnApi, Column } from "@ag-grid-community/all-modules";
+// (C) 2007-2025 GoodData Corporation
+import { GridApi, Column } from "ag-grid-community";
 
 export function setColumnMaxWidth(
-    columnApi: ColumnApi,
+    columnApi: GridApi,
     columnIds: string[],
     newMaxWidth: number | undefined,
 ): void {
@@ -10,7 +10,7 @@ export function setColumnMaxWidth(
 }
 
 export function setColumnMaxWidthIf(
-    columnApi: ColumnApi,
+    columnApi: GridApi,
     columnIds: string[],
     newMaxWidth: number | undefined,
     condition: (column: Column) => boolean,

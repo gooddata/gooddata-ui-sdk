@@ -1,5 +1,5 @@
-// (C) 2019-2023 GoodData Corporation
-import { ColDef, GridApi } from "@ag-grid-community/all-modules";
+// (C) 2019-2025 GoodData Corporation
+import { ColDef, GridApi } from "ag-grid-community";
 import ApiWrapper from "../base/agApiWrapper.js";
 import isEqual from "lodash/isEqual.js";
 import { IGridTotalsRow } from "./resultTypes.js";
