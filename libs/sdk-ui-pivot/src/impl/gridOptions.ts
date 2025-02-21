@@ -79,7 +79,7 @@ export function createGridOptions(
     return {
         // Initial data
         columnDefs: allColumnDefs,
-        rowData: [],
+        // rowData: [],
         defaultColDef: {
             cellClass: cellClassFactory(table, props),
             headerComponent: ColumnHeader,
