@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import {
     InitializeDashboard,
@@ -50,6 +50,7 @@ import {
     RefreshInsightWidget,
     RemoveDrillsForInsightWidget,
     ExportInsightWidget,
+    ExportRawInsightWidget,
     RemoveDrillDownForInsightWidget,
     AddDrillDownForInsightWidget,
     ModifyDrillDownForInsightWidget,
@@ -429,6 +430,8 @@ export type {
     ExportInsightWidget,
     ExportInsightWidgetPayload,
     AttributeHierarchyModified,
+    ExportRawInsightWidget,
+    ExportRawInsightWidgetPayload,
 } from "./insight.js";
 export {
     changeInsightWidgetHeader,
@@ -452,6 +455,7 @@ export {
     modifyDrillDownForInsightWidget,
     refreshInsightWidget,
     exportInsightWidget,
+    exportRawInsightWidget,
     attributeHierarchyModified,
 } from "./insight.js";
 export { loadAllWorkspaceUsers } from "./users.js";
@@ -596,4 +600,5 @@ export type DashboardCommands =
     | ToggleLayoutSectionHeaders
     //internal
     | SetScreenSize
-    | LoadAllWorkspaceUsers;
+    | LoadAllWorkspaceUsers
+    | ExportRawInsightWidget;

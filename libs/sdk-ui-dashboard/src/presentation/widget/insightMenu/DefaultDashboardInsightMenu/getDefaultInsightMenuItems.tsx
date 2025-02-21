@@ -5,6 +5,7 @@ import compact from "lodash/compact.js";
 
 import { IInsightMenuItem } from "../types.js";
 import { InsightAlerts } from "../../insight/configuration/InsightAlerts.js";
+import { ExportOptions } from "../../insight/configuration/ExportOptions.js";
 
 /**
  * @internal
@@ -31,6 +32,7 @@ export function getDefaultInsightMenuItems(
         onExportCSV: () => void;
         onScheduleExport: () => void;
         onScheduleManagementExport: () => void;
+        isExportRawVisible: boolean;
         isScheduleExportVisible: boolean;
         isScheduleExportManagementVisible: boolean;
         isDataError: boolean;
@@ -57,6 +59,7 @@ export function getDefaultInsightMenuItems(
         alertingDisabled,
         alertingDisabledReason,
         canCreateAutomation,
+        isExportRawVisible,
     } = config;
 
     const defaultWidgetTooltip = isDataError
@@ -93,7 +96,15 @@ export function getDefaultInsightMenuItems(
         (isScheduleExportManagementVisible && !scheduleExportManagementDisabled);
 
     const menuItems: (false | IInsightMenuItem)[] = [
-        {
+        isExportRawVisible && {
+            type: "submenu",
+            itemId: "Exports",
+            itemName: intl.formatMessage({ id: "widget.options.menu.export" }),
+            icon: "gd-icon-download",
+            className: "s-options-menu-exports",
+            SubmenuComponent: ExportOptions,
+        },
+        !isExportRawVisible && {
             type: "button",
             itemId: "ExportXLSXBubble",
             itemName: intl.formatMessage({ id: "widget.options.menu.exportToXLSX" }),
@@ -103,7 +114,7 @@ export function getDefaultInsightMenuItems(
             icon: "gd-icon-download",
             className: "s-options-menu-export-xlsx",
         },
-        {
+        !isExportRawVisible && {
             type: "button",
             itemId: "ExportCSVBubble",
             itemName: intl.formatMessage({ id: "widget.options.menu.exportToCSV" }),

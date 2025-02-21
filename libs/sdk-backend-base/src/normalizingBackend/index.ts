@@ -150,6 +150,12 @@ class DenormalizingExecutionResult implements IExecutionResult {
         return originalResult.export(options);
     };
 
+    public exportRaw = async (filename: string): Promise<IExportResult> => {
+        const originalResult = await this.originalExecution.execute();
+
+        return originalResult.exportRaw!(filename);
+    };
+
     public readAll = (): Promise<IDataView> => {
         const promisedDataView = this.normalizedResult.readAll();
 
