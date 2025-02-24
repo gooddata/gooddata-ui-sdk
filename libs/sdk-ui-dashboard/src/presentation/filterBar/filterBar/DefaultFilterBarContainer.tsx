@@ -1,9 +1,10 @@
-// (C) 2021-2024 GoodData Corporation
-import React, { useRef } from "react";
+// (C) 2021-2025 GoodData Corporation
+import React, { useCallback, useRef } from "react";
 import DefaultMeasure from "react-measure";
 import cx from "classnames";
 import { createSelector } from "@reduxjs/toolkit";
 import { defaultImport } from "default-import";
+import { UiButton } from "@gooddata/sdk-ui-kit";
 
 import { IntlWrapper } from "../../localization/index.js";
 import {
@@ -12,8 +13,10 @@ import {
     selectLocale,
     selectSupportsCrossFiltering,
     useDashboardSelector,
+    useDashboardDispatch,
     selectEnableFilterViews,
     selectEnableFlexibleLayout,
+    applyAllDashboardFilters,
 } from "../../../model/index.js";
 
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
@@ -52,6 +55,11 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
     const showFiltersConfigurationPanel = useDashboardSelector(selectShowFiltersConfigurationPanel);
     const isFilterViewsFeatureFlagEnabled = useDashboardSelector(selectEnableFilterViews);
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
+    const dispatch = useDashboardDispatch();
+
+    const applyFilterContext = useCallback(() => {
+        dispatch(applyAllDashboardFilters());
+    }, [dispatch]);
 
     return (
         <div className="dash-filters-wrapper s-gd-dashboard-filter-bar" ref={dropRef}>
@@ -65,6 +73,13 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                 <AllFiltersContainer setCalculatedRows={setCalculatedRows}>{children}</AllFiltersContainer>
                 <FiltersRows rows={rows} />
                 <div className="filter-bar-configuration">
+                    <UiButton
+                        // TODO: TODO disable this button
+                        // TODO: use react-intl to translate this
+                        label="Apply"
+                        variant="primary"
+                        onClick={applyFilterContext}
+                    />
                     {isFilterViewsFeatureFlagEnabled ? <FilterViews /> : null}
                     {showFiltersConfigurationPanel ? <FiltersConfigurationPanel /> : null}
                 </div>

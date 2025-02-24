@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { DashboardCommands, IDashboardCommand } from "../commands/index.js";
 import { SagaIterator } from "redux-saga";
 import { initializeDashboardHandler } from "./dashboard/initializeDashboardHandler/index.js";
@@ -86,6 +86,7 @@ import { attributeHierarchyModifiedHandler } from "./widgets/attributeHierarchyM
 import { addDateFilterHandler } from "./filterContext/dateFilter/addDateFilterHandler.js";
 import { removeDateFiltersHandler } from "./filterContext/dateFilter/removeDateFiltersHandler.js";
 import { moveDateFilterHandler } from "./filterContext/dateFilter/moveDateFilterHandler.js";
+import { applyAllFilterContextHandler } from "./filterContext/common.js";
 import { changeDateFilterWithDimensionModeHandler } from "./dashboard/changeDateFilterWithDimensionModeHandler.js";
 import { changeDateFilterTitleHandler } from "./dashboard/changeDateFilterTitleHandler.js";
 import { changeAttributeFilterLimitingItemsHandler } from "./dashboard/changeAttributeFilterLimitingItemsHandler.js";
@@ -136,6 +137,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD": addDateFilterHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE": removeDateFiltersHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE": moveDateFilterHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.APPLY_ALL": applyAllFilterContextHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE": changeAttributeFilterModeHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_DISPLAY_AS_LABEL": changeAttributeFilterDisplayAsLabelHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS": changeAttributeFilterLimitingItemsHandler,

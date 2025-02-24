@@ -671,6 +671,14 @@ const changeLimitingItems: FilterContextReducer<PayloadAction<IChangeAttributeLi
 //
 //
 
+const applyAllFilterContext: FilterContextReducer<PayloadAction<void>> = (state) => {
+    state.filterContextDefinition = state.workingFilterContextDefinition;
+};
+
+//
+//
+//
+
 export const filterContextReducers = {
     setFilterContext,
     updateFilterContextIdentity,
@@ -692,4 +700,5 @@ export const filterContextReducers = {
     changeSelectionMode,
     changeLimitingItems,
     setPreloadedAttributesWithReferences,
+    applyAllFilterContext,
 };

@@ -15,6 +15,7 @@ import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilt
 import { removeAttributeFilters } from "../../commands/filters.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 import { drillActions } from "../../store/drill/index.js";
+import { filterContextActions } from "../../store/filterContext/index.js";
 
 export function* dispatchFilterContextChanged(
     ctx: DashboardContext,
@@ -63,4 +64,8 @@ export function* resetCrossFiltering(cmd: IDashboardCommand) {
     );
     yield put(removeAttributeFilters(virtualFilters, cmd.correlationId));
     yield put(drillActions.resetCrossFiltering());
+}
+
+export function* applyAllFilterContextHandler() {
+    yield put(filterContextActions.applyAllFilterContext());
 }

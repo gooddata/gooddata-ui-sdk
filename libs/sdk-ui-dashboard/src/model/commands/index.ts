@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import {
     InitializeDashboard,
@@ -38,6 +38,7 @@ import {
     DeleteFilterView,
     SetFilterViewAsDefault,
     ReloadFilterViews,
+    ApplyAllDashboardFilters,
 } from "./filters.js";
 import {
     ChangeInsightWidgetFilterSettings,
@@ -229,6 +230,7 @@ export {
     applyFilterView,
     setFilterViewAsDefault,
     reloadFilterViews,
+    applyAllDashboardFilters,
 } from "./filters.js";
 
 export type {
@@ -594,6 +596,7 @@ export type DashboardCommands =
     | SetFilterViewAsDefault
     | ReloadFilterViews
     | ToggleLayoutSectionHeaders
+    | ApplyAllDashboardFilters
     //internal
     | SetScreenSize
     | LoadAllWorkspaceUsers;
