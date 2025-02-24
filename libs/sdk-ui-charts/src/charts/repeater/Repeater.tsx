@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -126,6 +126,7 @@ export function toCoreRepeaterProps(props: IRepeaterProps): ICoreChartProps {
         ...newProps,
         execution: createExecution(buckets, props),
         exportTitle: props.exportTitle || "Repeater", // TODO: is this correct? at least translate
+        enableExecutionCancelling: props.config?.enableExecutionCancelling ?? false,
     };
 }
 

@@ -324,7 +324,7 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         return this.allForecastData;
     };
 
-    public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
+    public readWindow = async (offset: number[], size: number[]): Promise<IDataView> => {
         if (!this.windows) {
             return super.readWindow(offset, size);
         }
@@ -332,7 +332,20 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         const cacheKey = windowKey(offset, size);
         let window: Promise<IDataView> | undefined = this.windows.get(cacheKey);
 
-        if (!window) {
+        if (this.signal && !window) {
+            const result = await super.readWindow(offset, size).catch((e) => {
+                if (this.windows) {
+                    this.windows.delete(cacheKey);
+                }
+                if (isAbortError(e)) {
+                    this.deleteExecutionCacheEntry();
+                }
+
+                throw e;
+            });
+            window = Promise.resolve(result);
+            this.windows.set(cacheKey, window);
+        } else if (!window) {
             window = super.readWindow(offset, size).catch((e) => {
                 if (this.windows) {
                     this.windows.delete(cacheKey);

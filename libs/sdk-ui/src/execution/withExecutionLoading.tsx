@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop.js";
 import hoistNonReactStatics from "hoist-non-react-statics";
@@ -293,7 +293,7 @@ export function withExecutionLoading<TProps>(
 
                 const readWindow = typeof window === "function" ? window(this.props) : window;
                 const promise = promiseFactory(this.props, readWindow);
-                this.cancelablePromise = makeCancelable(promise);
+                this.cancelablePromise = makeCancelable(() => promise);
 
                 try {
                     const result = await this.cancelablePromise.promise;

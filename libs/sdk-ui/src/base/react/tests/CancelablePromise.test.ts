@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { makeCancelable, CancelError } from "../CancelablePromise.js";
 import { createDummyPromise } from "./toolkit.js";
 import { describe, expect, it } from "vitest";
@@ -7,7 +7,7 @@ describe("CancelablePromise", () => {
     it("should throw instanceof CancelError with correct message when cancel was invoked before promise resolution", async () => {
         const CANCEL_REASON = "Canceled before promise resolution";
         const dummyPromise = createDummyPromise({ delay: 100 });
-        const cancelableDummyPromise = makeCancelable(dummyPromise);
+        const cancelableDummyPromise = makeCancelable(() => dummyPromise);
 
         cancelableDummyPromise.cancel(CANCEL_REASON);
 
@@ -28,7 +28,7 @@ describe("CancelablePromise", () => {
             result: RESULT,
             delay: 100,
         });
-        const cancelableDummyPromise = makeCancelable(dummyPromise);
+        const cancelableDummyPromise = makeCancelable(() => dummyPromise);
         const result = await cancelableDummyPromise.promise;
 
         cancelableDummyPromise.cancel();
@@ -42,7 +42,7 @@ describe("CancelablePromise", () => {
             result: RESULT,
             delay: 100,
         });
-        const cancelableDummyPromise = makeCancelable(dummyPromise);
+        const cancelableDummyPromise = makeCancelable(() => dummyPromise);
         const hasFulfilled = cancelableDummyPromise.getHasFulfilled();
 
         expect(hasFulfilled).toBe(false);
@@ -54,7 +54,7 @@ describe("CancelablePromise", () => {
             result: RESULT,
             delay: 100,
         });
-        const cancelableDummyPromise = makeCancelable(dummyPromise);
+        const cancelableDummyPromise = makeCancelable(() => dummyPromise);
         await cancelableDummyPromise.promise;
         const hasFulfilled = cancelableDummyPromise.getHasFulfilled();
 
@@ -68,7 +68,7 @@ describe("CancelablePromise", () => {
             willResolve: false,
             delay: 100,
         });
-        const cancelableDummyPromise = makeCancelable(dummyPromise);
+        const cancelableDummyPromise = makeCancelable(() => dummyPromise);
         let error;
         try {
             await cancelableDummyPromise.promise;
