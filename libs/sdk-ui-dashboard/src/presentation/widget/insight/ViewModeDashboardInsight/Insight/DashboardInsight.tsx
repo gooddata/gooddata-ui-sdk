@@ -90,6 +90,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         onError,
         onDrill: onDrillFn,
         onLoadingChanged,
+        afterRender,
         onExportReady,
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
@@ -118,7 +119,8 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
 
     // State props
     const { locale, settings, colorPalette } = useDashboardSelector(selectCommonDashboardInsightProps);
-    const { enableKDWidgetCustomHeight } = useDashboardSelector(selectSettings);
+    const { enableKDWidgetCustomHeight, enableDashboardAfterRenderDetection } =
+        useDashboardSelector(selectSettings);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const crossFilteringSelectedPoints = useDashboardSelector(
         selectCrossFilteringSelectedPointsByWidgetRef(ref),
@@ -148,14 +150,28 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                     setInitialRegistered(false);
                 }
 
-                onResolveAsyncRender();
+                // fallback to onLoadingChange-based resolve if afterRender detection not enabled
+                if (!enableDashboardAfterRenderDetection) {
+                    onResolveAsyncRender();
+                }
             }
             executionsHandler.onLoadingChanged({ isLoading });
             setIsVisualizationLoading(isLoading);
             onLoadingChanged?.({ isLoading });
         },
-        [onLoadingChanged, executionsHandler.onLoadingChanged, initialRegistered],
+        [
+            onLoadingChanged,
+            executionsHandler.onLoadingChanged,
+            initialRegistered,
+            enableDashboardAfterRenderDetection,
+        ],
     );
+
+    const handleAfterRender = useCallback(() => {
+        if (enableDashboardAfterRenderDetection) {
+            onResolveAsyncRender();
+        }
+    }, [afterRender, onResolveAsyncRender, enableDashboardAfterRenderDetection]);
 
     // Filtering
     const {
@@ -212,8 +228,12 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
             setVisualizationError(error);
             onError?.(error);
             executionsHandler.onError(error);
+            // rendered with error, notify if we're using afterRender to detect
+            if (enableDashboardAfterRenderDetection) {
+                onResolveAsyncRender();
+            }
         },
-        [onError, executionsHandler.onError],
+        [onError, executionsHandler.onError, enableDashboardAfterRenderDetection, onResolveAsyncRender],
     );
 
     const effectiveError = filtersError ?? visualizationError;
@@ -287,6 +307,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                                 ErrorComponent={ErrorComponent}
                                 LoadingComponent={LoadingComponent}
                                 onExportReady={onExportReady}
+                                afterRender={handleAfterRender}
                             />
                         </div>
                     ) : null}

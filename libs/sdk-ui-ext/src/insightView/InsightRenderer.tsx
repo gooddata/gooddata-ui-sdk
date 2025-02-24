@@ -51,16 +51,14 @@ import { Root, _createRoot } from "../internal/createRootProvider.js";
  * @internal
  */
 export interface IInsightRendererProps
-    extends Omit<
-        IInsightViewProps,
-        "insight" | "TitleComponent" | "onInsightLoaded" | "showTitle" | "afterRender"
-    > {
+    extends Omit<IInsightViewProps, "insight" | "TitleComponent" | "onInsightLoaded" | "showTitle"> {
     insight: IInsightDefinition | undefined;
     locale: ILocale;
     settings: IUserWorkspaceSettings | undefined;
     colorPalette: IColorPalette | undefined;
     onError?: OnError;
     theme?: ITheme;
+    afterRender?: () => void;
 }
 
 const getElementId = () => `gd-vis-${uuidv4()}`;
@@ -89,7 +87,13 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
 
     public static defaultProps: Pick<
         IInsightRendererProps,
-        "ErrorComponent" | "filters" | "drillableItems" | "LoadingComponent" | "pushData" | "locale"
+        | "ErrorComponent"
+        | "filters"
+        | "drillableItems"
+        | "LoadingComponent"
+        | "pushData"
+        | "locale"
+        | "afterRender"
     > = {
         ErrorComponent,
         filters: [],
@@ -97,6 +101,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
         LoadingComponent,
         pushData: noop,
         locale: DefaultLocale,
+        afterRender: () => {},
     };
 
     private unmountVisualization = () => {
@@ -182,6 +187,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
                 pushData: this.props.pushData,
                 onDrill: this.props.onDrill,
                 onExportReady: this.onExportReadyDecorator,
+                afterRender: this.props.afterRender,
             },
             configPanelElement: () => {
                 const rootNode =

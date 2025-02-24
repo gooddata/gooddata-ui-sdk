@@ -130,6 +130,7 @@ export enum TigerFeaturesNames {
     EnableRawExports = "enableRawExports",
     EnableDashboardFiltersApplyModes = "enableDashboardFiltersApplyModes",
     EnableExecutionCancelling = "enableExecutionCancelling",
+    EnableDashboardAfterRenderDetection = "enableDashboardAfterRenderDetection",
 }
 
 export type ITigerFeatureFlags = {
@@ -223,6 +224,7 @@ export type ITigerFeatureFlags = {
     enableRawExports: typeof FeatureFlagsValues["enableRawExports"][number];
     enableDashboardFiltersApplyModes: typeof FeatureFlagsValues["enableDashboardFiltersApplyModes"][number];
     enableExecutionCancelling: typeof FeatureFlagsValues["enableExecutionCancelling"][number];
+    enableDashboardAfterRenderDetection: typeof FeatureFlagsValues["enableDashboardAfterRenderDetection"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -316,6 +318,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRawExports: false,
     enableDashboardFiltersApplyModes: false,
     enableExecutionCancelling: false,
+    enableDashboardAfterRenderDetection: false,
 };
 
 export const FeatureFlagsValues = {
@@ -413,4 +416,5 @@ export const FeatureFlagsValues = {
     enableRawExports: [true, false] as const,
     enableDashboardFiltersApplyModes: [true, false] as const,
     enableExecutionCancelling: [true, false] as const,
+    enableDashboardAfterRenderDetection: [true, false] as const,
 };

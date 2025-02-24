@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import LegacyHeadline, { IHeadlineVisualizationProps } from "../LegacyHeadline.js";
@@ -11,6 +11,7 @@ describe("LegacyHeadline", () => {
 
     it("should call after render callback on componentDidMount", () => {
         const onAfterRender = vi.fn();
+        vi.useFakeTimers();
         createComponent({
             onAfterRender,
             data: {
@@ -21,7 +22,8 @@ describe("LegacyHeadline", () => {
                 },
             },
         });
-
+        vi.runAllTimers();
+        vi.useRealTimers();
         expect(onAfterRender).toHaveBeenCalledTimes(1);
     });
 
