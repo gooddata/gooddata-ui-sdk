@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { forwardRef, useEffect, useRef, useState, ReactNode, useCallback, useMemo } from "react";
 import { v4 as uuid } from "uuid";
 import identity from "lodash/identity.js";
@@ -34,6 +34,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
         textareaInOverlay = false,
         autofocus = false,
         isEditableLabelWidthBasedOnText = false,
+        ariaLabel,
     } = props;
 
     const rootRef = useRef<HTMLDivElement>(null);
@@ -226,6 +227,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
                 defaultValue={props.value}
                 placeholder={placeholder}
                 ref={textareaRef}
+                aria-label={ariaLabel}
             />
         );
     };

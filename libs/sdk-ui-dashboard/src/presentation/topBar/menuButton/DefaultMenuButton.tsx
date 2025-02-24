@@ -184,7 +184,9 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                         "gd-button-primary dash-header-options-button s-header-options-button gd-button",
                         dropdownAnchorClassName,
                     )}
-                    ariaLabel={tooltipText}
+                    accessibilityConfig={{
+                        ariaLabel: tooltipText,
+                    }}
                 />
                 {!isOpen ? (
                     <Bubble

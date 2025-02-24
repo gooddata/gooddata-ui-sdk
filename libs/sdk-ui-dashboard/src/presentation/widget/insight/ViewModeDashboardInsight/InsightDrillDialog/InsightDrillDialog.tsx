@@ -229,6 +229,7 @@ function InsightDrillDialogDescriptionButton({
 }: InsightDrillDialogDescriptionButtonProps) {
     const { formatMessage } = useIntl();
 
+    const accessibilityAriaLabel = formatMessage({ id: "widget.options.description" });
     return (
         <Button
             className={cx("gd-button-primary gd-button-icon-only drill-dialog-insight-container-button", {
@@ -237,7 +238,9 @@ function InsightDrillDialogDescriptionButton({
                 "drill-dialog-insight-container-button--mobile": isMobileDevice,
             })}
             onClick={() => setIsOpen((open) => !open)}
-            ariaLabel={formatMessage({ id: "widget.options.description" })}
+            accessibilityConfig={{
+                ariaLabel: accessibilityAriaLabel,
+            }}
             value={<UiIcon type="question" size={18} />}
         />
     );

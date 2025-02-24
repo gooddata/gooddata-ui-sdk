@@ -201,6 +201,9 @@ export function ScheduledMailDialogRenderer({
                                     placeholder={intl.formatMessage({
                                         id: "dialogs.schedule.email.title.placeholder",
                                     })}
+                                    ariaLabel={intl.formatMessage({
+                                        id: "dialogs.schedule.accessibility.label.email.title",
+                                    })}
                                 />
                             </div>
                         )}
