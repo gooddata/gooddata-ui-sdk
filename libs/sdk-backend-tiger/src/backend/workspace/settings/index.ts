@@ -12,7 +12,13 @@ import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings.js";
 import { unwrapSettingContent } from "../../../convertors/fromBackend/SettingsConverter.js";
 import { TigerSettingsService, mapTypeToKey } from "../../settings/index.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
-import { FeatureContext, isLiveFeatures, isStaticFeatures } from "@gooddata/api-client-tiger";
+import {
+    FeatureContext,
+    isLiveFeatures,
+    isStaticFeatures,
+    JsonApiWorkspaceSettingOutWithLinks,
+    JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
+} from "@gooddata/api-client-tiger";
 import { LIB_VERSION } from "../../../__version.js";
 import {
     convertDateFilterConfig,
@@ -32,15 +38,7 @@ export class TigerWorkspaceSettings
             const { data } = await this.authCall(async (client) =>
                 client.entities.getAllEntitiesWorkspaceSettings({ workspaceId: this.workspace }),
             );
-
-            const settings = data.data.reduce((result: ISettings, setting) => {
-                return {
-                    ...result,
-                    [mapTypeToKey(setting.attributes?.type, setting.id)]: unwrapSettingContent(
-                        setting.attributes?.content,
-                    ),
-                };
-            }, {});
+            const settings = this.mapSettingsToKeys(data.data);
 
             const {
                 data: { meta: config },
@@ -59,6 +57,44 @@ export class TigerWorkspaceSettings
             };
         });
     }
+
+    private mapSettingsToKeys = (data: JsonApiWorkspaceSettingOutWithLinks[]): ISettings => {
+        const nativeSettings = this.mapSettingsToKeysByOrigin(
+            data,
+            JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum.NATIVE,
+        );
+        const parentSettings = this.mapSettingsToKeysByOrigin(
+            data,
+            JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum.PARENT,
+        );
+        return Object.keys(parentSettings).reduce((result: ISettings, key) => {
+            if (result[key] === undefined) {
+                return {
+                    ...result,
+                    [key]: parentSettings[key],
+                };
+            }
+            return result;
+        }, nativeSettings);
+    };
+
+    private mapSettingsToKeysByOrigin = (
+        data: JsonApiWorkspaceSettingOutWithLinks[],
+        origin: JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
+    ): ISettings => {
+        return data.reduce((result: ISettings, setting) => {
+            const isValueApplicable = setting.meta?.origin?.originType === origin;
+            if (!isValueApplicable) {
+                return result;
+            }
+            const key = mapTypeToKey(setting.attributes?.type, setting.id);
+            const value = unwrapSettingContent(setting.attributes?.content);
+            return {
+                ...result,
+                [key]: value,
+            };
+        }, {});
+    };
 
     public async setAlertDefault(value: IAlertDefault): Promise<void> {
         return this.setSetting("ALERT", value);
