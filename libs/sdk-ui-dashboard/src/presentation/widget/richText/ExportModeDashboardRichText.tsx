@@ -11,8 +11,15 @@ export const ExportModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
     const exportRichText = useRichTextExportData();
     return (
         <div {...exportDataText}>
-            <RichText className="gd-rich-text-widget" value={widget?.content} renderMode="view" />
-            <input type="hidden" value={widget?.content ?? ""} {...exportRichText?.markdown} />
+            <RichText
+                className="gd-rich-text-widget"
+                value={widget?.content}
+                renderMode="view"
+                rawContent={{
+                    show: true,
+                    dataAttributes: exportRichText?.markdown,
+                }}
+            />
         </div>
     );
 };
