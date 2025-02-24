@@ -2916,5 +2916,10 @@
         "value": "minute",
         "comment": "Label of current selected granularity type. Is used in alert create dialog.",
         "limit": 0
+    },
+    "widget.options.menu.export": {
+        "value": "Export",
+        "comment": "Export to file with XLSX extension.",
+        "limit": 0
     }
 }

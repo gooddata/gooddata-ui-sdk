@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 /**
  * All available command types.
  *
@@ -108,7 +108,8 @@ export type DashboardCommandType =
     | "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS"
     | "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.RELOAD"
     // @internal
-    | "GDC.DASH/CMD.USERS.LOAD_ALL";
+    | "GDC.DASH/CMD.USERS.LOAD_ALL"
+    | "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW";
 
 /**
  * @public

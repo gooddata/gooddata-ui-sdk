@@ -424,6 +424,8 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     // (undocumented)
     export(options: IExportConfig): Promise<IExportResult>;
     // (undocumented)
+    exportRaw(filename: string): Promise<IExportResult>;
+    // (undocumented)
     fingerprint(): string;
     // (undocumented)
     readAll(): Promise<IDataView>;

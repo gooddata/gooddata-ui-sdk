@@ -119,7 +119,14 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
 
     const baseInsightTitle = insightTitle(insight);
 
-    const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
+    const {
+        exportCSVEnabled,
+        exportXLSXEnabled,
+        isExportRawVisible,
+        onExportRawCSV,
+        onExportCSV,
+        onExportXLSX,
+    } = useInsightExport({
         title: getTitleWithBreadcrumbs(baseInsightTitle, breadcrumbs),
         widgetRef: DRILL_MODAL_EXECUTION_PSEUDO_REF,
         insight,
@@ -155,7 +162,9 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                         enableDrillDescription={enableDrillDescription}
                         onExportXLSX={onExportXLSX}
                         onExportCSV={onExportCSV}
+                        onExportCSVRaw={onExportRawCSV}
                         isLoading={isLoading}
+                        isExportRawVisible={isExportRawVisible}
                     >
                         <WithDrillSelect
                             widgetRef={widget.ref}
