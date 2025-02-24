@@ -28,7 +28,17 @@ export type CommonExportDataAttributes = { "data-export-type": ExportElementType
  */
 export type HeaderExportData = {
     title?: CommonExportDataAttributes;
+    description?: DescriptionExportData;
+};
+
+/**
+ * Data attributes for export mode to be added to the description.
+ *
+ * @alpha
+ */
+export type DescriptionExportData = {
     description?: CommonExportDataAttributes;
+    richText?: RichTextExportData;
 };
 
 /**

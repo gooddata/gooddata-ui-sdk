@@ -29,13 +29,23 @@ export const useSectionExportData = (firstLevel: boolean): SectionExportData | u
         return {
             section: { "data-export-type": "section" },
             title: { "data-export-type": "section-title" },
-            description: { "data-export-type": "section-description" },
+            description: {
+                description: { "data-export-type": "section-description" },
+                richText: {
+                    markdown: { "data-export-content-type": "markdown" },
+                },
+            },
         };
     }
 
     return {
         title: { "data-export-type": "section-title" },
-        description: { "data-export-type": "section-description" },
+        description: {
+            description: { "data-export-type": "section-description" },
+            richText: {
+                markdown: { "data-export-content-type": "markdown" },
+            },
+        },
     };
 };
 
@@ -58,7 +68,12 @@ export const useWidgetExportData = (widget: ExtendedDashboardWidget): WidgetExpo
             ...(insight ? { "data-export-visualization-type": insightVisualizationType(insight) } : {}),
         },
         title: { "data-export-type": "widget-title" },
-        description: { "data-export-type": "widget-description" },
+        description: {
+            description: { "data-export-type": "section-description" },
+            richText: {
+                markdown: { "data-export-content-type": "markdown" },
+            },
+        },
     };
 };
 

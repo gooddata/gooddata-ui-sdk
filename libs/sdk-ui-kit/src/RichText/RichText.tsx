@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { useRef, useEffect, useCallback } from "react";
 import Markdown from "react-markdown";
@@ -33,6 +33,15 @@ export interface IRichTextProps {
      * resizing dynamically up to editRows value.
      */
     autoResize?: boolean;
+
+    /**
+     * This will enable of rendering hidden input with markdown content
+     * and data attributes for export purposes.
+     */
+    rawContent?: {
+        show: boolean;
+        dataAttributes?: Record<string, string>;
+    };
 }
 
 const RichTextCore: React.FC<IRichTextProps> = ({
@@ -44,6 +53,7 @@ const RichTextCore: React.FC<IRichTextProps> = ({
     emptyElement,
     className,
     autoResize,
+    rawContent,
 }) => {
     return (
         <div
@@ -67,6 +77,7 @@ const RichTextCore: React.FC<IRichTextProps> = ({
             ) : (
                 <RichTextView value={value} emptyElement={emptyElement} />
             )}
+            {rawContent?.show ? <input type="hidden" value={value} {...rawContent.dataAttributes} /> : null}
         </div>
     );
 };

@@ -3318,6 +3318,12 @@ export interface DeleteFilterViewPayload {
     readonly ref: ObjRef;
 }
 
+// @alpha
+export type DescriptionExportData = {
+    description?: CommonExportDataAttributes;
+    richText?: RichTextExportData;
+};
+
 // @beta (undocumented)
 export type DescriptionTooltipOpenedData = {
     from: DescriptionTooltipOpenedFrom;
@@ -3852,7 +3858,7 @@ export function getDrillDownTitle(drillDefinition: IDrillDownDefinition, drillEv
 // @alpha
 export type HeaderExportData = {
     title?: CommonExportDataAttributes;
-    description?: CommonExportDataAttributes;
+    description?: DescriptionExportData;
 };
 
 // @internal (undocumented)

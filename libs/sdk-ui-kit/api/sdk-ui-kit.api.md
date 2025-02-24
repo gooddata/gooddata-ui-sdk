@@ -3562,6 +3562,10 @@ export interface IRichTextProps {
     emptyElement?: JSX.Element;
     // (undocumented)
     onChange?: (text: string) => void;
+    rawContent?: {
+        show: boolean;
+        dataAttributes?: Record<string, string>;
+    };
     // (undocumented)
     renderMode?: "view" | "edit";
     // (undocumented)
