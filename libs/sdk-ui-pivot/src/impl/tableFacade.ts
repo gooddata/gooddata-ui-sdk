@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { TableDescriptor } from "./structure/tableDescriptor.js";
 import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
@@ -130,6 +130,7 @@ export class TableFacade {
         dataView: IDataView,
         tableMethods: TableDataCallbacks & TableConfigAccessors,
         props: Readonly<ICorePivotTableProps>,
+        private readonly abortController?: AbortController,
     ) {
         this.intl = props.intl;
 
@@ -197,6 +198,7 @@ export class TableFacade {
         this.gridApi = undefined;
         this.columnApi = undefined;
         this.destroyed = true;
+        this.abortController?.abort();
     };
 
     public isFullyInitialized = (): boolean => {
@@ -265,6 +267,7 @@ export class TableFacade {
             this.visibleData,
             this.gridApiGuard,
             this.intl,
+            this.abortController,
         );
     };
 

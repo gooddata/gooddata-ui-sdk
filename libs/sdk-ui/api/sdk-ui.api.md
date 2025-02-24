@@ -1434,7 +1434,7 @@ export const LOCALES: string[];
 export function localIdentifierMatch(localIdOrMeasure: string | IMeasure): IHeaderPredicate;
 
 // @internal
-export function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T>;
+export function makeCancelable<T>(promise: (signal: AbortSignal) => Promise<T>, enableAbortController?: boolean): ICancelablePromise<T>;
 
 // @public
 export type MeasureOf<T extends IMeasureDefinitionType> = T extends any ? IMeasure<T> : never;
@@ -1666,7 +1666,8 @@ export type UseCancelablePromiseLoadingState = {
 
 // @public
 export type UseCancelablePromiseOptions<TResult, TError> = UseCancelablePromiseCallbacks<TResult, TError> & {
-    promise: (() => Promise<TResult>) | undefined | null;
+    promise: ((signal: AbortSignal) => Promise<TResult>) | undefined | null;
+    enableAbortController?: boolean;
 };
 
 // @public

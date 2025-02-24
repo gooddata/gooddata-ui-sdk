@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isError from "lodash/isError.js";
 
 /**
@@ -54,30 +54,43 @@ export const isCancelError = (obj: unknown): obj is CancelError => {
  *
  * @internal
  */
-export function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T> {
+export function makeCancelable<T>(
+    promise: (signal: AbortSignal) => Promise<T>,
+    enableAbortController = false,
+): ICancelablePromise<T> {
+    const abortController = new AbortController();
     let cancelReason: string | undefined;
     let hasCanceled = false;
     let hasFulfilled = false;
 
     const wrappedPromise = new Promise<T>((resolve, reject) => {
-        promise.then(
-            (value) => {
-                if (hasCanceled) {
-                    reject(new CancelError(cancelReason));
-                } else {
-                    hasFulfilled = true;
-                    resolve(value);
-                }
-            },
-            (error) => {
-                if (hasCanceled) {
-                    reject(new CancelError(cancelReason));
-                } else {
-                    hasFulfilled = true;
-                    reject(error);
-                }
-            },
-        );
+        try {
+            if (enableAbortController) {
+                abortController.signal.addEventListener("abort", () => {
+                    reject(new CancelError(abortController.signal.reason));
+                });
+            }
+            promise(abortController.signal).then(
+                (value) => {
+                    if (hasCanceled) {
+                        reject(new CancelError(cancelReason));
+                    } else {
+                        hasFulfilled = true;
+                        resolve(value);
+                    }
+                },
+                (error) => {
+                    if (hasCanceled) {
+                        reject(new CancelError(cancelReason));
+                    } else {
+                        hasFulfilled = true;
+                        reject(error);
+                    }
+                },
+            );
+        } catch (error) {
+            reject(error);
+        }
     });
 
     return {
@@ -85,6 +98,9 @@ export function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T> {
         cancel: (reason?: string) => {
             hasCanceled = true;
             cancelReason = reason;
+            if (enableAbortController) {
+                abortController.abort(reason);
+            }
         },
         getHasCanceled: () => hasCanceled,
         getHasFulfilled: () => hasFulfilled,

@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IntlShape } from "react-intl";
 import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { ColDef, GridApi, IDatasource, IGetRowsParams } from "@ag-grid-community/all-modules";
@@ -41,8 +41,9 @@ export function createAgGridDatasource(
     initialDv: DataViewFacade,
     gridApiProvider: GridApiProvider,
     intl: IntlShape,
+    abortController?: AbortController,
 ): AgGridDatasource {
-    return new AgGridDatasource(config, initialDv, gridApiProvider, intl);
+    return new AgGridDatasource(config, initialDv, gridApiProvider, intl, abortController);
 }
 
 export type GridApiProvider = () => GridApi | undefined;
@@ -59,6 +60,7 @@ export class AgGridDatasource implements IDatasource {
         private readonly initialDv: DataViewFacade,
         private readonly gridApiProvider: GridApiProvider,
         private readonly intl: IntlShape,
+        private readonly abortController?: AbortController,
     ) {
         this.currentResult = initialDv.result();
         this.currentSorts = initialDv.meta().effectiveSortItems();
@@ -185,12 +187,15 @@ export class AgGridDatasource implements IDatasource {
         params: IGetRowsParams,
     ): void => {
         const { startRow, endRow, failCallback } = params;
+        let effectiveExecution = execution;
+        if (this.abortController) {
+            effectiveExecution = execution.withSignal(this.abortController.signal);
+        }
 
-        execution
+        effectiveExecution
             .execute()
             .then((newResult) => {
                 this.currentResult = newResult;
-
                 newResult
                     .readWindow([startRow, 0], [endRow - startRow, COLS_PER_PAGE])
                     .then((data) => {
@@ -238,6 +243,7 @@ export class AgGridDatasource implements IDatasource {
             return;
         }
 
+        this.abortController?.abort();
         this.destroyed = true;
         this.onDestroy();
     };

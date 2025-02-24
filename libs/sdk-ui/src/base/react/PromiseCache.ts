@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ICancelablePromise, makeCancelable } from "./CancelablePromise.js";
 import values from "lodash/values.js";
 
@@ -69,7 +69,7 @@ export class PromiseCache<TParams, TResult, TError = any> {
         if (cachedPromise) {
             return cachedPromise.promise;
         }
-        const cancelablePromise = makeCancelable(this.handler(params));
+        const cancelablePromise = makeCancelable(() => this.handler(params));
         cancelablePromise.promise
             .then((result) => (this.results[cacheKey] = result))
             .catch((error) => (this.errors[cacheKey] = error));
