@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { withExecution } from "./withExecution.js";
 import { DataViewWindow, IWithLoadingEvents, WithLoadingResult } from "./withExecutionLoading.js";
@@ -117,6 +117,16 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     window?: DataViewWindow;
 
     /**
+     * Optionally enable real execution cancellation.
+     *
+     * This means that if the execution request is not yet finished and the execution changes,
+     * the request will be cancelled and the new execution will be started.
+     *
+     * Default: false
+     */
+    enableExecutionCancelling?: boolean;
+
+    /**
      * Child component to which rendering is delegated.
      *
      * @remarks
@@ -180,6 +190,7 @@ function exportTitle(props: IExecuteProps): string {
 
 const WrappedExecute = withContexts(
     withExecution<IExecuteProps>({
+        enableExecutionCancelling: (props: IExecuteProps) => props.enableExecutionCancelling ?? false,
         exportTitle,
         execution: (props) => {
             const { seriesBy, slicesBy, totals, filters, sortBy } = props;

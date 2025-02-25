@@ -5955,12 +5955,14 @@ export interface IUseAttributeElements {
 
 // @public
 export interface IUseCustomWidgetExecutionDataViewConfig {
+    enableExecutionCancelling?: boolean;
     execution?: Exclude<IExecutionConfiguration, "filters">;
     widget: ICustomWidget;
 }
 
 // @public
 export interface IUseCustomWidgetInsightDataViewConfig {
+    enableExecutionCancelling?: boolean;
     insight?: IInsightDefinition | ObjRef;
     widget: ICustomWidget;
 }
@@ -9175,13 +9177,13 @@ export const useCancelEditDialog: () => {
 };
 
 // @public
-export function useCustomWidgetExecutionDataView({ widget, execution, onCancel, onError, onLoading, onPending, onSuccess, }: IUseCustomWidgetExecutionDataViewConfig & UseCustomWidgetExecutionDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+export function useCustomWidgetExecutionDataView({ enableExecutionCancelling, widget, execution, onCancel, onError, onLoading, onPending, onSuccess, }: IUseCustomWidgetExecutionDataViewConfig & UseCustomWidgetExecutionDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @public
 export type UseCustomWidgetExecutionDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
 
 // @public
-export function useCustomWidgetInsightDataView({ widget, insight, onCancel, onError, onLoading, onPending, onSuccess, }: IUseCustomWidgetInsightDataViewConfig & UseCustomWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+export function useCustomWidgetInsightDataView({ widget, insight, enableExecutionCancelling, onCancel, onError, onLoading, onPending, onSuccess, }: IUseCustomWidgetInsightDataViewConfig & UseCustomWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @public
 export type UseCustomWidgetInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;

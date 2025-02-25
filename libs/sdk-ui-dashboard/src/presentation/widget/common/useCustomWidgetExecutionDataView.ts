@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useEffect, useMemo } from "react";
 import {
     DataViewFacade,
@@ -10,7 +10,8 @@ import {
     useExecutionDataView,
 } from "@gooddata/sdk-ui";
 
-import { ICustomWidget, useWidgetFilters } from "../../../model/index.js";
+import { ICustomWidget, useWidgetFilters, selectEnableExecutionCancelling } from "../../../model/index.js";
+import { useSelector } from "react-redux";
 
 /**
  * Configuration options for the {@link useCustomWidgetExecutionDataView} hook.
@@ -29,6 +30,14 @@ export interface IUseCustomWidgetExecutionDataViewConfig {
      * Note: When the execution is not provided, hook is locked in a "pending" state.
      */
     execution?: Exclude<IExecutionConfiguration, "filters">;
+
+    /**
+     * Enable or disable real execution cancellation.
+     *
+     * This means that if the execution request is not yet finished and the execution changes,
+     * the request will be cancelled and the new execution will be started.
+     */
+    enableExecutionCancelling?: boolean;
 }
 
 /**
@@ -48,6 +57,7 @@ export type UseCustomWidgetExecutionDataViewCallbacks = UseCancelablePromiseCall
  * @public
  */
 export function useCustomWidgetExecutionDataView({
+    enableExecutionCancelling,
     widget,
     execution,
     onCancel,
@@ -58,7 +68,10 @@ export function useCustomWidgetExecutionDataView({
 }: IUseCustomWidgetExecutionDataViewConfig &
     UseCustomWidgetExecutionDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
     const filterQueryTask = useWidgetFilters(widget);
+    const enableExecutionCancellingFF = useSelector(selectEnableExecutionCancelling);
+    const effectiveExecutionCancelling = enableExecutionCancelling ?? enableExecutionCancellingFF;
     const dataViewTask = useExecutionDataView({
+        enableExecutionCancelling: effectiveExecutionCancelling,
         execution: execution
             ? {
                   ...execution,
