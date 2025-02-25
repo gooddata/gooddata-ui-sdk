@@ -22,6 +22,8 @@ export interface IDropdownButtonProps {
     onClick?: (e: React.MouseEvent) => void;
 
     children?: ReactNode;
+    dropdownId?: string;
+    buttonRef?: React.MutableRefObject<HTMLElement>;
 }
 
 /**
@@ -42,6 +44,8 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
 
     onClick,
     children,
+    dropdownId,
+    buttonRef,
 }) => {
     const buttonClasses = cx(
         "gd-button-primary",
@@ -66,6 +70,15 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
             iconRight={isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
             disabled={disabled}
             onClick={onClick}
+            accessibilityConfig={
+                dropdownId
+                    ? {
+                          isExpanded: isOpen,
+                          popupId: dropdownId,
+                      }
+                    : undefined
+            }
+            buttonRef={buttonRef}
         >
             {children}
         </Button>

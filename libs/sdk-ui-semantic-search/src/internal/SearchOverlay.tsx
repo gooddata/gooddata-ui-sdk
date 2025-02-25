@@ -244,6 +244,15 @@ const SearchOverlayCore: React.FC<
     // The List component requires explicit width
     const [ref, width] = useElementWidth();
 
+    const onEscKeyPress = React.useCallback(
+        (e: React.KeyboardEvent) => {
+            if (value.length > 0) {
+                e.stopPropagation();
+            }
+        },
+        [value],
+    );
+
     return (
         <div ref={ref} className={classnames("gd-semantic-search__overlay", className)}>
             <Input
@@ -254,6 +263,7 @@ const SearchOverlayCore: React.FC<
                 clearOnEsc
                 value={value}
                 onChange={(e) => setValue(String(e))}
+                onEscKeyPress={onEscKeyPress}
             />
             {(() => {
                 switch (searchStatus) {

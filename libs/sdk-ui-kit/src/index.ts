@@ -93,3 +93,5 @@ export type {
     UiPagedVirtualListProps,
     UiPagedVirtualListSkeletonItemProps,
 } from "./@ui/UiPagedVirtualList/UiPagedVirtualList.js";
+export { UiFocusTrap } from "./@ui/UiFocusTrap/UiFocusTrap.js";
+export type { UiFocusTrapProps } from "./@ui/UiFocusTrap/UiFocusTrap.js";

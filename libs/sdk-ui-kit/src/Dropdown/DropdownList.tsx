@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useCallback, useState, useEffect } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
@@ -152,6 +152,15 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
         setCurrentSearchString(searchString);
     }, [searchString]);
 
+    const onEscKeyPress = useCallback(
+        (e) => {
+            if (currentSearchString.length > 0) {
+                e.stopPropagation();
+            }
+        },
+        [currentSearchString],
+    );
+
     return (
         <React.Fragment>
             {title ? <div className="gd-list-title">{title}</div> : null}
@@ -163,6 +172,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
                     isSmall={searchFieldSize === "small"}
                     placeholder={searchPlaceholder}
                     clearOnEsc={true}
+                    onEscKeyPress={onEscKeyPress}
                     isSearch={true}
                     autofocus={!disableAutofocus}
                 />

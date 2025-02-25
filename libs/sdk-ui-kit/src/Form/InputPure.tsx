@@ -25,7 +25,7 @@ export interface InputPureProps extends IDomNativeProps {
     isSmall: boolean;
     maxlength: number;
     onChange: (value: string | number, e?: React.ChangeEvent<HTMLInputElement>) => void;
-    onEscKeyPress: () => void;
+    onEscKeyPress: (e: React.KeyboardEvent) => void;
     onEnterKeyPress: () => void;
     onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
     onFocus: (e: React.FocusEvent<HTMLInputElement>) => void;
@@ -101,7 +101,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
                 if (this.props.clearOnEsc) {
                     this.onClear();
                 }
-                this.props.onEscKeyPress();
+                this.props.onEscKeyPress(e);
                 break;
             case ENUM_KEY_CODE.KEY_CODE_ENTER:
                 this.props.onEnterKeyPress();

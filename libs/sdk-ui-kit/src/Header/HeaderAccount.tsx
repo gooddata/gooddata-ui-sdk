@@ -1,73 +1,75 @@
-// (C) 2007-2024 GoodData Corporation
-import React, { PureComponent, ReactNode } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { useState, useRef, ReactNode, useCallback } from "react";
 import cx from "classnames";
-import { injectIntl, FormattedMessage, WrappedComponentProps } from "react-intl";
+import { useIntl, FormattedMessage } from "react-intl";
 
 import { Overlay } from "../Overlay/index.js";
 import { Button } from "../Button/index.js";
 
-import { IHeaderAccountState, IHeaderMenuItem, IHeaderAccountProps } from "./typings.js";
+import { IHeaderMenuItem, IHeaderAccountProps } from "./typings.js";
+import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
+import { useId } from "../utils/useId.js";
 
-class WrappedHeaderAccount extends PureComponent<
-    IHeaderAccountProps & WrappedComponentProps,
-    IHeaderAccountState
-> {
-    static defaultProps: Pick<IHeaderAccountProps, "className" | "items" | "userName"> = {
-        className: "",
-        items: [],
-        userName: "",
-    };
+export const HeaderAccount: React.FC<IHeaderAccountProps> = ({
+    className = "",
+    items = [],
+    userName = "",
+    onMenuItemClick,
+}) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const intl = useIntl();
+    const id = useId();
+    const dropdownId = `account-dropdown-${id}`;
 
-    constructor(props: IHeaderAccountProps & WrappedComponentProps) {
-        super(props);
-
-        this.state = {
-            isOpen: false,
-        };
-    }
-
-    getClassNames(): string {
+    const getClassNames = (): string => {
         return cx("gd-header-button", {
             "gd-header-account": true,
-            "is-open": this.state.isOpen,
-            [this.props.className]: !!this.props.className,
+            "is-open": isOpen,
+            [className]: !!className,
         });
-    }
+    };
 
-    getMenuItems() {
-        return this.props.items.map((item) => {
+    const toggleAccountMenu = useCallback(
+        (newIsOpen = !isOpen): void => {
+            setIsOpen(newIsOpen);
+        },
+        [isOpen],
+    );
+
+    const toggleAccountMenuHandler = useCallback((): void => {
+        toggleAccountMenu();
+    }, [toggleAccountMenu]);
+
+    const menuItemClicked = useCallback(
+        (item: IHeaderMenuItem, e: React.MouseEvent<HTMLAnchorElement>): void => {
+            toggleAccountMenu(false);
+            onMenuItemClick(item, e);
+        },
+        [toggleAccountMenu, onMenuItemClick],
+    );
+
+    const getMenuItems = () => {
+        return items.map((item) => {
+            const tabIndexProp = item.href ? {} : { tabIndex: 0 };
             return (
                 <a
                     key={item.key}
                     href={item.href}
                     onClick={(e) => {
-                        this.menuItemClicked(item, e);
+                        menuItemClicked(item, e);
                     }}
                     className={`gd-list-item ${item.className}`}
+                    {...tabIndexProp}
                 >
                     <FormattedMessage id={item.key} />
                 </a>
             );
         });
-    }
-
-    toggleAccountMenu = (isOpen = !this.state.isOpen): void => {
-        this.setState({
-            isOpen,
-        });
     };
 
-    toggleAccountMenuHandler = (): void => {
-        this.toggleAccountMenu();
-    };
-
-    menuItemClicked(item: IHeaderMenuItem, e: React.MouseEvent<HTMLAnchorElement>): void {
-        this.toggleAccountMenu(false);
-        this.props.onMenuItemClick(item, e);
-    }
-
-    renderAccountMenu(): ReactNode {
-        return this.state.isOpen ? (
+    const renderAccountMenu = (): ReactNode => {
+        return isOpen ? (
             <Overlay
                 alignTo=".gd-header-account"
                 alignPoints={[
@@ -78,32 +80,36 @@ class WrappedHeaderAccount extends PureComponent<
                 closeOnOutsideClick
                 closeOnMouseDrag
                 closeOnParentScroll
+                closeOnEscape
                 onClose={() => {
-                    this.toggleAccountMenu(false);
+                    toggleAccountMenu(false);
                 }}
             >
-                <div className="gd-dialog gd-dropdown overlay gd-header-account-dropdown">
-                    <div className="gd-list small">{this.getMenuItems()}</div>
+                <div className="gd-dialog gd-dropdown overlay gd-header-account-dropdown" id={dropdownId}>
+                    <div className="gd-list small">
+                        <UiFocusTrap returnFocusTo={buttonRef.current}>{getMenuItems()}</UiFocusTrap>
+                    </div>
                 </div>
             </Overlay>
         ) : (
             false
         );
-    }
+    };
 
-    render(): ReactNode {
-        return (
-            <Button
-                className={this.getClassNames()}
-                onClick={this.toggleAccountMenuHandler}
-                title={this.props.intl.formatMessage({ id: "gs.header.account.title" })}
-            >
-                <span className="gd-header-account-icon gd-icon-user" />
-                <span className="gd-header-account-user">{this.props.userName}</span>
-                {this.renderAccountMenu()}
-            </Button>
-        );
-    }
-}
-
-export const HeaderAccount = injectIntl(WrappedHeaderAccount);
+    return (
+        <Button
+            buttonRef={buttonRef}
+            className={getClassNames()}
+            onClick={toggleAccountMenuHandler}
+            title={intl.formatMessage({ id: "gs.header.account.title" })}
+            accessibilityConfig={{
+                isExpanded: isOpen,
+                popupId: dropdownId,
+            }}
+        >
+            <span className="gd-header-account-icon gd-icon-user" />
+            <span className="gd-header-account-user">{userName}</span>
+            {renderAccountMenu()}
+        </Button>
+    );
+};
