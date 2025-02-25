@@ -316,6 +316,7 @@ export class DataViewLoader {
     seriesFrom: (...measuresAndScopingAttributes: IAttributeOrMeasure[]) => DataViewLoader;
     slicesFrom: (...attributes: IAttribute[]) => DataViewLoader;
     sortBy: (...sorts: ISortItem[]) => DataViewLoader;
+    withSignal: (signal: AbortSignal) => DataViewLoader;
     withTotals: (...totals: ITotal[]) => DataViewLoader;
 }
 
@@ -883,6 +884,7 @@ export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsight
     componentName?: string;
     dateFormat?: string | ((def: IExecutionDefinition, props: IExecuteInsightProps) => string);
     dimensions?: IDimension[] | ((def: IExecutionDefinition, props: IExecuteInsightProps) => IDimension[]);
+    enableExecutionCancelling?: boolean;
     ErrorComponent?: IExecuteErrorComponent;
     executeByReference?: boolean;
     exportTitle?: string;
@@ -903,6 +905,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     backend?: IAnalyticalBackend;
     children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
     componentName?: string;
+    enableExecutionCancelling?: boolean;
     ErrorComponent?: IExecuteErrorComponent;
     exportTitle?: string;
     filters?: NullableFiltersOrPlaceholders;
@@ -1128,6 +1131,7 @@ export interface IPushData {
 // @public
 export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
     children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
+    enableExecutionCancelling?: boolean;
     ErrorComponent?: IExecuteErrorComponent;
     execution: IPreparedExecution;
     exportTitle?: string;
@@ -1322,6 +1326,7 @@ export type IUseComposedPlaceholderHook<T extends IComposedPlaceholder<any, any,
 // @public
 export interface IUseExecutionDataViewConfig {
     backend?: IAnalyticalBackend;
+    enableExecutionCancelling?: boolean;
     execution?: IPreparedExecution | IExecutionConfiguration;
     window?: DataViewWindow;
     workspace?: string;
@@ -1332,6 +1337,7 @@ export interface IUseInsightDataViewConfig {
     backend?: IAnalyticalBackend;
     dateFormat?: string | ((def: IExecutionDefinition) => string);
     dimensions?: IDimension[] | ((def: IExecutionDefinition) => IDimension[]);
+    enableExecutionCancelling?: boolean;
     executeByReference?: boolean;
     filters?: INullableFilter[];
     insight?: ObjRef;
@@ -1383,6 +1389,7 @@ export interface IVisualizationProps {
 
 // @internal
 export interface IWithExecution<T> {
+    enableExecutionCancelling?: boolean | ((props: T) => boolean);
     events?: IWithLoadingEvents<T> | ((props: T) => IWithLoadingEvents<T>);
     execution: IPreparedExecution | ((props: T) => IPreparedExecution) | ((props: T) => Promise<IPreparedExecution>);
     exportTitle: string | ((props: T) => string);
@@ -1393,10 +1400,11 @@ export interface IWithExecution<T> {
 
 // @internal
 export interface IWithExecutionLoading<TProps> {
+    enableExecutionCancelling?: boolean | ((props: TProps) => boolean);
     events?: IWithLoadingEvents<TProps> | ((props: TProps) => IWithLoadingEvents<TProps>);
     exportTitle: string | ((props: TProps) => string);
     loadOnMount?: boolean | ((props: TProps) => boolean);
-    promiseFactory: (props: TProps, window?: DataViewWindow) => Promise<DataViewFacade>;
+    promiseFactory: (props: TProps, window?: DataViewWindow, signal?: AbortSignal) => Promise<DataViewFacade>;
     shouldRefetch?: (prevProps: TProps, nextProps: TProps) => boolean;
     window?: DataViewWindow | ((props: TProps) => DataViewWindow | undefined);
 }

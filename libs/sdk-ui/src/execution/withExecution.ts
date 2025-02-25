@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IPreparedExecution, isNoDataError } from "@gooddata/sdk-backend-spi";
 import {
     withExecutionLoading,
@@ -46,6 +46,16 @@ export interface IWithExecution<T> {
     events?: IWithLoadingEvents<T> | ((props: T) => IWithLoadingEvents<T>);
 
     /**
+     * Optionally enable real execution cancellation.
+     *
+     * This means that if the execution request is not yet finished and the execution changes,
+     * the request will be cancelled and the new execution will be started.
+     *
+     * Default: false
+     */
+    enableExecutionCancelling?: boolean | ((props: T) => boolean);
+
+    /**
      * Customize, whether execution & data loading should start as soon as component is mounted.
      *
      * @remarks
@@ -74,12 +84,24 @@ export interface IWithExecution<T> {
 export function withExecution<T>(
     params: IWithExecution<T>,
 ): (WrappedComponent: React.ComponentType<T & WithLoadingResult>) => React.ComponentClass<T, any> {
-    const { execution, events, loadOnMount, shouldRefetch, window, exportTitle } = params;
+    const { execution, events, loadOnMount, shouldRefetch, window, exportTitle, enableExecutionCancelling } =
+        params;
 
     return (WrappedComponent: React.ComponentType<T & WithLoadingResult>) => {
         const withLoadingParams = {
-            promiseFactory: async (props: T, window?: DataViewWindow) => {
-                const _execution = typeof execution === "function" ? await execution(props) : execution;
+            enableExecutionCancelling,
+            promiseFactory: async (props: T, window?: DataViewWindow, signal?: AbortSignal) => {
+                let _execution = typeof execution === "function" ? await execution(props) : execution;
+
+                const enableRealCancellation =
+                    typeof enableExecutionCancelling === "function"
+                        ? enableExecutionCancelling(props)
+                        : enableExecutionCancelling;
+
+                if (enableRealCancellation && signal) {
+                    _execution = _execution.withSignal(signal);
+                }
+
                 const executionResult = await _execution.execute();
                 try {
                     const dataView = !window

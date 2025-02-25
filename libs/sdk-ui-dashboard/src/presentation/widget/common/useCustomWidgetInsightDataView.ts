@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useEffect, useMemo } from "react";
 import { IInsightDefinition, insightSetFilters, isInsight, ObjRef } from "@gooddata/sdk-model";
 import {
@@ -13,7 +13,8 @@ import {
 } from "@gooddata/sdk-ui";
 import stringify from "json-stable-stringify";
 
-import { ICustomWidget, useWidgetFilters } from "../../../model/index.js";
+import { ICustomWidget, selectEnableExecutionCancelling, useWidgetFilters } from "../../../model/index.js";
+import { useSelector } from "react-redux";
 
 /**
  * Configuration options for the {@link useCustomWidgetInsightDataView} hook.
@@ -33,6 +34,14 @@ export interface IUseCustomWidgetInsightDataViewConfig {
      * Note: When the insight is not provided, hook is locked in a "pending" state.
      */
     insight?: IInsightDefinition | ObjRef;
+
+    /**
+     * Enable or disable real execution cancellation.
+     *
+     * This means that if the execution request is not yet finished and the execution changes,
+     * the request will be cancelled and the new execution will be started.
+     */
+    enableExecutionCancelling?: boolean;
 }
 
 /**
@@ -54,6 +63,7 @@ export type UseCustomWidgetInsightDataViewCallbacks = UseCancelablePromiseCallba
 export function useCustomWidgetInsightDataView({
     widget,
     insight,
+    enableExecutionCancelling,
     onCancel,
     onError,
     onLoading,
@@ -63,6 +73,8 @@ export function useCustomWidgetInsightDataView({
     UseCustomWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
+    const enableExecutionCancellingFF = useSelector(selectEnableExecutionCancelling);
+    const effectiveExecutionCancelling = enableExecutionCancelling ?? enableExecutionCancellingFF;
 
     const effectiveInsightTask = useCancelablePromise(
         {
@@ -114,6 +126,7 @@ export function useCustomWidgetInsightDataView({
 
     const dataViewTask = useExecutionDataView({
         execution: insightExecution,
+        enableExecutionCancelling: effectiveExecutionCancelling,
         onCancel,
         onError,
         onSuccess,

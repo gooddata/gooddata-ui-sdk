@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { DataViewWindow } from "./withExecutionLoading.js";
 import {
@@ -113,6 +113,16 @@ export interface IUseExecutionDataViewConfig {
      * workspace here, then the executor MUST be rendered within an existing WorkspaceContext.
      */
     workspace?: string;
+
+    /**
+     * Optionally enable real execution cancellation.
+     *
+     * This means that if the execution request is not yet finished and the execution changes,
+     * the request will be cancelled and the new execution will be started.
+     *
+     * Default: false
+     */
+    enableExecutionCancelling?: boolean;
 }
 
 /**
@@ -131,7 +141,16 @@ export function useExecutionDataView(
     config: IUseExecutionDataViewConfig & UseExecutionDataViewCallbacks,
     deps?: React.DependencyList,
 ): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
-    const { execution, window, onCancel, onError, onLoading, onPending, onSuccess } = config;
+    const {
+        execution,
+        window,
+        enableExecutionCancelling = false,
+        onCancel,
+        onError,
+        onLoading,
+        onPending,
+        onSuccess,
+    } = config;
     const backend = useBackendStrict(config.backend, "useExecutionDataView");
     const workspace = useWorkspaceStrict(config.workspace, "useExecutionDataView");
     const effectiveDeps = deps ?? [];
@@ -163,9 +182,14 @@ export function useExecutionDataView(
 
     return useCancelablePromise<DataViewFacade, GoodDataSdkError>(
         {
+            enableAbortController: enableExecutionCancelling,
             promise: preparedExecution
-                ? () =>
-                      preparedExecution
+                ? (signal) => {
+                      let effectiveExecution = preparedExecution;
+                      if (enableExecutionCancelling) {
+                          effectiveExecution = preparedExecution.withSignal(signal);
+                      }
+                      return effectiveExecution
                           .execute()
                           .then((executionResult) =>
                               window
@@ -177,7 +201,8 @@ export function useExecutionDataView(
                           })
                           .catch((error) => {
                               throw convertError(error);
-                          })
+                          });
+                  }
                 : null,
             onCancel,
             onError,
@@ -191,6 +216,7 @@ export function useExecutionDataView(
             preparedExecution?.fingerprint() ?? "__executionFingerprint__",
             window?.offset ?? "__offset__",
             window?.size ?? "__size__",
+            enableExecutionCancelling,
             ...effectiveDeps,
         ],
     );

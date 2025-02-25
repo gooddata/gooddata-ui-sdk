@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
 import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, ITotal } from "@gooddata/sdk-model";
 import { IAnalyticalBackend, IExecutionResult } from "@gooddata/sdk-backend-spi";
@@ -20,6 +20,7 @@ interface IDataViewLoaderOptions {
     readonly componentName?: string;
     readonly offset?: number[];
     readonly size?: number[];
+    readonly signal?: AbortSignal;
 }
 
 /**
@@ -93,6 +94,15 @@ export class DataViewLoader {
     };
 
     /**
+     * Runs execution with the provided AbortSignal.
+     *
+     * @alpha
+     */
+    public withSignal = (signal: AbortSignal): DataViewLoader => {
+        return this.newLoaderWithOptions({ signal });
+    };
+
+    /**
      * Loads subset of the result data and wraps them in {@link DataViewFacade}.
      *
      * @alpha
@@ -117,13 +127,17 @@ export class DataViewLoader {
     private loadResult = async (): Promise<IExecutionResult> => {
         invariant(this.options.seriesBy, "You need to specify series before loading the results.");
 
-        const execution = createExecution({
+        let execution = createExecution({
             backend: this.backend,
             workspace: this.workspace,
             seriesBy: this.options.seriesBy,
             componentName: "DataViewLoader",
             ...this.options,
         });
+
+        if (this.options.signal) {
+            execution = execution.withSignal(this.options.signal);
+        }
 
         return execution.execute();
     };

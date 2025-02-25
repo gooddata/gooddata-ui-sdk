@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { withExecution } from "./withExecution.js";
 import { DataViewWindow, IWithLoadingEvents, WithLoadingResult } from "./withExecutionLoading.js";
@@ -120,6 +120,16 @@ export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsight
     executeByReference?: boolean;
 
     /**
+     * Optionally enable real execution cancellation.
+     *
+     * This means that if the execution request is not yet finished and the execution changes,
+     * the request will be cancelled and the new execution will be started.
+     *
+     * Default: false
+     */
+    enableExecutionCancelling?: boolean;
+
+    /**
      * Child component to which rendering is delegated.
      *
      * @remarks
@@ -188,6 +198,7 @@ function exportTitle(props: IExecuteInsightProps): string {
  */
 export const ExecuteInsight = withContexts(
     withExecution<IExecuteInsightProps>({
+        enableExecutionCancelling: (props: IExecuteInsightProps) => props.enableExecutionCancelling ?? false,
         exportTitle,
         execution: async (props) => {
             const {
@@ -217,7 +228,7 @@ export const ExecuteInsight = withContexts(
                 executeByReference ? executionFactory.forInsightByRef : executionFactory.forInsight
             ).bind(executionFactory);
 
-            let insightExecution = executeFn(insight, filters);
+            let insightExecution = executeFn(insight, filters); //
 
             if (sorts) {
                 const resolvedSorts =
