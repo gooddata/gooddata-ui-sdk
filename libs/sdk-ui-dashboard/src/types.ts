@@ -188,6 +188,14 @@ export interface IMenuButtonItemsVisibility {
      */
     pdfExportButton?: boolean;
     /**
+     * If set to true, the Export to EXCEL button will be visible. Defaults to true.
+     */
+    excelExportButton?: boolean;
+    /**
+     * If set to true, the Export to PowerPoint button will be visible. Defaults to true.
+     */
+    powerPointExportButton?: boolean;
+    /**
      * If set to true, the Schedule emailing button will be visible. Defaults to true.
      */
     scheduleEmailButton?: boolean;

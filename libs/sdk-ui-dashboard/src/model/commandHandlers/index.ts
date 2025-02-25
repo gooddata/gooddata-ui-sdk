@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { DashboardCommands, IDashboardCommand } from "../commands/index.js";
 import { SagaIterator } from "redux-saga";
 import { initializeDashboardHandler } from "./dashboard/initializeDashboardHandler/index.js";
@@ -103,6 +103,9 @@ import { setScreenSizeHandler } from "./layout/setScreenSizeHandler.js";
 import { toggleLayoutSectionHeadersHandler } from "./layout/toggleLayoutSectionHeadersHandler.js";
 import { loadAllWorkspaceUsersHandler } from "./users/loadAllUsersHandler.js";
 import { exportRawInsightWidgetHandler } from "./widgets/exportRawInsightWidgetHandler.js";
+import { exportDashboardToExcelHandler } from "./dashboard/exportDashboardToExcelHandler.js";
+import { exportDashboardToPdfPresentationHandler } from "./dashboard/exportDashboardToPdfPresentationHandler.js";
+import { exportDashboardToPptPresentationHandler } from "./dashboard/exportDashboardToPptPresentationHandler.js";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -120,6 +123,9 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.CHANGE_RENDER_MODE": changeRenderModeHandler,
     "GDC.DASH/CMD.SHARING.CHANGE": changeSharingHandler,
     "GDC.DASH/CMD.EXPORT.PDF": exportDashboardToPdfHandler,
+    "GDC.DASH/CMD.EXPORT.EXCEL": exportDashboardToExcelHandler,
+    "GDC.DASH/CMD.EXPORT.PDF_PRESENTATION": exportDashboardToPdfPresentationHandler,
+    "GDC.DASH/CMD.EXPORT.PPT_PRESENTATION": exportDashboardToPptPresentationHandler,
     "GDC.DASH/CMD.EVENT.TRIGGER": triggerEventHandler,
     "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT": upsertExecutionResultHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION": changeFilterContextSelectionHandler,

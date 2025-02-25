@@ -3927,6 +3927,8 @@ export interface ISingleSelectListItemProps {
     // (undocumented)
     info?: string | ReactNode;
     // (undocumented)
+    isMenu?: boolean;
+    // (undocumented)
     isSelected?: boolean;
     // (undocumented)
     onClick?: (e: React_2.MouseEvent<HTMLElement>) => void;

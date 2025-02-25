@@ -117,9 +117,29 @@
         "comment": "",
         "limit": 0
     },
+    "options.menu.export": {
+        "value": "Export",
+        "comment": "Export submenu",
+        "limit": 0
+    },
+    "options.menu.export.header.presentation": {
+        "value": "Presentation",
+        "comment": "Export submenu for presentation",
+        "limit": 0
+    },
     "options.menu.export.PDF": {
-        "value": "Export to PDF",
+        "value": "PDF",
         "comment": "Export whole KPI dashboard to PDF",
+        "limit": 0
+    },
+    "options.menu.export.EXCEL": {
+        "value": "Excel",
+        "comment": "Export whole KPI dashboard to EXCEL",
+        "limit": 0
+    },
+    "options.menu.export.PPTX": {
+        "value": "PowerPoint",
+        "comment": "Export whole KPI dashboard to PowerPoint",
         "limit": 0
     },
     "options.menu.schedule.email": {
