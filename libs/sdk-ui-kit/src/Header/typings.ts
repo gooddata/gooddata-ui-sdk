@@ -92,7 +92,7 @@ export interface IAppHeaderState {
 export interface IHeaderAccountProps {
     className?: string;
     items?: IHeaderMenuItem[];
-    onMenuItemClick: (menuItem: IHeaderMenuItem, e?: React.MouseEvent) => void;
+    onMenuItemClick: (menuItem: IHeaderMenuItem, e?: React.MouseEvent | React.KeyboardEvent) => void;
     userName?: string;
 }
 

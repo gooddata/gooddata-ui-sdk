@@ -23,6 +23,8 @@ export interface IDropdownButtonProps {
     onClick?: (e: React.MouseEvent) => void;
 
     children?: ReactNode;
+    dropdownId?: string;
+    buttonRef?: React.MutableRefObject<HTMLElement>;
 }
 
 /**
@@ -43,6 +45,8 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
 
     onClick,
     children,
+    dropdownId,
+    buttonRef,
 }) => {
     const { ariaLabel, ariaLabelledBy } = accessibilityConfig ?? {};
 
@@ -58,13 +62,22 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
         className,
     );
 
+    const buttonAccessibilityConfig = dropdownId
+        ? {
+              isExpanded: isOpen,
+              popupId: dropdownId,
+              ariaLabel,
+              ariaLabelledBy,
+          }
+        : {
+              ariaLabel,
+              ariaLabelledBy,
+          };
+
     return (
         <Button
             id={id}
-            accessibilityConfig={{
-                ariaLabel,
-                ariaLabelledBy,
-            }}
+            accessibilityConfig={buttonAccessibilityConfig}
             title={title && typeof title === "string" ? title : undefined}
             className={buttonClasses}
             value={value}
@@ -72,6 +85,7 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
             iconRight={isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
             disabled={disabled}
             onClick={onClick}
+            buttonRef={buttonRef}
         >
             {children}
         </Button>

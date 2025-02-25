@@ -2013,6 +2013,16 @@
         "comment": "",
         "limit": 0
     },
+    "notifications.panel.button.label": {
+        "value": "Notifications",
+        "comment": "A global notifications button label in the main menu",
+        "limit": 0
+    },
+    "notifications.panel.notifications.list.label": {
+        "value": "Notifications",
+        "comment": "",
+        "limit": 0
+    },
     "notifications.panel.tab.unread": {
         "value": "Unread ({count})",
         "comment": "",
@@ -2050,6 +2060,11 @@
     },
     "notifications.panel.markAsRead": {
         "value": "Mark as read",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.alert.notification.type.label": {
+        "value": "Alert notification",
         "comment": "",
         "limit": 0
     },

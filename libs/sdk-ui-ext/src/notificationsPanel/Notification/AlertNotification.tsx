@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import { IAlertDescription, IAlertNotification, INotification } from "@gooddata/sdk-model";
-import { getDateTimeConfig, IDateConfig, UiIcon } from "@gooddata/sdk-ui-kit";
+import { getDateTimeConfig, IDateConfig, UiIcon, isActionKey } from "@gooddata/sdk-ui-kit";
 import { bem } from "../bem.js";
 import { Tooltip } from "../components/Tooltip.js";
 import { Popup } from "../components/Popup.js";
@@ -36,7 +36,7 @@ export function AlertNotification({
     };
 
     const clickNotification = useCallback(
-        (event: React.MouseEvent<HTMLDivElement>) => {
+        (event: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>) => {
             const target = event.target;
             const targetIsElement = target instanceof Element;
             const isNotificationsDetailsLink =
@@ -51,6 +51,13 @@ export function AlertNotification({
         [onNotificationClick, notification],
     );
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (isActionKey(event)) {
+            event.preventDefault();
+            clickNotification(event);
+        }
+    };
+
     // Hide filters for now, as there is lot of unresolved cases to consider
     // const filterCount = notification.details.data.alert.filterCount;
     // const isSliced = notification.details.data.alert.attribute;
@@ -63,7 +70,14 @@ export function AlertNotification({
     const traceId = notification.details.data.alert.traceId;
 
     return (
-        <div className={b({ isRead: notification.isRead })} onClick={clickNotification}>
+        <div
+            className={b({ isRead: notification.isRead })}
+            onClick={clickNotification}
+            onKeyDown={handleKeyDown}
+            role="listitem"
+            tabIndex={0}
+            aria-label={intl.formatMessage(messages.alertNotificationTypeLabel)}
+        >
             <div className={e("icon")}>
                 {!notification.isRead && <div className={e("unread-status")} />}
                 <UiIcon type="alert" size={14} color="complementary-6" />
@@ -166,5 +180,8 @@ const NotificationTime = ({ config }: { config: IDateConfig }) => {
 const messages = defineMessages({
     markAsRead: {
         id: "notifications.panel.markAsRead",
+    },
+    alertNotificationTypeLabel: {
+        id: "notifications.panel.alert.notification.type.label",
     },
 });

@@ -3,7 +3,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { ILocale } from "@gooddata/sdk-ui";
 import { assertNever, INotification } from "@gooddata/sdk-model";
-import { Overlay, alignConfigToAlignPoint } from "@gooddata/sdk-ui-kit";
+import { Overlay, alignConfigToAlignPoint, UiFocusTrap } from "@gooddata/sdk-ui-kit";
 import { invariant } from "ts-invariant";
 import { NotificationsProvider, useNotificationsContext } from "../data/NotificationsContext.js";
 import { OrganizationProvider } from "../@staging/OrganizationContext/OrganizationContext.js";
@@ -266,34 +266,36 @@ function NotificationsPanelController({
     );
 
     const notificationsPanel = (
-        <NotificationsPanel
-            NotificationsPanelHeader={NotificationsPanelHeader}
-            NotificationsList={NotificationsList}
-            NotificationsListEmptyState={NotificationsListEmptyState}
-            NotificationsListErrorState={NotificationsListErrorState}
-            Notification={Notification}
-            NotificationSkeletonItem={NotificationSkeletonItem}
-            toggleNotificationsPanel={toggleNotificationsPanel}
-            openNotificationsPanel={openNotificationsPanel}
-            closeNotificationsPanel={closeNotificationsPanel}
-            activeView={activeView}
-            changeActiveView={changeActiveView}
-            markNotificationAsRead={markNotificationAsRead}
-            markAllNotificationsAsRead={markAllNotificationsAsRead}
-            unreadNotificationsCount={unreadNotificationsCount}
-            hasUnreadNotifications={hasUnreadNotifications}
-            activeNotifications={activeNotifications}
-            onNotificationClick={handleNotificationClick}
-            status={status}
-            error={error}
-            loadNextPage={loadNextPage}
-            hasNextPage={hasNextPage}
-            itemHeight={itemHeight}
-            itemsGap={itemsGap}
-            itemPadding={itemPadding}
-            skeletonItemsCount={skeletonItemsCount}
-            maxListHeight={renderInline ? undefined : maxListHeight}
-        />
+        <UiFocusTrap returnFocusTo={buttonRef}>
+            <NotificationsPanel
+                NotificationsPanelHeader={NotificationsPanelHeader}
+                NotificationsList={NotificationsList}
+                NotificationsListEmptyState={NotificationsListEmptyState}
+                NotificationsListErrorState={NotificationsListErrorState}
+                Notification={Notification}
+                NotificationSkeletonItem={NotificationSkeletonItem}
+                toggleNotificationsPanel={toggleNotificationsPanel}
+                openNotificationsPanel={openNotificationsPanel}
+                closeNotificationsPanel={closeNotificationsPanel}
+                activeView={activeView}
+                changeActiveView={changeActiveView}
+                markNotificationAsRead={markNotificationAsRead}
+                markAllNotificationsAsRead={markAllNotificationsAsRead}
+                unreadNotificationsCount={unreadNotificationsCount}
+                hasUnreadNotifications={hasUnreadNotifications}
+                activeNotifications={activeNotifications}
+                onNotificationClick={handleNotificationClick}
+                status={status}
+                error={error}
+                loadNextPage={loadNextPage}
+                hasNextPage={hasNextPage}
+                itemHeight={itemHeight}
+                itemsGap={itemsGap}
+                itemPadding={itemPadding}
+                skeletonItemsCount={skeletonItemsCount}
+                maxListHeight={renderInline ? undefined : maxListHeight}
+            />
+        </UiFocusTrap>
     );
 
     if (renderInline) {

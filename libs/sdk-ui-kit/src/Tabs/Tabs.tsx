@@ -1,9 +1,10 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import noop from "lodash/noop.js";
+import { isActionKey } from "../utils/events.js";
 
 /**
  * @internal
@@ -89,6 +90,15 @@ export class Tabs extends Component<ITabsProps, ITabsState> {
                 onClick={() => {
                     this.selectTab(tab);
                 }}
+                onKeyDown={(event) => {
+                    if (isActionKey(event)) {
+                        event.preventDefault();
+                        this.selectTab(tab);
+                    }
+                }}
+                role="tab"
+                aria-selected={tab.id === this.state.selectedTabId}
+                tabIndex={0}
             >
                 <span>
                     {tab.icon ? <i className={tab.icon} /> : null}
@@ -109,7 +119,7 @@ export class Tabs extends Component<ITabsProps, ITabsState> {
         });
 
         return (
-            <div role="tabs" className={classNames}>
+            <div role="tablist" className={classNames}>
                 {this.renderTabs()}
             </div>
         );
