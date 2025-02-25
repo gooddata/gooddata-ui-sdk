@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { put, select, call } from "redux-saga/effects";
 import { IDashboardDateFilter } from "@gooddata/sdk-model";
 
 import { IDashboardCommand } from "../../commands/base.js";
@@ -66,6 +66,7 @@ export function* resetCrossFiltering(cmd: IDashboardCommand) {
     yield put(drillActions.resetCrossFiltering());
 }
 
-export function* applyAllFilterContextHandler() {
+export function* applyAllFilterContextHandler(ctx: DashboardContext, cmd: IDashboardCommand) {
     yield put(filterContextActions.applyAllFilterContext());
+    yield call(dispatchFilterContextChanged, ctx, cmd);
 }

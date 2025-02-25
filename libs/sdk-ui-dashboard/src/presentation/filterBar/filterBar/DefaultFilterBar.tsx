@@ -98,7 +98,11 @@ export const useFilterBarProps = (): IFilterBarProps => {
                     )
                 ) {
                     dispatch(
-                        setAttributeFilterDisplayForm(localIdentifier!, filter.attributeFilter.displayForm),
+                        setAttributeFilterDisplayForm(
+                            localIdentifier!,
+                            filter.attributeFilter.displayForm,
+                            isWorkingSelectionChange,
+                        ),
                     );
                 }
                 if (displayAsLabel) {

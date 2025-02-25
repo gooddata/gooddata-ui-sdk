@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { invariant } from "ts-invariant";
@@ -25,7 +25,7 @@ export function* changeAttributeDisplayFormHandler(
     ctx: DashboardContext,
     cmd: SetAttributeFilterDisplayForm,
 ): SagaIterator<void> {
-    const { filterLocalId, displayForm } = cmd.payload;
+    const { filterLocalId, displayForm, isWorkingSelectionChange } = cmd.payload;
     const {
         backend: {
             capabilities: { supportsElementUris },
@@ -81,18 +81,20 @@ export function* changeAttributeDisplayFormHandler(
                 displayForm,
                 supportsElementUris,
                 enableDuplicatedLabelValuesInAttributeFilter,
+                isWorkingSelectionChange,
             }),
         ]),
     );
 
-    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
-        yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
+    if (!isWorkingSelectionChange) {
+        const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
+            yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
 
-    invariant(
-        changedFilter,
-        "Inconsistent state in changeAttributeDisplayFormHandler, cannot update attribute filter for given local identifier.",
-    );
-
-    yield dispatchDashboardEvent(attributeDisplayFormChanged(ctx, changedFilter, cmd.correlationId));
-    yield call(dispatchFilterContextChanged, ctx, cmd);
+        invariant(
+            changedFilter,
+            "Inconsistent state in changeAttributeDisplayFormHandler, cannot update attribute filter for given local identifier.",
+        );
+        yield dispatchDashboardEvent(attributeDisplayFormChanged(ctx, changedFilter, cmd.correlationId));
+        yield call(dispatchFilterContextChanged, ctx, cmd);
+    }
 }

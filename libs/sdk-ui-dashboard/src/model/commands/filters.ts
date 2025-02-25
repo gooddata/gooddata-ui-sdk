@@ -844,6 +844,7 @@ export function changeFilterContextSelectionByParams(
 export interface SetAttributeFilterDisplayFormPayload {
     filterLocalId: string;
     displayForm: ObjRef;
+    isWorkingSelectionChange?: boolean;
 }
 
 /**
@@ -865,17 +866,20 @@ export interface SetAttributeFilterDisplayForm extends IDashboardCommand {
  * @beta
  * @param filterLocalId - local identifier of the filter the display form is changed for
  * @param displayForm - newly selected display form
+ * @param isWorkingSelectionChange - determines if command updates working filter context or applied filter context. Applied filter context is default.
  * @returns change filter display form command
  */
 export function setAttributeFilterDisplayForm(
     filterLocalId: string,
     displayForm: ObjRef,
+    isWorkingSelectionChange?: boolean,
 ): SetAttributeFilterDisplayForm {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM",
         payload: {
             filterLocalId,
             displayForm,
+            isWorkingSelectionChange,
         },
     };
 }

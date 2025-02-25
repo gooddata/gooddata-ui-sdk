@@ -466,6 +466,7 @@ export interface IChangeAttributeDisplayFormPayload {
     readonly displayForm: ObjRef;
     readonly supportsElementUris?: boolean;
     readonly enableDuplicatedLabelValuesInAttributeFilter?: boolean;
+    readonly isWorkingSelectionChange?: boolean;
 }
 
 /**
@@ -477,18 +478,30 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
 ) => {
     invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
 
-    const { filterLocalId, displayForm, supportsElementUris, enableDuplicatedLabelValuesInAttributeFilter } =
-        action.payload;
+    const {
+        filterLocalId,
+        displayForm,
+        supportsElementUris,
+        enableDuplicatedLabelValuesInAttributeFilter,
+        isWorkingSelectionChange,
+    } = action.payload;
 
-    const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
+    let filterContextDefinition = state.filterContextDefinition;
+    if (isWorkingSelectionChange) {
+        invariant(
+            state.workingFilterContextDefinition,
+            "Attempt to edit uninitialized working filter context",
+        );
+        filterContextDefinition = state.workingFilterContextDefinition;
+    }
+
+    const currentFilterIndex = filterContextDefinition.filters.findIndex(
         (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
     );
 
     invariant(currentFilterIndex >= 0, "Attempt to set parent of a non-existing filter");
 
-    const currentFilter = state.filterContextDefinition.filters[
-        currentFilterIndex
-    ] as IDashboardAttributeFilter;
+    const currentFilter = filterContextDefinition.filters[currentFilterIndex] as IDashboardAttributeFilter;
 
     currentFilter.attributeFilter.displayForm = { ...displayForm };
     const isMultiSelect = currentFilter.attributeFilter.selectionMode !== "single";
