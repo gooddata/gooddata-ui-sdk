@@ -17,6 +17,7 @@ import {
     selectEnableFilterViews,
     selectEnableFlexibleLayout,
     applyAllDashboardFilters,
+    selectAreAllFiltersApplied,
 } from "../../../model/index.js";
 
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
@@ -55,6 +56,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
     const showFiltersConfigurationPanel = useDashboardSelector(selectShowFiltersConfigurationPanel);
     const isFilterViewsFeatureFlagEnabled = useDashboardSelector(selectEnableFilterViews);
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
+    const areAllFiltersApplied = useDashboardSelector(selectAreAllFiltersApplied);
     const dispatch = useDashboardDispatch();
 
     const applyFilterContext = useCallback(() => {
@@ -74,10 +76,10 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                 <FiltersRows rows={rows} />
                 <div className="filter-bar-configuration">
                     <UiButton
-                        // TODO: TODO disable this button
                         // TODO: use react-intl to translate this
                         label="Apply"
                         variant="primary"
+                        isDisabled={areAllFiltersApplied}
                         onClick={applyFilterContext}
                     />
                     {isFilterViewsFeatureFlagEnabled ? <FilterViews /> : null}

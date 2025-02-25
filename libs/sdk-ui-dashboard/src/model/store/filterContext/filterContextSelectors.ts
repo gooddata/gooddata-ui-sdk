@@ -17,6 +17,9 @@ import {
     isDashboardDateFilterWithDimension,
     isObjRef,
     isDashboardCommonDateFilter,
+    isDashboardDateFilter,
+    objRefToString,
+    getAttributeElementsItems,
 } from "@gooddata/sdk-model";
 import { ObjRefMap, newDisplayFormMap } from "../../../_staging/metadata/objRefMap.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
@@ -25,6 +28,7 @@ import isEmpty from "lodash/isEmpty.js";
 import { selectSupportsCircularDependencyInFilters } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../drill/drillSelectors.js";
 import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
+import { identity, isEqual, keyBy, keys, sortBy } from "lodash";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -69,7 +73,7 @@ export const selectOriginalFilterContextFilters: DashboardSelector<FilterContext
 );
 
 /**
- * This selector returns current dashboard's filter context definition.
+ * This selector returns current applied dashboard's filter context definition.
  *
  * @remarks
  * It is expected that the selector is called only after the filter context state is correctly initialized.
@@ -84,10 +88,110 @@ export const selectFilterContextDefinition: DashboardSelector<IFilterContextDefi
     (filterContextState) => {
         invariant(
             filterContextState.filterContextDefinition,
-            "attempting to access uninitialized filter context state",
+            "attempting to access uninitialized applied filter context state",
         );
 
         return filterContextState.filterContextDefinition!;
+    },
+);
+
+/**
+ * This selector returns current working dashboard's filter context definition.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the wokring filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @returns a {@link @gooddata/sdk-backend-spi#IFilterContextDefinition}
+ *
+ * @alpha
+ */
+export const selectWorkingFilterContextDefinition: DashboardSelector<IFilterContextDefinition> =
+    createSelector(selectSelf, (filterContextState) => {
+        invariant(
+            filterContextState.workingFilterContextDefinition,
+            "attempting to access uninitialized working filter context state",
+        );
+
+        return filterContextState.workingFilterContextDefinition!;
+    });
+
+/**
+ * Returns true if working filters and applied filters are same.
+ *
+ * Attribute filters are considered equal if
+ *  - they have same localIdentifier
+ *  - they have same elelments (order does not matter)
+ *  - all other fields are deep equal EXCEPT dispalyForm
+ * We exclude diplayForm becuase of primary display form migration code.
+ * Which changes dispaly forms after update.
+ *
+ * @alpha
+ */
+export const selectAreAllFiltersApplied: DashboardSelector<boolean | undefined> = createSelector(
+    selectFilterContextDefinition,
+    selectWorkingFilterContextDefinition,
+    (filterContext, workingFilterContext) => {
+        if (filterContext.filters.length !== workingFilterContext.filters.length) {
+            return false;
+        }
+
+        function filterLocalIdentifier(filter: FilterContextItem): string {
+            if (isDashboardAttributeFilter(filter)) {
+                const localIdentifier = filter.attributeFilter.localIdentifier;
+                if (!localIdentifier) {
+                    console.warn(
+                        "Attribute filter without localIdentifier found. Using displayForm as fallback which may not be reliable.",
+                    );
+                    return objRefToString(filter.attributeFilter.displayForm);
+                }
+                return localIdentifier;
+            }
+            if (isDashboardDateFilter(filter)) {
+                const localIdentifier = filter.dateFilter.localIdentifier;
+                if (!localIdentifier) {
+                    console.warn(
+                        "Date filter without localIdentifier found. Using dataSet as fallback which may not be reliable.",
+                    );
+                    return (
+                        (filter.dateFilter.dataSet && objRefToString(filter.dateFilter.dataSet)) ??
+                        "default_date_filter"
+                    );
+                }
+            }
+            throw new Error("Unknown filter type");
+        }
+
+        const appliedFilters = keyBy(filterContext.filters, filterLocalIdentifier);
+        const workingFilters = keyBy(workingFilterContext.filters, filterLocalIdentifier);
+
+        return keys(appliedFilters)
+            .map((key): boolean => {
+                const appliedFilter = appliedFilters[key];
+                const workingFilter = workingFilters[key];
+
+                if (isDashboardAttributeFilter(appliedFilter) && isDashboardAttributeFilter(workingFilter)) {
+                    const {
+                        displayForm: _unusedAppliedDisplayForm,
+                        attributeElements: appliedElements,
+                        ...attributeFilterWithoutDisplayForm
+                    } = appliedFilter.attributeFilter;
+                    const {
+                        displayForm: _unusedWorkingDisplayForm,
+                        attributeElements: workingElements,
+                        ...workingFilterWithoutDisplayForm
+                    } = workingFilter.attributeFilter;
+                    return (
+                        isEqual(attributeFilterWithoutDisplayForm, workingFilterWithoutDisplayForm) &&
+                        isEqual(
+                            sortBy(getAttributeElementsItems(appliedElements)),
+                            sortBy(getAttributeElementsItems(workingElements)),
+                        )
+                    );
+                }
+                return isEqual(appliedFilter, workingFilter);
+            })
+            .every(identity);
     },
 );
 
@@ -165,7 +269,7 @@ export const selectAttributeFilterDisplayFormsMap: DashboardSelector<
 });
 
 /**
- * This selector returns dashboard's filter context filters.
+ * This selector returns dashboard's applied filter context filters.
  *
  * @remarks
  * It is expected that the selector is called only after the filter context state is correctly initialized.
