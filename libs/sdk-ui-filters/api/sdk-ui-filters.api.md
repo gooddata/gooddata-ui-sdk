@@ -703,6 +703,8 @@ export interface IDateFilterCallbackProps {
     onClose?: () => void;
     // (undocumented)
     onOpen?: () => void;
+    // (undocumented)
+    onSelect?: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
 }
 
 // @public

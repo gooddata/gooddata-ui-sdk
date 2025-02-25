@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import isEqual from "lodash/isEqual.js";
 import isNil from "lodash/isNil.js";
@@ -66,6 +66,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
  */
 export interface IDateFilterCallbackProps {
     onApply: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
+    onSelect?: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
     onCancel?: () => void;
     onOpen?: () => void;
     onClose?: () => void;
@@ -225,7 +226,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
     };
 
     private onChangesDiscarded = () => {
-        this.setState(() => DateFilter.getStateFromProps(this.props));
+        this.setState(() => DateFilter.getStateFromProps(this.props), this.handleSelectChange);
     };
 
     private onCancelClicked = () => {
@@ -243,12 +244,19 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
     };
 
     private handleExcludeCurrentPeriodChange = (excludeCurrentPeriod: boolean) => {
-        this.setState({ excludeCurrentPeriod });
+        this.setState({ excludeCurrentPeriod }, this.handleSelectChange);
     };
 
     private handleSelectedFilterOptionChange = (selectedFilterOption: DateFilterOption) => {
-        this.setState((state) =>
-            DateFilter.getStateFromSelectedOption(selectedFilterOption, state.excludeCurrentPeriod),
+        this.setState(
+            (state) =>
+                DateFilter.getStateFromSelectedOption(selectedFilterOption, state.excludeCurrentPeriod),
+            this.handleSelectChange,
         );
+    };
+
+    private handleSelectChange = () => {
+        const normalizedSelectedFilterOption = normalizeSelectedFilterOption(this.state.selectedFilterOption);
+        this.props.onSelect?.(normalizedSelectedFilterOption, this.state.excludeCurrentPeriod);
     };
 }

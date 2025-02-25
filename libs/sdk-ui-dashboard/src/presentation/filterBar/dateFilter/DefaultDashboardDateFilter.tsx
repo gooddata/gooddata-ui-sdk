@@ -79,6 +79,17 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
         },
         [onFilterChanged, filter?.dateFilter.dataSet],
     );
+    const onSelect = useCallback<NonNullable<IDateFilterProps["onSelect"]>>(
+        (option, exclude) => {
+            setLastSelectedOptionId(option.localIdentifier);
+            onFilterChanged(
+                dateFilterOptionToDashboardDateFilter(option, exclude, filter?.dateFilter.dataSet),
+                option.localIdentifier,
+                true,
+            );
+        },
+        [onFilterChanged, filter?.dateFilter.dataSet],
+    );
     const dateFormat = settings.formatLocale
         ? getLocalizedIcuDateFormatPattern(settings.formatLocale)
         : settings.responsiveUiDateFormat;
@@ -128,6 +139,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             availableGranularities={config.availableGranularities}
             customFilterName={title}
             onApply={onApply}
+            onSelect={onSelect}
             dateFormat={dateFormat}
             locale={locale}
             isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}

@@ -84,6 +84,11 @@ export interface DateFilterSelection {
      * The localId of the DateFilterOption selected.
      */
     readonly dateFilterOptionLocalId?: string;
+
+    /**
+     * Determines if this command should change working (staged for application) filters or applied filters (used to compute data).
+     */
+    readonly isWorkingSelectionChange?: boolean;
 }
 
 /**
@@ -126,6 +131,7 @@ export function changeDateFilterSelection(
     dateFilterOptionLocalId?: string,
     correlationId?: string,
     dataSet?: ObjRef,
+    isWorkingSelectionChange?: boolean,
 ): ChangeDateFilterSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION",
@@ -137,6 +143,7 @@ export function changeDateFilterSelection(
             from,
             to,
             dateFilterOptionLocalId,
+            isWorkingSelectionChange,
         },
     };
 }
@@ -200,6 +207,7 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
 export function clearDateFilterSelection(
     correlationId?: string,
     dataSet?: ObjRef,
+    isWorkingSelectionChange?: boolean,
 ): ChangeDateFilterSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION",
@@ -208,6 +216,7 @@ export function clearDateFilterSelection(
             dataSet,
             type: "relative",
             granularity: "GDC.time.date",
+            isWorkingSelectionChange,
         },
     };
 }

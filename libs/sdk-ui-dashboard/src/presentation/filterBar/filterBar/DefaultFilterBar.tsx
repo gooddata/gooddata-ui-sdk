@@ -126,12 +126,18 @@ export const useFilterBarProps = (): IFilterBarProps => {
     );
 
     const onDateFilterChanged = useCallback(
-        (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => {
+        (
+            filter: IDashboardDateFilter | undefined,
+            dateFilterOptionLocalId?: string,
+            isWorkingSelectionChange?: boolean,
+        ) => {
             if (!filter) {
-                dispatch(clearDateFilterSelection());
+                dispatch(clearDateFilterSelection(undefined, undefined, isWorkingSelectionChange));
             } else if (isAllTimeDashboardDateFilter(filter)) {
                 // all time filter
-                dispatch(clearDateFilterSelection(undefined, filter?.dateFilter.dataSet));
+                dispatch(
+                    clearDateFilterSelection(undefined, filter?.dateFilter.dataSet, isWorkingSelectionChange),
+                );
             } else {
                 const { type, granularity, from, to, dataSet } = filter.dateFilter;
                 dispatch(
@@ -143,6 +149,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
                         dateFilterOptionLocalId,
                         undefined,
                         dataSet,
+                        isWorkingSelectionChange,
                     ),
                 );
             }

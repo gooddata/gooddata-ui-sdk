@@ -43,34 +43,38 @@ export function* changeDateFilterSelectionHandler(
         );
     }
 
+    const isWorkingSelectionChange = cmd.payload.isWorkingSelectionChange;
     yield put(
         filterContextActions.upsertDateFilter(
             isAllTime
-                ? { type: "allTime", dataSet: cmd.payload.dataSet }
+                ? { type: "allTime", dataSet: cmd.payload.dataSet, isWorkingSelectionChange }
                 : {
                       type: cmd.payload.type,
                       granularity: cmd.payload.granularity,
                       from: cmd.payload.from,
                       to: cmd.payload.to,
                       dataSet: cmd.payload.dataSet,
+                      isWorkingSelectionChange,
                   },
         ),
     );
 
-    const affectedFilter: ReturnType<typeof selectFilterContextDateFilter> = cmd.payload.dataSet
-        ? yield select(selectFilterContextDateFilterByDataSet(cmd.payload.dataSet))
-        : yield select(selectFilterContextDateFilter);
+    if (!cmd.payload.isWorkingSelectionChange) {
+        const affectedFilter: ReturnType<typeof selectFilterContextDateFilter> = cmd.payload.dataSet
+            ? yield select(selectFilterContextDateFilterByDataSet(cmd.payload.dataSet))
+            : yield select(selectFilterContextDateFilter);
 
-    const isCrossFiltering = yield select(selectIsCrossFiltering);
-    if (isCrossFiltering) {
-        yield call(resetCrossFiltering, cmd);
+        const isCrossFiltering = yield select(selectIsCrossFiltering);
+        if (isCrossFiltering) {
+            yield call(resetCrossFiltering, cmd);
+        }
+
+        yield dispatchDashboardEvent(
+            dateFilterChanged(ctx, affectedFilter, cmd.payload.dateFilterOptionLocalId, cmd.correlationId),
+        );
+
+        yield call(dispatchFilterContextChanged, ctx, cmd);
     }
-
-    yield dispatchDashboardEvent(
-        dateFilterChanged(ctx, affectedFilter, cmd.payload.dateFilterOptionLocalId, cmd.correlationId),
-    );
-
-    yield call(dispatchFilterContextChanged, ctx, cmd);
 }
 
 function dateFilterSelectionToDateFilter(dateFilterSelection: DateFilterSelection): IDashboardDateFilter {

@@ -145,6 +145,7 @@ const setPreloadedAttributesWithReferences: FilterContextReducer<
 export interface IUpsertDateFilterAllTimePayload {
     readonly type: "allTime";
     readonly dataSet?: ObjRef;
+    readonly isWorkingSelectionChange?: boolean;
 }
 
 export interface IUpsertDateFilterNonAllTimePayload {
@@ -153,23 +154,27 @@ export interface IUpsertDateFilterNonAllTimePayload {
     readonly dataSet?: ObjRef;
     readonly from?: DateString | number;
     readonly to?: DateString | number;
+    readonly isWorkingSelectionChange?: boolean;
 }
 
 export type IUpsertDateFilterPayload = IUpsertDateFilterAllTimePayload | IUpsertDateFilterNonAllTimePayload;
 
 const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayload>> = (state, action) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const filterContextDefinition = action.payload.isWorkingSelectionChange
+        ? state.workingFilterContextDefinition
+        : state.filterContextDefinition;
+    invariant(filterContextDefinition, "Attempt to edit uninitialized filter context");
 
     const dateDataSet = action.payload.dataSet;
 
     let existingFilterIndex;
 
     if (dateDataSet) {
-        existingFilterIndex = state.filterContextDefinition.filters.findIndex(
+        existingFilterIndex = filterContextDefinition.filters.findIndex(
             (item) => isDashboardDateFilter(item) && areObjRefsEqual(item.dateFilter.dataSet, dateDataSet),
         );
     } else {
-        existingFilterIndex = state.filterContextDefinition.filters.findIndex((item) =>
+        existingFilterIndex = filterContextDefinition.filters.findIndex((item) =>
             isDashboardCommonDateFilter(item),
         );
     }
@@ -177,20 +182,21 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
     if (action.payload.type === "allTime") {
         if (existingFilterIndex >= 0) {
             if (dateDataSet) {
-                const dateFilter = state.filterContextDefinition.filters[existingFilterIndex];
+                const dateFilter = filterContextDefinition.filters[existingFilterIndex];
 
                 if (isDashboardDateFilter(dateFilter)) {
-                    state.filterContextDefinition.filters[existingFilterIndex] =
-                        newAllTimeDashboardDateFilter(dateFilter.dateFilter.dataSet);
+                    filterContextDefinition.filters[existingFilterIndex] = newAllTimeDashboardDateFilter(
+                        dateFilter.dateFilter.dataSet,
+                    );
                 }
             } else {
                 //if allTime common DF remove the date filter altogether
-                state.filterContextDefinition.filters.splice(existingFilterIndex, 1);
+                filterContextDefinition.filters.splice(existingFilterIndex, 1);
             }
         }
     } else if (existingFilterIndex >= 0) {
         const { type, granularity, from, to } = action.payload;
-        const dateFilter = state.filterContextDefinition.filters[existingFilterIndex];
+        const dateFilter = filterContextDefinition.filters[existingFilterIndex];
 
         if (isDashboardDateFilter(dateFilter)) {
             dateFilter.dateFilter.type = type;
@@ -200,7 +206,7 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
         }
     } else {
         const { type, granularity, from, to, dataSet } = action.payload;
-        state.filterContextDefinition.filters.unshift({
+        filterContextDefinition.filters.unshift({
             dateFilter: {
                 granularity,
                 type,
