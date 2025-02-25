@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { DataViewFacade, ExplicitDrill, OnFiredDrillEvent } from "@gooddata/sdk-ui";
 
@@ -76,4 +76,9 @@ export interface IRepeaterChartProps {
      * Called when user triggers a drill on a visualization.
      */
     onDrill?: OnFiredDrillEvent;
+
+    /**
+     * Called when the repeater chart finished rendering.
+     */
+    afterRender?: () => void;
 }

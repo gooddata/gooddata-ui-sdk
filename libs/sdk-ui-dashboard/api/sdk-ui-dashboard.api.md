@@ -4425,6 +4425,8 @@ export interface IDashboardInsightMenuTitleProps {
 
 // @public
 export interface IDashboardInsightProps {
+    // @internal (undocumented)
+    afterRender?: () => void;
     // @alpha
     backend?: IAnalyticalBackend;
     // @alpha (undocumented)

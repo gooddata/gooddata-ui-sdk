@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
@@ -15,12 +15,16 @@ import {
     UnmountFunction,
 } from "../../interfaces/Visualization.js";
 
-export type IIntlLocalizedUnknownVisualizationClass = WrappedComponentProps;
+export type IIntlLocalizedUnknownVisualizationClass = WrappedComponentProps & { onAfterRender?: () => void };
 export class LocalizedUnknownVisualizationClass extends React.Component<IIntlLocalizedUnknownVisualizationClass> {
     private errorDetails: {
         message: string;
         description: string;
     };
+
+    public componentDidMount(): void {
+        this.props.onAfterRender?.();
+    }
 
     constructor(props: IIntlLocalizedUnknownVisualizationClass) {
         super(props);
@@ -68,7 +72,7 @@ export class PluggableUnknownChart extends AbstractPluggableVisualization {
     ): void {
         this.renderFun(
             <IntlWrapper locale={options.locale}>
-                <IntlLocalizedUnknownVisualizationClass />
+                <IntlLocalizedUnknownVisualizationClass onAfterRender={this.afterRender} />
             </IntlWrapper>,
             this.getElement(),
         );

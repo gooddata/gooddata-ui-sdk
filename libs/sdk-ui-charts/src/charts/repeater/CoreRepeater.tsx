@@ -50,6 +50,7 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
         config = {},
         drillableItems = [],
         onDrill = noop,
+        afterRender = noop,
     } = props;
 
     const intl = useIntl();
@@ -190,6 +191,7 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
             config={configWithColorPalette}
             onError={onError}
             onColumnResized={onColumnResized}
+            afterRender={afterRender}
         />
     );
 };

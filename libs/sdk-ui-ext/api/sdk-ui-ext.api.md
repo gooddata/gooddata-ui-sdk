@@ -396,7 +396,9 @@ export interface IInsightErrorProps {
 }
 
 // @internal (undocumented)
-export interface IInsightRendererProps extends Omit<IInsightViewProps, "insight" | "TitleComponent" | "onInsightLoaded" | "showTitle" | "afterRender"> {
+export interface IInsightRendererProps extends Omit<IInsightViewProps, "insight" | "TitleComponent" | "onInsightLoaded" | "showTitle"> {
+    // (undocumented)
+    afterRender?: () => void;
     // (undocumented)
     colorPalette: IColorPalette | undefined;
     // (undocumented)

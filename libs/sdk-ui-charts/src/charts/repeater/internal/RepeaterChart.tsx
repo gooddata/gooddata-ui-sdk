@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { useMemo, useState } from "react";
 import { AgGridReact } from "@ag-grid-community/react";
@@ -29,11 +29,12 @@ import { InlineColumnChart } from "./InlineColumnChart.js";
 import { RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
 import isNil from "lodash/isNil.js";
 import { useDrilling } from "../hooks/useDrilling.js";
+import { useRenderWatcher } from "../hooks/useRenderWatcher.js";
 
 const DEFAULT_COL_DEF = { resizable: true };
 
 export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
-    const { dataView, onError, config } = props;
+    const { dataView, onError, config, afterRender } = props;
     const dataSource = useMemo(
         () => new AgGridDatasource(dataView, { onError }, config),
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -142,6 +143,8 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
     } = useResizing(columnDefs, items, props);
     const { onCellClicked, onGridReady: onDrillingGridReady } = useDrilling(columnDefs, items, props);
 
+    const { onFirstDataRendered } = useRenderWatcher(afterRender);
+
     return (
         <div className="gd-repeater ag-theme-balham s-repeater" ref={containerRef}>
             <AgGridReact
@@ -169,6 +172,7 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
                     onDrillingGridReady(e);
                 }}
                 onColumnResized={onColumnResized}
+                onFirstDataRendered={onFirstDataRendered}
             />
         </div>
     );

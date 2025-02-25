@@ -169,6 +169,11 @@ export interface IDashboardInsightProps {
      * @alpha
      */
     exportData?: WidgetExportDataAttributes;
+
+    /**
+     * @internal
+     */
+    afterRender?: () => void;
 }
 
 /**

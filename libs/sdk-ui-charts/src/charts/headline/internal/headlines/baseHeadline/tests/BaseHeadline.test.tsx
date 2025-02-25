@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 import { afterAll, beforeEach, describe, expect, it, SpyInstance, vi } from "vitest";
 import { render } from "@testing-library/react";
@@ -59,8 +59,11 @@ describe("BaseHeadline", () => {
 
     it("should call after render callback on when component rendered", () => {
         const onAfterRender = vi.fn();
+        vi.useFakeTimers();
         renderBaseHeadline({ primaryItem, onAfterRender });
 
+        vi.runAllTimers();
+        vi.useRealTimers();
         expect(onAfterRender).toHaveBeenCalledTimes(1);
     });
 
