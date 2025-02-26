@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Button, useMediaQuery } from "@gooddata/sdk-ui-kit";
@@ -10,8 +10,9 @@ import {
     switchToEditRenderMode,
     useDashboardDispatch,
     useDashboardSelector,
+    selectCanEnterEditMode,
 } from "../../../../../model/index.js";
-import { selectCanEnterEditMode } from "../selectors.js";
+
 import { IEditButtonProps } from "./types.js";
 
 const ALIGN_POINTS_TOOLTIP = [{ align: "bc tr" }];

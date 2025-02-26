@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import {
     GenAIObjectType,
@@ -81,7 +81,7 @@ export interface IChatThread {
     /**
      * Load chat history for the chat thread.
      */
-    loadHistory(fromInteractionId?: number, options?: { signal?: AbortSignal }): Promise<IChatThreadHistory>;
+    loadHistory(fromInteractionId?: string, options?: { signal?: AbortSignal }): Promise<IChatThreadHistory>;
     /**
      * Reset the chat thread history.
      */
@@ -89,7 +89,7 @@ export interface IChatThread {
     /**
      * Save user feedback for the interaction.
      */
-    saveUserFeedback(interactionId: number, feedback: GenAIChatInteractionUserFeedback): Promise<void>;
+    saveUserFeedback(interactionId: string, feedback: GenAIChatInteractionUserFeedback): Promise<void>;
     /**
      * Add a user message to the chat thread.
      */
@@ -144,5 +144,5 @@ export interface IGenAIChatEvaluation {
     createdVisualizations?: IGenAICreatedVisualizations;
     errorResponse?: string;
     chatHistoryThreadId?: string;
-    chatHistoryInteractionId?: number;
+    chatHistoryInteractionId?: string;
 }

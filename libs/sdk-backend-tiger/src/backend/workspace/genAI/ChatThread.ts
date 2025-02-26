@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { GenAIChatInteractionUserFeedback, IGenAIUserContext } from "@gooddata/sdk-model";
 import {
@@ -21,7 +21,7 @@ export class ChatThreadService implements IChatThread {
     ) {}
 
     async loadHistory(
-        fromInteractionId?: number,
+        fromInteractionId?: string,
         options?: { signal?: AbortSignal },
     ): Promise<IChatThreadHistory> {
         const response = await this.authCall((client) => {
@@ -51,7 +51,7 @@ export class ChatThreadService implements IChatThread {
     }
 
     async saveUserFeedback(
-        chatHistoryInteractionId: number,
+        chatHistoryInteractionId: string,
         userFeedback: GenAIChatInteractionUserFeedback,
     ): Promise<void> {
         await this.authCall((client) => {

@@ -286,6 +286,33 @@ export interface IWorkspaceDashboardsService {
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
 
     /**
+     * Export dashboard to pdf. You can override dashboard filters with custom filters.
+     * When no custom filters are set, the persisted dashboard filters will be used.
+     *
+     * PDF file is downloaded and attached as Blob data to the current window instance.
+     *
+     * @param ref - dashboard reference
+     * @param format - export format
+     * @param filters - Override stored dashboard filters with custom filters
+     * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
+     */
+    exportDashboardToPresentation(
+        ref: ObjRef,
+        format: "PDF" | "PPTX",
+        filters?: FilterContextItem[],
+    ): Promise<IExportResult>;
+
+    /**
+     * Export dashboard to tabular.
+     *
+     * Tabular file is downloaded and attached as Blob data to the current window instance.
+     *
+     * @param ref - dashboard reference
+     * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
+     */
+    exportDashboardToTabular(ref: ObjRef): Promise<IExportResult>;
+
+    /**
      * Create scheduled mail for the dashboard
      *
      * @param scheduledMail - scheduled email definition

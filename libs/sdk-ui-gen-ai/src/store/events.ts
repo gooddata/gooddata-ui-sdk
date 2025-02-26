@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 /**
  * A common event definition for the Chat component.
@@ -79,7 +79,7 @@ export const isChatUserMessageEvent = (event: ChatEvent): event is ChatUserMessa
  */
 export type ChatAssistantMessageEvent = BaseEvent & {
     type: "chatAssistantMessage";
-    interactionId?: number;
+    interactionId?: string;
     useCase: string;
 };
 
@@ -97,7 +97,7 @@ export const isChatAssistantMessageEvent = (event: ChatEvent): event is ChatAssi
  */
 export type ChatFeedbackEvent = BaseEvent & {
     type: "chatFeedback";
-    interactionId?: number;
+    interactionId?: string;
     feedback: "POSITIVE" | "NEGATIVE" | "NONE";
 };
 

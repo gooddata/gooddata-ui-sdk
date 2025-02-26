@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { ComponentType, ReactNode } from "react";
 
 /**
@@ -28,6 +28,24 @@ export interface IMenuButtonItemButton extends IMenuItemCommonProps {
 /**
  * @alpha
  */
+export interface IMenuButtonItemMenu extends IMenuItemCommonProps {
+    type: "menu";
+    itemName: string;
+    /**
+     * If specified, the value is shown on hover of the item as a tooltip.
+     */
+    tooltip?: string | ReactNode;
+    disabled?: boolean;
+    icon?: string | ReactNode;
+    items: [
+        IMenuButtonItemButton | IMenuButtonItemSeparator | IMenuButtonItemHeader,
+        ...(IMenuButtonItemButton | IMenuButtonItemSeparator | IMenuButtonItemHeader)[]
+    ];
+}
+
+/**
+ * @alpha
+ */
 export interface IMenuButtonItemSeparator extends IMenuItemCommonProps {
     type: "separator";
 }
@@ -43,7 +61,11 @@ export interface IMenuButtonItemHeader extends IMenuItemCommonProps {
 /**
  * @alpha
  */
-export type IMenuButtonItem = IMenuButtonItemButton | IMenuButtonItemSeparator | IMenuButtonItemHeader;
+export type IMenuButtonItem =
+    | IMenuButtonItemButton
+    | IMenuButtonItemSeparator
+    | IMenuButtonItemHeader
+    | IMenuButtonItemMenu;
 
 /**
  * @alpha

@@ -108,6 +108,8 @@ export {
     selectEnableDashboardFiltersApplyModes,
     selectDashboardFiltersApplyMode,
     selectEnableExecutionCancelling,
+    selectEnableOrchestratedTabularExports,
+    selectEnableDashboardTabularExport,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -188,6 +190,25 @@ export {
     selectImplicitDrillsToUrlByWidgetRef,
     selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
 } from "./widgetDrills/widgetDrillSelectors.js";
+
+export {
+    selectDeleteVisible,
+    selectFilterViewsVisible,
+    selectPdfExportVisible,
+    selectSaveAsVisible,
+    selectCommonExportAvailable,
+    selectSlideShowExportAvailable,
+    selectSlideShowExportVisible,
+    selectCanEnterEditModeAndIsLoaded,
+    selectIsShareButtonVisible,
+    selectIsSaveAsNewButtonVisible,
+    hasEditDashboardPermission,
+    hasEditLockedDashboardPermission,
+    selectCanSaveDashboard,
+    selectCanEnterEditMode,
+    selectIsPrivateDashboard,
+    selectIsCurrentDashboardVisibleInList,
+} from "./topBar/topBarSelectors.js";
 
 export type { UndoEnhancedState, UndoEntry } from "./_infra/undoEnhancer.js";
 export type { LayoutState, LayoutStash } from "./layout/layoutState.js";

@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../types.js";
 import { messagesSliceName } from "./messagesSlice.js";
@@ -34,7 +34,7 @@ export const globalErrorSelector: (state: RootState) => string | undefined = cre
     (state) => state.globalError,
 );
 
-export const lastMessageIdSelector: (state: RootState) => number | undefined = createSelector(
+export const lastMessageIdSelector: (state: RootState) => string | undefined = createSelector(
     messagesSelector,
     (messages) => [...messages].reverse().find((message) => !!message.id)?.id,
 );

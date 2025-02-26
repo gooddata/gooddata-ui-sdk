@@ -1,72 +1,33 @@
-// (C) 2022-2024 GoodData Corporation
-import React, { useCallback, useMemo, useRef } from "react";
+// (C) 2022-2025 GoodData Corporation
+import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
-import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
-import { useToastMessage, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import {
-    exportDashboardToPdf,
-    selectCanCreateAnalyticalDashboard,
-    selectCanExportPdf,
-    selectEnableKPIDashboardExportPDF,
-    selectEntitlementExportPdf,
-    selectIsInEditMode,
-    selectIsInViewMode,
-    selectIsNewDashboard,
+    uiActions,
     selectIsReadOnly,
-    selectIsSaveAsNewButtonHidden,
+    selectIsNewDashboard,
     selectLayoutHasAnalyticalWidgets,
     selectMenuButtonItemsVisibility,
-    uiActions,
-    useDashboardCommandProcessing,
+    selectEnableDashboardTabularExport,
+    selectEnableOrchestratedTabularExports,
     useDashboardDispatch,
     useDashboardScheduledEmails,
     useDashboardSelector,
     useDashboardAlerts,
-    selectEnableFilterViews,
-    selectDisableFilterViews,
     selectCanCreateAutomation,
+    selectDeleteVisible,
+    selectFilterViewsVisible,
+    selectPdfExportVisible,
+    selectSaveAsVisible,
+    selectSlideShowExportVisible,
 } from "../../../model/index.js";
-import { downloadFile } from "../../../_staging/fileUtils/downloadFile.js";
 import { IMenuButtonItem } from "../types.js";
-import { messages } from "../../../locales.js";
-import { selectIsSaveAsNewButtonVisible } from "../buttonBar/button/index.js";
 
-const useExportDashboard = () => {
-    const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
-    const lastExportMessageId = useRef("");
-    const { run: exportDashboard } = useDashboardCommandProcessing({
-        commandCreator: exportDashboardToPdf,
-        successEvent: "GDC.DASH/EVT.EXPORT.PDF.RESOLVED",
-        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
-        onBeforeRun: () => {
-            lastExportMessageId.current = addProgress(
-                messages.messagesExportResultStart,
-                // make sure the message stays there until removed by either success or error
-                { duration: 0 },
-            );
-        },
-        onSuccess: (event) => {
-            if (lastExportMessageId.current) {
-                removeMessage(lastExportMessageId.current);
-            }
-            addSuccess(messages.messagesExportResultSuccess);
-            downloadFile(event.payload.result);
-        },
-        onError: (error) => {
-            if (lastExportMessageId.current) {
-                removeMessage(lastExportMessageId.current);
-            }
-
-            if (isProtectedDataError(error)) {
-                addError(messages.messagesExportResultRestrictedError);
-            } else {
-                addError(messages.messagesExportResultError);
-            }
-        },
-    });
-    return exportDashboard;
-};
+import { useExportDashboardToPdf } from "./useExportDashboardToPdf.js";
+import { useExportDashboardToExcel } from "./useExportDashboardToExcel.js";
+import { useExportDashboardToPdfPresentation } from "./useExportDashboardToPdfPresentation.js";
+import { useExportDashboardToPowerPointPresentation } from "./useExportDashboardToPowerPointPresentation.js";
 
 // inject separator to each visible section, flat map the sections into a list of menu items
 const buildMenuItemList = (menuSections: IMenuButtonItem[][]): IMenuButtonItem[] =>
@@ -138,49 +99,65 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         openSaveAsDialog();
     }, [isNewDashboard, openSaveAsDialog]);
 
-    const exportDashboard = useExportDashboard();
+    const { exportDashboardToPdf, exportDashboardToPdfStatus } = useExportDashboardToPdf();
     const defaultOnExportToPdf = useCallback(() => {
         if (isNewDashboard) {
             return;
         }
-        exportDashboard();
-    }, [exportDashboard, isNewDashboard]);
+        exportDashboardToPdf();
+    }, [exportDashboardToPdf, isNewDashboard]);
+
+    const { exportDashboardToExcel, exportDashboardToExcelStatus } = useExportDashboardToExcel();
+    const defaultOnExportToExcel = useCallback(() => {
+        if (isNewDashboard) {
+            return;
+        }
+        exportDashboardToExcel();
+    }, [exportDashboardToExcel, isNewDashboard]);
+
+    const { exportDashboardToPdfPresentation, exportDashboardToPdfPresentationStatus } =
+        useExportDashboardToPdfPresentation();
+    const defaultOnExportToPdfPresentation = useCallback(() => {
+        if (isNewDashboard) {
+            return;
+        }
+        exportDashboardToPdfPresentation();
+    }, [exportDashboardToPdfPresentation, isNewDashboard]);
+
+    const { exportDashboardToPptPresentation, exportDashboardToPptPresentationStatus } =
+        useExportDashboardToPowerPointPresentation();
+    const defaultOnExportToPowerPointPresentation = useCallback(() => {
+        if (isNewDashboard) {
+            return;
+        }
+        exportDashboardToPptPresentation();
+    }, [exportDashboardToPptPresentation, isNewDashboard]);
 
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
-    const isInViewMode = useDashboardSelector(selectIsInViewMode);
-    const isInEditMode = useDashboardSelector(selectIsInEditMode);
-    const canCreateDashboard = useDashboardSelector(selectCanCreateAnalyticalDashboard);
-    const isSaveAsNewHidden = useDashboardSelector(selectIsSaveAsNewButtonHidden);
-    const isStandaloneSaveAsNewButtonVisible = useDashboardSelector(selectIsSaveAsNewButtonVisible);
 
-    const canExport = useDashboardSelector(selectCanExportPdf);
-    const isKPIDashboardExportPDFEnabled = !!useDashboardSelector(selectEnableKPIDashboardExportPDF);
-    const isExportPdfEntitlementPresent = !!useDashboardSelector(selectEntitlementExportPdf);
+    const isEnableDashboardTabularExport = useDashboardSelector(selectEnableDashboardTabularExport);
+    const isEnableOrchestratedTabularExports = useDashboardSelector(selectEnableOrchestratedTabularExports);
+
+    const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
+    const isPdfExportVisible = useDashboardSelector(selectPdfExportVisible);
 
     const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
 
-    const isFilterViewsFeatureFlagEnabled = useDashboardSelector(selectEnableFilterViews);
-    const isFilterViewsEnabledForDashboard = !useDashboardSelector(selectDisableFilterViews);
-    const isFilterViewsVisible =
-        isMobile && isFilterViewsFeatureFlagEnabled && isFilterViewsEnabledForDashboard;
+    const isFilterViewsEnabled = useDashboardSelector(selectFilterViewsVisible);
+    const isFilterViewsVisible = isMobile && isFilterViewsEnabled;
 
-    const isDeleteVisible = isInEditMode && (menuButtonItemsVisibility.deleteButton ?? true);
+    const isDeleteVisible = useDashboardSelector(selectDeleteVisible);
 
     // Do not show save as new button in menu item when it is already shown as a standalone top bar button.
-    const isSaveAsVisible =
-        !isStandaloneSaveAsNewButtonVisible &&
-        canCreateDashboard &&
-        !isSaveAsNewHidden &&
-        (menuButtonItemsVisibility.saveAsNewButton ?? true);
+    const isSaveAsVisible = useDashboardSelector(selectSaveAsVisible);
     const isSaveAsDisabled = isEmptyLayout || isNewDashboard || isReadOnly;
 
-    const isPdfExportVisible =
-        isInViewMode &&
-        canExport &&
-        isKPIDashboardExportPDFEnabled &&
-        isExportPdfEntitlementPresent &&
-        (menuButtonItemsVisibility.pdfExportButton ?? true);
+    const isInProgress =
+        exportDashboardToPdfStatus === "running" ||
+        exportDashboardToExcelStatus === "running" ||
+        exportDashboardToPdfPresentationStatus === "running" ||
+        exportDashboardToPptPresentationStatus === "running";
 
     return useMemo<IMenuButtonItem[]>(() => {
         if (isNewDashboard) {
@@ -277,8 +254,61 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                     itemId: "pdf-export-item", // careful, this is also used as a selector in tests, do not change
                     itemName: intl.formatMessage({ id: "options.menu.export.PDF" }),
                     onClick: defaultOnExportToPdf,
-                    visible: isPdfExportVisible,
+                    visible: isPdfExportVisible && !isExportVisible,
                     icon: "gd-icon-download",
+                },
+                {
+                    type: "menu",
+                    itemId: "menu-exports-list", // careful, this is also used as a selector in tests, do not change
+                    itemName: intl.formatMessage({ id: "options.menu.export" }),
+                    visible: isExportVisible,
+                    icon: "gd-icon-download",
+                    items: [
+                        {
+                            type: "button",
+                            itemId: "pdf-export-item", // careful, this is also used as a selector in tests, do not change
+                            itemName: intl.formatMessage({ id: "options.menu.export.PDF" }),
+                            onClick: defaultOnExportToPdf,
+                            visible: menuButtonItemsVisibility.pdfExportButton ?? true,
+                            disabled: isInProgress,
+                            icon: "gd-icon-download",
+                        },
+                        {
+                            type: "button",
+                            itemId: "excel-export-item", // careful, this is also used as a selector in tests, do not change
+                            itemName: intl.formatMessage({ id: "options.menu.export.EXCEL" }),
+                            onClick: defaultOnExportToExcel,
+                            visible:
+                                (menuButtonItemsVisibility.excelExportButton ?? true) &&
+                                isEnableDashboardTabularExport &&
+                                isEnableOrchestratedTabularExports,
+                            disabled: isInProgress,
+                            icon: "gd-icon-download",
+                        },
+                        {
+                            type: "header",
+                            itemId: "export-header-presentation",
+                            itemName: intl.formatMessage({ id: "options.menu.export.header.presentation" }),
+                        },
+                        {
+                            type: "button",
+                            itemId: "pdf-presentation-export-item", // careful, this is also used as a selector in tests, do not change
+                            itemName: intl.formatMessage({ id: "options.menu.export.PDF" }),
+                            onClick: defaultOnExportToPdfPresentation,
+                            visible: menuButtonItemsVisibility.pdfExportButton ?? true,
+                            disabled: isInProgress,
+                            icon: "gd-icon-download",
+                        },
+                        {
+                            type: "button",
+                            itemId: "pptx-presentation-export-item", // careful, this is also used as a selector in tests, do not change
+                            itemName: intl.formatMessage({ id: "options.menu.export.PPTX" }),
+                            onClick: defaultOnExportToPowerPointPresentation,
+                            visible: menuButtonItemsVisibility.powerPointExportButton ?? true,
+                            disabled: isInProgress,
+                            icon: "gd-icon-download",
+                        },
+                    ],
                 },
             ],
             // delete section
@@ -295,13 +325,20 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
             ],
         ]);
     }, [
+        isEnableDashboardTabularExport,
+        isEnableOrchestratedTabularExports,
         defaultOnExportToPdf,
         defaultOnSaveAs,
         defaultOnScheduleEmailing,
         defaultOnScheduleEmailingManagement,
+        defaultOnAlertsManagement,
+        defaultOnExportToExcel,
+        defaultOnExportToPdfPresentation,
+        defaultOnExportToPowerPointPresentation,
         intl,
         isDeleteVisible,
         isFilterViewsVisible,
+        isAlertsManagementVisible,
         isNewDashboard,
         isPdfExportVisible,
         isReadOnly,
@@ -313,8 +350,11 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         openDeleteDialog,
         openFilterViewsAddDialog,
         openFilterViewsListDialog,
-        isAlertsManagementVisible,
+        isExportVisible,
+        menuButtonItemsVisibility.pdfExportButton,
+        menuButtonItemsVisibility.excelExportButton,
+        menuButtonItemsVisibility.powerPointExportButton,
+        isInProgress,
         canCreateAutomation,
-        defaultOnAlertsManagement,
     ]);
 }

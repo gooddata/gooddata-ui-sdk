@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { v4 as uuidv4 } from "uuid";
 import {
     GenAIChatRoutingUseCase,
@@ -144,7 +144,7 @@ export type BaseMessage = {
     /**
      * Server-side ID for the message.
      */
-    id?: number;
+    id?: string;
     /**
      * Local ID for the message. We need the id right away for optimistic rendering.
      */
@@ -212,7 +212,7 @@ export const isAssistantMessage = (message?: Message): message is AssistantMessa
 export const makeAssistantMessage = (
     content: Contents[],
     complete = false,
-    id?: number,
+    id?: string,
     feedback: GenAIChatInteractionUserFeedback = "NONE",
 ): AssistantMessage => ({
     id: id,

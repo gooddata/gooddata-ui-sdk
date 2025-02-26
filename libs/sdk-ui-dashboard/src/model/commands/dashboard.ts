@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { DashboardConfig } from "../types/commonTypes.js";
 import {
@@ -426,6 +426,82 @@ export function exportDashboardToPdf(correlationId?: string): ExportDashboardToP
         correlationId,
     };
 }
+
+/**
+ * @beta
+ */
+export interface ExportDashboardToExcel extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.EXPORT.EXCEL";
+}
+
+/**
+ * Creates the {@link ExportDashboardToExcel} command. Dispatching this command will result in a request to export
+ * the dashboard to a EXCEL file. If successful, an instance of {@link DashboardExportToExcelResolved} will be emitted
+ * with the URL of the resulting file.
+ *
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @beta
+ */
+export function exportDashboardToExcel(correlationId?: string): ExportDashboardToExcel {
+    return {
+        type: "GDC.DASH/CMD.EXPORT.EXCEL",
+        correlationId,
+    };
+}
+
+/**
+ * @beta
+ */
+export interface ExportDashboardToPdfPresentation extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.EXPORT.PDF_PRESENTATION";
+}
+
+/**
+ * Creates the {@link ExportDashboardToPdfPresentation} command. Dispatching this command will result in a request to export
+ * the dashboard to a Pdf presentation file. If successful, an instance of {@link DashboardExportToPdfPresentationResolved} will be emitted
+ * with the URL of the resulting file.
+ *
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @beta
+ */
+export function exportDashboardToPdfPresentation(correlationId?: string): ExportDashboardToPdfPresentation {
+    return {
+        type: "GDC.DASH/CMD.EXPORT.PDF_PRESENTATION",
+        correlationId,
+    };
+}
+
+/**
+ * @beta
+ */
+export interface ExportDashboardToPptPresentation extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.EXPORT.PPT_PRESENTATION";
+}
+
+/**
+ * Creates the {@link ExportDashboardToPptPresentation} command. Dispatching this command will result in a request to export
+ * the dashboard to a Ppt presentation file. If successful, an instance of {@link DashboardExportToPptPresentationResolved} will be emitted
+ * with the URL of the resulting file.
+ *
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @beta
+ */
+export function exportDashboardToPptPresentation(correlationId?: string): ExportDashboardToPptPresentation {
+    return {
+        type: "GDC.DASH/CMD.EXPORT.PPT_PRESENTATION",
+        correlationId,
+    };
+}
+
+//
+//
+//
 
 /**
  * Payload of the {@link SetDashboardDateFilterConfigMode} command.

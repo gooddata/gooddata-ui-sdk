@@ -7,6 +7,7 @@ import {
     SaveDashboard,
     SaveDashboardAs,
     ExportDashboardToPdf,
+    ExportDashboardToExcel,
     DeleteDashboard,
     ChangeSharing,
     SetDashboardDateFilterConfigMode,
@@ -15,6 +16,8 @@ import {
     SetDateFilterConfigTitle,
     SetAttributeFilterLimitingItems,
     SetDashboardAttributeFilterConfigDisplayAsLabel,
+    ExportDashboardToPdfPresentation,
+    ExportDashboardToPptPresentation,
 } from "./dashboard.js";
 import { TriggerEvent } from "./events.js";
 import { UpsertExecutionResult } from "./executionResults.js";
@@ -125,6 +128,9 @@ export type {
     RenameDashboardPayload,
     ResetDashboard,
     ExportDashboardToPdf,
+    ExportDashboardToPptPresentation,
+    ExportDashboardToPdfPresentation,
+    ExportDashboardToExcel,
     DeleteDashboard,
     ChangeSharing,
     ChangeSharingPayload,
@@ -150,6 +156,9 @@ export {
     renameDashboard,
     resetDashboard,
     exportDashboardToPdf,
+    exportDashboardToExcel,
+    exportDashboardToPdfPresentation,
+    exportDashboardToPptPresentation,
     deleteDashboard,
     changeSharing,
     setDashboardDateFilterConfigMode,
@@ -514,6 +523,9 @@ export type DashboardCommands =
     | RenameDashboard
     | ResetDashboard
     | ExportDashboardToPdf
+    | ExportDashboardToExcel
+    | ExportDashboardToPdfPresentation
+    | ExportDashboardToPptPresentation
     | DeleteDashboard
     | TriggerEvent
     | UpsertExecutionResult

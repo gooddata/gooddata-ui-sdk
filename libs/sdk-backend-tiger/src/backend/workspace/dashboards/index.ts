@@ -420,15 +420,84 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 visualExportRequest,
             });
 
-            return await this.handleExportResultPolling(client, {
+            return await this.handleExportResultPolling(client, "application/pdf", {
                 workspaceId: this.workspace,
                 exportId: pdfExport?.data?.exportResult,
             });
         });
     };
 
+    public exportDashboardToPresentation = async (
+        dashboardRef: ObjRef,
+        format: "PDF" | "PPTX",
+        filters?: FilterContextItem[],
+    ): Promise<IExportResult> => {
+        const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
+
+        // skip all time date filter from stored filters, when missing, it's correctly
+        // restored to All time during the load later
+        const withoutAllTime = (filters || []).filter((f) => !isAllTimeDashboardDateFilter(f));
+
+        return this.authCall(async (client) => {
+            const dashboardResponse = await client.entities.getEntityAnalyticalDashboards(
+                {
+                    workspaceId: this.workspace,
+                    objectId: dashboardId,
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            );
+
+            const { title } = convertDashboard(dashboardResponse.data);
+            const slideshowExportRequest = {
+                fileName: title,
+                format,
+                dashboardId,
+                metadata: convertToBackendExportMetadata({ filters: withoutAllTime }),
+            };
+            const slideshowExport = await client.export.createSlideshowExport({
+                workspaceId: this.workspace,
+                slideshowExportRequest,
+            });
+
+            return await this.handleExportResultPolling(
+                client,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.presentation",
+                {
+                    workspaceId: this.workspace,
+                    exportId: slideshowExport?.data?.exportResult,
+                },
+            );
+        });
+    };
+
+    public exportDashboardToTabular = async (dashboardRef: ObjRef): Promise<IExportResult> => {
+        const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
+
+        return this.authCall(async (client) => {
+            const slideshowExport = await client.export.createDashboardExportRequest({
+                workspaceId: this.workspace,
+                dashboardId,
+            });
+
+            return await this.handleExportResultPolling(
+                client,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                {
+                    workspaceId: this.workspace,
+                    exportId: slideshowExport?.data?.exportResult,
+                },
+            );
+        });
+    };
+
     private async handleExportResultPolling(
         client: ITigerClient,
+        type:
+            | "application/pdf"
+            | "application/vnd.openxmlformats-officedocument.spreadsheetml.presentation"
+            | "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         payload: { exportId: string; workspaceId: string },
     ): Promise<IExportResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
@@ -438,7 +507,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             });
 
             if (result?.status === 200) {
-                const blob = new Blob([result?.data as any], { type: "application/pdf" });
+                const blob = new Blob([result?.data as any], { type });
                 return {
                     uri: result?.config?.url || "",
                     objectUrl: URL.createObjectURL(blob),

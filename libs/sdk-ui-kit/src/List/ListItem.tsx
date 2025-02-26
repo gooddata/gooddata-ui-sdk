@@ -24,6 +24,7 @@ export interface ISingleSelectListItemProps {
     eventsOnBubble?: boolean;
     hideDelayBubble?: number;
     isSelected?: boolean;
+    isMenu?: boolean;
 
     onClick?: (e: React.MouseEvent<HTMLElement>) => void;
     onMouseOver?: (e: React.MouseEvent<HTMLElement>) => void;
@@ -68,10 +69,13 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
     }
 
     private getClassNames = () => {
-        const { title, isSelected, className } = this.props;
+        const { title, isSelected, isMenu, className } = this.props;
         const generatedSeleniumClass = `s-${stringUtils.simplifyText(title)}`;
 
-        return cx("gd-list-item", className, generatedSeleniumClass, { "is-selected": isSelected });
+        return cx("gd-list-item", className, generatedSeleniumClass, {
+            "is-selected": isSelected,
+            "is-submenu": isMenu,
+        });
     };
 
     public render(): JSX.Element {

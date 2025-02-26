@@ -10,6 +10,12 @@ import {
     DashboardExportToPdfResolved,
     DashboardExportToPdfRequested,
     DashboardSharingChanged,
+    DashboardExportToExcelRequested,
+    DashboardExportToExcelResolved,
+    DashboardExportToPdfPresentationRequested,
+    DashboardExportToPdfPresentationResolved,
+    DashboardExportToPptPresentationRequested,
+    DashboardExportToPptPresentationResolved,
 } from "./dashboard.js";
 import {
     DashboardCommandFailed,
@@ -146,6 +152,15 @@ export type {
     DashboardExportToPdfResolvedPayload,
     DashboardSharingChanged,
     DashboardSharingChangedPayload,
+    DashboardExportToExcelRequested,
+    DashboardExportToExcelResolved,
+    DashboardExportToPdfPresentationRequested,
+    DashboardExportToPdfPresentationResolved,
+    DashboardExportToPptPresentationRequested,
+    DashboardExportToPptPresentationResolved,
+    DashboardExportToExcelResolvedPayload,
+    DashboardExportToPdfPresentationResolvedPayload,
+    DashboardExportToPptPresentationResolvedPayload,
 } from "./dashboard.js";
 export {
     isDashboardSaved,
@@ -159,6 +174,12 @@ export {
     isDashboardExportToPdfRequested,
     isDashboardExportToPdfResolved,
     isDashboardSharingChanged,
+    isDashboardExportToExcelRequested,
+    isDashboardExportToExcelResolved,
+    isDashboardExportToPdfPresentationRequested,
+    isDashboardExportToPdfPresentationResolved,
+    isDashboardExportToPptPresentationResolved,
+    isDashboardExportToPptPresentationRequested,
 } from "./dashboard.js";
 
 export type {
@@ -536,6 +557,12 @@ export type DashboardEvents =
     | DashboardWasReset
     | DashboardExportToPdfRequested
     | DashboardExportToPdfResolved
+    | DashboardExportToExcelRequested
+    | DashboardExportToExcelResolved
+    | DashboardExportToPdfPresentationRequested
+    | DashboardExportToPdfPresentationResolved
+    | DashboardExportToPptPresentationResolved
+    | DashboardExportToPptPresentationRequested
     | DashboardUserInteractionTriggered
     | DashboardDateFilterSelectionChanged
     | DashboardAttributeFilterAdded

@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IDashboardReferences,
@@ -335,6 +335,18 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
             objectUrl: "blob:/01345454545454",
             fileName: "export.pdf",
         });
+    }
+
+    public exportDashboardToPresentation(
+        _ref: ObjRef,
+        _format: string,
+        _filters?: FilterContextItem[],
+    ): Promise<IExportResult> {
+        throw new NotSupported("recorded backend does not support this call");
+    }
+
+    public exportDashboardToTabular(_ref: ObjRef): Promise<IExportResult> {
+        throw new NotSupported("recorded backend does not support this call");
     }
 
     //

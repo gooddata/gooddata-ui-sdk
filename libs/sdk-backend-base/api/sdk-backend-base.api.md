@@ -563,6 +563,10 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
     // (undocumented)
+    exportDashboardToPresentation(ref: ObjRef, format: "PPTX" | "PDF", filters?: FilterContextItem[]): Promise<IExportResult>;
+    // (undocumented)
+    exportDashboardToTabular(ref: ObjRef): Promise<IExportResult>;
+    // (undocumented)
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     // (undocumented)
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
@@ -683,7 +687,7 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
 // @internal
 export class DummyGenAIChatThread implements IChatThread {
     // (undocumented)
-    loadHistory(_fromInteractionId: number, { signal }: {
+    loadHistory(_fromInteractionId: string, { signal }: {
         signal?: AbortSignal;
     }): Promise<IChatThreadHistory>;
     // (undocumented)
@@ -691,7 +695,7 @@ export class DummyGenAIChatThread implements IChatThread {
     // (undocumented)
     reset(): Promise<void>;
     // (undocumented)
-    saveUserFeedback(_interactionId: number, _feedback: GenAIChatInteractionUserFeedback): Promise<void>;
+    saveUserFeedback(_interactionId: string, _feedback: GenAIChatInteractionUserFeedback): Promise<void>;
 }
 
 // @internal
