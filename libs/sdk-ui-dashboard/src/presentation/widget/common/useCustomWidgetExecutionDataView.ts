@@ -10,8 +10,12 @@ import {
     useExecutionDataView,
 } from "@gooddata/sdk-ui";
 
-import { ICustomWidget, useWidgetFilters, selectEnableExecutionCancelling } from "../../../model/index.js";
-import { useSelector } from "react-redux";
+import {
+    ICustomWidget,
+    useWidgetFilters,
+    selectEnableExecutionCancelling,
+    useDashboardSelector,
+} from "../../../model/index.js";
 
 /**
  * Configuration options for the {@link useCustomWidgetExecutionDataView} hook.
@@ -68,7 +72,7 @@ export function useCustomWidgetExecutionDataView({
 }: IUseCustomWidgetExecutionDataViewConfig &
     UseCustomWidgetExecutionDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
     const filterQueryTask = useWidgetFilters(widget);
-    const enableExecutionCancellingFF = useSelector(selectEnableExecutionCancelling);
+    const enableExecutionCancellingFF = useDashboardSelector(selectEnableExecutionCancelling);
     const effectiveExecutionCancelling = enableExecutionCancelling ?? enableExecutionCancellingFF;
     const dataViewTask = useExecutionDataView({
         enableExecutionCancelling: effectiveExecutionCancelling,
