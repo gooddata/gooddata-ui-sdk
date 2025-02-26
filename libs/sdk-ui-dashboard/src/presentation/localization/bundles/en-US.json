@@ -2921,5 +2921,10 @@
         "value": "Export",
         "comment": "Export to file with XLSX extension.",
         "limit": 0
+    },
+    "widget.drill.dialog.exportToCSV.raw": {
+        "value": "Export to CSV (raw)",
+        "comment": "",
+        "limit": 0
     }
 }
