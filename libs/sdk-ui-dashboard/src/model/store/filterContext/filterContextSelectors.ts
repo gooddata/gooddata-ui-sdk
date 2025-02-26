@@ -283,7 +283,21 @@ export const selectFilterContextFilters: DashboardSelector<FilterContextItem[]> 
 );
 
 /**
- * This selector returns dashboard's filter context attribute filters.
+ * This selector returns dashboard's working filter context filters.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectWorkingFilterContextFilters: DashboardSelector<FilterContextItem[]> = createSelector(
+    selectWorkingFilterContextDefinition,
+    (filterContext): FilterContextItem[] => filterContext.filters,
+);
+
+/**
+ * This selector returns dashboard's applied filter context attribute filters.
  *
  * @remarks
  * It is expected that the selector is called only after the filter context state is correctly initialized.
@@ -293,6 +307,20 @@ export const selectFilterContextFilters: DashboardSelector<FilterContextItem[]> 
  */
 export const selectFilterContextAttributeFilters: DashboardSelector<IDashboardAttributeFilter[]> =
     createSelector(selectFilterContextFilters, (filters): IDashboardAttributeFilter[] =>
+        filters.filter(isDashboardAttributeFilter),
+    );
+
+/**
+ * This selector returns dashboard's working filter context attribute filters.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectWorkingFilterContextAttributeFilters: DashboardSelector<IDashboardAttributeFilter[]> =
+    createSelector(selectWorkingFilterContextFilters, (filters): IDashboardAttributeFilter[] =>
         filters.filter(isDashboardAttributeFilter),
     );
 
