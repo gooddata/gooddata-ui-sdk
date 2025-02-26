@@ -8006,6 +8006,9 @@ export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<bo
 // @internal
 export const selectEnableDashboardFiltersApplyModes: DashboardSelector<boolean>;
 
+// @internal (undocumented)
+export const selectEnableDashboardTabularExport: DashboardSelector<boolean>;
+
 // @internal
 export const selectEnableDrilledTooltip: DashboardSelector<boolean>;
 
@@ -8077,6 +8080,9 @@ export const selectEnableKPIDashboardScheduleRecipients: DashboardSelector<boole
 
 // @internal
 export const selectEnableMultipleDateFilters: DashboardSelector<boolean>;
+
+// @internal (undocumented)
+export const selectEnableOrchestratedTabularExports: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableRenamingMeasureToMetric: DashboardSelector<boolean>;

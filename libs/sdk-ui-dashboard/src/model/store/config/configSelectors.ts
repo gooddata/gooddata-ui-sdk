@@ -842,6 +842,30 @@ export const selectEnableExternalRecipients: DashboardSelector<boolean> = create
 );
 
 /**
+ *
+ *
+ * @internal
+ */
+export const selectEnableDashboardTabularExport: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardTabularExport ?? false;
+    },
+);
+
+/**
+ *
+ *
+ * @internal
+ */
+export const selectEnableOrchestratedTabularExports: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableOrchestratedTabularExports ?? false;
+    },
+);
+
+/**
  * Returns whether drill dialog tooltip is enabled.
  *
  * @internal

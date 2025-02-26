@@ -3364,6 +3364,7 @@ export interface ISettings {
     enableDashboardFiltersApplyModes?: boolean;
     enableDashboardFilterViews?: boolean;
     enableDashboardFlexibleLayout?: boolean;
+    enableDashboardTabularExport?: boolean;
     enableDataSampling?: boolean;
     // (undocumented)
     enableDataSection?: boolean;
@@ -3419,6 +3420,7 @@ export interface ISettings {
     enableNumberSeparators?: boolean;
     // (undocumented)
     enableOracleDataSource?: boolean;
+    enableOrchestratedTabularExports?: boolean;
     enablePivotTableIncreaseBucketSize?: boolean;
     enablePivotTableTransposition?: boolean;
     // (undocumented)

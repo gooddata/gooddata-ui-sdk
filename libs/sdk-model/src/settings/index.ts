@@ -570,6 +570,16 @@ export interface ISettings {
     enableDrilledTooltip?: boolean;
 
     /**
+     * Enable dashboard tabular export
+     */
+    enableDashboardTabularExport?: boolean;
+
+    /**
+     * Enable orchestrated tabular exports
+     */
+    enableOrchestratedTabularExports?: boolean;
+
+    /**
      * Enable dynamic height of the dashboard section description fields in dashboard edit mode.
      */
     enableDashboardDescriptionDynamicHeight?: boolean;

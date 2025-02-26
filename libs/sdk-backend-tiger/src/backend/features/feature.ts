@@ -592,6 +592,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableDashboardTabularExport,
+            "enableDashboardTabularExport",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDashboardTabularExport,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableOrchestratedTabularExports,
+            "enableOrchestratedTabularExports",
+            "BOOLEAN",
+            FeatureFlagsValues.enableOrchestratedTabularExports,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableDrilledTooltip,
             "enableDrilledTooltip",
             "BOOLEAN",

@@ -131,6 +131,8 @@ export enum TigerFeaturesNames {
     EnableDashboardFiltersApplyModes = "enableDashboardFiltersApplyModes",
     EnableExecutionCancelling = "enableExecutionCancelling",
     EnableDashboardAfterRenderDetection = "enableDashboardAfterRenderDetection",
+    EnableDashboardTabularExport = "enableDashboardTabularExport",
+    EnableOrchestratedTabularExports = "enableOrchestratedTabularExports",
 }
 
 export type ITigerFeatureFlags = {
@@ -216,6 +218,8 @@ export type ITigerFeatureFlags = {
     enableInPlatformNotifications: typeof FeatureFlagsValues["enableInPlatformNotifications"][number];
     enableVisualizationFineTuning: typeof FeatureFlagsValues["enableVisualizationFineTuning"][number];
     enableExternalRecipients: typeof FeatureFlagsValues["enableExternalRecipients"][number];
+    enableDashboardTabularExport: typeof FeatureFlagsValues["enableDashboardTabularExport"][number];
+    enableOrchestratedTabularExports: typeof FeatureFlagsValues["enableOrchestratedTabularExports"][number];
     enableDrilledTooltip: typeof FeatureFlagsValues["enableDrilledTooltip"][number];
     enableDashboardDescriptionDynamicHeight: typeof FeatureFlagsValues["enableDashboardDescriptionDynamicHeight"][number];
     enableAmplitudeTracker: typeof FeatureFlagsValues["enableAmplitudeTracker"][number];
@@ -310,6 +314,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableInPlatformNotifications: true,
     enableVisualizationFineTuning: false,
     enableExternalRecipients: true,
+    enableDashboardTabularExport: false,
+    enableOrchestratedTabularExports: false,
     enableDrilledTooltip: true,
     enableDashboardDescriptionDynamicHeight: false,
     enableAmplitudeTracker: false,
@@ -408,6 +414,8 @@ export const FeatureFlagsValues = {
     enableInPlatformNotifications: [true, false] as const,
     enableVisualizationFineTuning: [true, false] as const,
     enableExternalRecipients: [true, false] as const,
+    enableDashboardTabularExport: [true, false] as const,
+    enableOrchestratedTabularExports: [true, false] as const,
     enableDrilledTooltip: [true, false] as const,
     enableDashboardDescriptionDynamicHeight: [true, false] as const,
     enableAmplitudeTracker: [true, false] as const,

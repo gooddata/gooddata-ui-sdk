@@ -15,6 +15,8 @@ import {
     selectIsSaveAsNewButtonHidden,
     selectLayoutHasAnalyticalWidgets,
     selectMenuButtonItemsVisibility,
+    selectEnableDashboardTabularExport,
+    selectEnableOrchestratedTabularExports,
     uiActions,
     useDashboardDispatch,
     useDashboardScheduledEmails,
@@ -146,6 +148,8 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
 
     const canExport = useDashboardSelector(selectCanExportPdf);
     const isSlideshowExportsEnabled = useDashboardSelector(selectEnableSlideshowExports);
+    const isEnableDashboardTabularExport = useDashboardSelector(selectEnableDashboardTabularExport);
+    const isEnableOrchestratedTabularExports = useDashboardSelector(selectEnableOrchestratedTabularExports);
     const isKPIDashboardExportPDFEnabled = !!useDashboardSelector(selectEnableKPIDashboardExportPDF);
     const isExportPdfEntitlementPresent = !!useDashboardSelector(selectEntitlementExportPdf);
 
@@ -307,7 +311,10 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                             itemId: "excel-export-item", // careful, this is also used as a selector in tests, do not change
                             itemName: intl.formatMessage({ id: "options.menu.export.EXCEL" }),
                             onClick: defaultOnExportToExcel,
-                            visible: menuButtonItemsVisibility.excelExportButton ?? true,
+                            visible:
+                                (menuButtonItemsVisibility.excelExportButton ?? true) &&
+                                isEnableDashboardTabularExport &&
+                                isEnableOrchestratedTabularExports,
                             disabled: isInProgress,
                             icon: "gd-icon-download",
                         },

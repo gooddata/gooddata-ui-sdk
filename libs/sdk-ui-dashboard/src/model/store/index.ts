@@ -108,6 +108,8 @@ export {
     selectEnableDashboardFiltersApplyModes,
     selectDashboardFiltersApplyMode,
     selectEnableExecutionCancelling,
+    selectEnableOrchestratedTabularExports,
+    selectEnableDashboardTabularExport,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
