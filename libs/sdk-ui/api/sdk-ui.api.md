@@ -48,6 +48,7 @@ import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IRankingFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
+import { IRequestCorrelationMetadata } from '@gooddata/sdk-backend-spi';
 import { IResultAttributeHeader } from '@gooddata/sdk-model';
 import { IResultAttributeHeaderItem } from '@gooddata/sdk-model';
 import { IResultHeader } from '@gooddata/sdk-model';
@@ -110,6 +111,9 @@ export type AttributesOrPlaceholders = ValuesOrPlaceholders<IAttribute>;
 
 // @public
 export const BackendProvider: React_2.FC<IBackendProviderProps>;
+
+// @public
+export const BackendProviderWithCorrelation: React_2.FC<IBackendProviderWithCorrelationProps>;
 
 // @public
 export class BadRequestSdkError extends GoodDataSdkError {
@@ -188,6 +192,9 @@ export function convertDrillableItemsToPredicates(drillableItems: ExplicitDrill[
 
 // @public
 export function convertError(error: unknown): GoodDataSdkError;
+
+// @public
+export const CorrelationProvider: React_2.FC<ICorrelationProviderProps>;
 
 // @internal
 export function createExportErrorFunction(error: GoodDataSdkError): IExportFunction;
@@ -551,6 +558,13 @@ export interface IBackendProviderProps {
     children?: React_2.ReactNode;
 }
 
+// @public
+export interface IBackendProviderWithCorrelationProps {
+    backend?: IAnalyticalBackend;
+    children?: React_2.ReactNode;
+    correlationData: IRequestCorrelationMetadata;
+}
+
 // @internal (undocumented)
 export interface ICancelablePromise<T> {
     // (undocumented)
@@ -624,6 +638,12 @@ export interface IComposedPlaceholder<TReturn, TValue extends any[], TContext> {
     type: "IComposedPlaceholder";
     // (undocumented)
     use: IUseComposedPlaceholderHook<IComposedPlaceholder<TReturn, TValue, TContext>>;
+}
+
+// @public
+export interface ICorrelationProviderProps {
+    children?: React_2.ReactNode;
+    correlationData: Record<string, string>;
 }
 
 // @public
@@ -1647,6 +1667,9 @@ export const useBackend: (backend?: IAnalyticalBackend) => IAnalyticalBackend | 
 export const useBackendStrict: (backend?: IAnalyticalBackend, context?: string) => IAnalyticalBackend;
 
 // @public
+export const useBackendWithCorrelation: (backend?: IAnalyticalBackend, correlationMetadata?: IRequestCorrelationMetadata) => IAnalyticalBackend | undefined;
+
+// @public
 export function useCancelablePromise<TResult, TError = any>(options: UseCancelablePromiseOptions<TResult, TError>, deps?: DependencyList): UseCancelablePromiseState<TResult, TError>;
 
 // @public
@@ -1712,6 +1735,9 @@ export const useClientWorkspaceStatus: () => UseCancelablePromiseStatus;
 
 // @public
 export function useComposedPlaceholder<TContext, TPlaceholder extends IComposedPlaceholder<any, any, TContext>>(placeholder: TPlaceholder, resolutionContext?: TContext): PlaceholderResolvedValue<TPlaceholder>;
+
+// @public
+export const useCorrelationData: () => Record<string, string>;
 
 // @public
 export function useDataExport({ execution, exportConfig, onCancel, onError, onLoading, onPending, onSuccess, }: {

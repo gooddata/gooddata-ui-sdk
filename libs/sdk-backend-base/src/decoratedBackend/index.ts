@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IAnalyticalBackendConfig,
@@ -67,6 +67,13 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
     public withTelemetry(componentName: string, props: object): IAnalyticalBackend {
         return new BackendWithDecoratedServices(
             this.decorated.withTelemetry(componentName, props),
+            this.factories,
+        );
+    }
+
+    public withCorrelation(correlationMetadata: Record<string, string>): IAnalyticalBackend {
+        return new BackendWithDecoratedServices(
+            this.decorated.withCorrelation(correlationMetadata),
             this.factories,
         );
     }

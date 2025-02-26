@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IAuthenticatedPrincipal,
@@ -93,6 +93,13 @@ export class CustomBackend implements IAnalyticalBackend {
         return new CustomBackend(this.config, this.authProvider, {
             componentName,
             props: Object.keys(props),
+        });
+    };
+
+    public withCorrelation = (correlationMetadata: Record<string, string>): IAnalyticalBackend => {
+        return new CustomBackend(this.config, this.authProvider, {
+            ...this.telemetryData,
+            correlationMetadata: { ...this.telemetryData?.correlationMetadata, ...correlationMetadata },
         });
     };
 

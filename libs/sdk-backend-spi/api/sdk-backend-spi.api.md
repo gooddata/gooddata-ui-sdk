@@ -223,6 +223,7 @@ export interface IAnalyticalBackend {
     organization(organizationId: string): IOrganization;
     organizations(): IOrganizations;
     withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend;
+    withCorrelation(correlationMetadata: IRequestCorrelationMetadata): IAnalyticalBackend;
     withTelemetry(componentName: string, props: object): IAnalyticalBackend;
     workspace(id: string): IAnalyticalWorkspace;
     workspaces(): IWorkspacesQueryFactory;
@@ -1136,6 +1137,11 @@ export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
 // @public
 export interface IPreparedExecutionOptions {
     signal?: AbortSignal;
+}
+
+// @public
+export interface IRequestCorrelationMetadata {
+    readonly [key: string]: string;
 }
 
 // @public

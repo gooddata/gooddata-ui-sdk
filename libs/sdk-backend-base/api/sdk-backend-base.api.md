@@ -94,6 +94,7 @@ import { IPagedResource } from '@gooddata/sdk-backend-spi';
 import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IPreparedExecutionOptions } from '@gooddata/sdk-backend-spi';
+import { IRequestCorrelationMetadata } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
@@ -1122,6 +1123,7 @@ export type SettingsWrapper = (settings: IWorkspaceSettings) => IWorkspaceSettin
 export type TelemetryData = {
     componentName?: string;
     props?: string[];
+    correlationMetadata?: IRequestCorrelationMetadata;
 };
 
 // @public

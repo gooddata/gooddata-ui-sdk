@@ -1,15 +1,15 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { AxiosInstance, AxiosResponse } from "axios";
 import { invariant } from "ts-invariant";
 import {
     IAnalyticalBackendConfig,
+    IAuthenticatedPrincipal,
     IBackendCapabilities,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
     IAuthenticationProvider,
-    IAuthenticatedPrincipal,
-    IWorkspacesQueryFactory,
     IUserService,
+    IWorkspacesQueryFactory,
     ErrorConverter,
     NotAuthenticated,
     IAuthenticationContext,
@@ -34,12 +34,12 @@ import { TigerWorkspace } from "./workspace/index.js";
 import { TigerWorkspaceQueryFactory } from "./workspaces/index.js";
 import { TigerUserService } from "./user/index.js";
 import {
+    IAuthProviderCallGuard,
     AuthProviderCallGuard,
+    AnonymousAuthProvider,
+    TelemetryData,
     AuthenticatedAsyncCall,
     IAuthenticatedAsyncCallContext,
-    TelemetryData,
-    AnonymousAuthProvider,
-    IAuthProviderCallGuard,
 } from "@gooddata/sdk-backend-base";
 import { DateFormatter } from "../convertors/fromBackend/dateFormatting/types.js";
 import { defaultDateFormatter } from "../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
@@ -181,7 +181,19 @@ export class TigerBackend implements IAnalyticalBackend {
         return new TigerBackend(
             this.config,
             this.implConfig,
-            { componentName, props: Object.keys(props) },
+            { ...this.telemetry, componentName, props: Object.keys(props) },
+            this.authProvider,
+        );
+    }
+
+    public withCorrelation(correlationMetadata: Record<string, string>): IAnalyticalBackend {
+        return new TigerBackend(
+            this.config,
+            this.implConfig,
+            {
+                ...this.telemetry,
+                correlationMetadata: { ...this.telemetry.correlationMetadata, ...correlationMetadata },
+            },
             this.authProvider,
         );
     }
@@ -400,6 +412,11 @@ function createHeaders(implConfig: TigerBackendConfig, telemetry: TelemetryData)
     if (implConfig.packageName && implConfig.packageVersion) {
         headers["X-GDC-JS-PACKAGE"] = implConfig.packageName;
         headers["X-GDC-JS-PACKAGE-VERSION"] = implConfig.packageVersion;
+    }
+
+    // Add correlation data as x-gdc-correlation header if available
+    if (telemetry.correlationMetadata && !isEmpty(telemetry.correlationMetadata)) {
+        headers["X-GDC-CORRELATION"] = JSON.stringify(telemetry.correlationMetadata);
     }
 
     return headers;

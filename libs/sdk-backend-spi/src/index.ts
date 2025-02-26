@@ -16,6 +16,7 @@ export type {
     IAuthenticatedPrincipal,
     IAuthenticationProvider,
     NotAuthenticatedHandler,
+    IRequestCorrelationMetadata,
 } from "./backend/index.js";
 export { prepareExecution } from "./backend/index.js";
 

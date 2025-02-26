@@ -192,6 +192,9 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
         withTelemetry(_component: string, _props: object): IAnalyticalBackend {
             return noopBackend;
         },
+        withCorrelation(_correlationMetadata: Record<string, string>): IAnalyticalBackend {
+            return this;
+        },
         withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
             return this;
         },
