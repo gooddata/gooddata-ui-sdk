@@ -80,7 +80,10 @@ describe("Dependent filter", () => {
             .clearIrrelevantElementValuesIsVisible(false)
             .containElementsListStatus("None")
             .showAllElementValuesIsVisible(true)
-            .showAllElementValues()
+            .showAllElementValues();
+        filterBar.waitForFiltersLoaded();
+        cityFilter
+            .isLoaded()
             .showAllElementValuesIsVisible(false)
             .containElementsListStatus("None")
             .hasFilterListSize(300)

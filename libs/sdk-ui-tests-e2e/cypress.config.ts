@@ -52,7 +52,7 @@ export default defineConfig({
             grepFilterSpecs: true,
         },
         retries: {
-            runMode: 2,
+            runMode: 0,
             openMode: 0,
         },
         trashAssetsBeforeRuns: false,
