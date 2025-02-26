@@ -28,6 +28,7 @@ import { FiltersConfigurationPanel } from "./FiltersConfigurationPanel.js";
 import { FilterViews } from "./filterViews/FilterViews.js";
 import { BulletsBar as FlexibleBulletsBar } from "../../flexibleLayout/dragAndDrop/Resize/BulletsBar/BulletsBar.js";
 import { BulletsBar as FluidBulletsBar } from "../../layout/dragAndDrop/Resize/BulletsBar/BulletsBar.js";
+import { useIntl } from "react-intl";
 
 const selectShowFiltersConfigurationPanel = createSelector(
     selectIsInEditMode,
@@ -63,6 +64,8 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
         dispatch(applyAllDashboardFilters());
     }, [dispatch]);
 
+    const intl = useIntl();
+
     return (
         <div className="dash-filters-wrapper s-gd-dashboard-filter-bar" ref={dropRef}>
             <div
@@ -76,8 +79,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                 <FiltersRows rows={rows} />
                 <div className="filter-bar-configuration">
                     <UiButton
-                        // TODO: use react-intl to translate this
-                        label="Apply"
+                        label={intl.formatMessage({ id: "apply" })}
                         variant="primary"
                         isDisabled={areAllFiltersApplied}
                         onClick={applyFilterContext}
