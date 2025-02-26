@@ -419,12 +419,12 @@ export interface ICancelable<T> {
 
 // @beta
 export interface IChatThread {
-    loadHistory(fromInteractionId?: number, options?: {
+    loadHistory(fromInteractionId?: string, options?: {
         signal?: AbortSignal;
     }): Promise<IChatThreadHistory>;
     query(userMessage: string): IChatThreadQuery;
     reset(): Promise<void>;
-    saveUserFeedback(interactionId: number, feedback: GenAIChatInteractionUserFeedback): Promise<void>;
+    saveUserFeedback(interactionId: string, feedback: GenAIChatInteractionUserFeedback): Promise<void>;
 }
 
 // @beta
@@ -773,7 +773,7 @@ export interface IForecastView {
 // @beta
 export interface IGenAIChatEvaluation {
     // (undocumented)
-    chatHistoryInteractionId?: number;
+    chatHistoryInteractionId?: string;
     // (undocumented)
     chatHistoryThreadId?: string;
     // (undocumented)
@@ -1381,6 +1381,8 @@ export interface IWorkspaceDashboardsService {
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
+    exportDashboardToPresentation(ref: ObjRef, format: "pdf" | "pptx", filters?: FilterContextItem[]): Promise<IExportResult>;
+    exportDashboardToTabular(ref: ObjRef): Promise<IExportResult>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
     getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions>;

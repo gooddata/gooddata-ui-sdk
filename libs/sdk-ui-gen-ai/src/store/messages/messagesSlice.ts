@@ -175,7 +175,7 @@ const messagesSlice = createSlice({
             }: PayloadAction<{
                 contents: Contents[];
                 assistantMessageId: string;
-                interactionId?: number;
+                interactionId?: string;
             }>,
         ) => {
             // Update assistant message

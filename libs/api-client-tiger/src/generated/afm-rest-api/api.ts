@@ -858,10 +858,10 @@ export interface ChatHistoryInteraction {
     threadIdSuffix?: string;
     /**
      * Chat History interaction ID. Unique ID for each interaction.
-     * @type {number}
+     * @type {string}
      * @memberof ChatHistoryInteraction
      */
-    chatHistoryInteractionId: number;
+    chatHistoryInteractionId: string;
     /**
      * Has the interaction already finished? Can be used for polling when interaction is in progress.
      * @type {boolean}
@@ -929,10 +929,10 @@ export interface ChatHistoryRequest {
     threadIdSuffix?: string;
     /**
      * Return chat history records only after this interaction ID. If empty, complete chat history is returned.
-     * @type {number}
+     * @type {string}
      * @memberof ChatHistoryRequest
      */
-    chatHistoryInteractionId?: number;
+    chatHistoryInteractionId?: string;
     /**
      * User feedback.
      * @type {string}
@@ -1080,10 +1080,10 @@ export interface ChatResult {
     threadIdSuffix?: string;
     /**
      * Chat History interaction ID. Unique ID for each interaction.
-     * @type {number}
+     * @type {string}
      * @memberof ChatResult
      */
-    chatHistoryInteractionId?: number;
+    chatHistoryInteractionId?: string;
 }
 /**
  *

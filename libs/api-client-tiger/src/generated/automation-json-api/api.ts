@@ -1467,6 +1467,69 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
 export const NotificationChannelsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Get latest in-platform notifications for the current user.
+         * @summary Get latest notifications.
+         * @param {string} [workspaceId] Workspace ID to filter notifications by.
+         * @param {boolean} [isRead] Filter notifications by read status.
+         * @param {string} [page] Zero-based page index (0..N)
+         * @param {string} [size] The size of the page to be returned.
+         * @param {Array<'total' | 'ALL'>} [metaInclude] Additional meta information to include in the response.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getNotifications: async (
+            workspaceId?: string,
+            isRead?: boolean,
+            page?: string,
+            size?: string,
+            metaInclude?: Array<"total" | "ALL">,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/actions/notifications`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (workspaceId !== undefined) {
+                localVarQueryParameter["workspaceId"] = workspaceId;
+            }
+
+            if (isRead !== undefined) {
+                localVarQueryParameter["isRead"] = isRead;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter["page"] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter["size"] = size;
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude);
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Tests the existing notification channel by sending a test notification.
          * @summary Test existing notification channel.
          * @param {string} notificationChannelId
@@ -1576,6 +1639,35 @@ export const NotificationChannelsApiFp = function (configuration?: Configuration
     const localVarAxiosParamCreator = NotificationChannelsApiAxiosParamCreator(configuration);
     return {
         /**
+         * Get latest in-platform notifications for the current user.
+         * @summary Get latest notifications.
+         * @param {string} [workspaceId] Workspace ID to filter notifications by.
+         * @param {boolean} [isRead] Filter notifications by read status.
+         * @param {string} [page] Zero-based page index (0..N)
+         * @param {string} [size] The size of the page to be returned.
+         * @param {Array<'total' | 'ALL'>} [metaInclude] Additional meta information to include in the response.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getNotifications(
+            workspaceId?: string,
+            isRead?: boolean,
+            page?: string,
+            size?: string,
+            metaInclude?: Array<"total" | "ALL">,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Notifications>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getNotifications(
+                workspaceId,
+                isRead,
+                page,
+                size,
+                metaInclude,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Tests the existing notification channel by sending a test notification.
          * @summary Test existing notification channel.
          * @param {string} notificationChannelId
@@ -1627,6 +1719,28 @@ export const NotificationChannelsApiFactory = function (
     const localVarFp = NotificationChannelsApiFp(configuration);
     return {
         /**
+         * Get latest in-platform notifications for the current user.
+         * @summary Get latest notifications.
+         * @param {NotificationChannelsApiGetNotificationsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getNotifications(
+            requestParameters: NotificationChannelsApiGetNotificationsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<Notifications> {
+            return localVarFp
+                .getNotifications(
+                    requestParameters.workspaceId,
+                    requestParameters.isRead,
+                    requestParameters.page,
+                    requestParameters.size,
+                    requestParameters.metaInclude,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Tests the existing notification channel by sending a test notification.
          * @summary Test existing notification channel.
          * @param {NotificationChannelsApiTestExistingNotificationChannelRequest} requestParameters Request parameters.
@@ -1670,6 +1784,19 @@ export const NotificationChannelsApiFactory = function (
  */
 export interface NotificationChannelsApiInterface {
     /**
+     * Get latest in-platform notifications for the current user.
+     * @summary Get latest notifications.
+     * @param {NotificationChannelsApiGetNotificationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NotificationChannelsApiInterface
+     */
+    getNotifications(
+        requestParameters: NotificationChannelsApiGetNotificationsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<Notifications>;
+
+    /**
      * Tests the existing notification channel by sending a test notification.
      * @summary Test existing notification channel.
      * @param {NotificationChannelsApiTestExistingNotificationChannelRequest} requestParameters Request parameters.
@@ -1694,6 +1821,48 @@ export interface NotificationChannelsApiInterface {
         requestParameters: NotificationChannelsApiTestNotificationChannelRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<TestResponse>;
+}
+
+/**
+ * Request parameters for getNotifications operation in NotificationChannelsApi.
+ * @export
+ * @interface NotificationChannelsApiGetNotificationsRequest
+ */
+export interface NotificationChannelsApiGetNotificationsRequest {
+    /**
+     * Workspace ID to filter notifications by.
+     * @type {string}
+     * @memberof NotificationChannelsApiGetNotifications
+     */
+    readonly workspaceId?: string;
+
+    /**
+     * Filter notifications by read status.
+     * @type {boolean}
+     * @memberof NotificationChannelsApiGetNotifications
+     */
+    readonly isRead?: boolean;
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {string}
+     * @memberof NotificationChannelsApiGetNotifications
+     */
+    readonly page?: string;
+
+    /**
+     * The size of the page to be returned.
+     * @type {string}
+     * @memberof NotificationChannelsApiGetNotifications
+     */
+    readonly size?: string;
+
+    /**
+     * Additional meta information to include in the response.
+     * @type {Array<'total' | 'ALL'>}
+     * @memberof NotificationChannelsApiGetNotifications
+     */
+    readonly metaInclude?: Array<"total" | "ALL">;
 }
 
 /**
@@ -1738,6 +1907,30 @@ export interface NotificationChannelsApiTestNotificationChannelRequest {
  * @extends {BaseAPI}
  */
 export class NotificationChannelsApi extends BaseAPI implements NotificationChannelsApiInterface {
+    /**
+     * Get latest in-platform notifications for the current user.
+     * @summary Get latest notifications.
+     * @param {NotificationChannelsApiGetNotificationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NotificationChannelsApi
+     */
+    public getNotifications(
+        requestParameters: NotificationChannelsApiGetNotificationsRequest = {},
+        options?: AxiosRequestConfig,
+    ) {
+        return NotificationChannelsApiFp(this.configuration)
+            .getNotifications(
+                requestParameters.workspaceId,
+                requestParameters.isRead,
+                requestParameters.page,
+                requestParameters.size,
+                requestParameters.metaInclude,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Tests the existing notification channel by sending a test notification.
      * @summary Test existing notification channel.

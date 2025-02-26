@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IDashboardReferences,
@@ -334,6 +334,26 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
             uri: "/example/export.pdf",
             objectUrl: "blob:/01345454545454",
             fileName: "export.pdf",
+        });
+    }
+
+    public exportDashboardToPresentation(
+        _ref: ObjRef,
+        _format: string,
+        _filters?: FilterContextItem[],
+    ): Promise<IExportResult> {
+        return Promise.resolve({
+            uri: "/example/export1.pdf",
+            objectUrl: "blob:/01345454545453",
+            fileName: "export1.pdf",
+        });
+    }
+
+    public exportDashboardToTabular(_ref: ObjRef): Promise<IExportResult> {
+        return Promise.resolve({
+            uri: "/example/export.xlsx",
+            objectUrl: "blob:/01345454545453",
+            fileName: "export.xlsx",
         });
     }
 

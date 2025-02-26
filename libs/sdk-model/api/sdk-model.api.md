@@ -1984,7 +1984,7 @@ export interface IGenAIActiveObject {
 
 // @alpha
 export interface IGenAIChatInteraction {
-    chatHistoryInteractionId: number;
+    chatHistoryInteractionId: string;
     createdVisualizations?: IGenAICreatedVisualizations;
     errorResponse?: string;
     foundObjects?: IGenAIFoundObjects;
