@@ -55,13 +55,10 @@ describe("Dependent filter", () => {
             .showAllElementValues();
 
         filterBar.waitForFiltersLoaded();
-        cityFilter
-            .showAllElementValuesIsVisible(false)
-            .hasFilterListSize(300)
-            .selectAttribute(["Hartford"])
-            .apply()
-            .isLoaded()
-            .hasSubtitle("Hartford");
+        cityFilter.showAllElementValuesIsVisible(false).hasFilterListSize(300);
+
+        filterBar.waitForFiltersLoaded();
+        cityFilter.selectAttribute(["Hartford"]).apply().isLoaded().hasSubtitle("Hartford");
 
         table.waitLoadStarted().waitLoaded().getColumnValues(2).should("deep.equal", ["Hartford"]);
         filterBar.waitForFiltersLoaded();
