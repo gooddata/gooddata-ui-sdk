@@ -52,7 +52,10 @@ describe("Dependent filter", () => {
             .hasSelectedValueList(["Bridgeport", "Danbury", "Hartford", "New Haven", "Norwich", "Waterbury"])
             .hasValueList(["Bridgeport", "Danbury", "Hartford", "New Haven", "Norwich", "Waterbury"])
             .showAllElementValuesIsVisible(true)
-            .showAllElementValues()
+            .showAllElementValues();
+
+        filterBar.waitForFiltersLoaded();
+        cityFilter
             .showAllElementValuesIsVisible(false)
             .hasFilterListSize(300)
             .selectAttribute(["Hartford"])
