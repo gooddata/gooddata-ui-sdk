@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { TotalTypes } from "./enum/TotalTypes";
 
@@ -12,6 +12,11 @@ export class Table {
 
     getElement(): Cypress.Chainable {
         return cy.get(this.parentSelector).find(".s-pivot-table");
+    }
+
+    public showsNoData() {
+        cy.get(this.parentSelector).find(".s-loading").should("exist");
+        cy.get(this.parentSelector).find(".visualization-empty").should("be.visible");
     }
 
     public isEmpty() {

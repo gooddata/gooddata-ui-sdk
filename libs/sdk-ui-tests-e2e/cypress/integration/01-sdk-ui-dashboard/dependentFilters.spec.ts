@@ -62,7 +62,7 @@ describe("Dependent filter", () => {
 
         stateFilter.open().selectAttribute(["Oregon"]).apply();
 
-        table.isEmpty();
+        table.showsNoData();
 
         cityFilter
             .open()
