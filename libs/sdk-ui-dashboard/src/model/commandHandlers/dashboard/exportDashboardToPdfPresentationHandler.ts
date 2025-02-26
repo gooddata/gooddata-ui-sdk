@@ -26,7 +26,7 @@ function exportDashboardToPdfPresentation(
     return backend
         .workspace(workspace)
         .dashboards()
-        .exportDashboardToPresentation(dashboardRef, "pdf", filters);
+        .exportDashboardToPresentation(dashboardRef, "PDF", filters);
 }
 
 export function* exportDashboardToPdfPresentationHandler(

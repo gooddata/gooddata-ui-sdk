@@ -298,7 +298,7 @@ export interface IWorkspaceDashboardsService {
      */
     exportDashboardToPresentation(
         ref: ObjRef,
-        format: "pdf" | "pptx",
+        format: "PDF" | "PPTX",
         filters?: FilterContextItem[],
     ): Promise<IExportResult>;
 

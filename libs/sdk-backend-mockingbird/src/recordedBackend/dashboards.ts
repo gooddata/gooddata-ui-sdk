@@ -342,19 +342,11 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         _format: string,
         _filters?: FilterContextItem[],
     ): Promise<IExportResult> {
-        return Promise.resolve({
-            uri: "/example/export1.pdf",
-            objectUrl: "blob:/01345454545453",
-            fileName: "export1.pdf",
-        });
+        throw new NotSupported("recorded backend does not support this call");
     }
 
     public exportDashboardToTabular(_ref: ObjRef): Promise<IExportResult> {
-        return Promise.resolve({
-            uri: "/example/export.xlsx",
-            objectUrl: "blob:/01345454545453",
-            fileName: "export.xlsx",
-        });
+        throw new NotSupported("recorded backend does not support this call");
     }
 
     //

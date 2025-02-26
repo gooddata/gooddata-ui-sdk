@@ -1,9 +1,5 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-export {
-    DefaultSaveAsNewButton,
-    useSaveAsNewButtonProps,
-    selectIsSaveAsNewButtonVisible,
-} from "./DefaultSaveAsNewButton.js";
+export { DefaultSaveAsNewButton, useSaveAsNewButtonProps } from "./DefaultSaveAsNewButton.js";
 export { SaveAsNewButton } from "./SaveAsNewButton.js";
 export * from "./types.js";

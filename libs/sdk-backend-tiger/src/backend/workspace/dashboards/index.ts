@@ -13,7 +13,6 @@ import {
     ITigerClient,
     JsonApiFilterViewOutDocument,
     isDataSetItem,
-    SlideshowExportRequestFormatEnum,
 } from "@gooddata/api-client-tiger";
 import {
     IDashboardReferences,
@@ -430,7 +429,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     public exportDashboardToPresentation = async (
         dashboardRef: ObjRef,
-        format: "pdf" | "pptx",
+        format: "PDF" | "PPTX",
         filters?: FilterContextItem[],
     ): Promise<IExportResult> => {
         const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
@@ -453,8 +452,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             const { title } = convertDashboard(dashboardResponse.data);
             const slideshowExportRequest = {
                 fileName: title,
+                format,
                 dashboardId,
-                format: format.toUpperCase() as SlideshowExportRequestFormatEnum,
                 metadata: convertToBackendExportMetadata({ filters: withoutAllTime }),
             };
             const slideshowExport = await client.export.createSlideshowExport({

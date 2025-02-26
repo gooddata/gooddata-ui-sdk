@@ -4,31 +4,26 @@ import { useIntl } from "react-intl";
 import { useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import {
-    selectCanCreateAnalyticalDashboard,
-    selectCanExportPdf,
-    selectEnableKPIDashboardExportPDF,
-    selectEntitlementExportPdf,
-    selectIsInEditMode,
-    selectIsInViewMode,
-    selectIsNewDashboard,
+    uiActions,
     selectIsReadOnly,
-    selectIsSaveAsNewButtonHidden,
+    selectIsNewDashboard,
     selectLayoutHasAnalyticalWidgets,
     selectMenuButtonItemsVisibility,
     selectEnableDashboardTabularExport,
     selectEnableOrchestratedTabularExports,
-    uiActions,
     useDashboardDispatch,
     useDashboardScheduledEmails,
     useDashboardSelector,
     useDashboardAlerts,
-    selectEnableFilterViews,
-    selectDisableFilterViews,
     selectCanCreateAutomation,
-    selectEnableSlideshowExports,
+    selectDeleteVisible,
+    selectFilterViewsVisible,
+    selectPdfExportVisible,
+    selectSaveAsVisible,
+    selectSlideShowExportVisible,
 } from "../../../model/index.js";
 import { IMenuButtonItem } from "../types.js";
-import { selectIsSaveAsNewButtonVisible } from "../buttonBar/button/index.js";
+
 import { useExportDashboardToPdf } from "./useExportDashboardToPdf.js";
 import { useExportDashboardToExcel } from "./useExportDashboardToExcel.js";
 import { useExportDashboardToPdfPresentation } from "./useExportDashboardToPdfPresentation.js";
@@ -140,51 +135,23 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
 
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
-    const isInViewMode = useDashboardSelector(selectIsInViewMode);
-    const isInEditMode = useDashboardSelector(selectIsInEditMode);
-    const canCreateDashboard = useDashboardSelector(selectCanCreateAnalyticalDashboard);
-    const isSaveAsNewHidden = useDashboardSelector(selectIsSaveAsNewButtonHidden);
-    const isStandaloneSaveAsNewButtonVisible = useDashboardSelector(selectIsSaveAsNewButtonVisible);
 
-    const canExport = useDashboardSelector(selectCanExportPdf);
-    const isSlideshowExportsEnabled = useDashboardSelector(selectEnableSlideshowExports);
     const isEnableDashboardTabularExport = useDashboardSelector(selectEnableDashboardTabularExport);
     const isEnableOrchestratedTabularExports = useDashboardSelector(selectEnableOrchestratedTabularExports);
-    const isKPIDashboardExportPDFEnabled = !!useDashboardSelector(selectEnableKPIDashboardExportPDF);
-    const isExportPdfEntitlementPresent = !!useDashboardSelector(selectEntitlementExportPdf);
+
+    const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
+    const isPdfExportVisible = useDashboardSelector(selectPdfExportVisible);
 
     const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
 
-    const isFilterViewsFeatureFlagEnabled = useDashboardSelector(selectEnableFilterViews);
-    const isFilterViewsEnabledForDashboard = !useDashboardSelector(selectDisableFilterViews);
-    const isFilterViewsVisible =
-        isMobile && isFilterViewsFeatureFlagEnabled && isFilterViewsEnabledForDashboard;
+    const isFilterViewsEnabled = useDashboardSelector(selectFilterViewsVisible);
+    const isFilterViewsVisible = isMobile && isFilterViewsEnabled;
 
-    const isDeleteVisible = isInEditMode && (menuButtonItemsVisibility.deleteButton ?? true);
+    const isDeleteVisible = useDashboardSelector(selectDeleteVisible);
 
     // Do not show save as new button in menu item when it is already shown as a standalone top bar button.
-    const isSaveAsVisible =
-        !isStandaloneSaveAsNewButtonVisible &&
-        canCreateDashboard &&
-        !isSaveAsNewHidden &&
-        (menuButtonItemsVisibility.saveAsNewButton ?? true);
+    const isSaveAsVisible = useDashboardSelector(selectSaveAsVisible);
     const isSaveAsDisabled = isEmptyLayout || isNewDashboard || isReadOnly;
-
-    const isPdfExportVisible =
-        isInViewMode &&
-        canExport &&
-        isKPIDashboardExportPDFEnabled &&
-        isExportPdfEntitlementPresent &&
-        (menuButtonItemsVisibility.pdfExportButton ?? true);
-
-    const isExportVisible =
-        isInViewMode &&
-        canExport &&
-        isSlideshowExportsEnabled &&
-        (menuButtonItemsVisibility.pdfExportButton ??
-            menuButtonItemsVisibility.excelExportButton ??
-            menuButtonItemsVisibility.powerPointExportButton ??
-            true);
 
     const isInProgress =
         exportDashboardToPdfStatus === "running" ||
@@ -358,6 +325,8 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
             ],
         ]);
     }, [
+        isEnableDashboardTabularExport,
+        isEnableOrchestratedTabularExports,
         defaultOnExportToPdf,
         defaultOnSaveAs,
         defaultOnScheduleEmailing,

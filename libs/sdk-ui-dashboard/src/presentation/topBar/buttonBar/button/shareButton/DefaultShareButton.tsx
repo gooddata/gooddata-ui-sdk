@@ -1,12 +1,16 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 
 import { IShareButtonProps } from "./types.js";
-import { uiActions, useDashboardDispatch, useDashboardSelector } from "../../../../../model/index.js";
+import {
+    uiActions,
+    selectIsShareButtonVisible,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../../../model/index.js";
 import { HiddenShareButton } from "./HiddenShareButton.js";
-import { selectIsShareButtonVisible } from "../selectors.js";
 
 const ALIGN_POINTS_TOOLTIP = [{ align: "bc tr" }];
 

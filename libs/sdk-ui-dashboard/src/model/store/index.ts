@@ -191,6 +191,25 @@ export {
     selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
 } from "./widgetDrills/widgetDrillSelectors.js";
 
+export {
+    selectDeleteVisible,
+    selectFilterViewsVisible,
+    selectPdfExportVisible,
+    selectSaveAsVisible,
+    selectCommonExportAvailable,
+    selectSlideShowExportAvailable,
+    selectSlideShowExportVisible,
+    selectCanEnterEditModeAndIsLoaded,
+    selectIsShareButtonVisible,
+    selectIsSaveAsNewButtonVisible,
+    hasEditDashboardPermission,
+    hasEditLockedDashboardPermission,
+    selectCanSaveDashboard,
+    selectCanEnterEditMode,
+    selectIsPrivateDashboard,
+    selectIsCurrentDashboardVisibleInList,
+} from "./topBar/topBarSelectors.js";
+
 export type { UndoEnhancedState, UndoEntry } from "./_infra/undoEnhancer.js";
 export type { LayoutState, LayoutStash } from "./layout/layoutState.js";
 

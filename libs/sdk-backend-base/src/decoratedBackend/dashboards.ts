@@ -91,7 +91,7 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
 
     exportDashboardToPresentation(
         ref: ObjRef,
-        format: "pptx" | "pdf",
+        format: "PPTX" | "PDF",
         filters?: FilterContextItem[],
     ): Promise<IExportResult> {
         return this.decorated.exportDashboardToPresentation(ref, format, filters);

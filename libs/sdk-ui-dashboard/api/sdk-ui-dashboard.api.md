@@ -3966,6 +3966,12 @@ export function getDefaultInsightMenuItems(intl: IntlShape, config: {
 // @internal (undocumented)
 export function getDrillDownTitle(drillDefinition: IDrillDownDefinition, drillEvent: IDrillEvent, drillDownIntersectionIgnoredAttributes?: IDrillDownIntersectionIgnoredAttributes[], drillTargetDisplayForm?: IAttributeDisplayFormMetadataObject): string | null;
 
+// @internal
+export const hasEditDashboardPermission: DashboardSelector<boolean>;
+
+// @internal
+export const hasEditLockedDashboardPermission: DashboardSelector<boolean>;
+
 // @alpha
 export type HeaderExportData = {
     title?: CommonExportDataAttributes;
@@ -7697,6 +7703,12 @@ export const selectCanEditDashboardPermission: DashboardSelector<boolean>;
 // @public
 export const selectCanEditLockedDashboardPermission: DashboardSelector<boolean>;
 
+// @internal (undocumented)
+export const selectCanEnterEditMode: DashboardSelector<boolean>;
+
+// @internal (undocumented)
+export const selectCanEnterEditModeAndIsLoaded: DashboardSelector<boolean>;
+
 // @public
 export const selectCanExecuteRaw: DashboardSelector<boolean>;
 
@@ -7742,6 +7754,9 @@ export const selectCanManageWorkspace: DashboardSelector<boolean>;
 // @public
 export const selectCanRefreshData: DashboardSelector<boolean>;
 
+// @internal (undocumented)
+export function selectCanSaveDashboard(state: DashboardState): boolean;
+
 // @public
 export const selectCanShareDashboardPermission: DashboardSelector<boolean>;
 
@@ -7783,6 +7798,9 @@ export const selectCatalogMeasures: DashboardSelector<ICatalogMeasure[]>;
 
 // @public
 export const selectColorPalette: DashboardSelector<IColorPalette>;
+
+// @internal
+export const selectCommonExportAvailable: DashboardSelector<boolean>;
 
 // @public
 export const selectConfig: DashboardSelector<ResolvedDashboardConfig>;
@@ -7906,6 +7924,9 @@ export const selectDateFormat: DashboardSelector<string | undefined>;
 
 // @alpha (undocumented)
 export const selectDateHierarchyTemplates: DashboardSelector<IDateHierarchyTemplate[]>;
+
+// @internal
+export const selectDeleteVisible: DashboardSelector<boolean>;
 
 // @public
 export const selectDisableDashboardCrossFiltering: DashboardSelector<boolean>;
@@ -8174,6 +8195,9 @@ export const selectFilterViewsAreLoading: DashboardSelector<boolean>;
 // @internal (undocumented)
 export const selectFilterViewsDialogMode: DashboardSelector<FilterViewDialogMode>;
 
+// @internal
+export const selectFilterViewsVisible: DashboardSelector<boolean>;
+
 // @beta
 export const selectFocusObject: DashboardSelector<DashboardFocusObject>;
 
@@ -8282,6 +8306,9 @@ export const selectIsCircularDependency: (currentFilterLocalId: string, neighbor
 // @beta (undocumented)
 export const selectIsCrossFiltering: DashboardSelector<boolean>;
 
+// @internal (undocumented)
+export const selectIsCurrentDashboardVisibleInList: DashboardSelector<boolean>;
+
 // @internal
 export const selectIsDashboardDirty: DashboardSelector<boolean>;
 
@@ -8375,6 +8402,9 @@ export const selectIsNewDashboard: DashboardSelector<boolean>;
 // @internal
 export const selectIsNewDashboardWithContent: DashboardSelector<boolean>;
 
+// @internal (undocumented)
+export const selectIsPrivateDashboard: DashboardSelector<boolean>;
+
 // @public
 export const selectIsReadOnly: DashboardSelector<boolean>;
 
@@ -8404,6 +8434,9 @@ export const selectIsSectionInsertedByPlugin: (refs: (ObjRef | undefined)[]) => 
 
 // @internal
 export const selectIsShareButtonHidden: DashboardSelector<boolean>;
+
+// @internal (undocumented)
+export const selectIsShareButtonVisible: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
 export const selectIsShareDialogOpen: DashboardSelector<boolean>;
@@ -8477,6 +8510,9 @@ export const selectOriginalFilterContextFilters: DashboardSelector<FilterContext
 // @internal
 export const selectOtherContextAttributeFilters: (ref?: ObjRef) => DashboardSelector<IDashboardAttributeFilter[]>;
 
+// @internal
+export const selectPdfExportVisible: DashboardSelector<boolean>;
+
 // @public
 export const selectPermissions: DashboardSelector<IWorkspacePermissions>;
 
@@ -8491,6 +8527,9 @@ export const selectPreloadedAttributesWithReferences: DashboardSelector<IAttribu
 
 // @internal (undocumented)
 export const selectRenderMode: DashboardSelector<RenderMode>;
+
+// @internal
+export const selectSaveAsVisible: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
 export const selectScheduleEmailDialogDefaultAttachment: DashboardSelector<ObjRef | undefined>;
@@ -8515,6 +8554,12 @@ export const selectSettings: DashboardSelector<ISettings>;
 
 // @internal
 export const selectShouldHidePixelPerfectExperience: DashboardSelector<string | number | boolean | object>;
+
+// @internal
+export const selectSlideShowExportAvailable: DashboardSelector<boolean>;
+
+// @internal
+export const selectSlideShowExportVisible: DashboardSelector<boolean>;
 
 // @internal
 export const selectStash: DashboardSelector<LayoutStash>;

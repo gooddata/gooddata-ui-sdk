@@ -26,7 +26,7 @@ function exportDashboardToPptPresentation(
     return backend
         .workspace(workspace)
         .dashboards()
-        .exportDashboardToPresentation(dashboardRef, "pptx", filters);
+        .exportDashboardToPresentation(dashboardRef, "PPTX", filters);
 }
 
 export function* exportDashboardToPptPresentationHandler(

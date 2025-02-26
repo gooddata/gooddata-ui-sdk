@@ -563,7 +563,7 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
     // (undocumented)
-    exportDashboardToPresentation(ref: ObjRef, format: "pptx" | "pdf", filters?: FilterContextItem[]): Promise<IExportResult>;
+    exportDashboardToPresentation(ref: ObjRef, format: "PPTX" | "PDF", filters?: FilterContextItem[]): Promise<IExportResult>;
     // (undocumented)
     exportDashboardToTabular(ref: ObjRef): Promise<IExportResult>;
     // (undocumented)
