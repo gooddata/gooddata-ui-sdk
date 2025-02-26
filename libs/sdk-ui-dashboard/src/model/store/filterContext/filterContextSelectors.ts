@@ -325,7 +325,7 @@ export const selectWorkingFilterContextAttributeFilters: DashboardSelector<IDash
     );
 
 /**
- * This selector returns dashboard's filter context date filter.
+ * This selector returns dashboard's applied filter context date filter.
  *
  * @remarks
  * It is expected that the selector is called only after the filter context state is correctly initialized.
@@ -335,6 +335,20 @@ export const selectWorkingFilterContextAttributeFilters: DashboardSelector<IDash
  */
 export const selectFilterContextDateFilter: DashboardSelector<IDashboardDateFilter | undefined> =
     createSelector(selectFilterContextFilters, (filters): IDashboardDateFilter | undefined =>
+        filters.find(isDashboardCommonDateFilter),
+    );
+
+/**
+ * This selector returns dashboard's working filter context date filter.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectWorkingFilterContextDateFilter: DashboardSelector<IDashboardDateFilter | undefined> =
+    createSelector(selectWorkingFilterContextFilters, (filters): IDashboardDateFilter | undefined =>
         filters.find(isDashboardCommonDateFilter),
     );
 
@@ -356,7 +370,7 @@ export const selectFilterContextDraggableFilters: DashboardSelector<
 );
 
 /**
- * This selector returns dashboard's filter context date filter with dimension specified.
+ * This selector returns dashboard's applied filter context date filter with dimension specified.
  *
  * @remarks
  * It is expected that the selector is called only after the filter context state is correctly initialized.
@@ -366,6 +380,20 @@ export const selectFilterContextDraggableFilters: DashboardSelector<
  */
 export const selectFilterContextDateFiltersWithDimension: DashboardSelector<IDashboardDateFilter[]> =
     createSelector(selectFilterContextFilters, (filters): IDashboardDateFilter[] =>
+        filters.filter(isDashboardDateFilterWithDimension),
+    );
+
+/**
+ * This selector returns dashboard's working filter context date filter with dimension specified.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectWorkingFilterContextDateFiltersWithDimension: DashboardSelector<IDashboardDateFilter[]> =
+    createSelector(selectWorkingFilterContextFilters, (filters): IDashboardDateFilter[] =>
         filters.filter(isDashboardDateFilterWithDimension),
     );
 

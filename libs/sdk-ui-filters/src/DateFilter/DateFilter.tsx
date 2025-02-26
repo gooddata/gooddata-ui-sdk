@@ -257,6 +257,8 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
 
     private handleSelectChange = () => {
         const normalizedSelectedFilterOption = normalizeSelectedFilterOption(this.state.selectedFilterOption);
-        this.props.onSelect?.(normalizedSelectedFilterOption, this.state.excludeCurrentPeriod);
+        if (isEmpty(validateFilterOption(normalizedSelectedFilterOption))) {
+            this.props.onSelect?.(normalizedSelectedFilterOption, this.state.excludeCurrentPeriod);
+        }
     };
 }
