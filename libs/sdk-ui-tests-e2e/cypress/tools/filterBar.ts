@@ -737,4 +737,8 @@ export class FilterBar {
         const testClass = getTestClassByTitle(name, "date-filter-button-");
         return cy.get(`.dash-filters-all .s-date-filter-button${testClass} .s-button-text`);
     }
+
+    waitForFiltersLoaded() {
+        cy.get(".s-attribute-filter").contains("Loading…").should("not.exist");
+    }
 }

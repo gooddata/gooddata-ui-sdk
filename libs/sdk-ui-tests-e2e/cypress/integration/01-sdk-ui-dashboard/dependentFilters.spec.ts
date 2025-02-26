@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
-import { AttributeFilter } from "../../tools/filterBar";
+import { AttributeFilter, FilterBar } from "../../tools/filterBar";
 import { TopBar } from "../../tools/dashboards";
 import { Table } from "../../tools/table";
 import { InsightsCatalog } from "../../tools/insightsCatalog";
@@ -12,6 +12,7 @@ const product = new AttributeFilter("Product");
 const stageName = new AttributeFilter("Stage Name");
 const table = new Table(".s-dash-item-0");
 const topBar = new TopBar();
+const filterBar = new FilterBar();
 
 describe("Dependent filter", () => {
     beforeEach(() => {
@@ -41,6 +42,7 @@ describe("Dependent filter", () => {
             .waitLoaded()
             .getColumnValues(2)
             .should("deep.equal", ["Bridgeport", "Hartford"]);
+        filterBar.waitForFiltersLoaded();
 
         cityFilter
             .isLoaded()
@@ -59,9 +61,11 @@ describe("Dependent filter", () => {
             .hasSubtitle("Hartford");
 
         table.waitLoadStarted().waitLoaded().getColumnValues(2).should("deep.equal", ["Hartford"]);
+        filterBar.waitForFiltersLoaded();
 
         stateFilter.open().selectAttribute(["Oregon"]).apply();
 
+        filterBar.waitForFiltersLoaded();
         table.showsNoData();
 
         cityFilter
@@ -105,6 +109,7 @@ describe("Dependent filter", () => {
         stateFilter.open().selectAttribute(["Connecticut", "Oregon"]).apply();
 
         table.waitLoadStarted().waitLoaded().getColumnValues(2).should("deep.equal", ["Hartford"]);
+        filterBar.waitForFiltersLoaded();
 
         cityFilter.open().hasSubtitle("Hartford").hasFilterListSize(10).hasSelectedValueList(["Hartford"]);
     });
