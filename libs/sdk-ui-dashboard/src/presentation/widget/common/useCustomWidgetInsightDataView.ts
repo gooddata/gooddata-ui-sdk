@@ -13,8 +13,12 @@ import {
 } from "@gooddata/sdk-ui";
 import stringify from "json-stable-stringify";
 
-import { ICustomWidget, selectEnableExecutionCancelling, useWidgetFilters } from "../../../model/index.js";
-import { useSelector } from "react-redux";
+import {
+    ICustomWidget,
+    selectEnableExecutionCancelling,
+    useDashboardSelector,
+    useWidgetFilters,
+} from "../../../model/index.js";
 
 /**
  * Configuration options for the {@link useCustomWidgetInsightDataView} hook.
@@ -73,7 +77,7 @@ export function useCustomWidgetInsightDataView({
     UseCustomWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError> {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
-    const enableExecutionCancellingFF = useSelector(selectEnableExecutionCancelling);
+    const enableExecutionCancellingFF = useDashboardSelector(selectEnableExecutionCancelling);
     const effectiveExecutionCancelling = enableExecutionCancelling ?? enableExecutionCancellingFF;
 
     const effectiveInsightTask = useCancelablePromise(
