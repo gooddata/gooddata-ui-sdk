@@ -146,6 +146,9 @@ export function recordedBackend(
         withTelemetry(_component: string, _props: object): IAnalyticalBackend {
             return backend;
         },
+        withCorrelation(_correlationMetadata: Record<string, string>): IAnalyticalBackend {
+            return backend;
+        },
         withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
             return this;
         },

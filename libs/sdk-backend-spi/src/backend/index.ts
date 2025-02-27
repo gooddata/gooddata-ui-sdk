@@ -91,6 +91,16 @@ export interface IAnalyticalBackend {
     withTelemetry(componentName: string, props: object): IAnalyticalBackend;
 
     /**
+     * Sets request correlation metadata that will be included in HTTP requests to the backend.
+     * If the {@link IAnalyticalBackend} instance already has correlation metadata set, the new metadata will be merged with the existing one.
+     * This method provides more flexibility than withTelemetry by allowing arbitrary key-value pairs to be sent.
+     *
+     * @param correlationMetadata - key-value pairs to include as correlation metadata
+     * @returns a new instance of backend configured with the merged correlation metadata
+     */
+    withCorrelation(correlationMetadata: IRequestCorrelationMetadata): IAnalyticalBackend;
+
+    /**
      * Sets authentication provider to be used when backend discovers current session is
      * not authenticated.
      *
@@ -284,6 +294,20 @@ export interface IAuthenticationContext {
      * non-standard authentication.
      */
     client: any;
+}
+
+/**
+ * Correlation metadata that will be included in HTTP requests.
+ * The exact mechanism for including correlation metadata in requests
+ * is determined by the specific sdk-backend-spi implementation.
+ *
+ * @public
+ */
+export interface IRequestCorrelationMetadata {
+    /**
+     * Key-value pairs for correlation metadata
+     */
+    readonly [key: string]: string;
 }
 
 //

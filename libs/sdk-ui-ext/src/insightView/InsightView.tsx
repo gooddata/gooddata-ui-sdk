@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import {
@@ -9,6 +9,8 @@ import {
     ObjRef,
     areObjRefsEqual,
     insightRef,
+    isIdentifierRef,
+    isUriRef,
 } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
@@ -21,6 +23,7 @@ import {
     useCancelablePromise,
     convertError,
     resolveLocale,
+    useBackendWithCorrelation,
 } from "@gooddata/sdk-ui";
 import { withMapboxToken } from "@gooddata/sdk-ui-geo";
 
@@ -259,12 +262,27 @@ export const IntlInsightView = withMapboxToken(withContexts(injectIntl(InsightVi
  *
  * @public
  */
-export class InsightView extends React.Component<IInsightViewProps> {
-    public render() {
-        return (
-            <IntlWrapper locale={this.props.locale}>
-                <IntlInsightView {...this.props} />
-            </IntlWrapper>
-        );
+export const InsightView = (props: IInsightViewProps) => {
+    const backend = useBackendWithVisualizationCorrelation(props);
+
+    return (
+        <IntlWrapper locale={props.locale}>
+            <IntlInsightView {...props} backend={backend} />
+        </IntlWrapper>
+    );
+};
+
+function useBackendWithVisualizationCorrelation(props: IInsightViewProps) {
+    const { backend, insight } = props;
+
+    let visualizationId;
+    if (typeof insight === "string") {
+        visualizationId = insight;
+    } else if (isIdentifierRef(insight)) {
+        visualizationId = insight.identifier;
+    } else if (isUriRef(insight)) {
+        visualizationId = insight.uri;
     }
+
+    return useBackendWithCorrelation(backend, { visualizationId });
 }

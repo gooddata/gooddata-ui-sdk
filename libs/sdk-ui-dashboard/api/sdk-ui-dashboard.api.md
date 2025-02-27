@@ -176,7 +176,6 @@ import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardDrillEvent as IDashboardDrillEvent_2 } from '../../../types.js';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardFilterView } from '@gooddata/sdk-model';
-import { IDashboardInsightProps as IDashboardInsightProps_2 } from './types.js';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem } from '@gooddata/sdk-model';
 import { IDashboardLayoutProps as IDashboardLayoutProps_2 } from './types.js';
@@ -1343,7 +1342,7 @@ export type CustomWidgetDraggableItem = BaseDraggableMovingItem & {
     widget: ICustomWidget;
 };
 
-// @internal (undocumented)
+// @public (undocumented)
 export const Dashboard: React_2.FC<IDashboardProps>;
 
 // @alpha
@@ -3248,7 +3247,7 @@ export const DefaultDashboardDateFilter: (props: IDashboardDateFilterProps) => J
 export function DefaultDashboardDateFilterComponentSetFactory(dateFilterProvider: DateFilterComponentProvider): DateFilterComponentSet;
 
 // @public
-export const DefaultDashboardInsight: ComponentType<IDashboardInsightProps_2>;
+export const DefaultDashboardInsight: (props: IDashboardInsightProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export function DefaultDashboardInsightComponentSetFactory(insightProvider: InsightComponentProvider): InsightWidgetComponentSet;
