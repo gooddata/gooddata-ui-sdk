@@ -35,6 +35,9 @@ export const anyBucket: BucketPredicate;
 // @public
 export const anyMeasure: MeasurePredicate;
 
+// @internal
+export function applyFilterContext(filterContext: IFilterContextDefinition, workingFilterContext: IWorkingFilterContextDefinition | undefined): IFilterContextDefinition;
+
 // @public
 export function applyRatioRule<T extends IAttributeOrMeasure>(items: T[], rule?: ComputeRatioRule): T[];
 
@@ -4286,6 +4289,11 @@ export interface IWidgetDescription {
 }
 
 // @alpha
+export interface IWorkingFilterContextDefinition {
+    readonly filters: WorkingFilterContextItem[];
+}
+
+// @alpha
 export interface IWorkspaceAccess {
     permissions: WorkspaceAccessPermission;
     workspace: string;
@@ -4858,6 +4866,14 @@ export function widgetType(widget: IWidget): AnalyticalWidgetType;
 
 // @alpha
 export function widgetUri(widget: IWidget): string;
+
+// @alpha
+export type WorkingDashboardAttributeFilter = {
+    attributeFilter: Partial<IDashboardAttributeFilter["attributeFilter"]>;
+};
+
+// @alpha
+export type WorkingFilterContextItem = WorkingDashboardAttributeFilter | IDashboardDateFilter;
 
 // @public
 export type WorkspaceAccessPermission = "VIEW" | "VIEW_AND_EXPORT" | "ANALYZE" | "ANALYZE_AND_EXPORT" | "MANAGE";

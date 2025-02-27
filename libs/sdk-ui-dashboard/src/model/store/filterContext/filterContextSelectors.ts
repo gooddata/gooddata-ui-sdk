@@ -20,6 +20,7 @@ import {
     isDashboardDateFilter,
     objRefToString,
     getAttributeElementsItems,
+    applyFilterContext,
 } from "@gooddata/sdk-model";
 import { ObjRefMap, newDisplayFormMap } from "../../../_staging/metadata/objRefMap.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
@@ -107,13 +108,13 @@ export const selectFilterContextDefinition: DashboardSelector<IFilterContextDefi
  * @alpha
  */
 export const selectWorkingFilterContextDefinition: DashboardSelector<IFilterContextDefinition> =
-    createSelector(selectSelf, (filterContextState) => {
+    createSelector(selectSelf, (state) => {
         invariant(
-            filterContextState.workingFilterContextDefinition,
+            state.filterContextDefinition,
             "attempting to access uninitialized working filter context state",
         );
 
-        return filterContextState.workingFilterContextDefinition!;
+        return applyFilterContext(state.filterContextDefinition, state.workingFilterContextDefinition)!;
     });
 
 /**
@@ -136,7 +137,7 @@ export const selectAreAllFiltersApplied: DashboardSelector<boolean | undefined> 
             return false;
         }
 
-        function filterLocalIdentifier(filter: FilterContextItem): string {
+        function filterIdentifier(filter: FilterContextItem): string {
             if (isDashboardAttributeFilter(filter)) {
                 const localIdentifier = filter.attributeFilter.localIdentifier;
                 if (!localIdentifier) {
@@ -148,22 +149,16 @@ export const selectAreAllFiltersApplied: DashboardSelector<boolean | undefined> 
                 return localIdentifier;
             }
             if (isDashboardDateFilter(filter)) {
-                const localIdentifier = filter.dateFilter.localIdentifier;
-                if (!localIdentifier) {
-                    console.warn(
-                        "Date filter without localIdentifier found. Using dataSet as fallback which may not be reliable.",
-                    );
-                    return (
-                        (filter.dateFilter.dataSet && objRefToString(filter.dateFilter.dataSet)) ??
-                        "default_date_filter"
-                    );
-                }
+                return (
+                    (filter.dateFilter.dataSet && objRefToString(filter.dateFilter.dataSet)) ??
+                    "default_date_filter"
+                );
             }
             throw new Error("Unknown filter type");
         }
 
-        const appliedFilters = keyBy(filterContext.filters, filterLocalIdentifier);
-        const workingFilters = keyBy(workingFilterContext.filters, filterLocalIdentifier);
+        const appliedFilters = keyBy(filterContext.filters, filterIdentifier);
+        const workingFilters = keyBy(workingFilterContext.filters, filterIdentifier);
 
         return keys(appliedFilters)
             .map((key): boolean => {

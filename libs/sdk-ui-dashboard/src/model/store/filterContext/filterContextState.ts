@@ -5,6 +5,7 @@ import {
     IDashboardObjectIdentity,
     IFilterContextDefinition,
     IAttributeDisplayFormMetadataObject,
+    type IWorkingFilterContextDefinition,
 } from "@gooddata/sdk-model";
 
 /**
@@ -21,9 +22,15 @@ export interface FilterContextState {
     /**
      * Contains staged filters state which are not applied by the user yet.
      * They are used to show selected values in filters and when user requests, they are applied to the filterContextDefinition (above).
+     *
+     * This working filter context contains only changed filters and their fields.
+     * before using this working, this state is merged with filterContextDefinition.
+     *
+     * This way we do not need to synchronize other fields, which makes it easier to maintain.
+     *
      * @alpha
      */
-    workingFilterContextDefinition?: IFilterContextDefinition;
+    workingFilterContextDefinition?: IWorkingFilterContextDefinition;
 
     /**
      * Filter context definition contains the original dashboard filters stored on the backend.
