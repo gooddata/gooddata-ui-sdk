@@ -54,6 +54,7 @@ describe("Dependent filter", () => {
             .showAllElementValuesIsVisible(true)
             .showAllElementValues();
 
+        cy.wait(1000);
         filterBar.waitForFiltersLoaded();
         cityFilter.showAllElementValuesIsVisible(false).hasFilterListSize(300);
 
@@ -81,6 +82,7 @@ describe("Dependent filter", () => {
             .containElementsListStatus("None")
             .showAllElementValuesIsVisible(true)
             .showAllElementValues();
+        cy.wait(1000);
         filterBar.waitForFiltersLoaded();
         cityFilter
             .isLoaded()
