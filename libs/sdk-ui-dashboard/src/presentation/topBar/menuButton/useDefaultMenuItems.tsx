@@ -252,7 +252,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                 {
                     type: "button",
                     itemId: "pdf-export-item", // careful, this is also used as a selector in tests, do not change
-                    itemName: intl.formatMessage({ id: "options.menu.export.PDF" }),
+                    itemName: intl.formatMessage({ id: "options.menu.export_to_pdf" }),
                     onClick: defaultOnExportToPdf,
                     visible: isPdfExportVisible && !isExportVisible,
                     icon: "gd-icon-download",
