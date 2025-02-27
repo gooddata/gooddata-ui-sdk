@@ -294,12 +294,17 @@ export interface IWorkspaceDashboardsService {
      * @param ref - dashboard reference
      * @param format - export format
      * @param filters - Override stored dashboard filters with custom filters
+     * @param options - additional options
      * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
      */
     exportDashboardToPresentation(
         ref: ObjRef,
         format: "PDF" | "PPTX",
         filters?: FilterContextItem[],
+        options?: {
+            widgetIds?: ObjRef[];
+            filename?: string;
+        },
     ): Promise<IExportResult>;
 
     /**
