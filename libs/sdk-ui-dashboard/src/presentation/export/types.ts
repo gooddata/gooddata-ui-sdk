@@ -7,6 +7,7 @@
  */
 export type ExportElementType =
     | "section"
+    | "section-info"
     | "section-title"
     | "section-description"
     | "widget"
@@ -19,7 +20,10 @@ export type ExportElementType =
  *
  * @alpha
  */
-export type CommonExportDataAttributes = { "data-export-type": ExportElementType };
+export type CommonExportDataAttributes = {
+    "data-export-type": ExportElementType;
+    "data-export-depth"?: string;
+};
 
 /**
  * Data attributes for export mode to be added to the header.
@@ -27,6 +31,7 @@ export type CommonExportDataAttributes = { "data-export-type": ExportElementType
  * @alpha
  */
 export type HeaderExportData = {
+    info?: CommonExportDataAttributes;
     title?: CommonExportDataAttributes;
     description?: DescriptionExportData;
 };

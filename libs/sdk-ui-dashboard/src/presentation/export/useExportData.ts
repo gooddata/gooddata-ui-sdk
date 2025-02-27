@@ -18,15 +18,16 @@ import {
 /**
  * @alpha
  */
-export const useSectionExportData = (firstLevel: boolean): SectionExportData | undefined => {
+export const useSectionExportData = (depth: number): SectionExportData | undefined => {
     const isExportMode = useDashboardSelector(selectIsInExportMode);
 
     if (!isExportMode) {
         return undefined;
     }
 
-    if (firstLevel) {
+    if (depth === 0) {
         return {
+            info: { "data-export-type": "section-info", "data-export-depth": depth.toString() },
             section: { "data-export-type": "section" },
             title: { "data-export-type": "section-title" },
             description: {
@@ -39,6 +40,7 @@ export const useSectionExportData = (firstLevel: boolean): SectionExportData | u
     }
 
     return {
+        info: { "data-export-type": "section-info", "data-export-depth": depth.toString() },
         title: { "data-export-type": "section-title" },
         description: {
             description: { "data-export-type": "section-description" },
@@ -69,7 +71,7 @@ export const useWidgetExportData = (widget: ExtendedDashboardWidget): WidgetExpo
         },
         title: { "data-export-type": "widget-title" },
         description: {
-            description: { "data-export-type": "section-description" },
+            description: { "data-export-type": "widget-description" },
             richText: {
                 markdown: { "data-export-content-type": "markdown" },
             },
