@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback, useEffect, useRef, useState } from "react";
 import isEqual from "lodash/isEqual.js";
 import debounce from "lodash/debounce.js";
@@ -780,6 +780,8 @@ function useCallbacks(
         }
     }, [handler, supportsKeepingDependentFiltersSelection, supportsShowingFilteredElements]);
 
+    useReportMigratedFilter(handler, onApply);
+
     return {
         onApply,
         onLoadNextElementsPage,
@@ -919,3 +921,37 @@ function replaceFilterDisplayForm(nextFilter: IAttributeFilter, primaryLabelRef:
         },
     };
 }
+
+// The hook detects if:
+// - filter uses non-primary label
+// - filter was created before "support duplicated label values" feature was introduced
+// - filter was migrated to use displayAsLabel by "loadAttributeSaga"
+// If all of the above applies, the provided callback (onApply of the filter) is called to propagate the
+// new filter state (filter label, displayAsLabel, and updated selection) is reported to the application
+// that uses the filter.
+const useReportMigratedFilter = (
+    handler: IMultiSelectAttributeFilterHandler,
+    onFilterMigrated: () => void,
+) => {
+    const initialLabel = useRef(handler.getDisplayAsLabel());
+    const initialFilter = useRef(handler.getFilter());
+    const wasMigrationReported = useRef(false);
+    const initStatus = handler.getInitStatus();
+
+    if (
+        !wasMigrationReported.current &&
+        initStatus === "success" &&
+        !areObjRefsEqual(initialLabel.current, handler.getDisplayAsLabel()) &&
+        !areObjRefsEqual(filterObjRef(initialFilter.current), filterObjRef(handler.getFilter()))
+    ) {
+        wasMigrationReported.current = true;
+        onFilterMigrated();
+
+        console.warn(
+            "AttributeFilter: Filter label migration reported to filter's parent app. Filter label:",
+            filterObjRef(initialFilter.current),
+            "Filter displayAsLabel:",
+            handler.getDisplayAsLabel(),
+        );
+    }
+};

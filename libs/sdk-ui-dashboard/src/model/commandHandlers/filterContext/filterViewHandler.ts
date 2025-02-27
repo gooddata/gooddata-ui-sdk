@@ -9,6 +9,7 @@ import {
     areObjRefsEqual,
     IFilterContextDefinition,
     isDashboardAttributeFilter,
+    IDashboardAttributeFilterConfig,
 } from "@gooddata/sdk-model";
 import { defaultErrorHandler } from "@gooddata/sdk-ui";
 
@@ -19,7 +20,7 @@ import {
     ApplyFilterView,
     SetFilterViewAsDefault,
     reloadFilterViews,
-    changeFilterContextSelection,
+    changeFilterContextSelectionByParams,
 } from "../../commands/index.js";
 import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
@@ -37,6 +38,7 @@ import {
 import { loadFilterViews } from "../dashboard/initializeDashboardHandler/loadFilterViews.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { resetCrossFiltering } from "./common.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 function createFilterView(
     ctx: DashboardContext,
@@ -125,9 +127,20 @@ export function* applyFilterViewHandler(ctx: DashboardContext, cmd: ApplyFilterV
         cmd.payload.ref,
     );
 
+    const attributeFilterConfigs: IDashboardAttributeFilterConfig[] = yield select(
+        selectAttributeFilterConfigsOverrides,
+    );
+
     if (filterView) {
         yield call(resetCrossFiltering, cmd);
-        yield put(changeFilterContextSelection(filterView.filterContext.filters, true, cmd.correlationId));
+        yield put(
+            changeFilterContextSelectionByParams({
+                filters: filterView.filterContext.filters,
+                attributeFilterConfigs,
+                resetOthers: true,
+                correlationId: cmd.correlationId,
+            }),
+        );
         yield put(filterViewApplicationSucceeded(ctx, filterView, cmd.correlationId));
     } else {
         yield put(filterViewApplicationFailed(ctx));
