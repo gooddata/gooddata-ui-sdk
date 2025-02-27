@@ -36,12 +36,9 @@ describe("Dependent filter", () => {
             ]);
 
         stateFilter.isLoaded().open().selectAttribute(["Connecticut"]).apply();
+        cy.wait(1000);
 
-        table
-            .waitLoadStarted()
-            .waitLoaded()
-            .getColumnValues(2)
-            .should("deep.equal", ["Bridgeport", "Hartford"]);
+        table.waitLoaded().getColumnValues(2).should("deep.equal", ["Bridgeport", "Hartford"]);
         filterBar.waitForFiltersLoaded();
 
         cityFilter
@@ -61,10 +58,11 @@ describe("Dependent filter", () => {
         filterBar.waitForFiltersLoaded();
         cityFilter.selectAttribute(["Hartford"]).apply().isLoaded().hasSubtitle("Hartford");
 
-        table.waitLoadStarted().waitLoaded().getColumnValues(2).should("deep.equal", ["Hartford"]);
+        table.waitLoaded().getColumnValues(2).should("deep.equal", ["Hartford"]);
         filterBar.waitForFiltersLoaded();
 
         stateFilter.open().selectAttribute(["Oregon"]).apply();
+        cy.wait(1000);
 
         filterBar.waitForFiltersLoaded();
         table.showsNoData();
@@ -113,8 +111,9 @@ describe("Dependent filter", () => {
             .hasSelectedValueList(["Medford"]);
 
         stateFilter.open().selectAttribute(["Connecticut", "Oregon"]).apply();
+        cy.wait(1000);
 
-        table.waitLoadStarted().waitLoaded().getColumnValues(2).should("deep.equal", ["Hartford"]);
+        table.waitLoaded().getColumnValues(2).should("deep.equal", ["Hartford"]);
         filterBar.waitForFiltersLoaded();
 
         cityFilter.open().hasSubtitle("Hartford").hasFilterListSize(10).hasSelectedValueList(["Hartford"]);
