@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import { ColDef, Column, ColumnResizedEvent } from "@ag-grid-community/all-modules";
+// (C) 2007-2025 GoodData Corporation
+import { ColDef, Column, ColumnResizedEvent } from "ag-grid-community";
 import { MEASURE_COLUMN, COLUMN_TOTAL, COLUMN_SUBTOTAL } from "./constants.js";
 import { agColId } from "../structure/tableDescriptorTypes.js";
 import { ColumnEventSourceType } from "../../columnWidths.js";
@@ -38,7 +38,7 @@ export function isHeaderResizer(target: HTMLElement): boolean {
 }
 
 export function isManualResizing(columnEvent: ColumnResizedEvent): boolean {
-    return Boolean(columnEvent?.source === ColumnEventSourceType.UI_DRAGGED && columnEvent.columns);
+    return columnEvent?.source === ColumnEventSourceType.UI_RESIZED && !!columnEvent.columns;
 }
 
 export function scrollBarExists(target: HTMLDivElement): boolean {

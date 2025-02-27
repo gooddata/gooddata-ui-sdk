@@ -1,7 +1,7 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import { invariant, InvariantError } from "ts-invariant";
-import { Column, ColumnResizedEvent } from "@ag-grid-community/all-modules";
+import { Column, ColumnResizedEvent } from "ag-grid-community";
 import { IAttributeOrMeasure, IMeasure, isMeasure, isAttribute } from "@gooddata/sdk-model";
 
 import {
@@ -94,7 +94,7 @@ function createMeasureLocator(measure: IMeasure): IRepeaterMeasureColumnLocator 
 //check
 
 export function isManualResizing(columnEvent: ColumnResizedEvent): boolean {
-    return Boolean(columnEvent?.source === ColumnEventSourceType.UI_DRAGGED && columnEvent.columns);
+    return columnEvent?.source === ColumnEventSourceType.UI_RESIZED && !!columnEvent.columns;
 }
 
 export function isAttributeColumnWidthItem(obj: any): obj is IRepeaterAttributeColumnWidthItem {
