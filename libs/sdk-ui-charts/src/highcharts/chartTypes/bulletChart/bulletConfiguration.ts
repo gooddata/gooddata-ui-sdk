@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
@@ -38,6 +38,9 @@ const BULLET_TEMPLATE = {
     },
     yAxis: [
         {
+            labels: {
+                distance: 7,
+            },
             stackLabels: {
                 enabled: false,
             },

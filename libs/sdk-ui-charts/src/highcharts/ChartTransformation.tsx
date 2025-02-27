@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { ITheme } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
@@ -157,6 +157,7 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         Highcharts.setOptions({
             lang: {
                 numericSymbols,
+                thousandsSep: " ", // we need to set thousands separator to space to keep it consistent with previous version 9.3.0 this never respect user settings.
             },
         });
     }

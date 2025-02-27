@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import { HighchartsOptions } from "../../lib/index.js";
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
@@ -26,8 +26,12 @@ const BAR_TEMPLATE = {
             },
         },
     },
+    xAxis: [],
     yAxis: [
         {
+            labels: {
+                distance: 7,
+            },
             stackLabels: {
                 enabled: false,
             },
