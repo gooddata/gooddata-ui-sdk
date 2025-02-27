@@ -71,9 +71,8 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         parentLayoutItemSize,
         parentLayoutPath,
     } = props;
-    const root = parentLayoutPath === undefined || parentLayoutPath.length === 0;
-    const showBorders = root;
-    const exportData = useSectionExportData(root);
+    const showBorders = parentLayoutPath === undefined || parentLayoutPath.length === 0;
+    const exportData = useSectionExportData(parentLayoutPath?.length ?? 0);
     const exportStyles = useSlideSizeStyle(renderMode, "section", parentLayoutPath);
     const renderProps = {
         section,

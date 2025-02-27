@@ -26,7 +26,7 @@ export const DashboardLayoutViewSectionHeader: React.FC<IDashboardLayoutSectionH
     }
     const isNestedLayout = section.layout().path() !== undefined;
     return (
-        <div className="gd-fluid-layout-row-header s-fluid-layout-row-header">
+        <div className="gd-fluid-layout-row-header s-fluid-layout-row-header" {...exportData?.info}>
             <div className={"gd-fluid-layout-row-header-container"}>
                 <div className="gd-row-header-view">
                     {title ? (

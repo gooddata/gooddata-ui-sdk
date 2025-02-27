@@ -1090,6 +1090,7 @@ export function commandStartedEventHandler<TCommand extends IDashboardCommand>(t
 // @alpha
 export type CommonExportDataAttributes = {
     "data-export-type": ExportElementType;
+    "data-export-depth"?: string;
 };
 
 // @public (undocumented)
@@ -3746,7 +3747,7 @@ export interface ExportDashboardToPptPresentation extends IDashboardCommand {
 export function exportDashboardToPptPresentation(correlationId?: string): ExportDashboardToPptPresentation;
 
 // @alpha
-export type ExportElementType = "section" | "section-title" | "section-description" | "widget" | "widget-content" | "widget-title" | "widget-description";
+export type ExportElementType = "section" | "section-info" | "section-title" | "section-description" | "widget" | "widget-content" | "widget-title" | "widget-description";
 
 // @beta (undocumented)
 export interface ExportInsightWidget extends IDashboardCommand {
@@ -3973,6 +3974,7 @@ export const hasEditLockedDashboardPermission: DashboardSelector<boolean>;
 
 // @alpha
 export type HeaderExportData = {
+    info?: CommonExportDataAttributes;
     title?: CommonExportDataAttributes;
     description?: DescriptionExportData;
 };
@@ -10113,7 +10115,7 @@ export function useSaveAsNewButtonProps(): ISaveAsNewButtonProps;
 export function useSaveButtonProps(): ISaveButtonProps;
 
 // @alpha (undocumented)
-export const useSectionExportData: (firstLevel: boolean) => SectionExportData | undefined;
+export const useSectionExportData: (depth: number) => SectionExportData | undefined;
 
 // @internal (undocumented)
 export function useShareButtonProps(): IShareButtonProps;

@@ -66,7 +66,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         screen,
         renderMode,
     } = props;
-    const exportData = useSectionExportData(true);
+    const exportData = useSectionExportData(0);
     const exportStyles = useSlideSizeStyle(renderMode, "section");
     const renderProps = { section, screen, renderMode, exportData: exportData?.section };
 
