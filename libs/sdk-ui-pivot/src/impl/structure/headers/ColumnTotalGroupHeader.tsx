@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import { IHeaderGroupParams } from "@ag-grid-community/all-modules";
+// (C) 2023-2025 GoodData Corporation
+import { IHeaderGroupParams } from "ag-grid-community";
 import React from "react";
 
 import TotalHeaderCell, { ALIGN_LEFT } from "./TotalHeaderCell.js";

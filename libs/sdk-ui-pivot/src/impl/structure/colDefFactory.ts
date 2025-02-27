@@ -1,5 +1,5 @@
-// (C) 2007-2023 GoodData Corporation
-import { ColDef, ColGroupDef } from "@ag-grid-community/all-modules";
+// (C) 2007-2025 GoodData Corporation
+import { ColDef, ColGroupDef } from "ag-grid-community";
 import findIndex from "lodash/findIndex.js";
 import { IntlShape } from "react-intl";
 import {
@@ -52,8 +52,8 @@ function getSortProp(
     return sort
         ? {
               sort: sortDirection(sort),
-              // use sortedAt to make sure the order of sorts is the same as the order of columns
-              sortedAt: sortIndex,
+              // use sortIndex to make sure the order of sorts is the same as the order of columns
+              sortIndex,
           }
         : {};
 }

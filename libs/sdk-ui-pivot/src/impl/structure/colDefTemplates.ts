@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import { ColDef, ValueFormatterParams } from "@ag-grid-community/all-modules";
+// (C) 2007-2025 GoodData Corporation
+import { ColDef, ValueFormatterParams } from "ag-grid-community";
 import { IMeasureDescriptor, ISeparators } from "@gooddata/sdk-model";
 import { TableFacade } from "../tableFacade.js";
 import { ICorePivotTableProps } from "../../publicTypes.js";
@@ -18,6 +18,7 @@ export function rowAttributeTemplate(table: TableFacade, props: Readonly<ICorePi
     const cellRenderer = createCellRenderer(table.tableDescriptor);
 
     return {
+        suppressSpanHeaderHeight: true,
         cellClass: cellClassFactory(table, props, "gd-row-attribute-column"),
         headerClass: headerClassFactory(table, props, "gd-row-attribute-column-header"),
         colSpan: (params) => {
@@ -41,6 +42,7 @@ export function rowMeasureTemplate(table: TableFacade, props: Readonly<ICorePivo
     const cellRenderer = createCellRenderer(table.tableDescriptor);
 
     return {
+        suppressSpanHeaderHeight: true,
         cellClass: cellClassFactory(table, props, "gd-row-measure-column"),
         headerClass: headerClassFactory(table, props, "gd-row-measure-header"),
         colSpan: (_params) => {
@@ -73,6 +75,7 @@ export function columnAttributeTemplate(table: TableFacade, props: Readonly<ICor
     const cellRenderer = createCellRenderer(table.tableDescriptor);
 
     return {
+        suppressSpanHeaderHeight: true,
         cellClass: cellClassFactory(table, props, "gd-column-attribute-column"),
         headerClass: headerClassFactory(table, props, "gd-column-attribute-column-header"),
         valueFormatter: (params: ValueFormatterParams) => {
@@ -101,6 +104,7 @@ export function mixedHeadersTemplate(table: TableFacade, props: Readonly<ICorePi
     const cellRenderer = createCellRenderer(table.tableDescriptor);
 
     return {
+        suppressSpanHeaderHeight: true,
         cellClass: cellClassFactory(table, props, "gd-mixed-headers-column"),
         headerClass: headerClassFactory(table, props, "gd-mixed-headers-column-header"),
         colSpan: (params) => {
@@ -128,6 +132,7 @@ export function measureColumnTemplate(table: TableFacade, props: Readonly<ICoreP
     const separators = props.config?.separators;
 
     return {
+        suppressSpanHeaderHeight: true,
         cellClass: cellClassFactory(table, props, cx(AG_NUMERIC_CELL_CLASSNAME, "gd-measure-column")),
         headerClass: headerClassFactory(
             table,
@@ -175,6 +180,7 @@ export function totalSubTotalColumnTemplate(
 
     return {
         headerComponent: ColumnTotalHeader,
+        suppressSpanHeaderHeight: true,
         cellClass: cellClassFactory(table, props, cx(AG_NUMERIC_CELL_CLASSNAME, "gd-total-column")),
         headerClass: headerClassFactory(table, props, "gd-total-column-header"),
         valueFormatter: (params: ValueFormatterParams) => {
@@ -214,6 +220,7 @@ export function mixedValuesColsTemplate(table: TableFacade, props: Readonly<ICor
 
     return {
         headerComponent: MixedValuesColumnHeader,
+        suppressSpanHeaderHeight: true,
         cellClass: cellClassFactory(table, props, cx("gd-mixed-values-column")),
         headerClass: headerClassFactory(table, props, "gd-mixed-values-column-header"),
         valueFormatter: (params: ValueFormatterParams) => {
