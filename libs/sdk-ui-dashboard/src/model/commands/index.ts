@@ -59,6 +59,7 @@ import {
     ModifyDrillDownForInsightWidget,
     AttributeHierarchyModified,
     ChangeInsightWidgetIgnoreCrossFiltering,
+    ExportSlidesInsightWidget,
 } from "./insight.js";
 import {
     ChangeKpiWidgetComparison,
@@ -441,6 +442,8 @@ export type {
     AttributeHierarchyModified,
     ExportRawInsightWidget,
     ExportRawInsightWidgetPayload,
+    ExportSlidesInsightWidget,
+    ExportSlidesInsightWidgetPayload,
 } from "./insight.js";
 export {
     changeInsightWidgetHeader,
@@ -465,6 +468,7 @@ export {
     refreshInsightWidget,
     exportInsightWidget,
     exportRawInsightWidget,
+    exportSlidesInsightWidget,
     attributeHierarchyModified,
 } from "./insight.js";
 export { loadAllWorkspaceUsers } from "./users.js";
@@ -613,4 +617,5 @@ export type DashboardCommands =
     //internal
     | SetScreenSize
     | LoadAllWorkspaceUsers
-    | ExportRawInsightWidget;
+    | ExportRawInsightWidget
+    | ExportSlidesInsightWidget;

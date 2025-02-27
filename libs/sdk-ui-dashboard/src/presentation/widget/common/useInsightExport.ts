@@ -18,10 +18,14 @@ import {
     DashboardInsightWidgetExportResolved,
     ExportRawInsightWidget,
     exportRawInsightWidget,
+    ExportSlidesInsightWidget,
+    exportSlidesInsightWidget,
+    selectSlideShowExportVisible,
 } from "../../../model/index.js";
 import { useExportHandler } from "./useExportHandler.js";
 import { useExportDialogContext } from "../../dashboardContexts/index.js";
 import { useRawExportHandler } from "./useRawExportHandler.js";
+import { useSlidesExportHandler } from "./useSlidesExportHandler.js";
 
 export const useInsightExport = (config: {
     title: string;
@@ -57,6 +61,15 @@ export const useInsightExport = (config: {
         [insight],
     );
 
+    const exportSlidesFunction = useCallback(
+        (title: string, exportType: "pdf" | "pptx") =>
+            dispatchAndWaitFor<ExportSlidesInsightWidget, DashboardInsightWidgetExportResolved>(
+                dispatch,
+                exportSlidesInsightWidget(widgetRef!, title, exportType, uuid()),
+            ).then((result) => result.payload.result),
+        [widgetRef],
+    );
+
     const settings = useDashboardSelector(selectSettings);
     const isInsightExportable = insight
         ? getInsightVisualizationMeta(insight, settings).supportsExport
@@ -66,6 +79,7 @@ export const useInsightExport = (config: {
 
     const exportHandler = useExportHandler();
     const exportRawHandler = useRawExportHandler();
+    const exportSlidesHandler = useSlidesExportHandler();
     const { openDialog, closeDialog } = useExportDialogContext();
 
     const onExportCSV = useCallback(() => {
@@ -85,6 +99,20 @@ export const useInsightExport = (config: {
         invariant(exportRawFunction);
         exportRawHandler(exportRawFunction, title).then(() => setIsExporting(false));
     }, [exportRawFunction, title]);
+
+    const onExportPowerPointPresentation = useCallback(() => {
+        setIsExporting(true);
+        // if this bombs there is an issue with the logic enabling the buttons
+        invariant(exportSlidesFunction);
+        exportSlidesHandler(exportSlidesFunction, title, "pptx").then(() => setIsExporting(false));
+    }, [exportSlidesFunction, title]);
+
+    const onExportPdfPresentation = useCallback(() => {
+        setIsExporting(true);
+        // if this bombs there is an issue with the logic enabling the buttons
+        invariant(exportSlidesFunction);
+        exportSlidesHandler(exportSlidesFunction, title, "pdf").then(() => setIsExporting(false));
+    }, [exportSlidesFunction, title]);
 
     const onExportXLSX = useCallback(() => {
         openDialog({
@@ -111,13 +139,17 @@ export const useInsightExport = (config: {
     const exportXLSXEnabled = !isExporting && isInsightExportable && isExportableToXlsx;
 
     const isExportRawVisible = settings.enableRawExports === true;
+    const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
 
     return {
         exportCSVEnabled,
         exportXLSXEnabled,
         isExportRawVisible,
+        isExportVisible,
         onExportCSV,
         onExportXLSX,
         onExportRawCSV,
+        onExportPdfPresentation,
+        onExportPowerPointPresentation,
     };
 };

@@ -275,25 +275,8 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                         },
                         {
                             type: "button",
-                            itemId: "excel-export-item", // careful, this is also used as a selector in tests, do not change
-                            itemName: intl.formatMessage({ id: "options.menu.export.EXCEL" }),
-                            onClick: defaultOnExportToExcel,
-                            visible:
-                                (menuButtonItemsVisibility.excelExportButton ?? true) &&
-                                isEnableDashboardTabularExport &&
-                                isEnableOrchestratedTabularExports,
-                            disabled: isInProgress,
-                            icon: "gd-icon-download",
-                        },
-                        {
-                            type: "header",
-                            itemId: "export-header-presentation",
-                            itemName: intl.formatMessage({ id: "options.menu.export.header.presentation" }),
-                        },
-                        {
-                            type: "button",
                             itemId: "pdf-presentation-export-item", // careful, this is also used as a selector in tests, do not change
-                            itemName: intl.formatMessage({ id: "options.menu.export.PDF" }),
+                            itemName: intl.formatMessage({ id: "options.menu.export.presentation.PDF" }),
                             onClick: defaultOnExportToPdfPresentation,
                             visible: menuButtonItemsVisibility.pdfExportButton ?? true,
                             disabled: isInProgress,
@@ -302,9 +285,21 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                         {
                             type: "button",
                             itemId: "pptx-presentation-export-item", // careful, this is also used as a selector in tests, do not change
-                            itemName: intl.formatMessage({ id: "options.menu.export.PPTX" }),
+                            itemName: intl.formatMessage({ id: "options.menu.export.presentation.PPTX" }),
                             onClick: defaultOnExportToPowerPointPresentation,
                             visible: menuButtonItemsVisibility.powerPointExportButton ?? true,
+                            disabled: isInProgress,
+                            icon: "gd-icon-download",
+                        },
+                        {
+                            type: "button",
+                            itemId: "excel-export-item", // careful, this is also used as a selector in tests, do not change
+                            itemName: intl.formatMessage({ id: "options.menu.export.EXCEL" }),
+                            onClick: defaultOnExportToExcel,
+                            visible:
+                                (menuButtonItemsVisibility.excelExportButton ?? true) &&
+                                isEnableDashboardTabularExport &&
+                                isEnableOrchestratedTabularExports,
                             disabled: isInProgress,
                             icon: "gd-icon-download",
                         },

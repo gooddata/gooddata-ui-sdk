@@ -431,6 +431,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         dashboardRef: ObjRef,
         format: "PDF" | "PPTX",
         filters?: FilterContextItem[],
+        options?: {
+            widgetIds?: ObjRef[];
+            filename?: string;
+        },
     ): Promise<IExportResult> => {
         const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
 
@@ -451,9 +455,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
             const { title } = convertDashboard(dashboardResponse.data);
             const slidesExportRequest = {
-                fileName: title,
                 format,
                 dashboardId,
+                fileName: options?.filename ?? title,
+                widgetIds: options?.widgetIds?.map((widgetId) => objRefToString(widgetId)),
                 metadata: convertToBackendExportMetadata({ filters: withoutAllTime }),
             };
             const slideshowExport = await client.export.createSlidesExport({

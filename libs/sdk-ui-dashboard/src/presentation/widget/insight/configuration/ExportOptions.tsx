@@ -8,6 +8,7 @@ import {
     Item,
     withBubble,
     IAlignPoint,
+    Header,
 } from "@gooddata/sdk-ui-kit";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -68,9 +69,12 @@ export const ExportOptions: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         exportCSVEnabled,
         exportXLSXEnabled,
         isExportRawVisible,
+        isExportVisible,
         onExportCSV,
         onExportRawCSV,
         onExportXLSX,
+        onExportPowerPointPresentation,
+        onExportPdfPresentation,
     } = useInsightExport({
         widgetRef: widget.ref,
         title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
@@ -82,6 +86,29 @@ export const ExportOptions: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
             {/* Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be under header */}
             <OverlayControllerProvider overlayController={overlayController}>
                 <ItemsWrapper className="gd-configuration-export-options" smallItemsSpacing={true}>
+                    {isExportVisible ? (
+                        <>
+                            <MenuItem
+                                onClick={() => {
+                                    onClose();
+                                    onExportPdfPresentation();
+                                }}
+                                disabled={false}
+                                className="gd-export-options-pdf-presentation"
+                                messageId="options.menu.export.presentation.PDF"
+                            />
+                            <MenuItem
+                                onClick={() => {
+                                    onClose();
+                                    onExportPowerPointPresentation();
+                                }}
+                                disabled={false}
+                                className="gd-export-options-pptx-presentation"
+                                messageId="options.menu.export.presentation.PPTX"
+                            />
+                            <Header>{intl.formatMessage({ id: "options.menu.export.header.data" })}</Header>
+                        </>
+                    ) : null}
                     {isExportRawVisible ? (
                         <>
                             {exportXLSXEnabled ? (
