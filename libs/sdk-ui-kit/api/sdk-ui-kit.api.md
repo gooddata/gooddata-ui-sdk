@@ -718,6 +718,16 @@ export const HubspotConversionTouchPointDialog: React_2.FC<IHubspotConversionTou
 export const Hyperlink: React_2.FC<IHyperlinkProps>;
 
 // @internal (undocumented)
+export interface IAccessibilityConfigBase {
+    // (undocumented)
+    ariaDescribedBy?: React.AriaAttributes["aria-describedby"];
+    // (undocumented)
+    ariaLabel?: React.AriaAttributes["aria-label"];
+    // (undocumented)
+    ariaLabelledBy?: React.AriaAttributes["aria-labelledby"];
+}
+
+// @internal (undocumented)
 export interface IAddButtonProps {
     // (undocumented)
     className?: string;
@@ -1052,7 +1062,11 @@ export interface IBucketItemDescriptors {
 // @internal (undocumented)
 export interface IButtonProps {
     // (undocumented)
+    accessibilityConfig?: IDropdownAccessibilityConfig;
+    // @deprecated (undocumented)
     ariaLabel?: string;
+    // (undocumented)
+    buttonRef?: React.MutableRefObject<HTMLElement>;
     // (undocumented)
     children?: ReactNode;
     // (undocumented)
@@ -1475,6 +1489,14 @@ export interface IDomNativeProps {
 }
 
 // @internal (undocumented)
+export interface IDropdownAccessibilityConfig extends IAccessibilityConfigBase {
+    // (undocumented)
+    isExpanded: boolean;
+    // (undocumented)
+    popupId: string;
+}
+
+// @internal (undocumented)
 export interface IDropdownBodyRenderProps {
     // (undocumented)
     closeDropdown: () => void;
@@ -1487,11 +1509,15 @@ export interface IDropdownButtonProps {
     // (undocumented)
     ariaLabel?: string;
     // (undocumented)
+    buttonRef?: React_2.MutableRefObject<HTMLElement>;
+    // (undocumented)
     children?: ReactNode;
     // (undocumented)
     className?: string;
     // (undocumented)
     disabled?: boolean;
+    // (undocumented)
+    dropdownId?: string;
     // (undocumented)
     iconLeft?: string;
     // (undocumented)
@@ -1511,7 +1537,11 @@ export interface IDropdownButtonProps {
 // @internal (undocumented)
 export interface IDropdownButtonRenderProps {
     // (undocumented)
+    buttonRef: React_2.MutableRefObject<HTMLElement | null>;
+    // (undocumented)
     closeDropdown: () => void;
+    // (undocumented)
+    dropdownId: string;
     // (undocumented)
     isMobile: boolean;
     // (undocumented)
@@ -3159,7 +3189,7 @@ export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
     onEnterKeyPress: () => void;
     // (undocumented)
-    onEscKeyPress: () => void;
+    onEscKeyPress: (e: React_2.KeyboardEvent) => void;
     // (undocumented)
     onFocus: (e: React_2.FocusEvent<HTMLInputElement>) => void;
     // (undocumented)
@@ -4944,6 +4974,19 @@ export interface UiButtonProps {
     tooltip?: React_2.ReactNode;
     // (undocumented)
     variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger;
+}
+
+// @internal (undocumented)
+export const UiFocusTrap: React_2.FC<UiFocusTrapProps>;
+
+// @internal (undocumented)
+export interface UiFocusTrapProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    onDeactivate?: () => void;
+    // (undocumented)
+    returnFocusTo?: React_2.RefObject<HTMLElement>;
 }
 
 // @internal (undocumented)

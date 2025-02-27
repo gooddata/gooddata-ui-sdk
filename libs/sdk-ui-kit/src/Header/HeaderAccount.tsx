@@ -41,29 +41,15 @@ export const HeaderAccount: React.FC<IHeaderAccountProps> = ({
         toggleAccountMenu();
     }, [toggleAccountMenu]);
 
-    const menuItemClicked = useCallback(
-        (item: IHeaderMenuItem, e: React.MouseEvent<HTMLAnchorElement>): void => {
-            toggleAccountMenu(false);
-            onMenuItemClick(item, e);
-        },
-        [toggleAccountMenu, onMenuItemClick],
-    );
-
     const getMenuItems = () => {
         return items.map((item) => {
-            const tabIndexProp = item.href ? {} : { tabIndex: 0 };
             return (
-                <a
+                <MenuItem
                     key={item.key}
-                    href={item.href}
-                    onClick={(e) => {
-                        menuItemClicked(item, e);
-                    }}
-                    className={`gd-list-item ${item.className}`}
-                    {...tabIndexProp}
-                >
-                    <FormattedMessage id={item.key} />
-                </a>
+                    item={item}
+                    toggleMenu={toggleAccountMenu}
+                    onMenuItemClick={onMenuItemClick}
+                />
             );
         });
     };
@@ -87,7 +73,7 @@ export const HeaderAccount: React.FC<IHeaderAccountProps> = ({
             >
                 <div className="gd-dialog gd-dropdown overlay gd-header-account-dropdown" id={dropdownId}>
                     <div className="gd-list small">
-                        <UiFocusTrap returnFocusTo={buttonRef.current}>{getMenuItems()}</UiFocusTrap>
+                        <UiFocusTrap returnFocusTo={buttonRef}>{getMenuItems()}</UiFocusTrap>
                     </div>
                 </div>
             </Overlay>
@@ -111,5 +97,47 @@ export const HeaderAccount: React.FC<IHeaderAccountProps> = ({
             <span className="gd-header-account-user">{userName}</span>
             {renderAccountMenu()}
         </Button>
+    );
+};
+
+const MenuItem: React.FC<{
+    item: IHeaderMenuItem;
+    toggleMenu: (isOpen: boolean) => void;
+    onMenuItemClick: (
+        item: IHeaderMenuItem,
+        e: React.MouseEvent<HTMLAnchorElement> | React.KeyboardEvent,
+    ) => void;
+}> = ({ item, toggleMenu, onMenuItemClick }) => {
+    const tabIndexProp = item.href ? {} : { tabIndex: 0 };
+
+    const handleClick = useCallback(
+        (e: React.MouseEvent<HTMLAnchorElement>): void => {
+            toggleMenu(false);
+            onMenuItemClick(item, e);
+        },
+        [item, toggleMenu, onMenuItemClick],
+    );
+
+    const handleKeyDown = useCallback(
+        (e: React.KeyboardEvent): void => {
+            if (e.key === "Enter" || e.key === "Space") {
+                e.preventDefault();
+                toggleMenu(false);
+                onMenuItemClick(item, e);
+            }
+        },
+        [item, toggleMenu, onMenuItemClick],
+    );
+
+    return (
+        <a
+            href={item.href}
+            onClick={handleClick}
+            className={`gd-list-item ${item.className}`}
+            onKeyDown={handleKeyDown}
+            {...tabIndexProp}
+        >
+            <FormattedMessage id={item.key} />
+        </a>
     );
 };

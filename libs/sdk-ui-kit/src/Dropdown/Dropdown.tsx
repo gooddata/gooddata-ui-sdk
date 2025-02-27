@@ -47,7 +47,7 @@ export interface IDropdownButtonRenderProps {
     isMobile: boolean;
     isOpen: boolean;
     dropdownId: string;
-    buttonRef: React.MutableRefObject<HTMLElement>;
+    buttonRef: React.MutableRefObject<HTMLElement | null>;
     openDropdown: () => void;
     closeDropdown: () => void;
     toggleDropdown: () => void;
@@ -165,7 +165,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
 
     const mountRef = useRef(false);
 
-    const buttonRef = useRef<HTMLElement>(null);
+    const buttonRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
         if (mountRef.current && onOpenStateChanged) {
@@ -186,16 +186,6 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
     };
 
     const isMobileDevice = useMediaQuery("mobileDevice");
-
-    // const handleEscapeKey = useCallback(
-    //     (event: React.KeyboardEvent) => {
-    //         if (event.key === "Escape" && isOpen) {
-    //             closeDropdown();
-    //             buttonRef.current?.focus();
-    //         }
-    //     },
-    //     [isOpen, closeDropdown, buttonRef],
-    // );
 
     const renderDropdown =
         isOpen &&
@@ -226,6 +216,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                 closeOnOutsideClick={closeOnOutsideClick}
                 closeOnMouseDrag={closeOnMouseDrag}
                 closeOnParentScroll={closeOnParentScroll}
+                closeOnEscape
                 shouldCloseOnClick={shouldCloseOnClick}
                 ignoreClicksOnByClass={ignoreClicksOnByClass}
                 onClose={closeDropdown}
@@ -235,13 +226,8 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                 onMouseUp={enableEventPropagation ? noop : undefined}
                 zIndex={overlayZIndex}
             >
-                <div
-                    className="overlay dropdown-body"
-                    role="listbox"
-                    id={dropdownId}
-                    onKeyDown={handleEscapeKey}
-                >
-                    <UiFocusTrap onDeactivate={closeDropdown}>
+                <div className="overlay dropdown-body" role="listbox" id={dropdownId}>
+                    <UiFocusTrap returnFocusTo={buttonRef}>
                         {renderBody({
                             closeDropdown,
                             isMobile: false,

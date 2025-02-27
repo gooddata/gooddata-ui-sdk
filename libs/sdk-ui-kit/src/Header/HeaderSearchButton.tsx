@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import React from "react";
 import cx from "classnames";
 import { Overlay } from "../Overlay/index.js";
 import { Button } from "../Button/index.js";
@@ -39,20 +39,11 @@ export const HeaderSearchButton: React.FC<HeaderSearchProps> = ({ children, titl
     }, [isOpen, toggleOpen]);
 
     const id = useId();
-    const dropdownId = `search-button-${id}`;
+    const dropdownId = `search-dropdown-${id}`;
 
     const classNames = cx("gd-header-measure", "gd-header-button", "gd-header-search", {
         "is-open": isOpen,
     });
-
-    const handleEscapeKey = useCallback(
-        (event: React.KeyboardEvent) => {
-            if (event.key === "Escape" && isOpen) {
-                buttonRef.current?.focus();
-            }
-        },
-        [isOpen, buttonRef],
-    );
 
     return (
         <Button
@@ -79,11 +70,8 @@ export const HeaderSearchButton: React.FC<HeaderSearchProps> = ({ children, titl
                     onClose={toggleOpen}
                     ignoreClicksOnByClass={[".gd-bubble"]}
                 >
-                    <UiFocusTrap>
-                        <div
-                            className="gd-dialog gd-dropdown overlay gd-header-search-dropdown"
-                            onKeyDown={handleEscapeKey}
-                        >
+                    <UiFocusTrap returnFocusTo={buttonRef}>
+                        <div className="gd-dialog gd-dropdown overlay gd-header-search-dropdown">
                             {children}
                         </div>
                     </UiFocusTrap>

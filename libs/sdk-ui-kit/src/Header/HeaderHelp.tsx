@@ -43,6 +43,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const helpMenuRef = useRef<Button>(null);
+    const helpMenuButtonRef = useRef<HTMLButtonElement>(null);
 
     const id = useId();
     const dropdownId = `help-dropdown-${id}`;
@@ -54,15 +55,6 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
         "anchor-tag-header-help": !isEmpty(helpRedirectUrl),
         [className]: !!className,
     });
-
-    const handleEscapeKey = useCallback(
-        (event: React.KeyboardEvent) => {
-            if (event.key === "Escape" && isOpen) {
-                helpMenuRef.current?.buttonNode.focus();
-            }
-        },
-        [isOpen, helpMenuRef],
-    );
 
     const menuItems = items.map((item) => {
         return (
@@ -139,11 +131,8 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
                 }}
             >
                 {!disableDropdown ? (
-                    <UiFocusTrap>
-                        <div
-                            className="gd-dialog gd-dropdown overlay gd-header-help-dropdown"
-                            onKeyDown={handleEscapeKey}
-                        >
+                    <UiFocusTrap returnFocusTo={helpMenuButtonRef}>
+                        <div className="gd-dialog gd-dropdown overlay gd-header-help-dropdown">
                             <div className="gd-list small">{menuItems}</div>
                         </div>
                     </UiFocusTrap>
@@ -167,6 +156,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
                 isExpanded: isOpen,
                 popupId: dropdownId,
             }}
+            buttonRef={helpMenuButtonRef}
         >
             <FormattedMessage id="gs.header.help" />
             {renderHelpMenu()}
