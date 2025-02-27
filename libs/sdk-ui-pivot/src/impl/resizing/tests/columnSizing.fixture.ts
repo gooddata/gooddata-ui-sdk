@@ -1,11 +1,11 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
 import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { TableDescriptor } from "../../structure/tableDescriptor.js";
 import { ColumnWidthItem } from "../../../columnWidths.js";
 import { ResizedColumnsStore } from "../columnSizing.js";
-import { Column, ColumnApi } from "@ag-grid-community/all-modules";
+import { Column, GridApi } from "ag-grid-community";
 
 const ColumnOnlyResult = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.SingleColumn,
@@ -56,7 +56,7 @@ export function testStore(
     return store;
 }
 
-export const getFakeColumnApi = (columnsMaps: { [id: string]: Column }): ColumnApi => {
+export const getFakeColumnApi = (columnsMaps: { [id: string]: Column }): GridApi => {
     const fakeColumnApi = {
         getColumn: (columnId: string) => {
             return columnsMaps[columnId];
@@ -64,11 +64,11 @@ export const getFakeColumnApi = (columnsMaps: { [id: string]: Column }): ColumnA
         setColumnWidth: (column: Column, width: number) => {
             columnsMaps[column.getColId()].getColDef().width = width;
         },
-        getAllColumns: () => {
+        getAllGridColumns: () => {
             return Object.keys(columnsMaps).map((colId: string) => columnsMaps[colId]);
         },
     };
-    return fakeColumnApi as ColumnApi;
+    return fakeColumnApi as any;
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

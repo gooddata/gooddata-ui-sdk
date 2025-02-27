@@ -1,7 +1,7 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import { useCallback, useEffect, useRef, MutableRefObject } from "react";
-import { ColDef, CellClickedEvent, GridReadyEvent } from "@ag-grid-community/all-modules";
+import { ColDef, CellClickedEvent, GridReadyEvent } from "ag-grid-community";
 import {
     convertDrillableItemsToPredicates,
     isSomeHeaderPredicateMatched,
@@ -44,7 +44,7 @@ export function useDrilling(columnDefs: ColDef[], items: IAttributeOrMeasure[], 
             return false;
         }
 
-        const columnIndex = cellEvent.columnApi.getAllColumns().findIndex((col) => col === cellEvent.column);
+        const columnIndex = cellEvent.api.getAllGridColumns().findIndex((col) => col === cellEvent.column);
         const attributeHeaderItem = cellEvent.data[cellEvent.colDef.field];
 
         const intersectionElement: IDrillEventIntersectionElement = {
@@ -66,7 +66,7 @@ export function useDrilling(columnDefs: ColDef[], items: IAttributeOrMeasure[], 
 
     const onGridReady = useCallback(
         (readyEvent: GridReadyEvent) => {
-            drillingState.current.columnApi = readyEvent.columnApi;
+            drillingState.current.columnApi = readyEvent.api;
         },
         [drillingState],
     );

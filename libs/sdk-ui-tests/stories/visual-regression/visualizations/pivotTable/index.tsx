@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 /* eslint-disable sonarjs/no-identical-functions */
 import { storiesOf } from "../../../_infra/storyRepository.js";
 import React from "react";
@@ -117,14 +117,14 @@ storiesOf(`${CustomStories}/Pivot Table`)
             screenshots: {
                 "initial viewport": {},
                 "scrolled right": {
-                    /* 
-                        this scroll is done to check if virtualized hidden cells 
+                    /*
+                        this scroll is done to check if virtualized hidden cells
                         are correctly resized after scroll
 
-                        ag-grid has a problem with programatically scrolled header 
+                        ag-grid has a problem with programatically scrolled header
                         so we used a cell in the body to scroll instead
                     */
-                    scrollToSelector: ".ag-center-cols-clipper .s-cell-0-9",
+                    scrollToSelector: ".s-cell-0-9",
                     postInteractionWait: 1000,
                 },
             },
@@ -148,14 +148,14 @@ storiesOf(`${CustomStories}/Pivot Table`)
             screenshots: {
                 "initial viewport": {},
                 "scrolled right": {
-                    /* 
-                        this scroll is done to check if virtualized hidden cells 
+                    /*
+                        this scroll is done to check if virtualized hidden cells
                         are correctly resized after scroll
 
-                        ag-grid has a problem with programatically scrolled header 
+                        ag-grid has a problem with programatically scrolled header
                         so we used a cell in the body to scroll instead
                     */
-                    scrollToSelector: ".ag-center-cols-clipper .s-cell-0-9",
+                    scrollToSelector: ".s-cell-0-9",
                     postInteractionWait: 1000,
                 },
             },

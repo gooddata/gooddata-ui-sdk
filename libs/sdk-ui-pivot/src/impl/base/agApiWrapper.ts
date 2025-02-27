@@ -1,14 +1,28 @@
-// (C) 2007-2023 GoodData Corporation
-import { GridApi } from "@ag-grid-community/all-modules";
+// (C) 2007-2025 GoodData Corporation
+import { GridApi } from "ag-grid-community";
 
 function getHeaderHeight(gridApi: GridApi): number {
-    return (gridApi as any)?.ctrlsService?.gridHeaderCtrl?.eGui?.clientHeight ?? 0;
+    // DANGER: using ag-grid internals
+    const headerCtrl = (gridApi.getDisplayedRowAtIndex?.(0) as any)?.beans?.ctrlsSvc?.get("gridHeaderCtrl");
+
+    if (!headerCtrl) {
+        // in some cases there is not displayed row at index 0, e.g.
+        //try to get dirty internal height of the grid
+
+        return gridApi.getSizesForCurrentTheme().headerHeight;
+    }
+
+    return headerCtrl?.eGui?.clientHeight ?? 0;
 }
 
 function getCellElement(gridApi: GridApi, attributeId: string, rowIndex: number): HTMLElement | null {
-    const rowRenderer = (gridApi as any).rowRenderer;
-    const rowCon = rowRenderer.rowCtrlsByRowIndex[rowIndex];
-    const cell = rowCon?.centerCellCtrls?.list?.find((col: any) => {
+    // DANGER: using ag-grid internals
+    const rowRenderer = (gridApi.getDisplayedRowAtIndex?.(rowIndex) as any)?.beans?.rowRenderer;
+    if (!rowRenderer) return null;
+
+    const centerCellCtrls = rowRenderer.getAllCellCtrls().filter((r: any) => r.rowNode.rowIndex === rowIndex);
+
+    const cell = centerCellCtrls?.find((col: any) => {
         return col.column.colId === attributeId;
     });
 
@@ -29,25 +43,16 @@ function removeCellClass(gridApi: GridApi, attributeId: string, rowIndex: number
     }
 }
 
-function getPaginationBottomRowIndex(gridApi: GridApi): number | null {
-    const paginationProxy = (gridApi as any).paginationProxy;
-    if (paginationProxy) {
-        return paginationProxy.bottomRowBounds?.rowIndex ?? null;
-    }
-
-    return null;
-}
-
 function getPinnedTopRowElement(gridApi: GridApi): HTMLElement | null {
     const pinnedTopRow = gridApi.getPinnedTopRow(0);
     if (!pinnedTopRow) {
         return null;
     }
 
-    const rootElement: HTMLElement | undefined = (gridApi as any).gridBodyCtrl?.eGridBody;
+    // DANGER: using ag-grid internals
+    const rootElement = (pinnedTopRow as any).beans?.ctrlsSvc?.getGridBodyCtrl?.()?.eGridBody;
     const rowElement = rootElement?.querySelector(`[row-id=${pinnedTopRow.id}]`);
-
-    return rowElement?.parentElement?.parentElement ?? null;
+    return rowElement?.parentElement?.parentElement?.parentElement ?? null;
 }
 
 function addPinnedTopRowClass(gridApi: GridApi, className: string): void {
@@ -85,5 +90,4 @@ export default {
     removePinnedTopRowClass,
     setPinnedTopRowStyles,
     // pinned row cell element
-    getPaginationBottomRowIndex,
 };

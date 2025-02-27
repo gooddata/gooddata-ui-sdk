@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IExecutionDefinition, ITotal, TotalType, ISeparators } from "@gooddata/sdk-model";
 import { ColumnWidthItem } from "../columnWidths.js";
 import {
@@ -19,7 +19,7 @@ import {
     GridReadyEvent,
     SortChangedEvent,
     PinnedRowDataChangedEvent,
-} from "@ag-grid-community/all-modules";
+} from "ag-grid-community";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
 export interface IMenuAggregationClickConfig {
