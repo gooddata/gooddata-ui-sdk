@@ -51,10 +51,10 @@ describe("Dependent filter", () => {
             .hasFilterListSize(6)
             .hasSelectedValueList(["Bridgeport", "Danbury", "Hartford", "New Haven", "Norwich", "Waterbury"])
             .hasValueList(["Bridgeport", "Danbury", "Hartford", "New Haven", "Norwich", "Waterbury"])
-            .showAllElementValuesIsVisible(true)
-            .showAllElementValues();
-
+            .showAllElementValuesIsVisible(true);
         cy.wait(1000);
+        cityFilter.showAllElementValues();
+
         filterBar.waitForFiltersLoaded();
         cityFilter.showAllElementValuesIsVisible(false).hasFilterListSize(300);
 
@@ -80,9 +80,10 @@ describe("Dependent filter", () => {
             .clearIrrelevantElementValues()
             .clearIrrelevantElementValuesIsVisible(false)
             .containElementsListStatus("None")
-            .showAllElementValuesIsVisible(true)
-            .showAllElementValues();
+            .showAllElementValuesIsVisible(true);
         cy.wait(1000);
+        cityFilter.showAllElementValues();
+
         filterBar.waitForFiltersLoaded();
         cityFilter
             .isLoaded()
