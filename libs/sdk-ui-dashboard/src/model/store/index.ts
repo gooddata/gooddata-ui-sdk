@@ -85,6 +85,7 @@ export {
     selectEnableAttributeFilterValuesValidation,
     selectEnableKDAttributeFilterDatesValidation,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     selectEnableRichTextDescriptions,
     selectIsDisabledCrossFiltering,
     selectIsDisableUserFilterReset,
