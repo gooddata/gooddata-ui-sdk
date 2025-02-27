@@ -105,12 +105,12 @@
                 }
             }
         },
-        "/api/v1/actions/workspaces/{workspaceId}/export/slideshow": {
+        "/api/v1/actions/workspaces/{workspaceId}/export/slides": {
             "post": {
                 "tags": ["Slideshow export", "actions"],
-                "summary": "(EXPERIMENTAL) Create slideshow export request",
-                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. A slideshow export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
-                "operationId": "createSlideshowExport",
+                "summary": "(EXPERIMENTAL) Create slides export request",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. A slides export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
+                "operationId": "createSlidesExport",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -125,7 +125,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/SlideshowExportRequest"
+                                "$ref": "#/components/schemas/SlidesExportRequest"
                             }
                         }
                     },
@@ -145,7 +145,7 @@
                 },
                 "x-gdc-security-info": {
                     "permissions": ["EXPORT_PDF"],
-                    "description": "Permissions required to execute slideshow export."
+                    "description": "Permissions required to execute slides export."
                 }
             }
         },
@@ -412,11 +412,11 @@
                 }
             }
         },
-        "/api/v1/actions/workspaces/{workspaceId}/export/slideshow/{exportId}/metadata": {
+        "/api/v1/actions/workspaces/{workspaceId}/export/slides/{exportId}/metadata": {
             "get": {
                 "tags": ["Slideshow export", "actions"],
                 "summary": "(EXPERIMENTAL) Retrieve metadata context",
-                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slideshow endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.",
                 "operationId": "getMetadata_1",
                 "parameters": [
                     {
@@ -450,12 +450,12 @@
                 }
             }
         },
-        "/api/v1/actions/workspaces/{workspaceId}/export/slideshow/{exportId}": {
+        "/api/v1/actions/workspaces/{workspaceId}/export/slides/{exportId}": {
             "get": {
                 "tags": ["Slideshow export", "actions"],
                 "summary": "(EXPERIMENTAL) Retrieve exported files",
                 "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn't ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.",
-                "operationId": "getSlideshowExport",
+                "operationId": "getSlidesExport",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -819,7 +819,7 @@
                 },
                 "description": "Export request object describing the export properties and overrides for tabular exports."
             },
-            "SlideshowExportRequest": {
+            "SlidesExportRequest": {
                 "required": ["dashboardId", "fileName", "format"],
                 "type": "object",
                 "properties": {
@@ -839,11 +839,19 @@
                         "description": "Dashboard identifier",
                         "example": "761cd28b-3f57-4ac9-bbdc-1c552cc0d1d0"
                     },
+                    "widgetIds": {
+                        "maxItems": 1,
+                        "type": "array",
+                        "description": "List of widget identifiers to be exported. Note that only one widget is currently supported.",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
                     "metadata": {
                         "$ref": "#/components/schemas/JsonNode"
                     }
                 },
-                "description": "Export request object describing the export properties and metadata for slideshow PDF exports."
+                "description": "Export request object describing the export properties and metadata for slides exports."
             },
             "AFM": {
                 "required": ["attributes", "filters", "measures"],
@@ -1565,6 +1573,48 @@
                 },
                 "description": "Filter the result on top/bottom N values according to given metric(s)."
             },
+            "RawCustomLabel": {
+                "required": ["title"],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Override value."
+                    }
+                },
+                "description": "Custom label object override."
+            },
+            "RawCustomMetric": {
+                "required": ["title"],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Metric title override."
+                    }
+                },
+                "description": "Custom metric object override."
+            },
+            "RawCustomOverride": {
+                "type": "object",
+                "properties": {
+                    "labels": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/RawCustomLabel"
+                        },
+                        "description": "Currently No-Op. Map of CustomLabels with keys used as placeholders in export result."
+                    },
+                    "metrics": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/RawCustomMetric"
+                        },
+                        "description": "Map of CustomMetrics with keys used as placeholders in export result."
+                    }
+                },
+                "description": "Custom cell value overrides (IDs will be replaced with specified values)."
+            },
             "RawExportRequest": {
                 "required": ["execution", "fileName", "format"],
                 "type": "object",
@@ -1582,6 +1632,9 @@
                         "type": "string",
                         "description": "Filename of downloaded file without extension.",
                         "example": "result"
+                    },
+                    "customOverride": {
+                        "$ref": "#/components/schemas/RawCustomOverride"
                     }
                 },
                 "description": "Export request object describing the export properties and overrides for raw exports."
