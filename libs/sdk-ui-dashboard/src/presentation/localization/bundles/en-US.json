@@ -127,6 +127,11 @@
         "comment": "Export submenu for presentation",
         "limit": 0
     },
+    "options.menu.export_to_pdf": {
+        "value": "Export to PDF",
+        "comment": "Export whole KPI dashboard to PDF",
+        "limit": 0
+    },
     "options.menu.export.PDF": {
         "value": "PDF",
         "comment": "Export whole KPI dashboard to PDF",
