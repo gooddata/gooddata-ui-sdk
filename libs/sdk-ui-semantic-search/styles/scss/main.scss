@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 @use "sass:color";
 @use "sass:meta";
 @use "@gooddata/sdk-ui-kit/src/@ui/defaultTheme.scss";
@@ -19,13 +19,14 @@
 
 .gd-semantic-search {
     &__results-item {
-        $line-height: 50px;
+        $line-height: 48px;
 
         display: flex;
         flex-direction: row;
         align-items: center;
         cursor: pointer;
         gap: 1em;
+        margin: 1px;
         padding: 0 1em;
         height: $line-height;
         text-decoration: none;

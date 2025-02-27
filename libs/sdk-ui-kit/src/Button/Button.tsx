@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -24,7 +24,20 @@ export class Button extends React.Component<IButtonProps> {
     public buttonNode: HTMLElement;
 
     public render() {
-        const { id, tagName, title, disabled, tabIndex, type, iconLeft, iconRight, ariaLabel } = this.props;
+        const {
+            id,
+            tagName,
+            title,
+            disabled,
+            tabIndex,
+            type,
+            iconLeft,
+            iconRight,
+            ariaLabel,
+            accessibilityConfig,
+            buttonRef,
+        } = this.props;
+        const { isExpanded, popupId, ariaLabel: ariaLabelFromConfig } = accessibilityConfig ?? {};
         const TagName = tagName as any;
         const effectiveValue = this.getEffectiveValue();
 
@@ -33,6 +46,9 @@ export class Button extends React.Component<IButtonProps> {
                 id={id}
                 ref={(ref: HTMLElement) => {
                     this.buttonNode = ref;
+                    if (buttonRef) {
+                        buttonRef.current = ref;
+                    }
                 }}
                 title={title}
                 className={this.getClassnames()}
@@ -40,7 +56,10 @@ export class Button extends React.Component<IButtonProps> {
                 onClick={this._onClick}
                 tabIndex={tabIndex}
                 aria-disabled={disabled}
-                aria-label={ariaLabel}
+                aria-label={ariaLabelFromConfig ?? ariaLabel}
+                aria-controls={popupId}
+                aria-haspopup={!!popupId}
+                aria-expanded={isExpanded}
                 role="button"
             >
                 {this.renderIcon(iconLeft)}

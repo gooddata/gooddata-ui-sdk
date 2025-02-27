@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useState, useRef, useCallback } from "react";
 import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
 import cx from "classnames";
@@ -7,6 +7,8 @@ import isEmpty from "lodash/isEmpty.js";
 import { Overlay } from "../Overlay/index.js";
 import { HelpMenuDropdownAlignPoints, IAlignPoint } from "../typings/positioning.js";
 import { Button } from "../Button/index.js";
+import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
+import { useId } from "../utils/useId.js";
 
 interface IHelpItem {
     key: string;
@@ -41,6 +43,10 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const helpMenuRef = useRef<Button>(null);
+    const helpMenuButtonRef = useRef<HTMLButtonElement>(null);
+
+    const id = useId();
+    const dropdownId = `help-dropdown-${id}`;
 
     const classNames = cx({
         "gd-header-help": true,
@@ -119,14 +125,17 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
                 closeOnOutsideClick
                 closeOnMouseDrag
                 closeOnParentScroll
+                closeOnEscape
                 onClose={() => {
                     toggleHelpMenu(false);
                 }}
             >
                 {!disableDropdown ? (
-                    <div className="gd-dialog gd-dropdown overlay gd-header-help-dropdown">
-                        <div className="gd-list small">{menuItems}</div>
-                    </div>
+                    <UiFocusTrap returnFocusTo={helpMenuButtonRef}>
+                        <div className="gd-dialog gd-dropdown overlay gd-header-help-dropdown">
+                            <div className="gd-list small">{menuItems}</div>
+                        </div>
+                    </UiFocusTrap>
                 ) : null}
             </Overlay>
         ) : (
@@ -143,6 +152,11 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
             className={cx(classNames, "gd-header-button")}
             onClick={() => toggleHelpMenu()}
             ref={helpMenuRef}
+            accessibilityConfig={{
+                isExpanded: isOpen,
+                popupId: dropdownId,
+            }}
+            buttonRef={helpMenuButtonRef}
         >
             <FormattedMessage id="gs.header.help" />
             {renderHelpMenu()}
