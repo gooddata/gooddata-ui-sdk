@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { attributeLocalId, IAttribute, Identifier, IMeasure, measureLocalId } from "@gooddata/sdk-model";
 
@@ -11,8 +11,8 @@ import { attributeLocalId, IAttribute, Identifier, IMeasure, measureLocalId } fr
  */
 export enum ColumnEventSourceType {
     AUTOSIZE_COLUMNS = "autosizeColumns",
-    UI_DRAGGED = "uiColumnDragged",
     FIT_GROW = "growToFit",
+    UI_RESIZED = "uiColumnResized",
 }
 
 /**

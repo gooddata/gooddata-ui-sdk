@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import {
@@ -13,7 +13,7 @@ import {
     TwoMeasuresWithColumnAttribute,
 } from "./table.fixture.js";
 import { createHeadersAndColDefs } from "../tableDescriptorFactory.js";
-import { ColDef, ColGroupDef } from "@ag-grid-community/all-modules";
+import { ColDef, ColGroupDef } from "ag-grid-community";
 import { describe, it, expect } from "vitest";
 
 describe("createTableDescriptor", () => {

@@ -1,6 +1,6 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
-import { GridApi } from "@ag-grid-community/all-modules";
+import { GridApi } from "ag-grid-community";
 import { IGroupingProvider } from "./data/rowGroupingProvider.js";
 import { getGridIndex } from "./base/agUtils.js";
 import ApiWrapper from "./base/agApiWrapper.js";
@@ -13,7 +13,7 @@ export interface IScrollPosition {
 }
 
 export function initializeStickyRow(gridApi: GridApi): void {
-    gridApi.setPinnedTopRowData([{}]);
+    gridApi.updateGridOptions({ pinnedTopRowData: [{}] });
 }
 
 export function updateStickyRowPosition(gridApi: GridApi | null, apiWrapper: any = ApiWrapper): void {
@@ -121,11 +121,13 @@ export function updateStickyRowContentClassesAndData(
     // set new rowData only if differen to avoid rerendering and flashing of the sticky row
     if (areDataDifferent(previousData, stickyRowData)) {
         const headerItemMapProp = isEmpty(headerItemMap) ? {} : { headerItemMap };
-        gridApi.setPinnedTopRowData([
-            {
-                ...stickyRowData,
-                ...headerItemMapProp,
-            },
-        ]);
+        gridApi.updateGridOptions({
+            pinnedTopRowData: [
+                {
+                    ...stickyRowData,
+                    ...headerItemMapProp,
+                },
+            ],
+        });
     }
 }
