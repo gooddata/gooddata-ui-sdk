@@ -24,6 +24,7 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
     const intl = useIntl();
     const selectedOption = destinations.find((o) => o.id === selectedDestination);
 
+    const accessibilityAriaLabel = intl.formatMessage({ id: "alert.accessibility.destination.label" });
     return (
         <div className="gd-alert-destination-select">
             <Dropdown
@@ -32,7 +33,9 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
                     return (
                         <Button
                             id={id}
-                            ariaLabel={intl.formatMessage({ id: "alert.accessibility.destination.label" })}
+                            accessibilityConfig={{
+                                ariaLabel: accessibilityAriaLabel,
+                            }}
                             onClick={toggleDropdown}
                             iconRight={isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
                             size="small"

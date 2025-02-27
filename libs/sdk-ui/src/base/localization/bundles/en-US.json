@@ -1061,6 +1061,36 @@
         "comment": "Displayed as placeholder in static period inputs where user enters date",
         "limit": 0
     },
+    "filters.date.accessibility.label.from": {
+        "value": "Select date from",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.date.accessibility.label.to": {
+        "value": "Select date to",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.time.accessibility.label.from": {
+        "value": "Select time from",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.time.accessibility.label.to": {
+        "value": "Select time to",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.relative.accessibility.label.period.from": {
+        "value": "Select period from",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.relative.accessibility.label.period.to": {
+        "value": "Select period to",
+        "comment": "",
+        "limit": 0
+    },
     "filters.floatingRange": {
         "value": "Relative period",
         "comment": "",

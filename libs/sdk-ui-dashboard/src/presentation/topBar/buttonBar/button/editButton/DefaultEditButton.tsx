@@ -56,7 +56,9 @@ export function DefaultEditButton({ isVisible, isEnabled, onEditClick }: IEditBu
                 value={intl.formatMessage({ id: "controlButtons.edit.value" })}
                 disabled={!isEnabled}
                 onClick={onEditClick}
-                ariaLabel={tooltipText}
+                accessibilityConfig={{
+                    ariaLabel: tooltipText,
+                }}
             />
             <Bubble alignTo="gd-button-action dash-header-edit-button" alignPoints={ALIGN_POINTS_TOOLTIP}>
                 {tooltipText}

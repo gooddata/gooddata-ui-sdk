@@ -483,6 +483,11 @@
         "comment": "Placeholder for schedule title input",
         "limit": 0
     },
+    "dialogs.schedule.accessibility.label.email.title": {
+        "value": "Schedule name",
+        "comment": "",
+        "limit": 0
+    },
     "dialogs.schedule.email.message.label": {
         "value": "Message",
         "comment": "Message of the scheduled email.",

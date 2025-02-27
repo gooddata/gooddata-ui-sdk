@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 @use "variables";
 
 .gd-invertable-select {
@@ -13,6 +13,10 @@
     margin: 10px;
     width: 100%;
     min-width: 0;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+    display: none;
 }
 
 .gd-invertable-select-all-checkbox,

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage } from "react-intl";
@@ -24,7 +24,7 @@ export const ShareStatusIndicator = (props: IShareStatusProps): JSX.Element | nu
         <div className="s-share-status gd-share-status">
             <BubbleHoverTrigger>
                 <div className="gd-share-indicator">
-                    <i className="gd-share-icon gd-icon-invisible" />
+                    <i aria-hidden="true" className="gd-share-icon gd-icon-invisible" />
                     <FormattedMessage id="header.shareStatus.private.text" />
                 </div>
                 <Bubble alignPoints={[{ align: "bc tl" }]} alignTo={`.gd-share-icon`}>

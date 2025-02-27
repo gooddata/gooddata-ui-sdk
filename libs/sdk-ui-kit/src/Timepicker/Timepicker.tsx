@@ -25,7 +25,7 @@ export { normalizeTime, formatTime };
 export interface ITimepickerOwnProps {
     time: Date | null;
     className?: string;
-    id?: string;
+    ariaLabelledBy?: string;
     maxVisibleItemsCount?: number;
     onChange?: (selectedTime: Date) => void;
     overlayPositionType?: OverlayPositionType;
@@ -134,13 +134,14 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
     };
 
     public render() {
-        const { id, overlayPositionType, maxVisibleItemsCount, overlayZIndex, intl } = this.props;
+        const { ariaLabelledBy, overlayPositionType, maxVisibleItemsCount, overlayZIndex, intl } = this.props;
         const { dropdownWidth, selectedTime } = this.state;
         const time = {
             h: selectedTime.getHours(),
             m: selectedTime.getMinutes(),
         };
         const { items, currentItem } = this.getTimeItems(time);
+        const accessibilityDropdownButtonLabel = intl.formatMessage({ id: "timePicker.accessibility.label" });
 
         return (
             <div className={this.getComponentClasses()} ref={this.dropdownRef}>
@@ -156,12 +157,14 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
                     ]}
                     renderButton={({ openDropdown, isOpen }) => (
                         <DropdownButton
-                            id={id}
+                            accessibilityConfig={{
+                                ariaLabelledBy,
+                                ariaLabel: accessibilityDropdownButtonLabel,
+                            }}
                             value={formatTime(time.h, time.m, this.props.timeFormat)}
                             isOpen={isOpen}
                             onClick={openDropdown}
                             iconLeft="gd-icon-timer"
-                            ariaLabel={intl.formatMessage({ id: "timePicker.accessibility.label" })}
                         />
                     )}
                     renderBody={({ closeDropdown, isMobile }) => (

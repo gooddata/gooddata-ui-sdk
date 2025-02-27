@@ -54,6 +54,10 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
         return null;
     }
 
+    const accessibilityAriaLabel = intl.formatMessage({
+        id: "insightAlert.config.accessbility.dropdown",
+    });
+
     return (
         <div className="gd-alert-comparison-operator-select">
             <Dropdown
@@ -77,9 +81,9 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                                 iconLeft={selectedComparisonItem?.icon ?? selectedRelativeItem?.icon}
                                 iconRight={`gd-icon-navigate${isOpen ? "up" : "down"}`}
                                 onClick={toggleDropdown}
-                                ariaLabel={intl.formatMessage({
-                                    id: "insightAlert.config.accessbility.dropdown",
-                                })}
+                                accessibilityConfig={{
+                                    ariaLabel: accessibilityAriaLabel,
+                                }}
                             >
                                 {intl.formatMessage({
                                     id: selectedComparisonItem?.title ?? selectedRelativeItem?.title,

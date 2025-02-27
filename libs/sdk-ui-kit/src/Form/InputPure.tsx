@@ -66,7 +66,6 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
         onBlur: noop,
         onFocus: noop,
         placeholder: "",
-        ariaLabel: "",
         prefix: "",
         readonly: false,
         suffix: "",
@@ -224,7 +223,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
                         placeholder={placeholder}
                         readOnly={readonly}
                         value={value}
-                        aria-label={ariaLabel}
+                        aria-label={ariaLabel ?? undefined}
                     />
                     {this.renderSearch(isSearch)}
                     {this.renderClearIcon(clearOnEsc)}

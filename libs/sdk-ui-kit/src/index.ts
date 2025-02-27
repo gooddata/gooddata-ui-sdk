@@ -13,6 +13,7 @@ export * from "./typings/positioning.js";
 export * from "./typings/domUtilities.js";
 export * from "./typings/domNative.js";
 export * from "./typings/overlay.js";
+export * from "./typings/accessibility.js";
 export * from "./utils/constants.js";
 export * from "./utils/featureFlags.js";
 export * from "./utils/drag.js";

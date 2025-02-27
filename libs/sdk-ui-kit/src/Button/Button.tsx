@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -24,7 +24,9 @@ export class Button extends React.Component<IButtonProps> {
     public buttonNode: HTMLElement;
 
     public render() {
-        const { id, tagName, title, disabled, tabIndex, type, iconLeft, iconRight, ariaLabel } = this.props;
+        const { id, tagName, title, disabled, tabIndex, type, iconLeft, iconRight, accessibilityConfig } =
+            this.props;
+        const { ariaLabel, ariaLabelledBy } = accessibilityConfig ?? {};
         const TagName = tagName as any;
         const effectiveValue = this.getEffectiveValue();
 
@@ -41,6 +43,7 @@ export class Button extends React.Component<IButtonProps> {
                 tabIndex={tabIndex}
                 aria-disabled={disabled}
                 aria-label={ariaLabel}
+                aria-labelledby={ariaLabelledBy}
                 role="button"
             >
                 {this.renderIcon(iconLeft)}

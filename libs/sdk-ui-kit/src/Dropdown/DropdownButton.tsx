@@ -2,6 +2,7 @@
 import React, { ReactNode } from "react";
 import cx from "classnames";
 import { Button } from "../Button/Button.js";
+import { IAccessibilityConfigBase } from "../typings/accessibility.js";
 
 /**
  * @internal
@@ -9,10 +10,10 @@ import { Button } from "../Button/Button.js";
 export interface IDropdownButtonProps {
     id?: string;
     className?: string;
+    accessibilityConfig?: IAccessibilityConfigBase;
 
     value?: ReactNode;
     title?: string;
-    ariaLabel?: string;
     disabled?: boolean;
 
     isOpen?: boolean;
@@ -30,10 +31,10 @@ export interface IDropdownButtonProps {
 export const DropdownButton: React.FC<IDropdownButtonProps> = ({
     id,
     className,
+    accessibilityConfig,
 
     value,
     title = value,
-    ariaLabel,
     disabled,
 
     isOpen,
@@ -43,6 +44,8 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
     onClick,
     children,
 }) => {
+    const { ariaLabel, ariaLabelledBy } = accessibilityConfig ?? {};
+
     const buttonClasses = cx(
         "gd-button-primary",
         "button-dropdown",
@@ -58,8 +61,11 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
     return (
         <Button
             id={id}
+            accessibilityConfig={{
+                ariaLabel,
+                ariaLabelledBy,
+            }}
             title={title && typeof title === "string" ? title : undefined}
-            ariaLabel={ariaLabel}
             className={buttonClasses}
             value={value}
             iconLeft={iconLeft}
