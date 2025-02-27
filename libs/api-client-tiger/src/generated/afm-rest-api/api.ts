@@ -1139,13 +1139,13 @@ export interface ClusteringResult {
      * @type {Array<number>}
      * @memberof ClusteringResult
      */
-    xcoord: Array<number>;
+    ycoord: Array<number>;
     /**
      *
      * @type {Array<number>}
      * @memberof ClusteringResult
      */
-    ycoord: Array<number>;
+    xcoord: Array<number>;
 }
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.

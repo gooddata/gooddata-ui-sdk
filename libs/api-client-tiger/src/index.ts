@@ -314,11 +314,14 @@ export type {
     ActionsApiCreateTabularExportRequest,
     ActionsApiGetTabularExportRequest,
     ExportResponse,
-    ActionsApiCreateSlideshowExportRequest,
+    ActionsApiCreateSlidesExportRequest,
     ActionsApiGetMetadata1Request,
-    ActionsApiGetSlideshowExportRequest,
-    SlideshowExportRequest,
-    SlideshowExportRequestFormatEnum,
+    ActionsApiGetSlidesExportRequest,
+    SlidesExportRequest,
+    RawCustomOverride,
+    RawCustomLabel,
+    RawCustomMetric,
+    SlidesExportRequestFormatEnum,
 } from "./generated/export-json-api/api.js";
 
 export type {

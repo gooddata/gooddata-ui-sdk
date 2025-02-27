@@ -450,15 +450,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
 
             const { title } = convertDashboard(dashboardResponse.data);
-            const slideshowExportRequest = {
+            const slidesExportRequest = {
                 fileName: title,
                 format,
                 dashboardId,
                 metadata: convertToBackendExportMetadata({ filters: withoutAllTime }),
             };
-            const slideshowExport = await client.export.createSlideshowExport({
+            const slideshowExport = await client.export.createSlidesExport({
                 workspaceId: this.workspace,
-                slideshowExportRequest,
+                slidesExportRequest,
             });
 
             return await this.handleExportResultPolling(
