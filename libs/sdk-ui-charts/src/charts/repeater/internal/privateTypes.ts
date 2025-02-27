@@ -1,8 +1,8 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { ISeparators, IAttributeOrMeasure } from "@gooddata/sdk-model";
 import { IHeaderPredicate, OnFiredDrillEvent, DataViewFacade } from "@gooddata/sdk-ui";
-import { ColumnApi, Column } from "@ag-grid-community/all-modules";
+import { GridApi, Column } from "ag-grid-community";
 
 import { RepeaterDefaultColumnWidth, RepeaterColumnResizedCallback } from "../publicTypes.js";
 import { RepeaterColumnWidthItem } from "../columnWidths.js";
@@ -28,13 +28,13 @@ export type ResizingState = {
     isAltKeyPressed: boolean;
     isMetaOrCtrlKeyPressed: boolean;
     clicks: number;
-    columnApi: ColumnApi | null;
+    columnApi: GridApi | null;
     manuallyResizedColumns: Column[];
 };
 
 export type DrillingState = {
     items: IAttributeOrMeasure[];
-    columnApi: ColumnApi | null;
+    columnApi: GridApi | null;
     drillablePredicates: IHeaderPredicate[];
     dataView: DataViewFacade;
 

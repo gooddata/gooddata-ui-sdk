@@ -1,5 +1,5 @@
-// (C) 2007-2021 GoodData Corporation
-import { CellClassParams, ColDef } from "@ag-grid-community/all-modules";
+// (C) 2007-2025 GoodData Corporation
+import { CellClassParams, ColDef } from "ag-grid-community";
 import { TableFacade } from "../tableFacade.js";
 import { ColumnHeadersPosition, ICorePivotTableProps } from "../../publicTypes.js";
 import { IGridRow } from "../data/resultTypes.js";

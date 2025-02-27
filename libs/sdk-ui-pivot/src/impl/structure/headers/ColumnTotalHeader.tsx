@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import { IHeaderParams } from "@ag-grid-community/all-modules";
+// (C) 2023-2025 GoodData Corporation
+import { IHeaderParams } from "ag-grid-community";
 import React from "react";
 import { IMenu } from "../../../publicTypes.js";
 

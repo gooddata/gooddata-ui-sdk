@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     IScrollPosition,
     stickyRowExists,
@@ -6,7 +6,7 @@ import {
     updateStickyRowPosition,
 } from "../stickyRowHandler.js";
 import { IGroupingProvider } from "../data/rowGroupingProvider.js";
-import { GridApi } from "@ag-grid-community/all-modules";
+import { GridApi } from "ag-grid-community";
 import { ROW_ATTRIBUTE_COLUMN } from "../base/constants.js";
 import { describe, it, expect, vi } from "vitest";
 
@@ -34,14 +34,16 @@ describe("stickyRowHandler", () => {
         fakeGetColumnDef: any = vi.fn(),
         fakeGetPinnedTopRow: any = () => ({ data: {} }),
         fakeSetPinnedTopRowData: any = vi.fn(),
+        fakeUpdateGridOptions: any = vi.fn(),
     ): GridApi {
         const fakeGridApi = {
             getDisplayedRowAtIndex: fakeGetDisplayedRowAtIndex,
             getColumnDef: fakeGetColumnDef,
             getPinnedTopRow: fakeGetPinnedTopRow,
             setPinnedTopRowData: fakeSetPinnedTopRowData,
+            updateGridOptions: fakeUpdateGridOptions,
         };
-        return fakeGridApi as GridApi;
+        return fakeGridApi as any;
     }
 
     function getFakeGroupingProvider(
@@ -303,7 +305,7 @@ describe("stickyRowHandler", () => {
             );
 
             it("should set empty sticky row data", () => {
-                expect(fakeGridApi.setPinnedTopRowData).toHaveBeenCalledWith([{}]);
+                expect(fakeGridApi.updateGridOptions).toHaveBeenCalledWith({ pinnedTopRowData: [{}] });
             });
 
             it("should temporarily show table cell behind", () => {
@@ -340,7 +342,9 @@ describe("stickyRowHandler", () => {
             );
 
             it("should set correct sticky row data", () => {
-                expect(fakeGridApi.setPinnedTopRowData).toHaveBeenCalledWith([fakeRow.data]);
+                expect(fakeGridApi.updateGridOptions).toHaveBeenCalledWith({
+                    pinnedTopRowData: [fakeRow.data],
+                });
             });
 
             it("should not temporarily show table cell behind", () => {
