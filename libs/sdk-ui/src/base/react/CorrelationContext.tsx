@@ -35,10 +35,15 @@ export const CorrelationProvider: React.FC<ICorrelationProviderProps> = ({ child
     // Get parent correlation metadata to merge with
     const parentCorrelationData = useCorrelationData();
 
+    const memoizedAdditionalCorrelationData = useMemo(() => {
+        return correlationData;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [JSON.stringify(correlationData)]);
+
     // Merge parent data with our data (newer values override)
     const mergedData = useMemo(() => {
-        return { ...parentCorrelationData, ...correlationData };
-    }, [parentCorrelationData, correlationData]);
+        return { ...parentCorrelationData, ...memoizedAdditionalCorrelationData };
+    }, [parentCorrelationData, memoizedAdditionalCorrelationData]);
 
     return <CorrelationContext.Provider value={mergedData}>{children}</CorrelationContext.Provider>;
 };
@@ -71,9 +76,16 @@ export const useBackendWithCorrelation = (
     const contextBackend = useBackend();
     const effectiveBackend = backend ?? contextBackend;
     const correlationData = useCorrelationData();
+
+    const memoizedAdditionalCorrelationData = useMemo(() => {
+        return correlationMetadata;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [JSON.stringify(correlationMetadata)]);
+
+    // Merge correlation data from context with metadata parameter, giving priority to context data
     const mergedCorrelationData = useMemo(() => {
-        return { ...correlationMetadata, ...correlationData };
-    }, [correlationMetadata, correlationData]);
+        return { ...correlationData, ...memoizedAdditionalCorrelationData };
+    }, [correlationData, memoizedAdditionalCorrelationData]);
 
     return useMemo(() => {
         if (!effectiveBackend || Object.keys(mergedCorrelationData).length === 0) {
@@ -123,9 +135,15 @@ export const BackendProviderWithCorrelation: React.FC<IBackendProviderWithCorrel
 
     // Get parent correlation metadata and merge
     const parentCorrelationData = useCorrelationData();
+
+    const memoizedAdditionalCorrelationData = useMemo(() => {
+        return correlationData;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [JSON.stringify(correlationData)]);
+
     const mergedData = useMemo(() => {
-        return { ...parentCorrelationData, ...correlationData };
-    }, [parentCorrelationData, correlationData]);
+        return { ...parentCorrelationData, ...memoizedAdditionalCorrelationData };
+    }, [parentCorrelationData, memoizedAdditionalCorrelationData]);
 
     // Create enhanced backend with correlation metadata
     const enhancedBackend = useMemo(() => {
