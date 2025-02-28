@@ -341,6 +341,10 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         _ref: ObjRef,
         _format: string,
         _filters?: FilterContextItem[],
+        _options?: {
+            widgetIds?: ObjRef[];
+            filename?: string;
+        },
     ): Promise<IExportResult> {
         throw new NotSupported("recorded backend does not support this call");
     }

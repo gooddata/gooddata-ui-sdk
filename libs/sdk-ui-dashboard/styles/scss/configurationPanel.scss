@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "variables";
 @use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
@@ -606,6 +606,8 @@
 
 .gd-configuration-export-options {
     width: 100%;
+    .gd-export-options-pdf-presentation,
+    .gd-export-options-pptx-presentation,
     .gd-export-options-xlsx,
     .gd-export-options-csv,
     .gd-export-options-csv-raw {

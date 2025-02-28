@@ -974,6 +974,7 @@ export interface ExportRawInsightWidgetPayload {
      */
     readonly filename: string;
 }
+
 /**
  * @alpha
  */
@@ -984,7 +985,8 @@ export interface ExportRawInsightWidget extends IDashboardCommand {
 /**
  * Creates the ExportRawInsightWidget command. Dispatching this command will result in exporting of the widget to a CSV.
  *
- * @param ref - reference to the Insight widget to refresh
+ * @param insight - insight to export
+ * @param filename - filename of the exported file
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -1001,6 +1003,62 @@ export function exportRawInsightWidget(
         payload: {
             insight,
             filename,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link ExportRawInsightWidget} command.
+ * @alpha
+ */
+export interface ExportSlidesInsightWidgetPayload {
+    /**
+     * Reference to Insight to export.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Reference to Insight title to export.
+     */
+    readonly filename: string;
+
+    /**
+     * Type of export to perform.
+     */
+    readonly exportType: "pdf" | "pptx";
+}
+
+/**
+ * @alpha
+ */
+export interface ExportSlidesInsightWidget extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_SLIDES";
+    readonly payload: ExportSlidesInsightWidgetPayload;
+}
+/**
+ * Creates the ExportSlidesInsightWidget command. Dispatching this command will result in exporting of the widget to a slides type (pdf, pptx).
+ *
+ * @param ref - reference to the Insight to export
+ * @param filename - filename of the exported file
+ * @param exportType - type of export to perform
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function exportSlidesInsightWidget(
+    ref: ObjRef,
+    filename: string,
+    exportType: "pdf" | "pptx",
+    correlationId?: string,
+): ExportSlidesInsightWidget {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_SLIDES",
+        correlationId,
+        payload: {
+            ref,
+            filename,
+            exportType,
         },
     };
 }

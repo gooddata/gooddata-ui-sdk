@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { IntlShape } from "react-intl";
 import compact from "lodash/compact.js";
@@ -33,6 +33,7 @@ export function getDefaultInsightMenuItems(
         onScheduleExport: () => void;
         onScheduleManagementExport: () => void;
         isExportRawVisible: boolean;
+        isExportVisible: boolean;
         isScheduleExportVisible: boolean;
         isScheduleExportManagementVisible: boolean;
         isDataError: boolean;
@@ -60,6 +61,7 @@ export function getDefaultInsightMenuItems(
         alertingDisabledReason,
         canCreateAutomation,
         isExportRawVisible,
+        isExportVisible,
     } = config;
 
     const defaultWidgetTooltip = isDataError
@@ -96,7 +98,7 @@ export function getDefaultInsightMenuItems(
         (isScheduleExportManagementVisible && !scheduleExportManagementDisabled);
 
     const menuItems: (false | IInsightMenuItem)[] = [
-        isExportRawVisible && {
+        (isExportRawVisible || isExportVisible) && {
             type: "submenu",
             itemId: "Exports",
             itemName: intl.formatMessage({ id: "widget.options.menu.export" }),
