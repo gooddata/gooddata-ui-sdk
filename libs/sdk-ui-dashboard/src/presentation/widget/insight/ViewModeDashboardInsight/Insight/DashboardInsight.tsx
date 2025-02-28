@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { CSSProperties, useCallback, useEffect, useMemo, useState } from "react";
+import React, { CSSProperties, useRef, useCallback, useEffect, useMemo, useState } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
 import {
@@ -101,6 +101,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
 
     // register as early as possible
     const [initialRegistered, setInitialRegistered] = useState(true);
+    const afterRenderCalled = useRef(false);
     useEffect(() => {
         onRequestAsyncRender();
     }, []);
@@ -136,6 +137,11 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     const handleLoadingChanged = useCallback<OnLoadingChanged>(
         ({ isLoading }) => {
             if (isLoading) {
+                // when loading starts, reset the afterRenderCalled
+                if (enableDashboardAfterRenderDetection) {
+                    afterRenderCalled.current = false;
+                }
+
                 if (!initialRegistered) {
                     // request when loading changed in later phases
                     // such as re-execution on filters change
@@ -168,7 +174,8 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     );
 
     const handleAfterRender = useCallback(() => {
-        if (enableDashboardAfterRenderDetection) {
+        if (enableDashboardAfterRenderDetection && !afterRenderCalled.current) {
+            afterRenderCalled.current = true;
             onResolveAsyncRender();
         }
     }, [afterRender, onResolveAsyncRender, enableDashboardAfterRenderDetection]);
