@@ -466,9 +466,11 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 slidesExportRequest,
             });
 
-            return await this.handleExportResultPolling(
+            return await this.handleExportSlidesResultPolling(
                 client,
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.presentation",
+                format === "PDF"
+                    ? "application/pdf"
+                    : "application/vnd.openxmlformats-officedocument.spreadsheetml.presentation",
                 {
                     workspaceId: this.workspace,
                     exportId: slideshowExport?.data?.exportResult,
@@ -486,7 +488,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 dashboardId,
             });
 
-            return await this.handleExportResultPolling(
+            return await this.handleExportTabularResultPolling(
                 client,
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 {
@@ -499,14 +501,67 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     private async handleExportResultPolling(
         client: ITigerClient,
-        type:
-            | "application/pdf"
-            | "application/vnd.openxmlformats-officedocument.spreadsheetml.presentation"
-            | "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        type: "application/pdf",
         payload: { exportId: string; workspaceId: string },
     ): Promise<IExportResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
             const result = await client.export.getExportedFile(payload, {
+                transformResponse: (x) => x,
+                responseType: "blob",
+            });
+
+            if (result?.status === 200) {
+                const blob = new Blob([result?.data as any], { type });
+                return {
+                    uri: result?.config?.url || "",
+                    objectUrl: URL.createObjectURL(blob),
+                    fileName: parseNameFromContentDisposition(result),
+                };
+            }
+
+            await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
+        }
+
+        throw new TimeoutError(
+            `Export timeout for export id "${payload.exportId}" in workspace "${payload.workspaceId}"`,
+        );
+    }
+
+    private async handleExportSlidesResultPolling(
+        client: ITigerClient,
+        type: "application/pdf" | "application/vnd.openxmlformats-officedocument.spreadsheetml.presentation",
+        payload: { exportId: string; workspaceId: string },
+    ): Promise<IExportResult> {
+        for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
+            const result = await client.export.getSlidesExport(payload, {
+                transformResponse: (x) => x,
+                responseType: "blob",
+            });
+
+            if (result?.status === 200) {
+                const blob = new Blob([result?.data as any], { type });
+                return {
+                    uri: result?.config?.url || "",
+                    objectUrl: URL.createObjectURL(blob),
+                    fileName: parseNameFromContentDisposition(result),
+                };
+            }
+
+            await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
+        }
+
+        throw new TimeoutError(
+            `Export timeout for export id "${payload.exportId}" in workspace "${payload.workspaceId}"`,
+        );
+    }
+
+    private async handleExportTabularResultPolling(
+        client: ITigerClient,
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        payload: { exportId: string; workspaceId: string },
+    ): Promise<IExportResult> {
+        for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
+            const result = await client.export.getTabularExport(payload, {
                 transformResponse: (x) => x,
                 responseType: "blob",
             });
