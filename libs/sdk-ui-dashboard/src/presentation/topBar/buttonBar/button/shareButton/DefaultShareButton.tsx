@@ -50,7 +50,7 @@ export const DefaultShareButton: React.FC<IShareButtonProps> = ({
                 className={
                     "gd-button-secondary dash-header-share-button s-header-share-button gd-button gd-icon-users"
                 }
-                ariaLabel={tooltipText}
+                accessibilityConfig={{ ariaLabel: tooltipText }}
             />
             <Bubble alignTo="gd-button-secondary dash-header-share-button" alignPoints={ALIGN_POINTS_TOOLTIP}>
                 {tooltipText}

@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { DynamicSelect, IDynamicSelectProps } from "../DynamicSelect/DynamicSelect.js";
@@ -42,6 +42,7 @@ class RelativeRangePickerComponent extends React.Component<
                     value={selectedFilterOption.from}
                     onChange={handleFromChange}
                     placeholder={intl.formatMessage({ id: "filters.from" })}
+                    ariaLabel={intl.formatMessage({ id: "filters.relative.accessibility.label.period.from" })}
                     className={cx(
                         "gd-relative-range-picker-picker",
                         "s-relative-range-picker-from",
@@ -54,6 +55,7 @@ class RelativeRangePickerComponent extends React.Component<
                     value={selectedFilterOption.to}
                     onChange={handleToChange}
                     placeholder={intl.formatMessage({ id: "filters.to" })}
+                    ariaLabel={intl.formatMessage({ id: "filters.relative.accessibility.label.period.to" })}
                     className={cx(
                         "gd-relative-range-picker-picker",
                         "s-relative-range-picker-to",
