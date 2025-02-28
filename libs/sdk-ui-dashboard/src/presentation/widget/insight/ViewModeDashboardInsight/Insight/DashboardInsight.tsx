@@ -131,6 +131,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
 
     // Loading and rendering
     const [isVisualizationLoading, setIsVisualizationLoading] = useState(false);
+    const [isVisualizationInitializing, setIsVisualizationInitializing] = useState(true);
     const [visualizationError, setVisualizationError] = useState<GoodDataSdkError | undefined>();
 
     const { onRequestAsyncRender, onResolveAsyncRender } = useDashboardAsyncRender(objRefToString(ref));
@@ -163,6 +164,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
             }
             executionsHandler.onLoadingChanged({ isLoading });
             setIsVisualizationLoading(isLoading);
+            setIsVisualizationInitializing(isLoading);
             onLoadingChanged?.({ isLoading });
         },
         [
@@ -276,7 +278,11 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     // if filter status is success and visualization is loading, render both loading and insight
     const loading = filtersStatus === "running" || isVisualizationLoading;
 
-    const exportDataVis = useVisualizationExportData(exportData, loading, !!effectiveError);
+    const exportDataVis = useVisualizationExportData(
+        exportData,
+        isVisualizationInitializing,
+        !!effectiveError,
+    );
 
     const renderComponent = () => {
         if (effectiveError) {

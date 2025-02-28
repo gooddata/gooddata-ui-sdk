@@ -221,6 +221,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             resized: false,
             tempExecution: execution,
             isLoading: false,
+            isFirstRender: false,
         };
 
         this.errorMap = newErrorMapping(props.intl);
@@ -631,6 +632,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         }
 
         this.updateStickyRow();
+        this.onLoadingAndRenderChanged(false, true);
     };
 
     private onModelUpdated = () => {
@@ -817,12 +819,18 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     };
 
     private onLoadingChanged = (loadingState: ILoadingState): void => {
+        this.onLoadingAndRenderChanged(loadingState.isLoading, this.state.isFirstRender);
+    };
+
+    private onLoadingAndRenderChanged = (isLoading: boolean, isFirstRender: boolean): void => {
         const { onLoadingChanged } = this.props;
 
         if (onLoadingChanged) {
-            onLoadingChanged(loadingState);
+            onLoadingChanged({
+                isLoading: isLoading || !isFirstRender,
+            });
 
-            this.setState({ isLoading: loadingState.isLoading });
+            this.setState({ isLoading, isFirstRender });
         }
     };
 
@@ -833,7 +841,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             this.setState({ error: error.getMessage(), readyToRender: true });
 
             // update loading state when an error occurs
-            this.onLoadingChanged({ isLoading: false });
+            this.onLoadingAndRenderChanged(false, true);
 
             onExportReady!(createExportErrorFunction(error));
 
