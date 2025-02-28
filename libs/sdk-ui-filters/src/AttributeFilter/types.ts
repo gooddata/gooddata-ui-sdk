@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     DashboardAttributeFilterSelectionMode,
@@ -246,6 +246,11 @@ export interface IAttributeFilterCoreProps {
      * Enables duplicated values in secondary labels.
      */
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
+
+    /**
+     * Enables the migration of displayAsLabel to be immediately reported to the parent app.
+     */
+    enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
 }
 
 /**

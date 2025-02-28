@@ -3385,6 +3385,7 @@ export interface ISettings {
     enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;
     enableIgnoreCrossFiltering?: boolean;
+    enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableInPlatformNotifications?: boolean;
     enableInsightExportScheduling?: boolean;
     enableInsightToReport?: boolean;

@@ -621,6 +621,11 @@ export interface ISettings {
      */
     enableExecutionCancelling?: boolean;
 
+    /**
+     * Enable immediate attribute filter displayAsLabel migration information propagation right upon the load of the component.
+     */
+    enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

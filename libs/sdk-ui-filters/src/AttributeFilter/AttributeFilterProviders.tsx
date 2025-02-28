@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterComponentsProvider } from "./Context/AttributeFilterComponentsContext.js";
@@ -49,6 +49,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         EmptyResultComponent,
         StatusBarComponent,
         enableDuplicatedLabelValuesInAttributeFilter = true,
+        enableImmediateAttributeFilterDisplayAsLabelMigration = false,
     } = props;
 
     const DefaultComponents = getAttributeFilterDefaultComponents(props);
@@ -105,6 +106,9 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     customIcon={customIcon}
                     enableDuplicatedLabelValuesInAttributeFilter={
                         enableDuplicatedLabelValuesInAttributeFilter
+                    }
+                    enableImmediateAttributeFilterDisplayAsLabelMigration={
+                        enableImmediateAttributeFilterDisplayAsLabelMigration
                     }
                 >
                     {children}

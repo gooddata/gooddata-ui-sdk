@@ -737,6 +737,16 @@ export const selectEnableDuplicatedLabelValuesInAttributeFilter: DashboardSelect
 );
 
 /**
+ * Returns whether attribute filter displays duplicated values when filter uses secondary label value.
+ *
+ * @internal
+ */
+export const selectEnableImmediateAttributeFilterDisplayAsLabelMigration: DashboardSelector<boolean> =
+    createSelector(selectConfig, (state) => {
+        return state.settings?.enableImmediateAttributeFilterDisplayAsLabelMigration ?? false;
+    });
+
+/**
  * Returns whether rich text in descriptions is enabled.
  *
  * @internal

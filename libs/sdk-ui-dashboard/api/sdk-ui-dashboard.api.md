@@ -8075,6 +8075,9 @@ export const selectEnableFlexibleLayout: DashboardSelector<boolean>;
 export const selectEnableIgnoreCrossFiltering: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableImmediateAttributeFilterDisplayAsLabelMigration: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableInPlatformNotifications: DashboardSelector<boolean>;
 
 // @public
