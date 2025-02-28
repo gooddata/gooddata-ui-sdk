@@ -3778,12 +3778,12 @@ export interface ExportRawInsightWidget extends IDashboardCommand {
 }
 
 // @alpha
-export function exportRawInsightWidget(insight: IInsightDefinition, filename: string, correlationId?: string): ExportRawInsightWidget;
+export function exportRawInsightWidget(ref: ObjRef, filename: string, correlationId?: string): ExportRawInsightWidget;
 
 // @alpha
 export interface ExportRawInsightWidgetPayload {
     readonly filename: string;
-    readonly insight: IInsightDefinition;
+    readonly ref: ObjRef;
 }
 
 // @alpha (undocumented)
@@ -3964,13 +3964,18 @@ export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, d
 export function getDefaultInsightMenuItems(intl: IntlShape, config: {
     exportXLSXDisabled: boolean;
     exportCSVDisabled: boolean;
+    exportCSVRawDisabled: boolean;
+    isExporting: boolean;
     scheduleExportDisabled: boolean;
     scheduleExportDisabledReason?: SchedulingDisabledReason;
     scheduleExportManagementDisabled: boolean;
     onExportXLSX: () => void;
     onExportCSV: () => void;
+    onExportRawCSV: () => void;
     onScheduleExport: () => void;
     onScheduleManagementExport: () => void;
+    onExportPowerPointPresentation: () => void;
+    onExportPdfPresentation: () => void;
     isExportRawVisible: boolean;
     isExportVisible: boolean;
     isScheduleExportVisible: boolean;

@@ -42,6 +42,8 @@ export interface IDrillModalRawExportOptionsProps {
     exportXLSXEnabled: boolean;
     onExportXLSX: () => void;
     exportCSVEnabled: boolean;
+    exportCSVRawEnabled: boolean;
+    isExporting: boolean;
     onExportCSV: () => void;
     onExportCSVRaw: () => void;
 }
@@ -103,6 +105,8 @@ const DrillModalRawExportOptions: React.FC<IDrillModalRawExportOptionsProps> = (
     showDropdown,
     exportXLSXEnabled,
     exportCSVEnabled,
+    exportCSVRawEnabled,
+    isExporting,
     toggleShowDropdown,
     onExportXLSX,
     onExportCSV,
@@ -110,7 +114,9 @@ const DrillModalRawExportOptions: React.FC<IDrillModalRawExportOptionsProps> = (
 }) => {
     const execution = useDashboardSelector(selectExecutionResultByRef(DRILL_MODAL_EXECUTION_PSEUDO_REF));
     const settings = useDashboardSelector(selectSettings);
-    const tooltip = getExportTooltip(execution, settings?.enableRawExports);
+    const tooltip = isExporting
+        ? "options.menu.export.in.progress"
+        : getExportTooltip(execution, settings?.enableRawExports);
 
     return showDropdown ? (
         <Overlay
@@ -136,12 +142,13 @@ const DrillModalRawExportOptions: React.FC<IDrillModalRawExportOptionsProps> = (
                     bubbleTextId={tooltip}
                     messageId="widget.drill.dialog.exportToCSV.formatted"
                 />
-                <Item
+                <DrillModalExportMenuItem
                     onClick={onExportCSVRaw}
-                    className="options-menu-export-csv-raw s-export-drilled-insight-csv"
-                >
-                    <FormattedMessage id="widget.drill.dialog.exportToCSV.raw" />
-                </Item>
+                    className="options-menu-export-csv-formatted s-export-drilled-insight-csv-raw"
+                    disabled={!exportCSVRawEnabled}
+                    bubbleTextId={tooltip}
+                    messageId="widget.drill.dialog.exportToCSV.raw"
+                />
             </ItemsWrapper>
         </Overlay>
     ) : null;

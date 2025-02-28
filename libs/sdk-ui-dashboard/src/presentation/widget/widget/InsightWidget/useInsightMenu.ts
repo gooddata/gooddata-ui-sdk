@@ -24,6 +24,8 @@ type UseInsightMenuConfig = {
     widget: IInsightWidget;
     exportCSVEnabled: boolean;
     exportXLSXEnabled: boolean;
+    exportCSVRawEnabled: boolean;
+    isExporting: boolean;
     isExportRawVisible: boolean;
     isExportVisible: boolean;
     onExportCSV: () => void;
@@ -31,6 +33,8 @@ type UseInsightMenuConfig = {
     onExportRawCSV: () => void;
     onScheduleExport: () => void;
     onScheduleManagementExport: () => void;
+    onExportPowerPointPresentation: () => void;
+    onExportPdfPresentation: () => void;
     isScheduleExportVisible: boolean;
     isScheduleExportManagementVisible: boolean;
     isAlertingVisible: boolean;
@@ -66,10 +70,15 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
     const {
         exportCSVEnabled,
         exportXLSXEnabled,
+        exportCSVRawEnabled,
+        isExporting,
         onExportCSV,
+        onExportRawCSV,
         onExportXLSX,
         onScheduleExport,
         onScheduleManagementExport,
+        onExportPdfPresentation,
+        onExportPowerPointPresentation,
         isScheduleExportVisible,
         isScheduleExportManagementVisible,
         isAlertingVisible,
@@ -91,6 +100,8 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         return getDefaultInsightMenuItems(intl, {
             exportCSVDisabled: !exportCSVEnabled,
             exportXLSXDisabled: !exportXLSXEnabled,
+            exportCSVRawDisabled: !exportCSVRawEnabled,
+            isExporting,
             scheduleExportManagementDisabled,
             scheduleExportDisabled,
             scheduleExportDisabledReason,
@@ -99,6 +110,10 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
             onExportCSV: () => {
                 setIsMenuOpen(false);
                 onExportCSV();
+            },
+            onExportRawCSV: () => {
+                setIsMenuOpen(false);
+                onExportRawCSV();
             },
             onExportXLSX: () => {
                 setIsMenuOpen(false);
@@ -112,6 +127,14 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
                 setIsMenuOpen(false);
                 onScheduleManagementExport();
             },
+            onExportPdfPresentation: () => {
+                setIsMenuOpen(false);
+                onExportPdfPresentation();
+            },
+            onExportPowerPointPresentation: () => {
+                setIsMenuOpen(false);
+                onExportPowerPointPresentation();
+            },
             isScheduleExportVisible,
             isScheduleExportManagementVisible,
             isDataError: isDataError(execution?.error),
@@ -124,6 +147,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         intl,
         exportCSVEnabled,
         exportXLSXEnabled,
+        exportCSVRawEnabled,
         scheduleExportManagementDisabled,
         scheduleExportDisabled,
         isScheduleExportVisible,
@@ -131,14 +155,19 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         execution?.error,
         isAlertingVisible,
         alertingDisabled,
+        isExportVisible,
         setIsMenuOpen,
         onExportCSV,
+        onExportRawCSV,
         onExportXLSX,
         onScheduleExport,
         onScheduleManagementExport,
+        onExportPdfPresentation,
+        onExportPowerPointPresentation,
         scheduleExportDisabledReason,
         alertingDisabledReason,
         canCreateAutomation,
         isExportRawVisible,
+        isExporting,
     ]);
 }
