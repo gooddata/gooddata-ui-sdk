@@ -1,9 +1,10 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { describe, it, expect } from "vitest";
 import { withNormalization } from "../index.js";
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend/index.js";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { NoDataError } from "@gooddata/sdk-backend-spi";
+import { IAutomationAlertExecutionDefinition } from "@gooddata/sdk-model";
 
 describe("withNormalization", () => {
     const measures = [
@@ -52,5 +53,86 @@ describe("withNormalization", () => {
             expect(typedError.dataView?.definition.attributes).toEqual(attributes);
             expect(typedError.dataView?.definition.measures).toEqual(measures);
         }
+    });
+
+    it("should normalize also attributes locals ids in filters", async () => {
+        const AlertExecution: IAutomationAlertExecutionDefinition = {
+            attributes: [
+                {
+                    attribute: {
+                        localIdentifier: "5050b198945940d989c6ec1dc5d41cb0",
+                        displayForm: {
+                            identifier: "cross_border_ind",
+                            type: "displayForm",
+                        },
+                        showAllValues: false,
+                    },
+                },
+            ],
+            measures: [
+                {
+                    measure: {
+                        localIdentifier: "dfa7419de85a48cab8a203960a84e766",
+                        definition: {
+                            measureDefinition: {
+                                item: {
+                                    identifier: "gross_fraud_rate",
+                                    type: "measure",
+                                },
+                                filters: [],
+                                computeRatio: false,
+                            },
+                        },
+                    },
+                },
+            ],
+            auxMeasures: [],
+            filters: [
+                {
+                    relativeDateFilter: {
+                        dataSet: {
+                            identifier: "DW_PROCESS_MONTH_END_DATE",
+                            type: "dataSet",
+                        },
+                        from: -15,
+                        to: -1,
+                        granularity: "GDC.time.month",
+                    },
+                },
+                {
+                    positiveAttributeFilter: {
+                        displayForm: {
+                            localIdentifier: "5050b198945940d989c6ec1dc5d41cb0",
+                        },
+                        in: {
+                            values: ["Domestic"],
+                        },
+                    },
+                },
+            ],
+        };
+
+        let normalized;
+        const backend = withNormalization(
+            dummyBackend({
+                // make sure the dataView is passed to the NoDataError
+                raiseNoDataExceptions: "with-data-view",
+            }),
+            {
+                normalizationStatus: (s) => {
+                    normalized = s.normalized;
+                },
+            },
+        );
+
+        const query = backend
+            .workspace("testWorkspace")
+            .execution()
+            .forItems([...AlertExecution.attributes, ...AlertExecution.measures], AlertExecution.filters);
+
+        const r = await query.execute();
+        expect(r).toBeDefined();
+        expect(normalized).toMatchSnapshot();
+        expect(r.definition).toMatchSnapshot();
     });
 });
