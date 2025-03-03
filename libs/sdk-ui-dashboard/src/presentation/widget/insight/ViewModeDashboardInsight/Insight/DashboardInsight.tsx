@@ -297,7 +297,11 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         } else {
             return (
                 <>
-                    {loading ? <LoadingComponent /> : null}
+                    {loading ? (
+                        <div className="insight-view-loader">
+                            <LoadingComponent />
+                        </div>
+                    ) : null}
                     {filtersStatus === "success" ? (
                         <div className="insight-view-visualization" style={insightWrapperStyle}>
                             <InsightBody
