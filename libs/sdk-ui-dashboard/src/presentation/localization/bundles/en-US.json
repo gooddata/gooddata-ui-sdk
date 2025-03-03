@@ -152,6 +152,11 @@
         "comment": "Export whole KPI dashboard to PowerPoint",
         "limit": 0
     },
+    "options.menu.export.in.progress": {
+        "value": "Export is in progress. Wait until it is finished before exporting again.",
+        "comment": "Export whole KPI dashboard to PowerPoint",
+        "limit": 0
+    },
     "options.menu.schedule.email": {
         "value": "Schedule export",
         "comment": "Translate as imperative. Schedule emailing whole KPI dashboard",
@@ -2955,11 +2960,6 @@
     "widget.options.menu.export": {
         "value": "Export",
         "comment": "Export to file with XLSX extension.",
-        "limit": 0
-    },
-    "widget.drill.dialog.exportToCSV.raw": {
-        "value": "Export to CSV (raw)",
-        "comment": "",
         "limit": 0
     }
 }

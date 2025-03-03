@@ -22,7 +22,9 @@ export interface DrillDialogProps {
     onExportCSVRaw: () => void;
     exportXLSXEnabled: boolean;
     exportCSVEnabled: boolean;
+    exportCSVRawEnabled: boolean;
     isLoading: boolean;
+    isExporting: boolean;
     enableDrillDescription: boolean;
     isExportRawVisible: boolean;
 }
@@ -42,10 +44,12 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     exportAvailable,
     exportXLSXEnabled,
     exportCSVEnabled,
+    exportCSVRawEnabled,
     onExportCSV,
     onExportXLSX,
     onExportCSVRaw,
     isLoading,
+    isExporting,
     isExportRawVisible,
 }) => {
     const settings = useDashboardSelector(selectSettings);
@@ -103,10 +107,12 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
                         exportAvailable={exportAvailable}
                         exportXLSXEnabled={exportXLSXEnabled}
                         exportCSVEnabled={exportCSVEnabled}
+                        exportCSVRawEnabled={exportCSVRawEnabled}
                         onExportXLSX={onExportXLSX}
                         onExportCSV={onExportCSV}
                         onExportCSVRaw={onExportCSVRaw}
                         isLoading={isLoading}
+                        isExporting={isExporting}
                         isExportRawVisible={isExportRawVisible}
                     />
                 </div>

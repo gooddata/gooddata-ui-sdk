@@ -9,7 +9,6 @@ import {
     InsightDrillDefinition,
     IInsightWidgetConfiguration,
     IDrillDownReference,
-    IInsightDefinition,
 } from "@gooddata/sdk-model";
 import {
     FilterOpReplaceAll,
@@ -965,9 +964,9 @@ export function exportInsightWidget(
  */
 export interface ExportRawInsightWidgetPayload {
     /**
-     * Reference to Insight to export.
+     * Reference to Insight Widget to export.
      */
-    readonly insight: IInsightDefinition;
+    readonly ref: ObjRef;
 
     /**
      * Reference to Insight title to export.
@@ -993,7 +992,7 @@ export interface ExportRawInsightWidget extends IDashboardCommand {
  * @alpha
  */
 export function exportRawInsightWidget(
-    insight: IInsightDefinition,
+    ref: ObjRef,
     filename: string,
     correlationId?: string,
 ): ExportRawInsightWidget {
@@ -1001,7 +1000,7 @@ export function exportRawInsightWidget(
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW",
         correlationId,
         payload: {
-            insight,
+            ref,
             filename,
         },
     };

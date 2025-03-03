@@ -1,43 +1,39 @@
 // (C) 2024-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { call } from "redux-saga/effects";
-import { IExecutionResult, IExportResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { call, select } from "redux-saga/effects";
+import { IExecutionResult, IExportResult } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
 import { ExportRawInsightWidget } from "../../commands/index.js";
 import { DashboardInsightWidgetExportResolved, insightWidgetExportResolved } from "../../events/insight.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { createExportRawFunction } from "@gooddata/sdk-ui";
 import { PromiseFnReturnType } from "../../types/sagas.js";
-import { defaultDimensionsGenerator, defWithDimensions, newDefForInsight } from "@gooddata/sdk-model";
+
+import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
 
 async function performExport(execution: IExecutionResult, filename: string): Promise<IExportResult> {
     return createExportRawFunction(execution, filename);
-}
-
-function getExecutionResult(preparedExecution: IPreparedExecution) {
-    return preparedExecution.execute();
 }
 
 export function* exportRawInsightWidgetHandler(
     ctx: DashboardContext,
     cmd: ExportRawInsightWidget,
 ): SagaIterator<DashboardInsightWidgetExportResolved> {
-    const { insight, filename } = cmd.payload;
-    const { workspace, backend } = ctx;
+    const { filename, ref } = cmd.payload;
 
-    const definition = defWithDimensions(newDefForInsight(workspace, insight!), defaultDimensionsGenerator);
-    const preparedExecution = backend.workspace(workspace).execution().forDefinition(definition);
-    const executionResult: PromiseFnReturnType<typeof getExecutionResult> = yield call(
-        getExecutionResult,
-        preparedExecution,
+    const executionEnvelope: ReturnType<ReturnType<typeof selectExecutionResultByRef>> = yield select(
+        selectExecutionResultByRef(ref),
     );
+
     // executionResult must be defined at this point
-    invariant(executionResult);
+    invariant(executionEnvelope?.executionResult);
+
     const result: PromiseFnReturnType<typeof performExport> = yield call(
         performExport,
-        executionResult,
+        executionEnvelope.executionResult,
         filename,
     );
+
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted
     const fullUri = ctx.backend.config.hostname
         ? new URL(result.uri, ctx.backend.config.hostname).href
@@ -46,5 +42,6 @@ export function* exportRawInsightWidgetHandler(
         ...result,
         uri: fullUri,
     };
+
     return insightWidgetExportResolved(ctx, sanitizedResult, cmd.correlationId);
 }

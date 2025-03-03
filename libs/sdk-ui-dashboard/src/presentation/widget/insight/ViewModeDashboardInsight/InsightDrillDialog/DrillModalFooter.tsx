@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useState, useCallback, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
@@ -10,11 +10,13 @@ import DrillModalRawExportOptions from "./DrillModalRawExportOptions.js";
 export interface IDrillModalFooterProps {
     exportAvailable: boolean;
     exportXLSXEnabled: boolean;
+    exportCSVRawEnabled: boolean;
     onExportXLSX: () => void;
     exportCSVEnabled: boolean;
     onExportCSV: () => void;
     onExportCSVRaw: () => void;
     isLoading: boolean;
+    isExporting: boolean;
     isExportRawVisible: boolean;
 }
 
@@ -25,9 +27,11 @@ export const DrillModalFooter: React.FC<IDrillModalFooterProps> = ({
     exportXLSXEnabled,
     onExportXLSX,
     exportCSVEnabled,
+    exportCSVRawEnabled,
     onExportCSV,
     onExportCSVRaw,
     isLoading,
+    isExporting,
     isExportRawVisible,
 }) => {
     const [showDropdown, setShowDropdown] = useState(false);
@@ -82,9 +86,11 @@ export const DrillModalFooter: React.FC<IDrillModalFooterProps> = ({
                         toggleShowDropdown={toggleShowDropdown}
                         exportXLSXEnabled={exportXLSXEnabled}
                         exportCSVEnabled={exportCSVEnabled}
+                        exportCSVRawEnabled={exportCSVRawEnabled}
                         onExportXLSX={handleOnExportXLSX}
                         onExportCSV={handleOnExportCSV}
                         onExportCSVRaw={handleOnExportCSVRaw}
+                        isExporting={isExporting}
                     />
                 </>
             ) : exportDisabled && !isLoading ? (

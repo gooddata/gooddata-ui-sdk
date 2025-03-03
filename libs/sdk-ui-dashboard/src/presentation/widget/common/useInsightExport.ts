@@ -56,9 +56,9 @@ export const useInsightExport = (config: {
         (title: string) =>
             dispatchAndWaitFor<ExportRawInsightWidget, DashboardInsightWidgetExportResolved>(
                 dispatch,
-                exportRawInsightWidget(insight!, title, uuid()),
+                exportRawInsightWidget(widgetRef, title, uuid()),
             ).then((result) => result.payload.result),
-        [insight],
+        [widgetRef],
     );
 
     const exportSlidesFunction = useCallback(
@@ -91,7 +91,7 @@ export const useInsightExport = (config: {
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportFunction);
         exportHandler(exportFunction, exportConfig).then(() => setIsExporting(false));
-    }, [exportFunction, title]);
+    }, [exportFunction, setIsExporting, title]);
 
     const onExportRawCSV = useCallback(() => {
         setIsExporting(true);
@@ -137,6 +137,7 @@ export const useInsightExport = (config: {
 
     const exportCSVEnabled = !isExporting && isInsightExportable && isExportableToCsv;
     const exportXLSXEnabled = !isExporting && isInsightExportable && isExportableToXlsx;
+    const exportCSVRawEnabled = !isExporting;
 
     const isExportRawVisible = settings.enableRawExports === true;
     const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
@@ -144,6 +145,8 @@ export const useInsightExport = (config: {
     return {
         exportCSVEnabled,
         exportXLSXEnabled,
+        exportCSVRawEnabled,
+        isExporting,
         isExportRawVisible,
         isExportVisible,
         onExportCSV,

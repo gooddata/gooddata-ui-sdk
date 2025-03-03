@@ -122,7 +122,9 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
     const {
         exportCSVEnabled,
         exportXLSXEnabled,
+        exportCSVRawEnabled,
         isExportRawVisible,
+        isExporting,
         onExportRawCSV,
         onExportCSV,
         onExportXLSX,
@@ -159,11 +161,13 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                         exportAvailable={exportXLSXEnabled || exportCSVEnabled}
                         exportXLSXEnabled={exportXLSXEnabled}
                         exportCSVEnabled={exportCSVEnabled}
+                        exportCSVRawEnabled={exportCSVRawEnabled}
                         enableDrillDescription={enableDrillDescription}
                         onExportXLSX={onExportXLSX}
                         onExportCSV={onExportCSV}
                         onExportCSVRaw={onExportRawCSV}
                         isLoading={isLoading}
+                        isExporting={isExporting}
                         isExportRawVisible={isExportRawVisible}
                     >
                         <WithDrillSelect
