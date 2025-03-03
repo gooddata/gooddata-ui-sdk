@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 import Highcharts from "highcharts";
 import { HighchartsReact } from "highcharts-react-official";
@@ -88,6 +88,7 @@ function createOptions({
                         enabled: false,
                     },
                 },
+                borderRadius: 0,
             },
         ],
     };

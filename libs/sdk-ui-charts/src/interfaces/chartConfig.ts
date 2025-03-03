@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { IColorPalette, Identifier, ISeparators } from "@gooddata/sdk-model";
 import { IDrillEventIntersectionElement, VisType } from "@gooddata/sdk-ui";
 import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
@@ -368,6 +368,12 @@ export interface IChartConfig {
      * @internal
      */
     enableVisualizationFineTuning?: boolean;
+
+    /**
+     * Whether to enable execution cancelling.
+     * @internal
+     */
+    enableExecutionCancelling?: boolean;
 }
 
 /**

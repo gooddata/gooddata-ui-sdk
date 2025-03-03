@@ -570,6 +570,16 @@ export interface ISettings {
     enableDrilledTooltip?: boolean;
 
     /**
+     * Enable dashboard tabular export
+     */
+    enableDashboardTabularExport?: boolean;
+
+    /**
+     * Enable orchestrated tabular exports
+     */
+    enableOrchestratedTabularExports?: boolean;
+
+    /**
      * Enable dynamic height of the dashboard section description fields in dashboard edit mode.
      */
     enableDashboardDescriptionDynamicHeight?: boolean;
@@ -610,6 +620,11 @@ export interface ISettings {
      * Enable execution cancelling.
      */
     enableExecutionCancelling?: boolean;
+
+    /**
+     * Enable immediate attribute filter displayAsLabel migration information propagation right upon the load of the component.
+     */
+    enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }

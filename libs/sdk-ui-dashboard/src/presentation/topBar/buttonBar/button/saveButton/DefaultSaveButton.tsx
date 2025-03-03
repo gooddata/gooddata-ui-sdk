@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React, { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -16,9 +16,11 @@ import {
     useDashboardSelector,
     selectDashboardTitle,
     selectLayoutHasAnalyticalWidgets,
+    selectCanSaveDashboard,
+    selectIsPrivateDashboard,
 } from "../../../../../model/index.js";
 import { messages } from "../../../../../locales.js";
-import { selectCanSaveDashboard, selectIsPrivateDashboard } from "../selectors.js";
+
 import { ISaveButtonProps } from "./types.js";
 
 /**

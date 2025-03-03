@@ -1,6 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useCallback, useEffect, useState } from "react";
-import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import {
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
@@ -11,6 +10,7 @@ import {
 
 import { getAlertThreshold, getMeasureFormat } from "../utils/getters.js";
 import { AlertAttribute, AlertMetric } from "../../../types.js";
+import { convertThresholdValue } from "../utils/threshold.js";
 
 export function useThresholdValue(
     changeValue: (value: number) => void,
@@ -47,7 +47,7 @@ export function useThresholdValue(
             const val = getMetricValue(selectedMeasure?.measure, selectedAttribute?.attribute, selectedValue);
             if (val !== undefined) {
                 changeValue(val);
-                setValue(convertValue(String(val), selectedMeasure?.measure.measure.format));
+                setValue(convertThresholdValue(String(val), selectedMeasure?.measure.measure.format));
             }
         }
     }, [
@@ -76,7 +76,7 @@ export function useThresholdValue(
 
     const onBlur = useCallback(
         (event: React.FocusEvent<HTMLInputElement>) => {
-            const val = convertValue(event.target.value, getMeasureFormat(selectedMeasure?.measure));
+            const val = convertThresholdValue(event.target.value, getMeasureFormat(selectedMeasure?.measure));
             changeValue(val!);
             setValue(val);
         },
@@ -88,32 +88,4 @@ export function useThresholdValue(
         onChange,
         onBlur,
     };
-}
-
-function convertValue(value: string, format?: string): number | undefined {
-    try {
-        const convertedValue = ClientFormatterFacade.convertValue(value);
-        const { formattedValue } = ClientFormatterFacade.formatValue(convertedValue, format, {
-            decimal: ".",
-            thousand: "",
-        });
-        return parseFormattedNumber(formattedValue);
-    } catch {
-        return parseFormattedNumber(value);
-    }
-}
-
-function parseFormattedNumber(formattedNumber: string): number | undefined {
-    // Remove any non-numeric characters except for decimal points
-    const cleanedString = formattedNumber.replace(/[^\d.-]/g, "");
-
-    // Parse and return the raw float number
-    const rawNumber = parseFloat(cleanedString);
-
-    // Check if the result is a valid number
-    if (isNaN(rawNumber)) {
-        return undefined;
-    }
-
-    return rawNumber;
 }

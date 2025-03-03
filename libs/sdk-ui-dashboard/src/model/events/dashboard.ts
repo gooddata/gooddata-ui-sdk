@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { IInsight, ObjRef, IDashboard, IWorkspacePermissions } from "@gooddata/sdk-model";
 import { IExportResult } from "@gooddata/sdk-backend-spi";
@@ -563,6 +563,256 @@ export function dashboardExportToPdfResolved(
 export const isDashboardExportToPdfResolved = eventGuard<DashboardExportToPdfResolved>(
     "GDC.DASH/EVT.EXPORT.PDF.RESOLVED",
 );
+
+/**
+ * This event is emitted at the start of the 'dashboard export to Excel' command processing.
+ *
+ * @beta
+ */
+export interface DashboardExportToExcelRequested extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.EXPORT.EXCEL.REQUESTED";
+}
+
+export function dashboardExportToExcelRequested(
+    ctx: DashboardContext,
+    correlationId?: string,
+): DashboardExportToExcelRequested {
+    return {
+        type: "GDC.DASH/EVT.EXPORT.EXCEL.REQUESTED",
+        ctx,
+        correlationId,
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardExportToExcelRequested}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardExportToExcelRequested = eventGuard<DashboardExportToExcelRequested>(
+    "GDC.DASH/EVT.EXPORT.EXCEL.REQUESTED",
+);
+
+/**
+ * Payload of the {@link DashboardExportToExcelResolved} event.
+ * @beta
+ */
+export interface DashboardExportToExcelResolvedPayload {
+    /**
+     * URI of the resulting file that can be used to download it.
+     */
+    readonly resultUri: string;
+    /**
+     * Collection of information used to download the resulting file.
+     */
+    readonly result: IExportResult;
+}
+
+/**
+ * This event is emitted at the end of successful 'dashboard export to Excel' command processing.
+ * In its payload, there is an uri of the resulting XLS file.
+ *
+ * @beta
+ */
+export interface DashboardExportToExcelResolved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.EXPORT.EXCEL.RESOLVED";
+    readonly payload: DashboardExportToExcelResolvedPayload;
+}
+
+export function dashboardExportToExcelResolved(
+    ctx: DashboardContext,
+    result: IExportResult,
+    correlationId?: string,
+): DashboardExportToExcelResolved {
+    return {
+        type: "GDC.DASH/EVT.EXPORT.EXCEL.RESOLVED",
+        ctx,
+        correlationId,
+        payload: {
+            resultUri: result.uri,
+            result,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardExportToExcelResolved}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardExportToExcelResolved = eventGuard<DashboardExportToExcelResolved>(
+    "GDC.DASH/EVT.EXPORT.EXCEL.RESOLVED",
+);
+
+//
+//
+//
+
+/**
+ * This event is emitted at the start of the 'dashboard export to PDF presentation' command processing.
+ *
+ * @beta
+ */
+export interface DashboardExportToPdfPresentationRequested extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.REQUESTED";
+}
+
+export function dashboardExportToPdfPresentationRequested(
+    ctx: DashboardContext,
+    correlationId?: string,
+): DashboardExportToPdfPresentationRequested {
+    return {
+        type: "GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.REQUESTED",
+        ctx,
+        correlationId,
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardExportToPdfPresentationRequested}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardExportToPdfPresentationRequested =
+    eventGuard<DashboardExportToPdfPresentationRequested>("GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.REQUESTED");
+
+/**
+ * Payload of the {@link DashboardExportToPdfPresentationResolved} event.
+ * @beta
+ */
+export interface DashboardExportToPdfPresentationResolvedPayload {
+    /**
+     * URI of the resulting file that can be used to download it.
+     */
+    readonly resultUri: string;
+    /**
+     * Collection of information used to download the resulting file.
+     */
+    readonly result: IExportResult;
+}
+
+/**
+ * This event is emitted at the end of successful 'dashboard export to PDF presentation' command processing.
+ * In its payload, there is an uri of the resulting PDF file.
+ *
+ * @beta
+ */
+export interface DashboardExportToPdfPresentationResolved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.RESOLVED";
+    readonly payload: DashboardExportToExcelResolvedPayload;
+}
+
+export function dashboardExportToPdfPresentationResolved(
+    ctx: DashboardContext,
+    result: IExportResult,
+    correlationId?: string,
+): DashboardExportToPdfPresentationResolved {
+    return {
+        type: "GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.RESOLVED",
+        ctx,
+        correlationId,
+        payload: {
+            resultUri: result.uri,
+            result,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardExportToPdfPresentationResolved}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardExportToPdfPresentationResolved =
+    eventGuard<DashboardExportToPdfPresentationResolved>("GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.RESOLVED");
+
+//
+//
+//
+
+/**
+ * This event is emitted at the start of the 'dashboard export to PPT presentation' command processing.
+ *
+ * @beta
+ */
+export interface DashboardExportToPptPresentationRequested extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.REQUESTED";
+}
+
+export function dashboardExportToPptPresentationRequested(
+    ctx: DashboardContext,
+    correlationId?: string,
+): DashboardExportToPptPresentationRequested {
+    return {
+        type: "GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.REQUESTED",
+        ctx,
+        correlationId,
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardExportToPptPresentationRequested}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardExportToPptPresentationRequested =
+    eventGuard<DashboardExportToPptPresentationRequested>("GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.REQUESTED");
+
+/**
+ * Payload of the {@link DashboardExportToPptPresentationResolved} event.
+ * @beta
+ */
+export interface DashboardExportToPptPresentationResolvedPayload {
+    /**
+     * URI of the resulting file that can be used to download it.
+     */
+    readonly resultUri: string;
+    /**
+     * Collection of information used to download the resulting file.
+     */
+    readonly result: IExportResult;
+}
+
+/**
+ * This event is emitted at the end of successful 'dashboard export to PPT presentation' command processing.
+ * In its payload, there is an uri of the resulting PDF file.
+ *
+ * @beta
+ */
+export interface DashboardExportToPptPresentationResolved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.RESOLVED";
+    readonly payload: DashboardExportToExcelResolvedPayload;
+}
+
+export function dashboardExportToPptPresentationResolved(
+    ctx: DashboardContext,
+    result: IExportResult,
+    correlationId?: string,
+): DashboardExportToPptPresentationResolved {
+    return {
+        type: "GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.RESOLVED",
+        ctx,
+        correlationId,
+        payload: {
+            resultUri: result.uri,
+            result,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardExportToPptPresentationResolved}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardExportToPptPresentationResolved =
+    eventGuard<DashboardExportToPptPresentationResolved>("GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.RESOLVED");
 
 //
 //

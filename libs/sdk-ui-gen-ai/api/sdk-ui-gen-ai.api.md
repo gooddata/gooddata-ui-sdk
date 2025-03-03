@@ -24,7 +24,7 @@ export type BaseEvent = {
 
 // @alpha (undocumented)
 export type BaseMessage = {
-    id?: number;
+    id?: string;
     localId: string;
     created: number;
     cancelled: boolean;
@@ -35,7 +35,7 @@ export type BaseMessage = {
 // @alpha
 export type ChatAssistantMessageEvent = BaseEvent & {
     type: "chatAssistantMessage";
-    interactionId?: number;
+    interactionId?: string;
     useCase: string;
 };
 
@@ -56,7 +56,7 @@ export interface ChatEventHandler<TEvent extends ChatEvent = any> {
 // @alpha
 export type ChatFeedbackEvent = BaseEvent & {
     type: "chatFeedback";
-    interactionId?: number;
+    interactionId?: string;
     feedback: "POSITIVE" | "NEGATIVE" | "NONE";
 };
 

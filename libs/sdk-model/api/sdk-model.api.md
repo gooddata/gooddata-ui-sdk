@@ -1987,7 +1987,7 @@ export interface IGenAIActiveObject {
 
 // @alpha
 export interface IGenAIChatInteraction {
-    chatHistoryInteractionId: number;
+    chatHistoryInteractionId: string;
     createdVisualizations?: IGenAICreatedVisualizations;
     errorResponse?: string;
     foundObjects?: IGenAIFoundObjects;
@@ -3367,6 +3367,7 @@ export interface ISettings {
     enableDashboardFiltersApplyModes?: boolean;
     enableDashboardFilterViews?: boolean;
     enableDashboardFlexibleLayout?: boolean;
+    enableDashboardTabularExport?: boolean;
     enableDataSampling?: boolean;
     // (undocumented)
     enableDataSection?: boolean;
@@ -3387,6 +3388,7 @@ export interface ISettings {
     enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;
     enableIgnoreCrossFiltering?: boolean;
+    enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableInPlatformNotifications?: boolean;
     enableInsightExportScheduling?: boolean;
     enableInsightToReport?: boolean;
@@ -3422,6 +3424,7 @@ export interface ISettings {
     enableNumberSeparators?: boolean;
     // (undocumented)
     enableOracleDataSource?: boolean;
+    enableOrchestratedTabularExports?: boolean;
     enablePivotTableIncreaseBucketSize?: boolean;
     enablePivotTableTransposition?: boolean;
     // (undocumented)

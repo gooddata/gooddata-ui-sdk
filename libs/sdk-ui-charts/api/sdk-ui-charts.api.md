@@ -320,6 +320,8 @@ export interface IChartConfig {
     enableAliasAttributeLabel?: boolean;
     enableChartSorting?: boolean;
     enableCompactSize?: boolean;
+    // @internal
+    enableExecutionCancelling?: boolean;
     enableJoinedAttributeAxisName?: boolean;
     enableReversedStacking?: boolean;
     // (undocumented)
@@ -447,6 +449,7 @@ export interface IContinuousLineConfig {
 // @internal
 export interface ICoreChartProps extends ICommonChartProps {
     clusteringConfig?: IClusteringConfig;
+    enableExecutionCancelling?: boolean;
     execution: IPreparedExecution;
     forecastConfig?: IForecastConfig;
 }

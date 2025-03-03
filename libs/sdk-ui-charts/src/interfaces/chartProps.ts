@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IAnalyticalBackend,
     IClusteringConfig,
@@ -114,6 +114,12 @@ export interface ICoreChartProps extends ICommonChartProps {
      * Prepared execution, which when executed, will provide data to visualize in the chart.
      */
     execution: IPreparedExecution;
+
+    /**
+     * Whether to enable execution cancelling.
+     * @internal
+     */
+    enableExecutionCancelling?: boolean;
 
     /**
      * Forecast configuration to apply to the chart data.

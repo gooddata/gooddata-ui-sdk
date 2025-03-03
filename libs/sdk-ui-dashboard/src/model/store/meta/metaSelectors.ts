@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import {
     idRef,
@@ -214,6 +214,19 @@ export const selectDashboardUriRef: DashboardSelector<UriRef | undefined> = crea
 export const selectIsNewDashboard: DashboardSelector<boolean> = createSelector(
     selectDashboardRef,
     isUndefined,
+);
+
+/**
+ * Selects a boolean indication if dashboard is dynamically filled, that mean that the dashboard is filled
+ * with widgets and layout dynamically from initial content
+ *
+ * @internal
+ */
+export const selectIsNewDashboardWithContent: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => {
+        return !state.persistedDashboard && (state.initialContent ?? false);
+    },
 );
 
 //

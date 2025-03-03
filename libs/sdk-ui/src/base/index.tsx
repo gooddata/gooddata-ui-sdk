@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 /*
  *
@@ -60,6 +60,16 @@ export type { IErrorProps } from "./react/ErrorComponent.js";
 export { ErrorComponent } from "./react/ErrorComponent.js";
 export type { IBackendProviderProps } from "./react/BackendContext.js";
 export { BackendProvider, useBackend, useBackendStrict, withBackend } from "./react/BackendContext.js";
+export type {
+    ICorrelationProviderProps,
+    IBackendProviderWithCorrelationProps,
+} from "./react/CorrelationContext.js";
+export {
+    CorrelationProvider,
+    useCorrelationData,
+    useBackendWithCorrelation,
+    BackendProviderWithCorrelation,
+} from "./react/CorrelationContext.js";
 export type { IWorkspaceProviderProps } from "./react/WorkspaceContext.js";
 export {
     WorkspaceProvider,
@@ -314,7 +324,7 @@ export {
     getIntersectionPartAfter,
     fireDrillEvent,
 } from "./vis/drilling.js";
-export { createExportFunction, createExportErrorFunction } from "./vis/export.js";
+export { createExportFunction, createExportRawFunction, createExportErrorFunction } from "./vis/export.js";
 export type {
     VisualizationEnvironment,
     ChartType,

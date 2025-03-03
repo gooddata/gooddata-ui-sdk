@@ -1,10 +1,9 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import React, { useCallback, useRef, useState } from "react";
-import { IntlShape, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 import cx from "classnames";
 import { IAutomationMetadataObject, IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
-import { ClientFormatterFacade, ISeparators } from "@gooddata/number-formatter";
 import { Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
@@ -17,11 +16,7 @@ import {
     useDashboardSelector,
 } from "../../../../model/index.js";
 import { useAlertValidation } from "../../../widget/insight/configuration/InsightAlertConfig/hooks/useAlertValidation.js";
-import {
-    getAlertThreshold,
-    getOperatorTitle,
-    getValueSuffix,
-} from "../../../widget/insight/configuration/InsightAlertConfig/utils/getters.js";
+import { getSubtitle } from "../../../widget/insight/configuration/InsightAlertConfig/utils/getters.js";
 
 import { AlertDropdown } from "./AlertDropdown.js";
 
@@ -165,19 +160,3 @@ export const Alert: React.FC<IAlertProps> = (props) => {
         </div>
     );
 };
-
-function getSubtitle(
-    intl: IntlShape,
-    widgetName: string,
-    alert: IAutomationMetadataObject,
-    separators?: ISeparators,
-): string {
-    const valueSuffix = getValueSuffix(alert.alert) ?? "";
-    const threshold = getAlertThreshold(alert.alert);
-    const convertedValue = ClientFormatterFacade.convertValue(threshold);
-    const { formattedValue } = ClientFormatterFacade.formatValue(convertedValue, undefined, separators);
-
-    return [`${getOperatorTitle(intl, alert.alert)} ${formattedValue}${valueSuffix}`, widgetName]
-        .filter(Boolean)
-        .join(" • ");
-}

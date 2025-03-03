@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2025-2-17
+Date generated: 2025-3-3
 
-Revision ID: d09808f499e16ce046783e34ec9878a1c6347343
+Revision ID: fca4393b34913f3071eb42d47a81594a71c04ce5
 
 ================================================================================
 ================================================================================
@@ -25,7 +25,7 @@ Revision ID: d09808f499e16ce046783e34ec9878a1c6347343
 ================================================================================
 
 - @aaronhayes/react-use-hubspot-form (2.1.1) [MIT]
-- @ag-grid-community/all-modules (27.3.0) [Multi-license: GPL-2.0-only OR MIT, MIT, ISC, OFL-1.1, BSD-3-Clause, Apache-2.0, Multi-license: Apache-2.0 OR GPL-2.0-only]
+- @ag-grid-community/all-modules (27.3.0) [MIT, Multi-license: GPL-2.0-only OR MIT, Multi-license: Apache-2.0 OR GPL-2.0-only, ISC, OFL-1.1, BSD-3-Clause, Apache-2.0]
 - @ag-grid-community/client-side-row-model (27.3.0) [MIT]
 - @ag-grid-community/core (27.3.0) [MIT, ISC]
 - @ag-grid-community/csv-export (27.3.0) [MIT]
@@ -209,7 +209,7 @@ Revision ID: d09808f499e16ce046783e34ec9878a1c6347343
 - @tanstack/react-virtual (3.11.1) [MIT]
 - @tanstack/virtual-core (3.10.9) [MIT]
 - @tootallnate/once (2.0.0) [MIT]
-- @ts-morph/common (0.12.3) [Apache-2.0, MIT]
+- @ts-morph/common (0.12.3) [MIT, Apache-2.0]
 - @types/body-parser (1.19.5) [MIT]
 - @types/bonjour (3.5.13) [MIT]
 - @types/connect (3.4.38) [MIT]
@@ -266,7 +266,7 @@ Revision ID: d09808f499e16ce046783e34ec9878a1c6347343
 - @webassemblyjs/helper-wasm-bytecode (1.11.6) [MIT]
 - @webassemblyjs/helper-wasm-section (1.11.6) [MIT]
 - @webassemblyjs/ieee754 (1.11.6) [MIT]
-- @webassemblyjs/leb128 (1.11.6) [MIT, Apache-2.0]
+- @webassemblyjs/leb128 (1.11.6) [Apache-2.0, MIT]
 - @webassemblyjs/utf8 (1.11.6) [MIT]
 - @webassemblyjs/wasm-edit (1.11.6) [MIT]
 - @webassemblyjs/wasm-gen (1.11.6) [MIT]
@@ -285,8 +285,8 @@ Revision ID: d09808f499e16ce046783e34ec9878a1c6347343
 - acorn-walk (8.3.1) [MIT]
 - agent-base (6.0.2) [MIT]
 - aggregate-error (3.1.0) [MIT]
-- ajv (6.12.6) [BSD-2-Clause, MIT]
-- ajv (8.12.0) [BSD-2-Clause, MIT]
+- ajv (6.12.6) [MIT, BSD-2-Clause]
+- ajv (8.12.0) [MIT, BSD-2-Clause]
 - ajv-formats (2.1.1) [MIT]
 - ajv-keywords (3.5.2) [MIT]
 - ajv-keywords (5.1.0) [MIT]
@@ -467,7 +467,7 @@ Revision ID: d09808f499e16ce046783e34ec9878a1c6347343
 - finalhandler (1.2.0) [MIT]
 - find-root (1.1.0) [MIT]
 - find-up (4.1.0) [MIT]
-- fixed-data-table-2 (1.2.22) [facebook-patent-rights-2, BSD-3-Clause]
+- fixed-data-table-2 (1.2.22) [BSD-3-Clause, facebook-patent-rights-2]
 - flat (5.0.2) [BSD-3-Clause]
 - follow-redirects (1.15.3) [MIT]
 - for-each (0.3.3) [MIT]
@@ -510,7 +510,7 @@ Revision ID: d09808f499e16ce046783e34ec9878a1c6347343
 - hasown (2.0.0) [MIT]
 - hast-util-to-jsx-runtime (2.3.0) [MIT]
 - hast-util-whitespace (3.0.0) [MIT]
-- highcharts (9.3.0) [MIT, BSD-3-Clause]
+- highcharts (12.1.2) [MIT, BSD-3-Clause]
 - highcharts-react-official (3.2.1) [MIT]
 - hoist-non-react-statics (3.3.2) [BSD-3-Clause]
 - hpack.js (2.1.6) [MIT]
@@ -689,7 +689,7 @@ Revision ID: d09808f499e16ce046783e34ec9878a1c6347343
 - nanoid (3.3.7) [MIT]
 - negotiator (0.6.3) [MIT]
 - neo-async (2.6.2) [MIT]
-- node-forge (1.3.1) [Multi-license: GPL-2.0-only OR BSD-3-Clause, public-domain, MIT, BSD-3-Clause]
+- node-forge (1.3.1) [Multi-license: GPL-2.0-only OR BSD-3-Clause, BSD-3-Clause, public-domain, MIT]
 - node-releases (2.0.18) [MIT]
 - normalize-path (3.0.0) [MIT]
 - npm-run-path (4.0.1) [MIT]
@@ -734,7 +734,7 @@ Revision ID: d09808f499e16ce046783e34ec9878a1c6347343
 - path-type (4.0.0) [MIT]
 - pathe (1.1.1) [MIT]
 - pathval (1.1.1) [MIT]
-- pbf (3.2.1) [MIT, BSD-3-Clause]
+- pbf (3.2.1) [BSD-3-Clause, MIT]
 - picocolors (1.0.0) [ISC]
 - picocolors (1.1.1) [ISC]
 - picomatch (2.3.1) [MIT]
@@ -750,7 +750,7 @@ Revision ID: d09808f499e16ce046783e34ec9878a1c6347343
 - process-nextick-args (2.0.1) [MIT]
 - prompts (2.4.2) [MIT]
 - prop-types (15.8.1) [MIT]
-- property-information (6.4.0) [BSD-3-Clause-Clear, MIT]
+- property-information (6.4.0) [MIT, BSD-3-Clause-Clear]
 - protocol-buffers-schema (3.6.0) [MIT]
 - proxy-addr (2.0.7) [MIT]
 - proxy-from-env (1.1.0) [MIT]
@@ -764,9 +764,9 @@ Revision ID: d09808f499e16ce046783e34ec9878a1c6347343
 - range-parser (1.2.1) [MIT]
 - raw-body (2.5.1) [MIT]
 - react (18.2.0) [MIT]
-- react-content-loader (6.2.1) [Apache-2.0, MIT]
+- react-content-loader (6.2.1) [MIT, Apache-2.0]
 - react-day-picker (8.9.1) [MIT]
-- react-dnd (14.0.5) [BSD-3-Clause, MIT]
+- react-dnd (14.0.5) [MIT, BSD-3-Clause]
 - react-dnd-html5-backend (14.1.0) [MIT]
 - react-dom (18.2.0) [MIT]
 - react-fast-compare (3.2.2) [MIT]
@@ -781,7 +781,7 @@ Revision ID: d09808f499e16ce046783e34ec9878a1c6347343
 - react-loading-skeleton (3.4.0) [MIT]
 - react-markdown (9.0.1) [MIT]
 - react-measure (2.5.2) [MIT]
-- react-native-listener (1.1.0) [Apache-2.0, MIT]
+- react-native-listener (1.1.0) [MIT, Apache-2.0]
 - react-portal (4.2.2) [MIT]
 - react-redux (7.2.9) [MIT]
 - react-responsive (8.2.0) [MIT, BSD-3-Clause]
@@ -820,7 +820,7 @@ Revision ID: d09808f499e16ce046783e34ec9878a1c6347343
 - retry (0.13.1) [MIT]
 - reusify (1.0.4) [MIT]
 - rimraf (3.0.2) [ISC]
-- rollup (4.21.2) [MIT, Apache-2.0, ISC]
+- rollup (4.21.2) [MIT, ISC, Apache-2.0]
 - rrweb-cssom (0.6.0) [MIT]
 - run-async (2.4.1) [MIT]
 - run-parallel (1.2.0) [MIT]
@@ -869,7 +869,7 @@ Revision ID: d09808f499e16ce046783e34ec9878a1c6347343
 - spark-md5 (3.0.2) [Multi-license: MIT OR WTFPL]
 - spdy (4.0.2) [MIT]
 - spdy-transport (3.0.0) [MIT]
-- stackback (0.0.2) [BSD-3-Clause, MIT]
+- stackback (0.0.2) [MIT, BSD-3-Clause]
 - statuses (1.5.0) [MIT]
 - statuses (2.0.1) [MIT]
 - std-env (3.6.0) [MIT]
@@ -1042,21 +1042,7 @@ Package Depth: Direct
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
-Multi-license: GPL-2.0-only OR MIT
-
-
-jQuery UI Datepicker 1.8.24
-
-Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
-Dual licensed under the MIT or GPL Version 2 licenses.
-http://jquery.org/license
-
-http://docs.jquery.com/UI/Datepicker
-
-
-
-* Other Licenses *
-MIT, ISC, OFL-1.1, BSD-3-Clause, Apache-2.0, Multi-license: Apache-2.0 OR GPL-2.0-only
+MIT, Multi-license: GPL-2.0-only OR MIT, Multi-license: Apache-2.0 OR GPL-2.0-only
 
 * MIT *
 
@@ -1105,6 +1091,43 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+
+* Multi-license: GPL-2.0-only OR MIT *
+
+jQuery UI Datepicker 1.8.24
+
+Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)
+Dual licensed under the MIT or GPL Version 2 licenses.
+http://jquery.org/license
+
+http://docs.jquery.com/UI/Datepicker
+
+
+* Multi-license: Apache-2.0 OR GPL-2.0-only *
+
+Copyright 2012 Igor Vaynberg
+
+Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
+
+This software is licensed under the Apache License, Version 2.0 (the "Apache License") or the GNU
+General Public License version 2 (the "GPL License"). You may choose either license to govern your
+use of this software only upon the condition that you accept all of the terms of either the Apache
+License or the GPL License.
+
+You may obtain a copy of the Apache License and the GPL License at:
+
+http://www.apache.org/licenses/LICENSE-2.0
+http://www.gnu.org/licenses/gpl-2.0.html
+
+Unless required by applicable law or agreed to in writing, software distributed under the
+Apache License or the GPL Licesnse is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+CONDITIONS OF ANY KIND, either express or implied. See the Apache License and the GPL License for
+the specific language governing permissions and limitations under the Apache License and the GPL License.
+
+
+
+* Other Licenses *
+ISC, OFL-1.1, BSD-3-Clause, Apache-2.0
 
 * ISC *
 
@@ -1161,28 +1184,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 @version v6.0.4
 @link https://docs.atlassian.com/aui/latest/
 @license Apache-2.0
-
-
-* Multi-license: Apache-2.0 OR GPL-2.0-only *
-
-Copyright 2012 Igor Vaynberg
-
-Version: 3.4.5 Timestamp: Mon Nov  4 08:22:42 PST 2013
-
-This software is licensed under the Apache License, Version 2.0 (the "Apache License") or the GNU
-General Public License version 2 (the "GPL License"). You may choose either license to govern your
-use of this software only upon the condition that you accept all of the terms of either the Apache
-License or the GPL License.
-
-You may obtain a copy of the Apache License and the GPL License at:
-
-http://www.apache.org/licenses/LICENSE-2.0
-http://www.gnu.org/licenses/gpl-2.0.html
-
-Unless required by applicable law or agreed to in writing, software distributed under the
-Apache License or the GPL Licesnse is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-CONDITIONS OF ANY KIND, either express or implied. See the Apache License and the GPL License for
-the specific language governing permissions and limitations under the Apache License and the GPL License.
 
 
 
@@ -8015,27 +8016,9 @@ Package Locator: npm+@ts-morph/common$0.12.3
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
+* Declared Licenses *
+MIT
 
-
-* Other Licenses *
-Apache-2.0, MIT
-
-* Apache-2.0 *
-
-Copyright (c) Microsoft Corporation. All rights reserved.
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-this file except in compliance with the License. You may obtain a copy of the
-License at http://www.apache.org/licenses/LICENSE-2.0
-
-THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-MERCHANTABLITY OR NON-INFRINGEMENT.
-
-See the Apache Version 2.0 License for specific language governing permissions
-and limitations under the License.
-
-* MIT *
 
 The MIT License (MIT)
 
@@ -8059,6 +8042,24 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+
+
+* Other Licenses *
+Apache-2.0
+
+
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
 
 
 --------------------------------------------------------------------------------
@@ -10073,12 +10074,31 @@ Package Locator: npm+@webassemblyjs/leb128$1.11.6
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
+* Declared Licenses *
+Apache-2.0
+
+
+Copyright 2012 The Obvious Corporation.
+http://obvious.com/
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
 
 
 * Other Licenses *
-MIT, Apache-2.0
+MIT
 
-* MIT *
 
 MIT License
 
@@ -10101,25 +10121,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-
-* Apache-2.0 *
-
-Copyright 2012 The Obvious Corporation.
-http://obvious.com/
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
 
 
 
@@ -10919,12 +10920,38 @@ Package Locator: npm+ajv$6.12.6
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
+* Declared Licenses *
+MIT
+
+
+The MIT License (MIT)
+
+Copyright (c) 2015-2017 Evgeny Poberezkin
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
 
 
 * Other Licenses *
-BSD-2-Clause, MIT
+BSD-2-Clause
 
-* BSD-2-Clause *
 
 * Copyright 2011 Gary Court. All rights reserved.
  *
@@ -10951,32 +10978,6 @@ BSD-2-Clause, MIT
  * The views and conclusions contained in the software and documentation are those of the
  * authors and should not be interpreted as representing official policies, either expressed
  * or implied, of Gary Court.
-
-* MIT *
-
-The MIT License (MIT)
-
-Copyright (c) 2015-2017 Evgeny Poberezkin
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
 
 
 --------------------------------------------------------------------------------
@@ -10987,12 +10988,38 @@ Package Locator: npm+ajv$8.12.0
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
+* Declared Licenses *
+MIT
+
+
+The MIT License (MIT)
+
+Copyright (c) 2015-2017 Evgeny Poberezkin
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
 
 
 * Other Licenses *
-BSD-2-Clause, MIT
+BSD-2-Clause
 
-* BSD-2-Clause *
 
 * Copyright 2011 Gary Court. All rights reserved.
  *
@@ -11019,32 +11046,6 @@ BSD-2-Clause, MIT
  * The views and conclusions contained in the software and documentation are those of the
  * authors and should not be interpreted as representing official policies, either expressed
  * or implied, of Gary Court.
-
-* MIT *
-
-The MIT License (MIT)
-
-Copyright (c) 2015-2017 Evgeny Poberezkin
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
 
 
 --------------------------------------------------------------------------------
@@ -18156,12 +18157,77 @@ Package Locator: npm+fixed-data-table-2$1.2.22
 Package Depth: Direct
 --------------------------------------------------------------------------------
 
+* Declared Licenses *
+BSD-3-Clause
+
+
+BSD License
+
+For FixedDataTable software
+
+Copyright (c) 2016, Schrodinger, Inc. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+ * Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+ * Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+ * Neither the name Schrodinger nor the names of its contributors may be used to
+   endorse or promote products derived from this software without specific
+   prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+BSD License
+
+For FixedDataTable software
+
+Copyright (c) 2015, Facebook, Inc. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+
+ * Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+ * Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+ * Neither the name Facebook nor the names of its contributors may be used to
+   endorse or promote products derived from this software without specific
+   prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 
 
 * Other Licenses *
-facebook-patent-rights-2, BSD-3-Clause
+facebook-patent-rights-2
 
-* facebook-patent-rights-2 *
 
 Additional Grant of Patent Rights Version 2
 
@@ -18230,71 +18296,6 @@ necessarily infringed by the Software standing alone.
 A "Patent Assertion" is any lawsuit or other action alleging direct, indirect,
 or contributory infringement or inducement to infringe any patent, including a
 cross-claim or counterclaim.
-
-
-* BSD-3-Clause *
-
-BSD License
-
-For FixedDataTable software
-
-Copyright (c) 2016, Schrodinger, Inc. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
- * Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
-
- * Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
-
- * Neither the name Schrodinger nor the names of its contributors may be used to
-   endorse or promote products derived from this software without specific
-   prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-BSD License
-
-For FixedDataTable software
-
-Copyright (c) 2015, Facebook, Inc. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-
- * Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
-
- * Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
-
- * Neither the name Facebook nor the names of its contributors may be used to
-   endorse or promote products derived from this software without specific
-   prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
@@ -18656,9 +18657,7 @@ Package Locator: npm+fs.realpath$1.0.0
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
-
-
-* Other Licenses *
+* Declared Licenses *
 MIT, ISC
 
 * MIT *
@@ -19699,9 +19698,9 @@ SOFTWARE.
 
 
 --------------------------------------------------------------------------------
-Package Title: highcharts (9.3.0)
+Package Title: highcharts (12.1.2)
 
-Package Locator: npm+highcharts$9.3.0
+Package Locator: npm+highcharts$12.1.2
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -23953,9 +23952,7 @@ Package Locator: npm+lodash.debounce$4.0.8
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
-
-
-* Other Licenses *
+* Declared Licenses *
 CC0-1.0, MIT
 
 * CC0-1.0 *
@@ -24372,9 +24369,7 @@ Package Locator: npm+mapbox-gl$2.15.0
 Package Depth: Direct
 --------------------------------------------------------------------------------
 
-
-
-* Other Licenses *
+* Declared Licenses *
 BSD-3-Clause, MIT
 
 * BSD-3-Clause *
@@ -26753,10 +26748,8 @@ Package Locator: npm+node-forge$1.3.1
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
-
-
-* Other Licenses *
-Multi-license: GPL-2.0-only OR BSD-3-Clause, public-domain, MIT, BSD-3-Clause
+* Declared Licenses *
+Multi-license: GPL-2.0-only OR BSD-3-Clause, BSD-3-Clause
 
 * Multi-license: GPL-2.0-only OR BSD-3-Clause *
 
@@ -27093,6 +27086,56 @@ POSSIBILITY OF SUCH DAMAGES.
 
 
 
+* BSD-3-Clause *
+
+ * Partial implementation of PKCS#1 v2.2: RSA-OEAP
+ *
+ * Modified but based on the following MIT and BSD licensed code:
+ *
+ * https://github.com/kjur/jsjws/blob/master/rsa.js:
+ *
+ * The 'jsjws'(JSON Web Signature JavaScript Library) License
+ *
+ * Copyright (c) 2012 Kenji Urushima
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *
+ * http://webrsa.cvs.sourceforge.net/viewvc/webrsa/Client/RSAES-OAEP.js?content-type=text%2Fplain:
+ *
+ * RSAES-OAEP.js
+ * $Id: RSAES-OAEP.js,v 1.1.1.1 2003/03/19 15:37:20 ellispritchard Exp $
+ * JavaScript Implementation of PKCS #1 v2.1 RSA CRYPTOGRAPHY STANDARD (RSA Laboratories, June 14, 2002)
+ * Copyright (C) Ellis Pritchard, Guardian Unlimited 2003.
+ * Contact: ellis@nukinetics.com
+ * Distributed under the BSD License.
+ *
+ * Official documentation: http://www.rsa.com/rsalabs/node.asp?id=2125
+ *
+ * @author Evan Jones (http://evanjones.ca/)
+ * @author Dave Longley
+ *
+ * Copyright (c) 2013-2014 Digital Bazaar, Inc.
+
+
+* Other Licenses *
+public-domain, MIT
+
 * public-domain *
 
  * Advanced Encryption Standard (AES) implementation.
@@ -27154,52 +27197,6 @@ This software is covered under the following copyright:
  *
  * All redistributions must retain an intact copy of this copyright notice
  * and disclaimer.
-
-* BSD-3-Clause *
-
- * Partial implementation of PKCS#1 v2.2: RSA-OEAP
- *
- * Modified but based on the following MIT and BSD licensed code:
- *
- * https://github.com/kjur/jsjws/blob/master/rsa.js:
- *
- * The 'jsjws'(JSON Web Signature JavaScript Library) License
- *
- * Copyright (c) 2012 Kenji Urushima
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * http://webrsa.cvs.sourceforge.net/viewvc/webrsa/Client/RSAES-OAEP.js?content-type=text%2Fplain:
- *
- * RSAES-OAEP.js
- * $Id: RSAES-OAEP.js,v 1.1.1.1 2003/03/19 15:37:20 ellispritchard Exp $
- * JavaScript Implementation of PKCS #1 v2.1 RSA CRYPTOGRAPHY STANDARD (RSA Laboratories, June 14, 2002)
- * Copyright (C) Ellis Pritchard, Guardian Unlimited 2003.
- * Contact: ellis@nukinetics.com
- * Distributed under the BSD License.
- *
- * Official documentation: http://www.rsa.com/rsalabs/node.asp?id=2125
- *
- * @author Evan Jones (http://evanjones.ca/)
- * @author Dave Longley
- *
- * Copyright (c) 2013-2014 Digital Bazaar, Inc.
 
 
 --------------------------------------------------------------------------------
@@ -27784,9 +27781,7 @@ Package Locator: npm+opener$1.5.2
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
-
-
-* Other Licenses *
+* Declared Licenses *
 Multi-license: WTFPL OR MIT
 
 
@@ -28865,18 +28860,9 @@ Package Locator: npm+pbf$3.2.1
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
+* Declared Licenses *
+BSD-3-Clause
 
-
-* Other Licenses *
-MIT, BSD-3-Clause
-
-* MIT *
-
-// 64-bit int handling is based on github.com/dpw/node-buffer-more-ints (MIT-licensed)
-
-
-
-* BSD-3-Clause *
 
 Copyright (c) 2017, Mapbox
 All rights reserved.
@@ -28905,6 +28891,15 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+
+* Other Licenses *
+MIT
+
+
+// 64-bit int handling is based on github.com/dpw/node-buffer-more-ints (MIT-licensed)
+
 
 
 
@@ -29299,12 +29294,9 @@ Package Locator: npm+prettier$2.5.1
 Package Depth: Direct
 --------------------------------------------------------------------------------
 
+* Declared Licenses *
+MIT
 
-
-* Other Licenses *
-MIT, Apache-2.0, MPL-2.0
-
-* MIT *
 
 Copyright © James Long and contributors
 
@@ -29338,6 +29330,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
+
+
+* Other Licenses *
+Apache-2.0, MPL-2.0
 
 * Apache-2.0 *
 
@@ -29511,22 +29507,9 @@ Package Locator: npm+property-information$6.4.0
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
+* Declared Licenses *
+MIT
 
-
-* Other Licenses *
-BSD-3-Clause-Clear, MIT
-
-* BSD-3-Clause-Clear *
-
-Copyright (c) [xxxx]-[xxxx] [Owner Organization]
-All rights reserved.
-Redistribution and use in source and binary forms, with or without modification, are permitted (subject to the limitations in the disclaimer below) provided that the following conditions are met:
-      * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-      * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-      * Neither the name of [Owner Organization] nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-* MIT *
 
 
 ## License
@@ -29560,6 +29543,19 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+
+
+* Other Licenses *
+BSD-3-Clause-Clear
+
+
+Copyright (c) [xxxx]-[xxxx] [Owner Organization]
+All rights reserved.
+Redistribution and use in source and binary forms, with or without modification, are permitted (subject to the limitations in the disclaimer below) provided that the following conditions are met:
+      * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+      * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+      * Neither the name of [Owner Organization] nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 --------------------------------------------------------------------------------
@@ -30029,27 +30025,9 @@ Package Locator: npm+react-content-loader$6.2.1
 Package Depth: Direct
 --------------------------------------------------------------------------------
 
+* Declared Licenses *
+MIT
 
-
-* Other Licenses *
-Apache-2.0, MIT
-
-* Apache-2.0 *
-
-Copyright (c) Microsoft Corporation. All rights reserved.
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-this file except in compliance with the License. You may obtain a copy of the
-License at http://www.apache.org/licenses/LICENSE-2.0
-
-THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-MERCHANTABLITY OR NON-INFRINGEMENT.
-
-See the Apache Version 2.0 License for specific language governing permissions
-and limitations under the License.
-
-* MIT *
 
 The MIT License (MIT)
 
@@ -30074,6 +30052,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
+* Other Licenses *
+Apache-2.0
+
+
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+
+
 --------------------------------------------------------------------------------
 Package Title: react-day-picker (8.9.1)
 
@@ -30082,9 +30078,7 @@ Package Locator: npm+react-day-picker$8.9.1
 Package Depth: Direct
 --------------------------------------------------------------------------------
 
-
-
-* Other Licenses *
+* Declared Licenses *
 MIT, MIT
 
 * MIT *
@@ -30148,16 +30142,9 @@ Package Locator: npm+react-dnd$14.0.5
 Package Depth: Direct
 --------------------------------------------------------------------------------
 
+* Declared Licenses *
+MIT
 
-
-* Other Licenses *
-BSD-3-Clause, MIT
-
-* BSD-3-Clause *
-
-Copyright 2015, Yahoo! Inc.\n * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms
-
-* MIT *
 
 The MIT License (MIT)
 
@@ -30183,6 +30170,13 @@ SOFTWARE.
 
 ---------------------
 Copyright (c) 2013-present, Facebook, Inc.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE file in the root directory of this source tree.
+
+
+* Other Licenses *
+BSD-3-Clause
+
+
+Copyright 2015, Yahoo! Inc.\n * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms
 
 
 --------------------------------------------------------------------------------
@@ -30684,28 +30678,9 @@ Package Locator: npm+react-native-listener$1.1.0
 Package Depth: Direct
 --------------------------------------------------------------------------------
 
+* Declared Licenses *
+MIT
 
-
-* Other Licenses *
-Apache-2.0, MIT
-
-* Apache-2.0 *
-
-Copyright (c) 2013-present, Facebook, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
-
-* MIT *
 
 Copyright (c) 2015 Erik Rasmussen
 
@@ -30730,6 +30705,25 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
+
+
+* Other Licenses *
+Apache-2.0
+
+
+Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
 
 
 --------------------------------------------------------------------------------
@@ -30812,12 +30806,9 @@ Package Locator: npm+react-responsive$8.2.0
 Package Depth: Direct
 --------------------------------------------------------------------------------
 
+* Declared Licenses *
+MIT
 
-
-* Other Licenses *
-MIT, BSD-3-Clause
-
-* MIT *
 
 Copyright (c) 2020 Contra <yo@contra.io>
 
@@ -30840,7 +30831,10 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-* BSD-3-Clause *
+
+* Other Licenses *
+BSD-3-Clause
+
 
 Copyright (c) <year> <owner> . All rights reserved.
 
@@ -32168,10 +32162,8 @@ Package Locator: npm+rollup$4.21.2
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
-
-
-* Other Licenses *
-MIT, Apache-2.0, ISC
+* Declared Licenses *
+MIT, ISC
 
 * MIT *
 
@@ -32754,7 +32746,17 @@ Repository: jorgebucaran/turbocolor
 > OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 > SOFTWARE.
 
-* Apache-2.0 *
+* ISC *
+
+Copyright (c) 2004-2010 by Internet Systems Consortium, Inc. ("ISC")
+Copyright (c) 1995-2003 by Internet Software Consortium
+Permission to use, copy, modify, and distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+
+* Other Licenses *
+Apache-2.0
+
 
 Copyright [yyyy] [name of copyright owner]
 
@@ -32769,13 +32771,6 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 
 See the License for the specific language governing permissions and limitations under the License.
-
-* ISC *
-
-Copyright (c) 2004-2010 by Internet Systems Consortium, Inc. ("ISC")
-Copyright (c) 1995-2003 by Internet Software Consortium
-Permission to use, copy, modify, and distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
-THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
 --------------------------------------------------------------------------------
@@ -32933,12 +32928,9 @@ Package Locator: npm+rxjs$7.8.1
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
+* Declared Licenses *
+Apache-2.0
 
-
-* Other Licenses *
-Apache-2.0, ISC
-
-* Apache-2.0 *
 
  Copyright (c) 2015-2018 Google, Inc., Netflix, Inc., Microsoft Corp. and contributors
 
@@ -32967,7 +32959,10 @@ Apache-2.0, ISC
     See the Apache Version 2.0 License for specific language governing permissions
     and limitations under the License.
 
-* ISC *
+
+* Other Licenses *
+ISC
+
 
    /*! *****************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -33101,10 +33096,8 @@ Package Locator: npm+sass$1.69.5
 Package Depth: Direct
 --------------------------------------------------------------------------------
 
-
-
-* Other Licenses *
-MIT, BSD-3-Clause, Apache-2.0, Zlib, bzip2-1.0.6
+* Declared Licenses *
+MIT, BSD-3-Clause, Apache-2.0
 
 * MIT *
 
@@ -34573,6 +34566,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 
 See the License for the specific language governing permissions and limitations under the License.
 
+
+* Other Licenses *
+Zlib, bzip2-1.0.6
+
 * Zlib *
 
 This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
@@ -34601,9 +34598,7 @@ Package Locator: npm+saxes$6.0.0
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
-
-
-* Other Licenses *
+* Declared Licenses *
 ISC, ISC
 
 * ISC *
@@ -35931,9 +35926,7 @@ Package Locator: npm+spark-md5$3.0.2
 Package Depth: Direct
 --------------------------------------------------------------------------------
 
-
-
-* Other Licenses *
+* Declared Licenses *
 Multi-license: MIT OR WTFPL
 
 
@@ -36014,12 +36007,17 @@ Package Locator: npm+stackback$0.0.2
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
+* Declared Licenses *
+MIT
+
+
+"author": "Roman Shtylman <shtylman@gmail.com>",
+  "license": "MIT"
 
 
 * Other Licenses *
-BSD-3-Clause, MIT
+BSD-3-Clause
 
-* BSD-3-Clause *
 
 // Copyright 2012 the V8 project authors. All rights reserved.
 // Redistribution and use in source and binary forms, with or without
@@ -36047,11 +36045,6 @@ BSD-3-Clause, MIT
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-* MIT *
-
-"author": "Roman Shtylman <shtylman@gmail.com>",
-  "license": "MIT"
 
 
 --------------------------------------------------------------------------------
@@ -37050,9 +37043,7 @@ Package Locator: npm+through$2.3.8
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
-
-
-* Other Licenses *
+* Declared Licenses *
 Multi-license: Apache-2.0 OR MIT
 
 
@@ -37783,9 +37774,7 @@ Package Locator: npm+type-fest$0.21.3
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
-
-
-* Other Licenses *
+* Declared Licenses *
 Multi-license: MIT OR CC0-1.0
 
 
@@ -37852,12 +37841,9 @@ Package Locator: npm+typescript$5.3.3
 Package Depth: Direct
 --------------------------------------------------------------------------------
 
+* Declared Licenses *
+Apache-2.0
 
-
-* Other Licenses *
-Apache-2.0, MIT, Unicode-DFS-2020, CC-BY-4.0, BSD-3-Clause, W3C-20150513, CC-BY-4.0
-
-* Apache-2.0 *
 
 Copyright (c) Microsoft Corporation. All rights reserved. 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
@@ -38066,6 +38052,10 @@ MATERIALS OR THE USE OR OTHER DEALINGS IN THE MATERIALS.
 ------------- End of ThirdPartyNotices ------------------------------------------- */
 
 
+
+
+* Other Licenses *
+MIT, Unicode-DFS-2020, CC-BY-4.0, BSD-3-Clause, W3C-20150513, CC-BY-4.0
 
 * MIT *
 
@@ -39288,12 +39278,9 @@ Package Locator: npm+uuid$8.3.2
 Package Depth: Direct
 --------------------------------------------------------------------------------
 
+* Declared Licenses *
+MIT
 
-
-* Other Licenses *
-MIT, BSD-3-Clause
-
-* MIT *
 
 The MIT License (MIT)
 
@@ -39318,7 +39305,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-* BSD-3-Clause *
+
+* Other Licenses *
+BSD-3-Clause
+
 
  * Browser-compatible JavaScript MD5
  *
@@ -39470,9 +39460,7 @@ Package Locator: npm+vite$5.4.3
 Package Depth: Direct
 --------------------------------------------------------------------------------
 
-
-
-* Other Licenses *
+* Declared Licenses *
 MIT, ISC, CC0-1.0, BSD-2-Clause, Apache-2.0
 
 * MIT *
@@ -47337,9 +47325,7 @@ Package Locator: npm+vitest$1.0.4
 Package Depth: Direct
 --------------------------------------------------------------------------------
 
-
-
-* Other Licenses *
+* Declared Licenses *
 MIT, ISC, BSD-3-Clause, Apache-2.0
 
 * MIT *
@@ -50398,9 +50384,7 @@ Package Locator: npm+vt-pbf$3.1.3
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
-
-
-* Other Licenses *
+* Declared Licenses *
 MIT, BSD-3-Clause
 
 * MIT *
@@ -72660,4 +72644,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2025-2-17
+Report Generated by FOSSA on 2025-3-3

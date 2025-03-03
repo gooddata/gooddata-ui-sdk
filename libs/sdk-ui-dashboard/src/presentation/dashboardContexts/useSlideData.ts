@@ -44,6 +44,7 @@ export function useSlideSizeStyle(
             ...(parentLayoutPath && parentLayoutPath.length > 0
                 ? {
                       gridTemplateRows: "max-content",
+                      height: "100%",
                   }
                 : {}),
         };

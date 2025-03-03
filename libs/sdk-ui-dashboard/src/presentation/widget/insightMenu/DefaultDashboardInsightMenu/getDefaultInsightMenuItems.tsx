@@ -1,10 +1,11 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { IntlShape } from "react-intl";
 import compact from "lodash/compact.js";
 
-import { IInsightMenuItem } from "../types.js";
+import { IInsightMenuItem, IInsightMenuSubmenuComponentProps } from "../types.js";
 import { InsightAlerts } from "../../insight/configuration/InsightAlerts.js";
+import { ExportOptions } from "../../insight/configuration/ExportOptions.js";
 
 /**
  * @internal
@@ -24,13 +25,20 @@ export function getDefaultInsightMenuItems(
     config: {
         exportXLSXDisabled: boolean;
         exportCSVDisabled: boolean;
+        exportCSVRawDisabled: boolean;
+        isExporting: boolean;
         scheduleExportDisabled: boolean;
         scheduleExportDisabledReason?: SchedulingDisabledReason;
         scheduleExportManagementDisabled: boolean;
         onExportXLSX: () => void;
         onExportCSV: () => void;
+        onExportRawCSV: () => void;
         onScheduleExport: () => void;
         onScheduleManagementExport: () => void;
+        onExportPowerPointPresentation: () => void;
+        onExportPdfPresentation: () => void;
+        isExportRawVisible: boolean;
+        isExportVisible: boolean;
         isScheduleExportVisible: boolean;
         isScheduleExportManagementVisible: boolean;
         isDataError: boolean;
@@ -43,13 +51,18 @@ export function getDefaultInsightMenuItems(
     const {
         exportCSVDisabled,
         exportXLSXDisabled,
+        exportCSVRawDisabled,
+        isExporting,
         scheduleExportDisabled,
         scheduleExportDisabledReason,
         scheduleExportManagementDisabled,
         onExportCSV,
+        onExportRawCSV,
         onExportXLSX,
         onScheduleExport,
         onScheduleManagementExport,
+        onExportPowerPointPresentation,
+        onExportPdfPresentation,
         isScheduleExportVisible,
         isScheduleExportManagementVisible,
         isDataError,
@@ -57,6 +70,8 @@ export function getDefaultInsightMenuItems(
         alertingDisabled,
         alertingDisabledReason,
         canCreateAutomation,
+        isExportRawVisible,
+        isExportVisible,
     } = config;
 
     const defaultWidgetTooltip = isDataError
@@ -87,13 +102,44 @@ export function getDefaultInsightMenuItems(
             ),
         },
     );
+    const exportDisabledTooltip = intl.formatMessage({
+        id: "options.menu.export.in.progress",
+    });
+
+    const WrappedExportOptions = (props: IInsightMenuSubmenuComponentProps) => {
+        return (
+            <ExportOptions
+                {...props}
+                exportCsvDisabled={exportCSVDisabled}
+                exportXLSVDisabled={exportXLSXDisabled}
+                exportCSVRawDisabled={exportCSVRawDisabled}
+                isExportVisible={isExportVisible}
+                isExportRawVisible={isExportRawVisible}
+                onExportCSV={onExportCSV}
+                onExportRawCSV={onExportRawCSV}
+                onExportXLSX={onExportXLSX}
+                onExportPowerPointPresentation={onExportPowerPointPresentation}
+                onExportPdfPresentation={onExportPdfPresentation}
+            />
+        );
+    };
 
     const isSomeScheduleVisible =
         (isScheduleExportVisible && !scheduleExportDisabled) ||
         (isScheduleExportManagementVisible && !scheduleExportManagementDisabled);
 
     const menuItems: (false | IInsightMenuItem)[] = [
-        {
+        (isExportRawVisible || isExportVisible) && {
+            type: "submenu",
+            itemId: "Exports",
+            itemName: intl.formatMessage({ id: "widget.options.menu.export" }),
+            icon: "gd-icon-download",
+            className: "s-options-menu-exports",
+            SubmenuComponent: WrappedExportOptions,
+            disabled: isExporting,
+            tooltip: exportDisabledTooltip,
+        },
+        !isExportRawVisible && {
             type: "button",
             itemId: "ExportXLSXBubble",
             itemName: intl.formatMessage({ id: "widget.options.menu.exportToXLSX" }),
@@ -103,7 +149,7 @@ export function getDefaultInsightMenuItems(
             icon: "gd-icon-download",
             className: "s-options-menu-export-xlsx",
         },
-        {
+        !isExportRawVisible && {
             type: "button",
             itemId: "ExportCSVBubble",
             itemName: intl.formatMessage({ id: "widget.options.menu.exportToCSV" }),

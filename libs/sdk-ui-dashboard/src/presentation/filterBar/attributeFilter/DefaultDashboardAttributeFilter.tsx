@@ -37,6 +37,7 @@ import {
     selectIsAttributeFilterDependentByLocalIdentifier,
     selectIsFilterFromCrossFilteringByLocalIdentifier,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     selectHasSomeExecutionResult,
     selectEnableCriticalContentPerformanceOptimizations,
     selectPreloadedAttributesWithReferences,
@@ -108,6 +109,9 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
     );
     const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
         selectEnableDuplicatedLabelValuesInAttributeFilter,
+    );
+    const enableImmediateAttributeFilterDisplayAsLabelMigration = useDashboardSelector(
+        selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     );
     const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
 
@@ -470,6 +474,9 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                 customIcon={visibilityIcon}
                 StatusBarComponent={CustomStatusBarComponent}
                 enableDuplicatedLabelValuesInAttributeFilter={enableDuplicatedLabelValuesInAttributeFilter}
+                enableImmediateAttributeFilterDisplayAsLabelMigration={
+                    enableImmediateAttributeFilterDisplayAsLabelMigration
+                }
                 withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE"}
             />
         </AttributeFilterParentFilteringProvider>

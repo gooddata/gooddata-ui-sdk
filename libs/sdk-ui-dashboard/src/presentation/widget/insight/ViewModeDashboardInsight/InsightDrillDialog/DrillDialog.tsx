@@ -19,10 +19,14 @@ export interface DrillDialogProps {
     exportAvailable: boolean;
     onExportXLSX: () => void;
     onExportCSV: () => void;
+    onExportCSVRaw: () => void;
     exportXLSXEnabled: boolean;
     exportCSVEnabled: boolean;
+    exportCSVRawEnabled: boolean;
     isLoading: boolean;
+    isExporting: boolean;
     enableDrillDescription: boolean;
+    isExportRawVisible: boolean;
 }
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cc tc", offset: { x: -20, y: 10 } }];
@@ -40,9 +44,13 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     exportAvailable,
     exportXLSXEnabled,
     exportCSVEnabled,
+    exportCSVRawEnabled,
     onExportCSV,
     onExportXLSX,
+    onExportCSVRaw,
     isLoading,
+    isExporting,
+    isExportRawVisible,
 }) => {
     const settings = useDashboardSelector(selectSettings);
     const canExport = useDashboardSelector(selectCanExportTabular);
@@ -99,9 +107,13 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
                         exportAvailable={exportAvailable}
                         exportXLSXEnabled={exportXLSXEnabled}
                         exportCSVEnabled={exportCSVEnabled}
+                        exportCSVRawEnabled={exportCSVRawEnabled}
                         onExportXLSX={onExportXLSX}
                         onExportCSV={onExportCSV}
+                        onExportCSVRaw={onExportCSVRaw}
                         isLoading={isLoading}
+                        isExporting={isExporting}
+                        isExportRawVisible={isExportRawVisible}
                     />
                 </div>
             ) : null}

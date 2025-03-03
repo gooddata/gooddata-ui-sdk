@@ -18,7 +18,7 @@ describe("Dependent filter", () => {
         Navigation.visit("dashboard/dashboard-dependent-filters");
     });
 
-    it("should test parent - child interaction in view mode", { tags: "pre-merge_isolated_tiger" }, () => {
+    it("should test parent - child interaction in view mode", { tags: "checklist_integrated_tiger" }, () => {
         table
             .waitLoaded()
             .getColumnValues(2)
@@ -109,7 +109,7 @@ describe("Dependent filter", () => {
         cityFilter.open().hasSubtitle("Hartford").hasFilterListSize(10).hasSelectedValueList(["Hartford"]);
     });
 
-    it("should test parent - child interaction in edit mode", { tags: "pre-merge_isolated_tiger" }, () => {
+    it("should test parent - child interaction in edit mode", { tags: "checklist_integrated_tiger" }, () => {
         topBar.enterEditMode().editButtonIsVisible(false);
 
         table

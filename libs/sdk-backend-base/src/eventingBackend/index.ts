@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { v4 as uuid } from "uuid";
 import {
@@ -24,8 +24,12 @@ import {
 } from "../decoratedBackend/execution.js";
 
 class WithExecutionEventing extends DecoratedPreparedExecution {
-    constructor(decorated: IPreparedExecution, private readonly callbacks: AnalyticalBackendCallbacks) {
-        super(decorated);
+    constructor(
+        decorated: IPreparedExecution,
+        private readonly callbacks: AnalyticalBackendCallbacks,
+        signal?: AbortSignal,
+    ) {
+        super(decorated, signal);
     }
 
     public execute = (): Promise<IExecutionResult> => {
@@ -48,8 +52,8 @@ class WithExecutionEventing extends DecoratedPreparedExecution {
             });
     };
 
-    protected createNew = (decorated: IPreparedExecution): IPreparedExecution => {
-        return new WithExecutionEventing(decorated, this.callbacks);
+    protected createNew = (decorated: IPreparedExecution, signal?: AbortSignal): IPreparedExecution => {
+        return new WithExecutionEventing(decorated, this.callbacks, signal);
     };
 }
 
@@ -236,7 +240,7 @@ export function withEventing(
         execution: (original) =>
             new DecoratedExecutionFactory(
                 original,
-                (execution) => new WithExecutionEventing(execution, callbacks),
+                (execution) => new WithExecutionEventing(execution, callbacks, execution.signal),
             ),
     });
 }

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -51,6 +51,7 @@ export const DashboardInsightMenuButton = (props: IDashboardInsightMenuButtonPro
             role="button"
             tabIndex={0}
             title={intl.formatMessage({ id: "widget.options.menu" })}
+            aria-label={intl.formatMessage({ id: "controlButtons.options.tooltip" })}
         >
             <div className={optionsIconClasses} />
         </div>

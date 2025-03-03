@@ -718,6 +718,14 @@ export const HubspotConversionTouchPointDialog: React_2.FC<IHubspotConversionTou
 export const Hyperlink: React_2.FC<IHyperlinkProps>;
 
 // @internal (undocumented)
+export interface IAccessibilityConfigBase {
+    // (undocumented)
+    ariaLabel?: React.AriaAttributes["aria-label"];
+    // (undocumented)
+    ariaLabelledBy?: React.AriaAttributes["aria-labelledby"];
+}
+
+// @internal (undocumented)
 export interface IAddButtonProps {
     // (undocumented)
     className?: string;
@@ -1052,7 +1060,7 @@ export interface IBucketItemDescriptors {
 // @internal (undocumented)
 export interface IButtonProps {
     // (undocumented)
-    ariaLabel?: string;
+    accessibilityConfig?: IAccessibilityConfigBase;
     // (undocumented)
     children?: ReactNode;
     // (undocumented)
@@ -1290,13 +1298,13 @@ export interface IDatePickerOwnProps {
     // (undocumented)
     alignPoints?: IAlignPoint[];
     // (undocumented)
+    ariaLabelledBy?: string;
+    // (undocumented)
     className?: string;
     // (undocumented)
     date?: Date;
     // (undocumented)
     dateFormat?: string;
-    // (undocumented)
-    id?: string;
     // (undocumented)
     locale?: string;
     // (undocumented)
@@ -1485,7 +1493,7 @@ export interface IDropdownBodyRenderProps {
 // @internal (undocumented)
 export interface IDropdownButtonProps {
     // (undocumented)
-    ariaLabel?: string;
+    accessibilityConfig?: IAccessibilityConfigBase;
     // (undocumented)
     children?: ReactNode;
     // (undocumented)
@@ -1638,6 +1646,8 @@ export interface IDropdownTagsProps {
 
 // @internal (undocumented)
 export interface IEditableLabelProps {
+    // (undocumented)
+    ariaLabel?: string;
     // (undocumented)
     autofocus?: boolean;
     // (undocumented)
@@ -3039,7 +3049,6 @@ export class Input extends React_2.PureComponent<InputPureProps, InputState> {
         onBlur: (...args: any[]) => void;
         onFocus: (...args: any[]) => void;
         placeholder: string;
-        ariaLabel: string;
         prefix: string;
         readonly: boolean;
         suffix: string;
@@ -3084,7 +3093,6 @@ export class InputPure extends React_2.PureComponent<InputPureProps> implements 
         onBlur: (...args: any[]) => void;
         onFocus: (...args: any[]) => void;
         placeholder: string;
-        ariaLabel: string;
         prefix: string;
         readonly: boolean;
         suffix: string;
@@ -3208,7 +3216,6 @@ export class InputWithNumberFormat extends React_2.PureComponent<InputWithNumber
         onBlur: (...args: any[]) => void;
         onFocus: (...args: any[]) => void;
         placeholder: string;
-        ariaLabel: string;
         prefix: string;
         readonly: boolean;
         suffix: string;
@@ -3562,6 +3569,10 @@ export interface IRichTextProps {
     emptyElement?: JSX.Element;
     // (undocumented)
     onChange?: (text: string) => void;
+    rawContent?: {
+        show: boolean;
+        dataAttributes?: Record<string, string>;
+    };
     // (undocumented)
     renderMode?: "view" | "edit";
     // (undocumented)
@@ -3923,6 +3934,8 @@ export interface ISingleSelectListItemProps {
     // (undocumented)
     info?: string | ReactNode;
     // (undocumented)
+    isMenu?: boolean;
+    // (undocumented)
     isSelected?: boolean;
     // (undocumented)
     onClick?: (e: React_2.MouseEvent<HTMLElement>) => void;
@@ -4184,9 +4197,9 @@ export interface ITextAreaWithSubmitState {
 // @internal (undocumented)
 export interface ITimepickerOwnProps {
     // (undocumented)
-    className?: string;
+    ariaLabelledBy?: string;
     // (undocumented)
-    id?: string;
+    className?: string;
     // (undocumented)
     locale?: string;
     // (undocumented)

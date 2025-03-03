@@ -30,16 +30,16 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
         onDateChange(newDate, !!selectedTime);
     };
 
-    const accessibilityValue = "schedule.start.time";
+    const accessibilityValue = "schedule-start-date-time-label";
 
     return (
         <div className="gd-recurrence-form-datetime s-recurrence-form-datetime gd-input-component">
-            <label htmlFor={accessibilityValue} className="gd-label">
+            <label id={accessibilityValue} className="gd-label">
                 {label}
             </label>
             <div className="gd-recurrence-form-datetime-inner">
                 <Datepicker
-                    id={accessibilityValue}
+                    ariaLabelledBy={accessibilityValue}
                     className="gd-recurrence-form-datetime-date s-recurrence-form-datetime-date"
                     date={date}
                     dateFormat={dateFormat}
@@ -49,7 +49,7 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
                     weekStart={weekStart}
                 />
                 <Timepicker
-                    id={accessibilityValue}
+                    ariaLabelledBy={accessibilityValue}
                     className="gd-recurrence-form-datetime-time s-recurrence-form-datetime-time"
                     maxVisibleItemsCount={MAX_VISIBLE_TIME_ITEMS_COUNT}
                     time={date}

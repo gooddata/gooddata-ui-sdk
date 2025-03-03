@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-execute",
-    "version": "10.21.0-alpha.46",
+    "version": "10.22.0-alpha.30",
     "title": "Execute",
     "description": "This example demonstrates using Execute component and build custom visualization.",
     "author": "GoodData",
@@ -46,7 +46,7 @@
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
         "default-import": "1.1.5",
-        "highcharts": "9.3.0",
+        "highcharts": "12.1.2",
         "highcharts-react-official": "3.2.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",

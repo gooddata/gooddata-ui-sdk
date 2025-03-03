@@ -151,6 +151,17 @@ export function getAlertMeasure(measures: AlertMetric[], alert?: IAutomationAler
 /**
  * @internal
  */
+export function getAlertMeasureFormat(alert?: IAutomationAlert): string | undefined {
+    const condition = alert?.condition;
+    if (condition?.type === "relative") {
+        return condition.measure.left.format ?? condition.measure.right.format ?? DEFAULT_MEASURE_FORMAT;
+    }
+    return condition?.left.format ?? DEFAULT_MEASURE_FORMAT;
+}
+
+/**
+ * @internal
+ */
 export function getAlertComparison(
     measure: AlertMetric | undefined,
     alert?: IAutomationAlert,
@@ -426,6 +437,21 @@ export function getDescription(
     const description = [name, title, `${formattedValue}${valueSuffix}`].filter(Boolean).join(" ");
 
     return description[0].toUpperCase() + description.slice(1);
+}
+
+export function getSubtitle(
+    intl: IntlShape,
+    widgetName: string,
+    alert: IAutomationMetadataObject,
+    separators?: ISeparators,
+): string {
+    const valueSuffix = getValueSuffix(alert.alert) ?? "";
+    const threshold = getAlertThreshold(alert.alert);
+    const formattedValue = formatValue(threshold, getAlertMeasureFormat(alert.alert), separators);
+
+    return [`${getOperatorTitle(intl, alert.alert)} ${formattedValue}${valueSuffix}`, widgetName]
+        .filter(Boolean)
+        .join(" • ");
 }
 
 function formatValue(value: string | number | undefined, format?: string, separators?: ISeparators) {

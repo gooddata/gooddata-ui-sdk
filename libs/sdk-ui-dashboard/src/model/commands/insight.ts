@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { IDashboardCommand } from "./base.js";
 import {
@@ -954,6 +954,110 @@ export function exportInsightWidget(
         payload: {
             config,
             ref,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link ExportRawInsightWidget} command.
+ * @alpha
+ */
+export interface ExportRawInsightWidgetPayload {
+    /**
+     * Reference to Insight Widget to export.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Reference to Insight title to export.
+     */
+    readonly filename: string;
+}
+
+/**
+ * @alpha
+ */
+export interface ExportRawInsightWidget extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW";
+    readonly payload: ExportRawInsightWidgetPayload;
+}
+/**
+ * Creates the ExportRawInsightWidget command. Dispatching this command will result in exporting of the widget to a CSV.
+ *
+ * @param insight - insight to export
+ * @param filename - filename of the exported file
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function exportRawInsightWidget(
+    ref: ObjRef,
+    filename: string,
+    correlationId?: string,
+): ExportRawInsightWidget {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW",
+        correlationId,
+        payload: {
+            ref,
+            filename,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link ExportRawInsightWidget} command.
+ * @alpha
+ */
+export interface ExportSlidesInsightWidgetPayload {
+    /**
+     * Reference to Insight to export.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Reference to Insight title to export.
+     */
+    readonly filename: string;
+
+    /**
+     * Type of export to perform.
+     */
+    readonly exportType: "pdf" | "pptx";
+}
+
+/**
+ * @alpha
+ */
+export interface ExportSlidesInsightWidget extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_SLIDES";
+    readonly payload: ExportSlidesInsightWidgetPayload;
+}
+/**
+ * Creates the ExportSlidesInsightWidget command. Dispatching this command will result in exporting of the widget to a slides type (pdf, pptx).
+ *
+ * @param ref - reference to the Insight to export
+ * @param filename - filename of the exported file
+ * @param exportType - type of export to perform
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function exportSlidesInsightWidget(
+    ref: ObjRef,
+    filename: string,
+    exportType: "pdf" | "pptx",
+    correlationId?: string,
+): ExportSlidesInsightWidget {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_SLIDES",
+        correlationId,
+        payload: {
+            ref,
+            filename,
+            exportType,
         },
     };
 }

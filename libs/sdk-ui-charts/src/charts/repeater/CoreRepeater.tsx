@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React, { useMemo, useEffect } from "react";
 import { WrappedComponentProps, injectIntl, useIntl } from "react-intl";
 import noop from "lodash/noop.js";
@@ -50,15 +50,23 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
         config = {},
         drillableItems = [],
         onDrill = noop,
+        afterRender = noop,
     } = props;
 
     const intl = useIntl();
 
+    const enableCancelling = props.config?.enableExecutionCancelling ?? false;
+
     const { result, error } = useCancelablePromise(
         {
-            promise: async () => {
+            enableAbortController: enableCancelling,
+            promise: async (signal) => {
                 const { offset, size } = getWindowSize(execution.definition.dimensions.length);
-                const executionResult = await execution.execute();
+                let effectiveExecution = execution;
+                if (enableCancelling) {
+                    effectiveExecution = execution.withSignal(signal);
+                }
+                const executionResult = await effectiveExecution.execute();
                 const dataWindow = await executionResult.readWindow(offset, size);
                 return DataViewFacade.for(dataWindow);
             },
@@ -74,7 +82,7 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
                 onError?.(convertError(error));
             },
         },
-        [execution.fingerprint()],
+        [execution.fingerprint(), enableCancelling],
     );
 
     const configWithColorPalette = useMemo<IChartConfig>(() => {
@@ -183,6 +191,7 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
             config={configWithColorPalette}
             onError={onError}
             onColumnResized={onColumnResized}
+            afterRender={afterRender}
         />
     );
 };

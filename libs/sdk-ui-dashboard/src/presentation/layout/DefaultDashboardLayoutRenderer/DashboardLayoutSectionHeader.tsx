@@ -33,7 +33,7 @@ export const DashboardLayoutSectionHeader: React.FC<IDashboardLayoutSectionHeade
     const { title, description, renderBeforeHeader, renderHeader, exportData } = props;
 
     return (
-        <div className="gd-fluid-layout-row-header s-fluid-layout-row-header">
+        <div className="gd-fluid-layout-row-header s-fluid-layout-row-header" {...exportData?.info}>
             {renderBeforeHeader}
             <div className="gd-fluid-layout-row-header-container">
                 {renderHeader ?? (

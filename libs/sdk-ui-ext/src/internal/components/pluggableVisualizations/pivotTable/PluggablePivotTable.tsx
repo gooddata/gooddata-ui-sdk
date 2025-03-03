@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     addIntersectionFiltersToInsight,
@@ -675,6 +675,7 @@ export function createPivotTableConfig(
 ): IPivotTableConfig {
     let tableConfig: IPivotTableConfig = {
         separators: config.separators,
+        enableExecutionCancelling: settings.enableExecutionCancelling ?? false,
     };
 
     const enableTableTotalRows = settings.enableTableTotalRows;

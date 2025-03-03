@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IDimension, IExecutionDefinition, INullableFilter, ISortItem, ObjRef } from "@gooddata/sdk-model";
 import {
@@ -92,6 +92,16 @@ export interface IUseInsightDataViewConfig {
      * workspace here, then the executor MUST be rendered within an existing WorkspaceContext.
      */
     workspace?: string;
+
+    /**
+     * Optionally enable real execution cancellation.
+     *
+     * This means that if the execution request is not yet finished and the execution changes,
+     * the request will be cancelled and the new execution will be started.
+     *
+     * Default: false
+     */
+    enableExecutionCancelling?: boolean;
 }
 
 /**
@@ -118,6 +128,7 @@ export function useInsightDataView(
         filters,
         window,
         executeByReference,
+        enableExecutionCancelling = false,
         onCancel,
         onError,
         onLoading,
@@ -161,6 +172,7 @@ export function useInsightDataView(
             window,
             backend,
             workspace,
+            enableExecutionCancelling,
             onCancel,
             onError,
             onLoading,

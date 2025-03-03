@@ -1,17 +1,19 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { DashboardMetaState, EmptyDashboardDescriptor } from "./metaState.js";
-import { IDashboard } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
+import { IDashboard } from "@gooddata/sdk-model";
+
+import { DashboardMetaState, EmptyDashboardDescriptor } from "./metaState.js";
 
 type MetaReducer<A extends Action> = CaseReducer<DashboardMetaState, A>;
 
 type SetMetaPayload = {
     dashboard?: IDashboard;
+    initialContent?: boolean;
 };
 const setMeta: MetaReducer<PayloadAction<SetMetaPayload>> = (state, action) => {
-    const { dashboard } = action.payload;
+    const { dashboard, initialContent } = action.payload;
 
     state.persistedDashboard = dashboard;
     state.descriptor = dashboard
@@ -28,6 +30,7 @@ const setMeta: MetaReducer<PayloadAction<SetMetaPayload>> = (state, action) => {
               disableFilterViews: dashboard.disableFilterViews,
           }
         : { ...EmptyDashboardDescriptor };
+    state.initialContent = initialContent;
 };
 
 const setDashboardTitle: MetaReducer<PayloadAction<string>> = (state, action) => {

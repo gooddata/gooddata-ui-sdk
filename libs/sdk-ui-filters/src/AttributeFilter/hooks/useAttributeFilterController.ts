@@ -98,6 +98,7 @@ export const useAttributeFilterController = (
         selectionMode = "multi",
         selectFirst = false,
         enableDuplicatedLabelValuesInAttributeFilter = true,
+        enableImmediateAttributeFilterDisplayAsLabelMigration = false,
         withoutApply = false,
     } = props;
 
@@ -191,6 +192,7 @@ export const useAttributeFilterController = (
         supportsShowingFilteredElements,
         supportsKeepingDependentFiltersSelection,
         enableDuplicatedLabelValuesInAttributeFilter,
+        enableImmediateAttributeFilterDisplayAsLabelMigration,
     );
 
     useSingleSelectModeHandler(handler, {
@@ -646,6 +648,7 @@ function useCallbacks(
     supportsShowingFilteredElements: boolean,
     supportsKeepingDependentFiltersSelection: boolean,
     enableDuplicatedLabelValuesInAttributeFilter: boolean,
+    enableImmediateAttributeFilterDisplayAsLabelMigration: boolean,
 ) {
     const {
         onApply: onApplyInputCallback,
@@ -813,6 +816,8 @@ function useCallbacks(
         }
     }, [handler, supportsKeepingDependentFiltersSelection, supportsShowingFilteredElements]);
 
+    useReportMigratedFilter(handler, onApply, enableImmediateAttributeFilterDisplayAsLabelMigration);
+
     return {
         onApply,
         onLoadNextElementsPage,
@@ -961,3 +966,40 @@ function replaceFilterDisplayForm(nextFilter: IAttributeFilter, primaryLabelRef:
         },
     };
 }
+
+// The hook detects if:
+// - filter uses non-primary label
+// - filter was created before "support duplicated label values" feature was introduced
+// - filter was migrated to use displayAsLabel by "loadAttributeSaga"
+// If all of the above applies, the provided callback (onApply of the filter) is called to propagate the
+// new filter state (filter label, displayAsLabel, and updated selection) is reported to the application
+// that uses the filter.
+const useReportMigratedFilter = (
+    handler: IMultiSelectAttributeFilterHandler,
+    onFilterMigrated: () => void,
+    enableImmediateAttributeFilterDisplayAsLabelMigration: boolean,
+) => {
+    const initialLabel = useRef(handler.getDisplayAsLabel());
+    const wasMigrationReported = useRef(false);
+    const initStatus = handler.getInitStatus();
+
+    if (
+        enableImmediateAttributeFilterDisplayAsLabelMigration &&
+        !wasMigrationReported.current &&
+        initStatus === "success" &&
+        !areObjRefsEqual(initialLabel.current, handler.getDisplayAsLabel()) &&
+        !areObjRefsEqual(filterObjRef(handler.getOriginalFilter()), filterObjRef(handler.getFilter()))
+    ) {
+        wasMigrationReported.current = true;
+        onFilterMigrated();
+
+        console.warn(
+            "AttributeFilter: Filter label migration reported to filter's parent app. Original filter label:",
+            filterObjRef(handler.getOriginalFilter()),
+            "new filter label:",
+            filterObjRef(handler.getFilter()),
+            "new filter displayAsLabel:",
+            handler.getDisplayAsLabel(),
+        );
+    }
+};

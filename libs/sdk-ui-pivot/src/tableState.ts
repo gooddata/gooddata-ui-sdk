@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ITotal } from "@gooddata/sdk-model";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { TableFacadeInitializer } from "./impl/tableFacadeInitializer.js";
@@ -14,6 +14,7 @@ export interface ICorePivotTableState {
     resized: boolean;
     tempExecution: IPreparedExecution;
     isLoading: boolean;
+    isFirstRender: boolean;
     error?: string;
 }
 

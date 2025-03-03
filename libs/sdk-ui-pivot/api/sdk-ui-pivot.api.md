@@ -188,6 +188,7 @@ export interface IPivotTableConfig {
     // @alpha
     columnHeadersPosition?: ColumnHeadersPosition;
     columnSizing?: IColumnSizing;
+    enableExecutionCancelling?: boolean;
     groupRows?: boolean;
     maxHeight?: number;
     // @alpha

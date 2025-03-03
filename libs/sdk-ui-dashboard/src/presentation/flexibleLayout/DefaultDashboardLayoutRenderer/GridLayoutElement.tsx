@@ -82,7 +82,6 @@ export const GridLayoutElement = forwardRef<HTMLDivElement, IGridLayoutElementPr
 
         return type === "section" ? (
             <section
-                role="section"
                 className={classNames}
                 style={sanitizedStyle}
                 onMouseLeave={onMouseLeave}

@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import {
@@ -195,6 +195,10 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                 onKeyDown={this.onKeyDown}
                 ref={this.dateRangePickerInputFrom}
                 placeholderDate={intl.formatMessage({ id: "filters.from" })}
+                accessibilityConfig={{
+                    dateAriaLabel: intl.formatMessage({ id: "filters.date.accessibility.label.from" }),
+                    timeAriaLabel: intl.formatMessage({ id: "filters.time.accessibility.label.from" }),
+                }}
                 onChange={this.handleFromChange}
                 value={this.state.inputFromValue}
                 dateFormat={dateFormat}
@@ -211,6 +215,10 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                 onKeyDown={this.onKeyDown}
                 ref={this.dateRangePickerInputTo}
                 placeholderDate={intl.formatMessage({ id: "filters.to" })}
+                accessibilityConfig={{
+                    dateAriaLabel: intl.formatMessage({ id: "filters.date.accessibility.label.to" }),
+                    timeAriaLabel: intl.formatMessage({ id: "filters.time.accessibility.label.to" }),
+                }}
                 onChange={this.handleToChange}
                 value={this.state.inputToValue}
                 dateFormat={dateFormat}

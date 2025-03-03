@@ -117,9 +117,44 @@
         "comment": "",
         "limit": 0
     },
-    "options.menu.export.PDF": {
+    "options.menu.export": {
+        "value": "Export",
+        "comment": "Export submenu",
+        "limit": 0
+    },
+    "options.menu.export.header.data": {
+        "value": "Data",
+        "comment": "Export submenu for data",
+        "limit": 0
+    },
+    "options.menu.export_to_pdf": {
         "value": "Export to PDF",
         "comment": "Export whole KPI dashboard to PDF",
+        "limit": 0
+    },
+    "options.menu.export.PDF": {
+        "value": "Snapshot (PDF)",
+        "comment": "Export whole KPI dashboard to PDF",
+        "limit": 0
+    },
+    "options.menu.export.EXCEL": {
+        "value": "Data (XLSX)",
+        "comment": "Export whole KPI dashboard to EXCEL",
+        "limit": 0
+    },
+    "options.menu.export.presentation.PPTX": {
+        "value": "Slide Deck (PPTX)",
+        "comment": "Export whole KPI dashboard to PowerPoint",
+        "limit": 0
+    },
+    "options.menu.export.presentation.PDF": {
+        "value": "Slide Deck (PDF)",
+        "comment": "Export whole KPI dashboard to PowerPoint",
+        "limit": 0
+    },
+    "options.menu.export.in.progress": {
+        "value": "Export is in progress. Wait until it is finished before exporting again.",
+        "comment": "Export whole KPI dashboard to PowerPoint",
         "limit": 0
     },
     "options.menu.schedule.email": {
@@ -456,6 +491,11 @@
     "dialogs.schedule.email.title.placeholder": {
         "value": "Untitled schedule",
         "comment": "Placeholder for schedule title input",
+        "limit": 0
+    },
+    "dialogs.schedule.accessibility.label.email.title": {
+        "value": "Schedule name",
+        "comment": "",
         "limit": 0
     },
     "dialogs.schedule.email.message.label": {
@@ -2915,6 +2955,11 @@
     "granularity.minute": {
         "value": "minute",
         "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "widget.options.menu.export": {
+        "value": "Export",
+        "comment": "Export to file with XLSX extension.",
         "limit": 0
     }
 }

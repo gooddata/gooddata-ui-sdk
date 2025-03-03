@@ -102,7 +102,19 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
 
     const { ref: widgetRef } = activeVisualization;
 
-    const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
+    const {
+        exportCSVEnabled,
+        exportXLSXEnabled,
+        exportCSVRawEnabled,
+        isExportRawVisible,
+        isExportVisible,
+        isExporting,
+        onExportRawCSV,
+        onExportCSV,
+        onExportXLSX,
+        onExportPdfPresentation,
+        onExportPowerPointPresentation,
+    } = useInsightExport({
         widgetRef,
         title: widgetTitle(activeVisualization) || intl.formatMessage({ id: "export.defaultTitle" }),
         insight,
@@ -140,10 +152,17 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
         widget: activeVisualization,
         exportCSVEnabled,
         exportXLSXEnabled,
+        exportCSVRawEnabled,
+        isExportRawVisible,
+        isExportVisible,
+        isExporting,
         onExportCSV,
         onExportXLSX,
+        onExportRawCSV,
         onScheduleExport,
         onScheduleManagementExport,
+        onExportPdfPresentation,
+        onExportPowerPointPresentation,
         isScheduleExportVisible: isScheduledEmailingVisible,
         isScheduleExportManagementVisible: isScheduledManagementEmailingVisible,
         isAlertingVisible,

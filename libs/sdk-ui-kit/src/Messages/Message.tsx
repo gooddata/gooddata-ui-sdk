@@ -30,6 +30,9 @@ export const Message: React.FC<IMessageProps> = ({
 
     const accesibilityRole = type === "error" ? "alert" : "status";
 
+    const accessibilityAriaLabel = intl.formatMessage({
+        id: "message.accessibility.dismiss.notification",
+    });
     return (
         <div role={accesibilityRole} aria-live={type === "error" ? undefined : "polite"} className={classes}>
             <div className="gd-message-text">
@@ -39,9 +42,9 @@ export const Message: React.FC<IMessageProps> = ({
                         <Button
                             className="gd-message-dismiss gd-icon-cross s-dialog-close-button"
                             onClick={onClose}
-                            ariaLabel={intl.formatMessage({
-                                id: "message.accessibility.dismiss.notification",
-                            })}
+                            accessibilityConfig={{
+                                ariaLabel: accessibilityAriaLabel,
+                            }}
                         />
                     </div>
                 ) : null}

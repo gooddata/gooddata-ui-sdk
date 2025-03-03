@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { useCallback, useMemo, useState, Dispatch, SetStateAction } from "react";
 import { useIntl } from "react-intl";
@@ -24,10 +24,17 @@ type UseInsightMenuConfig = {
     widget: IInsightWidget;
     exportCSVEnabled: boolean;
     exportXLSXEnabled: boolean;
+    exportCSVRawEnabled: boolean;
+    isExporting: boolean;
+    isExportRawVisible: boolean;
+    isExportVisible: boolean;
     onExportCSV: () => void;
     onExportXLSX: () => void;
+    onExportRawCSV: () => void;
     onScheduleExport: () => void;
     onScheduleManagementExport: () => void;
+    onExportPowerPointPresentation: () => void;
+    onExportPdfPresentation: () => void;
     isScheduleExportVisible: boolean;
     isScheduleExportManagementVisible: boolean;
     isAlertingVisible: boolean;
@@ -63,10 +70,15 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
     const {
         exportCSVEnabled,
         exportXLSXEnabled,
+        exportCSVRawEnabled,
+        isExporting,
         onExportCSV,
+        onExportRawCSV,
         onExportXLSX,
         onScheduleExport,
         onScheduleManagementExport,
+        onExportPdfPresentation,
+        onExportPowerPointPresentation,
         isScheduleExportVisible,
         isScheduleExportManagementVisible,
         isAlertingVisible,
@@ -76,6 +88,8 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         scheduleExportDisabledReason,
         alertingDisabledReason,
         widget,
+        isExportRawVisible,
+        isExportVisible,
     } = config;
 
     const intl = useIntl();
@@ -86,12 +100,20 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         return getDefaultInsightMenuItems(intl, {
             exportCSVDisabled: !exportCSVEnabled,
             exportXLSXDisabled: !exportXLSXEnabled,
+            exportCSVRawDisabled: !exportCSVRawEnabled,
+            isExporting,
             scheduleExportManagementDisabled,
             scheduleExportDisabled,
             scheduleExportDisabledReason,
+            isExportRawVisible,
+            isExportVisible,
             onExportCSV: () => {
                 setIsMenuOpen(false);
                 onExportCSV();
+            },
+            onExportRawCSV: () => {
+                setIsMenuOpen(false);
+                onExportRawCSV();
             },
             onExportXLSX: () => {
                 setIsMenuOpen(false);
@@ -105,6 +127,14 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
                 setIsMenuOpen(false);
                 onScheduleManagementExport();
             },
+            onExportPdfPresentation: () => {
+                setIsMenuOpen(false);
+                onExportPdfPresentation();
+            },
+            onExportPowerPointPresentation: () => {
+                setIsMenuOpen(false);
+                onExportPowerPointPresentation();
+            },
             isScheduleExportVisible,
             isScheduleExportManagementVisible,
             isDataError: isDataError(execution?.error),
@@ -117,6 +147,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         intl,
         exportCSVEnabled,
         exportXLSXEnabled,
+        exportCSVRawEnabled,
         scheduleExportManagementDisabled,
         scheduleExportDisabled,
         isScheduleExportVisible,
@@ -124,13 +155,19 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         execution?.error,
         isAlertingVisible,
         alertingDisabled,
+        isExportVisible,
         setIsMenuOpen,
         onExportCSV,
+        onExportRawCSV,
         onExportXLSX,
         onScheduleExport,
         onScheduleManagementExport,
+        onExportPdfPresentation,
+        onExportPowerPointPresentation,
         scheduleExportDisabledReason,
         alertingDisabledReason,
         canCreateAutomation,
+        isExportRawVisible,
+        isExporting,
     ]);
 }

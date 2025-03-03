@@ -592,6 +592,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableDashboardTabularExport,
+            "enableDashboardTabularExport",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDashboardTabularExport,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableOrchestratedTabularExports,
+            "enableOrchestratedTabularExports",
+            "BOOLEAN",
+            FeatureFlagsValues.enableOrchestratedTabularExports,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableDrilledTooltip,
             "enableDrilledTooltip",
             "BOOLEAN",
@@ -645,6 +659,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableExecutionCancelling",
             "BOOLEAN",
             FeatureFlagsValues.enableExecutionCancelling,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDashboardAfterRenderDetection,
+            "enableDashboardAfterRenderDetection",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDashboardAfterRenderDetection,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableImmediateAttributeFilterDisplayAsLabelMigration,
+            "enableImmediateAttributeFilterDisplayAsLabelMigration",
+            "BOOLEAN",
+            FeatureFlagsValues.enableImmediateAttributeFilterDisplayAsLabelMigration,
         ),
     };
 }

@@ -48,6 +48,7 @@ import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IRankingFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
+import { IRequestCorrelationMetadata } from '@gooddata/sdk-backend-spi';
 import { IResultAttributeHeader } from '@gooddata/sdk-model';
 import { IResultAttributeHeaderItem } from '@gooddata/sdk-model';
 import { IResultHeader } from '@gooddata/sdk-model';
@@ -110,6 +111,9 @@ export type AttributesOrPlaceholders = ValuesOrPlaceholders<IAttribute>;
 
 // @public
 export const BackendProvider: React_2.FC<IBackendProviderProps>;
+
+// @public
+export const BackendProviderWithCorrelation: React_2.FC<IBackendProviderWithCorrelationProps>;
 
 // @public
 export class BadRequestSdkError extends GoodDataSdkError {
@@ -189,11 +193,17 @@ export function convertDrillableItemsToPredicates(drillableItems: ExplicitDrill[
 // @public
 export function convertError(error: unknown): GoodDataSdkError;
 
+// @public
+export const CorrelationProvider: React_2.FC<ICorrelationProviderProps>;
+
 // @internal
 export function createExportErrorFunction(error: GoodDataSdkError): IExportFunction;
 
 // @internal
 export function createExportFunction(result: IExecutionResult, exportTitle?: string): IExportFunction;
+
+// @internal
+export function createExportRawFunction(result: IExecutionResult, filename: string): Promise<IExportResult>;
 
 // @internal (undocumented)
 export function createIntlMock(customMessages?: {}, locale?: string): IntlShape;
@@ -313,6 +323,7 @@ export class DataViewLoader {
     seriesFrom: (...measuresAndScopingAttributes: IAttributeOrMeasure[]) => DataViewLoader;
     slicesFrom: (...attributes: IAttribute[]) => DataViewLoader;
     sortBy: (...sorts: ISortItem[]) => DataViewLoader;
+    withSignal: (signal: AbortSignal) => DataViewLoader;
     withTotals: (...totals: ITotal[]) => DataViewLoader;
 }
 
@@ -547,6 +558,13 @@ export interface IBackendProviderProps {
     children?: React_2.ReactNode;
 }
 
+// @public
+export interface IBackendProviderWithCorrelationProps {
+    backend?: IAnalyticalBackend;
+    children?: React_2.ReactNode;
+    correlationData: IRequestCorrelationMetadata;
+}
+
 // @internal (undocumented)
 export interface ICancelablePromise<T> {
     // (undocumented)
@@ -623,6 +641,12 @@ export interface IComposedPlaceholder<TReturn, TValue extends any[], TContext> {
 }
 
 // @public
+export interface ICorrelationProviderProps {
+    children?: React_2.ReactNode;
+    correlationData: Record<string, string>;
+}
+
+// @public
 export interface IDataAccessMethods {
     // (undocumented)
     series(): IDataSeriesCollection;
@@ -673,6 +697,8 @@ export interface IDataSliceCollection extends Iterable<IDataSlice> {
 export interface IDataVisualizationProps extends IVisualizationProps, IVisualizationCallbacks {
     // @beta
     clusteringConfig?: IClusteringConfig;
+    // @internal
+    enableExecutionCancelling?: boolean;
     execution: IPreparedExecution;
     // @beta
     forecastConfig?: IForecastConfig;
@@ -878,6 +904,7 @@ export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsight
     componentName?: string;
     dateFormat?: string | ((def: IExecutionDefinition, props: IExecuteInsightProps) => string);
     dimensions?: IDimension[] | ((def: IExecutionDefinition, props: IExecuteInsightProps) => IDimension[]);
+    enableExecutionCancelling?: boolean;
     ErrorComponent?: IExecuteErrorComponent;
     executeByReference?: boolean;
     exportTitle?: string;
@@ -898,6 +925,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     backend?: IAnalyticalBackend;
     children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
     componentName?: string;
+    enableExecutionCancelling?: boolean;
     ErrorComponent?: IExecuteErrorComponent;
     exportTitle?: string;
     filters?: NullableFiltersOrPlaceholders;
@@ -1123,6 +1151,7 @@ export interface IPushData {
 // @public
 export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
     children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
+    enableExecutionCancelling?: boolean;
     ErrorComponent?: IExecuteErrorComponent;
     execution: IPreparedExecution;
     exportTitle?: string;
@@ -1317,6 +1346,7 @@ export type IUseComposedPlaceholderHook<T extends IComposedPlaceholder<any, any,
 // @public
 export interface IUseExecutionDataViewConfig {
     backend?: IAnalyticalBackend;
+    enableExecutionCancelling?: boolean;
     execution?: IPreparedExecution | IExecutionConfiguration;
     window?: DataViewWindow;
     workspace?: string;
@@ -1327,6 +1357,7 @@ export interface IUseInsightDataViewConfig {
     backend?: IAnalyticalBackend;
     dateFormat?: string | ((def: IExecutionDefinition) => string);
     dimensions?: IDimension[] | ((def: IExecutionDefinition) => IDimension[]);
+    enableExecutionCancelling?: boolean;
     executeByReference?: boolean;
     filters?: INullableFilter[];
     insight?: ObjRef;
@@ -1378,6 +1409,7 @@ export interface IVisualizationProps {
 
 // @internal
 export interface IWithExecution<T> {
+    enableExecutionCancelling?: boolean | ((props: T) => boolean);
     events?: IWithLoadingEvents<T> | ((props: T) => IWithLoadingEvents<T>);
     execution: IPreparedExecution | ((props: T) => IPreparedExecution) | ((props: T) => Promise<IPreparedExecution>);
     exportTitle: string | ((props: T) => string);
@@ -1388,10 +1420,11 @@ export interface IWithExecution<T> {
 
 // @internal
 export interface IWithExecutionLoading<TProps> {
+    enableExecutionCancelling?: boolean | ((props: TProps) => boolean);
     events?: IWithLoadingEvents<TProps> | ((props: TProps) => IWithLoadingEvents<TProps>);
     exportTitle: string | ((props: TProps) => string);
     loadOnMount?: boolean | ((props: TProps) => boolean);
-    promiseFactory: (props: TProps, window?: DataViewWindow) => Promise<DataViewFacade>;
+    promiseFactory: (props: TProps, window?: DataViewWindow, signal?: AbortSignal) => Promise<DataViewFacade>;
     shouldRefetch?: (prevProps: TProps, nextProps: TProps) => boolean;
     window?: DataViewWindow | ((props: TProps) => DataViewWindow | undefined);
 }
@@ -1429,7 +1462,7 @@ export const LOCALES: string[];
 export function localIdentifierMatch(localIdOrMeasure: string | IMeasure): IHeaderPredicate;
 
 // @internal
-export function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T>;
+export function makeCancelable<T>(promise: (signal: AbortSignal) => Promise<T>, enableAbortController?: boolean): ICancelablePromise<T>;
 
 // @public
 export type MeasureOf<T extends IMeasureDefinitionType> = T extends any ? IMeasure<T> : never;
@@ -1634,6 +1667,9 @@ export const useBackend: (backend?: IAnalyticalBackend) => IAnalyticalBackend | 
 export const useBackendStrict: (backend?: IAnalyticalBackend, context?: string) => IAnalyticalBackend;
 
 // @public
+export const useBackendWithCorrelation: (backend?: IAnalyticalBackend, correlationMetadata?: IRequestCorrelationMetadata) => IAnalyticalBackend | undefined;
+
+// @public
 export function useCancelablePromise<TResult, TError = any>(options: UseCancelablePromiseOptions<TResult, TError>, deps?: DependencyList): UseCancelablePromiseState<TResult, TError>;
 
 // @public
@@ -1661,7 +1697,8 @@ export type UseCancelablePromiseLoadingState = {
 
 // @public
 export type UseCancelablePromiseOptions<TResult, TError> = UseCancelablePromiseCallbacks<TResult, TError> & {
-    promise: (() => Promise<TResult>) | undefined | null;
+    promise: ((signal: AbortSignal) => Promise<TResult>) | undefined | null;
+    enableAbortController?: boolean;
 };
 
 // @public
@@ -1698,6 +1735,9 @@ export const useClientWorkspaceStatus: () => UseCancelablePromiseStatus;
 
 // @public
 export function useComposedPlaceholder<TContext, TPlaceholder extends IComposedPlaceholder<any, any, TContext>>(placeholder: TPlaceholder, resolutionContext?: TContext): PlaceholderResolvedValue<TPlaceholder>;
+
+// @public
+export const useCorrelationData: () => Record<string, string>;
 
 // @public
 export function useDataExport({ execution, exportConfig, onCancel, onError, onLoading, onPending, onSuccess, }: {

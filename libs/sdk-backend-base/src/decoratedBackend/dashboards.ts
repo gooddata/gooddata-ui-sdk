@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     IWorkspaceDashboardsService,
     IGetDashboardOptions,
@@ -87,6 +87,22 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
 
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult> {
         return this.decorated.exportDashboardToPdf(ref, filters);
+    }
+
+    exportDashboardToPresentation(
+        ref: ObjRef,
+        format: "PPTX" | "PDF",
+        filters?: FilterContextItem[],
+        options?: {
+            widgetIds?: ObjRef[];
+            filename?: string;
+        },
+    ): Promise<IExportResult> {
+        return this.decorated.exportDashboardToPresentation(ref, format, filters, options);
+    }
+
+    exportDashboardToTabular(ref: ObjRef): Promise<IExportResult> {
+        return this.decorated.exportDashboardToTabular(ref);
     }
 
     createScheduledMail(

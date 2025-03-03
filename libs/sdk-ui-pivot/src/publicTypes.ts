@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { ITheme, TotalType, IExecutionConfig, ISeparators } from "@gooddata/sdk-model";
 import {
@@ -150,6 +150,14 @@ export interface IPivotTableConfig {
      * Default: "top"
      */
     columnHeadersPosition?: ColumnHeadersPosition;
+
+    /**
+     * Enable execution cancelling.
+     *
+     * @remarks
+     * Default: false
+     */
+    enableExecutionCancelling?: boolean;
 }
 
 /**

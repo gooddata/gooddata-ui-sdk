@@ -172,6 +172,8 @@ export interface IGeoConfig {
     // (undocumented)
     cooperativeGestures?: boolean;
     // (undocumented)
+    enableExecutionCancelling?: boolean;
+    // (undocumented)
     isExportMode?: boolean;
     // (undocumented)
     legend?: IGeoLegendConfig;

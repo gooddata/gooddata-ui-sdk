@@ -167,7 +167,7 @@
         },
         "/api/v1/actions/notifications": {
             "get": {
-                "tags": ["actions"],
+                "tags": ["Notification Channels", "actions"],
                 "summary": "Get latest notifications.",
                 "description": "Get latest in-platform notifications for the current user.",
                 "operationId": "getNotifications",

@@ -93,6 +93,8 @@ import { INullableFilter } from '@gooddata/sdk-model';
 import { IPagedResource } from '@gooddata/sdk-backend-spi';
 import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
+import { IPreparedExecutionOptions } from '@gooddata/sdk-backend-spi';
+import { IRequestCorrelationMetadata } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
@@ -133,15 +135,15 @@ import { VisualizationProperties } from '@gooddata/sdk-model';
 export abstract class AbstractExecutionFactory implements IExecutionFactory {
     constructor(workspace: string);
     // (undocumented)
-    forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
+    forBuckets(buckets: IBucket[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    abstract forDefinition(def: IExecutionDefinition): IPreparedExecution;
+    abstract forDefinition(def: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
+    forInsight(insight: IInsightDefinition, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution;
+    forInsightByRef(insight: IInsight, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
     protected readonly workspace: string;
 }
@@ -399,21 +401,21 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
     // (undocumented)
     protected readonly decorated: IExecutionFactory;
     // (undocumented)
-    forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
+    forBuckets(buckets: IBucket[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forDefinition(def: IExecutionDefinition): IPreparedExecution;
+    forDefinition(def: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
+    forInsight(insight: IInsightDefinition, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution;
+    forInsightByRef(insight: IInsight, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     protected wrap: (execution: IPreparedExecution) => IPreparedExecution;
 }
 
 // @alpha
 export abstract class DecoratedExecutionResult implements IExecutionResult {
-    protected constructor(decorated: IExecutionResult, wrapper?: PreparedExecutionWrapper);
+    protected constructor(decorated: IExecutionResult, wrapper?: PreparedExecutionWrapper, signal?: AbortSignal | undefined);
     // (undocumented)
     definition: IExecutionDefinition;
     // (undocumented)
@@ -422,6 +424,8 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     equals(other: IExecutionResult): boolean;
     // (undocumented)
     export(options: IExportConfig): Promise<IExportResult>;
+    // (undocumented)
+    exportRaw(filename: string): Promise<IExportResult>;
     // (undocumented)
     fingerprint(): string;
     // (undocumented)
@@ -435,13 +439,15 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     // (undocumented)
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
     // (undocumented)
+    readonly signal: AbortSignal | undefined;
+    // (undocumented)
     transform(): IPreparedExecution;
 }
 
 // @alpha
 export abstract class DecoratedPreparedExecution implements IPreparedExecution {
-    protected constructor(decorated: IPreparedExecution);
-    protected abstract createNew(decorated: IPreparedExecution): IPreparedExecution;
+    protected constructor(decorated: IPreparedExecution, signal?: AbortSignal | undefined);
+    protected abstract createNew(decorated: IPreparedExecution, signal?: AbortSignal): IPreparedExecution;
     // (undocumented)
     protected readonly decorated: IPreparedExecution;
     // (undocumented)
@@ -455,7 +461,7 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     // (undocumented)
     fingerprint(): string;
     // (undocumented)
-    readonly signal?: AbortSignal;
+    readonly signal: AbortSignal | undefined;
     // (undocumented)
     withBuckets(...buckets: IBucket[]): IPreparedExecution;
     // (undocumented)
@@ -557,6 +563,13 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     // (undocumented)
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
+    // (undocumented)
+    exportDashboardToPresentation(ref: ObjRef, format: "PPTX" | "PDF", filters?: FilterContextItem[], options?: {
+        widgetIds?: ObjRef[];
+        filename?: string;
+    }): Promise<IExportResult>;
+    // (undocumented)
+    exportDashboardToTabular(ref: ObjRef): Promise<IExportResult>;
     // (undocumented)
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     // (undocumented)
@@ -678,7 +691,7 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
 // @internal
 export class DummyGenAIChatThread implements IChatThread {
     // (undocumented)
-    loadHistory(_fromInteractionId: number, { signal }: {
+    loadHistory(_fromInteractionId: string, { signal }: {
         signal?: AbortSignal;
     }): Promise<IChatThreadHistory>;
     // (undocumented)
@@ -686,7 +699,7 @@ export class DummyGenAIChatThread implements IChatThread {
     // (undocumented)
     reset(): Promise<void>;
     // (undocumented)
-    saveUserFeedback(_interactionId: number, _feedback: GenAIChatInteractionUserFeedback): Promise<void>;
+    saveUserFeedback(_interactionId: string, _feedback: GenAIChatInteractionUserFeedback): Promise<void>;
 }
 
 // @internal
@@ -732,20 +745,20 @@ export type ExecutionDecoratorFactory = (executionFactory: IExecutionFactory) =>
 export class ExecutionFactoryUpgradingToExecByReference extends DecoratedExecutionFactory {
     constructor(decorated: IExecutionFactory);
     // (undocumented)
-    forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
+    forInsight(insight: IInsightDefinition, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
 }
 
 // @internal
 export class ExecutionFactoryWithFixedFilters extends DecoratedExecutionFactory {
     constructor(decorated: IExecutionFactory, filters?: INullableFilter[]);
     // (undocumented)
-    forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
+    forBuckets(buckets: IBucket[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
+    forInsight(insight: IInsightDefinition, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution;
+    forInsightByRef(insight: IInsight, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
 }
 
 // @beta
@@ -1113,6 +1126,7 @@ export type SettingsWrapper = (settings: IWorkspaceSettings) => IWorkspaceSettin
 export type TelemetryData = {
     componentName?: string;
     props?: string[];
+    correlationMetadata?: IRequestCorrelationMetadata;
 };
 
 // @public

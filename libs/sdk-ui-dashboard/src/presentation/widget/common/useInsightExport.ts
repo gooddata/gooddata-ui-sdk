@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { useCallback, useState } from "react";
 import { invariant } from "ts-invariant";
 import { IExtendedExportConfig } from "@gooddata/sdk-ui";
@@ -16,9 +16,16 @@ import {
     exportInsightWidget,
     ExportInsightWidget,
     DashboardInsightWidgetExportResolved,
+    ExportRawInsightWidget,
+    exportRawInsightWidget,
+    ExportSlidesInsightWidget,
+    exportSlidesInsightWidget,
+    selectSlideShowExportVisible,
 } from "../../../model/index.js";
 import { useExportHandler } from "./useExportHandler.js";
 import { useExportDialogContext } from "../../dashboardContexts/index.js";
+import { useRawExportHandler } from "./useRawExportHandler.js";
+import { useSlidesExportHandler } from "./useSlidesExportHandler.js";
 
 export const useInsightExport = (config: {
     title: string;
@@ -45,6 +52,24 @@ export const useInsightExport = (config: {
         [widgetRef],
     );
 
+    const exportRawFunction = useCallback(
+        (title: string) =>
+            dispatchAndWaitFor<ExportRawInsightWidget, DashboardInsightWidgetExportResolved>(
+                dispatch,
+                exportRawInsightWidget(widgetRef, title, uuid()),
+            ).then((result) => result.payload.result),
+        [widgetRef],
+    );
+
+    const exportSlidesFunction = useCallback(
+        (title: string, exportType: "pdf" | "pptx") =>
+            dispatchAndWaitFor<ExportSlidesInsightWidget, DashboardInsightWidgetExportResolved>(
+                dispatch,
+                exportSlidesInsightWidget(widgetRef!, title, exportType, uuid()),
+            ).then((result) => result.payload.result),
+        [widgetRef],
+    );
+
     const settings = useDashboardSelector(selectSettings);
     const isInsightExportable = insight
         ? getInsightVisualizationMeta(insight, settings).supportsExport
@@ -53,6 +78,8 @@ export const useInsightExport = (config: {
     const isExportableToXlsx = useDashboardSelector(selectIsExecutionResultExportableToXlsxByRef(widgetRef));
 
     const exportHandler = useExportHandler();
+    const exportRawHandler = useRawExportHandler();
+    const exportSlidesHandler = useSlidesExportHandler();
     const { openDialog, closeDialog } = useExportDialogContext();
 
     const onExportCSV = useCallback(() => {
@@ -64,7 +91,28 @@ export const useInsightExport = (config: {
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportFunction);
         exportHandler(exportFunction, exportConfig).then(() => setIsExporting(false));
-    }, [exportFunction, title]);
+    }, [exportFunction, setIsExporting, title]);
+
+    const onExportRawCSV = useCallback(() => {
+        setIsExporting(true);
+        // if this bombs there is an issue with the logic enabling the buttons
+        invariant(exportRawFunction);
+        exportRawHandler(exportRawFunction, title).then(() => setIsExporting(false));
+    }, [exportRawFunction, title]);
+
+    const onExportPowerPointPresentation = useCallback(() => {
+        setIsExporting(true);
+        // if this bombs there is an issue with the logic enabling the buttons
+        invariant(exportSlidesFunction);
+        exportSlidesHandler(exportSlidesFunction, title, "pptx").then(() => setIsExporting(false));
+    }, [exportSlidesFunction, title]);
+
+    const onExportPdfPresentation = useCallback(() => {
+        setIsExporting(true);
+        // if this bombs there is an issue with the logic enabling the buttons
+        invariant(exportSlidesFunction);
+        exportSlidesHandler(exportSlidesFunction, title, "pdf").then(() => setIsExporting(false));
+    }, [exportSlidesFunction, title]);
 
     const onExportXLSX = useCallback(() => {
         openDialog({
@@ -89,11 +137,22 @@ export const useInsightExport = (config: {
 
     const exportCSVEnabled = !isExporting && isInsightExportable && isExportableToCsv;
     const exportXLSXEnabled = !isExporting && isInsightExportable && isExportableToXlsx;
+    const exportCSVRawEnabled = !isExporting;
+
+    const isExportRawVisible = settings.enableRawExports === true;
+    const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
 
     return {
         exportCSVEnabled,
         exportXLSXEnabled,
+        exportCSVRawEnabled,
+        isExporting,
+        isExportRawVisible,
+        isExportVisible,
         onExportCSV,
         onExportXLSX,
+        onExportRawCSV,
+        onExportPdfPresentation,
+        onExportPowerPointPresentation,
     };
 };

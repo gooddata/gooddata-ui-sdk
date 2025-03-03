@@ -79,6 +79,7 @@ exports[`XIRR > with correct config > should create expected execution definitio
 
 exports[`XIRR > with correct config > should create expected props for core chart 1`] = `
 {
+  "enableExecutionCancelling": false,
   "exportTitle": "Xirr",
   "workspace": "reference-workspace",
 }
@@ -166,6 +167,7 @@ exports[`XIRR > with drilling on single measure > should create expected props f
   "drillableItems": [
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Xirr",
   "workspace": "reference-workspace",
 }
@@ -256,6 +258,7 @@ exports[`XIRR > with drilling on single measure with underlining disabled > shou
   "drillableItems": [
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Xirr",
   "workspace": "reference-workspace",
 }
@@ -319,6 +322,7 @@ exports[`XIRR > with only measure > should create expected execution definition 
 
 exports[`XIRR > with only measure > should create expected props for core chart 1`] = `
 {
+  "enableExecutionCancelling": false,
   "exportTitle": "Xirr",
   "workspace": "reference-workspace",
 }
@@ -403,6 +407,7 @@ exports[`XIRR > with semantically wrong measure > should create expected executi
 
 exports[`XIRR > with semantically wrong measure > should create expected props for core chart 1`] = `
 {
+  "enableExecutionCancelling": false,
   "exportTitle": "Xirr",
   "workspace": "reference-workspace",
 }

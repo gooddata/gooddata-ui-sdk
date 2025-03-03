@@ -1,11 +1,12 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import React from "react";
+import { ReactReduxContextValue } from "react-redux";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ObjRef, IDashboard, IWorkspacePermissions } from "@gooddata/sdk-model";
+
 import { DashboardEventHandler } from "../eventHandlers/eventHandler.js";
 import { DashboardDispatch, DashboardState } from "../store/index.js";
 import { DashboardConfig, DashboardModelCustomizationFns, WidgetsOverlayFn } from "../types/commonTypes.js";
-import React from "react";
-import { ReactReduxContextValue } from "react-redux";
 import { RenderMode } from "../../types.js";
 
 /**

@@ -737,6 +737,16 @@ export const selectEnableDuplicatedLabelValuesInAttributeFilter: DashboardSelect
 );
 
 /**
+ * Returns whether attribute filter displays duplicated values when filter uses secondary label value.
+ *
+ * @internal
+ */
+export const selectEnableImmediateAttributeFilterDisplayAsLabelMigration: DashboardSelector<boolean> =
+    createSelector(selectConfig, (state) => {
+        return state.settings?.enableImmediateAttributeFilterDisplayAsLabelMigration ?? false;
+    });
+
+/**
  * Returns whether rich text in descriptions is enabled.
  *
  * @internal
@@ -842,6 +852,30 @@ export const selectEnableExternalRecipients: DashboardSelector<boolean> = create
 );
 
 /**
+ *
+ *
+ * @internal
+ */
+export const selectEnableDashboardTabularExport: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardTabularExport ?? false;
+    },
+);
+
+/**
+ *
+ *
+ * @internal
+ */
+export const selectEnableOrchestratedTabularExports: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableOrchestratedTabularExports ?? false;
+    },
+);
+
+/**
  * Returns whether drill dialog tooltip is enabled.
  *
  * @internal
@@ -907,5 +941,15 @@ export const selectDashboardFiltersApplyMode: DashboardSelector<DashboardFilters
     selectConfig,
     (state) => {
         return state.settings?.dashboardFiltersApplyMode ?? { mode: "INDIVIDUAL" };
+    },
+);
+
+/**
+ * @internal
+ */
+export const selectEnableExecutionCancelling: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableExecutionCancelling ?? false;
     },
 );

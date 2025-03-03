@@ -7,6 +7,7 @@
  */
 export type ExportElementType =
     | "section"
+    | "section-info"
     | "section-title"
     | "section-description"
     | "widget"
@@ -19,7 +20,10 @@ export type ExportElementType =
  *
  * @alpha
  */
-export type CommonExportDataAttributes = { "data-export-type": ExportElementType };
+export type CommonExportDataAttributes = {
+    "data-export-type": ExportElementType;
+    "data-export-depth"?: string;
+};
 
 /**
  * Data attributes for export mode to be added to the header.
@@ -27,8 +31,19 @@ export type CommonExportDataAttributes = { "data-export-type": ExportElementType
  * @alpha
  */
 export type HeaderExportData = {
+    info?: CommonExportDataAttributes;
     title?: CommonExportDataAttributes;
+    description?: DescriptionExportData;
+};
+
+/**
+ * Data attributes for export mode to be added to the description.
+ *
+ * @alpha
+ */
+export type DescriptionExportData = {
     description?: CommonExportDataAttributes;
+    richText?: RichTextExportData;
 };
 
 /**
@@ -66,6 +81,27 @@ export type WidgetExportDataAttributes = CommonExportDataAttributes & {
 export type WidgetExportData = HeaderExportData & {
     section?: CommonExportDataAttributes;
     widget?: WidgetExportDataAttributes;
+};
+
+/**
+ * Data attributes for export mode to be added to the rich text widget.
+ *
+ * @alpha
+ */
+export type RichTextDataAttributes = {
+    "data-export-content-type"?: "markdown";
+};
+
+/**
+ * Data attributes for export mode to be added to the rich text widget and its components.
+ *
+ * When customizing a rich text widget component, spread these properties in the element intended
+ * for export.
+ *
+ * @alpha
+ */
+export type RichTextExportData = {
+    markdown?: RichTextDataAttributes;
 };
 
 /**

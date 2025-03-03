@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     AgGridEvent,
     AllCommunityModules,
@@ -221,6 +221,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             resized: false,
             tempExecution: execution,
             isLoading: false,
+            isFirstRender: false,
         };
 
         this.errorMap = newErrorMapping(props.intl);
@@ -233,6 +234,14 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     //
     // Lifecycle
     //
+
+    private abortController: AbortController = new AbortController();
+    private refreshAbortController = (): void => {
+        if (this.props.config?.enableExecutionCancelling) {
+            this.abortController.abort();
+            this.abortController = new AbortController();
+        }
+    };
 
     /**
      * Starts initialization of table that will show results of the provided prepared execution. If there is
@@ -250,8 +259,13 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
      */
     private initialize = (execution: IPreparedExecution): TableFacadeInitializer => {
         this.internal.abandonInitialization();
-
-        const initializer = new TableFacadeInitializer(execution, this.getTableMethods(), this.props);
+        this.refreshAbortController();
+        const initializer = new TableFacadeInitializer(
+            execution,
+            this.getTableMethods(),
+            this.props,
+            this.props.config?.enableExecutionCancelling ? this.abortController : undefined,
+        );
 
         initializer.initialize().then((result) => {
             if (!result || this.internal.initializer !== result.initializer) {
@@ -301,6 +315,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     }
 
     public componentWillUnmount(): void {
+        this.refreshAbortController();
         if (this.containerRef) {
             this.containerRef.removeEventListener("mousedown", this.onContainerMouseDown);
         }
@@ -617,6 +632,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         }
 
         this.updateStickyRow();
+        this.onLoadingAndRenderChanged(false, true);
     };
 
     private onModelUpdated = () => {
@@ -803,12 +819,18 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     };
 
     private onLoadingChanged = (loadingState: ILoadingState): void => {
+        this.onLoadingAndRenderChanged(loadingState.isLoading, this.state.isFirstRender);
+    };
+
+    private onLoadingAndRenderChanged = (isLoading: boolean, isFirstRender: boolean): void => {
         const { onLoadingChanged } = this.props;
 
         if (onLoadingChanged) {
-            onLoadingChanged(loadingState);
+            onLoadingChanged({
+                isLoading: isLoading || !isFirstRender,
+            });
 
-            this.setState({ isLoading: loadingState.isLoading });
+            this.setState({ isLoading, isFirstRender });
         }
     };
 
@@ -819,7 +841,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             this.setState({ error: error.getMessage(), readyToRender: true });
 
             // update loading state when an error occurs
-            this.onLoadingChanged({ isLoading: false });
+            this.onLoadingAndRenderChanged(false, true);
 
             onExportReady!(createExportErrorFunction(error));
 

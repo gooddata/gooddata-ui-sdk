@@ -1,36 +1,53 @@
 // (C) 2025 GoodData Corporation
 
 import { insightVisualizationType } from "@gooddata/sdk-model";
+import { useMemo } from "react";
 import {
     ExtendedDashboardWidget,
     selectInsightByWidgetRef,
     selectIsInExportMode,
     useDashboardSelector,
 } from "../../model/index.js";
-import { SectionExportData, WidgetExportData, WidgetExportDataAttributes } from "./types.js";
-import { useMemo } from "react";
+import {
+    RichTextExportData,
+    SectionExportData,
+    WidgetExportData,
+    WidgetExportDataAttributes,
+} from "./types.js";
 
 /**
  * @alpha
  */
-export const useSectionExportData = (firstLevel: boolean): SectionExportData | undefined => {
+export const useSectionExportData = (depth: number): SectionExportData | undefined => {
     const isExportMode = useDashboardSelector(selectIsInExportMode);
 
     if (!isExportMode) {
         return undefined;
     }
 
-    if (firstLevel) {
+    if (depth === 0) {
         return {
+            info: { "data-export-type": "section-info", "data-export-depth": depth.toString() },
             section: { "data-export-type": "section" },
             title: { "data-export-type": "section-title" },
-            description: { "data-export-type": "section-description" },
+            description: {
+                description: { "data-export-type": "section-description" },
+                richText: {
+                    markdown: { "data-export-content-type": "markdown" },
+                },
+            },
         };
     }
 
     return {
+        info: { "data-export-type": "section-info", "data-export-depth": depth.toString() },
         title: { "data-export-type": "section-title" },
-        description: { "data-export-type": "section-description" },
+        description: {
+            description: { "data-export-type": "section-description" },
+            richText: {
+                markdown: { "data-export-content-type": "markdown" },
+            },
+        },
     };
 };
 
@@ -53,7 +70,27 @@ export const useWidgetExportData = (widget: ExtendedDashboardWidget): WidgetExpo
             ...(insight ? { "data-export-visualization-type": insightVisualizationType(insight) } : {}),
         },
         title: { "data-export-type": "widget-title" },
-        description: { "data-export-type": "widget-description" },
+        description: {
+            description: { "data-export-type": "widget-description" },
+            richText: {
+                markdown: { "data-export-content-type": "markdown" },
+            },
+        },
+    };
+};
+
+/**
+ * @alpha
+ */
+export const useRichTextExportData = (): RichTextExportData | undefined => {
+    const isExportMode = useDashboardSelector(selectIsInExportMode);
+
+    if (!isExportMode) {
+        return undefined;
+    }
+
+    return {
+        markdown: { "data-export-content-type": "markdown" },
     };
 };
 

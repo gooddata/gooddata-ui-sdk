@@ -61,7 +61,19 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     const visType = insight ? (insightVisualizationType(insight) as VisType) : undefined;
     const { ref: widgetRef } = widget;
 
-    const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
+    const {
+        exportCSVEnabled,
+        exportXLSXEnabled,
+        exportCSVRawEnabled,
+        isExportRawVisible,
+        isExportVisible,
+        isExporting,
+        onExportRawCSV,
+        onExportCSV,
+        onExportXLSX,
+        onExportPdfPresentation,
+        onExportPowerPointPresentation,
+    } = useInsightExport({
         widgetRef,
         title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
         insight,
@@ -93,10 +105,17 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         widget,
         exportCSVEnabled,
         exportXLSXEnabled,
+        exportCSVRawEnabled,
+        isExportRawVisible,
+        isExportVisible,
+        isExporting,
         onExportCSV,
         onExportXLSX,
+        onExportRawCSV,
         onScheduleExport,
         onScheduleManagementExport,
+        onExportPdfPresentation,
+        onExportPowerPointPresentation,
         isScheduleExportVisible: isScheduledEmailingVisible,
         isScheduleExportManagementVisible: isScheduledManagementEmailingVisible,
         isAlertingVisible,

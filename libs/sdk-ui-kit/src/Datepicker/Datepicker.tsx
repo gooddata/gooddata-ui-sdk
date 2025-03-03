@@ -40,7 +40,7 @@ const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-day_outside";
  * @internal
  */
 export interface IDatePickerOwnProps {
-    id?: string;
+    ariaLabelledBy?: string;
     date?: Date; // date value used to initialize date picker
     className?: string; // optional css applied to outer div
     placeholder?: string;
@@ -364,7 +364,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
 
     public render(): React.ReactNode {
         const { inputValue, selectedDate, monthDate, isOpen } = this.state;
-        const { id, placeholder, intl, tabIndex } = this.props;
+        const { ariaLabelledBy, placeholder, intl, tabIndex } = this.props;
 
         const classNamesProps: ClassNames = {
             root: this.getOverlayWrapperClasses(),
@@ -378,7 +378,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
                 onClick={this.handleWrapperClick}
             >
                 <input
-                    id={id}
+                    aria-labelledby={ariaLabelledBy}
                     aria-label={intl.formatMessage({ id: "datePicker.accessibility.label" })}
                     onKeyDown={this.onKeyDown}
                     tabIndex={tabIndex}

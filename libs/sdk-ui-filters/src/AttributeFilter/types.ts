@@ -273,6 +273,11 @@ export interface IAttributeFilterCoreProps {
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
 
     /**
+     * Enables the migration of displayAsLabel to be immediately reported to the parent app.
+     */
+    enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+
+    /**
      * This enables filter mode without apply button.
      * If true, it is responsibility of a client, to appy filters when needed.
      * Typically uses onSelect callback to catch filter state.

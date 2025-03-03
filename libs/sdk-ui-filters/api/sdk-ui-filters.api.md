@@ -402,6 +402,7 @@ export interface IAttributeFilterCoreProps {
     // @alpha
     displayAsLabel?: ObjRef;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
+    enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     filter?: IAttributeFilter;
     fullscreenOnMobile?: boolean;
     hiddenElements?: string[];

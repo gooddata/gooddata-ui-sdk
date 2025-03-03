@@ -10,6 +10,7 @@ import {
     IEntitlementDescriptor,
     Identifier,
     IDashboardLayout,
+    IInsight,
 } from "@gooddata/sdk-model";
 import { ILocale } from "@gooddata/sdk-ui";
 import keys from "lodash/keys.js";
@@ -47,6 +48,53 @@ export interface ObjectAvailabilityConfig {
      * range of objects may be excluded at first and then a subset will be cherry-picked using this prop.
      */
     includeObjectsWithTags?: string[];
+}
+
+/**
+ * Dashboard item
+ *
+ * @public
+ */
+export type DashboardItem = DashboardItemVisualization | DashboardItemVisualizationContent;
+
+/**
+ * Dashboard item with visualization
+ *
+ * @public
+ */
+export type DashboardItemVisualization = {
+    visualization: ObjRef;
+};
+
+/**
+ * Tests whether the provided item is a dashboard item with visualization.
+ * @param item - item to test
+ *
+ * @public
+ */
+export function isDashboardItemVisualization(item: unknown): item is DashboardItemVisualization {
+    return (item as DashboardItemVisualization).visualization !== undefined;
+}
+
+/**
+ * Dashboard item with visualization content
+ *
+ * @public
+ */
+export type DashboardItemVisualizationContent = {
+    visualizationContent: IInsight;
+};
+
+/**
+ * Tests whether the provided item is a dashboard item with visualization content.
+ * @param item - item to test
+ *
+ * @public
+ */
+export function isDashboardItemVisualizationContent(
+    item: unknown,
+): item is DashboardItemVisualizationContent {
+    return (item as DashboardItemVisualizationContent).visualizationContent !== undefined;
 }
 
 /**
@@ -265,6 +313,12 @@ export interface DashboardConfig {
      * Entitlements for the user who is rendering the dashboard
      */
     entitlements?: IEntitlementDescriptor[];
+
+    /**
+     * Initial content of the dashboard. In case of empty dashboard, this content will be filled
+     * into created section. If the dashboard is loaded from backend, this content will be ignored.
+     */
+    initialContent?: DashboardItem[];
 }
 
 /**
@@ -329,7 +383,13 @@ export interface DashboardFocusObject {
  */
 export type ResolvedDashboardConfig = Omit<
     Required<DashboardConfig>,
-    "mapboxToken" | "exportId" | "focusObject" | "slideConfig" | "references" | "entitlements"
+    | "mapboxToken"
+    | "exportId"
+    | "focusObject"
+    | "slideConfig"
+    | "references"
+    | "entitlements"
+    | "initialContent"
 > &
     DashboardConfig;
 

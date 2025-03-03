@@ -124,6 +124,11 @@ import { OrganizationPermissionAssignment } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 
 // @public
+export class AbortError extends AnalyticalBackendError {
+    constructor(message: string);
+}
+
+// @public
 export abstract class AnalyticalBackendError extends Error {
     protected constructor(message: string, abeType: string, cause?: Error | undefined);
     // (undocumented)
@@ -145,6 +150,7 @@ export const AnalyticalBackendErrorTypes: {
     LIMIT_REACHED: string;
     CONTRACT_EXPIRED: string;
     TIMEOUT_ERROR: string;
+    ABORT: string;
 };
 
 // @public
@@ -217,6 +223,7 @@ export interface IAnalyticalBackend {
     organization(organizationId: string): IOrganization;
     organizations(): IOrganizations;
     withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend;
+    withCorrelation(correlationMetadata: IRequestCorrelationMetadata): IAnalyticalBackend;
     withTelemetry(componentName: string, props: object): IAnalyticalBackend;
     workspace(id: string): IAnalyticalWorkspace;
     workspaces(): IWorkspacesQueryFactory;
@@ -413,12 +420,12 @@ export interface ICancelable<T> {
 
 // @beta
 export interface IChatThread {
-    loadHistory(fromInteractionId?: number, options?: {
+    loadHistory(fromInteractionId?: string, options?: {
         signal?: AbortSignal;
     }): Promise<IChatThreadHistory>;
     query(userMessage: string): IChatThreadQuery;
     reset(): Promise<void>;
-    saveUserFeedback(interactionId: number, feedback: GenAIChatInteractionUserFeedback): Promise<void>;
+    saveUserFeedback(interactionId: string, feedback: GenAIChatInteractionUserFeedback): Promise<void>;
 }
 
 // @beta
@@ -625,11 +632,11 @@ export interface IEntitlements {
 
 // @public
 export interface IExecutionFactory {
-    forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
-    forDefinition(def: IExecutionDefinition): IPreparedExecution;
-    forInsight(insightDefinition: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
-    forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution;
-    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
+    forBuckets(buckets: IBucket[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
+    forDefinition(def: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution;
+    forInsight(insightDefinition: IInsightDefinition, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
+    forInsightByRef(insight: IInsight, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
 }
 
 // @public
@@ -638,6 +645,8 @@ export interface IExecutionResult {
     readonly dimensions: IDimensionDescriptor[];
     equals(other: IExecutionResult): boolean;
     export(options: IExportConfig): Promise<IExportResult>;
+    // @alpha
+    exportRaw?(filename: string): Promise<IExportResult>;
     fingerprint(): string;
     readAll(): Promise<IDataView>;
     // @alpha
@@ -647,6 +656,7 @@ export interface IExecutionResult {
     // @beta
     readForecastAll(config: IForecastConfig): Promise<IForecastResult>;
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
+    readonly signal?: AbortSignal;
     transform(): IPreparedExecution;
 }
 
@@ -764,7 +774,7 @@ export interface IForecastView {
 // @beta
 export interface IGenAIChatEvaluation {
     // (undocumented)
-    chatHistoryInteractionId?: number;
+    chatHistoryInteractionId?: string;
     // (undocumented)
     chatHistoryThreadId?: string;
     // (undocumented)
@@ -1125,6 +1135,19 @@ export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
 }
 
 // @public
+export interface IPreparedExecutionOptions {
+    signal?: AbortSignal;
+}
+
+// @public
+export interface IRequestCorrelationMetadata {
+    readonly [key: string]: string;
+}
+
+// @public
+export function isAbortError(obj: unknown): obj is AbortError;
+
+// @public
 export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackendError;
 
 // @public
@@ -1364,6 +1387,11 @@ export interface IWorkspaceDashboardsService {
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
+    exportDashboardToPresentation(ref: ObjRef, format: "PDF" | "PPTX", filters?: FilterContextItem[], options?: {
+        widgetIds?: ObjRef[];
+        filename?: string;
+    }): Promise<IExportResult>;
+    exportDashboardToTabular(ref: ObjRef): Promise<IExportResult>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
     getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions>;
@@ -1633,7 +1661,7 @@ export class NotSupported extends AnalyticalBackendError {
 }
 
 // @public
-export function prepareExecution(backend: IAnalyticalBackend, definition: IExecutionDefinition): IPreparedExecution;
+export function prepareExecution(backend: IAnalyticalBackend, definition: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution;
 
 // @public
 export class ProtectedDataError extends AnalyticalBackendError {

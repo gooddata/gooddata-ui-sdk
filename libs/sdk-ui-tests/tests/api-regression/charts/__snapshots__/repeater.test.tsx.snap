@@ -156,6 +156,7 @@ exports[`Repeater > with canvas - large row height > should create expected prop
     },
     "rowHeight": "large",
   },
+  "enableExecutionCancelling": false,
   "exportTitle": "Repeater",
   "workspace": "reference-workspace",
 }
@@ -323,6 +324,7 @@ exports[`Repeater > with coloring - custom colors > should create expected props
       },
     },
   },
+  "enableExecutionCancelling": false,
   "exportTitle": "Repeater",
   "workspace": "reference-workspace",
 }
@@ -525,6 +527,7 @@ exports[`Repeater > with coloring - custom palette > should create expected prop
       },
     },
   },
+  "enableExecutionCancelling": false,
   "exportTitle": "Repeater",
   "workspace": "reference-workspace",
 }
@@ -734,6 +737,7 @@ exports[`Repeater > with coloring - custom palette preferred over colors > shoul
       },
     },
   },
+  "enableExecutionCancelling": false,
   "exportTitle": "Repeater",
   "workspace": "reference-workspace",
 }
@@ -894,6 +898,7 @@ exports[`Repeater > with coloring - default > should create expected props for c
       },
     },
   },
+  "enableExecutionCancelling": false,
   "exportTitle": "Repeater",
   "workspace": "reference-workspace",
 }
@@ -969,6 +974,7 @@ exports[`Repeater > with one attribute > should create expected execution defini
 
 exports[`Repeater > with one attribute > should create expected props for core chart 1`] = `
 {
+  "enableExecutionCancelling": false,
   "exportTitle": "Repeater",
   "workspace": "reference-workspace",
 }
@@ -1076,6 +1082,7 @@ exports[`Repeater > with one attribute and one measure > should create expected 
 
 exports[`Repeater > with one attribute and one measure > should create expected props for core chart 1`] = `
 {
+  "enableExecutionCancelling": false,
   "exportTitle": "Repeater",
   "workspace": "reference-workspace",
 }
@@ -1236,6 +1243,7 @@ exports[`Repeater > with one attribute and one visualisation > should create exp
       },
     },
   },
+  "enableExecutionCancelling": false,
   "exportTitle": "Repeater",
   "workspace": "reference-workspace",
 }

@@ -119,7 +119,16 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
 
     const baseInsightTitle = insightTitle(insight);
 
-    const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
+    const {
+        exportCSVEnabled,
+        exportXLSXEnabled,
+        exportCSVRawEnabled,
+        isExportRawVisible,
+        isExporting,
+        onExportRawCSV,
+        onExportCSV,
+        onExportXLSX,
+    } = useInsightExport({
         title: getTitleWithBreadcrumbs(baseInsightTitle, breadcrumbs),
         widgetRef: DRILL_MODAL_EXECUTION_PSEUDO_REF,
         insight,
@@ -152,10 +161,14 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                         exportAvailable={exportXLSXEnabled || exportCSVEnabled}
                         exportXLSXEnabled={exportXLSXEnabled}
                         exportCSVEnabled={exportCSVEnabled}
+                        exportCSVRawEnabled={exportCSVRawEnabled}
                         enableDrillDescription={enableDrillDescription}
                         onExportXLSX={onExportXLSX}
                         onExportCSV={onExportCSV}
+                        onExportCSVRaw={onExportRawCSV}
                         isLoading={isLoading}
+                        isExporting={isExporting}
+                        isExportRawVisible={isExportRawVisible}
                     >
                         <WithDrillSelect
                             widgetRef={widget.ref}
@@ -220,6 +233,7 @@ function InsightDrillDialogDescriptionButton({
 }: InsightDrillDialogDescriptionButtonProps) {
     const { formatMessage } = useIntl();
 
+    const accessibilityAriaLabel = formatMessage({ id: "widget.options.description" });
     return (
         <Button
             className={cx("gd-button-primary gd-button-icon-only drill-dialog-insight-container-button", {
@@ -228,7 +242,9 @@ function InsightDrillDialogDescriptionButton({
                 "drill-dialog-insight-container-button--mobile": isMobileDevice,
             })}
             onClick={() => setIsOpen((open) => !open)}
-            ariaLabel={formatMessage({ id: "widget.options.description" })}
+            accessibilityConfig={{
+                ariaLabel: accessibilityAriaLabel,
+            }}
             value={<UiIcon type="question" size={18} />}
         />
     );

@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import { ExplicitDrill, OnFiredDrillEvent } from "./DrillEvents.js";
 import React from "react";
@@ -116,4 +116,10 @@ export interface IDataVisualizationProps extends IVisualizationProps, IVisualiza
      * @beta
      */
     clusteringConfig?: IClusteringConfig;
+
+    /**
+     * Whether to enable execution cancelling.
+     * @internal
+     */
+    enableExecutionCancelling?: boolean;
 }

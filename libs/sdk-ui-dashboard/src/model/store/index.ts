@@ -85,6 +85,7 @@ export {
     selectEnableAttributeFilterValuesValidation,
     selectEnableKDAttributeFilterDatesValidation,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     selectEnableRichTextDescriptions,
     selectIsDisabledCrossFiltering,
     selectIsDisableUserFilterReset,
@@ -107,6 +108,9 @@ export {
     selectEnableSlideshowExports,
     selectEnableDashboardFiltersApplyModes,
     selectDashboardFiltersApplyMode,
+    selectEnableExecutionCancelling,
+    selectEnableOrchestratedTabularExports,
+    selectEnableDashboardTabularExport,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -193,6 +197,25 @@ export {
     selectImplicitDrillsToUrlByWidgetRef,
     selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
 } from "./widgetDrills/widgetDrillSelectors.js";
+
+export {
+    selectDeleteVisible,
+    selectFilterViewsVisible,
+    selectPdfExportVisible,
+    selectSaveAsVisible,
+    selectCommonExportAvailable,
+    selectSlideShowExportAvailable,
+    selectSlideShowExportVisible,
+    selectCanEnterEditModeAndIsLoaded,
+    selectIsShareButtonVisible,
+    selectIsSaveAsNewButtonVisible,
+    hasEditDashboardPermission,
+    hasEditLockedDashboardPermission,
+    selectCanSaveDashboard,
+    selectCanEnterEditMode,
+    selectIsPrivateDashboard,
+    selectIsCurrentDashboardVisibleInList,
+} from "./topBar/topBarSelectors.js";
 
 export type { UndoEnhancedState, UndoEntry } from "./_infra/undoEnhancer.js";
 export type { LayoutState, LayoutStash } from "./layout/layoutState.js";
@@ -311,6 +334,7 @@ export {
     selectPersistedDashboard,
     selectDashboardLockStatus,
     selectIsNewDashboard,
+    selectIsNewDashboardWithContent,
     selectIsDashboardDirty,
     selectIsDashboardPrivate,
     selectDashboardWorkingDefinition,
@@ -341,6 +365,7 @@ export {
     selectIsExecutionResultExportableToXlsxByRef,
     selectIsExecutionResultReadyForExportByRef,
     selectHasSomeExecutionResult,
+    selectIsExecutionResultExportableToCsvRawByRef,
 } from "./executionResults/executionResultsSelectors.js";
 export type { IExecutionResultEnvelope } from "./executionResults/types.js";
 export type { UiState, InvalidCustomUrlDrillParameterInfo, FilterViewDialogMode } from "./ui/uiState.js";

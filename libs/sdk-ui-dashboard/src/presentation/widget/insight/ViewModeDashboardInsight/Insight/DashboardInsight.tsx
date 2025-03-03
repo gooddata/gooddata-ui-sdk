@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { CSSProperties, useCallback, useEffect, useMemo, useState } from "react";
+import React, { CSSProperties, useRef, useCallback, useEffect, useMemo, useState } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
 import {
@@ -35,6 +35,7 @@ import {
     selectIsInEditMode,
     selectCrossFilteringSelectedPointsByWidgetRef,
     useWidgetFilters,
+    selectEnableExecutionCancelling,
 } from "../../../../../model/index.js";
 
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
@@ -57,13 +58,21 @@ const selectCommonDashboardInsightProps = createSelector(
 );
 
 const selectChartConfig = createSelector(
-    [selectMapboxToken, selectSeparators, selectDrillableItems, selectIsExport, selectIsInEditMode],
-    (mapboxToken, separators, drillableItems, isExportMode, isInEditMode) => ({
+    [
+        selectMapboxToken,
+        selectSeparators,
+        selectDrillableItems,
+        selectIsExport,
+        selectIsInEditMode,
+        selectEnableExecutionCancelling,
+    ],
+    (mapboxToken, separators, drillableItems, isExportMode, isInEditMode, enableExecutionCancelling) => ({
         mapboxToken,
         separators,
         forceDisableDrillOnAxes: !drillableItems?.length, // to keep in line with KD, enable axes drilling only if using explicit drills
         isExportMode,
         isInEditMode,
+        enableExecutionCancelling,
     }),
 );
 
@@ -81,6 +90,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         onError,
         onDrill: onDrillFn,
         onLoadingChanged,
+        afterRender,
         onExportReady,
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
@@ -91,6 +101,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
 
     // register as early as possible
     const [initialRegistered, setInitialRegistered] = useState(true);
+    const afterRenderCalled = useRef(false);
     useEffect(() => {
         onRequestAsyncRender();
     }, []);
@@ -109,7 +120,8 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
 
     // State props
     const { locale, settings, colorPalette } = useDashboardSelector(selectCommonDashboardInsightProps);
-    const { enableKDWidgetCustomHeight } = useDashboardSelector(selectSettings);
+    const { enableKDWidgetCustomHeight, enableDashboardAfterRenderDetection } =
+        useDashboardSelector(selectSettings);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const crossFilteringSelectedPoints = useDashboardSelector(
         selectCrossFilteringSelectedPointsByWidgetRef(ref),
@@ -119,12 +131,18 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
 
     // Loading and rendering
     const [isVisualizationLoading, setIsVisualizationLoading] = useState(false);
+    const [isVisualizationInitializing, setIsVisualizationInitializing] = useState(true);
     const [visualizationError, setVisualizationError] = useState<GoodDataSdkError | undefined>();
 
     const { onRequestAsyncRender, onResolveAsyncRender } = useDashboardAsyncRender(objRefToString(ref));
     const handleLoadingChanged = useCallback<OnLoadingChanged>(
         ({ isLoading }) => {
             if (isLoading) {
+                // when loading starts, reset the afterRenderCalled
+                if (enableDashboardAfterRenderDetection) {
+                    afterRenderCalled.current = false;
+                }
+
                 if (!initialRegistered) {
                     // request when loading changed in later phases
                     // such as re-execution on filters change
@@ -139,14 +157,30 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                     setInitialRegistered(false);
                 }
 
-                onResolveAsyncRender();
+                // fallback to onLoadingChange-based resolve if afterRender detection not enabled
+                if (!enableDashboardAfterRenderDetection) {
+                    onResolveAsyncRender();
+                }
             }
             executionsHandler.onLoadingChanged({ isLoading });
             setIsVisualizationLoading(isLoading);
+            setIsVisualizationInitializing(isLoading);
             onLoadingChanged?.({ isLoading });
         },
-        [onLoadingChanged, executionsHandler.onLoadingChanged, initialRegistered],
+        [
+            onLoadingChanged,
+            executionsHandler.onLoadingChanged,
+            initialRegistered,
+            enableDashboardAfterRenderDetection,
+        ],
     );
+
+    const handleAfterRender = useCallback(() => {
+        if (enableDashboardAfterRenderDetection && !afterRenderCalled.current) {
+            afterRenderCalled.current = true;
+            onResolveAsyncRender();
+        }
+    }, [afterRender, onResolveAsyncRender, enableDashboardAfterRenderDetection]);
 
     // Filtering
     const {
@@ -203,8 +237,12 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
             setVisualizationError(error);
             onError?.(error);
             executionsHandler.onError(error);
+            // rendered with error, notify if we're using afterRender to detect
+            if (enableDashboardAfterRenderDetection) {
+                onResolveAsyncRender();
+            }
         },
-        [onError, executionsHandler.onError],
+        [onError, executionsHandler.onError, enableDashboardAfterRenderDetection, onResolveAsyncRender],
     );
 
     const effectiveError = filtersError ?? visualizationError;
@@ -240,7 +278,11 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     // if filter status is success and visualization is loading, render both loading and insight
     const loading = filtersStatus === "running" || isVisualizationLoading;
 
-    const exportDataVis = useVisualizationExportData(exportData, loading, !!effectiveError);
+    const exportDataVis = useVisualizationExportData(
+        exportData,
+        isVisualizationInitializing,
+        !!effectiveError,
+    );
 
     const renderComponent = () => {
         if (effectiveError) {
@@ -255,7 +297,11 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         } else {
             return (
                 <>
-                    {loading ? <LoadingComponent /> : null}
+                    {loading ? (
+                        <div className="insight-view-loader">
+                            <LoadingComponent />
+                        </div>
+                    ) : null}
                     {filtersStatus === "success" ? (
                         <div className="insight-view-visualization" style={insightWrapperStyle}>
                             <InsightBody
@@ -278,6 +324,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                                 ErrorComponent={ErrorComponent}
                                 LoadingComponent={LoadingComponent}
                                 onExportReady={onExportReady}
+                                afterRender={handleAfterRender}
                             />
                         </div>
                     ) : null}

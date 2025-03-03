@@ -396,7 +396,9 @@ export interface IInsightErrorProps {
 }
 
 // @internal (undocumented)
-export interface IInsightRendererProps extends Omit<IInsightViewProps, "insight" | "TitleComponent" | "onInsightLoaded" | "showTitle" | "afterRender"> {
+export interface IInsightRendererProps extends Omit<IInsightViewProps, "insight" | "TitleComponent" | "onInsightLoaded" | "showTitle"> {
+    // (undocumented)
+    afterRender?: () => void;
     // (undocumented)
     colorPalette: IColorPalette | undefined;
     // (undocumented)
@@ -584,10 +586,7 @@ export const InsightError: React_2.FC<WithIntlProps<IInsightErrorProps & Wrapped
 export const InsightRenderer: React_2.FC<IInsightRendererProps>;
 
 // @public
-export class InsightView extends React_2.Component<IInsightViewProps> {
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const InsightView: (props: IInsightViewProps) => React_2.JSX.Element;
 
 // @beta
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition;

@@ -238,15 +238,16 @@ not be a dot (full stop) at the end of the header line.
 
 #### Body
 
-Description of the commit content and more details to the short
-description in the title. The lines must be wrapped at 72 characters.
+A detailed description of the commit, expanding on the short description in the title.
+Lines must be wrapped at 72 characters.
 
 #### Footer
 
-Commit must have two-line footer.
-First line contains risk in format: `risk: [nonprod|low|high]` e.g. `risk: low`.
-Second line contains JIRA ID reference in the form of `JIRA: PROJECT-TICKET_ID`.
-Changes that do not require a JIRA ticket (e.g. typo fixes) should have `JIRA: TRIVIAL` in the footer instead or omit the line.
+The commit must include a footer.
+
+The first (optional) line contains a JIRA ID reference in the format `JIRA: PROJECT-TICKET_ID`. For changes that do not require a JIRA ticket (e.g., typo fixes), use `JIRA: TRIVIAL` in the footer or omit this line entirely.
+
+The second line specifies the potential risk introduced by the commit in the format `risk: [nonprod|low|high]`, e.g., `risk: low`.
 
 #### Breaking changes
 

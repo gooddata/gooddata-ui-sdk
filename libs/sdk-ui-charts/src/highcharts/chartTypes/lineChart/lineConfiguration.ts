@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
 import { IChartConfig } from "../../../interfaces/index.js";
 import { styleVariables } from "../_chartCreators/styles/variables.js";
@@ -47,6 +47,9 @@ export function getLineConfiguration(
         xAxis: [
             {
                 categories: [] as string[],
+                labels: {
+                    distance: 7,
+                },
             },
         ],
         yAxis: [

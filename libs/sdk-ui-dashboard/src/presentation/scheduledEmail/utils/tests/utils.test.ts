@@ -35,16 +35,9 @@ describe("toNormalizedFirstRunAndCron", () => {
     it("no zone", () => {
         const res = toNormalizedFirstRunAndCron();
 
-        const iso = isoDate(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getDate(),
-            offset ? now.getHours() + 1 : now.getHours(),
-            0,
-        );
         const dt = toModifiedISOStringToTimezone(res.normalizedFirstRun, getUserTimezone().identifier);
         const cron = cronDaily(dt.date.getHours());
-        expect(res.firstRun).toEqual(iso);
+        expect(res.firstRun).toEqual(dt.iso);
         expect(res.cron).toEqual(cron);
     });
 

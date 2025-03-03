@@ -50,6 +50,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         EmptyResultComponent,
         StatusBarComponent,
         enableDuplicatedLabelValuesInAttributeFilter = true,
+        enableImmediateAttributeFilterDisplayAsLabelMigration = false,
     } = props;
 
     const DefaultComponents = getAttributeFilterDefaultComponents(props);
@@ -107,6 +108,9 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     customIcon={customIcon}
                     enableDuplicatedLabelValuesInAttributeFilter={
                         enableDuplicatedLabelValuesInAttributeFilter
+                    }
+                    enableImmediateAttributeFilterDisplayAsLabelMigration={
+                        enableImmediateAttributeFilterDisplayAsLabelMigration
                     }
                     withoutApply={props.withoutApply}
                 >

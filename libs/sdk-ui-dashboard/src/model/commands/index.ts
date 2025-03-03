@@ -7,6 +7,7 @@ import {
     SaveDashboard,
     SaveDashboardAs,
     ExportDashboardToPdf,
+    ExportDashboardToExcel,
     DeleteDashboard,
     ChangeSharing,
     SetDashboardDateFilterConfigMode,
@@ -15,6 +16,8 @@ import {
     SetDateFilterConfigTitle,
     SetAttributeFilterLimitingItems,
     SetDashboardAttributeFilterConfigDisplayAsLabel,
+    ExportDashboardToPdfPresentation,
+    ExportDashboardToPptPresentation,
 } from "./dashboard.js";
 import { TriggerEvent } from "./events.js";
 import { UpsertExecutionResult } from "./executionResults.js";
@@ -51,11 +54,13 @@ import {
     RefreshInsightWidget,
     RemoveDrillsForInsightWidget,
     ExportInsightWidget,
+    ExportRawInsightWidget,
     RemoveDrillDownForInsightWidget,
     AddDrillDownForInsightWidget,
     ModifyDrillDownForInsightWidget,
     AttributeHierarchyModified,
     ChangeInsightWidgetIgnoreCrossFiltering,
+    ExportSlidesInsightWidget,
 } from "./insight.js";
 import {
     ChangeKpiWidgetComparison,
@@ -125,6 +130,9 @@ export type {
     RenameDashboardPayload,
     ResetDashboard,
     ExportDashboardToPdf,
+    ExportDashboardToPptPresentation,
+    ExportDashboardToPdfPresentation,
+    ExportDashboardToExcel,
     DeleteDashboard,
     ChangeSharing,
     ChangeSharingPayload,
@@ -150,6 +158,9 @@ export {
     renameDashboard,
     resetDashboard,
     exportDashboardToPdf,
+    exportDashboardToExcel,
+    exportDashboardToPdfPresentation,
+    exportDashboardToPptPresentation,
     deleteDashboard,
     changeSharing,
     setDashboardDateFilterConfigMode,
@@ -431,6 +442,10 @@ export type {
     ExportInsightWidget,
     ExportInsightWidgetPayload,
     AttributeHierarchyModified,
+    ExportRawInsightWidget,
+    ExportRawInsightWidgetPayload,
+    ExportSlidesInsightWidget,
+    ExportSlidesInsightWidgetPayload,
 } from "./insight.js";
 export {
     changeInsightWidgetHeader,
@@ -454,6 +469,8 @@ export {
     modifyDrillDownForInsightWidget,
     refreshInsightWidget,
     exportInsightWidget,
+    exportRawInsightWidget,
+    exportSlidesInsightWidget,
     attributeHierarchyModified,
 } from "./insight.js";
 export { loadAllWorkspaceUsers } from "./users.js";
@@ -512,6 +529,9 @@ export type DashboardCommands =
     | RenameDashboard
     | ResetDashboard
     | ExportDashboardToPdf
+    | ExportDashboardToExcel
+    | ExportDashboardToPdfPresentation
+    | ExportDashboardToPptPresentation
     | DeleteDashboard
     | TriggerEvent
     | UpsertExecutionResult
@@ -599,4 +619,6 @@ export type DashboardCommands =
     | ApplyAllDashboardFilters
     //internal
     | SetScreenSize
-    | LoadAllWorkspaceUsers;
+    | LoadAllWorkspaceUsers
+    | ExportRawInsightWidget
+    | ExportSlidesInsightWidget;
