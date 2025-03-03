@@ -1,0 +1,151 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`withNormalization > should normalize also attributes locals ids in filters 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "cross_border_ind",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_cross_border_ind",
+        "showAllValues": false,
+      },
+    },
+  ],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_cross_border_ind",
+      ],
+    },
+  ],
+  "filters": [
+    {
+      "relativeDateFilter": {
+        "dataSet": {
+          "identifier": "DW_PROCESS_MONTH_END_DATE",
+          "type": "dataSet",
+        },
+        "from": -15,
+        "granularity": "GDC.time.month",
+        "to": -1,
+      },
+    },
+    {
+      "positiveAttributeFilter": {
+        "displayForm": {
+          "localIdentifier": "a_cross_border_ind",
+        },
+        "in": {
+          "values": [
+            "Domestic",
+          ],
+        },
+      },
+    },
+  ],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "computeRatio": false,
+            "filters": [],
+            "item": {
+              "identifier": "gross_fraud_rate",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_gross_fraud_rate",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "testWorkspace",
+}
+`;
+
+exports[`withNormalization > should normalize also attributes locals ids in filters 2`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "cross_border_ind",
+          "type": "displayForm",
+        },
+        "localIdentifier": "5050b198945940d989c6ec1dc5d41cb0",
+        "showAllValues": false,
+      },
+    },
+  ],
+  "buckets": [],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "5050b198945940d989c6ec1dc5d41cb0",
+      ],
+    },
+  ],
+  "filters": [
+    {
+      "relativeDateFilter": {
+        "dataSet": {
+          "identifier": "DW_PROCESS_MONTH_END_DATE",
+          "type": "dataSet",
+        },
+        "from": -15,
+        "granularity": "GDC.time.month",
+        "to": -1,
+      },
+    },
+    {
+      "positiveAttributeFilter": {
+        "displayForm": {
+          "localIdentifier": "5050b198945940d989c6ec1dc5d41cb0",
+        },
+        "in": {
+          "values": [
+            "Domestic",
+          ],
+        },
+      },
+    },
+  ],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "computeRatio": false,
+            "filters": [],
+            "item": {
+              "identifier": "gross_fraud_rate",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "dfa7419de85a48cab8a203960a84e766",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "testWorkspace",
+}
+`;
