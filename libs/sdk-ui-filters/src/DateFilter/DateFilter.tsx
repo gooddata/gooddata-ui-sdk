@@ -17,7 +17,7 @@ import { DEFAULT_DATE_FORMAT } from "./constants/Platform.js";
 import { normalizeSelectedFilterOption } from "./utils/FilterOptionNormalization.js";
 import { IFilterButtonCustomIcon, VisibilityMode } from "../shared/index.js";
 import { IFilterConfigurationProps } from "./DateFilterBody/types.js";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty.js";
 
 /**
  * Props of the {@link DateFilter} component that are reflected in the state.

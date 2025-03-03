@@ -29,7 +29,11 @@ import isEmpty from "lodash/isEmpty.js";
 import { selectSupportsCircularDependencyInFilters } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../drill/drillSelectors.js";
 import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
-import { identity, isEqual, keyBy, keys, sortBy } from "lodash";
+import identity from "lodash/identity.js";
+import isEqual from "lodash/isEqual.js";
+import keyBy from "lodash/keyBy.js";
+import keys from "lodash/keys.js";
+import sortBy from "lodash/sortBy.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
