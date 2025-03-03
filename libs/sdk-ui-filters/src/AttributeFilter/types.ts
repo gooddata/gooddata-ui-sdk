@@ -242,6 +242,7 @@ export interface IAttributeFilterCoreProps {
      * Specify function which will be called when user clicks 'Apply' button on this filter.
      * Note: this callback is typically not called when using Dashboard apply filters mode ALL_AT_ONCE
      * because there is no apply button dispalyed in attribute filter component.
+     * See withoutApply prop.
      *
      * @remarks
      * The function will receive the current specification of the filter, as it was updated by the user.
@@ -270,6 +271,14 @@ export interface IAttributeFilterCoreProps {
      * Enables duplicated values in secondary labels.
      */
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
+
+    /**
+     * This enables filter mode without apply button.
+     * If true, it is responsibility of a client, to appy filters when needed.
+     * Typically uses onSelect callback to catch filter state.
+     * Note, onApply callback is not called when this is true.
+     */
+    withoutApply?: boolean;
 }
 
 /**

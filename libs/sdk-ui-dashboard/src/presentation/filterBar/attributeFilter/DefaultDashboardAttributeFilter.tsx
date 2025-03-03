@@ -41,6 +41,7 @@ import {
     selectEnableCriticalContentPerformanceOptimizations,
     selectPreloadedAttributesWithReferences,
     selectIsDashboardExecuted,
+    selectDashboardFiltersApplyMode,
 } from "../../../model/index.js";
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
 import { getVisibilityIcon } from "../utils.js";
@@ -108,6 +109,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
     const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
         selectEnableDuplicatedLabelValuesInAttributeFilter,
     );
+    const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
 
     const filterRef = useMemo(() => {
         return filterObjRef(attributeFilter);
@@ -468,6 +470,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                 customIcon={visibilityIcon}
                 StatusBarComponent={CustomStatusBarComponent}
                 enableDuplicatedLabelValuesInAttributeFilter={enableDuplicatedLabelValuesInAttributeFilter}
+                withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE"}
             />
         </AttributeFilterParentFilteringProvider>
     );

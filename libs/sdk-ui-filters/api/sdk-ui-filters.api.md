@@ -418,6 +418,7 @@ export interface IAttributeFilterCoreProps {
     staticElements?: IAttributeElement[];
     title?: string;
     validateElementsBy?: ObjRef[];
+    withoutApply?: boolean;
     workspace?: string;
 }
 
@@ -744,6 +745,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     showDropDownHeaderMessage?: boolean;
     // (undocumented)
     weekStart?: WeekStart;
+    withoutApply?: boolean;
 }
 
 // @public

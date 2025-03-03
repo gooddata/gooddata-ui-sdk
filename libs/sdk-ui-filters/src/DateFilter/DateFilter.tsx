@@ -17,6 +17,7 @@ import { DEFAULT_DATE_FORMAT } from "./constants/Platform.js";
 import { normalizeSelectedFilterOption } from "./utils/FilterOptionNormalization.js";
 import { IFilterButtonCustomIcon, VisibilityMode } from "../shared/index.js";
 import { IFilterConfigurationProps } from "./DateFilterBody/types.js";
+import { isEmpty } from "lodash";
 
 /**
  * Props of the {@link DateFilter} component that are reflected in the state.
@@ -57,6 +58,14 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
      * @alpha
      */
     FilterConfigurationComponent?: React.ComponentType<IFilterConfigurationProps>;
+
+    /**
+     * This enables filter mode without apply button.
+     * If true, it is responsibility of a client, to appy filters when needed.
+     * Typically uses onSelect callback to catch filter state.
+     * Note, onApply callback is not called when this is true.
+     */
+    withoutApply?: boolean;
 }
 
 /**
@@ -105,6 +114,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
         onOpen: noop,
         onClose: noop,
         weekStart: "Sunday" as const,
+        withoutApply: false,
     };
 
     public static getDerivedStateFromProps(
@@ -239,7 +249,9 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             this.props.onOpen();
         } else {
             this.props.onClose();
-            this.onChangesDiscarded();
+            if (!this.props.withoutApply || !isEmpty(validateFilterOption(this.state.selectedFilterOption))) {
+                this.onChangesDiscarded();
+            }
         }
     };
 

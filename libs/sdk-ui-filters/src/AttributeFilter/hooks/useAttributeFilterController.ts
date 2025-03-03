@@ -20,6 +20,7 @@ import {
     isNegativeAttributeFilter,
     isPositiveAttributeFilter,
     ObjRef,
+    objRefToString,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict, GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
@@ -97,6 +98,7 @@ export const useAttributeFilterController = (
         selectionMode = "multi",
         selectFirst = false,
         enableDuplicatedLabelValuesInAttributeFilter = true,
+        withoutApply = false,
     } = props;
 
     const backend = useBackendStrict(backendInput, "AttributeFilter");
@@ -184,6 +186,7 @@ export const useAttributeFilterController = (
             setShouldIncludeLimitingFilters,
             limitingAttributeFilters,
             limitingDateFilters,
+            withoutApply,
         },
         supportsShowingFilteredElements,
         supportsKeepingDependentFiltersSelection,
@@ -195,6 +198,7 @@ export const useAttributeFilterController = (
         onApply: callbacks.onApply,
         selectionMode,
         enableDuplicatedLabelValuesInAttributeFilter,
+        withoutApply,
     });
 
     return {
@@ -497,7 +501,9 @@ function updateNonResettingFilter(
 
         const hasLimitingDateFiltersChanged =
             handler.getLimitingDateFilters().length !== limitingDateFilters.length ||
-            differenceBy(handler.getLimitingDateFilters(), limitingDateFilters).length > 0;
+            differenceBy(handler.getLimitingDateFilters(), limitingDateFilters, (dateFilter) =>
+                objRefToString(filterObjRef(dateFilter)),
+            ).length > 0;
         const hasNumberOfLimitingAttributesChanged =
             handler.getLimitingAttributeFilters().length !== limitingAttributeFilters.length;
         const shouldReinitilizeAllElements =
@@ -635,6 +641,7 @@ function useCallbacks(
         setShouldIncludeLimitingFilters: (value: boolean) => void;
         limitingAttributeFilters: IElementsQueryAttributeFilter[];
         limitingDateFilters: (IRelativeDateFilter | IAbsoluteDateFilter)[];
+        withoutApply: boolean;
     },
     supportsShowingFilteredElements: boolean,
     supportsKeepingDependentFiltersSelection: boolean,
@@ -651,6 +658,7 @@ function useCallbacks(
         setShouldIncludeLimitingFilters,
         limitingAttributeFilters,
         limitingDateFilters,
+        withoutApply,
     } = props;
 
     const handlerState = useAttributeFilterHandlerState(handler);
@@ -732,7 +740,9 @@ function useCallbacks(
     }, [handler]);
 
     const onReset = useCallback(() => {
-        handler.revertSelection();
+        if (!withoutApply) {
+            handler.revertSelection();
+        }
 
         if (handler.getSearch().length > 0) {
             handler.setSearch("");
@@ -756,13 +766,17 @@ function useCallbacks(
         setShouldReloadElements,
         shouldIncludeLimitingFilters,
         supportsShowingFilteredElements,
+        withoutApply,
     ]);
 
     const onApply = useCallback(() => {
+        if (withoutApply) {
+            return;
+        }
         handler.commitSelection();
         setConnectedPlaceholderValue(handler.getFilter());
         onSelectionChange(onApplyInputCallback);
-    }, [handler, setConnectedPlaceholderValue, onSelectionChange, onApplyInputCallback]);
+    }, [handler, setConnectedPlaceholderValue, onSelectionChange, onApplyInputCallback, withoutApply]);
 
     const onOpen = useCallback(() => {
         if (shouldReloadElements) {
@@ -820,9 +834,16 @@ const useSingleSelectModeHandler = (
         selectionMode: DashboardAttributeFilterSelectionMode;
         onApply: () => void;
         enableDuplicatedLabelValuesInAttributeFilter: boolean;
+        withoutApply: boolean;
     },
 ) => {
-    const { selectFirst, selectionMode, onApply, enableDuplicatedLabelValuesInAttributeFilter } = props;
+    const {
+        selectFirst,
+        selectionMode,
+        onApply,
+        enableDuplicatedLabelValuesInAttributeFilter,
+        withoutApply,
+    } = props;
     const committedSelectionKeys = handler.getCommittedSelection().keys;
     const initialStatus = handler.getInitStatus();
     const elements = handler.getAllElements();
@@ -834,7 +855,8 @@ const useSingleSelectModeHandler = (
             selectionMode === "single" &&
             isEmpty(committedSelectionKeys) &&
             initialStatus === "success" &&
-            !isEmpty(elements)
+            !isEmpty(elements) &&
+            !withoutApply
         ) {
             const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(filter));
             const keys = [
@@ -857,6 +879,7 @@ const useSingleSelectModeHandler = (
         handler,
         onApply,
         enableDuplicatedLabelValuesInAttributeFilter,
+        withoutApply,
     ]);
 };
 

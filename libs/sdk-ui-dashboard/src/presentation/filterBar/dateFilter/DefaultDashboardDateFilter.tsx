@@ -21,6 +21,7 @@ import { IDashboardDateFilterProps } from "./types.js";
 import {
     selectBackendCapabilities,
     selectCatalogDateDatasets,
+    selectDashboardFiltersApplyMode,
     selectIsInEditMode,
     selectLocale,
     selectSettings,
@@ -45,6 +46,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
     const locale = useDashboardSelector(selectLocale);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const weekStart = useDashboardSelector(selectWeekStart);
+    const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
     const { filter, onFilterChanged, config, readonly, autoOpen } = props;
 
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
@@ -149,6 +151,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             customIcon={visibilityIcon}
             showDropDownHeaderMessage={!filter?.dateFilter.dataSet}
             FilterConfigurationComponent={isConfigurationEnabled ? FilterConfigurationComponent : undefined}
+            withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE"}
         />
     );
 };

@@ -108,6 +108,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     enableDuplicatedLabelValuesInAttributeFilter={
                         enableDuplicatedLabelValuesInAttributeFilter
                     }
+                    withoutApply={props.withoutApply}
                 >
                     {children}
                 </AttributeFilterContextProvider>
