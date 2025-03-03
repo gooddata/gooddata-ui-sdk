@@ -32,7 +32,7 @@ import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpin
 import { DASHBOARDS_ENVIRONMENT, ANALYTICAL_ENVIRONMENT } from "../../../constants/properties.js";
 import { GEOPUSHPIN_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import GeoPushpinConfigurationPanel from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, ILoadingState, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     attributeAlias,
     attributeDisplayFormRef,
@@ -108,6 +108,8 @@ const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;
  * - |Segment| ≥ 1 ⇒ [attributeSort(Segment[0])]
  */
 export class PluggableGeoPushpinChart extends PluggableBaseChart {
+    private isFirstRendered = false;
+
     constructor(props: IVisConstruct) {
         super(props);
 
@@ -236,6 +238,26 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             );
         }
     }
+
+    protected onLoadingChanged = (loadingState: ILoadingState): void => {
+        const isLoading = loadingState.isLoading || !this.isFirstRendered;
+        this.callbacks.onLoadingChanged?.({
+            isLoading,
+        });
+
+        this.hasError = false;
+        this.isLoading = isLoading;
+        this.renderConfigurationPanel(this.currentInsight, this.currentOptions);
+    };
+
+    protected afterRender = (): void => {
+        this.isFirstRendered = true;
+        this.callbacks.onLoadingChanged?.({
+            isLoading: false,
+        });
+        this.isLoading = false;
+        this.callbacks.afterRender?.();
+    };
 
     protected buildVisualizationConfig(
         options: IVisProps,

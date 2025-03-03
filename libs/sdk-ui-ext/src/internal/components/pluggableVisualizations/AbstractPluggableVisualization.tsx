@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import {
     IBucketItem,
@@ -48,7 +48,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     /**
      * Standard callback
      */
-    private readonly callbacks: IVisCallbacks;
+    protected readonly callbacks: IVisCallbacks;
 
     /**
      * Insight that is currently rendered by the pluggable visualization. This field is set during
@@ -77,7 +77,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      */
     private readonly configPanelElement: string | ElementSelectorFunction;
 
-    private hasError: boolean;
+    protected hasError: boolean;
     private hasEmptyAfm: boolean;
 
     protected isLoading: boolean;
