@@ -1,4 +1,4 @@
-// (C) 2015-2024 GoodData Corporation
+// (C) 2015-2025 GoodData Corporation
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
@@ -121,6 +121,60 @@
         &::before {
             content: "";
             background: url("~@gooddata/sdk-ui-dashboard/esm/assets/filter.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
+    .gd-icon-type-pdf {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-pdf.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
+    .gd-icon-type-sheet {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-sheet.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
+    .gd-icon-type-slides {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-slides.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
+    .gd-icon-type-image {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-image.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
+    .gd-icon-type-csv-raw {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-csv-raw.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
+    .gd-icon-type-csv-formatted {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/type-csv-formatted.svg") no-repeat center;
             width: 16px;
             height: 16px;
             display: inline-block;
