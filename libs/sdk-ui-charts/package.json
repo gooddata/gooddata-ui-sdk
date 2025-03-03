@@ -86,7 +86,7 @@
         "@gooddata/util": "workspace:*",
         "classnames": "^2.3.1",
         "date-fns": "^2.22.1",
-        "default-import": "1.1.5",
+        "default-import": "1.1.7",
         "highcharts": "12.1.2",
         "hoist-non-react-statics": "^3.3.0",
         "js-yaml": "^4.1.0",

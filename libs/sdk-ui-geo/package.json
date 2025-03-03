@@ -62,7 +62,7 @@
         "@gooddata/sdk-ui-theme-provider": "workspace:*",
         "@gooddata/sdk-ui-vis-commons": "workspace:*",
         "classnames": "^2.3.1",
-        "default-import": "1.1.5",
+        "default-import": "1.1.7",
         "lodash": "^4.17.21",
         "mapbox-gl": "^2.6.1",
         "react-intl": "^6.4.1",
