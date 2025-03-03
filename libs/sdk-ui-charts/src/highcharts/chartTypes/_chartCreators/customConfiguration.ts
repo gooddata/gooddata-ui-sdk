@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import noop from "lodash/noop.js";
 import isString from "lodash/isString.js";
 import merge from "lodash/merge.js";
@@ -303,6 +303,27 @@ function getHighchartTooltipLeftOffset(chartType: string): number {
     }
     return HIGHCHARTS_TOOLTIP_TOP_LEFT_OFFSET;
 }
+
+function getRelativeCoordinates(
+    absoluteX: number,
+    absoluteY: number,
+    container: HTMLElement,
+    chartType: string,
+) {
+    // Get the bounding rectangle of the container
+    const containerRect = container.getBoundingClientRect();
+
+    // Adjust the container's coordinates to account for page scrolling
+    const containerX = containerRect.left + window.scrollX;
+    const containerY = containerRect.top + window.scrollY;
+
+    // Calculate the relative coordinates
+    const relativeX = absoluteX - containerX + getHighchartTooltipLeftOffset(chartType);
+    const relativeY = absoluteY - containerY;
+
+    return { x: relativeX, y: relativeY };
+}
+
 export function getTooltipPositionInViewPort(
     chartType: string,
     stacking: string,
@@ -319,18 +340,22 @@ export function getTooltipPositionInViewPort(
         point,
     );
     const { top: containerTop, left: containerLeft } = this.chart.container.getBoundingClientRect();
-    const leftOffset = pageXOffset + containerLeft - getHighchartTooltipLeftOffset(chartType);
-    const topOffset = pageYOffset + containerTop - getHighchartTooltipTopOffset(chartType);
+    const leftOffset = window.scrollX + containerLeft - getHighchartTooltipLeftOffset(chartType);
+    const topOffset = window.scrollY + containerTop - getHighchartTooltipTopOffset(chartType);
 
     const posX = isTooltipShownInFullScreen() ? leftOffset : leftOffset + x;
     const posY = topOffset + y;
 
-    const minPosY = TOOLTIP_VIEWPORT_MARGIN_TOP - TOOLTIP_PADDING + pageYOffset;
+    const minPosY = TOOLTIP_VIEWPORT_MARGIN_TOP - TOOLTIP_PADDING + window.scrollY;
     const posYLimited = posY < minPosY ? minPosY : posY;
 
+    // After migration to highcharts version 12.1.2 position of tooltip needs to be relative to container
+    // so we need to calculate relative position of tooltip from absolute page position
+    const relative = getRelativeCoordinates(posX, posYLimited, this.chart.container, chartType);
+
     return {
-        x: posX,
-        y: posYLimited,
+        x: relative.x,
+        y: relative.y,
     };
 }
 
@@ -476,7 +501,8 @@ function labelFormatterScatter() {
 // check whether series contains only positive values, not consider nulls
 function hasOnlyPositiveValues(series: any, x: any) {
     return every(series, (seriesItem: any) => {
-        const dataPoint = seriesItem.yData[x];
+        const yData = seriesItem.getColumn("y");
+        const dataPoint = yData[x];
         return dataPoint !== null && dataPoint >= 0;
     });
 }
@@ -1208,6 +1234,7 @@ const getYAxisConfiguration = (
         const tickConfiguration = getYAxisTickConfiguration(chartOptions, axisPropsKey);
 
         const titleTextProp = visible ? {} : { text: null }; // new way how to hide title instead of deprecated 'enabled'
+        const isInvertedChart = isInvertedChartType(chartOptions.type, chartConfig?.orientation?.position);
 
         return {
             ...getAxisLineConfiguration(type, visible),
@@ -1216,6 +1243,7 @@ const getYAxisConfiguration = (
                 style: {
                     color: axisValueColor,
                     font: '12px gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
+                    textOverflow: !isInvertedChart ? "unset" : "ellipsis", // We need disable ellipsis Y axis to backward compatibility with 9.6.0
                 },
                 ...formatter,
                 ...rotationProp,
@@ -1226,6 +1254,8 @@ const getYAxisConfiguration = (
                 style: {
                     color: axisLabelColor,
                     font: '14px gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
                 },
             },
             opposite,
@@ -1305,6 +1335,7 @@ const getXAxisConfiguration = (
                 style: {
                     color: axisValueColor,
                     font: '12px gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
+                    textOverflow: isInvertedChart ? "unset" : "ellipsis", // We need disable ellipsis Y axis to backward compatibility with 9.6.0
                 },
                 autoRotation: [-90],
                 ...formatter,
@@ -1317,9 +1348,10 @@ const getXAxisConfiguration = (
                 ...titleTextProp,
                 margin: 10,
                 style: {
-                    textOverflow: "ellipsis",
                     color: axisLabelColor,
                     font: '14px gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
                 },
             },
             className,
@@ -1377,7 +1409,9 @@ function getZoomingAndPanningConfiguration(
         ? {
               chart: {
                   animation: true,
-                  zoomType: "x",
+                  zooming: {
+                      type: "x",
+                  },
                   panKey: "shift",
                   panning: {
                       enabled: true,
