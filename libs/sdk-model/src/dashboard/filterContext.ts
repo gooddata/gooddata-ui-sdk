@@ -581,58 +581,74 @@ export function applyFilterContext(
     filterContext: IFilterContextDefinition,
     workingFilterContext: IWorkingFilterContextDefinition | undefined,
 ): IFilterContextDefinition {
-    return {
-        ...filterContext,
-        filters: filterContext.filters.map((appliedFilter): FilterContextItem => {
-            if (isDashboardAttributeFilter(appliedFilter)) {
-                const workingFilter: Partial<IDashboardAttributeFilter> | undefined =
-                    workingFilterContext?.filters
-                        ?.filter(isDashboardAttributeFilter)
-                        .find(
-                            (item) =>
-                                item.attributeFilter?.localIdentifier ===
-                                appliedFilter.attributeFilter.localIdentifier,
-                        );
-                if (!workingFilter?.attributeFilter) {
-                    return appliedFilter;
-                }
-                return {
-                    attributeFilter: {
-                        ...appliedFilter.attributeFilter,
-                        displayForm:
-                            workingFilter.attributeFilter.displayForm ??
-                            appliedFilter.attributeFilter.displayForm,
-                        attributeElements:
-                            workingFilter.attributeFilter.attributeElements ??
-                            appliedFilter.attributeFilter.attributeElements,
-                        negativeSelection:
-                            workingFilter.attributeFilter.negativeSelection ??
-                            appliedFilter.attributeFilter.negativeSelection,
-                    },
-                };
-            } else if (isDashboardDateFilter(appliedFilter)) {
-                const workingFilter: IDashboardDateFilter | undefined = workingFilterContext?.filters
-                    ?.filter(isDashboardDateFilter)
+    const filters = filterContext.filters.map((appliedFilter): FilterContextItem => {
+        if (isDashboardAttributeFilter(appliedFilter)) {
+            const workingFilter: Partial<IDashboardAttributeFilter> | undefined =
+                workingFilterContext?.filters
+                    ?.filter(isDashboardAttributeFilter)
                     .find(
                         (item) =>
-                            areObjRefsEqual(item.dateFilter.dataSet, appliedFilter.dateFilter.dataSet) ||
-                            (!item.dateFilter.dataSet && !appliedFilter.dateFilter.dataSet), // common date filter
+                            item.attributeFilter?.localIdentifier ===
+                            appliedFilter.attributeFilter.localIdentifier,
                     );
-                if (!workingFilter?.dateFilter) {
-                    return appliedFilter;
-                }
-                return {
-                    dateFilter: {
-                        ...appliedFilter.dateFilter,
-                        type: workingFilter.dateFilter.type,
-                        granularity: workingFilter.dateFilter.granularity,
-                        from: workingFilter.dateFilter.from,
-                        to: workingFilter.dateFilter.to,
-                    },
-                };
-            } else {
-                throw new Error("Unknown filter type");
+            if (!workingFilter?.attributeFilter) {
+                return appliedFilter;
             }
-        }),
+            return {
+                attributeFilter: {
+                    ...appliedFilter.attributeFilter,
+                    displayForm:
+                        workingFilter.attributeFilter.displayForm ??
+                        appliedFilter.attributeFilter.displayForm,
+                    attributeElements:
+                        workingFilter.attributeFilter.attributeElements ??
+                        appliedFilter.attributeFilter.attributeElements,
+                    negativeSelection:
+                        workingFilter.attributeFilter.negativeSelection ??
+                        appliedFilter.attributeFilter.negativeSelection,
+                },
+            };
+        } else if (isDashboardDateFilter(appliedFilter)) {
+            const workingFilter: IDashboardDateFilter | undefined = workingFilterContext?.filters
+                ?.filter(isDashboardDateFilter)
+                .find(
+                    (item) =>
+                        areObjRefsEqual(item.dateFilter.dataSet, appliedFilter.dateFilter.dataSet) ||
+                        (!item.dateFilter.dataSet && !appliedFilter.dateFilter.dataSet), // common date filter
+                );
+            if (!workingFilter?.dateFilter) {
+                return appliedFilter;
+            }
+            return {
+                dateFilter: {
+                    ...appliedFilter.dateFilter,
+                    type: workingFilter.dateFilter.type,
+                    granularity: workingFilter.dateFilter.granularity,
+                    from: workingFilter.dateFilter.from,
+                    to: workingFilter.dateFilter.to,
+                },
+            };
+        } else {
+            throw new Error("Unknown filter type");
+        }
+    });
+
+    const appliedCommonDateFilter = filterContext.filters.find(isDashboardCommonDateFilter);
+    const workingCommonDateFilter = workingFilterContext?.filters.find(isDashboardCommonDateFilter);
+
+    if (
+        appliedCommonDateFilter ||
+        !workingCommonDateFilter ||
+        (isAllTimeDashboardDateFilter(workingCommonDateFilter) && !appliedCommonDateFilter)
+    ) {
+        return {
+            ...filterContext,
+            filters,
+        };
+    }
+
+    return {
+        ...filterContext,
+        filters: [workingCommonDateFilter, ...filters],
     };
 }
