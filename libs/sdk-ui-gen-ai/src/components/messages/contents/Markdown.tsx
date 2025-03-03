@@ -1,7 +1,8 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import Markdown, { Components } from "react-markdown";
+import remarkEmoji from "remark-emoji";
 import { Hyperlink, Typography } from "@gooddata/sdk-ui-kit";
 
 const componentMap: Components = {
@@ -19,7 +20,11 @@ type MarkdownComponentProps = {
 
 export const MarkdownComponent: React.FC<MarkdownComponentProps> = ({ children, allowMarkdown = false }) => {
     if (allowMarkdown) {
-        return <Markdown components={componentMap}>{children}</Markdown>;
+        return (
+            <Markdown remarkPlugins={[remarkEmoji]} components={componentMap}>
+                {children}
+            </Markdown>
+        );
     }
 
     return <Typography tagName="p">{children}</Typography>;
