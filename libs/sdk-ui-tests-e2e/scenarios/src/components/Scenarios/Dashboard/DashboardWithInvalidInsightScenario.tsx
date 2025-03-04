@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
 import { Dashboard } from "@gooddata/sdk-ui-dashboard";
@@ -7,5 +7,5 @@ import { Dashboards } from "../../../../../reference_workspace/workspace_objects
 
 const dashboardsRef = idRef(Dashboards.KDWithInvalidInsight);
 export const DashboardWithInvalidInsightScenario: React.FC = () => {
-    return <Dashboard dashboard={dashboardsRef} />;
+    return <Dashboard dashboard={dashboardsRef} config={{ settings: { enableSlideshowExports: true } }} />;
 };
