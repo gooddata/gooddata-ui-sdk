@@ -1,7 +1,7 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
-import { DashboardMenu } from "../../tools/dashboardMenu";
+import { DashboardMenu, ExportMenu } from "../../tools/dashboardMenu";
 import { AttributeFilter } from "../../tools/filterBar";
 import { Export } from "../../tools/export";
 import { TopBar } from "../../tools/dashboards";
@@ -23,10 +23,10 @@ describe("Export dashboard to pdf", { tags: ["checklist_integrated_tiger_export"
                     fileName: string;
                     contents: string;
                 }) => {
-                    Navigation.visit(dashboardInfo.dashboardURL, { enableKPIDashboardExportPDF: true });
+                    Navigation.visit(dashboardInfo.dashboardURL, { enableSlideshowExports: true });
                     widget.waitTableLoaded();
                     topBar.dashboardTitleExist().dashboardTitleHasValue(dashboardInfo.dashboardTitle);
-                    dashboardMenu.toggle().clickOption("Export to PDF");
+                    dashboardMenu.toggle().clickExport().clickExportOption(ExportMenu.EXPORT_SNAPSHOT);
                     exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
                 },
             );
@@ -42,10 +42,10 @@ describe("Export dashboard to pdf", { tags: ["checklist_integrated_tiger_export"
                     fileName: string;
                     contents: string;
                 }) => {
-                    Navigation.visit(dashboardInfo.dashboardURL);
+                    Navigation.visit(dashboardInfo.dashboardURL, { enableSlideshowExports: true });
                     widget.waitChartLoaded();
                     topBar.dashboardTitleExist().dashboardTitleHasValue(dashboardInfo.dashboardTitle);
-                    dashboardMenu.toggle().clickOption("Export to PDF");
+                    dashboardMenu.toggle().clickExport().clickExportOption(ExportMenu.EXPORT_SNAPSHOT);
                     exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
                 },
             );
@@ -64,12 +64,12 @@ describe("Export dashboard to pdf", { tags: ["checklist_integrated_tiger_export"
                         fileName: string;
                         contents: string;
                     }) => {
-                        Navigation.visit(dashboardInfo.dashboardURL);
+                        Navigation.visit(dashboardInfo.dashboardURL, { enableSlideshowExports: true });
                         topBar.dashboardTitleExist().dashboardTitleHasValue(dashboardInfo.dashboardTitle);
                         productFilter.open().selectAttributeWithoutSearch("PhoenixSoft");
                         widget.waitTableLoaded();
 
-                        dashboardMenu.toggle().clickOption("Export to PDF");
+                        dashboardMenu.toggle().clickExport().clickExportOption(ExportMenu.EXPORT_SNAPSHOT);
                         exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
                     },
                 );
@@ -86,10 +86,10 @@ describe("Export dashboard to pdf", { tags: ["checklist_integrated_tiger_export"
                     fileName: string;
                     contents: string;
                 }) => {
-                    Navigation.visit(dashboardInfo.dashboardURL);
+                    Navigation.visit(dashboardInfo.dashboardURL, { enableSlideshowExports: true });
                     widget.waitChartLoaded();
                     topBar.dashboardTitleExist().dashboardTitleHasValue(dashboardInfo.dashboardTitle);
-                    dashboardMenu.toggle().clickOption("Export to PDF");
+                    dashboardMenu.toggle().clickExport().clickExportOption(ExportMenu.EXPORT_SNAPSHOT);
                     exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
                 },
             );
