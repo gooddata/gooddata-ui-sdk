@@ -23,10 +23,14 @@ export interface FilterContextState {
      * Contains staged filters state which are not applied by the user yet.
      * They are used to show selected values in filters and when user requests, they are applied to the filterContextDefinition (above).
      *
+     * @remarks
      * This working filter context contains only changed filters and their fields.
      * before using this working, this state is merged with filterContextDefinition.
      *
      * This way we do not need to synchronize other fields, which makes it easier to maintain.
+     *
+     * This state is used when DashboardFiltersApplyMode is ALL_AT_ONCE.
+     * But can be used programatically when embedding the dashboard too.
      *
      * @alpha
      */

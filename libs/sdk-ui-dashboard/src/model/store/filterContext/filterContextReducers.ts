@@ -714,7 +714,7 @@ const changeLimitingItems: FilterContextReducer<PayloadAction<IChangeAttributeLi
 //
 //
 
-const applyAllFilterContext: FilterContextReducer<PayloadAction<void>> = (state) => {
+const applyWorkingSelection: FilterContextReducer<PayloadAction<void>> = (state) => {
     invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
     state.filterContextDefinition = applyFilterContext(
         state.filterContextDefinition,
@@ -748,5 +748,5 @@ export const filterContextReducers = {
     changeSelectionMode,
     changeLimitingItems,
     setPreloadedAttributesWithReferences,
-    applyAllFilterContext,
+    applyWorkingSelection,
 };

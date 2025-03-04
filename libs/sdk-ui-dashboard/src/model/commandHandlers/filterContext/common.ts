@@ -66,7 +66,7 @@ export function* resetCrossFiltering(cmd: IDashboardCommand) {
     yield put(drillActions.resetCrossFiltering());
 }
 
-export function* applyAllFilterContextHandler(ctx: DashboardContext, cmd: IDashboardCommand) {
-    yield put(filterContextActions.applyAllFilterContext());
+export function* applyWorkingSelectionHandler(ctx: DashboardContext, cmd: IDashboardCommand) {
+    yield put(filterContextActions.applyWorkingSelection());
     yield call(dispatchFilterContextChanged, ctx, cmd);
 }

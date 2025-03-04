@@ -15,9 +15,9 @@ import {
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     ObjRef,
-    type IAttributeElement,
-    type IAttributeElementsByRef,
-    type DashboardAttributeFilterSelectionMode,
+    IAttributeElement,
+    IAttributeElementsByRef,
+    DashboardAttributeFilterSelectionMode,
 } from "@gooddata/sdk-model";
 import { DateFilterHelpers, DateFilterOption } from "@gooddata/sdk-ui-filters";
 

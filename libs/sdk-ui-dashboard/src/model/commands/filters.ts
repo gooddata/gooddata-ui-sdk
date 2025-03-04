@@ -1338,25 +1338,27 @@ export function reloadFilterViews(correlationId?: string): ReloadFilterViews {
  * Usually used with setting dashboardApplyFiltersMode: ALL_AT_ONCE
  *
  * @remarks
- * See {@link applyAllDashboardFilters} for a factory function that will help you create this command.
+ * See {@link applyFilterContextWorkingSelection} for a factory function that will help you create this command.
  *
  * @alpha
  */
-export interface ApplyAllDashboardFilters extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.APPLY_ALL";
+export interface ApplyFilterContextWorkingSelection extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.APPLY_WORKING_SELECTION";
 }
 
 /**
- * Creates the {@link ApplyAllDashboardFilters} command.
+ * Creates the {@link ApplyFilterContextWorkingSelection} command.
  *
  * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
  * @returns apply all filters command
  *
  * @alpha
  */
-export function applyAllDashboardFilters(correlationId?: string): ApplyAllDashboardFilters {
+export function applyFilterContextWorkingSelection(
+    correlationId?: string,
+): ApplyFilterContextWorkingSelection {
     return {
-        type: "GDC.DASH/CMD.FILTER_CONTEXT.APPLY_ALL",
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.APPLY_WORKING_SELECTION",
         correlationId,
     };
 }

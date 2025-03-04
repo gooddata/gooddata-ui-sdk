@@ -16,7 +16,7 @@ import {
     useDashboardDispatch,
     selectEnableFilterViews,
     selectEnableFlexibleLayout,
-    applyAllDashboardFilters,
+    applyFilterContextWorkingSelection,
     selectIsWorkingFilterContextChanged,
     selectDashboardFiltersApplyMode,
 } from "../../../model/index.js";
@@ -62,8 +62,8 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
     const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
     const dispatch = useDashboardDispatch();
 
-    const applyFilterContext = useCallback(() => {
-        dispatch(applyAllDashboardFilters());
+    const applyAllDashboardFilters = useCallback(() => {
+        dispatch(applyFilterContextWorkingSelection());
     }, [dispatch]);
 
     const intl = useIntl();
@@ -85,7 +85,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                             label={intl.formatMessage({ id: "apply" })}
                             variant="primary"
                             isDisabled={isWorkingFilterContextChanged}
-                            onClick={applyFilterContext}
+                            onClick={applyAllDashboardFilters}
                         />
                     )}
                     {isFilterViewsFeatureFlagEnabled ? <FilterViews /> : null}
