@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
@@ -283,7 +283,19 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         }
 
         const action = isViewportFrozen ? "disable" : "enable";
-        INTERACTION_EVENTS.forEach((interactionEvent): void => chart[interactionEvent]?.[action]?.());
+        try {
+            INTERACTION_EVENTS.forEach((interactionEvent): void => chart[interactionEvent]?.[action]?.());
+        } catch (e) {
+            const { config } = this.props;
+            const { isExportMode = false } = config || {};
+            const message = `GeoChart: toggle interaction events failed. Error: ${e}`;
+            // put as console.error in export mode to get to the exporter logs
+            if (isExportMode) {
+                console.error(message);
+            } else {
+                console.warn(message);
+            }
+        }
     };
 
     private updatePanAndZoom = (): void => {
