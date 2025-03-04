@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:color";
 @use "variables";
 @use "mixins";
@@ -893,6 +893,9 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
 }
 
 .gd-list-item.gd-project-list-item {
+    width: 100%;
+    background: none;
+    border: none;
     justify-content: flex-start;
     font-size: 14px;
     font-family: variables.$gd-font-primary;
@@ -922,6 +925,11 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
 
     &.gd-is-selected {
         font-weight: bold;
+    }
+
+    &:focus-visible {
+        border: none;
+        outline: auto;
     }
 }
 

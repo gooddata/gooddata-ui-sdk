@@ -19,6 +19,8 @@ export * from "./utils/featureFlags.js";
 export * from "./utils/drag.js";
 export * from "./utils/debounce.js";
 export * from "./utils/dateTimeConfig.js";
+export * from "./utils/events.js";
+export * from "./utils/useId.js";
 export * from "./measureNumberFormat/index.js";
 export * from "./syntaxHighlightingInput/index.js";
 export * from "./Button/index.js";
@@ -94,3 +96,5 @@ export type {
     UiPagedVirtualListProps,
     UiPagedVirtualListSkeletonItemProps,
 } from "./@ui/UiPagedVirtualList/UiPagedVirtualList.js";
+export { UiFocusTrap } from "./@ui/UiFocusTrap/UiFocusTrap.js";
+export type { UiFocusTrapProps } from "./@ui/UiFocusTrap/UiFocusTrap.js";

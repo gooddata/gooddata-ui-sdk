@@ -9,6 +9,7 @@ import { INotificationsPanelView } from "../types.js";
 import { INotificationsListEmptyStateComponentProps } from "./DefaultNotificationsListEmptyState.js";
 import { INotificationsListErrorStateComponentProps } from "./DefaultNotificationsListErrorState.js";
 import { INotificationSkeletonItemComponentProps } from "./DefaultSkeletonItem.js";
+import { useIntl, defineMessages } from "react-intl";
 
 const { b } = bem("gd-ui-ext-notifications-list");
 
@@ -135,12 +136,16 @@ export function DefaultNotificationsList({
 
     const { height, ref } = useElementSize();
 
+    const { formatMessage } = useIntl();
+
     return (
         <div
             className={b()}
             ref={(node) => {
                 ref.current = node;
             }}
+            role="list"
+            aria-label={formatMessage(messages.notificationsListLabel)}
         >
             {isError ? <NotificationsListErrorState error={error} /> : null}
             {isEmpty ? <NotificationsListEmptyState activeView={activeView} /> : null}
@@ -169,3 +174,9 @@ export function DefaultNotificationsList({
         </div>
     );
 }
+
+const messages = defineMessages({
+    notificationsListLabel: {
+        id: "notifications.panel.notifications.list.label",
+    },
+});

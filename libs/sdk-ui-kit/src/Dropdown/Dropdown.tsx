@@ -1,12 +1,13 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useState, useCallback, useEffect, useRef } from "react";
-import { v4 as uuid } from "uuid";
 import noop from "lodash/noop.js";
 
 import { FullScreenOverlay, Overlay } from "../Overlay/index.js";
 import { useMediaQuery } from "../responsive/useMediaQuery.js";
 import { IAlignPoint } from "../typings/positioning.js";
 import { OverlayPositionType } from "../typings/overlay.js";
+import { useId } from "../utils/useId.js";
+import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
 
 const SCROLLBAR_SELECTOR = ".fixedDataTableLayout_main .ScrollbarLayout_main";
 const MOBILE_DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
@@ -45,6 +46,8 @@ function shouldCloseOnClick(e: Event) {
 export interface IDropdownButtonRenderProps {
     isMobile: boolean;
     isOpen: boolean;
+    dropdownId: string;
+    buttonRef: React.MutableRefObject<HTMLElement | null>;
     openDropdown: () => void;
     closeDropdown: () => void;
     toggleDropdown: () => void;
@@ -96,7 +99,6 @@ export interface IDropdownProps {
  */
 interface IDropdownState {
     isOpen: boolean;
-    dropdownId: string;
 }
 
 /**
@@ -129,10 +131,12 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
         fullscreenOnMobile = true,
         enableEventPropagation = false,
     } = props;
-    const [{ isOpen, dropdownId }, setState] = useState<IDropdownState>({
+    const [{ isOpen }, setState] = useState<IDropdownState>({
         isOpen: !!openOnInit,
-        dropdownId: `dropdown-${uuid()}`,
     });
+
+    const id = useId();
+    const dropdownId = `dropdown-${id}`;
 
     const _renderButton = (renderProps: IDropdownButtonRenderProps) => (
         <div className={dropdownId}>{renderButton(renderProps)}</div>
@@ -160,6 +164,9 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
     }, []);
 
     const mountRef = useRef(false);
+
+    const buttonRef = useRef<HTMLElement | null>(null);
+
     useEffect(() => {
         if (mountRef.current && onOpenStateChanged) {
             onOpenStateChanged(isOpen);
@@ -175,6 +182,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
         openDropdown: openDropdown,
         closeDropdown: closeDropdown,
         toggleDropdown: toggleDropdown,
+        dropdownId,
     };
 
     const isMobileDevice = useMediaQuery("mobileDevice");
@@ -188,6 +196,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                         {_renderButton({
                             ...renderButtonProps,
                             isMobile: true,
+                            buttonRef,
                         })}
                     </div>
 
@@ -207,6 +216,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                 closeOnOutsideClick={closeOnOutsideClick}
                 closeOnMouseDrag={closeOnMouseDrag}
                 closeOnParentScroll={closeOnParentScroll}
+                closeOnEscape
                 shouldCloseOnClick={shouldCloseOnClick}
                 ignoreClicksOnByClass={ignoreClicksOnByClass}
                 onClose={closeDropdown}
@@ -216,12 +226,14 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                 onMouseUp={enableEventPropagation ? noop : undefined}
                 zIndex={overlayZIndex}
             >
-                <div className="overlay dropdown-body">
-                    {renderBody({
-                        closeDropdown,
-                        isMobile: false,
-                    })}
-                </div>
+                <UiFocusTrap returnFocusTo={buttonRef}>
+                    <div className="overlay dropdown-body" id={dropdownId}>
+                        {renderBody({
+                            closeDropdown,
+                            isMobile: false,
+                        })}
+                    </div>
+                </UiFocusTrap>
             </Overlay>
         ));
 
@@ -230,6 +242,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
             {_renderButton({
                 ...renderButtonProps,
                 isMobile: false,
+                buttonRef,
             })}
             {renderDropdown}
         </div>

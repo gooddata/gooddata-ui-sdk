@@ -1,9 +1,11 @@
-// (C) 2024 GoodData Corporation
-import * as React from "react";
+// (C) 2024-2025 GoodData Corporation
+import React from "react";
 import cx from "classnames";
 import { Overlay } from "../Overlay/index.js";
 import { Button } from "../Button/index.js";
 import { useHeaderSearch } from "./headerSearchContext.js";
+import { useId } from "../utils/useId.js";
+import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
 
 export type HeaderSearchProps = React.PropsWithChildren<{
     /**
@@ -16,6 +18,8 @@ const ALIGN_POINTS = [{ align: "br tr" }];
 
 export const HeaderSearchButton: React.FC<HeaderSearchProps> = ({ children, title }) => {
     const { isOpen, toggleOpen } = useHeaderSearch();
+
+    const buttonRef = React.useRef<HTMLButtonElement>(null);
 
     // Handle Cmd+K and Ctrl+K shortcuts
     React.useEffect(() => {
@@ -34,12 +38,24 @@ export const HeaderSearchButton: React.FC<HeaderSearchProps> = ({ children, titl
         };
     }, [isOpen, toggleOpen]);
 
+    const id = useId();
+    const dropdownId = `search-dropdown-${id}`;
+
     const classNames = cx("gd-header-measure", "gd-header-button", "gd-header-search", {
         "is-open": isOpen,
     });
 
     return (
-        <Button title={title} className={classNames} onClick={toggleOpen}>
+        <Button
+            title={title}
+            className={classNames}
+            onClick={toggleOpen}
+            accessibilityConfig={{
+                isExpanded: isOpen,
+                popupId: dropdownId,
+            }}
+            buttonRef={buttonRef}
+        >
             <span className="gd-icon-header-search-button"></span>
             <span className="gd-header-search-label">{title}</span>
             {isOpen ? (
@@ -54,7 +70,11 @@ export const HeaderSearchButton: React.FC<HeaderSearchProps> = ({ children, titl
                     onClose={toggleOpen}
                     ignoreClicksOnByClass={[".gd-bubble"]}
                 >
-                    <div className="gd-dialog gd-dropdown overlay gd-header-search-dropdown">{children}</div>
+                    <UiFocusTrap returnFocusTo={buttonRef}>
+                        <div className="gd-dialog gd-dropdown overlay gd-header-search-dropdown">
+                            {children}
+                        </div>
+                    </UiFocusTrap>
                 </Overlay>
             ) : null}
         </Button>

@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useState, useCallback } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -8,6 +8,7 @@ import {
     DescriptionPanelContent,
     Bubble,
     DESCRIPTION_PANEL_ARROW_OFFSETS,
+    isActionKey,
 } from "@gooddata/sdk-ui-kit";
 import { IDescriptionClickTriggerProps } from "./types.js";
 
@@ -46,7 +47,7 @@ export const DescriptionClickTrigger: React.FC<IDescriptionClickTriggerProps> = 
     const onKeyDown = useCallback(
         (event: React.KeyboardEvent<HTMLDivElement>) => {
             // This enables keyboard interaction events after focus
-            if (event.key === "Enter" || event.key === " ") {
+            if (isActionKey(event)) {
                 event.preventDefault();
                 switchIsOpen();
             }

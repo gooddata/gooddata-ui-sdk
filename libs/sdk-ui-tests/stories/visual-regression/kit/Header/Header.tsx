@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { Component } from "react";
 import { storiesOf } from "../../../_infra/storyRepository.js";
 import { UiKit } from "../../../_infra/storyGroups.js";
@@ -339,6 +339,7 @@ const messages = {
     "gs.header.logout": "Logout",
     "gs.header.projectPicker.demo": "Demo data",
     "gs.header.projectPicker.searchPlaceholder": "Search...",
+    "gs.header.projectPicker.searchLabel": "Search",
     "gs.header.projectPicker.workspaces": "Workspaces",
     "gs.header.account.title": "Account",
 };

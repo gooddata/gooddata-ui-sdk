@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { waitFor, render, screen, fireEvent } from "@testing-library/react";
 import { Button } from "../Button.js";
@@ -77,7 +77,7 @@ describe("ReactButton", () => {
                 iconLeft: "gd-icon-class",
             });
 
-            expect(screen.getByRole("button-icon")).toBeInTheDocument();
+            expect(screen.getByTestId("gd-button-icon")).toBeInTheDocument();
         });
     });
 });

@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
@@ -63,7 +63,7 @@ describe("SemanticSearch component", () => {
     it("should let user select item by clicking on it", async () => {
         const { baseElement, callback } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
 
-        const firstItem = baseElement.querySelector(".gd-semantic-search__results-item");
+        const firstItem = baseElement.querySelector(".gd-semantic-search__results-item__content");
         fireEvent.click(firstItem);
 
         expect(callback).toHaveBeenCalledOnce();
