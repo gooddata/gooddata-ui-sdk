@@ -543,6 +543,9 @@ export type {
     ITempFilterContext,
     IDashboardFilterView,
     IDashboardFilterViewSaveRequest,
+    IWorkingFilterContextDefinition,
+    WorkingFilterContextItem,
+    WorkingDashboardAttributeFilter,
 } from "./dashboard/filterContext.js";
 export {
     dashboardFilterReferenceObjRef,
@@ -565,6 +568,7 @@ export {
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
     isFilterContextItem,
+    applyFilterContext,
 } from "./dashboard/filterContext.js";
 
 export type { IWidgetAlert, IWidgetAlertBase, IWidgetAlertDefinition } from "./dashboard/alert.js";

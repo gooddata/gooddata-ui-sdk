@@ -132,6 +132,7 @@
     "delete": "Delete",
     "close": "Close",
     "cancel": "Cancel",
+    "apply": "Apply",
     "gs.date.today": "Today",
     "gs.date.tomorrow": "Tomorrow",
     "gs.date.yesterday": "Yesterday",

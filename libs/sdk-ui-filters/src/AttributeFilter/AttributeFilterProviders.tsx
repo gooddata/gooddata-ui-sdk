@@ -34,6 +34,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         disabled,
         customIcon,
         onApply,
+        onSelect,
         onError,
         ErrorComponent,
         LoadingComponent,
@@ -96,6 +97,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     parentFilterOverAttribute={parentFilterOverAttribute}
                     validateElementsBy={validateElementsBy}
                     onApply={onApply}
+                    onSelect={onSelect}
                     onError={onError}
                     hiddenElements={hiddenElements}
                     staticElements={staticElements}
@@ -110,6 +112,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     enableImmediateAttributeFilterDisplayAsLabelMigration={
                         enableImmediateAttributeFilterDisplayAsLabelMigration
                     }
+                    withoutApply={props.withoutApply}
                 >
                     {children}
                 </AttributeFilterContextProvider>

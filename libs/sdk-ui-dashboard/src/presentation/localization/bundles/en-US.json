@@ -833,6 +833,11 @@
         "comment": "",
         "limit": 0
     },
+    "apply": {
+        "value": "Apply",
+        "comment": "",
+        "limit": 0
+    },
     "gs.date.today": {
         "value": "Today",
         "comment": "",

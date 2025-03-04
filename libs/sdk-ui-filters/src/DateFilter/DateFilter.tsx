@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import isEqual from "lodash/isEqual.js";
 import isNil from "lodash/isNil.js";
@@ -17,6 +17,7 @@ import { DEFAULT_DATE_FORMAT } from "./constants/Platform.js";
 import { normalizeSelectedFilterOption } from "./utils/FilterOptionNormalization.js";
 import { IFilterButtonCustomIcon, VisibilityMode } from "../shared/index.js";
 import { IFilterConfigurationProps } from "./DateFilterBody/types.js";
+import isEmpty from "lodash/isEmpty.js";
 
 /**
  * Props of the {@link DateFilter} component that are reflected in the state.
@@ -57,6 +58,14 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
      * @alpha
      */
     FilterConfigurationComponent?: React.ComponentType<IFilterConfigurationProps>;
+
+    /**
+     * This enables filter mode without apply button.
+     * If true, it is responsibility of a client, to appy filters when needed.
+     * Typically uses onSelect callback to catch filter state.
+     * Note, onApply callback is not called when this is true.
+     */
+    withoutApply?: boolean;
 }
 
 /**
@@ -66,6 +75,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
  */
 export interface IDateFilterCallbackProps {
     onApply: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
+    onSelect?: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
     onCancel?: () => void;
     onOpen?: () => void;
     onClose?: () => void;
@@ -104,6 +114,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
         onOpen: noop,
         onClose: noop,
         weekStart: "Sunday" as const,
+        withoutApply: false,
     };
 
     public static getDerivedStateFromProps(
@@ -225,7 +236,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
     };
 
     private onChangesDiscarded = () => {
-        this.setState(() => DateFilter.getStateFromProps(this.props));
+        this.setState(() => DateFilter.getStateFromProps(this.props), this.handleSelectChange);
     };
 
     private onCancelClicked = () => {
@@ -238,17 +249,28 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             this.props.onOpen();
         } else {
             this.props.onClose();
-            this.onChangesDiscarded();
+            if (!this.props.withoutApply || !isEmpty(validateFilterOption(this.state.selectedFilterOption))) {
+                this.onChangesDiscarded();
+            }
         }
     };
 
     private handleExcludeCurrentPeriodChange = (excludeCurrentPeriod: boolean) => {
-        this.setState({ excludeCurrentPeriod });
+        this.setState({ excludeCurrentPeriod }, this.handleSelectChange);
     };
 
     private handleSelectedFilterOptionChange = (selectedFilterOption: DateFilterOption) => {
-        this.setState((state) =>
-            DateFilter.getStateFromSelectedOption(selectedFilterOption, state.excludeCurrentPeriod),
+        this.setState(
+            (state) =>
+                DateFilter.getStateFromSelectedOption(selectedFilterOption, state.excludeCurrentPeriod),
+            this.handleSelectChange,
         );
+    };
+
+    private handleSelectChange = () => {
+        const normalizedSelectedFilterOption = normalizeSelectedFilterOption(this.state.selectedFilterOption);
+        if (isEmpty(validateFilterOption(normalizedSelectedFilterOption))) {
+            this.props.onSelect?.(normalizedSelectedFilterOption, this.state.excludeCurrentPeriod);
+        }
     };
 }

@@ -86,6 +86,7 @@ import { attributeHierarchyModifiedHandler } from "./widgets/attributeHierarchyM
 import { addDateFilterHandler } from "./filterContext/dateFilter/addDateFilterHandler.js";
 import { removeDateFiltersHandler } from "./filterContext/dateFilter/removeDateFiltersHandler.js";
 import { moveDateFilterHandler } from "./filterContext/dateFilter/moveDateFilterHandler.js";
+import { applyWorkingSelectionHandler } from "./filterContext/common.js";
 import { changeDateFilterWithDimensionModeHandler } from "./dashboard/changeDateFilterWithDimensionModeHandler.js";
 import { changeDateFilterTitleHandler } from "./dashboard/changeDateFilterTitleHandler.js";
 import { changeAttributeFilterLimitingItemsHandler } from "./dashboard/changeAttributeFilterLimitingItemsHandler.js";
@@ -144,6 +145,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD": addDateFilterHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE": removeDateFiltersHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE": moveDateFilterHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.APPLY_WORKING_SELECTION": applyWorkingSelectionHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE": changeAttributeFilterModeHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_DISPLAY_AS_LABEL": changeAttributeFilterDisplayAsLabelHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS": changeAttributeFilterLimitingItemsHandler,

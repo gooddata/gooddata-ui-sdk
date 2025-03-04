@@ -37,6 +37,8 @@ import {
     selectEnableDuplicatedLabelValuesInAttributeFilter,
     setAttributeFilterDisplayForm,
     setDashboardAttributeFilterConfigDisplayAsLabel,
+    changeWorkingAttributeFilterSelection,
+    selectEnableDashboardFiltersApplyModes,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
@@ -70,10 +72,11 @@ export const useFilterBarProps = (): IFilterBarProps => {
     const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
         selectEnableDuplicatedLabelValuesInAttributeFilter,
     );
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
 
     const dispatch = useDashboardDispatch();
     const onAttributeFilterChanged = useCallback(
-        (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef) => {
+        (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef, isWorkingSelectionChange?: boolean) => {
             const convertedFilter = supportElementUris
                 ? filter
                 : convertDashboardAttributeFilterElementsValuesToUris(filter);
@@ -98,7 +101,11 @@ export const useFilterBarProps = (): IFilterBarProps => {
                     )
                 ) {
                     dispatch(
-                        setAttributeFilterDisplayForm(localIdentifier!, filter.attributeFilter.displayForm),
+                        setAttributeFilterDisplayForm(
+                            localIdentifier!,
+                            filter.attributeFilter.displayForm,
+                            isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                        ),
                     );
                 }
                 if (displayAsLabel) {
@@ -109,23 +116,51 @@ export const useFilterBarProps = (): IFilterBarProps => {
             }
 
             dispatch(
-                changeAttributeFilterSelection(
-                    localIdentifier!,
-                    attributeElements,
-                    negativeSelection ? "NOT_IN" : "IN",
-                ),
+                isWorkingSelectionChange && enableDashboardFiltersApplyModes
+                    ? changeWorkingAttributeFilterSelection(
+                          localIdentifier!,
+                          attributeElements,
+                          negativeSelection ? "NOT_IN" : "IN",
+                      )
+                    : changeAttributeFilterSelection(
+                          localIdentifier!,
+                          attributeElements,
+                          negativeSelection ? "NOT_IN" : "IN",
+                      ),
             );
         },
-        [dispatch, supportElementUris, enableDuplicatedLabelValuesInAttributeFilter, filters],
+        [
+            dispatch,
+            supportElementUris,
+            enableDuplicatedLabelValuesInAttributeFilter,
+            filters,
+            enableDashboardFiltersApplyModes,
+        ],
     );
 
     const onDateFilterChanged = useCallback(
-        (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => {
+        (
+            filter: IDashboardDateFilter | undefined,
+            dateFilterOptionLocalId?: string,
+            isWorkingSelectionChange?: boolean,
+        ) => {
             if (!filter) {
-                dispatch(clearDateFilterSelection());
+                dispatch(
+                    clearDateFilterSelection(
+                        undefined,
+                        undefined,
+                        isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                    ),
+                );
             } else if (isAllTimeDashboardDateFilter(filter)) {
                 // all time filter
-                dispatch(clearDateFilterSelection(undefined, filter?.dateFilter.dataSet));
+                dispatch(
+                    clearDateFilterSelection(
+                        undefined,
+                        filter?.dateFilter.dataSet,
+                        isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                    ),
+                );
             } else {
                 const { type, granularity, from, to, dataSet } = filter.dateFilter;
                 dispatch(
@@ -137,11 +172,12 @@ export const useFilterBarProps = (): IFilterBarProps => {
                         dateFilterOptionLocalId,
                         undefined,
                         dataSet,
+                        isWorkingSelectionChange && enableDashboardFiltersApplyModes,
                     ),
                 );
             }
         },
-        [dispatch],
+        [dispatch, enableDashboardFiltersApplyModes],
     );
 
     return { filters, onAttributeFilterChanged, onDateFilterChanged, DefaultFilterBar };

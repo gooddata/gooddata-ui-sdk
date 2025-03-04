@@ -84,6 +84,11 @@ export interface DateFilterSelection {
      * The localId of the DateFilterOption selected.
      */
     readonly dateFilterOptionLocalId?: string;
+
+    /**
+     * Determines if this command should change working (staged for application) filters or applied filters (used to compute data).
+     */
+    readonly isWorkingSelectionChange?: boolean;
 }
 
 /**
@@ -126,6 +131,7 @@ export function changeDateFilterSelection(
     dateFilterOptionLocalId?: string,
     correlationId?: string,
     dataSet?: ObjRef,
+    isWorkingSelectionChange?: boolean,
 ): ChangeDateFilterSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION",
@@ -137,6 +143,7 @@ export function changeDateFilterSelection(
             from,
             to,
             dateFilterOptionLocalId,
+            isWorkingSelectionChange,
         },
     };
 }
@@ -200,6 +207,7 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
 export function clearDateFilterSelection(
     correlationId?: string,
     dataSet?: ObjRef,
+    isWorkingSelectionChange?: boolean,
 ): ChangeDateFilterSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION",
@@ -208,6 +216,7 @@ export function clearDateFilterSelection(
             dataSet,
             type: "relative",
             granularity: "GDC.time.date",
+            isWorkingSelectionChange,
         },
     };
 }
@@ -488,6 +497,11 @@ export interface ChangeAttributeFilterSelectionPayload {
      * Selection type. Either 'IN' for positive selection or 'NOT_IN' for negative selection (All except selected items).
      */
     readonly selectionType: AttributeFilterSelectionType;
+    /**
+     * Determines if this command should change working (staged for application) filters or applied filters (used to compute data).
+     * Default is false - command changes applied filters.
+     */
+    readonly isWorkingSelectionChange?: boolean;
 }
 
 /**
@@ -505,7 +519,7 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
 }
 
 /**
- * Creates the ChangeAttributeFilterSelection command.
+ * Creates the ChangeAttributeFilterSelection command for applied filters.
  *
  * @remarks
  * Dispatching this command will result in application of element selection for the dashboard attribute filter
@@ -513,6 +527,9 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
  *
  * The attribute elements can be provided either using their URI (primary key) or value. Together with the
  * elements you must indicate the selection type - either 'IN' or 'NOT_IN'.
+ *
+ * If you want to change working filters use {@link changeWorkingAttributeFilterSelection}.
+ * See {@link ChangeAttributeFilterSelectionPayload.isWorkingSelectionChange} for details.
  *
  * @remarks see {@link resetAttributeFilterSelection} for convenience function to select all attribute elements of
  *  particular filter.
@@ -548,6 +565,58 @@ export function changeAttributeFilterSelection(
             filterLocalId,
             elements,
             selectionType,
+        },
+    };
+}
+
+/**
+ * Creates the ChangeAttributeFilterSelection command for working filter.
+ *
+ * @remarks
+ * Dispatching this command will result in changing working element selection for the dashboard attribute filter
+ * with the provided id, or error in case of invalid update (e.g. non-existing filterLocalId).
+ *
+ * The attribute elements can be provided either using their URI (primary key) or value. Together with the
+ * elements you must indicate the selection type - either 'IN' or 'NOT_IN'.
+ *
+ * If you want to change applied filters use {@link changeAttributeFilterSelection}.
+ * See {@link ChangeAttributeFilterSelectionPayload.isWorkingSelectionChange} for details.
+ *
+ * @remarks see {@link resetAttributeFilterSelection} for convenience function to select all attribute elements of
+ *  particular filter.
+ *
+ * See also {@link applyAttributeFilter} for convenient function when you have an {@link @gooddata/sdk-model#IAttributeFilter} instance.
+ *
+ *  @example
+ * ```
+ * const selectionType = isPositiveAttributeFilter ? "IN" : "NOT_IN";
+ * ```
+ *
+ * To create this command without a need to calculate the payload values from a {@link @gooddata/sdk-model#IFilter} object,
+ * we recommend to use {@link applyAttributeFilter} command creator instead.
+ *
+ * @param filterLocalId - dashboard attribute filter's local id
+ * @param elements - elements
+ * @param selectionType - selection type. either 'IN' or 'NOT_IN'
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @public
+ */
+export function changeWorkingAttributeFilterSelection(
+    filterLocalId: string,
+    elements: IAttributeElements,
+    selectionType: AttributeFilterSelectionType,
+    correlationId?: string,
+): ChangeAttributeFilterSelection {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION",
+        correlationId,
+        payload: {
+            filterLocalId,
+            elements,
+            selectionType,
+            isWorkingSelectionChange: true,
         },
     };
 }
@@ -835,6 +904,7 @@ export function changeFilterContextSelectionByParams(
 export interface SetAttributeFilterDisplayFormPayload {
     filterLocalId: string;
     displayForm: ObjRef;
+    isWorkingSelectionChange?: boolean;
 }
 
 /**
@@ -856,17 +926,20 @@ export interface SetAttributeFilterDisplayForm extends IDashboardCommand {
  * @beta
  * @param filterLocalId - local identifier of the filter the display form is changed for
  * @param displayForm - newly selected display form
+ * @param isWorkingSelectionChange - determines if command updates working filter context or applied filter context. Applied filter context is default.
  * @returns change filter display form command
  */
 export function setAttributeFilterDisplayForm(
     filterLocalId: string,
     displayForm: ObjRef,
+    isWorkingSelectionChange?: boolean,
 ): SetAttributeFilterDisplayForm {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM",
         payload: {
             filterLocalId,
             displayForm,
+            isWorkingSelectionChange,
         },
     };
 }
@@ -1307,6 +1380,36 @@ export interface ReloadFilterViews extends IDashboardCommand {
 export function reloadFilterViews(correlationId?: string): ReloadFilterViews {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.RELOAD",
+        correlationId,
+    };
+}
+
+/**
+ * Command for applying all working filters staged for application.
+ * Usually used with setting dashboardApplyFiltersMode: ALL_AT_ONCE
+ *
+ * @remarks
+ * See {@link applyFilterContextWorkingSelection} for a factory function that will help you create this command.
+ *
+ * @alpha
+ */
+export interface ApplyFilterContextWorkingSelection extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.APPLY_WORKING_SELECTION";
+}
+
+/**
+ * Creates the {@link ApplyFilterContextWorkingSelection} command.
+ *
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @returns apply all filters command
+ *
+ * @alpha
+ */
+export function applyFilterContextWorkingSelection(
+    correlationId?: string,
+): ApplyFilterContextWorkingSelection {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.APPLY_WORKING_SELECTION",
         correlationId,
     };
 }

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import {
     absoluteDateFilterValues,
@@ -15,6 +15,9 @@ import {
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     ObjRef,
+    IAttributeElement,
+    IAttributeElementsByRef,
+    DashboardAttributeFilterSelectionMode,
 } from "@gooddata/sdk-model";
 import { DateFilterHelpers, DateFilterOption } from "@gooddata/sdk-ui-filters";
 
@@ -42,22 +45,30 @@ export function dashboardAttributeFilterToAttributeFilter(
  * @internal
  * @param filter - filter to convert
  * @param localIdentifier - localIdentifier of the filter
+ * @param attributeElements - currently selected elements. Default is taken from the filter param.
+ * @param isInverted - whether filter has negative selection (NOT_IN operator). Default is taken from the filter param.
+ * @param selectionMode - selection mode of the filter (single / multi). Default is undefined.
  * @returns converted filter
  */
 export function attributeFilterToDashboardAttributeFilter(
     filter: IAttributeFilter,
     localIdentifier: string | undefined,
     title: string | undefined,
+    attributeElements?: IAttributeElement[],
+    isInverted?: boolean,
+    selectionMode?: DashboardAttributeFilterSelectionMode,
 ): IDashboardAttributeFilter {
-    const attributeElements = filterAttributeElements(filter);
-    const displayForm = filterObjRef(filter);
+    const attributeElementsObj: IAttributeElementsByRef | undefined = attributeElements && {
+        uris: attributeElements.map((element) => element.uri),
+    };
     return {
         attributeFilter: {
-            attributeElements,
-            displayForm,
-            negativeSelection: isNegativeAttributeFilter(filter),
+            attributeElements: attributeElementsObj ?? filterAttributeElements(filter),
+            displayForm: filterObjRef(filter),
+            negativeSelection: isInverted ?? isNegativeAttributeFilter(filter),
             localIdentifier,
             title,
+            selectionMode,
             // TODO filterElementsBy?
         },
     };

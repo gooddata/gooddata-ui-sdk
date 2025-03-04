@@ -21,6 +21,8 @@ import { IDashboardDateFilterProps } from "./types.js";
 import {
     selectBackendCapabilities,
     selectCatalogDateDatasets,
+    selectDashboardFiltersApplyMode,
+    selectEnableDashboardFiltersApplyModes,
     selectIsInEditMode,
     selectLocale,
     selectSettings,
@@ -45,6 +47,8 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
     const locale = useDashboardSelector(selectLocale);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const weekStart = useDashboardSelector(selectWeekStart);
+    const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
     const { filter, onFilterChanged, config, readonly, autoOpen } = props;
 
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
@@ -75,6 +79,17 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             onFilterChanged(
                 dateFilterOptionToDashboardDateFilter(option, exclude, filter?.dateFilter.dataSet),
                 option.localIdentifier,
+            );
+        },
+        [onFilterChanged, filter?.dateFilter.dataSet],
+    );
+    const onSelect = useCallback<NonNullable<IDateFilterProps["onSelect"]>>(
+        (option, exclude) => {
+            setLastSelectedOptionId(option.localIdentifier);
+            onFilterChanged(
+                dateFilterOptionToDashboardDateFilter(option, exclude, filter?.dateFilter.dataSet),
+                option.localIdentifier,
+                true,
             );
         },
         [onFilterChanged, filter?.dateFilter.dataSet],
@@ -128,6 +143,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             availableGranularities={config.availableGranularities}
             customFilterName={title}
             onApply={onApply}
+            onSelect={enableDashboardFiltersApplyModes ? onSelect : undefined}
             dateFormat={dateFormat}
             locale={locale}
             isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
@@ -137,6 +153,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             customIcon={visibilityIcon}
             showDropDownHeaderMessage={!filter?.dateFilter.dataSet}
             FilterConfigurationComponent={isConfigurationEnabled ? FilterConfigurationComponent : undefined}
+            withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes}
         />
     );
 };
