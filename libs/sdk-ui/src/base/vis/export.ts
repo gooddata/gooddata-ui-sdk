@@ -40,16 +40,6 @@ export function createExportFunction(result: IExecutionResult, exportTitle?: str
 }
 
 /**
- * Creates function to export Raw data in the provided result.
- *
- * @param result - data view that will be exported
- * @internal
- */
-export function createExportRawFunction(result: IExecutionResult, filename: string): Promise<IExportResult> {
-    return result.exportRaw!(filename);
-}
-
-/**
  * Creates function that should be passed to onExportReady in the event that the backend execution
  * fails and export is not possible.
  *

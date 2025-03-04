@@ -118,6 +118,7 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
         widgetRef,
         title: widgetTitle(activeVisualization) || intl.formatMessage({ id: "export.defaultTitle" }),
         insight,
+        widget: activeVisualization,
     });
 
     const {

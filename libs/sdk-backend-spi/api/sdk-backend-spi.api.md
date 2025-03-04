@@ -645,8 +645,6 @@ export interface IExecutionResult {
     readonly dimensions: IDimensionDescriptor[];
     equals(other: IExecutionResult): boolean;
     export(options: IExportConfig): Promise<IExportResult>;
-    // @alpha
-    exportRaw?(filename: string): Promise<IExportResult>;
     fingerprint(): string;
     readAll(): Promise<IDataView>;
     // @alpha
@@ -1386,6 +1384,7 @@ export interface IWorkspaceDashboardsService {
     deleteScheduledMail(ref: ObjRef): Promise<void>;
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
+    exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string): Promise<IExportResult>;
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
     exportDashboardToPresentation(ref: ObjRef, format: "PDF" | "PPTX", filters?: FilterContextItem[], options?: {
         widgetIds?: ObjRef[];

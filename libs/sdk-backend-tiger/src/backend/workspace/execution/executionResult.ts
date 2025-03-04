@@ -8,8 +8,6 @@ import {
     TabularExportRequest,
     TabularExportRequestFormatEnum,
     Settings,
-    RawExportActionsRequest,
-    AfmExport,
 } from "@gooddata/api-client-tiger";
 import {
     IDataView,
@@ -44,7 +42,6 @@ import { resolveCustomOverride } from "./utils.js";
 import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
 import { transformForecastResult } from "../../../convertors/fromBackend/afm/forecast.js";
 import { TigerCancellationConverter } from "../../../cancelation/index.js";
-import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec.js";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 const DEFAULT_POLL_DELAY = 5000;
@@ -278,32 +275,6 @@ export class TigerExecutionResult implements IExecutionResult {
                     exportId: tabularExport?.data?.exportResult,
                 },
                 format,
-            );
-        });
-    }
-
-    public exportRaw(filename: string): Promise<IExportResult> {
-        const execution = toAfmExecution(this.definition);
-
-        const payload: RawExportActionsRequest = {
-            format: "CSV",
-            execution: execution.execution as AfmExport,
-            fileName: filename,
-        };
-
-        return this.authCall(async (client) => {
-            const rawExport = await client.export.createRawExport({
-                workspaceId: this.definition.workspace,
-                rawExportRequest: payload,
-            });
-
-            return await this.handleExportResultPolling(
-                client,
-                {
-                    workspaceId: this.workspace,
-                    exportId: rawExport?.data?.exportResult,
-                },
-                TabularExportRequestFormatEnum.CSV,
             );
         });
     }

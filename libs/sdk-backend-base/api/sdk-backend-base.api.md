@@ -425,8 +425,6 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     // (undocumented)
     export(options: IExportConfig): Promise<IExportResult>;
     // (undocumented)
-    exportRaw(filename: string): Promise<IExportResult>;
-    // (undocumented)
     fingerprint(): string;
     // (undocumented)
     readAll(): Promise<IDataView>;
@@ -561,6 +559,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     // (undocumented)
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
+    // (undocumented)
+    exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string): Promise<IExportResult>;
     // (undocumented)
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
     // (undocumented)
