@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-gen-ai",
-    "version": "10.22.0-alpha.30",
+    "version": "10.22.0-alpha.36",
     "description": "GoodData GenAI SDK",
     "repository": {
         "type": "git",
@@ -78,7 +78,8 @@
         "react-textarea-autosize": "8.4.0",
         "uuid": "^8.3.2",
         "react-loading-skeleton": "^3.4.0",
-        "react-markdown": "^9.0.1"
+        "react-markdown": "^9.0.1",
+        "remark-emoji": "^5.0.1"
     },
     "peerDependencies": {
         "react": "^16.10.0 || ^17.0.0 || ^18.0.0",

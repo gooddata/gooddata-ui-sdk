@@ -14,7 +14,6 @@ export interface ICorePivotTableState {
     resized: boolean;
     tempExecution: IPreparedExecution;
     isLoading: boolean;
-    isFirstRender: boolean;
     error?: string;
 }
 

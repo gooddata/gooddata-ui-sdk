@@ -1043,6 +1043,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "remark-emoji",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "require-from-string",
       "allowedCategories": [ "production" ]
     },

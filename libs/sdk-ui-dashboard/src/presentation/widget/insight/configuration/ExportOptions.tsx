@@ -39,15 +39,16 @@ const getExportTooltip = (execution?: IExecutionResultEnvelope, enableRawExports
 
 interface IMenuItemProps {
     className: string;
+    icon: string;
     onClick?: () => void;
     messageId: string;
     disabled: boolean;
 }
 
-const MenuItem: React.FC<IMenuItemProps> = ({ className, disabled, messageId, onClick }) => {
+const MenuItem: React.FC<IMenuItemProps> = ({ className, disabled, messageId, onClick, icon }) => {
     return (
         <Item onClick={onClick} className={className} disabled={disabled}>
-            <div className="gd-icon-download" />
+            <div className={`gd-export-icon ${icon}`} />
             <FormattedMessage id={messageId} />
         </Item>
     );
@@ -102,6 +103,7 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
                                 }}
                                 disabled={false}
                                 className="gd-export-options-pdf-presentation"
+                                icon="gd-icon-type-pdf"
                                 messageId="options.menu.export.presentation.PDF"
                             />
                             <MenuItem
@@ -111,6 +113,7 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
                                 }}
                                 disabled={false}
                                 className="gd-export-options-pptx-presentation"
+                                icon="gd-icon-type-slides"
                                 messageId="options.menu.export.presentation.PPTX"
                             />
                             <Header>{intl.formatMessage({ id: "options.menu.export.header.data" })}</Header>
@@ -121,6 +124,7 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
                             {!exportXLSVDisabled ? (
                                 <MenuItem
                                     className="gd-export-options-xlsx"
+                                    icon="gd-icon-type-sheet"
                                     onClick={() => {
                                         onClose();
                                         onExportXLSX();
@@ -131,6 +135,7 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
                             ) : (
                                 <MenuItemWithBubble
                                     className="gd-export-options-xlsx"
+                                    icon="gd-icon-type-sheep"
                                     disabled={exportXLSVDisabled}
                                     messageId="widget.options.menu.XLSX"
                                     showBubble={true}
@@ -145,12 +150,14 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
                                         onExportCSV();
                                     }}
                                     className="gd-export-options-csv"
+                                    icon="gd-icon-type-csv-formatted"
                                     disabled={exportCsvDisabled}
                                     messageId="widget.options.menu.exportToCSV.formatted"
                                 />
                             ) : (
                                 <MenuItemWithBubble
                                     className="gd-export-options-csv"
+                                    icon="gd-icon-type-csv-formatted"
                                     disabled={exportCsvDisabled}
                                     messageId="widget.options.menu.exportToCSV.formatted"
                                     showBubble={true}
@@ -165,12 +172,14 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
                                         onExportRawCSV();
                                     }}
                                     className="gd-export-options-csv"
+                                    icon="gd-icon-type-csv-raw"
                                     disabled={exportCSVRawDisabled}
                                     messageId="widget.options.menu.exportToCSV.raw"
                                 />
                             ) : (
                                 <MenuItemWithBubble
                                     className="gd-export-options-csv-raw"
+                                    icon="gd-icon-type-csv-raw"
                                     disabled={exportCSVRawDisabled}
                                     messageId="widget.options.menu.exportToCSV.raw"
                                     showBubble={true}

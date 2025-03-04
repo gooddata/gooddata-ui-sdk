@@ -271,7 +271,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                             onClick: defaultOnExportToPdf,
                             visible: menuButtonItemsVisibility.pdfExportButton ?? true,
                             disabled: isInProgress,
-                            icon: "gd-icon-download",
+                            icon: "gd-icon-type-pdf",
                         },
                         {
                             type: "button",
@@ -280,7 +280,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                             onClick: defaultOnExportToPdfPresentation,
                             visible: menuButtonItemsVisibility.pdfExportButton ?? true,
                             disabled: isInProgress,
-                            icon: "gd-icon-download",
+                            icon: "gd-icon-type-pdf",
                         },
                         {
                             type: "button",
@@ -289,7 +289,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                             onClick: defaultOnExportToPowerPointPresentation,
                             visible: menuButtonItemsVisibility.powerPointExportButton ?? true,
                             disabled: isInProgress,
-                            icon: "gd-icon-download",
+                            icon: "gd-icon-type-slides",
                         },
                         {
                             type: "button",
@@ -301,7 +301,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                                 isEnableDashboardTabularExport &&
                                 isEnableOrchestratedTabularExports,
                             disabled: isInProgress,
-                            icon: "gd-icon-download",
+                            icon: "gd-icon-type-sheet",
                         },
                     ],
                 },
