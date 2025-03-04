@@ -378,8 +378,11 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
                 onClick={this.handleWrapperClick}
             >
                 <input
+                    role="combobox"
+                    aria-haspopup="dialog"
+                    aria-expanded={isOpen ? "true" : "false"}
+                    aria-controls="datepicker-popup"
                     aria-labelledby={ariaLabelledBy}
-                    aria-label={intl.formatMessage({ id: "datePicker.accessibility.label" })}
                     onKeyDown={this.onKeyDown}
                     tabIndex={tabIndex}
                     onClick={() => this.setState({ isOpen: true })}
@@ -392,7 +395,12 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
                 />
 
                 {isOpen ? (
-                    <div role="datepicker-picker" ref={this.datePickerContainerRef}>
+                    <div
+                        id="datepicker-popup"
+                        role="dialog"
+                        aria-label={intl.formatMessage({ id: "datePicker.accessibility.label" })}
+                        ref={this.datePickerContainerRef}
+                    >
                         <DayPicker
                             classNames={classNamesProps}
                             locale={convertLocale(intl.locale)}
