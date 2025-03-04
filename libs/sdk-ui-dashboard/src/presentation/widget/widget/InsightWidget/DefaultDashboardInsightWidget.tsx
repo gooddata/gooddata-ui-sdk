@@ -77,6 +77,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         widgetRef,
         title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
         insight,
+        widget,
     });
 
     const onScheduleExport = useCallback(() => {

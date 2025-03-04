@@ -473,17 +473,6 @@ export interface IExecutionResult {
     export(options: IExportConfig): Promise<IExportResult>;
 
     /**
-     * Asynchronously exports all raw data in this result to a blob.
-     *
-     * Exported file is downloaded and attached as Blob data to the current window instance.
-     *
-     * @returns promise with object URL pointing to a Blob data of downloaded exported insight
-     *
-     * @alpha
-     */
-    exportRaw?(filename: string): Promise<IExportResult>;
-
-    /**
      * Tests if this execution result is same as the other result.
      *
      * @param other - other result

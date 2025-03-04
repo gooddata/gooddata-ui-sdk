@@ -1,36 +1,68 @@
 // (C) 2024-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
-import { IExecutionResult, IExportResult } from "@gooddata/sdk-backend-spi";
+import { IExportResult } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
 import { ExportRawInsightWidget } from "../../commands/index.js";
 import { DashboardInsightWidgetExportResolved, insightWidgetExportResolved } from "../../events/insight.js";
 import { DashboardContext } from "../../types/commonTypes.js";
-import { createExportRawFunction } from "@gooddata/sdk-ui";
 import { PromiseFnReturnType } from "../../types/sagas.js";
+import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors.js";
 
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
+import {
+    defaultDimensionsGenerator,
+    defWithDimensions,
+    IExecutionDefinition,
+    INullableFilter,
+    newDefForInsight,
+} from "@gooddata/sdk-model";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
 
-async function performExport(execution: IExecutionResult, filename: string): Promise<IExportResult> {
-    return createExportRawFunction(execution, filename);
+async function exportDashboardToCSVRaw(
+    ctx: DashboardContext,
+    definition: IExecutionDefinition,
+    filename: string,
+): Promise<IExportResult> {
+    const { backend, workspace } = ctx;
+
+    return backend.workspace(workspace).dashboards().exportDashboardToCSVRaw(definition, filename);
 }
 
 export function* exportRawInsightWidgetHandler(
     ctx: DashboardContext,
     cmd: ExportRawInsightWidget,
 ): SagaIterator<DashboardInsightWidgetExportResolved> {
-    const { filename, ref } = cmd.payload;
+    const { ref, widget, insight, filename } = cmd.payload;
+    const { workspace } = ctx;
 
     const executionEnvelope: ReturnType<ReturnType<typeof selectExecutionResultByRef>> = yield select(
         selectExecutionResultByRef(ref),
     );
 
-    // executionResult must be defined at this point
-    invariant(executionEnvelope?.executionResult);
+    const filterContextFilters: ReturnType<typeof selectFilterContextFilters> = yield select(
+        selectFilterContextFilters,
+    );
 
-    const result: PromiseFnReturnType<typeof performExport> = yield call(
-        performExport,
-        executionEnvelope.executionResult,
+    const mergedFilters: INullableFilter[] = [
+        ...insight.insight.filters,
+        ...filterContextItemsToDashboardFiltersByWidget(filterContextFilters, widget),
+    ];
+
+    const definition = defWithDimensions(
+        newDefForInsight(workspace, insight!, mergedFilters),
+        defaultDimensionsGenerator,
+    );
+
+    const preparedExecutionDefinition = executionEnvelope?.executionResult?.definition ?? definition;
+
+    // execution definition must be defined at this point
+    invariant(preparedExecutionDefinition);
+
+    const result: PromiseFnReturnType<typeof exportDashboardToCSVRaw> = yield call(
+        exportDashboardToCSVRaw,
+        ctx,
+        preparedExecutionDefinition,
         filename,
     );
 

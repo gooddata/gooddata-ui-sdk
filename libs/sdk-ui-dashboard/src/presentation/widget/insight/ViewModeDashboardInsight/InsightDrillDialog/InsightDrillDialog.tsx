@@ -132,6 +132,7 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
         title: getTitleWithBreadcrumbs(baseInsightTitle, breadcrumbs),
         widgetRef: DRILL_MODAL_EXECUTION_PSEUDO_REF,
         insight,
+        widget,
     });
 
     const OverlayComponent = isMobileDevice ? FullScreenOverlay : Overlay;
