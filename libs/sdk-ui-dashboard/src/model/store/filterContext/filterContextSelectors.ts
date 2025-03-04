@@ -126,14 +126,14 @@ export const selectWorkingFilterContextDefinition: DashboardSelector<IFilterCont
  *
  * Attribute filters are considered equal if
  *  - they have same localIdentifier
- *  - they have same elelments (order does not matter)
- *  - all other fields are deep equal EXCEPT dispalyForm
+ *  - they have same elements (order does not matter)
+ *  - all other fields are deep equal EXCEPT displayForm
  * We exclude diplayForm becuase of primary display form migration code.
- * Which changes dispaly forms after update.
+ * Which changes display forms after update.
  *
  * @alpha
  */
-export const selectAreAllFiltersApplied: DashboardSelector<boolean | undefined> = createSelector(
+export const selectIsWorkingFilterContextChanged: DashboardSelector<boolean | undefined> = createSelector(
     selectFilterContextDefinition,
     selectWorkingFilterContextDefinition,
     (filterContext, workingFilterContext) => {
@@ -141,7 +141,7 @@ export const selectAreAllFiltersApplied: DashboardSelector<boolean | undefined> 
             return false;
         }
 
-        function filterIdentifier(filter: FilterContextItem): string {
+        function getFilterIdentifier(filter: FilterContextItem): string {
             if (isDashboardAttributeFilter(filter)) {
                 const localIdentifier = filter.attributeFilter.localIdentifier;
                 if (!localIdentifier) {
@@ -161,8 +161,8 @@ export const selectAreAllFiltersApplied: DashboardSelector<boolean | undefined> 
             throw new Error("Unknown filter type");
         }
 
-        const appliedFilters = keyBy(filterContext.filters, filterIdentifier);
-        const workingFilters = keyBy(workingFilterContext.filters, filterIdentifier);
+        const appliedFilters = keyBy(filterContext.filters, getFilterIdentifier);
+        const workingFilters = keyBy(workingFilterContext.filters, getFilterIdentifier);
 
         return keys(appliedFilters)
             .map((key): boolean => {
@@ -188,6 +188,7 @@ export const selectAreAllFiltersApplied: DashboardSelector<boolean | undefined> 
                         )
                     );
                 }
+                // Date filters
                 return isEqual(appliedFilter, workingFilter);
             })
             .every(identity);

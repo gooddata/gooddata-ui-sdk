@@ -17,7 +17,7 @@ import {
     selectEnableFilterViews,
     selectEnableFlexibleLayout,
     applyAllDashboardFilters,
-    selectAreAllFiltersApplied,
+    selectIsWorkingFilterContextChanged,
     selectDashboardFiltersApplyMode,
 } from "../../../model/index.js";
 
@@ -58,7 +58,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
     const showFiltersConfigurationPanel = useDashboardSelector(selectShowFiltersConfigurationPanel);
     const isFilterViewsFeatureFlagEnabled = useDashboardSelector(selectEnableFilterViews);
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
-    const areAllFiltersApplied = useDashboardSelector(selectAreAllFiltersApplied);
+    const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
     const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
     const dispatch = useDashboardDispatch();
 
@@ -84,7 +84,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                         <UiButton
                             label={intl.formatMessage({ id: "apply" })}
                             variant="primary"
-                            isDisabled={areAllFiltersApplied}
+                            isDisabled={isWorkingFilterContextChanged}
                             onClick={applyFilterContext}
                         />
                     )}

@@ -168,7 +168,7 @@ export {
     selectWorkingFilterContextAttributeFilters,
     selectWorkingFilterContextDateFilter,
     selectWorkingFilterContextDateFiltersWithDimension,
-    selectAreAllFiltersApplied,
+    selectIsWorkingFilterContextChanged,
     selectOtherContextAttributeFilters,
     selectAttributeFilterDisplayFormsMap,
     selectAttributeFilterDisplayForms,
