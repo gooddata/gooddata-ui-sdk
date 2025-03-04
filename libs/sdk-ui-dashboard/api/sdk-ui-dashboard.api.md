@@ -721,7 +721,7 @@ export interface ChangeAttributeFilterSelection extends IDashboardCommand {
 }
 
 // @public
-export function changeAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string, isWorkingSelectionChange?: boolean): ChangeAttributeFilterSelection;
+export function changeAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string): ChangeAttributeFilterSelection;
 
 // @public
 export interface ChangeAttributeFilterSelectionPayload {
@@ -1080,6 +1080,9 @@ export function changeSharing(newSharingProperties: ISharingApplyPayload_2, corr
 export interface ChangeSharingPayload {
     readonly newSharingProperties: ISharingApplyPayload_2;
 }
+
+// @public
+export function changeWorkingAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string): ChangeAttributeFilterSelection;
 
 // @public
 export function clearDateFilterSelection(correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean): ChangeDateFilterSelection;

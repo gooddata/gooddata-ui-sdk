@@ -37,6 +37,7 @@ import {
     selectEnableDuplicatedLabelValuesInAttributeFilter,
     setAttributeFilterDisplayForm,
     setDashboardAttributeFilterConfigDisplayAsLabel,
+    changeWorkingAttributeFilterSelection,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
@@ -113,13 +114,19 @@ export const useFilterBarProps = (): IFilterBarProps => {
             }
 
             dispatch(
-                changeAttributeFilterSelection(
-                    localIdentifier!,
-                    attributeElements,
-                    negativeSelection ? "NOT_IN" : "IN",
-                    undefined,
-                    isWorkingSelectionChange,
-                ),
+                isWorkingSelectionChange
+                    ? changeWorkingAttributeFilterSelection(
+                          localIdentifier!,
+                          attributeElements,
+                          negativeSelection ? "NOT_IN" : "IN",
+                          undefined,
+                      )
+                    : changeAttributeFilterSelection(
+                          localIdentifier!,
+                          attributeElements,
+                          negativeSelection ? "NOT_IN" : "IN",
+                          undefined,
+                      ),
             );
         },
         [dispatch, supportElementUris, enableDuplicatedLabelValuesInAttributeFilter, filters],

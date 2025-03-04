@@ -228,6 +228,7 @@ export {
     moveDateFilter,
     resetAttributeFilterSelection,
     changeAttributeFilterSelection,
+    changeWorkingAttributeFilterSelection,
     setAttributeFilterParents,
     changeFilterContextSelection,
     changeFilterContextSelectionByParams,
