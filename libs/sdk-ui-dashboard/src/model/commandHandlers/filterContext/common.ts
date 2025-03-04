@@ -16,6 +16,7 @@ import { removeAttributeFilters } from "../../commands/filters.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 import { drillActions } from "../../store/drill/index.js";
 import { filterContextActions } from "../../store/filterContext/index.js";
+import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../store/config/configSelectors.js";
 
 export function* dispatchFilterContextChanged(
     ctx: DashboardContext,
@@ -67,6 +68,11 @@ export function* resetCrossFiltering(cmd: IDashboardCommand) {
 }
 
 export function* applyWorkingSelectionHandler(ctx: DashboardContext, cmd: IDashboardCommand) {
-    yield put(filterContextActions.applyWorkingSelection());
+    const enableImmediateAttributeFilterDisplayAsLabelMigration: ReturnType<
+        typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
+    > = yield select(selectEnableImmediateAttributeFilterDisplayAsLabelMigration);
+    yield put(
+        filterContextActions.applyWorkingSelection({ enableImmediateAttributeFilterDisplayAsLabelMigration }),
+    );
     yield call(dispatchFilterContextChanged, ctx, cmd);
 }

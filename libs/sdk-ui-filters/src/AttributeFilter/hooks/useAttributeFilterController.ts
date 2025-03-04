@@ -772,14 +772,17 @@ function useCallbacks(
         withoutApply,
     ]);
 
-    const onApply = useCallback(() => {
-        if (withoutApply) {
-            return;
-        }
-        handler.commitSelection();
-        setConnectedPlaceholderValue(handler.getFilter());
-        onSelectionChange(onApplyInputCallback);
-    }, [handler, setConnectedPlaceholderValue, onSelectionChange, onApplyInputCallback, withoutApply]);
+    const onApply = useCallback(
+        (applyRegardlessWithoutApplySetting: boolean = false) => {
+            if (withoutApply && !applyRegardlessWithoutApplySetting) {
+                return;
+            }
+            handler.commitSelection();
+            setConnectedPlaceholderValue(handler.getFilter());
+            onSelectionChange(onApplyInputCallback);
+        },
+        [handler, setConnectedPlaceholderValue, onSelectionChange, onApplyInputCallback, withoutApply],
+    );
 
     const onOpen = useCallback(() => {
         if (shouldReloadElements) {
@@ -976,7 +979,7 @@ function replaceFilterDisplayForm(nextFilter: IAttributeFilter, primaryLabelRef:
 // that uses the filter.
 const useReportMigratedFilter = (
     handler: IMultiSelectAttributeFilterHandler,
-    onFilterMigrated: () => void,
+    onFilterMigrated: (applyRegardlessWithoutApplySetting: boolean) => void,
     enableImmediateAttributeFilterDisplayAsLabelMigration: boolean,
 ) => {
     const initialLabel = useRef(handler.getDisplayAsLabel());
@@ -991,7 +994,7 @@ const useReportMigratedFilter = (
         !areObjRefsEqual(filterObjRef(handler.getOriginalFilter()), filterObjRef(handler.getFilter()))
     ) {
         wasMigrationReported.current = true;
-        onFilterMigrated();
+        onFilterMigrated(true);
 
         console.warn(
             "AttributeFilter: Filter label migration reported to filter's parent app. Original filter label:",

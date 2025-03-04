@@ -19,7 +19,10 @@ import { IAttributeMetadataObject } from "@gooddata/sdk-model";
 import { query } from "../../../store/_infra/queryCall.js";
 import { queryAttributeByDisplayForm } from "../../../queries/index.js";
 import { newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
-import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../../store/config/configSelectors.js";
+import {
+    selectEnableDuplicatedLabelValuesInAttributeFilter,
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
+} from "../../../store/config/configSelectors.js";
 
 export function* changeAttributeDisplayFormHandler(
     ctx: DashboardContext,
@@ -71,6 +74,9 @@ export function* changeAttributeDisplayFormHandler(
     const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
         typeof selectEnableDuplicatedLabelValuesInAttributeFilter
     > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
+    const enableImmediateAttributeFilterDisplayAsLabelMigration: ReturnType<
+        typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
+    > = yield select(selectEnableImmediateAttributeFilterDisplayAsLabelMigration);
 
     yield put(
         batchActions([
@@ -81,7 +87,8 @@ export function* changeAttributeDisplayFormHandler(
                 displayForm,
                 supportsElementUris,
                 enableDuplicatedLabelValuesInAttributeFilter,
-                isWorkingSelectionChange,
+                isWorkingSelectionChange:
+                    isWorkingSelectionChange && !enableImmediateAttributeFilterDisplayAsLabelMigration,
             }),
         ]),
     );

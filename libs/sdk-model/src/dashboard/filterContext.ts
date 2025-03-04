@@ -580,6 +580,7 @@ export interface IDashboardFilterViewSaveRequest {
 export function applyFilterContext(
     filterContext: IFilterContextDefinition,
     workingFilterContext: IWorkingFilterContextDefinition | undefined,
+    enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean,
 ): IFilterContextDefinition {
     const filters = filterContext.filters.map((appliedFilter): FilterContextItem => {
         if (isDashboardAttributeFilter(appliedFilter)) {
@@ -594,12 +595,14 @@ export function applyFilterContext(
             if (!workingFilter?.attributeFilter) {
                 return appliedFilter;
             }
+
+            const displayForm = enableImmediateAttributeFilterDisplayAsLabelMigration
+                ? appliedFilter.attributeFilter.displayForm
+                : workingFilter.attributeFilter.displayForm ?? appliedFilter.attributeFilter.displayForm;
             return {
                 attributeFilter: {
                     ...appliedFilter.attributeFilter,
-                    displayForm:
-                        workingFilter.attributeFilter.displayForm ??
-                        appliedFilter.attributeFilter.displayForm,
+                    displayForm,
                     attributeElements:
                         workingFilter.attributeFilter.attributeElements ??
                         appliedFilter.attributeFilter.attributeElements,

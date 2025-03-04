@@ -34,6 +34,7 @@ import isEqual from "lodash/isEqual.js";
 import keyBy from "lodash/keyBy.js";
 import keys from "lodash/keys.js";
 import sortBy from "lodash/sortBy.js";
+import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../config/configSelectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -136,7 +137,8 @@ export const selectWorkingFilterContextDefinition: DashboardSelector<IFilterCont
 export const selectIsWorkingFilterContextChanged: DashboardSelector<boolean | undefined> = createSelector(
     selectFilterContextDefinition,
     selectWorkingFilterContextDefinition,
-    (filterContext, workingFilterContext) => {
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
+    (filterContext, workingFilterContext, enableImmediateAttributeFilterDisplayAsLabelMigration) => {
         if (filterContext.filters.length !== workingFilterContext.filters.length) {
             return false;
         }
@@ -170,18 +172,23 @@ export const selectIsWorkingFilterContextChanged: DashboardSelector<boolean | un
                 const workingFilter = workingFilters[key];
 
                 if (isDashboardAttributeFilter(appliedFilter) && isDashboardAttributeFilter(workingFilter)) {
-                    const {
-                        displayForm: _unusedAppliedDisplayForm,
-                        attributeElements: appliedElements,
-                        ...attributeFilterWithoutDisplayForm
-                    } = appliedFilter.attributeFilter;
-                    const {
-                        displayForm: _unusedWorkingDisplayForm,
-                        attributeElements: workingElements,
-                        ...workingFilterWithoutDisplayForm
-                    } = workingFilter.attributeFilter;
+                    const { attributeElements: appliedElements, ...appliedFilterWithoutElements } =
+                        appliedFilter.attributeFilter;
+                    const { attributeElements: workingElements, ...workingFilterWithoutElements } =
+                        workingFilter.attributeFilter;
+
+                    // This code can be removed when enableImmediateAttributeFilterDisplayAsLabelMigration is removed
+                    const partialAppliedFilter: Partial<IDashboardAttributeFilter["attributeFilter"]> =
+                        appliedFilterWithoutElements;
+                    const partialWorkingFilter: Partial<IDashboardAttributeFilter["attributeFilter"]> =
+                        workingFilterWithoutElements;
+                    if (!enableImmediateAttributeFilterDisplayAsLabelMigration) {
+                        delete partialAppliedFilter.displayForm;
+                        delete partialWorkingFilter.displayForm;
+                    }
+
                     return (
-                        isEqual(attributeFilterWithoutDisplayForm, workingFilterWithoutDisplayForm) &&
+                        isEqual(partialAppliedFilter, partialWorkingFilter) &&
                         isEqual(
                             sortBy(getAttributeElementsItems(appliedElements)),
                             sortBy(getAttributeElementsItems(workingElements)),

@@ -714,11 +714,20 @@ const changeLimitingItems: FilterContextReducer<PayloadAction<IChangeAttributeLi
 //
 //
 
-const applyWorkingSelection: FilterContextReducer<PayloadAction<void>> = (state) => {
+export interface IApplyWorkingSelectionPayload {
+    readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+}
+
+const applyWorkingSelection: FilterContextReducer<PayloadAction<IApplyWorkingSelectionPayload>> = (
+    state,
+    action,
+) => {
     invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const { enableImmediateAttributeFilterDisplayAsLabelMigration } = action.payload;
     state.filterContextDefinition = applyFilterContext(
         state.filterContextDefinition,
         state.workingFilterContextDefinition,
+        enableImmediateAttributeFilterDisplayAsLabelMigration,
     );
     state.workingFilterContextDefinition = { filters: [] };
 };
