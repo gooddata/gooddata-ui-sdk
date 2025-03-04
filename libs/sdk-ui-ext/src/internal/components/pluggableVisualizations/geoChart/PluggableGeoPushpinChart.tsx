@@ -256,6 +256,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             isLoading: false,
         });
         this.isLoading = false;
+        this.renderConfigurationPanel(this.currentInsight, this.currentOptions);
         this.callbacks.afterRender?.();
     };
 
