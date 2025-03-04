@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { Identifier } from "@gooddata/sdk-model";
 
 //
@@ -10,8 +10,8 @@ import { Identifier } from "@gooddata/sdk-model";
  */
 export enum ColumnEventSourceType {
     AUTOSIZE_COLUMNS = "autosizeColumns",
-    UI_DRAGGED = "uiColumnDragged",
     FIT_GROW = "growToFit",
+    UI_RESIZED = "uiColumnResized",
 }
 
 /**

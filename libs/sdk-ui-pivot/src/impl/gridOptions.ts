@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     ICustomGridOptions,
     TableAgGridCallbacks,
@@ -79,7 +79,6 @@ export function createGridOptions(
     return {
         // Initial data
         columnDefs: allColumnDefs,
-        rowData: [],
         defaultColDef: {
             cellClass: cellClassFactory(table, props),
             headerComponent: ColumnHeader,
@@ -115,7 +114,7 @@ export function createGridOptions(
 
         // infinite scrolling model
         rowModelType: "infinite",
-        serverSideStoreType: "partial",
+
         paginationPageSize: effectivePageSize,
         cacheOverflowSize: effectivePageSize,
         cacheBlockSize: effectivePageSize,

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     IAttributeDescriptor,
     IResultAttributeHeader,
@@ -6,7 +6,7 @@ import {
     IMeasureDescriptor,
 } from "@gooddata/sdk-model";
 import { DataSeriesDescriptor, DataSeriesId } from "@gooddata/sdk-ui";
-import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
+import { ColDef, ColGroupDef, Column } from "ag-grid-community";
 
 export const ColumnGroupingDescriptorId = "root";
 

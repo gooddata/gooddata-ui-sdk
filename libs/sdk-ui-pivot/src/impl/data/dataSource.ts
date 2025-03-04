@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { IntlShape } from "react-intl";
 import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { ColDef, GridApi, IDatasource, IGetRowsParams } from "@ag-grid-community/all-modules";
+import { ColDef, GridApi, IDatasource, IGetRowsParams } from "ag-grid-community";
 import { COLS_PER_PAGE } from "../base/constants.js";
 import { GroupingProviderFactory, IGroupingProvider } from "./rowGroupingProvider.js";
 import { createAgGridPage } from "./rowFactory.js";
@@ -126,7 +126,7 @@ export class AgGridDatasource implements IDatasource {
 
         // set totals
         if (areTotalsChanged(this.gridApiProvider(), rowTotals)) {
-            this.gridApiProvider()?.setPinnedBottomRowData(rowTotals);
+            this.gridApiProvider()?.updateGridOptions({ pinnedBottomRowData: rowTotals });
         }
     };
 

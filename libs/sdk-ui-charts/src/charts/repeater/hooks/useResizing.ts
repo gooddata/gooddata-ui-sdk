@@ -1,9 +1,8 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { useMemo, useCallback, useRef, MutableRefObject, useEffect } from "react";
 import { IAttributeOrMeasure } from "@gooddata/sdk-model";
-import { ColumnResizedEvent, Column, ColumnApi, ColDef } from "@ag-grid-community/all-modules";
-import { GridReadyEvent } from "@ag-grid-community/core";
+import { GridReadyEvent, ColumnResizedEvent, Column, GridApi, ColDef } from "ag-grid-community";
 
 import { ColumnResizingConfig, ResizingState } from "../internal/privateTypes.js";
 import { IRepeaterChartProps } from "../publicTypes.js";
@@ -88,7 +87,7 @@ export function useResizing(columnDefs: ColDef[], items: IAttributeOrMeasure[], 
 
     const onGridReady = useCallback(
         (readyEvent: GridReadyEvent) => {
-            resizingState.current.columnApi = readyEvent.columnApi;
+            resizingState.current.columnApi = readyEvent.api;
             applyColumnSizes(columnDefs, resizingState, resizeSettings);
             growToFit(resizingState, resizeSettings);
         },
@@ -171,7 +170,14 @@ function applyColumnSizes(
     resizingState: MutableRefObject<ResizingState>,
     resizeSettings: ColumnResizingConfig,
 ) {
+    const columnWidthItems: Array<{ key: string; newWidth: number }> = [];
+
     const columnApi = resizingState.current.columnApi;
+
+    if (!columnApi) {
+        return;
+    }
+
     resizeSettings.widths?.forEach((columnWidth) => {
         if (isAttributeColumnWidthItem(columnWidth)) {
             const column = columnDefs.find(
@@ -182,9 +188,12 @@ function applyColumnSizes(
             }
             if (column && columnApi) {
                 const columnDef = columnApi
-                    .getAllColumns()
+                    .getAllGridColumns()
                     .find((col) => col.getColDef().field === column.field);
-                columnApi.setColumnWidth(columnDef, columnWidth.attributeColumnWidthItem.width.value);
+                columnWidthItems.push({
+                    key: columnDef.getColId(),
+                    newWidth: columnWidth.attributeColumnWidthItem.width.value,
+                });
                 if (!getManualResizedColumn(resizingState, columnDef)) {
                     resizingState.current.manuallyResizedColumns.push(columnDef);
                 }
@@ -192,23 +201,36 @@ function applyColumnSizes(
         }
         if (isMeasureColumnWidthItem(columnWidth)) {
             columnWidth.measureColumnWidthItem.locators.forEach((locator) => {
-                applyMeasureColumnSize(
+                const res = applyMeasureColumnSize(
                     columnDefs,
                     resizingState,
                     locator,
                     columnWidth.measureColumnWidthItem.width.value,
                 );
+
+                if (res) {
+                    columnWidthItems.push(res);
+                }
             });
         }
         if (isWeakMeasureColumnWidthItem(columnWidth)) {
-            applyMeasureColumnSize(
+            const res = applyMeasureColumnSize(
                 columnDefs,
                 resizingState,
                 columnWidth.measureColumnWidthItem.locator,
                 columnWidth.measureColumnWidthItem.width.value,
             );
+
+            if (res) {
+                columnWidthItems.push(res);
+            }
         }
     });
+
+    setTimeout(() => {
+        columnApi.setColumnWidths(columnWidthItems.filter((columnWidthItem) => !!columnWidthItem));
+        columnApi.refreshCells();
+    }, 0);
 }
 
 function applyMeasureColumnSize(
@@ -216,7 +238,7 @@ function applyMeasureColumnSize(
     resizingState: MutableRefObject<ResizingState>,
     locator: RepeaterColumnLocator,
     width: number | "auto",
-) {
+): { key: string; newWidth: number } | undefined {
     const columnApi = resizingState.current.columnApi;
     if (isMeasureColumnLocator(locator)) {
         const column = columnDefs.find((col) => col.field === locator.measureLocatorItem.measureIdentifier);
@@ -225,17 +247,23 @@ function applyMeasureColumnSize(
             column.suppressSizeToFit = true;
         }
         if (column && columnApi && width !== "auto") {
-            const columnDef = columnApi.getAllColumns().find((col) => col.getColDef().field === column.field);
-            columnApi.setColumnWidth(columnDef, width);
+            const columnDef = columnApi
+                .getAllGridColumns()
+                .find((col) => col.getColDef().field === column.field);
+
             if (!getManualResizedColumn(resizingState, columnDef)) {
                 resizingState.current.manuallyResizedColumns.push(columnDef);
             }
+
+            return { key: columnDef.getColId(), newWidth: width };
         }
         //TODO: Autoresize column, value === "auto
     }
     if (isAttributeColumnLocator(locator)) {
         //TODO: Apply attribute column width
     }
+
+    return undefined;
 }
 
 function afterOnResizeColumns(
@@ -256,12 +284,12 @@ async function sleep(delay: number): Promise<void> {
     });
 }
 
-function setColumnMaxWidth(columnApi: ColumnApi, columnIds: string[], newMaxWidth: number | undefined): void {
+function setColumnMaxWidth(columnApi: GridApi, columnIds: string[], newMaxWidth: number | undefined): void {
     setColumnMaxWidthIf(columnApi, columnIds, newMaxWidth, () => true);
 }
 
 function setColumnMaxWidthIf(
-    columnApi: ColumnApi,
+    columnApi: GridApi,
     columnIds: string[],
     newMaxWidth: number | undefined,
     condition: (column: Column) => boolean,

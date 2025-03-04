@@ -2193,15 +2193,6 @@ importers:
 
   ../../libs/sdk-ui-charts:
     dependencies:
-      '@ag-grid-community/all-modules':
-        specifier: 27.3.0
-        version: 27.3.0
-      '@ag-grid-community/core':
-        specifier: 27.3.0
-        version: 27.3.0
-      '@ag-grid-community/react':
-        specifier: 27.3.0
-        version: 27.3.0(@ag-grid-community/core@27.3.0)(react-dom@18.2.0)(react@18.2.0)
       '@gooddata/number-formatter':
         specifier: ^1.0.6
         version: 1.0.6
@@ -2226,6 +2217,12 @@ importers:
       '@gooddata/util':
         specifier: workspace:*
         version: link:../util
+      ag-grid-community:
+        specifier: 33.1.0
+        version: 33.1.0
+      ag-grid-react:
+        specifier: 33.1.0
+        version: 33.1.0(react-dom@18.2.0)(react@18.2.0)
       classnames:
         specifier: ^2.3.1
         version: 2.3.2
@@ -3920,15 +3917,6 @@ importers:
 
   ../../libs/sdk-ui-pivot:
     dependencies:
-      '@ag-grid-community/all-modules':
-        specifier: 27.3.0
-        version: 27.3.0
-      '@ag-grid-community/core':
-        specifier: 27.3.0
-        version: 27.3.0
-      '@ag-grid-community/react':
-        specifier: 27.3.0
-        version: 27.3.0(@ag-grid-community/core@27.3.0)(react-dom@18.2.0)(react@18.2.0)
       '@gooddata/number-formatter':
         specifier: ^1.0.6
         version: 1.0.6
@@ -3950,6 +3938,12 @@ importers:
       '@gooddata/sdk-ui-vis-commons':
         specifier: workspace:*
         version: link:../sdk-ui-vis-commons
+      ag-grid-community:
+        specifier: 33.1.0
+        version: 33.1.0
+      ag-grid-react:
+        specifier: 33.1.0
+        version: 33.1.0(react-dom@18.2.0)(react@18.2.0)
       classnames:
         specifier: ^2.3.1
         version: 2.3.2
@@ -6748,51 +6742,6 @@ packages:
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
     engines: {node: '>=0.10.0'}
     dev: true
-
-  /@ag-grid-community/all-modules@27.3.0:
-    resolution: {integrity: sha512-yH5jH+sJ6niUR5N4MiyOYDUnldcjCRwpDeL82JyGh7/rsxACH026KcxEO+7Gk22CnSeMwUZidGorU2Dj/Na8rg==}
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
-    dependencies:
-      '@ag-grid-community/client-side-row-model': 27.3.0
-      '@ag-grid-community/core': 27.3.0
-      '@ag-grid-community/csv-export': 27.3.0
-      '@ag-grid-community/infinite-row-model': 27.3.0
-    dev: false
-
-  /@ag-grid-community/client-side-row-model@27.3.0:
-    resolution: {integrity: sha512-t6ggg/SvESsGEC75z62rD/zFeo2DZCKFxw5e0qKweHR106CjBUNMlnfXIIG81qOSXUWGnbbWlrijBbKbyt8aTA==}
-    dependencies:
-      '@ag-grid-community/core': 27.3.0
-    dev: false
-
-  /@ag-grid-community/core@27.3.0:
-    resolution: {integrity: sha512-77/bE2KdFlFI/ywEP46aSspXtgBteY/OPQyzU/lWqYrG2wC6cLfPSUB60t9e0FiqElwM/Vdcjz0TAjRwhZOPkw==}
-    dev: false
-
-  /@ag-grid-community/csv-export@27.3.0:
-    resolution: {integrity: sha512-7pR05jEqTdUPAoqEMHxXGh6j0KViGmqLa4uwKmriKzfZOvwlq6umjDmXvPFCRCWfswb9KOqS1iZlGhcWufKApQ==}
-    dependencies:
-      '@ag-grid-community/core': 27.3.0
-    dev: false
-
-  /@ag-grid-community/infinite-row-model@27.3.0:
-    resolution: {integrity: sha512-hUWQ6YdRrNCDAvSn1bbxvnklIqPx8QGXMjmLVfR47+Gp1aoA1i9OxtA39SlzsZnRqDxZE5eKgwb5uy2+C4vKhA==}
-    dependencies:
-      '@ag-grid-community/core': 27.3.0
-    dev: false
-
-  /@ag-grid-community/react@27.3.0(@ag-grid-community/core@27.3.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-wRBl4nqijdpVWRgSA4KnN5fZZ9wXBE1RLA2u0apyTHUb9BzFCHEocfJdfd2DVet7ddMc3SWMLKGm26rGT0Myig==}
-    peerDependencies:
-      '@ag-grid-community/core': ~27.3.0
-      react: ^16.3.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      '@ag-grid-community/core': 27.3.0
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-    dev: false
 
   /@ampproject/remapping@2.2.1:
     resolution: {integrity: sha512-lFMjJTrFL3j7L9yBxwYfCq2k6qqwHyzuUl/XBnif78PWTJYyL/dfowQHWE3sp6U6ZzqWiiIZnpTMO96zhkjwtg==}
@@ -12437,6 +12386,28 @@ packages:
     resolution: {integrity: sha512-4B/qKCfeE/ODUaAUpSwfzazo5x29WD4r3vXiWsB7I2mSDAihwEqKO+g8GELZUQSSAo5e1XTYh3ZVfLyxBc12nA==}
     engines: {node: '>= 10.0.0'}
     dev: true
+
+  /ag-charts-types@11.1.0:
+    resolution: {integrity: sha512-9cu2vJuFZNrhf7o5USG5n/meTIJKhJfTIds5ziRV+FI3mT1QZME2nchu4WQnoIE8gft9ACkuhtCUgOyW44A2iQ==}
+    dev: false
+
+  /ag-grid-community@33.1.0:
+    resolution: {integrity: sha512-xPEgNjRuudfimbGytoDttjlgAjz/N+muq7Tgw2GTMuUeSG0z54kBObvJxhezOEEashVMKBpqb/YhzIE6e+opqQ==}
+    dependencies:
+      ag-charts-types: 11.1.0
+    dev: false
+
+  /ag-grid-react@33.1.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-YB/t6U+P7HPcGY+ukJiVYtQNbDsNVVocDITPANsy21pfh5ojvoNfKEdieC904IPTdgjSMTpNDQJogBzTpMLTCA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    dependencies:
+      ag-grid-community: 33.1.0
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /agent-base@5.1.1:
     resolution: {integrity: sha512-TMeqbNl2fMW0nMjTEPOwe3J/PRFP4vqeoNuQMG0HlMrtm5QxKqdvAkZ1pRBQ/ulIyDD5Yq0nJ7YbdD8ey0TO3g==}
