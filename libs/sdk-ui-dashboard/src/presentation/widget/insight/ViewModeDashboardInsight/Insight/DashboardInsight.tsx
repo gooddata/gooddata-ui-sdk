@@ -164,7 +164,6 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
             }
             executionsHandler.onLoadingChanged({ isLoading });
             setIsVisualizationLoading(isLoading);
-            setIsVisualizationInitializing(isLoading);
             onLoadingChanged?.({ isLoading });
         },
         [
@@ -179,6 +178,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         if (enableDashboardAfterRenderDetection && !afterRenderCalled.current) {
             afterRenderCalled.current = true;
             onResolveAsyncRender();
+            setIsVisualizationInitializing(false);
         }
     }, [afterRender, onResolveAsyncRender, enableDashboardAfterRenderDetection]);
 
