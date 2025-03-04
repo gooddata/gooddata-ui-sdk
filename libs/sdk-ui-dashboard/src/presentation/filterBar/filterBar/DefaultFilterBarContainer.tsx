@@ -19,6 +19,7 @@ import {
     applyFilterContextWorkingSelection,
     selectIsWorkingFilterContextChanged,
     selectDashboardFiltersApplyMode,
+    selectEnableDashboardFiltersApplyModes,
 } from "../../../model/index.js";
 
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
@@ -60,6 +61,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
     const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
     const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
     const dispatch = useDashboardDispatch();
 
     const applyAllDashboardFilters = useCallback(() => {
@@ -79,15 +81,18 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
             >
                 <AllFiltersContainer setCalculatedRows={setCalculatedRows}>{children}</AllFiltersContainer>
                 <FiltersRows rows={rows} />
-                <div className="filter-bar-configuration">
-                    {filtersApplyMode.mode === "ALL_AT_ONCE" && (
+                <div
+                    className="filter-bar-configuration"
+                    style={{ alignItems: enableDashboardFiltersApplyModes ? "baseline" : undefined }}
+                >
+                    {filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes ? (
                         <UiButton
                             label={intl.formatMessage({ id: "apply" })}
                             variant="primary"
                             isDisabled={isWorkingFilterContextChanged}
                             onClick={applyAllDashboardFilters}
                         />
-                    )}
+                    ) : null}
                     {isFilterViewsFeatureFlagEnabled ? <FilterViews /> : null}
                     {showFiltersConfigurationPanel ? <FiltersConfigurationPanel /> : null}
                 </div>

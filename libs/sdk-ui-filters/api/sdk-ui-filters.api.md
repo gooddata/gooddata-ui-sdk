@@ -401,6 +401,7 @@ export interface IAttributeFilterCoreProps {
     disabled?: boolean;
     // @alpha
     displayAsLabel?: ObjRef;
+    enable?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     filter?: IAttributeFilter;

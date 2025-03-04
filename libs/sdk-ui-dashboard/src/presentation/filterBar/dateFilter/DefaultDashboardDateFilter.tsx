@@ -22,6 +22,7 @@ import {
     selectBackendCapabilities,
     selectCatalogDateDatasets,
     selectDashboardFiltersApplyMode,
+    selectEnableDashboardFiltersApplyModes,
     selectIsInEditMode,
     selectLocale,
     selectSettings,
@@ -47,6 +48,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const weekStart = useDashboardSelector(selectWeekStart);
     const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
     const { filter, onFilterChanged, config, readonly, autoOpen } = props;
 
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
@@ -141,7 +143,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             availableGranularities={config.availableGranularities}
             customFilterName={title}
             onApply={onApply}
-            onSelect={onSelect}
+            onSelect={enableDashboardFiltersApplyModes ? onSelect : undefined}
             dateFormat={dateFormat}
             locale={locale}
             isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
@@ -151,7 +153,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             customIcon={visibilityIcon}
             showDropDownHeaderMessage={!filter?.dateFilter.dataSet}
             FilterConfigurationComponent={isConfigurationEnabled ? FilterConfigurationComponent : undefined}
-            withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE"}
+            withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes}
         />
     );
 };

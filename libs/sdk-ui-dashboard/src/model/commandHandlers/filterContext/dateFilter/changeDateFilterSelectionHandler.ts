@@ -20,6 +20,7 @@ import { canApplyDateFilter, dispatchFilterContextChanged, resetCrossFiltering }
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { selectIsCrossFiltering } from "../../../store/drill/drillSelectors.js";
+import { selectEnableDashboardFiltersApplyModes } from "../../../store/config/configSelectors.js";
 
 export function* changeDateFilterSelectionHandler(
     ctx: DashboardContext,
@@ -43,7 +44,9 @@ export function* changeDateFilterSelectionHandler(
         );
     }
 
-    const isWorkingSelectionChange = cmd.payload.isWorkingSelectionChange;
+    const enableDashboardFiltersApplyModes: ReturnType<typeof selectEnableDashboardFiltersApplyModes> =
+        yield select(selectEnableDashboardFiltersApplyModes);
+    const isWorkingSelectionChange = cmd.payload.isWorkingSelectionChange && enableDashboardFiltersApplyModes;
     yield put(
         filterContextActions.upsertDateFilter(
             isAllTime
@@ -59,7 +62,7 @@ export function* changeDateFilterSelectionHandler(
         ),
     );
 
-    if (!cmd.payload.isWorkingSelectionChange) {
+    if (!isWorkingSelectionChange) {
         const affectedFilter: ReturnType<typeof selectFilterContextDateFilter> = cmd.payload.dataSet
             ? yield select(selectFilterContextDateFilterByDataSet(cmd.payload.dataSet))
             : yield select(selectFilterContextDateFilter);

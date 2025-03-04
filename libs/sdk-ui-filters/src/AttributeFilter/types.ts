@@ -239,6 +239,14 @@ export interface IAttributeFilterCoreProps {
     displayAsLabel?: ObjRef;
 
     /**
+     * This enables filter mode without apply button.
+     * If true, it is responsibility of a client, to appy filters when needed.
+     * Typically uses onSelect callback to catch filter state.
+     * Note, onApply callback is not called when this is true.
+     */
+    withoutApply?: boolean;
+
+    /**
      * Specify function which will be called when user clicks 'Apply' button on this filter.
      * Note: this callback is typically not called when using Dashboard apply filters mode ALL_AT_ONCE
      * because there is no apply button dispalyed in attribute filter component.
@@ -278,12 +286,9 @@ export interface IAttributeFilterCoreProps {
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
 
     /**
-     * This enables filter mode without apply button.
-     * If true, it is responsibility of a client, to appy filters when needed.
-     * Typically uses onSelect callback to catch filter state.
-     * Note, onApply callback is not called when this is true.
+     * Enables the migration of displayAsLabel to be immediately reported to the parent app.
      */
-    withoutApply?: boolean;
+    enable?: boolean;
 }
 
 /**

@@ -5,6 +5,7 @@ import { IDashboardAttributeFilter, IDashboardDateFilter, objRefToString } from 
 
 import {
     selectDashboardFiltersApplyMode,
+    selectEnableDashboardFiltersApplyModes,
     selectFilterContextDateFilter,
     selectFilterContextDateFiltersWithDimension,
     selectWorkingFilterContextDateFilter,
@@ -28,17 +29,22 @@ export type UseParentFiltersResult = Pick<IAttributeFilterBaseProps, "dependentD
  * @beta
  */
 export const useDependentDateFilters = (filter: IDashboardAttributeFilter): UseParentFiltersResult => {
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
     const dashboardFiltersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
 
     const allAppliedDateFilters = useDashboardSelector(selectFilterContextDateFiltersWithDimension);
     const allWorkingDateFilters = useDashboardSelector(selectWorkingFilterContextDateFiltersWithDimension);
     const allDateFilters =
-        dashboardFiltersApplyMode.mode === "ALL_AT_ONCE" ? allWorkingDateFilters : allAppliedDateFilters;
+        dashboardFiltersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes
+            ? allWorkingDateFilters
+            : allAppliedDateFilters;
 
     const commonAppliedDateFilter = useDashboardSelector(selectFilterContextDateFilter);
     const commonWorkingDateFilter = useDashboardSelector(selectWorkingFilterContextDateFilter);
     const commonDateFilter =
-        dashboardFiltersApplyMode.mode === "ALL_AT_ONCE" ? commonWorkingDateFilter : commonAppliedDateFilter;
+        dashboardFiltersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes
+            ? commonWorkingDateFilter
+            : commonAppliedDateFilter;
     const commonDateFilterWithAllTime = getCommonDateFilterWithAllTime(commonDateFilter);
 
     const dependentDateFilters = useMemo(() => {

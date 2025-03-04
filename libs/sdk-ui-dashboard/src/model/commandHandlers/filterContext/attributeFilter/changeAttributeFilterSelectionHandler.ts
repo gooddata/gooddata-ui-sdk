@@ -18,6 +18,7 @@ import {
     selectIsCrossFiltering,
     selectIsFilterFromCrossFilteringByLocalIdentifier,
 } from "../../../store/drill/drillSelectors.js";
+import { selectEnableDashboardFiltersApplyModes } from "../../../store/config/configSelectors.js";
 
 export function* changeAttributeFilterSelectionHandler(
     ctx: DashboardContext,
@@ -33,12 +34,15 @@ export function* changeAttributeFilterSelectionHandler(
         throw invalidArgumentsProvided(ctx, cmd, `Filter with filterLocalId ${filterLocalId} not found.`);
     }
 
+    const enableDashboardFiltersApplyModes: ReturnType<typeof selectEnableDashboardFiltersApplyModes> =
+        yield select(selectEnableDashboardFiltersApplyModes);
+
     yield put(
         filterContextActions.updateAttributeFilterSelection({
             elements,
             filterLocalId,
             negativeSelection: selectionType === "NOT_IN",
-            isWorkingSelectionChange,
+            isWorkingSelectionChange: isWorkingSelectionChange && enableDashboardFiltersApplyModes,
         }),
     );
 
@@ -61,7 +65,8 @@ export function* changeAttributeFilterSelectionHandler(
                             uris: [],
                         },
                         negativeSelection: true,
-                        isWorkingSelectionChange,
+                        isWorkingSelectionChange:
+                            isWorkingSelectionChange && enableDashboardFiltersApplyModes,
                     }),
                 ),
             ),
@@ -72,11 +77,15 @@ export function* changeAttributeFilterSelectionHandler(
     const isCurrentFilterCrossFiltering = yield select(
         selectIsFilterFromCrossFilteringByLocalIdentifier(filterLocalId),
     );
-    if (isCrossFiltering && !isCurrentFilterCrossFiltering && !isWorkingSelectionChange) {
+    if (
+        isCrossFiltering &&
+        !isCurrentFilterCrossFiltering &&
+        (!isWorkingSelectionChange || !enableDashboardFiltersApplyModes)
+    ) {
         yield call(resetCrossFiltering, cmd);
     }
 
-    if (!isWorkingSelectionChange) {
+    if (!isWorkingSelectionChange || !enableDashboardFiltersApplyModes) {
         yield dispatchDashboardEvent(attributeFilterSelectionChanged(ctx, changedFilter, cmd.correlationId));
         yield call(dispatchFilterContextChanged, ctx, cmd);
     }

@@ -38,6 +38,7 @@ import {
     setAttributeFilterDisplayForm,
     setDashboardAttributeFilterConfigDisplayAsLabel,
     changeWorkingAttributeFilterSelection,
+    selectEnableDashboardFiltersApplyModes,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
@@ -71,6 +72,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
     const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
         selectEnableDuplicatedLabelValuesInAttributeFilter,
     );
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
 
     const dispatch = useDashboardDispatch();
     const onAttributeFilterChanged = useCallback(
@@ -102,7 +104,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
                         setAttributeFilterDisplayForm(
                             localIdentifier!,
                             filter.attributeFilter.displayForm,
-                            isWorkingSelectionChange,
+                            isWorkingSelectionChange && enableDashboardFiltersApplyModes,
                         ),
                     );
                 }
@@ -114,22 +116,26 @@ export const useFilterBarProps = (): IFilterBarProps => {
             }
 
             dispatch(
-                isWorkingSelectionChange
+                isWorkingSelectionChange && enableDashboardFiltersApplyModes
                     ? changeWorkingAttributeFilterSelection(
                           localIdentifier!,
                           attributeElements,
                           negativeSelection ? "NOT_IN" : "IN",
-                          undefined,
                       )
                     : changeAttributeFilterSelection(
                           localIdentifier!,
                           attributeElements,
                           negativeSelection ? "NOT_IN" : "IN",
-                          undefined,
                       ),
             );
         },
-        [dispatch, supportElementUris, enableDuplicatedLabelValuesInAttributeFilter, filters],
+        [
+            dispatch,
+            supportElementUris,
+            enableDuplicatedLabelValuesInAttributeFilter,
+            filters,
+            enableDashboardFiltersApplyModes,
+        ],
     );
 
     const onDateFilterChanged = useCallback(
@@ -139,11 +145,21 @@ export const useFilterBarProps = (): IFilterBarProps => {
             isWorkingSelectionChange?: boolean,
         ) => {
             if (!filter) {
-                dispatch(clearDateFilterSelection(undefined, undefined, isWorkingSelectionChange));
+                dispatch(
+                    clearDateFilterSelection(
+                        undefined,
+                        undefined,
+                        isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                    ),
+                );
             } else if (isAllTimeDashboardDateFilter(filter)) {
                 // all time filter
                 dispatch(
-                    clearDateFilterSelection(undefined, filter?.dateFilter.dataSet, isWorkingSelectionChange),
+                    clearDateFilterSelection(
+                        undefined,
+                        filter?.dateFilter.dataSet,
+                        isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                    ),
                 );
             } else {
                 const { type, granularity, from, to, dataSet } = filter.dateFilter;
@@ -156,12 +172,12 @@ export const useFilterBarProps = (): IFilterBarProps => {
                         dateFilterOptionLocalId,
                         undefined,
                         dataSet,
-                        isWorkingSelectionChange,
+                        isWorkingSelectionChange && enableDashboardFiltersApplyModes,
                     ),
                 );
             }
         },
-        [dispatch],
+        [dispatch, enableDashboardFiltersApplyModes],
     );
 
     return { filters, onAttributeFilterChanged, onDateFilterChanged, DefaultFilterBar };

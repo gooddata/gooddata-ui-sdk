@@ -6,6 +6,7 @@ import { IAttributeFilter, ObjRef, IDashboardAttributeFilter } from "@gooddata/s
 import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import {
     selectDashboardFiltersApplyMode,
+    selectEnableDashboardFiltersApplyModes,
     selectFilterContextAttributeFilters,
     selectSupportsSettingConnectingAttributes,
     selectWorkingFilterContextAttributeFilters,
@@ -31,11 +32,12 @@ export type UseParentFiltersResult = Pick<
  * @public
  */
 export const useParentFilters = (filter: IDashboardAttributeFilter): UseParentFiltersResult => {
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
     const dashboardFiltersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
     const allAppliedAttributeFilters = useDashboardSelector(selectFilterContextAttributeFilters);
     const allWorkingAttributeFilters = useDashboardSelector(selectWorkingFilterContextAttributeFilters);
     const allAttributeFilters =
-        dashboardFiltersApplyMode.mode === "ALL_AT_ONCE"
+        dashboardFiltersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes
             ? allWorkingAttributeFilters
             : allAppliedAttributeFilters;
     const supportsSettingConnectingAttributes = useDashboardSelector(

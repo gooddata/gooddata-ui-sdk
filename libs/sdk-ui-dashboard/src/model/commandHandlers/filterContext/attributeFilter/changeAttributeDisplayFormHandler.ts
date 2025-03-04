@@ -20,6 +20,7 @@ import { query } from "../../../store/_infra/queryCall.js";
 import { queryAttributeByDisplayForm } from "../../../queries/index.js";
 import { newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
 import {
+    selectEnableDashboardFiltersApplyModes,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
 } from "../../../store/config/configSelectors.js";
@@ -77,6 +78,8 @@ export function* changeAttributeDisplayFormHandler(
     const enableImmediateAttributeFilterDisplayAsLabelMigration: ReturnType<
         typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
     > = yield select(selectEnableImmediateAttributeFilterDisplayAsLabelMigration);
+    const enableDashboardFiltersApplyModes: ReturnType<typeof selectEnableDashboardFiltersApplyModes> =
+        yield select(selectEnableDashboardFiltersApplyModes);
 
     yield put(
         batchActions([
@@ -88,12 +91,14 @@ export function* changeAttributeDisplayFormHandler(
                 supportsElementUris,
                 enableDuplicatedLabelValuesInAttributeFilter,
                 isWorkingSelectionChange:
-                    isWorkingSelectionChange && !enableImmediateAttributeFilterDisplayAsLabelMigration,
+                    isWorkingSelectionChange &&
+                    !enableImmediateAttributeFilterDisplayAsLabelMigration &&
+                    enableDashboardFiltersApplyModes,
             }),
         ]),
     );
 
-    if (!isWorkingSelectionChange) {
+    if (!isWorkingSelectionChange || !enableDashboardFiltersApplyModes) {
         const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
             yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
 

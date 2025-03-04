@@ -43,6 +43,7 @@ import {
     selectPreloadedAttributesWithReferences,
     selectIsDashboardExecuted,
     selectDashboardFiltersApplyMode,
+    selectEnableDashboardFiltersApplyModes,
 } from "../../../model/index.js";
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
 import { getVisibilityIcon } from "../utils.js";
@@ -114,6 +115,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
         selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     );
     const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
 
     const filterRef = useMemo(() => {
         return filterObjRef(attributeFilter);
@@ -442,18 +444,20 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                     );
                 }}
                 onSelect={(newFilter, isInverted, selectionMode, selectionTitles, displayAsLabel) => {
-                    onFilterChanged(
-                        attributeFilterToDashboardAttributeFilter(
-                            newFilter,
-                            filter.attributeFilter.localIdentifier,
-                            filter.attributeFilter.title,
-                            selectionTitles,
-                            isInverted,
-                            selectionMode,
-                        ),
-                        displayAsLabel,
-                        true,
-                    );
+                    if (enableDashboardFiltersApplyModes) {
+                        onFilterChanged(
+                            attributeFilterToDashboardAttributeFilter(
+                                newFilter,
+                                filter.attributeFilter.localIdentifier,
+                                filter.attributeFilter.title,
+                                selectionTitles,
+                                isInverted,
+                                selectionMode,
+                            ),
+                            displayAsLabel,
+                            true,
+                        );
+                    }
                 }}
                 parentFilters={parentFilters}
                 dependentDateFilters={dependentDateFilters}
@@ -477,7 +481,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                 enableImmediateAttributeFilterDisplayAsLabelMigration={
                     enableImmediateAttributeFilterDisplayAsLabelMigration
                 }
-                withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE"}
+                withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes}
             />
         </AttributeFilterParentFilteringProvider>
     );
