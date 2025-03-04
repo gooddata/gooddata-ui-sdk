@@ -10,7 +10,7 @@ on:
         required: true
         type: string
       TEST_BACKEND:
-        default: 'https://checklist.staging.stg11.panther.intgdc.com'
+        default: 'https://checklist-new-feature.staging.stg11.panther.intgdc.com'
         required: true
         type: string
       TIGER_DATASOURCES_NAME:
@@ -34,7 +34,7 @@ on:
         required: true
         type: string
       TEST_BACKEND:
-        default: 'https://checklist.staging.stg11.panther.intgdc.com'
+        default: 'https://checklist-new-feature.staging.stg11.panther.intgdc.com'
         required: true
         type: string
       TIGER_DATASOURCES_NAME:
