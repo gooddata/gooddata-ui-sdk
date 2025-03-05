@@ -92,6 +92,8 @@ export interface IDropdownProps {
     fullscreenOnMobile?: boolean;
 
     enableEventPropagation?: boolean;
+
+    closeOnEscape?: boolean;
 }
 
 /**
@@ -130,6 +132,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
 
         fullscreenOnMobile = true,
         enableEventPropagation = false,
+        closeOnEscape = false,
     } = props;
     const [{ isOpen }, setState] = useState<IDropdownState>({
         isOpen: !!openOnInit,
@@ -216,7 +219,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                 closeOnOutsideClick={closeOnOutsideClick}
                 closeOnMouseDrag={closeOnMouseDrag}
                 closeOnParentScroll={closeOnParentScroll}
-                closeOnEscape
+                closeOnEscape={closeOnEscape}
                 shouldCloseOnClick={shouldCloseOnClick}
                 ignoreClicksOnByClass={ignoreClicksOnByClass}
                 onClose={closeDropdown}

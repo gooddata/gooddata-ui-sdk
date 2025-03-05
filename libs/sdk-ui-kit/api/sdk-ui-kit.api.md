@@ -1635,6 +1635,8 @@ export interface IDropdownProps {
     // (undocumented)
     className?: string;
     // (undocumented)
+    closeOnEscape?: boolean;
+    // (undocumented)
     closeOnMouseDrag?: boolean;
     // (undocumented)
     closeOnOutsideClick?: boolean;

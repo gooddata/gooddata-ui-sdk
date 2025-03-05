@@ -86,6 +86,7 @@ export const CoreHeaderWorkspacePicker: React.FC<IHeaderWorkspacePickerProps> = 
             className={dropdownClassNames}
             closeOnParentScroll={true}
             closeOnMouseDrag={true}
+            closeOnEscape={true}
             onOpenStateChanged={(isOpen) => {
                 if (isOpen && onOpen) {
                     onOpen();
