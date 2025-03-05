@@ -3,7 +3,7 @@
 name: Checklist ~ run integrated e2e tests
 on:
   schedule:
-    - cron: '30 20 * * 0-4' #master branch
+    - cron: '30 8,20 * * 0-4' #master branch
     - cron: '30 13 * * 0,2,4' #release branch
   workflow_dispatch:
     inputs:
