@@ -168,7 +168,11 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
                     };
 
                     return (
-                        <div className={cx("gd-dynamic-select", className)} style={style}>
+                        <div
+                            className={cx("gd-dynamic-select", className)}
+                            style={style}
+                            aria-labelledby={undefined}
+                        >
                             <div className="gd-dynamic-select-input-wrapper">
                                 <input
                                     type="text"
