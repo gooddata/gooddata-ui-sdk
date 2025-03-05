@@ -6,6 +6,7 @@
  * @alpha
  */
 export type ExportElementType =
+    | "meta"
     | "section"
     | "section-info"
     | "section-title"
@@ -16,6 +17,22 @@ export type ExportElementType =
     | "widget-description";
 
 /**
+ * Export meta type.
+ *
+ * @alpha
+ */
+export type ExportMetaType =
+    | "dashboard-id"
+    | "dashboard-title"
+    | "dashboard-description"
+    | "dashboard-tags"
+    | "dashboard-tag"
+    | "dashboard-filters"
+    | "dashboard-filter"
+    | "dashboard-filter-name"
+    | "dashboard-filter-value";
+
+/**
  * Data attributes with export specification for components.
  *
  * @alpha
@@ -23,6 +40,41 @@ export type ExportElementType =
 export type CommonExportDataAttributes = {
     "data-export-type": ExportElementType;
     "data-export-depth"?: string;
+};
+
+/**
+ * Data attributes with export specification for meta.
+ *
+ * @alpha
+ */
+export type MetaExportDataAttributes = {
+    "data-export-meta-type": ExportMetaType;
+    "data-export-meta-filter-type"?: "date" | "attribute";
+};
+
+/**
+ * Data attributes for export mode to be added to the header.
+ *
+ * @alpha
+ */
+export type MetaExportData = {
+    root?: CommonExportDataAttributes;
+    id?: MetaExportDataAttributes;
+    title?: MetaExportDataAttributes;
+    description?: MetaExportDataAttributes;
+    tags?: {
+        root: MetaExportDataAttributes;
+        tag: MetaExportDataAttributes;
+    };
+    filters?: {
+        root: MetaExportDataAttributes;
+        dateFilter: MetaExportDataAttributes;
+        attributeFilter: MetaExportDataAttributes;
+        filter: {
+            name: MetaExportDataAttributes;
+            value: MetaExportDataAttributes;
+        };
+    };
 };
 
 /**

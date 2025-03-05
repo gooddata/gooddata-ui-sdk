@@ -11,6 +11,7 @@ import {
 import {
     RichTextExportData,
     SectionExportData,
+    MetaExportData,
     WidgetExportData,
     WidgetExportDataAttributes,
 } from "./types.js";
@@ -114,4 +115,59 @@ export const useVisualizationExportData = (
             "data-export-visualization-status": loading ? "loading" : error ? "error" : "loaded",
         };
     }, [widget, isExportMode, loading, error]);
+};
+
+/**
+ * @alpha
+ */
+export const useMetaExportData = (): MetaExportData | undefined => {
+    const isExportMode = useDashboardSelector(selectIsInExportMode);
+
+    if (!isExportMode) {
+        return undefined;
+    }
+
+    return {
+        root: {
+            "data-export-type": "meta",
+        },
+        id: {
+            "data-export-meta-type": "dashboard-id",
+        },
+        title: {
+            "data-export-meta-type": "dashboard-title",
+        },
+        description: {
+            "data-export-meta-type": "dashboard-description",
+        },
+        tags: {
+            root: {
+                "data-export-meta-type": "dashboard-tags",
+            },
+            tag: {
+                "data-export-meta-type": "dashboard-tag",
+            },
+        },
+        filters: {
+            root: {
+                "data-export-meta-type": "dashboard-filters",
+            },
+            dateFilter: {
+                "data-export-meta-type": "dashboard-filter",
+                "data-export-meta-filter-type": "date",
+            },
+            attributeFilter: {
+                "data-export-meta-type": "dashboard-filter",
+                "data-export-meta-filter-type": "attribute",
+            },
+            filter: {
+                name: {
+                    "data-export-meta-type": "dashboard-filter-name",
+                },
+                value: {
+                    "data-export-meta-type": "dashboard-filter-value",
+                },
+            },
+        },
+    };
 };

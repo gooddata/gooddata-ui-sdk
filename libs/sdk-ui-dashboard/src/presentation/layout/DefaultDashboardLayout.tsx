@@ -25,6 +25,7 @@ import {
 } from "../../model/index.js";
 import { isInitialPlaceholderWidget } from "../../widgets/index.js";
 import { DefaultFlexibleDashboardLayout } from "../flexibleLayout/index.js";
+import { DefaultDashboardExportVariables } from "../export/index.js";
 import { useDashboardCustomizationsContext } from "../dashboardContexts/index.js";
 
 import { DashboardLayoutWidget } from "./DashboardLayoutWidget.js";
@@ -157,6 +158,7 @@ const LegacyDefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element
 
     return (
         <>
+            <DefaultDashboardExportVariables renderMode={renderMode} />
             <DashboardLayout
                 className={isExport ? "export-mode" : ""}
                 layout={transformedLayout}

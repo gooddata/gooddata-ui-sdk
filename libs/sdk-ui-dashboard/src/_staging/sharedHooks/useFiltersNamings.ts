@@ -1,9 +1,11 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import {
     FilterContextItem,
     getAttributeElementsItems,
     IAttributeElement,
+    isAllTimeDashboardDateFilter,
+    isAllValuesDashboardAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilterWithDimension,
     serializeObjRef,
@@ -71,6 +73,8 @@ export function useFiltersNamings(filtersToDisplay: FilterContextItem[]) {
             );
 
             return {
+                type: "attributeFilter",
+                all: isAllValuesDashboardAttributeFilter(filter),
                 id: filter.attributeFilter.localIdentifier!,
                 title: filter.attributeFilter.title ?? attribute.attribute.title,
                 subtitle,
@@ -94,12 +98,16 @@ export function useFiltersNamings(filtersToDisplay: FilterContextItem[]) {
             if (isDashboardDateFilterWithDimension(filter)) {
                 const key = serializeObjRef(filter.dateFilter.dataSet!);
                 return {
+                    type: "dateFilter",
+                    all: isAllTimeDashboardDateFilter(filter),
                     id: uuidv4(), // used just for React keys
                     title: allDateFiltersTitlesObj[key],
                     subtitle,
                 };
             } else {
                 return {
+                    type: "dateFilter",
+                    all: isAllTimeDashboardDateFilter(filter),
                     id: uuidv4(), // used just for React keys
                     title: commonDateFilterTitle || intl.formatMessage({ id: "dateFilterDropdown.title" }),
                     subtitle,

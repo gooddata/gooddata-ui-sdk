@@ -2,3 +2,4 @@
 
 export * from "./types.js";
 export * from "./useExportData.js";
+export * from "./DefaultDashboardExportVariables.js";

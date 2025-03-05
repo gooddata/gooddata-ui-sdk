@@ -347,6 +347,7 @@ export {
     selectDisableDashboardUserFilterReset,
     selectDisableDashboardUserFilterSave,
     selectDisableFilterViews,
+    selectDashboardDescriptor,
 } from "./meta/metaSelectors.js";
 export {
     selectListedDashboards,
