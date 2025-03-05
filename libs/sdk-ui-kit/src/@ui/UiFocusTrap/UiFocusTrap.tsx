@@ -112,15 +112,15 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({ children, onDeactivate
 
         document.addEventListener("keydown", handleKeyDown);
 
-        // Move focus to the first element in the trap at start
-        const { firstElement } = getFocusableElements(trapRef.current);
-
-        setTimeout(() => {
+        const focusTrapTimeout = setTimeout(() => {
+            // Move focus to the first element in the trap at start
+            const { firstElement } = getFocusableElements(trapRef.current);
             firstElement?.focus();
         }, 100);
 
         return () => {
             document.removeEventListener("keydown", handleKeyDown);
+            clearTimeout(focusTrapTimeout);
         };
     }, [onDeactivate, returnFocusTo]);
 
