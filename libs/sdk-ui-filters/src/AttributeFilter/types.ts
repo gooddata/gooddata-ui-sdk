@@ -284,11 +284,6 @@ export interface IAttributeFilterCoreProps {
      * Enables the migration of displayAsLabel to be immediately reported to the parent app.
      */
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
-
-    /**
-     * Enables the migration of displayAsLabel to be immediately reported to the parent app.
-     */
-    enable?: boolean;
 }
 
 /**

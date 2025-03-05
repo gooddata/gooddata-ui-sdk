@@ -35,9 +35,6 @@ export const anyBucket: BucketPredicate;
 // @public
 export const anyMeasure: MeasurePredicate;
 
-// @internal
-export function applyFilterContext(filterContext: IFilterContextDefinition, workingFilterContext: IWorkingFilterContextDefinition | undefined, enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean): IFilterContextDefinition;
-
 // @public
 export function applyRatioRule<T extends IAttributeOrMeasure>(items: T[], rule?: ComputeRatioRule): T[];
 

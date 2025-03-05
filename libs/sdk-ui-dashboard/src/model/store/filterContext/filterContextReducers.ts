@@ -26,12 +26,12 @@ import {
     isDashboardCommonDateFilter,
     newAllTimeDashboardDateFilter,
     IDashboardAttributeFilterByDate,
-    applyFilterContext,
 } from "@gooddata/sdk-model";
 import { IParentWithConnectingAttributes } from "../../types/attributeFilterTypes.js";
 import { AddDateFilterPayload } from "../../commands/index.js";
 import { generateFilterLocalIdentifier } from "../_infra/generators.js";
 import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
+import { applyFilterContext } from "./filterContextUtils.js";
 
 type FilterContextReducer<A extends Action> = CaseReducer<FilterContextState, A>;
 

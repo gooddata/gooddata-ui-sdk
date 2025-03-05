@@ -20,7 +20,6 @@ import {
     isDashboardDateFilter,
     objRefToString,
     getAttributeElementsItems,
-    applyFilterContext,
 } from "@gooddata/sdk-model";
 import { ObjRefMap, newDisplayFormMap } from "../../../_staging/metadata/objRefMap.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
@@ -35,6 +34,7 @@ import keyBy from "lodash/keyBy.js";
 import keys from "lodash/keys.js";
 import sortBy from "lodash/sortBy.js";
 import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../config/configSelectors.js";
+import { applyFilterContext } from "./filterContextUtils.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
