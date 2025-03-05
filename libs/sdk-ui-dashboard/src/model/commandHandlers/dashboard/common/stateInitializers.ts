@@ -23,6 +23,8 @@ import {
     IDataSetMetadataObject,
     IDashboardObjectIdentity,
     IFilterContextDefinition,
+    IDashboardAttributeFilterConfig,
+    IDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 
 import { filterContextActions } from "../../../store/filterContext/index.js";
@@ -52,6 +54,7 @@ import { dateFilterConfigsActions } from "../../../store/dateFilterConfigs/index
 import { drillActions } from "../../../store/drill/index.js";
 
 import { dashboardInitialize, EmptyDashboardLayout } from "./dashboardInitialize.js";
+import { mergedMigratedAttributeFilters } from "./migratedAttributeFilters.js";
 
 /**
  * Returns a list of actions which when processed will initialize the essential parts of the dashboard
@@ -335,9 +338,9 @@ function* sanitizeFilterContext(
     );
 }
 
-function getDisplayAsLabels(dashboard: IDashboard): ObjRef[] {
+function getDisplayAsLabels(attributeFilterConfigs: IDashboardAttributeFilterConfig[] | undefined): ObjRef[] {
     return (
-        dashboard.attributeFilterConfigs?.reduce((labels: ObjRef[], config) => {
+        attributeFilterConfigs?.reduce((labels: ObjRef[], config) => {
             if (typeof config.displayAsLabel !== "undefined") {
                 labels.push(config.displayAsLabel);
             }
@@ -362,6 +365,12 @@ function getDisplayAsLabels(dashboard: IDashboard): ObjRef[] {
  *  these insights in the state; it uses the insights to perform sanitization of the dashboard layout
  * @param settings - settings currently in effect; note that this function will not create actions to store
  *  the settings in the state; it uses the settings during layout sanitization
+ * @param isImmediateAttributeFilterMigrationEnabled - enables transfer of changes made to the dashboard and
+ *  its filter context in view mode to the edit mode.
+ * @param migratedAttributeFilters - ad-hoc migrated attribute filters in view mode that must be applied to
+ *  the dashboard so user can save these changes (persisted dashboard state remains as is).
+ * @param migratedAttributeFilterConfigs - ad-hoc migrated attribute filter configs in view mode that must be
+ *  applied to the dashboard so user can save these changes (persisted dashboard state remains as is).
  * @param dateFilterConfig - effective date filter config to use; note that this function will not store
  *  the date filter config anywhere; it uses the config during filter context sanitization & determining
  *  which date option is selected
@@ -376,6 +385,9 @@ export function* actionsToInitializeExistingDashboard(
     dashboard: IDashboard,
     insights: IInsight[],
     settings: ISettings,
+    isImmediateAttributeFilterMigrationEnabled: boolean,
+    migratedAttributeFilters: IDashboardAttributeFilter[],
+    migratedAttributeFilterConfigs: IDashboardAttributeFilterConfig[] = [],
     dateFilterConfig: IDateFilterConfig,
     dateDataSets: ICatalogDateDataset[] | null,
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
@@ -404,12 +416,22 @@ export function* actionsToInitializeExistingDashboard(
 
     const filterContextDefinition = dashboardFilterContextDefinition(customizedDashboard, dateFilterConfig);
     const filterContextIdentity = dashboardFilterContextIdentity(customizedDashboard);
-    const displayAsLabels = getDisplayAsLabels(dashboard);
+
+    const migratedFilterContext: IFilterContextDefinition = isImmediateAttributeFilterMigrationEnabled
+        ? mergedMigratedAttributeFilters(filterContextDefinition, migratedAttributeFilters)
+        : filterContextDefinition;
+
+    const effectiveAttributeFilterConfigs = isImmediateAttributeFilterMigrationEnabled
+        ? migratedAttributeFilterConfigs
+        : dashboard.attributeFilterConfigs;
+
+    const displayAsLabels = getDisplayAsLabels(effectiveAttributeFilterConfigs);
+
     // load DFs for both filter refs and displayAsLabels
     const attributeFilterDisplayForms = yield call(
         resolveFilterDisplayForms,
         ctx,
-        filterContextDefinition.filters,
+        migratedFilterContext.filters,
         displayAsLabels,
         displayForms,
     );
@@ -430,7 +452,7 @@ export function* actionsToInitializeExistingDashboard(
     return [
         filterContextActions.setFilterContext({
             originalFilterContextDefinition: filterContextDefinition,
-            filterContextDefinition,
+            filterContextDefinition: migratedFilterContext,
             filterContextIdentity,
             attributeFilterDisplayForms,
         }),
@@ -440,7 +462,7 @@ export function* actionsToInitializeExistingDashboard(
             initialContent: false,
         }),
         attributeFilterConfigsActions.setAttributeFilterConfigs({
-            attributeFilterConfigs: dashboard.attributeFilterConfigs,
+            attributeFilterConfigs: effectiveAttributeFilterConfigs,
         }),
         dateFilterConfigActions.updateDateFilterConfig(dashboard.dateFilterConfig!),
         dateFilterConfigsActions.setDateFilterConfigs({

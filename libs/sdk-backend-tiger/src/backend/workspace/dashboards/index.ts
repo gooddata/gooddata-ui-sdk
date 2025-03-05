@@ -13,6 +13,9 @@ import {
     ITigerClient,
     JsonApiFilterViewOutDocument,
     isDataSetItem,
+    RawExportActionsRequest,
+    AfmExport,
+    ActionsApiGetRawExportRequest,
 } from "@gooddata/api-client-tiger";
 import {
     IDashboardReferences,
@@ -52,6 +55,7 @@ import {
     IDashboardFilterView,
     IDashboardFilterViewSaveRequest,
     IDashboardAttributeFilterConfig,
+    IExecutionDefinition,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import { v4 as uuid } from "uuid";
@@ -84,6 +88,7 @@ import { convertFilterView } from "../../../convertors/fromBackend/FilterViewCon
 import { invariant } from "ts-invariant";
 import { convertApiError } from "../../../utils/errorHandling.js";
 import { convertDataSetItem } from "../../../convertors/fromBackend/DataSetConverter.js";
+import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec.js";
 
 const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;
@@ -499,6 +504,30 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
     };
 
+    public exportDashboardToCSVRaw = async (
+        definition: IExecutionDefinition,
+        filename: string,
+    ): Promise<IExportResult> => {
+        const execution = toAfmExecution(definition);
+        const payload: RawExportActionsRequest = {
+            format: "CSV",
+            execution: execution.execution as AfmExport,
+            fileName: filename,
+        };
+
+        return this.authCall(async (client) => {
+            const rawExport = await client.export.createRawExport({
+                workspaceId: this.workspace,
+                rawExportRequest: payload,
+            });
+
+            return await this.handleExportRawResultPolling(client, {
+                workspaceId: this.workspace,
+                exportId: rawExport?.data?.exportResult,
+            });
+        });
+    };
+
     private async handleExportResultPolling(
         client: ITigerClient,
         type: "application/pdf",
@@ -567,6 +596,34 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             });
 
             if (result?.status === 200) {
+                const blob = new Blob([result?.data as any], { type });
+                return {
+                    uri: result?.config?.url || "",
+                    objectUrl: URL.createObjectURL(blob),
+                    fileName: parseNameFromContentDisposition(result),
+                };
+            }
+
+            await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
+        }
+
+        throw new TimeoutError(
+            `Export timeout for export id "${payload.exportId}" in workspace "${payload.workspaceId}"`,
+        );
+    }
+
+    private async handleExportRawResultPolling(
+        client: ITigerClient,
+        payload: ActionsApiGetRawExportRequest,
+    ): Promise<IExportResult> {
+        for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
+            const result = await client.export.getRawExport(payload, {
+                transformResponse: (x) => x,
+                responseType: "blob",
+            });
+
+            if (result?.status === 200) {
+                const type = "text/csv";
                 const blob = new Blob([result?.data as any], { type });
                 return {
                     uri: result?.config?.url || "",

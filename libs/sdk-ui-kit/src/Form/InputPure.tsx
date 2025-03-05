@@ -25,7 +25,7 @@ export interface InputPureProps extends IDomNativeProps {
     isSmall: boolean;
     maxlength: number;
     onChange: (value: string | number, e?: React.ChangeEvent<HTMLInputElement>) => void;
-    onEscKeyPress: () => void;
+    onEscKeyPress: (e: React.KeyboardEvent) => void;
     onEnterKeyPress: () => void;
     onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
     onFocus: (e: React.FocusEvent<HTMLInputElement>) => void;
@@ -100,7 +100,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
                 if (this.props.clearOnEsc) {
                     this.onClear();
                 }
-                this.props.onEscKeyPress();
+                this.props.onEscKeyPress(e);
                 break;
             case ENUM_KEY_CODE.KEY_CODE_ENTER:
                 this.props.onEnterKeyPress();
@@ -179,9 +179,8 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
         );
     }
 
-    render() {
+    renderInput() {
         const {
-            className,
             clearOnEsc,
             disabled,
             isSearch,
@@ -189,7 +188,6 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
             prefix,
             readonly,
             suffix,
-            label,
             maxlength,
             value,
             onBlur,
@@ -200,37 +198,46 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
             required,
             ariaLabel,
         } = this.props;
-
         return (
+            <div className="gd-input-wrapper">
+                <input
+                    ref={(ref) => {
+                        this.inputNodeRef = ref;
+                    }}
+                    type={type}
+                    id={id}
+                    name={name}
+                    required={required}
+                    className={this.getInputClassNames()}
+                    disabled={disabled}
+                    maxLength={maxlength}
+                    onChange={this.onChange}
+                    onBlur={onBlur}
+                    onFocus={onFocus}
+                    onKeyDown={this.onKeyPress}
+                    placeholder={placeholder}
+                    readOnly={readonly}
+                    value={value}
+                    aria-label={ariaLabel ?? undefined}
+                />
+                {this.renderSearch(isSearch)}
+                {this.renderClearIcon(clearOnEsc)}
+                {this.renderPrefix(prefix)}
+                {this.renderSuffix(suffix)}
+            </div>
+        );
+    }
+
+    render() {
+        const { className, label } = this.props;
+
+        return label ? (
             <label className={this.getLabelClassNames(className)}>
                 {this.renderLabel(label)}
-                <div className="gd-input-wrapper">
-                    <input
-                        ref={(ref) => {
-                            this.inputNodeRef = ref;
-                        }}
-                        type={type}
-                        id={id}
-                        name={name}
-                        required={required}
-                        className={this.getInputClassNames()}
-                        disabled={disabled}
-                        maxLength={maxlength}
-                        onChange={this.onChange}
-                        onBlur={onBlur}
-                        onFocus={onFocus}
-                        onKeyDown={this.onKeyPress}
-                        placeholder={placeholder}
-                        readOnly={readonly}
-                        value={value}
-                        aria-label={ariaLabel ?? undefined}
-                    />
-                    {this.renderSearch(isSearch)}
-                    {this.renderClearIcon(clearOnEsc)}
-                    {this.renderPrefix(prefix)}
-                    {this.renderSuffix(suffix)}
-                </div>
+                {this.renderInput()}
             </label>
+        ) : (
+            <div className={this.getLabelClassNames(className)}>{this.renderInput()}</div>
         );
     }
 

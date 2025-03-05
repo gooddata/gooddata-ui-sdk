@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { injectIntl, IntlShape } from "react-intl";
 import cx from "classnames";
@@ -9,7 +9,7 @@ export interface IHeaderWorkspacePickerItemProps {
     isDemo?: boolean;
     isSelected?: boolean;
     isLoading?: boolean;
-    onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
     intl: IntlShape;
 }
 
@@ -40,12 +40,12 @@ export const CoreHeaderWorkspacePickerItem: React.FC<IHeaderWorkspacePickerItemP
     });
 
     return (
-        <div className={classes} title={title} onClick={onClick}>
+        <button className={classes} title={title} onClick={onClick}>
             <span className="project-title">{title}</span>
             {isDemo ? (
                 <span className="demo-sticker">{t({ id: "gs.header.projectPicker.demo" })}</span>
             ) : null}
-        </div>
+        </button>
     );
 };
 

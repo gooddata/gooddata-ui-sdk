@@ -3778,12 +3778,14 @@ export interface ExportRawInsightWidget extends IDashboardCommand {
 }
 
 // @alpha
-export function exportRawInsightWidget(ref: ObjRef, filename: string, correlationId?: string): ExportRawInsightWidget;
+export function exportRawInsightWidget(ref: ObjRef, widget: IInsightWidget, insight: IInsight, filename: string, correlationId?: string): ExportRawInsightWidget;
 
 // @alpha
 export interface ExportRawInsightWidgetPayload {
     readonly filename: string;
+    readonly insight: IInsight;
     readonly ref: ObjRef;
+    readonly widget: IInsightWidget;
 }
 
 // @alpha (undocumented)

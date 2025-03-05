@@ -175,6 +175,7 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
                                     className="s-relative-range-input gd-input-field"
                                     aria-label={ariaLabel}
                                     {...getInputProps({
+                                        "aria-labelledby": undefined,
                                         ref: this.inputRef,
                                         placeholder: selectedItem ? selectedItem.label : placeholder,
                                         value: inputValue,

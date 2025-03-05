@@ -24,6 +24,7 @@ import {
     IDashboardFilterView,
     IDashboardFilterViewSaveRequest,
     IDashboardAttributeFilterConfig,
+    IExecutionDefinition,
 } from "@gooddata/sdk-model";
 import { IExportResult } from "../execution/export.js";
 import { IPagedResource } from "../../common/paging.js";
@@ -316,6 +317,17 @@ export interface IWorkspaceDashboardsService {
      * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
      */
     exportDashboardToTabular(ref: ObjRef): Promise<IExportResult>;
+
+    /**
+     * Export dashboard to CSV raw.
+     *
+     * CSV raw file is downloaded and attached as Blob data to the current window instance.
+     *
+     * @param definition - execution definition
+     * @param fileName - name of the file
+     * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
+     */
+    exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string): Promise<IExportResult>;
 
     /**
      * Create scheduled mail for the dashboard

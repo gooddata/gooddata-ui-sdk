@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import parseDate from "date-fns/parse/index.js";
@@ -31,7 +31,7 @@ describe("DatePicker", () => {
     }
 
     const openCalendar = async () => {
-        await userEvent.click(screen.getByRole("textbox"));
+        await userEvent.click(screen.getByRole("combobox"));
     };
 
     const closeCalendar = async () => {
@@ -39,15 +39,15 @@ describe("DatePicker", () => {
     };
 
     const testOpenCalendar = () => {
-        expect(screen.getByRole("datepicker-picker")).toBeInTheDocument();
+        expect(screen.getByRole("dialog")).toBeInTheDocument();
     };
 
     const testClosedCalendar = () => {
-        expect(screen.queryByRole("datepicker-picker")).not.toBeInTheDocument();
+        expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     };
 
     const setDate = async (value: string) => {
-        await userEvent.clear(screen.getByRole("textbox"));
+        await userEvent.clear(screen.getByRole("combobox"));
         await userEvent.paste(value);
     };
 
@@ -113,7 +113,7 @@ describe("DatePicker", () => {
         it("should initially render date input", () => {
             createComponent();
 
-            expect(screen.getByRole("textbox")).toBeInTheDocument();
+            expect(screen.getByRole("combobox")).toBeInTheDocument();
         });
 
         it("should initially render without date picker", () => {
@@ -132,7 +132,7 @@ describe("DatePicker", () => {
                     date: parseDate("01/01/2015", defaultDateFormat, new Date()),
                 });
 
-                expect(screen.getByRole("textbox")).toHaveValue("01/01/2015");
+                expect(screen.getByRole("combobox")).toHaveValue("01/01/2015");
             });
 
             it("should show date in provided format", () => {
@@ -142,7 +142,7 @@ describe("DatePicker", () => {
                     dateFormat: "yyyy/MM/dd",
                 });
 
-                expect(screen.getByRole("textbox")).toHaveValue("2015/02/01");
+                expect(screen.getByRole("combobox")).toHaveValue("2015/02/01");
             });
 
             it("should use provided className", () => {
@@ -170,7 +170,7 @@ describe("DatePicker", () => {
                 });
 
                 expect(screen.getByRole("datepicker")).toHaveClass(smallClass);
-                expect(screen.getByRole("textbox")).toHaveClass(smallClass);
+                expect(screen.getByRole("combobox")).toHaveClass(smallClass);
             });
 
             it("should use provided tabIndex", () => {
@@ -178,7 +178,7 @@ describe("DatePicker", () => {
                     tabIndex: 4,
                 });
 
-                expect(screen.getByRole("textbox")).toHaveProperty("tabIndex", 4);
+                expect(screen.getByRole("combobox")).toHaveProperty("tabIndex", 4);
             });
 
             describe("onChange", () => {

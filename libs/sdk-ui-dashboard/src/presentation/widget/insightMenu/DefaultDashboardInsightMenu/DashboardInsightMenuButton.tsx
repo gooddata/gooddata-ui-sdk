@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import { useIntl } from "react-intl";
-
+import { isActionKey } from "@gooddata/sdk-ui-kit";
 import { IDashboardInsightMenuButtonProps } from "../types.js";
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 
@@ -18,7 +18,7 @@ export const DashboardInsightMenuButton = (props: IDashboardInsightMenuButtonPro
     const onKeyDown = useCallback(
         (event: React.KeyboardEvent<HTMLDivElement>) => {
             // This enables keyboard interaction events after focus
-            if (event.key === "Enter" || event.key === " ") {
+            if (isActionKey(event)) {
                 event.preventDefault();
                 onClick();
             }

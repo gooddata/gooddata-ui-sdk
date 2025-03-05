@@ -2,7 +2,7 @@
 import { useCallback, useState } from "react";
 import { invariant } from "ts-invariant";
 import { IExtendedExportConfig } from "@gooddata/sdk-ui";
-import { IInsightDefinition, ObjRef } from "@gooddata/sdk-model";
+import { IInsight, IInsightWidget, ObjRef } from "@gooddata/sdk-model";
 import { getInsightVisualizationMeta } from "@gooddata/sdk-ui-ext";
 import { v4 as uuid } from "uuid";
 
@@ -30,9 +30,10 @@ import { useSlidesExportHandler } from "./useSlidesExportHandler.js";
 export const useInsightExport = (config: {
     title: string;
     widgetRef: ObjRef;
-    insight?: IInsightDefinition;
+    insight?: IInsight;
+    widget?: IInsightWidget;
 }) => {
-    const { title, widgetRef, insight } = config;
+    const { title, widgetRef, insight, widget } = config;
     const [isExporting, setIsExporting] = useState(false);
 
     const dispatch = useDashboardDispatch();
@@ -56,9 +57,9 @@ export const useInsightExport = (config: {
         (title: string) =>
             dispatchAndWaitFor<ExportRawInsightWidget, DashboardInsightWidgetExportResolved>(
                 dispatch,
-                exportRawInsightWidget(widgetRef, title, uuid()),
+                exportRawInsightWidget(widgetRef, widget!, insight!, title, uuid()),
             ).then((result) => result.payload.result),
-        [widgetRef],
+        [widgetRef, widget, insight],
     );
 
     const exportSlidesFunction = useCallback(

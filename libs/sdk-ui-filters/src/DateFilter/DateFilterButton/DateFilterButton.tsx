@@ -1,8 +1,8 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
-
+import { isActionKey } from "@gooddata/sdk-ui-kit";
 import { FilterButtonCustomIcon, IFilterButtonCustomIcon } from "../../shared/index.js";
 
 export interface IDateFilterButtonProps {
@@ -29,7 +29,7 @@ export const DateFilterButton: React.FC<IDateFilterButtonProps> = ({
     const onKeyDown = useCallback(
         (event) => {
             // This enables keyboard interaction events after focus
-            if (event.key === "Enter" || event.key === " ") {
+            if (isActionKey(event)) {
                 event.preventDefault();
                 onClick();
             }

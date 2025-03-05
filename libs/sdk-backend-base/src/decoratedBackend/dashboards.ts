@@ -33,6 +33,7 @@ import {
     IDateFilter,
     IDashboardFilterView,
     IDashboardAttributeFilterConfig,
+    IExecutionDefinition,
 } from "@gooddata/sdk-model";
 
 /**
@@ -103,6 +104,10 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
 
     exportDashboardToTabular(ref: ObjRef): Promise<IExportResult> {
         return this.decorated.exportDashboardToTabular(ref);
+    }
+
+    exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string): Promise<IExportResult> {
+        return this.decorated.exportDashboardToCSVRaw(definition, fileName);
     }
 
     createScheduledMail(

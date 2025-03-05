@@ -24,19 +24,37 @@ export class Button extends React.Component<IButtonProps> {
     public buttonNode: HTMLElement;
 
     public render() {
-        const { id, tagName, title, disabled, tabIndex, type, iconLeft, iconRight, accessibilityConfig } =
-            this.props;
-        const { ariaLabel, ariaLabelledBy } = accessibilityConfig ?? {};
+        const {
+            id,
+            tagName,
+            title,
+            disabled,
+            tabIndex,
+            type,
+            iconLeft,
+            iconRight,
+            accessibilityConfig,
+            buttonRef,
+        } = this.props;
+        const { isExpanded, popupId, ariaLabel, ariaLabelledBy } = accessibilityConfig ?? {};
         const TagName = tagName as any;
         const effectiveValue = this.getEffectiveValue();
+
+        const ariaDropdownProps = {
+            ...(popupId ? { "aria-haspopup": !!popupId } : {}),
+            ...(popupId && isExpanded ? { "aria-controls": popupId, "aria-expanded": isExpanded } : {}),
+        };
 
         return (
             <TagName
                 id={id}
                 ref={(ref: HTMLElement) => {
                     this.buttonNode = ref;
+                    if (buttonRef) {
+                        buttonRef.current = ref;
+                    }
                 }}
-                title={title}
+                title={title || ariaLabel}
                 className={this.getClassnames()}
                 type={type}
                 onClick={this._onClick}
@@ -44,6 +62,7 @@ export class Button extends React.Component<IButtonProps> {
                 aria-disabled={disabled}
                 aria-label={ariaLabel}
                 aria-labelledby={ariaLabelledBy}
+                {...ariaDropdownProps}
                 role="button"
             >
                 {this.renderIcon(iconLeft)}
@@ -88,6 +107,6 @@ export class Button extends React.Component<IButtonProps> {
             return null;
         }
 
-        return <span className={cx("gd-button-icon", icon)} role="button-icon" />;
+        return <span className={cx("gd-button-icon", icon)} data-testid="gd-button-icon" />;
     }
 }

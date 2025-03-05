@@ -8,14 +8,23 @@ import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { dashboardWasReset } from "../../events/dashboard.js";
 import { selectEffectiveDateFilterConfig } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { selectDateFilterConfig, selectSettings } from "../../store/config/configSelectors.js";
+import {
+    selectDateFilterConfig,
+    selectSettings,
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
+} from "../../store/config/configSelectors.js";
 import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,
 } from "./common/stateInitializers.js";
 import { batchActions } from "redux-batched-actions";
 import uniqWith from "lodash/uniqWith.js";
-import { areObjRefsEqual } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    IDashboardAttributeFilterConfig,
+    isDashboardAttributeFilter,
+    IDashboardAttributeFilter,
+} from "@gooddata/sdk-model";
 import { resolveInsights } from "../../utils/insightResolver.js";
 import { insightReferences } from "./common/insightReferences.js";
 import {
@@ -24,6 +33,10 @@ import {
 } from "../../store/catalog/catalogSelectors.js";
 import { applyDefaultFilterView } from "./common/filterViews.js";
 import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
+import { selectFilterContextAttributeFilters } from "../../store/filterContext/filterContextSelectors.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { getMigratedAttributeFilters } from "./common/migratedAttributeFilters.js";
+import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 
 export function* resetDashboardHandler(
     ctx: DashboardContext,
@@ -70,6 +83,40 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
          * Everything else can stay untouched.
          */
 
+        const isImmediateAttributeFilterMigrationEnabled: ReturnType<
+            typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
+        > = yield select(selectEnableImmediateAttributeFilterDisplayAsLabelMigration);
+
+        const currentFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
+            selectFilterContextAttributeFilters,
+        );
+        const crossFilteringFiltersLocalIdentifiers: ReturnType<
+            typeof selectCrossFilteringFiltersLocalIdentifiers
+        > = yield select(selectCrossFilteringFiltersLocalIdentifiers);
+        const migratedAttributeFilters = isImmediateAttributeFilterMigrationEnabled
+            ? getMigratedAttributeFilters(
+                  persistedDashboard.filterContext?.filters.filter(isDashboardAttributeFilter),
+                  currentFilters,
+                  crossFilteringFiltersLocalIdentifiers,
+              )
+            : [];
+
+        // Attribute filter configs created in view mode by ad-hoc attribute filter displayAsLabel migration.
+        // The config must be preserved when mode is changed from view to edit (when this saga is called) so the
+        // user can save the dashboard changes, including the config that would get lost otherwise.
+        const adHocAttributeFilterConfigs: IDashboardAttributeFilterConfig[] = yield select(
+            selectAttributeFilterConfigsOverrides,
+        );
+        const effectiveAttributeFilterConfigs = isImmediateAttributeFilterMigrationEnabled
+            ? mergeDashboardAttributeFilterConfigs(
+                  persistedDashboard.attributeFilterConfigs,
+                  adHocAttributeFilterConfigs,
+                  migratedAttributeFilters,
+              )
+            : persistedDashboard.attributeFilterConfigs;
+
+        // end of ad-hoc migration content
+
         const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
         const filterViews: ReturnType<typeof selectFilterViews> = yield select(selectFilterViews);
         const dashboardWithUpdatedFilterContext = applyDefaultFilterView(
@@ -86,7 +133,7 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             uniqueInsightRefsFromWidgets,
         );
 
-        const effectiveConfig: ReturnType<typeof selectEffectiveDateFilterConfig> = yield select(
+        const effectiveDateFilterConfig: ReturnType<typeof selectEffectiveDateFilterConfig> = yield select(
             selectEffectiveDateFilterConfig,
         );
         const dateDataSets: ReturnType<typeof selectCatalogDateDatasets> = yield select(
@@ -104,7 +151,10 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             dashboardWithUpdatedFilterContext,
             resolvedInsightsValues,
             settings,
-            effectiveConfig,
+            isImmediateAttributeFilterMigrationEnabled,
+            migratedAttributeFilters,
+            effectiveAttributeFilterConfigs,
+            effectiveDateFilterConfig,
             dateDataSets,
             displayForms,
         );
@@ -142,3 +192,34 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
         persistedDashboard,
     };
 }
+
+const mergeDashboardAttributeFilterConfigs = (
+    originalConfigs: IDashboardAttributeFilterConfig[] = [],
+    overridingConfigs: IDashboardAttributeFilterConfig[] = [],
+    migratedAttributeFilters: IDashboardAttributeFilter[],
+): IDashboardAttributeFilterConfig[] => {
+    const sanitizedOverridingConfigs = overridingConfigs.filter((config) =>
+        migratedAttributeFilters.some(
+            (filter) => filter.attributeFilter.localIdentifier === config.localIdentifier,
+        ),
+    );
+    const overriddenConfigs = originalConfigs.map((originalConfig) => {
+        const overridingConfig = sanitizedOverridingConfigs.find(
+            (config) => config.localIdentifier === originalConfig.localIdentifier,
+        );
+        if (!overridingConfig) {
+            return originalConfig;
+        }
+        return {
+            ...originalConfig,
+            ...overridingConfig,
+        };
+    });
+    const additionalOverridingConfigs = sanitizedOverridingConfigs.filter(
+        (config) =>
+            !overriddenConfigs.some(
+                (mergedConfig) => mergedConfig.localIdentifier === config.localIdentifier,
+            ),
+    );
+    return [...overriddenConfigs, ...additionalOverridingConfigs];
+};

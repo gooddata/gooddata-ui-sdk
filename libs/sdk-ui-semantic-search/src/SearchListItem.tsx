@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
 import { ITheme } from "@gooddata/sdk-model";
@@ -46,18 +46,20 @@ export const SearchListItem = <T,>({
     const areaLabel = getAreaLabel?.(listItem);
 
     return (
-        <Tag
-            href={listItem.url}
-            className={wrapperClassName}
-            onPointerOver={onPointerOver}
-            onClick={onClick}
-            onAuxClick={onClick}
-        >
-            <span className="gd-semantic-search__results-item__icon" aria-label={areaLabel}>
-                {renderIcon(listItem, theme)}
-            </span>
-            <span className="gd-semantic-search__results-item__text">{children}</span>
-            {renderDetails && isActive ? renderDetails(listItem, theme) : null}
-        </Tag>
+        <span className={wrapperClassName}>
+            <Tag
+                href={listItem.url}
+                className="gd-semantic-search__results-item__content"
+                onPointerOver={onPointerOver}
+                onClick={onClick}
+                onAuxClick={onClick}
+            >
+                <span className="gd-semantic-search__results-item__icon" aria-label={areaLabel}>
+                    {renderIcon(listItem, theme)}
+                </span>
+                <span className="gd-semantic-search__results-item__text">{children}</span>
+                {renderDetails && isActive ? renderDetails(listItem, theme) : null}
+            </Tag>
+        </span>
     );
 };

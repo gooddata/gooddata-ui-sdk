@@ -2,6 +2,20 @@
 
 import { ReactNode } from "react";
 import { IAccessibilityConfigBase } from "../typings/accessibility.js";
+/**
+ * @internal
+ */
+export interface IDropdownButtonAccessibilityConfig {
+    isExpanded?: boolean;
+    popupId?: string;
+}
+
+/**
+ * @internal
+ */
+export interface IButtonAccessibilityConfig
+    extends IAccessibilityConfigBase,
+        IDropdownButtonAccessibilityConfig {}
 
 /**
  * @internal
@@ -22,5 +36,6 @@ export interface IButtonProps {
     variant?: "primary" | "secondary";
     intent?: "action" | "positive" | "negative";
     size?: "small" | "medium" | "large";
-    accessibilityConfig?: IAccessibilityConfigBase;
+    accessibilityConfig?: IButtonAccessibilityConfig;
+    buttonRef?: React.MutableRefObject<HTMLElement>;
 }

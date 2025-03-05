@@ -45,6 +45,7 @@ import {
     IExistingDashboard,
     IDateFilter,
     IDashboardFilterView,
+    IExecutionDefinition,
 } from "@gooddata/sdk-model";
 import cloneDeep from "lodash/cloneDeep.js";
 import isEqual from "lodash/isEqual.js";
@@ -350,6 +351,13 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     }
 
     public exportDashboardToTabular(_ref: ObjRef): Promise<IExportResult> {
+        throw new NotSupported("recorded backend does not support this call");
+    }
+
+    public exportDashboardToCSVRaw(
+        _definition: IExecutionDefinition,
+        _fileName: string,
+    ): Promise<IExportResult> {
         throw new NotSupported("recorded backend does not support this call");
     }
 

@@ -30,6 +30,7 @@ import { ITheme } from '@gooddata/sdk-model';
 import { IThemeDefinition } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
+import { KeyboardEvent as KeyboardEvent_2 } from 'react';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MessageDescriptor } from 'react-intl';
 import { MutableRefObject } from 'react';
@@ -720,6 +721,8 @@ export const Hyperlink: React_2.FC<IHyperlinkProps>;
 // @internal (undocumented)
 export interface IAccessibilityConfigBase {
     // (undocumented)
+    ariaDescribedBy?: React.AriaAttributes["aria-describedby"];
+    // (undocumented)
     ariaLabel?: React.AriaAttributes["aria-label"];
     // (undocumented)
     ariaLabelledBy?: React.AriaAttributes["aria-labelledby"];
@@ -1058,9 +1061,15 @@ export interface IBucketItemDescriptors {
 }
 
 // @internal (undocumented)
+export interface IButtonAccessibilityConfig extends IAccessibilityConfigBase, IDropdownButtonAccessibilityConfig {
+}
+
+// @internal (undocumented)
 export interface IButtonProps {
     // (undocumented)
-    accessibilityConfig?: IAccessibilityConfigBase;
+    accessibilityConfig?: IButtonAccessibilityConfig;
+    // (undocumented)
+    buttonRef?: React.MutableRefObject<HTMLElement>;
     // (undocumented)
     children?: ReactNode;
     // (undocumented)
@@ -1491,15 +1500,27 @@ export interface IDropdownBodyRenderProps {
 }
 
 // @internal (undocumented)
+export interface IDropdownButtonAccessibilityConfig {
+    // (undocumented)
+    isExpanded?: boolean;
+    // (undocumented)
+    popupId?: string;
+}
+
+// @internal (undocumented)
 export interface IDropdownButtonProps {
     // (undocumented)
     accessibilityConfig?: IAccessibilityConfigBase;
+    // (undocumented)
+    buttonRef?: React_2.MutableRefObject<HTMLElement>;
     // (undocumented)
     children?: ReactNode;
     // (undocumented)
     className?: string;
     // (undocumented)
     disabled?: boolean;
+    // (undocumented)
+    dropdownId?: string;
     // (undocumented)
     iconLeft?: string;
     // (undocumented)
@@ -1519,7 +1540,11 @@ export interface IDropdownButtonProps {
 // @internal (undocumented)
 export interface IDropdownButtonRenderProps {
     // (undocumented)
+    buttonRef: React_2.MutableRefObject<HTMLElement | null>;
+    // (undocumented)
     closeDropdown: () => void;
+    // (undocumented)
+    dropdownId: string;
     // (undocumented)
     isMobile: boolean;
     // (undocumented)
@@ -1581,6 +1606,8 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     scrollToItem?: T;
     // (undocumented)
     searchFieldSize?: "small" | "normal";
+    // (undocumented)
+    searchLabel?: string;
     // (undocumented)
     searchPlaceholder?: string;
     // (undocumented)
@@ -1970,7 +1997,7 @@ export interface IHeaderAccountProps {
     // (undocumented)
     items?: IHeaderMenuItem[];
     // (undocumented)
-    onMenuItemClick: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent) => void;
+    onMenuItemClick: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent | React_2.KeyboardEvent) => void;
     // (undocumented)
     userName?: string;
 }
@@ -3121,6 +3148,8 @@ export class InputPure extends React_2.PureComponent<InputPureProps> implements 
     // (undocumented)
     renderClearIcon(clearOnEsc: boolean): React_2.ReactNode;
     // (undocumented)
+    renderInput(): React_2.JSX.Element;
+    // (undocumented)
     renderLabel(label: React_2.ReactNode): React_2.ReactNode;
     // (undocumented)
     renderPrefix(prefix: string): React_2.ReactNode;
@@ -3167,7 +3196,7 @@ export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
     onEnterKeyPress: () => void;
     // (undocumented)
-    onEscKeyPress: () => void;
+    onEscKeyPress: (e: React_2.KeyboardEvent) => void;
     // (undocumented)
     onFocus: (e: React_2.FocusEvent<HTMLInputElement>) => void;
     // (undocumented)
@@ -3599,6 +3628,9 @@ export interface IRowsIconProps extends IIconProps {
         totalRow?: Color;
     };
 }
+
+// @internal
+export const isActionKey: (event: KeyboardEvent_2) => boolean;
 
 // @internal (undocumented)
 export interface IScrollableItemProps {
@@ -4956,6 +4988,19 @@ export interface UiButtonProps {
 }
 
 // @internal (undocumented)
+export const UiFocusTrap: React_2.FC<UiFocusTrapProps>;
+
+// @internal (undocumented)
+export interface UiFocusTrapProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    onDeactivate?: () => void;
+    // (undocumented)
+    returnFocusTo?: React_2.RefObject<HTMLElement>;
+}
+
+// @internal (undocumented)
 export const UiIcon: ({ type, label, color, size }: UiIconProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
@@ -5049,6 +5094,9 @@ export function useElementSize(): {
 
 // @internal
 export const useHeaderSearch: () => HeaderSearchContext;
+
+// @internal
+export const useId: () => string;
 
 // @internal (undocumented)
 export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInverted: boolean, getItemTitle: (item: T) => string): string;

@@ -2,7 +2,7 @@
 import React from "react";
 import { INotification } from "@gooddata/sdk-model";
 import { bem } from "../bem.js";
-import { defineMessages, FormattedMessage } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import { AlertNotification } from "./AlertNotification.js";
 
 /**
@@ -53,8 +53,14 @@ export function DefaultNotification({
 }
 
 function UnsupportedNotificationType() {
+    const { formatMessage } = useIntl();
     return (
-        <div className={b({ isUnsupported: true })}>
+        <div
+            className={b({ isUnsupported: true })}
+            role="listitem"
+            tabIndex={0}
+            aria-label={formatMessage(messages.unsupportedNotificationType)}
+        >
             <div className={e("unsupported")}>
                 <FormattedMessage id={messages.unsupportedNotificationType.id} />
             </div>

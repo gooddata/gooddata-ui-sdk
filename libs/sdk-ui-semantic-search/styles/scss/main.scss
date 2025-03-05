@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 @use "sass:color";
 @use "sass:meta";
 @use "@gooddata/sdk-ui-kit/src/@ui/defaultTheme.scss";
@@ -20,26 +20,38 @@
 .gd-semantic-search {
     &__results-item {
         $line-height: 50px;
+        cursor: pointer;
 
         display: flex;
         flex-direction: row;
         align-items: center;
-        cursor: pointer;
-        gap: 1em;
-        padding: 0 1em;
         height: $line-height;
-        text-decoration: none;
-
-        &:hover,
-        &:focus,
-        &:active,
-        &:visited {
-            text-decoration: none;
-        }
 
         &--active {
             color: kit-variables.$is-focused-color;
             background: kit-variables.$is-focused-background;
+        }
+
+        &__content {
+            width: 100%;
+            height: calc($line-height - 2px);
+            margin: 1px 0;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1em;
+            padding: 0 1em;
+            text-decoration: none;
+
+            &:hover,
+            &:focus,
+            &:active,
+            &:visited {
+                text-decoration: none;
+            }
+            &:focus-visible {
+                outline: auto;
+            }
         }
 
         &__icon {

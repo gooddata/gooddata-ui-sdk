@@ -48,7 +48,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     /**
      * Standard callback
      */
-    protected readonly callbacks: IVisCallbacks;
+    private readonly callbacks: IVisCallbacks;
 
     /**
      * Insight that is currently rendered by the pluggable visualization. This field is set during
@@ -77,7 +77,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      */
     private readonly configPanelElement: string | ElementSelectorFunction;
 
-    protected hasError: boolean;
+    private hasError: boolean;
     private hasEmptyAfm: boolean;
 
     protected isLoading: boolean;
