@@ -1633,7 +1633,11 @@ export interface IDropdownProps {
     // (undocumented)
     alignPoints?: IAlignPoint[];
     // (undocumented)
+    autofocusOnOpen?: boolean;
+    // (undocumented)
     className?: string;
+    // (undocumented)
+    closeOnEscape?: boolean;
     // (undocumented)
     closeOnMouseDrag?: boolean;
     // (undocumented)
@@ -4992,6 +4996,8 @@ export const UiFocusTrap: React_2.FC<UiFocusTrapProps>;
 
 // @internal (undocumented)
 export interface UiFocusTrapProps {
+    // (undocumented)
+    autofocusOnOpen?: boolean;
     // (undocumented)
     children: React_2.ReactNode;
     // (undocumented)

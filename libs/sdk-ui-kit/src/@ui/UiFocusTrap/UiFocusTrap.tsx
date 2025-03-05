@@ -7,6 +7,7 @@ import React, { useEffect, useRef } from "react";
  */
 export interface UiFocusTrapProps {
     children: React.ReactNode;
+    autofocusOnOpen?: boolean;
     onDeactivate?: () => void;
     returnFocusTo?: React.RefObject<HTMLElement>;
 }
@@ -68,7 +69,12 @@ const focusAndEnsureReachableElement = (
 /**
  * @internal
  */
-export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({ children, onDeactivate, returnFocusTo }) => {
+export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
+    children,
+    onDeactivate,
+    returnFocusTo,
+    autofocusOnOpen = false,
+}) => {
     const trapRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -112,17 +118,19 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({ children, onDeactivate
 
         document.addEventListener("keydown", handleKeyDown);
 
-        // Move focus to the first element in the trap at start
-        const { firstElement } = getFocusableElements(trapRef.current);
-
-        setTimeout(() => {
-            firstElement?.focus();
+        const focusTrapTimeout = setTimeout(() => {
+            if (autofocusOnOpen) {
+                // Move focus to the first element in the trap at start
+                const { firstElement } = getFocusableElements(trapRef.current);
+                firstElement?.focus();
+            }
         }, 100);
 
         return () => {
             document.removeEventListener("keydown", handleKeyDown);
+            clearTimeout(focusTrapTimeout);
         };
-    }, [onDeactivate, returnFocusTo]);
+    }, [onDeactivate, returnFocusTo, autofocusOnOpen]);
 
     return (
         <div className="gd-focus-trap" ref={trapRef}>
