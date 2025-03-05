@@ -40,6 +40,7 @@ import { EmptyDashboardNestedLayout } from "./EmptyDashboardNestedLayout.js";
 import { useScreenSize } from "../dashboard/components/DashboardScreenSizeContext.js";
 import { useDashboardItemPathAndSize } from "../dashboard/components/DashboardItemPathAndSizeContext.js";
 import { useDashboardCustomizationsContext } from "../dashboardContexts/index.js";
+import { DefaultDashboardExportVariables } from "../export/index.js";
 
 /**
  * Get dashboard layout for exports.
@@ -171,6 +172,7 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
 
     return (
         <>
+            <DefaultDashboardExportVariables renderMode={renderMode} />
             <DashboardLayout
                 className={cx(dashboardItemClasses, {
                     "export-mode": isExport,

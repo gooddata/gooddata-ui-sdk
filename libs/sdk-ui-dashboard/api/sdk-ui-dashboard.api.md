@@ -3261,6 +3261,15 @@ export const DefaultDashboardDateFilter: (props: IDashboardDateFilterProps) => J
 // @internal (undocumented)
 export function DefaultDashboardDateFilterComponentSetFactory(dateFilterProvider: DateFilterComponentProvider): DateFilterComponentSet;
 
+// @alpha (undocumented)
+export function DefaultDashboardExportVariables({ renderMode }: DefaultDashboardExportVariablesProps): React_2.JSX.Element | null;
+
+// @alpha (undocumented)
+export interface DefaultDashboardExportVariablesProps {
+    // (undocumented)
+    renderMode: RenderMode;
+}
+
 // @public
 export const DefaultDashboardInsight: (props: IDashboardInsightProps) => React_2.JSX.Element;
 
@@ -3761,7 +3770,7 @@ export interface ExportDashboardToPptPresentation extends IDashboardCommand {
 export function exportDashboardToPptPresentation(correlationId?: string): ExportDashboardToPptPresentation;
 
 // @alpha
-export type ExportElementType = "section" | "section-info" | "section-title" | "section-description" | "widget" | "widget-content" | "widget-title" | "widget-description";
+export type ExportElementType = "meta" | "section" | "section-info" | "section-title" | "section-description" | "widget" | "widget-content" | "widget-title" | "widget-description";
 
 // @beta (undocumented)
 export interface ExportInsightWidget extends IDashboardCommand {
@@ -3782,6 +3791,9 @@ export interface ExportInsightWidgetPayload {
 
 // @alpha (undocumented)
 export type ExportLayoutCustomizationFn = <TWidget>(layout: IDashboardLayout, customizer: IExportLayoutCustomizer<TWidget>) => void;
+
+// @alpha
+export type ExportMetaType = "dashboard-id" | "dashboard-title" | "dashboard-description" | "dashboard-tags" | "dashboard-tag" | "dashboard-filters" | "dashboard-filter" | "dashboard-filter-name" | "dashboard-filter-value";
 
 // @alpha (undocumented)
 export interface ExportRawInsightWidget extends IDashboardCommand {
@@ -6386,6 +6398,33 @@ export type MenuItemDependencies = {
     useWidgetDeleteDialog?: boolean;
 };
 
+// @alpha
+export type MetaExportData = {
+    root?: CommonExportDataAttributes;
+    id?: MetaExportDataAttributes;
+    title?: MetaExportDataAttributes;
+    description?: MetaExportDataAttributes;
+    tags?: {
+        root: MetaExportDataAttributes;
+        tag: MetaExportDataAttributes;
+    };
+    filters?: {
+        root: MetaExportDataAttributes;
+        dateFilter: MetaExportDataAttributes;
+        attributeFilter: MetaExportDataAttributes;
+        filter: {
+            name: MetaExportDataAttributes;
+            value: MetaExportDataAttributes;
+        };
+    };
+};
+
+// @alpha
+export type MetaExportDataAttributes = {
+    "data-export-meta-type": ExportMetaType;
+    "data-export-meta-filter-type"?: "date" | "attribute";
+};
+
 // @alpha (undocumented)
 export interface ModifyDrillDownForInsightWidget extends IDashboardCommand {
     // (undocumented)
@@ -7885,6 +7924,9 @@ export const selectCurrentUserRef: DashboardSelector<ObjRef>;
 
 // @public
 export const selectDashboardDescription: DashboardSelector<string>;
+
+// @internal
+export const selectDashboardDescriptor: DashboardSelector<DashboardDescriptor>;
 
 // @alpha
 export const selectDashboardFiltersApplyMode: DashboardSelector<DashboardFiltersApplyMode>;
@@ -10111,6 +10153,9 @@ export function useInsightWidgetDataView(config: IUseInsightWidgetDataView & Use
 
 // @public
 export type UseInsightWidgetInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
+
+// @alpha (undocumented)
+export const useMetaExportData: () => MetaExportData | undefined;
 
 // @public
 export const useParentFilters: (filter: IDashboardAttributeFilter) => UseParentFiltersResult;

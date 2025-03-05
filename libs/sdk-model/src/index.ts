@@ -547,6 +547,7 @@ export type {
 export {
     dashboardFilterReferenceObjRef,
     isAllTimeDashboardDateFilter,
+    isAllValuesDashboardAttributeFilter,
     isDashboardAttributeFilter,
     isSingleSelectionFilter,
     isNegativeAttributeFilter as isNegativeDashboardAttributeFilter,

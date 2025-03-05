@@ -322,6 +322,21 @@ export function isAllTimeDashboardDateFilter(obj: unknown): boolean {
 }
 
 /**
+ * Type-guard testing whether the provider object is an All values attribute filter
+ * @alpha
+ */
+export function isAllValuesDashboardAttributeFilter(obj: unknown): boolean {
+    if (isDashboardAttributeFilter(obj) && obj.attributeFilter.negativeSelection) {
+        if (isAttributeElementsByRef(obj.attributeFilter.attributeElements)) {
+            return obj.attributeFilter.attributeElements.uris.length === 0;
+        } else {
+            return obj.attributeFilter.attributeElements.values.length === 0;
+        }
+    }
+    return false;
+}
+
+/**
  * Supported filter context items
  * @alpha
  */

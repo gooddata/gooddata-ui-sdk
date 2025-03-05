@@ -3046,6 +3046,9 @@ export function isAllTimeDateFilter(obj: unknown): obj is IRelativeDateFilter & 
 // @alpha
 export const isAllTimeDateFilterOption: (obj: unknown) => obj is IAllTimeDateFilterOption;
 
+// @alpha
+export function isAllValuesDashboardAttributeFilter(obj: unknown): boolean;
+
 // @public
 export function isArithmeticMeasure(obj: unknown): obj is IMeasure<IArithmeticMeasureDefinition>;
 
