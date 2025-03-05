@@ -664,5 +664,17 @@
     "nestedLayout.emptyDropZone.active.message": "<b>Drop here</b>{br}to add to the container",
     "insightAlert.config.accessbility.input": "Condition value",
     "insightAlert.config.accessbility.dropdown": "Condition type",
-    "alert.accessibility.destination.label": "Select how to send the alert"
+    "alert.accessibility.destination.label": "Select how to send the alert",
+    "insightAlert.config.action": "Action",
+    "insightAlert.config.name": "Name",
+    "insightAlert.config.accessibility.title": "Custom name of the alert",
+    "options.menu.export": "Export",
+    "options.menu.export.header.data": "Data",
+    "options.menu.export_to_pdf": "Export to PDF",
+    "options.menu.export.EXCEL": "Data (XLSX)",
+    "options.menu.export.presentation.PPTX": "Slide Deck (PPTX)",
+    "options.menu.export.presentation.PDF": "Slide Deck (PDF)",
+    "options.menu.export.in.progress": "Export is in progress. Please wait until it is completed before exporting again.",
+    "dialogs.schedule.accessibility.label.email.title": "Timetable name",
+    "widget.options.menu.export": "Export"
 }

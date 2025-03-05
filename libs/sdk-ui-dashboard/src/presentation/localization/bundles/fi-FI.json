@@ -664,5 +664,17 @@
     "nestedLayout.emptyDropZone.active.message": "<b>Pudota tänne</b>{br} lisättäväksi säiliöön",
     "insightAlert.config.accessbility.input": "Kuntoarvo",
     "insightAlert.config.accessbility.dropdown": "Kuntotyyppi",
-    "alert.accessibility.destination.label": "Valitse hälytyksen lähetystapa"
+    "alert.accessibility.destination.label": "Valitse hälytyksen lähetystapa",
+    "insightAlert.config.action": "Toiminta",
+    "insightAlert.config.name": "Nimi",
+    "insightAlert.config.accessibility.title": "Hälytyksen mukautettu nimi",
+    "options.menu.export": "Vie",
+    "options.menu.export.header.data": "Data",
+    "options.menu.export_to_pdf": "Vie PDF-muodossa",
+    "options.menu.export.EXCEL": "Tiedot (XLSX)",
+    "options.menu.export.presentation.PPTX": "Liukukansi (PPTX)",
+    "options.menu.export.presentation.PDF": "Liukukansi (pdf)",
+    "options.menu.export.in.progress": "Vienti on käynnissä. Odota, kunnes se on valmis, ennen kuin viet sen uudelleen.",
+    "dialogs.schedule.accessibility.label.email.title": "Aikataulun nimi",
+    "widget.options.menu.export": "Vie"
 }

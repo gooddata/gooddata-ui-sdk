@@ -22,5 +22,11 @@
     "gd.gen-ai.global-error.description": "嘗試重新啟動聊天機械人並重新開始。",
     "gd.gen-ai.button.send": "發送",
     "gd.gen-ai.input-label": "提出您的問題",
-    "gd.gen-ai.assistant-icon": "聊天機械人"
+    "gd.gen-ai.assistant-icon": "聊天機械人",
+    "gd.gen-ai.button.save": "救",
+    "gd.gen-ai.button.cancel": "取消",
+    "gd.gen-ai.button.edit": "編輯",
+    "gd.gen-ai.save-dialog.label": "名字",
+    "gd.gen-ai.save-dialog.title": "為可視化效果命名",
+    "gd.gen-ai.save-dialog.description": "為新的可視化效果指定一個新的描述性名稱，以便以後更容易找到它。"
 }

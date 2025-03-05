@@ -664,5 +664,13 @@
     "gs.list.acessibility.search.label": "検索属性値",
     "message.accessibility.dismiss.notification": "解雇通知",
     "datePicker.accessibility.label": "開始日を選択",
-    "timePicker.accessibility.label": "開始時間の選択"
+    "timePicker.accessibility.label": "開始時間の選択",
+    "gs.header.accessibility.label": "グローバル・アプリケーション・ヘッダ",
+    "gs.header.menu.accessibility.label": "グローバルナビゲーション",
+    "filters.date.accessibility.label.from": "日付から選択",
+    "filters.date.accessibility.label.to": "日付を選択",
+    "filters.time.accessibility.label.from": "時間から選択",
+    "filters.time.accessibility.label.to": "時間を選択",
+    "filters.relative.accessibility.label.period.from": "期間から選択",
+    "filters.relative.accessibility.label.period.to": "期間を選択"
 }

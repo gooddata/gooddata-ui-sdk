@@ -664,5 +664,17 @@
     "nestedLayout.emptyDropZone.active.message": "<b>Hier ablegen</b>{br}, um zum Container hinzuzufügen",
     "insightAlert.config.accessbility.input": "Bedingungswert",
     "insightAlert.config.accessbility.dropdown": "Bedingungsart",
-    "alert.accessibility.destination.label": "Auswählen, wie die Warnung gesendet werden soll"
+    "alert.accessibility.destination.label": "Auswählen, wie die Warnung gesendet werden soll",
+    "insightAlert.config.action": "Aktion",
+    "insightAlert.config.name": "Name",
+    "insightAlert.config.accessibility.title": "Benutzerdefinierter Name der Warnung",
+    "options.menu.export": "Exportieren",
+    "options.menu.export.header.data": "Daten",
+    "options.menu.export_to_pdf": "Nach PDF exportieren",
+    "options.menu.export.EXCEL": "Daten (XLSX)",
+    "options.menu.export.presentation.PPTX": "Foliendeck (PPTX)",
+    "options.menu.export.presentation.PDF": "Foliendeck (PDF)",
+    "options.menu.export.in.progress": "Der Export ist im Gange. Warten Sie, bis er fertig ist, bevor Sie es erneut exportieren.",
+    "dialogs.schedule.accessibility.label.email.title": "Name des plans",
+    "widget.options.menu.export": "Exportieren"
 }

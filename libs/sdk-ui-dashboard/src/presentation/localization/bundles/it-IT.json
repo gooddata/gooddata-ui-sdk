@@ -664,5 +664,17 @@
     "nestedLayout.emptyDropZone.active.message": "<b>Trascina qui</b>{br}per aggiungere al contenitore",
     "insightAlert.config.accessbility.input": "Valore della condizione",
     "insightAlert.config.accessbility.dropdown": "Tipo di condizione",
-    "alert.accessibility.destination.label": "Seleziona la modalità di invio dell'avviso"
+    "alert.accessibility.destination.label": "Seleziona la modalità di invio dell'avviso",
+    "insightAlert.config.action": "Azione",
+    "insightAlert.config.name": "Nome",
+    "insightAlert.config.accessibility.title": "Nome personalizzato dell'avviso",
+    "options.menu.export": "Esporta",
+    "options.menu.export.header.data": "Dati",
+    "options.menu.export_to_pdf": "Esporta in PDF",
+    "options.menu.export.EXCEL": "Dati (XLSX)",
+    "options.menu.export.presentation.PPTX": "Presentazione di diapositive (PPTX)",
+    "options.menu.export.presentation.PDF": "Presentazione di diapositive (PDF)",
+    "options.menu.export.in.progress": "L'esportazione è in corso. Attendere che sia terminata prima di esportare nuovamente.",
+    "dialogs.schedule.accessibility.label.email.title": "Nome del programma",
+    "widget.options.menu.export": "Esporta"
 }
