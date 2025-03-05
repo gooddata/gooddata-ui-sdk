@@ -54,6 +54,7 @@ import { dateFilterConfigsActions } from "../../../store/dateFilterConfigs/index
 import { drillActions } from "../../../store/drill/index.js";
 
 import { dashboardInitialize, EmptyDashboardLayout } from "./dashboardInitialize.js";
+import { mergedMigratedAttributeFilters } from "./migratedAttributeFilters.js";
 
 /**
  * Returns a list of actions which when processed will initialize the essential parts of the dashboard
@@ -417,20 +418,7 @@ export function* actionsToInitializeExistingDashboard(
     const filterContextIdentity = dashboardFilterContextIdentity(customizedDashboard);
 
     const migratedFilterContext: IFilterContextDefinition = isImmediateAttributeFilterMigrationEnabled
-        ? {
-              ...filterContextDefinition,
-              filters: filterContextDefinition.filters.map((filter) => {
-                  if (isDashboardAttributeFilter(filter)) {
-                      const migratedFilter = migratedAttributeFilters.find(
-                          (migratedFilter) =>
-                              migratedFilter.attributeFilter.localIdentifier ===
-                              filter.attributeFilter.localIdentifier,
-                      );
-                      return migratedFilter ?? filter;
-                  }
-                  return filter;
-              }),
-          }
+        ? mergedMigratedAttributeFilters(filterContextDefinition, migratedAttributeFilters)
         : filterContextDefinition;
 
     const effectiveAttributeFilterConfigs = isImmediateAttributeFilterMigrationEnabled

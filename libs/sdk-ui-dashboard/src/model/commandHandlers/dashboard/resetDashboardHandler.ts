@@ -22,7 +22,6 @@ import uniqWith from "lodash/uniqWith.js";
 import {
     areObjRefsEqual,
     IDashboardAttributeFilterConfig,
-    IDashboardAttributeFilter,
     isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 import { resolveInsights } from "../../utils/insightResolver.js";
@@ -35,6 +34,7 @@ import { applyDefaultFilterView } from "./common/filterViews.js";
 import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
 import { selectFilterContextAttributeFilters } from "../../store/filterContext/filterContextSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { getMigratedAttributeFilters } from "./common/migratedAttributeFilters.js";
 
 export function* resetDashboardHandler(
     ctx: DashboardContext,
@@ -183,23 +183,6 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
         batch,
         persistedDashboard,
     };
-}
-
-function getMigratedAttributeFilters(
-    persistedAttributeFilters: IDashboardAttributeFilter[] = [],
-    currentAttributeFilters: IDashboardAttributeFilter[] = [],
-): IDashboardAttributeFilter[] {
-    return currentAttributeFilters.filter((currentFilter) => {
-        const persistedFilter = persistedAttributeFilters.find(
-            (persistedFilter) =>
-                persistedFilter.attributeFilter.localIdentifier ===
-                currentFilter.attributeFilter.localIdentifier,
-        );
-        return !areObjRefsEqual(
-            persistedFilter?.attributeFilter.displayForm,
-            currentFilter.attributeFilter.displayForm,
-        );
-    });
 }
 
 const mergeDashboardAttributeFilterConfigs = (
