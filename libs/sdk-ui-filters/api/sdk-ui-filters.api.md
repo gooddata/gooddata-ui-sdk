@@ -409,6 +409,7 @@ export interface IAttributeFilterCoreProps {
     locale?: ILocale;
     onApply?: OnApplyCallbackType;
     onError?: (error: GoodDataSdkError) => void;
+    onSelect?: OnSelectCallbackType;
     parentFilterOverAttribute?: ParentFilterOverAttributeType;
     parentFilters?: AttributeFiltersOrPlaceholders;
     // @internal (undocumented)
@@ -418,6 +419,7 @@ export interface IAttributeFilterCoreProps {
     staticElements?: IAttributeElement[];
     title?: string;
     validateElementsBy?: ObjRef[];
+    withoutApply?: boolean;
     workspace?: string;
 }
 
@@ -703,6 +705,8 @@ export interface IDateFilterCallbackProps {
     onClose?: () => void;
     // (undocumented)
     onOpen?: () => void;
+    // (undocumented)
+    onSelect?: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
 }
 
 // @public
@@ -742,6 +746,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     showDropDownHeaderMessage?: boolean;
     // (undocumented)
     weekStart?: WeekStart;
+    withoutApply?: boolean;
 }
 
 // @public
@@ -1220,6 +1225,9 @@ export type OnLoadNextElementsPageStartCallbackPayload = CallbackPayloadWithCorr
 
 // @public
 export type OnLoadNextElementsPageSuccessCallbackPayload = CallbackPayloadWithCorrelation<ILoadElementsResult>;
+
+// @public (undocumented)
+export type OnSelectCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode, selectionTitles?: IAttributeElement[], displayAsLabel?: ObjRef) => void;
 
 // @public
 export type OnSelectionChangedCallbackPayload<T> = {

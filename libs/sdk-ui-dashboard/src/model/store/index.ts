@@ -155,7 +155,12 @@ export {
     selectCanEditLockedDashboardPermission,
     selectDashboardPermissions,
 } from "./dashboardPermissions/dashboardPermissionsSelectors.js";
-export type { FilterContextState } from "./filterContext/filterContextState.js";
+export type {
+    FilterContextState,
+    IWorkingFilterContextDefinition,
+    WorkingDashboardAttributeFilter,
+    WorkingFilterContextItem,
+} from "./filterContext/filterContextState.js";
 export {
     selectFilterContextDefinition,
     selectFilterContextIdentity,
@@ -163,6 +168,12 @@ export {
     selectFilterContextDateFilter,
     selectFilterContextDateFiltersWithDimension,
     selectFilterContextAttributeFilters,
+    selectWorkingFilterContextDefinition,
+    selectWorkingFilterContextFilters,
+    selectWorkingFilterContextAttributeFilters,
+    selectWorkingFilterContextDateFilter,
+    selectWorkingFilterContextDateFiltersWithDimension,
+    selectIsWorkingFilterContextChanged,
     selectOtherContextAttributeFilters,
     selectAttributeFilterDisplayFormsMap,
     selectAttributeFilterDisplayForms,

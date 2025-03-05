@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 /**
  * This package provides several React components related to filters.
  *
@@ -142,6 +142,7 @@ export type {
     IAttributeFilterEmptyResultProps,
     IAttributeFilterStatusBarProps,
     OnApplyCallbackType,
+    OnSelectCallbackType,
     ParentFilterOverAttributeType,
     IAttributeFilterCoreProps,
     IAttributeFilterCustomComponentProps,

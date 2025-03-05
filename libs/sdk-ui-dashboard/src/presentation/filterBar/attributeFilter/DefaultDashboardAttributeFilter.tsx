@@ -42,6 +42,8 @@ import {
     selectEnableCriticalContentPerformanceOptimizations,
     selectPreloadedAttributesWithReferences,
     selectIsDashboardExecuted,
+    selectDashboardFiltersApplyMode,
+    selectEnableDashboardFiltersApplyModes,
 } from "../../../model/index.js";
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
 import { getVisibilityIcon } from "../utils.js";
@@ -112,6 +114,8 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
     const enableImmediateAttributeFilterDisplayAsLabelMigration = useDashboardSelector(
         selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     );
+    const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
 
     const filterRef = useMemo(() => {
         return filterObjRef(attributeFilter);
@@ -439,6 +443,22 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                         displayAsLabel,
                     );
                 }}
+                onSelect={(newFilter, isInverted, selectionMode, selectionTitles, displayAsLabel) => {
+                    if (enableDashboardFiltersApplyModes) {
+                        onFilterChanged(
+                            attributeFilterToDashboardAttributeFilter(
+                                newFilter,
+                                filter.attributeFilter.localIdentifier,
+                                filter.attributeFilter.title,
+                                selectionTitles,
+                                isInverted,
+                                selectionMode,
+                            ),
+                            displayAsLabel,
+                            true,
+                        );
+                    }
+                }}
                 parentFilters={parentFilters}
                 dependentDateFilters={dependentDateFilters}
                 parentFilterOverAttribute={parentFilterOverAttribute}
@@ -461,6 +481,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                 enableImmediateAttributeFilterDisplayAsLabelMigration={
                     enableImmediateAttributeFilterDisplayAsLabelMigration
                 }
+                withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes}
             />
         </AttributeFilterParentFilteringProvider>
     );

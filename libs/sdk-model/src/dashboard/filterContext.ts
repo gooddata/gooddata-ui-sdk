@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import isNil from "lodash/isNil.js";
 import { DateFilterGranularity, DateString } from "../dateFilterConfig/index.js";

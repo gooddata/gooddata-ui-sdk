@@ -20,6 +20,7 @@ import { canApplyDateFilter, dispatchFilterContextChanged, resetCrossFiltering }
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { selectIsCrossFiltering } from "../../../store/drill/drillSelectors.js";
+import { selectEnableDashboardFiltersApplyModes } from "../../../store/config/configSelectors.js";
 
 export function* changeDateFilterSelectionHandler(
     ctx: DashboardContext,
@@ -43,34 +44,40 @@ export function* changeDateFilterSelectionHandler(
         );
     }
 
+    const enableDashboardFiltersApplyModes: ReturnType<typeof selectEnableDashboardFiltersApplyModes> =
+        yield select(selectEnableDashboardFiltersApplyModes);
+    const isWorkingSelectionChange = cmd.payload.isWorkingSelectionChange && enableDashboardFiltersApplyModes;
     yield put(
         filterContextActions.upsertDateFilter(
             isAllTime
-                ? { type: "allTime", dataSet: cmd.payload.dataSet }
+                ? { type: "allTime", dataSet: cmd.payload.dataSet, isWorkingSelectionChange }
                 : {
                       type: cmd.payload.type,
                       granularity: cmd.payload.granularity,
                       from: cmd.payload.from,
                       to: cmd.payload.to,
                       dataSet: cmd.payload.dataSet,
+                      isWorkingSelectionChange,
                   },
         ),
     );
 
-    const affectedFilter: ReturnType<typeof selectFilterContextDateFilter> = cmd.payload.dataSet
-        ? yield select(selectFilterContextDateFilterByDataSet(cmd.payload.dataSet))
-        : yield select(selectFilterContextDateFilter);
+    if (!isWorkingSelectionChange) {
+        const affectedFilter: ReturnType<typeof selectFilterContextDateFilter> = cmd.payload.dataSet
+            ? yield select(selectFilterContextDateFilterByDataSet(cmd.payload.dataSet))
+            : yield select(selectFilterContextDateFilter);
 
-    const isCrossFiltering = yield select(selectIsCrossFiltering);
-    if (isCrossFiltering) {
-        yield call(resetCrossFiltering, cmd);
+        const isCrossFiltering = yield select(selectIsCrossFiltering);
+        if (isCrossFiltering) {
+            yield call(resetCrossFiltering, cmd);
+        }
+
+        yield dispatchDashboardEvent(
+            dateFilterChanged(ctx, affectedFilter, cmd.payload.dateFilterOptionLocalId, cmd.correlationId),
+        );
+
+        yield call(dispatchFilterContextChanged, ctx, cmd);
     }
-
-    yield dispatchDashboardEvent(
-        dateFilterChanged(ctx, affectedFilter, cmd.payload.dateFilterOptionLocalId, cmd.correlationId),
-    );
-
-    yield call(dispatchFilterContextChanged, ctx, cmd);
 }
 
 function dateFilterSelectionToDateFilter(dateFilterSelection: DateFilterSelection): IDashboardDateFilter {

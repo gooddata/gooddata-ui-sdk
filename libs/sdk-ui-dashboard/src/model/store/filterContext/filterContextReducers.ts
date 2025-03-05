@@ -31,6 +31,7 @@ import { IParentWithConnectingAttributes } from "../../types/attributeFilterType
 import { AddDateFilterPayload } from "../../commands/index.js";
 import { generateFilterLocalIdentifier } from "../_infra/generators.js";
 import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
+import { applyFilterContext } from "./filterContextUtils.js";
 
 type FilterContextReducer<A extends Action> = CaseReducer<FilterContextState, A>;
 
@@ -77,6 +78,8 @@ const setFilterContext: FilterContextReducer<PayloadAction<SetFilterContextPaylo
 
         filters: filters,
     };
+
+    state.workingFilterContextDefinition = { filters: [] };
 
     state.originalFilterContextDefinition = originalFilterContextDefinition;
 
@@ -143,6 +146,7 @@ const setPreloadedAttributesWithReferences: FilterContextReducer<
 export interface IUpsertDateFilterAllTimePayload {
     readonly type: "allTime";
     readonly dataSet?: ObjRef;
+    readonly isWorkingSelectionChange?: boolean;
 }
 
 export interface IUpsertDateFilterNonAllTimePayload {
@@ -151,44 +155,61 @@ export interface IUpsertDateFilterNonAllTimePayload {
     readonly dataSet?: ObjRef;
     readonly from?: DateString | number;
     readonly to?: DateString | number;
+    readonly isWorkingSelectionChange?: boolean;
 }
 
 export type IUpsertDateFilterPayload = IUpsertDateFilterAllTimePayload | IUpsertDateFilterNonAllTimePayload;
 
 const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayload>> = (state, action) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const filterContextDefinition = action.payload.isWorkingSelectionChange
+        ? state.workingFilterContextDefinition
+        : state.filterContextDefinition;
+    invariant(filterContextDefinition?.filters, "Attempt to edit uninitialized filter context");
 
     const dateDataSet = action.payload.dataSet;
 
-    let existingFilterIndex;
+    let existingFilterIndex: number = -1;
 
     if (dateDataSet) {
-        existingFilterIndex = state.filterContextDefinition.filters.findIndex(
+        existingFilterIndex = filterContextDefinition.filters.findIndex(
             (item) => isDashboardDateFilter(item) && areObjRefsEqual(item.dateFilter.dataSet, dateDataSet),
         );
     } else {
-        existingFilterIndex = state.filterContextDefinition.filters.findIndex((item) =>
+        existingFilterIndex = filterContextDefinition.filters.findIndex((item) =>
             isDashboardCommonDateFilter(item),
         );
     }
 
-    if (action.payload.type === "allTime") {
+    if (action.payload.isWorkingSelectionChange && action.payload.type === "allTime") {
+        // we need to allways set working filter to distinguish between "not changed" and "all time" filter
+        if (existingFilterIndex >= 0) {
+            const dateFilter = filterContextDefinition.filters[existingFilterIndex];
+            if (isDashboardDateFilter(dateFilter)) {
+                filterContextDefinition.filters[existingFilterIndex] = newAllTimeDashboardDateFilter(
+                    dateFilter.dateFilter.dataSet,
+                );
+            }
+        } else {
+            filterContextDefinition.filters.unshift(newAllTimeDashboardDateFilter(action.payload.dataSet));
+        }
+    } else if (action.payload.type === "allTime") {
         if (existingFilterIndex >= 0) {
             if (dateDataSet) {
-                const dateFilter = state.filterContextDefinition.filters[existingFilterIndex];
+                const dateFilter = filterContextDefinition.filters[existingFilterIndex];
 
                 if (isDashboardDateFilter(dateFilter)) {
-                    state.filterContextDefinition.filters[existingFilterIndex] =
-                        newAllTimeDashboardDateFilter(dateFilter.dateFilter.dataSet);
+                    filterContextDefinition.filters[existingFilterIndex] = newAllTimeDashboardDateFilter(
+                        dateFilter.dateFilter.dataSet,
+                    );
                 }
             } else {
                 //if allTime common DF remove the date filter altogether
-                state.filterContextDefinition.filters.splice(existingFilterIndex, 1);
+                filterContextDefinition.filters.splice(existingFilterIndex, 1);
             }
         }
     } else if (existingFilterIndex >= 0) {
         const { type, granularity, from, to } = action.payload;
-        const dateFilter = state.filterContextDefinition.filters[existingFilterIndex];
+        const dateFilter = filterContextDefinition.filters[existingFilterIndex];
 
         if (isDashboardDateFilter(dateFilter)) {
             dateFilter.dateFilter.type = type;
@@ -198,7 +219,7 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
         }
     } else {
         const { type, granularity, from, to, dataSet } = action.payload;
-        state.filterContextDefinition.filters.unshift({
+        filterContextDefinition.filters.unshift({
             dateFilter: {
                 granularity,
                 type,
@@ -218,29 +239,50 @@ export interface IUpdateAttributeFilterSelectionPayload {
     readonly filterLocalId: string;
     readonly elements: IAttributeElements;
     readonly negativeSelection: boolean;
+    readonly isWorkingSelectionChange?: boolean;
 }
 
 const updateAttributeFilterSelection: FilterContextReducer<
     PayloadAction<IUpdateAttributeFilterSelectionPayload>
 > = (state, action) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const { elements, filterLocalId, negativeSelection, isWorkingSelectionChange } = action.payload;
+    const filterContextDefinition = isWorkingSelectionChange
+        ? state.workingFilterContextDefinition
+        : state.filterContextDefinition;
+    invariant(filterContextDefinition?.filters, "Attempt to edit uninitialized filter context");
 
-    const { elements, filterLocalId, negativeSelection } = action.payload;
-
-    const existingFilterIndex = state.filterContextDefinition.filters.findIndex(
+    const existingFilterIndex = filterContextDefinition.filters.findIndex(
         (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
     );
 
-    invariant(existingFilterIndex >= 0, "Attempt to update non-existing filter");
+    invariant(existingFilterIndex >= 0 || isWorkingSelectionChange, "Attempt to update non-existing filter");
 
-    state.filterContextDefinition.filters[existingFilterIndex] = {
-        attributeFilter: {
-            ...(state.filterContextDefinition.filters[existingFilterIndex] as IDashboardAttributeFilter)
-                .attributeFilter,
-            attributeElements: elements,
-            negativeSelection,
-        },
-    };
+    if (isWorkingSelectionChange && existingFilterIndex >= 0) {
+        filterContextDefinition.filters[existingFilterIndex] = {
+            attributeFilter: {
+                localIdentifier: filterLocalId,
+                attributeElements: elements,
+                negativeSelection,
+            },
+        };
+    } else if (isWorkingSelectionChange) {
+        filterContextDefinition.filters.push({
+            attributeFilter: {
+                localIdentifier: filterLocalId,
+                attributeElements: elements,
+                negativeSelection,
+            },
+        });
+    } else if (existingFilterIndex >= 0) {
+        filterContextDefinition.filters[existingFilterIndex] = {
+            attributeFilter: {
+                ...(filterContextDefinition.filters[existingFilterIndex] as IDashboardAttributeFilter)
+                    .attributeFilter,
+                attributeElements: elements,
+                negativeSelection,
+            },
+        };
+    }
 };
 
 //
@@ -461,6 +503,7 @@ export interface IChangeAttributeDisplayFormPayload {
     readonly displayForm: ObjRef;
     readonly supportsElementUris?: boolean;
     readonly enableDuplicatedLabelValuesInAttributeFilter?: boolean;
+    readonly isWorkingSelectionChange?: boolean;
 }
 
 /**
@@ -470,20 +513,39 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
     state,
     action,
 ) => {
-    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const {
+        filterLocalId,
+        displayForm,
+        supportsElementUris,
+        enableDuplicatedLabelValuesInAttributeFilter,
+        isWorkingSelectionChange,
+    } = action.payload;
+    const filterContextDefinition = isWorkingSelectionChange
+        ? state.workingFilterContextDefinition
+        : state.filterContextDefinition;
+    invariant(filterContextDefinition?.filters, "Attempt to edit uninitialized filter context");
 
-    const { filterLocalId, displayForm, supportsElementUris, enableDuplicatedLabelValuesInAttributeFilter } =
-        action.payload;
-
-    const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
+    const currentFilterIndex = filterContextDefinition.filters.findIndex(
         (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
     );
 
-    invariant(currentFilterIndex >= 0, "Attempt to set parent of a non-existing filter");
+    invariant(
+        currentFilterIndex >= 0 || isWorkingSelectionChange,
+        "Attempt to set parent of a non-existing filter",
+    );
 
-    const currentFilter = state.filterContextDefinition.filters[
-        currentFilterIndex
-    ] as IDashboardAttributeFilter;
+    if (isWorkingSelectionChange && currentFilterIndex < 0) {
+        filterContextDefinition.filters.push({
+            attributeFilter: {
+                displayForm,
+                attributeElements: isAttributeElementsByRef(displayForm) ? { uris: [] } : { values: [] },
+                negativeSelection: false,
+            },
+        });
+        return;
+    }
+
+    const currentFilter = filterContextDefinition.filters[currentFilterIndex] as IDashboardAttributeFilter;
 
     currentFilter.attributeFilter.displayForm = { ...displayForm };
     const isMultiSelect = currentFilter.attributeFilter.selectionMode !== "single";
@@ -666,6 +728,28 @@ const changeLimitingItems: FilterContextReducer<PayloadAction<IChangeAttributeLi
 //
 //
 
+export interface IApplyWorkingSelectionPayload {
+    readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+}
+
+const applyWorkingSelection: FilterContextReducer<PayloadAction<IApplyWorkingSelectionPayload>> = (
+    state,
+    action,
+) => {
+    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+    const { enableImmediateAttributeFilterDisplayAsLabelMigration } = action.payload;
+    state.filterContextDefinition = applyFilterContext(
+        state.filterContextDefinition,
+        state.workingFilterContextDefinition,
+        enableImmediateAttributeFilterDisplayAsLabelMigration,
+    );
+    state.workingFilterContextDefinition = { filters: [] };
+};
+
+//
+//
+//
+
 export const filterContextReducers = {
     setFilterContext,
     updateFilterContextIdentity,
@@ -687,4 +771,5 @@ export const filterContextReducers = {
     changeSelectionMode,
     changeLimitingItems,
     setPreloadedAttributesWithReferences,
+    applyWorkingSelection,
 };

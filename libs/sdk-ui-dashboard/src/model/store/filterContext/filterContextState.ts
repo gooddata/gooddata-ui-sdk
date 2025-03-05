@@ -5,17 +5,65 @@ import {
     IDashboardObjectIdentity,
     IFilterContextDefinition,
     IAttributeDisplayFormMetadataObject,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
 } from "@gooddata/sdk-model";
+
+/**
+ * Partial working attribute filter used in working filter context.
+ *
+ * @alpha
+ */
+export type WorkingDashboardAttributeFilter = {
+    attributeFilter: Partial<IDashboardAttributeFilter["attributeFilter"]>;
+};
+
+/**
+ * Partial working filter context item.
+ *
+ * @alpha
+ */
+export type WorkingFilterContextItem = WorkingDashboardAttributeFilter | IDashboardDateFilter;
+
+/**
+ * Working filter context.
+ *
+ * @alpha
+ */
+export interface IWorkingFilterContextDefinition {
+    /**
+     * Partial attribute or date filters
+     */
+    readonly filters: WorkingFilterContextItem[];
+}
 
 /**
  * @public
  */
 export interface FilterContextState {
     /**
-     * Filter context definition contains the actual filters to use. Filter context definition is present
+     * Filter context definition contains the actual filters to use. They are applied and used to compute insights data.
+     * Filter context definition is present.
      * @beta
      */
     filterContextDefinition?: IFilterContextDefinition;
+
+    /**
+     * Contains staged filters state which are not applied by the user yet.
+     * They are used to show selected values in filters and when user requests, they are applied to the filterContextDefinition (above).
+     *
+     * @remarks
+     * This working filter context contains only changed filters and their fields.
+     * before using this working, this state is merged with filterContextDefinition.
+     *
+     * This way we do not need to synchronize other fields, which makes it easier to maintain.
+     *
+     * This state is used when DashboardFiltersApplyMode is ALL_AT_ONCE.
+     * But can be used programatically when embedding the dashboard too.
+     *
+     * @alpha
+     */
+    workingFilterContextDefinition?: IWorkingFilterContextDefinition;
 
     /**
      * Filter context definition contains the original dashboard filters stored on the backend.
@@ -56,6 +104,7 @@ export interface FilterContextState {
 
 export const filterContextInitialState: FilterContextState = {
     filterContextDefinition: undefined,
+    workingFilterContextDefinition: undefined,
     filterContextIdentity: undefined,
     attributeFilterDisplayForms: undefined,
     attributesWithReferences: undefined,
