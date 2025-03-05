@@ -83,9 +83,7 @@ function getThemedConfiguration(theme: ITheme): any {
                 enableMouseTracking: true, // !Status.exportMode,
                 turboThreshold: DEFAULT_CATEGORIES_LIMIT,
                 borderColor: backgroundColor,
-                borderRadius: {
-                    radius: 0,
-                },
+                borderRadius: 0,
                 dataLabels: {
                     style: {
                         textOutline: "none",
