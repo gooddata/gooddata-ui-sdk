@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 export class AttributeFilterLimit {
     getElement() {
         return cy.get(".attribute-filter__limit__popup");
@@ -29,7 +29,11 @@ export class AttributeFilterLimit {
     }
 
     searchMetricItem(item: string) {
-        this.getListFilterByMetric().find(".gd-input-search").as("searchField").should("be.visible").clear();
+        this.getListFilterByMetric()
+            .find(".gd-input-search input")
+            .as("searchField")
+            .should("be.visible")
+            .clear();
         cy.get("@searchField").type(item);
         return this;
     }
