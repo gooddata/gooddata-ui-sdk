@@ -1,12 +1,15 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { useMemo } from "react";
 import { invariant } from "ts-invariant";
 import { IAttributeFilter, ObjRef, IDashboardAttributeFilter } from "@gooddata/sdk-model";
 
 import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import {
+    selectDashboardFiltersApplyMode,
+    selectEnableDashboardFiltersApplyModes,
     selectFilterContextAttributeFilters,
     selectSupportsSettingConnectingAttributes,
+    selectWorkingFilterContextAttributeFilters,
     useDashboardSelector,
 } from "../../../model/index.js";
 import { IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
@@ -29,7 +32,14 @@ export type UseParentFiltersResult = Pick<
  * @public
  */
 export const useParentFilters = (filter: IDashboardAttributeFilter): UseParentFiltersResult => {
-    const allAttributeFilters = useDashboardSelector(selectFilterContextAttributeFilters);
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+    const dashboardFiltersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
+    const allAppliedAttributeFilters = useDashboardSelector(selectFilterContextAttributeFilters);
+    const allWorkingAttributeFilters = useDashboardSelector(selectWorkingFilterContextAttributeFilters);
+    const allAttributeFilters =
+        dashboardFiltersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes
+            ? allWorkingAttributeFilters
+            : allAppliedAttributeFilters;
     const supportsSettingConnectingAttributes = useDashboardSelector(
         selectSupportsSettingConnectingAttributes,
     );

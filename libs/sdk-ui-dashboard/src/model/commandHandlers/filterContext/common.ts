@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { put, select, call } from "redux-saga/effects";
 import { IDashboardDateFilter } from "@gooddata/sdk-model";
 
 import { IDashboardCommand } from "../../commands/base.js";
@@ -15,6 +15,8 @@ import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilt
 import { removeAttributeFilters } from "../../commands/filters.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 import { drillActions } from "../../store/drill/index.js";
+import { filterContextActions } from "../../store/filterContext/index.js";
+import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../store/config/configSelectors.js";
 
 export function* dispatchFilterContextChanged(
     ctx: DashboardContext,
@@ -63,4 +65,14 @@ export function* resetCrossFiltering(cmd: IDashboardCommand) {
     );
     yield put(removeAttributeFilters(virtualFilters, cmd.correlationId));
     yield put(drillActions.resetCrossFiltering());
+}
+
+export function* applyWorkingSelectionHandler(ctx: DashboardContext, cmd: IDashboardCommand) {
+    const enableImmediateAttributeFilterDisplayAsLabelMigration: ReturnType<
+        typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
+    > = yield select(selectEnableImmediateAttributeFilterDisplayAsLabelMigration);
+    yield put(
+        filterContextActions.applyWorkingSelection({ enableImmediateAttributeFilterDisplayAsLabelMigration }),
+    );
+    yield call(dispatchFilterContextChanged, ctx, cmd);
 }

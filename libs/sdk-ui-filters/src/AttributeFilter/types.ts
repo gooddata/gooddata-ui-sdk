@@ -41,6 +41,17 @@ export type OnApplyCallbackType = (
 /**
  * @public
  */
+export type OnSelectCallbackType = (
+    filter: IAttributeFilter,
+    isInverted: boolean,
+    selectionMode?: DashboardAttributeFilterSelectionMode,
+    selectionTitles?: IAttributeElement[],
+    displayAsLabel?: ObjRef,
+) => void;
+
+/**
+ * @public
+ */
 export type ParentFilterOverAttributeType =
     | ObjRef
     | ((parentFilter: IAttributeFilter, index: number) => ObjRef);
@@ -228,7 +239,18 @@ export interface IAttributeFilterCoreProps {
     displayAsLabel?: ObjRef;
 
     /**
-     * Specify function which will be called when user clicks 'Apply' button.
+     * This enables filter mode without apply button.
+     * If true, it is responsibility of a client, to appy filters when needed.
+     * Typically uses onSelect callback to catch filter state.
+     * Note, onApply callback is not called when this is true.
+     */
+    withoutApply?: boolean;
+
+    /**
+     * Specify function which will be called when user clicks 'Apply' button on this filter.
+     * Note: this callback is typically not called when using Dashboard apply filters mode ALL_AT_ONCE
+     * because there is no apply button dispalyed in attribute filter component.
+     * See withoutApply prop.
      *
      * @remarks
      * The function will receive the current specification of the filter, as it was updated by the user.
@@ -236,6 +258,17 @@ export interface IAttributeFilterCoreProps {
      * @param filter - new value of the filter.
      */
     onApply?: OnApplyCallbackType;
+
+    /**
+     * Specify function which will be called when user changes filter working selection.
+     * This is the selection that is staged for application. Not applied yet.
+     *
+     * @remarks
+     * The function will receive the current specification of the filter, as it was updated by the user.
+     *
+     * @param filter - new value of the filter.
+     */
+    onSelect?: OnSelectCallbackType;
 
     /**
      * Callback that will be triggered when error is thrown.

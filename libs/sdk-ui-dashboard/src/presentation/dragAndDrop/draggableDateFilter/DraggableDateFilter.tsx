@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { IDashboardDateFilter } from "@gooddata/sdk-model";
 import classNames from "classnames";
@@ -14,7 +14,11 @@ type DraggableDateFilterProps = {
     autoOpen: boolean;
     readonly: boolean;
     FilterComponent: CustomDashboardDateFilterComponent;
-    onDateFilterChanged: (filter: IDashboardDateFilter | undefined) => void;
+    onDateFilterChanged: (
+        filter: IDashboardDateFilter | undefined,
+        dateFilterOptionLocalId?: string,
+        isWorkingSelectionChange?: boolean,
+    ) => void;
     onDateFilterAdded: (index: number) => void;
     onDateFilterClose: () => void;
 };
