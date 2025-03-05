@@ -664,5 +664,13 @@
     "gs.list.acessibility.search.label": "Waarden van eigenschappen zoeken",
     "message.accessibility.dismiss.notification": "Kennisgeving verwijderen",
     "datePicker.accessibility.label": "Selecteer begindatum",
-    "timePicker.accessibility.label": "Selecteer starttijd"
+    "timePicker.accessibility.label": "Selecteer starttijd",
+    "gs.header.accessibility.label": "Globale applicatieheader",
+    "gs.header.menu.accessibility.label": "Globale navigatie",
+    "filters.date.accessibility.label.from": "Selecteer een datum uit",
+    "filters.date.accessibility.label.to": "Selecteer een datum om",
+    "filters.time.accessibility.label.from": "Selecteer tijd uit",
+    "filters.time.accessibility.label.to": "Selecteer tijd om",
+    "filters.relative.accessibility.label.period.from": "Selecteer periode van",
+    "filters.relative.accessibility.label.period.to": "Selecteer periode om"
 }

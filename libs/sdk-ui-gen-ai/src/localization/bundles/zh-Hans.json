@@ -22,5 +22,11 @@
     "gd.gen-ai.global-error.description": "尝试重新启动聊天机器人并重新开始。",
     "gd.gen-ai.button.send": "发送",
     "gd.gen-ai.input-label": "提出您的问题",
-    "gd.gen-ai.assistant-icon": "聊天机器人"
+    "gd.gen-ai.assistant-icon": "聊天机器人",
+    "gd.gen-ai.button.save": "保存",
+    "gd.gen-ai.button.cancel": "取消",
+    "gd.gen-ai.button.edit": "编辑",
+    "gd.gen-ai.save-dialog.label": "名称",
+    "gd.gen-ai.save-dialog.title": "命名您的可视化",
+    "gd.gen-ai.save-dialog.description": "为新的可视化指定新的描述性名称，以便以后方便查找。"
 }

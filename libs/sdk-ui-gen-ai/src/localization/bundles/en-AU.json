@@ -22,5 +22,11 @@
     "gd.gen-ai.global-error.description": "Give rebooting the chatbot a go and start afresh.",
     "gd.gen-ai.button.send": "Send",
     "gd.gen-ai.input-label": "Ask your question",
-    "gd.gen-ai.assistant-icon": "chatbot"
+    "gd.gen-ai.assistant-icon": "chatbot",
+    "gd.gen-ai.button.save": "Save",
+    "gd.gen-ai.button.cancel": "Cancel",
+    "gd.gen-ai.button.edit": "Edit",
+    "gd.gen-ai.save-dialog.label": "Name",
+    "gd.gen-ai.save-dialog.title": "Name your visualisation",
+    "gd.gen-ai.save-dialog.description": "Give your new visualisation a new descriptive name, so it's easier to find it later on."
 }

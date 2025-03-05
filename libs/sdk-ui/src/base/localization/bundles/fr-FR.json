@@ -664,5 +664,13 @@
     "gs.list.acessibility.search.label": "Chercher les valeurs des attributs",
     "message.accessibility.dismiss.notification": "Ignorer la notification",
     "datePicker.accessibility.label": "Sélectionner la date de début",
-    "timePicker.accessibility.label": "Sélectionner l'heure de début"
+    "timePicker.accessibility.label": "Sélectionner l'heure de début",
+    "gs.header.accessibility.label": "En-tête d'application globale",
+    "gs.header.menu.accessibility.label": "Navigation globale",
+    "filters.date.accessibility.label.from": "Sélectionner la date à partir de",
+    "filters.date.accessibility.label.to": "Sélectionner la date pour",
+    "filters.time.accessibility.label.from": "Sélectionner le temps pour",
+    "filters.time.accessibility.label.to": "Sélectionner le temps pour",
+    "filters.relative.accessibility.label.period.from": "Sélectionner la période pour",
+    "filters.relative.accessibility.label.period.to": "Sélectionner la période pour"
 }

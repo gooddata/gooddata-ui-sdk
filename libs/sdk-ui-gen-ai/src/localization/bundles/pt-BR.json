@@ -22,5 +22,11 @@
     "gd.gen-ai.global-error.description": "Tente reiniciar o chatbot e começar de novo.",
     "gd.gen-ai.button.send": "Enviar",
     "gd.gen-ai.input-label": "Faça sua pergunta",
-    "gd.gen-ai.assistant-icon": "chatbot"
+    "gd.gen-ai.assistant-icon": "chatbot",
+    "gd.gen-ai.button.save": "Salvar",
+    "gd.gen-ai.button.cancel": "Cancelar",
+    "gd.gen-ai.button.edit": "Editar",
+    "gd.gen-ai.save-dialog.label": "Nome",
+    "gd.gen-ai.save-dialog.title": "Nomeie sua visualização",
+    "gd.gen-ai.save-dialog.description": "Dê à sua nova visualização um novo nome descritivo, para que seja mais fácil encontrá-la mais tarde."
 }

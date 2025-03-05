@@ -22,5 +22,11 @@
     "gd.gen-ai.global-error.description": "チャットボットを再起動して、やり直してみてください。",
     "gd.gen-ai.button.send": "送信",
     "gd.gen-ai.input-label": "お問い合わせ",
-    "gd.gen-ai.assistant-icon": "チャットボット"
+    "gd.gen-ai.assistant-icon": "チャットボット",
+    "gd.gen-ai.button.save": "保存",
+    "gd.gen-ai.button.cancel": "キャンセル",
+    "gd.gen-ai.button.edit": "編集",
+    "gd.gen-ai.save-dialog.label": "名前",
+    "gd.gen-ai.save-dialog.title": "ビジュアライゼーションに名前づけ",
+    "gd.gen-ai.save-dialog.description": "新しいビジュアライゼーションに新しい説明的な名前をつけて、後で見つけやすくしましょう。"
 }

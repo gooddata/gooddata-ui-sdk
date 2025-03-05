@@ -664,5 +664,17 @@
     "nestedLayout.emptyDropZone.active.message": "<b>Déposer ici</b>{br}pour ajouter au conteneur",
     "insightAlert.config.accessbility.input": "Valeur de la condition",
     "insightAlert.config.accessbility.dropdown": "Type de condition",
-    "alert.accessibility.destination.label": "Sélectionner le mode d'envoi de l'alerte"
+    "alert.accessibility.destination.label": "Sélectionner le mode d'envoi de l'alerte",
+    "insightAlert.config.action": "Action",
+    "insightAlert.config.name": "Nom",
+    "insightAlert.config.accessibility.title": "Nom personnalisé de l'alerte",
+    "options.menu.export": "Exporter",
+    "options.menu.export.header.data": "Données",
+    "options.menu.export_to_pdf": "Exporter vers PDF",
+    "options.menu.export.EXCEL": "Données (XLSX)",
+    "options.menu.export.presentation.PPTX": "Diaporama (PPTX)",
+    "options.menu.export.presentation.PDF": "Diaporama (PDF)",
+    "options.menu.export.in.progress": "L'exportation est en cours. Attendez qu'elle soit terminée avant de procéder à une nouvelle exportation.",
+    "dialogs.schedule.accessibility.label.email.title": "Nom de l'horaire",
+    "widget.options.menu.export": "Exporter"
 }

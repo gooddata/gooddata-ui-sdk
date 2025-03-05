@@ -664,5 +664,13 @@
     "gs.list.acessibility.search.label": "Hae määritteiden arvoja",
     "message.accessibility.dismiss.notification": "Hylkää ilmoitus",
     "datePicker.accessibility.label": "Valitse aloituspäivä",
-    "timePicker.accessibility.label": "Valitse aloitusaika"
+    "timePicker.accessibility.label": "Valitse aloitusaika",
+    "gs.header.accessibility.label": "Sovelluksen globaali otsikko",
+    "gs.header.menu.accessibility.label": "Globaali navigointi",
+    "filters.date.accessibility.label.from": "Valitse päivämäärä alkaen",
+    "filters.date.accessibility.label.to": "Valitse päivämäärä",
+    "filters.time.accessibility.label.from": "Valitse aika alkaen",
+    "filters.time.accessibility.label.to": "Valitse aika kohteeseen",
+    "filters.relative.accessibility.label.period.from": "Valitse ajanjakso alkaen",
+    "filters.relative.accessibility.label.period.to": "Valitse ajanjakso kohteeseen"
 }

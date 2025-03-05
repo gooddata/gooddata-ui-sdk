@@ -22,5 +22,11 @@
     "gd.gen-ai.global-error.description": "Probeer de chatbot opnieuw op te starten en opnieuw beginnen.",
     "gd.gen-ai.button.send": "Sturen",
     "gd.gen-ai.input-label": "Stel uw vraag",
-    "gd.gen-ai.assistant-icon": "chatbot"
+    "gd.gen-ai.assistant-icon": "chatbot",
+    "gd.gen-ai.button.save": "Opslaan",
+    "gd.gen-ai.button.cancel": "Annuleren",
+    "gd.gen-ai.button.edit": "Bewerken",
+    "gd.gen-ai.save-dialog.label": "Naam",
+    "gd.gen-ai.save-dialog.title": "Geef je visualisatie een naam",
+    "gd.gen-ai.save-dialog.description": "Geef je nieuwe visualisatie een nieuwe beschrijvende naam, zodat je hem later gemakkelijker kunt terugvinden."
 }

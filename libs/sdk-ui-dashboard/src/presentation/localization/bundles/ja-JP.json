@@ -664,5 +664,17 @@
     "nestedLayout.emptyDropZone.active.message": "<b>ここにドロップ</b>{br}してコンテナに追加する",
     "insightAlert.config.accessbility.input": "コンディション値",
     "insightAlert.config.accessbility.dropdown": "コンディションタイプ",
-    "alert.accessibility.destination.label": "アラートの送信方法を選択"
+    "alert.accessibility.destination.label": "アラートの送信方法を選択",
+    "insightAlert.config.action": "アクション",
+    "insightAlert.config.name": "名前",
+    "insightAlert.config.accessibility.title": "アラートのカスタム名",
+    "options.menu.export": "エクスポート",
+    "options.menu.export.header.data": "データ",
+    "options.menu.export_to_pdf": "PDF にエクスポート",
+    "options.menu.export.EXCEL": "データ (XLSX)",
+    "options.menu.export.presentation.PPTX": "スライド資料 (PPTX)",
+    "options.menu.export.presentation.PDF": "スライド資料 (PDF)",
+    "options.menu.export.in.progress": "エクスポート中です。終了するまで待ってから再度エクスポートしてください。",
+    "dialogs.schedule.accessibility.label.email.title": "スケジュール名",
+    "widget.options.menu.export": "エクスポート"
 }

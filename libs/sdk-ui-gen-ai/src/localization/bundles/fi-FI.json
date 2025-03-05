@@ -22,5 +22,11 @@
     "gd.gen-ai.global-error.description": "Yritä käynnistää chatbotti uudelleen ja aloittaa alusta.",
     "gd.gen-ai.button.send": "Lähetä",
     "gd.gen-ai.input-label": "Esitä kysymyksesi",
-    "gd.gen-ai.assistant-icon": "chatbot"
+    "gd.gen-ai.assistant-icon": "chatbot",
+    "gd.gen-ai.button.save": "Tallenna",
+    "gd.gen-ai.button.cancel": "Peruuta",
+    "gd.gen-ai.button.edit": "Muokkaa",
+    "gd.gen-ai.save-dialog.label": "Nimi",
+    "gd.gen-ai.save-dialog.title": "Nimeä visualisointisi",
+    "gd.gen-ai.save-dialog.description": "Anna uudelle visualisoinnille kuvaava nimi, jotta se on helpompi löytää myöhemmin."
 }

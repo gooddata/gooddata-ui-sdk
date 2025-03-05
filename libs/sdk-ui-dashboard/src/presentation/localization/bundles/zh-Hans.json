@@ -664,5 +664,17 @@
     "nestedLayout.emptyDropZone.active.message": "<b>放至这里</b>{br}添加到容器中",
     "insightAlert.config.accessbility.input": "条件值",
     "insightAlert.config.accessbility.dropdown": "条件类型",
-    "alert.accessibility.destination.label": "选择如何发送警报"
+    "alert.accessibility.destination.label": "选择如何发送警报",
+    "insightAlert.config.action": "行动",
+    "insightAlert.config.name": "名称",
+    "insightAlert.config.accessibility.title": "警报的自定义名称",
+    "options.menu.export": "导出为",
+    "options.menu.export.header.data": "数据",
+    "options.menu.export_to_pdf": "导出为 PDF",
+    "options.menu.export.EXCEL": "数据（XLSX）",
+    "options.menu.export.presentation.PPTX": "幻灯片 (PPTX)",
+    "options.menu.export.presentation.PDF": "幻灯片 (PDF)",
+    "options.menu.export.in.progress": "正在导出。请等待导出完成后再次导出。",
+    "dialogs.schedule.accessibility.label.email.title": "计划名称",
+    "widget.options.menu.export": "导出为"
 }

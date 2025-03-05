@@ -664,5 +664,13 @@
     "gs.list.acessibility.search.label": "搜索属性值",
     "message.accessibility.dismiss.notification": "关闭通知",
     "datePicker.accessibility.label": "选择开始日期",
-    "timePicker.accessibility.label": "选择开始时间"
+    "timePicker.accessibility.label": "选择开始时间",
+    "gs.header.accessibility.label": "全局应用程序标头",
+    "gs.header.menu.accessibility.label": "全球导航",
+    "filters.date.accessibility.label.from": "选择日期自",
+    "filters.date.accessibility.label.to": "选择日期至",
+    "filters.time.accessibility.label.from": "选择时间自",
+    "filters.time.accessibility.label.to": "选择时间至",
+    "filters.relative.accessibility.label.period.from": "选择时间段自",
+    "filters.relative.accessibility.label.period.to": "选择时间段至"
 }
