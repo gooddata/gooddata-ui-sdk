@@ -13,22 +13,31 @@ import {
  *
  * @param persistedAttributeFilters - attribute filters that are persisted in metadata
  * @param currentAttributeFilters - attribute filters that are in the current state
+ * @param crossFilteringFiltersLocalIdentifiers - current filters that have cross filtering applied
  */
 export function getMigratedAttributeFilters(
     persistedAttributeFilters: IDashboardAttributeFilter[] = [],
     currentAttributeFilters: IDashboardAttributeFilter[] = [],
+    crossFilteringFiltersLocalIdentifiers: string[] = [],
 ): IDashboardAttributeFilter[] {
-    return currentAttributeFilters.filter((currentFilter) => {
-        const persistedFilter = persistedAttributeFilters.find(
-            (persistedFilter) =>
-                persistedFilter.attributeFilter.localIdentifier ===
-                currentFilter.attributeFilter.localIdentifier,
-        );
-        return !areObjRefsEqual(
-            persistedFilter?.attributeFilter.displayForm,
-            currentFilter.attributeFilter.displayForm,
-        );
-    });
+    return currentAttributeFilters
+        .filter(
+            (currentFilter) =>
+                !crossFilteringFiltersLocalIdentifiers.includes(
+                    currentFilter.attributeFilter.localIdentifier!,
+                ),
+        )
+        .filter((currentFilter) => {
+            const persistedFilter = persistedAttributeFilters.find(
+                (persistedFilter) =>
+                    persistedFilter.attributeFilter.localIdentifier ===
+                    currentFilter.attributeFilter.localIdentifier,
+            );
+            return !areObjRefsEqual(
+                persistedFilter?.attributeFilter.displayForm,
+                currentFilter.attributeFilter.displayForm,
+            );
+        });
 }
 
 /**

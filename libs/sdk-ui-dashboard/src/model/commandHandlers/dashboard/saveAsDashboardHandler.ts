@@ -51,6 +51,7 @@ import {
     getMigratedAttributeFilters,
     mergedMigratedAttributeFilters,
 } from "./common/migratedAttributeFilters.js";
+import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 
 type DashboardSaveAsContext = {
     cmd: SaveDashboardAs;
@@ -108,10 +109,14 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
     const currentFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
         selectFilterContextAttributeFilters,
     );
+    const crossFilteringFiltersLocalIdentifiers: ReturnType<
+        typeof selectCrossFilteringFiltersLocalIdentifiers
+    > = yield select(selectCrossFilteringFiltersLocalIdentifiers);
     const migratedAttributeFilters = isImmediateAttributeFilterMigrationEnabled
         ? getMigratedAttributeFilters(
               originalPersistedDashboard?.filterContext?.filters.filter(isDashboardAttributeFilter),
               currentFilters,
+              crossFilteringFiltersLocalIdentifiers,
           )
         : [];
     const filterContextDefinition: ReturnType<typeof selectFilterContextDefinition> = yield select(
