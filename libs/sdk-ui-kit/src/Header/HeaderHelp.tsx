@@ -131,7 +131,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
                 }}
             >
                 {!disableDropdown ? (
-                    <UiFocusTrap returnFocusTo={helpMenuButtonRef}>
+                    <UiFocusTrap returnFocusTo={helpMenuButtonRef} autofocusOnOpen={true}>
                         <div className="gd-dialog gd-dropdown overlay gd-header-help-dropdown">
                             <div className="gd-list small">{menuItems}</div>
                         </div>

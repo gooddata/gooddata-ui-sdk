@@ -71,7 +71,9 @@ export const HeaderAccount: React.FC<IHeaderAccountProps> = ({
             >
                 <div className="gd-dialog gd-dropdown overlay gd-header-account-dropdown" id={dropdownId}>
                     <div className="gd-list small">
-                        <UiFocusTrap returnFocusTo={buttonRef}>{getMenuItems()}</UiFocusTrap>
+                        <UiFocusTrap returnFocusTo={buttonRef} autofocusOnOpen={true}>
+                            {getMenuItems()}
+                        </UiFocusTrap>
                     </div>
                 </div>
             </Overlay>

@@ -94,6 +94,8 @@ export interface IDropdownProps {
     enableEventPropagation?: boolean;
 
     closeOnEscape?: boolean;
+
+    autofocusOnOpen?: boolean;
 }
 
 /**
@@ -133,6 +135,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
         fullscreenOnMobile = true,
         enableEventPropagation = false,
         closeOnEscape = false,
+        autofocusOnOpen = false,
     } = props;
     const [{ isOpen }, setState] = useState<IDropdownState>({
         isOpen: !!openOnInit,
@@ -229,7 +232,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                 onMouseUp={enableEventPropagation ? noop : undefined}
                 zIndex={overlayZIndex}
             >
-                <UiFocusTrap returnFocusTo={buttonRef}>
+                <UiFocusTrap returnFocusTo={buttonRef} autofocusOnOpen={autofocusOnOpen}>
                     <div className="overlay dropdown-body" id={dropdownId}>
                         {renderBody({
                             closeDropdown,

@@ -266,7 +266,7 @@ function NotificationsPanelController({
     );
 
     const notificationsPanel = (
-        <UiFocusTrap returnFocusTo={buttonRef}>
+        <UiFocusTrap returnFocusTo={buttonRef} autofocusOnOpen={true}>
             <NotificationsPanel
                 NotificationsPanelHeader={NotificationsPanelHeader}
                 NotificationsList={NotificationsList}
