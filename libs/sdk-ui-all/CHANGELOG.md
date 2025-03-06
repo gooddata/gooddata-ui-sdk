@@ -13,6 +13,7 @@ Thu, 06 Mar 2025 08:46:39 GMT
 -   Support workspace and organization level setting for Dashboard filters apply mode
 -   Make DashboardAttributeFilter component customizable by prop
 -   Add support for enableDashboardFiltersApplyModes feature flag
+-   Update HighCharts library to latest version
 
 ## 10.20.0
 
