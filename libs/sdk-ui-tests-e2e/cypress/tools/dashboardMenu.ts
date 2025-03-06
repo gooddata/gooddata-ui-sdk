@@ -1,4 +1,9 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+export const enum ExportMenu {
+    EXPORT_SNAPSHOT = ".s-pdf-export-item",
+    EXPORT_SLIDE_PDF = ".s-pdf-presentation-export-item",
+    EXPORT_SLIDE_PPTX = ".s-pptx-presentation-export-item",
+}
 
 export class DashboardMenu {
     getButtonElement() {
@@ -26,5 +31,15 @@ export class DashboardMenu {
 
     optionItemNotExist(optionLabel: string) {
         this.getDropdownItemElement(optionLabel).should("not.exist");
+    }
+
+    clickExport() {
+        cy.get(".s-menu-exports-list").should("not.have.class", "is-disabled").and("be.visible").click();
+        return this;
+    }
+
+    clickExportOption(item: ExportMenu) {
+        cy.get(item).should("be.visible").click();
+        return this;
     }
 }
