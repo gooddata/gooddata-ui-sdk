@@ -305,15 +305,16 @@ export class DashboardLoader implements IDashboardLoader {
         } else {
             dashboardWithPlugins =
                 dashboardRef &&
-                (await backend
-                    .workspace(workspace)
-                    .dashboards()
-                    .getDashboardWithReferences(
-                        dashboardRef,
-                        filterContextRef,
-                        { loadUserData: true, exportId: config?.exportId },
-                        ["dashboardPlugin", "dataSet"],
-                    ));
+                (await backend.workspace(workspace).dashboards().getDashboardWithReferences(
+                    dashboardRef,
+                    filterContextRef,
+                    {
+                        loadUserData: true,
+                        exportId: config?.exportId,
+                        exportType: config?.exportType,
+                    },
+                    ["dashboardPlugin", "dataSet"],
+                ));
         }
 
         const ctx: DashboardContext = {

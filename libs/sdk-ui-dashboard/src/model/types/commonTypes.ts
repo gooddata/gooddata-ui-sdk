@@ -264,6 +264,12 @@ export interface DashboardConfig {
     exportId?: string;
 
     /**
+     * Specify type of the currently performed dashboard export.
+     * This id is used to retrieve export-related metadata, such as currently active attribute filters.
+     */
+    exportType?: "visual" | "slides";
+
+    /**
      * Disable cross filtering
      *
      * @remarks
@@ -385,6 +391,7 @@ export type ResolvedDashboardConfig = Omit<
     Required<DashboardConfig>,
     | "mapboxToken"
     | "exportId"
+    | "exportType"
     | "focusObject"
     | "slideConfig"
     | "references"

@@ -1595,6 +1595,7 @@ export interface DashboardConfig {
     entitlements?: IEntitlementDescriptor[];
     // @internal
     exportId?: string;
+    exportType?: "visual" | "slides";
     // @beta
     focusObject?: DashboardFocusObject;
     // @internal
@@ -7454,7 +7455,7 @@ export interface ResolveAsyncRenderPayload {
 }
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
