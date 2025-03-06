@@ -1,6 +1,18 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 20 Feb 2025 08:45:08 GMT and should not be manually modified.
+This log was last generated on Thu, 06 Mar 2025 08:46:39 GMT and should not be manually modified.
+
+## 10.22.0
+
+Thu, 06 Mar 2025 08:46:39 GMT
+
+### Updates
+
+-   New helper factory createRedirectToTigerAuthenticationWithParams to create a parametrized redirectToTigerAuthentication handler. Useful in Federated Identity Management context.
+-   Add support for execution cancelling via AbortController.
+-   Support workspace and organization level setting for Dashboard filters apply mode
+-   Make DashboardAttributeFilter component customizable by prop
+-   Add support for enableDashboardFiltersApplyModes feature flag
 
 ## 10.20.0
 

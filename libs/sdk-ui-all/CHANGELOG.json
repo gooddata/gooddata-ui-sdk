@@ -2,6 +2,30 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.22.0",
+            "tag": "@gooddata/sdk-ui-all_v10.22.0",
+            "date": "Thu, 06 Mar 2025 08:46:39 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "New helper factory createRedirectToTigerAuthenticationWithParams to create a parametrized redirectToTigerAuthentication handler. Useful in Federated Identity Management context."
+                    },
+                    {
+                        "comment": "Add support for execution cancelling via AbortController."
+                    },
+                    {
+                        "comment": "Support workspace and organization level setting for Dashboard filters apply mode"
+                    },
+                    {
+                        "comment": "Make DashboardAttributeFilter component customizable by prop"
+                    },
+                    {
+                        "comment": "Add support for enableDashboardFiltersApplyModes feature flag"
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.20.0",
             "tag": "@gooddata/sdk-ui-all_v10.20.0",
             "date": "Thu, 20 Feb 2025 08:45:08 GMT",
