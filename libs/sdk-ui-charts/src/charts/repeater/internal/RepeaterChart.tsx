@@ -1,8 +1,16 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React, { useMemo, useState } from "react";
-import { AgGridReact } from "@ag-grid-community/react";
-import { AllCommunityModules, ColDef, ICellRendererParams } from "@ag-grid-community/all-modules";
+import { AgGridReact } from "ag-grid-react";
+
+import {
+    ColDef,
+    ICellRendererParams,
+    AllCommunityModule,
+    ModuleRegistry,
+    provideGlobalGridOptions,
+} from "ag-grid-community";
+
 import { BucketNames, LoadingComponent, emptyHeaderTitleFromIntl, DataViewFacade } from "@gooddata/sdk-ui";
 import { AgGridDatasource } from "./repeaterAgGridDataSource.js";
 import {
@@ -31,7 +39,13 @@ import isNil from "lodash/isNil.js";
 import { useDrilling } from "../hooks/useDrilling.js";
 import { useRenderWatcher } from "../hooks/useRenderWatcher.js";
 
-const DEFAULT_COL_DEF = { resizable: true };
+// Register all Community features
+ModuleRegistry.registerModules([AllCommunityModule]);
+
+// Mark all grids as using legacy themes
+provideGlobalGridOptions({ theme: "legacy" });
+
+const DEFAULT_COL_DEF: ColDef = { resizable: true, sortable: false };
 
 export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
     const { dataView, onError, config, afterRender } = props;
@@ -146,8 +160,9 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
     const { onFirstDataRendered } = useRenderWatcher(afterRender);
 
     return (
-        <div className="gd-repeater ag-theme-balham s-repeater" ref={containerRef}>
+        <div className="gd-repeater s-repeater" ref={containerRef}>
             <AgGridReact
+                className="ag-theme-balham"
                 key={stringify({
                     rowHeight,
                     cellVerticalAlign: config?.cellVerticalAlign,
@@ -158,7 +173,7 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
                     onError: onError?.toString(),
                 })}
                 defaultColDef={DEFAULT_COL_DEF}
-                modules={AllCommunityModules}
+                modules={[AllCommunityModule]}
                 columnDefs={columnDefs}
                 rowClass="gd-table-row"
                 datasource={dataSource}

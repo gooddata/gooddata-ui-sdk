@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import { MutableRefObject } from "react";
 import { ResizingState, ColumnResizingConfig } from "./privateTypes.js";
@@ -18,7 +18,7 @@ export function growToFit(
         return;
     }
 
-    const columns = columnApi.getAllColumns();
+    const columns = columnApi.getAllGridColumns();
     const autoSizeColumns = columns.filter((col) => {
         return col.getColDef().resizable && !getManualResizedColumn(resizingState, col);
     });
@@ -42,8 +42,14 @@ export function growToFit(
 
     const width = (clientWidth - sumOfManualWidths) / autoSizeColumns.length;
 
-    const autoSizedWidths = autoSizeColumns.map(() => width);
-    autoSizeColumns.forEach((column, index) => {
-        columnApi.setColumnWidth(column, autoSizedWidths[index]);
+    const columnWidthItems: Array<{ key: string; newWidth: number }> = [];
+
+    autoSizeColumns.forEach((columnWidthItem) => {
+        columnWidthItems.push({ key: columnWidthItem.getColId(), newWidth: width });
     });
+
+    setTimeout(() => {
+        columnApi.setColumnWidths(columnWidthItems);
+        columnApi.refreshCells();
+    }, 0);
 }
