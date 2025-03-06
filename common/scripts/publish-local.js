@@ -36,7 +36,7 @@ try {
 }
 
 // Combine version and hash into the new version string
-const newVersion = `${version}${hash}`;
+const newVersion = `${version}-${hash}`;
 console.log(`New version: ${newVersion}`);
 
 // Build and run the Rush version command
