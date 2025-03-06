@@ -172,7 +172,9 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
 
     return (
         <>
-            <DefaultDashboardExportVariables renderMode={renderMode} />
+            {!itemPath || itemPath.length === 0 ? (
+                <DefaultDashboardExportVariables renderMode={renderMode} />
+            ) : null}
             <DashboardLayout
                 className={cx(dashboardItemClasses, {
                     "export-mode": isExport,
