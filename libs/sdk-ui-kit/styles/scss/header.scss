@@ -346,6 +346,20 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
         }
     }
 }
+a.gd-list-help-menu-item.gd-list-item {
+    &:focus-visible {
+        // disable outline and use box-shadow instead.
+        // outline highlights both element and ::after content added as divider
+        // needs to be rewriten in https: //gooddata.atlassian.net/browse/LX-769
+        outline: none;
+        box-shadow: 0 0 0 2px black;
+        text-decoration: none;
+    }
+
+    &:focus {
+        text-decoration: none;
+    }
+}
 
 .gd-header-menu-item {
     box-sizing: border-box;
@@ -942,6 +956,15 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
         .gd-list-item {
             font-family: variables.$gd-font-primary;
             font-weight: 400;
+        }
+        a.gd-list-item {
+            &:focus-visible {
+                outline: auto;
+                text-decoration: none;
+            }
+            &:focus {
+                text-decoration: none;
+            }
         }
     }
 }
