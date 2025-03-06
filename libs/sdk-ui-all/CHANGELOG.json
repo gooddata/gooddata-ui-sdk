@@ -21,6 +21,9 @@
                     },
                     {
                         "comment": "Add support for enableDashboardFiltersApplyModes feature flag"
+                    },
+                    {
+                        "comment": "Update HighCharts library to latest version"
                     }
                 ]
             }
