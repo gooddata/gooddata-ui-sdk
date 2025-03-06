@@ -145,6 +145,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const filterContext = await this.prepareFilterContext(
             options?.exportId,
+            options?.exportType,
             filterContextRef,
             result?.data?.included,
         );
@@ -168,7 +169,12 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const dataSets = included.filter(isDataSetItem).map(convertDataSetItem);
 
-        const filterContext = await this.prepareFilterContext(options?.exportId, filterContextRef, included);
+        const filterContext = await this.prepareFilterContext(
+            options?.exportId,
+            options?.exportType,
+            filterContextRef,
+            included,
+        );
 
         return {
             dashboard: convertDashboard(dashboard, filterContext),
@@ -199,8 +205,17 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
     };
 
-    private getFilterContextFromExportId = async (exportId: string): Promise<IFilterContext | null> => {
+    private getFilterContextFromExportId = async (
+        exportId: string,
+        type: "visual" | "slides" | undefined,
+    ): Promise<IFilterContext | null> => {
         const metadata = await this.authCall((client) => {
+            if (type === "slides") {
+                return client.export.getMetadata1({
+                    workspaceId: this.workspace,
+                    exportId,
+                });
+            }
             return client.export.getMetadata({
                 workspaceId: this.workspace,
                 exportId,
@@ -1144,6 +1159,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     // prepare filter context with priority for given filtercontext options
     private prepareFilterContext = async (
         exportId: string | undefined,
+        type: "visual" | "slides" | undefined,
         filterContextRef: ObjRef | undefined,
         includedFilterContext: JsonApiAnalyticalDashboardOutDocument["included"] = [],
     ): Promise<IFilterContext | undefined> => {
@@ -1152,7 +1168,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             : undefined;
 
         const filterContextByExportId = exportId
-            ? await this.getFilterContextFromExportId(exportId)
+            ? await this.getFilterContextFromExportId(exportId, type)
             : undefined;
 
         return (

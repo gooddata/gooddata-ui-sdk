@@ -136,6 +136,12 @@ export interface IGetDashboardOptions {
      * The id is missing when the dashboard is not loaded in the export mode
      */
     exportId?: string;
+
+    /**
+     * Specify type of the currently performed dashboard export.
+     * This id is used to retrieve export-related metadata, such as currently active attribute filters.
+     */
+    exportType?: "visual" | "slides";
 }
 
 /**

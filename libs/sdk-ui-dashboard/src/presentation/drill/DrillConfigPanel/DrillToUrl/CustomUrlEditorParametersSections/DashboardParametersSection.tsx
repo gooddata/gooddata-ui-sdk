@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
@@ -53,10 +53,9 @@ export const DashboardParametersSection: React.FC<IDashboardParametersSectionPro
                 const areDfsDifferent = filterIdentifier !== filterSecondaryIdentifier;
 
                 return (
-                    <>
+                    <React.Fragment key={index}>
                         {df ? (
                             <DisplayFormParam
-                                key={`df_${index}`}
                                 item={df}
                                 iconClassName="gd-icon-filter"
                                 onAdd={() => {
@@ -67,7 +66,6 @@ export const DashboardParametersSection: React.FC<IDashboardParametersSectionPro
                         ) : null}
                         {enableDuplicatedLabelValuesInAttributeFilter && secondaryDf && areDfsDifferent ? (
                             <DisplayFormParam
-                                key={`df_${index}_secondary`}
                                 item={secondaryDf}
                                 iconClassName="gd-icon-filter"
                                 onAdd={() => {
@@ -76,7 +74,7 @@ export const DashboardParametersSection: React.FC<IDashboardParametersSectionPro
                                 isFilter
                             />
                         ) : null}
-                    </>
+                    </React.Fragment>
                 );
             })}
         </>

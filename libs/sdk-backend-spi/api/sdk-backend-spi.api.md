@@ -809,6 +809,7 @@ export interface IGetAutomationsOptions {
 // @alpha
 export interface IGetDashboardOptions {
     exportId?: string;
+    exportType?: "visual" | "slides";
     includeAvailableViaLink?: boolean;
     loadUserData?: boolean;
 }
