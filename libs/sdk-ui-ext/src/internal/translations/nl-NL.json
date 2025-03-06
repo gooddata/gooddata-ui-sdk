@@ -373,7 +373,7 @@
     "properties.advanced.chartConfigOverride.button.apply": "Toepassen",
     "properties.advanced.chartConfigOverride.button.cancel": "Annuleren",
     "gs.date.yesterday": "Gisteren",
-    "notifications.panel.tab.unread": "Ongelezen ({count})",
+    "notifications.panel.tab.unread": "Niet gelezen ({count})",
     "notifications.panel.tab.all": "Alles",
     "notifications.panel.markAllAsRead": "Alles als gelezen markeren",
     "notifications.panel.error.loading": "Fout bij het laden van meldingen",

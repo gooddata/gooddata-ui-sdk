@@ -292,7 +292,7 @@
     "attributesDropdown.empty.item.tooltip": "包括缺失值 (null) 和空值 (\"\")。",
     "attributesDropdown.filterConfiguredMessage": "<strong>{parentTitle}</strong> 已被過濾 <strong>{childTitle}</strong> 直接過濾或透過其他過濾器過濾。",
     "attributesDropdown.attributeNameWithData": "數據為",
-    "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong>無法過濾<strong>{parentTitle}</strong>。資料模型中的過濾器屬性之間沒有任何關聯。",
+    "attributesDropdown.noConnectionMessage": "<strong>{childTitle}</strong> 無法過濾 <strong>{parentTitle}</strong>。資料模型中的過濾器屬性之間沒有任何關聯。",
     "attributesDropdown.details.type": "屬性",
     "attributesDropdown.details.dataset": "數據集",
     "attributesDropdown.relevantValues": "僅相關值。{nbsp}",

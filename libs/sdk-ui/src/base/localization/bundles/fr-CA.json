@@ -615,7 +615,7 @@
     "recurrence.repeats": "Se répète",
     "recurrence.types.hourly": "Toutes les heures",
     "recurrence.types.daily": "Quotidiennement",
-    "recurrence.types.weekly": "Hebdomadairement le{day}",
+    "recurrence.types.weekly": "Hebdomadairement le {day}",
     "recurrence.types.monthly.last": "Mensuellement sur le dernier {day}",
     "recurrence.types.monthly": "Mensuellement le {week, select, 1 {premier} 2 {deuxième} 3 {troisième} 4 {quatrième} other {dernier}} {day}",
     "recurrence.types.cron": "Expression Cron",

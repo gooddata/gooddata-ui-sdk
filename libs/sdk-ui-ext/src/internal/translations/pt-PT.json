@@ -383,7 +383,7 @@
     "notifications.panel.markAsRead": "Marcar como lido",
     "notifications.filters.buttonLabel": "Mostrar filtros",
     "notifications.filters.dialog.title": "Filtros aplicados",
-    "notifications.filters.dialog.dateRange": "Intervalo de Datas",
+    "notifications.filters.dialog.dateRange": "Intervalo de datas",
     "notifications.panel.triggers.title": "para {triggeredCount}/{totalCount} itens",
     "notifications.panel.triggers.dialog.newValue": "Novo valor",
     "close": "Fechar",

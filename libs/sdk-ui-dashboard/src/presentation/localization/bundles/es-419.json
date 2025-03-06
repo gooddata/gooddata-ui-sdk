@@ -470,7 +470,7 @@
     "save": "Guardar",
     "widget.options.menu.scheduleExport.edit": "Horarios de espectáculos",
     "dateFilterDropdown.configuration": "Configuración",
-    "dateFilterDropdown.title": "Rango de fechas",
+    "dateFilterDropdown.title": "Intervalo de fechas",
     "options.menu.alerts.edit": "Mostrar alertas",
     "options.menu.addFilterViews": "Crear vista",
     "options.menu.listFilterViews": "Mostrar mis vistas",

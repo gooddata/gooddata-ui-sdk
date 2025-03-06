@@ -111,7 +111,7 @@
     "cancel": "取消",
     "save": "保存",
     "loading": "正在加载…",
-    "filtering": "正在筛选...",
+    "filtering": "正在筛选…",
     "dateFilterDropdown.title": "日期范围",
     "dateFilterDropdown.setDefault": "为 {nbsp} 查看器设置默认日期筛选器：",
     "dateFilterDropdown.configuration": "配置",
