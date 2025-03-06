@@ -112,7 +112,7 @@
     "save": "Guardar",
     "loading": "Cargando…",
     "filtering": "Filtrando…",
-    "dateFilterDropdown.title": "Rango de fechas",
+    "dateFilterDropdown.title": "Intervalo de fechas",
     "dateFilterDropdown.setDefault": "Establecer el filtro de fecha predeterminado para{nbsp}lectores:",
     "dateFilterDropdown.configuration": "Configuración",
     "filters.thisMinute.title": "Este minuto",

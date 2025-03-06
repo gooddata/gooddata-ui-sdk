@@ -366,7 +366,7 @@
     "configurationPanel.zoomInsight": "Visualização com zoom",
     "configurationPanel.zoomInsight.help": "Ativar o zoom da visualização para apresentar uma vista detalhada. Mantenha a tecla shift pressionada para deslocar a área ampliada.",
     "configurationPanel.zoomInsight.notice": "O zoom não será aplicado aos dashboards exportados",
-    "configurationPanel.drillConfig.selectInsight": "Escolha a visualização...",
+    "configurationPanel.drillConfig.selectInsight": "Escolha a visualização…",
     "gs.date.date-dataset.recommended": "Recomendado",
     "gs.date.date-dataset.other": "Outros",
     "gs.date.date-dataset.related": "Relacionado",
