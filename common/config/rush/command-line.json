@@ -187,6 +187,13 @@
       "summary": "Uninstalls rootCA on your system removes ~/.gooddata/certs folder",
       "shellCommand": "node common/scripts/uninstall-certs.js",
       "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "publish-local",
+      "summary": "Publish SDK to local files",
+      "shellCommand": "node common/scripts/publish-local.js",
+      "safeForSimultaneousRushProcesses": true
     }
     // {
     //   /**
