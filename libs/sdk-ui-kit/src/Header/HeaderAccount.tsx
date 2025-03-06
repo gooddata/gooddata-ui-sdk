@@ -9,6 +9,7 @@ import { Button } from "../Button/index.js";
 import { IHeaderMenuItem, IHeaderAccountProps } from "./typings.js";
 import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
 import { useId } from "../utils/useId.js";
+import { isActionKey } from "../utils/events.js";
 
 export const HeaderAccount: React.FC<IHeaderAccountProps> = ({
     className = "",
@@ -120,7 +121,7 @@ const MenuItem: React.FC<{
 
     const handleKeyDown = useCallback(
         (e: React.KeyboardEvent): void => {
-            if (e.key === "Enter" || e.key === " ") {
+            if (isActionKey(e)) {
                 e.preventDefault();
                 toggleMenu(false);
                 onMenuItemClick(item, e);
