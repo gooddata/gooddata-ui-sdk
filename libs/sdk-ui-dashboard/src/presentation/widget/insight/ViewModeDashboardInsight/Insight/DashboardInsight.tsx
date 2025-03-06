@@ -241,6 +241,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
             if (enableDashboardAfterRenderDetection) {
                 onResolveAsyncRender();
             }
+            setIsVisualizationInitializing(false);
         },
         [onError, executionsHandler.onError, enableDashboardAfterRenderDetection, onResolveAsyncRender],
     );
