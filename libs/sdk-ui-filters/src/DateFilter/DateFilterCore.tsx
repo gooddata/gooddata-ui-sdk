@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useMemo, useState } from "react";
 import flow from "lodash/flow.js";
 import noop from "lodash/noop.js";
@@ -61,6 +61,8 @@ export interface IDateFilterCoreProps {
     weekStart?: WeekStart;
     customIcon?: IFilterButtonCustomIcon;
     FilterConfigurationComponent?: React.ComponentType<IFilterConfigurationProps>;
+
+    withoutApply?: boolean;
 }
 
 export const verifyDateFormat = (dateFormat: string): string => {
@@ -83,6 +85,8 @@ const adjustDateFormatForDisplay = (dateFormat: string, isTimeForAbsoluteRangeEn
 export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     originalSelectedFilterOption,
     originalExcludeCurrentPeriod,
+    selectedFilterOption,
+    excludeCurrentPeriod,
     onDropdownOpenChanged,
     customFilterName,
     dateFormat,
@@ -97,6 +101,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     onApplyClick,
     onCancelClick,
     showDropDownHeaderMessage,
+    withoutApply,
     ...dropdownBodyProps
 }) => {
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
@@ -137,8 +142,8 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                             isMobile={isMobile}
                             isOpen={isOpen}
                             dateFilterOption={applyExcludeCurrentPeriod(
-                                originalSelectedFilterOption,
-                                originalExcludeCurrentPeriod,
+                                withoutApply ? originalSelectedFilterOption : selectedFilterOption,
+                                withoutApply ? originalExcludeCurrentPeriod : excludeCurrentPeriod,
                             )}
                             dateFormat={adjustDateFormatForDisplay(
                                 verifiedDateFormat,
@@ -184,6 +189,8 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                                     // https://stackoverflow.com/questions/32370994/how-to-pass-props-to-this-props-children
                                     <DateFilterBody
                                         {...dropdownBodyProps}
+                                        selectedFilterOption={selectedFilterOption}
+                                        excludeCurrentPeriod={excludeCurrentPeriod}
                                         showHeaderMessage={showDropDownHeaderMessage}
                                         onApplyClick={onApplyClick}
                                         onCancelClick={onCancelClick}

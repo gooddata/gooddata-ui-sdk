@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { Dropdown, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
@@ -36,25 +36,27 @@ export const AttributeFilterDropdown: React.VFC = () => {
         initError,
         isFiltering,
         committedSelectionElements,
+        workingSelectionElements,
         onReset,
         onApply,
         onOpen,
         fullscreenOnMobile,
         isCommittedSelectionInverted,
+        isWorkingSelectionInverted,
         selectionMode,
         disabled,
         customIcon,
+        withoutApply,
     } = useAttributeFilterContext();
 
     const isMobile = useMediaQuery("mobileDevice");
 
-    const subtitle = useResolveAttributeFilterSubtitle(
-        isCommittedSelectionInverted,
-        committedSelectionElements,
-    );
+    const isSelectionInverted = withoutApply ? isWorkingSelectionInverted : isCommittedSelectionInverted;
+    const selectionElements = withoutApply ? workingSelectionElements : committedSelectionElements;
+    const subtitle = useResolveAttributeFilterSubtitle(isSelectionInverted, selectionElements);
 
     const isMultiselect = selectionMode !== "single";
-    const showSelectionCount = isMultiselect && committedSelectionElements.length !== 0;
+    const showSelectionCount = isMultiselect && selectionElements.length !== 0;
 
     return (
         <Dropdown
@@ -82,7 +84,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
                                     isLoaded={!isInitializing}
                                     isLoading={isInitializing}
                                     isOpen={isOpen}
-                                    selectedItemsCount={committedSelectionElements.length}
+                                    selectedItemsCount={selectionElements.length}
                                     showSelectionCount={showSelectionCount}
                                     disabled={disabled}
                                     customIcon={customIcon}

@@ -730,7 +730,7 @@ function useCallbacks(
     const onSelectionChange = useCallback(
         (onSelectionChangeInputCallback: OnApplyCallbackType | OnSelectCallbackType) => {
             const nextFilter = handler.getFilter();
-            const isInverted = handler.getCommittedSelection()?.isInverted;
+            const isInverted = handler.getWorkingSelection()?.isInverted;
 
             if (enableDuplicatedLabelValuesInAttributeFilter) {
                 const displayAsLabel = handler.getDisplayAsLabel();
