@@ -92,7 +92,16 @@ export const DefaultDashboardAttributeFilter = (
 };
 
 const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterProps): JSX.Element | null => {
-    const { filter, onFilterChanged, isDraggable, readonly, autoOpen, onClose, displayAsLabel } = props;
+    const {
+        filter,
+        workingFilter,
+        onFilterChanged,
+        isDraggable,
+        readonly,
+        autoOpen,
+        onClose,
+        displayAsLabel,
+    } = props;
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const { dependentDateFilters } = useDependentDateFilters(filter);
     const locale = useDashboardSelector(selectLocale);
@@ -100,6 +109,10 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const attributeFilterConfigsModeMap = useDashboardSelector(selectAttributeFilterConfigsModeMap);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
+    const workingAttributeFilter = useMemo(
+        () => dashboardAttributeFilterToAttributeFilter(workingFilter ?? filter),
+        [workingFilter, filter],
+    );
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
     const userInteraction = useDashboardUserInteraction();
     const isAttributeFilterDependent = useDashboardSelector(
@@ -432,6 +445,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                 title={filter.attributeFilter.title}
                 resetOnParentFilterChange={false}
                 filter={attributeFilter}
+                workingFilter={workingAttributeFilter}
                 displayAsLabel={displayAsLabel}
                 onApply={(newFilter, _isInverted, _selectionMode, _selectionTitles, displayAsLabel) => {
                     onFilterChanged(

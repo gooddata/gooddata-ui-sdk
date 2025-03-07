@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import classNames from "classnames";
@@ -15,6 +15,7 @@ import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_s
 
 type DraggableAttributeFilterProps = {
     filter: IDashboardAttributeFilter;
+    workingFilter?: IDashboardAttributeFilter;
     filterIndex: number;
     autoOpen: boolean;
     readonly: boolean;
@@ -28,6 +29,7 @@ type DraggableAttributeFilterProps = {
 export function DraggableAttributeFilter({
     FilterComponent,
     filter,
+    workingFilter,
     filterIndex,
     autoOpen,
     readonly,
@@ -58,6 +60,13 @@ export function DraggableAttributeFilter({
         return convertDashboardAttributeFilterElementsUrisToValues(filter);
     }, [filter, supportElementUris]);
 
+    const workingFilterToUse = useMemo(() => {
+        if (supportElementUris) {
+            return workingFilter ?? filter;
+        }
+        return convertDashboardAttributeFilterElementsUrisToValues(workingFilter ?? filter);
+    }, [workingFilter, filter, supportElementUris]);
+
     const onClose = useCallback(() => {
         onAttributeFilterClose();
     }, [onAttributeFilterClose]);
@@ -84,6 +93,7 @@ export function DraggableAttributeFilter({
             >
                 <FilterComponent
                     filter={filterToUse}
+                    workingFilter={workingFilterToUse}
                     onFilterChanged={onAttributeFilterChanged}
                     isDraggable={isInEditMode}
                     readonly={readonly}

@@ -20,6 +20,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         workspace,
         title,
         filter,
+        workingFilter,
         displayAsLabel,
         connectToPlaceholder,
         parentFilters,
@@ -89,6 +90,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     workspace={workspace}
                     title={title}
                     filter={filter}
+                    workingFilter={workingFilter}
                     displayAsLabel={displayAsLabel}
                     connectToPlaceholder={connectToPlaceholder}
                     resetOnParentFilterChange={resetOnParentFilterChange}

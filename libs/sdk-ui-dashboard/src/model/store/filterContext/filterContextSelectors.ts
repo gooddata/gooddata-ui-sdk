@@ -17,8 +17,6 @@ import {
     isDashboardDateFilterWithDimension,
     isObjRef,
     isDashboardCommonDateFilter,
-    isDashboardDateFilter,
-    objRefToString,
     getAttributeElementsItems,
 } from "@gooddata/sdk-model";
 import { ObjRefMap, newDisplayFormMap } from "../../../_staging/metadata/objRefMap.js";
@@ -34,7 +32,7 @@ import keyBy from "lodash/keyBy.js";
 import keys from "lodash/keys.js";
 import sortBy from "lodash/sortBy.js";
 import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../config/configSelectors.js";
-import { applyFilterContext } from "./filterContextUtils.js";
+import { applyFilterContext, getFilterIdentifier } from "./filterContextUtils.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -141,26 +139,6 @@ export const selectIsWorkingFilterContextChanged: DashboardSelector<boolean | un
     (filterContext, workingFilterContext, enableImmediateAttributeFilterDisplayAsLabelMigration) => {
         if (filterContext.filters.length !== workingFilterContext.filters.length) {
             return false;
-        }
-
-        function getFilterIdentifier(filter: FilterContextItem): string {
-            if (isDashboardAttributeFilter(filter)) {
-                const localIdentifier = filter.attributeFilter.localIdentifier;
-                if (!localIdentifier) {
-                    console.warn(
-                        "Attribute filter without localIdentifier found. Using displayForm as fallback which may not be reliable.",
-                    );
-                    return objRefToString(filter.attributeFilter.displayForm);
-                }
-                return localIdentifier;
-            }
-            if (isDashboardDateFilter(filter)) {
-                return (
-                    (filter.dateFilter.dataSet && objRefToString(filter.dateFilter.dataSet)) ??
-                    "default_date_filter"
-                );
-            }
-            throw new Error("Unknown filter type");
         }
 
         const appliedFilters = keyBy(filterContext.filters, getFilterIdentifier);

@@ -10,6 +10,7 @@ import {
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     IFilterContextDefinition,
+    objRefToString,
 } from "@gooddata/sdk-model";
 import type { IWorkingFilterContextDefinition } from "./filterContextState.js";
 
@@ -96,4 +97,23 @@ export function applyFilterContext(
         ...filterContext,
         filters: [workingCommonDateFilter, ...filters],
     };
+}
+
+export function getFilterIdentifier(filter: FilterContextItem): string {
+    if (isDashboardAttributeFilter(filter)) {
+        const localIdentifier = filter.attributeFilter.localIdentifier;
+        if (!localIdentifier) {
+            console.warn(
+                "Attribute filter without localIdentifier found. Using displayForm as fallback which may not be reliable.",
+            );
+            return objRefToString(filter.attributeFilter.displayForm);
+        }
+        return localIdentifier;
+    }
+    if (isDashboardDateFilter(filter)) {
+        return (
+            (filter.dateFilter.dataSet && objRefToString(filter.dateFilter.dataSet)) ?? "default_date_filter"
+        );
+    }
+    throw new Error("Unknown filter type");
 }

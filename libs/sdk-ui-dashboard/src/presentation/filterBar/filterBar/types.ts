@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { ComponentType } from "react";
 import {
     FilterContextItem,
@@ -15,6 +15,11 @@ export interface IFilterBarProps {
      * Filters that are set for the dashboard.
      */
     filters: FilterContextItem[];
+
+    /**
+     * Working filters that are used to dispaly filter selected values. If undefined, filters are used instead.
+     */
+    workingFilters?: FilterContextItem[];
 
     /**
      * When value of an attribute filter that is part of the FilterBar changes, the filter bar MUST propagate the event

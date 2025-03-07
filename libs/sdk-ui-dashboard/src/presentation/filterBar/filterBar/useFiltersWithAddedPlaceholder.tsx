@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 import partition from "lodash/partition.js";
@@ -27,6 +27,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model/index.js";
+import { getFilterIdentifier } from "../../../model/store/filterContext/filterContextUtils.js";
 
 /**
  * @internal
@@ -50,6 +51,7 @@ export function isFilterBarFilterPlaceholder(object: any): object is FilterBarFi
 export type FilterBarAttributeFilterIndexed = {
     filter: IDashboardAttributeFilter;
     filterIndex: number;
+    workingFilter?: IDashboardAttributeFilter;
 };
 
 /**
@@ -67,6 +69,7 @@ export type FilterBarAttributeItems = FilterBarAttributeItem[];
 export type FilterBarDateFilterIndexed = {
     filter: IDashboardDateFilter;
     filterIndex: number;
+    workingFilter?: IDashboardDateFilter;
 };
 
 /**
@@ -103,7 +106,10 @@ function isNotDashboardCommonDateFilter(
 /**
  * @internal
  */
-export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
+export function useFiltersWithAddedPlaceholder(
+    filters: FilterContextItem[],
+    workingFilters?: FilterContextItem[],
+): [
     {
         commonDateFilter: IDashboardDateFilter;
         draggableFiltersWithPlaceholder: FilterBarDraggableItems;
@@ -177,15 +183,25 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
     const draggableFiltersWithPlaceholder = useMemo(() => {
         const filterObjects: FilterBarDraggableItems = draggableFilters.map((filter, filterIndex) => {
             if (isDashboardAttributeFilter(filter)) {
+                const workingFilter =
+                    workingFilters
+                        ?.filter(isDashboardAttributeFilter)
+                        .find((wf) => getFilterIdentifier(wf) === getFilterIdentifier(filter)) ?? filter;
                 return {
                     filter,
                     filterIndex,
+                    workingFilter,
                 };
             }
 
+            const workingFilter =
+                workingFilters
+                    ?.filter(isDashboardDateFilter)
+                    .find((wf) => getFilterIdentifier(wf) === getFilterIdentifier(filter)) ?? filter;
             return {
                 filter,
                 filterIndex,
+                workingFilter,
             };
         });
 

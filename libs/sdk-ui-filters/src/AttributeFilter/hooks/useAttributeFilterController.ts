@@ -9,6 +9,7 @@ import {
     DashboardAttributeFilterSelectionMode,
     filterAttributeElements,
     filterObjRef,
+    getAttributeElementsItems,
     IAbsoluteDateFilter,
     IAttributeDisplayFormMetadataObject,
     IAttributeElement,
@@ -78,6 +79,7 @@ export const useAttributeFilterController = (
         workspace: workspaceInput,
 
         filter: filterInput,
+        workingFilter,
         connectToPlaceholder,
         parentFilters,
         dependentDateFilters,
@@ -158,6 +160,7 @@ export const useAttributeFilterController = (
         handler,
         {
             filter,
+            workingFilter,
             limitingAttributeFilters,
             limitingDateFilters,
             limitingValidationItems: validateElementsBy,
@@ -272,6 +275,7 @@ function useInitOrReload(
     handler: IMultiSelectAttributeFilterHandler,
     props: {
         filter: IAttributeFilter;
+        workingFilter: IAttributeFilter;
         limitingAttributeFilters?: IElementsQueryAttributeFilter[];
         limitingDateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
         limitingValidationItems?: ObjRef[];
@@ -290,6 +294,7 @@ function useInitOrReload(
 ) {
     const {
         filter,
+        workingFilter,
         limitingAttributeFilters,
         limitingDateFilters,
         limitingValidationItems = EMPTY_LIMITING_VALIDATION_ITEMS,
@@ -351,6 +356,32 @@ function useInitOrReload(
 
         const filterChanged = getFilterChanged(filter, handler, enableDuplicatedLabelValuesInAttributeFilter);
 
+        const getWorkingFilterChanged = (
+            workingFilter: IAttributeFilter,
+            handler: IMultiSelectAttributeFilterHandler,
+        ) => {
+            const { isInverted, keys } = handler.getWorkingSelection();
+            if (isPositiveAttributeFilter(workingFilter)) {
+                if (isInverted) {
+                    return true;
+                }
+                return !isEqual(
+                    [...keys].sort(),
+                    [...getAttributeElementsItems(workingFilter.positiveAttributeFilter.in)].sort(),
+                );
+            } else {
+                if (!isInverted) {
+                    return true;
+                }
+                return !isEqual(
+                    [...keys].sort(),
+                    [...getAttributeElementsItems(workingFilter.negativeAttributeFilter.notIn)].sort(),
+                );
+            }
+        };
+
+        const workingFilterChanged = getWorkingFilterChanged(workingFilter, handler);
+
         const limitingValidationItemsChanged = !isEqual(
             limitingValidationItems,
             handler.getLimitingValidationItems(),
@@ -358,11 +389,13 @@ function useInitOrReload(
 
         const props: UpdateFilterProps = {
             filter,
+            workingFilter,
             limitingAttributeFilters,
             limitingAttributesChanged,
             limitingDateFilters,
             limitingDateFiltersChanged,
             filterChanged,
+            workingFilterChanged,
             setConnectedPlaceholderValue,
             onApply,
             onSelect,
@@ -382,8 +415,11 @@ function useInitOrReload(
                   enableDuplicatedLabelValuesInAttributeFilter,
               );
         refreshByType(handler, change, supportsKeepingDependentFiltersSelection);
+
+        updateWorkingSelection(handler, props);
     }, [
         filter,
+        workingFilter,
         limitingAttributeFilters,
         limitingDateFilters,
         resetOnParentFilterChange,
@@ -451,12 +487,14 @@ function useInitOrReload(
 
 type UpdateFilterProps = {
     filter: IAttributeFilter;
+    workingFilter: IAttributeFilter;
     displayAsLabel: ObjRef;
     limitingAttributeFilters?: IElementsQueryAttributeFilter[];
     limitingAttributesChanged: boolean;
     limitingDateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
     limitingDateFiltersChanged: boolean;
     filterChanged: boolean;
+    workingFilterChanged: boolean;
     setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
     onApply: OnApplyCallbackType;
     onSelect: OnSelectCallbackType;
@@ -625,6 +663,29 @@ function refreshByType(
     }
     if (change === "init-self") {
         handler.init();
+    }
+}
+
+function updateWorkingSelection(
+    handler: IMultiSelectAttributeFilterHandler,
+    { workingFilter, workingFilterChanged, onSelect, selectionMode, displayAsLabel }: UpdateFilterProps,
+) {
+    if (workingFilterChanged) {
+        const workingElements = filterAttributeElements(workingFilter);
+        const workingKeys = isAttributeElementsByValue(workingElements)
+            ? workingElements.values
+            : workingElements.uris;
+        const isWorkingInverted = isNegativeAttributeFilter(workingFilter);
+
+        handler.changeSelection({ keys: workingKeys, isInverted: isWorkingInverted });
+
+        onSelect?.(
+            workingFilter,
+            isWorkingInverted,
+            selectionMode,
+            handler.getElementsByKey(handler.getWorkingSelection().keys),
+            displayAsLabel,
+        );
     }
 }
 
