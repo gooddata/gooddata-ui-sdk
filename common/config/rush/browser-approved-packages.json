@@ -295,6 +295,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/emailjs-mime-codec",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/fast-levenshtein",
       "allowedCategories": [ "production" ]
     },
@@ -632,6 +636,10 @@
     },
     {
       "name": "downshift",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "emailjs-mime-codec",
       "allowedCategories": [ "production" ]
     },
     {

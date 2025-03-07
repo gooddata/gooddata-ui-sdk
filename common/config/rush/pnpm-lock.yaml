@@ -1633,6 +1633,9 @@ importers:
       date-fns:
         specifier: ^2.22.1
         version: 2.30.0
+      emailjs-mime-codec:
+        specifier: ^2.0.9
+        version: 2.0.9
       eventsource-parser:
         specifier: ~3.0.0
         version: 3.0.0
@@ -1676,6 +1679,9 @@ importers:
       '@microsoft/api-extractor':
         specifier: ^7.36.0
         version: 7.38.5(@types/node@18.19.3)
+      '@types/emailjs-mime-codec':
+        specifier: ~2.0.2
+        version: 2.0.2
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -11390,6 +11396,10 @@ packages:
     resolution: {integrity: sha512-nv+GSx77ZtXiJzwKdsASqi+YQ5Z7vwHsTP0JY2SiQgjGckkBRKZnk8nIM+7oUZ1VCtuTz0+By4qVR7fqzp/Dfg==}
     dev: true
 
+  /@types/emailjs-mime-codec@2.0.2:
+    resolution: {integrity: sha512-WX7/eJCj/EA4bgYjBHBEz7fWgkQjCySUIf/KZiM/RPWiWtPzOxDphU6J+P2TObmh83pkLpyBa7oTFzF+7kbIuA==}
+    dev: true
+
   /@types/emscripten@1.39.10:
     resolution: {integrity: sha512-TB/6hBkYQJxsZHSqyeuO1Jt0AB/bW6G7rHt9g7lML7SOF6lbgcHvw/Lr+69iqN0qxgXLhWKScAon73JNnptuDw==}
     dev: true
@@ -15055,6 +15065,18 @@ packages:
       minimalistic-assert: 1.0.1
       minimalistic-crypto-utils: 1.0.1
     dev: true
+
+  /emailjs-base64@1.1.4:
+    resolution: {integrity: sha512-4h0xp1jgVTnIQBHxSJWXWanNnmuc5o+k4aHEpcLXSToN8asjB5qbXAexs7+PEsUKcEyBteNYsSvXUndYT2CGGA==}
+    dev: false
+
+  /emailjs-mime-codec@2.0.9:
+    resolution: {integrity: sha512-7qJo4pFGcKlWh/kCeNjmcgj34YoJWY0ekZXEHYtluWg4MVBnXqGM4CRMtZQkfYwitOhUgaKN5EQktJddi/YIDQ==}
+    dependencies:
+      emailjs-base64: 1.1.4
+      ramda: 0.26.1
+      text-encoding: 0.7.0
+    dev: false
 
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -20776,6 +20798,10 @@ packages:
       performance-now: 2.1.0
     dev: true
 
+  /ramda@0.26.1:
+    resolution: {integrity: sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==}
+    dev: false
+
   /ramda@0.28.0:
     resolution: {integrity: sha512-9QnLuG/kPVgWvMQ4aODhsBUFKOUmnbUnsSXACv+NCQZcHbeb+v8Lodp8OVxtRULN1/xOyYLLaL6npE6dMq5QTA==}
     dev: true
@@ -23103,6 +23129,11 @@ packages:
       acorn: 8.11.2
       commander: 2.20.3
       source-map-support: 0.5.21
+
+  /text-encoding@0.7.0:
+    resolution: {integrity: sha512-oJQ3f1hrOnbRLOcwKz0Liq2IcrvDeZRHXhd9RgLrsT+DjWY/nty1Hi7v3dtkaEYbPYe0mUoOfzRrMwfXXwgPUA==}
+    deprecated: no longer maintained
+    dev: false
 
   /text-table@0.2.0:
     resolution: {integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==}
