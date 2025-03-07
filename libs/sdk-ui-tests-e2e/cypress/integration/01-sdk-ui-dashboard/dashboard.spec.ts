@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
@@ -129,7 +129,7 @@ describe("Dashboard actions", () => {
         "should able to scroll vertical/ horizontal on widget",
         { tags: ["checklist_integrated_tiger"] },
         () => {
-            const table = new Table(".s-dash-item-0");
+            const table = new Table(".s-dash-item-0_0");
 
             Navigation.visit("dashboard/dashboard-many-rows-columns");
             editMode.edit();
