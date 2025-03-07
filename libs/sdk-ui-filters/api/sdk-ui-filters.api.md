@@ -387,7 +387,7 @@ export interface IAttributeFilterConfigurationButtonProps {
 }
 
 // @beta
-export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon">;
+export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon" | "withoutApply">;
 
 // @public (undocumented)
 export interface IAttributeFilterCoreProps {
@@ -420,6 +420,7 @@ export interface IAttributeFilterCoreProps {
     title?: string;
     validateElementsBy?: ObjRef[];
     withoutApply?: boolean;
+    workingFilter?: IAttributeFilter;
     workspace?: string;
 }
 
@@ -747,6 +748,10 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     // (undocumented)
     weekStart?: WeekStart;
     withoutApply?: boolean;
+    // (undocumented)
+    workingExcludeCurrentPeriod?: boolean;
+    // (undocumented)
+    workingSelectedFilterOption?: DateFilterOption;
 }
 
 // @public
@@ -767,6 +772,10 @@ export interface IDateFilterState extends IDateFilterStatePropsIntersection {
     initExcludeCurrentPeriod: boolean;
     // (undocumented)
     initSelectedFilterOption: DateFilterOption;
+    // (undocumented)
+    initWorkingExcludeCurrentPeriod: boolean;
+    // (undocumented)
+    initWorkingSelectedFilterOption: DateFilterOption;
     // (undocumented)
     isExcludeCurrentPeriodEnabled: boolean;
 }

@@ -192,7 +192,13 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const { filters, workingFilters, onAttributeFilterChanged, onDateFilterChanged } = props;
 
     const [
-        { commonDateFilter, draggableFiltersWithPlaceholder, draggableFiltersCount, autoOpenFilter },
+        {
+            commonDateFilter,
+            commonWorkingDateFilter,
+            draggableFiltersWithPlaceholder,
+            draggableFiltersCount,
+            autoOpenFilter,
+        },
         {
             addDraggableFilterPlaceholder,
             closeAttributeSelection,
@@ -249,6 +255,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     <>
                         <CustomCommonDateFilterComponent
                             filter={commonDateFilter}
+                            workingFilter={commonWorkingDateFilter}
                             onFilterChanged={onDateFilterChanged}
                             config={commonDateFilterComponentConfig}
                             readonly={commonDateFilterMode === DashboardDateFilterConfigModeValues.READONLY}
@@ -324,7 +331,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     );
                 } else {
                     if (filterOrPlaceholder.filter.dateFilter.dataSet) {
-                        const { filter, filterIndex } = filterOrPlaceholder;
+                        const { filter, workingFilter, filterIndex } = filterOrPlaceholder;
 
                         const CustomDateFilterComponent = DashboardDateFilterComponentProvider(filter);
 
@@ -348,6 +355,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                                     autoOpenFilter,
                                 )}
                                 filter={filter}
+                                workingFilter={workingFilter}
                                 filterIndex={filterIndex}
                                 config={{
                                     ...commonDateFilterComponentConfig,

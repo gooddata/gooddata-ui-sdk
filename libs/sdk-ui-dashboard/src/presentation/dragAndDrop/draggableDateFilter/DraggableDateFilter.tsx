@@ -9,6 +9,7 @@ import { useDashboardDrag } from "../useDashboardDrag.js";
 
 type DraggableDateFilterProps = {
     filter: IDashboardDateFilter;
+    workingFilter?: IDashboardDateFilter;
     filterIndex: number;
     config: IDashboardDateFilterConfig;
     autoOpen: boolean;
@@ -26,6 +27,7 @@ type DraggableDateFilterProps = {
 export function DraggableDateFilter({
     FilterComponent,
     filter,
+    workingFilter,
     filterIndex,
     autoOpen,
     readonly,
@@ -70,6 +72,7 @@ export function DraggableDateFilter({
             >
                 <FilterComponent
                     filter={filter}
+                    workingFilter={workingFilter}
                     config={config}
                     onFilterChanged={onDateFilterChanged}
                     isDraggable={isInEditMode}

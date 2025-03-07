@@ -142,8 +142,8 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                             isMobile={isMobile}
                             isOpen={isOpen}
                             dateFilterOption={applyExcludeCurrentPeriod(
-                                withoutApply ? originalSelectedFilterOption : selectedFilterOption,
-                                withoutApply ? originalExcludeCurrentPeriod : excludeCurrentPeriod,
+                                withoutApply ? selectedFilterOption : originalSelectedFilterOption,
+                                withoutApply ? excludeCurrentPeriod : originalExcludeCurrentPeriod,
                             )}
                             dateFormat={adjustDateFormatForDisplay(
                                 verifiedDateFormat,

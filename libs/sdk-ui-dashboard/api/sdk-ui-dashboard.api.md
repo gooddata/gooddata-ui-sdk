@@ -4310,6 +4310,7 @@ export interface IDashboardAttributeFilterProps {
     onFilterChanged: (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef, isWorkingSelectionChange?: boolean) => void;
     // @alpha
     readonly?: boolean;
+    workingFilter?: IDashboardAttributeFilter;
 }
 
 // @public (undocumented)
@@ -4448,6 +4449,7 @@ export interface IDashboardDateFilterProps {
     isDraggable?: boolean;
     onFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string, isWorkingSelectionChange?: boolean) => void;
     readonly?: boolean;
+    workingFilter: IDashboardDateFilter | undefined;
 }
 
 // @internal (undocumented)
@@ -4955,6 +4957,7 @@ export interface IFilterBarProps {
     filters: FilterContextItem[];
     onAttributeFilterChanged: (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef) => void;
     onDateFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
+    workingFilters?: FilterContextItem[];
 }
 
 // @public

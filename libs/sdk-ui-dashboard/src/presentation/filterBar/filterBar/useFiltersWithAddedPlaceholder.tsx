@@ -9,6 +9,7 @@ import {
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     isDashboardAttributeFilter,
+    isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isDashboardDateFilterWithDimension,
     isIdentifierRef,
@@ -28,6 +29,7 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 import { getFilterIdentifier } from "../../../model/store/filterContext/filterContextUtils.js";
+import find from "lodash/find.js";
 
 /**
  * @internal
@@ -112,6 +114,7 @@ export function useFiltersWithAddedPlaceholder(
 ): [
     {
         commonDateFilter: IDashboardDateFilter;
+        commonWorkingDateFilter?: IDashboardDateFilter;
         draggableFiltersWithPlaceholder: FilterBarDraggableItems;
         draggableFiltersCount: number;
         autoOpenFilter: ObjRef | undefined;
@@ -131,6 +134,7 @@ export function useFiltersWithAddedPlaceholder(
         selectEnableDuplicatedLabelValuesInAttributeFilter,
     );
 
+    const commonWorkingDateFilter = find(workingFilters, isDashboardCommonDateFilter);
     const [draggableFilters, [commonDateFilter]] = partition(filters, isNotDashboardCommonDateFilter);
     const [dateFiltersWithDimensions, attributeFilters] = partition(
         draggableFilters,
@@ -310,6 +314,7 @@ export function useFiltersWithAddedPlaceholder(
     return [
         {
             commonDateFilter,
+            commonWorkingDateFilter,
             draggableFiltersWithPlaceholder,
             draggableFiltersCount: draggableFilters.length,
             autoOpenFilter,
