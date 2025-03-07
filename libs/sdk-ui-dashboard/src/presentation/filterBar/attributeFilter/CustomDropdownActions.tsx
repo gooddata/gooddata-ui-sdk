@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 import { AttributeFilterConfigurationButton, AttributeFilterDeleteButton } from "@gooddata/sdk-ui-filters";
@@ -12,6 +12,7 @@ import { invariant } from "ts-invariant";
 import {
     selectAllCatalogAttributesMap,
     selectAttributeFilterDisplayFormsMap,
+    selectDashboardFiltersApplyMode,
     selectIsDeleteFilterButtonEnabled,
     selectIsInEditMode,
     useDashboardSelector,
@@ -71,6 +72,8 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
 }) => {
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const isDeleteButtonEnabled = useDashboardSelector(selectIsDeleteFilterButtonEnabled);
+    const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
+    const withoutApply = filtersApplyMode.mode === "ALL_AT_ONCE";
     const isConfigButtonVisible = useIsConfigButtonVisible(filterDisplayFormRef, attributes);
     const isSingleSelect = filterSelectionMode === "single";
 
@@ -99,13 +102,15 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
                         value={cancelText}
                         title={cancelText}
                     />
-                    <Button
-                        disabled={isApplyDisabled}
-                        className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
-                        onClick={onApplyButtonClick}
-                        value={applyText}
-                        title={applyText}
-                    />
+                    {!withoutApply && (
+                        <Button
+                            disabled={isApplyDisabled}
+                            className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
+                            onClick={onApplyButtonClick}
+                            value={applyText}
+                            title={applyText}
+                        />
+                    )}
                 </div>
             ) : null}
         </div>

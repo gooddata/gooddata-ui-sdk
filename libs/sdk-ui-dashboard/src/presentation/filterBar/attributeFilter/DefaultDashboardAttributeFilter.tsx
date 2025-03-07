@@ -144,6 +144,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
     const intl = useIntl();
 
     const cancelText = intl.formatMessage({ id: "gs.list.cancel" });
+    const closeText = intl.formatMessage({ id: "close" });
     const saveText = intl.formatMessage({ id: "attributesDropdown.save" });
     const applyText = intl.formatMessage({ id: "gs.list.apply" });
     const displayValuesAsText = intl.formatMessage({ id: "attributesDropdown.displayValuesAs" });
@@ -258,6 +259,8 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
     const CustomDropdownActions = useMemo(() => {
         return function DropdownActions(props: IAttributeFilterDropdownActionsProps) {
             const { currentDisplayFormRef, committedSelectionElements } = useAttributeFilterContext();
+            const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
+            const withoutApply = filtersApplyMode.mode === "ALL_AT_ONCE";
 
             const {
                 title,
@@ -306,7 +309,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                             filterDisplayFormRef={filter.attributeFilter.displayForm}
                             filterSelectionMode={filter.attributeFilter.selectionMode}
                             applyText={applyText}
-                            cancelText={cancelText}
+                            cancelText={withoutApply ? closeText : cancelText}
                             onConfigurationButtonClick={() => {
                                 setIsConfigurationOpen(true);
                                 onConfigurationClose();

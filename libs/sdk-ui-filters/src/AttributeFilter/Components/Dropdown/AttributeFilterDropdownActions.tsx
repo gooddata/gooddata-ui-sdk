@@ -1,7 +1,8 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
+import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 
 /**
  * AttributeFilter dropdown actions like confirm and cancel button.
@@ -43,8 +44,10 @@ export const AttributeFilterDropdownActions: React.VFC<IAttributeFilterDropdownA
     onCancelButtonClick,
 }) => {
     const intl = useIntl();
+    const { withoutApply } = useAttributeFilterContext();
 
     const cancelText = intl.formatMessage({ id: "gs.list.cancel" });
+    const closeText = intl.formatMessage({ id: "close" });
     const applyText = intl.formatMessage({ id: "gs.list.apply" });
 
     return (
@@ -54,16 +57,18 @@ export const AttributeFilterDropdownActions: React.VFC<IAttributeFilterDropdownA
                 <Button
                     className="gd-attribute-filter-cancel-button__next gd-button-secondary gd-button-small cancel-button s-cancel"
                     onClick={onCancelButtonClick}
-                    value={cancelText}
-                    title={cancelText}
+                    value={withoutApply ? closeText : cancelText}
+                    title={withoutApply ? closeText : cancelText}
                 />
-                <Button
-                    disabled={isApplyDisabled}
-                    className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
-                    onClick={onApplyButtonClick}
-                    value={applyText}
-                    title={applyText}
-                />
+                {!withoutApply && (
+                    <Button
+                        disabled={isApplyDisabled}
+                        className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
+                        onClick={onApplyButtonClick}
+                        value={applyText}
+                        title={applyText}
+                    />
+                )}
             </div>
         </div>
     );
