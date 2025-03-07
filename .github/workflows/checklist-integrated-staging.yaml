@@ -4,7 +4,6 @@ name: Checklist ~ run integrated e2e tests
 on:
   schedule:
     - cron: '30 8,20 * * 0-4' #master branch
-    - cron: '30 13 * * 0,2,4' #release branch
   workflow_dispatch:
     inputs:
       run-cypress-sdk:
@@ -43,7 +42,6 @@ jobs:
       run-export: ${{ steps.test-suite-options.outputs.run-export }}
       run-boiler-app: ${{ steps.test-suite-options.outputs.run-boiler-app }}
       send_message_to_slack_channel: ${{ steps.test-suite-options.outputs.send_message_to_slack_channel }}
-      git-revision: ${{ steps.git-revision-options.outputs.git-revision }}
     steps:
       - name: Set test suite options
         id: test-suite-options
@@ -68,16 +66,6 @@ jobs:
           else
             echo "send_message_to_slack_channel=${{ inputs.send_message_to_slack_channel }}" >> $GITHUB_OUTPUT
           fi
-      - name: Set git revision to run
-        id: git-revision-options
-        run: |
-          if [ -z "${{ github.event.schedule }}" ]; then
-            echo "git-revision=${{ inputs.test-branch }}" >> $GITHUB_OUTPUT
-          elif [ "${{ github.event.schedule }}" == '30 13 * * 0,2,4' ]; then
-            echo 'git-revision=release' >> $GITHUB_OUTPUT
-          else
-            echo 'git-revision=master' >> $GITHUB_OUTPUT
-          fi
   checklist-SDK:
     name: Cypress SDK on top of Tiger
     permissions:
@@ -89,7 +77,7 @@ jobs:
     if: ${{ needs.setup-stage.outputs.run-cypress-sdk == 'true' }}
     with:
       CYPRESS_TEST_TAGS: 'checklist_integrated_tiger'
-      GIT_REVISION: ${{ needs.setup-stage.outputs.git-revision }}
+      GIT_REVISION: ${{ inputs.test-branch }}
       TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
       TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'
   checklist-export:
@@ -103,7 +91,7 @@ jobs:
     if: ${{ !cancelled() && needs.setup-stage.outputs.run-export == 'true' }}
     with:
       CYPRESS_TEST_TAGS: 'checklist_integrated_tiger_export'
-      GIT_REVISION: ${{ needs.setup-stage.outputs.git-revision }}
+      GIT_REVISION: ${{ inputs.test-branch }}
       TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
       TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'
   checklist-boiler-app:
@@ -116,7 +104,7 @@ jobs:
     needs: [ setup-stage ]
     if: ${{ needs.setup-stage.outputs.run-boiler-app == 'true' }}
     with:
-      GIT_REVISION: ${{ needs.setup-stage.outputs.git-revision }}
+      GIT_REVISION: ${{ inputs.test-branch }}
       TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
       TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'
       SDK_VERSION: 'latest'
@@ -144,6 +132,6 @@ jobs:
         if: ${{ !cancelled() && needs.setup-stage.outputs.send_message_to_slack_channel == 'true' }}
         with:
           channel-id: panther-checklist-testing
-          slack-message: "${{ steps.alls-green.outcome == 'success' &&  ':unicorn_face:' || ':robot_panic:' }} `checklist-SDK-${{ needs.setup-stage.outputs.git-revision }}-branch: ` *${{ steps.alls-green.outcome == 'success' &&  'success' || 'failed' }}*; please check *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|the logs>*."
+          slack-message: "${{ steps.alls-green.outcome == 'success' &&  ':unicorn_face:' || ':robot_panic:' }} `checklist-SDK-${{ inputs.test-branch }}-branch: ` *${{ steps.alls-green.outcome == 'success' &&  'success' || 'failed' }}*; please check *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|the logs>*."
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
