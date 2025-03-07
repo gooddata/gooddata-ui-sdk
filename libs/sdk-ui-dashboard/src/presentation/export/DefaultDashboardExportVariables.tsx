@@ -46,13 +46,21 @@ export function DefaultDashboardExportVariables({ renderMode }: DefaultDashboard
             {dateFilters.length > 0 || attributeFilters.length > 0 ? (
                 <div {...exportData?.filters?.root}>
                     {dateFilters.map((filter, i: number) => (
-                        <div key={i} {...exportData?.filters?.dateFilter}>
+                        <div
+                            key={i}
+                            {...exportData?.filters?.dateFilter}
+                            {...exportData?.filters?.filter.filterData(filter)}
+                        >
                             <span {...exportData?.filters?.filter.name}>{filter?.title}</span> -{" "}
                             <span {...exportData?.filters?.filter.value}>{filter?.subtitle}</span>
                         </div>
                     ))}
                     {attributeFilters.map((filter, i: number) => (
-                        <div key={i} {...exportData?.filters?.attributeFilter}>
+                        <div
+                            key={i}
+                            {...exportData?.filters?.attributeFilter}
+                            {...exportData?.filters?.filter.filterData(filter)}
+                        >
                             <span {...exportData?.filters?.filter.name}>{filter?.title}</span> -{" "}
                             <span {...exportData?.filters?.filter.value}>{filter?.subtitle}</span>
                         </div>

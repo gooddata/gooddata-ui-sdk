@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+import { DashboardRelatedFilter } from "./hooks/useDashboardRelatedFilters.js";
+
 /**
  * Export element type.
  *
@@ -48,8 +50,9 @@ export type CommonExportDataAttributes = {
  * @alpha
  */
 export type MetaExportDataAttributes = {
-    "data-export-meta-type": ExportMetaType;
+    "data-export-meta-type"?: ExportMetaType;
     "data-export-meta-filter-type"?: "date" | "attribute";
+    "data-export-meta-filter-mode"?: "readonly" | "hidden" | "active";
 };
 
 /**
@@ -73,6 +76,7 @@ export type MetaExportData = {
         filter: {
             name: MetaExportDataAttributes;
             value: MetaExportDataAttributes;
+            filterData: (data: DashboardRelatedFilter) => MetaExportDataAttributes;
         };
     };
 };

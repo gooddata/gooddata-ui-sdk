@@ -2866,6 +2866,17 @@ export interface DashboardQueryStartedPayload {
 // @beta (undocumented)
 export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META" | "GDC.DASH/QUERY.MEASURE.DATE.DATASETS" | "GDC.DASH/QUERY.WIDGET.FILTERS" | "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS" | "GDC.DASH/QUERY.WIDGET.ALERT_COUNT" | "GDC.DASH/QUERY.CONNECTING.ATTRIBUTES" | "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE" | "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE" | "GDC.DASH/QUERY.ELEMENTS.ATTRIBUTE" | "GDC.DASH/QUERY.CONNECTED.ATTRIBUTES" | "GDC.DASH/QUERY.METRICS_AND_FACTS" | "GDC.DASH/QUERY.AVAILABLE.DATA.SETS.FOR.ITEMS";
 
+// @alpha (undocumented)
+export type DashboardRelatedFilter = {
+    type: "attributeFilter" | "dateFilter";
+    all: boolean;
+    id: string;
+    title: string;
+    subtitle: string;
+    common?: true;
+    mode: DashboardDateFilterConfigMode | DashboardAttributeFilterConfigMode;
+};
+
 // @beta
 export interface DashboardRenamed extends IDashboardEvent {
     // (undocumented)
@@ -6416,14 +6427,16 @@ export type MetaExportData = {
         filter: {
             name: MetaExportDataAttributes;
             value: MetaExportDataAttributes;
+            filterData: (data: DashboardRelatedFilter) => MetaExportDataAttributes;
         };
     };
 };
 
 // @alpha
 export type MetaExportDataAttributes = {
-    "data-export-meta-type": ExportMetaType;
+    "data-export-meta-type"?: ExportMetaType;
     "data-export-meta-filter-type"?: "date" | "attribute";
+    "data-export-meta-filter-mode"?: "readonly" | "hidden" | "active";
 };
 
 // @alpha (undocumented)

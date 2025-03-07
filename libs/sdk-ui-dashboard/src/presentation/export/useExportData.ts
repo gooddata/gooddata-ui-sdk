@@ -167,6 +167,9 @@ export const useMetaExportData = (): MetaExportData | undefined => {
                 value: {
                     "data-export-meta-type": "dashboard-filter-value",
                 },
+                filterData: (data) => ({
+                    "data-export-meta-filter-mode": data.mode,
+                }),
             },
         },
     };
