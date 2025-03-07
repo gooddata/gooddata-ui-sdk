@@ -203,6 +203,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                                         weekStart={weekStart}
                                         isConfigurationEnabled={FilterConfigurationComponent !== undefined}
                                         onConfigurationClick={openConfiguration}
+                                        withoutApply={withoutApply}
                                     />
                                 );
                             }}
