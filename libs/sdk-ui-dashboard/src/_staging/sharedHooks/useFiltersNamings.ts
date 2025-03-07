@@ -7,6 +7,7 @@ import {
     isAllTimeDashboardDateFilter,
     isAllValuesDashboardAttributeFilter,
     isDashboardAttributeFilter,
+    isDashboardCommonDateFilter,
     isDashboardDateFilterWithDimension,
     serializeObjRef,
 } from "@gooddata/sdk-model";
@@ -31,7 +32,16 @@ import {
 import { useCommonDateFilterTitle } from "./useCommonDateFilterTitle.js";
 import { useDateFiltersTitles } from "./useDateFiltersTitles.js";
 
-export function useFiltersNamings(filtersToDisplay: FilterContextItem[]) {
+export type FilterNaming = {
+    type: "attributeFilter" | "dateFilter";
+    all: boolean;
+    id: string;
+    title: string;
+    subtitle: string;
+    common?: true;
+};
+
+export function useFiltersNamings(filtersToDisplay: FilterContextItem[]): (FilterNaming | undefined)[] {
     const intl = useIntl();
     const locale = useDashboardSelector(selectLocale);
     const settings = useDashboardSelector(selectSettings);
@@ -95,24 +105,31 @@ export function useFiltersNamings(filtersToDisplay: FilterContextItem[]) {
             );
             const subtitle = DateFilterHelpers.getDateFilterTitle(dateFilterOption, locale, dateFormat);
 
-            if (isDashboardDateFilterWithDimension(filter)) {
-                const key = serializeObjRef(filter.dateFilter.dataSet!);
+            const a = filter;
+            if (isDashboardDateFilterWithDimension(a)) {
+                const key = serializeObjRef(a.dateFilter.dataSet!);
                 return {
                     type: "dateFilter",
-                    all: isAllTimeDashboardDateFilter(filter),
-                    id: uuidv4(), // used just for React keys
+                    all: isAllTimeDashboardDateFilter(a),
+                    id: a.dateFilter.localIdentifier ?? uuidv4(),
                     title: allDateFiltersTitlesObj[key],
                     subtitle,
                 };
-            } else {
+            }
+
+            const b = filter;
+            if (isDashboardCommonDateFilter(b)) {
                 return {
                     type: "dateFilter",
-                    all: isAllTimeDashboardDateFilter(filter),
-                    id: uuidv4(), // used just for React keys
+                    common: true,
+                    all: isAllTimeDashboardDateFilter(b),
+                    id: b.dateFilter.localIdentifier ?? uuidv4(),
                     title: commonDateFilterTitle || intl.formatMessage({ id: "dateFilterDropdown.title" }),
                     subtitle,
                 };
             }
+
+            return undefined;
         }
     });
 }
