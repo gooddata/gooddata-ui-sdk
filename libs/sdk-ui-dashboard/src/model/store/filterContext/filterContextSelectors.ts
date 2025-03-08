@@ -138,13 +138,13 @@ export const selectIsWorkingFilterContextChanged: DashboardSelector<boolean | un
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     (filterContext, workingFilterContext, enableImmediateAttributeFilterDisplayAsLabelMigration) => {
         if (filterContext.filters.length !== workingFilterContext.filters.length) {
-            return false;
+            return true;
         }
 
         const appliedFilters = keyBy(filterContext.filters, getFilterIdentifier);
         const workingFilters = keyBy(workingFilterContext.filters, getFilterIdentifier);
 
-        return keys(appliedFilters)
+        return !keys(appliedFilters)
             .map((key): boolean => {
                 const appliedFilter = appliedFilters[key];
                 const workingFilter = workingFilters[key];

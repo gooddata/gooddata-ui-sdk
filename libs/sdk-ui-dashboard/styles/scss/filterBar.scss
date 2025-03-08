@@ -29,6 +29,18 @@ $attribute-filter-drag-handle-left: 10px;
     }
 }
 
+.filters-message {
+    position: absolute;
+    left: 50%;
+    display: block;
+    transform: translateX(-50%);
+
+    a {
+        font-weight: bold;
+        cursor: pointer;
+    }
+}
+
 .gd-dash-header-wrapper {
     z-index: zIndexes.$filterbar-old; // we have to leave this style unchanged because old plugins
     transition: left variables.$sidebar-transition-length;
