@@ -2,7 +2,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
-import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 
 /**
  * AttributeFilter dropdown actions like confirm and cancel button.
@@ -29,6 +28,13 @@ export interface IAttributeFilterDropdownActionsProps {
      * @beta
      */
     isApplyDisabled?: boolean;
+
+    /**
+     * If true, the Apply button is not rendered and Cancel button is renamed to Close.
+     *
+     * @alpha
+     */
+    withoutApply?: boolean;
 }
 
 /**
@@ -42,9 +48,9 @@ export const AttributeFilterDropdownActions: React.VFC<IAttributeFilterDropdownA
     isApplyDisabled,
     onApplyButtonClick,
     onCancelButtonClick,
+    withoutApply,
 }) => {
     const intl = useIntl();
-    const { withoutApply } = useAttributeFilterContext();
 
     const cancelText = intl.formatMessage({ id: "gs.list.cancel" });
     const closeText = intl.formatMessage({ id: "close" });

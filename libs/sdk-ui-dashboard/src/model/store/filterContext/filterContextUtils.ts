@@ -99,6 +99,9 @@ export function applyFilterContext(
     };
 }
 
+/**
+ * @internal
+ */
 export function getFilterIdentifier(filter: FilterContextItem): string {
     if (isDashboardAttributeFilter(filter)) {
         const localIdentifier = filter.attributeFilter.localIdentifier;

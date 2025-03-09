@@ -76,3 +76,7 @@ export function* applyWorkingSelectionHandler(ctx: DashboardContext, cmd: IDashb
     );
     yield call(dispatchFilterContextChanged, ctx, cmd);
 }
+
+export function* resetWorkingSelectionHandler() {
+    yield put(filterContextActions.resetWorkingSelection());
+}

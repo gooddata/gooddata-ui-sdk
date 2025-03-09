@@ -27,8 +27,8 @@ import {
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
+    getFilterIdentifier,
 } from "../../../model/index.js";
-import { getFilterIdentifier } from "../../../model/store/filterContext/filterContextUtils.js";
 import find from "lodash/find.js";
 
 /**

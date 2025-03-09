@@ -471,6 +471,8 @@ export interface IAttributeFilterDropdownActionsProps {
     isApplyDisabled?: boolean;
     onApplyButtonClick: () => void;
     onCancelButtonClick: () => void;
+    // @alpha
+    withoutApply?: boolean;
 }
 
 // @beta
