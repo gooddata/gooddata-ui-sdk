@@ -10,7 +10,7 @@ const stateFilter = new AttributeFilter("State");
 const cityFilter = new AttributeFilter("City");
 const product = new AttributeFilter("Product");
 const stageName = new AttributeFilter("Stage Name");
-const table = new Table(".s-dash-item-0");
+const table = new Table(".s-dash-item-0_0");
 const topBar = new TopBar();
 
 describe("Dependent filter", () => {
@@ -111,7 +111,6 @@ describe("Dependent filter", () => {
 
     it("should test parent - child interaction in edit mode", { tags: "checklist_integrated_tiger" }, () => {
         topBar.enterEditMode().editButtonIsVisible(false);
-
         table
             .waitLoaded()
             .getColumnValues(1)
@@ -241,7 +240,7 @@ describe("Dependent filter", () => {
         stateFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(48);
         cityFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(300);
     });
-
+    
     it(
         "child filter can reduce to zero element by parent filter",
         { tags: "checklist_integrated_tiger" },
