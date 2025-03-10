@@ -22,7 +22,10 @@ import {
     reloadFilterViews,
     changeFilterContextSelectionByParams,
 } from "../../commands/index.js";
-import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors.js";
+import {
+    selectFilterContextDefinition,
+    selectWorkingFilterContextDefinition,
+} from "../../store/filterContext/filterContextSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 import { selectFilterViews, filterViewsActions } from "../../store/filterViews/index.js";
 import {
@@ -39,6 +42,8 @@ import { loadFilterViews } from "../dashboard/initializeDashboardHandler/loadFil
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { resetCrossFiltering } from "./common.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { filterContextActions } from "../../store/filterContext/index.js";
+import { selectDashboardFiltersApplyMode } from "../../store/index.js";
 
 function createFilterView(
     ctx: DashboardContext,
@@ -53,9 +58,17 @@ export function* saveFilterViewHandler(ctx: DashboardContext, cmd: SaveFilterVie
         throw Error("Dashboard ref must be provided.");
     }
 
-    const filterContext: ReturnType<typeof selectFilterContextDefinition> = yield select(
+    const appliedFilterContext: ReturnType<typeof selectFilterContextDefinition> = yield select(
         selectFilterContextDefinition,
     );
+    const workingFilterContext: ReturnType<typeof selectWorkingFilterContextDefinition> = yield select(
+        selectWorkingFilterContextDefinition,
+    );
+    const filtersApplyMode: ReturnType<typeof selectDashboardFiltersApplyMode> = yield select(
+        selectDashboardFiltersApplyMode,
+    );
+    const filterContext =
+        filtersApplyMode.mode === "ALL_AT_ONCE" ? workingFilterContext : appliedFilterContext;
 
     const virtualFilters: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiers> = yield select(
         selectCrossFilteringFiltersLocalIdentifiers,
@@ -133,6 +146,7 @@ export function* applyFilterViewHandler(ctx: DashboardContext, cmd: ApplyFilterV
 
     if (filterView) {
         yield call(resetCrossFiltering, cmd);
+        yield put(filterContextActions.resetWorkingSelection());
         yield put(
             changeFilterContextSelectionByParams({
                 filters: filterView.filterContext.filters,
