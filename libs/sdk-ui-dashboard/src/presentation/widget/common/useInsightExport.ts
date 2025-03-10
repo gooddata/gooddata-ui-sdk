@@ -143,6 +143,9 @@ export const useInsightExport = (config: {
     const isExportRawVisible = settings.enableRawExports === true;
     const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
 
+    const exportPdfPresentationDisabled = !!widget && !widget.localIdentifier;
+    const exportPowerPointPresentationDisabled = !!widget && !widget.localIdentifier;
+
     return {
         exportCSVEnabled,
         exportXLSXEnabled,
@@ -155,5 +158,7 @@ export const useInsightExport = (config: {
         onExportRawCSV,
         onExportPdfPresentation,
         onExportPowerPointPresentation,
+        exportPdfPresentationDisabled,
+        exportPowerPointPresentationDisabled,
     };
 };

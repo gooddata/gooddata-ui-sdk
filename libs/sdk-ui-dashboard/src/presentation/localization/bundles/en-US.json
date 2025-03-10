@@ -152,6 +152,11 @@
         "comment": "Export whole KPI dashboard to PowerPoint",
         "limit": 0
     },
+    "options.menu.export.presentation.unsupported.oldWidget": {
+        "value": "Unable to export. Please resave the dashboard or contact your administrator.",
+        "comment": "Message that explains that old widget cannot be exported without resaving the dashboard",
+        "limit": 0
+    },
     "options.menu.export.in.progress": {
         "value": "Export is in progress. Wait until it is finished before exporting again.",
         "comment": "Export whole KPI dashboard to PowerPoint",

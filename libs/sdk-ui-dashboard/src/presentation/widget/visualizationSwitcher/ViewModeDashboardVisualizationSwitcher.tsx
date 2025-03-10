@@ -114,6 +114,8 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
         onExportXLSX,
         onExportPdfPresentation,
         onExportPowerPointPresentation,
+        exportPdfPresentationDisabled,
+        exportPowerPointPresentationDisabled,
     } = useInsightExport({
         widgetRef,
         title: widgetTitle(activeVisualization) || intl.formatMessage({ id: "export.defaultTitle" }),
@@ -172,6 +174,8 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
         scheduleExportDisabled,
         scheduleExportManagementDisabled,
         scheduleExportDisabledReason,
+        exportPdfPresentationDisabled,
+        exportPowerPointPresentationDisabled,
     });
     const toggleMenu = useCallback(() => {
         if (isMenuOpen) {

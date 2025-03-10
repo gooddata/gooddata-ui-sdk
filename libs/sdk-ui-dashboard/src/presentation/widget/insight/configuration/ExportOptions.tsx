@@ -62,6 +62,8 @@ interface IExportOptionsProps extends IInsightMenuSubmenuComponentProps {
     isExportVisible: boolean;
     isExportRawVisible: boolean;
     exportCSVRawDisabled: boolean;
+    exportPdfPresentationDisabled: boolean;
+    exportPowerPointPresentationDisabled: boolean;
     onExportCSV: () => void;
     onExportRawCSV: () => void;
     onExportXLSX: () => void;
@@ -75,6 +77,8 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
     exportCsvDisabled,
     exportXLSVDisabled,
     exportCSVRawDisabled,
+    exportPdfPresentationDisabled,
+    exportPowerPointPresentationDisabled,
     isExportRawVisible,
     isExportVisible,
     onExportCSV,
@@ -88,6 +92,9 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
     const settings = useDashboardSelector(selectSettings);
 
     const tooltip = getExportTooltip(execution, settings?.enableRawExports);
+    const presentationTooltip = intl.formatMessage({
+        id: "options.menu.export.presentation.unsupported.oldWidget",
+    });
 
     return (
         <>
@@ -96,26 +103,50 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
                 <ItemsWrapper className="gd-configuration-export-options" smallItemsSpacing={true}>
                     {isExportVisible ? (
                         <>
-                            <MenuItem
-                                onClick={() => {
-                                    onClose();
-                                    onExportPdfPresentation();
-                                }}
-                                disabled={false}
-                                className="gd-export-options-pdf-presentation"
-                                icon="gd-icon-type-pdf"
-                                messageId="options.menu.export.presentation.PDF"
-                            />
-                            <MenuItem
-                                onClick={() => {
-                                    onClose();
-                                    onExportPowerPointPresentation();
-                                }}
-                                disabled={false}
-                                className="gd-export-options-pptx-presentation"
-                                icon="gd-icon-type-slides"
-                                messageId="options.menu.export.presentation.PPTX"
-                            />
+                            {!exportPdfPresentationDisabled ? (
+                                <MenuItem
+                                    onClick={() => {
+                                        onClose();
+                                        onExportPdfPresentation();
+                                    }}
+                                    disabled={exportPdfPresentationDisabled}
+                                    className="gd-export-options-pdf-presentation"
+                                    icon="gd-icon-type-pdf"
+                                    messageId="options.menu.export.presentation.PDF"
+                                />
+                            ) : (
+                                <MenuItemWithBubble
+                                    className="gd-export-options-pdf-presentation"
+                                    icon="gd-icon-type-pdf"
+                                    disabled={exportPdfPresentationDisabled}
+                                    messageId="options.menu.export.presentation.PDF"
+                                    showBubble={true}
+                                    alignPoints={alignPoints}
+                                    bubbleTextId={presentationTooltip}
+                                />
+                            )}
+                            {!exportPowerPointPresentationDisabled ? (
+                                <MenuItem
+                                    onClick={() => {
+                                        onClose();
+                                        onExportPowerPointPresentation();
+                                    }}
+                                    disabled={exportPowerPointPresentationDisabled}
+                                    className="gd-export-options-pptx-presentation"
+                                    icon="gd-icon-type-slides"
+                                    messageId="options.menu.export.presentation.PPTX"
+                                />
+                            ) : (
+                                <MenuItemWithBubble
+                                    className="gd-export-options-pptx-presentation"
+                                    icon="gd-icon-type-slides"
+                                    disabled={exportPowerPointPresentationDisabled}
+                                    messageId="options.menu.export.presentation.PPTX"
+                                    showBubble={true}
+                                    alignPoints={alignPoints}
+                                    bubbleTextId={presentationTooltip}
+                                />
+                            )}
                             <Header>{intl.formatMessage({ id: "options.menu.export.header.data" })}</Header>
                         </>
                     ) : null}
@@ -135,7 +166,7 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
                             ) : (
                                 <MenuItemWithBubble
                                     className="gd-export-options-xlsx"
-                                    icon="gd-icon-type-sheep"
+                                    icon="gd-icon-type-sheet"
                                     disabled={exportXLSVDisabled}
                                     messageId="widget.options.menu.XLSX"
                                     showBubble={true}

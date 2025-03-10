@@ -30,6 +30,8 @@ export function getDefaultInsightMenuItems(
         scheduleExportDisabled: boolean;
         scheduleExportDisabledReason?: SchedulingDisabledReason;
         scheduleExportManagementDisabled: boolean;
+        exportPdfPresentationDisabled: boolean;
+        exportPowerPointPresentationDisabled: boolean;
         onExportXLSX: () => void;
         onExportCSV: () => void;
         onExportRawCSV: () => void;
@@ -56,6 +58,8 @@ export function getDefaultInsightMenuItems(
         scheduleExportDisabled,
         scheduleExportDisabledReason,
         scheduleExportManagementDisabled,
+        exportPdfPresentationDisabled,
+        exportPowerPointPresentationDisabled,
         onExportCSV,
         onExportRawCSV,
         onExportXLSX,
@@ -120,6 +124,8 @@ export function getDefaultInsightMenuItems(
                 onExportXLSX={onExportXLSX}
                 onExportPowerPointPresentation={onExportPowerPointPresentation}
                 onExportPdfPresentation={onExportPdfPresentation}
+                exportPdfPresentationDisabled={exportPdfPresentationDisabled}
+                exportPowerPointPresentationDisabled={exportPowerPointPresentationDisabled}
             />
         );
     };

@@ -43,6 +43,8 @@ type UseInsightMenuConfig = {
     scheduleExportManagementDisabled: boolean;
     scheduleExportDisabledReason?: SchedulingDisabledReason;
     alertingDisabledReason?: AlertingDisabledReason;
+    exportPdfPresentationDisabled: boolean;
+    exportPowerPointPresentationDisabled: boolean;
 };
 
 export const useInsightMenu = (
@@ -90,6 +92,8 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         widget,
         isExportRawVisible,
         isExportVisible,
+        exportPdfPresentationDisabled,
+        exportPowerPointPresentationDisabled,
     } = config;
 
     const intl = useIntl();
@@ -142,6 +146,8 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
             alertingDisabled,
             alertingDisabledReason,
             canCreateAutomation,
+            exportPdfPresentationDisabled,
+            exportPowerPointPresentationDisabled,
         });
     }, [
         intl,
@@ -169,5 +175,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         canCreateAutomation,
         isExportRawVisible,
         isExporting,
+        exportPdfPresentationDisabled,
+        exportPowerPointPresentationDisabled,
     ]);
 }
