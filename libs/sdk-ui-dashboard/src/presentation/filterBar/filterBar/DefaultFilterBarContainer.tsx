@@ -78,6 +78,8 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                     className={cx("dash-filters-visible", {
                         scrollable: scrollable,
                         "s-dash-filters-visible-all": isFilterBarExpanded,
+                        "apply-all-at-once":
+                            filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes,
                     })}
                 >
                     <AllFiltersContainer setCalculatedRows={setCalculatedRows}>

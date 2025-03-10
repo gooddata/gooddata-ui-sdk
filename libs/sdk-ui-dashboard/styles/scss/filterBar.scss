@@ -143,6 +143,10 @@ $attribute-filter-drag-handle-left: 10px;
     min-height: variables.$filter-bar-height;
     margin-right: variables.$scrollbar-width;
 
+    .apply-all-at-once & {
+        width: calc(100% - 225px); // make space for global apply button too
+    }
+
     .dash-filters-date {
         max-width: 285px;
     }
