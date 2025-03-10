@@ -454,7 +454,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                 title={filter.attributeFilter.title}
                 resetOnParentFilterChange={false}
                 filter={attributeFilter}
-                workingFilter={workingAttributeFilter}
+                workingFilter={enableDashboardFiltersApplyModes ? workingAttributeFilter : undefined}
                 displayAsLabel={displayAsLabel}
                 onApply={(newFilter, _isInverted, _selectionMode, _selectionTitles, displayAsLabel) => {
                     onFilterChanged(
@@ -505,6 +505,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                     enableImmediateAttributeFilterDisplayAsLabelMigration
                 }
                 withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes}
+                enableDashboardFiltersApplyModes={enableDashboardFiltersApplyModes}
             />
         </AttributeFilterParentFilteringProvider>
     );

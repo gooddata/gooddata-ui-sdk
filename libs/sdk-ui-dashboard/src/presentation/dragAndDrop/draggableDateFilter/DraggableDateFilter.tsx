@@ -2,7 +2,12 @@
 import React from "react";
 import { IDashboardDateFilter } from "@gooddata/sdk-model";
 import classNames from "classnames";
-import { useDashboardSelector, selectIsInEditMode, selectCanAddMoreFilters } from "../../../model/index.js";
+import {
+    useDashboardSelector,
+    selectIsInEditMode,
+    selectCanAddMoreFilters,
+    selectEnableDashboardFiltersApplyModes,
+} from "../../../model/index.js";
 import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/DraggableFilterDropZoneHint.js";
 import { CustomDashboardDateFilterComponent, IDashboardDateFilterConfig } from "../../filterBar/types.js";
 import { useDashboardDrag } from "../useDashboardDrag.js";
@@ -52,6 +57,8 @@ export function DraggableDateFilter({
 
     const showDropZones = isInEditMode && !isDragging;
 
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+
     return (
         <div className="draggable-attribute-filter">
             {showDropZones ? (
@@ -72,7 +79,7 @@ export function DraggableDateFilter({
             >
                 <FilterComponent
                     filter={filter}
-                    workingFilter={workingFilter}
+                    workingFilter={enableDashboardFiltersApplyModes ? workingFilter : undefined}
                     config={config}
                     onFilterChanged={onDateFilterChanged}
                     isDraggable={isInEditMode}

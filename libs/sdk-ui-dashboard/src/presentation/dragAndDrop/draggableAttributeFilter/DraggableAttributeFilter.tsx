@@ -7,6 +7,7 @@ import {
     selectIsInEditMode,
     selectSupportsElementUris,
     selectCanAddMoreFilters,
+    selectEnableDashboardFiltersApplyModes,
 } from "../../../model/index.js";
 import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/DraggableFilterDropZoneHint.js";
 import { CustomDashboardAttributeFilterComponent } from "../../filterBar/types.js";
@@ -73,6 +74,8 @@ export function DraggableAttributeFilter({
 
     const showDropZones = isInEditMode && !isDragging;
 
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+
     return (
         <div className="draggable-attribute-filter">
             {showDropZones ? (
@@ -93,7 +96,7 @@ export function DraggableAttributeFilter({
             >
                 <FilterComponent
                     filter={filterToUse}
-                    workingFilter={workingFilterToUse}
+                    workingFilter={enableDashboardFiltersApplyModes ? workingFilterToUse : undefined}
                     onFilterChanged={onAttributeFilterChanged}
                     isDraggable={isInEditMode}
                     readonly={readonly}

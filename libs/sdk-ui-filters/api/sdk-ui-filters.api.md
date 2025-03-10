@@ -402,6 +402,7 @@ export interface IAttributeFilterCoreProps {
     disabled?: boolean;
     // @alpha
     displayAsLabel?: ObjRef;
+    enableDashboardFiltersApplyModes?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     filter?: IAttributeFilter;
@@ -734,6 +735,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     dateFilterMode: VisibilityMode;
     // (undocumented)
     dateFormat?: string;
+    enableDashboardFiltersApplyModes?: boolean;
     // @alpha
     FilterConfigurationComponent?: React_2.ComponentType<IFilterConfigurationProps>;
     // (undocumented)
@@ -751,9 +753,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     // (undocumented)
     weekStart?: WeekStart;
     withoutApply?: boolean;
-    // (undocumented)
     workingExcludeCurrentPeriod?: boolean;
-    // (undocumented)
     workingSelectedFilterOption?: DateFilterOption;
 }
 

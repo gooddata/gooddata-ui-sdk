@@ -115,6 +115,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                         enableImmediateAttributeFilterDisplayAsLabelMigration
                     }
                     withoutApply={props.withoutApply}
+                    enableDashboardFiltersApplyModes={props.enableDashboardFiltersApplyModes}
                 >
                     {children}
                 </AttributeFilterContextProvider>

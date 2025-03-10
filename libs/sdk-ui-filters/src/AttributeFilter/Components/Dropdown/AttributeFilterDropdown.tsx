@@ -52,10 +52,15 @@ export const AttributeFilterDropdown: React.VFC = () => {
 
     const isMobile = useMediaQuery("mobileDevice");
 
-    const isSelectionInverted = withoutApply ? isWorkingSelectionInverted : isCommittedSelectionInverted;
-    const selectionElements = withoutApply ? workingSelectionElements : committedSelectionElements;
+    const isSelectionInverted = useLastValidValue(
+        withoutApply ? isWorkingSelectionInverted : isCommittedSelectionInverted,
+        !isSelectionInvalid || !withoutApply,
+    );
+    const selectionElements = useLastValidValue(
+        withoutApply ? workingSelectionElements : committedSelectionElements,
+        !isSelectionInvalid || !withoutApply,
+    );
     const subtitle = useResolveAttributeFilterSubtitle(isSelectionInverted, selectionElements);
-    const lastValidSubtitle = useLastValidValue(subtitle, !isSelectionInvalid || !withoutApply);
 
     const isMultiselect = selectionMode !== "single";
     const showSelectionCount = isMultiselect && selectionElements.length !== 0;
@@ -81,7 +86,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
                             <AttributeFilterButtonErrorTooltip errorMessage={initError?.message}>
                                 <DropdownButtonComponent
                                     title={title}
-                                    subtitle={lastValidSubtitle}
+                                    subtitle={subtitle}
                                     isFiltering={isFiltering}
                                     isLoaded={!isInitializing}
                                     isLoading={isInitializing}

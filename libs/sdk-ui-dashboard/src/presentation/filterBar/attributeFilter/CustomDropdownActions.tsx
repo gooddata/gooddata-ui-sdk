@@ -13,6 +13,7 @@ import {
     selectAllCatalogAttributesMap,
     selectAttributeFilterDisplayFormsMap,
     selectDashboardFiltersApplyMode,
+    selectEnableDashboardFiltersApplyModes,
     selectIsDeleteFilterButtonEnabled,
     selectIsInEditMode,
     useDashboardSelector,
@@ -73,6 +74,7 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const isDeleteButtonEnabled = useDashboardSelector(selectIsDeleteFilterButtonEnabled);
     const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
     const withoutApply = filtersApplyMode.mode === "ALL_AT_ONCE";
     const isConfigButtonVisible = useIsConfigButtonVisible(filterDisplayFormRef, attributes);
     const isSingleSelect = filterSelectionMode === "single";
@@ -102,7 +104,7 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
                         value={cancelText}
                         title={cancelText}
                     />
-                    {!withoutApply && (
+                    {!withoutApply || !enableDashboardFiltersApplyModes ? (
                         <Button
                             disabled={isApplyDisabled}
                             className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
@@ -110,7 +112,7 @@ export const CustomAttributeFilterDropdownActions: React.FC<ICustomAttributeFilt
                             value={applyText}
                             title={applyText}
                         />
-                    )}
+                    ) : null}
                 </div>
             ) : null}
         </div>

@@ -98,15 +98,13 @@ export function* changeAttributeDisplayFormHandler(
         ]),
     );
 
-    if (!enableDashboardFiltersApplyModes) {
-        const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
-            yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
+    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
+        yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
 
-        invariant(
-            changedFilter,
-            "Inconsistent state in changeAttributeDisplayFormHandler, cannot update attribute filter for given local identifier.",
-        );
-        yield dispatchDashboardEvent(attributeDisplayFormChanged(ctx, changedFilter, cmd.correlationId));
-        yield call(dispatchFilterContextChanged, ctx, cmd);
-    }
+    invariant(
+        changedFilter,
+        "Inconsistent state in changeAttributeDisplayFormHandler, cannot update attribute filter for given local identifier.",
+    );
+    yield dispatchDashboardEvent(attributeDisplayFormChanged(ctx, changedFilter, cmd.correlationId));
+    yield call(dispatchFilterContextChanged, ctx, cmd);
 }

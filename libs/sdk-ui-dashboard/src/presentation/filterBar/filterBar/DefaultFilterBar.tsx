@@ -263,7 +263,9 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     <>
                         <CustomCommonDateFilterComponent
                             filter={commonDateFilter}
-                            workingFilter={commonWorkingDateFilter}
+                            workingFilter={
+                                enableDashboardFiltersApplyModes ? commonWorkingDateFilter : undefined
+                            }
                             onFilterChanged={onDateFilterChanged}
                             config={commonDateFilterComponentConfig}
                             readonly={commonDateFilterMode === DashboardDateFilterConfigModeValues.READONLY}
@@ -335,7 +337,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                             }`}
                             autoOpen={areObjRefsEqual(filter.attributeFilter.displayForm, autoOpenFilter)}
                             filter={filter}
-                            workingFilter={workingFilter}
+                            workingFilter={enableDashboardFiltersApplyModes ? workingFilter : undefined}
                             filterIndex={filterIndex}
                             readonly={
                                 attributeFilterMode === DashboardAttributeFilterConfigModeValues.READONLY
@@ -373,7 +375,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                                     autoOpenFilter,
                                 )}
                                 filter={filter}
-                                workingFilter={workingFilter}
+                                workingFilter={enableDashboardFiltersApplyModes ? workingFilter : undefined}
                                 filterIndex={filterIndex}
                                 config={{
                                     ...commonDateFilterComponentConfig,

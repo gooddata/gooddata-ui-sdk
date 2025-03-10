@@ -144,8 +144,10 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
         <DateFilter
             excludeCurrentPeriod={excludeCurrentPeriod}
             selectedFilterOption={dateFilterOption}
-            workingExcludeCurrentPeriod={workingExcludeCurrentPeriod}
-            workingSelectedFilterOption={workingFilterOption}
+            workingExcludeCurrentPeriod={
+                enableDashboardFiltersApplyModes ? workingExcludeCurrentPeriod : undefined
+            }
+            workingSelectedFilterOption={enableDashboardFiltersApplyModes ? workingFilterOption : undefined}
             dateFilterMode={
                 readonly
                     ? DashboardDateFilterConfigModeValues.READONLY
@@ -166,6 +168,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             showDropDownHeaderMessage={!filter?.dateFilter.dataSet}
             FilterConfigurationComponent={isConfigurationEnabled ? FilterConfigurationComponent : undefined}
             withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes}
+            enableDashboardFiltersApplyModes={enableDashboardFiltersApplyModes}
         />
     );
 };

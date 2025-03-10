@@ -29,6 +29,7 @@ import {
     selectIsDisableUserFilterReset,
     selectIsWorkingFilterContextChanged,
     resetFilterContextWorkingSelection,
+    selectEnableDashboardFiltersApplyModes,
 } from "../../../../model/index.js";
 
 /**
@@ -53,6 +54,7 @@ export const useResetFiltersButton = (): {
     const disableUserFilterResetByConfig = useDashboardSelector(selectIsDisableUserFilterReset);
     const disableUserFilterReset = useDashboardSelector(selectDisableDashboardUserFilterReset);
     const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
 
     const dispatch = useDashboardDispatch();
     const { filterContextStateReset } = useDashboardUserInteraction();
@@ -99,8 +101,10 @@ export const useResetFiltersButton = (): {
                 isDashboardCommonDateFilter,
             ) as [IDashboardDateFilter[], Array<IDashboardAttributeFilter | IDashboardDateFilter>];
 
+            if (enableDashboardFiltersApplyModes) {
+                dispatch(resetFilterContextWorkingSelection());
+            }
             // Dispatch a command, so it goes through the proper piping and trigger all the events
-            dispatch(resetFilterContextWorkingSelection());
             dispatch(
                 changeFilterContextSelection([
                     commonDateFilter ?? newAllTimeDashboardDateFilter(),

@@ -66,8 +66,23 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
      * Note, onApply callback is not called when this is true.
      */
     withoutApply?: boolean;
+
+    /**
+     * Working filter option used for synchronization inner filter state with outer given state.
+     * Makes a controlled component state out of this.
+     */
     workingSelectedFilterOption?: DateFilterOption;
+
+    /**
+     * Working filter exclude current period used for synchronization inner filter state with outer given state.
+     * Makes a controlled component state out of this.
+     */
     workingExcludeCurrentPeriod?: boolean;
+
+    /**
+     * If new apply all filters at once mode is enabled
+     */
+    enableDashboardFiltersApplyModes?: boolean;
 }
 
 /**
@@ -126,6 +141,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
         prevState: IDateFilterState,
     ): IDateFilterState {
         if (
+            nextProps.enableDashboardFiltersApplyModes &&
             nextProps.workingSelectedFilterOption &&
             nextProps.excludeCurrentPeriod &&
             (!isEqual(nextProps.workingSelectedFilterOption, prevState.initWorkingSelectedFilterOption) ||
@@ -229,6 +245,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             showDropDownHeaderMessage,
             FilterConfigurationComponent,
             withoutApply,
+            enableDashboardFiltersApplyModes,
         } = this.props;
         const { excludeCurrentPeriod, selectedFilterOption, isExcludeCurrentPeriodEnabled } = this.state;
         return dateFilterMode === "hidden" ? null : (
@@ -257,7 +274,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
                 weekStart={weekStart}
                 customIcon={customIcon}
                 FilterConfigurationComponent={FilterConfigurationComponent}
-                withoutApply={withoutApply}
+                withoutApply={enableDashboardFiltersApplyModes ? withoutApply : undefined}
             />
         );
     }
@@ -281,9 +298,12 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             this.props.onOpen();
         } else {
             this.props.onClose();
-            if (!this.props.withoutApply) {
+            if (!this.props.withoutApply || !this.props.enableDashboardFiltersApplyModes) {
                 this.onChangesDiscarded();
-            } else if (!isEmpty(validateFilterOption(this.state.selectedFilterOption))) {
+            } else if (
+                this.props.enableDashboardFiltersApplyModes &&
+                !isEmpty(validateFilterOption(this.state.selectedFilterOption))
+            ) {
                 this.setState(() => DateFilter.getStateFromWorkingProps(this.props));
             }
         }

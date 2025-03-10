@@ -102,6 +102,7 @@ export const useAttributeFilterController = (
         selectFirst = false,
         enableDuplicatedLabelValuesInAttributeFilter = true,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
+        enableDashboardFiltersApplyModes = false,
         withoutApply = false,
     } = props;
 
@@ -177,6 +178,7 @@ export const useAttributeFilterController = (
         supportsKeepingDependentFiltersSelection,
         supportsCircularDependencyInFilters,
         enableDuplicatedLabelValuesInAttributeFilter,
+        enableDashboardFiltersApplyModes,
     );
     const callbacks = useCallbacks(
         handler,
@@ -199,6 +201,7 @@ export const useAttributeFilterController = (
         supportsKeepingDependentFiltersSelection,
         enableDuplicatedLabelValuesInAttributeFilter,
         enableImmediateAttributeFilterDisplayAsLabelMigration,
+        enableDashboardFiltersApplyModes,
     );
 
     useSingleSelectModeHandler(handler, {
@@ -206,6 +209,7 @@ export const useAttributeFilterController = (
         onApply: callbacks.onApply,
         selectionMode,
         enableDuplicatedLabelValuesInAttributeFilter,
+        enableDashboardFiltersApplyModes,
     });
 
     return {
@@ -293,6 +297,7 @@ function useInitOrReload(
     supportsKeepingDependentFiltersSelection: boolean,
     supportsCircularDependencyInFilters: boolean,
     enableDuplicatedLabelValuesInAttributeFilter: boolean,
+    enableDashboardFiltersApplyModes: boolean,
 ) {
     const {
         filter,
@@ -418,7 +423,9 @@ function useInitOrReload(
               );
         refreshByType(handler, change, supportsKeepingDependentFiltersSelection);
 
-        updateWorkingSelection(handler, props);
+        if (enableDashboardFiltersApplyModes) {
+            updateWorkingSelection(handler, props);
+        }
     }, [
         filter,
         workingFilter,
@@ -436,6 +443,7 @@ function useInitOrReload(
         limitingValidationItems,
         displayAsLabel,
         enableDuplicatedLabelValuesInAttributeFilter,
+        enableDashboardFiltersApplyModes,
     ]);
 
     const isMountedRef = useRef(false);
@@ -706,6 +714,7 @@ function useCallbacks(
     supportsKeepingDependentFiltersSelection: boolean,
     enableDuplicatedLabelValuesInAttributeFilter: boolean,
     enableImmediateAttributeFilterDisplayAsLabelMigration: boolean,
+    enableDashboardFiltersApplyModes: boolean,
 ) {
     const {
         onApply: onApplyInputCallback,
@@ -731,7 +740,7 @@ function useCallbacks(
             const isInverted = handler.getWorkingSelection()?.isInverted;
             const keys = handler.getWorkingSelection().keys;
             const isSelectionInvalid = (!isInverted && isEmpty(keys)) || keys.length > MAX_SELECTION_SIZE;
-            if (isSelectionInvalid) {
+            if (isSelectionInvalid && enableDashboardFiltersApplyModes) {
                 return;
             }
             if (enableDuplicatedLabelValuesInAttributeFilter) {
@@ -764,7 +773,13 @@ function useCallbacks(
                 onSelectionChangeInputCallback?.(nextFilter, isInverted, selectionMode);
             }
         },
-        [handler, enableDuplicatedLabelValuesInAttributeFilter, handlerState, selectionMode],
+        [
+            handler,
+            enableDuplicatedLabelValuesInAttributeFilter,
+            handlerState,
+            selectionMode,
+            enableDashboardFiltersApplyModes,
+        ],
     );
 
     const onSelect = useCallback(
@@ -808,7 +823,7 @@ function useCallbacks(
     const onReset = useCallback(() => {
         if (!withoutApply) {
             handler.revertSelection();
-        } else if (isSelectionInvalid) {
+        } else if (isSelectionInvalid && enableDashboardFiltersApplyModes) {
             const workingElements = filterAttributeElements(workingFilter);
             const workingKeys = isAttributeElementsByValue(workingElements)
                 ? workingElements.values
@@ -843,6 +858,7 @@ function useCallbacks(
         withoutApply,
         isSelectionInvalid,
         workingFilter,
+        enableDashboardFiltersApplyModes,
     ]);
 
     const onApply = useCallback(
@@ -915,9 +931,16 @@ const useSingleSelectModeHandler = (
         selectionMode: DashboardAttributeFilterSelectionMode;
         onApply: (applyRegardlessWithoutApplySetting?: boolean) => void;
         enableDuplicatedLabelValuesInAttributeFilter: boolean;
+        enableDashboardFiltersApplyModes: boolean;
     },
 ) => {
-    const { selectFirst, selectionMode, onApply, enableDuplicatedLabelValuesInAttributeFilter } = props;
+    const {
+        selectFirst,
+        selectionMode,
+        onApply,
+        enableDuplicatedLabelValuesInAttributeFilter,
+        enableDashboardFiltersApplyModes,
+    } = props;
     const committedSelectionKeys = handler.getCommittedSelection().keys;
     const initialStatus = handler.getInitStatus();
     const elements = handler.getAllElements();
@@ -927,7 +950,8 @@ const useSingleSelectModeHandler = (
         if (
             selectFirst &&
             selectionMode === "single" &&
-            (isEmpty(committedSelectionKeys) || committedSelectionKeys.length > 1) &&
+            (isEmpty(committedSelectionKeys) ||
+                (committedSelectionKeys.length > 1 && enableDashboardFiltersApplyModes)) &&
             initialStatus === "success" &&
             !isEmpty(elements)
         ) {
@@ -952,6 +976,7 @@ const useSingleSelectModeHandler = (
         handler,
         onApply,
         enableDuplicatedLabelValuesInAttributeFilter,
+        enableDashboardFiltersApplyModes,
     ]);
 };
 

@@ -43,7 +43,10 @@ import { PromiseFnReturnType } from "../../types/sagas.js";
 import { resetCrossFiltering } from "./common.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { filterContextActions } from "../../store/filterContext/index.js";
-import { selectDashboardFiltersApplyMode } from "../../store/config/configSelectors.js";
+import {
+    selectDashboardFiltersApplyMode,
+    selectEnableDashboardFiltersApplyModes,
+} from "../../store/config/configSelectors.js";
 
 function createFilterView(
     ctx: DashboardContext,
@@ -67,8 +70,12 @@ export function* saveFilterViewHandler(ctx: DashboardContext, cmd: SaveFilterVie
     const filtersApplyMode: ReturnType<typeof selectDashboardFiltersApplyMode> = yield select(
         selectDashboardFiltersApplyMode,
     );
+    const enableDashboardFiltersApplyModes: ReturnType<typeof selectEnableDashboardFiltersApplyModes> =
+        yield select(selectEnableDashboardFiltersApplyModes);
     const filterContext =
-        filtersApplyMode.mode === "ALL_AT_ONCE" ? workingFilterContext : appliedFilterContext;
+        filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes
+            ? workingFilterContext
+            : appliedFilterContext;
 
     const virtualFilters: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiers> = yield select(
         selectCrossFilteringFiltersLocalIdentifiers,
@@ -146,7 +153,11 @@ export function* applyFilterViewHandler(ctx: DashboardContext, cmd: ApplyFilterV
 
     if (filterView) {
         yield call(resetCrossFiltering, cmd);
-        yield put(filterContextActions.resetWorkingSelection());
+        const enableDashboardFiltersApplyModes: ReturnType<typeof selectEnableDashboardFiltersApplyModes> =
+            yield select(selectEnableDashboardFiltersApplyModes);
+        if (enableDashboardFiltersApplyModes) {
+            yield put(filterContextActions.resetWorkingSelection());
+        }
         yield put(
             changeFilterContextSelectionByParams({
                 filters: filterView.filterContext.filters,
