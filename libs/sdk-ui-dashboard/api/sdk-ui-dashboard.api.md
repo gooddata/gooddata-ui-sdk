@@ -4011,6 +4011,8 @@ export function getDefaultInsightMenuItems(intl: IntlShape, config: {
     scheduleExportDisabled: boolean;
     scheduleExportDisabledReason?: SchedulingDisabledReason;
     scheduleExportManagementDisabled: boolean;
+    exportPdfPresentationDisabled: boolean;
+    exportPowerPointPresentationDisabled: boolean;
     onExportXLSX: () => void;
     onExportCSV: () => void;
     onExportRawCSV: () => void;

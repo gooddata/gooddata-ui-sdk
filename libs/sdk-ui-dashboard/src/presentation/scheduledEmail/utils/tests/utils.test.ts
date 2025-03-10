@@ -152,7 +152,9 @@ describe("getTimezoneOffset", () => {
     });
 
     it("America/Nassau", () => {
-        const offset = getTimezoneOffset(now, "America/Nassau");
+        // Nassau has winter time, so fix was needed
+        const fixedDate = new Date("2022-01-01T00:00:00Z");
+        const offset = getTimezoneOffset(fixedDate, "America/Nassau");
         expect(offset).toEqual(-18000000);
     });
 });
