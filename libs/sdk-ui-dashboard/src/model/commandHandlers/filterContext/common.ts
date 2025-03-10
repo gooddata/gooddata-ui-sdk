@@ -13,7 +13,10 @@ import { selectEffectiveDateFilterOptions } from "../../store/dateFilterConfig/d
 import { findDateFilterOptionByValue } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { removeAttributeFilters } from "../../commands/filters.js";
-import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
+import {
+    selectCrossFilteringFiltersLocalIdentifiers,
+    selectIsCrossFiltering,
+} from "../../store/drill/drillSelectors.js";
 import { drillActions } from "../../store/drill/index.js";
 import { filterContextActions } from "../../store/filterContext/index.js";
 import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../store/config/configSelectors.js";
@@ -74,5 +77,14 @@ export function* applyWorkingSelectionHandler(ctx: DashboardContext, cmd: IDashb
     yield put(
         filterContextActions.applyWorkingSelection({ enableImmediateAttributeFilterDisplayAsLabelMigration }),
     );
+    const isCrossFiltering: ReturnType<typeof selectIsCrossFiltering> = yield select(selectIsCrossFiltering);
+
+    if (isCrossFiltering) {
+        yield call(resetCrossFiltering, cmd);
+    }
     yield call(dispatchFilterContextChanged, ctx, cmd);
+}
+
+export function* resetWorkingSelectionHandler() {
+    yield put(filterContextActions.resetWorkingSelection());
 }

@@ -105,6 +105,15 @@ export interface IAttributeFilterCoreProps {
     filter?: IAttributeFilter;
 
     /**
+     * Specify a working attribute filter that will be shown.
+     *
+     * @remarks
+     * If provided it will use the provided filter to show currently given working selection (controlled component).
+     * If not provided this component will use its own internal state (uncontrolled component).
+     */
+    workingFilter?: IAttributeFilter;
+
+    /**
      * Specifies a parent attribute filter that will be used to reduce options for current attribute filter.
      *
      * @remarks
@@ -284,6 +293,11 @@ export interface IAttributeFilterCoreProps {
      * Enables the migration of displayAsLabel to be immediately reported to the parent app.
      */
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+
+    /**
+     * Enables the new apply all filters at once mode
+     */
+    enableDashboardFiltersApplyModes?: boolean;
 }
 
 /**

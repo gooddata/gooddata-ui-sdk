@@ -37,6 +37,11 @@ export interface IDashboardDateFilterProps {
     filter: IDashboardDateFilter | undefined;
 
     /**
+     * Definition of working filter used to render selected options.
+     */
+    workingFilter: IDashboardDateFilter | undefined;
+
+    /**
      * When the user interacts with the filter and changes its value, it MUST use this callback to propagate the
      * new filter value.
      *

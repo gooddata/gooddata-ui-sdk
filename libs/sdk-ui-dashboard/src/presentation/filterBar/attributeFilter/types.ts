@@ -15,6 +15,11 @@ export interface IDashboardAttributeFilterProps {
     filter: IDashboardAttributeFilter;
 
     /**
+     * Working filter which selection will be used to render.
+     */
+    workingFilter?: IDashboardAttributeFilter;
+
+    /**
      * When the user interacts with the filter and changes its value, it MUST use this callback to propagate the
      * new filter value.
      *

@@ -85,8 +85,6 @@ export function* changeAttributeFilterSelectionHandler(
         yield call(resetCrossFiltering, cmd);
     }
 
-    if (!isWorkingSelectionChange || !enableDashboardFiltersApplyModes) {
-        yield dispatchDashboardEvent(attributeFilterSelectionChanged(ctx, changedFilter, cmd.correlationId));
-        yield call(dispatchFilterContextChanged, ctx, cmd);
-    }
+    yield dispatchDashboardEvent(attributeFilterSelectionChanged(ctx, changedFilter, cmd.correlationId));
+    yield call(dispatchFilterContextChanged, ctx, cmd);
 }

@@ -42,6 +42,7 @@ import {
     SetFilterViewAsDefault,
     ReloadFilterViews,
     ApplyFilterContextWorkingSelection,
+    ResetFilterContextWorkingSelection,
 } from "./filters.js";
 import {
     ChangeInsightWidgetFilterSettings,
@@ -215,6 +216,7 @@ export type {
     SetFilterViewAsDefaultPayload,
     ReloadFilterViews,
     ApplyFilterContextWorkingSelection,
+    ResetFilterContextWorkingSelection,
 } from "./filters.js";
 export {
     changeDateFilterSelection,
@@ -244,6 +246,7 @@ export {
     setFilterViewAsDefault,
     reloadFilterViews,
     applyFilterContextWorkingSelection,
+    resetFilterContextWorkingSelection,
 } from "./filters.js";
 
 export type {
@@ -619,6 +622,7 @@ export type DashboardCommands =
     | ReloadFilterViews
     | ToggleLayoutSectionHeaders
     | ApplyFilterContextWorkingSelection
+    | ResetFilterContextWorkingSelection
     //internal
     | SetScreenSize
     | LoadAllWorkspaceUsers

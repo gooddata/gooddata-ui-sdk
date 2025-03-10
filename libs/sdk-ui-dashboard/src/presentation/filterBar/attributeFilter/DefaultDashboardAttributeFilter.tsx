@@ -92,7 +92,16 @@ export const DefaultDashboardAttributeFilter = (
 };
 
 const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterProps): JSX.Element | null => {
-    const { filter, onFilterChanged, isDraggable, readonly, autoOpen, onClose, displayAsLabel } = props;
+    const {
+        filter,
+        workingFilter,
+        onFilterChanged,
+        isDraggable,
+        readonly,
+        autoOpen,
+        onClose,
+        displayAsLabel,
+    } = props;
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const { dependentDateFilters } = useDependentDateFilters(filter);
     const locale = useDashboardSelector(selectLocale);
@@ -100,6 +109,10 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const attributeFilterConfigsModeMap = useDashboardSelector(selectAttributeFilterConfigsModeMap);
     const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
+    const workingAttributeFilter = useMemo(
+        () => dashboardAttributeFilterToAttributeFilter(workingFilter ?? filter),
+        [workingFilter, filter],
+    );
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
     const userInteraction = useDashboardUserInteraction();
     const isAttributeFilterDependent = useDashboardSelector(
@@ -131,6 +144,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
     const intl = useIntl();
 
     const cancelText = intl.formatMessage({ id: "gs.list.cancel" });
+    const closeText = intl.formatMessage({ id: "close" });
     const saveText = intl.formatMessage({ id: "attributesDropdown.save" });
     const applyText = intl.formatMessage({ id: "gs.list.apply" });
     const displayValuesAsText = intl.formatMessage({ id: "attributesDropdown.displayValuesAs" });
@@ -245,6 +259,8 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
     const CustomDropdownActions = useMemo(() => {
         return function DropdownActions(props: IAttributeFilterDropdownActionsProps) {
             const { currentDisplayFormRef, committedSelectionElements } = useAttributeFilterContext();
+            const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
+            const withoutApply = filtersApplyMode.mode === "ALL_AT_ONCE";
 
             const {
                 title,
@@ -293,7 +309,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                             filterDisplayFormRef={filter.attributeFilter.displayForm}
                             filterSelectionMode={filter.attributeFilter.selectionMode}
                             applyText={applyText}
-                            cancelText={cancelText}
+                            cancelText={withoutApply ? closeText : cancelText}
                             onConfigurationButtonClick={() => {
                                 setIsConfigurationOpen(true);
                                 onConfigurationClose();
@@ -383,6 +399,10 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                 userInteraction.attributeFilterInteraction("attributeFilterShowAllValuesClicked");
             };
 
+            if (filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes) {
+                return null;
+            }
+
             if (filter.attributeFilter.selectionMode === "single") {
                 return (
                     <SingleSelectionAttributeFilterStatusBar
@@ -418,6 +438,8 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
         filter.attributeFilter.validateElementsBy,
         capabilities.supportsShowingFilteredElements,
         userInteraction,
+        filtersApplyMode.mode,
+        enableDashboardFiltersApplyModes,
     ]);
 
     const AttributeFilterComponent = props.AttributeFilterComponent ?? AttributeFilterButton;
@@ -432,6 +454,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                 title={filter.attributeFilter.title}
                 resetOnParentFilterChange={false}
                 filter={attributeFilter}
+                workingFilter={enableDashboardFiltersApplyModes ? workingAttributeFilter : undefined}
                 displayAsLabel={displayAsLabel}
                 onApply={(newFilter, _isInverted, _selectionMode, _selectionTitles, displayAsLabel) => {
                     onFilterChanged(
@@ -482,6 +505,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                     enableImmediateAttributeFilterDisplayAsLabelMigration
                 }
                 withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes}
+                enableDashboardFiltersApplyModes={enableDashboardFiltersApplyModes}
             />
         </AttributeFilterParentFilteringProvider>
     );

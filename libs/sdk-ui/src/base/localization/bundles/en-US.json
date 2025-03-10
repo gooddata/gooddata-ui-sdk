@@ -636,6 +636,11 @@
         "comment": "",
         "limit": 0
     },
+    "close": {
+        "value": "Close",
+        "comment": "Button for closing the popup without triggering any action.",
+        "limit": 0
+    },
     "save": {
         "value": "Save",
         "comment": "Label of save button or visual element",

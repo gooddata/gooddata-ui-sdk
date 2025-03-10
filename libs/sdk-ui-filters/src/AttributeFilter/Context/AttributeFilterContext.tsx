@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useContext } from "react";
 import { IAttributeFilterCoreProps } from "../types.js";
 import { useAttributeFilterController } from "../hooks/useAttributeFilterController.js";
@@ -11,7 +11,14 @@ import { AttributeFilterController } from "../hooks/types.js";
 export type IAttributeFilterContext = AttributeFilterController &
     Pick<
         IAttributeFilterCoreProps,
-        "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon"
+        | "fullscreenOnMobile"
+        | "title"
+        | "selectionMode"
+        | "selectFirst"
+        | "disabled"
+        | "customIcon"
+        | "withoutApply"
+        | "workingFilter"
     >;
 
 export const AttributeFilterContext = React.createContext<IAttributeFilterContext>(null);
@@ -39,6 +46,8 @@ export const AttributeFilterContextProvider: React.FC<
         disabled,
         customIcon,
         enableDuplicatedLabelValuesInAttributeFilter = true,
+        withoutApply,
+        workingFilter,
     } = props;
 
     const controller = useAttributeFilterController(props);
@@ -55,6 +64,8 @@ export const AttributeFilterContextProvider: React.FC<
                 disabled,
                 customIcon,
                 enableDuplicatedLabelValuesInAttributeFilter,
+                withoutApply,
+                workingFilter,
             }}
         >
             {children}

@@ -27,6 +27,9 @@ import {
     selectDisableDashboardUserFilterReset,
     selectIsDisabledCrossFiltering,
     selectIsDisableUserFilterReset,
+    selectIsWorkingFilterContextChanged,
+    resetFilterContextWorkingSelection,
+    selectEnableDashboardFiltersApplyModes,
 } from "../../../../model/index.js";
 
 /**
@@ -50,6 +53,8 @@ export const useResetFiltersButton = (): {
     const disableCrossFiltering = useDashboardSelector(selectDisableDashboardCrossFiltering);
     const disableUserFilterResetByConfig = useDashboardSelector(selectIsDisableUserFilterReset);
     const disableUserFilterReset = useDashboardSelector(selectDisableDashboardUserFilterReset);
+    const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
 
     const dispatch = useDashboardDispatch();
     const { filterContextStateReset } = useDashboardUserInteraction();
@@ -64,13 +69,14 @@ export const useResetFiltersButton = (): {
         return difference(currentFiltersLocalIds, originalAttributeFiltersLocalIds);
     }, [currentFilters, originalFilters]);
 
-    const canReset = React.useMemo(() => {
+    const canReset = React.useMemo((): boolean => {
         return (
             !isEditMode &&
-            !isEqual(currentFilters, originalFilters) &&
-            // If the cross filter add some filters, we should allow the reset
-            ((!disableUserFilterReset && !disableUserFilterResetByConfig) ||
-                newlyAddedFiltersLocalIds.length > 0)
+            ((!isEqual(currentFilters, originalFilters) &&
+                // If the cross filter add some filters, we should allow the reset
+                ((!disableUserFilterReset && !disableUserFilterResetByConfig) ||
+                    newlyAddedFiltersLocalIds.length > 0)) ||
+                !!isWorkingFilterContextChanged)
         );
     }, [
         isEditMode,
@@ -79,6 +85,7 @@ export const useResetFiltersButton = (): {
         disableUserFilterReset,
         disableUserFilterResetByConfig,
         newlyAddedFiltersLocalIds.length,
+        isWorkingFilterContextChanged,
     ]);
 
     const resetFilters = React.useCallback(() => {
@@ -94,6 +101,9 @@ export const useResetFiltersButton = (): {
                 isDashboardCommonDateFilter,
             ) as [IDashboardDateFilter[], Array<IDashboardAttributeFilter | IDashboardDateFilter>];
 
+            if (enableDashboardFiltersApplyModes) {
+                dispatch(resetFilterContextWorkingSelection());
+            }
             // Dispatch a command, so it goes through the proper piping and trigger all the events
             dispatch(
                 changeFilterContextSelection([

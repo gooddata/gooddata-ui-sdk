@@ -1413,3 +1413,38 @@ export function applyFilterContextWorkingSelection(
         correlationId,
     };
 }
+
+/**
+ * Command for reseting all working filters.
+ * It resets the working filters in to  same state as applied filters.
+ *
+ * @remarks
+ * This command ot usually used with setting dashboardApplyFiltersMode: ALL_AT_ONCE
+ *
+ * If you want to reset applied filters too, you may use {@link changeFilterContextSelection} and pass all available filters to it.
+ *
+ * @remarks
+ * See {@link applyFilterContextWorkingSelection} for a factory function that will help you create this command.
+ *
+ * @alpha
+ */
+export interface ResetFilterContextWorkingSelection extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.RESET_WORKING_SELECTION";
+}
+
+/**
+ * Creates the {@link ResetFilterContextWorkingSelection} command.
+ *
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @returns apply reset working filters command
+ *
+ * @alpha
+ */
+export function resetFilterContextWorkingSelection(
+    correlationId?: string,
+): ResetFilterContextWorkingSelection {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.RESET_WORKING_SELECTION",
+        correlationId,
+    };
+}

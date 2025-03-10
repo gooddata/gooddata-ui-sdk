@@ -63,21 +63,21 @@ export function* changeDateFilterSelectionHandler(
     );
 
     if (!isWorkingSelectionChange) {
-        const affectedFilter: ReturnType<typeof selectFilterContextDateFilter> = cmd.payload.dataSet
-            ? yield select(selectFilterContextDateFilterByDataSet(cmd.payload.dataSet))
-            : yield select(selectFilterContextDateFilter);
-
         const isCrossFiltering = yield select(selectIsCrossFiltering);
         if (isCrossFiltering) {
             yield call(resetCrossFiltering, cmd);
         }
-
-        yield dispatchDashboardEvent(
-            dateFilterChanged(ctx, affectedFilter, cmd.payload.dateFilterOptionLocalId, cmd.correlationId),
-        );
-
-        yield call(dispatchFilterContextChanged, ctx, cmd);
     }
+
+    const affectedFilter: ReturnType<typeof selectFilterContextDateFilter> = cmd.payload.dataSet
+        ? yield select(selectFilterContextDateFilterByDataSet(cmd.payload.dataSet))
+        : yield select(selectFilterContextDateFilter);
+
+    yield dispatchDashboardEvent(
+        dateFilterChanged(ctx, affectedFilter, cmd.payload.dateFilterOptionLocalId, cmd.correlationId),
+    );
+
+    yield call(dispatchFilterContextChanged, ctx, cmd);
 }
 
 function dateFilterSelectionToDateFilter(dateFilterSelection: DateFilterSelection): IDashboardDateFilter {

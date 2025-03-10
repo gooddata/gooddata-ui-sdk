@@ -117,6 +117,11 @@
         "comment": "",
         "limit": 0
     },
+    "filterBar.unappliedFiltersNotification": {
+        "value": "<link>Apply filters</link> to see updated data.",
+        "comment": "Message banner. Some filters are changed by user but not applied yet. Do not translate HTML markup enclosed in <>.",
+        "limit": 0
+    },
     "options.menu.export": {
         "value": "Export",
         "comment": "Export submenu",
