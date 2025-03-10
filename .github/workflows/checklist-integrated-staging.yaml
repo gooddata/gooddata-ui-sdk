@@ -132,6 +132,6 @@ jobs:
         if: ${{ !cancelled() && needs.setup-stage.outputs.send_message_to_slack_channel == 'true' }}
         with:
           channel-id: panther-checklist-testing
-          slack-message: "${{ steps.alls-green.outcome == 'success' &&  ':unicorn_face:' || ':robot_panic:' }} `checklist-SDK-${{ inputs.test-branch }}-branch: ` *${{ steps.alls-green.outcome == 'success' &&  'success' || 'failed' }}*; please check *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|the logs>*."
+          slack-message: "${{ steps.alls-green.outcome == 'success' &&  ':unicorn_face:' || ':robot_panic:' }} `checklist-SDK-${GITHUB_REF#refs/heads/}-branch: ` *${{ steps.alls-green.outcome == 'success' &&  'success' || 'failed' }}*; please check *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|the logs>*."
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
