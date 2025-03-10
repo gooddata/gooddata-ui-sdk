@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { getDrillIntersection, IDrillEventIntersectionElement, IMappingHeader } from "@gooddata/sdk-ui";
 import { TableDescriptor } from "../structure/tableDescriptor.js";
 import {
@@ -8,7 +8,7 @@ import {
     isSeriesCol,
     isSliceCol,
 } from "../structure/tableDescriptorTypes.js";
-import { CellEvent } from "@ag-grid-community/all-modules";
+import { CellEvent, AgEventType } from "ag-grid-community";
 import { invariant } from "ts-invariant";
 import {
     createDataColLeafHeaders,
@@ -27,7 +27,7 @@ import { IGridRow } from "../data/resultTypes.js";
  * @param tableDescriptor - table descriptor
  */
 export function createDrillIntersection(
-    cellEvent: CellEvent,
+    cellEvent: CellEvent<AgEventType>,
     tableDescriptor: TableDescriptor,
     rowNodes: IGridRow[],
 ): IDrillEventIntersectionElement[] {

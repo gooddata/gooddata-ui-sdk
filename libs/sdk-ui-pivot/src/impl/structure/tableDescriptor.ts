@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IntlShape } from "react-intl";
 import {
     AnyCol,
@@ -20,7 +20,7 @@ import {
     MixedHeadersCol,
     TransposedMeasureDataCol,
 } from "./tableDescriptorTypes.js";
-import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
+import { ColDef, ColGroupDef, Column } from "ag-grid-community";
 import { invariant } from "ts-invariant";
 import {
     IAttributeColumnWidthItem,

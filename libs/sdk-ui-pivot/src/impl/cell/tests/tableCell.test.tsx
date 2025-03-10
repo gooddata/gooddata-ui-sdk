@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { render } from "@testing-library/react";
 import identity from "lodash/identity.js";
 import React from "react";
@@ -9,7 +9,7 @@ import { createTestTableFacade } from "../../tests/tableFacade.fixture.js";
 import { SingleMeasureWithRowAndColumnAttributes } from "../../structure/tests/table.fixture.js";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 import { ITheme } from "@gooddata/sdk-model";
-import { ICellRendererParams } from "@ag-grid-community/all-modules";
+import { ICellRendererParams } from "ag-grid-community";
 
 async function createTestRenderer() {
     const [TestFacade] = await createTestTableFacade(SingleMeasureWithRowAndColumnAttributes);

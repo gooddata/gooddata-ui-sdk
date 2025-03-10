@@ -1,7 +1,7 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import cx from "classnames";
 import { DataValue, ISeparators } from "@gooddata/sdk-model";
-import { CellStyle } from "@ag-grid-community/all-modules";
+import { CellStyle } from "ag-grid-community";
 import { ClientFormatterFacade, IFormattedResult } from "@gooddata/number-formatter";
 
 export interface ITableCellStyle {
