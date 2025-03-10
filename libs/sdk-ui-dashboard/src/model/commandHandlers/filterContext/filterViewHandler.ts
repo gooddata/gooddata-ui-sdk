@@ -43,7 +43,7 @@ import { PromiseFnReturnType } from "../../types/sagas.js";
 import { resetCrossFiltering } from "./common.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { filterContextActions } from "../../store/filterContext/index.js";
-import { selectDashboardFiltersApplyMode } from "../../store/index.js";
+import { selectDashboardFiltersApplyMode } from "../../store/config/configSelectors.js";
 
 function createFilterView(
     ctx: DashboardContext,

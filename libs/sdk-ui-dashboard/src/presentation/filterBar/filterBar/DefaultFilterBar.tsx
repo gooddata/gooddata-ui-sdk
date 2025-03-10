@@ -40,6 +40,9 @@ import {
     changeWorkingAttributeFilterSelection,
     selectEnableDashboardFiltersApplyModes,
     selectWorkingFilterContextFilters,
+    selectCrossFilteringFiltersLocalIdentifiers,
+    selectIsWorkingFilterContextChanged,
+    selectDashboardFiltersApplyMode,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
@@ -231,6 +234,11 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
         dateFiltersModeMap,
     );
 
+    const crossFilterLocalIds = useDashboardSelector(selectCrossFilteringFiltersLocalIdentifiers);
+    const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
+    const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+
     if (isExport || haveAllFiltersHidden) {
         return <HiddenFilterBar {...props} />;
     }
@@ -307,6 +315,16 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     invariant(displayForm, "inconsistent state, display form for a filter was not found");
 
                     if (attributeFilterMode === DashboardAttributeFilterConfigModeValues.HIDDEN) {
+                        return null;
+                    }
+
+                    if (
+                        filter.attributeFilter.localIdentifier &&
+                        crossFilterLocalIds.includes(filter.attributeFilter.localIdentifier) &&
+                        isWorkingFilterContextChanged &&
+                        filtersApplyMode.mode === "ALL_AT_ONCE" &&
+                        enableDashboardFiltersApplyModes
+                    ) {
                         return null;
                     }
 

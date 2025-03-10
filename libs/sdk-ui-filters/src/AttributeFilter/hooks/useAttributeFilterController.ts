@@ -35,6 +35,7 @@ import { useAttributeFilterControllerData } from "./useAttributeFilterController
 import {
     DISPLAY_FORM_CHANGED_CORRELATION,
     IRRELEVANT_SELECTION,
+    MAX_SELECTION_SIZE,
     PARENT_FILTERS_CORRELATION,
     RESET_CORRELATION,
     SEARCH_CORRELATION,
@@ -191,6 +192,8 @@ export const useAttributeFilterController = (
             limitingAttributeFilters,
             limitingDateFilters,
             withoutApply,
+            isSelectionInvalid: attributeFilterControllerData.isSelectionInvalid,
+            workingFilter,
         },
         supportsShowingFilteredElements,
         supportsKeepingDependentFiltersSelection,
@@ -203,7 +206,6 @@ export const useAttributeFilterController = (
         onApply: callbacks.onApply,
         selectionMode,
         enableDuplicatedLabelValuesInAttributeFilter,
-        withoutApply,
     });
 
     return {
@@ -668,7 +670,7 @@ function refreshByType(
 
 function updateWorkingSelection(
     handler: IMultiSelectAttributeFilterHandler,
-    { workingFilter, workingFilterChanged, onSelect, selectionMode, displayAsLabel }: UpdateFilterProps,
+    { workingFilter, workingFilterChanged }: UpdateFilterProps,
 ) {
     if (workingFilterChanged) {
         const workingElements = filterAttributeElements(workingFilter);
@@ -678,14 +680,6 @@ function updateWorkingSelection(
         const isWorkingInverted = isNegativeAttributeFilter(workingFilter);
 
         handler.changeSelection({ keys: workingKeys, isInverted: isWorkingInverted });
-
-        onSelect?.(
-            workingFilter,
-            isWorkingInverted,
-            selectionMode,
-            handler.getElementsByKey(handler.getWorkingSelection().keys),
-            displayAsLabel,
-        );
     }
 }
 
@@ -705,6 +699,8 @@ function useCallbacks(
         limitingAttributeFilters: IElementsQueryAttributeFilter[];
         limitingDateFilters: (IRelativeDateFilter | IAbsoluteDateFilter)[];
         withoutApply: boolean;
+        isSelectionInvalid: boolean;
+        workingFilter?: IAttributeFilter;
     },
     supportsShowingFilteredElements: boolean,
     supportsKeepingDependentFiltersSelection: boolean,
@@ -723,6 +719,8 @@ function useCallbacks(
         limitingAttributeFilters,
         limitingDateFilters,
         withoutApply,
+        isSelectionInvalid,
+        workingFilter,
     } = props;
 
     const handlerState = useAttributeFilterHandlerState(handler);
@@ -731,7 +729,11 @@ function useCallbacks(
         (onSelectionChangeInputCallback: OnApplyCallbackType | OnSelectCallbackType) => {
             const nextFilter = handler.getFilter();
             const isInverted = handler.getWorkingSelection()?.isInverted;
-
+            const keys = handler.getWorkingSelection().keys;
+            const isSelectionInvalid = (!isInverted && isEmpty(keys)) || keys.length > MAX_SELECTION_SIZE;
+            if (isSelectionInvalid) {
+                return;
+            }
             if (enableDuplicatedLabelValuesInAttributeFilter) {
                 const displayAsLabel = handler.getDisplayAsLabel();
                 const { attribute } = handlerState;
@@ -746,7 +748,7 @@ function useCallbacks(
                         filterUsingPrimaryLabel,
                         isInverted,
                         selectionMode,
-                        handler.getElementsByKey(handler.getWorkingSelection().keys),
+                        handler.getElementsByKey(keys),
                         displayAsLabel,
                     );
                 } else {
@@ -754,7 +756,7 @@ function useCallbacks(
                         nextFilter,
                         isInverted,
                         selectionMode,
-                        handler.getElementsByKey(handler.getWorkingSelection().keys),
+                        handler.getElementsByKey(keys),
                         displayAsLabel,
                     );
                 }
@@ -806,6 +808,14 @@ function useCallbacks(
     const onReset = useCallback(() => {
         if (!withoutApply) {
             handler.revertSelection();
+        } else if (isSelectionInvalid) {
+            const workingElements = filterAttributeElements(workingFilter);
+            const workingKeys = isAttributeElementsByValue(workingElements)
+                ? workingElements.values
+                : workingElements.uris;
+            const isWorkingInverted = isNegativeAttributeFilter(workingFilter);
+
+            handler.changeSelection({ keys: workingKeys, isInverted: isWorkingInverted });
         }
 
         if (handler.getSearch().length > 0) {
@@ -831,6 +841,8 @@ function useCallbacks(
         shouldIncludeLimitingFilters,
         supportsShowingFilteredElements,
         withoutApply,
+        isSelectionInvalid,
+        workingFilter,
     ]);
 
     const onApply = useCallback(
@@ -901,18 +913,11 @@ const useSingleSelectModeHandler = (
     props: {
         selectFirst: boolean;
         selectionMode: DashboardAttributeFilterSelectionMode;
-        onApply: () => void;
+        onApply: (applyRegardlessWithoutApplySetting?: boolean) => void;
         enableDuplicatedLabelValuesInAttributeFilter: boolean;
-        withoutApply: boolean;
     },
 ) => {
-    const {
-        selectFirst,
-        selectionMode,
-        onApply,
-        enableDuplicatedLabelValuesInAttributeFilter,
-        withoutApply,
-    } = props;
+    const { selectFirst, selectionMode, onApply, enableDuplicatedLabelValuesInAttributeFilter } = props;
     const committedSelectionKeys = handler.getCommittedSelection().keys;
     const initialStatus = handler.getInitStatus();
     const elements = handler.getAllElements();
@@ -922,10 +927,9 @@ const useSingleSelectModeHandler = (
         if (
             selectFirst &&
             selectionMode === "single" &&
-            isEmpty(committedSelectionKeys) &&
+            (isEmpty(committedSelectionKeys) || committedSelectionKeys.length > 1) &&
             initialStatus === "success" &&
-            !isEmpty(elements) &&
-            !withoutApply
+            !isEmpty(elements)
         ) {
             const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(filter));
             const keys = [
@@ -936,7 +940,7 @@ const useSingleSelectModeHandler = (
 
             handler.changeSelection({ keys, isInverted: false, irrelevantKeys: [] });
             handler.commitSelection();
-            onApply();
+            onApply(true);
         }
     }, [
         selectFirst,
@@ -948,7 +952,6 @@ const useSingleSelectModeHandler = (
         handler,
         onApply,
         enableDuplicatedLabelValuesInAttributeFilter,
-        withoutApply,
     ]);
 };
 

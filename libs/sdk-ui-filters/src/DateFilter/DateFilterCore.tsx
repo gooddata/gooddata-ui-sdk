@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import flow from "lodash/flow.js";
 import noop from "lodash/noop.js";
 import DefaultMediaQuery from "react-responsive";
@@ -17,6 +17,7 @@ import { DEFAULT_DATE_FORMAT, TIME_FORMAT_WITH_SEPARATOR } from "./constants/Pla
 import { filterVisibleDateFilterOptions, sanitizePresetIntervals } from "./utils/OptionUtils.js";
 import { IFilterButtonCustomIcon } from "../shared/index.js";
 import { IFilterConfigurationProps } from "./DateFilterBody/types.js";
+import isEmpty from "lodash/isEmpty.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -132,6 +133,16 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
         }
     };
 
+    const lastValidSelectedFilterOption = useLastValidValue(
+        selectedFilterOption,
+        isEmpty(dropdownBodyProps.errors),
+    );
+
+    const lastValidExcludeCurrentPeriod = useLastValidValue(
+        excludeCurrentPeriod,
+        isEmpty(dropdownBodyProps.errors),
+    );
+
     return (
         <IntlWrapper locale={locale || "en-US"}>
             <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
@@ -142,8 +153,8 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                             isMobile={isMobile}
                             isOpen={isOpen}
                             dateFilterOption={applyExcludeCurrentPeriod(
-                                withoutApply ? selectedFilterOption : originalSelectedFilterOption,
-                                withoutApply ? excludeCurrentPeriod : originalExcludeCurrentPeriod,
+                                withoutApply ? lastValidSelectedFilterOption : originalSelectedFilterOption,
+                                withoutApply ? lastValidExcludeCurrentPeriod : originalExcludeCurrentPeriod,
                             )}
                             dateFormat={adjustDateFormatForDisplay(
                                 verifiedDateFormat,
@@ -214,3 +225,11 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
         </IntlWrapper>
     );
 };
+
+function useLastValidValue<T>(value: T, isValid: boolean): T | undefined {
+    const lastValidValue = useRef<T | undefined>();
+    if (isValid) {
+        lastValidValue.current = value;
+    }
+    return lastValidValue.current;
+}

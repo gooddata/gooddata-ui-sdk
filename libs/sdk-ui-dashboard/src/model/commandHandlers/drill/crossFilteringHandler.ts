@@ -8,6 +8,7 @@ import {
     addAttributeFilter,
     changeAttributeFilterSelection,
     removeAttributeFilters,
+    resetFilterContextWorkingSelection,
 } from "../../commands/filters.js";
 import { CrossFiltering } from "../../commands/drill.js";
 import { crossFilteringRequested, crossFilteringResolved } from "../../events/drill.js";
@@ -124,6 +125,8 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
     });
 
     const correlation = `crossFiltering_${uuid()}`;
+
+    yield put(resetFilterContextWorkingSelection());
 
     // Cleanup of previous cross-filtering state
     if (!shouldUpdateExistingCrossFiltering) {

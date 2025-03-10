@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import React, { useRef } from "react";
 import { Dropdown, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
@@ -47,6 +47,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
         disabled,
         customIcon,
         withoutApply,
+        isSelectionInvalid,
     } = useAttributeFilterContext();
 
     const isMobile = useMediaQuery("mobileDevice");
@@ -54,6 +55,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
     const isSelectionInverted = withoutApply ? isWorkingSelectionInverted : isCommittedSelectionInverted;
     const selectionElements = withoutApply ? workingSelectionElements : committedSelectionElements;
     const subtitle = useResolveAttributeFilterSubtitle(isSelectionInverted, selectionElements);
+    const lastValidSubtitle = useLastValidValue(subtitle, !isSelectionInvalid || !withoutApply);
 
     const isMultiselect = selectionMode !== "single";
     const showSelectionCount = isMultiselect && selectionElements.length !== 0;
@@ -79,7 +81,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
                             <AttributeFilterButtonErrorTooltip errorMessage={initError?.message}>
                                 <DropdownButtonComponent
                                     title={title}
-                                    subtitle={subtitle}
+                                    subtitle={lastValidSubtitle}
                                     isFiltering={isFiltering}
                                     isLoaded={!isInitializing}
                                     isLoading={isInitializing}
@@ -120,3 +122,11 @@ export const AttributeFilterDropdown: React.VFC = () => {
         />
     );
 };
+
+function useLastValidValue<T>(value: T, isValid: boolean): T | undefined {
+    const lastValidValue = useRef<T | undefined>();
+    if (isValid) {
+        lastValidValue.current = value;
+    }
+    return lastValidValue.current;
+}

@@ -98,7 +98,7 @@ export function* changeAttributeDisplayFormHandler(
         ]),
     );
 
-    if (!isWorkingSelectionChange || !enableDashboardFiltersApplyModes) {
+    if (!enableDashboardFiltersApplyModes) {
         const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
             yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
 

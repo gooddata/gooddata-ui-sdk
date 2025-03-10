@@ -110,7 +110,9 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                 />
                 {isFlexibleLayoutEnabled ? <FlexibleBulletsBar /> : <FluidBulletsBar />}
             </div>
-            {isWorkingFilterContextChanged ? (
+            {isWorkingFilterContextChanged &&
+            filtersApplyMode.mode === "ALL_AT_ONCE" &&
+            enableDashboardFiltersApplyModes ? (
                 <div className="filters-message" style={{ marginTop: rows.length > 1 ? "35px" : "10px" }}>
                     <Message type="progress">
                         <FormattedMessage

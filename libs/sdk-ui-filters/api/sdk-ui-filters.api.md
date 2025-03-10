@@ -113,6 +113,7 @@ export type AttributeFilterControllerData = {
     elements: IAttributeElement[];
     totalElementsCount: number;
     totalElementsCountWithCurrentSettings: number;
+    isSelectionInvalid: boolean;
     isApplyDisabled: boolean;
     isWorkingSelectionInverted: boolean;
     workingSelectionElements: IAttributeElement[];
@@ -387,7 +388,7 @@ export interface IAttributeFilterConfigurationButtonProps {
 }
 
 // @beta
-export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon" | "withoutApply">;
+export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon" | "withoutApply" | "workingFilter">;
 
 // @public (undocumented)
 export interface IAttributeFilterCoreProps {

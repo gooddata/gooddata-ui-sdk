@@ -18,6 +18,7 @@ export type IAttributeFilterContext = AttributeFilterController &
         | "disabled"
         | "customIcon"
         | "withoutApply"
+        | "workingFilter"
     >;
 
 export const AttributeFilterContext = React.createContext<IAttributeFilterContext>(null);
@@ -46,6 +47,7 @@ export const AttributeFilterContextProvider: React.FC<
         customIcon,
         enableDuplicatedLabelValuesInAttributeFilter = true,
         withoutApply,
+        workingFilter,
     } = props;
 
     const controller = useAttributeFilterController(props);
@@ -63,6 +65,7 @@ export const AttributeFilterContextProvider: React.FC<
                 customIcon,
                 enableDuplicatedLabelValuesInAttributeFilter,
                 withoutApply,
+                workingFilter,
             }}
         >
             {children}

@@ -59,10 +59,11 @@ export function useAttributeFilterControllerData(
         ? Math.min(limit, totalElementsCountWithCurrentSettings - elements.length)
         : 0;
 
-    const isApplyDisabled =
+    const isSelectionInvalid =
         workingSelectionElements.length > MAX_SELECTION_SIZE ||
-        !isWorkingSelectionChanged ||
         (!isWorkingSelectionInverted && isWorkingSelectionEmpty);
+
+    const isApplyDisabled = isSelectionInvalid || !isWorkingSelectionChanged;
 
     const isParentFiltersEmpty = isLimitingAttributeFiltersEmpty(limitingAttributeFilters);
 
@@ -109,6 +110,7 @@ export function useAttributeFilterControllerData(
         totalElementsCount,
         totalElementsCountWithCurrentSettings,
 
+        isSelectionInvalid,
         isApplyDisabled,
 
         isWorkingSelectionInverted,
