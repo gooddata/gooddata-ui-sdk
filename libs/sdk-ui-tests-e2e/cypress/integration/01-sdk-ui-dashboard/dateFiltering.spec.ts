@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { DateFilter } from "../../tools/dateFilter";
@@ -10,19 +10,27 @@ const dateFilter = new DateFilter();
 const editMode = new EditMode();
 
 describe("Date filtering", () => {
-    it("verify date filter default state", { tags: "checklist_integrated_tiger" }, () => {
-        Navigation.visit("dashboard/new-dashboard");
-        dateFilter.subtitleHasValue(DateFilterValue.THIS_MONTH);
-    });
+    it(
+        "verify date filter default state",
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        () => {
+            Navigation.visit("dashboard/new-dashboard");
+            dateFilter.subtitleHasValue(DateFilterValue.THIS_MONTH);
+        },
+    );
 
-    it("should update date filter value correctly", { tags: "checklist_integrated_tiger" }, () => {
-        Navigation.visit("dashboard/dashboard-many-rows-columns");
-        dateFilter.subtitleHasValue(DateFilterValue.ALL_TIME);
-        dateFilter
-            .openAndSelectDateFilterByName(DateFilterValue.THIS_YEAR)
-            .apply()
-            .subtitleHasValue(DateFilterValue.THIS_YEAR);
-    });
+    it(
+        "should update date filter value correctly",
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        () => {
+            Navigation.visit("dashboard/dashboard-many-rows-columns");
+            dateFilter.subtitleHasValue(DateFilterValue.ALL_TIME);
+            dateFilter
+                .openAndSelectDateFilterByName(DateFilterValue.THIS_YEAR)
+                .apply()
+                .subtitleHasValue(DateFilterValue.THIS_YEAR);
+        },
+    );
 
     it("should display message on the top date filter panel", { tags: "checklist_integrated_tiger" }, () => {
         Navigation.visit("dashboard/dashboard-many-rows-columns");
@@ -33,7 +41,7 @@ describe("Date filtering", () => {
 
     it(
         "should reset the selected date filter on view mode when open edit mode",
-        { tags: "checklist_integrated_tiger" },
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
             Navigation.visit("dashboard/dashboard-many-rows-columns");
             dateFilter
@@ -45,22 +53,29 @@ describe("Date filtering", () => {
         },
     );
 
-    it("should display the selected date interval correctly", { tags: "checklist_integrated_tiger" }, () => {
-        Navigation.visitCopyOf("dashboard/dashboard-many-rows-columns");
+    it(
+        "should display the selected date interval correctly",
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        () => {
+            Navigation.visitCopyOf("dashboard/dashboard-many-rows-columns");
 
-        const dateFilterValues = [
-            DateFilterValue.THIS_MONTH,
-            DateFilterValue.THIS_YEAR,
-            DateFilterValue.ALL_TIME,
-        ];
+            const dateFilterValues = [
+                DateFilterValue.THIS_MONTH,
+                DateFilterValue.THIS_YEAR,
+                DateFilterValue.ALL_TIME,
+            ];
 
-        dateFilterValues.forEach((dateFilterValue) => {
-            editMode.edit();
-            dateFilter.waitDateFilterButtonVisible().openAndSelectDateFilterByName(dateFilterValue).apply();
-            editMode.saveButtonEnabled(true).save(true);
-            dateFilter.open().hasSelectedDateFilterValue(dateFilterValue);
-        });
-    });
+            dateFilterValues.forEach((dateFilterValue) => {
+                editMode.edit();
+                dateFilter
+                    .waitDateFilterButtonVisible()
+                    .openAndSelectDateFilterByName(dateFilterValue)
+                    .apply();
+                editMode.saveButtonEnabled(true).save(true);
+                dateFilter.open().hasSelectedDateFilterValue(dateFilterValue);
+            });
+        },
+    );
 
     // eslint-disable-next-line jest/no-disabled-tests
     it.skip("should select date filter by preset", { tags: "checklist_integrated_bear" }, () => {

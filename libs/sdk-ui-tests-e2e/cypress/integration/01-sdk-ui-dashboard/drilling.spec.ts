@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 
@@ -16,21 +16,25 @@ describe("Interaction", () => {
     const widgetConfig = new WidgetConfiguration(0);
 
     //Cover ticket: RAIL-4559
-    it("Should able to remove existing interactions", { tags: ["checklist_integrated_tiger"] }, () => {
-        Navigation.visitCopyOf("dashboard/drill-to-insight");
-        editMode.edit();
-        widget.waitChartLoaded().focus();
-        widgetConfig.openInteractions().getDrillConfigItem("Sum of Velocity").remove();
-        widgetConfig.getDrillConfigItem("Created - Year").remove();
-        editMode.save(true).edit();
-        widget.waitChartLoaded().focus();
-        widgetConfig.openInteractions().hasInteractionItems(false);
-    });
+    it(
+        "Should able to remove existing interactions",
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        () => {
+            Navigation.visitCopyOf("dashboard/drill-to-insight");
+            editMode.edit();
+            widget.waitChartLoaded().focus();
+            widgetConfig.openInteractions().getDrillConfigItem("Sum of Velocity").remove();
+            widgetConfig.getDrillConfigItem("Created - Year").remove();
+            editMode.save(true).edit();
+            widget.waitChartLoaded().focus();
+            widgetConfig.openInteractions().hasInteractionItems(false);
+        },
+    );
 
     //Cover ticket: RAIL-4717
     it(
         "Should correctly display attribute list in custom URL dialog",
-        { tags: ["checklist_integrated_tiger"] },
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
             Navigation.visit("dashboard/drill-to-insight");
             editMode.edit();

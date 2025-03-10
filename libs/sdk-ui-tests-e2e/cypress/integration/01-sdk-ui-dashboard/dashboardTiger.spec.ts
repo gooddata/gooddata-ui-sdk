@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
@@ -15,29 +15,33 @@ const widget = new Widget(0);
 const STAGE_NAME_CHECKBOX = ".s-stage_name";
 
 describe("Dashboard", () => {
-    describe("TopBar rendering advanced", { tags: ["checklist_integrated_tiger"] }, () => {
-        //Cover ticket: RAIL-4702
-        it("Should enable Save button when resize column", () => {
-            Navigation.visit("dashboard/stage-name");
-            editMode.edit();
-            const table = new Table(".s-dash-item");
-            table.waitLoaded().resizeColumn(0, 1, 500, true);
-            editMode.saveButtonEnabled(true);
-        });
+    describe(
+        "TopBar rendering advanced",
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        () => {
+            //Cover ticket: RAIL-4702
+            it("Should enable Save button when resize column", () => {
+                Navigation.visit("dashboard/stage-name");
+                editMode.edit();
+                const table = new Table(".s-dash-item");
+                table.waitLoaded().resizeColumn(0, 1, 500, true);
+                editMode.saveButtonEnabled(true);
+            });
 
-        //Cover ticket: RAIL-4728
-        it("Should reload widget after check/uncheck attribute filter", () => {
-            const widgetConfig = new WidgetConfiguration(0);
+            //Cover ticket: RAIL-4728
+            it("Should reload widget after check/uncheck attribute filter", () => {
+                const widgetConfig = new WidgetConfiguration(0);
 
-            Navigation.visit("dashboard/stage-name");
-            editMode.edit();
-            widget.waitTableLoaded().focus();
-            widgetConfig.openConfiguration().selectFilterCheckbox(STAGE_NAME_CHECKBOX);
-            widget.isLoading(true);
-            widgetConfig.selectFilterCheckbox(STAGE_NAME_CHECKBOX);
-            widget.isLoading(true);
-        });
-    });
+                Navigation.visit("dashboard/stage-name");
+                editMode.edit();
+                widget.waitTableLoaded().focus();
+                widgetConfig.openConfiguration().selectFilterCheckbox(STAGE_NAME_CHECKBOX);
+                widget.isLoading(true);
+                widgetConfig.selectFilterCheckbox(STAGE_NAME_CHECKBOX);
+                widget.isLoading(true);
+            });
+        },
+    );
     describe("TopBar rendering", { tags: ["pre-merge_isolated_tiger"] }, () => {
         beforeEach(() => {
             Navigation.visit("dashboard/dashboard-tiger");

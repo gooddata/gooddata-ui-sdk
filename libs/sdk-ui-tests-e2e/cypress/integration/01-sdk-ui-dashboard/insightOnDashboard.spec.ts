@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
@@ -96,7 +96,7 @@ describe("Date filtering on insight", () => {
 
     it(
         "remember last setting after selecting another insight",
-        { tags: ["checklist_integrated_tiger"] },
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
             widget.waitChartLoaded();
 
@@ -109,14 +109,18 @@ describe("Date filtering on insight", () => {
         },
     );
 
-    it("change filter on added insight", { tags: ["checklist_integrated_tiger"] }, () => {
-        widget.waitChartLoaded();
-        widgetConfiguration.open().openConfiguration().selectDateDataset(DATASET_CREATED);
+    it(
+        "change filter on added insight",
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        () => {
+            widget.waitChartLoaded();
+            widgetConfiguration.open().openConfiguration().selectDateDataset(DATASET_CREATED);
 
-        widget
-            .waitChartLoaded()
-            .getChart()
-            .getDataLabelValues()
-            .should("deep.equal", ["$4,108,360.80", "$2,267,528.48", "$3,461,373.87"]);
-    });
+            widget
+                .waitChartLoaded()
+                .getChart()
+                .getDataLabelValues()
+                .should("deep.equal", ["$4,108,360.80", "$2,267,528.48", "$3,461,373.87"]);
+        },
+    );
 });

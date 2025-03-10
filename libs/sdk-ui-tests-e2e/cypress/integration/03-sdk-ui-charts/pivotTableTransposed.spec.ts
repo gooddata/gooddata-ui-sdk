@@ -1,28 +1,36 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { Table } from "../../tools/table";
 
 describe("Table Component", { tags: ["checklist_integrated_tiger"] }, () => {
     const table = new Table(".s-table-component-transpose");
 
-    it("should display Metric in row, Column header on top", () => {
-        Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-mr-row-left");
-        table
-            .waitLoaded()
-            .hasMetricHeaderInRow(1, 1, "Amount")
-            .hasMetricHeaderInRow(2, 1, "Amount")
-            .hasHeader("Product");
-    });
+    it(
+        "should display Metric in row, Column header on top",
+        { tags: ["checklist_integrated_tiger_releng"] },
+        () => {
+            Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-mr-row-left");
+            table
+                .waitLoaded()
+                .hasMetricHeaderInRow(1, 1, "Amount")
+                .hasMetricHeaderInRow(2, 1, "Amount")
+                .hasHeader("Product");
+        },
+    );
 
     it("should display successful with Metric in row", () => {
         Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-mr-row-top");
         table.waitLoaded().hasMetricHeaderInRow(1, 1, "Amount").hasMetricHeaderInRow(2, 1, "Amount");
     });
 
-    it("should display Row attribute and Column header on top", () => {
-        Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-rc-row-left");
-        table.waitLoaded().hasHeader("Product").hasColumnHeaderOnTop("Forecast Category");
-    });
+    it(
+        "should display Row attribute and Column header on top",
+        { tags: ["checklist_integrated_tiger_releng"] },
+        () => {
+            Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-rc-row-left");
+            table.waitLoaded().hasHeader("Product").hasColumnHeaderOnTop("Forecast Category");
+        },
+    );
 
     it("should display Row header on top", () => {
         Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-r-row-left");

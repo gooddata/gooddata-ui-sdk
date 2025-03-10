@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
@@ -20,36 +20,43 @@ describe("Header section", () => {
             editMode.isInEditMode(false);
         });
 
-        it("can update header for all sections", { tags: ["checklist_integrated_tiger"] }, () => {
-            new DashboardMenu().toggle().hasOption("Save as new");
-            new DashboardHeader().saveAsNew("save a new dashboard");
-            editMode.edit().isInEditMode();
-            insightCatalog.waitForCatalogReload();
+        it(
+            "can update header for all sections",
+            { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+            () => {
+                new DashboardMenu().toggle().hasOption("Save as new");
+                new DashboardHeader().saveAsNew("save a new dashboard");
+                editMode.edit().isInEditMode();
+                insightCatalog.waitForCatalogReload();
 
-            cy.fixture("headerDataTest").then((data) => {
-                data["DataTest"].forEach((result: { rowIndex: number; sectionName: string }) => {
-                    new LayoutRow(result.rowIndex)
-                        .getHeader()
-                        .setTitle(result.sectionName)
-                        .setDescription(result.sectionName);
-                });
-            });
-
-            editMode.save(); //save all headers after input
-
-            cy.fixture("headerDataTest").then((data) => {
-                data["DataTest"].forEach((result: { rowIndex: number; sectionName: string }) => {
-                    if (result.rowIndex === 0) {
-                        new LayoutRow(result.rowIndex).getHeader().hasTitle(false).hasDescriptionWithText("");
-                    } else {
+                cy.fixture("headerDataTest").then((data) => {
+                    data["DataTest"].forEach((result: { rowIndex: number; sectionName: string }) => {
                         new LayoutRow(result.rowIndex)
                             .getHeader()
-                            .hasTitleWithText(result.sectionName)
-                            .hasDescriptionWithText(result.sectionName);
-                    }
+                            .setTitle(result.sectionName)
+                            .setDescription(result.sectionName);
+                    });
                 });
-            });
-        });
+
+                editMode.save(); //save all headers after input
+
+                cy.fixture("headerDataTest").then((data) => {
+                    data["DataTest"].forEach((result: { rowIndex: number; sectionName: string }) => {
+                        if (result.rowIndex === 0) {
+                            new LayoutRow(result.rowIndex)
+                                .getHeader()
+                                .hasTitle(false)
+                                .hasDescriptionWithText("");
+                        } else {
+                            new LayoutRow(result.rowIndex)
+                                .getHeader()
+                                .hasTitleWithText(result.sectionName)
+                                .hasDescriptionWithText(result.sectionName);
+                        }
+                    });
+                });
+            },
+        );
 
         it(
             "Header is removed after latest insight is deleted from a section",

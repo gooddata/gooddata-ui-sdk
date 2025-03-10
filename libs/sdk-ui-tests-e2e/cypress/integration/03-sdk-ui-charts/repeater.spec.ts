@@ -1,9 +1,9 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { Repeater } from "../../tools/repeater";
 
 describe("Repeater", { tags: ["checklist_integrated_tiger"] }, () => {
-    it(`Should render apply full customzie configurations`, () => {
+    it(`Should render apply full customize configurations`, () => {
         Navigation.visit("visualizations/repeater/repeater-full-configs");
         const repeater = new Repeater();
         repeater
@@ -41,7 +41,7 @@ describe("Repeater", { tags: ["checklist_integrated_tiger"] }, () => {
             .hasColor(3, 0, "rgb(181, 60, 51)");
     });
 
-    it(`Should render Dashboard Repeater`, () => {
+    it(`Should render Dashboard Repeater`, { tags: ["checklist_integrated_tiger_releng"] }, () => {
         Navigation.visit("visualizations/repeater/repeater-dashboard");
         const repeater = new Repeater();
         repeater
@@ -67,7 +67,7 @@ describe("Repeater", { tags: ["checklist_integrated_tiger"] }, () => {
         repeater.hasHeaderCellsAmount(1).hasHeaderLabel(["Product Image"]);
     });
 
-    it(`Should show erorr when Repeater has no Column`, () => {
+    it(`Should show error when Repeater has no Column`, () => {
         Navigation.visit("visualizations/repeater/repeater-no-column");
         const repeater = new Repeater();
         repeater.shouldShowErorrMessage(

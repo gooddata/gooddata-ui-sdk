@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { AttributeFilterConfiguration } from "../../tools/attributeFilterConfig";
 import { AttributeFilterButton } from "../../tools/attributeFilterButton";
@@ -83,7 +83,7 @@ describe("Attribute filter", () => {
     describe("Config attribute filter", () => {
         it(
             "Should reset display form value dropdown after cancel attribute panel",
-            { tags: ["checklist_integrated_tiger"] },
+            { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
             () => {
                 Navigation.visit("dashboard/stage-name");
 
