@@ -74,7 +74,7 @@ import {
     SetDrillForKpiWidget,
     RemoveDrillForKpiWidget,
 } from "./kpi.js";
-import { ChangeRichTextWidgetContent } from "./richText.js";
+import { ChangeRichTextWidgetContent, ChangeRichTextWidgetFilterSettings } from "./richText.js";
 import {
     AddVisualizationToVisualizationSwitcherWidgetContent,
     UpdateVisualizationsFromVisualizationSwitcherWidgetContent,
@@ -481,8 +481,13 @@ export {
 export { loadAllWorkspaceUsers } from "./users.js";
 export type { LoadAllWorkspaceUsers } from "./users.js";
 
-export type { ChangeRichTextWidgetContent, ChangeRichTextWidgetContentPayload } from "./richText.js";
-export { changeRichTextWidgetContent } from "./richText.js";
+export type {
+    ChangeRichTextWidgetContent,
+    ChangeRichTextWidgetContentPayload,
+    ChangeRichTextWidgetFilterSettings,
+    ChangeRichTextWidgetFilterSettingsPayload,
+} from "./richText.js";
+export { changeRichTextWidgetContent, enableRichTextWidgetDateFilter } from "./richText.js";
 
 export type {
     AddVisualizationToVisualizationSwitcherWidgetContent,
@@ -587,6 +592,7 @@ export type DashboardCommands =
     | SetAttributeFilterTitle
     | SetAttributeFilterSelectionMode
     | ChangeRichTextWidgetContent
+    | ChangeRichTextWidgetFilterSettings
     | AddVisualizationToVisualizationSwitcherWidgetContent
     | UpdateVisualizationsFromVisualizationSwitcherWidgetContent
     //alpha

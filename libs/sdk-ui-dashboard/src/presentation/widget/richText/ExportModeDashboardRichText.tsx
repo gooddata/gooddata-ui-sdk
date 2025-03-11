@@ -1,24 +1,44 @@
 // (C) 2020-2025 GoodData Corporation
-import React from "react";
-import { RichText } from "@gooddata/sdk-ui-kit";
+import React, { useCallback, useState } from "react";
+import { GoodDataSdkError, ILoadingState } from "@gooddata/sdk-ui";
 
 import { useRichTextExportData, useVisualizationExportData } from "../../export/index.js";
 
 import { IDashboardRichTextProps } from "./types.js";
+import { ViewModeDashboardRichText } from "./ViewModeDashboardRichText.js";
 
-export const ExportModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({ widget, exportData }) => {
-    const exportDataText = useVisualizationExportData(exportData, false, false);
+export const ExportModeDashboardRichText: React.FC<IDashboardRichTextProps> = (props) => {
+    const { onLoadingChanged, onError } = props;
+
+    const [isVisualizationInitializing, setIsVisualizationInitializing] = useState(true);
+    const [error, setError] = useState<GoodDataSdkError | undefined>(undefined);
+
+    const exportDataText = useVisualizationExportData(props.exportData, isVisualizationInitializing, !!error);
     const exportRichText = useRichTextExportData();
+
+    const onLoadingChangedHandler = useCallback(
+        (loading: ILoadingState) => {
+            setIsVisualizationInitializing(loading.isLoading);
+            onLoadingChanged?.(loading);
+        },
+        [onLoadingChanged],
+    );
+    const onErrorHandler = useCallback(
+        (error: GoodDataSdkError) => {
+            setIsVisualizationInitializing(false);
+            setError(error);
+            onError?.(error);
+        },
+        [onError],
+    );
+
     return (
         <div {...exportDataText}>
-            <RichText
-                className="gd-rich-text-widget"
-                value={widget?.content}
-                renderMode="view"
-                rawContent={{
-                    show: true,
-                    dataAttributes: exportRichText?.markdown,
-                }}
+            <ViewModeDashboardRichText
+                {...props}
+                richTextExportData={exportRichText}
+                onLoadingChanged={onLoadingChangedHandler}
+                onError={onErrorHandler}
             />
         </div>
     );

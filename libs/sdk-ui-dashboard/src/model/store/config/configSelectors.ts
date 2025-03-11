@@ -920,6 +920,16 @@ export const selectEnableSlideshowExports: DashboardSelector<boolean> = createSe
 );
 
 /**
+ * @internal
+ */
+export const selectEnableRichTextDynamicReferences: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableRichTextDynamicReferences ?? false;
+    },
+);
+
+/**
  * Feature flag
  * @internal
  */

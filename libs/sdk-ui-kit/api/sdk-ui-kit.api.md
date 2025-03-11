@@ -19,6 +19,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IColorPaletteDefinition } from '@gooddata/sdk-model';
+import { IFilter } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-ui';
 import { IMeasureSortTarget } from '@gooddata/sdk-model';
 import { IMetadataObjectBase } from '@gooddata/sdk-model';
@@ -35,6 +36,8 @@ import { LocalIdRef } from '@gooddata/sdk-model';
 import { MessageDescriptor } from 'react-intl';
 import { MutableRefObject } from 'react';
 import { ObjRef } from '@gooddata/sdk-model';
+import { OnError } from '@gooddata/sdk-ui';
+import { OnLoadingChanged } from '@gooddata/sdk-ui';
 import { OverlayController as OverlayController_2 } from './OverlayController.js';
 import { PureComponent } from 'react';
 import { default as React_2 } from 'react';
@@ -3600,12 +3603,21 @@ export interface IRichTextProps {
     editRows?: number;
     // (undocumented)
     emptyElement?: JSX.Element;
+    filters?: IFilter[];
+    // (undocumented)
+    LoadingComponent?: React_2.ComponentType;
     // (undocumented)
     onChange?: (text: string) => void;
+    // @alpha (undocumented)
+    onError?: OnError;
+    // @alpha (undocumented)
+    onLoadingChanged?: OnLoadingChanged;
     rawContent?: {
         show: boolean;
         dataAttributes?: Record<string, string>;
     };
+    // (undocumented)
+    referencesEnabled?: boolean;
     // (undocumented)
     renderMode?: "view" | "edit";
     // (undocumented)

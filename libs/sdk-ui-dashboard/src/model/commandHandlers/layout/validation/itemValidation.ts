@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { ExtendedDashboardItem } from "../../../types/layoutTypes.js";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import {
@@ -13,6 +13,8 @@ import {
     isKpiWidget,
     isInsightWidget,
     ObjRef,
+    isRichTextWidget,
+    IRichTextWidget,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import { InsightResolutionResult, resolveInsights } from "../../../utils/insightResolver.js";
@@ -35,10 +37,12 @@ import {
     validateAttributeFiltersToIgnore,
     validateDatasetForInsightWidgetDateFilter,
     validateDatasetForKpiWidgetDateFilter,
+    validateDatasetForRichTextWidgetDateFilter,
 } from "../../widgets/validation/filterValidation.js";
 import { ItemResolutionResult } from "./stashValidation.js";
 import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { newInsight } from "../../../../_staging/insight/insightBuilder.js";
 
 function normalizeItems(
     items: ExtendedDashboardItem[],
@@ -178,7 +182,37 @@ function* validateAndResolveKpiFilters(
     }
 }
 
-function removeObsoleteAttributeFilterIgnores<T extends IKpiWidget | IInsightWidget>(
+function* validateAndResolveRichTextFilters(
+    ctx: DashboardContext,
+    cmd: IDashboardCommand,
+    widget: IRichTextWidget,
+    autoDateDataset: boolean,
+): SagaIterator<IRichTextWidget> {
+    const ignoredFilterRefs = widget.ignoreDashboardFilters
+        .filter(isDashboardAttributeFilterReference)
+        .map((f) => f.displayForm);
+    yield call(validateAttributeFiltersToIgnore, ctx, cmd, widget, ignoredFilterRefs);
+
+    if (widget.dateDataSet) {
+        yield call(validateDatasetForRichTextWidgetDateFilter, ctx, cmd, widget, widget.dateDataSet);
+
+        return widget;
+    } else if (autoDateDataset) {
+        const insightDateDatasets: InsightDateDatasets = yield call(
+            query,
+            queryDateDatasetsForInsight(newInsight("local:table")),
+        );
+
+        return {
+            ...widget,
+            dateDataSet: insightSelectDateDataset(insightDateDatasets)?.dataSet.ref,
+        };
+    } else {
+        return widget;
+    }
+}
+
+function removeObsoleteAttributeFilterIgnores<T extends IKpiWidget | IInsightWidget | IRichTextWidget>(
     widget: T,
     attributeFilters: IDashboardAttributeFilter[],
     displayAsLabelMap: Map<string, ObjRef>,
@@ -248,7 +282,7 @@ export function* validateAndResolveItemFilterSettings(
              * the stashed items were already thoroughly validated & normalized the first time they were added onto the
              * dashboard so the code does not have to re-do all the validations.
              */
-            if (isInsightWidget(widget) || isKpiWidget(widget)) {
+            if (isInsightWidget(widget) || isKpiWidget(widget) || isRichTextWidget(widget)) {
                 /*
                  * Insight and KPI widgets may be set to ignore some attribute filters. validation must check
                  * that any ignored filters on the stashed item are still present on the filter context.
@@ -293,6 +327,19 @@ export function* validateAndResolveItemFilterSettings(
             } else if (isKpiWidget(widget)) {
                 const updatedWidget: SagaReturnType<typeof validateAndResolveKpiFilters> = yield call(
                     validateAndResolveKpiFilters,
+                    ctx,
+                    cmd,
+                    widget,
+                    autoDateDataset,
+                );
+
+                updatedItems.push({
+                    ...item,
+                    widget: updatedWidget,
+                });
+            } else if (isRichTextWidget(widget)) {
+                const updatedWidget: SagaReturnType<typeof validateAndResolveRichTextFilters> = yield call(
+                    validateAndResolveRichTextFilters,
                     ctx,
                     cmd,
                     widget,

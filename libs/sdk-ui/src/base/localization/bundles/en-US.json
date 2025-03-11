@@ -3383,6 +3383,16 @@
         "comment": "Do not translate word 'Markdown'",
         "limit": 0
     },
+    "richText.no_data": {
+        "value": "No data",
+        "comment": "No data retrieved from the server",
+        "limit": 0
+    },
+    "richText.no_fetch": {
+        "value": "Data could not be retrieved",
+        "comment": "Data could not be retrieved from the server",
+        "limit": 0
+    },
     "recurrence.starts": {
         "value": "Starts on",
         "comment": "Describes when recurrence starts.",

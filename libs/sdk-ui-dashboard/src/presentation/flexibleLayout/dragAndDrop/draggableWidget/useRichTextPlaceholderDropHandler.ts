@@ -1,8 +1,11 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
 
 import {
     addNestedLayoutSectionItem,
+    ChangeInsightWidgetFilterSettings,
+    DashboardCommandFailed,
+    enableRichTextWidgetDateFilter,
     uiActions,
     useDashboardCommandProcessing,
     useDashboardDispatch,
@@ -16,12 +19,25 @@ import { BaseDraggableLayoutItemSize } from "../../../dragAndDrop/index.js";
 export function useRichTextPlaceholderDropHandler(layoutPath: ILayoutItemPath) {
     const dispatch = useDashboardDispatch();
 
+    const { run: preselectDateDataset } = useDashboardCommandProcessing({
+        commandCreator: enableRichTextWidgetDateFilter,
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+        successEvent: "GDC.DASH/EVT.RICH_TEXT_WIDGET.FILTER_SETTINGS_CHANGED",
+        onSuccess: (event) => {
+            dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(event.payload.ref));
+        },
+        onError: (event: DashboardCommandFailed<ChangeInsightWidgetFilterSettings>) => {
+            dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(event.payload.command.payload.ref));
+        },
+    });
+
     const { run: createRichText } = useDashboardCommandProcessing({
         commandCreator: addNestedLayoutSectionItem,
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
         successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.ITEMS_ADDED",
         onSuccess: (event) => {
             const ref = event.payload.itemsAdded[0].widget!.ref;
+            preselectDateDataset(ref, "default");
             dispatch(uiActions.selectWidget(ref));
         },
     });

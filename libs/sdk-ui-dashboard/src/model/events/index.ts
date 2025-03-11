@@ -74,7 +74,10 @@ import {
     DashboardInsightWidgetExportResolved,
     DashboardInsightWidgetRefreshed,
 } from "./insight.js";
-import { DashboardRichTextWidgetContentChanged } from "./richText.js";
+import {
+    DashboardRichTextWidgetContentChanged,
+    DashboardRichTextWidgetFilterSettingsChanged,
+} from "./richText.js";
 import {
     DashboardVisualizationSwitcherWidgetVisualizationAdded,
     DashboardVisualizationSwitcherWidgetVisualizationsUpdated,
@@ -383,8 +386,15 @@ export {
 export type {
     DashboardRichTextWidgetContentChanged,
     DashboardRichTextWidgetContentChangedPayload,
+    DashboardRichTextWidgetFilterSettingsChanged,
+    DashboardRichTextWidgetFilterSettingsChangedPayload,
 } from "./richText.js";
-export { isDashboardRichTextWidgetContentChanged, richTextWidgetContentChanged } from "./richText.js";
+export {
+    isDashboardRichTextWidgetContentChanged,
+    richTextWidgetContentChanged,
+    isDashboardRichTextWidgetFilterSettingsChanged,
+    richTextWidgetFilterSettingsChanged,
+} from "./richText.js";
 
 export type {
     DashboardVisualizationSwitcherWidgetVisualizationAdded,
@@ -605,6 +615,7 @@ export type DashboardEvents =
     | DashboardInsightWidgetExportResolved
     | DashboardInsightWidgetRefreshed
     | DashboardRichTextWidgetContentChanged
+    | DashboardRichTextWidgetFilterSettingsChanged
     | DashboardVisualizationSwitcherWidgetVisualizationAdded
     | DashboardVisualizationSwitcherWidgetVisualizationsUpdated
     | DashboardWidgetExecutionStarted

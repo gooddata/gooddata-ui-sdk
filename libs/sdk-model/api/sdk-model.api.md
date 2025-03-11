@@ -3436,6 +3436,7 @@ export interface ISettings {
     enableRenamingProjectToWorkspace?: boolean;
     enableReversedStacking?: boolean;
     enableRichTextDescriptions?: boolean;
+    enableRichTextDynamicReferences?: boolean;
     enableScatterPlotClustering?: boolean;
     enableScatterPlotSegmentation?: boolean;
     enableScheduling?: boolean;

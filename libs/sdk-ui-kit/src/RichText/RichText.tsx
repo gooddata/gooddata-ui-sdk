@@ -4,7 +4,12 @@ import React, { useRef, useEffect, useCallback } from "react";
 import Markdown from "react-markdown";
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import { IntlWrapper } from "@gooddata/sdk-ui";
+import { IFilter } from "@gooddata/sdk-model";
+import { IntlWrapper, LoadingComponent, OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
+
+import { remarkReferences } from "./plugins/remark-references.js";
+import { rehypeReferences } from "./plugins/rehype-references.js";
+import { useEvaluatedReferences } from "./hooks/useEvaluatedReferences.js";
 
 // lineHeight from CSS, used to calculate max textarea height based on provided row count
 const RICH_TEXT_TEXTAREA_ROW_HEIGHT = 19;
@@ -17,6 +22,10 @@ const RICH_TEXT_PLACEHOLDER = `
 ![image](http://url/img.png)
 `;
 
+function DefaultLoadingComponent() {
+    return <LoadingComponent />;
+}
+
 /**
  * @internal
  */
@@ -28,6 +37,7 @@ export interface IRichTextProps {
     editRows?: number;
     emptyElement?: JSX.Element;
     className?: string;
+    referencesEnabled?: boolean;
     /**
      * If provided, the textarea starts at just 1 row,
      * resizing dynamically up to editRows value.
@@ -42,11 +52,29 @@ export interface IRichTextProps {
         show: boolean;
         dataAttributes?: Record<string, string>;
     };
+
+    /**
+     * Filters to be used for rendering references.
+     */
+    filters?: IFilter[];
+
+    /**
+     * @alpha
+     */
+    onLoadingChanged?: OnLoadingChanged;
+    /**
+     * @alpha
+     */
+    onError?: OnError;
+
+    //Components
+    LoadingComponent?: React.ComponentType;
 }
 
 const RichTextCore: React.FC<IRichTextProps> = ({
     value,
     onChange,
+    referencesEnabled,
     renderMode = "view",
     editPlaceholder,
     editRows,
@@ -54,6 +82,10 @@ const RichTextCore: React.FC<IRichTextProps> = ({
     className,
     autoResize,
     rawContent,
+    filters,
+    onLoadingChanged,
+    onError,
+    LoadingComponent,
 }) => {
     return (
         <div
@@ -75,7 +107,15 @@ const RichTextCore: React.FC<IRichTextProps> = ({
                     autoResize={autoResize}
                 />
             ) : (
-                <RichTextView value={value} emptyElement={emptyElement} />
+                <RichTextView
+                    value={value}
+                    filters={filters}
+                    referencesEnabled={referencesEnabled}
+                    LoadingComponent={LoadingComponent}
+                    onLoadingChanged={onLoadingChanged}
+                    onError={onError}
+                    emptyElement={emptyElement}
+                />
             )}
             {rawContent?.show ? <input type="hidden" value={value} {...rawContent.dataAttributes} /> : null}
         </div>
@@ -150,6 +190,12 @@ const RichTextEdit: React.FC<IRichTextEditProps> = ({
 interface IRichTextViewProps {
     value: string;
     emptyElement?: JSX.Element;
+    referencesEnabled?: boolean;
+    filters?: IFilter[];
+    onLoadingChanged?: OnLoadingChanged;
+    onError?: OnError;
+    //Components
+    LoadingComponent?: React.ComponentType;
 }
 
 const ImageComponent = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
@@ -160,15 +206,51 @@ const AnchorComponent = (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) =
     <a target="_blank" rel="noopener noreferrer" {...props} />
 );
 
-const RichTextView: React.FC<IRichTextViewProps> = ({ value, emptyElement }) => {
-    // Strip all whitespace and newlines
-    const isValueEmpty = !value?.replace(/\s/g, "");
+const RichTextView: React.FC<IRichTextViewProps> = ({
+    value,
+    referencesEnabled,
+    emptyElement,
+    filters,
+    onError,
+    onLoadingChanged,
+    LoadingComponent = DefaultLoadingComponent,
+}) => {
+    const intl = useIntl();
+    const { loading, metrics, isEmptyValue, error } = useEvaluatedReferences(
+        value,
+        filters,
+        referencesEnabled,
+    );
 
-    if (isValueEmpty && emptyElement) {
+    useEffect(() => {
+        onLoadingChanged?.({
+            isLoading: loading,
+        });
+    }, [onLoadingChanged, loading]);
+
+    useEffect(() => {
+        if (error) {
+            onError?.(error);
+        }
+    }, [error, onError]);
+
+    if (isEmptyValue && emptyElement) {
         return emptyElement;
     }
 
-    return <Markdown components={{ img: ImageComponent, a: AnchorComponent }}>{value}</Markdown>;
+    if (loading) {
+        return <LoadingComponent />;
+    }
+
+    return (
+        <Markdown
+            components={{ img: ImageComponent, a: AnchorComponent }}
+            remarkPlugins={referencesEnabled ? [remarkReferences()] : []}
+            rehypePlugins={referencesEnabled ? [rehypeReferences(intl, metrics)] : []}
+        >
+            {value}
+        </Markdown>
+    );
 };
 
 /**

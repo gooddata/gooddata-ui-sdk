@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     areObjRefsEqual,
     ObjRef,
@@ -12,6 +12,7 @@ import {
     IDashboardDateFilter,
     isDashboardDateFilterReference,
     isDashboardDateFilter,
+    isRichTextWidget,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 
@@ -44,6 +45,7 @@ import {
     queryDateDatasetsForMeasure,
 } from "../../../queries/index.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { newInsight } from "../../../../_staging/insight/insightBuilder.js";
 
 function toAttributeDisplayFormRefs(references: IDashboardFilterReference[]) {
     return references.filter(isDashboardAttributeFilterReference).map((reference) => reference.displayForm);
@@ -212,6 +214,12 @@ function* enableDateFilter(
                 queryDateDatasetsForMeasure(widget.kpi.metric),
             );
             dateDatasetToUse = queryResult.dateDatasetsOrdered[0];
+        } else if (isRichTextWidget(widget)) {
+            const queryResult: InsightDateDatasets = yield call(
+                query,
+                queryDateDatasetsForInsight(newInsight("local:table")),
+            );
+            dateDatasetToUse = insightSelectDateDataset(queryResult);
         } else {
             invariant(false, "Cannot use default date dataset for custom widgets");
         }

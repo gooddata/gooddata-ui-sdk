@@ -106,6 +106,7 @@ export {
     selectEnableDashboardDescriptionDynamicHeight,
     selectEnableCriticalContentPerformanceOptimizations,
     selectEnableSlideshowExports,
+    selectEnableRichTextDynamicReferences,
     selectEnableDashboardFiltersApplyModes,
     selectDashboardFiltersApplyMode,
     selectEnableExecutionCancelling,
