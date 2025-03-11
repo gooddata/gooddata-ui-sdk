@@ -18,12 +18,13 @@ export interface DefaultDashboardExportVariablesProps {
  * @alpha
  */
 export function DefaultDashboardExportVariables({ renderMode }: DefaultDashboardExportVariablesProps) {
+    const run = renderMode === "export";
     const exportData = useMetaExportData();
     const dashboardId = useDashboardSelector(selectDashboardId);
     const dashboardDescriptor = useDashboardSelector(selectDashboardDescriptor);
-    const { dateFilters, attributeFilters } = useDashboardRelatedFilters();
+    const { dateFilters, attributeFilters, isError, isLoading } = useDashboardRelatedFilters(run);
 
-    if (renderMode !== "export") {
+    if (!run) {
         return null;
     }
 
@@ -49,7 +50,7 @@ export function DefaultDashboardExportVariables({ renderMode }: DefaultDashboard
                         <div
                             key={i}
                             {...exportData?.filters?.dateFilter}
-                            {...exportData?.filters?.filter.filterData(filter)}
+                            {...exportData?.filters?.filter.filterData(filter, isLoading, isError)}
                         >
                             <span {...exportData?.filters?.filter.name}>{filter?.title}</span> -{" "}
                             <span {...exportData?.filters?.filter.value}>{filter?.subtitle}</span>
@@ -59,7 +60,7 @@ export function DefaultDashboardExportVariables({ renderMode }: DefaultDashboard
                         <div
                             key={i}
                             {...exportData?.filters?.attributeFilter}
-                            {...exportData?.filters?.filter.filterData(filter)}
+                            {...exportData?.filters?.filter.filterData(filter, isLoading, isError)}
                         >
                             <span {...exportData?.filters?.filter.name}>{filter?.title}</span> -{" "}
                             <span {...exportData?.filters?.filter.value}>{filter?.subtitle}</span>

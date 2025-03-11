@@ -167,8 +167,9 @@ export const useMetaExportData = (): MetaExportData | undefined => {
                 value: {
                     "data-export-meta-type": "dashboard-filter-value",
                 },
-                filterData: (data) => ({
+                filterData: (data, loading, error) => ({
                     "data-export-meta-filter-mode": data.mode,
+                    "data-export-meta-filter-status": loading ? "loading" : error ? "error" : "loaded",
                 }),
             },
         },
