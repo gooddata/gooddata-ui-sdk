@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
@@ -113,21 +113,25 @@ describe.skip("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
 describe("Dashboard actions", () => {
     const editMode = new EditMode();
     //Cover ticket: RAIL-4772
-    it("should able to delete dashboard after save as new", { tags: ["checklist_integrated_tiger"] }, () => {
-        Navigation.visitCopyOf("dashboard/kpis");
+    it(
+        "should able to delete dashboard after save as new",
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        () => {
+            Navigation.visitCopyOf("dashboard/kpis");
 
-        editMode.edit();
-        new DashboardHeader()
-            .menuButtonIsVisible(true)
-            .clickMenuButton()
-            .deleteDashboard(true)
-            .dashboardTitleHasValue("Untitled");
-    });
+            editMode.edit();
+            new DashboardHeader()
+                .menuButtonIsVisible(true)
+                .clickMenuButton()
+                .deleteDashboard(true)
+                .dashboardTitleHasValue("Untitled");
+        },
+    );
 
     //Cover ticket: RAIL-4642
     it(
         "should able to scroll vertical/ horizontal on widget",
-        { tags: ["checklist_integrated_tiger"] },
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
             const table = new Table(".s-dash-item-0");
 
@@ -138,8 +142,12 @@ describe("Dashboard actions", () => {
     );
 
     //Cover ticket: RAIL-4750
-    it("should direct to view mode after save as new", { tags: ["checklist_integrated_tiger"] }, () => {
-        Navigation.visitCopyOf("dashboard/kpis");
-        dashboardHeader.editButtonIsVisible(true).shareButtonExists(true);
-    });
+    it(
+        "should direct to view mode after save as new",
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        () => {
+            Navigation.visitCopyOf("dashboard/kpis");
+            dashboardHeader.editButtonIsVisible(true).shareButtonExists(true);
+        },
+    );
 });
