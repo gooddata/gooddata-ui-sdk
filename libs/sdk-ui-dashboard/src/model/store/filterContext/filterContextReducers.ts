@@ -750,6 +750,15 @@ const applyWorkingSelection: FilterContextReducer<PayloadAction<IApplyWorkingSel
 //
 //
 
+const resetWorkingSelection: FilterContextReducer<PayloadAction> = (state) => {
+    invariant(state.workingFilterContextDefinition, "Attempt to edit uninitialized working filter context");
+    state.workingFilterContextDefinition = { filters: [] };
+};
+
+//
+//
+//
+
 export const filterContextReducers = {
     setFilterContext,
     updateFilterContextIdentity,
@@ -772,4 +781,5 @@ export const filterContextReducers = {
     changeLimitingItems,
     setPreloadedAttributesWithReferences,
     applyWorkingSelection,
+    resetWorkingSelection,
 };

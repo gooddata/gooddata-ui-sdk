@@ -39,6 +39,10 @@ import {
     setDashboardAttributeFilterConfigDisplayAsLabel,
     changeWorkingAttributeFilterSelection,
     selectEnableDashboardFiltersApplyModes,
+    selectWorkingFilterContextFilters,
+    selectCrossFilteringFiltersLocalIdentifiers,
+    selectIsWorkingFilterContextChanged,
+    selectDashboardFiltersApplyMode,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
@@ -68,6 +72,7 @@ import { ResetFiltersButton } from "./ResetFiltersButton.js";
  */
 export const useFilterBarProps = (): IFilterBarProps => {
     const filters = useDashboardSelector(selectFilterContextFilters);
+    const workingFilters = useDashboardSelector(selectWorkingFilterContextFilters);
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
     const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
         selectEnableDuplicatedLabelValuesInAttributeFilter,
@@ -180,24 +185,30 @@ export const useFilterBarProps = (): IFilterBarProps => {
         [dispatch, enableDashboardFiltersApplyModes],
     );
 
-    return { filters, onAttributeFilterChanged, onDateFilterChanged, DefaultFilterBar };
+    return { filters, workingFilters, onAttributeFilterChanged, onDateFilterChanged, DefaultFilterBar };
 };
 
 /**
  * @alpha
  */
 export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
-    const { filters, onAttributeFilterChanged, onDateFilterChanged } = props;
+    const { filters, workingFilters, onAttributeFilterChanged, onDateFilterChanged } = props;
 
     const [
-        { commonDateFilter, draggableFiltersWithPlaceholder, draggableFiltersCount, autoOpenFilter },
+        {
+            commonDateFilter,
+            commonWorkingDateFilter,
+            draggableFiltersWithPlaceholder,
+            draggableFiltersCount,
+            autoOpenFilter,
+        },
         {
             addDraggableFilterPlaceholder,
             closeAttributeSelection,
             selectDraggableFilter,
             onCloseAttributeFilter,
         },
-    ] = useFiltersWithAddedPlaceholder(filters);
+    ] = useFiltersWithAddedPlaceholder(filters, workingFilters);
 
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
@@ -223,6 +234,11 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
         dateFiltersModeMap,
     );
 
+    const crossFilterLocalIds = useDashboardSelector(selectCrossFilteringFiltersLocalIdentifiers);
+    const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
+    const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+
     if (isExport || haveAllFiltersHidden) {
         return <HiddenFilterBar {...props} />;
     }
@@ -247,6 +263,9 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     <>
                         <CustomCommonDateFilterComponent
                             filter={commonDateFilter}
+                            workingFilter={
+                                enableDashboardFiltersApplyModes ? commonWorkingDateFilter : undefined
+                            }
                             onFilterChanged={onDateFilterChanged}
                             config={commonDateFilterComponentConfig}
                             readonly={commonDateFilterMode === DashboardDateFilterConfigModeValues.READONLY}
@@ -273,7 +292,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                         />
                     );
                 } else if (isFilterBarAttributeFilter(filterOrPlaceholder)) {
-                    const { filter, filterIndex } = filterOrPlaceholder;
+                    const { filter, filterIndex, workingFilter } = filterOrPlaceholder;
                     const convertedFilter = supportElementUris
                         ? filter
                         : convertDashboardAttributeFilterElementsUrisToValues(filter);
@@ -301,6 +320,16 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                         return null;
                     }
 
+                    if (
+                        filter.attributeFilter.localIdentifier &&
+                        crossFilterLocalIds.includes(filter.attributeFilter.localIdentifier) &&
+                        isWorkingFilterContextChanged &&
+                        filtersApplyMode.mode === "ALL_AT_ONCE" &&
+                        enableDashboardFiltersApplyModes
+                    ) {
+                        return null;
+                    }
+
                     return (
                         <DraggableAttributeFilter
                             key={`${objRefToString(displayForm.attribute)}-${
@@ -308,6 +337,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                             }`}
                             autoOpen={areObjRefsEqual(filter.attributeFilter.displayForm, autoOpenFilter)}
                             filter={filter}
+                            workingFilter={enableDashboardFiltersApplyModes ? workingFilter : undefined}
                             filterIndex={filterIndex}
                             readonly={
                                 attributeFilterMode === DashboardAttributeFilterConfigModeValues.READONLY
@@ -321,7 +351,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     );
                 } else {
                     if (filterOrPlaceholder.filter.dateFilter.dataSet) {
-                        const { filter, filterIndex } = filterOrPlaceholder;
+                        const { filter, workingFilter, filterIndex } = filterOrPlaceholder;
 
                         const CustomDateFilterComponent = DashboardDateFilterComponentProvider(filter);
 
@@ -345,6 +375,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                                     autoOpenFilter,
                                 )}
                                 filter={filter}
+                                workingFilter={enableDashboardFiltersApplyModes ? workingFilter : undefined}
                                 filterIndex={filterIndex}
                                 config={{
                                     ...commonDateFilterComponentConfig,

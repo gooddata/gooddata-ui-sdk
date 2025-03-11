@@ -113,6 +113,7 @@ export type AttributeFilterControllerData = {
     elements: IAttributeElement[];
     totalElementsCount: number;
     totalElementsCountWithCurrentSettings: number;
+    isSelectionInvalid: boolean;
     isApplyDisabled: boolean;
     isWorkingSelectionInverted: boolean;
     workingSelectionElements: IAttributeElement[];
@@ -387,7 +388,7 @@ export interface IAttributeFilterConfigurationButtonProps {
 }
 
 // @beta
-export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon">;
+export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon" | "withoutApply" | "workingFilter">;
 
 // @public (undocumented)
 export interface IAttributeFilterCoreProps {
@@ -401,6 +402,7 @@ export interface IAttributeFilterCoreProps {
     disabled?: boolean;
     // @alpha
     displayAsLabel?: ObjRef;
+    enableDashboardFiltersApplyModes?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     filter?: IAttributeFilter;
@@ -419,7 +421,10 @@ export interface IAttributeFilterCoreProps {
     staticElements?: IAttributeElement[];
     title?: string;
     validateElementsBy?: ObjRef[];
+    // @alpha
     withoutApply?: boolean;
+    // @alpha @deprecated
+    workingFilter?: IAttributeFilter;
     workspace?: string;
 }
 
@@ -470,6 +475,8 @@ export interface IAttributeFilterDropdownActionsProps {
     isApplyDisabled?: boolean;
     onApplyButtonClick: () => void;
     onCancelButtonClick: () => void;
+    // @alpha
+    withoutApply?: boolean;
 }
 
 // @beta
@@ -730,6 +737,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     dateFilterMode: VisibilityMode;
     // (undocumented)
     dateFormat?: string;
+    enableDashboardFiltersApplyModes?: boolean;
     // @alpha
     FilterConfigurationComponent?: React_2.ComponentType<IFilterConfigurationProps>;
     // (undocumented)
@@ -746,7 +754,12 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     showDropDownHeaderMessage?: boolean;
     // (undocumented)
     weekStart?: WeekStart;
+    // @alpha
     withoutApply?: boolean;
+    // @alpha @deprecated
+    workingExcludeCurrentPeriod?: boolean;
+    // @alpha @deprecated
+    workingSelectedFilterOption?: DateFilterOption;
 }
 
 // @public
@@ -767,6 +780,10 @@ export interface IDateFilterState extends IDateFilterStatePropsIntersection {
     initExcludeCurrentPeriod: boolean;
     // (undocumented)
     initSelectedFilterOption: DateFilterOption;
+    // (undocumented)
+    initWorkingExcludeCurrentPeriod: boolean;
+    // (undocumented)
+    initWorkingSelectedFilterOption: DateFilterOption;
     // (undocumented)
     isExcludeCurrentPeriodEnabled: boolean;
 }

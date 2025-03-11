@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import classNames from "classnames";
@@ -7,6 +7,7 @@ import {
     selectIsInEditMode,
     selectSupportsElementUris,
     selectCanAddMoreFilters,
+    selectEnableDashboardFiltersApplyModes,
 } from "../../../model/index.js";
 import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/DraggableFilterDropZoneHint.js";
 import { CustomDashboardAttributeFilterComponent } from "../../filterBar/types.js";
@@ -15,6 +16,7 @@ import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_s
 
 type DraggableAttributeFilterProps = {
     filter: IDashboardAttributeFilter;
+    workingFilter?: IDashboardAttributeFilter;
     filterIndex: number;
     autoOpen: boolean;
     readonly: boolean;
@@ -28,6 +30,7 @@ type DraggableAttributeFilterProps = {
 export function DraggableAttributeFilter({
     FilterComponent,
     filter,
+    workingFilter,
     filterIndex,
     autoOpen,
     readonly,
@@ -58,11 +61,20 @@ export function DraggableAttributeFilter({
         return convertDashboardAttributeFilterElementsUrisToValues(filter);
     }, [filter, supportElementUris]);
 
+    const workingFilterToUse = useMemo(() => {
+        if (supportElementUris) {
+            return workingFilter ?? filter;
+        }
+        return convertDashboardAttributeFilterElementsUrisToValues(workingFilter ?? filter);
+    }, [workingFilter, filter, supportElementUris]);
+
     const onClose = useCallback(() => {
         onAttributeFilterClose();
     }, [onAttributeFilterClose]);
 
     const showDropZones = isInEditMode && !isDragging;
+
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
 
     return (
         <div className="draggable-attribute-filter">
@@ -84,6 +96,7 @@ export function DraggableAttributeFilter({
             >
                 <FilterComponent
                     filter={filterToUse}
+                    workingFilter={enableDashboardFiltersApplyModes ? workingFilterToUse : undefined}
                     onFilterChanged={onAttributeFilterChanged}
                     isDraggable={isInEditMode}
                     readonly={readonly}

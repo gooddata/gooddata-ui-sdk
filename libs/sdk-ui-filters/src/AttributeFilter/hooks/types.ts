@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import {
     IAttributeDisplayFormMetadataObject,
@@ -85,7 +85,13 @@ export type AttributeFilterControllerData = {
     totalElementsCountWithCurrentSettings: number;
 
     /**
-     * If true, selection has changes or the number of selected elements reached the limit of maximum selection size.
+     * If true, current selection is considered not valid and should not be applied.
+     * The number of selected elements reached the limit of maximum selection size or no elements are selected.
+     */
+    isSelectionInvalid: boolean;
+
+    /**
+     * If true, selection has no changes or the selection si invalid. see {@link AttributeFilterControllerData.isSelectionInvalid}.
      */
     isApplyDisabled: boolean;
 

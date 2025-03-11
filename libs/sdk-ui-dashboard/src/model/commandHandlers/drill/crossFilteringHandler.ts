@@ -8,6 +8,7 @@ import {
     addAttributeFilter,
     changeAttributeFilterSelection,
     removeAttributeFilters,
+    resetFilterContextWorkingSelection,
 } from "../../commands/filters.js";
 import { CrossFiltering } from "../../commands/drill.js";
 import { crossFilteringRequested, crossFilteringResolved } from "../../events/drill.js";
@@ -24,6 +25,7 @@ import { removeAttributeFiltersHandler } from "../filterContext/attributeFilter/
 import isEmpty from "lodash/isEmpty.js";
 import {
     selectEnableCrossFilteringAliasTitles,
+    selectEnableDashboardFiltersApplyModes,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
 } from "../../store/config/configSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
@@ -124,6 +126,12 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
     });
 
     const correlation = `crossFiltering_${uuid()}`;
+
+    const enableDashboardFiltersApplyModes: ReturnType<typeof selectEnableDashboardFiltersApplyModes> =
+        yield select(selectEnableDashboardFiltersApplyModes);
+    if (enableDashboardFiltersApplyModes) {
+        yield put(resetFilterContextWorkingSelection());
+    }
 
     // Cleanup of previous cross-filtering state
     if (!shouldUpdateExistingCrossFiltering) {

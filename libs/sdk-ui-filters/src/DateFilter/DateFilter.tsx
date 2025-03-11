@@ -64,8 +64,33 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
      * If true, it is responsibility of a client, to appy filters when needed.
      * Typically uses onSelect callback to catch filter state.
      * Note, onApply callback is not called when this is true.
+     *
+     * @alpha
      */
     withoutApply?: boolean;
+
+    /**
+     * Working filter option used for synchronization inner filter state with outer given state.
+     * Makes a controlled component state out of this.
+     *
+     * @alpha
+     * @deprecated dont use. Will be removed in future releases.
+     */
+    workingSelectedFilterOption?: DateFilterOption;
+
+    /**
+     * Working filter exclude current period used for synchronization inner filter state with outer given state.
+     * Makes a controlled component state out of this.
+     *
+     * @alpha
+     * @deprecated dont use. Will be removed in future releases.
+     */
+    workingExcludeCurrentPeriod?: boolean;
+
+    /**
+     * If new apply all filters at once mode is enabled
+     */
+    enableDashboardFiltersApplyModes?: boolean;
 }
 
 /**
@@ -96,6 +121,8 @@ export interface IDateFilterProps extends IDateFilterOwnProps, IDateFilterCallba
 export interface IDateFilterState extends IDateFilterStatePropsIntersection {
     initExcludeCurrentPeriod: boolean;
     initSelectedFilterOption: DateFilterOption;
+    initWorkingExcludeCurrentPeriod: boolean;
+    initWorkingSelectedFilterOption: DateFilterOption;
     isExcludeCurrentPeriodEnabled: boolean;
 }
 
@@ -122,6 +149,15 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
         prevState: IDateFilterState,
     ): IDateFilterState {
         if (
+            nextProps.enableDashboardFiltersApplyModes &&
+            nextProps.workingSelectedFilterOption &&
+            nextProps.excludeCurrentPeriod &&
+            (!isEqual(nextProps.workingSelectedFilterOption, prevState.initWorkingSelectedFilterOption) ||
+                nextProps.excludeCurrentPeriod !== prevState.initWorkingExcludeCurrentPeriod)
+        ) {
+            return DateFilter.getStateFromWorkingProps(nextProps);
+        }
+        if (
             !isEqual(nextProps.selectedFilterOption, prevState.initSelectedFilterOption) ||
             nextProps.excludeCurrentPeriod !== prevState.initExcludeCurrentPeriod
         ) {
@@ -131,14 +167,32 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
         return null;
     }
 
-    private static getStateFromProps(props: IDateFilterProps) {
+    private static getStateFromProps(props: IDateFilterProps): IDateFilterState {
         const canExcludeCurrent = canExcludeCurrentPeriod(props.selectedFilterOption);
         return {
             initSelectedFilterOption: props.selectedFilterOption,
             selectedFilterOption: props.selectedFilterOption,
             initExcludeCurrentPeriod: props.excludeCurrentPeriod,
             excludeCurrentPeriod: canExcludeCurrent ? props.excludeCurrentPeriod : false,
-            isTimeForAbsoluteRangeEnabled: props.isTimeForAbsoluteRangeEnabled,
+            isExcludeCurrentPeriodEnabled: canExcludeCurrent,
+            initWorkingSelectedFilterOption: props.workingSelectedFilterOption ?? props.selectedFilterOption,
+            initWorkingExcludeCurrentPeriod: props.workingExcludeCurrentPeriod ?? props.excludeCurrentPeriod,
+        };
+    }
+
+    private static getStateFromWorkingProps(props: IDateFilterProps): IDateFilterState {
+        const canExcludeCurrent = canExcludeCurrentPeriod(
+            props.workingSelectedFilterOption ?? props.selectedFilterOption,
+        );
+        return {
+            ...DateFilter.getStateFromProps(props),
+            selectedFilterOption: props.workingSelectedFilterOption ?? props.selectedFilterOption,
+            excludeCurrentPeriod: canExcludeCurrent
+                ? props.workingExcludeCurrentPeriod ?? props.excludeCurrentPeriod
+                : false,
+            initWorkingExcludeCurrentPeriod: props.workingExcludeCurrentPeriod ?? props.excludeCurrentPeriod,
+            initWorkingSelectedFilterOption: props.workingSelectedFilterOption ?? props.selectedFilterOption,
+            initExcludeCurrentPeriod: props.excludeCurrentPeriod,
             isExcludeCurrentPeriodEnabled: canExcludeCurrent,
         };
     }
@@ -198,6 +252,8 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             customIcon,
             showDropDownHeaderMessage,
             FilterConfigurationComponent,
+            withoutApply,
+            enableDashboardFiltersApplyModes,
         } = this.props;
         const { excludeCurrentPeriod, selectedFilterOption, isExcludeCurrentPeriodEnabled } = this.state;
         return dateFilterMode === "hidden" ? null : (
@@ -226,6 +282,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
                 weekStart={weekStart}
                 customIcon={customIcon}
                 FilterConfigurationComponent={FilterConfigurationComponent}
+                withoutApply={enableDashboardFiltersApplyModes ? withoutApply : undefined}
             />
         );
     }
@@ -249,8 +306,13 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             this.props.onOpen();
         } else {
             this.props.onClose();
-            if (!this.props.withoutApply || !isEmpty(validateFilterOption(this.state.selectedFilterOption))) {
+            if (!this.props.withoutApply || !this.props.enableDashboardFiltersApplyModes) {
                 this.onChangesDiscarded();
+            } else if (
+                this.props.enableDashboardFiltersApplyModes &&
+                !isEmpty(validateFilterOption(this.state.selectedFilterOption))
+            ) {
+                this.setState(() => DateFilter.getStateFromWorkingProps(this.props));
             }
         }
     };

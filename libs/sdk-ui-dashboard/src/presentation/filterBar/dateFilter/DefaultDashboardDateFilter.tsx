@@ -49,7 +49,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
     const weekStart = useDashboardSelector(selectWeekStart);
     const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
     const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
-    const { filter, onFilterChanged, config, readonly, autoOpen } = props;
+    const { filter, workingFilter, onFilterChanged, config, readonly, autoOpen } = props;
 
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     let defaultDateFilterName: string;
@@ -73,6 +73,16 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             ),
         [filter, config.dateFilterOptions, lastSelectedOptionId],
     );
+    const { dateFilterOption: workingFilterOption, excludeCurrentPeriod: workingExcludeCurrentPeriod } =
+        useMemo(
+            () =>
+                matchDateFilterToDateFilterOptionWithPreference(
+                    workingFilter,
+                    config.dateFilterOptions,
+                    lastSelectedOptionId,
+                ),
+            [workingFilter, config.dateFilterOptions, lastSelectedOptionId],
+        );
     const onApply = useCallback<IDateFilterProps["onApply"]>(
         (option, exclude) => {
             setLastSelectedOptionId(option.localIdentifier);
@@ -134,6 +144,10 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
         <DateFilter
             excludeCurrentPeriod={excludeCurrentPeriod}
             selectedFilterOption={dateFilterOption}
+            workingExcludeCurrentPeriod={
+                enableDashboardFiltersApplyModes ? workingExcludeCurrentPeriod : undefined
+            }
+            workingSelectedFilterOption={enableDashboardFiltersApplyModes ? workingFilterOption : undefined}
             dateFilterMode={
                 readonly
                     ? DashboardDateFilterConfigModeValues.READONLY
@@ -154,6 +168,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             showDropDownHeaderMessage={!filter?.dateFilter.dataSet}
             FilterConfigurationComponent={isConfigurationEnabled ? FilterConfigurationComponent : undefined}
             withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes}
+            enableDashboardFiltersApplyModes={enableDashboardFiltersApplyModes}
         />
     );
 };

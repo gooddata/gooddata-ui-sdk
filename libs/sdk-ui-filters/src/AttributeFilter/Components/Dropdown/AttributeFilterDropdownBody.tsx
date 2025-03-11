@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useMemo, useCallback } from "react";
 import { useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
@@ -20,6 +20,7 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
     const { onApplyButtonClick, onCancelButtonClick, width = DEFAULT_DROPDOWN_BODY_WIDTH } = props;
 
     const { DropdownActionsComponent, ElementsSelectComponent } = useAttributeFilterComponentsContext();
+    const { withoutApply } = useAttributeFilterContext();
     const isMobile = useMediaQuery("mobileDevice");
 
     const {
@@ -96,6 +97,7 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
                 onApplyButtonClick={onApplyButtonClick}
                 onCancelButtonClick={onCancelButtonClick}
                 isApplyDisabled={isApplyDisabled}
+                withoutApply={withoutApply}
             />
         </div>
     );

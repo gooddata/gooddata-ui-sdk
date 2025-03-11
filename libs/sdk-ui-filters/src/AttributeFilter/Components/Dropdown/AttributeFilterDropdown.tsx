@@ -1,5 +1,5 @@
-// (C) 2022-2023 GoodData Corporation
-import React from "react";
+// (C) 2022-2025 GoodData Corporation
+import React, { useRef } from "react";
 import { Dropdown, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
@@ -36,25 +36,34 @@ export const AttributeFilterDropdown: React.VFC = () => {
         initError,
         isFiltering,
         committedSelectionElements,
+        workingSelectionElements,
         onReset,
         onApply,
         onOpen,
         fullscreenOnMobile,
         isCommittedSelectionInverted,
+        isWorkingSelectionInverted,
         selectionMode,
         disabled,
         customIcon,
+        withoutApply,
+        isSelectionInvalid,
     } = useAttributeFilterContext();
 
     const isMobile = useMediaQuery("mobileDevice");
 
-    const subtitle = useResolveAttributeFilterSubtitle(
-        isCommittedSelectionInverted,
-        committedSelectionElements,
+    const isSelectionInverted = useLastValidValue(
+        withoutApply ? isWorkingSelectionInverted : isCommittedSelectionInverted,
+        !isSelectionInvalid || !withoutApply,
     );
+    const selectionElements = useLastValidValue(
+        withoutApply ? workingSelectionElements : committedSelectionElements,
+        !isSelectionInvalid || !withoutApply,
+    );
+    const subtitle = useResolveAttributeFilterSubtitle(isSelectionInverted, selectionElements);
 
     const isMultiselect = selectionMode !== "single";
-    const showSelectionCount = isMultiselect && committedSelectionElements.length !== 0;
+    const showSelectionCount = isMultiselect && selectionElements.length !== 0;
 
     return (
         <Dropdown
@@ -82,7 +91,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
                                     isLoaded={!isInitializing}
                                     isLoading={isInitializing}
                                     isOpen={isOpen}
-                                    selectedItemsCount={committedSelectionElements.length}
+                                    selectedItemsCount={selectionElements.length}
                                     showSelectionCount={showSelectionCount}
                                     disabled={disabled}
                                     customIcon={customIcon}
@@ -118,3 +127,11 @@ export const AttributeFilterDropdown: React.VFC = () => {
         />
     );
 };
+
+function useLastValidValue<T>(value: T, isValid: boolean): T | undefined {
+    const lastValidValue = useRef<T | undefined>();
+    if (isValid) {
+        lastValidValue.current = value;
+    }
+    return lastValidValue.current;
+}
