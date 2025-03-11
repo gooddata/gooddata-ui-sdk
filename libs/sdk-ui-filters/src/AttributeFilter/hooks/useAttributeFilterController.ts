@@ -364,9 +364,12 @@ function useInitOrReload(
         const filterChanged = getFilterChanged(filter, handler, enableDuplicatedLabelValuesInAttributeFilter);
 
         const getWorkingFilterChanged = (
-            workingFilter: IAttributeFilter,
             handler: IMultiSelectAttributeFilterHandler,
+            workingFilter?: IAttributeFilter,
         ) => {
+            if (!workingFilter) {
+                return false;
+            }
             const { isInverted, keys } = handler.getWorkingSelection();
             if (isPositiveAttributeFilter(workingFilter)) {
                 if (isInverted) {
@@ -387,7 +390,7 @@ function useInitOrReload(
             }
         };
 
-        const workingFilterChanged = getWorkingFilterChanged(workingFilter, handler);
+        const workingFilterChanged = getWorkingFilterChanged(handler, workingFilter);
 
         const limitingValidationItemsChanged = !isEqual(
             limitingValidationItems,
