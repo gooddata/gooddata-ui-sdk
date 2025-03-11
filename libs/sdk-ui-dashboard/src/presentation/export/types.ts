@@ -53,6 +53,7 @@ export type MetaExportDataAttributes = {
     "data-export-meta-type"?: ExportMetaType;
     "data-export-meta-filter-type"?: "date" | "attribute";
     "data-export-meta-filter-mode"?: "readonly" | "hidden" | "active";
+    "data-export-meta-filter-status"?: "loading" | "loaded" | "error";
 };
 
 /**
@@ -76,7 +77,11 @@ export type MetaExportData = {
         filter: {
             name: MetaExportDataAttributes;
             value: MetaExportDataAttributes;
-            filterData: (data: DashboardRelatedFilter) => MetaExportDataAttributes;
+            filterData: (
+                data: DashboardRelatedFilter,
+                isLoading: boolean,
+                isError: boolean,
+            ) => MetaExportDataAttributes;
         };
     };
 };
