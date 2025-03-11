@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import {
     changeRichTextWidgetContent,
     eagerRemoveSectionItemByWidgetRef,
+    selectEnableRichTextDynamicReferences,
     selectIsWhiteLabeled,
     uiActions,
     useDashboardDispatch,
@@ -24,6 +25,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { usePrevious } from "@gooddata/sdk-ui";
 import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../presentation/constants/index.js";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { useRichTextFilters } from "./useRichTextFilters.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_FILTER_Z_INDEX);
 
@@ -35,6 +37,9 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({ w
     const previousIsSelected = usePrevious(isSelected);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const intl = useIntl();
+
+    const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
+    const filters = useRichTextFilters(widget);
 
     const dispatch = useDashboardDispatch();
 
@@ -68,6 +73,8 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({ w
     return (
         <>
             <RichText
+                referencesEnabled={isRichTextReferencesEnabled}
+                filters={filters}
                 className="gd-rich-text-widget"
                 value={richText}
                 onChange={setRichText}

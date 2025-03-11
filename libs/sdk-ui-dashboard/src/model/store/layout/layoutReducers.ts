@@ -652,7 +652,7 @@ const replaceWidgetFilterSettings: LayoutReducer<ReplaceWidgetFilterSettings> = 
     const { ignoreDashboardFilters, dateDataSet, ref } = action.payload;
     const widget = getWidgetByRef(state, ref);
 
-    invariant(widget && (isInsightWidget(widget) || isKpiWidget(widget)));
+    invariant(widget && (isInsightWidget(widget) || isKpiWidget(widget) || isRichTextWidget(widget)));
 
     widget.dateDataSet = dateDataSet;
     widget.ignoreDashboardFilters = ignoreDashboardFilters ?? [];

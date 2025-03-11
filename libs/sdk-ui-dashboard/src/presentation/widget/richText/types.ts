@@ -2,7 +2,8 @@
 import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IRichTextWidget } from "@gooddata/sdk-model";
-import { WidgetExportDataAttributes } from "../../export/index.js";
+import { RichTextExportData, WidgetExportDataAttributes } from "../../export/index.js";
+import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 
 ///
 /// Component props
@@ -58,11 +59,27 @@ export interface IDashboardRichTextProps {
     clientWidth?: number;
 
     /**
+     * @alpha
+     */
+    onError?: OnError;
+    /**
+     * Callback to receive notifications about loading state of the widget.
+     */
+    onLoadingChanged?: OnLoadingChanged;
+
+    /**
      * Data for export in export mode.
      *
      * @alpha
      */
     exportData?: WidgetExportDataAttributes;
+
+    /**
+     * Data for export in export mode.
+     *
+     * @alpha
+     */
+    richTextExportData?: RichTextExportData;
 }
 
 ///

@@ -1,7 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { IDashboardCommand } from "./base.js";
 import { ObjRef } from "@gooddata/sdk-model";
+import { WidgetFilterOperation } from "../types/widgetTypes.js";
 
 /**
  * Payload of the {@link ChangeRichTextWidgetContent} command.
@@ -49,6 +50,65 @@ export function changeRichTextWidgetContent(
         payload: {
             ref,
             content,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * Payload of the {@link ChangeRichTextWidgetFilterSettings} command.
+ * @beta
+ */
+export interface ChangeRichTextWidgetFilterSettingsPayload {
+    /**
+     * Reference to RichText Widget whose filter settings to change.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Filter operation to apply.
+     */
+    readonly operation: WidgetFilterOperation;
+}
+
+/**
+ * @beta
+ */
+export interface ChangeRichTextWidgetFilterSettings extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_FILTER_SETTINGS";
+    readonly payload: ChangeRichTextWidgetFilterSettingsPayload;
+}
+
+/**
+ * Creates the ChangeRichTextWidgetFilterSettings command for {@link FilterOpEnableDateFilter} operation.
+ *
+ * Dispatching this command will result in change of RichText widget's date filter setting. The date filtering will
+ * be enabled and the provided date data set will be used for date-filtering widget's RichText.
+ *
+ * @param ref - reference of the RichText widget to modify
+ * @param dateDataset - date data set to use for filtering the RichText, if "default" is provided, the default date dataset will be resolved and used
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @beta
+ */
+export function enableRichTextWidgetDateFilter(
+    ref: ObjRef,
+    dateDataset: ObjRef | "default",
+    correlationId?: string,
+): ChangeRichTextWidgetFilterSettings {
+    return {
+        type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "enableDateFilter",
+                dateDataset,
+            },
         },
     };
 }

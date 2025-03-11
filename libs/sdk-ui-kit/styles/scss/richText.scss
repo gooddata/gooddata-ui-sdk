@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 @use "Dialog/variables" as dialog-variables;
 @use "mixins" as mx;
@@ -27,6 +27,16 @@
         &::placeholder {
             color: var(--gd-palette-complementary-6, #94a1ad);
         }
+    }
+
+    .gd-rich-text-metric-value {
+        font-weight: bold;
+    }
+    .gd-rich-text-metric-empty {
+        color: variables.$gd-color-text;
+    }
+    .gd-rich-text-metric-error {
+        color: variables.$gd-palette-error-base;
     }
 }
 

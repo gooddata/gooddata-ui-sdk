@@ -335,6 +335,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/mdast",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/node",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -448,6 +452,10 @@
     },
     {
       "name": "@types/tough-cookie",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@types/unist",
       "allowedCategories": [ "production" ]
     },
     {
@@ -835,6 +843,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "mdast",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "memoize-one",
       "allowedCategories": [ "production" ]
     },
@@ -1051,6 +1063,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "remark",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "require-from-string",
       "allowedCategories": [ "production" ]
     },
@@ -1153,6 +1169,10 @@
     {
       "name": "typescript",
       "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "unified",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "util",

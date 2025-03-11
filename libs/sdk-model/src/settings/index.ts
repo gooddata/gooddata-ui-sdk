@@ -601,6 +601,11 @@ export interface ISettings {
     enableSlideshowExports?: boolean;
 
     /**
+     * Enable rich text dynamic references.
+     */
+    enableRichTextDynamicReferences?: boolean;
+
+    /**
      * Enable insights export of raw data when limit is reached.
      */
     enableRawExports?: boolean;

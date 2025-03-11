@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IDashboardQuery } from "./base.js";
 import {
     IInsight,

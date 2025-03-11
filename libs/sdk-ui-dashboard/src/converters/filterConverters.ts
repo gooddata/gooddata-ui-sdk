@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
@@ -154,6 +154,28 @@ export function filterContextItemsToDashboardFiltersByWidget(
             return dashboardDateFilterToDateFilterByWidget(filter, widget);
         }
     });
+}
+
+/**
+ * Gets {@link IDashboardFilter} items for filters specified as {@link @gooddata/sdk-backend-spi#FilterContextItem} instances.
+ *
+ * @param filterContextItems - filter context items to get filters for
+ * @param widget - widget to use to get dateDataSet for date filters
+ * @public
+ */
+export function filterContextItemsToDashboardFiltersByRichTextWidget(
+    filterContextItems: FilterContextItem[],
+    widget: Partial<IFilterableWidget>,
+): IDashboardFilter[] {
+    return filterContextItems
+        .map((filter) => {
+            if (isDashboardAttributeFilter(filter)) {
+                return dashboardAttributeFilterToAttributeFilter(filter);
+            } else {
+                return dashboardDateFilterToDateFilterByWidget(filter, widget);
+            }
+        })
+        .filter(Boolean) as IDashboardFilter[];
 }
 
 /**
