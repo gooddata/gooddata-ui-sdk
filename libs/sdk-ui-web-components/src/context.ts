@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 /**
@@ -16,7 +16,7 @@ export type CustomElementContext = {
 
 let contextPromiseResolve: (context: CustomElementContext) => void;
 let contextPromiseResolved = false;
-const contextPromise: Promise<CustomElementContext> = new Promise((resolve) => {
+let contextPromise: Promise<CustomElementContext> = new Promise((resolve) => {
     contextPromiseResolve = resolve;
 });
 
@@ -30,6 +30,25 @@ export const setContext = (context: CustomElementContext) => {
         throw new Error("Context is already set.");
     }
 
+    contextPromiseResolved = true;
+    contextPromiseResolve(context);
+};
+
+/**
+ * A function to reset the existing context with a new one.
+ * Unlike setContext, this can be called multiple times, overwriting any previously set context.
+ *
+ * @public
+ */
+export const resetContext = (context: CustomElementContext) => {
+    // If context is already resolved, create a new promise
+    if (contextPromiseResolved) {
+        contextPromise = new Promise((resolve) => {
+            contextPromiseResolve = resolve;
+        });
+    }
+
+    // Set the new context
     contextPromiseResolved = true;
     contextPromiseResolve(context);
 };
