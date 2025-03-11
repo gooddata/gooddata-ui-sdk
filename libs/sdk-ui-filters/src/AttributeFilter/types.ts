@@ -110,6 +110,9 @@ export interface IAttributeFilterCoreProps {
      * @remarks
      * If provided it will use the provided filter to show currently given working selection (controlled component).
      * If not provided this component will use its own internal state (uncontrolled component).
+     *
+     * @alpha
+     * @deprecated dont use. Will be removed in future releases.
      */
     workingFilter?: IAttributeFilter;
 
@@ -252,6 +255,8 @@ export interface IAttributeFilterCoreProps {
      * If true, it is responsibility of a client, to appy filters when needed.
      * Typically uses onSelect callback to catch filter state.
      * Note, onApply callback is not called when this is true.
+     *
+     * @alpha
      */
     withoutApply?: boolean;
 

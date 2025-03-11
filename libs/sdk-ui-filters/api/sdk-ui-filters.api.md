@@ -421,7 +421,9 @@ export interface IAttributeFilterCoreProps {
     staticElements?: IAttributeElement[];
     title?: string;
     validateElementsBy?: ObjRef[];
+    // @alpha
     withoutApply?: boolean;
+    // @alpha @deprecated
     workingFilter?: IAttributeFilter;
     workspace?: string;
 }
@@ -752,8 +754,11 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     showDropDownHeaderMessage?: boolean;
     // (undocumented)
     weekStart?: WeekStart;
+    // @alpha
     withoutApply?: boolean;
+    // @alpha @deprecated
     workingExcludeCurrentPeriod?: boolean;
+    // @alpha @deprecated
     workingSelectedFilterOption?: DateFilterOption;
 }
 

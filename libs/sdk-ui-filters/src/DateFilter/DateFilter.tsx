@@ -64,18 +64,26 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
      * If true, it is responsibility of a client, to appy filters when needed.
      * Typically uses onSelect callback to catch filter state.
      * Note, onApply callback is not called when this is true.
+     *
+     * @alpha
      */
     withoutApply?: boolean;
 
     /**
      * Working filter option used for synchronization inner filter state with outer given state.
      * Makes a controlled component state out of this.
+     *
+     * @alpha
+     * @deprecated dont use. Will be removed in future releases.
      */
     workingSelectedFilterOption?: DateFilterOption;
 
     /**
      * Working filter exclude current period used for synchronization inner filter state with outer given state.
      * Makes a controlled component state out of this.
+     *
+     * @alpha
+     * @deprecated dont use. Will be removed in future releases.
      */
     workingExcludeCurrentPeriod?: boolean;
 

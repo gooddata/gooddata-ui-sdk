@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Support of new filter mode Apply all at once",
+            "comment": "Support of new filter mode Apply all at once in Dashboard",
             "type": "none"
         }
     ],
