@@ -147,11 +147,11 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
                                     bubbleTextId={presentationTooltip}
                                 />
                             )}
-                            <Header>{intl.formatMessage({ id: "options.menu.export.header.data" })}</Header>
                         </>
                     ) : null}
                     {isExportRawVisible ? (
                         <>
+                            <Header>{intl.formatMessage({ id: "options.menu.export.header.data" })}</Header>
                             {!exportXLSVDisabled ? (
                                 <MenuItem
                                     className="gd-export-options-xlsx"
