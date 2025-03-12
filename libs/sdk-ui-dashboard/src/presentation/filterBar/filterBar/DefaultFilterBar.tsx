@@ -17,6 +17,7 @@ import {
 } from "@gooddata/sdk-model";
 import {
     changeAttributeFilterSelection,
+    changeMigratedAttributeFilterSelection,
     changeDateFilterSelection,
     clearDateFilterSelection,
     selectEffectiveDateFilterAvailableGranularities,
@@ -81,7 +82,12 @@ export const useFilterBarProps = (): IFilterBarProps => {
 
     const dispatch = useDashboardDispatch();
     const onAttributeFilterChanged = useCallback(
-        (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef, isWorkingSelectionChange?: boolean) => {
+        (
+            filter: IDashboardAttributeFilter,
+            displayAsLabel?: ObjRef,
+            isWorkingSelectionChange?: boolean,
+            isResultOfMigration?: boolean,
+        ) => {
             const convertedFilter = supportElementUris
                 ? filter
                 : convertDashboardAttributeFilterElementsValuesToUris(filter);
@@ -110,6 +116,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
                             localIdentifier!,
                             filter.attributeFilter.displayForm,
                             isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                            isResultOfMigration,
                         ),
                     );
                 }
@@ -120,19 +127,31 @@ export const useFilterBarProps = (): IFilterBarProps => {
                 }
             }
 
-            dispatch(
-                isWorkingSelectionChange && enableDashboardFiltersApplyModes
-                    ? changeWorkingAttributeFilterSelection(
-                          localIdentifier!,
-                          attributeElements,
-                          negativeSelection ? "NOT_IN" : "IN",
-                      )
-                    : changeAttributeFilterSelection(
-                          localIdentifier!,
-                          attributeElements,
-                          negativeSelection ? "NOT_IN" : "IN",
-                      ),
-            );
+            if (isWorkingSelectionChange && enableDashboardFiltersApplyModes) {
+                dispatch(
+                    changeWorkingAttributeFilterSelection(
+                        localIdentifier!,
+                        attributeElements,
+                        negativeSelection ? "NOT_IN" : "IN",
+                    ),
+                );
+            } else if (isResultOfMigration) {
+                dispatch(
+                    changeMigratedAttributeFilterSelection(
+                        localIdentifier!,
+                        attributeElements,
+                        negativeSelection ? "NOT_IN" : "IN",
+                    ),
+                );
+            } else {
+                dispatch(
+                    changeAttributeFilterSelection(
+                        localIdentifier!,
+                        attributeElements,
+                        negativeSelection ? "NOT_IN" : "IN",
+                    ),
+                );
+            }
         },
         [
             dispatch,

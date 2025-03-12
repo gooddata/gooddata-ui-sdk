@@ -738,7 +738,10 @@ function useCallbacks(
     const handlerState = useAttributeFilterHandlerState(handler);
 
     const onSelectionChange = useCallback(
-        (onSelectionChangeInputCallback: OnApplyCallbackType | OnSelectCallbackType) => {
+        (
+            onSelectionChangeInputCallback: OnApplyCallbackType | OnSelectCallbackType,
+            isResultOfMigration: boolean,
+        ) => {
             const nextFilter = handler.getFilter();
             const isInverted = handler.getWorkingSelection()?.isInverted;
             const keys = handler.getWorkingSelection().keys;
@@ -749,7 +752,18 @@ function useCallbacks(
             if (enableDuplicatedLabelValuesInAttributeFilter) {
                 const displayAsLabel = handler.getDisplayAsLabel();
                 const { attribute } = handlerState;
-                if (!isPrimaryLabelUsed(nextFilter, attribute.data?.displayForms)) {
+                if (isPrimaryLabelUsed(nextFilter, attribute.data?.displayForms)) {
+                    onSelectionChangeInputCallback?.(
+                        nextFilter,
+                        isInverted,
+                        selectionMode,
+                        handler.getElementsByKey(keys),
+                        displayAsLabel,
+                        // filter was migrated after first render,
+                        // enableImmediateAttributeFilterDisplayAsLabelMigration ff is enabled
+                        isResultOfMigration,
+                    );
+                } else {
                     const primaryDisplayForm = attribute.data?.displayForms.find((df) => df.isPrimary);
                     if (!primaryDisplayForm) {
                         throw new Error("No primary display form found.");
@@ -762,14 +776,9 @@ function useCallbacks(
                         selectionMode,
                         handler.getElementsByKey(keys),
                         displayAsLabel,
-                    );
-                } else {
-                    onSelectionChangeInputCallback?.(
-                        nextFilter,
-                        isInverted,
-                        selectionMode,
-                        handler.getElementsByKey(keys),
-                        displayAsLabel,
+                        // filter was migrated when user changed it for the first time,
+                        // enableImmediateAttributeFilterDisplayAsLabelMigration ff is disabled
+                        true,
                     );
                 }
             } else {
@@ -796,7 +805,7 @@ function useCallbacks(
             const irrelevantKeysObj = selectionMode === "single" ? { irrelevantKeys: [] } : {};
             handler.changeSelection({ keys, isInverted, ...irrelevantKeysObj });
 
-            onSelectionChange(onSelectInputCallback);
+            onSelectionChange(onSelectInputCallback, false);
         },
         [
             handler,
@@ -864,16 +873,23 @@ function useCallbacks(
         enableDashboardFiltersApplyModes,
     ]);
 
+    const onApplyChanges = useCallback(
+        (isResultOfMigration: boolean) => {
+            handler.commitSelection();
+            setConnectedPlaceholderValue(handler.getFilter());
+            onSelectionChange(onApplyInputCallback, isResultOfMigration);
+        },
+        [handler, setConnectedPlaceholderValue, onSelectionChange, onApplyInputCallback],
+    );
+
     const onApply = useCallback(
         (applyRegardlessWithoutApplySetting: boolean = false) => {
             if (withoutApply && !applyRegardlessWithoutApplySetting) {
                 return;
             }
-            handler.commitSelection();
-            setConnectedPlaceholderValue(handler.getFilter());
-            onSelectionChange(onApplyInputCallback);
+            onApplyChanges(false);
         },
-        [handler, setConnectedPlaceholderValue, onSelectionChange, onApplyInputCallback, withoutApply],
+        [withoutApply, onApplyChanges],
     );
 
     const onOpen = useCallback(() => {
@@ -911,7 +927,8 @@ function useCallbacks(
         }
     }, [handler, supportsKeepingDependentFiltersSelection, supportsShowingFilteredElements]);
 
-    useReportMigratedFilter(handler, onApply, enableImmediateAttributeFilterDisplayAsLabelMigration);
+    const onFilterMigrated = useCallback(() => onApplyChanges(true), [onApplyChanges]);
+    useReportMigratedFilter(handler, onFilterMigrated, enableImmediateAttributeFilterDisplayAsLabelMigration);
 
     return {
         onApply,

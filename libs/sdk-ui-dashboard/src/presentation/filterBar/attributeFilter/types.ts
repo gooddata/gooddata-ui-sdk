@@ -25,12 +25,16 @@ export interface IDashboardAttributeFilterProps {
      *
      * @param filter - new attribute filter value.
      * @param displayAsLabel - label used for presentation of attribute filter elements in UI
-     * @param isWorkingSelectionChange - if the change is to applied (application of filters) or unapplied filters (filters staged before application).
+     * @param isWorkingSelectionChange - if the change is to applied (application of filters) or un-applied filters (filters staged before application).
+     * @param isResultOfMigration - internal value, specifies that filter change was caused by displayAsLabel
+     *  ad-hoc migration, the param will be removed once the usage of displayAsLabel is migrated on database
+     *  metadata level.
      */
     onFilterChanged: (
         filter: IDashboardAttributeFilter,
         displayAsLabel?: ObjRef,
         isWorkingSelectionChange?: boolean,
+        isResultOfMigration?: boolean,
     ) => void;
 
     /**

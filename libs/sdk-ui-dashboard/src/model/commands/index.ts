@@ -230,6 +230,7 @@ export {
     moveDateFilter,
     resetAttributeFilterSelection,
     changeAttributeFilterSelection,
+    changeMigratedAttributeFilterSelection,
     changeWorkingAttributeFilterSelection,
     setAttributeFilterParents,
     changeFilterContextSelection,

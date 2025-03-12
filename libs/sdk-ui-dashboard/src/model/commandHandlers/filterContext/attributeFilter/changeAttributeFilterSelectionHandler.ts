@@ -18,13 +18,17 @@ import {
     selectIsCrossFiltering,
     selectIsFilterFromCrossFilteringByLocalIdentifier,
 } from "../../../store/drill/drillSelectors.js";
-import { selectEnableDashboardFiltersApplyModes } from "../../../store/config/configSelectors.js";
+import {
+    selectEnableDashboardFiltersApplyModes,
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
+} from "../../../store/config/configSelectors.js";
 
 export function* changeAttributeFilterSelectionHandler(
     ctx: DashboardContext,
     cmd: ChangeAttributeFilterSelection,
 ): SagaIterator<void> {
-    const { elements, filterLocalId, selectionType, isWorkingSelectionChange } = cmd.payload;
+    const { elements, filterLocalId, selectionType, isWorkingSelectionChange, isResultOfMigration } =
+        cmd.payload;
 
     // validate filterLocalId
     const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
@@ -37,12 +41,18 @@ export function* changeAttributeFilterSelectionHandler(
     const enableDashboardFiltersApplyModes: ReturnType<typeof selectEnableDashboardFiltersApplyModes> =
         yield select(selectEnableDashboardFiltersApplyModes);
 
+    const enableImmediateAttributeFilterDisplayAsLabelMigration: ReturnType<
+        typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
+    > = yield select(selectEnableImmediateAttributeFilterDisplayAsLabelMigration);
+
     yield put(
         filterContextActions.updateAttributeFilterSelection({
             elements,
             filterLocalId,
             negativeSelection: selectionType === "NOT_IN",
             isWorkingSelectionChange: isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+            enableImmediateAttributeFilterDisplayAsLabelMigration,
+            isResultOfMigration,
         }),
     );
 

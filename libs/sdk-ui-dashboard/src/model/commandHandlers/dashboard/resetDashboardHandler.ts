@@ -33,7 +33,10 @@ import {
 } from "../../store/catalog/catalogSelectors.js";
 import { applyDefaultFilterView } from "./common/filterViews.js";
 import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
-import { selectFilterContextAttributeFilters } from "../../store/filterContext/filterContextSelectors.js";
+import {
+    selectFilterContextAttributeFilters,
+    selectOriginalFilterContextDefinition,
+} from "../../store/filterContext/filterContextSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { getMigratedAttributeFilters } from "./common/migratedAttributeFilters.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
@@ -115,6 +118,12 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
               )
             : persistedDashboard.attributeFilterConfigs;
 
+        const originalFilterContext: ReturnType<typeof selectOriginalFilterContextDefinition> = yield select(
+            selectOriginalFilterContextDefinition,
+        );
+        const effectiveOriginalFilterContext = isImmediateAttributeFilterMigrationEnabled
+            ? originalFilterContext
+            : undefined;
         // end of ad-hoc migration content
 
         const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
@@ -152,6 +161,7 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             resolvedInsightsValues,
             settings,
             isImmediateAttributeFilterMigrationEnabled,
+            effectiveOriginalFilterContext,
             migratedAttributeFilters,
             effectiveAttributeFilterConfigs,
             effectiveDateFilterConfig,
