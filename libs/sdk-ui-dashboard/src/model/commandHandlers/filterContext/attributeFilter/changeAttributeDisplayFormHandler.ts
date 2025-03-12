@@ -29,7 +29,7 @@ export function* changeAttributeDisplayFormHandler(
     ctx: DashboardContext,
     cmd: SetAttributeFilterDisplayForm,
 ): SagaIterator<void> {
-    const { filterLocalId, displayForm, isWorkingSelectionChange } = cmd.payload;
+    const { filterLocalId, displayForm, isWorkingSelectionChange, isResultOfMigration } = cmd.payload;
     const {
         backend: {
             capabilities: { supportsElementUris },
@@ -94,6 +94,8 @@ export function* changeAttributeDisplayFormHandler(
                     isWorkingSelectionChange &&
                     !enableImmediateAttributeFilterDisplayAsLabelMigration &&
                     enableDashboardFiltersApplyModes,
+                enableImmediateAttributeFilterDisplayAsLabelMigration,
+                isResultOfMigration,
             }),
         ]),
     );

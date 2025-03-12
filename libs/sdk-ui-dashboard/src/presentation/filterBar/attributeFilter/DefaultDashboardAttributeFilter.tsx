@@ -456,7 +456,14 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                 filter={attributeFilter}
                 workingFilter={enableDashboardFiltersApplyModes ? workingAttributeFilter : undefined}
                 displayAsLabel={displayAsLabel}
-                onApply={(newFilter, _isInverted, _selectionMode, _selectionTitles, displayAsLabel) => {
+                onApply={(
+                    newFilter,
+                    _isInverted,
+                    _selectionMode,
+                    _selectionTitles,
+                    displayAsLabel,
+                    isResultOfMigration,
+                ) => {
                     onFilterChanged(
                         attributeFilterToDashboardAttributeFilter(
                             newFilter,
@@ -464,6 +471,8 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                             filter.attributeFilter.title,
                         ),
                         displayAsLabel,
+                        false,
+                        isResultOfMigration,
                     );
                 }}
                 onSelect={(newFilter, isInverted, selectionMode, selectionTitles, displayAsLabel) => {

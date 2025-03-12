@@ -502,6 +502,12 @@ export interface ChangeAttributeFilterSelectionPayload {
      * Default is false - command changes applied filters.
      */
     readonly isWorkingSelectionChange?: boolean;
+    /**
+     * Internal value, specifies that filter change was caused by displayAsLabel
+     * ad-hoc migration, the param will be removed once the usage of displayAsLabel is migrated on database
+     * metadata level.
+     */
+    readonly isResultOfMigration?: boolean;
 }
 
 /**
@@ -565,6 +571,55 @@ export function changeAttributeFilterSelection(
             filterLocalId,
             elements,
             selectionType,
+        },
+    };
+}
+
+/**
+ * Creates the ChangeAttributeFilterSelection command for adhoc migrated attribute filter.
+ *
+ * @remarks
+ * Dispatching this command will result in application of element selection for the dashboard attribute filter
+ * with the provided id, or error in case of invalid update (e.g. non-existing filterLocalId).
+ *
+ * The attribute elements can be provided either using their URI (primary key) or value. Together with the
+ * elements you must indicate the selection type - either 'IN' or 'NOT_IN'.
+ *
+ * @remarks see {@link resetAttributeFilterSelection} for convenience function to select all attribute elements of
+ *  particular filter.
+ *
+ * See also {@link applyAttributeFilter} for convenient function when you have an {@link @gooddata/sdk-model#IAttributeFilter} instance.
+ *
+ *  @example
+ * ```
+ * const selectionType = isPositiveAttributeFilter ? "IN" : "NOT_IN";
+ * ```
+ *
+ * To create this command without a need to calculate the payload values from a {@link @gooddata/sdk-model#IFilter} object,
+ * we recommend to use {@link applyAttributeFilter} command creator instead.
+ *
+ * @param filterLocalId - dashboard attribute filter's local id
+ * @param elements - elements
+ * @param selectionType - selection type. either 'IN' or 'NOT_IN'
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @internal
+ */
+export function changeMigratedAttributeFilterSelection(
+    filterLocalId: string,
+    elements: IAttributeElements,
+    selectionType: AttributeFilterSelectionType,
+    correlationId?: string,
+): ChangeAttributeFilterSelection {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION",
+        correlationId,
+        payload: {
+            filterLocalId,
+            elements,
+            selectionType,
+            isResultOfMigration: true,
         },
     };
 }
@@ -905,6 +960,7 @@ export interface SetAttributeFilterDisplayFormPayload {
     filterLocalId: string;
     displayForm: ObjRef;
     isWorkingSelectionChange?: boolean;
+    isResultOfMigration?: boolean;
 }
 
 /**
@@ -927,12 +983,16 @@ export interface SetAttributeFilterDisplayForm extends IDashboardCommand {
  * @param filterLocalId - local identifier of the filter the display form is changed for
  * @param displayForm - newly selected display form
  * @param isWorkingSelectionChange - determines if command updates working filter context or applied filter context. Applied filter context is default.
+ * @param isResultOfMigration - internal value, specifies that filter change was caused by displayAsLabel
+ *  ad-hoc migration, the param will be removed once the usage of displayAsLabel is migrated on database
+ *  metadata level.
  * @returns change filter display form command
  */
 export function setAttributeFilterDisplayForm(
     filterLocalId: string,
     displayForm: ObjRef,
     isWorkingSelectionChange?: boolean,
+    isResultOfMigration?: boolean,
 ): SetAttributeFilterDisplayForm {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM",
@@ -940,6 +1000,7 @@ export function setAttributeFilterDisplayForm(
             filterLocalId,
             displayForm,
             isWorkingSelectionChange,
+            isResultOfMigration,
         },
     };
 }

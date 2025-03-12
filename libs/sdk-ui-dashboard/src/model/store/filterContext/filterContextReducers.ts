@@ -27,7 +27,6 @@ import {
     newAllTimeDashboardDateFilter,
     IDashboardAttributeFilterByDate,
 } from "@gooddata/sdk-model";
-import { IParentWithConnectingAttributes } from "../../types/attributeFilterTypes.js";
 import { AddDateFilterPayload } from "../../commands/index.js";
 import { generateFilterLocalIdentifier } from "../_infra/generators.js";
 import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
@@ -240,12 +239,21 @@ export interface IUpdateAttributeFilterSelectionPayload {
     readonly elements: IAttributeElements;
     readonly negativeSelection: boolean;
     readonly isWorkingSelectionChange?: boolean;
+    readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+    readonly isResultOfMigration?: boolean;
 }
 
 const updateAttributeFilterSelection: FilterContextReducer<
     PayloadAction<IUpdateAttributeFilterSelectionPayload>
 > = (state, action) => {
-    const { elements, filterLocalId, negativeSelection, isWorkingSelectionChange } = action.payload;
+    const {
+        elements,
+        filterLocalId,
+        negativeSelection,
+        isWorkingSelectionChange,
+        enableImmediateAttributeFilterDisplayAsLabelMigration,
+        isResultOfMigration,
+    } = action.payload;
     const filterContextDefinition = isWorkingSelectionChange
         ? state.workingFilterContextDefinition
         : state.filterContextDefinition;
@@ -282,6 +290,21 @@ const updateAttributeFilterSelection: FilterContextReducer<
                 negativeSelection,
             },
         };
+    }
+
+    // update original filters to not show "reset filters" button, that will revert filter to the wrong state
+    if (enableImmediateAttributeFilterDisplayAsLabelMigration && isResultOfMigration) {
+        const originalFilter = state.originalFilterContextDefinition?.filters.find(
+            (item: FilterContextItem) =>
+                isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
+        );
+        if (isDashboardAttributeFilter(originalFilter)) {
+            originalFilter.attributeFilter = {
+                ...originalFilter.attributeFilter,
+                attributeElements: elements,
+                negativeSelection,
+            };
+        }
     }
 };
 
@@ -488,8 +511,8 @@ const clearAttributeFiltersSelection: FilterContextReducer<
             currentFilterIndex
         ] as IDashboardAttributeFilter;
 
-        const isMultiSelect = currentFilter.attributeFilter.selectionMode !== "single";
-        currentFilter.attributeFilter.negativeSelection = isMultiSelect;
+        currentFilter.attributeFilter.negativeSelection =
+            currentFilter.attributeFilter.selectionMode !== "single";
         currentFilter.attributeFilter.attributeElements = isAttributeElementsByRef(
             currentFilter.attributeFilter.attributeElements,
         )
@@ -504,6 +527,8 @@ export interface IChangeAttributeDisplayFormPayload {
     readonly supportsElementUris?: boolean;
     readonly enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     readonly isWorkingSelectionChange?: boolean;
+    readonly enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+    readonly isResultOfMigration?: boolean;
 }
 
 /**
@@ -519,6 +544,8 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
         supportsElementUris,
         enableDuplicatedLabelValuesInAttributeFilter,
         isWorkingSelectionChange,
+        enableImmediateAttributeFilterDisplayAsLabelMigration,
+        isResultOfMigration,
     } = action.payload;
     const filterContextDefinition = isWorkingSelectionChange
         ? state.workingFilterContextDefinition
@@ -548,22 +575,28 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
     const currentFilter = filterContextDefinition.filters[currentFilterIndex] as IDashboardAttributeFilter;
 
     currentFilter.attributeFilter.displayForm = { ...displayForm };
-    const isMultiSelect = currentFilter.attributeFilter.selectionMode !== "single";
 
     if (!supportsElementUris && !enableDuplicatedLabelValuesInAttributeFilter) {
-        currentFilter.attributeFilter.negativeSelection = isMultiSelect;
+        currentFilter.attributeFilter.negativeSelection =
+            currentFilter.attributeFilter.selectionMode !== "single";
         currentFilter.attributeFilter.attributeElements = isAttributeElementsByRef(
             currentFilter.attributeFilter.attributeElements,
         )
             ? { uris: [] }
             : { values: [] };
     }
-};
 
-export interface IUpdateConnectingAttributesOnFilterAddedPayload {
-    addedFilterLocalId: string;
-    connectingAttributes: IParentWithConnectingAttributes[];
-}
+    // update original filters to not show "reset filters" button, that will revert filter to wrong state
+    if (enableImmediateAttributeFilterDisplayAsLabelMigration && isResultOfMigration) {
+        const originalFilter = state.originalFilterContextDefinition?.filters.find(
+            (item: FilterContextItem) =>
+                isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
+        );
+        if (isDashboardAttributeFilter(originalFilter)) {
+            originalFilter.attributeFilter.displayForm = { ...displayForm };
+        }
+    }
+};
 
 export interface IChangeAttributeTitlePayload {
     readonly filterLocalId: string;

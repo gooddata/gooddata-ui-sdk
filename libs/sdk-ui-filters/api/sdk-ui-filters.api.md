@@ -1141,7 +1141,7 @@ export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace
 export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, attributeFilter: IAttributeFilter, options: IMultiSelectAttributeFilterHandlerOptions): IMultiSelectAttributeFilterHandler;
 
 // @public (undocumented)
-export type OnApplyCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode, selectionTitles?: IAttributeElement[], displayAsLabel?: ObjRef) => void;
+export type OnApplyCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode, selectionTitles?: IAttributeElement[], displayAsLabel?: ObjRef, isResultOfMigration?: boolean) => void;
 
 // @public
 export type OnInitCancelCallbackPayload = CallbackPayloadWithCorrelation;

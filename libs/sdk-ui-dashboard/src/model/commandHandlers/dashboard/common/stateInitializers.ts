@@ -367,6 +367,10 @@ function getDisplayAsLabels(attributeFilterConfigs: IDashboardAttributeFilterCon
  *  the settings in the state; it uses the settings during layout sanitization
  * @param isImmediateAttributeFilterMigrationEnabled - enables transfer of changes made to the dashboard and
  *  its filter context in view mode to the edit mode.
+ * @param originalFilterContextDefinition - original filter definition that should be used instead of the
+ *  one taken from the persisted dashboard ("dashboard" parameter of this function). It contains ad-hoc
+ *  migrated attribute filters in state right after the migration, before potential user change to selection.
+ *  If not provided, the filter context from persisted dashboard will be used.
  * @param migratedAttributeFilters - ad-hoc migrated attribute filters in view mode that must be applied to
  *  the dashboard so user can save these changes (persisted dashboard state remains as is).
  * @param migratedAttributeFilterConfigs - ad-hoc migrated attribute filter configs in view mode that must be
@@ -386,6 +390,7 @@ export function* actionsToInitializeExistingDashboard(
     insights: IInsight[],
     settings: ISettings,
     isImmediateAttributeFilterMigrationEnabled: boolean,
+    originalFilterContextDefinition: IFilterContextDefinition | undefined,
     migratedAttributeFilters: IDashboardAttributeFilter[],
     migratedAttributeFilterConfigs: IDashboardAttributeFilterConfig[] = [],
     dateFilterConfig: IDateFilterConfig,
@@ -421,6 +426,11 @@ export function* actionsToInitializeExistingDashboard(
         ? mergedMigratedAttributeFilters(filterContextDefinition, migratedAttributeFilters)
         : filterContextDefinition;
 
+    const migratedOriginalFilterContext: IFilterContextDefinition =
+        isImmediateAttributeFilterMigrationEnabled && originalFilterContextDefinition !== undefined
+            ? originalFilterContextDefinition
+            : filterContextDefinition;
+
     const effectiveAttributeFilterConfigs = isImmediateAttributeFilterMigrationEnabled
         ? migratedAttributeFilterConfigs
         : dashboard.attributeFilterConfigs;
@@ -448,10 +458,9 @@ export function* actionsToInitializeExistingDashboard(
         insights,
         settings,
     );
-
     return [
         filterContextActions.setFilterContext({
-            originalFilterContextDefinition: filterContextDefinition,
+            originalFilterContextDefinition: migratedOriginalFilterContext,
             filterContextDefinition: migratedFilterContext,
             filterContextIdentity,
             attributeFilterDisplayForms,

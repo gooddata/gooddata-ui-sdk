@@ -250,6 +250,7 @@ function* loadExistingDashboard(
         insights,
         config.settings,
         config.settings.enableImmediateAttributeFilterDisplayAsLabelMigration ?? false,
+        undefined,
         [],
         dashboard.attributeFilterConfigs,
         effectiveDateFilterConfig.config,

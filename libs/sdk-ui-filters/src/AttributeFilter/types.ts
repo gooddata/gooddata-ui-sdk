@@ -36,6 +36,7 @@ export type OnApplyCallbackType = (
     selectionMode?: DashboardAttributeFilterSelectionMode,
     selectionTitles?: IAttributeElement[],
     displayAsLabel?: ObjRef,
+    isResultOfMigration?: boolean,
 ) => void;
 
 /**

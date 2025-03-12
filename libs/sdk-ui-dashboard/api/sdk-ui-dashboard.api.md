@@ -727,6 +727,7 @@ export function changeAttributeFilterSelection(filterLocalId: string, elements: 
 export interface ChangeAttributeFilterSelectionPayload {
     readonly elements: IAttributeElements;
     readonly filterLocalId: string;
+    readonly isResultOfMigration?: boolean;
     readonly isWorkingSelectionChange?: boolean;
     readonly selectionType: AttributeFilterSelectionType;
 }
@@ -1025,6 +1026,9 @@ export interface ChangeLayoutSectionHeaderPayload {
     readonly index: number | ILayoutSectionPath;
     readonly merge?: boolean;
 }
+
+// @internal
+export function changeMigratedAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string): ChangeAttributeFilterSelection;
 
 // @alpha
 export function changeNestedLayoutSectionHeader(index: ILayoutSectionPath, header: IDashboardLayoutSectionHeader, merge?: boolean, correlationId?: string): ChangeLayoutSectionHeader;
@@ -4360,7 +4364,7 @@ export interface IDashboardAttributeFilterProps {
     filter: IDashboardAttributeFilter;
     isDraggable?: boolean;
     onClose?: () => void;
-    onFilterChanged: (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef, isWorkingSelectionChange?: boolean) => void;
+    onFilterChanged: (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef, isWorkingSelectionChange?: boolean, isResultOfMigration?: boolean) => void;
     // @alpha
     readonly?: boolean;
     workingFilter?: IDashboardAttributeFilter;
@@ -8888,7 +8892,7 @@ export interface SetAttributeFilterDisplayForm extends IDashboardCommand {
 }
 
 // @beta
-export function setAttributeFilterDisplayForm(filterLocalId: string, displayForm: ObjRef, isWorkingSelectionChange?: boolean): SetAttributeFilterDisplayForm;
+export function setAttributeFilterDisplayForm(filterLocalId: string, displayForm: ObjRef, isWorkingSelectionChange?: boolean, isResultOfMigration?: boolean): SetAttributeFilterDisplayForm;
 
 // @beta (undocumented)
 export interface SetAttributeFilterDisplayFormPayload {
@@ -8896,6 +8900,8 @@ export interface SetAttributeFilterDisplayFormPayload {
     displayForm: ObjRef;
     // (undocumented)
     filterLocalId: string;
+    // (undocumented)
+    isResultOfMigration?: boolean;
     // (undocumented)
     isWorkingSelectionChange?: boolean;
 }

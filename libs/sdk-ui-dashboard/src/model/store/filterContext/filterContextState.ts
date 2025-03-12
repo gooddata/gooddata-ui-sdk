@@ -59,7 +59,7 @@ export interface FilterContextState {
      * This way we do not need to synchronize other fields, which makes it easier to maintain.
      *
      * This state is used when DashboardFiltersApplyMode is ALL_AT_ONCE.
-     * But can be used programatically when embedding the dashboard too.
+     * But can be used programmatically when embedding the dashboard too.
      *
      * @alpha
      */
