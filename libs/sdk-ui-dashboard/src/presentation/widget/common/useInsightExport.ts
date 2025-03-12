@@ -21,6 +21,8 @@ import {
     ExportSlidesInsightWidget,
     exportSlidesInsightWidget,
     selectSlideShowExportVisible,
+    selectIsExportableToCSV,
+    selectIsExportableToXLSX,
 } from "../../../model/index.js";
 import { useExportHandler } from "./useExportHandler.js";
 import { useExportDialogContext } from "../../dashboardContexts/index.js";
@@ -140,8 +142,12 @@ export const useInsightExport = (config: {
     const exportXLSXEnabled = !isExporting && isInsightExportable && isExportableToXlsx;
     const exportCSVRawEnabled = !isExporting;
 
-    const isExportRawVisible = settings.enableRawExports === true;
     const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
+
+    const canExportCSV = useDashboardSelector(selectIsExportableToCSV);
+    const canExportXLSX = useDashboardSelector(selectIsExportableToXLSX);
+    const canExportCSVAndXLSX = isInsightExportable && canExportCSV && canExportXLSX;
+    const isExportRawVisible = settings.enableRawExports === true && canExportCSVAndXLSX;
 
     const exportPdfPresentationDisabled = !!widget && !widget.localIdentifier;
     const exportPowerPointPresentationDisabled = !!widget && !widget.localIdentifier;

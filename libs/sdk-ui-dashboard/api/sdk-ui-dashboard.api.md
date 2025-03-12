@@ -8536,6 +8536,12 @@ export const selectIsExecutionResultReadyForExportByRef: (ref: ObjRef) => Dashbo
 // @public
 export const selectIsExport: DashboardSelector<boolean>;
 
+// @internal (undocumented)
+export const selectIsExportableToCSV: DashboardSelector<boolean>;
+
+// @internal (undocumented)
+export const selectIsExportableToXLSX: DashboardSelector<boolean>;
+
 // @alpha (undocumented)
 export const selectIsFilterAttributeSelectionOpen: DashboardSelector<boolean>;
 
