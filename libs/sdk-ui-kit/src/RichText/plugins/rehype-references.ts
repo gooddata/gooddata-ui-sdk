@@ -8,15 +8,20 @@ import { Parent } from "unist";
 import { EvaluatedMetric } from "../hooks/useEvaluatedMetrics.js";
 import { createReference } from "../helpers/references.js";
 
-import { REFERENCE_REGEX_MATCH, TextNode } from "./types.js";
+import { HtmlNode, REFERENCE_REGEX_MATCH, REFERENCE_REGEX_SPLIT, TextNode } from "./types.js";
 
 export function rehypeReferences(intl: IntlShape, metrics?: EvaluatedMetric[]) {
     return function () {
         return function (tree: Root) {
-            iterateTree(tree, {
-                onReference: (text, ref) => {
+            iterateTree(tree as HtmlNode, {
+                onTextNodeReference: (text, ref) => {
                     const metric = metrics?.find((m) => areObjRefsEqual(m.ref, ref));
                     return [createMetricValue(intl, text, metric, metric?.value)];
+                },
+                onTextRawReference: (ref) => {
+                    const metric = metrics?.find((m) => areObjRefsEqual(m.ref, ref));
+
+                    return metric?.value?.toString() ?? "";
                 },
             });
             return tree;
@@ -25,31 +30,97 @@ export function rehypeReferences(intl: IntlShape, metrics?: EvaluatedMetric[]) {
 }
 
 function iterateTree(
-    node: Parent | TextNode,
-    callbacks: { onReference: (text: TextNode, ref: IdentifierRef, id: string) => Parent[] },
+    node: HtmlNode,
+    callbacks: {
+        onTextNodeReference: (text: TextNode, ref: IdentifierRef, id: string) => Parent[];
+        onTextRawReference: (ref: IdentifierRef, id: string) => string;
+    },
 ): Parent[] {
     //Text type
     if (node.type === "text") {
-        REFERENCE_REGEX_MATCH.lastIndex = -1;
-        const match = REFERENCE_REGEX_MATCH.exec((node as TextNode).value);
-        if (match) {
-            const { ref } = createReference(match);
-            if (ref) {
-                return callbacks.onReference(node as TextNode, ref, match[2]);
-            }
+        const res = iterateReferenceMatch((node as TextNode).value, (ref, id) => {
+            return callbacks.onTextNodeReference(node as TextNode, ref, id);
+        });
+        return res.length ? res : [node];
+    }
+    //Image type
+    if (node.type === "element" && node.tagName === "img") {
+        if (node.properties.alt) {
+            node.properties.alt = iterateReferenceRawTextMatch(String(node.properties.alt), (ref, id) => {
+                return callbacks.onTextRawReference(ref, id);
+            });
+        }
+        if (node.properties.title) {
+            node.properties.title = iterateReferenceRawTextMatch(String(node.properties.title), (ref, id) => {
+                return callbacks.onTextRawReference(ref, id);
+            });
+        }
+        if (node.properties.src) {
+            const src = decodeURI(node.properties.src);
+            const update = iterateReferenceRawTextMatch(String(src), (ref, id) => {
+                return callbacks.onTextRawReference(ref, id);
+            });
+            node.properties.src = encodeURI(update);
         }
     }
-
-    // has children
+    //Anchor type
+    if (node.type === "element" && node.tagName === "a") {
+        if (node.properties.title) {
+            node.properties.title = iterateReferenceRawTextMatch(String(node.properties.title), (ref, id) => {
+                return callbacks.onTextRawReference(ref, id);
+            });
+        }
+        if (node.properties.href) {
+            const url = decodeURI(node.properties.href);
+            const updated = iterateReferenceRawTextMatch(String(url), (ref, id) => {
+                return callbacks.onTextRawReference(ref, id);
+            });
+            node.properties.href = encodeURI(updated);
+        }
+    }
     if (node.children) {
+        // has children
         node.children = node.children.reduce((acc, child) => {
-            return [...acc, ...iterateTree(child as Parent, callbacks)];
+            return [...acc, ...iterateTree(child as HtmlNode, callbacks)];
         }, []);
         return [node];
     }
 
     // no children
     return [node];
+}
+
+function iterateReferenceRawTextMatch(
+    value: string,
+    onMatch: (ref: IdentifierRef, id: string) => string,
+): string {
+    const items = value.split(REFERENCE_REGEX_SPLIT);
+    return items
+        .map((item) => {
+            const match = REFERENCE_REGEX_MATCH.exec(item);
+            if (match) {
+                const { ref } = createReference(match);
+                if (ref) {
+                    return onMatch(ref, match[2]);
+                }
+            }
+            return item;
+        })
+        .join("");
+}
+
+function iterateReferenceMatch<T>(value: string, onMatch: (ref: IdentifierRef, id: string) => T[]): T[] {
+    const items: T[] = [];
+    REFERENCE_REGEX_MATCH.lastIndex = -1;
+    let match = REFERENCE_REGEX_MATCH.exec(value);
+    while (match) {
+        const { ref } = createReference(match);
+        if (ref) {
+            items.push(...onMatch(ref, match[2]));
+        }
+        match = REFERENCE_REGEX_MATCH.exec(value);
+    }
+    return items;
 }
 
 function createMetricValue(
