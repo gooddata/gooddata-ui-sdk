@@ -7,18 +7,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@ag-grid-community/all-modules",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@ag-grid-community/core",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@ag-grid-community/react",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "@babel/cli",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -477,6 +465,14 @@
     {
       "name": "@welldone-software/why-did-you-render",
       "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "ag-grid-community",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "ag-grid-react",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "async",

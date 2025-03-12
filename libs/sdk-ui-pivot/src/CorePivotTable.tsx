@@ -1,16 +1,19 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     AgGridEvent,
-    AllCommunityModules,
+    AllCommunityModule,
     BodyScrollEvent,
     ColumnResizedEvent,
     GridReadyEvent,
     SortChangedEvent,
     PinnedRowDataChangedEvent,
-} from "@ag-grid-community/all-modules";
+    ModuleRegistry,
+    provideGlobalGridOptions,
+} from "ag-grid-community";
+
 import { v4 as uuidv4 } from "uuid";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { AgGridReact } from "@ag-grid-community/react";
+import { AgGridReact } from "ag-grid-react";
 import React from "react";
 import { injectIntl } from "react-intl";
 import cx from "classnames";
@@ -57,6 +60,12 @@ import { TableFacadeInitializer } from "./impl/tableFacadeInitializer.js";
 import { ICorePivotTableState, InternalTableState } from "./tableState.js";
 import { isColumnAutoresizeEnabled } from "./impl/resizing/columnSizing.js";
 import cloneDeep from "lodash/cloneDeep.js";
+
+// Register all Community features
+ModuleRegistry.registerModules([AllCommunityModule]);
+
+// Mark all grids as using legacy themes
+provideGlobalGridOptions({ theme: "legacy" });
 
 const DEFAULT_COLUMN_WIDTH = 200;
 const WATCHING_TABLE_RENDERED_INTERVAL = 500;
@@ -296,7 +305,6 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     };
 
     public componentDidMount(): void {
-        this.alertParentWrapperMissingHeight();
         this.internal.initializer = this.initialize(this.props.execution);
     }
 
@@ -446,23 +454,6 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         );
     }
 
-    /**
-     * Checks DOM if height has been set on PivotTable parent wrapper. If height has not been set,
-     * PivotTable will not be rendered correctly. Therefore, we need to inform the user at least on the console
-     * on what is happening.
-     *
-     * @internal
-     */
-    private alertParentWrapperMissingHeight(): void {
-        const parentWrapper = document.getElementById(this.pivotTableId)?.parentElement;
-        const parentHeight = parentWrapper?.offsetHeight ?? 0;
-        if (parentHeight < 20) {
-            console.warn(
-                `The wrapper height of the pivot table has not been set or is suspiciously small. This might cause pivot table rendering issues. If so, please set an appropriate height for the wrapper. Use document.getElementById("${this.pivotTableId}") to find the PivotTable element in the DOM, which will help you to identify its wrapper.`,
-            );
-        }
-    }
-
     private stopEventWhenResizeHeader(e: React.MouseEvent): void {
         // Do not propagate event when it originates from the table resizer.
         // This means for example that we can resize columns without triggering drag in the application.
@@ -564,7 +555,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
                     style={style}
                     ref={this.setContainerRef}
                 >
-                    <AgGridReact {...this.internal.gridOptions} modules={AllCommunityModules} />
+                    <AgGridReact {...this.internal.gridOptions} modules={[AllCommunityModule]} />
                     {shouldRenderLoadingOverlay ? this.renderLoading() : null}
                 </div>
             </div>
@@ -578,7 +569,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     private onGridReady = (event: GridReadyEvent) => {
         invariant(this.internal.table);
 
-        this.internal.table.finishInitialization(event.api, event.columnApi);
+        this.internal.table.finishInitialization(event.api, event.api);
         this.updateDesiredHeight();
 
         if (this.getGroupRows()) {
@@ -586,9 +577,15 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         }
 
         this.internal.table.setTooltipFields();
+
+        // when table contains only headers, the onFirstDataRendered
+        // is not triggered; trigger it manually
+        if (this.internal.table.isEmpty()) {
+            this.onFirstDataRendered();
+        }
     };
 
-    private onFirstDataRendered = async (_event: AgGridEvent) => {
+    private onFirstDataRendered = async (_event?: AgGridEvent) => {
         invariant(this.internal.table);
 
         if (this.internal.firstDataRendered) {
@@ -681,7 +678,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             return;
         }
 
-        const sortItems = this.internal.table.createSortItems(event.columnApi.getAllColumns()!);
+        const sortItems = this.internal.table.createSortItems(event.api.getAllGridColumns()!);
 
         // Changing sort may cause subtotals to no longer be reasonably placed - remove them if that is the case
         // This applies only to totals in ATTRIBUTE bucket, column totals are not affected by sorting
