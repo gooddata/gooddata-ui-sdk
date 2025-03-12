@@ -6,11 +6,12 @@ import {
     DashboardDateFilterConfigMode,
     FilterContextItem,
     IAttributeElement,
+    getAttributeElementsItems,
     isDashboardAttributeFilter,
+    IDashboardAttributeFilterConfig,
 } from "@gooddata/sdk-model";
 
 import { FilterNaming, useFiltersNamings } from "../../../_staging/sharedHooks/useFiltersNamings.js";
-import { dashboardAttributeFilterToAttributeFilter } from "../../../converters/index.js";
 import {
     selectAttributeFilterConfigsOverrides,
     selectDateFilterConfigOverrides,
@@ -51,7 +52,11 @@ export function useDashboardRelatedFilters(run: boolean): {
                 if (!run) {
                     return dashboardFilters;
                 }
-                return Promise.all(dashboardFilters.map((f) => updateLabelElements(backend, workspaceId, f)));
+                return Promise.all(
+                    dashboardFilters.map((f) =>
+                        updateLabelElements(backend, workspaceId, attributeFiltersConfig, f),
+                    ),
+                );
             },
         },
         [run, dashboardFilters],
@@ -83,26 +88,39 @@ export function useDashboardRelatedFilters(run: boolean): {
 async function updateLabelElements(
     backend: IAnalyticalBackend,
     workspaceId: string,
+    attributeFiltersConfig: IDashboardAttributeFilterConfig[],
     dashboardFilter: FilterContextItem,
 ): Promise<FilterContextItem> {
     // Skip filters that are not attribute filters
-    if (!isDashboardAttributeFilter(dashboardFilter)) {
-        return dashboardFilter;
-    }
+    if (isDashboardAttributeFilter(dashboardFilter)) {
+        const config = attributeFiltersConfig.find(
+            (c) => c.localIdentifier === dashboardFilter.attributeFilter.localIdentifier,
+        );
+        const values = getAttributeElementsItems(dashboardFilter.attributeFilter.attributeElements);
+        const query = backend
+            .workspace(workspaceId)
+            .attributes()
+            .elements()
+            .forDisplayForm(config?.displayAsLabel ?? dashboardFilter.attributeFilter.displayForm)
+            .withOptions({
+                elements: {
+                    values,
+                },
+                filterByPrimaryLabel: true,
+            });
 
-    const filter = dashboardAttributeFilterToAttributeFilter(dashboardFilter);
+        const data = await query.query();
+        const all: IAttributeElement[] = await data.all();
 
-    const query = backend.workspace(workspaceId).attributes().elements().forFilter(filter);
-    const data = await query.query();
-    const all: IAttributeElement[] = await data.all();
-
-    return {
-        ...dashboardFilter,
-        attributeFilter: {
-            ...dashboardFilter.attributeFilter,
-            attributeElements: {
-                values: all.map((a) => a.title),
+        return {
+            ...dashboardFilter,
+            attributeFilter: {
+                ...dashboardFilter.attributeFilter,
+                attributeElements: {
+                    values: all.map((a) => a.title),
+                },
             },
-        },
-    };
+        };
+    }
+    return dashboardFilter;
 }
