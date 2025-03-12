@@ -66,6 +66,7 @@ export interface IOverlayState {
         right: number;
         align: string;
     };
+    initialVisiblePart: number;
     overflow?: string;
     scrollTop?: number;
     observedHeight?: number;

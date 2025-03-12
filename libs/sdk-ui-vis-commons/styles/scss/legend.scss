@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:color";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables" as bubble-variables;
@@ -200,6 +200,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
 
         &.position-dialog {
             margin-left: 0;
+            overflow-x: auto;
 
             .circle-min-value {
                 margin-left: 10px;
@@ -241,7 +242,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
                 justify-content: flex-start;
                 flex-wrap: wrap;
                 flex-direction: column;
-                overflow: hidden;
+                // overflow: hidden;
                 width: auto;
                 min-width: 0; // hack for FF
                 max-width: 100%; // hack for IE
@@ -630,6 +631,15 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
         &::before,
         &::after {
             top: 93px;
+        }
+    }
+}
+
+.target-tr.self-tl.truncated,
+.target-tl.self-tr.truncated {
+    .legend-popup-dialog-content.zoomed {
+        @media #{kit-variables.$medium-up} {
+            width: 200px;
         }
     }
 }

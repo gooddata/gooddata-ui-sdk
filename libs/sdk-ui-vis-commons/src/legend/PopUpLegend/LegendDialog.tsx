@@ -1,6 +1,7 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { Overlay, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import cx from "classnames";
+import { ZoomAwareOverlay, useMediaQuery, useIsZoomed } from "@gooddata/sdk-ui-kit";
 import { legendDialogAlignPoints, legendMobileDialogAlignPoints } from "./alignPoints.js";
 
 const LegendDialogWrapper: React.FC<{ children: (isMobile: boolean) => JSX.Element }> = ({ children }) => {
@@ -17,13 +18,19 @@ interface ILegendDialogContent {
 const LegendDialogContent: React.FC<ILegendDialogContent> = (props) => {
     const { title, onCloseDialog, children } = props;
 
+    const isZoomed = useIsZoomed(1.2);
+
     const onClose = (e: React.MouseEvent) => {
         e.preventDefault();
         onCloseDialog();
     };
 
+    const className = cx("legend-popup-dialog", "legend-popup-dialog-content", {
+        zoomed: isZoomed,
+    });
+
     return (
-        <div className="legend-popup-dialog legend-popup-dialog-content">
+        <div className={className}>
             <div className="legend-header">
                 <div className="legend-header-title">{title}</div>
                 <div
@@ -55,7 +62,7 @@ export const LegendDialog: React.FC<ILegendDialogProps> = (props) => {
         <LegendDialogWrapper>
             {(isMobile) => {
                 return (
-                    <Overlay
+                    <ZoomAwareOverlay
                         alignTo={alignTo}
                         alignPoints={isMobile ? legendMobileDialogAlignPoints : legendDialogAlignPoints}
                         closeOnOutsideClick={!isMobile}
@@ -65,7 +72,7 @@ export const LegendDialog: React.FC<ILegendDialogProps> = (props) => {
                         <LegendDialogContent title={name} onCloseDialog={onCloseDialog}>
                             {children}
                         </LegendDialogContent>
-                    </Overlay>
+                    </ZoomAwareOverlay>
                 );
             }}
         </LegendDialogWrapper>
