@@ -205,6 +205,8 @@ export {
     selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
 } from "./widgetDrills/widgetDrillSelectors.js";
 
+export { selectIsExportableToCSV, selectIsExportableToXLSX } from "./widgetExports/widgetExportsSelectors.js";
+
 export {
     selectDeleteVisible,
     selectFilterViewsVisible,
