@@ -47,7 +47,8 @@
         color: var(--gd-palette-complementary-7, #6d7680);
     }
 
-    a {
+    a,
+    a * {
         cursor: pointer;
         color: variables.$gd-palette-primary-base;
         text-decoration: underline;
@@ -56,6 +57,10 @@
             color: variables.$gd-color-text;
             text-decoration: underline;
         }
+    }
+    a:hover,
+    a:hover * {
+        color: variables.$gd-color-text;
     }
 
     h1,

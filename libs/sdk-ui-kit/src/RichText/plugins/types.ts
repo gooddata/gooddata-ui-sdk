@@ -2,7 +2,8 @@
 import { Parent } from "unist";
 import { Options } from "react-markdown";
 
-export type TextNode = Parent & { value: string };
+export type HtmlNode = Parent & { type: string; tagName: string; properties: Record<string, string> };
+export type TextNode = HtmlNode & { value: string };
 
 export const EMPTY_OPTIONS: Readonly<Options> = {};
 
