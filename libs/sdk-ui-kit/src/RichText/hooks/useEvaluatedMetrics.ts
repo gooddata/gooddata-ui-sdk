@@ -1,6 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { useBackend, useCancelablePromise, useExecutionDataView, useWorkspace } from "@gooddata/sdk-ui";
+import {
+    DataPoint,
+    useBackend,
+    useCancelablePromise,
+    useExecutionDataView,
+    useWorkspace,
+} from "@gooddata/sdk-ui";
 import {
     IFilter,
     IMeasure,
@@ -16,7 +22,7 @@ export type EvaluatedMetric = {
     def: IMeasure;
     header: IResultHeader;
     ref: ObjRef;
-    value: number | string | null | undefined;
+    data: DataPoint;
 };
 
 export function useEvaluatedMetrics(references: ReferenceMap, filters: IFilter[], enabled: boolean) {
@@ -47,18 +53,18 @@ export function useEvaluatedMetrics(references: ReferenceMap, filters: IFilter[]
                 }
 
                 const headerItems = executionResult.meta().allHeaders();
-                const data = executionResult.data().series().toArray();
+                const dataSeries = executionResult.data().series().toArray();
                 const definition = executionResult.definition;
                 const items: Array<EvaluatedMetric> = [];
 
                 headerItems[0][0].forEach((header, i) => {
                     const def = definition.measures[i];
-                    const value = data[i].rawData()[0];
+                    const data = dataSeries[i].dataPoints()[0];
 
                     if (isMeasureDefinition(def.measure.definition)) {
                         items.push({
                             def,
-                            value,
+                            data,
                             header,
                             ref: def.measure.definition.measureDefinition.item,
                         });
@@ -85,10 +91,6 @@ function getMeasures(references: ReferenceMap) {
     return metrics.map((ref, i) => {
         return newMeasure(ref, (m) => {
             m.localId(`m_${i}`);
-            //TODO: Fill data somehow
-            // m.alias("");
-            // m.title("");
-            // m.format("");
             return m;
         });
     });
