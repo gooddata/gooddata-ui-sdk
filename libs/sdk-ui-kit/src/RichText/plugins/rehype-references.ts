@@ -16,12 +16,11 @@ export function rehypeReferences(intl: IntlShape, metrics?: EvaluatedMetric[]) {
             iterateTree(tree as HtmlNode, {
                 onTextNodeReference: (text, ref) => {
                     const metric = metrics?.find((m) => areObjRefsEqual(m.ref, ref));
-                    return [createMetricValue(intl, text, metric, metric?.value)];
+                    return [createMetricValue(intl, text, metric)];
                 },
                 onTextRawReference: (ref) => {
                     const metric = metrics?.find((m) => areObjRefsEqual(m.ref, ref));
-
-                    return metric?.value?.toString() ?? "";
+                    return metric.data.formattedValue();
                 },
             });
             return tree;
@@ -123,12 +122,7 @@ function iterateReferenceMatch<T>(value: string, onMatch: (ref: IdentifierRef, i
     return items;
 }
 
-function createMetricValue(
-    intl: IntlShape,
-    text: TextNode,
-    metric: EvaluatedMetric,
-    value: number | string | null | undefined,
-) {
+function createMetricValue(intl: IntlShape, text: TextNode, metric: EvaluatedMetric) {
     if (!metric) {
         return {
             type: "element",
@@ -140,6 +134,9 @@ function createMetricValue(
             children: [{ type: "text", value: `(${intl.formatMessage({ id: "richText.no_fetch" })})` }],
         };
     }
+
+    const value = metric.data.rawValue;
+
     if (value === null || value === undefined) {
         return {
             type: "element",
@@ -158,6 +155,6 @@ function createMetricValue(
             className: ["gd-rich-text-metric-value"],
         },
         position: text.position,
-        children: [{ type: "text", value: value.toString() }],
+        children: [{ type: "text", value: metric.data.formattedValue() }],
     };
 }
