@@ -140,9 +140,8 @@ export const useInsightExport = (config: {
     const exportXLSXEnabled = !isExporting && isInsightExportable && isExportableToXlsx;
     const exportCSVRawEnabled = !isExporting;
 
+    const isExportRawVisible = settings.enableRawExports === true;
     const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
-    const canExportCSVAndXLSX = isInsightExportable && isExportableToCsv && isExportableToXlsx;
-    const isExportRawVisible = settings.enableRawExports === true && canExportCSVAndXLSX;
 
     const exportPdfPresentationDisabled = !!widget && !widget.localIdentifier;
     const exportPowerPointPresentationDisabled = !!widget && !widget.localIdentifier;
