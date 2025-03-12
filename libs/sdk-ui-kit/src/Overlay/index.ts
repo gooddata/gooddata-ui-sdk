@@ -1,6 +1,7 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 export * from "./typings.js";
 export { Overlay } from "./Overlay.js";
+export * from "./ZoomAwareOverlay.js";
 export { FullScreenOverlay } from "./FullScreenOverlay.js";
 export { OverlayController } from "./OverlayController.js";
 export type { IOverlayControllerProviderProps } from "./OverlayContext.js";

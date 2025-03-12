@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 @use "variables";
 
 .gd-description-panel-bubble {
@@ -62,6 +62,10 @@
         overflow: auto;
         padding: 0 15px;
     }
+}
+
+.truncated .gd-description-panel.zoomed {
+    max-height: 200px;
 }
 
 .gd-ellipsis-text {
