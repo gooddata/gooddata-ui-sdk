@@ -4,6 +4,18 @@ import { useIntl } from "react-intl";
 import cx from "classnames";
 import { IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
 
+import {
+    changeLayoutSectionHeader,
+    selectEnableRichTextDescriptions,
+    uiActions,
+    useDashboardDispatch,
+    useDashboardSelector,
+    selectEnableDashboardDescriptionDynamicHeight,
+    selectEnableRichTextDynamicReferences,
+} from "../../../../model/index.js";
+import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
+import { useRichTextFilters } from "../../../../_staging/sharedHooks/useRichTextFilters.js";
+
 import { EditableLabelWithBubble } from "./EditableLabelWithBubble.js";
 import {
     getTitle,
@@ -13,14 +25,6 @@ import {
     MAX_DESCRIPTION_LENGTH,
     DESCRIPTION_LENGTH_WARNING_LIMIT,
 } from "./sectionHeaderHelper.js";
-import {
-    changeLayoutSectionHeader,
-    selectEnableRichTextDescriptions,
-    uiActions,
-    useDashboardDispatch,
-    useDashboardSelector,
-    selectEnableDashboardDescriptionDynamicHeight,
-} from "../../../../model/index.js";
 
 const richTextTooltipAlignPoints: IAlignPoint[] = [
     { align: "bl tl", offset: { x: 6, y: 1 } },
@@ -37,9 +41,15 @@ export interface ISectionHeaderEditableProps {
 
 export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.Element {
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
+    const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
+
     const isDescriptionDynamicHeightEnabled = useDashboardSelector(
         selectEnableDashboardDescriptionDynamicHeight,
     );
+
+    const { LoadingComponent } = useDashboardComponentsContext();
+    const filters = useRichTextFilters();
+
     const description = useRichText ? props.description : getDescription(props.description);
     const title = getTitle(props.title);
     const { index } = props;
@@ -152,6 +162,9 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
                                     : richTextTooltipAlignPoints
                             }
                             autoResize={isDescriptionDynamicHeightEnabled}
+                            referencesEnabled={isRichTextReferencesEnabled}
+                            filters={filters}
+                            LoadingComponent={LoadingComponent}
                         />
                     </div>
                 ) : (

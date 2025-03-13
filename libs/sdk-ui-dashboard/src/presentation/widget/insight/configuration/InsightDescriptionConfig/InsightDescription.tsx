@@ -1,9 +1,14 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { TextAreaWithSubmit, IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
-import { selectEnableRichTextDescriptions, useDashboardSelector } from "../../../../../model/index.js";
+import { IFilter } from "@gooddata/sdk-model";
+import {
+    selectEnableRichTextDescriptions,
+    selectEnableRichTextDynamicReferences,
+    useDashboardSelector,
+} from "../../../../../model/index.js";
 
 const richTextTooltipAlignPoints: IAlignPoint[] = [
     { align: "bl tl", offset: { x: 4, y: 5 } },
@@ -14,10 +19,14 @@ interface IInsightDescriptionProps {
     description: string;
     readOnly?: boolean;
     setDescription: (newDescription: string) => void;
+    LoadingComponent?: React.ComponentType;
+    insightFilters?: IFilter[];
 }
 
 export function InsightDescription(props: IInsightDescriptionProps) {
-    const { description, setDescription, readOnly = false } = props;
+    const { description, setDescription, readOnly = false, LoadingComponent, insightFilters } = props;
+    const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
+
     const intl = useIntl();
     const placeholder = intl.formatMessage({
         id: "configurationPanel.visualprops.descriptionPlaceholder",
@@ -73,6 +82,9 @@ export function InsightDescription(props: IInsightDescriptionProps) {
                         }
                         showTooltip={isRichTextEditing}
                         tooltipAlignPoints={richTextTooltipAlignPoints}
+                        referencesEnabled={isRichTextReferencesEnabled}
+                        LoadingComponent={LoadingComponent}
+                        filters={insightFilters}
                     />
                 </div>
             ) : (

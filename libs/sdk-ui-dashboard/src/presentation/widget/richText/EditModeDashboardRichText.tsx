@@ -24,8 +24,8 @@ import {
 import { FormattedMessage, useIntl } from "react-intl";
 import { usePrevious } from "@gooddata/sdk-ui";
 import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../presentation/constants/index.js";
+import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { useRichTextFilters } from "./useRichTextFilters.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_FILTER_Z_INDEX);
 

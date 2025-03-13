@@ -10,6 +10,7 @@ import {
     IInsightWidget,
     IMeasure,
     ISeparators,
+    IFilter,
 } from "@gooddata/sdk-model";
 import {
     ExplicitDrill,
@@ -144,6 +145,11 @@ export interface IDashboardInsightProps {
      * @alpha
      */
     onDrillToCustomUrl?: OnDrillToCustomUrlSuccess;
+
+    /**
+     * @internal
+     */
+    onWidgetFiltersReady?: (filters?: IFilter[]) => void;
 
     /**
      * @alpha

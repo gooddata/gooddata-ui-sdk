@@ -1,6 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
-import { IInsight, IInsightWidget, ScreenSize } from "@gooddata/sdk-model";
-import { DescriptionExportData } from "src/presentation/export/types.js";
+import { IFilter, IInsight, IInsightWidget, ScreenSize } from "@gooddata/sdk-model";
+import React from "react";
+
+import { DescriptionExportData } from "../../export/index.js";
 
 export interface IInsightWidgetDescriptionTriggerProps {
     widget: IInsightWidget;
@@ -14,4 +16,7 @@ export interface IDescriptionClickTriggerProps {
     description?: string;
     onOpen?: () => void;
     useRichText?: boolean;
+    useReferences?: boolean;
+    LoadingComponent?: React.ComponentType;
+    filters?: IFilter[];
 }

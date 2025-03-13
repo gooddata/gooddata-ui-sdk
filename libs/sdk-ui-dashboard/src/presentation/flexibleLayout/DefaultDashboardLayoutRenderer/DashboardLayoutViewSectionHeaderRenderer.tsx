@@ -5,6 +5,7 @@ import isEmpty from "lodash/isEmpty.js";
 
 import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
 import { useLayoutSectionsConfiguration } from "../../widget/common/useLayoutSectionsConfiguration.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
 import { DashboardLayoutSectionHeaderDescription } from "./DashboardLayoutSectionHeaderDescription.js";
 import { HeaderExportData } from "../../export/index.js";
@@ -19,6 +20,8 @@ export const DashboardLayoutViewSectionHeader: React.FC<IDashboardLayoutSectionH
     exportData,
 }) => {
     const { areSectionHeadersEnabled } = useLayoutSectionsConfiguration(section.layout().raw());
+    const { LoadingComponent } = useDashboardComponentsContext();
+
     const title = section.title();
     const description = section.description();
     if (!areSectionHeadersEnabled || (isEmpty(title) && isEmpty(description))) {
@@ -45,6 +48,7 @@ export const DashboardLayoutViewSectionHeader: React.FC<IDashboardLayoutSectionH
                         <DashboardLayoutSectionHeaderDescription
                             description={description}
                             exportData={exportData?.description}
+                            LoadingComponent={LoadingComponent}
                         />
                     ) : null}
                 </div>

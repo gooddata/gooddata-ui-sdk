@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import isEmpty from "lodash/isEmpty.js";
 import { IntlWrapper } from "@gooddata/sdk-ui";
@@ -6,6 +6,7 @@ import { EllipsisText } from "./EllipsisText.js";
 import { ArrowOffsets, Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 import { useMediaQuery } from "../responsive/index.js";
 import { RichText } from "../RichText/index.js";
+import { IFilter } from "@gooddata/sdk-model";
 import cx from "classnames";
 
 /**
@@ -68,6 +69,9 @@ export interface IDescriptionPanelProps {
     onBubbleOpen?: () => void;
     arrowOffsets?: ArrowOffsets;
     useRichText?: boolean;
+    useReferences?: boolean;
+    LoadingComponent?: React.ComponentType;
+    filters?: IFilter[];
 }
 
 /**
@@ -126,7 +130,14 @@ const DescriptionPanelCore: React.FC<IDescriptionPanelProps> = (props) => {
 };
 
 const DescriptionPanelContentCore: React.FC<IDescriptionPanelProps> = (props) => {
-    const { title, description, useRichText = false } = props;
+    const {
+        title,
+        description,
+        useRichText = false,
+        useReferences = false,
+        LoadingComponent,
+        filters,
+    } = props;
 
     return (
         <div className="gd-description-panel s-gd-description-panel">
@@ -134,7 +145,13 @@ const DescriptionPanelContentCore: React.FC<IDescriptionPanelProps> = (props) =>
             {!isEmpty(description) && (
                 <div className="gd-description-panel-content">
                     {useRichText ? (
-                        <RichText value={description} renderMode="view" />
+                        <RichText
+                            value={description}
+                            renderMode="view"
+                            referencesEnabled={useReferences}
+                            filters={filters}
+                            LoadingComponent={LoadingComponent}
+                        />
                     ) : (
                         <EllipsisText text={description} />
                     )}

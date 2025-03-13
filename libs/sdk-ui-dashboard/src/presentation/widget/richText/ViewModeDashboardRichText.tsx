@@ -3,8 +3,8 @@ import React from "react";
 import { RichText } from "@gooddata/sdk-ui-kit";
 
 import { selectEnableRichTextDynamicReferences, useDashboardSelector } from "../../../model/index.js";
+import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 
-import { useRichTextFilters } from "./useRichTextFilters.js";
 import { IDashboardRichTextProps } from "./types.js";
 
 /**
