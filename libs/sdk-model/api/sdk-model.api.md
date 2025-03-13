@@ -4108,6 +4108,7 @@ export interface IUser {
     fullName?: string;
     lastName?: string;
     login: string;
+    organizationId?: string;
     organizationName?: string;
     permissions?: string[];
     ref: ObjRef;
