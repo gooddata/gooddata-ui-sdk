@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Add an option to specify chart tooltip class name",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "me@achumak.name"
+}
