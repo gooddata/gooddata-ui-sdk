@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { Component, forwardRef, createRef } from "react";
 // eslint-disable-next-line react/no-deprecated
 import ReactDOM, { unmountComponentAtNode } from "react-dom";
@@ -326,13 +326,13 @@ describe("Overlay", () => {
     describe("Portal DOM node", () => {
         it("should create node when Overlay constructed", () => {
             renderOverlayComponent();
-            expect(screen.getByLabelText("portal-scroll-anchor")).toBeInTheDocument();
+            expect(screen.getByTestId("portal-scroll-anchor")).toBeInTheDocument();
         });
 
         it("should remove node asynchronously after component unmount", () => {
             const { unmount } = renderOverlayComponent();
             unmount();
-            expect(screen.queryByLabelText("portal-scroll-anchor")).not.toBeInTheDocument();
+            expect(screen.getAllByTestId("portal-scroll-anchor")).not.toBeInTheDocument();
         });
     });
 });

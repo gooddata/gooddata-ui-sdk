@@ -8,6 +8,7 @@ import { useMediaQuery } from "../responsive/index.js";
 import { RichText } from "../RichText/index.js";
 import { IFilter } from "@gooddata/sdk-model";
 import cx from "classnames";
+import { useIsZoomed } from "../ZoomContext/ZoomContext.js";
 
 /**
  * @internal
@@ -139,8 +140,14 @@ const DescriptionPanelContentCore: React.FC<IDescriptionPanelProps> = (props) =>
         filters,
     } = props;
 
+    const isZoomed = useIsZoomed(1.2); // ignore slight zoom in
+
+    const className = cx("gd-description-panel s-gd-description-panel", {
+        zoomed: isZoomed,
+    });
+
     return (
-        <div className="gd-description-panel s-gd-description-panel">
+        <div className={className}>
             {!isEmpty(title) && <div className="gd-description-panel-title">{title}</div>}
             {!isEmpty(description) && (
                 <div className="gd-description-panel-content">

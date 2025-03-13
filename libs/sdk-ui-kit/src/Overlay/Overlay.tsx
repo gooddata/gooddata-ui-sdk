@@ -92,12 +92,16 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
 
     private overlayRef = createRef<HTMLDivElement>();
     private containerRef = createRef<HTMLSpanElement>();
-    private resizeHandler = debounce(() => this.align(), 100);
+    private resizeHandler = debounce(() => {
+        this.isInitialAlign = true;
+        this.align();
+    }, 100);
     private portalNode: HTMLDivElement | null = null;
     private isComponentMounted: boolean;
     private clickedInside: boolean;
     private id = uuid();
     private alignmentTimeoutId: number;
+    private isInitialAlign: boolean;
     static contextType = OverlayContext;
     declare context: React.ContextType<typeof OverlayContext>;
     private observer: ResizeObserver | undefined;
@@ -112,6 +116,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
                 top: INIT_STATE_ALIGN,
                 right: 0,
             },
+            initialVisiblePart: 0,
             observedHeight: 0,
         };
 
@@ -120,6 +125,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         this.isComponentMounted = false;
         this.clickedInside = false;
         this.alignmentTimeoutId = 0;
+        this.isInitialAlign = true;
 
         bindAll(
             this,
@@ -188,7 +194,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         // https://github.com/facebook/react/issues/11387
         return (
             <span
-                aria-label="portal-scroll-anchor"
+                data-testid="portal-scroll-anchor"
                 className="s-portal-scroll-anchor"
                 ref={this.containerRef}
             >
@@ -234,8 +240,12 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
             this.setState(
                 {
                     alignment: optimalAlign.alignment,
+                    initialVisiblePart: this.isInitialAlign
+                        ? optimalAlign.visiblePart
+                        : this.state.initialVisiblePart,
                 },
                 () => {
+                    this.isInitialAlign = false;
                     this.props.onAlign(optimalAlign.alignment);
                 },
             );
@@ -292,7 +302,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     };
 
     private getOverlayClasses = (): string => {
-        return cx(this.props.className, this.getAlignClasses(), {
+        return cx(this.props.className, this.getAlignClasses(), this.getVisibilityClass(), {
             "overlay-wrapper": true,
         });
     };
@@ -302,9 +312,20 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
      * for position of arrows and stuff
      */
     private getAlignClasses = (): string => {
+        if (!this.isAligned()) {
+            return "";
+        }
         const align = this.state.alignment.align.split(" ");
 
         return `target-${align[0]} self-${align[1]}`;
+    };
+
+    private getVisibilityClass = (): string => {
+        if (!this.isAligned()) {
+            return "";
+        }
+
+        return this.state.initialVisiblePart < 1 ? "truncated" : "";
     };
 
     private createPortalNode(): void {

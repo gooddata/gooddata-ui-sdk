@@ -3435,6 +3435,8 @@ export interface IOverlayState {
         align: string;
     };
     // (undocumented)
+    initialVisiblePart: number;
+    // (undocumented)
     observedHeight?: number;
     // (undocumented)
     overflow?: string;
@@ -4354,6 +4356,14 @@ export interface IWorkspacePickerHomeFooterProps {
     theme?: ITheme;
 }
 
+// @internal
+export interface IZoomContextState {
+    hasVisualViewport: boolean;
+    viewportHeight: number;
+    viewportWidth: number;
+    zoomLevel: number;
+}
+
 // @internal (undocumented)
 export type LabelSize = "small" | "normal";
 
@@ -5126,6 +5136,9 @@ export const useId: () => string;
 export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInverted: boolean, getItemTitle: (item: T) => string): string;
 
 // @internal
+export const useIsZoomed: (baseZoomLevel?: number) => boolean;
+
+// @internal
 export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;
 
 // @internal
@@ -5161,6 +5174,9 @@ export interface UseToastMessageType {
     removeMessage: (id: string) => void;
 }
 
+// @internal
+export const useZoom: () => IZoomContextState;
+
 // @internal (undocumented)
 export type VariantDanger = "danger";
 
@@ -5184,5 +5200,20 @@ export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React
 
 // @internal (undocumented)
 export const WorkspacePickerHomeFooter: React_2.ComponentType<Omit<IWorkspacePickerHomeFooterProps, "theme" | "themeIsLoading" | "themeStatus">>;
+
+// @internal
+export const ZoomAwareOverlay: <T extends HTMLElement = HTMLElement>(props: IOverlayProps<T>) => JSX.Element;
+
+// @internal
+export const ZoomContext: React_2.Context<IZoomContextState>;
+
+// @internal
+export const ZoomProvider: React_2.FC<ZoomProviderProps>;
+
+// @internal
+export interface ZoomProviderProps {
+    // (undocumented)
+    children: ReactNode;
+}
 
 ```
