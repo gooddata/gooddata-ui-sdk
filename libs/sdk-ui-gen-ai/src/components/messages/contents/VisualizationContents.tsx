@@ -154,6 +154,18 @@ const assertNever = (value: never): never => {
     throw new Error("Unknown visualization type: " + value);
 };
 
+const visualizationTooltipOptions = {
+    tooltip: {
+        className: "gd-gen-ai-chat__vis_tooltip",
+    },
+};
+
+const legendTooltipOptions = {
+    legend: {
+        responsive: "autoPositionWithPopup" as const,
+    },
+};
+
 const renderBarChart = (metrics: IMeasure[], dimensions: IAttribute[], filters: IFilter[]) => (
     <BarChart
         height={VIS_HEIGHT}
@@ -161,11 +173,10 @@ const renderBarChart = (metrics: IMeasure[], dimensions: IAttribute[], filters: 
         viewBy={[dimensions[0], dimensions[1]].filter(Boolean)}
         stackBy={metrics.length <= 1 ? dimensions[2] : undefined}
         config={{
+            ...visualizationTooltipOptions,
+            ...legendTooltipOptions,
             // Better visibility with stacked bars if there are multiple metrics and dimensions
             stackMeasures: metrics.length > 1 && dimensions.length === 2,
-            legend: {
-                responsive: "autoPositionWithPopup",
-            },
         }}
         filters={filters}
     />
@@ -178,11 +189,10 @@ const renderColumnChart = (metrics: IMeasure[], dimensions: IAttribute[], filter
         viewBy={[dimensions[0], dimensions[1]].filter(Boolean)}
         stackBy={metrics.length <= 1 ? dimensions[2] : undefined}
         config={{
+            ...visualizationTooltipOptions,
+            ...legendTooltipOptions,
             // Better visibility with stacked bars if there are multiple metrics and dimensions
             stackMeasures: metrics.length > 1 && dimensions.length === 2,
-            legend: {
-                responsive: "autoPositionWithPopup",
-            },
         }}
         filters={filters}
     />
@@ -196,9 +206,8 @@ const renderLineChart = (metrics: IMeasure[], dimensions: IAttribute[], filters:
         segmentBy={metrics.length <= 1 ? dimensions[1] : undefined}
         filters={filters}
         config={{
-            legend: {
-                responsive: "autoPositionWithPopup",
-            },
+            ...visualizationTooltipOptions,
+            ...legendTooltipOptions,
         }}
     />
 );
@@ -209,6 +218,9 @@ const renderPieChart = (metrics: IMeasure[], dimensions: IAttribute[], filters: 
         measures={metrics}
         viewBy={metrics.length <= 1 ? dimensions[0] : undefined}
         filters={filters}
+        config={{
+            ...visualizationTooltipOptions,
+        }}
     />
 );
 
@@ -221,5 +233,8 @@ const renderHeadline = (metrics: IMeasure[], _dimensions: IAttribute[], filters:
         primaryMeasure={metrics[0]}
         secondaryMeasures={[metrics[1], metrics[2]].filter(Boolean)}
         filters={filters}
+        config={{
+            ...visualizationTooltipOptions,
+        }}
     />
 );

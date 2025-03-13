@@ -885,6 +885,7 @@ export const isWaterfall: LodashIsEqual1x1;
 
 // @public
 export interface ITooltipConfig {
+    className?: string;
     enabled?: boolean;
 }
 

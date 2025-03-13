@@ -721,4 +721,8 @@ export interface ITooltipConfig {
      * @defaultValue defaults to true, meaning the tooltip is shown
      */
     enabled?: boolean;
+    /**
+     * Additional class name to be added to the tooltip container
+     */
+    className?: string;
 }
