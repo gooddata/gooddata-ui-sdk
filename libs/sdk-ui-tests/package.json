@@ -150,7 +150,6 @@
         "stylelint-config-prettier": "^8.0.2",
         "ts-invariant": "^0.7.5",
         "ts-loader": "^8.3.0",
-        "ts-node": "^10.4.0",
         "tslib": "^2.5.0",
         "typescript": "5.3.3",
         "uuid": "^8.3.2",
