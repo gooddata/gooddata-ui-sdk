@@ -2,7 +2,13 @@
 import * as React from "react";
 import cx from "classnames";
 import { RichText } from "@gooddata/sdk-ui-kit";
-import { selectEnableRichTextDescriptions, useDashboardSelector } from "../../../model/index.js";
+
+import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
+import {
+    selectEnableRichTextDescriptions,
+    selectEnableRichTextDynamicReferences,
+    useDashboardSelector,
+} from "../../../model/index.js";
 import { DescriptionExportData } from "../../export/index.js";
 
 /**
@@ -11,13 +17,16 @@ import { DescriptionExportData } from "../../export/index.js";
 export interface IDashboardLayoutSectionHeaderDescriptionProps {
     description: string;
     exportData?: DescriptionExportData;
+    LoadingComponent?: React.ComponentType;
 }
 
 export const DashboardLayoutSectionHeaderDescription: React.FC<
     IDashboardLayoutSectionHeaderDescriptionProps
 > = (props) => {
-    const { description, exportData } = props;
+    const { description, exportData, LoadingComponent } = props;
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
+    const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
+    const filters = useRichTextFilters();
 
     const className = cx("gd-paragraph", "description", "s-fluid-layout-row-description");
     return (
@@ -31,6 +40,9 @@ export const DashboardLayoutSectionHeaderDescription: React.FC<
                         show: !!exportData?.richText,
                         dataAttributes: exportData?.richText?.markdown,
                     }}
+                    referencesEnabled={isRichTextReferencesEnabled}
+                    filters={filters}
+                    LoadingComponent={LoadingComponent}
                 />
             ) : (
                 description

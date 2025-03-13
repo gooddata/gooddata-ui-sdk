@@ -2,6 +2,11 @@
 
 import React from "react";
 import { DescriptionPanelContent } from "@gooddata/sdk-ui-kit";
+
+import { selectEnableRichTextDynamicReferences, useDashboardSelector } from "../../../model/index.js";
+import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+
 import { IInsightWidgetDescriptionTriggerProps } from "./types.js";
 import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";
 
@@ -13,8 +18,11 @@ import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";
 export const ExportModeInsightWidgetDescription: React.FC<IInsightWidgetDescriptionTriggerProps> = (
     props,
 ) => {
-    const { exportData } = props;
+    const { exportData, widget } = props;
     const { isVisible, description, useRichText } = useInsightWidgetDescription(props);
+    const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
+    const filters = useRichTextFilters(widget);
+    const { LoadingComponent } = useDashboardComponentsContext();
 
     if (!isVisible) {
         return null;
@@ -22,7 +30,13 @@ export const ExportModeInsightWidgetDescription: React.FC<IInsightWidgetDescript
 
     return (
         <div style={{ display: "none" }} {...exportData}>
-            <DescriptionPanelContent description={description} useRichText={useRichText} />
+            <DescriptionPanelContent
+                description={description}
+                useRichText={useRichText}
+                useReferences={useReferences}
+                filters={filters}
+                LoadingComponent={LoadingComponent}
+            />
         </div>
     );
 };

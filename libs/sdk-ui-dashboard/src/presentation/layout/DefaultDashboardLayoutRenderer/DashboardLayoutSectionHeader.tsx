@@ -3,6 +3,7 @@ import React from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import { DashboardLayoutSectionHeaderDescription } from "./DashboardLayoutSectionHeaderDescription.js";
 import { HeaderExportData } from "../../export/index.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
 /**
  * @alpha
@@ -31,6 +32,7 @@ export interface IDashboardLayoutSectionHeaderProps {
 
 export const DashboardLayoutSectionHeader: React.FC<IDashboardLayoutSectionHeaderProps> = (props) => {
     const { title, description, renderBeforeHeader, renderHeader, exportData } = props;
+    const { LoadingComponent } = useDashboardComponentsContext();
 
     return (
         <div className="gd-fluid-layout-row-header s-fluid-layout-row-header" {...exportData?.info}>
@@ -51,6 +53,7 @@ export const DashboardLayoutSectionHeader: React.FC<IDashboardLayoutSectionHeade
                             <DashboardLayoutSectionHeaderDescription
                                 description={description}
                                 exportData={exportData?.description}
+                                LoadingComponent={LoadingComponent}
                             />
                         ) : null}
                     </div>

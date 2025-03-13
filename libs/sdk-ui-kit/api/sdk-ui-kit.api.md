@@ -1352,11 +1352,17 @@ export interface IDescriptionPanelProps {
     // (undocumented)
     description?: string;
     // (undocumented)
+    filters?: IFilter[];
+    // (undocumented)
+    LoadingComponent?: React_2.ComponentType;
+    // (undocumented)
     locale?: string;
     // (undocumented)
     onBubbleOpen?: () => void;
     // (undocumented)
     title?: string;
+    // (undocumented)
+    useReferences?: boolean;
     // (undocumented)
     useRichText?: boolean;
 }

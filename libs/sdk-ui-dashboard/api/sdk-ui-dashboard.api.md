@@ -1719,7 +1719,7 @@ export interface DashboardDateFilterSelectionChangedPayload {
 export function dashboardDateFilterToDateFilterByDateDataSet(filter: IDashboardDateFilter, dateDataSet: ObjRef): IDateFilter;
 
 // @public
-export function dashboardDateFilterToDateFilterByWidget(filter: IDashboardDateFilter, widget: Partial<IFilterableWidget>): IDateFilter;
+export function dashboardDateFilterToDateFilterByWidget(filter: IDashboardDateFilter, widget?: Partial<IFilterableWidget>): IDateFilter;
 
 // @public
 export interface DashboardDeinitialized extends IDashboardEvent {
@@ -3924,7 +3924,7 @@ export type FilterBarRenderingMode = "default" | "hidden";
 export function filterContextItemsToDashboardFiltersByDateDataSet(filterContextItems: FilterContextItem[], dateDataSet: ObjRef): IDashboardFilter[];
 
 // @public
-export function filterContextItemsToDashboardFiltersByRichTextWidget(filterContextItems: FilterContextItem[], widget: Partial<IFilterableWidget>): IDashboardFilter[];
+export function filterContextItemsToDashboardFiltersByRichTextWidget(filterContextItems: FilterContextItem[], widget?: Partial<IFilterableWidget>): IDashboardFilter[];
 
 // @public
 export function filterContextItemsToDashboardFiltersByWidget(filterContextItems: FilterContextItem[], widget: Partial<IFilterableWidget>): IDashboardFilter[];
@@ -4672,6 +4672,8 @@ export interface IDashboardInsightProps {
     onExportReady?: OnExportReady;
     // @alpha (undocumented)
     onLoadingChanged?: OnLoadingChanged;
+    // @internal (undocumented)
+    onWidgetFiltersReady?: (filters?: IFilter[]) => void;
     // @internal (undocumented)
     pushData?: (data: IPushData) => void;
     widget: IInsightWidget;

@@ -1,12 +1,18 @@
 // (C) 2025 GoodData Corporation
 
 import { useMemo } from "react";
-import { IRichTextWidget, isAbsoluteDateFilter, isObjRef, isRelativeDateFilter } from "@gooddata/sdk-model";
+import {
+    IInsightWidget,
+    IRichTextWidget,
+    isAbsoluteDateFilter,
+    isObjRef,
+    isRelativeDateFilter,
+} from "@gooddata/sdk-model";
 
-import { selectFilterContextFilters, useDashboardSelector } from "../../../model/index.js";
-import { filterContextItemsToDashboardFiltersByRichTextWidget } from "../../../converters/index.js";
+import { selectFilterContextFilters, useDashboardSelector } from "../../model/index.js";
+import { filterContextItemsToDashboardFiltersByRichTextWidget } from "../../converters/index.js";
 
-export function useRichTextFilters(widget: IRichTextWidget) {
+export function useRichTextFilters(widget?: IRichTextWidget | IInsightWidget) {
     const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
 
     return useMemo(() => {
@@ -16,7 +22,7 @@ export function useRichTextFilters(widget: IRichTextWidget) {
         let filters = filterContextItemsToDashboardFiltersByRichTextWidget(dashboardFilters, widget);
 
         // Do not filter by common date filter
-        if (!widget.dateDataSet) {
+        if (!widget?.dateDataSet) {
             filters = filters.filter((f) => {
                 if (isRelativeDateFilter(f)) {
                     return isObjRef(f.relativeDateFilter.dataSet);

@@ -16,6 +16,7 @@ import {
 import {
     changeNestedLayoutSectionHeader,
     selectEnableRichTextDescriptions,
+    selectEnableRichTextDynamicReferences,
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
@@ -23,6 +24,8 @@ import {
 
 import { serializeLayoutSectionPath } from "../../../../_staging/layout/coordinates.js";
 import { IDashboardLayoutSectionFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
+import { useRichTextFilters } from "../../../../_staging/sharedHooks/useRichTextFilters.js";
+import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 
 const richTextTooltipAlignPoints: IAlignPoint[] = [{ align: "tl bl", offset: { x: 6, y: -4 } }];
 
@@ -38,6 +41,11 @@ export function SectionHeaderEditable({
     section,
 }: ISectionHeaderEditableProps): JSX.Element {
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
+    const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
+
+    const { LoadingComponent } = useDashboardComponentsContext();
+    const filters = useRichTextFilters();
+
     const description = useRichText ? rawDescription : getDescription(rawDescription);
     const title = getTitle(rawTitle);
     const intl = useIntl();
@@ -152,6 +160,9 @@ export function SectionHeaderEditable({
                             showTooltip={isRichTextEditing}
                             tooltipAlignPoints={richTextTooltipAlignPoints}
                             autoResize={true}
+                            referencesEnabled={isRichTextReferencesEnabled}
+                            filters={filters}
+                            LoadingComponent={LoadingComponent}
                         />
                     </div>
                 ) : (

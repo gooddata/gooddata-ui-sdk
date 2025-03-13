@@ -91,18 +91,18 @@ export function dashboardAttributeFilterToAttributeFilter(
  */
 export function dashboardDateFilterToDateFilterByWidget(
     filter: IDashboardDateFilter,
-    widget: Partial<IFilterableWidget>,
+    widget?: Partial<IFilterableWidget>,
 ): IDateFilter {
     if (filter.dateFilter.type === "relative") {
         return newRelativeDateFilter(
-            filter.dateFilter.dataSet || widget.dateDataSet!,
+            widget ? filter.dateFilter.dataSet || widget.dateDataSet! : filter.dateFilter.dataSet!,
             filter.dateFilter.granularity,
             numberOrStringToNumber(filter.dateFilter.from!),
             numberOrStringToNumber(filter.dateFilter.to!),
         );
     } else {
         return newAbsoluteDateFilter(
-            filter.dateFilter.dataSet || widget.dateDataSet!,
+            widget ? filter.dateFilter.dataSet || widget.dateDataSet! : filter.dateFilter.dataSet!,
             filter.dateFilter.from!.toString(),
             filter.dateFilter.to!.toString(),
         );
@@ -165,7 +165,7 @@ export function filterContextItemsToDashboardFiltersByWidget(
  */
 export function filterContextItemsToDashboardFiltersByRichTextWidget(
     filterContextItems: FilterContextItem[],
-    widget: Partial<IFilterableWidget>,
+    widget?: Partial<IFilterableWidget>,
 ): IDashboardFilter[] {
     return filterContextItems
         .map((filter) => {

@@ -7,6 +7,7 @@ import {
     isInsight,
     IInsightWidget,
     IInsightWidgetDescriptionConfiguration,
+    IFilter,
 } from "@gooddata/sdk-model";
 import {
     Button,
@@ -26,7 +27,11 @@ import { useInsightExport } from "../../../common/index.js";
 import { OnDrillDownSuccess, WithDrillSelect } from "../../../../drill/index.js";
 import { IntlWrapper } from "../../../../localization/index.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
-import { useWidgetExecutionsHandler } from "../../../../../model/index.js";
+import {
+    selectEnableRichTextDynamicReferences,
+    useDashboardSelector,
+    useWidgetExecutionsHandler,
+} from "../../../../../model/index.js";
 import { ThemedLoadingEqualizer } from "../../../../presentationComponents/index.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../../constants/index.js";
 
@@ -117,6 +122,11 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
         executionsHandler.onLoadingChanged({ isLoading });
     }, []);
 
+    const [widgetFilters, setWidgetFilters] = useState<IFilter[] | undefined>(undefined);
+    const handleFiltersReady = useCallback((filters: IFilter[] | undefined) => {
+        setWidgetFilters(filters);
+    }, []);
+
     const baseInsightTitle = insightTitle(insight);
 
     const {
@@ -183,6 +193,8 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                                             isOpen={isOpen}
                                             isMobileDevice={isMobileDevice}
                                             description={description}
+                                            widgetFilters={widgetFilters}
+                                            LoadingComponent={LoadingComponent}
                                         />
                                         <div className="drill-dialog-insight-container-insight">
                                             <InsightDrillDialogDescriptionButton
@@ -195,6 +207,7 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                                                 onDrill={onDrill}
                                                 onLoadingChanged={handleLoadingChanged}
                                                 onError={executionsHandler.onError}
+                                                onWidgetFiltersReady={handleFiltersReady}
                                                 pushData={executionsHandler.onPushData}
                                                 ErrorComponent={ErrorComponent}
                                                 LoadingComponent={LoadingComponent}
@@ -255,13 +268,19 @@ interface InsightDrillDialogDescriptionContentProps {
     isMobileDevice: boolean;
     isOpen: boolean;
     description: string;
+    widgetFilters?: IFilter[];
+    LoadingComponent?: React.ComponentType;
 }
 
 function InsightDrillDialogDescriptionContent({
     isOpen,
     isMobileDevice,
     description,
+    widgetFilters,
+    LoadingComponent,
 }: InsightDrillDialogDescriptionContentProps) {
+    const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
+
     return (
         <div
             className={cx("drill-dialog-insight-container-description", {
@@ -270,7 +289,13 @@ function InsightDrillDialogDescriptionContent({
             })}
         >
             <div className="drill-dialog-insight-container-description-content">
-                <RichText value={description} renderMode="view" />
+                <RichText
+                    value={description}
+                    renderMode="view"
+                    referencesEnabled={isRichTextReferencesEnabled}
+                    filters={widgetFilters}
+                    LoadingComponent={LoadingComponent}
+                />
             </div>
         </div>
     );
