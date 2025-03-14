@@ -42,6 +42,12 @@ export class Dashboard {
         return this;
     }
 
+    waitForDashboardLoaded() {
+        cy.get(".catalog-is-loaded").should("exist");
+        cy.get(".accessible-dashboards-loaded").should("exist");
+        return this;
+    }
+
     moveWidget(fromIndex: number, toIndex: number, dropzone: WidgetDropZone) {
         const dataTransfer = new DataTransfer();
         cy.get(".dash-item-content").eq(fromIndex).trigger("dragstart", { dataTransfer });
