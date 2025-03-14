@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useIntl } from "react-intl";
 import {
@@ -30,9 +30,12 @@ import {
     useDashboardSelector,
     selectCurrentUser,
     selectBackendCapabilities,
+    selectEnableRichTextDescriptions,
+    selectEnableRichTextDynamicReferences,
 } from "../../model/index.js";
 import { IInsightListProps } from "./types.js";
 import { messages } from "../../locales.js";
+import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 
 const ITEMS_PER_PAGE = 50;
 const ITEM_HEIGHT = 40;
@@ -84,6 +87,9 @@ export const InsightList: React.FC<IInsightListProps> = ({
     const canCreateVisualization = useDashboardSelector(selectCanCreateVisualization);
     const allowCreateInsightRequest = useDashboardSelector(selectAllowCreateInsightRequest);
     const settings = useDashboardSelector(selectSettings);
+    const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
+    const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
+    const { LoadingComponent } = useDashboardComponentsContext();
     const previousSearch = useRef("");
 
     const params = pagesToLoad.map((pageNumber) => ({
@@ -225,6 +231,9 @@ export const InsightList: React.FC<IInsightListProps> = ({
                             isLocked={insightIsLocked(insightListSourceItem.insight)}
                             onClick={() => onSelect?.(insight)}
                             metadataTimeZone={settings?.metadataTimeZone}
+                            useRichText={useRichText}
+                            useReferences={useReferences}
+                            LoadingComponent={LoadingComponent}
                         />
                     );
                 })

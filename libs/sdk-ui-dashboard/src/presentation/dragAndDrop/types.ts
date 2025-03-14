@@ -1,5 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
-import { IDashboardAttributeFilter, IDashboardDateFilter, IInsight, IKpi } from "@gooddata/sdk-model";
+import React from "react";
+import {
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    IFilter,
+    IInsight,
+    IKpi,
+} from "@gooddata/sdk-model";
 import { ICustomWidget } from "../../model/types/layoutTypes.js";
 import { ILayoutItemPath, ILayoutSectionPath } from "../../types.js";
 
@@ -434,6 +441,10 @@ export type CustomDashboardInsightListItemComponentProps = {
     showDescriptionPanel?: boolean;
     onDescriptionPanelOpen?: () => void;
     metadataTimeZone?: string;
+    filters?: IFilter[];
+    useRichText?: boolean;
+    useReferences?: boolean;
+    LoadingComponent?: React.ComponentType;
 };
 
 /**

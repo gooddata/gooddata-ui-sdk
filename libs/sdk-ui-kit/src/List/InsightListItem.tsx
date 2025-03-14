@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { Component, createRef } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
@@ -10,6 +10,7 @@ import { Button } from "../Button/index.js";
 import { ShortenedText } from "../ShortenedText/index.js";
 import { DescriptionPanel, DESCRIPTION_PANEL_ARROW_OFFSETS } from "../DescriptionPanel/index.js";
 import { getDateTimeConfig } from "../utils/dateTimeConfig.js";
+import { IFilter } from "@gooddata/sdk-model";
 
 const VISUALIZATION_TYPE_UNKNOWN = "unknown";
 const WIDGET_TYPE_KPI = "kpi";
@@ -47,13 +48,18 @@ export interface IInsightListItemProps {
     updated?: string;
     type?: string;
     width?: number;
+    filters?: IFilter[];
 
     onClick?: () => void;
     onDelete?: () => void;
     onDescriptionPanelOpen?: () => void;
 
     showDescriptionPanel?: boolean;
+    useRichText?: boolean;
+    useReferences?: boolean;
     metadataTimeZone?: string;
+
+    LoadingComponent?: React.ComponentType;
 }
 
 /**
@@ -83,9 +89,13 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
             type = VISUALIZATION_TYPE_UNKNOWN,
             isSelected,
             isLoading,
+            filters,
+            LoadingComponent,
             onClick,
             onDescriptionPanelOpen,
             showDescriptionPanel = false,
+            useRichText = false,
+            useReferences = false,
         } = this.props;
 
         const visualizationListItemClassname = cx(
@@ -107,6 +117,10 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
                             title={title}
                             description={description}
                             arrowOffsets={this.shouldRenderActions() ? modifiedArrowOffsets : undefined}
+                            useReferences={useReferences}
+                            useRichText={useRichText}
+                            filters={filters}
+                            LoadingComponent={LoadingComponent}
                         />
                     </div>
                 ) : null}
