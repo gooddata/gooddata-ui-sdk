@@ -45,7 +45,7 @@
         "chalk": "^4.1.1",
         "commander": "^8.1.0",
         "fast-glob": "^3.2.7",
-        "html-validate": "^8.7.3",
+        "html-validate": "9.5.1",
         "jsonschema": "^1.2.6",
         "lodash": "^4.17.21",
         "tslib": "^2.5.0",
@@ -73,7 +73,7 @@
         "mkdirp": "^1.0.4",
         "prettier": "~2.5.0",
         "typescript": "5.3.3",
-        "vitest": "1.0.4"
+        "vitest": "3.0.8"
     },
     "bin": {
         "i18n-toolkit": "index.js"
