@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { getContext, select, takeEvery } from "redux-saga/effects";
 import { setOpenAction } from "../chatWindow/chatWindowSlice.js";
@@ -8,6 +8,7 @@ import {
     evaluateMessageCompleteAction,
     setUserFeedback,
     loadThreadSuccessAction,
+    visualizationErrorAction,
 } from "../messages/messagesSlice.js";
 import { EventDispatcher } from "../events.js";
 import { isRoutingContents, isTextContents, isUserMessage, Message, RoutingContents } from "../../model.js";
@@ -20,6 +21,7 @@ export function* onEvent() {
     yield takeEvery(newMessageAction.type, onNewMessage);
     yield takeEvery(evaluateMessageCompleteAction.type, onEvaluateMessageComplete);
     yield takeEvery(setUserFeedback.type, onUserFeedback);
+    yield takeEvery(visualizationErrorAction.type, onVisualizationError);
 }
 
 function* onSetOpen({ payload: { isOpen } }: ReturnType<typeof setOpenAction>) {
@@ -120,5 +122,19 @@ function* onUserFeedback({ payload: { assistantMessageId, feedback } }: ReturnTy
         interactionId: assistantMessage.id,
         threadId,
         feedback,
+    });
+}
+
+function* onVisualizationError({
+    payload: { errorMessage, errorType },
+}: ReturnType<typeof visualizationErrorAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatVisualizationError",
+        threadId,
+        errorMessage,
+        errorType,
     });
 }

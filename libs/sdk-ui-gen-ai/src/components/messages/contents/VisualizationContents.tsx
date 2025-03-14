@@ -11,11 +11,11 @@ import { VisualizationErrorBoundary } from "./VisualizationErrorBoundary.js";
 import { MarkdownComponent } from "./Markdown.js";
 import { Bubble, BubbleHoverTrigger, Button, Icon } from "@gooddata/sdk-ui-kit";
 import { useDispatch } from "react-redux";
-import { newMessageAction } from "../../../store/index.js";
+import { newMessageAction, visualizationErrorAction } from "../../../store/index.js";
 import { useConfig } from "../../ConfigContext.js";
 import { VisualizationSaveDialog } from "./VisualizationSaveDialog.js";
 import { FormattedMessage } from "react-intl";
-import { useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { GoodDataSdkError, OnError, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 const VIS_HEIGHT = 250;
 
@@ -61,6 +61,15 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
         }
     };
 
+    const handleSdkError = (error: GoodDataSdkError) => {
+        dispatch(
+            visualizationErrorAction({
+                errorType: error.seType,
+                errorMessage: error.getMessage(),
+            }),
+        );
+    };
+
     return (
         <div className={className}>
             <MarkdownComponent allowMarkdown={useMarkdown}>{content.text}</MarkdownComponent>
@@ -76,17 +85,22 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
                             {(() => {
                                 switch (visualization.visualizationType) {
                                     case "BAR":
-                                        return renderBarChart(metrics, dimensions, filters);
+                                        return renderBarChart(metrics, dimensions, filters, handleSdkError);
                                     case "COLUMN":
-                                        return renderColumnChart(metrics, dimensions, filters);
+                                        return renderColumnChart(
+                                            metrics,
+                                            dimensions,
+                                            filters,
+                                            handleSdkError,
+                                        );
                                     case "LINE":
-                                        return renderLineChart(metrics, dimensions, filters);
+                                        return renderLineChart(metrics, dimensions, filters, handleSdkError);
                                     case "PIE":
-                                        return renderPieChart(metrics, dimensions, filters);
+                                        return renderPieChart(metrics, dimensions, filters, handleSdkError);
                                     case "TABLE":
-                                        return renderTable(metrics, dimensions, filters);
+                                        return renderTable(metrics, dimensions, filters, handleSdkError);
                                     case "HEADLINE":
-                                        return renderHeadline(metrics, dimensions, filters);
+                                        return renderHeadline(metrics, dimensions, filters, handleSdkError);
                                     default:
                                         return assertNever(visualization.visualizationType);
                                 }
@@ -166,7 +180,12 @@ const legendTooltipOptions = {
     },
 };
 
-const renderBarChart = (metrics: IMeasure[], dimensions: IAttribute[], filters: IFilter[]) => (
+const renderBarChart = (
+    metrics: IMeasure[],
+    dimensions: IAttribute[],
+    filters: IFilter[],
+    onError: OnError,
+) => (
     <BarChart
         height={VIS_HEIGHT}
         measures={metrics}
@@ -179,10 +198,16 @@ const renderBarChart = (metrics: IMeasure[], dimensions: IAttribute[], filters: 
             stackMeasures: metrics.length > 1 && dimensions.length === 2,
         }}
         filters={filters}
+        onError={onError}
     />
 );
 
-const renderColumnChart = (metrics: IMeasure[], dimensions: IAttribute[], filters: IFilter[]) => (
+const renderColumnChart = (
+    metrics: IMeasure[],
+    dimensions: IAttribute[],
+    filters: IFilter[],
+    onError: OnError,
+) => (
     <ColumnChart
         height={VIS_HEIGHT}
         measures={metrics}
@@ -195,10 +220,16 @@ const renderColumnChart = (metrics: IMeasure[], dimensions: IAttribute[], filter
             stackMeasures: metrics.length > 1 && dimensions.length === 2,
         }}
         filters={filters}
+        onError={onError}
     />
 );
 
-const renderLineChart = (metrics: IMeasure[], dimensions: IAttribute[], filters: IFilter[]) => (
+const renderLineChart = (
+    metrics: IMeasure[],
+    dimensions: IAttribute[],
+    filters: IFilter[],
+    onError: OnError,
+) => (
     <LineChart
         height={VIS_HEIGHT}
         measures={metrics}
@@ -209,10 +240,16 @@ const renderLineChart = (metrics: IMeasure[], dimensions: IAttribute[], filters:
             ...visualizationTooltipOptions,
             ...legendTooltipOptions,
         }}
+        onError={onError}
     />
 );
 
-const renderPieChart = (metrics: IMeasure[], dimensions: IAttribute[], filters: IFilter[]) => (
+const renderPieChart = (
+    metrics: IMeasure[],
+    dimensions: IAttribute[],
+    filters: IFilter[],
+    onError: OnError,
+) => (
     <PieChart
         height={VIS_HEIGHT}
         measures={metrics}
@@ -221,14 +258,20 @@ const renderPieChart = (metrics: IMeasure[], dimensions: IAttribute[], filters: 
         config={{
             ...visualizationTooltipOptions,
         }}
+        onError={onError}
     />
 );
 
-const renderTable = (metrics: IMeasure[], dimensions: IAttribute[], filters: IFilter[]) => (
-    <PivotTable measures={metrics} rows={dimensions} filters={filters} />
+const renderTable = (metrics: IMeasure[], dimensions: IAttribute[], filters: IFilter[], onError: OnError) => (
+    <PivotTable measures={metrics} rows={dimensions} filters={filters} onError={onError} />
 );
 
-const renderHeadline = (metrics: IMeasure[], _dimensions: IAttribute[], filters: IFilter[]) => (
+const renderHeadline = (
+    metrics: IMeasure[],
+    _dimensions: IAttribute[],
+    filters: IFilter[],
+    onError: OnError,
+) => (
     <Headline
         primaryMeasure={metrics[0]}
         secondaryMeasures={[metrics[1], metrics[2]].filter(Boolean)}
@@ -236,5 +279,6 @@ const renderHeadline = (metrics: IMeasure[], _dimensions: IAttribute[], filters:
         config={{
             ...visualizationTooltipOptions,
         }}
+        onError={onError}
     />
 );

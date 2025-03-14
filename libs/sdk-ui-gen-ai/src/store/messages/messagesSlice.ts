@@ -11,6 +11,7 @@ import {
     Message,
     UserMessage,
 } from "../../model.js";
+import { SdkErrorType } from "@gooddata/sdk-ui";
 
 type MessagesSliceState = {
     /**
@@ -289,6 +290,13 @@ const messagesSlice = createSlice({
                 visualization.savedVisualizationId = payload.savedVisualizationId;
             }
         },
+        visualizationErrorAction: (
+            state,
+            _action: PayloadAction<{
+                errorType: SdkErrorType;
+                errorMessage?: string;
+            }>,
+        ) => state,
     },
 });
 
@@ -313,4 +321,5 @@ export const {
     saveVisualizationAction,
     saveVisualizationErrorAction,
     saveVisualizationSuccessAction,
+    visualizationErrorAction,
 } = messagesSlice.actions;

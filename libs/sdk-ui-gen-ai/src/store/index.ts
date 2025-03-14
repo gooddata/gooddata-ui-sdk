@@ -23,6 +23,7 @@ export {
     saveVisualizationAction,
     saveVisualizationErrorAction,
     saveVisualizationSuccessAction,
+    visualizationErrorAction,
 } from "./messages/messagesSlice.js";
 
 export {

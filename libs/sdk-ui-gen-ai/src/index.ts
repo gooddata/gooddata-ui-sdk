@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 /**
  * This package provides React components for GoodData's GenAI features.
@@ -30,10 +30,12 @@ export {
     type ChatResetEvent,
     type ChatFeedbackEvent,
     type ChatEvent,
+    type ChatVisualizationErrorEvent,
     isChatAssistantMessageEvent,
     isChatUserMessageEvent,
     isChatClosedEvent,
     isChatOpenedEvent,
     isChatResetEvent,
     isChatFeedbackEvent,
+    isChatVisualizationErrorEvent,
 } from "./store/events.js";

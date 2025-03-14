@@ -11,6 +11,8 @@ import { IGenAIVisualization } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 
+import { SdkErrorType } from '@gooddata/sdk-ui';
+
 // @alpha (undocumented)
 export type AssistantMessage = BaseMessage & {
     role: "assistant";
@@ -45,7 +47,7 @@ export type ChatClosedEvent = BaseEvent & {
 };
 
 // @alpha
-export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent;
+export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatVisualizationErrorEvent;
 
 // @alpha
 export interface ChatEventHandler<TEvent extends ChatEvent = any> {
@@ -74,6 +76,13 @@ export type ChatResetEvent = BaseEvent & {
 export type ChatUserMessageEvent = BaseEvent & {
     type: "chatUserMessage";
     question: string;
+};
+
+// @alpha
+export type ChatVisualizationErrorEvent = BaseEvent & {
+    type: "chatVisualizationError";
+    errorType: SdkErrorType;
+    errorMessage?: string;
 };
 
 // @alpha (undocumented)
@@ -112,6 +121,9 @@ export const isChatResetEvent: (event: ChatEvent) => event is ChatResetEvent;
 
 // @alpha
 export const isChatUserMessageEvent: (event: ChatEvent) => event is ChatUserMessageEvent;
+
+// @alpha
+export const isChatVisualizationErrorEvent: (event: ChatEvent) => event is ChatVisualizationErrorEvent;
 
 // @alpha
 export type Message = UserMessage | AssistantMessage;
