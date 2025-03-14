@@ -1,5 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
+import { SdkErrorType } from "@gooddata/sdk-ui";
+
 /**
  * A common event definition for the Chat component.
  * @alpha
@@ -110,6 +112,24 @@ export const isChatFeedbackEvent = (event: ChatEvent): event is ChatFeedbackEven
 };
 
 /**
+ * A chat visualization error event.
+ * @alpha
+ */
+export type ChatVisualizationErrorEvent = BaseEvent & {
+    type: "chatVisualizationError";
+    errorType: SdkErrorType;
+    errorMessage?: string;
+};
+
+/**
+ * Type guard for the ChatVisualizationErrorEvent.
+ * @alpha
+ */
+export const isChatVisualizationErrorEvent = (event: ChatEvent): event is ChatVisualizationErrorEvent => {
+    return event.type === "chatVisualizationError";
+};
+
+/**
  * A union type for all chat events.
  * @alpha
  */
@@ -119,7 +139,8 @@ export type ChatEvent =
     | ChatResetEvent
     | ChatUserMessageEvent
     | ChatAssistantMessageEvent
-    | ChatFeedbackEvent;
+    | ChatFeedbackEvent
+    | ChatVisualizationErrorEvent;
 
 /**
  * An event handler for the Chat component.
@@ -136,6 +157,10 @@ export interface ChatEventHandler<TEvent extends ChatEvent = any> {
     handler: (event: TEvent) => void;
 }
 
+/**
+ * A dispatcher for chat events.
+ * @alpha
+ */
 export class EventDispatcher {
     private handlers: ChatEventHandler[] = [];
 
