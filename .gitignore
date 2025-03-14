@@ -70,6 +70,7 @@ tsconfig.tsbuildinfo
 temp
 
 # Rush files
+common/.rush/
 common/temp/**
 package-deps.json
 libs/**/src/**/*.js

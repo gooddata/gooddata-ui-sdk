@@ -1,6 +1,7 @@
 name: Set up rush with cache
 description: This action sets up rush with cache
 
+# more info https://github.com/microsoft/rushstack/issues/1847#issuecomment-1030889912
 runs:
   using: 'composite'
   steps:
@@ -9,7 +10,16 @@ runs:
       uses: ./.github/actions/node/warm-up-node
       id: node-cache
 
+    - name: Set rush home dirs
+      run: |
+        # Set path to global rush folder
+        echo "RUSH_GLOBAL_FOLDER=$GITHUB_WORKSPACE/common/.rush" >> $GITHUB_ENV
+
+      shell: bash
+
     # Set up caching for global rush installation
+    # path common/.rush is set via RUSH_GLOBAL_FOLDER
+    # We need defined unified home folder for rush on runners and different docker images
     - name: Cache Rush
       uses: runs-on/cache@v4
       env:
@@ -17,8 +27,8 @@ runs:
       with:
         path: |
           common/temp/install-run
-          ~/.rush
-        key: Rush-cache-${{ hashFiles('rush.json') }}
+          common/.rush
+        key: rush-cache-${{ hashFiles('rush.json') }}
 
     # Perform a lookup to check if the cache for pnpm exists
     - name: Cache pnpm lookup
@@ -30,7 +40,7 @@ runs:
         lookup-only: true
         path: |
           common/temp/pnpm-store
-        key: pnpm-cache-${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+        key: pnpm-cache-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}-${{ hashFiles('rush.json') }}
 
 
     - name: Cache pnpm
@@ -43,7 +53,7 @@ runs:
       with:
         path: |
           common/temp/pnpm-store
-        key: pnpm-cache-${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+        key: pnpm-cache-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}-${{ hashFiles('rush.json') }}
 
     - name: Install rush
       # we skip instal if we are warming up the cache and cache hit
