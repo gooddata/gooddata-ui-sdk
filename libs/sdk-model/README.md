@@ -13,6 +13,8 @@ These domain models are backend-agnostic. This makes them reusable across differ
 The package includes TypeScript type definitions, factory functions, functions to get or set certain properties
 of the objects in an immutable way, and more. These are used in both the `@gooddata/sdk-backend-*` and `@gooddata/sdk-ui* packages`.
 
+change
+
 ## License
 
 (C) 2017-2022 GoodData Corporation
