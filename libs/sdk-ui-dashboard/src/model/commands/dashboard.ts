@@ -806,3 +806,29 @@ export function setDateFilterConfigTitle(
         },
     };
 }
+
+/**
+ * Command for showing live dashboard instead of its snapshot.
+ * @alpha
+ */
+export interface ShowLiveDashboard extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.SHOW_LIVE_DASHBOARD";
+}
+
+/**
+ * Creates the {@link ShowLiveDashboard} command.
+ *
+ * @remarks
+ * Dispatching the commands will result into setting state to ignore snapshot mode.
+ *
+ *
+ * @alpha
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @returns show live dashboard command
+ */
+export function showLiveDashboard(correlationId?: string): ShowLiveDashboard {
+    return {
+        type: "GDC.DASH/CMD.SHOW_LIVE_DASHBOARD",
+        correlationId,
+    };
+}

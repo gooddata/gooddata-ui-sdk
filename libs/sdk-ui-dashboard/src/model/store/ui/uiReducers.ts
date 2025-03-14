@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import {
     areObjRefsEqual,
@@ -349,6 +349,10 @@ const hideAllWidgetsOverlay: UiReducer = (state) => {
     }, {} as Record<string, IDashboardWidgetOverlay>);
 };
 
+const ignoreSnapshotTime: UiReducer = (state) => {
+    state.ignoreSnapshotTime = true;
+};
+
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
@@ -404,4 +408,5 @@ export const uiReducers = {
     toggleFilterViewsDialog,
     openWidgetDeleteDialog,
     closeWidgetDeleteDialog,
+    ignoreSnapshotTime,
 };

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
@@ -18,6 +18,7 @@ import {
 } from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { InvalidCustomUrlDrillParameterInfo, FilterViewDialogMode } from "./uiState.js";
+import { selectConfig } from "../config/configSelectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -504,4 +505,26 @@ export const selectIsFilterViewsDialogOpen: DashboardSelector<boolean> = createS
 export const selectFilterViewsDialogMode: DashboardSelector<FilterViewDialogMode> = createSelector(
     selectSelf,
     (state) => state.filterViews.mode ?? "list",
+);
+
+/**
+ * @internal
+ */
+export const selectIgnoreSnapshotTime: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.ignoreSnapshotTime ?? false,
+);
+
+/**
+ * @internal
+ */
+export const selectSnapshotTime: DashboardSelector<string | undefined> = createSelector(
+    [selectConfig, selectIgnoreSnapshotTime],
+    (config, ignoreSnapshotTime) => {
+        if (ignoreSnapshotTime) {
+            return undefined;
+        }
+
+        return config.snapshotTime ?? undefined;
+    },
 );

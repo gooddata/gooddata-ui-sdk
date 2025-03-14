@@ -31,6 +31,7 @@ import { FilterViews } from "./filterViews/FilterViews.js";
 import { BulletsBar as FlexibleBulletsBar } from "../../flexibleLayout/dragAndDrop/Resize/BulletsBar/BulletsBar.js";
 import { BulletsBar as FluidBulletsBar } from "../../layout/dragAndDrop/Resize/BulletsBar/BulletsBar.js";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useSnapshotModeMessage } from "./useSnapshotModeMessage.js";
 
 const selectShowFiltersConfigurationPanel = createSelector(
     selectIsInEditMode,
@@ -62,6 +63,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
     const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
     const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
     const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+    const { showSnapshotModeMessage, formattedDate, onShowLiveDashboard } = useSnapshotModeMessage();
     const dispatch = useDashboardDispatch();
 
     const applyAllDashboardFilters = useCallback(() => {
@@ -119,6 +121,26 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                             id="filterBar.unappliedFiltersNotification"
                             values={{
                                 link: (chunks) => <a onClick={applyAllDashboardFilters}>{chunks}</a>,
+                            }}
+                        />
+                    </Message>
+                </div>
+            ) : null}
+            {showSnapshotModeMessage ? (
+                <div className="filters-message" style={{ marginTop: rows.length > 1 ? "35px" : "10px" }}>
+                    <Message type="progress">
+                        <FormattedMessage
+                            id="filterBar.snapshotModeNotificationMessage"
+                            values={{
+                                bold: (chunks) => <strong>{chunks}</strong>,
+                                date: formattedDate,
+                            }}
+                        />
+                        <span className="filters-message-spacer" />
+                        <FormattedMessage
+                            id="filterBar.snapshotModeNotificationAction"
+                            values={{
+                                link: (chunks) => <a onClick={onShowLiveDashboard}>{chunks}</a>,
                             }}
                         />
                     </Message>

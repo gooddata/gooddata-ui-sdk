@@ -9,6 +9,7 @@
 @use "notifications_channels_dialog";
 @use "scheduled_mail_recipients";
 @use "item-states";
+@use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b1c1d1);
@@ -730,7 +731,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 }
 
 .gd-fluidlayout-column-container {
-    z-index: 10;
+    z-index: zIndexes.$dashboard-layout-column;
 }
 
 .gd-header-menu-overlay {

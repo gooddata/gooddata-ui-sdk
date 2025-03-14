@@ -122,6 +122,16 @@
         "comment": "Message banner. Some filters are changed by user but not applied yet. Do not translate HTML markup enclosed in <>.",
         "limit": 0
     },
+    "filterBar.snapshotModeNotificationMessage": {
+        "value": "<bold>Note.</bold> This is a snapshot from {date}.",
+        "comment": "Message banner describing dashboard snapshot mode. Don't translate placeholders enclosed in '{}'.",
+        "limit": 0
+    },
+    "filterBar.snapshotModeNotificationAction": {
+        "value": "<link>View live</link>",
+        "comment": "Do not translate HTML markup enclosed in <>.",
+        "limit": 0
+    },
     "options.menu.export": {
         "value": "Export",
         "comment": "Export submenu",

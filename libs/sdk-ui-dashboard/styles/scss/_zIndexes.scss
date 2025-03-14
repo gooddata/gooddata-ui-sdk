@@ -37,3 +37,6 @@ $scheduled-email-mask-small: $scheduled-email-mask + 1;
 $toolbar-basic: $resize-basic + 1;
 
 $dashboard-canvas-tooltip: $filterbar-sdk-8-12 + 1;
+
+$dashboard-layout-column: 10;
+$dashboard-message: $dashboard-layout-column + 1;

@@ -861,3 +861,23 @@ export function dashboardSharingChanged(
  * @public
  */
 export const isDashboardSharingChanged = eventGuard<DashboardSharingChanged>("GDC.DASH/EVT.SHARING.CHANGED");
+
+/**
+ * This event is emitted at the start of the 'show live dashboard' command processing.
+ *
+ * @alpha
+ */
+export interface LiveDashboardRequested extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.LIVE_DASHBOARD_REQUESTED";
+}
+
+export function liveDashboardRequested(
+    ctx: DashboardContext,
+    correlationId?: string,
+): LiveDashboardRequested {
+    return {
+        type: "GDC.DASH/EVT.LIVE_DASHBOARD_REQUESTED",
+        ctx,
+        correlationId,
+    };
+}

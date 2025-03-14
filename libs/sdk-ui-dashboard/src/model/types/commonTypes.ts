@@ -325,6 +325,13 @@ export interface DashboardConfig {
      * into created section. If the dashboard is loaded from backend, this content will be ignored.
      */
     initialContent?: DashboardItem[];
+
+    /**
+     * @alpha
+     *
+     * Snapshot timestamp for the dashboard execution as ISO string
+     */
+    snapshotTime?: string;
 }
 
 /**
@@ -397,6 +404,7 @@ export type ResolvedDashboardConfig = Omit<
     | "references"
     | "entitlements"
     | "initialContent"
+    | "snapshotTime"
 > &
     DashboardConfig;
 
