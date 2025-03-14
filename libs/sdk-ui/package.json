@@ -117,7 +117,7 @@
         "stylelint-config-prettier": "^8.0.2",
         "tsd": "^0.21.0",
         "typescript": "5.3.3",
-        "vitest": "1.0.4",
+        "vitest": "3.0.8",
         "vitest-dom": "0.1.1"
     }
 }

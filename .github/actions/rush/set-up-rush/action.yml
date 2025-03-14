@@ -13,6 +13,12 @@ runs:
       uses: ./.github/actions/node/set-up-node
       id: node-init
 
+    # This is temporary solution to disable zstd before cached operation on runners see readme in zstd action directory
+    - name: detect zstd
+      uses: ./.github/actions/zstd/detect-zstd
+    - name: disbale zstd
+      uses: ./.github/actions/zstd/disable-zstd
+
     # The runner is set up to assume a role using a web identity token, which is only possible for runners in the infra1-runners-arc group.
     # Region and role ARN and token file are passed as environment variables from the runner.
     - name: Fetch AWS env variables
@@ -36,11 +42,17 @@ runs:
         echo "RUSH_BUILD_CACHE_CREDENTIAL=$RUSH_BUILD_CACHE_CREDENTIAL" >> $GITHUB_ENV
       shell: bash
 
-    - name: Enable rush build cache via environment variable
-      run: echo "RUSH_BUILD_CACHE_ENABLED=1" >> $GITHUB_ENV
+    - name: Enable rush build cache via environment variable and set rush home dirs
+      run: |
+        echo "RUSH_BUILD_CACHE_ENABLED=1" >> $GITHUB_ENV
+
+        # Set path to global rush folder
+        echo "RUSH_GLOBAL_FOLDER=$GITHUB_WORKSPACE/common/.rush" >> $GITHUB_ENV
+
       shell: bash
 
     # Restore cache for global rush installation
+    # We need defined unified home folder for rush on runners and different docker images
     - name: Cache Rush
       uses: runs-on/cache/restore@v4
       env:
@@ -48,8 +60,8 @@ runs:
       with:
         path: |
           common/temp/install-run
-          ~/.rush
-        key: Rush-cache-${{ hashFiles('rush.json') }}
+          common/.rush
+        key: rush-cache-${{ hashFiles('rush.json') }}
 
     - name: Cache pnpm
       if: ${{ inputs.install-dependencies == 'true' }}
@@ -60,7 +72,13 @@ runs:
       with:
         path: |
           common/temp/pnpm-store
-        key: pnpm-cache-${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+        key: pnpm-cache-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}-${{ hashFiles('rush.json') }}
+
+
+    # All cached operation done enable zstd back
+    # This is temporary solution to disable zstd before cached operation on runners see readme in zstd action directory
+    - name: enable zstd
+      uses: ./.github/actions/zstd/enable-zstd
 
     # Install rush
     - name: Install rush

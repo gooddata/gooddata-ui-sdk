@@ -1,0 +1,15 @@
+name: "Enable zstd"
+description: "Enables zstd by renaming its directory back to the original name"
+runs:
+  using: "composite"
+  steps:
+    - name: Restore zstd directory
+      shell: bash
+      run: |
+        if [ -z "$ZSTD_DIR" ]; then
+          echo "Environment variable ZSTD_DIR is not set."
+          exit 0
+        fi
+        BACKUP_DIR="${ZSTD_DIR}_backup"
+        echo "Restoring directory: renaming $BACKUP_DIR back to $ZSTD_DIR"
+        mv "$BACKUP_DIR" "$ZSTD_DIR"

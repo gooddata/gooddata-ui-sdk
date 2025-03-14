@@ -3,33 +3,58 @@
 import * as process from "process";
 import fs from "fs";
 import * as path from "path";
-import keys from "lodash/keys.js";
+import fse from "fs-extra";
 
-import { readJsonSync } from "../src/_base/utils.js";
+export function readJsonSync(file) {
+    return JSON.parse(fse.readFileSync(file, { encoding: "utf-8" }));
+}
+
 
 /*
  * This script is used during build to clean up the contents of package.json that will be shipped with
- * the template project bootstrapped by the plugin development toolkit.
+ * the template project bootstrapped by the application development toolkit.
  *
- * The rationale here is, that the original package.json included in the `dashboard-plugin-template` contains
+ * The rationale here is, that the original package.json included in the `react-app-template` contains
  * scripts and dependencies specific of the UI.SDK monorepo. They should not be included in the bootstrapped
- * plugin project.
+ * application project.
  *
  * There are two ways to go.. one is to have additional package.json.template files with only the content
- * that is vital to have in the bootstrapped plugin. The problem with that approach the dependencies and
+ * that is vital to have in the bootstrapped application. The problem with that approach the dependencies and
  * devDependencies. Within SDK monorepo, we rely on rush to manage consistent versions and to bump intra-SDK
  * dependency versions. The template content would be out of this loop and we will still require some extra
  * processing to transfer & cleanup the dependencies from the main package.json.
  *
  * Alternative to the templates (and possibly some funky `jq` processing to handle the dependencies) is
- * this script to clean things up programatically.
+ * this script to clean things up programmatically.
  */
 
-const GdScriptsRemove = ["test-ci", "eslint-ci", "dep-cruiser", "dep-cruiser-ci", "validate", "validate-ci"];
+const GdScriptsReplace = {
+    clean: "rm -rf esm *.log",
+    test: null,
+    "test-once": null,
+    "test-ci": null,
+    eslint: null,
+    "eslint-ci": null,
+    "prettier-check": null,
+    "prettier-write": null,
+    "dep-cruiser": null,
+    "dep-cruiser-ci": null,
+    validate: null,
+    "validate-ci": null,
+};
 
-const UnnecessaryDevDependencies = ["@gooddata/eslint-config", "dependency-cruiser", "eslint-plugin-sonarjs"];
+const UnnecessaryDependencies = [
+    "@gooddata/eslint-config",
+    "dependency-cruiser",
+    "eslint-plugin-sonarjs",
+    /^eslint/i,
+    "prettier",
+    "vitest",
+    /^@typescript-eslint\//,
+];
 
-const ExplicitTypeScriptDependencies = [
+const TypeScriptDependencies = [
+    /^@types\//,
     "@typescript-eslint/eslint-plugin",
     "@typescript-eslint/parser",
     "ts-loader",
@@ -37,15 +62,34 @@ const ExplicitTypeScriptDependencies = [
     "tslib",
 ];
 
+function removeItems(search, targets) {
+    for (const target of Object.keys(targets)) {
+        for (const item of search) {
+            if (item === target || (item instanceof RegExp && item.test(target))) {
+                delete targets[target];
+            }
+        }
+    }
+}
+
+function replaceItems(search, targets) {
+    for (const [searchKey, searchValue] of Object.entries(search)) {
+        if (searchValue === null) {
+            delete targets[searchKey];
+        } else {
+            targets[searchKey] = searchValue;
+        }
+    }
+}
+
 function resolveCurrentPackageVersion() {
     //we need current version of app-toolkit
     const parenPackagePath = path.resolve("./", "package.json");
     const parentPackage = readJsonSync(parenPackagePath);
-    parentPackage.peerDependen;
     return parentPackage.version;
 }
 
-function updateGDPackageVersion(version: string, targets: { [key: string]: string }) {
+function updateGDPackageVersion(version, targets) {
     //replace workspace version definition
     for (const [searchKey, searchValue] of Object.entries(targets)) {
         if (searchValue === "workspace:*") {
@@ -56,40 +100,40 @@ function updateGDPackageVersion(version: string, targets: { [key: string]: strin
     }
 }
 
-function removeGdStuff(packageJson: Record<string, any>) {
-    packageJson.name = "<plugin-name>";
+function removeGdStuff(packageJson) {
+    packageJson.name = "<app-name>";
     packageJson.author = "";
-    packageJson.description = "";
+    packageJson.description = "GoodData React SDK application";
 
-    const { scripts, devDependencies, dependencies, peerDependencies } = packageJson;
+    const { scripts, devDependencies, dependencies } = packageJson;
 
-    GdScriptsRemove.forEach((script) => {
-        delete scripts[script];
-    });
-
-    UnnecessaryDevDependencies.forEach((dep) => {
-        delete devDependencies[dep];
-    });
+    replaceItems(GdScriptsReplace, scripts);
+    removeItems(UnnecessaryDependencies, devDependencies);
+    removeItems(UnnecessaryDependencies, dependencies);
 
     const packageVersion = resolveCurrentPackageVersion();
 
     updateGDPackageVersion(packageVersion, devDependencies);
     updateGDPackageVersion(packageVersion, dependencies);
-    updateGDPackageVersion(packageVersion, peerDependencies);
 
     delete packageJson.repository;
+    delete packageJson.sideEffects;
+    delete packageJson.files;
+    delete packageJson.license;
 }
 
-function removeTs(packageJson: Record<string, any>) {
+function removeTs(packageJson) {
     const { devDependencies, dependencies } = packageJson;
-    const typings = keys(devDependencies).filter((dep) => dep.startsWith("@types"));
 
-    [...ExplicitTypeScriptDependencies, ...typings].forEach((dep) => {
-        delete devDependencies[dep];
-        delete dependencies[dep];
-    });
+    removeItems(TypeScriptDependencies, devDependencies);
+    removeItems(TypeScriptDependencies, dependencies);
 
     delete packageJson.typings;
+
+    if (packageJson.gooddata?.catalogOutput) {
+        // Use .js file for catalog export
+        packageJson.gooddata.catalogOutput = packageJson.gooddata.catalogOutput.replace(/\.ts$/, ".js");
+    }
 }
 
 if (process.argv.length !== 4) {

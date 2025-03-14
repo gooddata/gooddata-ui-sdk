@@ -1,5 +1,5 @@
 name: Warm up node cache and install node
-description: This action install node and create cache s3 item for node installation. Node version is hardcoded to version 18.17.0
+description: This action install node and create cache s3 item for node installation. Node version is hardcoded to version 22.13.0
 
 runs:
   using: 'composite'
@@ -8,7 +8,7 @@ runs:
       id: check-node
       uses: ./.github/actions/node/check-node-version
       with:
-        node-version: 18.17.0
+        node-version: 22.13.0
 
     # create s3 cache for node installation
     - name: Cache Node.js
@@ -18,15 +18,15 @@ runs:
       env:
         RUNS_ON_S3_BUCKET_CACHE: gdc-github-cache
       with:
-          path: /home/runner/_work/_tool/node/18.17.0/
-          key: node-18.17.0-cache
+          path: /home/runner/_work/_tool/node/22.13.0/
+          key: node-22.13.0-cache
 
     # Prepare node
     - name: Install Node.js
       if: ${{ steps.check-node.outputs.node-installed == 'false' }}
       uses: actions/setup-node@v4
       with:
-        node-version: 18.17.0
+        node-version: 22.13.0
 
     # Print node location and version
     - name: print node location

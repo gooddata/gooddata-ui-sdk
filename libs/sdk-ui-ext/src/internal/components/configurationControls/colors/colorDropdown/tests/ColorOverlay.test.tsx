@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
@@ -7,6 +7,17 @@ import * as uiKit from "@gooddata/sdk-ui-kit";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 import ColorOverlay, { IColorOverlayProps, DropdownVersionType } from "../ColorOverlay.js";
+
+// Mock the Overlay component
+vi.mock("@gooddata/sdk-ui-kit", async () => {
+    const actual = await vi.importActual("@gooddata/sdk-ui-kit");
+    return {
+        ...actual,
+        Overlay: vi.fn((props) => {
+            return React.createElement("div", { "aria-label": "mocked-overlay" }, props.children);
+        }),
+    };
+});
 
 const defaultProps: IColorOverlayProps = {
     alignTo: "#somestyle",
@@ -21,17 +32,15 @@ function createComponent(customProps: Partial<IColorOverlayProps> = {}) {
 
 describe("ColorOverlay", () => {
     beforeEach(() => {
-        vi.restoreAllMocks();
+        vi.clearAllMocks();
     });
 
     it("should render ColorOverlay control", () => {
         createComponent();
-        expect(screen.getByLabelText("Color overlay content")).toBeInTheDocument();
+        expect(screen.getByLabelText("Color overlay content")).not.toBeNull();
     });
 
     it("ColorOverlay should be aligned to top left or bottom left", () => {
-        const overlaySpy = vi.spyOn(uiKit, "Overlay").mockImplementation((): null => null);
-
         createComponent();
 
         const expectAlignPoints = [
@@ -51,15 +60,13 @@ describe("ColorOverlay", () => {
             },
         ];
 
-        expect(overlaySpy).toHaveBeenCalledWith(
+        expect(uiKit.Overlay).toHaveBeenCalledWith(
             expect.objectContaining({ alignPoints: expectAlignPoints, alignTo: defaultProps.alignTo }),
             {},
         );
     });
 
     it("ColorOverlay should be aligned to center left or bottom left ", () => {
-        const overlaySpy = vi.spyOn(uiKit, "Overlay").mockImplementation((): null => null);
-
         createComponent({ dropdownVersion: DropdownVersionType.ColorPicker });
 
         const expectAlignPoints = [
@@ -86,7 +93,7 @@ describe("ColorOverlay", () => {
             },
         ];
 
-        expect(overlaySpy).toHaveBeenCalledWith(
+        expect(uiKit.Overlay).toHaveBeenCalledWith(
             expect.objectContaining({ alignPoints: expectAlignPoints, alignTo: defaultProps.alignTo }),
             {},
         );

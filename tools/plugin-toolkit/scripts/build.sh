@@ -17,8 +17,8 @@ PACKAGE_DIR="$(echo $(cd $(dirname $0)/.. && pwd -P))"
 DIST_DIR="${PACKAGE_DIR}/esm"
 BABEL_BIN="${PACKAGE_DIR}/node_modules/.bin/babel"
 PRETTIER_BIN="${PACKAGE_DIR}/node_modules/.bin/prettier"
-TSNODE_BIN="${PACKAGE_DIR}/node_modules/.bin/ts-node"
-PREPARE_PACKAGE_JSON="${TSNODE_BIN} --esm ${PACKAGE_DIR}/scripts/preparePackageJson.ts"
+
+PREPARE_PACKAGE_JSON="node ${PACKAGE_DIR}/scripts/preparePackageJson.mjs"
 
 DASHBOARD_PLUGIN_TEMPLATE_DIR="${PACKAGE_DIR}/../dashboard-plugin-template"
 JS_CONFIG_TEMPLATES="${DASHBOARD_PLUGIN_TEMPLATE_DIR}/configTemplates/js/*"

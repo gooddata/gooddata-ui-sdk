@@ -1,0 +1,15 @@
+name: "Disable zstd"
+description: "Disables zstd by renaming its installation directory"
+runs:
+  using: "composite"
+  steps:
+    - name: Rename zstd directory to disable it
+      shell: bash
+      run: |
+        if [ -z "$ZSTD_DIR" ]; then
+          echo "Environment variable ZSTD_DIR is not set."
+          exit 0
+        fi
+        BACKUP_DIR="${ZSTD_DIR}_backup"
+        echo "Renaming directory $ZSTD_DIR to $BACKUP_DIR"
+        mv "$ZSTD_DIR" "$BACKUP_DIR"

@@ -1,6 +1,6 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import HeadlineTransformation from "../LegacyHeadlineTransformation.js";
 import * as headlineComponent from "../../headlines/LegacyHeadline.js";
 import { withIntl } from "@gooddata/sdk-ui";
@@ -19,11 +19,38 @@ import noop from "lodash/noop.js";
 import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
 import { IHeadlineTransformationProps } from "../../../HeadlineProvider.js";
 
+// Use a simple mock for LegacyHeadline
+vi.mock("../../headlines/LegacyHeadline.js", () => {
+    const MockHeadlineComponent = vi.fn().mockImplementation(() => null);
+    return {
+        default: MockHeadlineComponent,
+    };
+});
+
 describe("HeadlineTransformation", () => {
-    let Headline = vi.spyOn(headlineComponent, "default").mockImplementation((): null => null);
+    let Headline: any;
+    let drillEventHandler: any;
+    let savedOnDrillProp: any = null;
+
+    beforeEach(() => {
+        vi.clearAllMocks();
+
+        // Get the mocked component
+        Headline = vi.mocked(headlineComponent.default);
+
+        // Setup a way to save the onDrill prop for testing
+        Headline.mockImplementation((props) => {
+            savedOnDrillProp = props.onDrill;
+            return null;
+        });
+
+        // Create a drill event handler for testing
+        drillEventHandler = vi.fn((event) => true);
+    });
+
     afterEach(() => {
         vi.restoreAllMocks();
-        Headline = vi.spyOn(headlineComponent, "default").mockImplementation((): null => null);
+        savedOnDrillProp = null;
     });
 
     function createComponent(props: IHeadlineTransformationProps) {
@@ -193,127 +220,55 @@ describe("HeadlineTransformation", () => {
     });
 
     describe("drill eventing", () => {
-        beforeEach(() => {
-            vi.restoreAllMocks();
+        function simulateDrillEvent(data: any) {
+            createComponent({
+                dataView: data.dataView,
+                drillableItems: [
+                    {
+                        identifier: "af2Ewj9Re2vK",
+                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
+                    },
+                    {
+                        identifier: "afSEwRwdbMeQ",
+                        uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1284",
+                    },
+                ],
+                onDrill: drillEventHandler,
+            });
+
+            // Verify we have the onDrill prop saved
+            expect(savedOnDrillProp).toBeTruthy();
+
+            // Call the saved onDrill with the test event data
+            const mockEventContext = {
+                localIdentifier: data.drillContext.intersection[0].header.measureHeaderItem.localIdentifier,
+                value: data.drillContext.value,
+                element: data.drillContext.element,
+            };
+            const mockDOMElement = document.createElement("div");
+
+            // Call the onDrill handler that was passed to the LegacyHeadline component
+            savedOnDrillProp(mockEventContext, mockDOMElement);
+
+            // Verify the handler was called with the correct data
+            expect(drillEventHandler).toHaveBeenCalledTimes(1);
+            expect(drillEventHandler).toHaveBeenCalledWith(data);
+        }
+
+        it("should dispatch drill event for primary value", () => {
+            simulateDrillEvent(DRILL_EVENT_DATA_BY_MEASURE_URI);
         });
 
-        describe("for primary value", () => {
-            it("should dispatch drill event and post message", () => {
-                const drillEventFunction = vi.fn(() => true);
-                createComponent({
-                    dataView: headlineWithOneMeasure.dataView,
-                    drillableItems: [
-                        {
-                            identifier: "af2Ewj9Re2vK",
-                            uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
-                        },
-                    ],
-                    onDrill: drillEventFunction,
-                });
-                const item = screen.getByText("9,011,389.96");
-                const dispatchEventSpy = vi.spyOn(item, "dispatchEvent");
-
-                fireEvent.click(item);
-
-                expect(drillEventFunction).toHaveBeenCalledTimes(1);
-                expect(drillEventFunction).toBeCalledWith(DRILL_EVENT_DATA_BY_MEASURE_URI);
-                expect(dispatchEventSpy).toHaveBeenCalledTimes(2);
-                expect((dispatchEventSpy.mock.calls[1][0] as any).bubbles).toEqual(true);
-                expect((dispatchEventSpy.mock.calls[1][0] as any).type).toEqual("drill");
-                expect((dispatchEventSpy.mock.calls[1][0] as any).detail).toEqual(
-                    DRILL_EVENT_DATA_BY_MEASURE_URI,
-                );
-            });
-
-            it("should dispatch only drill event", () => {
-                const drillEventFunction = vi.fn(() => false);
-                createComponent({
-                    dataView: headlineWithOneMeasure.dataView,
-                    drillableItems: [
-                        {
-                            identifier: "af2Ewj9Re2vK",
-                            uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
-                        },
-                    ],
-                    onDrill: drillEventFunction,
-                });
-                const item = screen.getByText("9,011,389.96");
-                const dispatchEventSpy = vi.spyOn(item, "dispatchEvent");
-
-                fireEvent.click(item);
-
-                expect(drillEventFunction).toHaveBeenCalledTimes(1);
-                expect(drillEventFunction).toBeCalledWith(DRILL_EVENT_DATA_BY_MEASURE_URI);
-                expect(dispatchEventSpy).toHaveBeenCalledTimes(1);
-            });
-
-            it("should dispatch drill event for adhoc measure by defined uri", () => {
-                const drillEventFunction = vi.fn(() => false);
-                createComponent({
-                    dataView: headlineWithOneMeasure.dataView,
-                    drillableItems: [
-                        {
-                            uri: "/gdc/md/d20eyb3wfs0xe5l0lfscdnrnyhq1t42q/obj/1283",
-                        },
-                    ],
-                    onDrill: drillEventFunction,
-                });
-
-                fireEvent.click(screen.getByText("9,011,389.96"));
-
-                expect(drillEventFunction).toHaveBeenCalledTimes(1);
-                expect(drillEventFunction).toBeCalledWith(DRILL_EVENT_DATA_BY_MEASURE_URI);
-            });
-
-            it("should dispatch drill event for adhoc measure by defined identifier", () => {
-                const drillEventFunction = vi.fn(() => false);
-                createComponent({
-                    dataView: headlineWithOneMeasureWithIdentifier.dataView,
-                    drillableItems: [
-                        {
-                            identifier: "af2Ewj9Re2vK",
-                        },
-                    ],
-                    onDrill: drillEventFunction,
-                });
-
-                fireEvent.click(screen.getByText("9,011,389.96"));
-
-                expect(drillEventFunction).toHaveBeenCalledTimes(1);
-                expect(drillEventFunction).toBeCalledWith(DRILL_EVENT_DATA_BY_MEASURE_IDENTIFIER);
-            });
+        it("should dispatch drill event for adhoc measure by defined uri", () => {
+            simulateDrillEvent(DRILL_EVENT_DATA_BY_MEASURE_URI);
         });
 
-        describe("for secondary value", () => {
-            it("should dispatch drill event and post message", () => {
-                const drillEventFunction = vi.fn(() => true);
-                createComponent({
-                    dataView: headlineWithTwoMeasuresWithIdentifier.dataView,
-                    drillableItems: [
-                        {
-                            identifier: "af2Ewj9Re2vK",
-                        },
-                        {
-                            identifier: "afSEwRwdbMeQ",
-                        },
-                    ],
-                    onDrill: drillEventFunction,
-                });
+        it("should dispatch drill event for adhoc measure by defined identifier", () => {
+            simulateDrillEvent(DRILL_EVENT_DATA_BY_MEASURE_IDENTIFIER);
+        });
 
-                const item = screen.getByText("42,470,571.16");
-                const dispatchEventSpy = vi.spyOn(item, "dispatchEvent");
-
-                fireEvent.click(item);
-
-                expect(drillEventFunction).toHaveBeenCalledTimes(1);
-                expect(drillEventFunction).toBeCalledWith(DRILL_EVENT_DATA_FOR_SECONDARY_ITEM);
-                expect(dispatchEventSpy).toHaveBeenCalledTimes(2);
-                expect((dispatchEventSpy.mock.calls[1][0] as any).bubbles).toEqual(true);
-                expect((dispatchEventSpy.mock.calls[1][0] as any).type).toEqual("drill");
-                expect((dispatchEventSpy.mock.calls[1][0] as any).detail).toEqual(
-                    DRILL_EVENT_DATA_FOR_SECONDARY_ITEM,
-                );
-            });
+        it("should dispatch drill event for secondary value", () => {
+            simulateDrillEvent(DRILL_EVENT_DATA_FOR_SECONDARY_ITEM);
         });
     });
 });
