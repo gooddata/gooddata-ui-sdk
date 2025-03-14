@@ -11,6 +11,7 @@ import {
     IMeasure,
     ISeparators,
     IFilter,
+    IExecutionConfig,
 } from "@gooddata/sdk-model";
 import {
     ExplicitDrill,
@@ -251,6 +252,11 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
      * The current user settings.
      */
     settings: IUserWorkspaceSettings | undefined;
+
+    /**
+     * Contains configuration that should be part of insight execution
+     */
+    execConfig?: IExecutionConfig;
 }
 
 ///

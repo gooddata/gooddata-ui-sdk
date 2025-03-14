@@ -1832,6 +1832,7 @@ export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" |
 // @public
 export interface IExecutionConfig {
     dataSamplingPercentage?: number;
+    timestamp?: string;
 }
 
 // @public

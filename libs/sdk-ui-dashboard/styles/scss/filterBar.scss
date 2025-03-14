@@ -34,10 +34,17 @@ $attribute-filter-drag-handle-left: 10px;
     left: 50%;
     display: block;
     transform: translateX(-50%);
+    // without any z-index, the message is hidden on mobile view
+    z-index: zIndexes.$dashboard-message;
 
     a {
         font-weight: bold;
         cursor: pointer;
+    }
+
+    .filters-message-spacer {
+        width: 10px;
+        display: inline-block;
     }
 }
 

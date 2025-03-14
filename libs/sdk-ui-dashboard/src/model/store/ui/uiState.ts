@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { ObjRef, Identifier, Uri } from "@gooddata/sdk-model";
 
 import {
@@ -89,6 +89,7 @@ export interface UiState {
     filterAttributeSelectionOpen: boolean;
     selectedFilterIndex: number | undefined;
     activeSection: ILayoutSectionPath | undefined;
+    ignoreSnapshotTime: boolean;
     /** @alpha */
     drillValidationMessages: {
         invalidDrillWidgetRefs: ObjRef[];
@@ -162,4 +163,5 @@ export const uiInitialState: UiState = {
     draggingWidgetSource: undefined,
     draggingWidgetTarget: undefined,
     widgetsOverlay: {},
+    ignoreSnapshotTime: false,
 };

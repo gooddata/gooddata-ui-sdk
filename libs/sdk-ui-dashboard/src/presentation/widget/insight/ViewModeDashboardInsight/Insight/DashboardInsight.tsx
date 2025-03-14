@@ -3,6 +3,7 @@ import React, { CSSProperties, useRef, useCallback, useEffect, useMemo, useState
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
 import {
+    IExecutionConfig,
     insightProperties,
     insightSetFilters,
     insightVisualizationUrl,
@@ -36,6 +37,7 @@ import {
     selectCrossFilteringSelectedPointsByWidgetRef,
     useWidgetFilters,
     selectEnableExecutionCancelling,
+    selectSnapshotTime,
 } from "../../../../../model/index.js";
 
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
@@ -285,6 +287,9 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         !!effectiveError,
     );
 
+    const snapshotTime = useDashboardSelector(selectSnapshotTime);
+    const execConfig: IExecutionConfig = useMemo(() => ({ timestamp: snapshotTime }), [snapshotTime]);
+
     const renderComponent = () => {
         if (effectiveError) {
             return (
@@ -326,6 +331,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                                 LoadingComponent={LoadingComponent}
                                 onExportReady={onExportReady}
                                 afterRender={handleAfterRender}
+                                execConfig={execConfig}
                             />
                         </div>
                     ) : null}
