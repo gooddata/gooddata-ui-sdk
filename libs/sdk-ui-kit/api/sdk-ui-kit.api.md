@@ -2230,11 +2230,15 @@ export interface IInsightListItemProps {
     // (undocumented)
     description?: string;
     // (undocumented)
+    filters?: IFilter[];
+    // (undocumented)
     isLoading?: boolean;
     // (undocumented)
     isLocked?: boolean;
     // (undocumented)
     isSelected?: boolean;
+    // (undocumented)
+    LoadingComponent?: React_2.ComponentType;
     // (undocumented)
     metadataTimeZone?: string;
     // (undocumented)
@@ -2251,6 +2255,10 @@ export interface IInsightListItemProps {
     type?: string;
     // (undocumented)
     updated?: string;
+    // (undocumented)
+    useReferences?: boolean;
+    // (undocumented)
+    useRichText?: boolean;
     // (undocumented)
     width?: number;
 }

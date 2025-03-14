@@ -1258,7 +1258,7 @@ export type CustomDashboardDateFilterComponent = ComponentType<IDashboardDateFil
 export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightProps>;
 
 // @internal (undocumented)
-export type CustomDashboardInsightListItemComponent = React.ComponentType<CustomDashboardInsightListItemComponentProps>;
+export type CustomDashboardInsightListItemComponent = React_2.ComponentType<CustomDashboardInsightListItemComponentProps>;
 
 // @internal (undocumented)
 export type CustomDashboardInsightListItemComponentProps = {
@@ -1271,6 +1271,10 @@ export type CustomDashboardInsightListItemComponentProps = {
     showDescriptionPanel?: boolean;
     onDescriptionPanelOpen?: () => void;
     metadataTimeZone?: string;
+    filters?: IFilter[];
+    useRichText?: boolean;
+    useReferences?: boolean;
+    LoadingComponent?: React_2.ComponentType;
 };
 
 // @alpha (undocumented)
@@ -6305,7 +6309,7 @@ export interface IWorkingFilterContextDefinition {
 }
 
 // @internal (undocumented)
-export type IWrapCreatePanelItemWithDragComponent = React.ComponentType<IWrapCreatePanelItemWithDragProps>;
+export type IWrapCreatePanelItemWithDragComponent = React_2.ComponentType<IWrapCreatePanelItemWithDragProps>;
 
 // @internal (undocumented)
 export type IWrapCreatePanelItemWithDragInnerProps = {
@@ -6328,7 +6332,7 @@ export type IWrapCreatePanelItemWithDragProps = {
 };
 
 // @internal (undocumented)
-export type IWrapInsightListItemWithDragComponent = React.ComponentType<IWrapInsightListItemWithDragProps>;
+export type IWrapInsightListItemWithDragComponent = React_2.ComponentType<IWrapInsightListItemWithDragProps>;
 
 // @internal (undocumented)
 export interface IWrapInsightListItemWithDragProps {
