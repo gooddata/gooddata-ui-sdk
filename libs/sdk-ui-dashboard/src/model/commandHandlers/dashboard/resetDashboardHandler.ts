@@ -121,9 +121,12 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
         const originalFilterContext: ReturnType<typeof selectOriginalFilterContextDefinition> = yield select(
             selectOriginalFilterContextDefinition,
         );
-        const effectiveOriginalFilterContext = isImmediateAttributeFilterMigrationEnabled
-            ? originalFilterContext
-            : undefined;
+
+        const hasUnsavedFilterChanges = migratedAttributeFilters.length > 0;
+        const effectiveOriginalFilterContext =
+            isImmediateAttributeFilterMigrationEnabled && hasUnsavedFilterChanges
+                ? originalFilterContext
+                : undefined;
         // end of ad-hoc migration content
 
         const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
