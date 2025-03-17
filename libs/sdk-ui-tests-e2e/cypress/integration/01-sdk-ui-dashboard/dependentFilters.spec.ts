@@ -1,9 +1,10 @@
 // (C) 2023-2025 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { AttributeFilter } from "../../tools/filterBar";
-import { TopBar } from "../../tools/dashboards";
+import { TopBar, Dashboard } from "../../tools/dashboards";
 import { Table } from "../../tools/table";
 import { InsightsCatalog } from "../../tools/insightsCatalog";
+import { Widget } from "../../tools/widget";
 
 const regionFilter = new AttributeFilter("Region");
 const stateFilter = new AttributeFilter("State");
@@ -16,6 +17,7 @@ const topBar = new TopBar();
 describe("Dependent filter", () => {
     beforeEach(() => {
         Navigation.visit("dashboard/dashboard-dependent-filters");
+        new Dashboard().waitForDashboardLoaded();
     });
 
     it(
@@ -37,7 +39,7 @@ describe("Dependent filter", () => {
                     "Providence",
                 ]);
 
-            stateFilter.isLoaded().open().selectAttribute(["Connecticut"]).apply();
+            stateFilter.isLoaded().open().elementsAreLoaded().selectAttribute(["Connecticut"]).apply();
 
             table
                 .waitLoadStarted()
@@ -48,6 +50,7 @@ describe("Dependent filter", () => {
             cityFilter
                 .isLoaded()
                 .open()
+                .elementsAreLoaded()
                 .hasSubtitle("All")
                 .hasFilterListSize(6)
                 .hasSelectedValueList([
@@ -72,10 +75,11 @@ describe("Dependent filter", () => {
 
             stateFilter.open().selectAttribute(["Oregon"]).apply();
 
-            table.isEmpty();
+            new Widget(0).hasNoDataForFilter();
 
             cityFilter
                 .open()
+                .elementsAreLoaded()
                 .hasSubtitle("Hartford")
                 .hasFilterListSize(4)
                 .hasSelectedValueList([])
@@ -118,6 +122,7 @@ describe("Dependent filter", () => {
 
             cityFilter
                 .open()
+                .elementsAreLoaded()
                 .hasSubtitle("Hartford")
                 .hasFilterListSize(10)
                 .hasSelectedValueList(["Hartford"]);
@@ -148,6 +153,7 @@ describe("Dependent filter", () => {
             stateFilter
                 .isLoaded()
                 .open()
+                .elementsAreLoaded()
                 .hasSubtitle("All")
                 .hasFilterListSize(48)
                 .configureLimitingParentFilterDependency("Region")
@@ -177,7 +183,7 @@ describe("Dependent filter", () => {
                     "Rhode Island",
                 ]);
 
-            regionFilter.open().selectAttribute(["West Coast"]).apply();
+            regionFilter.open().elementsAreLoaded().selectAttribute(["West Coast"]).apply();
             table.waitLoadStarted().waitLoaded();
 
             stateFilter
@@ -191,13 +197,15 @@ describe("Dependent filter", () => {
                 .isLoaded()
                 .hasSubtitle("California");
 
-            cy.wait(1000);
+            table.waitLoadStarted().waitLoaded();
 
             cityFilter
                 .open()
+                .elementsAreLoaded()
                 .hasSubtitle("All")
                 .hasFilterListSize(50)
                 .configureLimitingParentFilterDependency("Region")
+                .elementsAreLoaded()
                 .hasFilterListSize(7)
                 .selectAttribute(["Sacramento"])
                 .apply();
@@ -218,7 +226,7 @@ describe("Dependent filter", () => {
                 .selectAttribute(["East Coast"])
                 .apply();
 
-            cy.wait(1000);
+            new Widget(0).hasNoDataForFilter();
 
             stateFilter
                 .open()
@@ -238,7 +246,7 @@ describe("Dependent filter", () => {
                 .selectAttribute(["West Coast"])
                 .apply();
 
-            cy.wait(1000);
+            table.waitLoadStarted().waitLoaded();
 
             stateFilter
                 .open()
@@ -253,11 +261,11 @@ describe("Dependent filter", () => {
 
             topBar.cancelEditMode().discardChanges().editButtonIsVisible(true);
 
-            table.waitLoaded();
+            table.waitLoadStarted().waitLoaded();
 
-            regionFilter.isLoaded().open().hasSubtitle("East Coast").hasFilterListSize(4);
-            stateFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(48);
-            cityFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(300);
+            regionFilter.isLoaded().open().elementsAreLoaded().hasSubtitle("East Coast").hasFilterListSize(4);
+            stateFilter.isLoaded().open().elementsAreLoaded().hasSubtitle("All").hasFilterListSize(48);
+            cityFilter.isLoaded().open().elementsAreLoaded().hasSubtitle("All").hasFilterListSize(300);
         },
     );
 
@@ -265,20 +273,12 @@ describe("Dependent filter", () => {
         "child filter can reduce to zero element by parent filter",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
-            cy.intercept("GET", "**/attributes**").as("attributes");
             topBar.enterEditMode().editButtonIsVisible(false);
-            product.open().selectAttributesWithoutApply("TouchAll").apply();
-            // open, close, then open to make sure that attribute filter on child is reloaded to correct valid elements
-            cy.wait("@attributes").then(() => {
-                stageName
-                    .open()
-                    .close()
-                    .open()
-                    .elementsAreLoaded()
-                    .hasNoRelevantMessage()
-                    .showAllElementValuesIsVisible(true);
-            });
-            table.isEmpty();
+            new InsightsCatalog().waitForCatalogLoad();
+            product.open().elementsAreLoaded().selectAttributesWithoutApply("TouchAll").apply();
+            new Widget(0).hasNoDataForFilter();
+            stageName.open().elementsAreLoaded().hasNoRelevantMessage().showAllElementValuesIsVisible(true);
+            new Widget(0).hasNoDataForFilter();
         },
     );
 
@@ -290,8 +290,6 @@ describe("Dependent filter", () => {
             new InsightsCatalog().waitForCatalogLoad();
             stateFilter.open().selectAttributesWithoutApply("Alabama").apply();
             cityFilter
-                .open()
-                .close()
                 .open()
                 .elementsAreLoaded()
                 .hasFilterListSize(5)
@@ -305,14 +303,14 @@ describe("Dependent filter", () => {
         "can reload elements after removing parent filter",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
-            cy.intercept("GET", "**/attributes**").as("attributes");
             topBar.enterEditMode().editButtonIsVisible(false);
-            stateFilter.open().selectAttributesWithoutApply("Alabama").apply();
-            cy.wait("@attributes").then(() => {
-                cityFilter.open().close().open().elementsAreLoaded().hasFilterListSize(5).close();
-                stateFilter.removeFilter();
-                cityFilter.isLoaded().open().elementsAreLoaded().hasFilterListSize(300);
-            });
+            new InsightsCatalog().waitForCatalogLoad();
+            stateFilter.open().elementsAreLoaded().selectAttributesWithoutApply("Alabama").apply();
+            new Widget(0).hasNoDataForFilter();
+            cityFilter.open().elementsAreLoaded().hasFilterListSize(5).close();
+            stateFilter.removeFilter();
+            table.waitLoadStarted().waitLoaded();
+            cityFilter.isLoaded().open().elementsAreLoaded().hasFilterListSize(300);
         },
     );
 
@@ -320,23 +318,24 @@ describe("Dependent filter", () => {
         "should test a circle parent - child filter in edit mode",
         { tags: "checklist_integrated_tiger" },
         () => {
-            cy.intercept("GET", "**/attributes**").as("attributes");
-
             topBar.enterEditMode().editButtonIsVisible(false);
-            cy.wait("@attributes").then(() => {
-                cityFilter.open().selectAttribute(["Boston", "Nashua"]).apply();
-            });
+            new InsightsCatalog().waitForCatalogLoad();
+            cityFilter.open().elementsAreLoaded().selectAttribute(["Boston", "Nashua"]).apply();
+            table.waitLoadStarted().waitLoaded();
 
             stateFilter
                 .open()
                 .elementsAreLoaded()
                 .configureLimitingParentFilterDependency("City")
+                .elementsAreLoaded()
                 .hasFilterListSize(2)
                 .selectAttribute(["Massachusetts"])
                 .apply();
+            table.waitLoadStarted().waitLoaded();
 
             stateFilter
                 .open()
+                .elementsAreLoaded()
                 .hasFilterListSize(2)
                 .showAllElementValuesIsVisible(true)
                 .showAllElementValues()
