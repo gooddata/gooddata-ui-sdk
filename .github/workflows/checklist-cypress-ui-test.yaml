@@ -27,6 +27,10 @@ on:
         type: string
         required: false
         description: 'Test files to be filtered'
+      DISPATCH_ID:
+        description: 'Unique dispatch id from upstream job'
+        required: false
+        type: string
   workflow_call:
     inputs:
       GIT_REVISION:
@@ -50,6 +54,13 @@ on:
         type: string
 
 jobs:
+  dispatch_id:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.DISPATCH_ID != ''
+    runs-on: ubuntu-latest
+    steps:
+      - id: dispatch-id
+        name: ${{ github.event.inputs.DISPATCH_ID }}
+        run: echo "The dispatch ID is ${{ github.event.inputs.DISPATCH_ID }}"
   warm-up-cache:
     runs-on:
       group: infra1-runners-arc
@@ -57,7 +68,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.GIT_REVISION }}
           fetch-depth: 2
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
@@ -76,7 +86,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.GIT_REVISION }}
           fetch-depth: 2
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
@@ -102,13 +111,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.GIT_REVISION }}
           fetch-depth: 2
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
         with:
           name: git-action
           email: git-action@gooddata.com
+      - name: Checkout the correct commit corresponding to $GIT_REVISION
+        if: ${{ inputs.GIT_REVISION != 'master' }}
+        run: |
+          git checkout ${{ inputs.GIT_REVISION }}
       - name: Setup rush
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
