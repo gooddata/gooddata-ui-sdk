@@ -13,11 +13,11 @@ describe("parseText", () => {
     it.each([
         [
             "Hello, {visualization.foo} and {dashboard.bar}!",
-            "Hello, [Foo](/analyze/#/wsid/foo/edit) and [Bar](/dashboards/#/workspace/wsid/dashboard/bar)!",
+            "Hello, [Foo](gooddata://visualization?ws=wsid&id=foo) and [Bar](gooddata://dashboard?ws=wsid&id=bar)!",
         ],
-        ["{visualization.foo}", "[Foo](/analyze/#/wsid/foo/edit)"],
-        ["{dashboard.bar} test", "[Bar](/dashboards/#/workspace/wsid/dashboard/bar) test"],
-        ["test {dashboard.bar}", "test [Bar](/dashboards/#/workspace/wsid/dashboard/bar)"],
+        ["{visualization.foo}", "[Foo](gooddata://visualization?ws=wsid&id=foo)"],
+        ["{dashboard.bar} test", "[Bar](gooddata://dashboard?ws=wsid&id=bar) test"],
+        ["test {dashboard.bar}", "test [Bar](gooddata://dashboard?ws=wsid&id=bar)"],
         ["Test test", "Test test"],
         ["{foo.bar}", "{foo.bar}"],
     ] as [string, string][])("should parse %s", (text: string, expected: string) => {

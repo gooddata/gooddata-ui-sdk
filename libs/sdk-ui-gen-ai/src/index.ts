@@ -39,3 +39,5 @@ export {
     isChatFeedbackEvent,
     isChatVisualizationErrorEvent,
 } from "./store/events.js";
+
+export type { LinkHandlerEvent } from "./components/ConfigContext.js";

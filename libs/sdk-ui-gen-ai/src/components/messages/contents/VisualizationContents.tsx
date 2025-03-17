@@ -42,19 +42,18 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
     const config = useConfig();
     const [saveDialogOpen, setSaveDialogOpen] = React.useState(false);
     const workspaceId = useWorkspaceStrict();
+    const href = `/analyze/#/${workspaceId}/${visualization.savedVisualizationId}/edit`;
 
-    const handleButtonClick = (e: any) => {
+    const handleButtonClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLDivElement>) => {
         if (visualization?.savedVisualizationId) {
-            // TODO should instead trigger an event and let the hosting app do the redirect
-            const url = `/analyze/#/${workspaceId}/${visualization.savedVisualizationId}/edit`;
-            if (e.ctrlKey || e.metaKey) {
-                // Open in a new tab
-                window.open(url);
-            } else {
-                // Open in the same tab
-                window.location.href = url;
-            }
-            e.preventDefault();
+            config.linkHandler?.({
+                id: visualization.id,
+                type: "visualization",
+                workspaceId,
+                newTab: e.metaKey,
+                preventDefault: e.preventDefault.bind(e),
+                itemUrl: href,
+            });
             e.stopPropagation();
         } else {
             setSaveDialogOpen(true);
@@ -112,27 +111,46 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
                             {visualization.title}
                         </MarkdownComponent>
                     </div>
-                    {config.allowCreateVisualization ? (
-                        <div onClick={handleButtonClick} className="gd-gen-ai-chat__visualization__save">
-                            <BubbleHoverTrigger
-                                tagName="div"
-                                className="gd-gen-ai-chat__visualization__save__bubble"
-                            >
-                                {visualization.savedVisualizationId ? (
-                                    <Icon.Edit width={18} height={18} color="#fff" />
-                                ) : (
-                                    <Icon.Save width={18} height={18} color="#fff" />
-                                )}
-                                <Bubble alignPoints={[{ align: "bc tc", offset: { x: 0, y: 8 } }]}>
-                                    {visualization.savedVisualizationId ? (
-                                        <FormattedMessage id={"gd.gen-ai.button.edit"} />
-                                    ) : (
-                                        <FormattedMessage id={"gd.gen-ai.button.save"} />
-                                    )}
-                                </Bubble>
-                            </BubbleHoverTrigger>
-                        </div>
-                    ) : null}
+                    {config.allowCreateVisualization
+                        ? (() => {
+                              const trigger = (
+                                  <BubbleHoverTrigger
+                                      tagName="span"
+                                      className="gd-gen-ai-chat__visualization__save__bubble"
+                                  >
+                                      {visualization.savedVisualizationId ? (
+                                          <Icon.Edit width={18} height={18} color="#fff" />
+                                      ) : (
+                                          <Icon.Save width={18} height={18} color="#fff" />
+                                      )}
+                                      <Bubble alignPoints={[{ align: "bc tc", offset: { x: 0, y: 8 } }]}>
+                                          {visualization.savedVisualizationId ? (
+                                              <FormattedMessage id={"gd.gen-ai.button.edit"} />
+                                          ) : (
+                                              <FormattedMessage id={"gd.gen-ai.button.save"} />
+                                          )}
+                                      </Bubble>
+                                  </BubbleHoverTrigger>
+                              );
+
+                              return visualization.savedVisualizationId && config.allowNativeLinks ? (
+                                  <a
+                                      href={href}
+                                      onClick={handleButtonClick}
+                                      className="gd-gen-ai-chat__visualization__save"
+                                  >
+                                      {trigger}
+                                  </a>
+                              ) : (
+                                  <div
+                                      onClick={handleButtonClick}
+                                      className="gd-gen-ai-chat__visualization__save"
+                                  >
+                                      {trigger}
+                                  </div>
+                              );
+                          })()
+                        : null}
                     {saveDialogOpen ? (
                         <VisualizationSaveDialog
                             onClose={() => setSaveDialogOpen(false)}

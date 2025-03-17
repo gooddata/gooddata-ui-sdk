@@ -9,7 +9,7 @@ import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { GenAIChatOverlay } from "./GenAIChatOverlay.js";
 import { ChatEventHandler } from "../store/events.js";
 import { isOpenSelector, setOpenAction } from "../store/index.js";
-import { ConfigProvider } from "./ConfigContext.js";
+import { ConfigProvider, LinkHandlerEvent } from "./ConfigContext.js";
 
 export type GenAIChatDialogProps = {
     backend?: IAnalyticalBackend;
@@ -17,6 +17,7 @@ export type GenAIChatDialogProps = {
     isOpen: boolean;
     onClose: () => void;
     eventHandlers?: ChatEventHandler[];
+    onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
 };
 
 // Default z-index:
@@ -30,6 +31,7 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
     isOpen,
     onClose,
     eventHandlers,
+    onLinkClick,
 }) => {
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
@@ -59,7 +61,11 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
                 <BackendProvider backend={effectiveBackend}>
                     <WorkspaceProvider workspace={effectiveWorkspace}>
                         <OverlayControllerProvider overlayController={chatOverlayController}>
-                            <ConfigProvider allowCreateVisualization={true}>
+                            <ConfigProvider
+                                allowCreateVisualization={true}
+                                allowNativeLinks={true}
+                                linkHandler={onLinkClick}
+                            >
                                 <GenAIChatOverlay onClose={onClose} />
                             </ConfigProvider>
                         </OverlayControllerProvider>
