@@ -109,7 +109,6 @@ import { exportDashboardToPdfPresentationHandler } from "./dashboard/exportDashb
 import { exportDashboardToPptPresentationHandler } from "./dashboard/exportDashboardToPptPresentationHandler.js";
 import { exportSlidesInsightWidgetHandler } from "./widgets/exportSlidesInsightWidgetHandler.js";
 import { changeRichTextWidgetFilterSettingsHandler } from "./widgets/changeRichTextWidgetFilterSettingsHandler.js";
-import { showLiveDashboardHandler } from "./dashboard/showLiveDashboard.js";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -227,5 +226,4 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS": setFilterViewAsDefaultHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.RELOAD": reloadFilterViewsHandler,
     "GDC.DASH/CMD.USERS.LOAD_ALL": loadAllWorkspaceUsersHandler,
-    "GDC.DASH/CMD.SHOW_LIVE_DASHBOARD": showLiveDashboardHandler,
 };

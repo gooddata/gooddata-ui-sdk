@@ -18,7 +18,6 @@ import {
     SetDashboardAttributeFilterConfigDisplayAsLabel,
     ExportDashboardToPdfPresentation,
     ExportDashboardToPptPresentation,
-    ShowLiveDashboard,
 } from "./dashboard.js";
 import { TriggerEvent } from "./events.js";
 import { UpsertExecutionResult } from "./executionResults.js";
@@ -150,7 +149,6 @@ export type {
     SetAttributeFilterLimitingItemsPayload,
     SetDashboardAttributeFilterConfigDisplayAsLabel,
     SetDashboardAttributeFilterConfigDisplayAsLabelPayload,
-    ShowLiveDashboard,
 } from "./dashboard.js";
 export {
     InitialLoadCorrelationId,
@@ -172,7 +170,6 @@ export {
     setDateFilterConfigTitle,
     setAttributeFilterLimitingItems,
     setDashboardAttributeFilterConfigDisplayAsLabel,
-    showLiveDashboard,
 } from "./dashboard.js";
 
 export type { TriggerEvent, TriggerEventPayload } from "./events.js";
@@ -633,7 +630,6 @@ export type DashboardCommands =
     | ToggleLayoutSectionHeaders
     | ApplyFilterContextWorkingSelection
     | ResetFilterContextWorkingSelection
-    | ShowLiveDashboard
     //internal
     | SetScreenSize
     | LoadAllWorkspaceUsers
