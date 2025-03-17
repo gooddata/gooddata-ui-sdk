@@ -2,19 +2,29 @@
 
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
+/**
+ * Use custom URL schema for the link. In Markdown rendered our component knows
+ * how to handle these and how to convert them to normal links.
+ *
+ * Custom URL schema is `gooddata://<type>?ws=<workspaceId>&id=<objectId>`
+ */
 const getFoundObjectLink = (obj: ISemanticSearchResultItem, workspaceId: string) => {
     switch (obj.type) {
         case "visualization":
-            return `/analyze/#/${workspaceId}/${obj.id}/edit`;
+            return `gooddata://visualization?ws=${workspaceId}&id=${obj.id}`;
         case "dashboard":
-            return `/dashboards/#/workspace/${workspaceId}/dashboard/${obj.id}`;
+            return `gooddata://dashboard?ws=${workspaceId}&id=${obj.id}`;
         case "metric":
-            return `/metrics/#/${workspaceId}/metric/${obj.id}`;
+            return `gooddata://metric?ws=${workspaceId}&id=${obj.id}`;
         default:
             return null;
     }
 };
 
+/**
+ * TODO - consider using inline directives syntax for object references,
+ *  or teach LLM to return custom schema URLs from the get-go.
+ */
 const rx = /\{[^}][^.}]*\.[^}]+\}/g;
 export const replaceLinks = (
     text: string,

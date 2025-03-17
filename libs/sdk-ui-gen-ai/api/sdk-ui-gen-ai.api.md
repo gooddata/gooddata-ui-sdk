@@ -101,6 +101,7 @@ export const GenAIChat: React_2.FC<GenAIChatProps>;
 export interface GenAIChatProps {
     backend?: IAnalyticalBackend;
     eventHandlers?: ChatEventHandler[];
+    onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
     workspace?: string;
 }
 
@@ -124,6 +125,16 @@ export const isChatUserMessageEvent: (event: ChatEvent) => event is ChatUserMess
 
 // @alpha
 export const isChatVisualizationErrorEvent: (event: ChatEvent) => event is ChatVisualizationErrorEvent;
+
+// @alpha (undocumented)
+export type LinkHandlerEvent = {
+    type: string;
+    id: string;
+    workspaceId: string;
+    newTab: boolean;
+    itemUrl: string;
+    preventDefault: () => void;
+};
 
 // @alpha
 export type Message = UserMessage | AssistantMessage;
