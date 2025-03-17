@@ -148,7 +148,7 @@ export class AttributeFilter {
     showAllElementValues() {
         cy.get(".overlay.dropdown-body .s-attribute-filter-status-show-all .s-action-show-all")
             .should("be.visible")
-            .click();
+            .realClick();
 
         this.elementsAreLoaded();
         return this;
