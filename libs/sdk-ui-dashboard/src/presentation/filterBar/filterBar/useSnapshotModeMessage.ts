@@ -4,7 +4,7 @@ import { ILocale } from "@gooddata/sdk-ui";
 import {
     selectLocale,
     selectSnapshotTime,
-    showLiveDashboard,
+    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -40,7 +40,7 @@ export const useSnapshotModeMessage = () => {
     const dispatch = useDashboardDispatch();
 
     const onShowLiveDashboard = useCallback(() => {
-        dispatch(showLiveDashboard());
+        dispatch(uiActions.ignoreSnapshotTime());
     }, [dispatch]);
 
     return {
