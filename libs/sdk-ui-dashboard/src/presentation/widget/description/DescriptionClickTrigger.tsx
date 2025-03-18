@@ -85,6 +85,7 @@ export const DescriptionClickTrigger: React.FC<IDescriptionClickTriggerProps> = 
                     closeOnOutsideClick={true}
                     closeOnParentScroll={false}
                     alignTo={`.${props.className}`}
+                    ensureVisibility={true}
                 >
                     <DescriptionPanelContent {...props} />
                 </Bubble>

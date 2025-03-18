@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import {
@@ -86,6 +86,7 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
             ignoreClicksOnByClass={ignoreClicksOnByClass}
             onClose={onClose}
             overlayPositionType={overlayPositionType}
+            ensureVisibility={true}
         >
             {children}
         </Bubble>

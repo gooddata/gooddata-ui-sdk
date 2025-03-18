@@ -17,8 +17,6 @@ export interface IOverlayProps<T> {
     closeOnEscape?: boolean;
     width?: number | string;
     maxWidth?: number | string;
-    height?: number | string;
-    maxHeight?: number | string;
 
     /**
      * Specifies a threshold for resizing the component when its content changes.
@@ -53,6 +51,7 @@ export interface IOverlayProps<T> {
     onMouseOver?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     onMouseUp?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     zIndex?: number | undefined;
+    ensureVisibility?: boolean;
 }
 
 /**
@@ -64,8 +63,11 @@ export interface IOverlayState {
         left: number;
         top: number;
         right: number;
+        width?: number;
+        height?: number;
         align: string;
     };
+    initialVisiblePart: number;
     overflow?: string;
     scrollTop?: number;
     observedHeight?: number;

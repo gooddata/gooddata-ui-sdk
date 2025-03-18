@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import keys from "lodash/keys.js";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -10,7 +10,7 @@ import cx from "classnames";
 
 import { IAlignPoint } from "../typings/positioning.js";
 import { ArrowDirections, ArrowOffsets } from "./typings.js";
-import { Overlay } from "../Overlay/index.js";
+import { ZoomAwareOverlay } from "../Overlay/index.js";
 import { OverlayPositionType } from "../typings/overlay.js";
 
 const ARROW_DIRECTIONS: ArrowDirections = {
@@ -78,6 +78,7 @@ export interface IBubbleProps {
     overlayClassName?: string;
     children?: React.ReactNode;
     overlayPositionType?: OverlayPositionType;
+    ensureVisibility?: boolean;
 }
 
 /**
@@ -185,7 +186,7 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
         const arrowStyle = result(this.props, "arrowStyle", {});
 
         return (
-            <Overlay
+            <ZoomAwareOverlay
                 className={this.props.overlayClassName}
                 alignTo={this.props.alignTo}
                 onAlign={this.onAlign}
@@ -197,6 +198,7 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
                 ignoreClicksOnByClass={this.props.ignoreClicksOnByClass}
                 onClose={this.props.onClose}
                 positionType={this.props.overlayPositionType}
+                ensureVisibility={this.props.ensureVisibility}
             >
                 <div
                     onMouseEnter={this.props.onMouseEnter}
@@ -213,7 +215,7 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
                         <div className="content">{this.props.children}</div>
                     </div>
                 </div>
-            </Overlay>
+            </ZoomAwareOverlay>
         );
     }
 }
