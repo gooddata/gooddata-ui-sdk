@@ -79,6 +79,8 @@ export type Alignment = {
     left: number;
     top: number;
     right: number;
+    width?: number;
+    height?: number;
     align: string;
 };
 
@@ -996,6 +998,8 @@ export interface IBubbleProps {
     closeOnOutsideClick?: boolean;
     // (undocumented)
     closeOnParentScroll?: boolean;
+    // (undocumented)
+    ensureVisibility?: boolean;
     ignoreClicksOn?: any[];
     // (undocumented)
     ignoreClicksOnByClass?: string[];
@@ -3403,14 +3407,12 @@ export interface IOverlayProps<T> {
     // (undocumented)
     containerClassName?: string;
     // (undocumented)
-    height?: number | string;
+    ensureVisibility?: boolean;
     ignoreClicksOn?: T[];
     // (undocumented)
     ignoreClicksOnByClass?: string[];
     // (undocumented)
     isModal?: boolean;
-    // (undocumented)
-    maxHeight?: number | string;
     // (undocumented)
     maxWidth?: number | string;
     // (undocumented)
@@ -3440,6 +3442,8 @@ export interface IOverlayState {
         left: number;
         top: number;
         right: number;
+        width?: number;
+        height?: number;
         align: string;
     };
     // (undocumented)
