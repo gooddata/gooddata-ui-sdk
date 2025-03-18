@@ -145,7 +145,7 @@ export type InsightMenuItemsProvider = (
 ) => IInsightMenuItem[];
 
 /**
- * @beta
+ * @alpha
  */
 export type RichTextMenuItemsProvider = (
     widget: IRichTextWidget,

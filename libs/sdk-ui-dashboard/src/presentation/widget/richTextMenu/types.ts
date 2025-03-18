@@ -9,7 +9,7 @@ import { RenderMode } from "../../../types.js";
 ///
 
 /**
- * @beta
+ * @alpha
  */
 export interface IRichTextMenuItemButton {
     type: "button";
@@ -29,7 +29,7 @@ export interface IRichTextMenuItemButton {
 }
 
 /**
- * @beta
+ * @alpha
  */
 export interface IIRichTextMenuItemSeparator {
     type: "separator";
@@ -37,7 +37,7 @@ export interface IIRichTextMenuItemSeparator {
 }
 
 /**
- * @beta
+ * @alpha
  */
 export type IRichTextMenuItem = IRichTextMenuItemButton | IIRichTextMenuItemSeparator | IRichTextMenuSubmenu;
 
@@ -94,7 +94,7 @@ export interface IRichTextMenuSubmenuComponentProps {
 }
 
 /**
- * @beta
+ * @alpha
  */
 export interface IRichTextMenuSubmenu {
     type: "submenu";

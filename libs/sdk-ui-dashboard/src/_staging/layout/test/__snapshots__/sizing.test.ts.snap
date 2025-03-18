@@ -222,7 +222,7 @@ exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight fals
 
 exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for kpi without pop widget 1`] = `12`;
 
-exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for rich text widget 1`] = `6`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for rich text widget 1`] = `2`;
 
 exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for unknown widget 1`] = `undefined`;
 
@@ -268,7 +268,7 @@ exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true
 
 exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for kpi without pop widget 1`] = `6`;
 
-exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for rich text widget 1`] = `6`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for rich text widget 1`] = `2`;
 
 exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for unknown widget 1`] = `22`;
 

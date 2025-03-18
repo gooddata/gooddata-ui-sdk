@@ -5250,7 +5250,7 @@ export interface IInsightMenuSubmenuComponentProps {
     widget: IInsightWidget;
 }
 
-// @beta (undocumented)
+// @alpha (undocumented)
 export interface IIRichTextMenuItemSeparator {
     // (undocumented)
     itemId: string;
@@ -5633,10 +5633,10 @@ export type IRichTextDraggingComponentProps = {
     item: RichTextDraggableItem;
 };
 
-// @beta (undocumented)
+// @alpha (undocumented)
 export type IRichTextMenuItem = IRichTextMenuItemButton | IIRichTextMenuItemSeparator | IRichTextMenuSubmenu;
 
-// @beta (undocumented)
+// @alpha (undocumented)
 export interface IRichTextMenuItemButton {
     className?: string;
     // (undocumented)
@@ -5654,7 +5654,7 @@ export interface IRichTextMenuItemButton {
     type: "button";
 }
 
-// @beta (undocumented)
+// @alpha (undocumented)
 export interface IRichTextMenuSubmenu {
     className?: string;
     // (undocumented)
@@ -5667,9 +5667,8 @@ export interface IRichTextMenuSubmenu {
     itemName: string;
     // (undocumented)
     onClick?: (e: MouseEvent_2) => void;
-    // @alpha
     renderSubmenuComponentOnly?: boolean;
-    // @alpha (undocumented)
+    // (undocumented)
     SubmenuComponent: ComponentType<IRichTextMenuSubmenuComponentProps>;
     tooltip?: string | ReactNode;
     // (undocumented)
@@ -7727,7 +7726,7 @@ export type RichTextMenuItemDependencies = {
     useWidgetDeleteDialog?: boolean;
 };
 
-// @beta (undocumented)
+// @alpha (undocumented)
 export type RichTextMenuItemsProvider = (widget: IRichTextWidget, defaultItems: IRichTextMenuItem[], closeMenu: () => void, renderMode: RenderMode) => IRichTextMenuItem[];
 
 // @internal (undocumented)
