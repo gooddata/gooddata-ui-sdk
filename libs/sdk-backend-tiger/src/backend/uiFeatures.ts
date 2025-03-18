@@ -135,6 +135,7 @@ export enum TigerFeaturesNames {
     EnableOrchestratedTabularExports = "enableOrchestratedTabularExports",
     EnableImmediateAttributeFilterDisplayAsLabelMigration = "enableImmediateAttributeFilterDisplayAsLabelMigration",
     EnableRichTextDynamicReferences = "enableRichTextDynamicReferences",
+    EnableAnalyticalDesignerCatalogSideload = "enableAnalyticalDesignerCatalogSideload",
 }
 
 export type ITigerFeatureFlags = {
@@ -233,6 +234,7 @@ export type ITigerFeatureFlags = {
     enableDashboardAfterRenderDetection: typeof FeatureFlagsValues["enableDashboardAfterRenderDetection"][number];
     enableImmediateAttributeFilterDisplayAsLabelMigration: typeof FeatureFlagsValues["enableImmediateAttributeFilterDisplayAsLabelMigration"][number];
     enableRichTextDynamicReferences: typeof FeatureFlagsValues["enableRichTextDynamicReferences"][number];
+    enableAnalyticalDesignerCatalogSideload: typeof FeatureFlagsValues["enableAnalyticalDesignerCatalogSideload"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -331,6 +333,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardAfterRenderDetection: false,
     enableImmediateAttributeFilterDisplayAsLabelMigration: false,
     enableRichTextDynamicReferences: false,
+    enableAnalyticalDesignerCatalogSideload: false,
 };
 
 export const FeatureFlagsValues = {
@@ -433,4 +436,5 @@ export const FeatureFlagsValues = {
     enableDashboardAfterRenderDetection: [true, false] as const,
     enableImmediateAttributeFilterDisplayAsLabelMigration: [true, false] as const,
     enableRichTextDynamicReferences: [true, false] as const,
+    enableAnalyticalDesignerCatalogSideload: [true, false] as const,
 };
