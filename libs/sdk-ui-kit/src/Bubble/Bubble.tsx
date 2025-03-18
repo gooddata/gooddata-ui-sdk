@@ -78,6 +78,7 @@ export interface IBubbleProps {
     overlayClassName?: string;
     children?: React.ReactNode;
     overlayPositionType?: OverlayPositionType;
+    ensureVisibility?: boolean;
 }
 
 /**
@@ -197,6 +198,7 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
                 ignoreClicksOnByClass={this.props.ignoreClicksOnByClass}
                 onClose={this.props.onClose}
                 positionType={this.props.overlayPositionType}
+                ensureVisibility={this.props.ensureVisibility}
             >
                 <div
                     onMouseEnter={this.props.onMouseEnter}

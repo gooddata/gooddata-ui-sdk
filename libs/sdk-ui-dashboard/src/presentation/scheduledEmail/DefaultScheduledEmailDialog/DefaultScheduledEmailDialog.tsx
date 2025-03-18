@@ -148,7 +148,12 @@ export function ScheduledMailDialogRenderer({
 
     return (
         <>
-            <Overlay className="gd-notifications-channels-dialog-overlay" isModal={true} positionType="fixed">
+            <Overlay
+                className="gd-notifications-channels-dialog-overlay"
+                isModal={true}
+                positionType="fixed"
+                ensureVisibility={true}
+            >
                 <OverlayControllerProvider overlayController={overlayController}>
                     <ConfirmDialogBase
                         className="gd-notifications-channels-dialog s-gd-notifications-channels-dialog"

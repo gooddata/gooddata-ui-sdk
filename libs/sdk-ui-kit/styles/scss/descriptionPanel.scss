@@ -64,8 +64,14 @@
     }
 }
 
-.truncated .gd-description-panel.zoomed {
-    max-height: 200px;
+.truncated {
+    .gd-description-panel-bubble,
+    .bubble-content,
+    .content,
+    .gd-description-panel.zoomed {
+        height: 100%;
+        max-height: 100%;
+    }
 }
 
 .gd-ellipsis-text {

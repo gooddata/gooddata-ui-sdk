@@ -123,6 +123,7 @@ const DescriptionPanelCore: React.FC<IDescriptionPanelProps> = (props) => {
                 alignPoints={DESCRIPTION_PANEL_ALIGN_POINTS}
                 arrowOffsets={arrowOffsets}
                 arrowStyle={{ display: "none" }}
+                ensureVisibility={true}
             >
                 <DescriptionPanelContentCore {...props} />
             </Bubble>

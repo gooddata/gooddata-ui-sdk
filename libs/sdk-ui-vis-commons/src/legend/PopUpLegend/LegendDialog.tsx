@@ -68,6 +68,7 @@ export const LegendDialog: React.FC<ILegendDialogProps> = (props) => {
                         closeOnOutsideClick={!isMobile}
                         onClose={onCloseDialog}
                         className="kpi-alert-dialog-overlay"
+                        ensureVisibility={true}
                     >
                         <LegendDialogContent title={name} onCloseDialog={onCloseDialog}>
                             {children}

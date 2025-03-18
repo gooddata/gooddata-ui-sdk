@@ -140,12 +140,15 @@
     line-height: 14px;
     color: kit-variables.$gd-color-text;
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .gd-edit-alert__form {
     padding: 10px 10px 0 10px;
-    max-height: dashboard-variables.$gd-configuration-alert-content-height;
     overflow: auto;
+    flex: 1 1 auto;
+    min-height: 0;
 }
 
 .gd-edit-alert__destination-label,
@@ -193,6 +196,7 @@
 
 .gd-edit-alert__buttons {
     padding: 10px;
+    flex: 0 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -359,6 +363,19 @@
 .gd-alerts-configuration-panel-management {
     .arrow-position {
         display: none;
+    }
+}
+
+.gd-configuration-bubble-wrapper.truncated {
+    .gd-alerts-configuration-panel-management,
+    .gd-alerts-configuration-panel {
+        height: 100%;
+    }
+}
+
+.gd-configuration-bubble-wrapper:not(.truncated) {
+    .gd-edit-alert__form {
+        max-height: dashboard-variables.$gd-configuration-alert-content-height;
     }
 }
 
