@@ -879,6 +879,8 @@ export type {
     IThemeModal,
     IThemeModalTitle,
     IThemeTooltip,
+    IThemeImages,
+    ImageUri,
 } from "./theme/index.js";
 
 export type { IWorkspacePermissions, WorkspacePermission } from "./permissions/index.js";

@@ -32,7 +32,9 @@ export type ExportMetaType =
     | "dashboard-filters"
     | "dashboard-filter"
     | "dashboard-filter-name"
-    | "dashboard-filter-value";
+    | "dashboard-filter-value"
+    | "logo"
+    | "cover-image";
 
 /**
  * Data attributes with export specification for components.
@@ -54,6 +56,7 @@ export type MetaExportDataAttributes = {
     "data-export-meta-filter-type"?: "date" | "attribute";
     "data-export-meta-filter-mode"?: "readonly" | "hidden" | "active";
     "data-export-meta-filter-status"?: "loading" | "loaded" | "error";
+    "data-export-meta-image-status"?: "loading" | "loaded" | "error";
 };
 
 /**

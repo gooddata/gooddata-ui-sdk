@@ -2286,6 +2286,9 @@ export interface ILlmEndpointOpenAI extends ILlmEndpointBase {
 export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem | ITotalLocatorItem;
 
 // @beta
+export type ImageUri = string;
+
+// @beta
 export interface IMdObject extends IMdObjectBase, IMdObjectIdentity {
 }
 
@@ -3807,6 +3810,7 @@ export interface ITheme {
     button?: IThemeButton;
     chart?: IThemeChart;
     dashboards?: IThemeDashboard;
+    images?: IThemeImages;
     kpi?: IThemeKpi;
     modal?: IThemeModal;
     palette?: IThemePalette;
@@ -3984,6 +3988,12 @@ export interface IThemeDefinition extends Partial<IMetadataObject> {
     readonly theme: ITheme;
     // (undocumented)
     readonly type: "theme";
+}
+
+// @beta
+export interface IThemeImages {
+    coverImage?: ImageUri;
+    logo?: ImageUri;
 }
 
 // @beta

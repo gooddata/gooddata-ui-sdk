@@ -1,11 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
-import React from "react";
+import React, { useCallback, useMemo, useState } from "react";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { useMetaExportData } from "./useExportData.js";
+import { useMetaExportData, useMetaExportImageData } from "./useExportData.js";
 import { RenderMode } from "../../types.js";
 import { selectDashboardId, useDashboardSelector, selectDashboardDescriptor } from "../../model/index.js";
 
 import { useDashboardRelatedFilters } from "./hooks/useDashboardRelatedFilters.js";
+import { MetaExportDataAttributes } from "./types.js";
 
 /**
  * @alpha
@@ -22,6 +24,7 @@ export function DefaultDashboardExportVariables({ renderMode }: DefaultDashboard
     const exportData = useMetaExportData();
     const dashboardId = useDashboardSelector(selectDashboardId);
     const dashboardDescriptor = useDashboardSelector(selectDashboardDescriptor);
+    const theme = useTheme();
     const { dateFilters, attributeFilters, isError, isLoading } = useDashboardRelatedFilters(run);
 
     if (!run) {
@@ -68,6 +71,31 @@ export function DefaultDashboardExportVariables({ renderMode }: DefaultDashboard
                     ))}
                 </div>
             ) : null}
+            <MetaImage image={theme?.images?.logo} type="logo" />
+            <MetaImage image={theme?.images?.coverImage} type="cover-image" />
         </div>
     );
+}
+
+function MetaImage({
+    image,
+    type,
+}: {
+    type: MetaExportDataAttributes["data-export-meta-type"];
+    image?: string;
+    exportData?: MetaExportDataAttributes;
+}) {
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+    const onError = useCallback(() => setError(true), []);
+    const onLoad = useCallback(() => setLoading(false), []);
+
+    const exportData = useMetaExportImageData(type, loading, error);
+    const url = useMemo(() => image?.replace(/url\((.*)\)/, "$1"), [image]);
+
+    if (!url) {
+        return null;
+    }
+
+    return <img src={url} onLoad={onLoad} onError={onError} alt="" {...exportData} />;
 }
