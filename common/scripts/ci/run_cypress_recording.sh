@@ -2,7 +2,7 @@
 
 set -e
 
-CYPRESS_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/tools/gdc-frontend-cypress-factory:202501151356.a6074a3'
+CYPRESS_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/cypress/included:13.17.0'
 DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
 ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../../ && pwd -P))
 E2E_TEST_DIR=$ROOT_DIR/libs/sdk-ui-tests-e2e
