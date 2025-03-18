@@ -32,6 +32,7 @@ import {
     IExportResult,
     IGetDashboardPluginOptions,
     IDashboardsQuery,
+    IRawExportCustomOverrides,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -60,6 +61,7 @@ import {
     IDashboardAttributeFilterConfig,
     IExecutionDefinition,
 } from "@gooddata/sdk-model";
+import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
 import { v4 as uuid } from "uuid";
 import {
@@ -525,6 +527,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     public exportDashboardToCSVRaw = async (
         definition: IExecutionDefinition,
         filename: string,
+        customOverrides?: IRawExportCustomOverrides,
     ): Promise<IExportResult> => {
         const execution = toAfmExecution(definition);
         const payload: RawExportActionsRequest = {
@@ -532,6 +535,12 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             execution: execution.execution as AfmExport,
             fileName: filename,
             executionSettings: execution.settings,
+            customOverride: !isEmpty(customOverrides)
+                ? {
+                      metrics: customOverrides?.measures,
+                      labels: customOverrides?.displayForms,
+                  }
+                : undefined,
         };
 
         return this.authCall(async (client) => {

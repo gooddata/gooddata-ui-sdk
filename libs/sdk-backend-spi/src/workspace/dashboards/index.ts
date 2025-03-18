@@ -190,6 +190,35 @@ export interface IGetScheduledMailOptions {
 export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet";
 
 /**
+ * Custom title override for raw exports.
+ *
+ * @alpha
+ */
+export interface IRawExportCustomOverride {
+    /**
+     * Custom title for the object.
+     */
+    title: string;
+}
+
+/**
+ * Custom title overrides for raw exports.
+ *
+ * @alpha
+ */
+export interface IRawExportCustomOverrides {
+    /**
+     * Mapping of localId - custom override.
+     */
+    measures?: Record<string, IRawExportCustomOverride>;
+
+    /**
+     * Mapping of localId - custom override.
+     */
+    displayForms?: Record<string, IRawExportCustomOverride>;
+}
+
+/**
  * Service to list, create and update analytical dashboards
  *
  * @alpha
@@ -331,9 +360,14 @@ export interface IWorkspaceDashboardsService {
      *
      * @param definition - execution definition
      * @param fileName - name of the file
+     * @param customOverrides - custom title overrides for measures and display forms
      * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
      */
-    exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string): Promise<IExportResult>;
+    exportDashboardToCSVRaw(
+        definition: IExecutionDefinition,
+        fileName: string,
+        customOverrides?: IRawExportCustomOverrides,
+    ): Promise<IExportResult>;
 
     /**
      * Create scheduled mail for the dashboard
