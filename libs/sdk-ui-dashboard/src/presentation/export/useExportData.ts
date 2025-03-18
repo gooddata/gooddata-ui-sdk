@@ -196,3 +196,32 @@ export const useMetaExportImageData = (
         "data-export-meta-image-status": loading ? "loading" : error ? "error" : "loaded",
     };
 };
+
+/**
+ * @alpha
+ */
+export const useMetaPaletteData = (): {
+    exportData: MetaExportDataAttributes | undefined;
+    item: (key: string, value: string) => MetaExportDataAttributes | undefined;
+} => {
+    const isExportMode = useDashboardSelector(selectIsInExportMode);
+
+    if (!isExportMode) {
+        return {
+            exportData: {},
+            item: () => ({}),
+        };
+    }
+
+    return {
+        exportData: {
+            "data-export-meta-type": "theme-palette",
+        },
+        item: (key: string, value: string) => {
+            return {
+                "data-export-palette-key": key,
+                "data-export-palette-value": value,
+            };
+        },
+    };
+};

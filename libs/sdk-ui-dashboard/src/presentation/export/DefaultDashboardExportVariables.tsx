@@ -1,11 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { IThemeComplementaryPalette } from "@gooddata/sdk-model";
 
-import { useMetaExportData, useMetaExportImageData } from "./useExportData.js";
-import { RenderMode } from "../../types.js";
 import { selectDashboardId, useDashboardSelector, selectDashboardDescriptor } from "../../model/index.js";
+import { RenderMode } from "../../types.js";
 
+import { useMetaExportData, useMetaExportImageData, useMetaPaletteData } from "./useExportData.js";
 import { useDashboardRelatedFilters } from "./hooks/useDashboardRelatedFilters.js";
 import { MetaExportDataAttributes } from "./types.js";
 
@@ -24,8 +25,8 @@ export function DefaultDashboardExportVariables({ renderMode }: DefaultDashboard
     const exportData = useMetaExportData();
     const dashboardId = useDashboardSelector(selectDashboardId);
     const dashboardDescriptor = useDashboardSelector(selectDashboardDescriptor);
-    const theme = useTheme();
     const { dateFilters, attributeFilters, isError, isLoading } = useDashboardRelatedFilters(run);
+    const theme = useTheme();
 
     if (!run) {
         return null;
@@ -73,6 +74,7 @@ export function DefaultDashboardExportVariables({ renderMode }: DefaultDashboard
             ) : null}
             <MetaImage image={theme?.images?.logo} type="logo" />
             <MetaImage image={theme?.images?.coverImage} type="cover-image" />
+            <Palette data={theme?.palette?.complementary} />
         </div>
     );
 }
@@ -83,7 +85,6 @@ function MetaImage({
 }: {
     type: MetaExportDataAttributes["data-export-meta-type"];
     image?: string;
-    exportData?: MetaExportDataAttributes;
 }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -98,4 +99,20 @@ function MetaImage({
     }
 
     return <img src={url} onLoad={onLoad} onError={onError} alt="" {...exportData} />;
+}
+
+function Palette({ data }: { data?: IThemeComplementaryPalette }) {
+    const { exportData, item } = useMetaPaletteData();
+
+    if (!data) {
+        return null;
+    }
+
+    return (
+        <div {...exportData}>
+            {Object.entries(data).map(([key, value], i) => (
+                <div {...item(key, value)} key={i} />
+            ))}
+        </div>
+    );
 }
