@@ -219,6 +219,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
                     readOnly={readonly}
                     value={value}
                     aria-label={ariaLabel ?? undefined}
+                    autoComplete={isSearch ? "off" : undefined}
                 />
                 {this.renderSearch(isSearch)}
                 {this.renderClearIcon(clearOnEsc)}

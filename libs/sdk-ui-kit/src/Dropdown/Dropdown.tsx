@@ -206,7 +206,10 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                         })}
                     </div>
 
-                    <div className="gd-mobile-dropdown-content gd-flex-item-stretch gd-flex-row-container">
+                    <div
+                        id={dropdownId}
+                        className="gd-mobile-dropdown-content gd-flex-item-stretch gd-flex-row-container"
+                    >
                         {renderBody({
                             closeDropdown,
                             isMobile: true,
