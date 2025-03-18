@@ -101,6 +101,14 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         }
     }
 
+    &.type-rich-text {
+        .viz-line-family-chart {
+            width: 100%;
+            min-width: 0;
+        }
+        min-height: 55px;
+    }
+
     &:hover {
         a.kpi-link {
             .kpi-value {

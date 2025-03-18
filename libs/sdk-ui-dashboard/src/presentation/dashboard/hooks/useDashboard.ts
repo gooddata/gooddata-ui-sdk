@@ -24,6 +24,8 @@ import {
     DefaultVisualizationSwitcherToolbar,
     DefaultDashboardNestedLayout,
     DefaultDashboardLayoutComponentSetFactory,
+    DefaultDashboardRichTextMenu,
+    DefaultDashboardRichTextMenuTitle,
 } from "../../widget/index.js";
 import { IDashboardProps } from "../types.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -41,6 +43,8 @@ import {
     VisualizationSwitcherComponentProvider,
     VisualizationSwitcherToolbarComponentProvider,
     DashboardLayoutComponentProvider,
+    RichTextMenuComponentProvider,
+    RichTextMenuTitleComponentProvider,
 } from "../../dashboardContexts/index.js";
 import {
     AttributeFilterComponentSet,
@@ -64,7 +68,9 @@ interface IUseDashboardResult {
     insightBodyProvider: InsightBodyComponentProvider;
     insightMenuButtonProvider: InsightMenuButtonComponentProvider;
     insightMenuProvider: InsightMenuComponentProvider;
+    richTextMenuProvider: RichTextMenuComponentProvider;
     insightMenuTitleProvider: InsightMenuTitleComponentProvider;
+    richTextMenuTitleProvider: RichTextMenuTitleComponentProvider;
     dashboardContentProvider: DashboardContentComponentProvider;
     insightWidgetComponentSet: InsightWidgetComponentSet;
     attributeFilterComponentSet: AttributeFilterComponentSet;
@@ -92,6 +98,8 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         InsightComponentSetProvider,
         DashboardContentComponentProvider,
         RichTextComponentProvider,
+        RichTextMenuComponentProvider,
+        RichTextMenuTitleComponentProvider,
         VisualizationSwitcherComponentProvider,
         VisualizationSwitcherToolbarComponentProvider,
         DashboardLayoutComponentProvider,
@@ -210,6 +218,23 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         [RichTextComponentProvider],
     );
 
+    const richTextMenuProvider = useCallback<RichTextMenuComponentProvider>(
+        (richText) => {
+            const userSpecified = RichTextMenuComponentProvider?.(richText);
+            // if user customizes the items, always use the "new" default menu
+            return userSpecified ?? DefaultDashboardRichTextMenu;
+        },
+        [RichTextMenuComponentProvider],
+    );
+
+    const richTextMenuTitleProvider = useCallback<RichTextMenuTitleComponentProvider>(
+        (widget) => {
+            const userSpecified = RichTextMenuTitleComponentProvider?.(widget);
+            return userSpecified ?? DefaultDashboardRichTextMenuTitle;
+        },
+        [RichTextMenuTitleComponentProvider],
+    );
+
     const richTextWidgetComponentSet = useMemo<RichTextWidgetComponentSet>(() => {
         return DefaultDashboardRichTextComponentSetFactory(richTextProvider);
     }, [richTextProvider]);
@@ -259,6 +284,8 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         attributeFilterComponentSet,
         dateFilterComponentSet,
         richTextProvider,
+        richTextMenuProvider,
+        richTextMenuTitleProvider,
         richTextWidgetComponentSet,
         visualizationSwitcherProvider,
         visualizationSwitcherWidgetComponentSet,

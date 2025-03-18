@@ -14,6 +14,9 @@ import {
     CustomDashboardVisualizationSwitcherComponent,
     CustomVisualizationSwitcherToolbarComponent,
     CustomDashboardNestedLayoutComponent,
+    CustomDashboardRichTextMenuComponent,
+    IRichTextMenuItem,
+    CustomDashboardRichTextMenuTitleComponent,
 } from "../widget/types.js";
 import { DashboardConfig, ExtendedDashboardWidget } from "../../model/index.js";
 import { CustomTitleComponent, CustomTopBarComponent, ITitleProps, ITopBarProps } from "../topBar/types.js";
@@ -108,6 +111,16 @@ export type InsightMenuComponentProvider = (
 export type OptionalInsightMenuComponentProvider = OptionalProvider<InsightMenuComponentProvider>;
 
 /**
+ * @alpha
+ */
+export type RichTextMenuComponentProvider = (widget: IRichTextWidget) => CustomDashboardRichTextMenuComponent;
+
+/**
+ * @alpha
+ */
+export type OptionalRichTextMenuComponentProvider = OptionalProvider<RichTextMenuComponentProvider>;
+
+/**
  * @internal
  */
 export type InsightMenuTitleComponentProvider = (
@@ -132,6 +145,16 @@ export type InsightMenuItemsProvider = (
 ) => IInsightMenuItem[];
 
 /**
+ * @beta
+ */
+export type RichTextMenuItemsProvider = (
+    widget: IRichTextWidget,
+    defaultItems: IRichTextMenuItem[],
+    closeMenu: () => void,
+    renderMode: RenderMode,
+) => IRichTextMenuItem[];
+
+/**
  * @public
  */
 export type RichTextComponentProvider = (widget: IRichTextWidget) => CustomDashboardRichTextComponent;
@@ -140,6 +163,18 @@ export type RichTextComponentProvider = (widget: IRichTextWidget) => CustomDashb
  * @public
  */
 export type OptionalRichTextComponentProvider = OptionalProvider<RichTextComponentProvider>;
+
+/**
+ * @internal
+ */
+export type RichTextMenuTitleComponentProvider = (
+    widget: IRichTextWidget,
+) => CustomDashboardRichTextMenuTitleComponent;
+
+/**
+ * @internal
+ */
+export type OptionalRichTextMenuTitleComponentProvider = OptionalProvider<RichTextMenuTitleComponentProvider>;
 
 /**
  * @public

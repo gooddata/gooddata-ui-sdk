@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 
@@ -29,7 +29,7 @@ export const EditableDashboardRichTextWidget: React.FC<IDefaultDashboardRichText
         <DashboardItem
             className={cx(
                 dashboardItemClasses,
-                "type-visualization",
+                "type-rich-text",
                 "gd-dashboard-view-widget",
                 "is-edit-mode",
                 { "is-selected": isSelected },

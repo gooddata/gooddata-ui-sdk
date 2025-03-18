@@ -4,6 +4,7 @@ import { RichText } from "@gooddata/sdk-ui-kit";
 
 import { selectEnableRichTextDynamicReferences, useDashboardSelector } from "../../../model/index.js";
 import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
 import { IDashboardRichTextProps } from "./types.js";
 
@@ -18,6 +19,7 @@ export const ViewModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
 }) => {
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const filters = useRichTextFilters(widget);
+    const { LoadingComponent } = useDashboardComponentsContext();
 
     return (
         <RichText
@@ -32,6 +34,7 @@ export const ViewModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
             }}
             onLoadingChanged={onLoadingChanged}
             onError={onError}
+            LoadingComponent={LoadingComponent}
         />
     );
 };

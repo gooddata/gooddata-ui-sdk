@@ -16,6 +16,7 @@ export {
 export * from "./insight/index.js";
 export * from "./insightMenu/index.js";
 export * from "./richText/index.js";
+export * from "./richTextMenu/index.js";
 export * from "./visualizationSwitcher/index.js";
 export * from "./dashboardLayout/index.js";
 export * from "./widget/index.js";

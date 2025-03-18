@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IVisualizationDefaultSizeInfo } from "../../interfaces/VisualizationDescriptor.js";
 
 export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT = 22.5;
@@ -15,6 +15,7 @@ export const MIDDLE_VISUALIZATION_HEIGHT = 22;
  * @internal
  */
 export const MIN_VISUALIZATION_WIDTH = 2;
+export const MIN_RICH_TEXT_WIDTH = 1;
 
 /**
  * @internal
@@ -64,12 +65,12 @@ export const INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo
  */
 export const RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
-        min: MIN_VISUALIZATION_WIDTH,
+        min: MIN_RICH_TEXT_WIDTH,
         default: 6,
     },
     height: {
         default: 22,
-        min: 6,
+        min: 2,
         max: 40,
     },
 };
@@ -79,12 +80,12 @@ export const RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo =
  */
 export const RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
-        min: MIN_VISUALIZATION_WIDTH,
+        min: MIN_RICH_TEXT_WIDTH,
         default: 4,
     },
     height: {
         default: 22,
-        min: 6,
+        min: 2,
         max: 40,
     },
 };

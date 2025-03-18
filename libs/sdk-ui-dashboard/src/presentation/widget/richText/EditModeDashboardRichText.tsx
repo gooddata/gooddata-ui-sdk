@@ -1,5 +1,22 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { useEffect, useMemo, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { widgetRef } from "@gooddata/sdk-model";
+import { usePrevious } from "@gooddata/sdk-ui";
+import {
+    Button,
+    ConfirmDialog,
+    Icon,
+    OverlayController,
+    OverlayControllerProvider,
+    RichText,
+    Typography,
+} from "@gooddata/sdk-ui-kit";
+
+import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../presentation/constants/index.js";
+import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
     changeRichTextWidgetContent,
     eagerRemoveSectionItemByWidgetRef,
@@ -10,33 +27,26 @@ import {
     useDashboardSelector,
     useWidgetSelection,
 } from "../../../model/index.js";
+
+import { useEditableRichTextMenu } from "./useEditableRichTextMenu.js";
 import { IDashboardRichTextProps } from "./types.js";
-import { widgetRef } from "@gooddata/sdk-model";
-import {
-    Button,
-    ConfirmDialog,
-    Icon,
-    OverlayController,
-    OverlayControllerProvider,
-    RichText,
-    Typography,
-} from "@gooddata/sdk-ui-kit";
-import { FormattedMessage, useIntl } from "react-intl";
-import { usePrevious } from "@gooddata/sdk-ui";
-import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../presentation/constants/index.js";
-import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_FILTER_Z_INDEX);
 
 /**
  * @internal
  */
-export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({ widget, clientWidth }) => {
-    const { isSelected } = useWidgetSelection(widgetRef(widget));
+export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
+    widget,
+    clientWidth,
+    clientHeight,
+}) => {
+    const { isSelected, hasConfigPanelOpen, closeConfigPanel } = useWidgetSelection(widgetRef(widget));
     const previousIsSelected = usePrevious(isSelected);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const intl = useIntl();
+
+    const { menuItems } = useEditableRichTextMenu({ closeMenu: closeConfigPanel, widget });
 
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const filters = useRichTextFilters(widget);
@@ -59,19 +69,41 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({ w
         );
     }, [emptyContentIconColor, intl]);
 
+    const { RichTextMenuComponentProvider, LoadingComponent } = useDashboardComponentsContext();
+
+    const RichTextMenuComponent = useMemo(
+        () => RichTextMenuComponentProvider(widget),
+        [RichTextMenuComponentProvider, widget],
+    );
+
     useEffect(() => {
         setIsRichTextEditing(isSelected);
     }, [isSelected]);
 
     useEffect(() => {
         // Deselect widget and commit updated markdown text "on blur"
-        if (previousIsSelected === true && isSelected === false && richText !== widget?.content) {
+        if (previousIsSelected && !isSelected && richText !== widget?.content) {
             dispatch(changeRichTextWidgetContent(widget.ref, richText));
         }
     }, [richText, widget?.content, widget.ref, dispatch, isSelected, previousIsSelected]);
 
+    const showLink =
+        !isWhiteLabeled &&
+        typeof clientWidth !== "undefined" &&
+        clientWidth > 250 &&
+        typeof clientHeight !== "undefined" &&
+        clientHeight > 150;
+
     return (
         <>
+            {hasConfigPanelOpen && isRichTextReferencesEnabled ? (
+                <RichTextMenuComponent
+                    widget={widget}
+                    isOpen={hasConfigPanelOpen}
+                    onClose={closeConfigPanel}
+                    items={menuItems}
+                />
+            ) : null}
             <RichText
                 referencesEnabled={isRichTextReferencesEnabled}
                 filters={filters}
@@ -80,11 +112,12 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({ w
                 onChange={setRichText}
                 renderMode={isRichTextEditing ? "edit" : "view"}
                 emptyElement={EmptyElement}
+                LoadingComponent={LoadingComponent}
             />
-            {isRichTextEditing ? (
+            {isRichTextEditing && (showLink || !isRichTextReferencesEnabled) ? (
                 <div className="gd-rich-text-widget-footer">
                     <div className="gd-rich-text-footer-options">
-                        {!isWhiteLabeled && typeof clientWidth !== "undefined" && clientWidth > 250 ? (
+                        {showLink ? (
                             <a
                                 className="gd-button-link-dimmed gd-icon-circle-question"
                                 href="https://www.gooddata.com/docs/cloud/create-dashboards/rich-text/"
@@ -95,21 +128,23 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({ w
                             </a>
                         ) : null}
                     </div>
-                    <div className="gd-rich-text-footer-actions">
-                        <Button
-                            className="gd-button-link gd-button-icon-only gd-icon-trash s-rich-text-remove-button"
-                            onClick={() => setIsConfirmDeleteDialogVisible(true)}
-                        />
-                        <span className="gd-divider" />
-                        <Button
-                            className="gd-button-link gd-button-icon-only gd-icon-checkmark s-rich-text-confirm-button"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                dispatch(uiActions.clearWidgetSelection());
-                                dispatch(changeRichTextWidgetContent(widget.ref, richText));
-                            }}
-                        />
-                    </div>
+                    {!isRichTextReferencesEnabled && (
+                        <div className="gd-rich-text-footer-actions">
+                            <Button
+                                className="gd-button-link gd-button-icon-only gd-icon-trash s-rich-text-remove-button"
+                                onClick={() => setIsConfirmDeleteDialogVisible(true)}
+                            />
+                            <span className="gd-divider" />
+                            <Button
+                                className="gd-button-link gd-button-icon-only gd-icon-checkmark s-rich-text-confirm-button"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    dispatch(uiActions.clearWidgetSelection());
+                                    dispatch(changeRichTextWidgetContent(widget.ref, richText));
+                                }}
+                            />
+                        </div>
+                    )}
                 </div>
             ) : null}
             {isConfirmDeleteDialogVisible ? (

@@ -31,6 +31,7 @@ import { CustomSaveAsDialogComponent } from "../saveAs/index.js";
 import { CustomShareDialogComponent } from "../shareDialog/index.js";
 import {
     InsightMenuItemsProvider,
+    RichTextMenuItemsProvider,
     OptionalAttributeFilterComponentProvider,
     OptionalInsightComponentProvider,
     OptionalInsightMenuButtonComponentProvider,
@@ -44,6 +45,8 @@ import {
     OptionalVisualizationSwitcherComponentProvider,
     OptionalVisualizationSwitcherToolbarComponentProvider,
     OptionalDashboardLayoutComponentProvider,
+    OptionalRichTextMenuComponentProvider,
+    OptionalRichTextMenuTitleComponentProvider,
 } from "../dashboardContexts/index.js";
 import { CustomSidebarComponent } from "./DashboardSidebar/types.js";
 import { InsightComponentSetProvider } from "../componentDefinition/types.js";
@@ -174,6 +177,19 @@ export interface IDashboardCustomComponentProps {
     InsightMenuComponentProvider?: OptionalInsightMenuComponentProvider;
 
     /**
+     * Specify function to obtain custom component to use for rendering an rich text menu.
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link DefaultDashboardRichTextMenu} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardRichTextMenu} will be used.
+     *    This is useful if you want to customize just one particular insight and keep default rendering for
+     *    the other rich texts.
+     *
+     * @alpha
+     */
+    RichTextMenuComponentProvider?: OptionalRichTextMenuComponentProvider;
+
+    /**
      * Specify function to obtain custom component to use for rendering the title of the insight menu.
      *
      * @remarks
@@ -185,6 +201,19 @@ export interface IDashboardCustomComponentProps {
      * @internal
      */
     InsightMenuTitleComponentProvider?: OptionalInsightMenuTitleComponentProvider;
+
+    /**
+     * Specify function to obtain custom component to use for rendering the title of the rich text menu.
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link DefaultDashboardRichTextMenuTitle} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardRichTextMenuTitle} will be used.
+     *    This is useful if you want to customize just one particular rich text and keep default rendering for
+     *    the other insights.
+     *
+     * @internal
+     */
+    RichTextMenuTitleComponentProvider?: OptionalRichTextMenuTitleComponentProvider;
 
     /**
      * Specify function to obtain insight component set.
@@ -441,6 +470,16 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
      * @alpha
      */
     insightMenuItemsProvider?: InsightMenuItemsProvider;
+
+    /**
+     * Provide custom provider to change items rendered in rich text menus.
+     *
+     * @remarks
+     * If the function returns an empty array, the menu will not be rendered at all.
+     *
+     * @alpha
+     */
+    richTextMenuItemsProvider?: RichTextMenuItemsProvider;
 
     /**
      * Specify customization functions.

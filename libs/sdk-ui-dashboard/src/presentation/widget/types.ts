@@ -16,8 +16,20 @@ export type {
     IInsightMenuItemButton,
     IInsightMenuItemSeparator,
 } from "./insightMenu/types.js";
+export type { CustomDashboardRichTextComponent, IDashboardRichTextProps } from "./richText/types.js";
+export type {
+    CustomDashboardRichTextMenuComponent,
+    CustomDashboardRichTextMenuTitleComponent,
+    CustomDashboardRichTextMenuButtonComponent,
+    IRichTextMenuItem,
+    IDashboardRichTextMenuButtonProps,
+    IDashboardRichTextMenuTitleProps,
+    IDashboardRichTextMenuProps,
+    IRichTextMenuItemButton,
+    IRichTextMenuSubmenu,
+    IIRichTextMenuItemSeparator,
+} from "./richTextMenu/types.js";
 export type { IDashboardWidgetProps, CustomDashboardWidgetComponent } from "./widget/types.js";
-export type { CustomDashboardRichTextComponent, IDashboardRichTextProps } from "../widget/richText/types.js";
 export type {
     CustomDashboardVisualizationSwitcherComponent,
     IDashboardVisualizationSwitcherProps,

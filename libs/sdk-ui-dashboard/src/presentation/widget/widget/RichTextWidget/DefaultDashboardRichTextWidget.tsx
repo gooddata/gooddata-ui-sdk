@@ -18,7 +18,7 @@ export const DefaultDashboardRichTextWidget: React.FC<IDefaultDashboardRichTextW
 
     return (
         <DashboardItem
-            className={cx(dashboardItemClasses, "type-visualization", "gd-dashboard-view-widget", {
+            className={cx(dashboardItemClasses, "type-rich-text", "gd-dashboard-view-widget", {
                 "gd-highlighted": highlighted,
             })}
             screen={screen}
