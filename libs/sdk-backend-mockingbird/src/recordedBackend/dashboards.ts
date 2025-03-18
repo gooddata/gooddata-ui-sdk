@@ -17,6 +17,7 @@ import {
     walkLayout,
     IGetDashboardPluginOptions,
     IDashboardsQuery,
+    IRawExportCustomOverrides,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -61,6 +62,7 @@ function isDashboardRecording(obj: unknown): obj is DashboardRecording {
 
 export class RecordedDashboards implements IWorkspaceDashboardsService {
     private localDashboards: IDashboard[] = [];
+
     public constructor(
         public readonly workspace: string,
         private readonly insights: IWorkspaceInsightsService,
@@ -357,6 +359,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     public exportDashboardToCSVRaw(
         _definition: IExecutionDefinition,
         _fileName: string,
+        _customOverrides?: IRawExportCustomOverrides,
     ): Promise<IExportResult> {
         throw new NotSupported("recorded backend does not support this call");
     }

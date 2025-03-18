@@ -94,6 +94,7 @@ import { IPagedResource } from '@gooddata/sdk-backend-spi';
 import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IPreparedExecutionOptions } from '@gooddata/sdk-backend-spi';
+import { IRawExportCustomOverrides } from '@gooddata/sdk-backend-spi';
 import { IRequestCorrelationMetadata } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
@@ -560,7 +561,7 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     // (undocumented)
-    exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string): Promise<IExportResult>;
+    exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string, customOverrides?: IRawExportCustomOverrides): Promise<IExportResult>;
     // (undocumented)
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
     // (undocumented)

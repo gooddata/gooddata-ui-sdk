@@ -1138,6 +1138,17 @@ export interface IPreparedExecutionOptions {
     signal?: AbortSignal;
 }
 
+// @alpha
+export interface IRawExportCustomOverride {
+    title: string;
+}
+
+// @alpha
+export interface IRawExportCustomOverrides {
+    displayForms?: Record<string, IRawExportCustomOverride>;
+    measures?: Record<string, IRawExportCustomOverride>;
+}
+
 // @public
 export interface IRequestCorrelationMetadata {
     readonly [key: string]: string;
@@ -1385,7 +1396,7 @@ export interface IWorkspaceDashboardsService {
     deleteScheduledMail(ref: ObjRef): Promise<void>;
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
-    exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string): Promise<IExportResult>;
+    exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string, customOverrides?: IRawExportCustomOverrides): Promise<IExportResult>;
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
     exportDashboardToPresentation(ref: ObjRef, format: "PDF" | "PPTX", filters?: FilterContextItem[], options?: {
         widgetIds?: ObjRef[];

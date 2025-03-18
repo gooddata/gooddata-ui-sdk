@@ -12,6 +12,7 @@ import {
     IExportResult,
     IGetDashboardPluginOptions,
     IDashboardsQuery,
+    IRawExportCustomOverrides,
 } from "@gooddata/sdk-backend-spi";
 import {
     IFilter,
@@ -106,8 +107,12 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         return this.decorated.exportDashboardToTabular(ref);
     }
 
-    exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string): Promise<IExportResult> {
-        return this.decorated.exportDashboardToCSVRaw(definition, fileName);
+    exportDashboardToCSVRaw(
+        definition: IExecutionDefinition,
+        fileName: string,
+        customOverrides?: IRawExportCustomOverrides,
+    ): Promise<IExportResult> {
+        return this.decorated.exportDashboardToCSVRaw(definition, fileName, customOverrides);
     }
 
     createScheduledMail(
