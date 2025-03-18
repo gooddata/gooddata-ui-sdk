@@ -569,6 +569,19 @@ export interface CustomOverride {
 export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
 
 /**
+ * Various settings affecting the process of AFM execution or its result
+ * @export
+ * @interface ExecutionSettings
+ */
+export interface ExecutionSettings {
+    /**
+     * Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
+     * @type {number}
+     * @memberof ExecutionSettings
+     */
+    dataSamplingPercentage?: number;
+}
+/**
  *
  * @export
  * @interface ExportResponse
@@ -1113,7 +1126,7 @@ export interface RawCustomMetric {
  */
 export interface RawCustomOverride {
     /**
-     * Currently No-Op. Map of CustomLabels with keys used as placeholders in export result.
+     * Map of CustomLabels with keys used as placeholders in export result.
      * @type {{ [key: string]: RawCustomLabel; }}
      * @memberof RawCustomOverride
      */
@@ -1155,6 +1168,12 @@ export interface RawExportRequest {
      * @memberof RawExportRequest
      */
     customOverride?: RawCustomOverride;
+    /**
+     *
+     * @type {ExecutionSettings}
+     * @memberof RawExportRequest
+     */
+    executionSettings?: ExecutionSettings;
 }
 
 export const RawExportRequestFormatEnum = {
@@ -1792,7 +1811,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+         * This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified.
          * @summary Retrieve metadata context
          * @param {string} workspaceId
          * @param {string} exportId
@@ -1809,49 +1828,6 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             // verify required parameter 'exportId' is not null or undefined
             assertParamExists("getMetadata", "exportId", exportId);
             const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/visual/{exportId}/metadata`
-                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
-         * @summary (EXPERIMENTAL) Retrieve metadata context
-         * @param {string} workspaceId
-         * @param {string} exportId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMetadata1: async (
-            workspaceId: string,
-            exportId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("getMetadata1", "workspaceId", workspaceId);
-            // verify required parameter 'exportId' is not null or undefined
-            assertParamExists("getMetadata1", "exportId", exportId);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/slides/{exportId}/metadata`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1938,6 +1914,49 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             // verify required parameter 'exportId' is not null or undefined
             assertParamExists("getSlidesExport", "exportId", exportId);
             const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/slides/{exportId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSlidesExportMetadata: async (
+            workspaceId: string,
+            exportId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getSlidesExportMetadata", "workspaceId", workspaceId);
+            // verify required parameter 'exportId' is not null or undefined
+            assertParamExists("getSlidesExportMetadata", "exportId", exportId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/slides/{exportId}/metadata`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -2137,7 +2156,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+         * This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified.
          * @summary Retrieve metadata context
          * @param {string} workspaceId
          * @param {string} exportId
@@ -2150,26 +2169,6 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMetadata(
-                workspaceId,
-                exportId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
-         * @summary (EXPERIMENTAL) Retrieve metadata context
-         * @param {string} workspaceId
-         * @param {string} exportId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getMetadata1(
-            workspaceId: string,
-            exportId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMetadata1(
                 workspaceId,
                 exportId,
                 options,
@@ -2210,6 +2209,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSlidesExport(
+                workspaceId,
+                exportId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSlidesExportMetadata(
+            workspaceId: string,
+            exportId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSlidesExportMetadata(
                 workspaceId,
                 exportId,
                 options,
@@ -2357,7 +2376,7 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
-         * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+         * This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified.
          * @summary Retrieve metadata context
          * @param {ActionsApiGetMetadataRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -2369,21 +2388,6 @@ export const ActionsApiFactory = function (
         ): AxiosPromise<void> {
             return localVarFp
                 .getMetadata(requestParameters.workspaceId, requestParameters.exportId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
-         * @summary (EXPERIMENTAL) Retrieve metadata context
-         * @param {ActionsApiGetMetadata1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMetadata1(
-            requestParameters: ActionsApiGetMetadata1Request,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
-            return localVarFp
-                .getMetadata1(requestParameters.workspaceId, requestParameters.exportId, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -2414,6 +2418,21 @@ export const ActionsApiFactory = function (
         ): AxiosPromise<void> {
             return localVarFp
                 .getSlidesExport(requestParameters.workspaceId, requestParameters.exportId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * @param {ActionsApiGetSlidesExportMetadataRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSlidesExportMetadata(
+            requestParameters: ActionsApiGetSlidesExportMetadataRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .getSlidesExportMetadata(requestParameters.workspaceId, requestParameters.exportId, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -2519,7 +2538,7 @@ export interface ActionsApiInterface {
     ): AxiosPromise<void>;
 
     /**
-     * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+     * This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified.
      * @summary Retrieve metadata context
      * @param {ActionsApiGetMetadataRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2528,19 +2547,6 @@ export interface ActionsApiInterface {
      */
     getMetadata(
         requestParameters: ActionsApiGetMetadataRequest,
-        options?: AxiosRequestConfig,
-    ): AxiosPromise<void>;
-
-    /**
-     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
-     * @summary (EXPERIMENTAL) Retrieve metadata context
-     * @param {ActionsApiGetMetadata1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApiInterface
-     */
-    getMetadata1(
-        requestParameters: ActionsApiGetMetadata1Request,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
@@ -2567,6 +2573,19 @@ export interface ActionsApiInterface {
      */
     getSlidesExport(
         requestParameters: ActionsApiGetSlidesExportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.
+     * @summary (EXPERIMENTAL) Retrieve metadata context
+     * @param {ActionsApiGetSlidesExportMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getSlidesExportMetadata(
+        requestParameters: ActionsApiGetSlidesExportMetadataRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
@@ -2732,27 +2751,6 @@ export interface ActionsApiGetMetadataRequest {
 }
 
 /**
- * Request parameters for getMetadata1 operation in ActionsApi.
- * @export
- * @interface ActionsApiGetMetadata1Request
- */
-export interface ActionsApiGetMetadata1Request {
-    /**
-     *
-     * @type {string}
-     * @memberof ActionsApiGetMetadata1
-     */
-    readonly workspaceId: string;
-
-    /**
-     *
-     * @type {string}
-     * @memberof ActionsApiGetMetadata1
-     */
-    readonly exportId: string;
-}
-
-/**
  * Request parameters for getRawExport operation in ActionsApi.
  * @export
  * @interface ActionsApiGetRawExportRequest
@@ -2790,6 +2788,27 @@ export interface ActionsApiGetSlidesExportRequest {
      *
      * @type {string}
      * @memberof ActionsApiGetSlidesExport
+     */
+    readonly exportId: string;
+}
+
+/**
+ * Request parameters for getSlidesExportMetadata operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetSlidesExportMetadataRequest
+ */
+export interface ActionsApiGetSlidesExportMetadataRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetSlidesExportMetadata
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetSlidesExportMetadata
      */
     readonly exportId: string;
 }
@@ -2933,7 +2952,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+     * This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified.
      * @summary Retrieve metadata context
      * @param {ActionsApiGetMetadataRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -2943,20 +2962,6 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     public getMetadata(requestParameters: ActionsApiGetMetadataRequest, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration)
             .getMetadata(requestParameters.workspaceId, requestParameters.exportId, options)
-            .then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
-     * @summary (EXPERIMENTAL) Retrieve metadata context
-     * @param {ActionsApiGetMetadata1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApi
-     */
-    public getMetadata1(requestParameters: ActionsApiGetMetadata1Request, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .getMetadata1(requestParameters.workspaceId, requestParameters.exportId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -2988,6 +2993,23 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     ) {
         return ActionsApiFp(this.configuration)
             .getSlidesExport(requestParameters.workspaceId, requestParameters.exportId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.
+     * @summary (EXPERIMENTAL) Retrieve metadata context
+     * @param {ActionsApiGetSlidesExportMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getSlidesExportMetadata(
+        requestParameters: ActionsApiGetSlidesExportMetadataRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .getSlidesExportMetadata(requestParameters.workspaceId, requestParameters.exportId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -3380,23 +3402,23 @@ export const SlideshowExportApiAxiosParamCreator = function (configuration?: Con
             };
         },
         /**
-         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
-         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
          * @param {string} workspaceId
          * @param {string} exportId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMetadata1: async (
+        getSlidesExport: async (
             workspaceId: string,
             exportId: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("getMetadata1", "workspaceId", workspaceId);
+            assertParamExists("getSlidesExport", "workspaceId", workspaceId);
             // verify required parameter 'exportId' is not null or undefined
-            assertParamExists("getMetadata1", "exportId", exportId);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/slides/{exportId}/metadata`
+            assertParamExists("getSlidesExport", "exportId", exportId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/slides/{exportId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3423,23 +3445,23 @@ export const SlideshowExportApiAxiosParamCreator = function (configuration?: Con
             };
         },
         /**
-         * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
-         * @summary (EXPERIMENTAL) Retrieve exported files
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
          * @param {string} workspaceId
          * @param {string} exportId
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSlidesExport: async (
+        getSlidesExportMetadata: async (
             workspaceId: string,
             exportId: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("getSlidesExport", "workspaceId", workspaceId);
+            assertParamExists("getSlidesExportMetadata", "workspaceId", workspaceId);
             // verify required parameter 'exportId' is not null or undefined
-            assertParamExists("getSlidesExport", "exportId", exportId);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/slides/{exportId}`
+            assertParamExists("getSlidesExportMetadata", "exportId", exportId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/slides/{exportId}/metadata`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3496,26 +3518,6 @@ export const SlideshowExportApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
-         * @summary (EXPERIMENTAL) Retrieve metadata context
-         * @param {string} workspaceId
-         * @param {string} exportId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getMetadata1(
-            workspaceId: string,
-            exportId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMetadata1(
-                workspaceId,
-                exportId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
          * @summary (EXPERIMENTAL) Retrieve exported files
          * @param {string} workspaceId
@@ -3529,6 +3531,26 @@ export const SlideshowExportApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSlidesExport(
+                workspaceId,
+                exportId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSlidesExportMetadata(
+            workspaceId: string,
+            exportId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSlidesExportMetadata(
                 workspaceId,
                 exportId,
                 options,
@@ -3569,21 +3591,6 @@ export const SlideshowExportApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
-         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
-         * @summary (EXPERIMENTAL) Retrieve metadata context
-         * @param {SlideshowExportApiGetMetadata1Request} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMetadata1(
-            requestParameters: SlideshowExportApiGetMetadata1Request,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
-            return localVarFp
-                .getMetadata1(requestParameters.workspaceId, requestParameters.exportId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
          * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
          * @summary (EXPERIMENTAL) Retrieve exported files
          * @param {SlideshowExportApiGetSlidesExportRequest} requestParameters Request parameters.
@@ -3596,6 +3603,21 @@ export const SlideshowExportApiFactory = function (
         ): AxiosPromise<void> {
             return localVarFp
                 .getSlidesExport(requestParameters.workspaceId, requestParameters.exportId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * @param {SlideshowExportApiGetSlidesExportMetadataRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSlidesExportMetadata(
+            requestParameters: SlideshowExportApiGetSlidesExportMetadataRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .getSlidesExportMetadata(requestParameters.workspaceId, requestParameters.exportId, options)
                 .then((request) => request(axios, basePath));
         },
     };
@@ -3621,19 +3643,6 @@ export interface SlideshowExportApiInterface {
     ): AxiosPromise<ExportResponse>;
 
     /**
-     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
-     * @summary (EXPERIMENTAL) Retrieve metadata context
-     * @param {SlideshowExportApiGetMetadata1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SlideshowExportApiInterface
-     */
-    getMetadata1(
-        requestParameters: SlideshowExportApiGetMetadata1Request,
-        options?: AxiosRequestConfig,
-    ): AxiosPromise<void>;
-
-    /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
      * @summary (EXPERIMENTAL) Retrieve exported files
      * @param {SlideshowExportApiGetSlidesExportRequest} requestParameters Request parameters.
@@ -3643,6 +3652,19 @@ export interface SlideshowExportApiInterface {
      */
     getSlidesExport(
         requestParameters: SlideshowExportApiGetSlidesExportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.
+     * @summary (EXPERIMENTAL) Retrieve metadata context
+     * @param {SlideshowExportApiGetSlidesExportMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SlideshowExportApiInterface
+     */
+    getSlidesExportMetadata(
+        requestParameters: SlideshowExportApiGetSlidesExportMetadataRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 }
@@ -3669,27 +3691,6 @@ export interface SlideshowExportApiCreateSlidesExportRequest {
 }
 
 /**
- * Request parameters for getMetadata1 operation in SlideshowExportApi.
- * @export
- * @interface SlideshowExportApiGetMetadata1Request
- */
-export interface SlideshowExportApiGetMetadata1Request {
-    /**
-     *
-     * @type {string}
-     * @memberof SlideshowExportApiGetMetadata1
-     */
-    readonly workspaceId: string;
-
-    /**
-     *
-     * @type {string}
-     * @memberof SlideshowExportApiGetMetadata1
-     */
-    readonly exportId: string;
-}
-
-/**
  * Request parameters for getSlidesExport operation in SlideshowExportApi.
  * @export
  * @interface SlideshowExportApiGetSlidesExportRequest
@@ -3706,6 +3707,27 @@ export interface SlideshowExportApiGetSlidesExportRequest {
      *
      * @type {string}
      * @memberof SlideshowExportApiGetSlidesExport
+     */
+    readonly exportId: string;
+}
+
+/**
+ * Request parameters for getSlidesExportMetadata operation in SlideshowExportApi.
+ * @export
+ * @interface SlideshowExportApiGetSlidesExportMetadataRequest
+ */
+export interface SlideshowExportApiGetSlidesExportMetadataRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof SlideshowExportApiGetSlidesExportMetadata
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof SlideshowExportApiGetSlidesExportMetadata
      */
     readonly exportId: string;
 }
@@ -3735,23 +3757,6 @@ export class SlideshowExportApi extends BaseAPI implements SlideshowExportApiInt
     }
 
     /**
-     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
-     * @summary (EXPERIMENTAL) Retrieve metadata context
-     * @param {SlideshowExportApiGetMetadata1Request} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SlideshowExportApi
-     */
-    public getMetadata1(
-        requestParameters: SlideshowExportApiGetMetadata1Request,
-        options?: AxiosRequestConfig,
-    ) {
-        return SlideshowExportApiFp(this.configuration)
-            .getMetadata1(requestParameters.workspaceId, requestParameters.exportId, options)
-            .then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
      * @summary (EXPERIMENTAL) Retrieve exported files
      * @param {SlideshowExportApiGetSlidesExportRequest} requestParameters Request parameters.
@@ -3765,6 +3770,23 @@ export class SlideshowExportApi extends BaseAPI implements SlideshowExportApiInt
     ) {
         return SlideshowExportApiFp(this.configuration)
             .getSlidesExport(requestParameters.workspaceId, requestParameters.exportId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.
+     * @summary (EXPERIMENTAL) Retrieve metadata context
+     * @param {SlideshowExportApiGetSlidesExportMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SlideshowExportApi
+     */
+    public getSlidesExportMetadata(
+        requestParameters: SlideshowExportApiGetSlidesExportMetadataRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SlideshowExportApiFp(this.configuration)
+            .getSlidesExportMetadata(requestParameters.workspaceId, requestParameters.exportId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 }
@@ -4332,7 +4354,7 @@ export const VisualExportApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+         * This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified.
          * @summary Retrieve metadata context
          * @param {string} workspaceId
          * @param {string} exportId
@@ -4425,7 +4447,7 @@ export const VisualExportApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+         * This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified.
          * @summary Retrieve metadata context
          * @param {string} workspaceId
          * @param {string} exportId
@@ -4493,7 +4515,7 @@ export const VisualExportApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
-         * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+         * This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified.
          * @summary Retrieve metadata context
          * @param {VisualExportApiGetMetadataRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -4543,7 +4565,7 @@ export interface VisualExportApiInterface {
     ): AxiosPromise<void>;
 
     /**
-     * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+     * This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified.
      * @summary Retrieve metadata context
      * @param {VisualExportApiGetMetadataRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -4661,7 +4683,7 @@ export class VisualExportApi extends BaseAPI implements VisualExportApiInterface
     }
 
     /**
-     * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
+     * This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified.
      * @summary Retrieve metadata context
      * @param {VisualExportApiGetMetadataRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

@@ -394,12 +394,6 @@ export interface ActionsApiGetExportedFileRequest {
 }
 
 // @public
-export interface ActionsApiGetMetadata1Request {
-    readonly exportId: string;
-    readonly workspaceId: string;
-}
-
-// @public
 export interface ActionsApiGetMetadataRequest {
     readonly exportId: string;
     readonly workspaceId: string;
@@ -407,6 +401,12 @@ export interface ActionsApiGetMetadataRequest {
 
 // @public
 export interface ActionsApiGetRawExportRequest {
+    readonly exportId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiGetSlidesExportMetadataRequest {
     readonly exportId: string;
     readonly workspaceId: string;
 }
@@ -1100,13 +1100,18 @@ export type AfmExportComparisonMeasureValueFilterComparisonMeasureValueFilterOpe
 export type AfmExportDateFilter = AfmExportAbsoluteDateFilter | AfmExportRelativeDateFilter;
 
 // @public
-export type AfmExportFilterDefinition = AfmExportAbsoluteDateFilter | AfmExportComparisonMeasureValueFilter | AfmExportInilineFilterDefinition | AfmExportNegativeAttributeFilter | AfmExportPositiveAttributeFilter | AfmExportRangeMeasureValueFilter | AfmExportRankingFilter | AfmExportRelativeDateFilter;
+export interface AfmExportExecutionSettings {
+    dataSamplingPercentage?: number;
+}
+
+// @public
+export type AfmExportFilterDefinition = AfmExportAbsoluteDateFilter | AfmExportComparisonMeasureValueFilter | AfmExportInlineFilterDefinition | AfmExportNegativeAttributeFilter | AfmExportPositiveAttributeFilter | AfmExportRangeMeasureValueFilter | AfmExportRankingFilter | AfmExportRelativeDateFilter;
 
 // @public
 export type AfmExportFilterDefinitionForSimpleMeasure = AfmExportAttributeFilter | AfmExportDateFilter;
 
 // @public
-export interface AfmExportInilineFilterDefinition {
+export interface AfmExportInlineFilterDefinition {
     inline: AfmExportInlineFilterDefinitionInline;
 }
 
@@ -8446,9 +8451,9 @@ export interface ExportActionsApiInterface {
     createTabularExport(requestParameters: ActionsApiCreateTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportResponse>;
     getExportedFile(requestParameters: ActionsApiGetExportedFileRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getMetadata(requestParameters: ActionsApiGetMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getMetadata1(requestParameters: ActionsApiGetMetadata1Request, options?: AxiosRequestConfig): AxiosPromise<void>;
     getRawExport(requestParameters: ActionsApiGetRawExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getSlidesExport(requestParameters: ActionsApiGetSlidesExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getSlidesExportMetadata(requestParameters: ActionsApiGetSlidesExportMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getTabularExport(requestParameters: ActionsApiGetTabularExportRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 
@@ -17799,6 +17804,7 @@ export interface RawCustomOverride {
 export interface RawExportActionsRequest {
     customOverride?: RawCustomOverride;
     execution: AfmExport;
+    executionSettings?: AfmExportExecutionSettings;
     fileName: string;
     format: RawExportActionsRequestFormatEnum;
 }

@@ -239,7 +239,7 @@
             "get": {
                 "tags": ["actions", "Visual export"],
                 "summary": "Retrieve metadata context",
-                "description": "This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.",
+                "description": "This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified.",
                 "operationId": "getMetadata",
                 "parameters": [
                     {
@@ -416,8 +416,8 @@
             "get": {
                 "tags": ["Slideshow export", "actions"],
                 "summary": "(EXPERIMENTAL) Retrieve metadata context",
-                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.",
-                "operationId": "getMetadata_1",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.",
+                "operationId": "getSlidesExportMetadata",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -1215,6 +1215,21 @@
                     }
                 ]
             },
+            "ExecutionSettings": {
+                "type": "object",
+                "properties": {
+                    "dataSamplingPercentage": {
+                        "maximum": 100,
+                        "exclusiveMaximum": true,
+                        "minimum": 0,
+                        "exclusiveMinimum": true,
+                        "type": "number",
+                        "description": "Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.",
+                        "format": "float"
+                    }
+                },
+                "description": "Various settings affecting the process of AFM execution or its result"
+            },
             "FilterDefinition": {
                 "type": "object",
                 "description": "Abstract filter definition type",
@@ -1603,7 +1618,7 @@
                         "additionalProperties": {
                             "$ref": "#/components/schemas/RawCustomLabel"
                         },
-                        "description": "Currently No-Op. Map of CustomLabels with keys used as placeholders in export result."
+                        "description": "Map of CustomLabels with keys used as placeholders in export result."
                     },
                     "metrics": {
                         "type": "object",
@@ -1635,6 +1650,9 @@
                     },
                     "customOverride": {
                         "$ref": "#/components/schemas/RawCustomOverride"
+                    },
+                    "executionSettings": {
+                        "$ref": "#/components/schemas/ExecutionSettings"
                     }
                 },
                 "description": "Export request object describing the export properties and overrides for raw exports."
