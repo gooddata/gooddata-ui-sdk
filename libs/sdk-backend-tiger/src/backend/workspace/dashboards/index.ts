@@ -211,7 +211,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     ): Promise<IFilterContext | null> => {
         const metadata = await this.authCall((client) => {
             if (type === "slides") {
-                return client.export.getMetadata1({
+                return client.export.getSlidesExportMetadata({
                     workspaceId: this.workspace,
                     exportId,
                 });
