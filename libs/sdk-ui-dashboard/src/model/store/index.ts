@@ -287,6 +287,7 @@ export {
     selectInsightsMap,
     selectInsightByRef,
     selectInsightByWidgetRef,
+    selectRawExportOverridesForInsightByRef,
 } from "./insights/insightsSelectors.js";
 export type { CatalogState } from "./catalog/catalogState.js";
 export {

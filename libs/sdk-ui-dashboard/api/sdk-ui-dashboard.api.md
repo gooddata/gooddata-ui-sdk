@@ -247,6 +247,7 @@ import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
 import { IPushData } from '@gooddata/sdk-ui';
+import { IRawExportCustomOverrides } from '@gooddata/sdk-backend-spi';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IRenderListItemProps } from '@gooddata/sdk-ui-kit';
 import { IResultWarning } from '@gooddata/sdk-model';
@@ -8727,6 +8728,9 @@ export const selectPlatformEdition: DashboardSelector<PlatformEdition>;
 
 // @internal
 export const selectPreloadedAttributesWithReferences: DashboardSelector<IAttributeWithReferences[] | undefined>;
+
+// @alpha
+export const selectRawExportOverridesForInsightByRef: (ref: ObjRef | undefined) => DashboardSelector<IRawExportCustomOverrides | undefined>;
 
 // @internal (undocumented)
 export const selectRenderMode: DashboardSelector<RenderMode>;
