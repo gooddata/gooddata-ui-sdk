@@ -332,7 +332,7 @@ describe("Overlay", () => {
         it("should remove node asynchronously after component unmount", () => {
             const { unmount } = renderOverlayComponent();
             unmount();
-            expect(screen.getAllByTestId("portal-scroll-anchor")).not.toBeInTheDocument();
+            expect(screen.queryAllByTestId("portal-scroll-anchor")).toHaveLength(0);
         });
     });
 });

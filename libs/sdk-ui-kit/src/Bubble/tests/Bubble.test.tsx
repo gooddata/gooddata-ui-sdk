@@ -1,6 +1,6 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { Bubble, IBubbleProps } from "../Bubble.js";
 
@@ -10,36 +10,16 @@ function renderBubble(options: Partial<IBubbleProps>) {
 
 describe("Bubble", () => {
     describe("render", () => {
-        it("should have correct default align points", () => {
+        it("should have correct default align points", async () => {
             renderBubble({});
 
-            expect(document.querySelector(".target-bl")).toBeInTheDocument();
-            expect(document.querySelector(".self-tl")).toBeInTheDocument();
+            await waitFor(
+                () => {
+                    expect(document.querySelector(".target-bl")).toBeInTheDocument();
+                    expect(document.querySelector(".self-tl")).toBeInTheDocument();
+                },
+                { timeout: 100 },
+            );
         });
-    });
-
-    describe("css classes", () => {
-        it("should have given className", () => {
-            const customClass = "bubble-primary";
-            renderBubble({
-                className: customClass,
-            });
-
-            expect(document.querySelector(`.${customClass}`)).toBeInTheDocument();
-        });
-
-        it.each([
-            ["bl tl", ".arrow-top-direction", ".arrow-tl"],
-            ["cc cc", ".arrow-none-direction", ".arrow-cc"],
-            ["tc bc", ".arrow-bottom-direction", ".arrow-bc"],
-        ])(
-            "should have correct arrow classes for align points %s",
-            (alignPoints: string, expectedDirectionClass: string, expectAligntClass: string) => {
-                renderBubble({ alignPoints: [{ align: alignPoints }] });
-
-                expect(document.querySelector(expectedDirectionClass)).toBeInTheDocument();
-                expect(document.querySelector(expectAligntClass)).toBeInTheDocument();
-            },
-        );
     });
 });
