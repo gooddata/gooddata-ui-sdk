@@ -242,7 +242,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
                 justify-content: flex-start;
                 flex-wrap: wrap;
                 flex-direction: column;
-                // overflow: hidden;
+                overflow: hidden;
                 width: auto;
                 min-width: 0; // hack for FF
                 max-width: 100%; // hack for IE

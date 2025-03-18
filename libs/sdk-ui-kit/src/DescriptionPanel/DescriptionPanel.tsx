@@ -8,7 +8,7 @@ import { useMediaQuery } from "../responsive/index.js";
 import { RichText } from "../RichText/index.js";
 import { IFilter } from "@gooddata/sdk-model";
 import cx from "classnames";
-import { useIsZoomed } from "../ZoomContext/ZoomContext.js";
+import { ZOOM_THRESHOLD, useIsZoomed } from "../ZoomContext/ZoomContext.js";
 
 /**
  * @internal
@@ -141,7 +141,7 @@ const DescriptionPanelContentCore: React.FC<IDescriptionPanelProps> = (props) =>
         filters,
     } = props;
 
-    const isZoomed = useIsZoomed(1.2); // ignore slight zoom in
+    const isZoomed = useIsZoomed(ZOOM_THRESHOLD); // ignore slight zoom in
 
     const className = cx("gd-description-panel s-gd-description-panel", {
         zoomed: isZoomed,

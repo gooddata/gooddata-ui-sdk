@@ -5214,6 +5214,9 @@ export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React
 export const WorkspacePickerHomeFooter: React_2.ComponentType<Omit<IWorkspacePickerHomeFooterProps, "theme" | "themeIsLoading" | "themeStatus">>;
 
 // @internal
+export const ZOOM_THRESHOLD = 1.2;
+
+// @internal
 export const ZoomAwareOverlay: <T extends HTMLElement = HTMLElement>(props: IOverlayProps<T>) => JSX.Element;
 
 // @internal

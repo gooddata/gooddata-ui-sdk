@@ -3,6 +3,12 @@ import React, { createContext, useContext, useEffect, useState, ReactNode } from
 
 /**
  * @internal
+ * The threshold for determining if the window is zoomed enough to handle it explicitly in components styles
+ */
+export const ZOOM_THRESHOLD = 1.2;
+
+/**
+ * @internal
  * Interface for zoom context state
  */
 export interface IZoomContextState {

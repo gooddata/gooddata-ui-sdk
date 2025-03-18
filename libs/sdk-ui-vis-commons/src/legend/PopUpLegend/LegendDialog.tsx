@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { ZoomAwareOverlay, useMediaQuery, useIsZoomed } from "@gooddata/sdk-ui-kit";
+import { ZoomAwareOverlay, useMediaQuery, useIsZoomed, ZOOM_THRESHOLD } from "@gooddata/sdk-ui-kit";
 import { legendDialogAlignPoints, legendMobileDialogAlignPoints } from "./alignPoints.js";
 
 const LegendDialogWrapper: React.FC<{ children: (isMobile: boolean) => JSX.Element }> = ({ children }) => {
@@ -18,7 +18,7 @@ interface ILegendDialogContent {
 const LegendDialogContent: React.FC<ILegendDialogContent> = (props) => {
     const { title, onCloseDialog, children } = props;
 
-    const isZoomed = useIsZoomed(1.2);
+    const isZoomed = useIsZoomed(ZOOM_THRESHOLD);
 
     const onClose = (e: React.MouseEvent) => {
         e.preventDefault();
