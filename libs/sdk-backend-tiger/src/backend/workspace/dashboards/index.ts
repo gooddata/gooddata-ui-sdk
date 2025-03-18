@@ -15,7 +15,10 @@ import {
     isDataSetItem,
     RawExportActionsRequest,
     AfmExport,
+    ActionsApiGetExportedFileRequest,
     ActionsApiGetRawExportRequest,
+    ActionsApiGetSlidesExportRequest,
+    ActionsApiGetTabularExportRequest,
 } from "@gooddata/api-client-tiger";
 import {
     IDashboardReferences,
@@ -528,6 +531,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             format: "CSV",
             execution: execution.execution as AfmExport,
             fileName: filename,
+            executionSettings: execution.settings,
         };
 
         return this.authCall(async (client) => {
@@ -546,7 +550,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     private async handleExportResultPolling(
         client: ITigerClient,
         type: "application/pdf",
-        payload: { exportId: string; workspaceId: string },
+        payload: ActionsApiGetExportedFileRequest,
     ): Promise<IExportResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
             const result = await client.export.getExportedFile(payload, {
@@ -574,7 +578,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     private async handleExportSlidesResultPolling(
         client: ITigerClient,
         type: "application/pdf" | "application/vnd.openxmlformats-officedocument.spreadsheetml.presentation",
-        payload: { exportId: string; workspaceId: string },
+        payload: ActionsApiGetSlidesExportRequest,
     ): Promise<IExportResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
             const result = await client.export.getSlidesExport(payload, {
@@ -602,7 +606,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     private async handleExportTabularResultPolling(
         client: ITigerClient,
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        payload: { exportId: string; workspaceId: string },
+        payload: ActionsApiGetTabularExportRequest,
     ): Promise<IExportResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
             const result = await client.export.getTabularExport(payload, {
