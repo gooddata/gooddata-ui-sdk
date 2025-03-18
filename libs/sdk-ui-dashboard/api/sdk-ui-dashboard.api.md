@@ -3850,7 +3850,7 @@ export interface ExportInsightWidgetPayload {
 export type ExportLayoutCustomizationFn = <TWidget>(layout: IDashboardLayout, customizer: IExportLayoutCustomizer<TWidget>) => void;
 
 // @alpha
-export type ExportMetaType = "dashboard-id" | "dashboard-title" | "dashboard-description" | "dashboard-tags" | "dashboard-tag" | "dashboard-filters" | "dashboard-filter" | "dashboard-filter-name" | "dashboard-filter-value";
+export type ExportMetaType = "dashboard-id" | "dashboard-title" | "dashboard-description" | "dashboard-tags" | "dashboard-tag" | "dashboard-filters" | "dashboard-filter" | "dashboard-filter-name" | "dashboard-filter-value" | "logo" | "cover-image";
 
 // @alpha (undocumented)
 export interface ExportRawInsightWidget extends IDashboardCommand {
@@ -6505,6 +6505,7 @@ export type MetaExportDataAttributes = {
     "data-export-meta-filter-type"?: "date" | "attribute";
     "data-export-meta-filter-mode"?: "readonly" | "hidden" | "active";
     "data-export-meta-filter-status"?: "loading" | "loaded" | "error";
+    "data-export-meta-image-status"?: "loading" | "loaded" | "error";
 };
 
 // @alpha (undocumented)
@@ -10274,6 +10275,9 @@ export type UseInsightWidgetInsightDataViewCallbacks = UseCancelablePromiseCallb
 
 // @alpha (undocumented)
 export const useMetaExportData: () => MetaExportData | undefined;
+
+// @alpha (undocumented)
+export const useMetaExportImageData: (type: MetaExportDataAttributes["data-export-meta-type"], loading: boolean, error: boolean) => MetaExportDataAttributes | undefined;
 
 // @public
 export const useParentFilters: (filter: IDashboardAttributeFilter) => UseParentFiltersResult;

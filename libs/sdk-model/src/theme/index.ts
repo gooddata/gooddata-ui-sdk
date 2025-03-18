@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { IMetadataObject } from "../ldm/metadata/index.js";
 
@@ -25,6 +25,31 @@ export interface IThemeTypography {
      */
     fontBold?: ThemeFontUri;
 }
+
+/**
+ * Definition of images used in the UI
+ *
+ * @beta
+ */
+export interface IThemeImages {
+    /**
+     * Cover image used in the export service
+     */
+    coverImage?: ImageUri;
+
+    /**
+     * Logo image used in the export service and in the UI
+     */
+    logo?: ImageUri;
+}
+
+/**
+ * Custom image URI which is used
+ * @remarks In format url('path/to/image')
+ *
+ * @beta
+ */
+export type ImageUri = string;
 
 /**
  * Color string in hex format, e.g. #14b2e2
@@ -765,6 +790,12 @@ export interface IThemeAnalyticalDesigner {
  * @beta
  */
 export interface ITheme {
+    /**
+     * Images
+     *
+     * Customizable images used in the UI
+     */
+    images?: IThemeImages;
     /**
      * Typography
      *

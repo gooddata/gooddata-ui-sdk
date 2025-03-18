@@ -14,6 +14,7 @@ import {
     MetaExportData,
     WidgetExportData,
     WidgetExportDataAttributes,
+    MetaExportDataAttributes,
 } from "./types.js";
 
 /**
@@ -173,5 +174,25 @@ export const useMetaExportData = (): MetaExportData | undefined => {
                 }),
             },
         },
+    };
+};
+
+/**
+ * @alpha
+ */
+export const useMetaExportImageData = (
+    type: MetaExportDataAttributes["data-export-meta-type"],
+    loading: boolean,
+    error: boolean,
+): MetaExportDataAttributes | undefined => {
+    const isExportMode = useDashboardSelector(selectIsInExportMode);
+
+    if (!isExportMode) {
+        return undefined;
+    }
+
+    return {
+        "data-export-meta-type": type,
+        "data-export-meta-image-status": loading ? "loading" : error ? "error" : "loaded",
     };
 };
