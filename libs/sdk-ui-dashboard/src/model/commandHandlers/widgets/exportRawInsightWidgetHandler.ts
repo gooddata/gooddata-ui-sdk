@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
-import { IExportResult } from "@gooddata/sdk-backend-spi";
+import { IExportResult, IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
 import { ExportRawInsightWidget } from "../../commands/index.js";
 import { DashboardInsightWidgetExportResolved, insightWidgetExportResolved } from "../../events/insight.js";
@@ -14,19 +14,22 @@ import {
     defaultDimensionsGenerator,
     defWithDimensions,
     IExecutionDefinition,
+    insightRef,
     INullableFilter,
     newDefForInsight,
 } from "@gooddata/sdk-model";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
+import { selectRawExportOverridesForInsightByRef } from "../../store/insights/insightsSelectors.js";
 
 async function exportDashboardToCSVRaw(
     ctx: DashboardContext,
     definition: IExecutionDefinition,
     filename: string,
+    overrides?: IRawExportCustomOverrides,
 ): Promise<IExportResult> {
     const { backend, workspace } = ctx;
 
-    return backend.workspace(workspace).dashboards().exportDashboardToCSVRaw(definition, filename);
+    return backend.workspace(workspace).dashboards().exportDashboardToCSVRaw(definition, filename, overrides);
 }
 
 export function* exportRawInsightWidgetHandler(
@@ -59,11 +62,16 @@ export function* exportRawInsightWidgetHandler(
     // execution definition must be defined at this point
     invariant(preparedExecutionDefinition);
 
+    const overrides: ReturnType<ReturnType<typeof selectRawExportOverridesForInsightByRef>> = yield select(
+        selectRawExportOverridesForInsightByRef(insightRef(insight)),
+    );
+
     const result: PromiseFnReturnType<typeof exportDashboardToCSVRaw> = yield call(
         exportDashboardToCSVRaw,
         ctx,
         preparedExecutionDefinition,
         filename,
+        overrides,
     );
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted
