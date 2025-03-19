@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { ContentRect } from "react-measure";
 import { v4 } from "uuid";
@@ -9,7 +9,8 @@ import partial from "lodash/partial.js";
 import throttle from "lodash/throttle.js";
 import isNil from "lodash/isNil.js";
 import cx from "classnames";
-import { OnLegendReady } from "../../interfaces/index.js";
+import * as jsYaml from "js-yaml";
+import { OnLegendReady, IChartConfig } from "../../interfaces/index.js";
 import { Chart, IChartProps } from "./Chart.js";
 import {
     isFunnel,
@@ -19,7 +20,7 @@ import {
     isSankeyOrDependencyWheel,
     isWaterfall,
 } from "../chartTypes/_util/common.js";
-import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { VisualizationTypes, LoadingComponent } from "@gooddata/sdk-ui";
 import Highcharts, { HighchartsOptions, YAxisOptions, XAxisOptions } from "../lib/index.js";
 import { alignChart } from "../chartTypes/_chartCreators/helpers.js";
 import {
@@ -33,7 +34,8 @@ import {
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess.js";
 import { ITheme } from "@gooddata/sdk-model";
-import { IChartOptions, ISeriesDataItem } from "../typings/unsafe.js";
+import { IChartOptions, ISeriesDataItem, ISeriesItem } from "../typings/unsafe.js";
+import { mergePropertiesWithOverride } from "./propertyMerger.js";
 
 /**
  * @internal
@@ -64,6 +66,7 @@ export interface IHighChartsRendererProps {
     afterRender(): void;
     resetZoomButtonTooltip?: string;
     contentRect?: ContentRect;
+    config?: IChartConfig;
 }
 
 export interface IHighChartsRendererState {
@@ -246,7 +249,7 @@ export class HighChartsRenderer extends React.PureComponent<
     private createChartConfig(chartConfig: HighchartsOptions, legendItemsEnabled: any[]): HighchartsOptions {
         const { series, chart, xAxis, yAxis } = chartConfig;
 
-        const selectionEvent = chart.zoomType
+        const selectionEvent = chart?.zooming?.type
             ? {
                   selection: this.onChartSelection,
               }
@@ -258,6 +261,7 @@ export class HighChartsRenderer extends React.PureComponent<
             VisualizationTypes.TREEMAP,
             VisualizationTypes.FUNNEL,
             VisualizationTypes.PYRAMID,
+            VisualizationTypes.SCATTER,
         ];
         const multipleSeries = isOneOfTypes(chart.type, firstSeriesTypes);
 
@@ -267,7 +271,8 @@ export class HighChartsRenderer extends React.PureComponent<
             items = this.skipLeadingZeros(items).filter((i) => !isNil(i.y));
         }
 
-        const updatedItems = items.map((item: any, itemIndex: number) => {
+        const updatedItems = items.map((item: any) => {
+            const itemIndex = item.legendIndex;
             const visible =
                 legendItemsEnabled[itemIndex] !== undefined ? legendItemsEnabled[itemIndex] : true;
             return {
@@ -366,11 +371,27 @@ export class HighChartsRenderer extends React.PureComponent<
         const chartProps = {
             domProps: { className: "viz-react-highchart-wrap gd-viz-highchart-wrap", style },
             ref: this.setChartRef,
-            config,
+            config: this.props.config?.enableVisualizationFineTuning
+                ? mergePropertiesWithOverride(config, this.getHighChartsConfigOverride())
+                : config,
             callback: this.props.afterRender,
         };
         return this.props.chartRenderer(chartProps);
     }
+
+    private getHighChartsConfigOverride = (): Partial<HighchartsOptions> => {
+        try {
+            // YAML value was automatically merged from visualization properties to chart config from where
+            // we will load it now and transform to JSON, expecting that it contains valid partial
+            // HighChart configuration.
+            const rawConfigOverride = this.props.config?.chartConfigOverride;
+            return rawConfigOverride === undefined ? undefined : jsYaml.load(rawConfigOverride);
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error("Visualization properties contains invalid HighCharts config override", e);
+            return undefined;
+        }
+    };
 
     private onZoomOutButtonClick = (): void => {
         this.chartRef.getChart().zoomOut();
@@ -382,7 +403,7 @@ export class HighChartsRenderer extends React.PureComponent<
             theme,
             resetZoomButtonTooltip,
         } = this.props;
-        if (chart?.zoomType) {
+        if (chart?.zooming?.type) {
             return (
                 <BubbleHoverTrigger
                     tagName="abbr"
@@ -404,6 +425,52 @@ export class HighChartsRenderer extends React.PureComponent<
             );
         }
         return null;
+    }
+
+    private renderLoading() {
+        const container = this.highchartsRendererRef.current;
+        const { chartOptions } = this.props;
+        const { data } = chartOptions;
+
+        const loading: ISeriesItem[] =
+            data?.series?.filter((series: ISeriesItem) => {
+                return series.data.some((data?: ISeriesDataItem) => data?.loading);
+            }) ?? [];
+
+        if (!loading.length || !container) {
+            return null;
+        }
+
+        const loadingSeries = loading.reduce<number[]>((loadingSeries: number[], series: ISeriesItem) => {
+            if (!loadingSeries.includes(series.legendIndex)) {
+                loadingSeries.push(series.legendIndex);
+            }
+            return loadingSeries;
+        }, []);
+        const contentRect = container.getBoundingClientRect();
+
+        const elements: React.ReactNode[] = [];
+        for (let i = 0; i < loadingSeries.length; i++) {
+            const el = container.querySelector(`.highcharts-series.highcharts-series-${loadingSeries[i]}`);
+            if (el) {
+                const rect = el.getBoundingClientRect();
+                elements.push(
+                    <div
+                        key={i}
+                        className="gd-chart-forecasting"
+                        style={{
+                            width: contentRect.left + contentRect.width - (rect.left + rect.width),
+                            left: rect.left + rect.width - contentRect.left,
+                        }}
+                    >
+                        <div className="gd-chart-forecasting-background" />
+                        <LoadingComponent />
+                    </div>,
+                );
+            }
+        }
+
+        return elements;
     }
 
     private renderVisualization() {
@@ -444,6 +511,7 @@ export class HighChartsRenderer extends React.PureComponent<
                 {!isLegendRenderedFirst
                     ? this.renderLegend(legendDetails, contentRect, this.containerId)
                     : null}
+                {this.renderLoading()}
             </div>
         );
     }

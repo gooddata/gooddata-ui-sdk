@@ -1,8 +1,6 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
-export { IFilterButtonCustomIcon, VisibilityMode } from "./interfaces/index.js";
+export type { IFilterButtonCustomIcon, VisibilityMode } from "./interfaces/index.js";
 
-export {
-    FilterButtonCustomIcon,
-    IFilterButtonCustomIconProps,
-} from "./components/internal/FilterButtonCustomIcon.js";
+export type { IFilterButtonCustomIconProps } from "./components/internal/FilterButtonCustomIcon.js";
+export { FilterButtonCustomIcon } from "./components/internal/FilterButtonCustomIcon.js";

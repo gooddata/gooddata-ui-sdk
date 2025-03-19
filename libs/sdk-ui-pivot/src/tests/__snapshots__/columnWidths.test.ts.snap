@@ -20,7 +20,7 @@ exports[`newWidthForAllColumnsForMeasure > should create width item when measure
   "measureColumnWidthItem": {
     "locator": {
       "measureLocatorItem": {
-        "measureIdentifier": "m_aangOxLSeztu",
+        "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     "width": {
@@ -35,7 +35,7 @@ exports[`newWidthForAllColumnsForMeasure > should create width item with grow to
   "measureColumnWidthItem": {
     "locator": {
       "measureLocatorItem": {
-        "measureIdentifier": "m_aangOxLSeztu",
+        "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     "width": {
@@ -51,7 +51,7 @@ exports[`newWidthForAllColumnsForMeasure > should create width item with grow to
   "measureColumnWidthItem": {
     "locator": {
       "measureLocatorItem": {
-        "measureIdentifier": "m_aangOxLSeztu",
+        "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     "width": {
@@ -86,7 +86,7 @@ exports[`newWidthForAttributeColumn > should create width item when attribute as
 exports[`newWidthForAttributeColumn > should create width item when attribute as value and without grow to fit prop 1`] = `
 {
   "attributeColumnWidthItem": {
-    "attributeIdentifier": "a_label.product.id.name",
+    "attributeIdentifier": "a_label.f_product.product.name",
     "width": {
       "value": 10,
     },
@@ -97,7 +97,7 @@ exports[`newWidthForAttributeColumn > should create width item when attribute as
 exports[`newWidthForAttributeColumn > should create width item with grow to fit prop false 1`] = `
 {
   "attributeColumnWidthItem": {
-    "attributeIdentifier": "a_label.product.id.name",
+    "attributeIdentifier": "a_label.f_product.product.name",
     "width": {
       "allowGrowToFit": false,
       "value": 10,
@@ -109,7 +109,7 @@ exports[`newWidthForAttributeColumn > should create width item with grow to fit 
 exports[`newWidthForAttributeColumn > should create width item with grow to fit prop true 1`] = `
 {
   "attributeColumnWidthItem": {
-    "attributeIdentifier": "a_label.product.id.name",
+    "attributeIdentifier": "a_label.f_product.product.name",
     "width": {
       "allowGrowToFit": true,
       "value": 10,
@@ -141,7 +141,7 @@ exports[`setNewWidthForSelectedColumns > should create width item when measure a
     "locators": [
       {
         "measureLocatorItem": {
-          "measureIdentifier": "m_aangOxLSeztu",
+          "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
         },
       },
     ],
@@ -158,13 +158,13 @@ exports[`setNewWidthForSelectedColumns > should create width item with attr loca
     "locators": [
       {
         "attributeLocatorItem": {
-          "attributeIdentifier": "a_label.product.id.name",
+          "attributeIdentifier": "a_label.f_product.product.name",
           "element": "uri",
         },
       },
       {
         "measureLocatorItem": {
-          "measureIdentifier": "m_aangOxLSeztu",
+          "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
         },
       },
     ],
@@ -181,7 +181,7 @@ exports[`setNewWidthForSelectedColumns > should create width item with grow to f
     "locators": [
       {
         "measureLocatorItem": {
-          "measureIdentifier": "m_aangOxLSeztu",
+          "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
         },
       },
     ],
@@ -199,7 +199,7 @@ exports[`setNewWidthForSelectedColumns > should create width item with grow to f
     "locators": [
       {
         "measureLocatorItem": {
-          "measureIdentifier": "m_aangOxLSeztu",
+          "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
         },
       },
     ],

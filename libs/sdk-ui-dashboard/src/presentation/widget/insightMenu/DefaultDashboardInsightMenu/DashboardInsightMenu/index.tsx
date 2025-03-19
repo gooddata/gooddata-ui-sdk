@@ -11,7 +11,7 @@ import { DashboardInsightMenuBubble } from "./DashboardInsightMenuBubble.js";
 import { DashboardInsightEditMenuBubble } from "./DashboardInsightEditMenuBubble.js";
 import { RenderMode } from "../../../../../types.js";
 
-const DashboardInsightMenuBody: React.FC<
+export const DashboardInsightMenuBody: React.FC<
     IDashboardInsightMenuProps & {
         submenu: IInsightMenuSubmenu | null;
         setSubmenu: React.Dispatch<React.SetStateAction<IInsightMenuSubmenu | null>>;
@@ -20,14 +20,22 @@ const DashboardInsightMenuBody: React.FC<
 > = (props) => {
     const { items, widget, insight, submenu, setSubmenu, onClose, renderMode } = props;
 
+    const renderSubmenuComponent = submenu ? (
+        <submenu.SubmenuComponent widget={widget} onClose={onClose} onGoBack={() => setSubmenu(null)} />
+    ) : null;
+
     return submenu ? (
-        <DashboardInsightSubmenuContainer
-            onClose={onClose}
-            title={submenu.itemName}
-            onBack={() => setSubmenu(null)}
-        >
-            <submenu.SubmenuComponent widget={widget} onClose={onClose} />
-        </DashboardInsightSubmenuContainer>
+        submenu.renderSubmenuComponentOnly ? (
+            renderSubmenuComponent
+        ) : (
+            <DashboardInsightSubmenuContainer
+                onClose={onClose}
+                title={submenu.itemName}
+                onBack={() => setSubmenu(null)}
+            >
+                {renderSubmenuComponent}
+            </DashboardInsightSubmenuContainer>
+        )
     ) : (
         <DashboardInsightMenuContainer
             onClose={onClose}

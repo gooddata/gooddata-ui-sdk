@@ -61,7 +61,7 @@ if [[ "$IS_AIO" == true ]]; then
   trap shutdownAIO EXIT
   docker network create $NETWORK_ID
 
-  docker run --name $CONTAINER_ID -e APP_LOGLEVEL=INFO -e GDCN_LICENSE_KEY \
+  docker run --name $CONTAINER_ID --pull always -e APP_LOGLEVEL=INFO -e GDCN_LICENSE_KEY \
       -e BUNDLE_TYPE=gdc -e GDCN_PUBLIC_URL=$TEST_HOST -p $PORT_NUMBER:3000 --net=$NETWORK_ID -d $AIO_IMAGE
 
   if ! health_check; then
@@ -88,8 +88,6 @@ if [[ "$IS_AIO" == true ]]; then
     -d '{
         "data": {
         "attributes": {
-          "cachePath": ["TIGER_CACHE"],
-            "enableCaching": false,
           "name": "pg_staging-goodsales",
           "url": "jdbc:postgresql://localhost:5432/demo",
           "schema": "goodsales",
@@ -108,7 +106,6 @@ pushd "${ROOT_DIR}" || exit 1
 docker run --rm --entrypoint '' \
 -e HOST=$CYPRESS_HOST \
 -e TIGER_API_TOKEN=$TIGER_API_TOKEN \
--e SDK_BACKEND=TIGER \
 -e FIXTURE_TYPE=$FIXTURE_TYPE \
 -e TIGER_DATASOURCES_NAME=$TIGER_DATASOURCES_NAME \
 $EXTRA_PARAMS \

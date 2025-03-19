@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import noop from "lodash/noop.js";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { IAttribute, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
@@ -182,7 +182,7 @@ describe("PluggableHeatmap", () => {
             [
                 "on column attribute",
                 sourceInsightDef,
-                Region,
+                Region.Default,
                 targetUri,
                 intersection,
                 expectedInsightDefRegion,
@@ -190,7 +190,7 @@ describe("PluggableHeatmap", () => {
             [
                 "on row attribute",
                 sourceInsightDef,
-                Department,
+                Department.Default,
                 targetUri,
                 intersection,
                 expectedInsightDefDepartment,

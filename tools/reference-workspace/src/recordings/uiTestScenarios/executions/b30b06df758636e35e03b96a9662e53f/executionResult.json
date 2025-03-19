@@ -1,0 +1,69 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": { "identifier": "attr.f_owner.salesrep", "name": "Sales Rep", "uri": "" },
+                        "granularity": null,
+                        "identifier": "attr.f_owner.salesrep",
+                        "localIdentifier": "a_attr.f_owner.salesrep",
+                        "name": "Sales Rep",
+                        "primaryLabel": { "identifier": "attr.f_owner.salesrep", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "f_opportunitysnapshot.forecastcategory_id",
+                            "name": "Forecast Category",
+                            "uri": ""
+                        },
+                        "granularity": null,
+                        "identifier": "f_opportunitysnapshot.forecastcategory_id",
+                        "localIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
+                        "name": "Forecast Category",
+                        "primaryLabel": {
+                            "identifier": "f_opportunitysnapshot.forecastcategory_id",
+                            "type": "displayForm"
+                        },
+                        "totalItems": [
+                            { "totalHeaderItem": { "name": "sum" } },
+                            { "totalHeaderItem": { "name": "min" } },
+                            { "totalHeaderItem": { "name": "max" } }
+                        ],
+                        "uri": ""
+                    }
+                },
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                    "name": "Amount"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.0%",
+                                    "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
+                                    "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
+                                    "name": "Probability"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

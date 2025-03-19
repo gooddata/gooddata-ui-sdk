@@ -9,6 +9,12 @@ A **geo pushpin chart** visualizes data broken down by geographic region across 
 
 {{< embedded-image alt="Geo Pushpin Chart" src="/gd-ui/geo_pushpin_chart.png" >}}
 
+## Access Token Requirement
+
+When using geo pushpin charts in a dashboard or the Analytical Designer within GoodData Cloud’s main web application—or when these are embedded directly via an iframe—access tokens are provided automatically, ensuring seamless functionality without user intervention.
+
+However, when implementing geo pushpin charts in a custom GoodData.UI application (i.e. within the `DashboardView`, `InsightView`, or `GeoPushpinChart` components), you must [provide your own Mapbox access token](https://docs.mapbox.com/help/how-mapbox-works/access-tokens/). This token should be specified in the [mapboxToken property](#properties).
+
 ## Structure
 
 ```jsx
@@ -162,7 +168,7 @@ The following example shows the supported `geoConfig` structure with sample valu
 
 ## Mapbox token provider
 
-The token provider allows setting of the Mapbox token for whole app or for a part of the app. It is not necessary to provide the token for every chart, insight or dashboard.
+The token provider allows setting of the Mapbox token for whole app or for a part of the app. It is not necessary to provide the token for every chart, visualization or dashboard.
 
 ## Structure
 

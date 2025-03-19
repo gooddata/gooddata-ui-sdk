@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ScreenSize } from "@gooddata/sdk-model";
 import React from "react";
 import { Row } from "react-grid-system";
@@ -6,7 +6,9 @@ import { RenderMode } from "../../../types.js";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
-} from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+} from "../../../_staging/dashboard/legacyFluidLayout/facade/interfaces.js";
+import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
+
 import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
 import {
     IDashboardLayoutGridRowRenderer,
@@ -44,6 +46,8 @@ export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowPro
         renderMode,
     } = props;
 
+    const exportStyles = useSlideSizeStyle(renderMode, "nested");
+
     const rowItems = items.map((item) => (
         <DashboardLayoutItem
             key={itemKeyGetter({ item, screen })}
@@ -55,7 +59,7 @@ export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowPro
     ));
 
     return (
-        <Row className="gd-fluidlayout-row s-gd-fluid-layout-row">
+        <Row className="gd-fluidlayout-row s-gd-fluid-layout-row" style={exportStyles}>
             {gridRowRenderer
                 ? gridRowRenderer({
                       children: rowItems,

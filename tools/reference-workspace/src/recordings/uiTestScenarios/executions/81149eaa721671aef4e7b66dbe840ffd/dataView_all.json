@@ -1,0 +1,139 @@
+{
+    "count": [49, 1],
+    "data": [
+        [4000],
+        [20000],
+        [6006.2],
+        [68000],
+        [null],
+        [7565.08],
+        [40000],
+        [18000],
+        [31200],
+        [10800],
+        [109941.82],
+        [20000],
+        [13200],
+        [16871.89],
+        [53091.72],
+        [null],
+        [16571.47],
+        [140000],
+        [21793.85],
+        [443236.78],
+        [11062],
+        [21643.44],
+        [12000],
+        [14000],
+        [27200],
+        [null],
+        [75600],
+        [6000],
+        [21269.2],
+        [200978.12],
+        [41675.46],
+        [720],
+        [54600],
+        [null],
+        [32160],
+        [34656.51],
+        [8000],
+        [30034.6],
+        [33167.06],
+        [11600],
+        [16000],
+        [2119.78],
+        [47903.17],
+        [4000],
+        [40000],
+        [948],
+        [18000],
+        [98576.82],
+        [40000]
+    ],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "name": "(add)ventures", "uri": "(add)ventures" } },
+                { "attributeHeaderItem": { "name": "(mt) Media Temple", "uri": "(mt) Media Temple" } },
+                { "attributeHeaderItem": { "name": ".decimal", "uri": ".decimal" } },
+                { "attributeHeaderItem": { "name": "1 Source Consulting", "uri": "1 Source Consulting" } },
+                { "attributeHeaderItem": { "name": "1-800 Postcards", "uri": "1-800 Postcards" } },
+                { "attributeHeaderItem": { "name": "1-800 We Answer", "uri": "1-800 We Answer" } },
+                { "attributeHeaderItem": { "name": "1-888-OhioComp", "uri": "1-888-OhioComp" } },
+                { "attributeHeaderItem": { "name": "1000Bulbs.com", "uri": "1000Bulbs.com" } },
+                { "attributeHeaderItem": { "name": "101 Financial", "uri": "101 Financial" } },
+                { "attributeHeaderItem": { "name": "123 Exteriors", "uri": "123 Exteriors" } },
+                { "attributeHeaderItem": { "name": "14 West", "uri": "14 West" } },
+                {
+                    "attributeHeaderItem": { "name": "1Source International", "uri": "1Source International" }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "1st Choice Staffing & Consulting",
+                        "uri": "1st Choice Staffing & Consulting"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "1st in Video - Music World",
+                        "uri": "1st in Video - Music World"
+                    }
+                },
+                { "attributeHeaderItem": { "name": "2 Wheel Bikes", "uri": "2 Wheel Bikes" } },
+                { "attributeHeaderItem": { "name": "2HB Software Designs", "uri": "2HB Software Designs" } },
+                { "attributeHeaderItem": { "name": "352 Media Group", "uri": "352 Media Group" } },
+                { "attributeHeaderItem": { "name": "3Degrees", "uri": "3Degrees" } },
+                { "attributeHeaderItem": { "name": "3E", "uri": "3E" } },
+                { "attributeHeaderItem": { "name": "3balls.com", "uri": "3balls.com" } },
+                {
+                    "attributeHeaderItem": {
+                        "name": "3dCart Shopping Cart Software",
+                        "uri": "3dCart Shopping Cart Software"
+                    }
+                },
+                { "attributeHeaderItem": { "name": "49er Communications", "uri": "49er Communications" } },
+                { "attributeHeaderItem": { "name": "4Wall Entertainment", "uri": "4Wall Entertainment" } },
+                { "attributeHeaderItem": { "name": "4th Source", "uri": "4th Source" } },
+                { "attributeHeaderItem": { "name": "5LINX Enterprises", "uri": "5LINX Enterprises" } },
+                { "attributeHeaderItem": { "name": "614 Media Group", "uri": "614 Media Group" } },
+                { "attributeHeaderItem": { "name": "6K Systems", "uri": "6K Systems" } },
+                { "attributeHeaderItem": { "name": "7 Medical Systems", "uri": "7 Medical Systems" } },
+                { "attributeHeaderItem": { "name": "7 Simple Machines", "uri": "7 Simple Machines" } },
+                { "attributeHeaderItem": { "name": "7-Eleven", "uri": "7-Eleven" } },
+                { "attributeHeaderItem": { "name": "720 Strategies", "uri": "720 Strategies" } },
+                { "attributeHeaderItem": { "name": "90octane", "uri": "90octane" } },
+                { "attributeHeaderItem": { "name": "919 Marketing", "uri": "919 Marketing" } },
+                { "attributeHeaderItem": { "name": "@properties", "uri": "@properties" } },
+                { "attributeHeaderItem": { "name": "A Main Hobbies", "uri": "A Main Hobbies" } },
+                { "attributeHeaderItem": { "name": "A Place for Mom", "uri": "A Place for Mom" } },
+                { "attributeHeaderItem": { "name": "A Squared Group", "uri": "A Squared Group" } },
+                {
+                    "attributeHeaderItem": {
+                        "name": "A White Orchid Wedding",
+                        "uri": "A White Orchid Wedding"
+                    }
+                },
+                { "attributeHeaderItem": { "name": "A&C Plastics", "uri": "A&C Plastics" } },
+                {
+                    "attributeHeaderItem": {
+                        "name": "A&P Consulting Transportation Engineers",
+                        "uri": "A&P Consulting Transportation Engineers"
+                    }
+                },
+                { "attributeHeaderItem": { "name": "A&R Tarpaulins", "uri": "A&R Tarpaulins" } },
+                { "attributeHeaderItem": { "name": "A+ Mortgage Services", "uri": "A+ Mortgage Services" } },
+                { "attributeHeaderItem": { "name": "A+ Tutor U", "uri": "A+ Tutor U" } },
+                { "attributeHeaderItem": { "name": "A-1 Textiles", "uri": "A-1 Textiles" } },
+                { "attributeHeaderItem": { "name": "A-Life Medical", "uri": "A-Life Medical" } },
+                { "attributeHeaderItem": { "name": "A-T Solutions", "uri": "A-T Solutions" } },
+                { "attributeHeaderItem": { "name": "A. Pomerantz & Co.", "uri": "A. Pomerantz & Co." } },
+                { "attributeHeaderItem": { "name": "A.B. Data", "uri": "A.B. Data" } },
+                { "attributeHeaderItem": { "name": "A.R.M. Solutions", "uri": "A.R.M. Solutions" } }
+            ]
+        ],
+        [[{ "measureHeaderItem": { "name": "Amount", "order": 0 } }]]
+    ],
+    "offset": [0, 0],
+    "totalCount": [49, 1]
+}

@@ -1,65 +1,72 @@
 name: check
-on: pull_request
+
+on:
+  pull_request:
+    branches:
+      - master
+      - release
+
+concurrency:
+  group: check-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
-  prepare-env:
-    runs-on:
-      group: infra1-runners-arc
-      labels: runners-small
-    outputs:
-      branch: ${{ github.base_ref }}
-      ref: ${{ github.ref }}
-      commit: ${{ github.event.pull_request.head.sha }}
-      pr_number: ${{ github.event.pull_request.number }}
-      project: ${{ github.repository }}
-      changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v40
-  gooddata-ui-sdk-unit-tests:
-    runs-on:
-      group: infra1-runners-arc
-      labels: runners-small
-    needs:
-      - prepare-env
+
+  dismiss-approvals:
+    runs-on: ubuntu-latest
     permissions:
+      pull-requests: write
       contents: read
-      id-token: write
     steps:
-      - name: Call Jenkins trigger
-        id: call-jenkins
-        uses: gooddata/github-actions-public/jenkins/trigger@master
+      - name: Dismiss Approvals
+        uses: actions/github-script@v7
         with:
-          server: ${{ vars.JENKINS_ADDRESS }}
-          folder: gooddata-ui-sdk
-          job-name: gooddata-ui-sdk-unit-tests
-          vault-url: ${{ vars.VAULT_ADDRESS }}
-          params: |-
-            {
-              "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",
-              "GH_REF": "${{ needs.prepare-env.outputs.ref }}",
-              "GH_COMMIT": "${{ needs.prepare-env.outputs.commit }}",
-              "GH_URL": "git@github.com:",
-              "GH_CHANGE": "${{ needs.prepare-env.outputs.pr_number }}",
-              "GH_PROJECT": "${{ needs.prepare-env.outputs.project }}",
-              "BUILD_BY_GITHUB": "true",
-              "GH_PIPELINE": "check"
+          script: |
+            const prNumber = context.payload.pull_request.number;
+
+            // Get all reviews on the pull request
+            const reviews = await github.rest.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber,
+            });
+
+            // Iterate over reviews and dismiss approvals
+            for (const review of reviews.data) {
+              if (review.state === "APPROVED") {
+                await github.rest.pulls.dismissReview({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: prNumber,
+                  review_id: review.id,
+                  message: "Approval dismissed automatically due to PR update.",
+                });
+                console.log(`Dismissed approval from ${review.user.login}`);
+              }
             }
-          comment-pr: 'true'
+        env:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+
+  build-validate-stage:
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: read
+    name: build-validate-stage
+    uses: ./.github/workflows/rw-rush-build-basic-checks.yml
+    with:
+      target-branch: ${{ github.event.pull_request.base.ref }}
+    secrets: inherit
+
   ready-to-merge:
     runs-on:
       group: infra1-runners-arc
       labels: runners-small
-    if: always()
+    if: ${{ !cancelled() }}
     needs:
-      - prepare-env
-      - gooddata-ui-sdk-unit-tests
+      - build-validate-stage
     steps:
       - name: Check if needed jobs succeeded
         uses: re-actors/alls-green@release/v1
         with:
-          allowed-skips: ${{ toJSON(needs) }}
           jobs: ${{ toJSON(needs) }}

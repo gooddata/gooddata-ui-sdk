@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
@@ -21,7 +21,8 @@ describe("WorkspacePickerHomeFooter", () => {
     it("should render home icon and call onClick when clicked", async () => {
         const onClick = vi.fn();
         renderWorkspacePickerHomeFooter({ onClick });
-        const homeIcon = screen.getByRole("icon-home");
+
+        const homeIcon = screen.getByTestId("s-workspace-picker-home-footer");
 
         expect(homeIcon).toBeInTheDocument();
 

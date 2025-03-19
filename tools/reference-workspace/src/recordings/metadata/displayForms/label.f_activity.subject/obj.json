@@ -1,0 +1,10 @@
+{
+    "attribute": { "identifier": "attr.f_activity.activity", "type": "attribute" },
+    "description": "",
+    "id": "label.f_activity.subject",
+    "isDefault": true,
+    "ref": { "identifier": "label.f_activity.subject", "type": "displayForm" },
+    "title": "Subject",
+    "type": "displayForm",
+    "uri": "https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/referenceworkspace/labels/label.f_activity.subject"
+}

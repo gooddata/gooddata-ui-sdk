@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IExecutionFactory,
@@ -8,6 +8,7 @@ import {
     IExplainProvider,
     ExplainType,
     NoDataError,
+    IPreparedExecutionOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -32,6 +33,7 @@ import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpe
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { downloadFile } from "../../../utils/downloadFile.js";
+import { TigerCancellationConverter } from "../../../cancelation/index.js";
 
 export class TigerPreparedExecution implements IPreparedExecution {
     private _fingerprint: string | undefined;
@@ -41,6 +43,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
         public readonly definition: IExecutionDefinition,
         private readonly executionFactory: IExecutionFactory,
         private readonly dateFormatter: DateFormatter,
+        public readonly options?: IPreparedExecutionOptions,
     ) {}
 
     public async execute(): Promise<IExecutionResult> {
@@ -49,17 +52,23 @@ export class TigerPreparedExecution implements IPreparedExecution {
         const afmExecution = toAfmExecution(this.definition);
 
         return this.authCall((client) =>
-            client.execution.computeReport({
-                workspaceId: this.definition.workspace,
-                afmExecution,
-            }),
+            client.execution.computeReport(
+                {
+                    workspaceId: this.definition.workspace,
+                    afmExecution,
+                },
+                { ...new TigerCancellationConverter(this.options?.signal ?? null).forAxios() },
+            ),
         ).then((response) => {
+            const resultCancelToken = response?.headers["X-Gdc-Cancel-Token"];
             return new TigerExecutionResult(
                 this.authCall,
                 this.definition,
                 this.executionFactory,
                 response.data,
                 this.dateFormatter,
+                this.options?.signal,
+                resultCancelToken,
             );
         });
     }
@@ -99,19 +108,35 @@ export class TigerPreparedExecution implements IPreparedExecution {
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-        return this.executionFactory.forDefinition(defWithDimensions(this.definition, ...dimsOrGen));
+        return this.executionFactory.forDefinition(
+            defWithDimensions(this.definition, ...dimsOrGen),
+            this.options,
+        );
     }
 
     public withBuckets(...buckets: IBucket[]): IPreparedExecution {
-        return this.executionFactory.forDefinition(defWithBuckets(this.definition, ...buckets));
+        return this.executionFactory.forDefinition(defWithBuckets(this.definition, ...buckets), this.options);
     }
 
     public withSorting(...items: ISortItem[]): IPreparedExecution {
-        return this.executionFactory.forDefinition(defWithSorting(this.definition, items));
+        return this.executionFactory.forDefinition(defWithSorting(this.definition, items), this.options);
+    }
+
+    public withSignal(signal: AbortSignal): IPreparedExecution {
+        return new TigerPreparedExecution(
+            this.authCall,
+            this.definition,
+            this.executionFactory,
+            this.dateFormatter,
+            { ...this.options, signal },
+        );
     }
 
     public withDateFormat(dateFormat: string): IPreparedExecution {
-        return this.executionFactory.forDefinition(defWithDateFormat(this.definition, dateFormat));
+        return this.executionFactory.forDefinition(
+            defWithDateFormat(this.definition, dateFormat),
+            this.options,
+        );
     }
 
     public fingerprint(): string {
@@ -123,7 +148,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
     }
 
     public withExecConfig(config: IExecutionConfig): IPreparedExecution {
-        return this.executionFactory.forDefinition(defWithExecConfig(this.definition, config));
+        return this.executionFactory.forDefinition(defWithExecConfig(this.definition, config), this.options);
     }
 
     public equals(other: IPreparedExecution): boolean {

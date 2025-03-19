@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterComponentsProvider } from "./Context/AttributeFilterComponentsContext.js";
@@ -20,8 +20,11 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         workspace,
         title,
         filter,
+        workingFilter,
+        displayAsLabel,
         connectToPlaceholder,
         parentFilters,
+        dependentDateFilters,
         parentFilterOverAttribute,
         validateElementsBy,
         hiddenElements,
@@ -32,6 +35,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         disabled,
         customIcon,
         onApply,
+        onSelect,
         onError,
         ErrorComponent,
         LoadingComponent,
@@ -46,6 +50,8 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         ElementsSelectActionsComponent,
         EmptyResultComponent,
         StatusBarComponent,
+        enableDuplicatedLabelValuesInAttributeFilter = true,
+        enableImmediateAttributeFilterDisplayAsLabelMigration = false,
     } = props;
 
     const DefaultComponents = getAttributeFilterDefaultComponents(props);
@@ -84,12 +90,16 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     workspace={workspace}
                     title={title}
                     filter={filter}
+                    workingFilter={workingFilter}
+                    displayAsLabel={displayAsLabel}
                     connectToPlaceholder={connectToPlaceholder}
                     resetOnParentFilterChange={resetOnParentFilterChange}
                     parentFilters={parentFilters}
+                    dependentDateFilters={dependentDateFilters}
                     parentFilterOverAttribute={parentFilterOverAttribute}
                     validateElementsBy={validateElementsBy}
                     onApply={onApply}
+                    onSelect={onSelect}
                     onError={onError}
                     hiddenElements={hiddenElements}
                     staticElements={staticElements}
@@ -98,6 +108,14 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     selectFirst={selectFirst}
                     disabled={disabled}
                     customIcon={customIcon}
+                    enableDuplicatedLabelValuesInAttributeFilter={
+                        enableDuplicatedLabelValuesInAttributeFilter
+                    }
+                    enableImmediateAttributeFilterDisplayAsLabelMigration={
+                        enableImmediateAttributeFilterDisplayAsLabelMigration
+                    }
+                    withoutApply={props.withoutApply}
+                    enableDashboardFiltersApplyModes={props.enableDashboardFiltersApplyModes}
                 >
                     {children}
                 </AttributeFilterContextProvider>

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import {
     areObjRefsEqual,
@@ -10,20 +10,31 @@ import {
     widgetRef,
     widgetUri,
 } from "@gooddata/sdk-model";
-import { InvalidCustomUrlDrillParameterInfo, UiState } from "./uiState.js";
-import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types.js";
+import { InvalidCustomUrlDrillParameterInfo, UiState, FilterViewDialogMode } from "./uiState.js";
+import {
+    IMenuButtonItemsVisibility,
+    IScheduleEmailContext,
+    ILayoutItemPath,
+    ILayoutSectionPath,
+} from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
 
-const openScheduleEmailDialog: UiReducer = (state) => {
+const openScheduleEmailDialog: UiReducer<PayloadAction<IScheduleEmailContext>> = (state, action) => {
     state.scheduleEmailDialog.open = true;
+    if (action.payload.widgetRef) {
+        state.scheduleEmailDialog.context = {
+            widgetRef: action.payload.widgetRef,
+        };
+    }
 };
 
 const closeScheduleEmailDialog: UiReducer = (state) => {
     state.scheduleEmailDialog.open = false;
+    state.scheduleEmailDialog.context = undefined;
 };
 
 const setScheduleEmailDialogDefaultAttachment: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
@@ -34,12 +45,37 @@ const resetScheduleEmailDialogDefaultAttachment: UiReducer = (state) => {
     state.scheduleEmailDialog.defaultAttachmentRef = undefined;
 };
 
-const openScheduleEmailManagementDialog: UiReducer = (state) => {
+const openScheduleEmailManagementDialog: UiReducer<PayloadAction<IScheduleEmailContext>> = (
+    state,
+    action,
+) => {
     state.scheduleEmailManagementDialog.open = true;
+    if (action.payload.widgetRef) {
+        state.scheduleEmailManagementDialog.context = {
+            widgetRef: action.payload.widgetRef,
+        };
+    }
 };
 
 const closeScheduleEmailManagementDialog: UiReducer = (state) => {
     state.scheduleEmailManagementDialog.open = false;
+    state.scheduleEmailManagementDialog.context = undefined;
+};
+
+const openAlertingManagementDialog: UiReducer<PayloadAction> = (state) => {
+    state.alertsManagementDialog.open = true;
+};
+
+const closeAlertingManagementDialog: UiReducer = (state) => {
+    state.alertsManagementDialog.open = false;
+};
+
+const openAlertingDialog: UiReducer<PayloadAction> = (state) => {
+    state.alertsDialog.open = true;
+};
+
+const closeAlertingDialog: UiReducer = (state) => {
+    state.alertsDialog.open = false;
 };
 
 const openSaveAsDialog: UiReducer = (state) => {
@@ -66,7 +102,32 @@ const closeDeleteDialog: UiReducer = (state) => {
     state.deleteDialog.open = false;
 };
 
-const openKpiDeleteDialog: UiReducer<PayloadAction<ILayoutCoordinates>> = (state, action) => {
+const openWidgetDeleteDialog: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
+    state.widgetDeleteDialog.open = true;
+    state.widgetDeleteDialog.widgetRef = action.payload;
+};
+
+const closeWidgetDeleteDialog: UiReducer = (state) => {
+    state.widgetDeleteDialog.open = false;
+    state.widgetDeleteDialog.widgetRef = undefined;
+};
+
+const toggleFilterViewsDialog: UiReducer<
+    PayloadAction<
+        | {
+              open?: boolean;
+              mode?: FilterViewDialogMode;
+          }
+        | undefined
+    >
+> = (state, action) => {
+    state.filterViews = {
+        open: action.payload?.open ?? !state.filterViews.open,
+        mode: action.payload?.mode ?? "list",
+    };
+};
+
+const openKpiDeleteDialog: UiReducer<PayloadAction<ILayoutItemPath>> = (state, action) => {
     state.kpiDeleteDialog.widgetCoordinates = action.payload;
 };
 
@@ -147,12 +208,12 @@ const clearFilterIndexSelection: UiReducer = (state) => {
     state.selectedFilterIndex = undefined;
 };
 
-const setActiveSectionIndex: UiReducer<PayloadAction<number>> = (state, action) => {
-    state.activeSectionIndex = action.payload;
+const setActiveSection: UiReducer<PayloadAction<ILayoutSectionPath>> = (state, action) => {
+    state.activeSection = action.payload;
 };
 
-const clearActiveSectionIndex: UiReducer = (state) => {
-    state.activeSectionIndex = undefined;
+const clearActiveSection: UiReducer = (state) => {
+    state.activeSection = undefined;
 };
 
 const resetInvalidDrillWidgetRefs: UiReducer = (state) => {
@@ -235,14 +296,17 @@ const clearDraggingWidgetSource: UiReducer<PayloadAction<void>> = (state) => {
     state.draggingWidgetSource = undefined;
 };
 
-const setDraggingWidgetTarget: UiReducer<PayloadAction<ILayoutCoordinates>> = (state, action) => {
+const setDraggingWidgetTarget: UiReducer<PayloadAction<ILayoutItemPath>> = (state, action) => {
     state.draggingWidgetTarget = action.payload;
-    state.activeSectionIndex = action.payload.sectionIndex;
+    state.activeSection = {
+        parent: action.payload.length > 1 ? action.payload.slice(0, -1) : undefined, // cut last item out to get parent of the item of section with sectionIndex used below
+        sectionIndex: action.payload[action.payload.length - 1].sectionIndex, // use sectionIndex from the last item
+    };
 };
 
 const clearDraggingWidgetTarget: UiReducer<PayloadAction<void>> = (state) => {
     state.draggingWidgetTarget = undefined;
-    state.activeSectionIndex = undefined;
+    state.activeSection = undefined;
 };
 
 const setWidgetsOverlay: UiReducer<PayloadAction<Record<string, IDashboardWidgetOverlay>>> = (
@@ -285,6 +349,10 @@ const hideAllWidgetsOverlay: UiReducer = (state) => {
     }, {} as Record<string, IDashboardWidgetOverlay>);
 };
 
+const ignoreExecutionTimestamp: UiReducer = (state) => {
+    state.ignoreExecutionTimestamp = true;
+};
+
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
@@ -292,6 +360,10 @@ export const uiReducers = {
     resetScheduleEmailDialogDefaultAttachment,
     openScheduleEmailManagementDialog,
     closeScheduleEmailManagementDialog,
+    openAlertingManagementDialog,
+    closeAlertingManagementDialog,
+    openAlertingDialog,
+    closeAlertingDialog,
     openSaveAsDialog,
     closeSaveAsDialog,
     setFilterBarExpanded,
@@ -315,8 +387,8 @@ export const uiReducers = {
     setFilterAttributeSelectionOpen,
     selectFilterIndex,
     clearFilterIndexSelection,
-    setActiveSectionIndex,
-    clearActiveSectionIndex,
+    setActiveSection,
+    clearActiveSection,
     openCancelEditModeDialog,
     closeCancelEditModeDialog,
     resetInvalidDrillWidgetRefs,
@@ -333,4 +405,8 @@ export const uiReducers = {
     toggleWidgetsOverlay,
     setWidgetsOverlay,
     hideAllWidgetsOverlay,
+    toggleFilterViewsDialog,
+    openWidgetDeleteDialog,
+    closeWidgetDeleteDialog,
+    ignoreExecutionTimestamp,
 };

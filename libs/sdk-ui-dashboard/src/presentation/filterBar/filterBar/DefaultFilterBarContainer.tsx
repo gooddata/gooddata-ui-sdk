@@ -1,7 +1,10 @@
-// (C) 2021-2024 GoodData Corporation
-import React, { useRef } from "react";
+// (C) 2021-2025 GoodData Corporation
+import React, { useCallback, useRef } from "react";
 import DefaultMeasure from "react-measure";
 import cx from "classnames";
+import { createSelector } from "@reduxjs/toolkit";
+import { defaultImport } from "default-import";
+import { Message, UiButton } from "@gooddata/sdk-ui-kit";
 
 import { IntlWrapper } from "../../localization/index.js";
 import {
@@ -10,16 +13,25 @@ import {
     selectLocale,
     selectSupportsCrossFiltering,
     useDashboardSelector,
+    useDashboardDispatch,
+    selectEnableFilterViews,
+    selectEnableFlexibleLayout,
+    applyFilterContextWorkingSelection,
+    selectIsWorkingFilterContextChanged,
+    selectDashboardFiltersApplyMode,
+    selectEnableDashboardFiltersApplyModes,
 } from "../../../model/index.js";
 
-import { BulletsBar } from "../../dragAndDrop/index.js";
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
 import { useRowsCalculator, CalculatedRows } from "./hooks/useRowsCalculator.js";
 import { useFilterBarState } from "./hooks/useFilterBarState.js";
 import { useFilterExpansionByDragAndDrop } from "./hooks/useFilterExpansionByDragAndDrop.js";
-import { defaultImport } from "default-import";
-import { createSelector } from "@reduxjs/toolkit";
 import { FiltersConfigurationPanel } from "./FiltersConfigurationPanel.js";
+import { FilterViews } from "./filterViews/FilterViews.js";
+import { BulletsBar as FlexibleBulletsBar } from "../../flexibleLayout/dragAndDrop/Resize/BulletsBar/BulletsBar.js";
+import { BulletsBar as FluidBulletsBar } from "../../layout/dragAndDrop/Resize/BulletsBar/BulletsBar.js";
+import { FormattedMessage, useIntl } from "react-intl";
+import { useExecutionTimestampMessage } from "./useExecutionTimestampMessage.js";
 
 const selectShowFiltersConfigurationPanel = createSelector(
     selectIsInEditMode,
@@ -46,27 +58,96 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
     );
 
     const showFiltersConfigurationPanel = useDashboardSelector(selectShowFiltersConfigurationPanel);
+    const isFilterViewsFeatureFlagEnabled = useDashboardSelector(selectEnableFilterViews);
+    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
+    const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
+    const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+    const { showExecutionTimestampMessage, formattedDate, onShowCurrentTimestampDashboard } =
+        useExecutionTimestampMessage();
+    const dispatch = useDashboardDispatch();
+
+    const applyAllDashboardFilters = useCallback(() => {
+        dispatch(applyFilterContextWorkingSelection());
+    }, [dispatch]);
+
+    const intl = useIntl();
 
     return (
-        <div className="dash-filters-wrapper s-gd-dashboard-filter-bar" ref={dropRef}>
-            <div
-                style={{ height }}
-                className={cx("dash-filters-visible", {
-                    scrollable: scrollable,
-                    "s-dash-filters-visible-all": isFilterBarExpanded,
-                })}
-            >
-                <AllFiltersContainer setCalculatedRows={setCalculatedRows}>{children}</AllFiltersContainer>
-                <FiltersRows rows={rows} />
-                {showFiltersConfigurationPanel ? <FiltersConfigurationPanel /> : null}
+        <>
+            <div className="dash-filters-wrapper s-gd-dashboard-filter-bar" ref={dropRef}>
+                <div
+                    style={{ height }}
+                    className={cx("dash-filters-visible", {
+                        scrollable: scrollable,
+                        "s-dash-filters-visible-all": isFilterBarExpanded,
+                        "apply-all-at-once":
+                            filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes,
+                    })}
+                >
+                    <AllFiltersContainer setCalculatedRows={setCalculatedRows}>
+                        {children}
+                    </AllFiltersContainer>
+                    <FiltersRows rows={rows} />
+                    <div
+                        className="filter-bar-configuration"
+                        style={{ alignItems: enableDashboardFiltersApplyModes ? "baseline" : undefined }}
+                    >
+                        {filtersApplyMode.mode === "ALL_AT_ONCE" &&
+                        enableDashboardFiltersApplyModes &&
+                        isWorkingFilterContextChanged ? (
+                            <UiButton
+                                label={intl.formatMessage({ id: "apply" })}
+                                variant="primary"
+                                onClick={applyAllDashboardFilters}
+                            />
+                        ) : null}
+                        {isFilterViewsFeatureFlagEnabled ? <FilterViews /> : null}
+                        {showFiltersConfigurationPanel ? <FiltersConfigurationPanel /> : null}
+                    </div>
+                </div>
+                <ShowAllFiltersButton
+                    isFilterBarExpanded={isFilterBarExpanded}
+                    isVisible={rows.length > 1}
+                    onToggle={(isExpanded) => setFilterBarExpanded(isExpanded)}
+                />
+                {isFlexibleLayoutEnabled ? <FlexibleBulletsBar /> : <FluidBulletsBar />}
             </div>
-            <ShowAllFiltersButton
-                isFilterBarExpanded={isFilterBarExpanded}
-                isVisible={rows.length > 1}
-                onToggle={(isExpanded) => setFilterBarExpanded(isExpanded)}
-            />
-            <BulletsBar />
-        </div>
+            {isWorkingFilterContextChanged &&
+            filtersApplyMode.mode === "ALL_AT_ONCE" &&
+            enableDashboardFiltersApplyModes ? (
+                <div className="filters-message" style={{ marginTop: rows.length > 1 ? "35px" : "10px" }}>
+                    <Message type="progress">
+                        <FormattedMessage
+                            id="filterBar.unappliedFiltersNotification"
+                            values={{
+                                link: (chunks) => <a onClick={applyAllDashboardFilters}>{chunks}</a>,
+                            }}
+                        />
+                    </Message>
+                </div>
+            ) : null}
+            {showExecutionTimestampMessage ? (
+                <div className="filters-message" style={{ marginTop: rows.length > 1 ? "35px" : "10px" }}>
+                    <Message type="progress">
+                        <FormattedMessage
+                            id="filterBar.executionTimestampNotificationMessage"
+                            values={{
+                                bold: (chunks) => <strong>{chunks}</strong>,
+                                date: formattedDate,
+                            }}
+                        />
+                        <span className="filters-message-spacer" />
+                        <FormattedMessage
+                            id="filterBar.executionTimestampNotificationAction"
+                            values={{
+                                link: (chunks) => <a onClick={onShowCurrentTimestampDashboard}>{chunks}</a>,
+                            }}
+                        />
+                    </Message>
+                </div>
+            ) : null}
+        </>
     );
 };
 

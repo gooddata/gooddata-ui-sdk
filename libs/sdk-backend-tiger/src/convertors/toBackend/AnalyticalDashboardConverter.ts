@@ -12,17 +12,58 @@ import {
     IDashboardDefinition,
     IDashboardPluginDefinition,
     IDashboardPluginLink,
+    isVisualizationSwitcherWidget,
+    isVisualizationSwitcherWidgetDefinition,
+    IInsightWidget,
+    isDashboardLayout,
 } from "@gooddata/sdk-model";
 import omit from "lodash/omit.js";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
 import update from "lodash/fp/update.js";
 import { convertLayout } from "../shared/layoutConverter.js";
+import { generateWidgetLocalIdentifier } from "../../utils/widgetLocalIdentifier.js";
 
-function removeIdentifiers(widget: IDashboardWidget) {
-    return omit(widget, ["ref", "uri", "identifier"]);
+function removeIdentifiers(widget: IDashboardWidget, useWidgetLocalIdentifiers?: boolean): IDashboardWidget {
+    /**
+     * We want to keep localIdentifier which is the only widget identity stored on backend.
+     * If it is nonexistent, we create a new one.
+     */
+    const localIdentifierObj = useWidgetLocalIdentifiers
+        ? { localIdentifier: widget.localIdentifier ?? generateWidgetLocalIdentifier() }
+        : {};
+
+    let updatedWidget: IDashboardWidget;
+
+    if (isDashboardLayout(widget)) {
+        updatedWidget = {
+            ...widget,
+            ...localIdentifierObj,
+            ...removeWidgetIdentifiersInLayout(widget, useWidgetLocalIdentifiers),
+        };
+    } else {
+        updatedWidget = {
+            ...widget,
+            ...localIdentifierObj,
+            // check both types as widget during save as new is already stripped from ref and uri
+            ...(isVisualizationSwitcherWidget(widget) || isVisualizationSwitcherWidgetDefinition(widget)
+                ? {
+                      visualizations: widget.visualizations.map(
+                          (visualization) =>
+                              removeIdentifiers(visualization, useWidgetLocalIdentifiers) as IInsightWidget,
+                      ),
+                  }
+                : {}),
+        };
+    }
+
+    // omit removes mandatory props, but we do not have type for such stripped widget
+    return omit(updatedWidget, ["ref", "uri", "identifier"]) as IDashboardWidget;
 }
 
-function removeWidgetIdentifiersInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
+function removeWidgetIdentifiersInLayout(
+    layout: IDashboardLayout<IDashboardWidget> | undefined,
+    useWidgetLocalIdentifiers?: boolean,
+) {
     if (!layout) {
         return;
     }
@@ -33,15 +74,23 @@ function removeWidgetIdentifiersInLayout(layout: IDashboardLayout<IDashboardWidg
     });
 
     return widgetsPaths.reduce((newLayout, widgetPath) => {
-        return update(widgetPath, removeIdentifiers, newLayout);
+        return update(
+            widgetPath,
+            (widget) => removeIdentifiers(widget, useWidgetLocalIdentifiers),
+            newLayout,
+        );
     }, layout);
 }
 
 export function convertAnalyticalDashboard(
     dashboard: IDashboardDefinition,
     filterContextRef?: ObjRef,
+    useWidgetLocalIdentifiers?: boolean,
 ): AnalyticalDashboardModelV2.IAnalyticalDashboard {
-    const layout = convertLayout(false, removeWidgetIdentifiersInLayout(dashboard.layout));
+    const layout = convertLayout(
+        false,
+        removeWidgetIdentifiersInLayout(dashboard.layout, useWidgetLocalIdentifiers),
+    );
 
     return {
         dateFilterConfig: cloneWithSanitizedIds(dashboard.dateFilterConfig),
@@ -51,6 +100,9 @@ export function convertAnalyticalDashboard(
         layout: cloneWithSanitizedIds(layout),
         plugins: dashboard.plugins?.map(convertDashboardPluginLinkToBackend),
         disableCrossFiltering: dashboard.disableCrossFiltering,
+        disableUserFilterReset: dashboard.disableUserFilterReset,
+        disableUserFilterSave: dashboard.disableUserFilterSave,
+        disableFilterViews: dashboard.disableFilterViews,
         version: "2",
     };
 }

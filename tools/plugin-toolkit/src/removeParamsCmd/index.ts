@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import { areObjRefsEqual, IDashboard, IDashboardDefinition, idRef } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
@@ -9,21 +9,10 @@ import { genericErrorReporter } from "../_base/utils.js";
 import { getRemovePluginParamsCmdConfig, RemovePluginParamsCmdConfig } from "./actionConfig.js";
 
 function printUsedUpdatePluginParamsSummary(config: RemovePluginParamsCmdConfig) {
-    const {
-        backend,
-        hostname,
-        workspace,
-        dashboard,
-        identifier,
-        credentials: { username },
-    } = config;
+    const { hostname, workspace, dashboard, identifier } = config;
 
     logInfo("Everything looks valid. Going to update plugin parameters on the dashboard.");
-    logInfo(`  Hostname    : ${hostname}   (${backend === "bear" ? "GoodData platform" : "GoodData.CN"})`);
-
-    if (backend === "bear") {
-        logInfo(`  Username    : ${username}`);
-    }
+    logInfo(`  Hostname    : ${hostname}   (${"GoodData.CN"})`);
 
     logInfo(`  Workspace   : ${workspace}`);
     logInfo(`  Dashboard   : ${dashboard}`);

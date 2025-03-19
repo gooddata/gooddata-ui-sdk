@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { AddDrillTargets, addDrillTargets } from "../../../commands/drillTargets.js";
@@ -12,7 +12,6 @@ import { changeRenderMode } from "../../../commands/renderMode.js";
 import { selectInvalidDrillWidgetRefs } from "../../../store/ui/uiSelectors.js";
 
 import {
-    KpiWidgetRef,
     SimpleDashboardIdentifier,
     SimpleDashboardSimpleSortedTableWidgetDrillTargets,
     SimpleSortedTableWidgetRef,
@@ -56,16 +55,6 @@ describe("addDrillTargetsHandler", () => {
     it("should fail when trying to add drill targets for non-existing widget", async () => {
         const event: DashboardCommandFailed<AddDrillTargets> = await Tester.dispatchAndWaitFor(
             addDrillTargets(uriRef("bogus"), availableDrillTargetsMock, TestCorrelation),
-            "GDC.DASH/EVT.COMMAND.FAILED",
-        );
-
-        expect(event.payload.reason).toEqual("USER_ERROR");
-        expect(event.correlationId).toEqual(TestCorrelation);
-    });
-
-    it("should fail when trying to add drill targets for kpi widget", async () => {
-        const event: DashboardCommandFailed<AddDrillTargets> = await Tester.dispatchAndWaitFor(
-            addDrillTargets(KpiWidgetRef, availableDrillTargetsMock, TestCorrelation),
             "GDC.DASH/EVT.COMMAND.FAILED",
         );
 

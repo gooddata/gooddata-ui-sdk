@@ -1,6 +1,7 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import { AxiosResponse } from "axios";
+import { mimeWordDecode } from "emailjs-mime-codec";
 
 export function downloadFile(fileName: string, data: any) {
     const url = new Blob([data]);
@@ -16,7 +17,8 @@ export function downloadFile(fileName: string, data: any) {
 export const parseNameFromContentDisposition = (response: AxiosResponse) => {
     const contentDispositionHeader = response.headers["content-disposition"];
     // eslint-disable-next-line regexp/no-unused-capturing-group
-    const matches = /filename\*?=([^']*'')?([^;]*)/.exec(contentDispositionHeader);
+    const matches = /filename\*?=(?:UTF-8''([^;]+)|"([^"]+)")/.exec(contentDispositionHeader);
     const urlEncodedFileName = matches ? matches[2] : undefined;
-    return urlEncodedFileName ? decodeURIComponent(urlEncodedFileName) : undefined;
+
+    return urlEncodedFileName ? decodeURIComponent(mimeWordDecode(urlEncodedFileName)) : undefined;
 };

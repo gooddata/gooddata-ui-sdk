@@ -1,0 +1,39 @@
+{
+    "count": [3, 7],
+    "data": [
+        [9459230.78, 20528222.66, 8323300.01, null, null, null, null],
+        [18939790.52, 53688663.75, 39648366.14, 4318364.55, 26627.58, null, 3644],
+        [9480559.74, 33160441.09, 31325066.13, 4318364.55, 26627.58, 0, 3644]
+    ],
+    "headerItems": [
+        [
+            [
+                { "measureHeaderItem": { "name": "Won", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 1 } },
+                { "measureHeaderItem": { "name": "m_9fa7cb9ce4d2947059b490e24a925317", "order": 2 } }
+            ]
+        ],
+        [
+            [
+                { "attributeHeaderItem": { "formattedName": "2010", "name": "2010", "uri": "2010" } },
+                { "attributeHeaderItem": { "formattedName": "2011", "name": "2011", "uri": "2011" } },
+                { "attributeHeaderItem": { "formattedName": "2012", "name": "2012", "uri": "2012" } },
+                { "attributeHeaderItem": { "formattedName": "2013", "name": "2013", "uri": "2013" } },
+                { "attributeHeaderItem": { "formattedName": "2014", "name": "2014", "uri": "2014" } },
+                { "attributeHeaderItem": { "formattedName": "2016", "name": "2016", "uri": "2016" } },
+                { "attributeHeaderItem": { "formattedName": "2017", "name": "2017", "uri": "2017" } }
+            ],
+            [
+                { "attributeHeaderItem": { "formattedName": "2010", "name": "2010", "uri": "2010" } },
+                { "attributeHeaderItem": { "formattedName": "2011", "name": "2011", "uri": "2011" } },
+                { "attributeHeaderItem": { "formattedName": "2012", "name": "2012", "uri": "2012" } },
+                { "attributeHeaderItem": { "formattedName": "2013", "name": "2013", "uri": "2013" } },
+                { "attributeHeaderItem": { "formattedName": "2014", "name": "2014", "uri": "2014" } },
+                { "attributeHeaderItem": { "formattedName": "2016", "name": "2016", "uri": "2016" } },
+                { "attributeHeaderItem": { "formattedName": "2017", "name": "2017", "uri": "2017" } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [3, 7]
+}

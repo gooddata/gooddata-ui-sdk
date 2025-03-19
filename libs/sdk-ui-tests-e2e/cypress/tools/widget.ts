@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { Chart } from "./chart";
 import { Table } from "./table";
@@ -19,8 +19,6 @@ export class Widget {
     }
 
     waitChartLoaded() {
-        // it needs to see visualization-uri-root to know the chart loading
-        this.getElement().find(".visualization-uri-root").should("exist");
         // wait for .s-loading not existed to make sure chart loaded
         this.getElement().find(".gd-visualization-content").find(".s-loading").should("not.exist");
         return this;

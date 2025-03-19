@@ -16,18 +16,22 @@ import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
+import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
 import { IColor } from '@gooddata/sdk-model';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { Identifier } from '@gooddata/sdk-model';
+import { IDimension } from '@gooddata/sdk-model';
 import { IDrillEventCallback } from '@gooddata/sdk-ui';
 import { IDrillEventIntersectionElement } from '@gooddata/sdk-ui';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
+import { IForecastConfig } from '@gooddata/sdk-backend-spi';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IRgbColorValue } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
@@ -40,9 +44,11 @@ import { LodashIsEqual1x1 } from 'lodash/fp.js';
 import { MeasureOrPlaceholder } from '@gooddata/sdk-ui';
 import { MeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';
+import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import { VisType } from '@gooddata/sdk-ui';
+import { WrappedComponentProps } from 'react-intl';
 
 // @public
 export const AreaChart: (props: IAreaChartProps) => React_2.JSX.Element;
@@ -79,8 +85,23 @@ export type CalculationType = "change" | "ratio" | "difference" | "change_differ
 // @public
 export type ChartAlignTypes = "top" | "bottom" | "middle";
 
+// @beta
+export type ChartCellImageSizing = "fit" | "fill";
+
+// @beta
+export type ChartCellTextWrapping = "clip" | "wrap";
+
+// @beta
+export type ChartCellVerticalAlign = "top" | "middle" | "bottom";
+
+// @beta
+export type ChartInlineVisualizationType = "metric" | "line" | "column";
+
 // @public
 export type ChartOrientationType = "horizontal" | "vertical";
+
+// @beta
+export type ChartRowHeight = "small" | "medium" | "large";
 
 export { ColorUtils }
 
@@ -109,8 +130,17 @@ export type ComparisonPosition = "top" | "left" | "right" | "auto";
 // @internal (undocumented)
 export const ComparisonPositionValues: Record<Uppercase<ComparisonPosition>, ComparisonPosition>;
 
+// @internal
+export function constructRepeaterBuckets(rowAttribute: IAttribute, columns: IAttributeOrMeasure[], viewBy?: IAttribute, inlineVisualizations?: IInlineVisualizationsConfig): IBucket[];
+
+// @internal
+export function constructRepeaterDimensions(buckets: IBucket[]): IDimension[];
+
 // @internal (undocumented)
 export const CoreHeadline: React_2.ComponentClass<ICoreChartProps & ICoreHeadlineExtendedProps, any>;
+
+// @internal (undocumented)
+export const CoreRepeater: React_2.FC<ICoreRepeaterChartProps>;
 
 // @internal
 export const CoreXirr: React_2.ComponentClass<ICoreChartProps, any>;
@@ -254,10 +284,27 @@ export interface IChartCallbacks extends IVisualizationCallbacks {
     onLegendReady?: OnLegendReady;
 }
 
+// @beta
+export interface IChartClusteringConfig {
+    enabled: boolean;
+    numberOfClusters: number;
+    threshold?: number;
+}
+
 // @public
 export interface IChartConfig {
+    // @beta
+    cellImageSizing?: ChartCellImageSizing;
+    // @beta
+    cellTextWrapping?: ChartCellTextWrapping;
+    // @beta
+    cellVerticalAlign?: ChartCellVerticalAlign;
     // @internal
     chart?: any;
+    // @internal
+    chartConfigOverride?: string;
+    // @beta
+    clustering?: IChartClusteringConfig;
     colorMapping?: IColorMapping[];
     colorPalette?: IColorPalette;
     colors?: string[];
@@ -269,15 +316,27 @@ export interface IChartConfig {
     disableDrillDown?: boolean;
     disableDrillUnderline?: boolean;
     dualAxis?: boolean;
+    // @internal
+    enableAliasAttributeLabel?: boolean;
     enableChartSorting?: boolean;
     enableCompactSize?: boolean;
+    // @internal
+    enableExecutionCancelling?: boolean;
     enableJoinedAttributeAxisName?: boolean;
     enablePartialResults?: boolean;
     enableReversedStacking?: boolean;
     // (undocumented)
     enableSeparateTotalLabels?: boolean;
+    // @internal
+    enableVisualizationFineTuning?: boolean;
     forceDisableDrillOnAxes?: boolean;
+    // @beta
+    forecast?: IForecast;
     grid?: IGridConfig;
+    // @beta
+    hyperLinks?: IDisplayFormHyperlinksConfig;
+    // @beta
+    inlineVisualizations?: IInlineVisualizationsConfig;
     legend?: ILegendConfig;
     legendLayout?: "vertical" | "horizontal";
     // @internal (undocumented)
@@ -285,6 +344,8 @@ export interface IChartConfig {
     // @internal
     orientation?: IOrientationConfig;
     primaryChartType?: "line" | "column" | "area";
+    // @beta
+    rowHeight?: ChartRowHeight;
     secondary_xaxis?: IAxisConfig;
     secondary_yaxis?: IAxisConfig;
     secondaryChartType?: "line" | "column" | "area";
@@ -388,13 +449,23 @@ export interface IContinuousLineConfig {
 
 // @internal
 export interface ICoreChartProps extends ICommonChartProps {
+    clusteringConfig?: IClusteringConfig;
+    enableExecutionCancelling?: boolean;
     execution: IPreparedExecution;
+    forecastConfig?: IForecastConfig;
 }
 
 // @internal (undocumented)
 export interface ICoreHeadlineExtendedProps {
     // (undocumented)
     headlineTransformation: React_2.ComponentType<IHeadlineTransformationProps>;
+}
+
+// @internal (undocumented)
+export interface ICoreRepeaterChartProps extends ICoreChartProps, WrappedComponentProps {
+    onColumnResized?: RepeaterColumnResizedCallback;
+    // (undocumented)
+    theme?: ITheme;
 }
 
 // @internal (undocumented)
@@ -458,6 +529,13 @@ export interface IDependencyWheelChartBucketProps {
 export interface IDependencyWheelChartProps extends IBucketChartProps, IDependencyWheelChartBucketProps {
 }
 
+// @beta
+export interface IDisplayFormHyperlinksConfig {
+    [displayFormLocalIdentifier: string]: {
+        staticElementsText: string;
+    };
+}
+
 // @public (undocumented)
 export interface IDonutChartBucketProps {
     filters?: NullableFiltersOrPlaceholders;
@@ -469,6 +547,14 @@ export interface IDonutChartBucketProps {
 
 // @public (undocumented)
 export interface IDonutChartProps extends IBucketChartProps, IDonutChartBucketProps {
+}
+
+// @beta
+export interface IForecast {
+    confidence: number;
+    enabled: boolean;
+    period: number;
+    seasonal: boolean;
 }
 
 // @public (undocumented)
@@ -538,6 +624,13 @@ export interface IHeatmapBucketProps {
 export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {
 }
 
+// @beta (undocumented)
+export interface IInlineVisualizationsConfig {
+    [localIdentifier: string]: {
+        type: ChartInlineVisualizationType;
+    };
+}
+
 // @public
 export interface ILabelConfig {
     equals?: string;
@@ -582,6 +675,8 @@ export interface ILineChartBucketProps {
 
 // @public (undocumented)
 export interface ILineChartProps extends IBucketChartProps, ILineChartBucketProps {
+    // @beta
+    forecastConfig?: IForecastConfig;
 }
 
 // @public
@@ -617,6 +712,93 @@ export interface IPyramidChartProps extends IBucketChartProps, IPyramidChartBuck
 }
 
 // @public (undocumented)
+export interface IRepeaterAbsoluteColumnWidth {
+    // (undocumented)
+    allowGrowToFit?: boolean;
+    // (undocumented)
+    value: number;
+}
+
+// @public
+export interface IRepeaterAttributeColumnLocator {
+    // (undocumented)
+    attributeLocatorItem: IRepeaterAttributeColumnLocatorBody;
+}
+
+// @public
+export interface IRepeaterAttributeColumnLocatorBody {
+    attributeIdentifier: Identifier;
+    element?: string | null;
+}
+
+// @public (undocumented)
+export interface IRepeaterAttributeColumnWidthItem {
+    // (undocumented)
+    attributeColumnWidthItem: IRepeaterAttributeColumnWidthItemBody;
+}
+
+// @public
+export interface IRepeaterAttributeColumnWidthItemBody {
+    // (undocumented)
+    attributeIdentifier: Identifier;
+    // (undocumented)
+    width: IRepeaterAbsoluteColumnWidth;
+}
+
+// @public (undocumented)
+export interface IRepeaterAutoColumnWidth {
+    // (undocumented)
+    value: "auto";
+}
+
+// @beta (undocumented)
+export interface IRepeaterBucketProps {
+    attribute: AttributeOrPlaceholder;
+    columns?: AttributesMeasuresOrPlaceholders;
+    filters?: NullableFiltersOrPlaceholders;
+    placeholdersResolutionContext?: any;
+    viewBy?: AttributeOrPlaceholder;
+}
+
+// @public (undocumented)
+export interface IRepeaterColumnSizing {
+    columnWidths?: RepeaterColumnWidthItem[];
+    defaultWidth?: RepeaterDefaultColumnWidth;
+    growToFit?: boolean;
+}
+
+// @public
+export interface IRepeaterMeasureColumnLocator {
+    // (undocumented)
+    measureLocatorItem: IRepeaterMeasureColumnLocatorBody;
+}
+
+// @public
+export interface IRepeaterMeasureColumnLocatorBody {
+    measureIdentifier: Identifier;
+}
+
+// @public (undocumented)
+export interface IRepeaterMeasureColumnWidthItem {
+    // (undocumented)
+    measureColumnWidthItem: IRepeaterMeasureColumnWidthItemBody;
+}
+
+// @public
+export interface IRepeaterMeasureColumnWidthItemBody {
+    // (undocumented)
+    locators: RepeaterColumnLocator[];
+    // (undocumented)
+    width: RepeaterColumnWidth;
+}
+
+// @beta (undocumented)
+export interface IRepeaterProps extends IBucketChartProps, IRepeaterBucketProps {
+    drillableItems?: ExplicitDrill[];
+    onDrill?: OnFiredDrillEvent;
+}
+
+// @public (undocumented)
 export interface ISankeyChartBucketProps {
     attributeFrom?: AttributeOrPlaceholder;
     attributeTo?: AttributeOrPlaceholder;
@@ -647,6 +829,7 @@ export interface IScatterPlotBucketProps {
     attribute?: AttributeOrPlaceholder;
     filters?: NullableFiltersOrPlaceholders;
     placeholdersResolutionContext?: any;
+    segmentBy?: AttributeOrPlaceholder;
     sortBy?: SortsOrPlaceholders;
     xAxisMeasure?: MeasureOrPlaceholder;
     yAxisMeasure?: MeasureOrPlaceholder;
@@ -703,6 +886,7 @@ export const isWaterfall: LodashIsEqual1x1;
 
 // @public
 export interface ITooltipConfig {
+    className?: string;
     enabled?: boolean;
 }
 
@@ -769,6 +953,24 @@ export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 // @public
 export const PyramidChart: (props: IPyramidChartProps) => React_2.JSX.Element;
 
+// @beta (undocumented)
+export const Repeater: (props: IRepeaterProps) => JSX.Element;
+
+// @public (undocumented)
+export type RepeaterColumnLocator = IRepeaterAttributeColumnLocator | IRepeaterMeasureColumnLocator;
+
+// @public (undocumented)
+export type RepeaterColumnResizedCallback = (columnWidths: RepeaterColumnWidthItem[]) => void;
+
+// @public (undocumented)
+export type RepeaterColumnWidth = IRepeaterAbsoluteColumnWidth | IRepeaterAutoColumnWidth;
+
+// @public (undocumented)
+export type RepeaterColumnWidthItem = IRepeaterAttributeColumnWidthItem | IRepeaterMeasureColumnWidthItem;
+
+// @public (undocumented)
+export type RepeaterDefaultColumnWidth = "unset" | "autoresizeAll" | "viewport";
+
 // @public
 export const SankeyChart: (props: ISankeyChartProps) => React_2.JSX.Element;
 
@@ -783,6 +985,11 @@ export const Treemap: (props: ITreemapProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export function updateConfigWithSettings(config: IChartConfig, settings: ISettings): IChartConfig;
+
+// @internal (undocumented)
+export function updateForecastWithSettings(config: IChartConfig, settings: ISettings, { enabled }: {
+    enabled: boolean;
+}): IForecastConfig | undefined;
 
 // @public
 export const ViewByAttributesLimit = 2;

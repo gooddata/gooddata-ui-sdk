@@ -3,7 +3,10 @@ title: Using Angular 9+
 linkTitle: Angular 9+
 copyright: (C) 2007-2018 GoodData Corporation
 id: ht_use_react_component_in_angular_2.x
+draft: true
 ---
+
+<!-- Bear specific? -->
 
 To be able to use the visual components in your Angular 9+ environment, wrap each component into an Angular component, and then render the React component using `ReactDom.render` inside.
 

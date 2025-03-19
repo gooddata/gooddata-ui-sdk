@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import isNil from "lodash/isNil.js";
 import { DateFilterGranularity, DateString } from "../dateFilterConfig/index.js";
@@ -42,6 +42,21 @@ export interface IDashboardAttributeFilterParent {
 }
 
 /**
+ * Dependent date filter of an attribute filter of the filter context
+ * @beta
+ */
+export interface IDashboardAttributeFilterByDate {
+    /**
+     * Local identifier of the date filter
+     */
+    filterLocalIdentifier: string;
+    /**
+     * To distinguish between different types of date filters (common, specific)
+     */
+    isCommonDate: boolean;
+}
+
+/**
  * Attribute filter selection mode value
  * @beta
  */
@@ -79,6 +94,12 @@ export interface IDashboardAttributeFilter {
          * @beta
          */
         filterElementsBy?: IDashboardAttributeFilterParent[];
+
+        /**
+         * Date filters that are limiting attributes elements available in this filter.
+         * @beta
+         */
+        filterElementsByDate?: IDashboardAttributeFilterByDate[];
 
         /**
          * Items that are limiting attribute elements available in this filter.
@@ -301,10 +322,33 @@ export function isAllTimeDashboardDateFilter(obj: unknown): boolean {
 }
 
 /**
+ * Type-guard testing whether the provider object is an All values attribute filter
+ * @alpha
+ */
+export function isAllValuesDashboardAttributeFilter(obj: unknown): boolean {
+    if (isDashboardAttributeFilter(obj) && obj.attributeFilter.negativeSelection) {
+        if (isAttributeElementsByRef(obj.attributeFilter.attributeElements)) {
+            return obj.attributeFilter.attributeElements.uris.length === 0;
+        } else {
+            return obj.attributeFilter.attributeElements.values.length === 0;
+        }
+    }
+    return false;
+}
+
+/**
  * Supported filter context items
  * @alpha
  */
 export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter;
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link FilterContextItem}.
+ * @alpha
+ */
+export function isFilterContextItem(obj: unknown): obj is FilterContextItem {
+    return isDashboardDateFilter(obj) || isDashboardAttributeFilter(obj);
+}
 
 /**
  * Common filter context properties
@@ -481,4 +525,35 @@ export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): 
  */
 function hasFilterContextBaseProps(obj: unknown): boolean {
     return !isEmpty(obj) && !!(obj as IFilterContextBase).filters;
+}
+
+/**
+ * Interface that represents saved dashboard filter view created for a specific dashboard by a specific user.
+ *
+ * There should always be just one default filter view for the user and the dashboard at any given time.
+ * The consistency must be handled by backend or client. The reason why the flag cannot be on the dashboard
+ * is that each user can have a different default filter view per dashboard and also the filter views can be
+ * created by users that have only VIEW permission for the workspace and cannot modify the dashboard object.
+ *
+ * @alpha
+ */
+export interface IDashboardFilterView {
+    readonly ref: ObjRef;
+    readonly name: string;
+    readonly dashboard: ObjRef;
+    readonly user: ObjRef;
+    readonly filterContext: IFilterContextDefinition;
+    readonly isDefault?: boolean;
+}
+/**
+ * Interface that represents an entity provided to SPI function that creates a new dashboard filter view
+ * {@link IDashboardFilterView} entity.
+ *
+ * @alpha
+ */
+export interface IDashboardFilterViewSaveRequest {
+    readonly name: string;
+    readonly dashboard: ObjRef;
+    readonly filterContext: IFilterContextDefinition;
+    readonly isDefault?: boolean;
 }

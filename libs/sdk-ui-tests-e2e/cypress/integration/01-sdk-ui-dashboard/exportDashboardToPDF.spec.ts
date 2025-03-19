@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { DashboardMenu } from "../../tools/dashboardMenu";
@@ -13,51 +13,32 @@ const exportControl = new Export();
 const widget = new Widget(0);
 const topBar = new TopBar();
 
-describe("Export dashboard to pdf", { tags: ["checklist_integrated_tiger_export"] }, () => {
-    it("should export insight to PDF from dashboards", () => {
-        cy.fixture("dashboardInfosForExport").then((data) => {
-            data["validInsightsForTigerPDFExport"].forEach(
-                (dashboardInfo: {
-                    dashboardTitle: string;
-                    dashboardURL: string;
-                    fileName: string;
-                    contents: string;
-                }) => {
-                    Navigation.visit(dashboardInfo.dashboardURL, { enableKPIDashboardExportPDF: true });
-                    widget.waitTableLoaded();
-                    topBar.dashboardTitleExist().dashboardTitleHasValue(dashboardInfo.dashboardTitle);
-                    dashboardMenu.toggle().clickOption("Export to PDF");
-                    exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
-                },
-            );
-        });
-    });
-
-    it("should export invalid insight to PDF from dashboards", () => {
-        cy.fixture("dashboardInfosForExport").then((data) => {
-            data["invalidInsight"].forEach(
-                (dashboardInfo: {
-                    dashboardTitle: string;
-                    dashboardURL: string;
-                    fileName: string;
-                    contents: string;
-                }) => {
-                    Navigation.visit(dashboardInfo.dashboardURL);
-                    widget.waitChartLoaded();
-                    topBar.dashboardTitleExist().dashboardTitleHasValue(dashboardInfo.dashboardTitle);
-                    dashboardMenu.toggle().clickOption("Export to PDF");
-                    exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
-                },
-            );
-        });
-    });
-
-    it(
-        "is able to export dashboard with temporary filter to pdf",
-        { tags: ["checklist_integrated_tiger_export"] },
-        () => {
+describe(
+    "Export dashboard to pdf",
+    { tags: ["checklist_integrated_tiger_export", "checklist_integrated_tiger_export_releng"] },
+    () => {
+        it("should export insight to PDF from dashboards", () => {
             cy.fixture("dashboardInfosForExport").then((data) => {
-                data["insightsAfterChangingFilterForPDFExport"].forEach(
+                data["validInsightsForTigerPDFExport"].forEach(
+                    (dashboardInfo: {
+                        dashboardTitle: string;
+                        dashboardURL: string;
+                        fileName: string;
+                        contents: string;
+                    }) => {
+                        Navigation.visit(dashboardInfo.dashboardURL, { enableKPIDashboardExportPDF: true });
+                        widget.waitTableLoaded();
+                        topBar.dashboardTitleExist().dashboardTitleHasValue(dashboardInfo.dashboardTitle);
+                        dashboardMenu.toggle().clickOption("Export to PDF");
+                        exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
+                    },
+                );
+            });
+        });
+
+        it("should export invalid insight to PDF from dashboards", () => {
+            cy.fixture("dashboardInfosForExport").then((data) => {
+                data["invalidInsight"].forEach(
                     (dashboardInfo: {
                         dashboardTitle: string;
                         dashboardURL: string;
@@ -65,15 +46,57 @@ describe("Export dashboard to pdf", { tags: ["checklist_integrated_tiger_export"
                         contents: string;
                     }) => {
                         Navigation.visit(dashboardInfo.dashboardURL);
+                        widget.waitChartLoaded();
                         topBar.dashboardTitleExist().dashboardTitleHasValue(dashboardInfo.dashboardTitle);
-                        productFilter.open().selectAttributeWithoutSearch("PhoenixSoft");
-                        widget.waitTableLoaded();
-
                         dashboardMenu.toggle().clickOption("Export to PDF");
                         exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
                     },
                 );
             });
-        },
-    );
-});
+        });
+
+        it(
+            "is able to export dashboard with temporary filter to pdf",
+            { tags: ["checklist_integrated_tiger_export", "checklist_integrated_tiger_export_releng"] },
+            () => {
+                cy.fixture("dashboardInfosForExport").then((data) => {
+                    data["insightsAfterChangingFilterForPDFExport"].forEach(
+                        (dashboardInfo: {
+                            dashboardTitle: string;
+                            dashboardURL: string;
+                            fileName: string;
+                            contents: string;
+                        }) => {
+                            Navigation.visit(dashboardInfo.dashboardURL);
+                            topBar.dashboardTitleExist().dashboardTitleHasValue(dashboardInfo.dashboardTitle);
+                            productFilter.open().selectAttributeWithoutSearch("PhoenixSoft");
+                            widget.waitTableLoaded();
+
+                            dashboardMenu.toggle().clickOption("Export to PDF");
+                            exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
+                        },
+                    );
+                });
+            },
+        );
+
+        it("should export insight over data points limit to PDF from dashboards", () => {
+            cy.fixture("dashboardInfosForExport").then((data) => {
+                data["insightsManyData"].forEach(
+                    (dashboardInfo: {
+                        dashboardTitle: string;
+                        dashboardURL: string;
+                        fileName: string;
+                        contents: string;
+                    }) => {
+                        Navigation.visit(dashboardInfo.dashboardURL);
+                        widget.waitChartLoaded();
+                        topBar.dashboardTitleExist().dashboardTitleHasValue(dashboardInfo.dashboardTitle);
+                        dashboardMenu.toggle().clickOption("Export to PDF");
+                        exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
+                    },
+                );
+            });
+        });
+    },
+);

@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 @use "variables";
 
@@ -92,8 +92,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-basis: 30px;
-            height: 30px;
+            flex-basis: 32px;
+            height: 32px;
             margin: auto 0;
             background-color: variables.$is-focused-background;
             border-radius: 100px;
@@ -153,9 +153,10 @@
             content: "\e61a";
             position: relative;
             font-family: variables.$gd-font-indigo;
-            color: variables.$gd-color-disabled;
+            color: variables.$gd-color-state-blank;
             font-size: 16px;
             font-weight: 400;
+            top: 1px;
         }
     }
 
@@ -202,4 +203,5 @@
     border-top: 1px solid variables.$gd-border-color;
     height: 0;
     margin-top: 10px;
+    margin-bottom: 5px;
 }

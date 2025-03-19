@@ -1,9 +1,10 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     DashboardAttributeFilterSelectionMode,
     IAttributeElement,
     IAttributeFilter,
+    IDashboardDateFilter,
     ObjRef,
 } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -33,6 +34,20 @@ export type OnApplyCallbackType = (
     filter: IAttributeFilter,
     isInverted: boolean,
     selectionMode?: DashboardAttributeFilterSelectionMode,
+    selectionTitles?: IAttributeElement[],
+    displayAsLabel?: ObjRef,
+    isResultOfMigration?: boolean,
+) => void;
+
+/**
+ * @public
+ */
+export type OnSelectCallbackType = (
+    filter: IAttributeFilter,
+    isInverted: boolean,
+    selectionMode?: DashboardAttributeFilterSelectionMode,
+    selectionTitles?: IAttributeElement[],
+    displayAsLabel?: ObjRef,
 ) => void;
 
 /**
@@ -86,11 +101,24 @@ export interface IAttributeFilterCoreProps {
      *
      * Note: It's not possible to combine this property with "connectToPlaceholder" property. Either - provide a value, or a placeholder.
      * The 'onApply' callback must be specified in order to handle filter changes.
+     * if enableDuplicatedLabelValuesInAttributeFilter is true, then this filter definition needs to use primary label of given attribute
      */
     filter?: IAttributeFilter;
 
     /**
-     * Specifies a parent attribute filter that will be used to reduce options for for current attribute filter.
+     * Specify a working attribute filter that will be shown.
+     *
+     * @remarks
+     * If provided it will use the provided filter to show currently given working selection (controlled component).
+     * If not provided this component will use its own internal state (uncontrolled component).
+     *
+     * @alpha
+     * @deprecated dont use. Will be removed in future releases.
+     */
+    workingFilter?: IAttributeFilter;
+
+    /**
+     * Specifies a parent attribute filter that will be used to reduce options for current attribute filter.
      *
      * @remarks
      * Parent filters elements must contain their URIs due to current backend limitations.
@@ -125,6 +153,13 @@ export interface IAttributeFilterCoreProps {
      * The property is supported only by some backend. The backends that do not support it will ignore it.
      */
     validateElementsBy?: ObjRef[];
+
+    /**
+     * Specifies a dependent date filter that will be used to reduce options for for current attribute filter.
+     *
+     * @beta
+     */
+    dependentDateFilters?: IDashboardDateFilter[];
 
     /**
      * Specify title for the attribute filter.
@@ -210,7 +245,27 @@ export interface IAttributeFilterCoreProps {
     customIcon?: IFilterButtonCustomIcon;
 
     /**
-     * Specify function which will be called when user clicks 'Apply' button.
+     * Provide a attribute filter label used for representing elements in component.
+     *
+     * @alpha
+     */
+    displayAsLabel?: ObjRef;
+
+    /**
+     * This enables filter mode without apply button.
+     * If true, it is responsibility of a client, to appy filters when needed.
+     * Typically uses onSelect callback to catch filter state.
+     * Note, onApply callback is not called when this is true.
+     *
+     * @alpha
+     */
+    withoutApply?: boolean;
+
+    /**
+     * Specify function which will be called when user clicks 'Apply' button on this filter.
+     * Note: this callback is typically not called when using Dashboard apply filters mode ALL_AT_ONCE
+     * because there is no apply button dispalyed in attribute filter component.
+     * See withoutApply prop.
      *
      * @remarks
      * The function will receive the current specification of the filter, as it was updated by the user.
@@ -220,9 +275,35 @@ export interface IAttributeFilterCoreProps {
     onApply?: OnApplyCallbackType;
 
     /**
+     * Specify function which will be called when user changes filter working selection.
+     * This is the selection that is staged for application. Not applied yet.
+     *
+     * @remarks
+     * The function will receive the current specification of the filter, as it was updated by the user.
+     *
+     * @param filter - new value of the filter.
+     */
+    onSelect?: OnSelectCallbackType;
+
+    /**
      * Callback that will be triggered when error is thrown.
      */
     onError?: (error: GoodDataSdkError) => void;
+
+    /**
+     * Enables duplicated values in secondary labels.
+     */
+    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
+
+    /**
+     * Enables the migration of displayAsLabel to be immediately reported to the parent app.
+     */
+    enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+
+    /**
+     * Enables the new apply all filters at once mode
+     */
+    enableDashboardFiltersApplyModes?: boolean;
 }
 
 /**

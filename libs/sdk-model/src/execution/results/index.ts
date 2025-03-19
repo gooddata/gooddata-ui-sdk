@@ -1,6 +1,7 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { ObjRef } from "../../objRef/index.js";
+import { AttributeDisplayFormType } from "../../ldm/metadata/attributeDisplayForm/index.js";
 
 /**
  * Single calculated data value.
@@ -13,6 +14,13 @@ import { ObjRef } from "../../objRef/index.js";
  * @public
  */
 export type DataValue = null | string | number;
+
+/**
+ * Forecast single data value
+ *
+ * @beta
+ */
+export type ForecastDataValue = { low: DataValue; high: DataValue; prediction: DataValue; loading: boolean };
 
 /**
  * Descriptor of the measure and its contents.
@@ -204,6 +212,11 @@ export interface IAttributeDescriptorBody {
     type?: string;
 
     /**
+     * Label type (eg. image, hyperlink, etc...)
+     */
+    labelType?: AttributeDisplayFormType;
+
+    /**
      * Describes attributes to which the display form belongs.
      */
     formOf: IAttributeHeaderFormOf;
@@ -220,6 +233,11 @@ export interface IAttributeDescriptorBody {
         locale: string;
         pattern: string;
     };
+
+    /**
+     * Primary label of the attribute from formOf
+     */
+    primaryLabel: ObjRef;
 }
 
 /**

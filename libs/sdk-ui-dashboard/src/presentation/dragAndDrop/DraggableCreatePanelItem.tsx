@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { CustomCreatePanelItemComponent } from "../componentDefinition/index.js";
 import { DraggableItem, IWrapCreatePanelItemWithDragComponent } from "./types.js";
@@ -12,6 +12,7 @@ export type IDraggableCreatePanelItemProps = {
     dragItem: DraggableItem;
     hideDefaultPreview?: boolean;
     disabled?: boolean;
+    onDragStart?: (item: DraggableItem) => void;
 };
 
 /**

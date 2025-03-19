@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
 import { DependencyWheelChart } from "../DependencyWheelChart.js";
@@ -27,7 +27,7 @@ describe("DependencyWheelChart", () => {
                 backend={dummyBackend()}
                 measure={ReferenceMd.Amount}
                 attributeFrom={ReferenceMd.Product.Name}
-                attributeTo={ReferenceMd.Region}
+                attributeTo={ReferenceMd.Region.Default}
             />,
         );
         expect(CoreDependencyWheelChart).toHaveBeenCalled();
@@ -40,14 +40,14 @@ describe("DependencyWheelChart", () => {
                 backend={dummyBackend()}
                 measure={ReferenceMd.Amount}
                 attributeFrom={ReferenceMd.Product.Name}
-                attributeTo={ReferenceMd.Region}
+                attributeTo={ReferenceMd.Region.Default}
                 sortBy={[newAttributeSort(ReferenceMd.Product.Name, "asc")]}
             />,
         );
 
         const expectedDims = newTwoDimensional(
             [MeasureGroupIdentifier],
-            [ReferenceMd.Product.Name, ReferenceMd.Region],
+            [ReferenceMd.Product.Name, ReferenceMd.Region.Default],
         );
 
         expect(CoreDependencyWheelChart).toHaveBeenCalledWith(

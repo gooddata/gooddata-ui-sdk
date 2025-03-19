@@ -7,10 +7,13 @@
                         "measure": {
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
                                 }
                             },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
                         }
                     }
                 ],
@@ -20,8 +23,11 @@
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                            "localIdentifier": "a_label.product.id.name"
+                            "displayForm": {
+                                "identifier": "label.f_product.product.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_product.product.name"
                         }
                     }
                 ],
@@ -35,7 +41,13 @@
             {
                 "measureSortItem": {
                     "direction": "asc",
-                    "locators": [{ "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } }]
+                    "locators": [
+                        {
+                            "measureLocatorItem": {
+                                "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ]
                 }
             }
         ],

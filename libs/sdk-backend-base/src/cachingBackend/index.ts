@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     IAnalyticalBackend,
     IBackendCapabilities,
@@ -10,6 +10,8 @@ import {
     IElementsQueryResult,
     IExecutionFactory,
     IExecutionResult,
+    IForecastConfig,
+    IForecastResult,
     IPreparedExecution,
     ISecuritySettingsService,
     IUserWorkspaceSettings,
@@ -20,6 +22,14 @@ import {
     IWorkspaceSettings,
     IWorkspaceSettingsService,
     ValidationContext,
+    IWorkspaceAutomationService,
+    IGetAutomationsOptions,
+    IGetAutomationOptions,
+    IAutomationsQuery,
+    IAutomationsQueryResult,
+    AutomationType,
+    IAttributeWithReferences,
+    isAbortError,
 } from "@gooddata/sdk-backend-spi";
 import {
     AttributesDecoratorFactory,
@@ -27,6 +37,7 @@ import {
     ExecutionDecoratorFactory,
     SecuritySettingsDecoratorFactory,
     WorkspaceSettingsDecoratorFactory,
+    AutomationsDecoratorFactory,
 } from "../decoratedBackend/types.js";
 import { decoratedBackend } from "../decoratedBackend/index.js";
 import { LRUCache } from "lru-cache";
@@ -60,13 +71,22 @@ import {
     IAttributeDisplayFormMetadataObject,
     IMetadataObject,
     IAttributeMetadataObject,
-    IRelativeDateFilter,
     IMeasure,
     objRefToString,
     IMeasureDefinitionType,
+    IRelativeDateFilter,
+    IAbsoluteDateFilter,
+    IAutomationMetadataObject,
+    IAutomationMetadataObjectDefinition,
+    ISeparators,
+    IAlertDefault,
 } from "@gooddata/sdk-model";
 import { DecoratedWorkspaceAttributesService } from "../decoratedBackend/attributes.js";
 import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings.js";
+import {
+    DecoratedWorkspaceAutomationsService,
+    DecoratedAutomationsQuery,
+} from "../decoratedBackend/automations.js";
 
 //
 // Supporting types
@@ -88,6 +108,12 @@ type AttributeCacheEntry = {
     displayForms: LRUCache<string, Promise<IAttributeDisplayFormMetadataObject>>;
     attributesByDisplayForms: LRUCache<string, Promise<IAttributeMetadataObject>>;
     attributeElementResults?: LRUCache<string, Promise<IElementsQueryResult>>;
+    dataSetsMeta: LRUCache<string, Promise<IMetadataObject>>;
+};
+
+type AutomationCacheEntry = {
+    automations: LRUCache<string, Promise<IAutomationMetadataObject[]>>;
+    queries: LRUCache<string, Promise<IAutomationsQueryResult>>;
 };
 
 type WorkspaceSettingsCacheEntry = {
@@ -101,6 +127,7 @@ type CachingContext = {
         workspaceCatalogs?: LRUCache<string, CatalogCacheEntry>;
         securitySettings?: LRUCache<string, SecuritySettingsCacheEntry>;
         workspaceAttributes?: LRUCache<string, AttributeCacheEntry>;
+        workspaceAutomations?: LRUCache<string, AutomationCacheEntry>;
         workspaceSettings?: LRUCache<string, WorkspaceSettingsCacheEntry>;
     };
     config: CachingConfiguration;
@@ -112,28 +139,70 @@ type CachingContext = {
 //
 
 class WithExecutionCaching extends DecoratedPreparedExecution {
-    constructor(decorated: IPreparedExecution, private readonly ctx: CachingContext) {
-        super(decorated);
+    constructor(
+        decorated: IPreparedExecution,
+        private readonly ctx: CachingContext,
+        signal?: AbortSignal | undefined,
+    ) {
+        super(decorated, signal);
     }
 
     public execute = async (): Promise<IExecutionResult> => {
         const cacheKey = this.fingerprint();
         const cache = this.ctx.caches.execution!;
         let cacheEntry = cache.get(cacheKey);
+        // We need to delete the execution cache entry also if the result is cancelled,
+        // to avoid 404 on result next time it's called
+        // because cancel token provided from the backend was already used and we need
+        // to retrieve the new one.
+        const deleteExecutionCacheEntry = () => {
+            cache.delete(cacheKey);
+        };
 
-        if (!cacheEntry) {
-            const result = super
-                .execute()
-                .then((res) => {
-                    return new WithExecutionResultCaching(res, this.createNew, this.ctx);
-                })
-                .catch((e) => {
-                    cache.delete(cacheKey);
+        // If there is no cache entry and abort signal is provided,
+        // we need cache execution only after successful resolution,
+        // because running execution can be cancelled.
+        if (this.signal) {
+            if (!cacheEntry) {
+                try {
+                    const result = await super.execute().then((res) => {
+                        return new WithExecutionResultCaching(
+                            res,
+                            this.createNew,
+                            this.ctx,
+                            deleteExecutionCacheEntry,
+                            this.signal,
+                        );
+                    });
+
+                    cacheEntry = { result: Promise.resolve(result) };
+                    cache.set(cacheKey, cacheEntry);
+                } catch (e) {
+                    deleteExecutionCacheEntry();
                     throw e;
-                });
+                }
+            }
+        } else {
+            if (!cacheEntry) {
+                const result = super
+                    .execute()
+                    .then((res) => {
+                        return new WithExecutionResultCaching(
+                            res,
+                            this.createNew,
+                            this.ctx,
+                            deleteExecutionCacheEntry,
+                            undefined,
+                        );
+                    })
+                    .catch((e) => {
+                        deleteExecutionCacheEntry();
+                        throw e;
+                    });
 
-            cacheEntry = { result };
-            cache.set(cacheKey, cacheEntry);
+                cacheEntry = { result };
+                cache.set(cacheKey, cacheEntry);
+            }
         }
 
         return new DefinitionSanitizingExecutionResult(
@@ -144,7 +213,7 @@ class WithExecutionCaching extends DecoratedPreparedExecution {
     };
 
     protected createNew = (decorated: IPreparedExecution): IPreparedExecution => {
-        return new WithExecutionCaching(decorated, this.ctx);
+        return new WithExecutionCaching(decorated, this.ctx, this.signal);
     };
 }
 
@@ -198,22 +267,41 @@ function windowKey(offset: number[], size: number[]): string {
 
 class WithExecutionResultCaching extends DecoratedExecutionResult {
     private allData: Promise<IDataView> | undefined;
+    private allForecastConfig: IForecastConfig | undefined;
+    private allForecastData: Promise<IForecastResult> | undefined;
     private windows: LRUCache<string, Promise<IDataView>> | undefined;
 
     constructor(
         decorated: IExecutionResult,
         wrapper: PreparedExecutionWrapper,
         private readonly ctx: CachingContext,
+        private deleteExecutionCacheEntry: () => void,
+        public readonly signal: AbortSignal | undefined,
     ) {
-        super(decorated, wrapper);
+        super(decorated, wrapper, signal);
 
         if (cachingEnabled(this.ctx.config.maxResultWindows)) {
             this.windows = new LRUCache({ max: this.ctx.config.maxResultWindows! });
         }
     }
 
-    public readAll = (): Promise<IDataView> => {
-        if (!this.allData) {
+    public readAll = async (): Promise<IDataView> => {
+        if (!this.allData && this.signal) {
+            try {
+                const allData = await super.readAll();
+                this.allData = Promise.resolve(allData);
+            } catch (err) {
+                // If result was canceled, we need to delete also the execution cache entry,
+                // to avoid 404 on result next time it's called,
+                // because cancel token provided from the backend was already used and we need
+                // to retrieve the new one.
+                if (isAbortError(err)) {
+                    this.deleteExecutionCacheEntry();
+                }
+                this.allData = undefined;
+                throw err;
+            }
+        } else if (!this.allData) {
             this.allData = super.readAll().catch((e) => {
                 this.allData = undefined;
                 throw e;
@@ -223,7 +311,20 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         return this.allData;
     };
 
-    public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
+    public readForecastAll = (config: IForecastConfig): Promise<IForecastResult> => {
+        // TODO: enable forecasting caching size configuration
+        if (!this.allForecastData || this.allForecastConfig !== config) {
+            this.allForecastConfig = config;
+            this.allForecastData = super.readForecastAll(config).catch((e) => {
+                this.allForecastData = undefined;
+                throw e;
+            });
+        }
+
+        return this.allForecastData;
+    };
+
+    public readWindow = async (offset: number[], size: number[]): Promise<IDataView> => {
         if (!this.windows) {
             return super.readWindow(offset, size);
         }
@@ -231,7 +332,20 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         const cacheKey = windowKey(offset, size);
         let window: Promise<IDataView> | undefined = this.windows.get(cacheKey);
 
-        if (!window) {
+        if (this.signal && !window) {
+            const result = await super.readWindow(offset, size).catch((e) => {
+                if (this.windows) {
+                    this.windows.delete(cacheKey);
+                }
+                if (isAbortError(e)) {
+                    this.deleteExecutionCacheEntry();
+                }
+
+                throw e;
+            });
+            window = Promise.resolve(result);
+            this.windows.set(cacheKey, window);
+        } else if (!window) {
             window = super.readWindow(offset, size).catch((e) => {
                 if (this.windows) {
                     this.windows.delete(cacheKey);
@@ -265,10 +379,26 @@ class WithCatalogCaching extends DecoratedWorkspaceCatalogFactory {
         let catalog = cache.get(cacheKey);
 
         if (!catalog) {
-            catalog = super.load().catch((e) => {
-                cache.delete(cacheKey);
-                throw e;
-            });
+            catalog = super
+                .load()
+                .then((catalog) => {
+                    catalog.attributes().forEach((catalogAttribute) => {
+                        catalogAttribute.displayForms.forEach((displayForm) => {
+                            this.cacheAttributeByDisplayForm(displayForm.ref, catalogAttribute.attribute);
+                        });
+                        if (catalogAttribute.dataSet) {
+                            this.cacheAttributeDataSetMeta(
+                                catalogAttribute.attribute.ref,
+                                catalogAttribute.dataSet,
+                            );
+                        }
+                    });
+                    return catalog;
+                })
+                .catch((e) => {
+                    cache.delete(cacheKey);
+                    throw e;
+                });
 
             cache.set(cacheKey, catalog);
         }
@@ -278,6 +408,45 @@ class WithCatalogCaching extends DecoratedWorkspaceCatalogFactory {
 
     protected createNew = (decorated: IWorkspaceCatalogFactory): IWorkspaceCatalogFactory => {
         return new WithCatalogCaching(decorated, this.ctx);
+    };
+
+    ///
+    /// Caching of individual catalog objects
+    ///
+    private cacheAttributeByDisplayForm = (displayFormRef: ObjRef, attribute: IAttributeMetadataObject) => {
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).attributesByDisplayForms;
+
+        const idCacheKey = isIdentifierRef(displayFormRef) ? displayFormRef.identifier : undefined;
+
+        let cacheItem = idCacheKey && cache.get(idCacheKey);
+
+        if (!cacheItem) {
+            cacheItem = new Promise<IAttributeMetadataObject>((resolve) => resolve(attribute));
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
+    };
+
+    private cacheAttributeDataSetMeta = (attributeRef: ObjRef, dataSet: IMetadataObject) => {
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).dataSetsMeta;
+
+        const idCacheKey = isIdentifierRef(attributeRef) ? attributeRef.identifier : undefined;
+
+        let cacheItem = idCacheKey && cache.get(idCacheKey);
+
+        if (!cacheItem) {
+            cacheItem = new Promise<IMetadataObject>((resolve) => resolve(dataSet));
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
     };
 
     private getOrCreateWorkspaceEntry = (workspace: string): CatalogCacheEntry => {
@@ -407,8 +576,28 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
         return userWorkspaceSettings;
     }
 
+    public async setAlertDefault(value: IAlertDefault): Promise<void> {
+        return super.setAlertDefault(value);
+    }
+
     public async setLocale(locale: string): Promise<void> {
         return super.setLocale(locale);
+    }
+
+    public async setSeparators(separators: ISeparators): Promise<void> {
+        return super.setSeparators(separators);
+    }
+
+    public async setTimezone(timezone: string): Promise<void> {
+        return super.setTimezone(timezone);
+    }
+
+    public async setDateFormat(dateFormat: string): Promise<void> {
+        return super.setDateFormat(dateFormat);
+    }
+
+    public async setWeekStart(weekStart: string): Promise<void> {
+        return super.setWeekStart(weekStart);
     }
 
     public async setColorPalette(colorPaletteId: string): Promise<void> {
@@ -417,6 +606,14 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
 
     public async setTheme(themeId: string): Promise<void> {
         return super.setTheme(themeId);
+    }
+
+    public deleteColorPalette(): Promise<void> {
+        return super.deleteColorPalette();
+    }
+
+    public deleteTheme(): Promise<void> {
+        return super.deleteTheme();
     }
 
     private getOrCreateWorkspaceEntry = (workspace: string): WorkspaceSettingsCacheEntry => {
@@ -460,7 +657,7 @@ function elementsCacheKey(
         offset?: number;
         options?: IElementsQueryOptions;
         attributeFilters?: IElementsQueryAttributeFilter[];
-        dateFilters?: IRelativeDateFilter[];
+        dateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
         measures?: IMeasure[];
         validateBy?: ObjRef[];
     },
@@ -474,6 +671,9 @@ function getOrCreateAttributeCache(ctx: CachingContext, workspace: string): Attr
 
     if (!cacheEntry) {
         cacheEntry = {
+            dataSetsMeta: new LRUCache<string, Promise<IMetadataObject>>({
+                max: ctx.config.maxAttributesPerWorkspace!,
+            }),
             displayForms: new LRUCache<string, Promise<IAttributeDisplayFormMetadataObject>>({
                 max: ctx.config.maxAttributeDisplayFormsPerWorkspace!,
             }),
@@ -503,7 +703,7 @@ class CachedElementsQuery extends DecoratedElementsQuery {
             offset?: number;
             options?: IElementsQueryOptions;
             attributeFilters?: IElementsQueryAttributeFilter[];
-            dateFilters?: IRelativeDateFilter[];
+            dateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
             measures?: IMeasure[];
             validateBy?: ObjRef[];
         } = {},
@@ -521,17 +721,33 @@ class CachedElementsQuery extends DecoratedElementsQuery {
         invariant(cache, "inconsistent attribute element cache config");
         const cacheKey = elementsCacheKey(this.ref, this.settings);
 
-        let result = cache.get(cacheKey);
+        const result = cache.get(cacheKey);
 
+        //If no cache entry and we have signal, we need cache by result
+        if (this.settings.signal) {
+            if (!result) {
+                try {
+                    const res = await super.query();
+                    cache.set(cacheKey, Promise.resolve(res));
+                    return res;
+                } catch (e) {
+                    cache.delete(cacheKey);
+                    throw e;
+                }
+            }
+            return result;
+        }
+
+        //If no cache entry and no signal, we need cache by promise
         if (!result) {
-            result = super.query().catch((e) => {
+            const promise = super.query().catch((e) => {
                 cache.delete(cacheKey);
                 throw e;
             });
 
-            cache.set(cacheKey, result);
+            cache.set(cacheKey, promise);
+            return promise;
         }
-
         return result;
     };
 
@@ -545,6 +761,7 @@ class CachedElementsQuery extends DecoratedElementsQuery {
             dateFilters?: IRelativeDateFilter[] | undefined;
             measures?: IMeasure<IMeasureDefinitionType>[] | undefined;
             validateBy?: ObjRef[];
+            signal?: AbortSignal;
         },
     ): IElementsQuery {
         return new CachedElementsQuery(decorated, this.ctx, this.workspace, this.ref, settings);
@@ -694,11 +911,362 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
         return cacheItem;
     };
 
+    getAttributeDatasetMeta = async (ref: ObjRef): Promise<IMetadataObject> => {
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).dataSetsMeta;
+
+        const idCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
+
+        let cacheItem = idCacheKey && cache.get(idCacheKey);
+
+        if (!cacheItem) {
+            // eslint-disable-next-line sonarjs/no-identical-functions
+            cacheItem = super.getAttributeDatasetMeta(ref).catch((e) => {
+                if (idCacheKey) {
+                    cache.delete(idCacheKey);
+                }
+                throw e;
+            });
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
+    };
+
+    public async getAttributesWithReferences(refs: ObjRef[]): Promise<IAttributeWithReferences[]> {
+        const attributeByDfCache = getOrCreateAttributeCache(
+            this.ctx,
+            this.workspace,
+        ).attributesByDisplayForms;
+        const dataSetByAttributeCache = getOrCreateAttributeCache(this.ctx, this.workspace).dataSetsMeta;
+
+        // grab a reference to the cache results as soon as possible in case they would get evicted while loading the ones with missing data in cache
+        // then would might not be able to call cache.get again and be guaranteed to get the data
+        const refsWithCacheResults: { ref: ObjRef; cacheHit?: Promise<IAttributeWithReferences> }[] = [];
+
+        for (const ref of refs) {
+            // First, get attribute cached by display form if available
+            const attrCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
+            const attrCacheHit = attrCacheKey ? attributeByDfCache.get(attrCacheKey) : undefined;
+            const attributeFromCache = attrCacheHit ? await attrCacheHit : undefined;
+
+            // If attribute was cached, try to get dataSet by attribute from cache
+            const dataSetCacheKey =
+                attributeFromCache && isIdentifierRef(attributeFromCache.ref)
+                    ? attributeFromCache.ref.identifier
+                    : undefined;
+            const dataSetCacheHit = dataSetCacheKey
+                ? dataSetByAttributeCache.get(dataSetCacheKey)
+                : undefined;
+            const dataSetFromCache = dataSetCacheHit ? await dataSetCacheHit : undefined;
+
+            // If both attribute and dataSet were cached, consider it as a cacheHit of attribute with references
+            const cacheHit =
+                attributeFromCache && dataSetFromCache
+                    ? Promise.resolve({
+                          attribute: attributeFromCache,
+                          dataSet: dataSetFromCache,
+                      } as IAttributeWithReferences)
+                    : undefined;
+
+            refsWithCacheResults.push({ ref, cacheHit });
+        }
+
+        const [withCacheHits, withoutCacheHits] = partition(
+            refsWithCacheResults,
+            ({ cacheHit }) => !!cacheHit,
+        );
+
+        const refsToLoad = withoutCacheHits.map((item) => item.ref);
+
+        const [alreadyInCache, loadedFromServer] = await Promise.all([
+            // await the stuff from cache, we need the data available (we cannot just return the promises)
+            Promise.all(withCacheHits.map((item) => item.cacheHit!)),
+            // load items not in cache using the bulk operation
+            refsToLoad.length > 0
+                ? this.decorated.getAttributesWithReferences(refsToLoad)
+                : Promise.resolve([]),
+        ]);
+
+        // save newly loaded to cache for future reference
+        loadedFromServer.forEach((loaded) => {
+            // Cache attribute by display form refs
+            loaded.attribute.displayForms.forEach((displayForm) => {
+                this.cacheAttributeByDisplayForm(displayForm.ref, loaded.attribute);
+            });
+
+            // Cache dataSet by attribute ref
+            if (loaded.dataSet) {
+                this.cacheAttributeDataSetMeta(loaded.attribute.ref, loaded.dataSet);
+            }
+        });
+
+        const loadedRefs = loadedFromServer.flatMap((item) =>
+            item.attribute.displayForms.map((df) => df.ref),
+        );
+        const outputRefs = this.ctx.capabilities.allowsInconsistentRelations
+            ? skipMissingReferences(refs, refsToLoad, loadedRefs)
+            : refs;
+
+        // reconstruct the original ordering
+        const candidates = [...loadedFromServer, ...alreadyInCache];
+
+        return outputRefs.map((ref) => {
+            const match = candidates.find((item) =>
+                item.attribute.displayForms.some((df) => areObjRefsEqual(ref, df.ref)),
+            );
+            // if this bombs, some data got lost in the process
+            invariant(match);
+            return match;
+        });
+    }
+
+    private cacheAttributeByDisplayForm = (displayFormRef: ObjRef, attribute: IAttributeMetadataObject) => {
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).attributesByDisplayForms;
+
+        const idCacheKey = isIdentifierRef(displayFormRef) ? displayFormRef.identifier : undefined;
+
+        let cacheItem = idCacheKey && cache.get(idCacheKey);
+
+        if (!cacheItem) {
+            cacheItem = new Promise<IAttributeMetadataObject>((resolve) => resolve(attribute));
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
+    };
+
+    private cacheAttributeDataSetMeta = (attributeRef: ObjRef, dataSet: IMetadataObject) => {
+        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).dataSetsMeta;
+
+        const idCacheKey = isIdentifierRef(attributeRef) ? attributeRef.identifier : undefined;
+
+        let cacheItem = idCacheKey && cache.get(idCacheKey);
+
+        if (!cacheItem) {
+            cacheItem = new Promise<IMetadataObject>((resolve) => resolve(dataSet));
+
+            if (idCacheKey) {
+                cache.set(idCacheKey, cacheItem);
+            }
+        }
+
+        return cacheItem;
+    };
+
     public elements(): IElementsQueryFactory {
         const decorated = this.decorated.elements();
         return cachingEnabled(this.ctx.config.maxAttributeElementResultsPerWorkspace)
             ? new CachedElementsQueryFactory(decorated, this.ctx, this.workspace)
             : decorated;
+    }
+}
+
+//AUTOMATIONS CACHING
+
+function getOrCreateAutomationsCache(ctx: CachingContext, workspace: string): AutomationCacheEntry {
+    const cache = ctx.caches.workspaceAutomations!;
+    let cacheEntry = cache.get(workspace);
+
+    if (!cacheEntry) {
+        cacheEntry = {
+            automations: new LRUCache<string, Promise<IAutomationMetadataObject[]>>({
+                max: ctx.config.maxAutomationsWorkspaces!,
+            }),
+            queries: new LRUCache<string, Promise<IAutomationsQueryResult>>({
+                max: ctx.config.maxAutomationsWorkspaces!,
+            }),
+        };
+        cache.set(workspace, cacheEntry);
+    }
+
+    return cacheEntry;
+}
+
+class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
+    private settings: {
+        size: number;
+        page: number;
+        author: string | null;
+        recipient: string | null;
+        user: string | null;
+        dashboard: string | null;
+        filter: { title?: string };
+        sort: NonNullable<unknown>;
+        type: AutomationType | undefined;
+        totalCount: number | undefined;
+    } = {
+        size: 100,
+        page: 0,
+        author: null,
+        recipient: null,
+        user: null,
+        dashboard: null,
+        filter: {},
+        sort: {},
+        type: undefined,
+        totalCount: undefined,
+    };
+
+    constructor(
+        decorated: IAutomationsQuery,
+        private readonly ctx: CachingContext,
+        private readonly workspace: string,
+    ) {
+        super(decorated);
+    }
+
+    withSize(size: number): IAutomationsQuery {
+        this.settings.size = size;
+        super.withSize(size);
+        return this;
+    }
+
+    withPage(page: number): IAutomationsQuery {
+        this.settings.page = page;
+        super.withPage(page);
+        return this;
+    }
+
+    withFilter(filter: { title?: string }): IAutomationsQuery {
+        this.settings.filter = { ...filter };
+        this.settings.totalCount = undefined;
+        super.withFilter(filter);
+        return this;
+    }
+
+    withSorting(sort: string[]): IAutomationsQuery {
+        this.settings.sort = { sort };
+        super.withSorting(sort);
+        return this;
+    }
+
+    withType(type: AutomationType): IAutomationsQuery {
+        this.settings.type = type;
+        super.withType(type);
+        return this;
+    }
+
+    withAuthor(author: string): IAutomationsQuery {
+        this.settings.author = author;
+        super.withAuthor(author);
+        return this;
+    }
+
+    withRecipient(recipient: string): IAutomationsQuery {
+        this.settings.recipient = recipient;
+        super.withRecipient(recipient);
+        return this;
+    }
+
+    withUser(user: string): IAutomationsQuery {
+        this.settings.user = user;
+        super.withUser(user);
+        return this;
+    }
+
+    withDashboard(dashboard: string): IAutomationsQuery {
+        this.settings.dashboard = dashboard;
+        super.withDashboard(dashboard);
+        return this;
+    }
+
+    public query(): Promise<IAutomationsQueryResult> {
+        const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
+        const key = stringify(this.settings);
+
+        const result = cache.queries.get(key);
+
+        if (!result) {
+            const promise = super.query().catch((e) => {
+                cache.queries.delete(key);
+                throw e;
+            });
+
+            cache.queries.set(key, promise);
+            return promise;
+        }
+
+        return result;
+    }
+
+    async queryAll(): Promise<IAutomationMetadataObject[]> {
+        const firstQuery = await this.query();
+        return firstQuery.all();
+    }
+}
+
+class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
+    constructor(
+        decorated: IWorkspaceAutomationService,
+        private readonly ctx: CachingContext,
+        private readonly workspace: string,
+    ) {
+        super(decorated);
+    }
+
+    public getAutomations(options?: IGetAutomationsOptions): Promise<IAutomationMetadataObject[]> {
+        const cache = getOrCreateAutomationsCache(this.ctx, this.workspace).automations;
+        const key = stringify(options);
+
+        const result = cache.get(key);
+
+        if (!result) {
+            const promise = super.getAutomations(options).catch((e) => {
+                cache.delete(key);
+                throw e;
+            });
+
+            cache.set(key, promise);
+            return promise;
+        }
+
+        return result;
+    }
+
+    public async createAutomation(
+        automation: IAutomationMetadataObjectDefinition,
+        options?: IGetAutomationOptions,
+    ): Promise<IAutomationMetadataObject> {
+        const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
+        const result = await super.createAutomation(automation, options);
+        cache.automations.clear();
+        cache.queries.clear();
+        return result;
+    }
+
+    public async updateAutomation(
+        automation: IAutomationMetadataObject,
+        options?: IGetAutomationOptions,
+    ): Promise<IAutomationMetadataObject> {
+        const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
+        const result = await super.updateAutomation(automation, options);
+        cache.automations.clear();
+        cache.queries.clear();
+        return result;
+    }
+
+    public async deleteAutomation(id: string): Promise<void> {
+        const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
+        await super.deleteAutomation(id);
+        cache.automations.clear();
+        cache.queries.clear();
+    }
+
+    public async unsubscribeAutomation(id: string): Promise<void> {
+        const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
+        await super.unsubscribeAutomation(id);
+        cache.automations.clear();
+        cache.queries.clear();
+    }
+
+    getAutomationsQuery(): IAutomationsQuery {
+        return new CachedAutomationsQueryFactory(super.getAutomationsQuery(), this.ctx, this.workspace);
     }
 }
 
@@ -708,7 +1276,10 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
 
 function cachedExecutions(ctx: CachingContext): ExecutionDecoratorFactory {
     return (original: IExecutionFactory) =>
-        new DecoratedExecutionFactory(original, (execution) => new WithExecutionCaching(execution, ctx));
+        new DecoratedExecutionFactory(
+            original,
+            (execution) => new WithExecutionCaching(execution, ctx, execution.signal),
+        );
 }
 
 function cachedCatalog(ctx: CachingContext): CatalogDecoratorFactory {
@@ -725,6 +1296,10 @@ function cachedWorkspaceSettings(ctx: CachingContext): WorkspaceSettingsDecorato
 
 function cachedAttributes(ctx: CachingContext): AttributesDecoratorFactory {
     return (original, workspace) => new WithAttributesCaching(original, ctx, workspace);
+}
+
+function cachedAutomations(ctx: CachingContext): AutomationsDecoratorFactory {
+    return (original, workspace) => new WithAutomationsCaching(original, ctx, workspace);
 }
 
 function cachingEnabled(desiredSize: number | undefined): boolean {
@@ -940,6 +1515,20 @@ export type CachingConfiguration = {
     maxAttributeWorkspaces?: number;
 
     /**
+     * Maximum number of workspaces for which to cache selected {@link @gooddata/sdk-backend-spi#IWorkspaceAutomationsService} calls.
+     * The workspace identifier is used as cache key.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen. Unbounded
+     * cache may be OK in applications where number of workspaces is small - the cache will be limited
+     * naturally and will not grow uncontrollably.
+     *
+     * When non-positive number is specified, then no caching will be done.
+     */
+    maxAutomationsWorkspaces?: number;
+
+    /**
      * Maximum number of attribute display forms to cache per workspace.
      *
      * When limit is reached, cache entries will be evicted using LRU policy.
@@ -1021,10 +1610,11 @@ export const RecommendedCachingConfiguration: CachingConfiguration = {
     maxSecuritySettingsOrgUrls: 100,
     maxSecuritySettingsOrgUrlsAge: 300_000, // 5 minutes
     maxAttributeWorkspaces: 1,
-    maxAttributeDisplayFormsPerWorkspace: 100,
-    maxAttributesPerWorkspace: 100,
+    maxAttributeDisplayFormsPerWorkspace: 500,
+    maxAttributesPerWorkspace: 500,
     maxAttributeElementResultsPerWorkspace: 100,
     maxWorkspaceSettings: 1,
+    maxAutomationsWorkspaces: 1,
 };
 
 /**
@@ -1049,6 +1639,7 @@ export function withCaching(
     const securitySettingsCaching = cachingEnabled(config.maxSecuritySettingsOrgs);
     const attributeCaching = cachingEnabled(config.maxAttributeWorkspaces);
     const workspaceSettingsCaching = cachingEnabled(config.maxWorkspaceSettings);
+    const automationsCaching = cachingEnabled(config.maxAutomationsWorkspaces);
 
     const ctx: CachingContext = {
         caches: {
@@ -1063,6 +1654,9 @@ export function withCaching(
             workspaceSettings: workspaceSettingsCaching
                 ? new LRUCache({ max: config.maxWorkspaceSettings! })
                 : undefined,
+            workspaceAutomations: automationsCaching
+                ? new LRUCache({ max: config.maxAutomationsWorkspaces! })
+                : undefined,
         },
         config,
         capabilities: realBackend.capabilities,
@@ -1072,6 +1666,7 @@ export function withCaching(
     const catalog = catalogCaching ? cachedCatalog(ctx) : identity;
     const securitySettings = securitySettingsCaching ? cachedSecuritySettings(ctx) : identity;
     const attributes = attributeCaching ? cachedAttributes(ctx) : identity;
+    const automations = automationsCaching ? cachedAutomations(ctx) : identity;
     const workspaceSettings = workspaceSettingsCaching ? cachedWorkspaceSettings(ctx) : identity;
 
     if (config.onCacheReady) {
@@ -1084,6 +1679,7 @@ export function withCaching(
         securitySettings,
         attributes,
         workspaceSettings,
+        automations,
     });
 }
 

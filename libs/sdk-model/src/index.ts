@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 /**
  * This package provides domain models for GoodData.UI.
  *
@@ -10,16 +10,16 @@
  *
  * @packageDocumentation
  */
-export { DateAttributeGranularity, DateGranularity, AllTimeGranularity } from "./base/dateGranularities.js";
-export { IAuditable, IAuditableDates, IAuditableUsers } from "./base/metadata.js";
-export { ComparatorDirection, IComparator } from "./base/comparators.js";
+export type { DateAttributeGranularity, AllTimeGranularity } from "./base/dateGranularities.js";
+export { DateGranularity } from "./base/dateGranularities.js";
+export type { IAuditable, IAuditableDates, IAuditableUsers } from "./base/metadata.js";
+export type { ComparatorDirection, IComparator } from "./base/comparators.js";
+export { assertNever } from "./base/typeUtils.js";
 
+export type { IAttribute, IAttributeBody, AttributePredicate } from "./execution/attribute/index.js";
 export {
-    IAttribute,
-    IAttributeBody,
     isAttribute,
     attributeLocalId,
-    AttributePredicate,
     anyAttribute,
     idMatchAttribute,
     attributesFind,
@@ -30,15 +30,63 @@ export {
     attributeDisplayFormRef,
 } from "./execution/attribute/index.js";
 
-export {
-    newAttribute,
-    modifyAttribute,
-    AttributeBuilder,
-    AttributeModifications,
-    AttributeBuilderInput,
-} from "./execution/attribute/factory.js";
+export type { AttributeModifications, AttributeBuilderInput } from "./execution/attribute/factory.js";
+export { newAttribute, modifyAttribute, AttributeBuilder } from "./execution/attribute/factory.js";
 
+export type {
+    INotificationChannelMetadataObjectBase,
+    ICustomSmtpDestinationConfiguration,
+    IDefaultSmtpDestinationConfiguration,
+    IInPlatformNotificationChannelMetadataObject,
+    IInPlatformNotificationChannelMetadataObjectDefinition,
+    ISmtpDestinationConfiguration,
+    ISmtpNotificationChannelMetadataObject,
+    ISmtpNotificationChannelMetadataObjectDefinition,
+    IWebhookDestinationConfiguration,
+    IWebhookNotificationChannelMetadataObject,
+    IWebhookNotificationChannelMetadataObjectDefinition,
+    NotificationChannelAllowedRecipients,
+    NotificationChannelDestinationType,
+    INotificationChannelMetadataObject,
+    INotificationChannelMetadataObjectDefinition,
+    NotificationChannelDashboardLinkVisibility,
+    INotificationChannelTestResponse,
+    ToNotificationChannelMetadataObject,
+} from "./notificationChannels/index.js";
 export {
+    isNotificationChannelMetadataObject,
+    isNotificationChannelMetadataObjectDefinition,
+} from "./notificationChannels/index.js";
+export type {
+    AlertDescriptionStatus,
+    AutomationNotificationType,
+    IAlertDescription,
+    IAlertEvaluationRow,
+    IAlertEvaluationRowMetric,
+    IAlertNotification,
+    IAlertNotificationDetails,
+    IAutomationNotificationDetailsBase,
+    INotification,
+    INotificationBase,
+    IScheduleNotification,
+    IScheduleNotificationDetails,
+    ITestNotification,
+    ITestNotificationDetails,
+    IWebhookAutomationInfo,
+    IWebhookMessageDataAlert,
+    IWebhookMessageDataBase,
+    IWebhookMessageDataSchedule,
+    NotificationType,
+    WebhookRecipient,
+} from "./notifications/index.js";
+export {
+    isAlertNotification,
+    isScheduleNotification,
+    isTestNotification,
+    isNotification,
+} from "./notifications/index.js";
+
+export type {
     ObjectType,
     Identifier,
     Uri,
@@ -47,6 +95,8 @@ export {
     LocalIdRef,
     ObjRef,
     ObjRefInScope,
+} from "./objRef/index.js";
+export {
     isUriRef,
     isIdentifierRef,
     objRefToString,
@@ -57,25 +107,24 @@ export {
     deserializeObjRef,
 } from "./objRef/index.js";
 
+export type { IDimension, DimensionItem, ItemInDimension } from "./execution/base/dimension.js";
 export {
-    IDimension,
     isDimension,
     dimensionTotals,
-    DimensionItem,
     newTwoDimensional,
     newDimension,
     MeasureGroupIdentifier,
     dimensionSetTotals,
     dimensionsFindItem,
-    ItemInDimension,
     isMeasureGroupIdentifier,
 } from "./execution/base/dimension.js";
 
 export { idRef, uriRef, localIdRef } from "./objRef/factory.js";
 
-export { TotalType, ITotal, isTotal, newTotal, totalIsNative } from "./execution/base/totals.js";
+export type { TotalType, ITotal } from "./execution/base/totals.js";
+export { isTotal, newTotal, totalIsNative } from "./execution/base/totals.js";
 
-export {
+export type {
     SortDirection,
     ISortDirection,
     IAttributeSortItem,
@@ -91,6 +140,9 @@ export {
     IMeasureLocatorItemBody,
     ITotalLocatorItem,
     ITotalLocatorItemBody,
+    SortEntityIds,
+} from "./execution/base/sort.js";
+export {
     isMeasureLocator,
     isAttributeLocator,
     isTotalLocator,
@@ -103,7 +155,6 @@ export {
     newAttributeSort,
     newAttributeAreaSort,
     newAttributeLocator,
-    SortEntityIds,
     sortEntityIds,
     sortDirection,
     sortMeasureLocators,
@@ -112,7 +163,7 @@ export {
     measureLocatorIdentifier,
 } from "./execution/base/sort.js";
 
-export {
+export type {
     IAttributeElementsByRef,
     IAttributeElementsByValue,
     IAttributeElements,
@@ -127,23 +178,12 @@ export {
     IRankingFilter,
     IRankingFilterBody,
     RankingFilterOperator,
-    isRankingFilter,
     IFilter,
+    IIdentifiableFilter,
     INullableFilter,
     IMeasureFilter,
     IDateFilter,
     IAttributeFilter,
-    isAbsoluteDateFilter,
-    isRelativeDateFilter,
-    isAllTimeDateFilter,
-    attributeElementsIsEmpty,
-    attributeElementsCount,
-    updateAttributeElementsItems,
-    getAttributeElementsItems,
-    isPositiveAttributeFilter,
-    isNegativeAttributeFilter,
-    isDateFilter,
-    isMeasureValueFilter,
     ComparisonConditionOperator,
     IComparisonCondition,
     IComparisonConditionBody,
@@ -151,6 +191,26 @@ export {
     IRangeConditionBody,
     MeasureValueFilterCondition,
     RangeConditionOperator,
+    IAbsoluteDateFilterValues,
+    IRelativeDateFilterValues,
+    IAbsoluteDateFilterBody,
+    IRelativeDateFilterBody,
+    IRelativeDateFilterAllTimeBody,
+} from "./execution/filter/index.js";
+export {
+    isRankingFilter,
+    isAbsoluteDateFilter,
+    isRelativeDateFilter,
+    isAllTimeDateFilter,
+    attributeElementsIsEmpty,
+    attributeElementsCount,
+    updateAttributeElementsItems,
+    getAttributeElementsItems,
+    isSimpleMeasureFilter,
+    isPositiveAttributeFilter,
+    isNegativeAttributeFilter,
+    isDateFilter,
+    isMeasureValueFilter,
     isAttributeFilter,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
@@ -163,8 +223,7 @@ export {
     filterAttributeElements,
     filterMeasureRef,
     filterObjRef,
-    IAbsoluteDateFilterValues,
-    IRelativeDateFilterValues,
+    filterLocalIdentifier,
     absoluteDateFilterValues,
     relativeDateFilterValues,
     measureValueFilterCondition,
@@ -184,7 +243,7 @@ export {
 
 export { mergeFilters } from "./execution/filter/filterMerge.js";
 
-export {
+export type {
     IMeasureTitle,
     IMeasureTitleBody,
     IMeasureDefinitionType,
@@ -202,6 +261,10 @@ export {
     IPreviousPeriodMeasureDefinition,
     IPreviousPeriodMeasureDefinitionBody,
     IPreviousPeriodDateDataSet,
+    MeasurePredicate,
+    MeasureOrLocalId,
+} from "./execution/measure/index.js";
+export {
     isMeasure,
     isSimpleMeasure,
     isInlineMeasure,
@@ -217,7 +280,6 @@ export {
     isVirtualArithmeticMeasureDefinition,
     isInlineMeasureDefinition,
     measureLocalId,
-    MeasurePredicate,
     anyMeasure,
     idMatchMeasure,
     measureDoesComputeRatio,
@@ -235,15 +297,21 @@ export {
     measureFilters,
     measurePopAttribute,
     measurePreviousPeriodDateDataSets,
-    MeasureOrLocalId,
 } from "./execution/measure/index.js";
 
-export {
+export type {
     IPreviousPeriodDateDataSetSimple,
+    MeasureModifications,
+    MeasureEnvelope,
+    InlineMeasureBuilderInput,
+    ArithmeticMeasureBuilderInput,
+    PoPMeasureBuilderInput,
+    PreviousPeriodMeasureBuilderInput,
+} from "./execution/measure/factory.js";
+export {
     ArithmeticMeasureBuilder,
     VirtualArithmeticMeasureBuilder,
     MeasureBuilder,
-    MeasureModifications,
     PoPMeasureBuilder,
     PreviousPeriodMeasureBuilder,
     InlineMeasureBuilder,
@@ -259,21 +327,21 @@ export {
     newPopMeasure,
     newPreviousPeriodMeasure,
     newInlineMeasure,
-    MeasureEnvelope,
-    InlineMeasureBuilderInput,
-    ArithmeticMeasureBuilderInput,
-    PoPMeasureBuilderInput,
-    PreviousPeriodMeasureBuilderInput,
 } from "./execution/measure/factory.js";
 
-export {
+export type {
     IAttributeOrMeasure,
     IBucket,
+    MeasureInBucket,
+    AttributeInBucket,
+    BucketPredicate,
+    BucketItemModifications,
+    BucketItemReducer,
+} from "./execution/buckets/index.js";
+export {
     isBucket,
     idMatchBucket,
     anyBucket,
-    MeasureInBucket,
-    AttributeInBucket,
     newBucket,
     bucketIsEmpty,
     bucketAttributes,
@@ -285,12 +353,9 @@ export {
     bucketTotals,
     bucketSetTotals,
     bucketItems,
-    BucketPredicate,
     applyRatioRule,
     ComputeRatioRule,
     disableComputeRatio,
-    BucketItemModifications,
-    BucketItemReducer,
     bucketModifyItems,
     bucketItemReduce,
 } from "./execution/buckets/index.js";
@@ -311,10 +376,13 @@ export {
 
 export { bucketItemLocalId } from "./execution/buckets/bucketItem.js";
 
-export {
+export type {
     IExecutionDefinition,
     IExecutionConfig,
     DimensionGenerator,
+    IPostProcessing,
+} from "./execution/executionDefinition/index.js";
+export {
     defWithFilters,
     defFingerprint,
     defSetDimensions,
@@ -322,7 +390,6 @@ export {
     defSetBuckets,
     defTotals,
     defSetExecConfig,
-    IPostProcessing,
     defSetPostProcessing,
 } from "./execution/executionDefinition/index.js";
 
@@ -340,7 +407,7 @@ export {
     emptyDef,
 } from "./execution/executionDefinition/factory.js";
 
-export {
+export type {
     GuidType,
     RgbType,
     IRgbColorValue,
@@ -349,22 +416,29 @@ export {
     IColorPaletteItem,
     IColorFromPalette,
     IRgbColor,
+    IColorPaletteMetadataObject,
+    IColorPaletteDefinition,
+} from "./colors/index.js";
+export {
     isColorFromPalette,
     isRgbColor,
     isColorPaletteItem,
     colorPaletteItemToRgb,
     colorPaletteToColors,
-    IColorPaletteMetadataObject,
-    IColorPaletteDefinition,
 } from "./colors/index.js";
 
-export {
+export type {
     IInsight,
     IInsightDefinition,
     IVisualizationClass,
     IVisualizationClassBody,
     VisualizationProperties,
+    IAttributeFilterConfigs,
+    IAttributeFilterConfig,
     IColorMappingItem,
+    InsightDisplayFormUsage,
+} from "./insight/index.js";
+export {
     isInsight,
     isColorMappingItem,
     insightRef,
@@ -390,6 +464,7 @@ export {
     insightUpdatedBy,
     insightTotals,
     insightFilters,
+    insightAttributeFilterConfigs,
     insightVisualizationUrl,
     insightVisualizationType,
     insightSetFilters,
@@ -398,7 +473,6 @@ export {
     insightSetSorts,
     insightModifyItems,
     insightReduceItems,
-    InsightDisplayFormUsage,
     insightDisplayFormUsage,
     visClassUrl,
     visClassId,
@@ -413,13 +487,14 @@ export {
     insightUpdatedByComparator,
 } from "./insight/comparators.js";
 
-export { newInsightDefinition, InsightDefinitionBuilder, InsightModifications } from "./insight/factory.js";
+export type { InsightModifications } from "./insight/factory.js";
+export { newInsightDefinition, InsightDefinitionBuilder } from "./insight/factory.js";
 
 export { insightSanitize, sanitizeBucketTotals } from "./insight/sanitization.js";
 
 export { factoryNotationFor } from "./execution/objectFactoryNotation/index.js";
 
-export {
+export type {
     DateFilterOptionAbsoluteFormType,
     DateFilterOptionAbsolutePresetType,
     DateFilterOptionAllTimeType,
@@ -437,6 +512,8 @@ export {
     IRelativeDateFilterForm,
     IRelativeDateFilterPreset,
     IRelativeDateFilterPresetOfGranularity,
+} from "./dateFilterConfig/index.js";
+export {
     isAbsoluteDateFilterForm,
     isAbsoluteDateFilterPreset,
     isAllTimeDateFilterOption,
@@ -445,9 +522,9 @@ export {
     isRelativeDateFilterPreset,
 } from "./dateFilterConfig/index.js";
 
-export { IDashboardObjectIdentity } from "./dashboard/common.js";
+export type { IDashboardObjectIdentity } from "./dashboard/common.js";
 
-export {
+export type {
     DateFilterAbsoluteType,
     DateFilterRelativeType,
     DateFilterType,
@@ -456,6 +533,7 @@ export {
     DashboardAttributeFilterSelectionMode,
     IDashboardAttributeFilterParent,
     IDashboardAttributeFilterReference,
+    IDashboardAttributeFilterByDate,
     IDashboardDateFilter,
     IDashboardDateFilterReference,
     IDashboardFilterReference,
@@ -463,8 +541,13 @@ export {
     IFilterContextBase,
     IFilterContextDefinition,
     ITempFilterContext,
+    IDashboardFilterView,
+    IDashboardFilterViewSaveRequest,
+} from "./dashboard/filterContext.js";
+export {
     dashboardFilterReferenceObjRef,
     isAllTimeDashboardDateFilter,
+    isAllValuesDashboardAttributeFilter,
     isDashboardAttributeFilter,
     isSingleSelectionFilter,
     isNegativeAttributeFilter as isNegativeDashboardAttributeFilter,
@@ -482,17 +565,13 @@ export {
     newAbsoluteDashboardDateFilter,
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
+    isFilterContextItem,
 } from "./dashboard/filterContext.js";
 
-export {
-    IWidgetAlert,
-    IWidgetAlertBase,
-    IWidgetAlertDefinition,
-    isWidgetAlert,
-    isWidgetAlertDefinition,
-} from "./dashboard/alert.js";
+export type { IWidgetAlert, IWidgetAlertBase, IWidgetAlertDefinition } from "./dashboard/alert.js";
+export { isWidgetAlert, isWidgetAlertDefinition } from "./dashboard/alert.js";
 
-export {
+export type {
     DrillDefinition,
     DrillOrigin,
     DrillOriginType,
@@ -516,6 +595,8 @@ export {
     InsightDrillDefinition,
     KpiDrillDefinition,
     ICrossFiltering,
+} from "./dashboard/drill.js";
+export {
     isDrillFromAttribute,
     isDrillFromMeasure,
     isDrillToAttributeUrl,
@@ -524,18 +605,22 @@ export {
     isDrillToInsight,
     isDrillToLegacyDashboard,
     isAttributeHierarchyReference,
+    isDateHierarchyReference,
     isCrossFiltering,
+    drillDownReferenceHierarchyRef,
+    drillDownReferenceAttributeRef,
 } from "./dashboard/drill.js";
 
-export {
-    BuiltInWidgetTypes,
+export type {
     IBaseWidget,
     IDrillableWidget,
     IFilterableWidget,
     IWidgetDescription,
+    IDrillDownIntersectionIgnoredAttributes,
 } from "./dashboard/baseWidget.js";
+export { BuiltInWidgetTypes } from "./dashboard/baseWidget.js";
 
-export {
+export type {
     IKpi,
     IKpiBase,
     IKpiComparisonDirection,
@@ -544,12 +629,10 @@ export {
     IKpiWithPreviousPeriodComparison,
     IKpiWithComparison,
     IKpiWithoutComparison,
-    isKpiWithComparison,
-    isKpiWithoutComparison,
-    isKpi,
 } from "./dashboard/kpi.js";
+export { isKpiWithComparison, isKpiWithoutComparison, isKpi } from "./dashboard/kpi.js";
 
-export {
+export type {
     AnalyticalWidgetType,
     IAnalyticalWidget,
     IKpiWidget,
@@ -567,9 +650,12 @@ export {
     IRichTextWidget,
     IRichTextWidgetBase,
     IRichTextWidgetDefinition,
+    IVisualizationSwitcherWidget,
+    IVisualizationSwitcherWidgetBase,
+    IVisualizationSwitcherWidgetDefinition,
 } from "./dashboard/analyticalWidgets.js";
 
-export {
+export type {
     CatalogItemType,
     CatalogItem,
     ICatalogGroup,
@@ -579,54 +665,68 @@ export {
     ICatalogMeasure,
     ICatalogDateDataset,
     ICatalogDateAttribute,
+    ICatalogItemBase,
+    IGroupableCatalogItemBase,
+    GroupableCatalogItem,
+    ICatalogDateAttributeHierarchy,
+} from "./ldm/catalog/index.js";
+export {
     isCatalogAttribute,
     isCatalogAttributeHierarchy,
     isCatalogDateAttributeHierarchy,
     isCatalogFact,
     isCatalogMeasure,
     isCatalogDateDataset,
-    ICatalogItemBase,
-    IGroupableCatalogItemBase,
-    GroupableCatalogItem,
     catalogItemMetadataObject,
-    ICatalogDateAttributeHierarchy,
+    getHierarchyRef,
+    getHierarchyTitle,
+    getHierarchyAttributes,
 } from "./ldm/catalog/index.js";
 
-export {
+export type {
     IAttributeDisplayFormMetadataObject,
-    isAttributeDisplayFormMetadataObject,
     AttributeDisplayFormType,
     IAttributeMetadataObject,
-    isAttributeMetadataObject,
     IDataSetMetadataObject,
-    isDataSetMetadataObject,
     IVariableMetadataObject,
-    isVariableMetadataObject,
     IFactMetadataObject,
-    isFactMetadataObject,
     IMetadataObjectDefinition,
     IMeasureMetadataObject,
     IMeasureMetadataObjectBase,
-    isMeasureMetadataObject,
     IMeasureMetadataObjectDefinition,
-    isMeasureMetadataObjectDefinition,
     IMetadataObject,
     IMetadataObjectBase,
     IMetadataObjectIdentity,
-    isMetadataObject,
     MetadataObject,
-    metadataObjectId,
     IDashboardMetadataObject,
+    IAttributeHierarchyMetadataObject,
+    IDateHierarchyTemplate,
+    IMdObject,
+    IMdObjectBase,
+    IMdObjectDefinition,
+    IMdObjectIdentity,
+    ToMdObjectDefinition,
+} from "./ldm/metadata/index.js";
+export {
+    isAttributeDisplayFormMetadataObject,
+    isAttributeMetadataObject,
+    isDataSetMetadataObject,
+    isVariableMetadataObject,
+    isFactMetadataObject,
+    isMeasureMetadataObject,
+    isMeasureMetadataObjectDefinition,
+    isMetadataObject,
+    metadataObjectId,
     isDashboardMetadataObject,
     attributeDisplayFormMetadataObjectAttributeRef,
     attributeDisplayFormMetadataObjectRef,
     attributeDisplayFormMetadataObjectTitle,
-    IAttributeHierarchyMetadataObject,
     isAttributeHierarchyMetadataObject,
-    IDateHierarchyTemplate,
+    isMdObject,
+    isMdObjectDefinition,
 } from "./ldm/metadata/index.js";
 
-export {
+export type {
     DataColumnType,
     DatasetLoadStatus,
     IDataColumnBody,
@@ -638,11 +738,10 @@ export {
     IDatasetBody,
 } from "./ldm/datasets/index.js";
 
-export { IAttributeElement } from "./ldm/attributeElement.js";
+export type { IAttributeElement } from "./ldm/attributeElement.js";
 
+export type { IWidget, IWidgetDefinition } from "./dashboard/widget.js";
 export {
-    IWidget,
-    IWidgetDefinition,
     isWidget,
     isWidgetDefinition,
     widgetUri,
@@ -656,32 +755,31 @@ export {
     isInsightWidget,
     isRichTextWidget,
     isRichTextWidgetDefinition,
+    isVisualizationSwitcherWidget,
+    isVisualizationSwitcherWidgetDefinition,
 } from "./dashboard/widget.js";
 
-export {
+export type {
     IDashboardAttachment,
-    isDashboardAttachment,
     IWidgetAttachment,
-    isWidgetAttachment,
     IExportOptions,
     IScheduledMail,
     IScheduledMailDefinition,
     ScheduledMailAttachment,
     IScheduledMailBase,
 } from "./dashboard/scheduledMail.js";
+export { isDashboardAttachment, isWidgetAttachment } from "./dashboard/scheduledMail.js";
 
-export {
+export type {
     IUser,
     IUserGroup,
     IWorkspaceUser,
-    userFullName,
     IOrganizationUser,
     IOrganizationUserGroup,
-    isIOrganizationUser,
-    isIOrganizationUserGroup,
 } from "./user/index.js";
+export { userFullName, isIOrganizationUser, isIOrganizationUserGroup } from "./user/index.js";
 
-export {
+export type {
     IDashboardLayout,
     IDashboardWidget,
     IDashboardLayoutSection,
@@ -689,14 +787,19 @@ export {
     IDashboardLayoutSize,
     IDashboardLayoutSizeByScreenSize,
     IDashboardLayoutItem,
+    IDashboardLayoutWidget,
+    IDashboardLayoutConfiguration,
+    IDashboardLayoutSectionsConfiguration,
     ScreenSize,
+} from "./dashboard/layout.js";
+export {
     isDashboardLayout,
     isDashboardLayoutSection,
     isDashboardLayoutItem,
     isDashboardWidget,
 } from "./dashboard/layout.js";
 
-export {
+export type {
     IDashboard,
     IDashboardDefinition,
     IListedDashboard,
@@ -707,26 +810,41 @@ export {
     IDashboardAttributeFilterConfig,
     IDashboardDateFilterConfigItem,
     DashboardAttributeFilterConfigMode,
-    DashboardDateFilterConfigModeValues,
-    DashboardAttributeFilterConfigModeValues,
     IDashboardDateFilterAddedPresets,
     IDashboardPluginBase,
     IDashboardPlugin,
     IDashboardPluginDefinition,
     IDashboardPluginLink,
-    isDashboard,
-    isDashboardDefinition,
     IAccessControlAware,
     ShareStatus,
     IDashboardPermissions,
     IExistingDashboard,
 } from "./dashboard/dashboard.js";
-
-export { ISeparators, ISettings, PlatformEdition, IWhiteLabeling, WeekStart } from "./settings/index.js";
-
-export { IWorkspaceUserGroup } from "./userGroup/index.js";
-
 export {
+    DashboardDateFilterConfigModeValues,
+    DashboardAttributeFilterConfigModeValues,
+    isDashboard,
+    isDashboardDefinition,
+} from "./dashboard/dashboard.js";
+
+export type {
+    ISeparators,
+    ISettings,
+    PlatformEdition,
+    IWhiteLabeling,
+    IAlertDefault,
+    WeekStart,
+    IOpenAiConfig,
+    DashboardFiltersApplyMode,
+    EarlyAccessFeatureContext,
+    EarlyAccessFeatureStatus,
+    IEarlyAccessFeatureConfig,
+    IEarlyAccessFeaturesConfig,
+} from "./settings/index.js";
+
+export type { IWorkspaceUserGroup } from "./userGroup/index.js";
+
+export type {
     ThemeFontUri,
     ThemeColor,
     IThemeColorFamily,
@@ -761,12 +879,15 @@ export {
     IThemeModal,
     IThemeModalTitle,
     IThemeTooltip,
+    IThemeImages,
+    ImageUri,
 } from "./theme/index.js";
 
-export { IWorkspacePermissions, WorkspacePermission } from "./permissions/index.js";
+export type { IWorkspacePermissions, WorkspacePermission } from "./permissions/index.js";
 
-export {
+export type {
     DataValue,
+    ForecastDataValue,
     IMeasureDescriptor,
     IMeasureDescriptorObject,
     IMeasureDescriptorItem,
@@ -788,6 +909,8 @@ export {
     IResultWarning,
     IColorDescriptor,
     IColorDescriptorItem,
+} from "./execution/results/index.js";
+export {
     isColorDescriptor,
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
@@ -801,17 +924,13 @@ export {
     attributeDescriptorName,
 } from "./execution/results/index.js";
 
-export {
+export type {
     AccessGranteeDetail,
     IAccessGrantee,
     IUserAccess,
     IUserAccessGrantee,
     IUserGroupAccess,
     IUserGroupAccessGrantee,
-    isUserAccess,
-    isUserAccessGrantee,
-    isUserGroupAccess,
-    isUserGroupAccessGrantee,
     IGranularAccessGrantee,
     AccessGranularPermission,
     IGranteeGranularity,
@@ -824,6 +943,16 @@ export {
     IGranularUserAccessGrantee,
     IGranularUserGroupAccessGrantee,
     IGranularRulesAccessGrantee,
+    WorkspaceAccessPermission,
+    IWorkspaceAccess,
+    IUserWorkspaceAccessGrantee,
+    IUserGroupWorkspaceAccessGrantee,
+} from "./accessControl/index.js";
+export {
+    isUserAccess,
+    isUserAccessGrantee,
+    isUserGroupAccess,
+    isUserGroupAccessGrantee,
     isGranularAccess,
     isAvailableUserGroupAccessGrantee,
     isAvailableUserAccessGrantee,
@@ -833,28 +962,120 @@ export {
     isGranularUserAccess,
     isGranularUserGroupAccess,
     isGranularRulesAccessGrantee,
-    WorkspaceAccessPermission,
-    IWorkspaceAccess,
-    IUserWorkspaceAccessGrantee,
-    IUserGroupWorkspaceAccessGrantee,
     isUserWorkspaceAccessGrantee,
     isUserGroupWorkspaceAccessGrantee,
 } from "./accessControl/index.js";
 
-export {
+export type {
     IOrganizationDescriptor,
+    IOrganizationDescriptorUpdate,
     IWorkspacePermissionAssignment,
     IAssignedWorkspace,
     AssignedWorkspacePermission,
-    AssignedWorkspacePermissionValue,
     IOrganizationPermissionAssignment,
     OrganizationPermissionAssignment,
-    OrganizationPermissionAssignmentValue,
     IOrganizationAssignee,
     AssignedDataSourcePermission,
-    AssignedDataSourcePermissionValue,
     IAssignedDataSource,
     IDataSourcePermissionAssignment,
 } from "./organization/index.js";
-export { IEntitlementsName, IEntitlementDescriptor } from "./entitlements/index.js";
-export { DataSourceType, IDataSourceIdentifierDescriptor } from "./dataSources/index.js";
+export {
+    AssignedWorkspacePermissionValue,
+    OrganizationPermissionAssignmentValue,
+    AssignedDataSourcePermissionValue,
+    isAssignedWorkspacePermission,
+} from "./organization/index.js";
+export type { IEntitlementsName, IEntitlementDescriptor } from "./entitlements/index.js";
+export type { DataSourceType, IDataSourceIdentifierDescriptor } from "./dataSources/index.js";
+
+export type {
+    IExportDefinitionMetadataObject,
+    IExportDefinitionBase,
+    IExportDefinitionDashboardSettings,
+    IExportDefinitionDashboardRequestPayload,
+    IExportDefinitionVisualizationObjectSettings,
+    IExportDefinitionVisualizationObjectRequestPayload,
+    IExportDefinitionRequestPayload,
+    IExportDefinitionDashboardContent,
+    IExportDefinitionVisualizationObjectContent,
+    IExportDefinitionMetadataObjectDefinition,
+    IExportResult,
+    IExportResultStatus,
+} from "./exports/index.js";
+export {
+    exportDefinitionTitle,
+    exportDefinitionCreated,
+    exportDefinitionUpdated,
+    isExportDefinitionDashboardRequestPayload,
+    isExportDefinitionVisualizationObjectRequestPayload,
+} from "./exports/index.js";
+
+export type {
+    IWorkspaceDataFilter,
+    IWorkspaceDataFilterDefinition,
+    IWorkspaceDataFilterSetting,
+} from "./dataFilter/index.js";
+export type {
+    IAutomationMetadataObjectBase,
+    IAutomationMetadataObject,
+    IAutomationMetadataObjectDefinition,
+    IAutomationSchedule,
+    IAutomationRecipient,
+    IAutomationRecipientBase,
+    IAutomationRecipientType,
+    IAutomationUserGroupRecipient,
+    IAutomationUserRecipient,
+    IAutomationExternalRecipient,
+    IAutomationUnknownRecipient,
+    IAutomationAlert,
+    IAutomationAlertCondition,
+    IAutomationAlertExecutionDefinition,
+    IAlertComparisonOperator,
+    IAlertTriggerMode,
+    IAlertTriggerState,
+    IAutomationAlertTrigger,
+    IAutomationAlertComparisonCondition,
+    IAlertRelativeOperator,
+    IAlertRelativeArithmeticOperator,
+    IAutomationAlertRelativeCondition,
+    IAutomationDetails,
+} from "./automations/index.js";
+export {
+    isAutomationMetadataObject,
+    isAutomationMetadataObjectDefinition,
+    isAutomationUserGroupRecipient,
+    isAutomationUserRecipient,
+    isAutomationExternalUserRecipient,
+    isAutomationUnknownUserRecipient,
+} from "./automations/index.js";
+
+export type { ISemanticSearchResultItem, ISemanticSearchRelationship } from "./genAI/semanticSearch.js";
+
+export type {
+    IGenAIChatInteraction,
+    IGenAIUserContext,
+    IGenAIChatRouting,
+    IGenAICreatedVisualizations,
+    IGenAIFoundObjects,
+    IGenAIVisualization,
+    IGenAIVisualizationDimension,
+    IGenAIVisualizationMetric,
+    IGenAIActiveObject,
+    IGenAISuggestion,
+    GenAIChatRoutingUseCase,
+    GenAIChatInteractionUserFeedback,
+    GenAIChatRole,
+    GenAIVisualizationType,
+    GenAIMetricAggregation,
+    GenAIMetricType,
+    GenAIFilter,
+    GenAIPositiveAttributeFilter,
+    GenAINegativeAttributeFilter,
+    GenAIAbsoluteDateFilter,
+    GenAIRelativeDateFilter,
+    GenAIDateGranularity,
+} from "./genAI/chat.js";
+
+export type { GenAIObjectType } from "./genAI/common.js";
+
+export type { ILlmEndpointBase, ILlmEndpointOpenAI, LlmEndpointOpenAIPatch } from "./llmEndpoints/index.js";

@@ -1,2 +1,3 @@
-// (C) 2020 GoodData Corporation
-export { Tabs, ITab, ITabsProps, ITabsState, FormatXMLElementFn } from "./Tabs.js";
+// (C) 2020-2024 GoodData Corporation
+export type { ITab, ITabsProps, ITabsState, FormatXMLElementFn } from "./Tabs.js";
+export { Tabs } from "./Tabs.js";

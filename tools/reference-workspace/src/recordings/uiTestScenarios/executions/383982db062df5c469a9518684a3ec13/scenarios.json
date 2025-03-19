@@ -1,0 +1,422 @@
+[
+    {
+        "n2oMap": {
+            "m_f_density_sum": "m_f_density_sum",
+            "m_f_stagehistory.f_duration_sum": "m_f_stagehistory.f_duration_sum",
+            "m_f_stagehistory.f_velocity_sum": "m_f_stagehistory.f_velocity_sum"
+        },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Sum Velocity",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": { "identifier": "f_stagehistory.f_velocity", "type": "fact" }
+                                    }
+                                },
+                                "format": "$#,##0",
+                                "localIdentifier": "m_f_stagehistory.f_velocity_sum"
+                            }
+                        },
+                        {
+                            "measure": {
+                                "alias": "Sum Duration",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": { "identifier": "f_stagehistory.f_duration", "type": "fact" }
+                                    }
+                                },
+                                "format": "$#,##0",
+                                "localIdentifier": "m_f_stagehistory.f_duration_sum"
+                            }
+                        },
+                        {
+                            "measure": {
+                                "alias": "Sum Density",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": { "identifier": "f_density", "type": "fact" }
+                                    }
+                                },
+                                "format": "$#,##0",
+                                "localIdentifier": "m_f_density_sum"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "view" }
+            ],
+            "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Sum Velocity",
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_stagehistory.f_velocity", "type": "fact" }
+                            }
+                        },
+                        "format": "$#,##0",
+                        "localIdentifier": "m_f_stagehistory.f_velocity_sum"
+                    }
+                },
+                {
+                    "measure": {
+                        "alias": "Sum Duration",
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_stagehistory.f_duration", "type": "fact" }
+                            }
+                        },
+                        "format": "$#,##0",
+                        "localIdentifier": "m_f_stagehistory.f_duration_sum"
+                    }
+                },
+                {
+                    "measure": {
+                        "alias": "Sum Density",
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_density", "type": "fact" }
+                            }
+                        },
+                        "format": "$#,##0",
+                        "localIdentifier": "m_f_density_sum"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "multi measures",
+        "vis": "WaterfallChart"
+    },
+    {
+        "n2oMap": {
+            "m_f_density_sum": "m_f_density_sum",
+            "m_f_stagehistory.f_duration_sum": "m_f_stagehistory.f_duration_sum",
+            "m_f_stagehistory.f_velocity_sum": "m_f_stagehistory.f_velocity_sum"
+        },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Sum Velocity",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": { "identifier": "f_stagehistory.f_velocity", "type": "fact" }
+                                    }
+                                },
+                                "format": "$#,##0",
+                                "localIdentifier": "m_f_stagehistory.f_velocity_sum"
+                            }
+                        },
+                        {
+                            "measure": {
+                                "alias": "Sum Duration",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": { "identifier": "f_stagehistory.f_duration", "type": "fact" }
+                                    }
+                                },
+                                "format": "$#,##0",
+                                "localIdentifier": "m_f_stagehistory.f_duration_sum"
+                            }
+                        },
+                        {
+                            "measure": {
+                                "alias": "Sum Density",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": { "identifier": "f_density", "type": "fact" }
+                                    }
+                                },
+                                "format": "$#,##0",
+                                "localIdentifier": "m_f_density_sum"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "view" }
+            ],
+            "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Sum Velocity",
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_stagehistory.f_velocity", "type": "fact" }
+                            }
+                        },
+                        "format": "$#,##0",
+                        "localIdentifier": "m_f_stagehistory.f_velocity_sum"
+                    }
+                },
+                {
+                    "measure": {
+                        "alias": "Sum Duration",
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_stagehistory.f_duration", "type": "fact" }
+                            }
+                        },
+                        "format": "$#,##0",
+                        "localIdentifier": "m_f_stagehistory.f_duration_sum"
+                    }
+                },
+                {
+                    "measure": {
+                        "alias": "Sum Density",
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_density", "type": "fact" }
+                            }
+                        },
+                        "format": "$#,##0",
+                        "localIdentifier": "m_f_density_sum"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "multi measures with a total measure",
+        "vis": "WaterfallChart"
+    },
+    {
+        "n2oMap": {
+            "m_f_density_sum": "m_f_density_sum",
+            "m_f_stagehistory.f_duration_sum": "m_f_stagehistory.f_duration_sum",
+            "m_f_stagehistory.f_velocity_sum": "m_f_stagehistory.f_velocity_sum"
+        },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Sum Velocity",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": { "identifier": "f_stagehistory.f_velocity", "type": "fact" }
+                                    }
+                                },
+                                "format": "$#,##0",
+                                "localIdentifier": "m_f_stagehistory.f_velocity_sum"
+                            }
+                        },
+                        {
+                            "measure": {
+                                "alias": "Sum Duration",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": { "identifier": "f_stagehistory.f_duration", "type": "fact" }
+                                    }
+                                },
+                                "format": "$#,##0",
+                                "localIdentifier": "m_f_stagehistory.f_duration_sum"
+                            }
+                        },
+                        {
+                            "measure": {
+                                "alias": "Sum Density",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": { "identifier": "f_density", "type": "fact" }
+                                    }
+                                },
+                                "format": "$#,##0",
+                                "localIdentifier": "m_f_density_sum"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "view" }
+            ],
+            "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Sum Velocity",
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_stagehistory.f_velocity", "type": "fact" }
+                            }
+                        },
+                        "format": "$#,##0",
+                        "localIdentifier": "m_f_stagehistory.f_velocity_sum"
+                    }
+                },
+                {
+                    "measure": {
+                        "alias": "Sum Duration",
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_stagehistory.f_duration", "type": "fact" }
+                            }
+                        },
+                        "format": "$#,##0",
+                        "localIdentifier": "m_f_stagehistory.f_duration_sum"
+                    }
+                },
+                {
+                    "measure": {
+                        "alias": "Sum Density",
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_density", "type": "fact" }
+                            }
+                        },
+                        "format": "$#,##0",
+                        "localIdentifier": "m_f_density_sum"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "multi measures with themed",
+        "vis": "WaterfallChart"
+    },
+    {
+        "n2oMap": {
+            "m_f_density_sum": "m_f_density_sum",
+            "m_f_stagehistory.f_duration_sum": "m_f_stagehistory.f_duration_sum",
+            "m_f_stagehistory.f_velocity_sum": "m_f_stagehistory.f_velocity_sum"
+        },
+        "originalExecution": {
+            "attributes": [],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Sum Velocity",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": { "identifier": "f_stagehistory.f_velocity", "type": "fact" }
+                                    }
+                                },
+                                "format": "$#,##0",
+                                "localIdentifier": "m_f_stagehistory.f_velocity_sum"
+                            }
+                        },
+                        {
+                            "measure": {
+                                "alias": "Sum Duration",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": { "identifier": "f_stagehistory.f_duration", "type": "fact" }
+                                    }
+                                },
+                                "format": "$#,##0",
+                                "localIdentifier": "m_f_stagehistory.f_duration_sum"
+                            }
+                        },
+                        {
+                            "measure": {
+                                "alias": "Sum Density",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": { "identifier": "f_density", "type": "fact" }
+                                    }
+                                },
+                                "format": "$#,##0",
+                                "localIdentifier": "m_f_density_sum"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                { "items": [], "localIdentifier": "view" }
+            ],
+            "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Sum Velocity",
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_stagehistory.f_velocity", "type": "fact" }
+                            }
+                        },
+                        "format": "$#,##0",
+                        "localIdentifier": "m_f_stagehistory.f_velocity_sum"
+                    }
+                },
+                {
+                    "measure": {
+                        "alias": "Sum Duration",
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_stagehistory.f_duration", "type": "fact" }
+                            }
+                        },
+                        "format": "$#,##0",
+                        "localIdentifier": "m_f_stagehistory.f_duration_sum"
+                    }
+                },
+                {
+                    "measure": {
+                        "alias": "Sum Density",
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_density", "type": "fact" }
+                            }
+                        },
+                        "format": "$#,##0",
+                        "localIdentifier": "m_f_density_sum"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "multi measures with font",
+        "vis": "WaterfallChart"
+    }
+]

@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IAnalyticalBackendConfig,
@@ -20,12 +20,13 @@ import { AnalyticalWorkspaceDecorator } from "./analyticalWorkspace.js";
 import { OrganizationDecorator } from "./organization.js";
 import { OrganizationsDecorator } from "./organizations.js";
 
-export {
+export type {
     ExecutionDecoratorFactory,
     CatalogDecoratorFactory,
     SecuritySettingsDecoratorFactory,
     WorkspaceSettingsDecoratorFactory,
     AttributesDecoratorFactory,
+    AutomationsDecoratorFactory,
     DashboardsDecoratorFactory,
     DecoratorFactories,
 } from "./types.js";
@@ -47,8 +48,8 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
         return this.decorated.authenticate(force);
     }
 
-    public deauthenticate(): Promise<void> {
-        return this.decorated.deauthenticate();
+    public deauthenticate(returnTo?: string): Promise<void> {
+        return this.decorated.deauthenticate(returnTo);
     }
 
     public isAuthenticated(): Promise<IAuthenticatedPrincipal | null> {
@@ -66,6 +67,13 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
     public withTelemetry(componentName: string, props: object): IAnalyticalBackend {
         return new BackendWithDecoratedServices(
             this.decorated.withTelemetry(componentName, props),
+            this.factories,
+        );
+    }
+
+    public withCorrelation(correlationMetadata: Record<string, string>): IAnalyticalBackend {
+        return new BackendWithDecoratedServices(
+            this.decorated.withCorrelation(correlationMetadata),
             this.factories,
         );
     }

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { ScatterPlot, IScatterPlotProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
@@ -9,6 +9,13 @@ export const ScatterPlotWithMeasuresAndAttribute = {
     xAxisMeasure: ReferenceMd.Amount,
     yAxisMeasure: ReferenceMd.WinRate,
     attribute: ReferenceMd.Product.Name,
+};
+
+export const ScatterPlotWithMeasuresAttributeAndSegmentBy = {
+    xAxisMeasure: ReferenceMd.Amount,
+    yAxisMeasure: ReferenceMd.WinRate,
+    attribute: ReferenceMd.City.Name,
+    segmentBy: ReferenceMd.State.Name,
 };
 
 /*
@@ -30,6 +37,10 @@ export default scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
         attribute: ReferenceMd.Product.Name,
     })
     .addScenario("x and y axis measures and attribute", ScatterPlotWithMeasuresAndAttribute)
+    .addScenario(
+        "x and y axis measures, attribute and segmentation",
+        ScatterPlotWithMeasuresAttributeAndSegmentBy,
+    )
     .addScenario("x and y axis measures and attribute with attr sorting", {
         xAxisMeasure: ReferenceMd.Amount,
         yAxisMeasure: ReferenceMd.WinRate,
@@ -39,5 +50,5 @@ export default scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
     .addScenario("x and y axis measures and attribute with nulls in data", {
         xAxisMeasure: ReferenceMd.Amount,
         yAxisMeasure: ReferenceMd.WinRate,
-        attribute: ReferenceMd.DateDatasets.Closed.Year.Default,
+        attribute: ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
     });

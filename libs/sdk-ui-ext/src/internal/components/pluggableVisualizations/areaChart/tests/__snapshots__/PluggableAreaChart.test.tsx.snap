@@ -350,8 +350,8 @@ exports[`PluggableAreaChart > optional stacking > should return reference point 
         "isShowInPercentEnabled": true,
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> or <span class="date-field-icon" /> from <span class="stack-by">view by</span>",
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> or <span class="date-field-icon" /> from <span class="stack-by">view by</span>",
       },
       "stack": {
         "accepts": [
@@ -520,7 +520,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse all measures, onl
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
+        "title": "Metrics",
       },
       "stack": {
         "accepts": [
@@ -534,7 +534,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse all measures, onl
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "title": "Stack by",
-        "warningMessage": "To stack by an attribute, an insight can have only one measure",
+        "warningMessage": "To stack by an attribute, an visualization can have only one metric",
       },
       "view": {
         "accepts": [
@@ -552,7 +552,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse all measures, onl
           "date": 1,
         },
         "title": "View by",
-        "warningMessage": "To view by another attribute, an insight can have only one measure",
+        "warningMessage": "To view by another attribute, an visualization can have only one metric",
       },
     },
     "exportConfig": {
@@ -691,8 +691,8 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, only
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [
@@ -868,8 +868,8 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, two 
         "isShowInPercentEnabled": true,
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">view by</span>",
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">view by</span>",
       },
       "stack": {
         "accepts": [
@@ -991,8 +991,8 @@ exports[`PluggableAreaChart > should cut out measures tail when getting nM 0Vb 1
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [
@@ -1113,8 +1113,8 @@ exports[`PluggableAreaChart > should return reference point when no categories a
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [

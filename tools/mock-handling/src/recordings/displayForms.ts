@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import { IRecording, readJsonSync, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
 import { IAnalyticalBackend, IElementsQuery } from "@gooddata/sdk-backend-spi";
@@ -99,9 +99,11 @@ export class DisplayFormRecording implements IRecording {
             fs.mkdirSync(this.directory, { recursive: true });
         }
 
-        const replaceString: [string, string] | undefined = newWorkspaceId
-            ? [workspace, newWorkspaceId]
-            : undefined;
+        const replaceString: [string, string][] = [];
+
+        if (newWorkspaceId) {
+            replaceString.push([workspace, newWorkspaceId]);
+        }
 
         writeAsJsonSync(this.requestFile, this.spec, { replaceString });
         writeAsJsonSync(this.elementFile, elements, { replaceString });

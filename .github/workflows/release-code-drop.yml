@@ -27,6 +27,7 @@ jobs:
         with:
           source-branch: 'master'
           target-branch: 'release'
+          token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
 
   prepare-versions-release:
     needs: prepare-branch
@@ -61,21 +62,10 @@ jobs:
       source-branch: "master"
       skip-bump: true
 
-  publish-pre-release-release:
-    needs: prepare-versions-release
-    uses: ./.github/workflows/rw-publish-prerelease.yml
-    permissions:
-      contents: write
-      id-token: write
-    secrets: inherit
-    with:
-      source-branch: "release"
-      skip-bump: true
-
   slack-notification:
     strategy:
       matrix:
-        channels: ["#javascript-notifications", "#ask-delivery"]
+        channels: ["#javascript-notifications", "#releases"]
     runs-on: [ubuntu-latest]
     needs: [prepare-versions-release, prepare-versions-master]
     steps:

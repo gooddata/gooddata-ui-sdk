@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
@@ -9,7 +9,7 @@ import { scenariosFor } from "../../src/index.js";
 // -> they would be grouped if the grouping was enabled no matter what
 const PivotTableWithMeasureAndTwoAttributesThatHasAdjacentCellsWhenSortedByMeasure = {
     measures: [ReferenceMd.Amount],
-    rows: [ReferenceMd.Department, ReferenceMd.Product.Name],
+    rows: [ReferenceMd.Department.Default, ReferenceMd.Product.Name],
 };
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
@@ -17,7 +17,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
     .addScenario("single measure pivot with grouping sorted by first row attr", {
         ...PivotTableWithMeasureAndTwoAttributesThatHasAdjacentCellsWhenSortedByMeasure,
-        sortBy: [newAttributeSort(ReferenceMd.Department, "desc")],
+        sortBy: [newAttributeSort(ReferenceMd.Department.Default, "desc")],
     })
     .addScenario("single measure pivot with grouping sorted by second row attr", {
         ...PivotTableWithMeasureAndTwoAttributesThatHasAdjacentCellsWhenSortedByMeasure,

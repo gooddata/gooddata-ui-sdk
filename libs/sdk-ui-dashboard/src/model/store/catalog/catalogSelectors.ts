@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import flatMap from "lodash/flatMap.js";
 import {
@@ -14,7 +14,9 @@ import {
     objRefToString,
     IDateHierarchyTemplate,
     ICatalogDateAttributeHierarchy,
-    isCatalogAttributeHierarchy,
+    idRef,
+    getHierarchyAttributes,
+    getHierarchyRef,
 } from "@gooddata/sdk-model";
 
 import {
@@ -74,6 +76,18 @@ export const selectCatalogAttributeDisplayForms: DashboardSelector<IAttributeDis
 /**
  * @public
  */
+export const selectCatalogAttributeDisplayFormsById: DashboardSelector<
+    Record<string, IAttributeDisplayFormMetadataObject>
+> = createSelector(selectCatalogAttributeDisplayForms, (displayForms) => {
+    return displayForms.reduce((acc, displayForm) => {
+        acc[displayForm.id] = displayForm;
+        return acc;
+    }, {} as Record<string, IAttributeDisplayFormMetadataObject>);
+});
+
+/**
+ * @public
+ */
 export const selectCatalogMeasures: DashboardSelector<ICatalogMeasure[]> = createSelector(
     selectSelf,
     (state) => {
@@ -121,6 +135,20 @@ export const selectHasCatalogDateDatasets: DashboardSelector<boolean> = createSe
     selectCatalogDateDatasets,
     negate(isEmpty),
 );
+
+/**
+ * @alpha
+ */
+export const selectCatalogIsLoaded: DashboardSelector<boolean> = createSelector(selectSelf, (state) => {
+    return [
+        state.attributes,
+        state.measures,
+        state.dateDatasets,
+        state.facts,
+        state.attributeHierarchies,
+        state.dateHierarchyTemplates,
+    ].every((item) => item !== undefined);
+});
 
 /**
  * @public
@@ -192,9 +220,33 @@ export const selectAttributesWithDrillDown: DashboardSelector<(ICatalogAttribute
     );
 
 /**
+ * Descendant of the attribute hierarchy.
  * @alpha
  */
-export const selectAttributesWithHierarchyDescendants: DashboardSelector<Record<string, ObjRef[]>> =
+export type HierarchyDescendant = {
+    /**
+     * Reference to the hierarchy.
+     */
+    hierarchyRef: ObjRef;
+    /**
+     * Reference to the hierarchy descendant - attribute or date attribute.
+     */
+    descendantRef: ObjRef;
+};
+
+/**
+ * Dictionary of the hierarchy descendants grouped by particular attribute.
+ * Key is the attribute id.
+ * Value is the array of the descendants with their respective hierarchy ref.
+ *
+ * @alpha
+ */
+export type HierarchyDescendantsByAttributeId = Record<string, HierarchyDescendant[]>;
+
+/**
+ * @alpha
+ */
+export const selectAttributesWithHierarchyDescendants: DashboardSelector<HierarchyDescendantsByAttributeId> =
     createSelector(
         [selectCatalogAttributes, selectCatalogDateAttributes, selectAllCatalogAttributeHierarchies],
         (attributes = [], dateAttributes = [], attributeHierarchies = []) => {
@@ -294,20 +346,20 @@ export const selectCatalogDateAttributeToDataset: DashboardSelector<
     );
 });
 
+//
 function getAttributesWithHierarchyDescendants(
     attributes: ICatalogAttribute[],
     dateAttributes: ICatalogDateAttribute[],
     attributeHierarchies: (ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy)[],
-): Record<string, ObjRef[]> {
+): HierarchyDescendantsByAttributeId {
     const allCatalogAttributes = [...attributes, ...dateAttributes];
-    const attributeDescendants: Record<string, ObjRef[]> = {};
+    const attributeDescendants: HierarchyDescendantsByAttributeId = {};
 
     allCatalogAttributes.forEach((attribute) => {
         const attributeRef = attribute.attribute.ref;
         attributeHierarchies.forEach((hierarchy) => {
-            const attributes = isCatalogAttributeHierarchy(hierarchy)
-                ? hierarchy.attributeHierarchy.attributes
-                : hierarchy.attributes;
+            const hierarchyRef = getHierarchyRef(hierarchy);
+            const attributes = getHierarchyAttributes(hierarchy);
             const foundAttributeIndex = attributes.findIndex((ref) => areObjRefsEqual(ref, attributeRef));
 
             if (foundAttributeIndex < 0) {
@@ -321,10 +373,14 @@ function getAttributesWithHierarchyDescendants(
             }
 
             const attributeRefAsString = objRefToString(attributeRef);
+            const descendantWithHierarchy: HierarchyDescendant = {
+                hierarchyRef,
+                descendantRef: foundDescendant,
+            };
             if (attributeDescendants[attributeRefAsString]) {
-                attributeDescendants[attributeRefAsString].push(foundDescendant);
+                attributeDescendants[attributeRefAsString].push(descendantWithHierarchy);
             } else {
-                attributeDescendants[attributeRefAsString] = [foundDescendant];
+                attributeDescendants[attributeRefAsString] = [descendantWithHierarchy];
             }
         });
     });
@@ -362,6 +418,12 @@ function buildDateHierarchy(
     if (!isEmpty(dateAttributesInHierarchy)) {
         return {
             type: "dateAttributeHierarchy",
+            // create ref of adhoc date hierarchy by combining date dataset id and date template id
+            // this ref should not be stored on MD server as it is not existing MD object
+            ref: idRef(
+                `${dateTemplate.id}/${objRefToString(dateDataset.dataSet.ref)}`,
+                "dateAttributeHierarchy",
+            ),
             templateId: dateTemplate.id,
             dateDatasetRef: dateDataset.dataSet.ref,
             title: dateDataset.dataSet.title,

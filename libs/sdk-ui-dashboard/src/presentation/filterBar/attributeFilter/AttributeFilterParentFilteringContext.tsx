@@ -8,10 +8,15 @@ import {
     areObjRefsEqual,
     ObjRef,
     DashboardAttributeFilterConfigModeValues,
+    IAttributeOrMeasure,
+    IDashboardDateFilter,
+    IAttributeElement,
 } from "@gooddata/sdk-model";
 import {
     selectAllCatalogDisplayFormsMap,
     selectAttributeFilterDisplayFormsMap,
+    selectFilterContextDateFilter,
+    selectFilterContextDateFiltersWithDimension,
     selectOtherContextAttributeFilters,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -22,6 +27,7 @@ import { useTitleConfiguration } from "./dashboardDropdownBody/configuration/hoo
 import { useSelectionModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useSelectionModeConfiguration.js";
 import { useModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useModeConfiguration.js";
 import { useLimitingItemsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useLimitingItemsConfiguration.js";
+import { useDependentDateFiltersConfiguration } from "./dashboardDropdownBody/configuration/hooks/useDependentDateFiltersConfiguration.js";
 
 /**
  * @internal
@@ -31,12 +37,17 @@ export type IAttributeFilterParentFiltering = ReturnType<typeof useParentsConfig
     ReturnType<typeof useTitleConfiguration> &
     ReturnType<typeof useSelectionModeConfiguration> &
     ReturnType<typeof useModeConfiguration> & {
-        onConfigurationSave: () => void;
+        onConfigurationSave: (
+            currentDisplayFormRef: ObjRef,
+            committedSelectionElements: IAttributeElement[],
+        ) => void;
         showDisplayFormPicker: boolean;
         showResetTitle: boolean;
         defaultAttributeFilterTitle?: string;
         attributeFilterDisplayForm: ObjRef;
-    } & ReturnType<typeof useLimitingItemsConfiguration>;
+        availableDatasetsForFilter: IAttributeOrMeasure[];
+    } & ReturnType<typeof useLimitingItemsConfiguration> &
+    ReturnType<typeof useDependentDateFiltersConfiguration>;
 
 export const AttributeFilterParentFiltering = React.createContext<IAttributeFilterParentFiltering>(
     null as any,
@@ -55,6 +66,7 @@ export const useAttributeFilterParentFiltering = (): IAttributeFilterParentFilte
  */
 export type IAttributeFilterParentFilteringProviderProps = {
     filter: IDashboardAttributeFilter;
+    displayAsLabel?: ObjRef;
     attributes?: IAttributeMetadataObject[];
     children?: React.ReactNode;
 };
@@ -65,7 +77,19 @@ export type IAttributeFilterParentFilteringProviderProps = {
 export const AttributeFilterParentFilteringProvider: React.FC<
     IAttributeFilterParentFilteringProviderProps
 > = (props) => {
-    const { children, filter: currentFilter, attributes } = props;
+    const { children, filter: currentFilter, attributes, displayAsLabel } = props;
+
+    const availableDatasetsForFilter: IAttributeOrMeasure[] = useMemo(
+        () => [
+            {
+                attribute: {
+                    localIdentifier: currentFilter.attributeFilter.localIdentifier!,
+                    displayForm: displayAsLabel ?? currentFilter.attributeFilter.displayForm,
+                },
+            },
+        ],
+        [currentFilter, displayAsLabel],
+    );
 
     const attributeFilter = useMemo(
         () => dashboardAttributeFilterToAttributeFilter(currentFilter),
@@ -82,6 +106,14 @@ export const AttributeFilterParentFilteringProvider: React.FC<
 
     const neighborFilters: IDashboardAttributeFilter[] = useDashboardSelector(
         selectOtherContextAttributeFilters(filterRef),
+    );
+
+    const neighborDateFilters: IDashboardDateFilter[] = useDashboardSelector(
+        selectFilterContextDateFiltersWithDimension,
+    );
+
+    const commonDateFilter: IDashboardDateFilter | undefined = useDashboardSelector(
+        selectFilterContextDateFilter,
     );
 
     const catalogDisplayFormsMap = useDashboardSelector(selectAllCatalogDisplayFormsMap);
@@ -109,13 +141,22 @@ export const AttributeFilterParentFilteringProvider: React.FC<
     } = useParentsConfiguration(neighborFilters, currentFilter);
 
     const {
+        dependentDateFilters,
+        dependentCommonDateFilter,
+        onDependentDateFiltersSelect,
+        onConfigurationClose: onDependentDateFiltersClose,
+        onDependentDateFiltersChange,
+        onDependentDateFiltersConfigurationChanged,
+    } = useDependentDateFiltersConfiguration(neighborDateFilters, currentFilter, commonDateFilter);
+
+    const {
         onDisplayFormSelect,
         filterDisplayForms,
         displayFormChanged,
         onDisplayFormChange,
         onConfigurationClose: onDisplayFormClose,
         displayFormChangeStatus,
-    } = useDisplayFormConfiguration(currentFilter, memoizedAttributes);
+    } = useDisplayFormConfiguration(currentFilter, memoizedAttributes, displayAsLabel);
 
     const {
         title,
@@ -155,10 +196,12 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         // the order is important to keep the app in valid state
         if (selectionMode === "single") {
             onParentFiltersChange();
+            onDependentDateFiltersChange();
             onSelectionModeChange();
         } else {
             onSelectionModeChange();
             onParentFiltersChange();
+            onDependentDateFiltersChange();
         }
         onDisplayFormChange();
         onTitleChange();
@@ -172,6 +215,7 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onSelectionModeChange,
         onModeChange,
         onLimitingItemsChange,
+        onDependentDateFiltersChange,
     ]);
 
     const onConfigurationClose = useCallback(() => {
@@ -181,6 +225,7 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onSelectionModeClose();
         onModeClose();
         onLimitingItemsClose();
+        onDependentDateFiltersClose();
     }, [
         onParentFiltersClose,
         onDisplayFormClose,
@@ -188,6 +233,7 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onSelectionModeClose,
         onModeClose,
         onLimitingItemsClose,
+        onDependentDateFiltersClose,
     ]);
 
     const showDisplayFormPicker = filterDisplayForms.availableDisplayForms.length > 1;
@@ -230,6 +276,12 @@ export const AttributeFilterParentFilteringProvider: React.FC<
                 limitingItemsChanged,
                 onLimitingItemsUpdate,
                 onLimitingItemsChange,
+                availableDatasetsForFilter,
+                dependentDateFilters,
+                dependentCommonDateFilter,
+                onDependentDateFiltersSelect,
+                onDependentDateFiltersChange,
+                onDependentDateFiltersConfigurationChanged,
             }}
         >
             {children}

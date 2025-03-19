@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { v4 as uuid } from "uuid";
 import debounce from "lodash/debounce.js";
@@ -29,6 +29,10 @@ import ptBR from "date-fns/locale/pt-BR/index.js";
 import zhCN from "date-fns/locale/zh-CN/index.js";
 import ru from "date-fns/locale/ru/index.js";
 import it from "date-fns/locale/it/index.js";
+import enGB from "date-fns/locale/en-GB/index.js";
+import frCA from "date-fns/locale/fr-CA/index.js";
+import fi from "date-fns/locale/fi/index.js";
+import enAU from "date-fns/locale/en-AU/index.js";
 
 const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-day_outside";
 
@@ -36,6 +40,7 @@ const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-day_outside";
  * @internal
  */
 export interface IDatePickerOwnProps {
+    ariaLabelledBy?: string;
     date?: Date; // date value used to initialize date picker
     className?: string; // optional css applied to outer div
     placeholder?: string;
@@ -72,6 +77,13 @@ const convertedLocales: Record<string, Locale> = {
     "zh-Hans": zhCN,
     "ru-RU": ru,
     "it-IT": it,
+    "es-419": es,
+    "en-GB": enGB,
+    "fr-CA": frCA,
+    "zh-Hant": zhCN,
+    "zh-HK": zhCN,
+    "en-AU": enAU,
+    "fi-FI": fi,
 };
 
 function formatDate(date: Date, dateFormat: string): string {
@@ -172,7 +184,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         const { props } = this;
 
         if (props.date > nextProps.date || props.date < nextProps.date) {
-            const selectedDate = this.updateDate(nextProps.date);
+            const selectedDate = this.updateDate(nextProps.date || new Date());
             this.setState({ selectedDate });
             this.setState({ monthDate: selectedDate });
             this.setState({ inputValue: formatDate(selectedDate, props.dateFormat) });
@@ -311,7 +323,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
 
     private alignDatePicker() {
         const { alignPoints } = this.props;
-        const container = this.datePickerContainerRef.current.parentElement;
+        const container = this.datePickerContainerRef.current?.parentElement;
 
         if (!alignPoints || !container) return;
 
@@ -352,7 +364,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
 
     public render(): React.ReactNode {
         const { inputValue, selectedDate, monthDate, isOpen } = this.state;
-        const { placeholder, intl, tabIndex } = this.props;
+        const { ariaLabelledBy, placeholder, intl, tabIndex } = this.props;
 
         const classNamesProps: ClassNames = {
             root: this.getOverlayWrapperClasses(),
@@ -366,6 +378,11 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
                 onClick={this.handleWrapperClick}
             >
                 <input
+                    role="combobox"
+                    aria-haspopup="dialog"
+                    aria-expanded={isOpen ? "true" : "false"}
+                    aria-controls="datepicker-popup"
+                    aria-labelledby={ariaLabelledBy}
                     onKeyDown={this.onKeyDown}
                     tabIndex={tabIndex}
                     onClick={() => this.setState({ isOpen: true })}
@@ -378,7 +395,12 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
                 />
 
                 {isOpen ? (
-                    <div role="datepicker-picker" ref={this.datePickerContainerRef}>
+                    <div
+                        id="datepicker-popup"
+                        role="dialog"
+                        aria-label={intl.formatMessage({ id: "datePicker.accessibility.label" })}
+                        ref={this.datePickerContainerRef}
+                    >
                         <DayPicker
                             classNames={classNamesProps}
                             locale={convertLocale(intl.locale)}

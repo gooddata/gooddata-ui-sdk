@@ -1,9 +1,14 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Overlay, ItemsWrapper, Item, IAlignPoint, BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 import { idRef } from "@gooddata/sdk-model";
-import { selectExecutionResultByRef, useDashboardSelector } from "../../../../../model/index.js";
+import {
+    IExecutionResultEnvelope,
+    selectExecutionResultByRef,
+    selectSettings,
+    useDashboardSelector,
+} from "../../../../../model/index.js";
 import { isDataError, isDataErrorTooLarge } from "../../../../../_staging/errors/errorPredicates.js";
 
 const overlayAlignPoints: IAlignPoint[] = [
@@ -18,12 +23,27 @@ const overlayAlignPoints: IAlignPoint[] = [
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cl br" }];
 
+const getExportTooltip = (execution?: IExecutionResultEnvelope, enableRawExports?: boolean): string => {
+    if (isDataErrorTooLarge(execution?.error)) {
+        return "options.menu.data.too.large";
+    } else if (isDataError(execution?.error)) {
+        if (enableRawExports) {
+            return "options.menu.unsupported.raw.error";
+        } else {
+            return "options.menu.unsupported.error";
+        }
+    }
+    return "options.menu.unsupported.loading";
+};
+
 export interface IDrillModalRawExportOptionsProps {
     showDropdown: boolean;
     toggleShowDropdown(): void;
     exportXLSXEnabled: boolean;
     onExportXLSX: () => void;
     exportCSVEnabled: boolean;
+    exportCSVRawEnabled: boolean;
+    isExporting: boolean;
     onExportCSV: () => void;
     onExportCSVRaw: () => void;
 }
@@ -78,29 +98,24 @@ const DrillModalExportMenuItem: React.FC<IDrillModalExportMenuItemProps> = ({
         />
     );
 };
-
 const DRILL_MODAL_EXECUTION_PSEUDO_REF = idRef("@@GDC_DRILL_MODAL");
 
 const DrillModalRawExportOptions: React.FC<IDrillModalRawExportOptionsProps> = ({
     showDropdown,
     exportXLSXEnabled,
     exportCSVEnabled,
+    exportCSVRawEnabled,
+    isExporting,
     toggleShowDropdown,
     onExportXLSX,
     onExportCSV,
     onExportCSVRaw,
 }) => {
     const execution = useDashboardSelector(selectExecutionResultByRef(DRILL_MODAL_EXECUTION_PSEUDO_REF));
-
-    const partialWarning =
-        execution?.warnings?.filter((warning) => warning.warningCode === "gdc.pixtab.partial") ?? [];
-
-    const tooltip =
-        isDataErrorTooLarge(execution?.error) || partialWarning.length > 0
-            ? "widget.drill.modal.data.too.large"
-            : isDataError(execution?.error)
-            ? "options.menu.unsupported.error"
-            : "options.menu.unsupported.loading";
+    const settings = useDashboardSelector(selectSettings);
+    const tooltip = isExporting
+        ? "options.menu.export.in.progress"
+        : getExportTooltip(execution, settings?.enableRawExports);
 
     return showDropdown ? (
         <Overlay
@@ -126,12 +141,13 @@ const DrillModalRawExportOptions: React.FC<IDrillModalRawExportOptionsProps> = (
                     bubbleTextId={tooltip}
                     messageId="widget.drill.dialog.exportToCSV.formatted"
                 />
-                <Item
+                <DrillModalExportMenuItem
                     onClick={onExportCSVRaw}
-                    className="options-menu-export-csv-raw s-export-drilled-insight-csv"
-                >
-                    <FormattedMessage id="widget.drill.dialog.exportToCSV.raw" />
-                </Item>
+                    className="options-menu-export-csv-formatted s-export-drilled-insight-csv-raw"
+                    disabled={!exportCSVRawEnabled}
+                    bubbleTextId={tooltip}
+                    messageId="widget.drill.dialog.exportToCSV.raw"
+                />
             </ItemsWrapper>
         </Overlay>
     ) : null;

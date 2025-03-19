@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IChartConfig } from "../../../interfaces/index.js";
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { ICategory, IUnsafeHighchartsTooltipPoint, ITooltipFactory } from "../../typings/unsafe.js";
@@ -203,6 +203,51 @@ export function generateTooltipXYFn(
                 customEscape(measures[2].measureHeaderItem.name),
                 formatValueForTooltip(point.z, measures[2].measureHeaderItem.format, separators),
             ]);
+        }
+
+        return renderTooltipHTML(textData, maxTooltipContentWidth);
+    };
+}
+
+export function generateTooltipScatterPlotFn(
+    measures: IMeasureDescriptor[],
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    config: IChartConfig = {},
+    clusterTitle?: string,
+): ITooltipFactory {
+    const { separators } = config;
+
+    return (point: IUnsafeHighchartsTooltipPoint, maxTooltipContentWidth: number): string => {
+        const textData = [];
+        const viewByName = point.name ? point.name : point.series.name;
+        const stackByName = point.segmentName ? point.segmentName : point.series.name;
+        const clusterName = point.clusterName ? point.clusterName : point.series.name;
+
+        if (viewByAttribute) {
+            textData.unshift([customEscape(viewByAttribute.formOf.name), customEscape(viewByName)]);
+        }
+
+        if (stackByAttribute) {
+            textData.unshift([customEscape(stackByAttribute.formOf.name), customEscape(stackByName)]);
+        }
+
+        if (measures[0]) {
+            textData.push([
+                customEscape(measures[0].measureHeaderItem.name),
+                formatValueForTooltip(point.x, measures[0].measureHeaderItem.format, separators),
+            ]);
+        }
+
+        if (measures[1]) {
+            textData.push([
+                customEscape(measures[1].measureHeaderItem.name),
+                formatValueForTooltip(point.y, measures[1].measureHeaderItem.format, separators),
+            ]);
+        }
+
+        if (config?.clustering?.enabled && clusterName) {
+            textData.unshift([clusterTitle, customEscape(clusterName)]);
         }
 
         return renderTooltipHTML(textData, maxTooltipContentWidth);

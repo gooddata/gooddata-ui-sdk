@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "typo-mixins";
 @use "variables";
 
@@ -29,8 +29,12 @@
     font-size: 14px;
     text-align: center;
 
+    &:focus-visible {
+        outline: auto;
+    }
+
     &:hover {
-        color: var(--gd-palette-complementary-8, variables.$is-focused-color);
+        color: var(--gd-palette-complementary-8-from-theme, variables.$is-focused-color);
         border-bottom: 3px solid variables.$gd-border-color;
     }
 

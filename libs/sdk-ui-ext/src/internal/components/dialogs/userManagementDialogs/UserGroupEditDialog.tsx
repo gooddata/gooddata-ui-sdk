@@ -1,6 +1,6 @@
 // (C) 2023-2024 GoodData Corporation
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 import { Tabs, Overlay, IAlignPoint, Message } from "@gooddata/sdk-ui-kit";
@@ -25,7 +25,7 @@ import { EditUserGroupDetails } from "./Details/EditUserGroupDetails.js";
 import { UserGroupDetailsView } from "./Details/UserGroupDetailsView.js";
 import { UsersList } from "./Users/UsersList.js";
 import { extractUserGroupName } from "./utils.js";
-import { IGrantedDataSource, UserGroupEditDialogMode } from "./types.js";
+import { IGrantedDataSource, IGrantedWorkspace, UserGroupEditDialogMode } from "./types.js";
 import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
 import { DataSourceList } from "./DataSources/DataSourceList.js";
 import { AddDataSource } from "./DataSources/AddDataSource.js";
@@ -46,6 +46,7 @@ export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
     onSuccess: () => void;
     onClose: () => void;
     renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
+    areFilterViewsEnabled?: boolean;
 }
 
 const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
@@ -56,6 +57,7 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
     onClose,
     initialView = "VIEW",
     renderDataSourceIcon,
+    areFilterViewsEnabled = false,
 }) => {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserGroupDialogMode(initialView);
@@ -133,6 +135,23 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
 
     const isOpenedInEditMode = initialView !== "VIEW";
 
+    const [workspaceToEdit, setWorkspaceToEdit] = useState<IGrantedWorkspace>(undefined);
+
+    const handleWorkspaceEdit = (workspace: IGrantedWorkspace) => {
+        setWorkspaceToEdit(workspace);
+        setDialogMode("WORKSPACE");
+    };
+
+    const handleWorkspaceChanged = (workspaces: IGrantedWorkspace[]) => {
+        setWorkspaceToEdit(undefined);
+        onWorkspacesChanged(workspaces);
+    };
+
+    const handleWorkspaceCancel = () => {
+        setWorkspaceToEdit(undefined);
+        setDialogMode("VIEW");
+    };
+
     const isLoading = error
         ? false
         : userGroupIsLoading || !grantedWorkspaces || !grantedUsers || !grantedDataSources;
@@ -153,6 +172,7 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
                 isModal={true}
                 positionType="fixed"
                 className={dialogOverlayClassNames}
+                resizeObserverThreshold={0.2}
             >
                 <div className={dialogWrapperClassNames}>
                     {isLoading ? (
@@ -214,6 +234,8 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
                                             mode="VIEW"
                                             onDelete={removeGrantedWorkspace}
                                             onChange={updateGrantedWorkspace}
+                                            areFilterViewsEnabled={areFilterViewsEnabled}
+                                            onClick={handleWorkspaceEdit}
                                         />
                                     )}
                                     {selectedTabId.id === userGroupDialogTabsMessages.dataSources.id && (
@@ -246,9 +268,11 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
                                     subjectType="userGroup"
                                     grantedWorkspaces={grantedWorkspaces}
                                     enableBackButton={!isOpenedInEditMode}
-                                    onSubmit={onWorkspacesChanged}
-                                    onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
+                                    onSubmit={handleWorkspaceChanged}
+                                    onCancel={isOpenedInEditMode ? onClose : handleWorkspaceCancel}
                                     onClose={onClose}
+                                    areFilterViewsEnabled={areFilterViewsEnabled}
+                                    editWorkspace={workspaceToEdit}
                                 />
                             )}
                             {dialogMode === "USERS" && (

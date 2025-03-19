@@ -241,6 +241,27 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-ui-gen-ai",
+            "projectFolder": "libs/sdk-ui-gen-ai",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-semantic-search",
+            "projectFolder": "libs/sdk-ui-semantic-search",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "@gooddata/sdk-interactive-example-repeater",
+            "projectFolder": "examples/sdk-interactive-examples/examples/example-repeater",
+            "reviewCategory": "examples",
+            "versionPolicyName": "sdk-examples",
+            "shouldPublish": false
+        },
+        {
             "packageName": "@gooddata/sdk-interactive-example-dependentfilters",
             "projectFolder": "examples/sdk-interactive-examples/examples/example-dependentfilters",
             "reviewCategory": "examples",
@@ -407,13 +428,6 @@
             "shouldPublish": false
         },
         {
-            "packageName": "@gooddata/experimental-workspace",
-            "projectFolder": "tools/experimental-workspace",
-            "reviewCategory": "tools",
-            "versionPolicyName": "sdk",
-            "shouldPublish": true
-        },
-        {
             "packageName": "@gooddata/util",
             "projectFolder": "libs/util",
             "reviewCategory": "production",
@@ -431,13 +445,6 @@
             "packageName": "@gooddata/sdk-ui-kit",
             "projectFolder": "libs/sdk-ui-kit",
             "reviewCategory": "production",
-            "versionPolicyName": "sdk",
-            "shouldPublish": true
-        },
-        {
-            "packageName": "@gooddata/live-examples-workspace",
-            "projectFolder": "tools/live-examples-workspace",
-            "reviewCategory": "tools",
             "versionPolicyName": "sdk",
             "shouldPublish": true
         },
@@ -546,13 +553,6 @@
             "shouldPublish": true
         },
         {
-            "packageName": "@gooddata/sdk-backend-bear",
-            "projectFolder": "libs/sdk-backend-bear",
-            "reviewCategory": "production",
-            "versionPolicyName": "sdk",
-            "shouldPublish": true
-        },
-        {
             "packageName": "@gooddata/sdk-model",
             "projectFolder": "libs/sdk-model",
             "reviewCategory": "production",
@@ -569,20 +569,6 @@
         {
             "packageName": "@gooddata/api-client-tiger",
             "projectFolder": "libs/api-client-tiger",
-            "reviewCategory": "production",
-            "versionPolicyName": "sdk",
-            "shouldPublish": true
-        },
-        {
-            "packageName": "@gooddata/api-client-bear",
-            "projectFolder": "libs/api-client-bear",
-            "reviewCategory": "production",
-            "versionPolicyName": "sdk",
-            "shouldPublish": true
-        },
-        {
-            "packageName": "@gooddata/api-model-bear",
-            "projectFolder": "libs/api-model-bear",
             "reviewCategory": "production",
             "versionPolicyName": "sdk",
             "shouldPublish": true
@@ -609,12 +595,6 @@
         {
             "packageName": "@gooddata/playground",
             "projectFolder": "examples/playground",
-            "reviewCategory": "examples",
-            "shouldPublish": false
-        },
-        {
-            "packageName": "@gooddata/sdk-examples",
-            "projectFolder": "examples/sdk-examples",
             "reviewCategory": "examples",
             "shouldPublish": false
         },

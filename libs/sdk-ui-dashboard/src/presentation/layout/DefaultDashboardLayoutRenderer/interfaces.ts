@@ -1,10 +1,14 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+import { CSSProperties } from "react";
 import { IDashboardLayout, IDashboardWidget, ScreenSize } from "@gooddata/sdk-model";
+
 import { RenderMode } from "../../../types.js";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
-} from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+} from "../../../_staging/dashboard/legacyFluidLayout/facade/interfaces.js";
+import { CommonExportDataAttributes, SectionExportData } from "../../export/index.js";
+import { DashboardFocusObject } from "../../../model/index.js";
 
 /**
  * Default props provided to {@link IDashboardLayoutSectionKeyGetter}.
@@ -81,6 +85,16 @@ export interface IDashboardLayoutSectionRenderProps<TWidget = IDashboardWidget> 
      * Is hidden section? Use this to hide the section without remounting it.
      */
     isHidden?: boolean;
+
+    /**
+     * Data for section export in export mode.
+     */
+    exportData?: CommonExportDataAttributes;
+
+    /**
+     * Styles for section export in export mode.
+     */
+    exportStyles?: CSSProperties;
 }
 
 /**
@@ -113,6 +127,11 @@ export interface IDashboardLayoutSectionHeaderRenderProps<TWidget = IDashboardWi
      * Default renderer of the section header - can be used as a fallback for custom sectionHeaderRenderer.
      */
     DefaultSectionHeaderRenderer: IDashboardLayoutSectionHeaderRenderer<TWidget>;
+
+    /**
+     * Data for header export in export mode.
+     */
+    exportData?: SectionExportData;
 }
 
 /**
@@ -399,9 +418,22 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
     enableCustomHeight?: boolean;
 
     /**
+     * Transformer for export layout
+     */
+    exportTransformer?: <TWidget>(
+        layout: IDashboardLayout<TWidget>,
+        focusObject?: DashboardFocusObject,
+    ) => IDashboardLayout<TWidget> | undefined;
+
+    /**
      * Dashboard render mode
      */
     renderMode?: RenderMode;
+
+    /**
+     * Dashboard focus object.
+     */
+    focusObject?: DashboardFocusObject;
 }
 
 /**

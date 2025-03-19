@@ -176,6 +176,7 @@ rushx build
 ### What should the commits look like?
 
 Commits should follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+Following format and rules are enforced by CI checks.
 
 Example:
 
@@ -191,6 +192,7 @@ feat(sdk-model): clarify attribute area sort
 -  but this way, the intent is cleaner
 -  also, the aggregation: boolean was not good, this is indeed a function that may one day support more
 
+risk: low
 JIRA: RAIL-2175
 ```
 
@@ -236,13 +238,16 @@ not be a dot (full stop) at the end of the header line.
 
 #### Body
 
-Description of the commit content and more details to the short
-description in the title. The lines must be wrapped at 72 characters.
+A detailed description of the commit, expanding on the short description in the title.
+Lines must be wrapped at 72 characters.
 
 #### Footer
 
-Footer should contain JIRA ID reference in the form of `JIRA: PROJECT-TICKET_ID`.
-Changes that do not require a JIRA ticket (e.g. typo fixes) should have `TRIVIAL` in the footer instead or omit the footer.
+The commit must include a footer.
+
+The first (optional) line contains a JIRA ID reference in the format `JIRA: PROJECT-TICKET_ID`. For changes that do not require a JIRA ticket (e.g., typo fixes), use `JIRA: TRIVIAL` in the footer or omit this line entirely.
+
+The second line specifies the potential risk introduced by the commit in the format `risk: [nonprod|low|high]`, e.g., `risk: low`.
 
 #### Breaking changes
 

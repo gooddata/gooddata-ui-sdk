@@ -1,8 +1,7 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 // Globals injected by webpack
 
 declare const BACKEND_URL: string;
-declare const BACKEND_TYPE: "BEAR" | "TIGER";
 declare const WORKSPACE_ID: string;
 
 declare const BASEPATH: string;

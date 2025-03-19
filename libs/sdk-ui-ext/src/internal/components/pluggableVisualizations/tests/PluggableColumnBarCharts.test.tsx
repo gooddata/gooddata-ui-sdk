@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import noop from "lodash/noop.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
@@ -525,7 +525,7 @@ describe("PluggableColumnBarCharts", () => {
             [
                 "on viewby when stacks present",
                 insightDefinitionWithStackBy,
-                Department,
+                Department.Default,
                 targetUri,
                 intersection,
                 expectedInsightDefinitionWithStackByDrillToDepartment,
@@ -533,7 +533,7 @@ describe("PluggableColumnBarCharts", () => {
             [
                 "on stackby when stacks present",
                 insightDefinitionWithStackBy,
-                Region,
+                Region.Default,
                 targetUri,
                 intersection,
                 expectedInsightDefinitionWithStackByDrillToRegion,
@@ -541,7 +541,7 @@ describe("PluggableColumnBarCharts", () => {
             [
                 "on viewby when stacks not present",
                 insightDefinition,
-                Region,
+                Region.Default,
                 targetUri,
                 intersection,
                 expectedInsightDefinitionDrillToRegion,

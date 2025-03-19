@@ -1,10 +1,12 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
+
 import {
-    isAttributeHeader,
-    IExecutionResult as IBearExecutionResult,
+    IExecutionResult as ILegacyExecutionResult,
     IResultDimension,
     IExecutionResponse,
-} from "@gooddata/api-model-bear";
+    isAttributeHeader,
+} from "./legacyBackendTypes.js";
+
 import {
     IAnalyticalBackendConfig,
     IAuthenticatedPrincipal,
@@ -42,6 +44,16 @@ import {
     IEntitlements,
     IAttributeHierarchiesService,
     IDataSourcesService,
+    IWorkspaceExportDefinitionsService,
+    IDataFiltersService,
+    IWorkspaceLogicalModelService,
+    IForecastResult,
+    IForecastView,
+    IAnomalyDetectionResult,
+    IClusteringResult,
+    IClusteringConfig,
+    IWorkspaceAutomationService,
+    IGenAIService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -125,6 +137,9 @@ export function legacyRecordedBackend(
         withTelemetry(_component: string, _props: object): IAnalyticalBackend {
             return noopBackend;
         },
+        withCorrelation(_correlationMetadata: Record<string, string>): IAnalyticalBackend {
+            return noopBackend;
+        },
         withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
             return this;
         },
@@ -193,6 +208,9 @@ function recordedWorkspace(
         getDescriptor(): Promise<IWorkspaceDescriptor> {
             throw new NotSupported("not supported");
         },
+        updateDescriptor(): Promise<IWorkspaceDescriptor> {
+            throw new NotSupported("not supported");
+        },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
             throw new NotSupported("not supported");
         },
@@ -247,6 +265,26 @@ function recordedWorkspace(
         attributeHierarchies(): IAttributeHierarchiesService {
             throw new NotSupported("not supported");
         },
+
+        exportDefinitions(): IWorkspaceExportDefinitionsService {
+            throw new NotSupported("not supported");
+        },
+
+        dataFilters(): IDataFiltersService {
+            throw new NotSupported("not supported");
+        },
+
+        logicalModel(): IWorkspaceLogicalModelService {
+            throw new NotSupported("not supported");
+        },
+
+        automations(): IWorkspaceAutomationService {
+            throw new NotSupported("not supported");
+        },
+
+        genAI(): IGenAIService {
+            throw new NotSupported("not supported");
+        },
     };
 }
 
@@ -265,7 +303,7 @@ function recordedDataView(
     result: IExecutionResult,
     recording: LegacyExecutionRecording,
 ): IDataView {
-    const afmResult = recording.result.executionResult as IBearExecutionResult;
+    const afmResult = recording.result.executionResult as ILegacyExecutionResult;
     const fp = defFingerprint(definition) + "/recordedData";
 
     return {
@@ -282,6 +320,24 @@ function recordedDataView(
         },
         equals(other: IDataView): boolean {
             return fp === other.fingerprint();
+        },
+        withForecast(): IDataView {
+            throw new NotSupported("not supported");
+        },
+        forecast(): IForecastView {
+            return {
+                headerItems: [],
+                low: [],
+                high: [],
+                prediction: [],
+                loading: false,
+            };
+        },
+        clustering(): IClusteringResult {
+            throw new NotSupported("Clustering is not supported by the legacy recorded backend.");
+        },
+        withClustering(_config?: IClusteringConfig, _result?: IClusteringResult): IDataView {
+            throw new NotSupported("Clustering is not supported by the legacy recorded backend.");
         },
     };
 }
@@ -340,6 +396,15 @@ function recordedExecutionResult(
         readWindow(_1: number[], _2: number[]): Promise<IDataView> {
             return Promise.resolve(recordedDataView(definition, result, recording));
         },
+        readForecastAll(): Promise<IForecastResult> {
+            throw new NotSupported("Forecasting is not supported by the recorded backend.");
+        },
+        readAnomalyDetectionAll(): Promise<IAnomalyDetectionResult> {
+            throw new NotSupported("Anomaly detection is not supported by the recorded backend.");
+        },
+        readClusteringAll(): Promise<IClusteringResult> {
+            throw new NotSupported("Clustering is not supported by the recorded backend.");
+        },
         fingerprint(): string {
             return fp;
         },
@@ -383,6 +448,9 @@ function recordedPreparedExecution(
                 console.warn("Backend does not support data sampling, result will be not affected");
             }
             return executionFactory.forDefinition(definition);
+        },
+        withSignal(_signal: AbortSignal): IPreparedExecution {
+            return recordedPreparedExecution(definition, executionFactory, recordings);
         },
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {

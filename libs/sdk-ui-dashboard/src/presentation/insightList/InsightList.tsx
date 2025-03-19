@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useIntl } from "react-intl";
 import {
@@ -7,7 +7,6 @@ import {
     IInsight,
     insightUpdated,
     insightIsLocked,
-    isUriRef,
     areObjRefsEqual,
     insightSummary,
     insightCreated,
@@ -27,12 +26,16 @@ import {
     selectInsightListLastUpdateRequested,
     selectSettings,
     useDashboardEventDispatch,
+    getAuthor,
     useDashboardSelector,
     selectCurrentUser,
-    selectSupportsObjectUris,
+    selectBackendCapabilities,
+    selectEnableRichTextDescriptions,
+    selectEnableRichTextDynamicReferences,
 } from "../../model/index.js";
 import { IInsightListProps } from "./types.js";
 import { messages } from "../../locales.js";
+import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 
 const ITEMS_PER_PAGE = 50;
 const ITEM_HEIGHT = 40;
@@ -55,12 +58,9 @@ export function getInsightListSourceItem(insight: IInsight): IInsightListItem {
 const dropdownTabsTranslationIds = [messages.tabsMy, messages.tabsAll] as ITab[];
 
 const useAuthor = () => {
-    const isObjectUrisSupported = useDashboardSelector(selectSupportsObjectUris);
-    const user = useDashboardSelector(selectCurrentUser);
-    const userUri = isUriRef(user.ref) ? user.ref.uri : undefined;
-
-    // getInsights filter via user URI on Bear, via user's login on Tiger
-    return isObjectUrisSupported ? userUri : user.login;
+    const capabilities = useDashboardSelector(selectBackendCapabilities);
+    const currentUser = useDashboardSelector(selectCurrentUser);
+    return getAuthor(capabilities, currentUser);
 };
 
 /**
@@ -87,6 +87,9 @@ export const InsightList: React.FC<IInsightListProps> = ({
     const canCreateVisualization = useDashboardSelector(selectCanCreateVisualization);
     const allowCreateInsightRequest = useDashboardSelector(selectAllowCreateInsightRequest);
     const settings = useDashboardSelector(selectSettings);
+    const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
+    const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
+    const { LoadingComponent } = useDashboardComponentsContext();
     const previousSearch = useRef("");
 
     const params = pagesToLoad.map((pageNumber) => ({
@@ -228,6 +231,9 @@ export const InsightList: React.FC<IInsightListProps> = ({
                             isLocked={insightIsLocked(insightListSourceItem.insight)}
                             onClick={() => onSelect?.(insight)}
                             metadataTimeZone={settings?.metadataTimeZone}
+                            useRichText={useRichText}
+                            useReferences={useReferences}
+                            LoadingComponent={LoadingComponent}
                         />
                     );
                 })

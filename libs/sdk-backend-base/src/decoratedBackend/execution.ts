@@ -1,6 +1,7 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IDataView,
+    IForecastView,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
@@ -9,6 +10,13 @@ import {
     ExplainConfig,
     IExplainProvider,
     ExplainType,
+    IForecastResult,
+    IForecastConfig,
+    IAnomalyDetectionConfig,
+    IAnomalyDetectionResult,
+    IClusteringConfig,
+    IClusteringResult,
+    IPreparedExecutionOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeOrMeasure,
@@ -47,24 +55,40 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
         private readonly wrapper: PreparedExecutionWrapper = identity,
     ) {}
 
-    public forDefinition(def: IExecutionDefinition): IPreparedExecution {
-        return this.wrap(this.decorated.forDefinition(def));
+    public forDefinition(def: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution {
+        return this.wrap(this.decorated.forDefinition(def, options));
     }
 
-    public forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution {
-        return this.wrap(this.decorated.forItems(items, filters));
+    public forItems(
+        items: IAttributeOrMeasure[],
+        filters?: INullableFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution {
+        return this.wrap(this.decorated.forItems(items, filters, options));
     }
 
-    public forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution {
-        return this.wrap(this.decorated.forBuckets(buckets, filters));
+    public forBuckets(
+        buckets: IBucket[],
+        filters?: INullableFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution {
+        return this.wrap(this.decorated.forBuckets(buckets, filters, options));
     }
 
-    public forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution {
-        return this.wrap(this.decorated.forInsight(insight, filters));
+    public forInsight(
+        insight: IInsightDefinition,
+        filters?: INullableFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution {
+        return this.wrap(this.decorated.forInsight(insight, filters, options));
     }
 
-    public forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution {
-        return this.wrap(this.decorated.forInsightByRef(insight, filters));
+    public forInsightByRef(
+        insight: IInsight,
+        filters?: INullableFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution {
+        return this.wrap(this.decorated.forInsightByRef(insight, filters, options));
     }
 
     /**
@@ -90,7 +114,10 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
 export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     public readonly definition: IExecutionDefinition;
 
-    protected constructor(protected readonly decorated: IPreparedExecution) {
+    protected constructor(
+        protected readonly decorated: IPreparedExecution,
+        public readonly signal: AbortSignal | undefined = decorated.signal,
+    ) {
         this.definition = decorated.definition;
     }
 
@@ -100,6 +127,10 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
 
     public execute(): Promise<IExecutionResult> {
         return this.decorated.execute();
+    }
+
+    public withSignal(signal: AbortSignal): IPreparedExecution {
+        return this.createNew(this.decorated.withSignal(signal), signal);
     }
 
     public explain<T extends ExplainType | undefined>(
@@ -113,23 +144,23 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     }
 
     public withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-        return this.createNew(this.decorated.withDimensions(...dim));
+        return this.createNew(this.decorated.withDimensions(...dim), this.signal);
     }
 
     public withSorting(...items: ISortItem[]): IPreparedExecution {
-        return this.createNew(this.decorated.withSorting(...items));
+        return this.createNew(this.decorated.withSorting(...items), this.signal);
     }
 
     public withBuckets(...buckets: IBucket[]): IPreparedExecution {
-        return this.createNew(this.decorated.withBuckets(...buckets));
+        return this.createNew(this.decorated.withBuckets(...buckets), this.signal);
     }
 
     public withDateFormat(dateFormat: string): IPreparedExecution {
-        return this.createNew(this.decorated.withDateFormat(dateFormat));
+        return this.createNew(this.decorated.withDateFormat(dateFormat), this.signal);
     }
 
     public withExecConfig(config: IExecutionConfig): IPreparedExecution {
-        return this.createNew(this.decorated.withExecConfig(config));
+        return this.createNew(this.decorated.withExecConfig(config), this.signal);
     }
 
     /**
@@ -139,7 +170,7 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
      *
      * @param decorated - instance to decorate
      */
-    protected abstract createNew(decorated: IPreparedExecution): IPreparedExecution;
+    protected abstract createNew(decorated: IPreparedExecution, signal?: AbortSignal): IPreparedExecution;
 }
 
 /**
@@ -158,6 +189,7 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     protected constructor(
         private readonly decorated: IExecutionResult,
         private readonly wrapper: PreparedExecutionWrapper = identity,
+        public readonly signal: AbortSignal | undefined = decorated.signal,
     ) {
         this.definition = decorated.definition;
         this.dimensions = decorated.dimensions;
@@ -173,6 +205,18 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
 
     public readAll(): Promise<IDataView> {
         return this.decorated.readAll();
+    }
+
+    public readForecastAll(config: IForecastConfig): Promise<IForecastResult> {
+        return this.decorated.readForecastAll(config);
+    }
+
+    public readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult> {
+        return this.decorated.readAnomalyDetectionAll(config);
+    }
+
+    public readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult> {
+        return this.decorated.readClusteringAll(config);
     }
 
     public readWindow(offset: number[], size: number[]): Promise<IDataView> {
@@ -209,9 +253,13 @@ export abstract class DecoratedDataView implements IDataView {
     public definition: IExecutionDefinition;
     public result: IExecutionResult;
     public warnings?: IResultWarning[];
+    public forecastConfig?: IForecastConfig;
+    public forecastResult?: IForecastResult;
 
     constructor(private readonly decorated: IDataView, result?: IExecutionResult) {
         this.result = result ?? decorated.result;
+        this.forecastConfig = decorated.forecastConfig;
+        this.forecastResult = decorated.forecastResult;
 
         this.count = decorated.count;
         this.data = decorated.data;
@@ -230,5 +278,21 @@ export abstract class DecoratedDataView implements IDataView {
 
     public fingerprint(): string {
         return this.decorated.fingerprint();
+    }
+
+    public withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView {
+        return this.decorated.withForecast(config, result);
+    }
+
+    public forecast(): IForecastView {
+        return this.decorated.forecast();
+    }
+
+    clustering(): IClusteringResult {
+        return this.decorated.clustering();
+    }
+
+    withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView {
+        return this.decorated.withClustering(config, result);
     }
 }

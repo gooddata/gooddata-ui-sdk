@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IAttributeOrMeasure,
@@ -15,7 +15,7 @@ import {
     INullableFilter,
 } from "@gooddata/sdk-model";
 
-import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, IPreparedExecution, IPreparedExecutionOptions } from "@gooddata/sdk-backend-spi";
 import { DecoratedExecutionFactory } from "../decoratedBackend/execution.js";
 
 /**
@@ -26,45 +26,63 @@ import { DecoratedExecutionFactory } from "../decoratedBackend/execution.js";
  *
  * Note: the `forInsightByRef` is implemented as fallback to freeform execution done by `forInsight`. The
  * rationale is that most backends do not support that anyway so it is a safe default behavior. If the backend
- * supports execute-by-reference, then overload the method with your own implementation (see sdk-backend-bear for
- * inspiration)
+ * supports execute-by-reference, then overload the method with your own implementation
  *
  * @internal
  */
 export abstract class AbstractExecutionFactory implements IExecutionFactory {
     constructor(protected readonly workspace: string) {}
 
-    public abstract forDefinition(def: IExecutionDefinition): IPreparedExecution;
+    public abstract forDefinition(
+        def: IExecutionDefinition,
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution;
 
-    public forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution {
+    public forItems(
+        items: IAttributeOrMeasure[],
+        filters?: INullableFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution {
         const def = defWithDimensions(
             newDefForItems(this.workspace, items, filters),
             defaultDimensionsGenerator,
         );
 
-        return this.forDefinition(def);
+        return this.forDefinition(def, options);
     }
 
-    public forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution {
+    public forBuckets(
+        buckets: IBucket[],
+        filters?: INullableFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution {
         const def = defWithDimensions(
             newDefForBuckets(this.workspace, buckets, filters),
             defaultDimensionsGenerator,
         );
 
-        return this.forDefinition(def);
+        return this.forDefinition(def, options);
     }
 
-    public forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution {
+    public forInsight(
+        insight: IInsightDefinition,
+        filters?: INullableFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution {
         const def = defWithDimensions(
             newDefForInsight(this.workspace, insight, filters),
             defaultDimensionsGenerator,
         );
 
-        return this.forDefinition(def);
+        return this.forDefinition(def, options);
     }
 
-    public forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution {
-        return this.forInsight(insight, filters);
+    public forInsightByRef(
+        insight: IInsight,
+        filters?: INullableFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution {
+        return this.forInsight(insight, filters, options);
     }
 }
 
@@ -82,20 +100,36 @@ export class ExecutionFactoryWithFixedFilters extends DecoratedExecutionFactory 
         super(decorated);
     }
 
-    public forItems(items: IAttributeOrMeasure[], filters: INullableFilter[] = []): IPreparedExecution {
-        return super.forItems(items, this.filters.concat(filters));
+    public forItems(
+        items: IAttributeOrMeasure[],
+        filters: INullableFilter[] = [],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution {
+        return super.forItems(items, this.filters.concat(filters), options);
     }
 
-    public forBuckets(buckets: IBucket[], filters: INullableFilter[] = []): IPreparedExecution {
-        return super.forBuckets(buckets, this.filters.concat(filters));
+    public forBuckets(
+        buckets: IBucket[],
+        filters: INullableFilter[] = [],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution {
+        return super.forBuckets(buckets, this.filters.concat(filters), options);
     }
 
-    public forInsight(insight: IInsightDefinition, filters: INullableFilter[] = []): IPreparedExecution {
-        return super.forInsight(insight, this.filters.concat(filters));
+    public forInsight(
+        insight: IInsightDefinition,
+        filters: INullableFilter[] = [],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution {
+        return super.forInsight(insight, this.filters.concat(filters), options);
     }
 
-    public forInsightByRef(insight: IInsight, filters: INullableFilter[] = []): IPreparedExecution {
-        return super.forInsightByRef(insight, this.filters.concat(filters));
+    public forInsightByRef(
+        insight: IInsight,
+        filters: INullableFilter[] = [],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution {
+        return super.forInsightByRef(insight, this.filters.concat(filters), options);
     }
 }
 
@@ -111,11 +145,15 @@ export class ExecutionFactoryUpgradingToExecByReference extends DecoratedExecuti
         super(decorated);
     }
 
-    public forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution {
+    public forInsight(
+        insight: IInsightDefinition,
+        filters?: INullableFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution {
         if (isInsight(insight)) {
-            return this.forInsightByRef(insight, filters);
+            return this.forInsightByRef(insight, filters, options);
         }
 
-        return super.forInsight(insight, filters);
+        return super.forInsight(insight, filters, options);
     }
 }

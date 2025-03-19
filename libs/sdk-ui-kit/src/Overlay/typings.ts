@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { IAlignPoint } from "../typings/positioning.js";
 import { Alignment, OverlayPositionType } from "../typings/overlay.js";
 
@@ -7,7 +7,7 @@ import { Alignment, OverlayPositionType } from "../typings/overlay.js";
  */
 export interface IOverlayProps<T> {
     alignPoints?: IAlignPoint[];
-    alignTo?: string | HTMLElement;
+    alignTo?: string | HTMLElement | null;
     children?: React.ReactNode;
     className?: string;
     containerClassName?: string;
@@ -15,6 +15,16 @@ export interface IOverlayProps<T> {
     closeOnOutsideClick?: boolean;
     closeOnParentScroll?: boolean;
     closeOnEscape?: boolean;
+    width?: number | string;
+    maxWidth?: number | string;
+
+    /**
+     * Specifies a threshold for resizing the component when its content changes.
+     * The threshold is a percentage (0-1) of the component's height.
+     * For example, a threshold of 0.1 means the component will resize when its content
+     * changes by 10% of its height.
+     */
+    resizeObserverThreshold?: number;
 
     /**
      * Array of refs where user clicks should be ignored
@@ -41,6 +51,7 @@ export interface IOverlayProps<T> {
     onMouseOver?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     onMouseUp?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     zIndex?: number | undefined;
+    ensureVisibility?: boolean;
 }
 
 /**
@@ -52,8 +63,12 @@ export interface IOverlayState {
         left: number;
         top: number;
         right: number;
+        width?: number;
+        height?: number;
         align: string;
     };
+    initialVisiblePart: number;
     overflow?: string;
     scrollTop?: number;
+    observedHeight?: number;
 }

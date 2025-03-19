@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import { scenariosFor } from "../../src/index.js";
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
@@ -39,32 +39,32 @@ export const PivotTableWithTwoMeasuresAndSingleRowAttr = {
 
 export const PivotTableWighSingleMeasureAndSingleRowColAttr = {
     measures: [ReferenceMd.Amount],
-    rows: [ReferenceMd.SalesRep.Owner],
+    rows: [ReferenceMd.SalesRep.Default],
     columns: [ReferenceMd.ForecastCategory],
 };
 
 export const PivotTableWighTwoMeasureAndSingleRowColAttr = {
     measures: [ReferenceMd.Amount, ReferenceMd.Probability],
-    rows: [ReferenceMd.SalesRep.Owner],
+    rows: [ReferenceMd.SalesRep.Default],
     columns: [ReferenceMd.ForecastCategory],
 };
 
 export const PivotTableWithSingleMeasureAndTwoRowsAndCols = {
     measures: [ReferenceMd.Amount],
-    rows: [ReferenceMd.Product.Name, ReferenceMd.Department],
-    columns: [ReferenceMd.StageName.Default, ReferenceMd.Region],
+    rows: [ReferenceMd.Product.Name, ReferenceMd.Department.Default],
+    columns: [ReferenceMd.StageName.Default, ReferenceMd.Region.Default],
 };
 
 export const PivotTableWithTwoMeasuresAndTwoRowsAndCols = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won],
-    rows: [ReferenceMd.Product.Name, ReferenceMd.Department],
-    columns: [ReferenceMd.ForecastCategory, ReferenceMd.Region],
+    rows: [ReferenceMd.Product.Name, ReferenceMd.Department.Default],
+    columns: [ReferenceMd.ForecastCategory, ReferenceMd.Region.Default],
 };
 
 export const PivotTableWithTwoMeasuresAndThreeRowsAndTwoCols = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won],
-    rows: [ReferenceMd.Product.Name, ReferenceMd.Department, ReferenceMd.SalesRep.OwnerName],
-    columns: [ReferenceMd.ForecastCategory, ReferenceMd.Region],
+    rows: [ReferenceMd.Product.Name, ReferenceMd.Department.Default, ReferenceMd.SalesRep.Default],
+    columns: [ReferenceMd.ForecastCategory, ReferenceMd.Region.Default],
 };
 
 export const PivotTableWithArithmeticMeasures = {
@@ -79,32 +79,33 @@ export const PivotTableWithArithmeticMeasures = {
 
 export const PivotTableWithMeasuresAndRowsOnly = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won],
-    rows: [ReferenceMd.Department, ReferenceMd.Region],
+    rows: [ReferenceMd.Department.Default, ReferenceMd.Region.Default],
 };
 
 export const PivotTableWithMeasuresAndColumnOnly = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won],
-    columns: [ReferenceMd.Region],
+    columns: [ReferenceMd.Region.Default],
 };
 
 export const PivotTableWithMeasuresAndColumnsOnly = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won],
-    columns: [ReferenceMd.Department, ReferenceMd.Region],
+    columns: [ReferenceMd.Department.Default, ReferenceMd.Region.Default],
 };
 
 export const PivotTableWithAttributesWithoutMeasures = {
     measures: [],
-    rows: [ReferenceMd.StageName.Default, ReferenceMd.Region],
-    columns: [ReferenceMd.Department],
+    rows: [ReferenceMd.StageName.Default, ReferenceMd.Region.Default],
+    columns: [ReferenceMd.Department.Default],
 };
 
-const modifiedCreatedYear: IAttribute = modifyAttribute(ReferenceMd.DateDatasets.Created.Year.Default, (m) =>
-    m.localId("created.test"),
+const modifiedCreatedYear: IAttribute = modifyAttribute(
+    ReferenceMd.DateDatasets.Created.CreatedYear.Default,
+    (m) => m.localId("created.test"),
 );
 
 export const PivotTableWithTwoSameDate = {
-    measures: [],
-    rows: [ReferenceMd.DateDatasets.Created.Year.Default, modifiedCreatedYear],
+    measures: [ReferenceMd.Amount],
+    rows: [ReferenceMd.DateDatasets.Created.CreatedYear.Default, modifiedCreatedYear],
     columns: [],
 };
 
@@ -114,7 +115,7 @@ const modifiedProductName: IAttribute = modifyAttribute(ReferenceMd.Product.Name
 
 export const PivotTableWithRepeatingRowAttributes = {
     measures: [ReferenceMd.Amount],
-    rows: [ReferenceMd.Product.Name, ReferenceMd.Region, modifiedProductName],
+    rows: [ReferenceMd.Product.Name, ReferenceMd.Region.Default, modifiedProductName],
     columns: [],
 };
 
@@ -134,17 +135,17 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     })
     .addScenario("single measure with column attribute", {
         measures: [ReferenceMd.Amount],
-        columns: [ReferenceMd.Region],
+        columns: [ReferenceMd.Region.Default],
     })
     .addScenario("single measure with row and column attributes", {
         measures: [ReferenceMd.Amount],
         rows: [ReferenceMd.Product.Name],
-        columns: [ReferenceMd.Region],
+        columns: [ReferenceMd.Region.Default],
     })
     .addScenario("single measure with two row and one column attributes", {
         measures: [ReferenceMd.Amount],
-        rows: [ReferenceMd.Product.Name, ReferenceMd.Department],
-        columns: [ReferenceMd.Region],
+        rows: [ReferenceMd.Product.Name, ReferenceMd.Department.Default],
+        columns: [ReferenceMd.Region.Default],
     })
     .addScenario(
         "single measure with two row and two column attributes",
@@ -156,17 +157,17 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .addScenario("two measures with row attribute", PivotTableWithTwoMeasuresAndSingleRowAttr)
     .addScenario("two measures with column attribute", {
         measures: [ReferenceMd.Amount, ReferenceMd.Won],
-        columns: [ReferenceMd.Region],
+        columns: [ReferenceMd.Region.Default],
     })
     .addScenario("two measures with row and column attributes", {
         measures: [ReferenceMd.Amount, ReferenceMd.Won],
         rows: [ReferenceMd.Product.Name],
-        columns: [ReferenceMd.Region],
+        columns: [ReferenceMd.Region.Default],
     })
     .addScenario("two measures with two row and one column attributes", {
         measures: [ReferenceMd.Amount, ReferenceMd.Won],
-        rows: [ReferenceMd.Product.Name, ReferenceMd.Department],
-        columns: [ReferenceMd.Region],
+        rows: [ReferenceMd.Product.Name, ReferenceMd.Department.Default],
+        columns: [ReferenceMd.Region.Default],
     })
     .addScenario(
         "two measures with two row and two column attributes",

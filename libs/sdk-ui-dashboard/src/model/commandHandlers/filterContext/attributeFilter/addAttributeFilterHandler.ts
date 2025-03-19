@@ -1,8 +1,14 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { invariant } from "ts-invariant";
-import { IDashboardAttributeFilter, ObjRef, objRefToString, isInsightWidget } from "@gooddata/sdk-model";
+import {
+    IDashboardAttributeFilter,
+    ObjRef,
+    objRefToString,
+    isInsightWidget,
+    areObjRefsEqual,
+} from "@gooddata/sdk-model";
 
 import { AddAttributeFilter } from "../../../commands/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
@@ -30,10 +36,12 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../../store/drill/drillSelectors.js";
 import { selectAllAnalyticalWidgets } from "../../../store/layout/layoutSelectors.js";
 import { validateDrillToCustomUrlParams } from "../../common/validateDrillToCustomUrlParams.js";
+import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../../store/config/configSelectors.js";
 
 export function* addAttributeFilterHandler(
     ctx: DashboardContext,
     cmd: AddAttributeFilter,
+    type: "normal" | "crossfilter" = "normal",
 ): SagaIterator<void> {
     const {
         displayForm,
@@ -44,13 +52,28 @@ export function* addAttributeFilterHandler(
         selectionMode,
         mode,
         localIdentifier,
+        primaryDisplayForm,
+        title,
     } = cmd.payload;
 
     const isUnderFilterCountLimit: ReturnType<typeof selectCanAddMoreFilters> = yield select(
         selectCanAddMoreFilters,
     );
 
-    if (!isUnderFilterCountLimit) {
+    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
+        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
+    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
+
+    const usedDisplayForm =
+        enableDuplicatedLabelValuesInAttributeFilter && primaryDisplayForm ? primaryDisplayForm : displayForm;
+    const displayAsLabel =
+        enableDuplicatedLabelValuesInAttributeFilter &&
+        primaryDisplayForm &&
+        !areObjRefsEqual(primaryDisplayForm, displayForm)
+            ? displayForm
+            : undefined;
+
+    if (!isUnderFilterCountLimit && type !== "crossfilter") {
         throw invalidArgumentsProvided(
             ctx,
             cmd,
@@ -65,18 +88,18 @@ export function* addAttributeFilterHandler(
     const resolvedDisplayForm: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
         resolveDisplayFormMetadata,
         ctx,
-        [displayForm],
+        [usedDisplayForm],
     );
 
     if (!isEmpty(resolvedDisplayForm.missing)) {
         throw invalidArgumentsProvided(
             ctx,
             cmd,
-            `Attempting to add filter for a non-existing display form ${objRefToString(displayForm)}.`,
+            `Attempting to add filter for a non-existing display form ${objRefToString(usedDisplayForm)}.`,
         );
     }
 
-    const displayFormMetadata = resolvedDisplayForm.resolved.get(displayForm);
+    const displayFormMetadata = resolvedDisplayForm.resolved.get(usedDisplayForm);
 
     invariant(displayFormMetadata);
 
@@ -85,7 +108,7 @@ export function* addAttributeFilterHandler(
     const canBeAdded: PromiseFnReturnType<typeof canFilterBeAdded> = yield call(
         canFilterBeAdded,
         ctx,
-        displayForm,
+        usedDisplayForm,
         allFilters,
     );
 
@@ -101,7 +124,7 @@ export function* addAttributeFilterHandler(
             `Filter for attribute ${objRefToString(
                 attributeRef,
             )} represented by the displayForm ${objRefToString(
-                displayForm,
+                usedDisplayForm,
             )} already exists in the filter context.`,
         );
     }
@@ -116,6 +139,7 @@ export function* addAttributeFilterHandler(
                 parentFilters,
                 selectionMode,
                 localIdentifier,
+                title,
             }),
             filterContextActions.addAttributeFilterDisplayForm(displayFormMetadata),
         ]),
@@ -135,15 +159,25 @@ export function* addAttributeFilterHandler(
     const capabilities: ReturnType<typeof selectBackendCapabilities> = yield select(
         selectBackendCapabilities,
     );
+    const attributeFilterConfigActions = [];
     if (capabilities.supportsHiddenAndLockedFiltersOnUI && mode) {
-        yield put(
-            batchActions([
-                attributeFilterConfigsActions.changeMode({
-                    localIdentifier: addedFilter.attributeFilter.localIdentifier!,
-                    mode,
-                }),
-            ]),
+        attributeFilterConfigActions.push(
+            attributeFilterConfigsActions.changeMode({
+                localIdentifier: addedFilter.attributeFilter.localIdentifier!,
+                mode,
+            }),
         );
+    }
+    if (enableDuplicatedLabelValuesInAttributeFilter && displayAsLabel) {
+        attributeFilterConfigActions.push(
+            attributeFilterConfigsActions.changeDisplayAsLabel({
+                localIdentifier: addedFilter.attributeFilter.localIdentifier!,
+                displayAsLabel,
+            }),
+        );
+    }
+    if (attributeFilterConfigActions.length > 0) {
+        yield put(batchActions(attributeFilterConfigActions));
     }
 
     yield dispatchDashboardEvent(

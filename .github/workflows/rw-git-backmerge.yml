@@ -23,7 +23,9 @@ on:
 
 jobs:
   merge-and-resolve-conflicts:
-    runs-on: ubuntu-latest
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-cxa-xlarge
     outputs:
       pr_url: ${{ steps.prepare-pr.outputs.pr_url }}
       pr_has_conflicts: ${{ steps.prepare-pr.outputs.pr_has_conflicts }}
@@ -33,19 +35,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup node
-        uses: actions/setup-node@v4
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
         with:
-          node-version: 18.17.0
+          name: git-action
+          email: git-action@gooddata.com
 
-      - name: Install rush
-        run: |
-            npm install -g @microsoft/rush
-
-      - name: Configure Git
-        run: |
-          git config user.name 'github-actions'
-          git config user.email 'github-actions@github.com'
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
 
       - name: Merge and Resolve Conflicts or Create Pull Request
         id: prepare-pr
@@ -78,11 +77,11 @@ jobs:
 
           for policy in $policies
           do
-            rush version --ensure-version-policy --override-version $version --version-policy $policy
+            node common/scripts/install-run-rush.js version --ensure-version-policy --override-version $version --version-policy $policy
           done
 
           # commit only if bump produced some changes
-          git diff --exit-code || git commit --no-verify -a -m "chore: bumped version of sdk packages to $version which is in $TARGET_BRANCH" -m "" -m "TRIVIAL"
+          git diff --exit-code || git commit --no-verify -a -m "chore: bumped version of sdk packages to $version which is in $TARGET_BRANCH" -m "risk: nonprod"
 
           # rush bump to something that's in target branch
           git merge --verbose --no-ff origin/$TARGET_BRANCH || true
@@ -108,8 +107,9 @@ jobs:
           EOL
           )
 
-          PR_OUTPUT=$(gh pr create --title "Merge $SOURCE_BRANCH into $TARGET_BRANCH" --body "$PR_MESSAGE" --base "$TARGET_BRANCH" --head "$TMP_BRANCH")
+          PR_OUTPUT=$(gh pr create --title "Merge $SOURCE_BRANCH into $TARGET_BRANCH" --body "$PR_MESSAGE" --base "$TARGET_BRANCH" --head "$TMP_BRANCH" --label "skip publish")
           PR_URL=$(echo "$PR_OUTPUT" | grep -o 'https://github.com[^ ]*')
+
           echo "Created pull-request: $PR_URL"
 
           echo "pr_url=$PR_URL" >> $GITHUB_OUTPUT
@@ -117,5 +117,5 @@ jobs:
         env:
           SOURCE_BRANCH: ${{ inputs.source-branch }}
           TARGET_BRANCH: ${{ inputs.target-branch }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
         shell: bash

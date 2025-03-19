@@ -1,0 +1,131 @@
+{
+    "count": [3, 16],
+    "data": [
+        [
+            3601.6,
+            418741.51,
+            230.3,
+            14377.21,
+            null,
+            28203.56,
+            null,
+            43160.04,
+            null,
+            3564.9,
+            15406.26,
+            16714.71,
+            245882.65,
+            835955.96,
+            36077.28,
+            2100699.63
+        ],
+        [
+            344436.28,
+            673215.73,
+            22442.98,
+            298467.33,
+            77113.58,
+            734258.66,
+            null,
+            48392.52,
+            null,
+            211951.28,
+            22383.68,
+            null,
+            1027225.71,
+            1786420.28,
+            609548.49,
+            1122761.89
+        ],
+        [
+            4350.22,
+            55764.01,
+            null,
+            7827.29,
+            12026.84,
+            102931.35,
+            18359.6,
+            3129.5,
+            2735.24,
+            172186.79,
+            null,
+            224500.35,
+            136710.01,
+            669682.5,
+            329785.44,
+            1572969.19
+        ]
+    ],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "name": "PhoenixSoft", "uri": "PhoenixSoft" } },
+                { "attributeHeaderItem": { "name": "WonderKid", "uri": "WonderKid" } },
+                { "attributeHeaderItem": { "name": "WonderKid", "uri": "WonderKid" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } }
+            ]
+        ],
+        [
+            [
+                { "attributeHeaderItem": { "name": "Interest", "uri": "Interest" } },
+                { "attributeHeaderItem": { "name": "Interest", "uri": "Interest" } },
+                { "attributeHeaderItem": { "name": "Discovery", "uri": "Discovery" } },
+                { "attributeHeaderItem": { "name": "Discovery", "uri": "Discovery" } },
+                { "attributeHeaderItem": { "name": "Short List", "uri": "Short List" } },
+                { "attributeHeaderItem": { "name": "Short List", "uri": "Short List" } },
+                { "attributeHeaderItem": { "name": "Risk Assessment", "uri": "Risk Assessment" } },
+                { "attributeHeaderItem": { "name": "Risk Assessment", "uri": "Risk Assessment" } },
+                { "attributeHeaderItem": { "name": "Conviction", "uri": "Conviction" } },
+                { "attributeHeaderItem": { "name": "Conviction", "uri": "Conviction" } },
+                { "attributeHeaderItem": { "name": "Negotiation", "uri": "Negotiation" } },
+                { "attributeHeaderItem": { "name": "Negotiation", "uri": "Negotiation" } },
+                { "attributeHeaderItem": { "name": "Closed Won", "uri": "Closed Won" } },
+                { "attributeHeaderItem": { "name": "Closed Won", "uri": "Closed Won" } },
+                { "attributeHeaderItem": { "name": "Closed Lost", "uri": "Closed Lost" } },
+                { "attributeHeaderItem": { "name": "Closed Lost", "uri": "Closed Lost" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } }
+            ]
+        ]
+    ],
+    "offset": [9, 0],
+    "totalCount": [12, 16]
+}

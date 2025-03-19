@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     areObjRefsEqual,
     ObjRef,
@@ -12,6 +12,7 @@ import {
     IDashboardDateFilter,
     isDashboardDateFilterReference,
     isDashboardDateFilter,
+    isRichTextWidget,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 
@@ -43,6 +44,8 @@ import {
     queryDateDatasetsForInsight,
     queryDateDatasetsForMeasure,
 } from "../../../queries/index.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { newInsight } from "../../../../_staging/insight/insightBuilder.js";
 
 function toAttributeDisplayFormRefs(references: IDashboardFilterReference[]) {
     return references.filter(isDashboardAttributeFilterReference).map((reference) => reference.displayForm);
@@ -63,12 +66,19 @@ function toRefs(references: IDashboardFilterReference[]) {
 
 function getIgnoredAttributeFilters(
     filters: IDashboardAttributeFilter[],
+    displayAsLabelMap: Map<string, ObjRef>,
     ignored: IDashboardFilterReference[],
 ): IDashboardAttributeFilter[] {
     const ignoredRefs = toAttributeDisplayFormRefs(ignored);
 
     return filters.filter((filter) => {
-        return ignoredRefs.some((ref) => areObjRefsEqual(filter.attributeFilter.displayForm, ref));
+        return ignoredRefs.some((ref) => {
+            const displayAsLabel = displayAsLabelMap.get(filter.attributeFilter.localIdentifier!);
+            return (
+                areObjRefsEqual(filter.attributeFilter.displayForm, ref) ||
+                areObjRefsEqual(displayAsLabel, ref)
+            );
+        });
     });
 }
 
@@ -85,6 +95,7 @@ function getIgnoredDateFilters(
 
 function getIgnoredFilters(
     filters: Array<IDashboardDateFilter | IDashboardAttributeFilter>,
+    displayAsLabelMap: Map<string, ObjRef>,
     ignored: IDashboardFilterReference[],
 ): Array<IDashboardDateFilter | IDashboardAttributeFilter> {
     const ignoredRefs = toRefs(ignored);
@@ -94,7 +105,11 @@ function getIgnoredFilters(
             if (isDashboardDateFilter(filter)) {
                 return areObjRefsEqual(filter.dateFilter.dataSet!, ref);
             }
-            return areObjRefsEqual(filter.attributeFilter.displayForm, ref);
+            const displayAsLabel = displayAsLabelMap.get(filter.attributeFilter.localIdentifier!);
+            return (
+                areObjRefsEqual(filter.attributeFilter.displayForm, ref) ||
+                areObjRefsEqual(displayAsLabel, ref)
+            );
         });
     });
 }
@@ -152,7 +167,10 @@ function* changeDateFilterIgnore(
     const filters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
         selectFilterContextDraggableFilters,
     );
-    const ignoredFilters = getIgnoredFilters(filters, widget.ignoreDashboardFilters);
+    const displayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> = yield select(
+        selectAttributeFilterConfigsDisplayAsLabelMap,
+    );
+    const ignoredFilters = getIgnoredFilters(filters, displayAsLabelMap, widget.ignoreDashboardFilters);
 
     return {
         dateDataSet,
@@ -196,6 +214,12 @@ function* enableDateFilter(
                 queryDateDatasetsForMeasure(widget.kpi.metric),
             );
             dateDatasetToUse = queryResult.dateDatasetsOrdered[0];
+        } else if (isRichTextWidget(widget)) {
+            const queryResult: InsightDateDatasets = yield call(
+                query,
+                queryDateDatasetsForInsight(newInsight("local:table")),
+            );
+            dateDatasetToUse = insightSelectDateDataset(queryResult);
         } else {
             invariant(false, "Cannot use default date dataset for custom widgets");
         }
@@ -266,7 +290,10 @@ function* getIgnoredAttributeFiltersWorWidget(widget: IAnalyticalWidget) {
     const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
         selectFilterContextAttributeFilters,
     );
-    return getIgnoredAttributeFilters(attributeFilters, widget.ignoreDashboardFilters);
+    const displayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> = yield select(
+        selectAttributeFilterConfigsDisplayAsLabelMap,
+    );
+    return getIgnoredAttributeFilters(attributeFilters, displayAsLabelMap, widget.ignoreDashboardFilters);
 }
 
 function* ignoreAttributeFilter(

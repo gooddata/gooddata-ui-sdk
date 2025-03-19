@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import React from "react";
 import { IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
@@ -20,6 +20,7 @@ export interface IAddWorkspaceToSubjectsProps extends IWithTelemetryProps {
     organizationId: string;
     onSuccess: () => void;
     onClose: () => void;
+    areFilterViewsEnabled?: boolean;
 }
 
 const AddWorkspaceToSubjectsComponent: React.FC<IAddWorkspaceToSubjectsProps> = ({
@@ -28,10 +29,17 @@ const AddWorkspaceToSubjectsComponent: React.FC<IAddWorkspaceToSubjectsProps> = 
     organizationId,
     onSuccess,
     onClose,
+    areFilterViewsEnabled = false,
 }) => {
     return (
         <OrganizationIdProvider organizationId={organizationId}>
-            <Overlay alignPoints={alignPoints} isModal={true} positionType="fixed">
+            <Overlay
+                alignPoints={alignPoints}
+                isModal={true}
+                positionType="fixed"
+                className="gd-user-management-dialog"
+                resizeObserverThreshold={0.2}
+            >
                 <AddWorkspace
                     ids={ids}
                     subjectType={subjectType}
@@ -40,6 +48,7 @@ const AddWorkspaceToSubjectsComponent: React.FC<IAddWorkspaceToSubjectsProps> = 
                     onSubmit={onSuccess}
                     onCancel={onClose}
                     onClose={onClose}
+                    areFilterViewsEnabled={areFilterViewsEnabled}
                 />
             </Overlay>
         </OrganizationIdProvider>

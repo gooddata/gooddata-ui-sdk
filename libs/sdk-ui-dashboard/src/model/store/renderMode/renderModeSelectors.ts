@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardSelector, DashboardState } from "../types.js";
@@ -33,4 +33,14 @@ export const selectIsInViewMode: DashboardSelector<boolean> = createSelector(
 export const selectIsInEditMode: DashboardSelector<boolean> = createSelector(
     selectRenderMode,
     (renderMode) => renderMode === "edit",
+);
+
+/**
+ * Returns whether the current Dashboard is on export mode.
+ *
+ * @internal
+ */
+export const selectIsInExportMode: DashboardSelector<boolean> = createSelector(
+    selectRenderMode,
+    (renderMode) => renderMode === "export",
 );

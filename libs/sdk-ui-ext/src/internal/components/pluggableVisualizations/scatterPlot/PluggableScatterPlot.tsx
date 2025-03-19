@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import { VisualizationTypes } from "@gooddata/sdk-ui";
+// (C) 2019-2024 GoodData Corporation
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
 import { BUCKETS } from "../../../constants/bucket.js";
 import { SCATTERPLOT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -13,6 +13,7 @@ import {
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 
 import {
+    findBucket,
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
     sanitizeFilters,
@@ -25,6 +26,7 @@ import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { transformBuckets } from "./bucketHelper.js";
 import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
 
 /**
  * PluggableScatterPlot
@@ -36,19 +38,21 @@ import cloneDeep from "lodash/cloneDeep.js";
  * | Measure (X-axis) | measures           | measures only       |
  * | Measure (Y-axis) | secondary_measures | measures only       |
  * | ViewBy           | attribute          | attributes or dates |
+ * | SegmentBy        | attribute          | attributes or dates |
  *
  * ### Bucket axioms
  *
  * - |MeasureX| ≤ 1
  * - |MeasureY| ≤ 1
  * - |ViewBy| ≤ 1
+ * - |SegmentBy| ≤ 1
  * - |MeasureX| + |MeasureY| ≥ 1
  *
  * ## Dimensions
  *
  * The PluggableScatterPlot always creates the same two dimensional execution.
  *
- * - ⊤ ⇒ [[...ViewBy], [MeasureGroupIdentifier]]
+ * - ⊤ ⇒ [[...ViewBy, ...SegmentBy], [MeasureGroupIdentifier]]
  *
  * ## Sorts
  *
@@ -85,8 +89,11 @@ export class PluggableScatterPlot extends PluggableBaseChart {
             this.supportedPropertiesList,
         );
         newReferencePoint = removeSort(newReferencePoint);
+        newReferencePoint = sanitizeFilters(newReferencePoint);
+        newReferencePoint = disableClusteringForMissingViewBy(newReferencePoint);
+        newReferencePoint = disableClusteringIfFewerThanTwoMeasures(newReferencePoint);
 
-        return Promise.resolve(sanitizeFilters(newReferencePoint));
+        return Promise.resolve(newReferencePoint);
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
@@ -117,4 +124,29 @@ export class PluggableScatterPlot extends PluggableBaseChart {
             );
         }
     }
+}
+
+function disableClusteringForMissingViewBy(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
+    let updatedReferencePoint = referencePoint;
+    const viewByBucket = findBucket(referencePoint.buckets, BucketNames.ATTRIBUTE);
+    const hasViewByItems = (viewByBucket?.items?.length ?? 0) > 0;
+    if (!hasViewByItems) {
+        updatedReferencePoint = set(referencePoint, "properties.controls.clustering.enabled", false);
+    }
+    return updatedReferencePoint;
+}
+
+function disableClusteringIfFewerThanTwoMeasures(
+    referencePoint: IExtendedReferencePoint,
+): IExtendedReferencePoint {
+    let updatedReferencePoint = referencePoint;
+    const measuresBucket = findBucket(referencePoint.buckets, BucketNames.MEASURES);
+    const secondaryMeasuresBucket = findBucket(referencePoint.buckets, BucketNames.SECONDARY_MEASURES);
+    const measuresBucketItemsCount = measuresBucket?.items?.length ?? 0;
+    const secondaryMeasuresBucketItemsCount = secondaryMeasuresBucket?.items?.length ?? 0;
+    const hasXAndYMeasures = measuresBucketItemsCount === 1 && secondaryMeasuresBucketItemsCount === 1;
+    if (!hasXAndYMeasures) {
+        updatedReferencePoint = set(referencePoint, "properties.controls.clustering.enabled", false);
+    }
+    return updatedReferencePoint;
 }

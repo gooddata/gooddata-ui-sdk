@@ -1,74 +1,90 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
-    IAuthenticatedPrincipal,
+    InMemoryPaging,
+    DummySemanticSearchQueryBuilder,
+    DummyGenAIChatThread,
+} from "@gooddata/sdk-backend-base";
+import {
     IAnalyticalBackend,
     IAnalyticalWorkspace,
+    IAttributeHierarchiesService,
+    IAuthenticatedPrincipal,
     IAuthenticationProvider,
+    IBackendCapabilities,
+    IDataSourcesService,
+    IDateFilterConfigsQuery,
+    IDateFilterConfigsQueryResult,
+    IEntitlements,
     IExecutionFactory,
-    IWorkspaceCatalogFactory,
-    IWorkspaceDatasetsService,
+    IOrganization,
+    IOrganizationPermissionService,
+    IOrganizationSettingsService,
+    IOrganizationStylingService,
+    IOrganizationUserService,
+    IOrganizations,
+    ISecuritySettingsService,
+    IUserService,
+    IUserSettingsService,
+    IUserWorkspaceSettings,
+    IWorkspaceAccessControlService,
     IWorkspaceAttributesService,
-    IWorkspaceMeasuresService,
+    IWorkspaceCatalogFactory,
+    IWorkspaceDashboardsService,
+    IWorkspaceDatasetsService,
+    IWorkspaceDescriptor,
+    IWorkspaceExportDefinitionsService,
     IWorkspaceFactsService,
+    IWorkspaceInsightsService,
+    IWorkspaceMeasuresService,
     IWorkspacePermissionsService,
-    IWorkspacesQueryFactory,
     IWorkspaceSettings,
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
-    NotSupported,
-    IUserService,
-    IWorkspaceInsightsService,
-    IUserSettingsService,
-    IWorkspaceDashboardsService,
-    IUserWorkspaceSettings,
-    IWorkspaceUsersQuery,
-    IDateFilterConfigsQuery,
-    IBackendCapabilities,
-    IWorkspaceDescriptor,
-    IOrganization,
-    ISecuritySettingsService,
-    ValidationContext,
-    IOrganizations,
-    IDateFilterConfigsQueryResult,
     IWorkspaceUserGroupsQuery,
-    IWorkspaceAccessControlService,
-    IOrganizationStylingService,
-    IOrganizationSettingsService,
-    IEntitlements,
-    IOrganizationPermissionService,
-    IOrganizationUserService,
-    IAttributeHierarchiesService,
-    IDataSourcesService,
+    IWorkspaceUsersQuery,
+    IWorkspacesQueryFactory,
+    NotSupported,
+    ValidationContext,
+    IDataFiltersService,
+    IWorkspaceLogicalModelService,
+    IOrganizationNotificationChannelService,
+    IWorkspaceAutomationService,
+    IGenAIService,
+    IChatThread,
+    IOrganizationLlmEndpointsService,
+    IOrganizationNotificationService,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
-    idRef,
+    IColorPaletteDefinition,
+    IColorPaletteMetadataObject,
+    IOrganizationDescriptor,
     ISeparators,
     ITheme,
-    IWorkspacePermissions,
-    IOrganizationDescriptor,
-    IUser,
     IThemeDefinition,
     IThemeMetadataObject,
-    IColorPaletteMetadataObject,
-    IColorPaletteDefinition,
+    IUser,
+    IWorkspacePermissions,
+    idRef,
+    ObjRef,
+    ILlmEndpointOpenAI,
+    INotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
-import { RecordedExecutionFactory } from "./execution.js";
-import { RecordedBackendConfig, RecordingIndex } from "./types.js";
-import { RecordedInsights } from "./insights.js";
-import { RecordedCatalogFactory } from "./catalog.js";
+import RecordedAttributeHierarchiesService from "./attributeHierarchies.js";
 import { RecordedAttributes } from "./attributes.js";
-import { RecordedMeasures } from "./measures.js";
-import { RecordedFacts } from "./facts.js";
+import { RecordedCatalogFactory } from "./catalog.js";
 import { RecordedDashboards } from "./dashboards.js";
-import { InMemoryPaging } from "@gooddata/sdk-backend-base";
+import { RecordedExecutionFactory } from "./execution.js";
+import { RecordedFacts } from "./facts.js";
+import { RecordedInsights } from "./insights.js";
+import { RecordedMeasures } from "./measures.js";
+import { RecordedBackendConfig, RecordingIndex } from "./types.js";
 import {
+    RecordedWorkspaceUsersQuery,
     recordedAccessControlFactory,
     recordedUserGroupsQuery,
-    RecordedWorkspaceUsersQuery,
 } from "./userManagement.js";
-import RecordedAttributeHierarchiesService from "./attributeHierarchies.js";
 
 const defaultConfig: RecordedBackendConfig = {
     hostname: "test",
@@ -90,7 +106,7 @@ export const defaultRecordedBackendCapabilities: IBackendCapabilities = {
     canCalculateTotals: true,
     canCalculateNativeTotals: true,
     supportsCsvUploader: true,
-    supportsKpiWidget: true,
+    supportsKpiWidget: false,
     supportsWidgetEntity: true,
     supportsOwners: true,
     allowsInconsistentRelations: false,
@@ -128,6 +144,9 @@ export function recordedBackend(
             return recordedBackend(index, { ...config, hostname });
         },
         withTelemetry(_component: string, _props: object): IAnalyticalBackend {
+            return backend;
+        },
+        withCorrelation(_correlationMetadata: Record<string, string>): IAnalyticalBackend {
             return backend;
         },
         withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
@@ -180,6 +199,9 @@ function recordedWorkspace(
         async getDescriptor(): Promise<IWorkspaceDescriptor> {
             return recordedDescriptor(this.workspace, implConfig);
         },
+        async updateDescriptor(): Promise<IWorkspaceDescriptor> {
+            throw new NotSupported("not supported");
+        },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
             throw new NotSupported("not supported");
         },
@@ -218,13 +240,40 @@ function recordedWorkspace(
                         ...(implConfig.globalSettings ?? {}),
                     };
                 },
+                async setAlertDefault(): Promise<void> {
+                    return Promise.resolve();
+                },
                 async setLocale(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async setSeparators(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async setTimezone(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async setDateFormat(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async setWeekStart(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async setDashboardFiltersApplyMode(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async deleteDashboardFiltersApplyMode(): Promise<void> {
                     return Promise.resolve();
                 },
                 async setColorPalette(): Promise<void> {
                     return Promise.resolve();
                 },
                 async setTheme(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async deleteColorPalette(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async deleteTheme(): Promise<void> {
                     return Promise.resolve();
                 },
             };
@@ -236,6 +285,24 @@ function recordedWorkspace(
                 },
                 async getTheme(): Promise<ITheme> {
                     return implConfig.theme ?? {};
+                },
+                async getActiveTheme(): Promise<ObjRef | undefined> {
+                    return Promise.resolve(undefined);
+                },
+                async setActiveTheme(): Promise<void> {
+                    return Promise.resolve(undefined);
+                },
+                async getActiveColorPalette(): Promise<ObjRef | undefined> {
+                    return Promise.resolve(undefined);
+                },
+                async setActiveColorPalette(): Promise<void> {
+                    return Promise.resolve(undefined);
+                },
+                clearActiveColorPalette(): Promise<void> {
+                    return Promise.resolve(undefined);
+                },
+                clearActiveTheme(): Promise<void> {
+                    return Promise.resolve(undefined);
                 },
             };
         },
@@ -263,6 +330,31 @@ function recordedWorkspace(
         attributeHierarchies(): IAttributeHierarchiesService {
             return new RecordedAttributeHierarchiesService(implConfig);
         },
+        exportDefinitions(): IWorkspaceExportDefinitionsService {
+            throw new NotSupported("not supported");
+        },
+        dataFilters(): IDataFiltersService {
+            throw new NotSupported("not supported");
+        },
+        logicalModel(): IWorkspaceLogicalModelService {
+            throw new NotSupported("not supported");
+        },
+        automations(): IWorkspaceAutomationService {
+            throw new NotSupported("not supported");
+        },
+        genAI(): IGenAIService {
+            return {
+                getChatThread(): IChatThread {
+                    return new DummyGenAIChatThread();
+                },
+                getSemanticSearchQuery: () => {
+                    return new DummySemanticSearchQueryBuilder(workspace);
+                },
+                semanticSearchIndex: () => {
+                    throw new NotSupported("not supported");
+                },
+            };
+        },
     };
 }
 
@@ -282,6 +374,12 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
     return {
         organizationId,
         getDescriptor(): Promise<IOrganizationDescriptor> {
+            return Promise.resolve({
+                id: organizationId,
+                title: "mock organization",
+            });
+        },
+        updateDescriptor(): Promise<IOrganizationDescriptor> {
             return Promise.resolve({
                 id: organizationId,
                 title: "mock organization",
@@ -357,14 +455,42 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
             return {
                 setWhiteLabeling: () => Promise.resolve(),
                 setLocale: () => Promise.resolve(),
+                setSeparators: () => Promise.resolve(),
                 setTimezone: () => Promise.resolve(),
                 setDateFormat: () => Promise.resolve(),
                 setWeekStart: () => Promise.resolve(),
                 getSettings: () => Promise.resolve({}),
                 setTheme: () => Promise.resolve(),
                 setColorPalette: () => Promise.resolve(),
+                setOpenAiConfig: () => Promise.resolve(),
+                setDashboardFiltersApplyMode: () => Promise.resolve(),
+                setAlertDefault: () => Promise.resolve(),
                 deleteTheme: () => Promise.resolve(),
                 deleteColorPalette: () => Promise.resolve(),
+            };
+        },
+        notificationChannels(): IOrganizationNotificationChannelService {
+            return {
+                testNotificationChannel: () =>
+                    Promise.resolve({
+                        successful: true,
+                    }),
+                getNotificationChannel: () => Promise.resolve({} as INotificationChannelMetadataObject),
+                createNotificationChannel: () => Promise.resolve({} as INotificationChannelMetadataObject),
+                updateNotificationChannel: () => Promise.resolve({} as INotificationChannelMetadataObject),
+                deleteNotificationChannel: () => Promise.resolve(),
+                getNotificationChannelsQuery: () => {
+                    throw new NotSupported("not supported");
+                },
+            };
+        },
+        notifications(): IOrganizationNotificationService {
+            return {
+                markNotificationAsRead: () => Promise.reject(new NotSupported("not supported")),
+                markAllNotificationsAsRead: () => Promise.reject(new NotSupported("not supported")),
+                getNotificationsQuery: () => {
+                    throw new NotSupported("not supported");
+                },
             };
         },
         permissions(): IOrganizationPermissionService {
@@ -401,9 +527,41 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 getUserGroupsOfUser: () => Promise.resolve([]),
                 getUsersOfUserGroup: () => Promise.resolve([]),
                 getUsers: () => Promise.resolve([]),
+                getUsersByEmail: () => Promise.resolve([]),
                 removeUsersFromUserGroups: () => Promise.resolve(),
                 updateUser: () => Promise.resolve(),
                 updateUserGroup: () => Promise.resolve(),
+            };
+        },
+        llmEndpoints(): IOrganizationLlmEndpointsService {
+            const dummyEndpoint: ILlmEndpointOpenAI = {
+                id: "dummyLlmEndpoint",
+                title: "Dummy Llm Endpoint",
+                provider: "OPENAI",
+                model: "gpt-4o-mini",
+                workspaceIds: [],
+            };
+
+            return {
+                getCount: () => Promise.resolve(0),
+                getAll: () => Promise.resolve([]),
+                deleteLlmEndpoint: () => Promise.resolve(),
+                getLlmEndpoint: () =>
+                    Promise.resolve({
+                        ...dummyEndpoint,
+                    }),
+                createLlmEndpoint: () =>
+                    Promise.resolve({
+                        ...dummyEndpoint,
+                    }),
+                updateLlmEndpoint: () =>
+                    Promise.resolve({
+                        ...dummyEndpoint,
+                    }),
+                patchLlmEndpoint: () =>
+                    Promise.resolve({
+                        ...dummyEndpoint,
+                    }),
             };
         },
     };
@@ -432,6 +590,18 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
                 }
             );
         },
+        async getUserWithDetails(): Promise<IUser> {
+            return (
+                implConfig.userManagement?.user ?? {
+                    login: USER_ID,
+                    ref: idRef(USER_ID),
+                    email: "",
+                    fullName: "",
+                    firstName: "",
+                    lastName: "",
+                }
+            );
+        },
         settings(): IUserSettingsService {
             return {
                 getSettings: async () => ({
@@ -441,6 +611,7 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
                     ...(implConfig.globalSettings ?? {}),
                 }),
                 setLocale: () => Promise.resolve(),
+                setSeparators: () => Promise.resolve(),
             };
         },
     };
@@ -471,6 +642,8 @@ function recordedPermissionsFactory(): IWorkspacePermissionsService {
             canRefreshData: true,
             canManageACL: true,
             canManageScheduledMail: true,
+            canCreateFilterView: true,
+            canCreateAutomation: true,
         }),
     };
 }
@@ -495,6 +668,11 @@ function recordedDateFilterConfig(implConfig: RecordedBackendConfig): IDateFilte
             return this;
         },
         query(): Promise<IDateFilterConfigsQueryResult> {
+            const { dateFilterConfig } = implConfig;
+
+            return Promise.resolve(new InMemoryPaging(dateFilterConfig ? [dateFilterConfig] : []));
+        },
+        queryCustomDateFilterConfig(): Promise<IDateFilterConfigsQueryResult> {
             const { dateFilterConfig } = implConfig;
 
             return Promise.resolve(new InMemoryPaging(dateFilterConfig ? [dateFilterConfig] : []));

@@ -1,25 +1,67 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
-import { isCrossFiltering, isDrillToLegacyDashboard } from "@gooddata/sdk-model";
+import {
+    IAttributeDisplayFormMetadataObject,
+    IDrillDownIntersectionIgnoredAttributes,
+    isCrossFiltering,
+    isDrillToLegacyDashboard,
+} from "@gooddata/sdk-model";
 import { IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
 import isEqual from "lodash/isEqual.js";
 import compact from "lodash/compact.js";
 import uniqWith from "lodash/uniqWith.js";
-import { getDrillOriginLocalIdentifier, isDrillConfigured } from "../../../_staging/drills/drillingUtils.js";
-import { DashboardDrillDefinition } from "../../../types.js";
+import {
+    getDrillOriginLocalIdentifier,
+    isDrillConfigured,
+    isDrillDownIntersectionIgnoredAttributesForHierarchy,
+} from "../../../_staging/drills/drillingUtils.js";
+import { DashboardDrillDefinition, IDrillDownDefinition } from "../../../types.js";
 
 import { isDrillToUrl } from "../types.js";
 
 /**
  * @internal
  */
-export function getDrillDownAttributeTitle(localIdentifier: string, drillEvent: IDrillEvent): string | null {
+export function getDrillDownTitle(
+    drillDefinition: IDrillDownDefinition,
+    drillEvent: IDrillEvent,
+    drillDownIntersectionIgnoredAttributes?: IDrillDownIntersectionIgnoredAttributes[],
+    drillTargetDisplayForm?: IAttributeDisplayFormMetadataObject,
+): string | null {
+    const localIdentifier = getDrillOriginLocalIdentifier(drillDefinition);
+
+    if (drillDownIntersectionIgnoredAttributes) {
+        const drillDownIntersectionIgnoredAttributesForCurrentHierarchy =
+            drillDownIntersectionIgnoredAttributes?.find((ignored) => {
+                return isDrillDownIntersectionIgnoredAttributesForHierarchy(
+                    ignored,
+                    drillDefinition.hierarchyRef!,
+                );
+            });
+        const ignoredAttributesLocalIdentifiers =
+            drillDownIntersectionIgnoredAttributesForCurrentHierarchy?.ignoredAttributes ?? [];
+
+        if (ignoredAttributesLocalIdentifiers.includes(localIdentifier)) {
+            return drillDefinition.title ?? drillTargetDisplayForm?.title ?? "";
+        }
+    }
+
+    return getDrillOriginAttributeElementTitle(localIdentifier, drillEvent);
+}
+
+/**
+ * @internal
+ */
+export function getDrillOriginAttributeElementTitle(
+    drillOriginLocalId: string,
+    drillEvent: IDrillEvent,
+): string | null {
     return (drillEvent.drillContext.intersection || [])
         .map((intersectionElement) => intersectionElement.header)
         .filter(isDrillIntersectionAttributeItem)
         .filter(
             (intersectionAttributeItem) =>
-                intersectionAttributeItem.attributeHeader.localIdentifier === localIdentifier,
+                intersectionAttributeItem.attributeHeader.localIdentifier === drillOriginLocalId,
         )
         .map((intersectionAttributeItem) => intersectionAttributeItem.attributeHeaderItem.name)[0];
 }

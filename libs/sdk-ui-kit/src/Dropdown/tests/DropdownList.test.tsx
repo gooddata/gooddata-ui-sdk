@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { DropdownList, IDropdownListNoDataRenderProps, IDropdownListProps } from "../DropdownList.js";
@@ -16,7 +16,7 @@ const itemRenderer = itemMock.componentWithProps(({ item }) => ({ children: item
 const mockItems = Array.from(Array(10)).map((_, i): string => `${i}`);
 
 const testIfItemListIsRendered = (mockItems: string[]) => {
-    expect(screen.getByRole("list")).toBeInTheDocument();
+    expect(screen.getByTestId("gd-list")).toBeInTheDocument();
     mockItems.every((item) => expect(screen.getByText(item)).toBeInTheDocument());
 };
 
@@ -36,7 +36,7 @@ describe("DropdownList", () => {
 
     it("should render the tabs, when showTabs is true", () => {
         renderDropdownList({ showTabs: true });
-        expect(screen.getByRole("tabs")).toBeInTheDocument();
+        expect(screen.getByRole("tablist")).toBeInTheDocument();
     });
 
     it("should render the loading state, when isLoading is true", () => {

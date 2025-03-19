@@ -1,7 +1,7 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { ChartSortingOwnProps } from "@gooddata/sdk-ui-kit";
 import { attributeLocalId, localIdRef, measureLocalId } from "@gooddata/sdk-model";
-import { ExperimentalMd } from "@gooddata/experimental-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 
 type SortingPropsMock = {
     currentSort: ChartSortingOwnProps["currentSort"];
@@ -13,13 +13,13 @@ export const singleAttributeSortConfig: SortingPropsMock = {
         {
             attributeSortItem: {
                 direction: "desc",
-                attributeIdentifier: attributeLocalId(ExperimentalMd.Activity.Subject),
+                attributeIdentifier: attributeLocalId(ReferenceMd.Activity.Subject),
             },
         },
     ],
     availableSorts: [
         {
-            itemId: localIdRef(attributeLocalId(ExperimentalMd.Activity.Subject)),
+            itemId: localIdRef(attributeLocalId(ReferenceMd.Activity.Subject)),
             attributeSort: {
                 normalSortEnabled: true,
                 areaSortEnabled: false,
@@ -33,13 +33,13 @@ export const singleChronologicalDateSortConfig: SortingPropsMock = {
         {
             attributeSortItem: {
                 direction: "desc",
-                attributeIdentifier: attributeLocalId(ExperimentalMd.DateDatasets.Closed.Year.Default),
+                attributeIdentifier: attributeLocalId(ReferenceMd.DateDatasets.Closed.ClosedYear.Default),
             },
         },
     ],
     availableSorts: [
         {
-            itemId: localIdRef(attributeLocalId(ExperimentalMd.DateDatasets.Closed.Year.Default)),
+            itemId: localIdRef(attributeLocalId(ReferenceMd.DateDatasets.Closed.ClosedYear.Default)),
             attributeSort: {
                 normalSortEnabled: true,
                 areaSortEnabled: false,
@@ -53,13 +53,15 @@ export const singleGenericDateAndMetricSortConfig: SortingPropsMock = {
         {
             attributeSortItem: {
                 direction: "desc",
-                attributeIdentifier: attributeLocalId(ExperimentalMd.DateDatasets.Closed.MonthYear.Long),
+                attributeIdentifier: attributeLocalId(
+                    ReferenceMd.DateDatasets.Closed.ClosedMonthYear.Default,
+                ),
             },
         },
     ],
     availableSorts: [
         {
-            itemId: localIdRef(attributeLocalId(ExperimentalMd.DateDatasets.Closed.MonthYear.Long)),
+            itemId: localIdRef(attributeLocalId(ReferenceMd.DateDatasets.Closed.ClosedMonthYear.Default)),
             attributeSort: {
                 normalSortEnabled: true,
                 areaSortEnabled: false,
@@ -70,7 +72,7 @@ export const singleGenericDateAndMetricSortConfig: SortingPropsMock = {
                     locators: [
                         {
                             measureLocatorItem: {
-                                measureIdentifier: measureLocalId(ExperimentalMd.SnapshotEOP),
+                                measureIdentifier: measureLocalId(ReferenceMd.SnapshotEOP),
                             },
                         },
                     ],
@@ -88,7 +90,7 @@ export const singleAttributeWithSingleMetricSortConfig: SortingPropsMock = {
                 locators: [
                     {
                         measureLocatorItem: {
-                            measureIdentifier: measureLocalId(ExperimentalMd.SnapshotEOP),
+                            measureIdentifier: measureLocalId(ReferenceMd.SnapshotEOP),
                         },
                     },
                 ],
@@ -97,7 +99,7 @@ export const singleAttributeWithSingleMetricSortConfig: SortingPropsMock = {
     ],
     availableSorts: [
         {
-            itemId: localIdRef(attributeLocalId(ExperimentalMd.Account.Name)),
+            itemId: localIdRef(attributeLocalId(ReferenceMd.Account.Name)),
             attributeSort: {
                 normalSortEnabled: true,
                 areaSortEnabled: false,
@@ -108,7 +110,7 @@ export const singleAttributeWithSingleMetricSortConfig: SortingPropsMock = {
                     locators: [
                         {
                             measureLocatorItem: {
-                                measureIdentifier: measureLocalId(ExperimentalMd.SnapshotEOP),
+                                measureIdentifier: measureLocalId(ReferenceMd.SnapshotEOP),
                             },
                         },
                     ],
@@ -126,7 +128,7 @@ export const singleAttributeWithMultipleMetrics: SortingPropsMock = {
                 locators: [
                     {
                         measureLocatorItem: {
-                            measureIdentifier: measureLocalId(ExperimentalMd.SnapshotEOP),
+                            measureIdentifier: measureLocalId(ReferenceMd.SnapshotEOP),
                         },
                     },
                 ],
@@ -135,7 +137,7 @@ export const singleAttributeWithMultipleMetrics: SortingPropsMock = {
     ],
     availableSorts: [
         {
-            itemId: localIdRef(attributeLocalId(ExperimentalMd.Account.Name)),
+            itemId: localIdRef(attributeLocalId(ReferenceMd.Account.Name)),
             attributeSort: {
                 normalSortEnabled: true,
                 areaSortEnabled: true,
@@ -146,7 +148,7 @@ export const singleAttributeWithMultipleMetrics: SortingPropsMock = {
                     locators: [
                         {
                             measureLocatorItem: {
-                                measureIdentifier: measureLocalId(ExperimentalMd.SnapshotEOP),
+                                measureIdentifier: measureLocalId(ReferenceMd.SnapshotEOP),
                             },
                         },
                     ],
@@ -156,7 +158,7 @@ export const singleAttributeWithMultipleMetrics: SortingPropsMock = {
                     locators: [
                         {
                             measureLocatorItem: {
-                                measureIdentifier: measureLocalId(ExperimentalMd.TimelineEOP),
+                                measureIdentifier: measureLocalId(ReferenceMd.TimelineEOP),
                             },
                         },
                     ],
@@ -166,7 +168,7 @@ export const singleAttributeWithMultipleMetrics: SortingPropsMock = {
                     locators: [
                         {
                             measureLocatorItem: {
-                                measureIdentifier: measureLocalId(ExperimentalMd.NrOfOpportunities),
+                                measureIdentifier: measureLocalId(ReferenceMd.NrOfOpportunities),
                             },
                         },
                     ],
@@ -181,7 +183,7 @@ export const multipleAttributesMultipleMetricsSortConfig: SortingPropsMock = {
         {
             attributeSortItem: {
                 direction: "asc",
-                attributeIdentifier: attributeLocalId(ExperimentalMd.Account.Name),
+                attributeIdentifier: attributeLocalId(ReferenceMd.Account.Name),
                 aggregation: "sum",
             },
         },
@@ -191,7 +193,7 @@ export const multipleAttributesMultipleMetricsSortConfig: SortingPropsMock = {
                 locators: [
                     {
                         measureLocatorItem: {
-                            measureIdentifier: measureLocalId(ExperimentalMd.SnapshotEOP),
+                            measureIdentifier: measureLocalId(ReferenceMd.SnapshotEOP),
                         },
                     },
                 ],
@@ -200,14 +202,14 @@ export const multipleAttributesMultipleMetricsSortConfig: SortingPropsMock = {
     ],
     availableSorts: [
         {
-            itemId: localIdRef(attributeLocalId(ExperimentalMd.Account.Name)),
+            itemId: localIdRef(attributeLocalId(ReferenceMd.Account.Name)),
             attributeSort: {
                 normalSortEnabled: true,
                 areaSortEnabled: true,
             },
         },
         {
-            itemId: localIdRef(attributeLocalId(ExperimentalMd.Account.Name)),
+            itemId: localIdRef(attributeLocalId(ReferenceMd.Account.Name)),
             attributeSort: {
                 normalSortEnabled: true,
                 areaSortEnabled: false,
@@ -218,7 +220,7 @@ export const multipleAttributesMultipleMetricsSortConfig: SortingPropsMock = {
                     locators: [
                         {
                             measureLocatorItem: {
-                                measureIdentifier: measureLocalId(ExperimentalMd.SnapshotEOP),
+                                measureIdentifier: measureLocalId(ReferenceMd.SnapshotEOP),
                             },
                         },
                     ],
@@ -228,7 +230,7 @@ export const multipleAttributesMultipleMetricsSortConfig: SortingPropsMock = {
                     locators: [
                         {
                             measureLocatorItem: {
-                                measureIdentifier: measureLocalId(ExperimentalMd.TimelineEOP),
+                                measureIdentifier: measureLocalId(ReferenceMd.TimelineEOP),
                             },
                         },
                     ],
@@ -238,7 +240,7 @@ export const multipleAttributesMultipleMetricsSortConfig: SortingPropsMock = {
                     locators: [
                         {
                             measureLocatorItem: {
-                                measureIdentifier: measureLocalId(ExperimentalMd.NrOfOpportunities),
+                                measureIdentifier: measureLocalId(ReferenceMd.NrOfOpportunities),
                             },
                         },
                     ],

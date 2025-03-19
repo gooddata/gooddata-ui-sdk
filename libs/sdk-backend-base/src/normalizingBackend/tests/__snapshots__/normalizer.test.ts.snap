@@ -9,12 +9,12 @@ exports[`Normalizer > should also normalize col & row totals in buckets 1`] = `
           "definition": {
             "measureDefinition": {
               "item": {
-                "identifier": "acugFHNJgsBy",
+                "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                 "type": "measure",
               },
             },
           },
-          "localIdentifier": "m_acugFHNJgsBy",
+          "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
         },
       },
       {
@@ -22,12 +22,12 @@ exports[`Normalizer > should also normalize col & row totals in buckets 1`] = `
           "definition": {
             "measureDefinition": {
               "item": {
-                "identifier": "aangOxLSeztu",
+                "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                 "type": "measure",
               },
             },
           },
-          "localIdentifier": "m_aangOxLSeztu",
+          "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
         },
       },
     ],
@@ -38,32 +38,32 @@ exports[`Normalizer > should also normalize col & row totals in buckets 1`] = `
       {
         "attribute": {
           "displayForm": {
-            "identifier": "label.owner.region",
+            "identifier": "f_owner.region_id",
             "type": "displayForm",
           },
-          "localIdentifier": "a_label.owner.region",
+          "localIdentifier": "a_f_owner.region_id",
         },
       },
       {
         "attribute": {
           "displayForm": {
-            "identifier": "label.product.id.name",
+            "identifier": "label.f_product.product.name",
             "type": "displayForm",
           },
-          "localIdentifier": "a_label.product.id.name",
+          "localIdentifier": "a_label.f_product.product.name",
         },
       },
     ],
     "localIdentifier": "attribute",
     "totals": [
       {
-        "attributeIdentifier": "a_label.product.id.name",
-        "measureIdentifier": "m_acugFHNJgsBy",
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
         "type": "sum",
       },
       {
-        "attributeIdentifier": "a_label.product.id.name",
-        "measureIdentifier": "m_acugFHNJgsBy",
+        "attributeIdentifier": "a_label.f_product.product.name",
+        "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
         "type": "max",
       },
     ],
@@ -73,32 +73,32 @@ exports[`Normalizer > should also normalize col & row totals in buckets 1`] = `
       {
         "attribute": {
           "displayForm": {
-            "identifier": "label.account.id.name",
+            "identifier": "label.f_account.account.name",
             "type": "displayForm",
           },
-          "localIdentifier": "a_label.account.id.name",
+          "localIdentifier": "a_label.f_account.account.name",
         },
       },
       {
         "attribute": {
           "displayForm": {
-            "identifier": "label.owner.id.name",
+            "identifier": "label.f_owner.salesrep.ownername",
             "type": "displayForm",
           },
-          "localIdentifier": "a_label.owner.id.name",
+          "localIdentifier": "a_label.f_owner.salesrep.ownername",
         },
       },
     ],
     "localIdentifier": "columns",
     "totals": [
       {
-        "attributeIdentifier": "a_label.owner.id.name",
-        "measureIdentifier": "m_acugFHNJgsBy",
+        "attributeIdentifier": "a_label.f_owner.salesrep.ownername",
+        "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
         "type": "sum",
       },
       {
-        "attributeIdentifier": "a_label.owner.id.name",
-        "measureIdentifier": "m_acugFHNJgsBy",
+        "attributeIdentifier": "a_label.f_owner.salesrep.ownername",
+        "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
         "type": "avg",
       },
     ],
@@ -127,12 +127,12 @@ exports[`Normalizer > should normalize arithmetic measures 1`] = `
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -140,12 +140,12 @@ exports[`Normalizer > should normalize arithmetic measures 1`] = `
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -153,13 +153,13 @@ exports[`Normalizer > should normalize arithmetic measures 1`] = `
         "definition": {
           "arithmeticMeasure": {
             "measureIdentifiers": [
-              "m_aangOxLSeztu",
-              "m_acugFHNJgsBy",
+              "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+              "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
             ],
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+        "localIdentifier": "m_9fa7cb9ce4d2947059b490e24a925317",
       },
     },
     {
@@ -167,13 +167,13 @@ exports[`Normalizer > should normalize arithmetic measures 1`] = `
         "definition": {
           "arithmeticMeasure": {
             "measureIdentifiers": [
-              "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
-              "m_acugFHNJgsBy",
+              "m_9fa7cb9ce4d2947059b490e24a925317",
+              "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_68d94d71b9317a58cd6c5b9a3f71f488",
+        "localIdentifier": "m_aebe46cecdb5eb3b5c069ce97a80535f",
       },
     },
   ],
@@ -204,12 +204,12 @@ exports[`Normalizer > should normalize arithmetic measures when mixed between th
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -217,13 +217,13 @@ exports[`Normalizer > should normalize arithmetic measures when mixed between th
         "definition": {
           "arithmeticMeasure": {
             "measureIdentifiers": [
-              "m_aangOxLSeztu",
-              "m_acugFHNJgsBy",
+              "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+              "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
             ],
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+        "localIdentifier": "m_9fa7cb9ce4d2947059b490e24a925317",
       },
     },
     {
@@ -231,12 +231,12 @@ exports[`Normalizer > should normalize arithmetic measures when mixed between th
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -267,12 +267,12 @@ exports[`Normalizer > should normalize arithmetic measures when mixed between th
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -281,13 +281,13 @@ exports[`Normalizer > should normalize arithmetic measures when mixed between th
         "definition": {
           "arithmeticMeasure": {
             "measureIdentifiers": [
-              "m_aangOxLSeztu",
-              "m_acugFHNJgsBy",
+              "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+              "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
             ],
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+        "localIdentifier": "m_9fa7cb9ce4d2947059b490e24a925317",
       },
     },
     {
@@ -295,12 +295,12 @@ exports[`Normalizer > should normalize arithmetic measures when mixed between th
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -331,12 +331,12 @@ exports[`Normalizer > should normalize arithmetic measures with keeping removabl
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -344,12 +344,12 @@ exports[`Normalizer > should normalize arithmetic measures with keeping removabl
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -358,13 +358,13 @@ exports[`Normalizer > should normalize arithmetic measures with keeping removabl
         "definition": {
           "arithmeticMeasure": {
             "measureIdentifiers": [
-              "m_aangOxLSeztu",
-              "m_acugFHNJgsBy",
+              "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+              "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
             ],
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+        "localIdentifier": "m_9fa7cb9ce4d2947059b490e24a925317",
       },
     },
     {
@@ -373,13 +373,13 @@ exports[`Normalizer > should normalize arithmetic measures with keeping removabl
         "definition": {
           "arithmeticMeasure": {
             "measureIdentifiers": [
-              "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
-              "m_acugFHNJgsBy",
+              "m_9fa7cb9ce4d2947059b490e24a925317",
+              "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_68d94d71b9317a58cd6c5b9a3f71f488",
+        "localIdentifier": "m_aebe46cecdb5eb3b5c069ce97a80535f",
       },
     },
   ],
@@ -410,26 +410,26 @@ exports[`Normalizer > should normalize derived measures 1`] = `
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
       "measure": {
         "definition": {
           "popMeasureDefinition": {
-            "measureIdentifier": "m_acugFHNJgsBy",
+            "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
             "popAttribute": {
-              "identifier": "closed.year",
+              "identifier": "dt_closedate_timestamp.year",
               "type": "attribute",
             },
           },
         },
-        "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+        "localIdentifier": "m_m_e519fa2a_86c3_4e32_8313_0c03062348j3_dt_closedate_timestamp.year",
       },
     },
     {
@@ -439,15 +439,15 @@ exports[`Normalizer > should normalize derived measures 1`] = `
             "dateDataSets": [
               {
                 "dataSet": {
-                  "identifier": "closed.dataset.dt",
+                  "identifier": "dt_closedate_timestamp",
                 },
                 "periodsAgo": 1,
               },
             ],
-            "measureIdentifier": "m_acugFHNJgsBy",
+            "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
-        "localIdentifier": "m_m_acugFHNJgsBy_previous_period",
+        "localIdentifier": "m_m_e519fa2a_86c3_4e32_8313_0c03062348j3_previous_period",
       },
     },
   ],
@@ -478,12 +478,12 @@ exports[`Normalizer > should normalize derived measures with keeping removable p
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -491,14 +491,14 @@ exports[`Normalizer > should normalize derived measures with keeping removable p
         "alias": "Won Last Year",
         "definition": {
           "popMeasureDefinition": {
-            "measureIdentifier": "m_acugFHNJgsBy",
+            "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
             "popAttribute": {
-              "identifier": "closed.year",
+              "identifier": "dt_closedate_timestamp.year",
               "type": "attribute",
             },
           },
         },
-        "localIdentifier": "m_m_acugFHNJgsBy_closed.year",
+        "localIdentifier": "m_m_e519fa2a_86c3_4e32_8313_0c03062348j3_dt_closedate_timestamp.year",
       },
     },
     {
@@ -508,15 +508,15 @@ exports[`Normalizer > should normalize derived measures with keeping removable p
             "dateDataSets": [
               {
                 "dataSet": {
-                  "identifier": "closed.dataset.dt",
+                  "identifier": "dt_closedate_timestamp",
                 },
                 "periodsAgo": 1,
               },
             ],
-            "measureIdentifier": "m_acugFHNJgsBy",
+            "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
-        "localIdentifier": "m_m_acugFHNJgsBy_previous_period",
+        "localIdentifier": "m_m_e519fa2a_86c3_4e32_8313_0c03062348j3_previous_period",
       },
     },
   ],
@@ -532,19 +532,19 @@ exports[`Normalizer > should normalize duplicate attributes and measures 1`] = `
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region_1",
+        "localIdentifier": "a_f_owner.region_id_1",
       },
     },
   ],
@@ -557,8 +557,8 @@ exports[`Normalizer > should normalize duplicate attributes and measures 1`] = `
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
-        "a_label.owner.region_1",
+        "a_f_owner.region_id",
+        "a_f_owner.region_id_1",
       ],
     },
   ],
@@ -569,12 +569,12 @@ exports[`Normalizer > should normalize duplicate attributes and measures 1`] = `
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -582,12 +582,12 @@ exports[`Normalizer > should normalize duplicate attributes and measures 1`] = `
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy_1",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3_1",
       },
     },
   ],
@@ -603,19 +603,19 @@ exports[`Normalizer > should normalize duplicate attributes and measures with ke
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region_1",
+        "localIdentifier": "a_f_owner.region_id_1",
       },
     },
   ],
@@ -628,8 +628,8 @@ exports[`Normalizer > should normalize duplicate attributes and measures with ke
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
-        "a_label.owner.region_1",
+        "a_f_owner.region_id",
+        "a_f_owner.region_id_1",
       ],
     },
   ],
@@ -640,12 +640,12 @@ exports[`Normalizer > should normalize duplicate attributes and measures with ke
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -653,12 +653,12 @@ exports[`Normalizer > should normalize duplicate attributes and measures with ke
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy_1",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3_1",
       },
     },
   ],
@@ -692,7 +692,7 @@ exports[`Normalizer > should normalize measure value filters 1`] = `
           },
         },
         "measure": {
-          "localIdentifier": "m_68d94d71b9317a58cd6c5b9a3f71f488",
+          "localIdentifier": "m_aebe46cecdb5eb3b5c069ce97a80535f",
         },
       },
     },
@@ -703,12 +703,12 @@ exports[`Normalizer > should normalize measure value filters 1`] = `
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -716,12 +716,12 @@ exports[`Normalizer > should normalize measure value filters 1`] = `
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -729,13 +729,13 @@ exports[`Normalizer > should normalize measure value filters 1`] = `
         "definition": {
           "arithmeticMeasure": {
             "measureIdentifiers": [
-              "m_aangOxLSeztu",
-              "m_acugFHNJgsBy",
+              "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+              "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
             ],
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+        "localIdentifier": "m_9fa7cb9ce4d2947059b490e24a925317",
       },
     },
     {
@@ -743,13 +743,13 @@ exports[`Normalizer > should normalize measure value filters 1`] = `
         "definition": {
           "arithmeticMeasure": {
             "measureIdentifiers": [
-              "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
-              "m_acugFHNJgsBy",
+              "m_9fa7cb9ce4d2947059b490e24a925317",
+              "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_68d94d71b9317a58cd6c5b9a3f71f488",
+        "localIdentifier": "m_aebe46cecdb5eb3b5c069ce97a80535f",
       },
     },
   ],
@@ -783,7 +783,7 @@ exports[`Normalizer > should normalize measure value filters with keeping remova
           },
         },
         "measure": {
-          "localIdentifier": "m_68d94d71b9317a58cd6c5b9a3f71f488",
+          "localIdentifier": "m_aebe46cecdb5eb3b5c069ce97a80535f",
         },
       },
     },
@@ -794,12 +794,12 @@ exports[`Normalizer > should normalize measure value filters with keeping remova
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -807,12 +807,12 @@ exports[`Normalizer > should normalize measure value filters with keeping remova
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -821,13 +821,13 @@ exports[`Normalizer > should normalize measure value filters with keeping remova
         "definition": {
           "arithmeticMeasure": {
             "measureIdentifiers": [
-              "m_aangOxLSeztu",
-              "m_acugFHNJgsBy",
+              "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+              "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
             ],
             "operator": "difference",
           },
         },
-        "localIdentifier": "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+        "localIdentifier": "m_9fa7cb9ce4d2947059b490e24a925317",
       },
     },
     {
@@ -836,13 +836,13 @@ exports[`Normalizer > should normalize measure value filters with keeping remova
         "definition": {
           "arithmeticMeasure": {
             "measureIdentifiers": [
-              "m_f72796b0fbc7c0dc4d17a1e68c1a9933",
-              "m_acugFHNJgsBy",
+              "m_9fa7cb9ce4d2947059b490e24a925317",
+              "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
             ],
             "operator": "ratio",
           },
         },
-        "localIdentifier": "m_68d94d71b9317a58cd6c5b9a3f71f488",
+        "localIdentifier": "m_aebe46cecdb5eb3b5c069ce97a80535f",
       },
     },
   ],
@@ -858,19 +858,19 @@ exports[`Normalizer > should normalize ranking filters 1`] = `
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -883,8 +883,8 @@ exports[`Normalizer > should normalize ranking filters 1`] = `
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
-        "a_label.product.id.name",
+        "a_f_owner.region_id",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -893,11 +893,11 @@ exports[`Normalizer > should normalize ranking filters 1`] = `
       "rankingFilter": {
         "attributes": [
           {
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         ],
         "measure": {
-          "localIdentifier": "m_acugFHNJgsBy",
+          "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
         },
         "operator": "TOP",
         "value": 1,
@@ -910,12 +910,12 @@ exports[`Normalizer > should normalize ranking filters 1`] = `
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -931,19 +931,19 @@ exports[`Normalizer > should normalize ranking filters with keeping removable pr
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -956,8 +956,8 @@ exports[`Normalizer > should normalize ranking filters with keeping removable pr
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
-        "a_label.product.id.name",
+        "a_f_owner.region_id",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -966,11 +966,11 @@ exports[`Normalizer > should normalize ranking filters with keeping removable pr
       "rankingFilter": {
         "attributes": [
           {
-            "localIdentifier": "a_label.owner.region",
+            "localIdentifier": "a_f_owner.region_id",
           },
         ],
         "measure": {
-          "localIdentifier": "m_acugFHNJgsBy",
+          "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
         },
         "operator": "TOP",
         "value": 1,
@@ -983,12 +983,12 @@ exports[`Normalizer > should normalize ranking filters with keeping removable pr
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -1004,19 +1004,19 @@ exports[`Normalizer > should normalize simple attributes and measures 1`] = `
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1029,8 +1029,8 @@ exports[`Normalizer > should normalize simple attributes and measures 1`] = `
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
-        "a_label.product.id.name",
+        "a_f_owner.region_id",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -1041,12 +1041,12 @@ exports[`Normalizer > should normalize simple attributes and measures 1`] = `
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -1055,12 +1055,12 @@ exports[`Normalizer > should normalize simple attributes and measures 1`] = `
           "measureDefinition": {
             "aggregation": "max",
             "item": {
-              "identifier": "fact.opportunitysnapshot.amount",
+              "identifier": "f_opportunitysnapshot.f_amount",
               "type": "fact",
             },
           },
         },
-        "localIdentifier": "m_fact.opportunitysnapshot.amount_max",
+        "localIdentifier": "m_f_opportunitysnapshot.f_amount_max",
       },
     },
     {
@@ -1069,12 +1069,12 @@ exports[`Normalizer > should normalize simple attributes and measures 1`] = `
           "measureDefinition": {
             "computeRatio": true,
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu_ratio",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050_ratio",
       },
     },
   ],
@@ -1090,19 +1090,19 @@ exports[`Normalizer > should normalize simple attributes and measures with keepi
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -1115,8 +1115,8 @@ exports[`Normalizer > should normalize simple attributes and measures with keepi
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
-        "a_label.product.id.name",
+        "a_f_owner.region_id",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -1127,12 +1127,12 @@ exports[`Normalizer > should normalize simple attributes and measures with keepi
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -1142,12 +1142,12 @@ exports[`Normalizer > should normalize simple attributes and measures with keepi
           "measureDefinition": {
             "aggregation": "max",
             "item": {
-              "identifier": "fact.opportunitysnapshot.amount",
+              "identifier": "f_opportunitysnapshot.f_amount",
               "type": "fact",
             },
           },
         },
-        "localIdentifier": "m_fact.opportunitysnapshot.amount_max",
+        "localIdentifier": "m_f_opportunitysnapshot.f_amount_max",
       },
     },
     {
@@ -1157,12 +1157,12 @@ exports[`Normalizer > should normalize simple attributes and measures with keepi
           "measureDefinition": {
             "computeRatio": true,
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu_ratio",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050_ratio",
       },
     },
   ],
@@ -1193,12 +1193,12 @@ exports[`Normalizer > should normalize simple measures with filters 1`] = `
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -1209,7 +1209,7 @@ exports[`Normalizer > should normalize simple measures with filters 1`] = `
               {
                 "negativeAttributeFilter": {
                   "displayForm": {
-                    "identifier": "label.owner.region",
+                    "identifier": "f_owner.region_id",
                     "type": "displayForm",
                   },
                   "notIn": {
@@ -1221,12 +1221,12 @@ exports[`Normalizer > should normalize simple measures with filters 1`] = `
               },
             ],
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy_a85dcdac",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3_9e3977eb",
       },
     },
   ],
@@ -1257,12 +1257,12 @@ exports[`Normalizer > should normalize simple measures with filters with keeping
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -1273,7 +1273,7 @@ exports[`Normalizer > should normalize simple measures with filters with keeping
               {
                 "negativeAttributeFilter": {
                   "displayForm": {
-                    "identifier": "label.owner.region",
+                    "identifier": "f_owner.region_id",
                     "type": "displayForm",
                   },
                   "notIn": {
@@ -1285,12 +1285,12 @@ exports[`Normalizer > should normalize simple measures with filters with keeping
               },
             ],
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy_a85dcdac",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3_9e3977eb",
       },
     },
   ],

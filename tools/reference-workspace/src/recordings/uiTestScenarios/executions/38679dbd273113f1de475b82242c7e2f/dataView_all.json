@@ -1,0 +1,31 @@
+{
+    "count": [6, 2],
+    "data": [
+        [27222899.64, 0.5659630606860159],
+        [22946895.47, 0.5543859649122806],
+        [38596194.86, 0.5303754266211604],
+        [8042031.92, 0.5722772277227722],
+        [9525857.91, 0.5803571428571429],
+        [10291576.74, 0.5220729366602687]
+    ],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "name": "CompuSci", "uri": "CompuSci" } },
+                { "attributeHeaderItem": { "name": "Educationly", "uri": "Educationly" } },
+                { "attributeHeaderItem": { "name": "Explorer", "uri": "Explorer" } },
+                { "attributeHeaderItem": { "name": "Grammar Plus", "uri": "Grammar Plus" } },
+                { "attributeHeaderItem": { "name": "PhoenixSoft", "uri": "PhoenixSoft" } },
+                { "attributeHeaderItem": { "name": "WonderKid", "uri": "WonderKid" } }
+            ]
+        ],
+        [
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Win Rate", "order": 1 } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [6, 2]
+}

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { IDashboard, IAccessControlAware } from "@gooddata/sdk-model";
 
@@ -7,7 +7,13 @@ import { IDashboard, IAccessControlAware } from "@gooddata/sdk-model";
  */
 export type DashboardDescriptor = Pick<
     IDashboard,
-    "title" | "description" | "tags" | "disableCrossFiltering"
+    | "title"
+    | "description"
+    | "tags"
+    | "disableCrossFiltering"
+    | "disableUserFilterReset"
+    | "disableUserFilterSave"
+    | "disableFilterViews"
 > &
     IAccessControlAware;
 
@@ -35,9 +41,17 @@ export interface DashboardMetaState {
      * SaveAsDashboard command processing (which essentially flush the current dashboard state to backend)
      */
     persistedDashboard?: IDashboard;
+
+    /**
+     * This property indicates whether the dashboard is dynamically filled. This means that the dashboard
+     * is not loaded from existing persisted dashboard but is instead built from scratch based on the
+     * provided items.
+     */
+    initialContent?: boolean;
 }
 
 export const metaInitialState: DashboardMetaState = {
     descriptor: EmptyDashboardDescriptor,
     persistedDashboard: undefined,
+    initialContent: undefined,
 };

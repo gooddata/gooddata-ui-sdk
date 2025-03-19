@@ -1,6 +1,10 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { IDashboardEngine, IDashboardPluginContract_V1 } from "@gooddata/sdk-ui-dashboard";
-import { compareBuild as semverCompareBuild, satisfies as semverSatisfies } from "semver";
+import {
+    compareBuild as semverCompareBuild,
+    satisfies as semverSatisfies,
+    intersects as semverIntersects,
+} from "semver";
 
 /**
  * Determine dashboard engine to use with the plugins.
@@ -26,8 +30,13 @@ export function isPluginCompatibleWithDashboardEngine(
     plugin: IDashboardPluginContract_V1,
 ): boolean {
     const { minEngineVersion, maxEngineVersion, compatibility, debugName, displayName, version } = plugin;
-    const requiredVersion =
-        compatibility ?? `>=${minEngineVersion}${maxEngineVersion ? " <=" + maxEngineVersion : ""}`;
+
+    let requiredVersion;
+    if (compatibility) {
+        requiredVersion = semverIntersects("9", compatibility) ? `${compatibility} || ^10` : compatibility;
+    } else {
+        requiredVersion = `>=${minEngineVersion}${maxEngineVersion ? " <=" + maxEngineVersion : ""}`;
+    }
 
     const matchesEngineVersion = semverSatisfies(engine.version, requiredVersion, {
         includePrerelease: true,

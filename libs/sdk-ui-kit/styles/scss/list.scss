@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "fixed-data-table-2/dist/fixed-data-table.css";
 @use "sass:color";
 @use "animations";
@@ -149,8 +149,7 @@ $menu-item-icon-width: 30px;
 
     @include mixins.text-overflow();
 
-    &:hover,
-    &:focus {
+    &:hover {
         color: variables.$is-focused-color;
         background: variables.$is-focused-background;
         text-decoration: none;
@@ -158,6 +157,9 @@ $menu-item-icon-width: 30px;
         &.is-selected {
             background-color: variables.$is-selected-focused-background;
         }
+    }
+    &:focus-visible {
+        outline: auto;
     }
 
     &.gd-menu-item-remove:hover {
@@ -427,6 +429,10 @@ $menu-item-icon-width: 30px;
         border: none;
     }
 
+    .public_fixedDataTable_main:focus-visible {
+        outline: auto;
+    }
+
     .public_Scrollbar_main {
         &,
         &.public_Scrollbar_mainActive {
@@ -527,7 +533,7 @@ $menu-item-icon-width: 30px;
     z-index: 10;
     display: inline-block;
     padding: 8px 0;
-    box-shadow: 0 1px 20px var(--gd-shadow-color, rgba(20, 56, 93, 0.2));
+    box-shadow: 0 1px 20px var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.2));
     background: variables.$gd-color-white;
     border-radius: 3px;
 }

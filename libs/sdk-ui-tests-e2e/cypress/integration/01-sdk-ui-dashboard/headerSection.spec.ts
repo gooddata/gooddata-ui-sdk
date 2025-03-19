@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
@@ -20,36 +20,43 @@ describe("Header section", () => {
             editMode.isInEditMode(false);
         });
 
-        it("can update header for all sections", { tags: ["checklist_integrated_tiger"] }, () => {
-            new DashboardMenu().toggle().hasOption("Save as new");
-            new DashboardHeader().saveAsNew("save a new dashboard");
-            editMode.edit().isInEditMode();
-            insightCatalog.waitForCatalogReload();
+        it(
+            "can update header for all sections",
+            { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+            () => {
+                new DashboardMenu().toggle().hasOption("Save as new");
+                new DashboardHeader().saveAsNew("save a new dashboard");
+                editMode.edit().isInEditMode();
+                insightCatalog.waitForCatalogReload();
 
-            cy.fixture("headerDataTest").then((data) => {
-                data["DataTest"].forEach((result: { rowIndex: number; sectionName: string }) => {
-                    new LayoutRow(result.rowIndex)
-                        .getHeader()
-                        .setTitle(result.sectionName)
-                        .setDescription(result.sectionName);
-                });
-            });
-
-            editMode.save(); //save all headers after input
-
-            cy.fixture("headerDataTest").then((data) => {
-                data["DataTest"].forEach((result: { rowIndex: number; sectionName: string }) => {
-                    if (result.rowIndex === 0) {
-                        new LayoutRow(result.rowIndex).getHeader().hasTitle(false).hasDescription(false);
-                    } else {
+                cy.fixture("headerDataTest").then((data) => {
+                    data["DataTest"].forEach((result: { rowIndex: number; sectionName: string }) => {
                         new LayoutRow(result.rowIndex)
                             .getHeader()
-                            .hasTitleWithText(result.sectionName)
-                            .hasDescriptionWithText(result.sectionName);
-                    }
+                            .setTitle(result.sectionName)
+                            .setDescription(result.sectionName);
+                    });
                 });
-            });
-        });
+
+                editMode.save(); //save all headers after input
+
+                cy.fixture("headerDataTest").then((data) => {
+                    data["DataTest"].forEach((result: { rowIndex: number; sectionName: string }) => {
+                        if (result.rowIndex === 0) {
+                            new LayoutRow(result.rowIndex)
+                                .getHeader()
+                                .hasTitle(false)
+                                .hasDescriptionWithText("");
+                        } else {
+                            new LayoutRow(result.rowIndex)
+                                .getHeader()
+                                .hasTitleWithText(result.sectionName)
+                                .hasDescriptionWithText(result.sectionName);
+                        }
+                    });
+                });
+            },
+        );
 
         it(
             "Header is removed after latest insight is deleted from a section",
@@ -73,36 +80,26 @@ describe("Header section", () => {
         });
 
         //Cover ticket: RAIL-4674
-        it(
-            "Limitation of title, description",
-            { tags: ["checklist_integrated_tiger", "checklist_integrated_bear"] },
-            () => {
-                cy.fixture("headerDataTest").then((data) => {
-                    const title = data["LimitTexts"].title;
-                    const desc = data["LimitTexts"].description;
-                    const headerRow_01 = layoutRow_01.getHeader();
-                    const headerRow_02 = layoutRow_02.getHeader();
-                    insightCatalog.waitForCatalogReload();
-                    headerRow_01
-                        .setTitle(title)
-                        .selectTitleInput()
-                        .hasLimitMessage(true, "128/256 caractères restant")
-                        .clickOutside()
-                        .hasLimitMessage(false, "128/256 caractères restant");
-                    headerRow_02
-                        .scrollIntoView()
-                        .setDescription(desc)
-                        .selectDescriptionInput()
-                        .hasLimitMessage(true, "512/1024 caractères restant")
-                        .clickOutside()
-                        .hasLimitMessage(false, "512/1024 caractères restant");
+        it("Limitation of title", { tags: ["checklist_integrated_tiger"] }, () => {
+            cy.fixture("headerDataTest").then((data) => {
+                const title = data["LimitTexts"].title;
+                const desc = data["LimitTexts"].description;
+                const headerRow_01 = layoutRow_01.getHeader();
+                const headerRow_02 = layoutRow_02.getHeader();
+                insightCatalog.waitForCatalogReload();
+                headerRow_01
+                    .setTitle(title)
+                    .selectTitleInput()
+                    .hasLimitMessage(true, "128/256 caractères restant")
+                    .clickOutside()
+                    .hasLimitMessage(false, "128/256 caractères restant");
+                headerRow_02.scrollIntoView().setDescription(desc).selectDescriptionInput().clickOutside();
 
-                    editMode.save();
-                    headerRow_01.hasTitleWithText(title);
-                    headerRow_02.hasDescriptionWithText(desc);
-                });
-            },
-        );
+                editMode.save();
+                headerRow_01.hasTitleWithText(title);
+                headerRow_02.hasDescriptionWithText(desc);
+            });
+        });
 
         it("Header placeholder should be translated", { tags: ["pre-merge_isolated_tiger"] }, () => {
             layoutRow_01

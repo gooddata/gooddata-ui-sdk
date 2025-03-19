@@ -15,18 +15,12 @@ mkdir -p /home/cypressuser/.npm-global/lib
 npx --verbose --yes @gooddata/$BOILER_APP_VERSION init $BOILER_APP_NAME --language $SDK_LANG
 
 tmp=$(mktemp)
-jq --arg host "${HOST}" --arg ws "${TEST_WORKSPACE_ID}" --arg backend "${sdk_backend}" \
-'.gooddata.hostname = $host | .gooddata.workspaceId = $ws | .gooddata.backend = $backend' \
+jq --arg host "${HOST}" --arg ws "${TEST_WORKSPACE_ID}" \
+'.gooddata.hostname = $host | .gooddata.workspaceId = $ws' \
 $BOILER_APP_NAME/package.json > $tmp
 mv $tmp $BOILER_APP_NAME/package.json
 
-if [[ "$sdk_backend" == 'bear' ]]; then
-    export GDC_USERNAME=${USER_NAME:?}
-    export GDC_PASSWORD=${PASSWORD:?}
-    cp -fr ./scripts/backend_bear.template $BOILER_APP_NAME/src/backend.${SDK_LANG}
-else
-    export TIGER_API_TOKEN=${TIGER_API_TOKEN:?}
-fi
+export TIGER_API_TOKEN=${TIGER_API_TOKEN:?}
 
 sed -i 's/ProductCategoriesPieChart/Headline/g' $BOILER_APP_NAME/src/App.${SDK_LANG}x
 

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { IInsight, IInsightDefinition, insightSanitize, ISettings } from "@gooddata/sdk-model";
 import { IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -45,8 +45,8 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
     ): IVisualizationSizeInfo {
         return {
             width: {
-                default: layoutDescriptor.gridColumnsCount,
-                min: 3,
+                default: settings.enableDashboardFlexibleLayout ? 4 : layoutDescriptor.gridColumnsCount,
+                min: 2,
                 max: layoutDescriptor.gridColumnsCount,
             },
             height: {
@@ -61,6 +61,7 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
         insight: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
+        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ): IInsight {
         const drillDownInsight = modifyBucketsAttributesForDrillDown(
             insight,
@@ -70,6 +71,7 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
             drillDownInsight,
             drillDownContext.event.drillContext.intersection,
             backendSupportsElementUris,
+            enableDuplicatedLabelValuesInAttributeFilter,
         );
         return sanitizeTableProperties(insightSanitize(drillDownInsightWithFilters));
     }

@@ -1,7 +1,7 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import axios from "axios";
-import { ILiveFeatures } from "@gooddata/api-client-tiger";
+import { ApiEntitlement, ILiveFeatures } from "@gooddata/api-client-tiger";
 import { getFeatureHubFeatures, FeatureHubResponse } from "../hub.js";
 import { FeatureDef } from "../feature.js";
 import { pickContext } from "../index.js";
@@ -9,9 +9,24 @@ import { describe, expect, it, vi } from "vitest";
 
 const axiosGetSpy = vi.spyOn(axios, "get");
 
+const entitlements: ApiEntitlement[] = [
+    {
+        name: "Tier",
+        value: "TRIAL",
+    },
+];
+
 describe("live features", () => {
-    function createFeatures(earlyAccess = "", organizationId = ""): ILiveFeatures["live"] {
-        return { configuration: { host: "/", key: "" }, context: { earlyAccess, organizationId } };
+    function createFeatures(
+        earlyAccessValues: string[] = [],
+        organizationId = "",
+        tier = "",
+        jsSdkVersion = "",
+    ): ILiveFeatures["live"] {
+        return {
+            configuration: { host: "/", key: "" },
+            context: { earlyAccessValues, organizationId, tier, jsSdkVersion },
+        };
     }
 
     function createFeature(key: string, type: FeatureDef["type"], value: any): FeatureDef {
@@ -47,7 +62,7 @@ describe("live features", () => {
             baseURL: "/",
             headers: {
                 "Content-type": "application/json",
-                "X-FeatureHub": "earlyAccess=,organizationId=",
+                "X-FeatureHub": "",
             },
             method: "GET",
             params: { sdkUrl: "" },
@@ -59,12 +74,15 @@ describe("live features", () => {
     it("call axios with ws context", async () => {
         mockReturn([]);
 
-        await getFeatureHubFeatures(createFeatures(), pickContext({ earlyAccess: "omega" }, "test-org"));
+        await getFeatureHubFeatures(
+            createFeatures(),
+            pickContext({ earlyAccessValues: ["omega"] }, "test-org", [], "1.0.0"),
+        );
         expect(axiosGetSpy).toHaveBeenCalledWith("/features", {
             baseURL: "/",
             headers: {
                 "Content-type": "application/json",
-                "X-FeatureHub": "earlyAccess=omega,organizationId=test-org",
+                "X-FeatureHub": "organizationId=test-org,earlyAccess=omega,jsSdkVersion=1.0.0",
                 "if-none-match": expect.anything(),
             },
             method: "GET",
@@ -77,12 +95,12 @@ describe("live features", () => {
     it("call axios with context filled", async () => {
         mockReturn([]);
 
-        await getFeatureHubFeatures(createFeatures("beta", "org"));
+        await getFeatureHubFeatures(createFeatures(["beta"], "org", "", "1.0.0"));
         expect(axiosGetSpy).toHaveBeenCalledWith("/features", {
             baseURL: "/",
             headers: {
                 "Content-type": "application/json",
-                "X-FeatureHub": "earlyAccess=beta,organizationId=org",
+                "X-FeatureHub": "organizationId=org,earlyAccess=beta,jsSdkVersion=1.0.0",
                 "if-none-match": expect.anything(),
             },
             method: "GET",
@@ -96,14 +114,14 @@ describe("live features", () => {
         mockReturn([]);
 
         await getFeatureHubFeatures(
-            createFeatures("beta", "org"),
-            pickContext({ earlyAccess: "omega" }, "test-org"),
+            createFeatures(["beta"], "org"),
+            pickContext({ earlyAccessValues: ["omega"] }, "test-org", entitlements, "1.0.0"),
         );
         expect(axiosGetSpy).toHaveBeenCalledWith("/features", {
             baseURL: "/",
             headers: {
                 "Content-type": "application/json",
-                "X-FeatureHub": "earlyAccess=omega,organizationId=test-org",
+                "X-FeatureHub": "organizationId=test-org,earlyAccess=omega,tier=TRIAL,jsSdkVersion=1.0.0",
                 "if-none-match": expect.anything(),
             },
             method: "GET",

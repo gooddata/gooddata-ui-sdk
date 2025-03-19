@@ -19,6 +19,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IColorPaletteDefinition } from '@gooddata/sdk-model';
+import { IFilter } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-ui';
 import { IMeasureSortTarget } from '@gooddata/sdk-model';
 import { IMetadataObjectBase } from '@gooddata/sdk-model';
@@ -30,12 +31,17 @@ import { ITheme } from '@gooddata/sdk-model';
 import { IThemeDefinition } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
+import { KeyboardEvent as KeyboardEvent_2 } from 'react';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MessageDescriptor } from 'react-intl';
+import { MutableRefObject } from 'react';
 import { ObjRef } from '@gooddata/sdk-model';
+import { OnError } from '@gooddata/sdk-ui';
+import { OnLoadingChanged } from '@gooddata/sdk-ui';
 import { OverlayController as OverlayController_2 } from './OverlayController.js';
 import { PureComponent } from 'react';
 import { default as React_2 } from 'react';
+import * as React_3 from 'react';
 import { ReactNode } from 'react';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
@@ -50,16 +56,31 @@ export type ActionType = "LinkButton" | "Button" | "Switcher";
 export function activateHeaderMenuItems(items: IHeaderMenuItem[][], ids: Array<string>): IHeaderMenuItem[][];
 
 // @internal (undocumented)
+export const AddButton: React_2.FC<IAddButtonProps>;
+
+// @internal (undocumented)
 export const AddGranteeBase: React_2.FC<IAddGranteeBaseProps>;
 
 // @internal (undocumented)
-export type AddMessageType = (message: MessageDescriptor, options?: Pick<IMessageDefinition, "duration" | "intensive" | "values">) => string;
+export type AddMessageType = (message: MessageDescriptor, options?: MessageParameters) => string;
+
+// @internal (undocumented)
+export type AlignConfig = {
+    triggerAlignPoint: PositionPoint;
+    overlayAlignPoint: PositionPoint;
+    offset?: IOffset;
+};
+
+// @internal (undocumented)
+export function alignConfigToAlignPoint(alignConfig: AlignConfig): IAlignPoint;
 
 // @internal (undocumented)
 export type Alignment = {
     left: number;
     top: number;
     right: number;
+    width?: number;
+    height?: number;
     align: string;
 };
 
@@ -95,6 +116,18 @@ export class AutoSize extends Component<IAutoSizeProps> {
 
 // @internal (undocumented)
 export const BackButton: React_2.FC<IBackButtonProps>;
+
+// @internal
+export const bem: (block: `gd-ui-kit-${string}`) => {
+    b: (props?: StyleProps) => string;
+    e: (element: string, props?: StyleProps) => string;
+};
+
+// @internal
+export function bemFactory<TPrefix extends string>(block: `${TPrefix}-${string}`): {
+    b: (props?: StyleProps) => string;
+    e: (element: string, props?: StyleProps) => string;
+};
 
 // @internal (undocumented)
 export class Bubble extends React_2.Component<IBubbleProps, IBubbleState> {
@@ -191,7 +224,6 @@ export class Button extends React_2.Component<IButtonProps> {
         tagName: string;
         title: string;
         type: string;
-        value: string;
         iconLeft: string;
         iconRight: string;
     };
@@ -299,6 +331,9 @@ export const CommunityEditionDialog: React_2.FC<ICommunityEditionDialogProps>;
 export const ComponentLabelsProvider: React_2.FC<IComponentLabelsProviderProps>;
 
 // @internal (undocumented)
+export function ComponentTable<TProps extends object, TProp extends keyof TProps>({ Component, columnsBy, rowsBy, baseProps, debug, codeSnippet, cellWidth, cellHeight, align, }: IComponentTableProps<TProps, TProp>): React_2.JSX.Element;
+
+// @internal (undocumented)
 export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
     // (undocumented)
     render(): JSX.Element;
@@ -313,7 +348,9 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
 }
 
 // @internal (undocumented)
-export const ContentDivider: React_2.FC;
+export const ContentDivider: React_2.FC<{
+    className?: string;
+}>;
 
 // @internal (undocumented)
 export type CopyCodeOriginType = "keyboard" | "button";
@@ -422,6 +459,9 @@ export const Dropdown: React_2.FC<IDropdownProps>;
 export const DropdownButton: React_2.FC<IDropdownButtonProps>;
 
 // @internal (undocumented)
+export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProps<T>): React_2.JSX.Element;
+
+// @internal (undocumented)
 export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element;
 
 // @internal (undocumented)
@@ -429,73 +469,6 @@ export const DropdownTabs: React_2.FC<IDropdownTagsProps>;
 
 // @internal (undocumented)
 export const EditableLabel: React_2.ForwardRefExoticComponent<IEditableLabelProps & React_2.RefAttributes<HTMLDivElement>>;
-
-// @internal (undocumented)
-export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEditableLabelState> {
-    constructor(props: IEditableLabelInnerProps);
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentWillUnmount(): void;
-    // (undocumented)
-    static defaultProps: {
-        children: boolean;
-        className: string;
-        maxLength: number;
-        maxRows: number;
-        onCancel: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        onEditingStart: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        onChange: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        placeholder: string;
-        scrollToEndOnEditingStart: boolean;
-        textareaInOverlay: boolean;
-        autofocus: boolean;
-        isEditableLabelWidthBasedOnText: boolean;
-    };
-    // (undocumented)
-    edit: (_e?: React_2.MouseEvent<HTMLDivElement>) => void;
-    // (undocumented)
-    isClickOutsideTextarea(clickedTarget: EventTarget): boolean;
-    // (undocumented)
-    isMultiLine(): boolean;
-    // (undocumented)
-    measureRootDimensions(): void;
-    // (undocumented)
-    onCancel: () => void;
-    // (undocumented)
-    onChange: (e: React_2.ChangeEvent<HTMLTextAreaElement>) => void;
-    // (undocumented)
-    onDocumentClick: (e: MouseEvent) => void;
-    // (undocumented)
-    onKeyDown: (e: React_2.KeyboardEvent<HTMLTextAreaElement>) => void;
-    // (undocumented)
-    onSelectStart(e: React_2.MouseEvent): void;
-    // (undocumented)
-    onSubmit: () => void;
-    // (undocumented)
-    removeListeners(): void;
-    // (undocumented)
-    render(): ReactNode;
-    // (undocumented)
-    renderEditableLabelEdit(): ReactNode;
-    // (undocumented)
-    renderTextarea(style?: {}): ReactNode;
-    // (undocumented)
-    renderTextAreaInOverlay(): ReactNode;
-    // (undocumented)
-    selectAndFocus: () => void;
-    // (undocumented)
-    UNSAFE_componentWillReceiveProps(newProps: IEditableLabelProps): void;
-}
 
 // @internal
 export const EllipsisText: React_2.FC<IEllipsisTextProps>;
@@ -524,10 +497,7 @@ export class ErrorOverlay extends React_2.PureComponent<IErrorOverlayProps> {
 }
 
 // @internal (undocumented)
-export const ExportDialog: {
-    (props: IExportDialogBaseProps): JSX.Element;
-    defaultProps: IExportDialogBaseProps;
-};
+export const ExportDialog: (props: IExportDialogBaseProps) => JSX.Element;
 
 // @internal (undocumented)
 export class ExportDialogBase extends DialogBase<IExportDialogBaseProps> {
@@ -592,6 +562,12 @@ export class FullScreenOverlay extends Overlay<IOverlayState> {
 export const GD_COLOR_HIGHLIGHT = "#14b2e2";
 
 // @internal (undocumented)
+export const GD_COLOR_STATE_BLANK = "#6d7680";
+
+// @internal (undocumented)
+export const GD_COLOR_STATE_HOVER = "#94a1ad";
+
+// @internal (undocumented)
 export const GD_COLOR_WHITE = "#fff";
 
 // @internal (undocumented)
@@ -604,7 +580,7 @@ showOnlyLogoutItem?: boolean, featureFlags?: ISettings): IHeaderMenuItem[];
 export function generateHeaderHelpMenuItems(documentationUrl?: string, supportForumUrl?: string, userEmail?: string, workspaceId?: string, sessionId?: string, supportEmail?: string, isBranded?: boolean, featureFlags?: ISettings): IHeaderMenuItem[];
 
 // @internal (undocumented)
-export function generateHeaderMenuItemsGroups(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions, hasAnalyticalDashboards?: boolean, workspaceId?: string, dashboardId?: string, tabId?: string, hasNoDataSet?: boolean, backendSupportsDataItem?: boolean, backendSupportsCsvUploader?: boolean, hasMeasures?: boolean, hasManage?: boolean): IHeaderMenuItem[][];
+export function generateHeaderMenuItemsGroups(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions, hasAnalyticalDashboards?: boolean, workspaceId?: string, dashboardId?: string, tabId?: string, hasNoDataSet?: boolean, backendSupportsDataItem?: boolean, backendSupportsCsvUploader?: boolean, hasMeasures?: boolean, hasManage?: boolean, baseUrl?: string): IHeaderMenuItem[][];
 
 // @internal (undocumented)
 export function generateHeaderStaticHelpMenuItems(documentationUrl?: string, communityUrl?: string, universityUrl?: string, slackUrl?: string): IHeaderMenuItem[];
@@ -619,7 +595,7 @@ export const getColorsPreviewFromColorPalette: (colorPalette: IColorPalette) => 
 export const getColorsPreviewFromTheme: (theme: ITheme) => string[];
 
 // @internal
-export function getDateTimeConfig(date: string, options?: IDateTimeConfigOptions): IInsightListItemDateConfig;
+export function getDateTimeConfig(date: string, options?: IDateTimeConfigOptions): IDateConfig;
 
 // @internal (undocumented)
 export const getDefaultEmbedTypeOptions: (embedType: EmbedType) => EmbedOptionsType;
@@ -690,6 +666,9 @@ export const HEADER_ITEM_ID_DASHBOARDS = "gs.header.dashboards";
 export const HEADER_ITEM_ID_DATA = "gs.header.data";
 
 // @internal (undocumented)
+export const HEADER_ITEM_ID_HOME = "gs.header.home";
+
+// @internal (undocumented)
 export const HEADER_ITEM_ID_KPIS = "gs.header.kpis";
 
 // @internal (undocumented)
@@ -718,6 +697,15 @@ export const HeaderDataMenu: React_2.FC<WithIntlProps<IHeaderDataMenuProps>> & {
     WrappedComponent: React_2.ComponentType<IHeaderDataMenuProps>;
 };
 
+// @internal
+export type HeaderSearchContext = {
+    isOpen: boolean;
+    toggleOpen: () => void;
+};
+
+// @internal
+export const HeaderSearchProvider: ({ children, ...rest }: React_3.PropsWithChildren<HeaderSearchContext>) => React_3.JSX.Element;
+
 // @internal (undocumented)
 export const HeaderWorkspacePicker: React_2.FC<WithIntlProps<IHeaderWorkspacePickerProps>> & {
     WrappedComponent: React_2.ComponentType<IHeaderWorkspacePickerProps>;
@@ -726,11 +714,40 @@ export const HeaderWorkspacePicker: React_2.FC<WithIntlProps<IHeaderWorkspacePic
 // @internal (undocumented)
 export type HelpMenuDropdownAlignPoints = "br tr" | "bl tl";
 
+// @internal (undocumented)
+export type HorizontalPosition = "left" | "center" | "right";
+
 // @public (undocumented)
 export const HubspotConversionTouchPointDialog: React_2.FC<IHubspotConversionTouchPointDialogBaseProps>;
 
 // @internal
 export const Hyperlink: React_2.FC<IHyperlinkProps>;
+
+// @internal (undocumented)
+export interface IAccessibilityConfigBase {
+    // (undocumented)
+    ariaDescribedBy?: React.AriaAttributes["aria-describedby"];
+    // (undocumented)
+    ariaLabel?: React.AriaAttributes["aria-label"];
+    // (undocumented)
+    ariaLabelledBy?: React.AriaAttributes["aria-labelledby"];
+}
+
+// @internal (undocumented)
+export interface IAddButtonProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
+    title: JSX.Element;
+    // (undocumented)
+    tooltip?: JSX.Element;
+    // (undocumented)
+    tooltipAlignPoints?: IAlignPoint[];
+}
 
 // @internal (undocumented)
 export interface IAddGranteeBaseProps {
@@ -819,6 +836,8 @@ export interface IAppHeaderProps {
     // (undocumented)
     helpRedirectUrl?: string;
     // (undocumented)
+    isAccessibilityCompliant?: boolean;
+    // (undocumented)
     logoHref?: string;
     // (undocumented)
     logoTitle?: string;
@@ -826,6 +845,13 @@ export interface IAppHeaderProps {
     logoUrl?: string;
     // (undocumented)
     menuItemsGroups?: IHeaderMenuItem[][];
+    // (undocumented)
+    notificationsPanel?: (props: {
+        isMobile: boolean;
+        closeNotificationsOverlay: () => void;
+    }) => React_2.ReactNode;
+    // (undocumented)
+    onChatItemClick?: (e: React_2.MouseEvent) => void;
     // (undocumented)
     onHelpClick?: (isOpen: boolean) => void;
     // (undocumented)
@@ -836,6 +862,10 @@ export interface IAppHeaderProps {
     onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent) => void;
     // (undocumented)
     onUpsellButtonClick?: (e: React_2.MouseEvent) => void;
+    // (undocumented)
+    search?: React_2.ReactNode;
+    // (undocumented)
+    showChatItem?: boolean;
     // (undocumented)
     showInviteItem?: boolean;
     // (undocumented)
@@ -859,7 +889,11 @@ export interface IAppHeaderState {
     // (undocumented)
     isHelpMenuOpen: boolean;
     // (undocumented)
+    isNotificationsMenuOpen: boolean;
+    // (undocumented)
     isOverlayMenuOpen: boolean;
+    // (undocumented)
+    isSearchMenuOpen: boolean;
     // (undocumented)
     responsiveMode: boolean;
 }
@@ -964,6 +998,8 @@ export interface IBubbleProps {
     closeOnOutsideClick?: boolean;
     // (undocumented)
     closeOnParentScroll?: boolean;
+    // (undocumented)
+    ensureVisibility?: boolean;
     ignoreClicksOn?: any[];
     // (undocumented)
     ignoreClicksOnByClass?: string[];
@@ -977,6 +1013,8 @@ export interface IBubbleProps {
     onMouseLeave?: () => void;
     // (undocumented)
     overlayClassName?: string;
+    // (undocumented)
+    overlayPositionType?: OverlayPositionType;
 }
 
 // @internal (undocumented)
@@ -999,6 +1037,8 @@ export interface IBubbleTriggerProps {
     onBubbleClose?: () => void;
     // (undocumented)
     onBubbleOpen?: () => void;
+    // (undocumented)
+    openOnInit?: boolean;
     // (undocumented)
     tagName?: React_2.ElementType;
 }
@@ -1028,7 +1068,17 @@ export interface IBucketItemDescriptors {
 }
 
 // @internal (undocumented)
+export interface IButtonAccessibilityConfig extends IAccessibilityConfigBase, IDropdownButtonAccessibilityConfig {
+}
+
+// @internal (undocumented)
 export interface IButtonProps {
+    // (undocumented)
+    accessibilityConfig?: IButtonAccessibilityConfig;
+    // (undocumented)
+    buttonRef?: React.MutableRefObject<HTMLElement>;
+    // (undocumented)
+    children?: ReactNode;
     // (undocumented)
     className?: string;
     // (undocumented)
@@ -1040,7 +1090,11 @@ export interface IButtonProps {
     // (undocumented)
     id?: string;
     // (undocumented)
+    intent?: "action" | "positive" | "negative";
+    // (undocumented)
     onClick?(e: React.MouseEvent): void;
+    // (undocumented)
+    size?: "small" | "medium" | "large";
     // (undocumented)
     tabIndex?: number;
     // (undocumented)
@@ -1048,9 +1102,11 @@ export interface IButtonProps {
     // (undocumented)
     title?: string;
     // (undocumented)
-    type?: string;
+    type?: HTMLButtonElement["type"];
     // (undocumented)
     value?: ReactNode;
+    // (undocumented)
+    variant?: "primary" | "secondary";
 }
 
 // @internal (undocumented)
@@ -1136,7 +1192,29 @@ export type IComponentLabelsProviderProps = {
 };
 
 // @internal (undocumented)
-export const Icon: Record<string, React.FC<IIconProps>>;
+export interface IComponentTableProps<TProps extends object, TProp extends keyof TProps> {
+    // (undocumented)
+    align?: "center" | "flex-start";
+    // (undocumented)
+    baseProps?: Partial<TProps>;
+    // (undocumented)
+    cellHeight?: number;
+    // (undocumented)
+    cellWidth?: number;
+    // (undocumented)
+    codeSnippet?: string;
+    // (undocumented)
+    columnsBy: IPropCombination<TProps, TProp>;
+    // (undocumented)
+    Component: React_2.ComponentType<TProps>;
+    // (undocumented)
+    debug?: boolean;
+    // (undocumented)
+    rowsBy: IPropCombination<TProps, TProp>[];
+}
+
+// @internal (undocumented)
+export const Icon: Record<string, React_2.FC<IIconProps>>;
 
 // @internal (undocumented)
 export interface IConfirmDialogBaseProps extends IDialogBaseProps {
@@ -1173,6 +1251,9 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
 }
 
 // @internal (undocumented)
+export type IconType = "check" | "plus" | "sync" | "alert" | "close" | "question" | "crossCircle";
+
+// @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
     // (undocumented)
     className?: string;
@@ -1180,6 +1261,18 @@ export interface ICustomizableCheckmarkProps {
     height?: number;
     // (undocumented)
     width?: number;
+}
+
+// @internal (undocumented)
+export interface IDateConfig {
+    // (undocumented)
+    date: Date;
+    // (undocumented)
+    isCurrentYear: boolean;
+    // (undocumented)
+    isToday: boolean;
+    // (undocumented)
+    isYesterday: boolean;
 }
 
 // @internal (undocumented)
@@ -1221,6 +1314,8 @@ export interface IDatePickerOwnProps {
     // (undocumented)
     alignPoints?: IAlignPoint[];
     // (undocumented)
+    ariaLabelledBy?: string;
+    // (undocumented)
     className?: string;
     // (undocumented)
     date?: Date;
@@ -1261,11 +1356,19 @@ export interface IDescriptionPanelProps {
     // (undocumented)
     description?: string;
     // (undocumented)
+    filters?: IFilter[];
+    // (undocumented)
+    LoadingComponent?: React_2.ComponentType;
+    // (undocumented)
     locale?: string;
     // (undocumented)
     onBubbleOpen?: () => void;
     // (undocumented)
     title?: string;
+    // (undocumented)
+    useReferences?: boolean;
+    // (undocumented)
+    useRichText?: boolean;
 }
 
 // @internal (undocumented)
@@ -1295,6 +1398,8 @@ export interface IDialogBaseProps {
     onMouseUp?: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     // (undocumented)
     onSubmit?: (data?: any) => void;
+    // (undocumented)
+    shouldCloseOnClick?: (e: Event) => boolean;
     // (undocumented)
     submitOnEnterKey?: boolean;
 }
@@ -1408,11 +1513,27 @@ export interface IDropdownBodyRenderProps {
 }
 
 // @internal (undocumented)
+export interface IDropdownButtonAccessibilityConfig {
+    // (undocumented)
+    isExpanded?: boolean;
+    // (undocumented)
+    popupId?: string;
+}
+
+// @internal (undocumented)
 export interface IDropdownButtonProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    // (undocumented)
+    buttonRef?: React_2.MutableRefObject<HTMLElement>;
+    // (undocumented)
+    children?: ReactNode;
     // (undocumented)
     className?: string;
     // (undocumented)
     disabled?: boolean;
+    // (undocumented)
+    dropdownId?: string;
     // (undocumented)
     iconLeft?: string;
     // (undocumented)
@@ -1432,7 +1553,11 @@ export interface IDropdownButtonProps {
 // @internal (undocumented)
 export interface IDropdownButtonRenderProps {
     // (undocumented)
+    buttonRef: React_2.MutableRefObject<HTMLElement | null>;
+    // (undocumented)
     closeDropdown: () => void;
+    // (undocumented)
+    dropdownId: string;
     // (undocumented)
     isMobile: boolean;
     // (undocumented)
@@ -1441,6 +1566,21 @@ export interface IDropdownButtonRenderProps {
     openDropdown: () => void;
     // (undocumented)
     toggleDropdown: () => void;
+}
+
+// @internal (undocumented)
+export interface IDropdownInvertableSelectProps<T> {
+    getItemKey: (item: T) => string;
+    getItemTitle: (item: T) => string;
+    initialIsInverted?: boolean;
+    initialSearchString?: string;
+    initialValue?: T[];
+    onChange: (selectedItems: T[], isInverted: boolean) => void;
+    options: T[];
+    renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => JSX.Element;
+    renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => JSX.Element;
+    title: string;
+    width?: number;
 }
 
 // @internal (undocumented)
@@ -1480,6 +1620,8 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     // (undocumented)
     searchFieldSize?: "small" | "normal";
     // (undocumented)
+    searchLabel?: string;
+    // (undocumented)
     searchPlaceholder?: string;
     // (undocumented)
     searchString?: string;
@@ -1504,7 +1646,11 @@ export interface IDropdownProps {
     // (undocumented)
     alignPoints?: IAlignPoint[];
     // (undocumented)
+    autofocusOnOpen?: boolean;
+    // (undocumented)
     className?: string;
+    // (undocumented)
+    closeOnEscape?: boolean;
     // (undocumented)
     closeOnMouseDrag?: boolean;
     // (undocumented)
@@ -1543,13 +1689,9 @@ export interface IDropdownTagsProps {
 }
 
 // @internal (undocumented)
-export interface IEditableLabelInnerProps extends IEditableLabelProps {
-    // (undocumented)
-    innerRef: React_2.ForwardedRef<HTMLDivElement>;
-}
-
-// @internal (undocumented)
 export interface IEditableLabelProps {
+    // (undocumented)
+    ariaLabel?: string;
     // (undocumented)
     autofocus?: boolean;
     // (undocumented)
@@ -1584,6 +1726,8 @@ export interface IEditableLabelProps {
 export interface IEditableLabelState {
     // (undocumented)
     isEditing: boolean;
+    // (undocumented)
+    rootWidth: number;
     // (undocumented)
     textareaFontSize?: number;
     // (undocumented)
@@ -1870,7 +2014,7 @@ export interface IHeaderAccountProps {
     // (undocumented)
     items?: IHeaderMenuItem[];
     // (undocumented)
-    onMenuItemClick: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent) => void;
+    onMenuItemClick: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent | React_2.KeyboardEvent) => void;
     // (undocumented)
     userName?: string;
 }
@@ -1935,6 +2079,8 @@ export interface IHeaderMenuItem {
     className?: string;
     // (undocumented)
     href?: string;
+    // (undocumented)
+    icon?: React_2.ReactNode;
     // (undocumented)
     iconName?: string;
     // (undocumented)
@@ -2051,6 +2197,8 @@ export interface IHyperlinkProps {
 // @internal (undocumented)
 export interface IIconProps {
     // (undocumented)
+    ariaHidden?: boolean;
+    // (undocumented)
     className?: string;
     // (undocumented)
     color?: Color;
@@ -2072,22 +2220,13 @@ export interface IInsightIconProps {
     visualizationUrl?: string;
 }
 
-// @internal (undocumented)
-export interface IInsightListItemDateConfig {
-    // (undocumented)
-    date: Date;
-    // (undocumented)
-    isCurrentYear: boolean;
-    // (undocumented)
-    isToday: boolean;
-    // (undocumented)
-    isYesterday: boolean;
-}
+// @internal @deprecated
+export type IInsightListItemDateConfig = IDateConfig;
 
 // @internal (undocumented)
 export interface IInsightListItemDateProps {
     // (undocumented)
-    config: IInsightListItemDateConfig;
+    config: IDateConfig;
 }
 
 // @internal (undocumented)
@@ -2095,11 +2234,15 @@ export interface IInsightListItemProps {
     // (undocumented)
     description?: string;
     // (undocumented)
+    filters?: IFilter[];
+    // (undocumented)
     isLoading?: boolean;
     // (undocumented)
     isLocked?: boolean;
     // (undocumented)
     isSelected?: boolean;
+    // (undocumented)
+    LoadingComponent?: React_2.ComponentType;
     // (undocumented)
     metadataTimeZone?: string;
     // (undocumented)
@@ -2116,6 +2259,10 @@ export interface IInsightListItemProps {
     type?: string;
     // (undocumented)
     updated?: string;
+    // (undocumented)
+    useReferences?: boolean;
+    // (undocumented)
+    useRichText?: boolean;
     // (undocumented)
     width?: number;
 }
@@ -2141,6 +2288,10 @@ export interface IInvertableSelectAllCheckboxProps {
 // @internal (undocumented)
 export interface IInvertableSelectItem {
     // (undocumented)
+    icon?: JSX.Element;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
     isSelected?: boolean;
     // (undocumented)
     onClick?: () => void;
@@ -2151,7 +2302,15 @@ export interface IInvertableSelectItem {
     // (undocumented)
     onOnly?: () => void;
     // (undocumented)
+    renderOnly?: (props: IInvertableSelectItemRenderOnlyProps) => JSX.Element;
+    // (undocumented)
     title?: string;
+}
+
+// @internal (undocumented)
+export interface IInvertableSelectItemRenderOnlyProps {
+    // (undocumented)
+    onOnly?: () => void;
 }
 
 // @internal (undocumented)
@@ -2261,6 +2420,7 @@ export interface IInvertableSelectRenderItemProps<T> {
     onDeselect: () => void;
     onSelect: () => void;
     onSelectOnly: () => void;
+    title: string;
 }
 
 // @internal (undocumented)
@@ -2328,6 +2488,16 @@ export interface IInvertableSelectStatusBarProps<T> {
 }
 
 // @internal (undocumented)
+export interface IInvertableSelectStatusProps<T> {
+    // (undocumented)
+    getItemTitle: (item: T) => string;
+    // (undocumented)
+    isInverted: boolean;
+    // (undocumented)
+    selectedItems: T[];
+}
+
+// @internal (undocumented)
 export interface IItemProps {
     // (undocumented)
     checked?: boolean;
@@ -2377,6 +2547,8 @@ export interface ILegacyInvertableListProps<T> {
     isLoadingClass?: React_2.ElementType;
     // (undocumented)
     isMobile?: boolean;
+    // (undocumented)
+    isSearchFieldAutoFocused?: boolean;
     // (undocumented)
     itemHeight: number;
     // (undocumented)
@@ -2939,13 +3111,13 @@ export class Input extends React_2.PureComponent<InputPureProps, InputState> {
     // (undocumented)
     inputNodeRef: InputPure;
     // (undocumented)
-    onChange: (value: string | number) => void;
+    onChange: (value: string | number, e?: React_2.ChangeEvent<HTMLInputElement>) => void;
     // (undocumented)
     render(): React_2.JSX.Element;
     // (undocumented)
     UNSAFE_componentWillReceiveProps(nextProps: InputPureProps): void;
     // (undocumented)
-    valueChanged(value: string | number): void;
+    valueChanged(value: string | number, e?: React_2.ChangeEvent<HTMLInputElement>): void;
 }
 
 // @internal (undocumented)
@@ -3001,6 +3173,8 @@ export class InputPure extends React_2.PureComponent<InputPureProps> implements 
     // (undocumented)
     renderClearIcon(clearOnEsc: boolean): React_2.ReactNode;
     // (undocumented)
+    renderInput(): React_2.JSX.Element;
+    // (undocumented)
     renderLabel(label: React_2.ReactNode): React_2.ReactNode;
     // (undocumented)
     renderPrefix(prefix: string): React_2.ReactNode;
@@ -3012,6 +3186,10 @@ export class InputPure extends React_2.PureComponent<InputPureProps> implements 
 
 // @internal (undocumented)
 export interface InputPureProps extends IDomNativeProps {
+    // (undocumented)
+    accessibilityType?: string;
+    // (undocumented)
+    ariaLabel?: string;
     // (undocumented)
     className: string;
     // (undocumented)
@@ -3043,7 +3221,7 @@ export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
     onEnterKeyPress: () => void;
     // (undocumented)
-    onEscKeyPress: () => void;
+    onEscKeyPress: (e: React_2.KeyboardEvent) => void;
     // (undocumented)
     onFocus: (e: React_2.FocusEvent<HTMLInputElement>) => void;
     // (undocumented)
@@ -3145,6 +3323,11 @@ export const InsightListItem: React_2.FC<WithIntlProps<IInsightListItemProps & W
 export const InsightListItemDate: React_2.FC<IInsightListItemDateProps>;
 
 // @internal (undocumented)
+export const InsightListItemTypeIcon: React_2.FC<{
+    type: string;
+}>;
+
+// @internal (undocumented)
 export interface INumericInputProps {
     // (undocumented)
     onValueChanged: (height: string) => void;
@@ -3166,6 +3349,9 @@ export function InvertableSelectLimitWarning(props: IInvertableSelectLimitWarnin
 
 // @internal (undocumented)
 export function InvertableSelectSearchBar(props: IInvertableSelectSearchBarProps): React_2.JSX.Element;
+
+// @internal (undocumented)
+export function InvertableSelectStatus<T>(props: IInvertableSelectStatusProps<T>): React_2.JSX.Element;
 
 // @internal (undocumented)
 export function InvertableSelectStatusBar<T>(props: IInvertableSelectStatusBarProps<T>): React_2.JSX.Element;
@@ -3205,7 +3391,7 @@ export interface IOverlayProps<T> {
     // (undocumented)
     alignPoints?: IAlignPoint[];
     // (undocumented)
-    alignTo?: string | HTMLElement;
+    alignTo?: string | HTMLElement | null;
     // (undocumented)
     children?: React.ReactNode;
     // (undocumented)
@@ -3220,11 +3406,15 @@ export interface IOverlayProps<T> {
     closeOnParentScroll?: boolean;
     // (undocumented)
     containerClassName?: string;
+    // (undocumented)
+    ensureVisibility?: boolean;
     ignoreClicksOn?: T[];
     // (undocumented)
     ignoreClicksOnByClass?: string[];
     // (undocumented)
     isModal?: boolean;
+    // (undocumented)
+    maxWidth?: number | string;
     // (undocumented)
     onAlign?: (optimalAlign: Alignment) => void;
     // (undocumented)
@@ -3236,8 +3426,11 @@ export interface IOverlayProps<T> {
     // (undocumented)
     onMouseUp?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     positionType?: OverlayPositionType;
+    resizeObserverThreshold?: number;
     // (undocumented)
     shouldCloseOnClick?: (e: Event) => boolean;
+    // (undocumented)
+    width?: number | string;
     // (undocumented)
     zIndex?: number | undefined;
 }
@@ -3249,8 +3442,14 @@ export interface IOverlayState {
         left: number;
         top: number;
         right: number;
+        width?: number;
+        height?: number;
         align: string;
     };
+    // (undocumented)
+    initialVisiblePart: number;
+    // (undocumented)
+    observedHeight?: number;
     // (undocumented)
     overflow?: string;
     // (undocumented)
@@ -3263,6 +3462,16 @@ export interface IPositioning {
     offset?: IOffset;
     // (undocumented)
     snapPoints: ISnapPoints;
+}
+
+// @internal (undocumented)
+export interface IPropCombination<TProps extends object, TProp extends keyof TProps> {
+    // (undocumented)
+    baseProps?: Partial<TProps>;
+    // (undocumented)
+    prop: TProp;
+    // (undocumented)
+    values: TProps[TProp][];
 }
 
 // @internal (undocumented)
@@ -3281,6 +3490,68 @@ export interface IReactOptions {
     type: "react";
     // (undocumented)
     unit?: UnitsType;
+}
+
+// @internal (undocumented)
+export interface IRecurrenceFormProps {
+    // (undocumented)
+    allowHourlyRecurrence?: boolean;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    cronExpression: string;
+    // (undocumented)
+    dateFormat?: string;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    onChange: (cronExpression: string, startDate: Date | null, isValid: boolean) => void;
+    // (undocumented)
+    onRecurrenceDropdownOpen?: () => void;
+    // (undocumented)
+    repeatLabel?: string;
+    // (undocumented)
+    showRepeatTypeDescription?: boolean;
+    // (undocumented)
+    showTimezoneInOccurrence?: boolean;
+    // (undocumented)
+    startDate?: Date | null;
+    // (undocumented)
+    startLabel?: string;
+    // (undocumented)
+    timeFormat?: string;
+    // (undocumented)
+    timezone?: string;
+    // (undocumented)
+    weekStart?: WeekStart;
+}
+
+// @internal (undocumented)
+export interface IRecurrenceProps {
+    // (undocumented)
+    allowHourlyRecurrence?: boolean;
+    // (undocumented)
+    cronValue: string;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    onCronValueChange: (cronValue: string, isValid: boolean) => void;
+    // (undocumented)
+    onRecurrenceDropdownOpen?: () => void;
+    // (undocumented)
+    onRepeatTypeChange: (repeatType: string) => void;
+    // (undocumented)
+    recurrenceType: RecurrenceType;
+    // (undocumented)
+    showRepeatTypeDescription?: boolean;
+    // (undocumented)
+    showTimezoneInOccurrence?: boolean;
+    // (undocumented)
+    startDate?: Date | null;
+    // (undocumented)
+    timezone?: string;
+    // (undocumented)
+    weekStart?: WeekStart;
 }
 
 // @internal (undocumented)
@@ -3342,6 +3613,50 @@ export interface IResponsiveTextProps {
 }
 
 // @internal (undocumented)
+export interface IRichTextProps {
+    autoResize?: boolean;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    editPlaceholder?: string;
+    // (undocumented)
+    editRows?: number;
+    // (undocumented)
+    emptyElement?: JSX.Element;
+    filters?: IFilter[];
+    // (undocumented)
+    LoadingComponent?: React_2.ComponentType;
+    // (undocumented)
+    onChange?: (text: string) => void;
+    // @alpha (undocumented)
+    onError?: OnError;
+    // @alpha (undocumented)
+    onLoadingChanged?: OnLoadingChanged;
+    rawContent?: {
+        show: boolean;
+        dataAttributes?: Record<string, string>;
+    };
+    // (undocumented)
+    referencesEnabled?: boolean;
+    // (undocumented)
+    renderMode?: "view" | "edit";
+    // (undocumented)
+    value: string;
+}
+
+// @internal (undocumented)
+export interface IRichTextWithTooltipProps extends IRichTextProps {
+    // (undocumented)
+    showTooltip?: boolean;
+    // (undocumented)
+    tooltipAlignPoints?: IAlignPoint[];
+    // (undocumented)
+    tooltipDescription?: string;
+    // (undocumented)
+    tooltipMarkdown?: JSX.Element;
+}
+
+// @internal (undocumented)
 export interface IRowsIconProps extends IIconProps {
     // (undocumented)
     colorPalette?: {
@@ -3349,6 +3664,9 @@ export interface IRowsIconProps extends IIconProps {
         totalRow?: Color;
     };
 }
+
+// @internal
+export const isActionKey: (event: KeyboardEvent_2) => boolean;
 
 // @internal (undocumented)
 export interface IScrollableItemProps {
@@ -3399,6 +3717,21 @@ export const isDateDatasetHeader: (obj: unknown) => obj is IDateDatasetHeader;
 export type isElementInvisibleType = (element: HTMLElement, container: HTMLElement) => boolean;
 
 // @internal (undocumented)
+export interface ISeparatorLineProps {
+    height?: number;
+    m?: number;
+    mB?: number;
+    mL?: number;
+    mR?: number;
+    mT?: number;
+    p?: number;
+    pB?: number;
+    pL?: number;
+    pR?: number;
+    pT?: number;
+}
+
+// @internal (undocumented)
 export interface ISettingItem {
     // (undocumented)
     actionTooltipText?: string;
@@ -3425,11 +3758,13 @@ export interface ISettingItem {
     // (undocumented)
     onAction?: () => void;
     // (undocumented)
-    renderSubtitle?: () => React.ReactNode;
+    renderSubtitle?: () => ReactNode;
     // (undocumented)
     title: string;
     // (undocumented)
-    titleTooltipText?: string;
+    titleTooltipHideDelay?: number;
+    // (undocumented)
+    titleTooltipText?: ReactNode;
     // (undocumented)
     value: string | ReactNode;
 }
@@ -3613,6 +3948,8 @@ export interface IShortenedTextProps {
     // (undocumented)
     displayTooltip?: boolean;
     // (undocumented)
+    ellipsisPosition?: "middle" | "end";
+    // (undocumented)
     getElement?: (context: any) => Pick<HTMLElement, "scrollWidth" | "getBoundingClientRect">;
     // (undocumented)
     tagName?: React_2.ElementType;
@@ -3661,9 +3998,11 @@ export interface ISingleSelectListItemProps {
     // (undocumented)
     hideDelayBubble?: number;
     // (undocumented)
-    icon?: string;
+    icon?: string | ReactNode;
     // (undocumented)
     info?: string | ReactNode;
+    // (undocumented)
+    isMenu?: boolean;
     // (undocumented)
     isSelected?: boolean;
     // (undocumented)
@@ -3788,7 +4127,11 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
     // (undocumented)
     footerMobileMessage?: string;
     // (undocumented)
+    isEditingSupported?: boolean;
+    // (undocumented)
     isLoading?: boolean;
+    // (undocumented)
+    isSavingActionInProgress?: boolean;
     // (undocumented)
     itemToColorPreview: (itemContent: T) => string[];
     // (undocumented)
@@ -3922,6 +4265,8 @@ export interface ITextAreaWithSubmitState {
 // @internal (undocumented)
 export interface ITimepickerOwnProps {
     // (undocumented)
+    ariaLabelledBy?: string;
+    // (undocumented)
     className?: string;
     // (undocumented)
     locale?: string;
@@ -3936,7 +4281,11 @@ export interface ITimepickerOwnProps {
     // (undocumented)
     skipNormalizeTime?: boolean;
     // (undocumented)
-    time: Date;
+    time: Date | null;
+    // (undocumented)
+    timeAnchor?: number;
+    // (undocumented)
+    timeFormat?: string;
 }
 
 // @internal (undocumented)
@@ -3962,7 +4311,7 @@ export interface ITypographyProps {
     // (undocumented)
     onClick?: (e: React_2.MouseEvent) => void;
     // (undocumented)
-    tagName: "h1" | "h2" | "h3" | "p";
+    tagName: TypographyTagName;
     // (undocumented)
     title?: string;
 }
@@ -4017,6 +4366,14 @@ export interface IWorkspacePickerHomeFooterProps {
     onClick?: (e: React_2.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
     // (undocumented)
     theme?: ITheme;
+}
+
+// @internal
+export interface IZoomContextState {
+    hasVisualViewport: boolean;
+    viewportHeight: number;
+    viewportWidth: number;
+    zoomLevel: number;
 }
 
 // @internal (undocumented)
@@ -4162,10 +4519,16 @@ export type MenuAlignment = ["bottom", "right"] | ["bottom", "left"] | ["top", "
 export const Message: React_2.FC<IMessageProps>;
 
 // @internal (undocumented)
+export type MessageParameters = Pick<IMessageDefinition, "duration" | "intensive" | "values" | "showMore" | "showLess" | "errorDetail">;
+
+// @internal (undocumented)
 export const Messages: React_2.FC<IMessagesProps>;
 
 // @internal (undocumented)
 export type MessageType = "success" | "progress" | "error" | "warning";
+
+// @internal (undocumented)
+export const META_DATA_TIMEZONE = "Europe/Prague";
 
 // @internal (undocumented)
 export const MetadataList: React_2.FC<IMetadataListProps>;
@@ -4185,7 +4548,7 @@ export class MultiSelectListItem extends PureComponent<IMultiSelectListItemProps
 export const NoData: React_2.FC<INoDataProps>;
 
 // @internal
-export function normalizeTime(time: Date): Date;
+export function normalizeTime(time?: Date, date?: Date, timeAnchor?: number): Date;
 
 // @internal (undocumented)
 export const NumericInput: React_2.FC<INumericInputProps>;
@@ -4259,6 +4622,9 @@ export const OverlayControllerProvider: React_2.FC<IOverlayControllerProviderPro
 export type OverlayPositionType = "absolute" | "fixed" | SameAsTargetPosition;
 
 // @internal (undocumented)
+export type PositionPoint = `${VerticalPosition}-${HorizontalPosition}`;
+
+// @internal (undocumented)
 export function preselectDateDataset<T extends IDateDataset>(dateDatasets: T[], recommendedDate: T): Array<T | IDateDatasetHeader>;
 
 // @internal (undocumented)
@@ -4268,7 +4634,31 @@ export enum PresetType {
 }
 
 // @internal (undocumented)
+export function propCombinationsFor<TProps extends object>(baseProps: TProps): <TProp extends keyof TProps>(prop: TProp, values: TProps[TProp][], additionalProps?: Partial<TProps>) => IPropCombination<TProps, TProp>;
+
+// @internal (undocumented)
 export const recommendedHeader: IDateDatasetHeader;
+
+// @internal
+export const Recurrence: React_2.FC<IRecurrenceProps>;
+
+// @internal
+export const RECURRENCE_TYPES: {
+    HOURLY: string;
+    DAILY: string;
+    WEEKLY: string;
+    MONTHLY: string;
+    CRON: string;
+};
+
+// @internal (undocumented)
+export const RecurrenceForm: React_2.FC<IRecurrenceFormProps>;
+
+// @internal
+export type RecurrenceType = typeof RECURRENCE_TYPES[RecurrenceTypeKey];
+
+// @internal
+export type RecurrenceTypeKey = keyof typeof RECURRENCE_TYPES;
 
 // @internal (undocumented)
 export const relatedHeader: IDateDatasetHeader;
@@ -4281,6 +4671,12 @@ export type ResponsiveScreenType = "xxl" | "xl" | "lg" | "md" | "sm" | "xs";
 
 // @internal (undocumented)
 export const ResponsiveText: React_2.FC<IResponsiveTextProps>;
+
+// @internal (undocumented)
+export const RichText: React_2.FC<IRichTextProps>;
+
+// @internal (undocumented)
+export const RichTextWithTooltip: React_2.FC<IRichTextWithTooltipProps>;
 
 // @internal (undocumented)
 export type SameAsTargetPosition = "sameAsTarget";
@@ -4310,6 +4706,9 @@ export type SelectedTime = {
 
 // @internal (undocumented)
 export const Separator: React_2.FC;
+
+// @internal (undocumented)
+export function SeparatorLine({ mT: marginTop, mR: marginRight, mB: marginBottom, mL: marginLeft, pT: paddingTop, pR: paddingRight, pB: paddingBottom, pL: paddingLeft, m, p, height, }: ISeparatorLineProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export type Separators = {
@@ -4352,7 +4751,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
     // (undocumented)
     componentDidUpdate(): void;
     // (undocumented)
-    static defaultProps: Pick<IShortenedTextProps, "className" | "tagName" | "tooltipAlignPoints" | "tooltipVisibleOnMouseOver" | "getElement" | "displayTooltip">;
+    static defaultProps: Pick<IShortenedTextProps, "className" | "tagName" | "tooltipAlignPoints" | "tooltipVisibleOnMouseOver" | "getElement" | "displayTooltip" | "ellipsisPosition">;
     // (undocumented)
     recomputeShortening(): void;
     // (undocumented)
@@ -4389,6 +4788,15 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
 
 // @internal (undocumented)
 export type SingleSelectListItemType = "header" | "separator";
+
+// @internal (undocumented)
+export type SizeLarge = "large";
+
+// @internal (undocumented)
+export type SizeMedium = "medium";
+
+// @internal (undocumented)
+export type SizeSmall = "small";
 
 // @internal (undocumented)
 export enum SnapPoint {
@@ -4447,6 +4855,9 @@ export class Spinner extends PureComponent<ISpinnerProps> {
 
 // @internal (undocumented)
 export type SpinnerSize = "large" | "small";
+
+// @internal
+export type StyleProps = Record<string, string | boolean>;
 
 // @internal (undocumented)
 export const StylingEditorDialog: <T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>) => React_2.JSX.Element;
@@ -4545,6 +4956,9 @@ export class TextAreaWithSubmit extends Component<ITextAreaWithSubmitProps, ITex
 }
 
 // @internal (undocumented)
+export type ThemeColor = "primary" | "warning" | "error" | "complementary-0" | "complementary-1" | "complementary-2" | "complementary-3" | "complementary-4" | "complementary-5" | "complementary-6" | "complementary-7" | "complementary-8" | "complementary-9";
+
+// @internal (undocumented)
 export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
     // (undocumented)
     render(): React_2.JSX.Element;
@@ -4576,6 +4990,9 @@ export const ToastMessages: React_2.FC;
 // @internal (undocumented)
 export function transform2Dropdown<T extends IDateDataset>(dateDatasets: T[]): Array<T | IDateDatasetHeader>;
 
+// @internal
+export const transformCronExpressionToRecurrenceType: (date: Date | null, cronExpression: string, allowHourlyRecurrence: boolean, weekStart: WeekStart) => RecurrenceType;
+
 // @internal (undocumented)
 export type TUTMContent = "main_menu_help_documentation" | "main_menu_help_university" | "main_menu_help_community" | "main_menu_help_support" | "main_menu_help_ticket" | "main_menu_help_slack";
 
@@ -4583,10 +5000,155 @@ export type TUTMContent = "main_menu_help_documentation" | "main_menu_help_unive
 export const Typography: React_2.FC<ITypographyProps>;
 
 // @internal (undocumented)
+export type TypographyTagName = "h1" | "h2" | "h3" | "p";
+
+// @internal (undocumented)
+export const UiButton: ({ buttonRef, size, variant, label, isDisabled, isLoading, iconBefore, iconAfter, onClick, dataId, }: UiButtonProps) => React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiButtonProps {
+    // (undocumented)
+    buttonRef?: React_2.RefObject<HTMLButtonElement>;
+    // (undocumented)
+    dataId?: string;
+    // (undocumented)
+    iconAfter?: IconType;
+    // (undocumented)
+    iconBefore?: IconType;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    onClick?: (e: React_2.MouseEvent<HTMLButtonElement>) => void;
+    // (undocumented)
+    size?: SizeSmall | SizeMedium | SizeLarge;
+    // (undocumented)
+    tooltip?: React_2.ReactNode;
+    // (undocumented)
+    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger;
+}
+
+// @internal (undocumented)
+export const UiFocusTrap: React_2.FC<UiFocusTrapProps>;
+
+// @internal (undocumented)
+export interface UiFocusTrapProps {
+    // (undocumented)
+    autofocusOnOpen?: boolean;
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    onDeactivate?: () => void;
+    // (undocumented)
+    returnFocusTo?: React_2.RefObject<HTMLElement>;
+}
+
+// @internal (undocumented)
+export const UiIcon: ({ type, label, color, size }: UiIconProps) => React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiIconProps {
+    // (undocumented)
+    color?: ThemeColor;
+    // (undocumented)
+    label?: string;
+    // (undocumented)
+    size?: number;
+    // (undocumented)
+    type: IconType;
+}
+
+// @internal (undocumented)
+export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>): React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiPagedVirtualListProps<T> {
+    // (undocumented)
+    children: (item: T) => React_2.ReactNode;
+    // (undocumented)
+    hasNextPage?: boolean;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    itemHeight: number;
+    // (undocumented)
+    itemPadding: number;
+    // (undocumented)
+    items?: T[];
+    // (undocumented)
+    itemsGap: number;
+    // (undocumented)
+    loadNextPage?: () => void;
+    // (undocumented)
+    maxHeight: number;
+    // (undocumented)
+    SkeletonItem?: React_2.ComponentType<UiPagedVirtualListSkeletonItemProps>;
+    // (undocumented)
+    skeletonItemsCount: number;
+}
+
+// @internal (undocumented)
+export interface UiPagedVirtualListSkeletonItemProps {
+    // (undocumented)
+    itemHeight: number;
+}
+
+// @internal (undocumented)
+export function UiSkeleton({ itemsCount, itemHeight, itemWidth, itemsGap, direction, }: UiSkeletonProps): React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiSkeletonProps {
+    direction?: "row" | "column";
+    itemHeight?: (number | string) | (number | string)[];
+    itemsCount?: number;
+    itemsGap?: number;
+    itemWidth?: (number | string) | (number | string)[];
+}
+
+// @internal (undocumented)
 export type UnitsType = "px" | "%" | "rem" | "em";
 
 // @internal (undocumented)
 export const unrelatedHeader: IDateDatasetHeader;
+
+// @internal
+export const useDebouncedState: <T>(initialValue: T, delay: number) => UseDebouncedStateOutput<T>;
+
+// @internal
+export type UseDebouncedStateOutput<T> = [
+/**
+* The current value.
+*/
+T,
+(value: T) => void,
+/**
+* The debounced value.
+*/
+T,
+(value: T) => void
+];
+
+// @internal (undocumented)
+export function useElementSize(): {
+    ref: MutableRefObject<HTMLElement>;
+    height: number;
+    width: number;
+};
+
+// @internal
+export const useHeaderSearch: () => HeaderSearchContext;
+
+// @internal
+export const useId: () => string;
+
+// @internal (undocumented)
+export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInverted: boolean, getItemTitle: (item: T) => string): string;
+
+// @internal
+export const useIsZoomed: (baseZoomLevel?: number) => boolean;
 
 // @internal
 export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;
@@ -4624,10 +5186,49 @@ export interface UseToastMessageType {
     removeMessage: (id: string) => void;
 }
 
+// @internal
+export const useZoom: () => IZoomContextState;
+
+// @internal (undocumented)
+export type VariantDanger = "danger";
+
+// @internal (undocumented)
+export type VariantPopOut = "popout";
+
+// @internal (undocumented)
+export type VariantPrimary = "primary";
+
+// @internal (undocumented)
+export type VariantSecondary = "secondary";
+
+// @internal (undocumented)
+export type VariantTertiary = "tertiary";
+
+// @internal (undocumented)
+export type VerticalPosition = "top" | "center" | "bottom";
+
 // @internal (undocumented)
 export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React_2.FC<T & IWithBubbleProps>;
 
 // @internal (undocumented)
 export const WorkspacePickerHomeFooter: React_2.ComponentType<Omit<IWorkspacePickerHomeFooterProps, "theme" | "themeIsLoading" | "themeStatus">>;
+
+// @internal
+export const ZOOM_THRESHOLD = 1.2;
+
+// @internal
+export const ZoomAwareOverlay: <T extends HTMLElement = HTMLElement>(props: IOverlayProps<T>) => JSX.Element;
+
+// @internal
+export const ZoomContext: React_2.Context<IZoomContextState>;
+
+// @internal
+export const ZoomProvider: React_2.FC<ZoomProviderProps>;
+
+// @internal
+export interface ZoomProviderProps {
+    // (undocumented)
+    children: ReactNode;
+}
 
 ```

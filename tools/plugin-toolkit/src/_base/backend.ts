@@ -1,13 +1,10 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
-import { TargetBackendType } from "./types.js";
-import bearFactory, { FixedLoginAndPasswordAuthProvider } from "@gooddata/sdk-backend-bear";
 import tigerFactory, { TigerTokenAuthProvider } from "@gooddata/sdk-backend-tiger";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BackendCredentials } from "./credentials.js";
 
 export type BackendConfig = {
-    backend: TargetBackendType;
     hostname: string;
     credentials: BackendCredentials;
 };
@@ -15,24 +12,16 @@ export type BackendConfig = {
 /**
  * Creates a new analytical backend according to the provided config.
  *
- * Note: this function assumes & does not check that the necessary props holding credentials/token are
+ * Note: this function assumes & does not check that the necessary props holding token are
  * set. It is responsibility of the caller to ensure that & properly communicate to the user via CLI
  * messages.
  */
 export function createBackend(backendConfig: BackendConfig): IAnalyticalBackend {
-    const { backend, hostname, credentials } = backendConfig;
+    const { hostname, credentials } = backendConfig;
 
-    if (backend === "bear") {
-        const { username, password } = credentials;
+    const { token } = credentials;
 
-        return bearFactory({
-            hostname,
-        }).withAuthentication(new FixedLoginAndPasswordAuthProvider(username!, password!));
-    } else {
-        const { token } = credentials;
-
-        return tigerFactory({
-            hostname,
-        }).withAuthentication(new TigerTokenAuthProvider(token!));
-    }
+    return tigerFactory({
+        hostname,
+    }).withAuthentication(new TigerTokenAuthProvider(token!));
 }

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { withExecution } from "./withExecution.js";
@@ -48,6 +48,16 @@ export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
      * to trigger the execution and loading.
      */
     loadOnMount?: boolean;
+
+    /**
+     * Optionally enable real execution cancellation.
+     *
+     * This means that if the execution request is not yet finished and the execution changes,
+     * the request will be cancelled and the new execution will be started.
+     *
+     * Default: false
+     */
+    enableExecutionCancelling?: boolean;
 
     /**
      * Child component to which rendering is delegated.
@@ -123,6 +133,7 @@ function exportTitle(props: IRawExecuteProps): string {
  * @public
  */
 export const RawExecute = withExecution<IRawExecuteProps>({
+    enableExecutionCancelling: (props: IRawExecuteProps) => props.enableExecutionCancelling ?? false,
     exportTitle,
     execution: (props: IRawExecuteProps) => props.execution,
     events: (props: IRawExecuteProps) => {

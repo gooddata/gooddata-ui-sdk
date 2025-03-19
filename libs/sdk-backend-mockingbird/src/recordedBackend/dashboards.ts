@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IDashboardReferences,
@@ -17,6 +17,7 @@ import {
     walkLayout,
     IGetDashboardPluginOptions,
     IDashboardsQuery,
+    IRawExportCustomOverrides,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -44,6 +45,8 @@ import {
     IDashboardPermissions,
     IExistingDashboard,
     IDateFilter,
+    IDashboardFilterView,
+    IExecutionDefinition,
 } from "@gooddata/sdk-model";
 import cloneDeep from "lodash/cloneDeep.js";
 import isEqual from "lodash/isEqual.js";
@@ -59,6 +62,7 @@ function isDashboardRecording(obj: unknown): obj is DashboardRecording {
 
 export class RecordedDashboards implements IWorkspaceDashboardsService {
     private localDashboards: IDashboard[] = [];
+
     public constructor(
         public readonly workspace: string,
         private readonly insights: IWorkspaceInsightsService,
@@ -138,17 +142,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         return Promise.resolve(recording);
     };
 
-    public getDashboardWidgetAlertsForCurrentUser = (ref: ObjRef): Promise<IWidgetAlert[]> => {
-        const recording = this.findRecordingOrLocalDashboard(ref);
-
-        if (!recording) {
-            return Promise.reject(new UnexpectedResponseError("Not Found", 404, {}));
-        }
-
-        if (isDashboardRecording(recording)) {
-            return Promise.resolve(recording.alerts);
-        }
-
+    public getDashboardWidgetAlertsForCurrentUser = (_ref: ObjRef): Promise<IWidgetAlert[]> => {
         return Promise.resolve([]);
     };
 
@@ -307,6 +301,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         return Promise.resolve([
             {
                 negativeAttributeFilter: {
+                    localIdentifier: "naf_01",
                     displayForm: {
                         uri: "/example/md/mock/123",
                     },
@@ -343,6 +338,30 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
             objectUrl: "blob:/01345454545454",
             fileName: "export.pdf",
         });
+    }
+
+    public exportDashboardToPresentation(
+        _ref: ObjRef,
+        _format: string,
+        _filters?: FilterContextItem[],
+        _options?: {
+            widgetIds?: ObjRef[];
+            filename?: string;
+        },
+    ): Promise<IExportResult> {
+        throw new NotSupported("recorded backend does not support this call");
+    }
+
+    public exportDashboardToTabular(_ref: ObjRef): Promise<IExportResult> {
+        throw new NotSupported("recorded backend does not support this call");
+    }
+
+    public exportDashboardToCSVRaw(
+        _definition: IExecutionDefinition,
+        _fileName: string,
+        _customOverrides?: IRawExportCustomOverrides,
+    ): Promise<IExportResult> {
+        throw new NotSupported("recorded backend does not support this call");
     }
 
     //
@@ -411,6 +430,22 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
 
     public validateDashboardsExistence(_dashboardRefs: ObjRef[]): Promise<IExistingDashboard[]> {
         return Promise.resolve([]);
+    }
+
+    public getFilterViewsForCurrentUser(_dashboardRef: ObjRef): Promise<IDashboardFilterView[]> {
+        return Promise.resolve([]);
+    }
+
+    public createFilterView(_filterView: IDashboardFilterView): Promise<IDashboardFilterView> {
+        throw new NotSupported("recorded backend does not support this call");
+    }
+
+    public deleteFilterView(_ref: ObjRef): Promise<void> {
+        throw new NotSupported("recorded backend does not support this call");
+    }
+
+    public setFilterViewAsDefault(_ref: ObjRef, _isDefault: boolean): Promise<void> {
+        throw new NotSupported("recorded backend does not support this call");
     }
 }
 

@@ -12,6 +12,27 @@ export interface IOrganizationDescriptor {
     title: string;
     bootstrapUser?: ObjRef;
     bootstrapUserGroup?: ObjRef;
+    /**
+     * @deprecated - use early access values instead
+     */
+    earlyAccess?: string;
+    earlyAccessValues?: string[];
+}
+
+/**
+ * Organization descriptor properties to update.
+ * Optional properties can be set to null to delete the value.
+ *
+ * @see IOrganizationDescriptor
+ * @public
+ */
+export interface IOrganizationDescriptorUpdate {
+    title?: string;
+    /**
+     * @deprecated - use early access values instead
+     */
+    earlyAccess?: string | null;
+    earlyAccessValues?: string[] | null;
 }
 
 /**
@@ -35,7 +56,9 @@ export const AssignedWorkspacePermissionValue = {
     EXPORT: "EXPORT",
     EXPORT_TABULAR: "EXPORT_TABULAR",
     EXPORT_PDF: "EXPORT_PDF",
+    CREATE_FILTER_VIEW: "CREATE_FILTER_VIEW",
     VIEW: "VIEW",
+    CREATE_AUTOMATION: "CREATE_AUTOMATION",
 } as const;
 
 /**
@@ -45,6 +68,18 @@ export const AssignedWorkspacePermissionValue = {
  */
 export type AssignedWorkspacePermission =
     typeof AssignedWorkspacePermissionValue[keyof typeof AssignedWorkspacePermissionValue];
+
+/**
+ * Type guard to check if a value is an AssignedWorkspacePermission.
+ *
+ * @alpha
+ */
+export function isAssignedWorkspacePermission(value: unknown): value is AssignedWorkspacePermission {
+    return (
+        typeof value === "string" &&
+        Object.values(AssignedWorkspacePermissionValue).includes(value as AssignedWorkspacePermission)
+    );
+}
 
 /**
  * @alpha

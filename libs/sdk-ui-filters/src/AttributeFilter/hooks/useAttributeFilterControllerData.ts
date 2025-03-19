@@ -1,5 +1,6 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useState, useEffect } from "react";
+import isEmpty from "lodash/isEmpty.js";
 import {
     IMultiSelectAttributeFilterHandler,
     isLimitingAttributeFiltersEmpty,
@@ -22,7 +23,7 @@ export function useAttributeFilterControllerData(
 
     const initStatus = handlerState.initialization.status;
     const initError = handlerState.initialization.error;
-    const isInitializing = initStatus === "loading";
+    const isInitializing = initStatus === "loading" || initStatus === "pending";
 
     const attribute = handlerState.attribute.data;
 
@@ -50,6 +51,7 @@ export function useAttributeFilterControllerData(
     const searchString = handlerState.elements.options.search;
     const limit = handlerState.elements.options.limit;
     const limitingAttributeFilters = handlerState.elements.options.limitingAttributeFilters;
+    const limitingDateFilters = handlerState.elements.options.limitingDateFilters;
     const limitingValidationItems = handlerState.elements.options.limitingValidationItems;
 
     const hasNextElementsPage = elements.length < totalElementsCountWithCurrentSettings;
@@ -57,21 +59,28 @@ export function useAttributeFilterControllerData(
         ? Math.min(limit, totalElementsCountWithCurrentSettings - elements.length)
         : 0;
 
-    const isApplyDisabled =
+    const isSelectionInvalid =
         workingSelectionElements.length > MAX_SELECTION_SIZE ||
-        !isWorkingSelectionChanged ||
         (!isWorkingSelectionInverted && isWorkingSelectionEmpty);
+
+    const isApplyDisabled = isSelectionInvalid || !isWorkingSelectionChanged;
 
     const isParentFiltersEmpty = isLimitingAttributeFiltersEmpty(limitingAttributeFilters);
 
     const isFilteredByParentFilters =
         shouldIncludeLimitingFilters && initialElementsPageStatus === "success" && !isParentFiltersEmpty;
 
+    const isFilteredByDependentDateFilters =
+        shouldIncludeLimitingFilters &&
+        initialElementsPageStatus === "success" &&
+        !isEmpty(limitingDateFilters);
+
     const isFiltering = useIsFiltering(handler);
 
     const parentFilterAttributes = handler.getLimitingAttributeFiltersAttributes();
     const displayForms = attribute?.displayForms ?? [];
     const currentDisplayFormRef = filterObjRef(handlerState.attributeFilter);
+    const currentDisplayAsDisplayFormRef = filterObjRef(handlerState.attributeFilterToDisplay);
 
     const offset = handlerState.elements.options.offset;
 
@@ -101,6 +110,7 @@ export function useAttributeFilterControllerData(
         totalElementsCount,
         totalElementsCountWithCurrentSettings,
 
+        isSelectionInvalid,
         isApplyDisabled,
 
         isWorkingSelectionInverted,
@@ -114,8 +124,11 @@ export function useAttributeFilterControllerData(
         isFilteredByParentFilters,
         parentFilterAttributes,
 
+        isFilteredByDependentDateFilters,
+
         displayForms,
         currentDisplayFormRef,
+        currentDisplayAsDisplayFormRef,
 
         enableShowingFilteredElements: supportsShowingFilteredElements,
 

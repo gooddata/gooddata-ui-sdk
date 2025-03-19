@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import {
     IBucketItem,
@@ -33,6 +33,8 @@ import {
     IPushData,
     isGoodDataSdkError,
     UnexpectedSdkError,
+    isForecastNotReceived,
+    isClusteringNotReceived,
 } from "@gooddata/sdk-ui";
 import { IntlShape } from "react-intl";
 import { createInternalIntl } from "../../utils/internalIntlProvider.js";
@@ -257,7 +259,8 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
 
         // EMPTY_AFM is handled in update as it can change on any render contrary to other error types
         // that have to be set manually or by loading
-        if (!isEmptyAfm(error)) {
+        // FORECAST_NOT_RECEIVED is not handled as an normal error, cause its not results in invalid chart
+        if (!isEmptyAfm(error) && !isForecastNotReceived(error) && !isClusteringNotReceived(error)) {
             this.hasError = true;
         }
 
@@ -373,5 +376,9 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
                 currentReferencePoint?.properties?.controls?.[prop] !==
                 nextReferencePoint?.properties?.controls?.[prop],
         );
+    }
+
+    public getBucketsToUpdate(_currentReferencePoint: IReferencePoint, _nextReferencePoint: IReferencePoint) {
+        return undefined;
     }
 }

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -189,6 +189,7 @@ export interface IVisualizationDescriptor {
         insight: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
+        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ): IInsight;
 
     /**
@@ -203,5 +204,5 @@ export interface IVisualizationDescriptor {
     /**
      * Gets additional metadata related to the particular visualization.
      */
-    getMeta(): IVisualizationMeta;
+    getMeta(settings?: ISettings): IVisualizationMeta;
 }

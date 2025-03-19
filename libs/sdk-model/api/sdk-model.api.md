@@ -18,10 +18,13 @@ export type AccessGranteeDetail = IUserAccess | IUserGroupAccess | IGranularUser
 export type AccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
 
 // @public
+export type AlertDescriptionStatus = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "TIMEOUT";
+
+// @public
 export type AllTimeGranularity = "ALL_TIME_GRANULARITY";
 
 // @public
-export type AnalyticalWidgetType = "kpi" | "insight" | "richText";
+export type AnalyticalWidgetType = "kpi" | "insight" | "richText" | "visualizationSwitcher";
 
 // @public
 export const anyAttribute: AttributePredicate;
@@ -61,6 +64,9 @@ export type ArithmeticMeasureBuilderInput = {
 // @public
 export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
 
+// @internal
+export const assertNever: (value: never) => void;
+
 // @alpha
 export type AssignedDataSourcePermission = typeof AssignedDataSourcePermissionValue[keyof typeof AssignedDataSourcePermissionValue];
 
@@ -80,7 +86,9 @@ export const AssignedWorkspacePermissionValue: {
     readonly EXPORT: "EXPORT";
     readonly EXPORT_TABULAR: "EXPORT_TABULAR";
     readonly EXPORT_PDF: "EXPORT_PDF";
+    readonly CREATE_FILTER_VIEW: "CREATE_FILTER_VIEW";
     readonly VIEW: "VIEW";
+    readonly CREATE_AUTOMATION: "CREATE_AUTOMATION";
 };
 
 // @public
@@ -126,6 +134,10 @@ export type AttributeDisplayFormType =
 * Display form representing hyperlink
 */
 "GDC.link"
+/**
+* Display form representing image hyperlink
+*/
+| "GDC.image"
 /**
 * Display form representing geo pin location.
 * Both latitude and longitude in single value (lat;long).
@@ -179,6 +191,9 @@ export function attributeShowAllValues(attribute: IAttribute): boolean | undefin
 
 // @public
 export function attributeUri(attribute: IAttribute): string | undefined;
+
+// @public
+export type AutomationNotificationType = "automation-task.completed" | "automation-task.limit-exceeded";
 
 // @public
 export function bucketAttribute(bucket: IBucket, idOrFun?: string | AttributePredicate): IAttribute | undefined;
@@ -311,13 +326,20 @@ export const DashboardDateFilterConfigModeValues: Record<Uppercase<DashboardDate
 export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): ObjRef;
 
 // @public
+export type DashboardFiltersApplyMode = {
+    mode: "INDIVIDUAL";
+} | {
+    mode: "ALL_AT_ONCE";
+};
+
+// @public
 export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 
 // @public
 export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
 // @alpha (undocumented)
-export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB";
+export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLEXCONNECT";
 
 // @public
 export type DataValue = null | string | number;
@@ -432,6 +454,12 @@ export function disableComputeRatio<T extends IAttributeOrMeasure>(item: T): T;
 // @public
 export type DrillDefinition = InsightDrillDefinition | KpiDrillDefinition;
 
+// @alpha
+export function drillDownReferenceAttributeRef(drillDownReference: IDrillDownReference): ObjRef;
+
+// @alpha
+export function drillDownReferenceHierarchyRef(drillDownReference: IDrillDownReference): ObjRef;
+
 // @public
 export type DrillOrigin = IDrillFromMeasure | IDrillFromAttribute;
 
@@ -444,8 +472,23 @@ export type DrillTransition = "pop-up" | "in-place" | "new-window";
 // @public
 export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard" | "drillToCustomUrl" | "drillToAttributeUrl" | "crossFiltering";
 
+// @beta (undocumented)
+export type EarlyAccessFeatureContext = "WORKSPACE" | "ORGANIZATION";
+
+// @beta (undocumented)
+export type EarlyAccessFeatureStatus = "EXPERIMENTAL" | "BETA";
+
 // @public
 export function emptyDef(workspace: string): IExecutionDefinition;
+
+// @alpha
+export function exportDefinitionCreated(exportDefinition: IExportDefinitionMetadataObject): string | undefined;
+
+// @alpha
+export function exportDefinitionTitle(exportDefinition: IExportDefinitionMetadataObject): string;
+
+// @alpha
+export function exportDefinitionUpdated(exportDefinition: IExportDefinitionMetadataObject): string | undefined;
 
 // @public
 export const factoryNotationFor: (data: any, additionalConversion?: ((data: any) => string | undefined) | undefined) => string;
@@ -463,6 +506,9 @@ export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter
 export function filterIsEmpty(filter: IAttributeFilter): boolean;
 
 // @public
+export function filterLocalIdentifier(filter: IFilter): string | undefined;
+
+// @public
 export function filterMeasureRef(filter: IFilter): ObjRefInScope | undefined;
 
 // @public
@@ -471,8 +517,79 @@ export function filterObjRef(filter: IAbsoluteDateFilter | IRelativeDateFilter |
 // @public
 export function filterObjRef(filter: IFilter): ObjRef | undefined;
 
+// @beta
+export type ForecastDataValue = {
+    low: DataValue;
+    high: DataValue;
+    prediction: DataValue;
+    loading: boolean;
+};
+
+// @alpha
+export type GenAIAbsoluteDateFilter = {
+    using: string;
+    from: string;
+    to: string;
+};
+
+// @alpha
+export type GenAIChatInteractionUserFeedback = "POSITIVE" | "NEGATIVE" | "NONE";
+
+// @alpha
+export type GenAIChatRole = "USER" | "AI";
+
+// @alpha
+export type GenAIChatRoutingUseCase = "SEARCH_ALL" | "SEARCH_VISUALIZATIONS" | "SEARCH_DASHBOARDS" | "CREATE_VISUALIZATION" | "EXTEND_VISUALIZATION" | "GENERAL" | "INVALID";
+
+// @alpha
+export type GenAIDateGranularity = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR";
+
+// @alpha
+export type GenAIFilter = GenAIPositiveAttributeFilter | GenAINegativeAttributeFilter | GenAIAbsoluteDateFilter | GenAIRelativeDateFilter;
+
+// @alpha
+export type GenAIMetricAggregation = "COUNT" | "SUM" | "MIN" | "MAX" | "AVG" | "MEDIAN";
+
+// @alpha
+export type GenAIMetricType = "metric" | "fact" | "attribute";
+
+// @alpha
+export type GenAINegativeAttributeFilter = {
+    using: string;
+    exclude: Array<string | null>;
+};
+
+// @beta
+export type GenAIObjectType = "dataset" | "attribute" | "label" | "fact" | "date" | "metric" | "visualization" | "dashboard";
+
+// @alpha
+export type GenAIPositiveAttributeFilter = {
+    using: string;
+    include: Array<string | null>;
+};
+
+// @alpha
+export type GenAIRelativeDateFilter = {
+    using: string;
+    granularity: GenAIDateGranularity;
+    from: number;
+    to: number;
+};
+
+// @alpha
+export type GenAIVisualizationType = "TABLE" | "HEADLINE" | "BAR" | "LINE" | "PIE" | "COLUMN";
+
 // @internal
 export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null>;
+
+// @internal (undocumented)
+export const getHierarchyAttributes: (hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => ObjRef[];
+
+// @internal (undocumented)
+export const getHierarchyRef: (hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => ObjRef;
+
+// @internal (undocumented)
+export const getHierarchyTitle: (hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => string;
 
 // @alpha
 export function getSelectedElementsCount(filter: IDashboardAttributeFilter): number;
@@ -486,11 +603,14 @@ export type GuidType = "guid";
 // @public
 export interface IAbsoluteDateFilter {
     // (undocumented)
-    absoluteDateFilter: {
-        dataSet: ObjRef;
-        from: string;
-        to: string;
-    };
+    absoluteDateFilter: IAbsoluteDateFilterBody;
+}
+
+// @public
+export interface IAbsoluteDateFilterBody extends IIdentifiableFilter {
+    dataSet: ObjRef;
+    from: string;
+    to: string;
 }
 
 // @alpha
@@ -524,6 +644,72 @@ export interface IAccessControlAware {
 
 // @public
 export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee | IGranularAccessGrantee;
+
+// @alpha (undocumented)
+export type IAlertComparisonOperator = "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO";
+
+// @public
+export interface IAlertDefault {
+    defaultCron: string;
+    defaultTimezone: string;
+}
+
+// @public
+export interface IAlertDescription {
+    attribute?: string;
+    condition: string;
+    currentValues?: IAlertEvaluationRow[];
+    errorMessage?: string;
+    filterCount?: number;
+    formattedThreshold?: string;
+    lowerThreshold?: number;
+    metric: string;
+    status?: AlertDescriptionStatus;
+    threshold?: number;
+    totalValueCount?: number;
+    traceId?: string;
+    triggeredCount?: number;
+    upperThreshold?: number;
+}
+
+// @public
+export interface IAlertEvaluationRow {
+    computedMetric?: IAlertEvaluationRowMetric;
+    labelValue?: string;
+    primaryMetric?: IAlertEvaluationRowMetric;
+    secondaryMetric?: IAlertEvaluationRowMetric;
+}
+
+// @public
+export interface IAlertEvaluationRowMetric {
+    formattedValue?: string;
+    value: number;
+}
+
+// @public
+export interface IAlertNotification extends INotificationBase {
+    automationId?: string;
+    details: IAlertNotificationDetails;
+    // (undocumented)
+    notificationType: "alertNotification";
+}
+
+// @public
+export interface IAlertNotificationDetails extends IAutomationNotificationDetailsBase {
+    data: IWebhookMessageDataAlert;
+}
+
+// @alpha (undocumented)
+export type IAlertRelativeArithmeticOperator = "DIFFERENCE" | "CHANGE";
+
+// @alpha (undocumented)
+export type IAlertRelativeOperator = "INCREASES_BY" | "DECREASES_BY" | "CHANGES_BY";
+
+// @alpha (undocumented)
+export type IAlertTriggerMode = "ALWAYS" | "ONCE";
+
+// @alpha (undocumented)
+export type IAlertTriggerState = "ACTIVE" | "PAUSED";
 
 // @alpha
 export interface IAllTimeDateFilterOption extends IDateFilterOption {
@@ -589,8 +775,10 @@ export interface IAttributeDescriptorBody {
     formOf: IAttributeHeaderFormOf;
     granularity?: string;
     identifier: string;
+    labelType?: AttributeDisplayFormType;
     localIdentifier: string;
     name: string;
+    primaryLabel: ObjRef;
     ref: ObjRef;
     // (undocumented)
     totalItems?: ITotalDescriptor[];
@@ -603,6 +791,7 @@ export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
     attribute: ObjRef;
     displayFormType?: AttributeDisplayFormType | string;
     isDefault?: boolean;
+    isPrimary?: boolean;
     // (undocumented)
     type: "displayForm";
 }
@@ -631,6 +820,16 @@ export interface IAttributeElementsByValue {
 
 // @public
 export type IAttributeFilter = IPositiveAttributeFilter | INegativeAttributeFilter;
+
+// @public
+export type IAttributeFilterConfig = {
+    displayAsLabel: ObjRef;
+};
+
+// @public
+export type IAttributeFilterConfigs = {
+    [filterLocalIdentifier: string]: IAttributeFilterConfig;
+};
 
 // @public
 export interface IAttributeHeaderFormOf {
@@ -712,6 +911,143 @@ export interface IAuditableUsers {
     updatedBy?: IUser;
 }
 
+// @alpha (undocumented)
+export interface IAutomationAlert {
+    condition: IAutomationAlertCondition;
+    execution: IAutomationAlertExecutionDefinition;
+    trigger: IAutomationAlertTrigger;
+}
+
+// @alpha (undocumented)
+export interface IAutomationAlertComparisonCondition {
+    left: {
+        id: string;
+        title?: string;
+        format?: string;
+    };
+    operator: IAlertComparisonOperator;
+    right: number;
+    type: "comparison";
+}
+
+// @alpha (undocumented)
+export type IAutomationAlertCondition = IAutomationAlertComparisonCondition | IAutomationAlertRelativeCondition;
+
+// @alpha (undocumented)
+export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "attributes" | "measures" | "filters"> & {
+    readonly auxMeasures?: IMeasure[];
+};
+
+// @alpha (undocumented)
+export interface IAutomationAlertRelativeCondition {
+    measure: {
+        operator: IAlertRelativeArithmeticOperator;
+        left: {
+            id: string;
+            title?: string;
+            format?: string;
+        };
+        right: {
+            id: string;
+            title?: string;
+            format?: string;
+        };
+    };
+    operator: IAlertRelativeOperator;
+    threshold: number;
+    type: "relative";
+}
+
+// @alpha (undocumented)
+export interface IAutomationAlertTrigger {
+    mode?: IAlertTriggerMode;
+    state: IAlertTriggerState;
+}
+
+// @public (undocumented)
+export interface IAutomationDetails {
+    message?: string;
+    subject?: string;
+}
+
+// @alpha (undocumented)
+export interface IAutomationExternalRecipient extends Omit<IAutomationUserRecipient, "type"> {
+    type: "externalUser";
+}
+
+// @alpha (undocumented)
+export interface IAutomationMetadataObject extends IAutomationMetadataObjectBase, IMetadataObject, IAuditable {
+    // (undocumented)
+    type: "automation";
+}
+
+// @alpha (undocumented)
+export interface IAutomationMetadataObjectBase {
+    alert?: IAutomationAlert;
+    dashboard?: Identifier;
+    details?: IAutomationDetails;
+    exportDefinitions?: IExportDefinitionMetadataObject[];
+    metadata?: {
+        widget?: string;
+        filters?: string[];
+    };
+    notificationChannel?: string;
+    recipients?: IAutomationRecipient[];
+    schedule?: IAutomationSchedule;
+}
+
+// @alpha (undocumented)
+export interface IAutomationMetadataObjectDefinition extends Omit<IAutomationMetadataObjectBase, "exportDefinitions">, IMetadataObjectDefinition, IAuditable {
+    // (undocumented)
+    exportDefinitions?: (IExportDefinitionMetadataObjectDefinition | IExportDefinitionMetadataObject)[];
+    // (undocumented)
+    type: "automation";
+}
+
+// @public
+export interface IAutomationNotificationDetailsBase {
+    timestamp: string;
+    webhookMessageType: AutomationNotificationType;
+}
+
+// @alpha (undocumented)
+export type IAutomationRecipient = IAutomationUserRecipient | IAutomationUserGroupRecipient | IAutomationExternalRecipient | IAutomationUnknownRecipient;
+
+// @alpha (undocumented)
+export interface IAutomationRecipientBase {
+    id: string;
+    type: IAutomationRecipientType;
+}
+
+// @alpha (undocumented)
+export type IAutomationRecipientType = "user" | "userGroup" | "externalUser";
+
+// @alpha (undocumented)
+export interface IAutomationSchedule {
+    cron: string;
+    cronDescription?: string;
+    firstRun?: string;
+    timezone?: string;
+}
+
+// @alpha (undocumented)
+export interface IAutomationUnknownRecipient extends Omit<IAutomationUserRecipient, "type"> {
+    type: "unknownUser";
+}
+
+// @alpha (undocumented)
+export interface IAutomationUserGroupRecipient extends IAutomationRecipientBase {
+    name?: string;
+    type: "userGroup";
+}
+
+// @alpha (undocumented)
+export interface IAutomationUserRecipient extends IAutomationRecipientBase {
+    email?: string;
+    name?: string;
+    type: "user";
+}
+
 // @alpha
 export type IAvailableAccessGrantee = IAvailableUserAccessGrantee | IAvailableUserGroupAccessGrantee;
 
@@ -733,6 +1069,7 @@ export interface IAvailableUserGroupAccessGrantee {
 
 // @public
 export interface IBaseWidget {
+    readonly localIdentifier?: string;
     readonly type: string;
 }
 
@@ -749,6 +1086,7 @@ export interface IBucket {
 // @public
 export interface ICatalogAttribute extends IGroupableCatalogItemBase {
     attribute: IAttributeMetadataObject;
+    dataSet?: IDataSetMetadataObject;
     defaultDisplayForm: IAttributeDisplayFormMetadataObject;
     displayForms: IAttributeDisplayFormMetadataObject[];
     geoPinDisplayForms: IAttributeDisplayFormMetadataObject[];
@@ -771,10 +1109,10 @@ export interface ICatalogDateAttribute {
 
 // @internal (undocumented)
 export interface ICatalogDateAttributeHierarchy {
-    // (undocumented)
     attributes: ObjRef[];
-    // (undocumented)
     dateDatasetRef: ObjRef;
+    // (undocumented)
+    ref: ObjRef;
     // (undocumented)
     templateId: string;
     // (undocumented)
@@ -899,12 +1237,27 @@ export interface ICrossFiltering extends IDrill {
     type: "crossFiltering";
 }
 
+// @beta (undocumented)
+export type ICustomSmtpDestinationConfiguration = {
+    type: "customSmtp";
+    senderEmail?: string;
+    senderDisplayName?: string;
+    host?: string;
+    port?: 25 | 465 | 587 | 2525;
+    username?: string;
+    password?: string;
+};
+
 // @alpha
 export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+    readonly dataSets?: IDataSetMetadataObject[];
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     readonly disableCrossFiltering?: boolean;
+    readonly disableFilterViews?: boolean;
+    readonly disableUserFilterReset?: boolean;
+    readonly disableUserFilterSave?: boolean;
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: IDashboardLayout<TWidget>;
     readonly plugins?: IDashboardPluginLink[];
@@ -912,7 +1265,7 @@ export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, 
     readonly type: "IDashboard";
 }
 
-// @alpha
+// @alpha @deprecated
 export interface IDashboardAttachment {
     dashboard: ObjRef;
     filterContext?: ObjRef;
@@ -928,14 +1281,22 @@ export interface IDashboardAttributeFilter {
         attributeElements: IAttributeElements;
         localIdentifier?: string;
         filterElementsBy?: IDashboardAttributeFilterParent[];
+        filterElementsByDate?: IDashboardAttributeFilterByDate[];
         validateElementsBy?: ObjRef[];
         title?: string;
         selectionMode?: DashboardAttributeFilterSelectionMode;
     };
 }
 
+// @beta
+export interface IDashboardAttributeFilterByDate {
+    filterLocalIdentifier: string;
+    isCommonDate: boolean;
+}
+
 // @alpha
 export interface IDashboardAttributeFilterConfig {
+    displayAsLabel?: ObjRef;
     localIdentifier: string;
     mode?: DashboardAttributeFilterConfigMode;
 }
@@ -1010,6 +1371,9 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     readonly disableCrossFiltering?: boolean;
+    readonly disableFilterViews?: boolean;
+    readonly disableUserFilterReset?: boolean;
+    readonly disableUserFilterSave?: boolean;
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
     readonly layout?: IDashboardLayout<TWidget>;
     readonly plugins?: IDashboardPluginLink[];
@@ -1020,11 +1384,47 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
 // @public
 export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
 
+// @alpha
+export interface IDashboardFilterView {
+    // (undocumented)
+    readonly dashboard: ObjRef;
+    // (undocumented)
+    readonly filterContext: IFilterContextDefinition;
+    // (undocumented)
+    readonly isDefault?: boolean;
+    // (undocumented)
+    readonly name: string;
+    // (undocumented)
+    readonly ref: ObjRef;
+    // (undocumented)
+    readonly user: ObjRef;
+}
+
+// @alpha
+export interface IDashboardFilterViewSaveRequest {
+    // (undocumented)
+    readonly dashboard: ObjRef;
+    // (undocumented)
+    readonly filterContext: IFilterContextDefinition;
+    // (undocumented)
+    readonly isDefault?: boolean;
+    // (undocumented)
+    readonly name: string;
+}
+
 // @public
 export interface IDashboardLayout<TWidget = IDashboardWidget> {
+    // @alpha
+    configuration?: IDashboardLayoutConfiguration;
     sections: IDashboardLayoutSection<TWidget>[];
     size?: IDashboardLayoutSize;
     type: "IDashboardLayout";
+}
+
+// @alpha
+export interface IDashboardLayoutConfiguration {
+    // (undocumented)
+    sections?: IDashboardLayoutSectionsConfiguration;
 }
 
 // @public
@@ -1047,6 +1447,12 @@ export interface IDashboardLayoutSectionHeader {
     title?: string;
 }
 
+// @alpha
+export interface IDashboardLayoutSectionsConfiguration {
+    // (undocumented)
+    enableHeader: boolean;
+}
+
 // @public
 export interface IDashboardLayoutSize {
     gridHeight?: number;
@@ -1061,6 +1467,12 @@ export interface IDashboardLayoutSizeByScreenSize {
     sm?: IDashboardLayoutSize;
     xl: IDashboardLayoutSize;
     xs?: IDashboardLayoutSize;
+}
+
+// @public
+export interface IDashboardLayoutWidget extends IDashboardLayout<IDashboardWidget>, IBaseWidget, IDashboardObjectIdentity {
+    // (undocumented)
+    type: "IDashboardLayout";
 }
 
 // @public
@@ -1108,7 +1520,7 @@ export interface IDashboardPluginLink {
 }
 
 // @public
-export type IDashboardWidget = IWidget | IWidgetDefinition | IDashboardLayout<IDashboardWidget>;
+export type IDashboardWidget = IWidget | IWidgetDefinition | IDashboardLayoutWidget;
 
 // @public
 export interface IDataColumn {
@@ -1248,6 +1660,13 @@ export interface IDateHierarchyTemplate extends IMetadataObjectIdentity, IMetada
     type: "dateHierarchyTemplate";
 }
 
+// @beta (undocumented)
+export type IDefaultSmtpDestinationConfiguration = {
+    type: "defaultSmtp";
+    senderEmail?: string;
+    senderDisplayName?: string;
+};
+
 // @public
 export type Identifier = string;
 
@@ -1286,6 +1705,7 @@ export function idRef(identifier: Identifier, type?: ObjectType): IdentifierRef;
 
 // @public
 export interface IDrill {
+    drillIntersectionIgnoredAttributes?: string[];
     localIdentifier?: string;
     origin: DrillOrigin;
     transition: DrillTransition;
@@ -1294,9 +1714,17 @@ export interface IDrill {
 
 // @public
 export interface IDrillableWidget {
+    // @alpha
+    readonly drillDownIntersectionIgnoredAttributes?: IDrillDownIntersectionIgnoredAttributes[];
     readonly drills: DrillDefinition[];
     // @alpha
     readonly ignoredDrillDownHierarchies?: IDrillDownReference[];
+}
+
+// @alpha
+export interface IDrillDownIntersectionIgnoredAttributes {
+    readonly drillDownReference: IDrillDownReference;
+    readonly ignoredAttributes: string[];
 }
 
 // @alpha (undocumented)
@@ -1369,6 +1797,28 @@ export interface IDrillToLegacyDashboard extends IDrill {
     type: "drillToLegacyDashboard";
 }
 
+// @beta (undocumented)
+export interface IEarlyAccessFeatureConfig {
+    // (undocumented)
+    context: EarlyAccessFeatureContext;
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    docs?: string;
+    // (undocumented)
+    earlyAccess: string;
+    // (undocumented)
+    status: EarlyAccessFeatureStatus;
+    // (undocumented)
+    title: string;
+}
+
+// @beta (undocumented)
+export interface IEarlyAccessFeaturesConfig {
+    // (undocumented)
+    features: IEarlyAccessFeatureConfig[];
+}
+
 // @public
 export interface IEntitlementDescriptor {
     expiry?: string;
@@ -1377,11 +1827,12 @@ export interface IEntitlementDescriptor {
 }
 
 // @public
-export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "UserTelemetryDisabled";
+export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement";
 
 // @public
 export interface IExecutionConfig {
     dataSamplingPercentage?: number;
+    timestamp?: string;
 }
 
 // @public
@@ -1403,12 +1854,96 @@ export interface IExistingDashboard extends IDashboardObjectIdentity {
 }
 
 // @alpha
+export interface IExportDefinitionBase {
+    // (undocumented)
+    requestPayload: IExportDefinitionRequestPayload;
+}
+
+// @alpha
+export interface IExportDefinitionDashboardContent {
+    // (undocumented)
+    dashboard: Identifier;
+    // (undocumented)
+    filters?: FilterContextItem[];
+}
+
+// @alpha
+export type IExportDefinitionDashboardRequestPayload = {
+    type: "dashboard";
+    fileName: string;
+    format: "PDF";
+    settings?: IExportDefinitionDashboardSettings;
+    content: IExportDefinitionDashboardContent;
+};
+
+// @alpha
+export interface IExportDefinitionDashboardSettings {
+    // (undocumented)
+    orientation: "portrait" | "landscape";
+}
+
+// @alpha
+export interface IExportDefinitionMetadataObject extends IExportDefinitionBase, IMetadataObject, IAuditable {
+    // (undocumented)
+    type: "exportDefinition";
+}
+
+// @alpha
+export interface IExportDefinitionMetadataObjectDefinition extends IExportDefinitionBase, IMetadataObjectDefinition {
+    // (undocumented)
+    type: "exportDefinition";
+}
+
+// @alpha
+export type IExportDefinitionRequestPayload = IExportDefinitionDashboardRequestPayload | IExportDefinitionVisualizationObjectRequestPayload;
+
+// @alpha
+export interface IExportDefinitionVisualizationObjectContent {
+    dashboard?: Identifier;
+    // (undocumented)
+    filters?: IFilter[];
+    // (undocumented)
+    visualizationObject: Identifier;
+    widget?: Identifier;
+}
+
+// @alpha
+export type IExportDefinitionVisualizationObjectRequestPayload = {
+    type: "visualizationObject";
+    fileName: string;
+    format: "CSV" | "XLSX" | "HTML" | "PDF";
+    settings?: IExportDefinitionVisualizationObjectSettings;
+    content: IExportDefinitionVisualizationObjectContent;
+};
+
+// @alpha
+export interface IExportDefinitionVisualizationObjectSettings {
+    // (undocumented)
+    mergeHeaders?: boolean;
+    // (undocumented)
+    orientation?: "portrait" | "landscape";
+}
+
+// @alpha
 export interface IExportOptions {
     // (undocumented)
     includeFilters?: boolean;
     // (undocumented)
     mergeHeaders?: boolean;
 }
+
+// @public
+export interface IExportResult {
+    errorMessage?: string;
+    exportId: string;
+    fileName: string;
+    fileUri?: string;
+    status: IExportResultStatus;
+    traceId?: string;
+}
+
+// @public
+export type IExportResultStatus = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "TIMEOUT";
 
 // @public
 export interface IFactMetadataObject extends IMetadataObject {
@@ -1422,6 +1957,7 @@ export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttri
 // @public
 export interface IFilterableWidget {
     readonly dateDataSet?: ObjRef;
+    readonly ignoreCrossFiltering?: boolean;
     readonly ignoreDashboardFilters: IDashboardFilterReference[];
 }
 
@@ -1438,6 +1974,82 @@ export interface IFilterContextBase {
 
 // @alpha
 export interface IFilterContextDefinition extends IFilterContextBase, Partial<IDashboardObjectIdentity> {
+}
+
+// @alpha
+export interface IGenAIActiveObject {
+    id: string;
+    type: GenAIObjectType;
+    workspaceId: string;
+}
+
+// @alpha
+export interface IGenAIChatInteraction {
+    chatHistoryInteractionId: string;
+    createdVisualizations?: IGenAICreatedVisualizations;
+    errorResponse?: string;
+    foundObjects?: IGenAIFoundObjects;
+    interactionFinished: boolean;
+    question: string;
+    routing: IGenAIChatRouting;
+    textResponse?: string;
+    userFeedback?: GenAIChatInteractionUserFeedback;
+}
+
+// @alpha
+export interface IGenAIChatRouting {
+    reasoning: string;
+    useCase: GenAIChatRoutingUseCase;
+}
+
+// @alpha
+export interface IGenAICreatedVisualizations {
+    objects: IGenAIVisualization[];
+    reasoning: string;
+}
+
+// @alpha
+export interface IGenAIFoundObjects {
+    objects: ISemanticSearchResultItem[];
+    reasoning: string;
+}
+
+// @alpha
+export type IGenAISuggestion = {
+    query: string;
+    label: string;
+};
+
+// @alpha
+export interface IGenAIUserContext {
+    activeObject: IGenAIActiveObject;
+}
+
+// @alpha
+export interface IGenAIVisualization {
+    dimensionality: IGenAIVisualizationDimension[];
+    filters?: GenAIFilter[];
+    id: string;
+    metrics: IGenAIVisualizationMetric[];
+    savedVisualizationId?: string;
+    saving?: boolean;
+    suggestions?: IGenAISuggestion[];
+    title: string;
+    visualizationType: GenAIVisualizationType;
+}
+
+// @alpha
+export interface IGenAIVisualizationDimension {
+    id: string;
+    type: "attribute";
+}
+
+// @alpha
+export interface IGenAIVisualizationMetric {
+    aggFunction?: GenAIMetricAggregation;
+    id: string;
+    title?: string;
+    type: GenAIMetricType;
 }
 
 // @public
@@ -1489,12 +2101,29 @@ export interface IGroupableCatalogItemBase extends ICatalogItemBase {
 }
 
 // @public
+export interface IIdentifiableFilter {
+    // (undocumented)
+    localIdentifier?: Identifier;
+}
+
+// @public
 export interface IInlineMeasureDefinition {
     // (undocumented)
     inlineDefinition: {
         maql: string;
     };
 }
+
+// @beta (undocumented)
+export interface IInPlatformNotificationChannelMetadataObject extends INotificationChannelMetadataObjectBase, IMdObject {
+    // (undocumented)
+    destinationType: "inPlatform";
+    // (undocumented)
+    type: "notificationChannel";
+}
+
+// @beta
+export type IInPlatformNotificationChannelMetadataObjectDefinition = ToMdObjectDefinition<IInPlatformNotificationChannelMetadataObject>;
 
 // @public
 export type IInsight = IInsightDefinition & {
@@ -1515,6 +2144,7 @@ export type IInsightDefinition = {
         visualizationUrl: string;
         buckets: IBucket[];
         filters: IFilter[];
+        attributeFilterConfigs?: IAttributeFilterConfigs;
         sorts: ISortItem[];
         properties: VisualizationProperties;
     };
@@ -1637,8 +2267,47 @@ export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, R
     readonly uri: string;
 }
 
+// @alpha
+export interface ILlmEndpointBase {
+    description?: string;
+    id: string;
+    title: string;
+    workspaceIds: string[];
+}
+
+// @alpha
+export interface ILlmEndpointOpenAI extends ILlmEndpointBase {
+    model: string;
+    organization?: string;
+    provider: "OPENAI";
+}
+
 // @public
 export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem | ITotalLocatorItem;
+
+// @beta
+export type ImageUri = string;
+
+// @beta
+export interface IMdObject extends IMdObjectBase, IMdObjectIdentity {
+}
+
+// @beta (undocumented)
+export interface IMdObjectBase {
+    description?: string;
+    tags?: string[];
+    title?: string;
+}
+
+// @beta
+export interface IMdObjectDefinition extends IMdObjectBase, Pick<IMdObjectIdentity, "type"> {
+}
+
+// @beta (undocumented)
+export interface IMdObjectIdentity {
+    id: string;
+    type: ObjectType;
+}
 
 // @public
 export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionType> extends IMeasureTitle {
@@ -1772,7 +2441,7 @@ export interface IMeasureValueFilter {
 }
 
 // @public
-export interface IMeasureValueFilterBody {
+export interface IMeasureValueFilterBody extends IIdentifiableFilter {
     // (undocumented)
     condition?: MeasureValueFilterCondition;
     // (undocumented)
@@ -1788,6 +2457,7 @@ export interface IMetadataObjectBase {
     deprecated: boolean;
     description: string;
     production: boolean;
+    tags?: string[];
     title: string;
     type: ObjectType;
     unlisted: boolean;
@@ -1801,6 +2471,7 @@ export interface IMetadataObjectDefinition extends Partial<IMetadataObjectBase>,
 export interface IMetadataObjectIdentity {
     id: string;
     ref: ObjRef;
+    // @deprecated
     uri: string;
 }
 
@@ -1811,8 +2482,8 @@ export interface INegativeAttributeFilter {
 }
 
 // @public
-export interface INegativeAttributeFilterBody {
-    displayForm: ObjRef;
+export interface INegativeAttributeFilterBody extends IIdentifiableFilter {
+    displayForm: ObjRef | ObjRefInScope;
     notIn: IAttributeElements;
 }
 
@@ -1829,6 +2500,44 @@ export class InlineMeasureBuilder extends MeasureBuilderBase<IInlineMeasureDefin
 
 // @public
 export type InlineMeasureBuilderInput = string | IMeasure<IInlineMeasureDefinition>;
+
+// @public
+export type INotification = IAlertNotification | IScheduleNotification | ITestNotification;
+
+// @public
+export interface INotificationBase {
+    createdAt: string;
+    id: string;
+    isRead: boolean;
+    notificationType: NotificationType;
+    type: "notification";
+    workspaceId?: string;
+}
+
+// @beta (undocumented)
+export type INotificationChannelMetadataObject = IWebhookNotificationChannelMetadataObject | ISmtpNotificationChannelMetadataObject | IInPlatformNotificationChannelMetadataObject;
+
+// @beta
+export interface INotificationChannelMetadataObjectBase {
+    allowedRecipients?: NotificationChannelAllowedRecipients;
+    customDashboardUrl?: string;
+    dashboardLinkVisibility?: NotificationChannelDashboardLinkVisibility;
+    destinationType: NotificationChannelDestinationType;
+    // (undocumented)
+    type: "notificationChannel";
+}
+
+// @beta (undocumented)
+export type INotificationChannelMetadataObjectDefinition = IWebhookNotificationChannelMetadataObjectDefinition | ISmtpNotificationChannelMetadataObjectDefinition | IInPlatformNotificationChannelMetadataObjectDefinition;
+
+// @beta (undocumented)
+export interface INotificationChannelTestResponse {
+    error?: string;
+    successful: boolean;
+}
+
+// @public
+export function insightAttributeFilterConfigs(insight: IInsightDefinition): IAttributeFilterConfigs | undefined;
 
 // @public
 export function insightAttributes(insight: IInsightDefinition, attributePredicate?: AttributePredicate): IAttribute[];
@@ -1854,6 +2563,8 @@ export const insightCreatedComparator: (direction: ComparatorDirection_2) => ICo
 // @internal
 export class InsightDefinitionBuilder {
     constructor(visualizationUrl: string);
+    // (undocumented)
+    attributeFilterConfigs: (attributeFilterConfigs: IAttributeFilterConfigs) => InsightDefinitionBuilder;
     // (undocumented)
     buckets: (buckets: IBucket[]) => InsightDefinitionBuilder;
     // (undocumented)
@@ -1980,6 +2691,12 @@ export type InsightWidgetDescriptionSourceType = "widget" | "insight";
 // @public
 export type INullableFilter = IFilter | undefined | null;
 
+// @alpha
+export interface IOpenAiConfig {
+    org: string;
+    token: string;
+}
+
 // @alpha (undocumented)
 export interface IOrganizationAssignee {
     // (undocumented)
@@ -1994,10 +2711,24 @@ export interface IOrganizationDescriptor {
     bootstrapUser?: ObjRef;
     // (undocumented)
     bootstrapUserGroup?: ObjRef;
+    // @deprecated (undocumented)
+    earlyAccess?: string;
+    // (undocumented)
+    earlyAccessValues?: string[];
     // (undocumented)
     id: string;
     // (undocumented)
     title: string;
+}
+
+// @public
+export interface IOrganizationDescriptorUpdate {
+    // @deprecated (undocumented)
+    earlyAccess?: string | null;
+    // (undocumented)
+    earlyAccessValues?: string[] | null;
+    // (undocumented)
+    title?: string;
 }
 
 // @alpha (undocumented)
@@ -2067,8 +2798,8 @@ export interface IPositiveAttributeFilter {
 }
 
 // @public
-export interface IPositiveAttributeFilterBody {
-    displayForm: ObjRef;
+export interface IPositiveAttributeFilterBody extends IIdentifiableFilter {
+    displayForm: ObjRef | ObjRefInScope;
     in: IAttributeElements;
 }
 
@@ -2131,7 +2862,7 @@ export interface IRankingFilter {
 }
 
 // @public
-export interface IRankingFilterBody {
+export interface IRankingFilterBody extends IIdentifiableFilter {
     // (undocumented)
     attributes?: ObjRefInScope[];
     // (undocumented)
@@ -2144,20 +2875,34 @@ export interface IRankingFilterBody {
 
 // @public
 export type IRelativeDateFilter = {
-    relativeDateFilter: {
-        dataSet: ObjRef;
-        granularity: DateAttributeGranularity;
-        from: number;
-        to: number;
-    };
+    relativeDateFilter: IRelativeDateFilterBody;
 } | {
-    relativeDateFilter: {
-        dataSet: ObjRef;
-        granularity: AllTimeGranularity;
-        from: 0;
-        to: 0;
-    };
+    relativeDateFilter: IRelativeDateFilterAllTimeBody;
 };
+
+// @public
+export interface IRelativeDateFilterAllTimeBody extends IIdentifiableFilter {
+    // (undocumented)
+    dataSet: ObjRef;
+    // (undocumented)
+    from: 0;
+    // (undocumented)
+    granularity: AllTimeGranularity;
+    // (undocumented)
+    to: 0;
+}
+
+// @public
+export interface IRelativeDateFilterBody extends IIdentifiableFilter {
+    // (undocumented)
+    dataSet: ObjRef;
+    // (undocumented)
+    from: number;
+    // (undocumented)
+    granularity: DateAttributeGranularity;
+    // (undocumented)
+    to: number;
+}
 
 // @alpha
 export interface IRelativeDateFilterForm extends IDateFilterOption {
@@ -2289,6 +3034,9 @@ export const isAbsoluteDateFilterPreset: (obj: unknown) => obj is IAbsoluteDateF
 // @public
 export function isAdhocMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
+// @public
+export function isAlertNotification(notification: unknown): notification is IAlertNotification;
+
 // @alpha
 export function isAllTimeDashboardDateFilter(obj: unknown): boolean;
 
@@ -2302,11 +3050,17 @@ export function isAllTimeDateFilter(obj: unknown): obj is IRelativeDateFilter & 
 // @alpha
 export const isAllTimeDateFilterOption: (obj: unknown) => obj is IAllTimeDateFilterOption;
 
+// @alpha
+export function isAllValuesDashboardAttributeFilter(obj: unknown): boolean;
+
 // @public
 export function isArithmeticMeasure(obj: unknown): obj is IMeasure<IArithmeticMeasureDefinition>;
 
 // @public
 export function isArithmeticMeasureDefinition(obj: unknown): obj is IArithmeticMeasureDefinition;
+
+// @alpha
+export function isAssignedWorkspacePermission(value: unknown): value is AssignedWorkspacePermission;
 
 // @public
 export function isAttribute(obj: unknown): obj is IAttribute;
@@ -2348,6 +3102,24 @@ export function isAttributeSort(obj: unknown): obj is IAttributeSortItem;
 export function isAttributeValueSort(obj: unknown): obj is IAttributeSortItem;
 
 // @alpha
+export function isAutomationExternalUserRecipient(obj: unknown): obj is IAutomationExternalRecipient;
+
+// @alpha (undocumented)
+export function isAutomationMetadataObject(obj: unknown): obj is IAutomationMetadataObject;
+
+// @alpha (undocumented)
+export function isAutomationMetadataObjectDefinition(obj: unknown): obj is IAutomationMetadataObjectDefinition;
+
+// @alpha
+export function isAutomationUnknownUserRecipient(obj: unknown): obj is IAutomationUnknownRecipient;
+
+// @alpha
+export function isAutomationUserGroupRecipient(obj: unknown): obj is IAutomationUserGroupRecipient;
+
+// @alpha
+export function isAutomationUserRecipient(obj: unknown): obj is IAutomationUserRecipient;
+
+// @alpha
 export const isAvailableUserAccessGrantee: (obj: unknown) => obj is IAvailableUserAccessGrantee;
 
 // @alpha
@@ -2374,11 +3146,11 @@ export function isCatalogFact(obj: unknown): obj is ICatalogFact;
 // @public
 export function isCatalogMeasure(obj: unknown): obj is ICatalogMeasure;
 
-// @alpha
+// @alpha @deprecated
 export interface IScheduledMail extends IAuditableUsers, IScheduledMailBase, IDashboardObjectIdentity {
 }
 
-// @alpha
+// @alpha @deprecated
 export interface IScheduledMailBase {
     attachments: ScheduledMailAttachment[];
     bcc?: string[];
@@ -2398,8 +3170,21 @@ export interface IScheduledMailBase {
     };
 }
 
-// @alpha
+// @alpha @deprecated
 export interface IScheduledMailDefinition extends IScheduledMailBase, Partial<IDashboardObjectIdentity> {
+}
+
+// @public
+export interface IScheduleNotification extends INotificationBase {
+    automationId?: string;
+    details: IScheduleNotificationDetails;
+    // (undocumented)
+    notificationType: "scheduleNotification";
+}
+
+// @public
+export interface IScheduleNotificationDetails extends IAutomationNotificationDetailsBase {
+    data: IWebhookMessageDataSchedule;
 }
 
 // @public
@@ -2474,6 +3259,9 @@ export function isDateFilter(obj: unknown): obj is IDateFilter;
 // @alpha
 export const isDateFilterGranularity: (obj: unknown) => obj is DateFilterGranularity;
 
+// @alpha
+export function isDateHierarchyReference(obj: unknown): obj is IDateHierarchyReference;
+
 // @public
 export function isDimension(obj: unknown): obj is IDimension;
 
@@ -2498,6 +3286,35 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 // @alpha
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
 
+// @beta
+export interface ISemanticSearchRelationship {
+    sourceObjectId: string;
+    sourceObjectTitle: string;
+    sourceObjectType: GenAIObjectType;
+    sourceWorkspaceId: string;
+    targetObjectId: string;
+    targetObjectTitle: string;
+    targetObjectType: GenAIObjectType;
+    targetWorkspaceId: string;
+}
+
+// @beta
+export interface ISemanticSearchResultItem {
+    createdAt?: string;
+    description?: string;
+    id: string;
+    modifiedAt?: string;
+    score?: number;
+    scoreDescriptor?: number;
+    scoreExactMatch?: number;
+    scoreTitle?: number;
+    tags?: string[];
+    title: string;
+    type: GenAIObjectType;
+    visualizationUrl?: string;
+    workspaceId: string;
+}
+
 // @public
 export interface ISeparators {
     decimal: string;
@@ -2506,17 +3323,30 @@ export interface ISeparators {
 
 // @public
 export interface ISettings {
-    ["msf.enableTenantCustomModel"]?: boolean;
-    ["pixtab.enablePartialReports"]?: boolean;
     // (undocumented)
     [key: string]: number | boolean | string | object | undefined;
     ADCatalogGroupsExpanded?: boolean;
     ADMeasureValueFilterNullAsZeroOption?: string;
+    alertDefault?: IAlertDefault;
+    // @alpha
+    dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
+    // @alpha
+    dateFilterConfig?: IDateFilterConfig;
     disableKpiDashboardHeadlineUnderline?: boolean;
+    // @beta
+    earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
     enableAdDescriptionEdit?: boolean;
     enableADMultipleDateFilters?: boolean;
+    // @deprecated
+    enableAIFunctions?: boolean;
+    enableAlertAttributes?: boolean;
+    enableAlerting?: boolean;
+    enableAlertingRollout?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
+    enableAmplitudeTracker?: boolean;
     enableAnalyticalDashboardPermissions?: boolean;
+    // (undocumented)
+    enableAnalyticalDashboards?: boolean;
     enableApproxCount?: boolean;
     enableAttributeFilterValuesValidation?: boolean;
     enableAxisLabelFormat?: boolean;
@@ -2527,20 +3357,50 @@ export interface ISettings {
     enableClickableAttributeURL?: boolean;
     enableColumnHeadersPosition?: boolean;
     enableCompanyLogoInEmbeddedUI?: boolean;
+    enableComparisonInAlerting?: boolean;
     enableCompositeGrain?: boolean;
     enableCreateUser?: boolean;
+    // @alpha
+    enableCriticalContentPerformanceOptimizations?: boolean;
+    // @internal
+    enableCrossFilteringAliasTitles?: boolean;
+    // (undocumented)
+    enableCsvUploader?: boolean;
     enableCustomColorPicker?: boolean;
+    enableDashboardDescriptionDynamicHeight?: boolean;
+    enableDashboardFiltersApplyModes?: boolean;
+    enableDashboardFilterViews?: boolean;
+    enableDashboardFlexibleLayout?: boolean;
+    enableDashboardTabularExport?: boolean;
     enableDataSampling?: boolean;
+    // (undocumented)
+    enableDataSection?: boolean;
+    enableDefaultSmtp?: boolean;
     enableDescriptions?: boolean;
+    enableDestinationTesting?: boolean;
     enableDrilledInsightExport?: boolean;
+    enableDrilledTooltip?: boolean;
+    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
+    enableEarlyAccessFeaturesRollout?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
+    enableExecutionCancelling?: boolean;
+    enableExternalRecipients?: boolean;
+    enableGenAIChat?: boolean;
+    enableGenAIChatRollout?: boolean;
+    enableHeadlineExport?: boolean;
     enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;
+    enableIgnoreCrossFiltering?: boolean;
+    enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+    enableInPlatformNotifications?: boolean;
     enableInsightExportScheduling?: boolean;
     enableInsightToReport?: boolean;
+    enableInvalidValuesInAttributeFilter?: boolean;
+    enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
     enableKDRichText?: boolean;
+    enableKDVisualizationSwitcher?: boolean;
     enableKDWidgetCustomHeight?: boolean;
     enableKDZooming?: boolean;
     enableKPIDashboardDrillFromAttribute?: boolean;
@@ -2551,32 +3411,77 @@ export interface ISettings {
     enableKPIDashboardSaveAsNew?: boolean;
     enableKPIDashboardSchedule?: boolean;
     enableKPIDashboardScheduleRecipients?: boolean;
+    // (undocumented)
+    enableMariaDbDataSource?: boolean;
+    // (undocumented)
+    enableMotherDuckDataSource?: boolean;
+    enableMultipleCSVs?: boolean;
+    enableMultipleDataSourcesInWorkspace?: boolean;
     enableMultipleDateFilters?: boolean;
     enableMultipleDates?: boolean;
+    // (undocumented)
+    enableMySqlDataSource?: boolean;
     enableNewHeadline?: boolean;
+    // (undocumented)
+    enableNewNavigationForResponsiveUi?: boolean;
+    enableNewUserCreationFlow?: boolean;
+    enableNumberSeparators?: boolean;
+    // (undocumented)
+    enableOracleDataSource?: boolean;
+    enableOrchestratedTabularExports?: boolean;
     enablePivotTableIncreaseBucketSize?: boolean;
     enablePivotTableTransposition?: boolean;
+    // (undocumented)
+    enablePixelPerfectExperience?: boolean;
     enablePushpinGeoChart?: boolean;
-    enableRawExportsInNewUI?: boolean;
+    enableRawExports?: boolean;
     enableRenamingMeasureToMetric?: boolean;
+    // (undocumented)
+    enableRenamingProjectToWorkspace?: boolean;
     enableReversedStacking?: boolean;
+    enableRichTextDescriptions?: boolean;
+    enableRichTextDynamicReferences?: boolean;
+    enableScatterPlotClustering?: boolean;
+    enableScatterPlotSegmentation?: boolean;
+    enableScheduling?: boolean;
+    enableSemanticSearch?: boolean;
+    enableSemanticSearchRollout?: boolean;
     enableSeparateTotalLabels?: boolean;
+    // (undocumented)
+    enableSingleStoreDataSource?: boolean;
+    enableSlideshowExports?: boolean;
+    enableSmtp?: boolean;
+    // (undocumented)
+    enableSnowflakeKeyPairAuthentication?: boolean;
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;
     enableTableColumnsManualResizing?: boolean;
     enableUnavailableItemsVisible?: boolean;
     enableUserManagement?: boolean;
+    enableVisualizationFineTuning?: boolean;
     enableWaterfallChart?: boolean;
     enableWeekFilters?: boolean;
+    enableWidgetIdentifiersRollout?: boolean;
     formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;
+    // (undocumented)
+    hidePixelPerfectExperience?: boolean;
     metadataTimeZone?: string;
+    // @alpha
+    openAiConfig?: IOpenAiConfig;
     platformEdition?: PlatformEdition;
     responsiveUiDateFormat?: string;
     showHiddenCatalogItems?: boolean;
+    timezone?: string;
     weekStart?: WeekStart;
     whiteLabeling?: IWhiteLabeling;
 }
+
+// @alpha
+export function isExportDefinitionDashboardRequestPayload(obj: unknown): obj is IExportDefinitionDashboardRequestPayload;
+
+// @alpha
+export function isExportDefinitionVisualizationObjectRequestPayload(obj: unknown): obj is IExportDefinitionVisualizationObjectRequestPayload;
 
 // @public
 export function isFactMetadataObject(obj: unknown): obj is IFactMetadataObject;
@@ -2589,6 +3494,9 @@ export function isFilterContext(obj: unknown): obj is IFilterContext;
 
 // @alpha
 export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDefinition;
+
+// @alpha
+export function isFilterContextItem(obj: unknown): obj is FilterContextItem;
 
 // @alpha
 export const isGranularAccess: (obj: unknown) => obj is IGranularUserAccess | IGranularUserGroupAccess;
@@ -2653,6 +3561,12 @@ export function isKpiWithoutComparison(obj: unknown): obj is IKpiWithoutComparis
 // @public
 export function isLocalIdRef(obj: unknown): obj is LocalIdRef;
 
+// @beta
+export function isMdObject(obj: unknown): obj is IMdObject;
+
+// @beta
+export function isMdObjectDefinition(obj: unknown): obj is IMdObjectDefinition;
+
 // @public
 export function isMeasure(obj: unknown): obj is IMeasure;
 
@@ -2689,11 +3603,36 @@ export function isMeasureValueFilter(obj: unknown): obj is IMeasureValueFilter;
 // @public
 export function isMetadataObject(obj: unknown): obj is IMetadataObject;
 
+// @beta
+export type ISmtpDestinationConfiguration = ICustomSmtpDestinationConfiguration | IDefaultSmtpDestinationConfiguration;
+
+// @beta (undocumented)
+export interface ISmtpNotificationChannelMetadataObject extends INotificationChannelMetadataObjectBase, IMdObject {
+    destinationConfig?: ISmtpDestinationConfiguration;
+    // (undocumented)
+    destinationType: "smtp";
+    sendInPlatformNotifications: boolean;
+    // (undocumented)
+    type: "notificationChannel";
+}
+
+// @beta
+export type ISmtpNotificationChannelMetadataObjectDefinition = ToMdObjectDefinition<ISmtpNotificationChannelMetadataObject>;
+
 // @public
 export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttributeFilter;
 
 // @alpha
 export function isNegativeDashboardAttributeFilter(filter: IDashboardAttributeFilter): boolean;
+
+// @public
+export function isNotification(notification: unknown): notification is INotification;
+
+// @beta
+export function isNotificationChannelMetadataObject(obj: unknown): obj is INotificationChannelMetadataObject;
+
+// @beta
+export function isNotificationChannelMetadataObjectDefinition(obj: unknown): obj is INotificationChannelMetadataObjectDefinition;
 
 // @public
 export function isObjRef(obj: unknown): obj is ObjRef;
@@ -2761,13 +3700,22 @@ export function isRichTextWidget(obj: unknown): obj is IRichTextWidget;
 export function isRichTextWidgetDefinition(obj: unknown): obj is IRichTextWidgetDefinition;
 
 // @public
+export function isScheduleNotification(notification: unknown): notification is IScheduleNotification;
+
+// @public
 export function isSimpleMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
+
+// @public
+export function isSimpleMeasureFilter(obj: unknown): obj is IMeasureFilter;
 
 // @alpha
 export function isSingleSelectionFilter(filter: IDashboardAttributeFilter): boolean;
 
 // @alpha
 export function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
+
+// @public
+export function isTestNotification(notification: unknown): notification is ITestNotification;
 
 // @public
 export function isTotal(obj: unknown): obj is ITotal;
@@ -2809,6 +3757,12 @@ export function isVirtualArithmeticMeasure(obj: unknown): obj is IMeasure<IVirtu
 export function isVirtualArithmeticMeasureDefinition(obj: unknown): obj is IVirtualArithmeticMeasureDefinition;
 
 // @alpha
+export function isVisualizationSwitcherWidget(obj: unknown): obj is IVisualizationSwitcherWidget;
+
+// @alpha
+export function isVisualizationSwitcherWidgetDefinition(obj: unknown): obj is IVisualizationSwitcherWidgetDefinition;
+
+// @alpha
 export function isWidget(obj: unknown): obj is IWidget;
 
 // @alpha
@@ -2838,12 +3792,25 @@ export interface ITempFilterContext {
     readonly uri: string;
 }
 
+// @public
+export interface ITestNotification extends INotificationBase {
+    details: ITestNotificationDetails;
+    // (undocumented)
+    notificationType: "testNotification";
+}
+
+// @public
+export interface ITestNotificationDetails {
+    message: string;
+}
+
 // @beta
 export interface ITheme {
     analyticalDesigner?: IThemeAnalyticalDesigner;
     button?: IThemeButton;
     chart?: IThemeChart;
     dashboards?: IThemeDashboard;
+    images?: IThemeImages;
     kpi?: IThemeKpi;
     modal?: IThemeModal;
     palette?: IThemePalette;
@@ -3024,6 +3991,12 @@ export interface IThemeDefinition extends Partial<IMetadataObject> {
 }
 
 // @beta
+export interface IThemeImages {
+    coverImage?: ImageUri;
+    logo?: ImageUri;
+}
+
+// @beta
 export interface IThemeKpi {
     primaryMeasureColor?: ThemeColor;
     secondaryInfoColor?: ThemeColor;
@@ -3139,11 +4112,14 @@ export interface ITotalLocatorItemBody {
 // @public
 export interface IUser {
     authenticationId?: string;
+    deployment?: string;
     email?: string;
+    entitlements?: IEntitlementDescriptor[];
     firstName?: string;
     fullName?: string;
     lastName?: string;
     login: string;
+    organizationId?: string;
     organizationName?: string;
     permissions?: string[];
     ref: ObjRef;
@@ -3216,6 +4192,67 @@ export interface IVisualizationClassBody {
     url: string;
 }
 
+// @public (undocumented)
+export interface IVisualizationSwitcherWidget extends IVisualizationSwitcherWidgetBase, IDashboardObjectIdentity {
+}
+
+// @public (undocumented)
+export interface IVisualizationSwitcherWidgetBase extends IAnalyticalWidget {
+    // (undocumented)
+    readonly type: "visualizationSwitcher";
+    readonly visualizations: IInsightWidget[];
+}
+
+// @public (undocumented)
+export interface IVisualizationSwitcherWidgetDefinition extends IVisualizationSwitcherWidgetBase, Partial<IDashboardObjectIdentity> {
+}
+
+// @public
+export interface IWebhookAutomationInfo {
+    dashboardURL: string;
+    id: string;
+    isCustomDashboardURL?: boolean;
+    title?: string;
+}
+
+// @beta (undocumented)
+export interface IWebhookDestinationConfiguration {
+    endpoint?: string;
+    hasToken?: boolean;
+    token?: string;
+}
+
+// @public
+export interface IWebhookMessageDataAlert extends IWebhookMessageDataBase {
+    alert: IAlertDescription;
+}
+
+// @public
+export interface IWebhookMessageDataBase {
+    automation: IWebhookAutomationInfo;
+    details?: IAutomationDetails;
+    recipients?: WebhookRecipient[];
+    remainingActionCount?: number;
+    tabularExports?: IExportResult[];
+    visualExports?: IExportResult[];
+}
+
+// @public
+export type IWebhookMessageDataSchedule = IWebhookMessageDataBase;
+
+// @beta
+export interface IWebhookNotificationChannelMetadataObject extends INotificationChannelMetadataObjectBase, IMdObject {
+    destinationConfig?: IWebhookDestinationConfiguration;
+    // (undocumented)
+    destinationType: "webhook";
+    sendInPlatformNotifications: boolean;
+    // (undocumented)
+    type: "notificationChannel";
+}
+
+// @beta
+export type IWebhookNotificationChannelMetadataObjectDefinition = ToMdObjectDefinition<IWebhookNotificationChannelMetadataObject>;
+
 // @public
 export interface IWhiteLabeling {
     appleTouchIconUrl?: string;
@@ -3225,7 +4262,7 @@ export interface IWhiteLabeling {
 }
 
 // @public (undocumented)
-export type IWidget = IKpiWidget | IInsightWidget | IRichTextWidget;
+export type IWidget = IKpiWidget | IInsightWidget | IRichTextWidget | IVisualizationSwitcherWidget;
 
 // @alpha
 export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity {
@@ -3248,7 +4285,7 @@ export interface IWidgetAlertDefinition extends IWidgetAlertBase, Partial<IDashb
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
 }
 
-// @alpha
+// @alpha @deprecated
 export interface IWidgetAttachment {
     // (undocumented)
     exportOptions?: IExportOptions;
@@ -3259,7 +4296,7 @@ export interface IWidgetAttachment {
 }
 
 // @public
-export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition | IRichTextWidgetDefinition;
+export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition | IRichTextWidgetDefinition | IVisualizationSwitcherWidgetDefinition;
 
 // @public
 export interface IWidgetDescription {
@@ -3271,6 +4308,46 @@ export interface IWidgetDescription {
 export interface IWorkspaceAccess {
     permissions: WorkspaceAccessPermission;
     workspace: string;
+}
+
+// @alpha
+export interface IWorkspaceDataFilter {
+    // (undocumented)
+    columnName?: string;
+    // @deprecated (undocumented)
+    id: string;
+    // (undocumented)
+    isInherited: boolean;
+    // (undocumented)
+    ref: ObjRef;
+    // (undocumented)
+    settings: IWorkspaceDataFilterSetting[];
+    // (undocumented)
+    title?: string;
+}
+
+// @alpha
+export interface IWorkspaceDataFilterDefinition {
+    // (undocumented)
+    columnName: string;
+    // (undocumented)
+    id?: string;
+    // (undocumented)
+    title: string;
+}
+
+// @alpha
+export interface IWorkspaceDataFilterSetting {
+    // (undocumented)
+    filterValues: string[];
+    // @deprecated (undocumented)
+    id: string;
+    // (undocumented)
+    isInherited: boolean;
+    // (undocumented)
+    ref: ObjRef;
+    // (undocumented)
+    title?: string;
 }
 
 // @alpha
@@ -3318,6 +4395,9 @@ export type KpiWidgetDescriptionSourceType = "kpi" | "metric";
 
 // @alpha
 export type ListedDashboardAvailability = "full" | "viaLink";
+
+// @alpha
+export type LlmEndpointOpenAIPatch = Partial<ILlmEndpointOpenAI> & Pick<ILlmEndpointOpenAI, "id">;
 
 // @public
 export type LocalIdRef = {
@@ -3559,13 +4639,13 @@ export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope | s
 export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope | LocalIdRef | string, operator: RangeConditionOperator, from: number, to: number, treatNullValuesAs?: number): IMeasureValueFilter;
 
 // @public
-export function newNegativeAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, notInValues: IAttributeElements | string[]): INegativeAttributeFilter;
+export function newNegativeAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, notInValues: IAttributeElements | string[], localIdentifier?: string): INegativeAttributeFilter;
 
 // @public
 export function newPopMeasure(measureOrLocalId: MeasureOrLocalId, popAttrIdOrRef: ObjRef | Identifier, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
 
 // @public
-export function newPositiveAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, inValues: IAttributeElements | string[]): IPositiveAttributeFilter;
+export function newPositiveAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, inValues: IAttributeElements | string[], localIdentifier?: string): IPositiveAttributeFilter;
 
 // @public
 export function newPreviousPeriodMeasure(measureIdOrLocalId: MeasureOrLocalId, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;
@@ -3591,8 +4671,20 @@ export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: Dimensi
 // @internal
 export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<VirtualArithmeticMeasureBuilder>): IMeasure<IVirtualArithmeticMeasureDefinition>;
 
+// @beta
+export type NotificationChannelAllowedRecipients = "creator" | "internal" | "external";
+
+// @beta
+export type NotificationChannelDashboardLinkVisibility = "hidden" | "visible" | "internalOnly";
+
+// @beta
+export type NotificationChannelDestinationType = "webhook" | "smtp" | "inPlatform";
+
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy";
+export type NotificationType = "alertNotification" | "scheduleNotification" | "testNotification";
+
+// @public
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "notificationChannel";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;
@@ -3672,7 +4764,7 @@ export type RgbType = "rgb";
 // @internal
 export function sanitizeBucketTotals(bucket: IBucket, sortItems: ISortItem[], totals?: ITotal[]): ITotal[];
 
-// @alpha
+// @alpha @deprecated
 export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;
 
 // @alpha
@@ -3708,6 +4800,12 @@ export type ThemeColor = string;
 
 // @beta
 export type ThemeFontUri = string;
+
+// @beta
+export type ToMdObjectDefinition<T extends IMdObject> = Omit<T, "id">;
+
+// @beta
+export type ToNotificationChannelMetadataObject<T extends INotificationChannelMetadataObjectDefinition> = T extends IWebhookNotificationChannelMetadataObjectDefinition ? IWebhookNotificationChannelMetadataObject : T extends ISmtpNotificationChannelMetadataObjectDefinition ? ISmtpNotificationChannelMetadataObject : T extends IInPlatformNotificationChannelMetadataObjectDefinition ? IInPlatformNotificationChannelMetadataObject : never;
 
 // @public
 export function totalIsNative(total: ITotal): boolean;
@@ -3754,6 +4852,12 @@ export function visClassUrl(vc: IVisualizationClass): string;
 // @public
 export type VisualizationProperties = {
     [key: string]: any;
+};
+
+// @public
+export type WebhookRecipient = {
+    id: string;
+    email: string;
 };
 
 // @public
@@ -3862,6 +4966,14 @@ export type WorkspacePermission =
 /**
 * Whether the current user has permissions to export as pdf documents.
 */
-| "canExportPdf";
+| "canExportPdf"
+/**
+* Whether the current user has permissions to create a dashboard filter view.
+*/
+| "canCreateFilterView"
+/**
+* Whether the current user has permissions to create an automation.
+*/
+| "canCreateAutomation";
 
 ```

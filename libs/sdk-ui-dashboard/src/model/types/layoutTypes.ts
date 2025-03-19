@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import {
     idRef,
@@ -12,9 +12,13 @@ import {
     IDashboardLayoutSectionHeader,
     IDashboardLayoutSizeByScreenSize,
     IDashboardLayoutItem,
+    IDashboardLayout,
+    isDashboardLayout,
 } from "@gooddata/sdk-model";
 import cloneDeep from "lodash/cloneDeep.js";
 import isEmpty from "lodash/isEmpty.js";
+
+import { ILayoutItemPath } from "../../types.js";
 
 /**
  * Base type for custom widgets. Custom widgets may extend this and add extra properties to hold widget-specific
@@ -128,12 +132,40 @@ export function extendedWidgetDebugStr(widget: ExtendedDashboardWidget): string 
 }
 
 /**
+ * Extension of the default {@link @gooddata/sdk-backend-spi#IDashboardLayoutWidget} type to also include view-only
+ * custom widget types.
+ *
+ * @public
+ */
+export interface ExtendedDashboardLayoutWidget
+    extends IDashboardLayout<ExtendedDashboardWidget>,
+        IBaseWidget,
+        IDashboardObjectIdentity {
+    type: "IDashboardLayout";
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link ExtendedDashboardLayoutWidget}.
+ * @public
+ */
+export function isExtendedDashboardLayoutWidget(obj: unknown): obj is ExtendedDashboardLayoutWidget {
+    return isDashboardLayout<ExtendedDashboardWidget>(obj);
+}
+
+/**
  * Extension of the default {@link @gooddata/sdk-backend-spi#IWidget} type to also include view-only
  * custom widget types.
  *
  * @public
  */
-export type ExtendedDashboardWidget = IWidget | ICustomWidget;
+export type ExtendedDashboardWidget = IWidget | ICustomWidget | ExtendedDashboardLayoutWidget;
+
+/**
+ * Subset of widget types which support filtering.
+ *
+ * @public
+ */
+export type FilterableDashboardWidget = IWidget | ICustomWidget;
 
 /**
  * Specialization of the IDashboardLayoutItem which also includes the extended dashboard widgets - KPI and
@@ -276,3 +308,13 @@ export type InternalDashboardItemDefinition = ExtendedDashboardItem | StashedDas
  * @public
  */
 export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardWidget>;
+
+/**
+ * Item with its height
+ *
+ * @internal
+ */
+export interface IItemWithHeight {
+    itemPath: ILayoutItemPath;
+    height: number;
+}

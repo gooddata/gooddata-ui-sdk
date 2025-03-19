@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "sass:color";
 @use "../variables.scss";
 
@@ -15,30 +15,39 @@ $button-action-color-hover: variables.$gd-color-text;
 $default-button-normal-border-color: #ccd8e2;
 
 $button-normal-bg: variables.$gd-color-light;
-$button-normal-color: var(--gd-palette-complementary-7, #778491);
+$button-normal-color: var(--gd-palette-complementary-7-from-theme, #778491);
 $button-normal-border-color: var(--gd-palette-complementary-4, $default-button-normal-border-color);
 $button-normal-hover-bg: var(--gd-palette-complementary-1, #f5f8fa);
-$button-normal-hover-border-color: var(--gd-palette-complementary-4, color.adjust(#1f3449, $alpha: -0.8));
-$button-normal-active-gradient-top: var(--gd-palette-complementary-2, #dee6ef);
-$button-normal-active-gradient-bottom: var(--gd-palette-complementary-2, #ecf0f5);
+$button-normal-hover-border-color: var(
+    --gd-palette-complementary-4-from-theme,
+    color.adjust(#1f3449, $alpha: -0.8)
+);
+$button-normal-active-gradient-top: var(--gd-palette-complementary-2-from-theme, #dee6ef);
+$button-normal-active-gradient-bottom: var(--gd-palette-complementary-2-from-theme, #ecf0f5);
 $default-button-normal-active-border-color: #b1c1d1;
 $button-normal-active-border-color: var(
-    --gd-palette-complementary-5,
+    --gd-palette-complementary-5-from-theme,
     $default-button-normal-active-border-color
 );
 $button-normal-active-shadow: var(
-    --gd-shadow-color,
+    --gd-shadow-color-from-theme,
     color.adjust($default-button-normal-active-border-color, $alpha: -0.35)
 );
 $button-normal-hover-box-shadow: var(
-    --gd-shadow-color,
+    --gd-shadow-color-from-theme,
     color.adjust($default-button-normal-active-border-color, $alpha: -0.4)
 );
 
 $default-button-shadow-color: #14385d;
-$button-shadow-color: var(--gd-shadow-color, $default-button-shadow-color);
-$button-shadow-lighter: var(--gd-shadow-color, color.adjust($default-button-shadow-color, $alpha: -0.91));
-$button-shadow-darker: var(--gd-shadow-color, color.adjust($default-button-shadow-color, $alpha: -0.85));
+$button-shadow-color: var(--gd-shadow-color-from-theme, $default-button-shadow-color);
+$button-shadow-lighter: var(
+    --gd-shadow-color-from-theme,
+    color.adjust($default-button-shadow-color, $alpha: -0.91)
+);
+$button-shadow-darker: var(
+    --gd-shadow-color-from-theme,
+    color.adjust($default-button-shadow-color, $alpha: -0.85)
+);
 
 // Branded colors calculation
 // primary color

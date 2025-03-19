@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { DashboardLoadResult, IDashboardLoader } from "./loader.js";
 import {
@@ -292,17 +292,30 @@ export class DashboardLoader implements IDashboardLoader {
         const { config } = this.baseProps;
         let dashboardConfig = config;
 
-        const dashboardWithPlugins =
-            dashboardRef &&
-            (await backend
-                .workspace(workspace)
-                .dashboards()
-                .getDashboardWithReferences(
+        let dashboardWithPlugins: IDashboardWithReferences | undefined;
+        if (
+            config?.settings?.enableCriticalContentPerformanceOptimizations &&
+            isDashboard(dashboard) &&
+            config?.references
+        ) {
+            dashboardWithPlugins = {
+                dashboard,
+                references: config.references,
+            };
+        } else {
+            dashboardWithPlugins =
+                dashboardRef &&
+                (await backend.workspace(workspace).dashboards().getDashboardWithReferences(
                     dashboardRef,
                     filterContextRef,
-                    { loadUserData: true, exportId: config?.exportId },
-                    ["dashboardPlugin"],
+                    {
+                        loadUserData: true,
+                        exportId: config?.exportId,
+                        exportType: config?.exportType,
+                    },
+                    ["dashboardPlugin", "dataSet"],
                 ));
+        }
 
         const ctx: DashboardContext = {
             backend,

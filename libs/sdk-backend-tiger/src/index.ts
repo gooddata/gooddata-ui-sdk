@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 /**
  * This package provides the Analytical Backend implementation for GoodData Cloud and GoodData.CN.
  *
@@ -7,8 +7,6 @@
  * with low-level details. The functionality includes but is not limited to:
  * getting and creating metadata objects, running executions, getting settings, getting available workspaces, and more.
  *
- * For similar package for the GoodData platform, see `@gooddata/sdk-backend-bear`.
- *
  * @packageDocumentation
  */
 import { IAnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -16,8 +14,7 @@ import { TigerBackend } from "./backend/index.js";
 import { withNormalization } from "@gooddata/sdk-backend-base";
 
 /**
- * Returns function which creates instances of Analytical Backend implementation which works with the 'tiger'
- * version of the GoodData platform.
+ * Returns function which creates instances of Analytical Backend implementation which works with the 'tiger' backend.
  *
  * @param config - analytical backend configuration, may be omitted and provided later
  * @param implConfig - tiger client specific configuration, may be omitted at this point but it cannot be provided later
@@ -51,28 +48,36 @@ function tigerFactory(config?: IAnalyticalBackendConfig, implConfig?: any): IAna
 
 export default tigerFactory;
 export { AnonymousAuthProvider } from "@gooddata/sdk-backend-base";
-export {
+export type {
     DeclarativeModel,
     GenerateLdmRequest,
     ApiEntitlement,
-    ApiEntitlementNameEnum,
-    StagingUploadLocation,
     AnalyzeCsvRequest,
     AnalyzeCsvResponse,
     ImportCsvRequest,
+    ImportCsvResponse,
+    GdStorageFile,
+    UploadFileResponse,
+    ReadCsvFileManifestsResponse,
 } from "@gooddata/api-client-tiger";
+export { ApiEntitlementNameEnum } from "@gooddata/api-client-tiger";
+export type {
+    SetJwtCallback,
+    JwtIsAboutToExpireHandler,
+    IRedirectToTigerAuthenticationParams,
+    RedirectToTigerAuthenticationHandler,
+} from "./auth.js";
 export {
     ContextDeferredAuthProvider,
     TigerTokenAuthProvider,
-    SetJwtCallback,
-    JwtIsAboutToExpireHandler,
     TigerJwtAuthProvider,
     TigerAuthProviderBase,
     createTigerAuthenticationUrl,
     redirectToTigerAuthentication,
+    createRedirectToTigerAuthenticationWithParams,
 } from "./auth.js";
 
-export {
+export type {
     TigerSpecificFunctions,
     IApiToken,
     IApiTokenExtended,
@@ -108,14 +113,17 @@ export {
     ScanRequest,
     ScanResult,
     IDataSourceCacheStrategy,
+    INotificationChannel,
 } from "./backend/tigerSpecificFunctions.js";
 
-export { TigerAfmType, TigerMetadataType, TigerObjectType } from "./types/index.js";
+export type { TigerAfmType, TigerMetadataType, TigerObjectType } from "./types/index.js";
+export type { TigerCompatibleObjectType } from "./types/refTypeMapping.js";
 export {
     isTigerType,
     isTigerCompatibleType,
     tigerIdTypeToObjectType,
     objectTypeToTigerIdType,
-    TigerCompatibleObjectType,
 } from "./types/refTypeMapping.js";
-export { getIdOrigin, OriginInfoWithId } from "./convertors/fromBackend/ObjectInheritance.js";
+export type { OriginInfoWithId } from "./convertors/fromBackend/ObjectInheritance.js";
+export { getIdOrigin } from "./convertors/fromBackend/ObjectInheritance.js";
+export { toAfmExecution } from "./convertors/toBackend/afm/toAfmResultSpec.js";

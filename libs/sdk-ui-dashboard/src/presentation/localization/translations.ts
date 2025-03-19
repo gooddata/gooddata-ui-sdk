@@ -18,9 +18,9 @@ import es419 from "./bundles/es-419.json";
 import frCA from "./bundles/fr-CA.json";
 import enGB from "./bundles/en-GB.json";
 import enAU from "./bundles/en-AU.json";
+import fiFI from "./bundles/fi-FI.json";
 import zhHant from "./bundles/zh-Hant.json";
 import zhHK from "./bundles/zh-HK.json";
-import fiFI from "./bundles/fi-FI.json";
 
 const sdkUiDashboardTranslations: { [locale: string]: Record<string, string> } = {
     "en-US": translationUtils.removeMetadata(enUS),

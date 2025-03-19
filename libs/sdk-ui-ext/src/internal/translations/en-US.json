@@ -165,7 +165,12 @@
         "limit": 0
     },
     "dashboard.bucket.attribute_title.scatter": {
-        "value": "Attribute",
+        "value": "View by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.segment_title.scatter": {
+        "value": "Segment by",
         "comment": "",
         "limit": 0
     },
@@ -675,6 +680,21 @@
         "comment": "",
         "limit": 0
     },
+    "dashboard.bucket.attribute_title.repeater": {
+        "value": "Rows",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.view_title.repeater": {
+        "value": "View by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.columns_title.repeater": {
+        "value": "Columns",
+        "comment": "",
+        "limit": 0
+    },
     "dashboard.error.missing_primary_bucket_item.heading._measure|insight": {
         "value": "No primary measure in your insight",
         "comment": "",
@@ -869,6 +889,191 @@
     "properties.canvas.dataLabels.hide": {
         "value": "hide",
         "comment": "",
+        "limit": 0
+    },
+    "properties.canvas.rowHeight": {
+        "value": "Row height",
+        "comment": "Label of the dropdown for configuring the row height of the chart",
+        "limit": 0
+    },
+    "properties.canvas.rowHeight.small": {
+        "value": "small",
+        "comment": "Option of the dropdown for configuring the row height of the chart (small)",
+        "limit": 0
+    },
+    "properties.canvas.rowHeight.medium": {
+        "value": "medium",
+        "comment": "Option of the dropdown for configuring the row height of the chart (medium)",
+        "limit": 0
+    },
+    "properties.canvas.rowHeight.large": {
+        "value": "large",
+        "comment": "Option of the dropdown for configuring the row height of the chart (large)",
+        "limit": 0
+    },
+    "properties.canvas.verticalAlign": {
+        "value": "Vertical align",
+        "comment": "Label of the dropdown for configuring vertical alignment of the chart cells",
+        "limit": 0
+    },
+    "properties.canvas.verticalAlign.top": {
+        "value": "top",
+        "comment": "Option of the dropdown for configuring the vertical alignment of the chart cell (top)",
+        "limit": 0
+    },
+    "properties.canvas.verticalAlign.middle": {
+        "value": "middle",
+        "comment": "Option of the dropdown for configuring the vertical alignment of the chart cell (middle)",
+        "limit": 0
+    },
+    "properties.canvas.verticalAlign.bottom": {
+        "value": "bottom",
+        "comment": "Option of the dropdown for configuring the vertical alignment of the chart cell (bottom)",
+        "limit": 0
+    },
+    "properties.canvas.textWrapping": {
+        "value": "Text wrapping",
+        "comment": "Label of the dropdown for configuring text wrapping of the chart cells",
+        "limit": 0
+    },
+    "properties.canvas.textWrapping.clip": {
+        "value": "clip",
+        "comment": "Option of the dropdown for configuring the text wrapping of the chart cell (clip)",
+        "limit": 0
+    },
+    "properties.canvas.textWrapping.wrap": {
+        "value": "wrap",
+        "comment": "Option of the dropdown for configuring the text wrapping of the chart cell (wrap)",
+        "limit": 0
+    },
+    "properties.canvas.image": {
+        "value": "Image",
+        "comment": "Label of the dropdown for configuring image sizing of the chart cells",
+        "limit": 0
+    },
+    "properties.canvas.image.fit": {
+        "value": "fit",
+        "comment": "Option of the dropdown for configuring the image sizing of the chart cell (fit)",
+        "limit": 0
+    },
+    "properties.canvas.image.fill": {
+        "value": "fill",
+        "comment": "Option of the dropdown for configuring the image sizing of the chart cell (fill)",
+        "limit": 0
+    },
+    "properties.forecast.title": {
+        "value": "Forecast",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.forecastDisabled.title": {
+        "value": "Forecast is not available for this combination of buckets",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.forecastPeriod.title": {
+        "value": "Period",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.forecastPeriod.placeholder": {
+        "value": "Period",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.forecastSeasonal.title": {
+        "value": "Seasonality",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.forecastConfidence.title": {
+        "value": "Confidence",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.forecastConfidence.70": {
+        "value": "70%",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.forecastConfidence.75": {
+        "value": "75%",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.forecastConfidence.80": {
+        "value": "80%",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.forecastConfidence.85": {
+        "value": "85%",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.forecastConfidence.90": {
+        "value": "90%",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.forecastConfidence.95": {
+        "value": "95%",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.forecastSliced.title": {
+        "value": "Showing partial forecast.",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.forecastSliced.description": {
+        "value": "The available data point don`t cover the entire selected period.",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.clustering.title": {
+        "value": "Cluster",
+        "comment": "Title of the clustering configuration section.",
+        "limit": 0
+    },
+    "properties.clustering.amount": {
+        "value": "Amount",
+        "comment": "Label of the input for configuring the number of clusters.",
+        "limit": 0
+    },
+    "properties.clustering.amount.placeholder": {
+        "value": "3",
+        "comment": "Placeholder of the input for configuring the number of clusters.",
+        "limit": 0
+    },
+    "properties.clustering.threshold": {
+        "value": "Threshold",
+        "comment": "Label of the input for configuring the clustering threshold.",
+        "limit": 0
+    },
+    "properties.clustering.threshold.placeholder": {
+        "value": "0.03",
+        "comment": "Placeholder of the input for configuring the clustering threshold.",
+        "limit": 0
+    },
+    "properties.clustering.threshold.tooltip": {
+        "value": "The threshold is a limit that determines when to group data. <link>Learn more</link>",
+        "comment": "Tooltip message of the clustering threshold input. Do not translate <link> and </link> tags",
+        "limit": 0
+    },
+    "properties.clustering.amount.partial.title": {
+        "value": "Showing partial clusters",
+        "comment": "Message title that is shown when clustering amount is higher than the number of visualization data points.",
+        "limit": 0
+    },
+    "properties.clustering.amount.partial.description": {
+        "value": "The available data points don't cover the entire selected amount.",
+        "comment": "Message description that is shown when clustering amount is higher than the number of visualization data points.",
+        "limit": 0
+    },
+    "properties.clustering.disabled": {
+        "value": "Clustering requires 2 Metrics and View by, without Segment by.",
+        "comment": "Tooltip message of the disabled toggle that enables clustering",
         "limit": 0
     },
     "properties.canvas.totalLabels": {
@@ -1383,9 +1588,69 @@
         "comment": "The title for the interactions configuration section",
         "limit": 0
     },
+    "properties.advanced.title": {
+        "value": "Advanced customizations",
+        "comment": "The title for the advanced configuration section",
+        "limit": 0
+    },
+    "properties.advanced.chartConfigOverride.noValueLabel": {
+        "value": "No customizations yet.",
+        "comment": "Text show when user did not define any customization yet.",
+        "limit": 0
+    },
+    "properties.advanced.chartConfigOverride.link": {
+        "value": "Learn more",
+        "comment": "Text of link that leads to feature documentation.",
+        "limit": 0
+    },
+    "properties.advanced.chartConfigOverride.editorButton": {
+        "value": "Open editor",
+        "comment": "Text of button that opens editor of configuration.",
+        "limit": 0
+    },
+    "properties.advanced.chartConfigOverride.title": {
+        "value": "Advanced customization",
+        "comment": "Text of dialog that defines advanced customization of visualization.",
+        "limit": 0
+    },
+    "properties.advanced.chartConfigOverride.snippets.header": {
+        "value": "Snippets",
+        "comment": "The header of list that contains snippets (recipes) of various charts configurations.",
+        "limit": 0
+    },
+    "properties.advanced.chartConfigOverride.button.apply": {
+        "value": "Apply",
+        "comment": "The label of button in dialog that applies the dialog value.",
+        "limit": 0
+    },
+    "properties.advanced.chartConfigOverride.button.cancel": {
+        "value": "Cancel",
+        "comment": "The label of button in dialog that closes the dialog.",
+        "limit": 0
+    },
     "properties.interactions.drillDown": {
         "value": "Drill down",
         "comment": "The text for the drill down checkbox",
+        "limit": 0
+    },
+    "properties.interactions.alerts": {
+        "value": "Alert",
+        "comment": "Label of the checkbox that enables/disables alerts configuration for particular visualization.",
+        "limit": 0
+    },
+    "properties.interactions.alerts.tooltip": {
+        "value": "Enable users to create alerts for this visualization on dashboards.",
+        "comment": "Tooltip for the checkbox that enables/disables alerts configuration for particular visualization.",
+        "limit": 0
+    },
+    "properties.interactions.scheduledExports": {
+        "value": "Scheduled exports",
+        "comment": "Label of the checkbox that enables/disables scheduled exports configuration for particular visualization.",
+        "limit": 0
+    },
+    "properties.interactions.scheduledExports.tooltip": {
+        "value": "Enable users to create scheduled exports for this visualization on dashboards.",
+        "comment": "Tooltip for the checkbox that enables/disables scheduled exports configuration for particular visualization.",
         "limit": 0
     },
     "properties.comparison.title": {
@@ -1736,6 +2001,121 @@
     "properties.comparison.position.left": {
         "value": "left",
         "comment": "The title of dropdown option that specifies the position of comparison to be on left.",
+        "limit": 0
+    },
+    "visualizations.headline.tertiary.title": {
+        "value": "Versus",
+        "comment": "Means comparison of two values - for example '100 (this week) VERSUS 10 (last week)'.",
+        "limit": 0
+    },
+    "gs.date.yesterday": {
+        "value": "Yesterday",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.button.label": {
+        "value": "Notifications",
+        "comment": "A global notifications button label in the main menu",
+        "limit": 0
+    },
+    "notifications.panel.notifications.list.label": {
+        "value": "Notifications",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.tab.unread": {
+        "value": "Unread ({count})",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.tab.all": {
+        "value": "All",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.markAllAsRead": {
+        "value": "Mark all as read",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.error.loading": {
+        "value": "Error loading notifications",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.empty.all": {
+        "value": "No notifications",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.empty.unread": {
+        "value": "No unread notifications",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.unsupported.notification.type": {
+        "value": "Unsupported notification type",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.markAsRead": {
+        "value": "Mark as read",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.alert.notification.type.label": {
+        "value": "Alert notification",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.filters.buttonLabel": {
+        "value": "Show filters",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.filters.dialog.title": {
+        "value": "Applied filters",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.filters.dialog.dateRange": {
+        "value": "Date Range",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.triggers.title": {
+        "value": "for {triggeredCount}/{totalCount} items",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.triggers.dialog.newValue": {
+        "value": "New value",
+        "comment": "",
+        "limit": 0
+    },
+    "close": {
+        "value": "Close",
+        "comment": "Label of a button for closing a dialog window",
+        "limit": 0
+    },
+    "notifications.panel.triggers.dialog.title": {
+        "value": "Triggered for",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.error.learnMore": {
+        "value": "Learn more",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.error.traceId": {
+        "value": "Trace ID",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.error.message": {
+        "value": "The alert could not be processed.",
+        "comment": "",
         "limit": 0
     }
 }

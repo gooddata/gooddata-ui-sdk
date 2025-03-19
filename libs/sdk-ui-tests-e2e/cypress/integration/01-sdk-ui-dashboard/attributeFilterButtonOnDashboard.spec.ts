@@ -9,7 +9,9 @@ import { InsightsCatalog } from "../../tools/insightsCatalog";
 const ATTRIBUTE_FILTER_RENAMING_BUTTON_SELECTOR = ".s-attribute-filter.s-activity_type";
 const CONFIGURATION_SELECTOR = ".s-configuration-button";
 
-describe("AttributeFilterButtonRenaming", { tags: ["pre-merge_isolated_bear"] }, () => {
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("AttributeFilterButtonRenaming", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("dashboard/attribute-filter-button-renaming");
         new InsightsCatalog().waitForCatalogLoad();

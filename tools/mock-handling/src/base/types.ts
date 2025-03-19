@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 
 /**
@@ -13,8 +13,6 @@ export class DataRecorderError extends Error {
         super(message);
     }
 }
-
-export type BackendType = "bear" | "tiger";
 
 /*
  * Defines types used across catalog exporter
@@ -35,24 +33,14 @@ export type DataRecorderConfig = {
     projectId: string | null;
 
     /**
-     * User to authenticate as.
+     * Tiger token
      */
-    username: string | null;
-
-    /**
-     * Password to use for authentication
-     */
-    password: string | null;
+    tigerToken: string | null;
 
     /**
      * Directory with recordings inputs & outputs.
      */
     recordingDir: string | null;
-
-    /**
-     * Backend type: bear or tiger.
-     */
-    backend: BackendType | null;
 
     /**
      * If specified, projectId will be replaced with this value in all files written by

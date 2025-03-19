@@ -4,7 +4,6 @@
 
 ```ts
 
-/// <reference types="mapbox-gl" />
 /// <reference types="react" />
 
 import { AttributeMeasureOrPlaceholder } from '@gooddata/sdk-ui';
@@ -172,6 +171,8 @@ export interface IGeoConfig {
     colors?: string[];
     // (undocumented)
     cooperativeGestures?: boolean;
+    // (undocumented)
+    enableExecutionCancelling?: boolean;
     // (undocumented)
     isExportMode?: boolean;
     // (undocumented)

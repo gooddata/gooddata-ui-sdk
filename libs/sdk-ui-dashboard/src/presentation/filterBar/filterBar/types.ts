@@ -1,6 +1,11 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { ComponentType } from "react";
-import { FilterContextItem, IDashboardAttributeFilter, IDashboardDateFilter } from "@gooddata/sdk-model";
+import {
+    FilterContextItem,
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    ObjRef,
+} from "@gooddata/sdk-model";
 
 /**
  * @alpha
@@ -12,12 +17,17 @@ export interface IFilterBarProps {
     filters: FilterContextItem[];
 
     /**
+     * Working filters that are used to dispaly filter selected values. If undefined, filters are used instead.
+     */
+    workingFilters?: FilterContextItem[];
+
+    /**
      * When value of an attribute filter that is part of the FilterBar changes, the filter bar MUST propagate the event
      * using this callback.
      *
      * @param filter - filter that has changed
      */
-    onAttributeFilterChanged: (filter: IDashboardAttributeFilter) => void;
+    onAttributeFilterChanged: (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef) => void;
 
     /**
      * When value of a date filter that is part of the FilterBar changes, the filter bar MUST propagate the event

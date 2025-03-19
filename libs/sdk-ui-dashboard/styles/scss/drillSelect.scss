@@ -1,5 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
-@use "variables";
+// (C) 2020-2025 GoodData Corporation
 @use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/Bubble/variables" as bubble-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
@@ -15,11 +14,12 @@
 
 .gd-drill-modal-picker-dropdown {
     overflow: hidden;
-    max-width: 170px;
-    width: variables.$gd-configuration-panel-inner-width;
+    max-width: 230px;
+    width: 230px;
     background-color: var(--gd-palette-complementary-0, #fff);
     border-radius: 3px;
-    border: 1px solid var(--gd-palette-complementary-3, button-variables.$default-button-normal-border-color);
+    border: 1px solid
+        var(--gd-palette-complementary-3-from-theme, button-variables.$default-button-normal-border-color);
     box-shadow: bubble-variables.$bubble-boxShadow;
     $item-padding-side: 12px;
     $item-height: 27px;
@@ -82,7 +82,7 @@
         &:focus {
             background: var(--gd-palette-complementary-2, #ebeff4);
             span {
-                color: var(--gd-palette-complementary-9);
+                color: var(--gd-palette-complementary-9-from-theme);
             }
         }
     }
@@ -101,8 +101,6 @@
     height: 100%;
 
     &:first-child {
-        padding-top: 10px;
-
         .gd-bubble-trigger-zoom-out {
             z-index: zIndexes.$drill-dialog-basic;
             top: -30px;

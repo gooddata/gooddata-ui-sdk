@@ -1,8 +1,10 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
+
+import { IDashboardLayoutSectionHeader, ObjRef, ScreenSize } from "@gooddata/sdk-model";
+import { DashboardItemDefinition, RelativeIndex, StashedDashboardItemsId } from "../types/layoutTypes.js";
+import { ILayoutItemPath, ILayoutSectionPath } from "../../types.js";
 
 import { IDashboardCommand } from "./base.js";
-import { DashboardItemDefinition, RelativeIndex, StashedDashboardItemsId } from "../types/layoutTypes.js";
-import { IDashboardLayoutSectionHeader, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * Payload of the {@link AddLayoutSection} command.
@@ -15,8 +17,12 @@ export interface AddLayoutSectionPayload {
      * @remarks
      * Index is zero-based and for convenience index -1 means place new section at the end. 0 means place new
      * section at the beginning. Both 0 and -1 and can be used when inserting the first section into and empty layout.
+     *
+     * {@link RelativeIndex} support will be removed in the next major SDK version. Use {@link ILayoutSectionPath} instead.
+     *
+     * TODO LX-648: Remove RelativeIndex type in the next major version.
      */
-    readonly index: RelativeIndex;
+    readonly index: RelativeIndex | ILayoutSectionPath;
 
     /**
      * Specify the section header.
@@ -60,8 +66,10 @@ export interface AddLayoutSection extends IDashboardCommand {
  *
  * You may optionally specify the initial values of the section header and the items that will be in the new section.
  *
+ * This command operates only on the root layout. For nested layouts, use {@link addNestedLayoutSection}.
+ *
  * @param index - index to place the section at; -1 can be used as convenience to append a new section
- * @param initialHeader - specify specify header for the newly created section
+ * @param initialHeader - specify header for the newly created section
  * @param initialItems - specify one or more items that the newly created section should include from the get-go
  * @param autoResolveDateFilterDataset - specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
  *  and insight widgets; default is disabled meaning date filtering will be enabled only for those KPI or Insight widgets
@@ -73,6 +81,46 @@ export interface AddLayoutSection extends IDashboardCommand {
  */
 export function addLayoutSection(
     index: number,
+    initialHeader?: IDashboardLayoutSectionHeader,
+    initialItems?: DashboardItemDefinition[],
+    autoResolveDateFilterDataset?: boolean,
+    correlationId?: string,
+): AddLayoutSection {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION",
+        correlationId,
+        payload: {
+            index,
+            initialHeader,
+            initialItems,
+            autoResolveDateFilterDataset,
+        },
+    };
+}
+
+/**
+ * Creates the AddLayoutSection command.
+ *
+ * @remarks
+ * Dispatching this command will result in the addition of a new layout section.
+ * The new section will be placed at the desired index and will be empty by default.
+ *
+ * You may optionally specify the initial values of the section header and the items that will be in the new section.
+ *
+ * @param index - index to place the section at; -1 can be used as convenience to append a new section
+ * @param initialHeader - specify header for the newly created section
+ * @param initialItems - specify one or more items that the newly created section should include from the get-go
+ * @param autoResolveDateFilterDataset - specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
+ *  and insight widgets; default is disabled meaning date filtering will be enabled only for those KPI or Insight widgets
+ *  that already specify dateDataset.
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+// eslint-disable-next-line sonarjs/no-identical-functions
+export function addNestedLayoutSection(
+    index: ILayoutSectionPath,
     initialHeader?: IDashboardLayoutSectionHeader,
     initialItems?: DashboardItemDefinition[],
     autoResolveDateFilterDataset?: boolean,
@@ -103,15 +151,25 @@ export interface MoveLayoutSectionPayload {
      * Index of the section to move.
      *
      * Index is zero-based.
+     *
+     * @remarks
+     * "number" support will be removed in the next major SDK version. Use {@link ILayoutSectionPath} instead.
+     *
+     * TODO LX-648: Remove number type in the next major version.
      */
-    readonly sectionIndex: number;
+    readonly sectionIndex: number | ILayoutSectionPath;
 
     /**
      * Index where the section should be moved.
      *
      * Index is zero-based. For convenience index of -1 means moving the item to the end of the section list.
+     *
+     * @remarks
+     * "number" support will be removed in the next major SDK version. Use {@link ILayoutSectionPath} instead.
+     *
+     * TODO LX-648: Remove number type in the next major version.
      */
-    readonly toIndex: RelativeIndex;
+    readonly toIndex: number | ILayoutSectionPath;
 }
 
 /**
@@ -126,6 +184,9 @@ export interface MoveLayoutSection extends IDashboardCommand {
  * Creates the MoveLayoutSection command. Dispatching this command will result in move of the section located at `sectionIndex`
  * to a new place indicated by `toIndex`.
  *
+ * @remarks
+ * This command operates only on the root layout. For nested layouts, use {@link moveNestedLayoutSection}.
+ *
  * @param sectionIndex - index of section to move
  * @param toIndex - the new index for the section
  * @param correlationId - specify correlation id to use for this command. this will be included in all
@@ -136,6 +197,33 @@ export interface MoveLayoutSection extends IDashboardCommand {
 export function moveLayoutSection(
     sectionIndex: number,
     toIndex: number,
+    correlationId?: string,
+): MoveLayoutSection {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION",
+        correlationId,
+        payload: {
+            sectionIndex,
+            toIndex,
+        },
+    };
+}
+
+/**
+ * Creates the MoveLayoutSection command. Dispatching this command will result in move of the section located at `sectionIndex`
+ * to a new place indicated by `toIndex`.
+ *
+ * @param sectionIndex - index of section to move
+ * @param toIndex - the new index for the section
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+// eslint-disable-next-line sonarjs/no-identical-functions
+export function moveNestedLayoutSection(
+    sectionIndex: ILayoutSectionPath,
+    toIndex: ILayoutSectionPath,
     correlationId?: string,
 ): MoveLayoutSection {
     return {
@@ -161,8 +249,13 @@ export interface RemoveLayoutSectionPayload {
      * Index of section to remove.
      *
      * Zero based. For convenience -1 can be used to remove the last section.
+     *
+     * @remarks
+     * {@link RelativeIndex} support will be removed in the next major SDK version. Use {@link ILayoutSectionPath} instead.
+     *
+     * TODO LX-648: Remove RelativeIndex type in the next major version.
      */
-    readonly index: RelativeIndex;
+    readonly index: RelativeIndex | ILayoutSectionPath;
 
     /**
      * Specify stash identifier.
@@ -193,6 +286,8 @@ export interface RemoveLayoutSection extends IDashboardCommand {
  * section. You can optionally specify that the items in the section should not be physically removed but instead be
  * stashed for later 'resurrection'.
  *
+ * This command operates only on the root layout. For nested layouts, use {@link removeNestedLayoutSection}.
+ *
  * @param index - index of section to remove
  * @param stashIdentifier - specify identifier to stash items under; if you do not specify this, then the dashboard items in the removed section will also be removed
  * @param correlationId - specify correlation id to use for this command. this will be included in all
@@ -202,6 +297,37 @@ export interface RemoveLayoutSection extends IDashboardCommand {
  */
 export function removeLayoutSection(
     index: number,
+    stashIdentifier?: StashedDashboardItemsId,
+    correlationId?: string,
+): RemoveLayoutSection {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION",
+        correlationId,
+        payload: {
+            index,
+            stashIdentifier,
+        },
+    };
+}
+
+/**
+ * Creates the RemoveLayoutSection command.
+ *
+ * @remarks
+ * Dispatching this command will result in removal of the entire dashboard
+ * section. You can optionally specify that the items in the section should not be physically removed but instead be
+ * stashed for later 'resurrection'.
+ *
+ * @param index - index of section to remove
+ * @param stashIdentifier - specify identifier to stash items under; if you do not specify this, then the dashboard items in the removed section will also be removed
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+// eslint-disable-next-line sonarjs/no-identical-functions
+export function removeNestedLayoutSection(
+    index: ILayoutSectionPath,
     stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
 ): RemoveLayoutSection {
@@ -229,8 +355,12 @@ export interface ChangeLayoutSectionHeaderPayload {
      *
      * @remarks
      * Index is zero based. Exact index must be provided.
+     *
+     * "number" support will be removed in the next major SDK version. Use {@link ILayoutSectionPath} instead.
+     *
+     * TODO LX-648: Remove number type in the next major version.
      */
-    readonly index: number;
+    readonly index: number | ILayoutSectionPath;
 
     /**
      * New value of the header.
@@ -260,6 +390,8 @@ export interface ChangeLayoutSectionHeader extends IDashboardCommand {
  * @remarks
  * Dispatching this command will result in change of the section's title and/or description.
  *
+ * This command operates only on the root layout. For nested layouts, use {@link changeNestedLayoutSectionHeader}.
+ *
  * @param index - index of section to change
  * @param header - new header
  * @param merge - indicates whether the old header and the new header should be merged; default is no merging
@@ -270,6 +402,38 @@ export interface ChangeLayoutSectionHeader extends IDashboardCommand {
  */
 export function changeLayoutSectionHeader(
     index: number,
+    header: IDashboardLayoutSectionHeader,
+    merge?: boolean,
+    correlationId?: string,
+): ChangeLayoutSectionHeader {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER",
+        correlationId,
+        payload: {
+            index,
+            header,
+            merge,
+        },
+    };
+}
+
+/**
+ * Creates the ChangeLayoutSectionHeader command.
+ *
+ * @remarks
+ * Dispatching this command will result in change of the section's title and/or description.
+ *
+ * @param index - index of section to change
+ * @param header - new header
+ * @param merge - indicates whether the old header and the new header should be merged; default is no merging
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+// eslint-disable-next-line sonarjs/no-identical-functions
+export function changeNestedLayoutSectionHeader(
+    index: ILayoutSectionPath,
     header: IDashboardLayoutSectionHeader,
     merge?: boolean,
     correlationId?: string,
@@ -299,6 +463,10 @@ export interface AddSectionItemsPayload {
      *
      * @remarks
      * Index is zero-based.
+     *
+     * {@link AddSectionItemsPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link AddSectionItemsPayload.itemPath} instead.
+     *
+     * TODO LX-648: Remove sectionIndex in the next major version.
      */
     readonly sectionIndex: number;
 
@@ -307,8 +475,21 @@ export interface AddSectionItemsPayload {
      *
      * @remarks
      * Index is zero-based. For convenience, you may specify -1 to append the new item.
+     *
+     * {@link AddSectionItemsPayload.itemIndex} support will be removed in the next major SDK version. Use {@link AddSectionItemsPayload.itemPath} instead.
+     *
+     * TODO LX-648: Remove itemIndex in the next major version.
      */
     readonly itemIndex: RelativeIndex;
+    /**
+     * Path to which the item should be added.
+     *
+     * @remarks
+     * Index is zero-based.
+     *
+     * TODO LX-648: make the prop required
+     */
+    readonly itemPath?: ILayoutItemPath;
 
     /**
      * Items to add. This item may be a placeholder for KPI or insight, an actual dashboard widget or a previously
@@ -351,6 +532,7 @@ export interface AddSectionItems extends IDashboardCommand {
  * section. This item may be a placeholder for KPI or insight, an actual dashboard widget or a previously stashed
  * dashboard item.
  *
+ * This command operates only on the root layout. For nested layouts, use {@link addNestedLayoutSectionItem}.
  *
  * @param sectionIndex - index of section to which the new item should be added
  * @param itemIndex - index at which to insert the new item
@@ -376,6 +558,44 @@ export function addSectionItem(
         payload: {
             sectionIndex,
             itemIndex,
+            itemPath: undefined as unknown as ILayoutItemPath,
+            items: [item],
+            autoResolveDateFilterDataset,
+        },
+    };
+}
+
+/**
+ * Creates the AddSectionItems command.
+ *
+ * @remarks
+ * Dispatching this command will result in addition of a new item into the existing
+ * section. This item may be a placeholder for KPI or insight, an actual dashboard widget or a previously stashed
+ * dashboard item.
+ *
+ * @param itemPath - path to which the new item should be added
+ * @param item - definition of the new item.
+ * @param autoResolveDateFilterDataset - specify whether dashboard should auto-resolve date dataset to use for date filtering of KPI
+ *  and insight widgets; default is disabled meaning date filtering will be enabled only for those KPI or Insight widgets
+ *  that already specify dateDataset.
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function addNestedLayoutSectionItem(
+    itemPath: ILayoutItemPath,
+    item: DashboardItemDefinition,
+    autoResolveDateFilterDataset?: boolean,
+    correlationId?: string,
+): AddSectionItems {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS",
+        correlationId: correlationId,
+        payload: {
+            sectionIndex: -1,
+            itemIndex: -1,
+            itemPath: itemPath,
             items: [item],
             autoResolveDateFilterDataset,
         },
@@ -393,13 +613,30 @@ export function addSectionItem(
 export interface ReplaceSectionItemPayload {
     /**
      * Index of section where the item to modify resides.
+     *
+     * @remarks
+     * {@link ReplaceSectionItemPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link ReplaceSectionItemPayload.itemPath} instead.
+     *
+     * TODO LX-648: Remove sectionIndex in the next major version.
      */
     readonly sectionIndex: number;
 
     /**
      * Index of item within section that should be modified.
+     *
+     * @remarks
+     * {@link ReplaceSectionItemPayload.itemIndex} support will be removed in the next major SDK version. Use {@link ReplaceSectionItemPayload.itemPath} instead.
+     *
+     * TODO LX-648: Remove itemIndex in the next major version.
      */
     readonly itemIndex: number;
+
+    /**
+     * Index where the item to modify resides.
+     *
+     * TODO LX-648: make the prop required
+     */
+    readonly itemPath?: ILayoutItemPath;
 
     /**
      * New item definition.
@@ -439,7 +676,10 @@ export interface ReplaceSectionItem extends IDashboardCommand {
 
 /**
  * Creates the ReplaceSectionItem command. Dispatching this command will result in replacement of particular dashboard
- * item with a new item. By default the old item will be discarded, however you may specify to stash it for later use.
+ * item with a new item. By default, the old item will be discarded, however you may specify to stash it for later use.
+ *
+ * @remarks
+ * This command operates only on the root layout. For nested layouts, use {@link replaceNestedLayoutSectionItem}.
  *
  * @param sectionIndex - index of section where the item to replace resides
  * @param itemIndex - index of item within the section
@@ -452,6 +692,8 @@ export interface ReplaceSectionItem extends IDashboardCommand {
  *  events that will be emitted during the command processing
  *
  * @beta
+ *
+ * TODO LX-648: Consider removing this command variant and leave only a nested variant
  */
 export function replaceSectionItem(
     sectionIndex: number,
@@ -467,9 +709,46 @@ export function replaceSectionItem(
         payload: {
             sectionIndex,
             itemIndex,
+            itemPath: undefined as unknown as ILayoutItemPath,
             item,
-            autoResolveDateFilterDataset,
             stashIdentifier,
+            autoResolveDateFilterDataset,
+        },
+    };
+}
+
+/**
+ * Creates the ReplaceSectionItem command. Dispatching this command will result in replacement of particular dashboard
+ * item with a new item. By default, the old item will be discarded, however you may specify to stash it for later use.
+ *
+ * @param itemPath - path where the item to replace resides
+ * @param item - new item definition
+ * @param stashIdentifier - specify identifier of stash where the old item should be stored
+ * @param autoResolveDateFilterDataset - specify whether dashboard should auto-resolve date dataset
+ *  to use for date filtering of KPI or insight widget that is replacing the existing item; default is disabled
+ *  meaning date filtering will be enabled only for those KPI or Insight widgets that already specify dateDataset.
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function replaceNestedLayoutSectionItem(
+    itemPath: ILayoutItemPath,
+    item: DashboardItemDefinition,
+    stashIdentifier?: StashedDashboardItemsId,
+    autoResolveDateFilterDataset?: boolean,
+    correlationId?: string,
+): ReplaceSectionItem {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM",
+        correlationId,
+        payload: {
+            sectionIndex: -1,
+            itemIndex: -1,
+            itemPath,
+            item,
+            stashIdentifier,
+            autoResolveDateFilterDataset,
         },
     };
 }
@@ -487,6 +766,11 @@ export interface MoveSectionItemPayload {
      * Index of the section where the item to move is located.
      *
      * Index is zero-based.
+     *
+     * @remarks
+     * {@link MoveSectionItemPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link MoveSectionItemPayload.fromPath} instead.
+     *
+     * TODO LX-648: Remove sectionIndex in the next major version.
      */
     readonly sectionIndex: number;
 
@@ -494,6 +778,11 @@ export interface MoveSectionItemPayload {
      * Index of section item that should be moved.
      *
      * Index is zero-based.
+     *
+     * @remarks
+     * {@link MoveSectionItemPayload.itemIndex} support will be removed in the next major SDK version. Use {@link MoveSectionItemPayload.fromPath} instead.
+     *
+     * TODO LX-648: Remove itemIndex in the next major version.
      */
     readonly itemIndex: number;
 
@@ -501,6 +790,11 @@ export interface MoveSectionItemPayload {
      * Index of section to which the item should be moved.
      *
      * Index is zero-based. For convenience you may specify -1 to move to last section.
+     *
+     * @remarks
+     * {@link MoveSectionItemPayload.toSectionIndex} support will be removed in the next major SDK version. Use {@link MoveSectionItemPayload.toPath} instead.
+     *
+     * TODO LX-648: Remove toSectionIndex in the next major version.
      */
     readonly toSectionIndex: RelativeIndex;
 
@@ -509,8 +803,31 @@ export interface MoveSectionItemPayload {
      *
      * Index is zero-based. For convenience you may specify -1 to append the item at the end of the target section's
      * items.
+     *
+     * @remarks
+     * {@link MoveSectionItemPayload.toItemIndex} support will be removed in the next major SDK version. Use {@link MoveSectionItemPayload.toPath} instead.
+     *
+     * TODO LX-648: Remove toItemIndex in the next major version.
      */
     readonly toItemIndex: RelativeIndex;
+
+    /**
+     * Path where the item to move is located.
+     *
+     * Index is zero-based.
+     *
+     * TODO LX-648: make the prop required
+     */
+    readonly fromPath?: ILayoutItemPath;
+
+    /**
+     * Path to which the item should be moved.
+     *
+     * Index is zero-based. For convenience, you may specify -1 to move to last section.
+     *
+     * TODO LX-648: make the prop required
+     */
+    readonly toPath?: ILayoutItemPath;
 
     /**
      * If true and original section stays empty after move, then it will be removed.
@@ -533,6 +850,8 @@ export interface MoveSectionItem extends IDashboardCommand {
  * Dispatching this command will result in move of single item within
  * section or from one section to another.
  *
+ * This command operates only on the root layout. For nested layouts, use {@link moveNestedLayoutSectionItem}.
+ *
  * @param sectionIndex - source section index
  * @param itemIndex - index of item to move
  * @param toSectionIndex - target section index; you may specify -1 to move to last section
@@ -541,6 +860,8 @@ export interface MoveSectionItem extends IDashboardCommand {
  *  events that will be emitted during the command processing
  *
  * @beta
+ *
+ * TODO LX-648: Consider removing this command variant and leave only a nested variant
  */
 export function moveSectionItem(
     sectionIndex: number,
@@ -556,7 +877,43 @@ export function moveSectionItem(
             sectionIndex,
             itemIndex,
             toSectionIndex,
-            toItemIndex,
+            toItemIndex: toItemIndex,
+            fromPath: undefined as unknown as ILayoutItemPath,
+            toPath: undefined as unknown as ILayoutItemPath,
+            removeOriginalSectionIfEmpty: false,
+        },
+    };
+}
+
+/**
+ * Creates the MoveSectionItem command.
+ *
+ * @remarks
+ * Dispatching this command will result in move of single item within
+ * section or from one section to another.
+ *
+ * @param fromPath - source item path
+ * @param toPath - target path; you may specify -1 to move to last section/to be last item
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function moveNestedLayoutSectionItem(
+    fromPath: ILayoutItemPath,
+    toPath: ILayoutItemPath,
+    correlationId?: string,
+): MoveSectionItem {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM",
+        correlationId,
+        payload: {
+            sectionIndex: -1,
+            itemIndex: -1,
+            toSectionIndex: -1,
+            toItemIndex: -1,
+            fromPath,
+            toPath,
             removeOriginalSectionIfEmpty: false,
         },
     };
@@ -569,6 +926,8 @@ export function moveSectionItem(
  * Dispatching this command will result in move of single item within
  * section or from one section to another. If original section stays empty after move, then it will be removed.
  *
+ * This command operates only on the root layout. For nested layouts, use {@link moveNestedLayoutSectionItemAndRemoveOriginalSectionIfEmpty}.
+ *
  * @param sectionIndex - source section index
  * @param itemIndex - index of item to move
  * @param toSectionIndex - target section index; you may specify -1 to move to last section
@@ -577,6 +936,8 @@ export function moveSectionItem(
  *  events that will be emitted during the command processing
  *
  * @beta
+ *
+ * TODO LX-648: Consider removing this command variant and leave only a nested variant
  */
 export function moveSectionItemAndRemoveOriginalSectionIfEmpty(
     sectionIndex: number,
@@ -592,7 +953,43 @@ export function moveSectionItemAndRemoveOriginalSectionIfEmpty(
             sectionIndex,
             itemIndex,
             toSectionIndex,
-            toItemIndex,
+            toItemIndex: toItemIndex,
+            fromPath: undefined as unknown as ILayoutItemPath,
+            toPath: undefined as unknown as ILayoutItemPath,
+            removeOriginalSectionIfEmpty: true,
+        },
+    };
+}
+
+/**
+ * Creates the MoveSectionItem command.
+ *
+ * @remarks
+ * Dispatching this command will result in move of single item within
+ * section or from one section to another. If original section stays empty after move, then it will be removed.
+ *
+ * @param fromPath - source item path
+ * @param toPath - target path; you may specify -1 to move to last section/to be last item
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function moveNestedLayoutSectionItemAndRemoveOriginalSectionIfEmpty(
+    fromPath: ILayoutItemPath,
+    toPath: ILayoutItemPath,
+    correlationId?: string,
+): MoveSectionItem {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM",
+        correlationId,
+        payload: {
+            sectionIndex: -1,
+            itemIndex: -1,
+            toSectionIndex: -1,
+            toItemIndex: -1,
+            fromPath,
+            toPath,
             removeOriginalSectionIfEmpty: true,
         },
     };
@@ -611,6 +1008,11 @@ export interface MoveSectionItemToNewSectionPayload {
      * Index of the section where the item to move is located.
      *
      * Index is zero-based.
+     *
+     * @remarks
+     * {@link MoveSectionItemToNewSectionPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link MoveSectionItemToNewSectionPayload.itemPath} instead.
+     *
+     * TODO LX-648: Remove sectionIndex in the next major version.
      */
     readonly sectionIndex: number;
 
@@ -618,6 +1020,11 @@ export interface MoveSectionItemToNewSectionPayload {
      * Index of section item that should be moved.
      *
      * Index is zero-based.
+     *
+     * @remarks
+     * {@link MoveSectionItemToNewSectionPayload.itemIndex} support will be removed in the next major SDK version. Use {@link MoveSectionItemToNewSectionPayload.itemPath} instead.
+     *
+     * TODO LX-648: Remove itemIndex in the next major version.
      */
     readonly itemIndex: number;
 
@@ -625,8 +1032,29 @@ export interface MoveSectionItemToNewSectionPayload {
      * Index of section to which should be created and the item should be moved into.
      *
      * Index is zero-based. For convenience you may specify -1 to move to last section.
+     *
+     * @remarks
+     * {@link MoveSectionItemToNewSectionPayload.toSectionIndex} support will be removed in the next major SDK version. Use {@link MoveSectionItemToNewSectionPayload.itemPath} instead.
+     *
+     * TODO LX-648: Remove toSectionIndex in the next major version.
      */
     readonly toSectionIndex: RelativeIndex;
+
+    /**
+     * Index where the item to move is located.
+     *
+     * TODO LX-648: make the prop required
+     */
+    readonly itemPath?: ILayoutItemPath;
+
+    /**
+     * Path of section that should be created and the item should be moved into.
+     *
+     * Index is zero-based. For convenience, you may specify -1 to move to last section.
+     *
+     * TODO LX-648: make the prop required
+     */
+    readonly toSection?: ILayoutSectionPath;
 
     /**
      * If true and original section stays empty after move, then it will be removed.
@@ -649,6 +1077,8 @@ export interface MoveSectionItemToNewSection extends IDashboardCommand {
  * Dispatching this command will result in move of single item within
  * section or from one section to another.
  *
+ * This command operates only on the root layout. For nested layouts, use {@link moveNestedLayoutSectionItemToNewSection}.
+ *
  * @param sectionIndex - source section index
  * @param itemIndex - index of item to move
  * @param toSectionIndex - target section index; you may specify -1 to move to last section
@@ -656,6 +1086,8 @@ export interface MoveSectionItemToNewSection extends IDashboardCommand {
  *  events that will be emitted during the command processing
  *
  * @beta
+ *
+ * TODO LX-648: Consider removing this command variant and leave only a nested variant
  */
 export function moveSectionItemToNewSection(
     sectionIndex: number,
@@ -670,6 +1102,41 @@ export function moveSectionItemToNewSection(
             sectionIndex,
             itemIndex,
             toSectionIndex,
+            itemPath: undefined as unknown as ILayoutItemPath,
+            toSection: undefined as unknown as ILayoutSectionPath,
+            removeOriginalSectionIfEmpty: false,
+        },
+    };
+}
+
+/**
+ * Creates the MoveSectionItemToNewSection command.
+ *
+ * @remarks
+ * Dispatching this command will result in move of single item within
+ * section or from one section to another.
+ *
+ * @param itemPath - source item path
+ * @param toSection - target section path; you may specify -1 to move to last section
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function moveNestedLayoutSectionItemToNewSection(
+    itemPath: ILayoutItemPath,
+    toSection: ILayoutSectionPath,
+    correlationId?: string,
+): MoveSectionItemToNewSection {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM_TO_NEW_SECTION",
+        correlationId,
+        payload: {
+            sectionIndex: -1,
+            itemIndex: -1,
+            toSectionIndex: -1,
+            itemPath,
+            toSection,
             removeOriginalSectionIfEmpty: false,
         },
     };
@@ -682,6 +1149,8 @@ export function moveSectionItemToNewSection(
  * Dispatching this command will result in move of single item within
  * section or from one section to another. If original section stays empty after move, then it will be removed.
  *
+ * This command operates only on the root layout. For nested layouts, use {@link moveNestedLayoutSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty}.
+ *
  * @param sectionIndex - source section index
  * @param itemIndex - index of item to move
  * @param toSectionIndex - target section index; you may specify -1 to move to last section
@@ -689,6 +1158,8 @@ export function moveSectionItemToNewSection(
  *  events that will be emitted during the command processing
  *
  * @beta
+ *
+ * TODO LX-648: Consider removing this command variant and leave only a nested variant
  */
 export function moveSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty(
     sectionIndex: number,
@@ -703,6 +1174,41 @@ export function moveSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty(
             sectionIndex,
             itemIndex,
             toSectionIndex,
+            itemPath: undefined as unknown as ILayoutItemPath,
+            toSection: undefined as unknown as ILayoutSectionPath,
+            removeOriginalSectionIfEmpty: true,
+        },
+    };
+}
+
+/**
+ * Creates the MoveSectionItemToNewSection command.
+ *
+ * @remarks
+ * Dispatching this command will result in move of single item within
+ * section or from one section to another. If original section stays empty after move, then it will be removed.
+ *
+ * @param itemPath - source item index
+ * @param toSection - target section index; you may specify -1 to move to last section
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function moveNestedLayoutSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty(
+    itemPath: ILayoutItemPath,
+    toSection: ILayoutSectionPath,
+    correlationId?: string,
+): MoveSectionItemToNewSection {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM_TO_NEW_SECTION",
+        correlationId,
+        payload: {
+            sectionIndex: -1,
+            itemIndex: -1,
+            toSectionIndex: -1,
+            itemPath,
+            toSection,
             removeOriginalSectionIfEmpty: true,
         },
     };
@@ -722,6 +1228,10 @@ export interface RemoveSectionItemPayload {
      *
      * @remarks
      * Index is zero-based.
+     *
+     * {@link RemoveSectionItemPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link RemoveSectionItemPayload.itemPath} instead.
+     *
+     * TODO LX-648: Remove sectionIndex in the next major version.
      */
     readonly sectionIndex: number;
 
@@ -730,8 +1240,22 @@ export interface RemoveSectionItemPayload {
      *
      * @remarks
      * Index is zero-based. For convenience you may use index of -1 to remove last item from section.
+     *
+     * {@link RemoveSectionItemPayload.itemIndex} support will be removed in the next major SDK version. Use {@link RemoveSectionItemPayload.itemPath} instead.
+     *
+     * TODO LX-648: Remove itemIndex in the next major version.
      */
     readonly itemIndex: RelativeIndex;
+
+    /**
+     * Index where the item to remove is located.
+     *
+     * @remarks
+     * Index is zero-based.
+     *
+     * TODO LX-648: make the prop required
+     */
+    readonly itemPath?: ILayoutItemPath;
 
     /**
      * Specify stash identifier.
@@ -773,6 +1297,8 @@ export interface RemoveSectionItem extends IDashboardCommand {
  *
  * You may optionally specify the stashIdentifier in order to stash the removed item for later resurrection.
  *
+ * This command operates only on the root layout. For nested layouts, use {@link removeNestedLayoutSectionItem}.
+ *
  * @param sectionIndex - index of section from which to remove the item
  * @param itemIndex - index of item to remove
  * @param stashIdentifier - stash identifier to store the removed item under; if not specified the item will be removed
@@ -780,6 +1306,8 @@ export interface RemoveSectionItem extends IDashboardCommand {
  *  events that will be emitted during the command processing
  *
  * @beta
+ *
+ * TODO LX-648: Consider removing this command variant and leave only a nested variant
  */
 export function removeSectionItem(
     sectionIndex: number,
@@ -793,6 +1321,42 @@ export function removeSectionItem(
         payload: {
             sectionIndex,
             itemIndex,
+            itemPath: undefined as unknown as ILayoutItemPath,
+            stashIdentifier,
+            eager: false,
+        },
+    };
+}
+
+/**
+ * Creates the RemoveSectionItem command.
+ *
+ * @remarks
+ * Dispatching this command will result in removal
+ * of the item from a section. If the removed item was last in the section, the section will be left on the layout
+ * and will contain no items.
+ *
+ * You may optionally specify the stashIdentifier in order to stash the removed item for later resurrection.
+ *
+ * @param itemPath - index from which to remove the item
+ * @param stashIdentifier - stash identifier to store the removed item under; if not specified the item will be removed
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function removeNestedLayoutSectionItem(
+    itemPath: ILayoutItemPath,
+    stashIdentifier?: StashedDashboardItemsId,
+    correlationId?: string,
+): RemoveSectionItem {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM",
+        correlationId,
+        payload: {
+            sectionIndex: -1,
+            itemIndex: -1,
+            itemPath,
             stashIdentifier,
             eager: false,
         },
@@ -808,6 +1372,8 @@ export function removeSectionItem(
  *
  * You may optionally specify the stashIdentifier in order to stash the removed item for later resurrection.
  *
+ * This command operates only on the root layout. For nested layouts, use {@link eagerRemoveNestedLayoutSectionItem}.
+ *
  * @param sectionIndex - index of section from which to remove the item
  * @param itemIndex - index of item to remove
  * @param stashIdentifier - stash identifier to store the removed item under; if not specified the item will be removed
@@ -815,6 +1381,8 @@ export function removeSectionItem(
  *  events that will be emitted during the command processing
  *
  * @beta
+ *
+ * TODO LX-648: Consider removing this command variant and leave only a nested variant
  */
 export function eagerRemoveSectionItem(
     sectionIndex: number,
@@ -828,6 +1396,41 @@ export function eagerRemoveSectionItem(
         payload: {
             sectionIndex,
             itemIndex,
+            itemPath: undefined as unknown as ILayoutItemPath,
+            stashIdentifier,
+            eager: true,
+        },
+    };
+}
+
+/**
+ * Creates the RemoveSectionItem configured to do eager remove of item.
+ *
+ * @remarks
+ * Dispatching this command will result in removal
+ * of the item from a section and if the section only contains that item then the whole section will be removed as well.
+ *
+ * You may optionally specify the stashIdentifier in order to stash the removed item for later resurrection.
+ *
+ * @param itemPath - path of section from which to remove the item
+ * @param stashIdentifier - stash identifier to store the removed item under; if not specified the item will be removed
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function eagerRemoveNestedLayoutSectionItem(
+    itemPath: ILayoutItemPath,
+    stashIdentifier?: StashedDashboardItemsId,
+    correlationId?: string,
+): RemoveSectionItem {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM",
+        correlationId,
+        payload: {
+            sectionIndex: -1,
+            itemIndex: -1,
+            itemPath,
             stashIdentifier,
             eager: true,
         },
@@ -1074,8 +1677,13 @@ export interface ResizeHeightPayload {
      * Index of the section to resize.
      *
      * Index is zero-based.
+     *
+     * @remarks
+     * "number" support will be removed in the next major SDK version. Use {@link ILayoutSectionPath} instead.
+     *
+     * TODO LX-648: Remove number type in the next major version.
      */
-    readonly sectionIndex: number;
+    readonly sectionIndex: number | ILayoutSectionPath;
 
     /**
      * Indexes of the items to resize.
@@ -1100,6 +1708,9 @@ export interface ResizeHeight extends IDashboardCommand {
 
 /**
  * Creates the ResizeHeight command.
+ *
+ * @remarks
+ * This command operates only on the root layout. For nested layouts, use {@link resizeNestedLayoutItemsHeight}.
  *
  * @param sectionIndex - index of the section
  * @param itemIndexes - indexes of the items
@@ -1127,6 +1738,35 @@ export function resizeHeight(
 }
 
 /**
+ * Creates the ResizeHeight command.
+ *
+ * @param sectionIndex - index of the section
+ * @param itemIndexes - indexes of the items
+ * @param height - height in Grid Rows (by default 1 Grid Row is 20px)
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+// eslint-disable-next-line sonarjs/no-identical-functions
+export function resizeNestedLayoutItemsHeight(
+    sectionIndex: ILayoutSectionPath,
+    itemIndexes: number[],
+    height: number,
+    correlationId?: string,
+): ResizeHeight {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_HEIGHT",
+        correlationId,
+        payload: {
+            sectionIndex,
+            itemIndexes,
+            height,
+        },
+    };
+}
+
+/**
  * Payload of the {@link ResizeWidth} command.
  * @beta
  */
@@ -1135,6 +1775,11 @@ export interface ResizeWidthPayload {
      * Index of the section to resize.
      *
      * Index is zero-based.
+     *
+     * @remarks
+     * {@link ResizeWidthPayload.sectionIndex} support will be removed in the next major SDK version. Use {@link ResizeWidthPayload.itemPath} instead.
+     *
+     * TODO LX-648: Remove sectionIndex in the next major version.
      */
     readonly sectionIndex: number;
 
@@ -1142,8 +1787,21 @@ export interface ResizeWidthPayload {
      * Indexes of the item to resize.
      *
      * Index is zero-based.
+     *
+     * @remarks
+     * {@link ResizeWidthPayload.itemIndex} support will be removed in the next major SDK version. Use {@link ResizeWidthPayload.itemPath} instead.
+     *
+     * TODO LX-648: Remove itemIndex in the next major version.
      */
     readonly itemIndex: number;
+    /**
+     * Index of the item to resize.
+     *
+     * Index is zero-based.
+     *
+     * TODO LX-648: make the prop required
+     */
+    readonly itemPath?: ILayoutItemPath;
 
     /**
      * width to resize.
@@ -1162,6 +1820,9 @@ export interface ResizeWidth extends IDashboardCommand {
 /**
  * Creates the ResizeWidth command.
  *
+ * @remarks
+ * This command operates only on the root layout. For nested layouts, use {@link resizeNestedLayoutItemWidth}.
+ *
  * @param sectionIndex - index of the section
  * @param itemIndex - index of the item
  * @param width - width in Grid Rows (by default 1 Grid Row is 20px)
@@ -1169,6 +1830,8 @@ export interface ResizeWidth extends IDashboardCommand {
  *  events that will be emitted during the command processing
  *
  * @beta
+ *
+ * TODO LX-648: Consider removing this command variant and leave only a nested variant
  */
 export function resizeWidth(
     sectionIndex: number,
@@ -1182,7 +1845,125 @@ export function resizeWidth(
         payload: {
             sectionIndex,
             itemIndex,
+            itemPath: undefined as unknown as ILayoutItemPath,
             width,
+        },
+    };
+}
+
+/**
+ * Creates the ResizeWidth command.
+ *
+ * @param itemPath - index of the section
+ * @param width - width in Grid Rows (by default 1 Grid Row is 20px)
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function resizeNestedLayoutItemWidth(
+    itemPath: ILayoutItemPath,
+    width: number,
+    correlationId?: string,
+): ResizeWidth {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_WIDTH",
+        correlationId,
+        payload: {
+            sectionIndex: -1,
+            itemIndex: -1,
+            itemPath,
+            width,
+        },
+    };
+}
+
+/////
+
+/**
+ * Payload of the {@link SetScreenSize} command.
+ * @internal
+ */
+export interface SetScreenSizePayload {
+    screenSize: ScreenSize;
+}
+
+/**
+ * @internal
+ */
+export interface SetScreenSize extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.SET_SCREEN_SIZE";
+    readonly payload: SetScreenSizePayload;
+}
+
+/**
+ * Creates the SetScreenSize command.
+ *
+ * @remarks
+ * This command sets new screen size for the dashboard layout.
+ * Do not use this command directly, it is used internally by the dashboard layout engine.
+ *
+ * @param screenSize - new screen size to set
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @internal
+ *
+ */
+export function setScreenSize(screenSize: ScreenSize, correlationId?: string): SetScreenSize {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.SET_SCREEN_SIZE",
+        correlationId,
+        payload: {
+            screenSize,
+        },
+    };
+}
+
+/////
+
+/**
+ * Payload of the {@link ToggleLayoutSectionHeaders} command.
+ * @internal
+ */
+export interface ToggleLayoutSectionHeadersPayload {
+    layoutPath: ILayoutItemPath | undefined;
+    enableSectionHeaders: boolean;
+}
+
+/**
+ * @internal
+ */
+export interface ToggleLayoutSectionHeaders extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_SECTION_HEADERS";
+    readonly payload: ToggleLayoutSectionHeadersPayload;
+}
+
+/**
+ * Creates the ToggleLayoutSectionHeaders command.
+ *
+ * @remarks
+ * This command toggles headers of the sections for the dashboard layout.
+ *
+ * @param layoutPath - layout for which the sections will have the headers toggled.
+ * @param enableSectionHeaders - value of that determines state of the headers of the layout sections. True to enable headers, false to disable them.
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ *
+ */
+export function toggleLayoutSectionHeaders(
+    layoutPath: ILayoutItemPath | undefined,
+    enableSectionHeaders: boolean,
+    correlationId?: string,
+): ToggleLayoutSectionHeaders {
+    return {
+        type: "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_SECTION_HEADERS",
+        correlationId,
+        payload: {
+            layoutPath,
+            enableSectionHeaders,
         },
     };
 }

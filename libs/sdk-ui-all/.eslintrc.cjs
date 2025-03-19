@@ -9,4 +9,5 @@ module.exports = {
         "plugin:regexp/recommended",
         "../../.eslintrc.js",
     ],
+    parserOptions: { tsconfigRootDir: __dirname, project: "tsconfig.json" },
 };

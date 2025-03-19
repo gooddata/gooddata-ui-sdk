@@ -1,23 +1,24 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import {
     IFilterContext,
     IDrillToAttributeUrl,
     IDrillToCustomUrl,
-    IDrillToDashboard,
+    //  IDrillToDashboard,
     IDrillToInsight,
     IKpiWidget,
     IListedDashboard,
     idRef,
+    IDrillToDashboard,
 } from "@gooddata/sdk-model";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { ComplexDashboardIdentifier } from "./ComplexDashboard.fixtures.js";
 import { IInaccessibleDashboard } from "../../types/inaccessibleDashboardTypes.js";
 
-export const SimpleDashboardIdentifier = "aaRaEZRWdRpQ";
+export const SimpleDashboardIdentifier = "adb4fefa-c5ad-410e-bb2c-d6933e0ec7a0";
 export const SimpleDashboardWithReferences = ReferenceRecordings.Recordings.metadata.dashboards
-    .dash_aaRaEZRWdRpQ.obj as IDashboardWithReferences;
+    .dash_adb4fefa_c5ad_410e_bb2c_d6933e0ec7a0.obj as IDashboardWithReferences;
 export const SimpleDashboardLayout = SimpleDashboardWithReferences.dashboard.layout!;
 export const SimpleDashboardFilterContext = SimpleDashboardWithReferences.dashboard
     .filterContext as IFilterContext;

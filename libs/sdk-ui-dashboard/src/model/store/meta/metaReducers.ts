@@ -1,17 +1,19 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { DashboardMetaState, EmptyDashboardDescriptor } from "./metaState.js";
-import { IDashboard } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
+import { IDashboard } from "@gooddata/sdk-model";
+
+import { DashboardMetaState, EmptyDashboardDescriptor } from "./metaState.js";
 
 type MetaReducer<A extends Action> = CaseReducer<DashboardMetaState, A>;
 
 type SetMetaPayload = {
     dashboard?: IDashboard;
+    initialContent?: boolean;
 };
 const setMeta: MetaReducer<PayloadAction<SetMetaPayload>> = (state, action) => {
-    const { dashboard } = action.payload;
+    const { dashboard, initialContent } = action.payload;
 
     state.persistedDashboard = dashboard;
     state.descriptor = dashboard
@@ -23,8 +25,12 @@ const setMeta: MetaReducer<PayloadAction<SetMetaPayload>> = (state, action) => {
               isUnderStrictControl: dashboard.isUnderStrictControl,
               isLocked: dashboard.isLocked,
               disableCrossFiltering: dashboard.disableCrossFiltering,
+              disableUserFilterReset: dashboard.disableUserFilterReset,
+              disableUserFilterSave: dashboard.disableUserFilterSave,
+              disableFilterViews: dashboard.disableFilterViews,
           }
         : { ...EmptyDashboardDescriptor };
+    state.initialContent = initialContent;
 };
 
 const setDashboardTitle: MetaReducer<PayloadAction<string>> = (state, action) => {
@@ -39,8 +45,29 @@ const setDisableCrossFiltering: MetaReducer<PayloadAction<boolean>> = (state, ac
     state.descriptor.disableCrossFiltering = action.payload;
 };
 
+const setDisableUserFilterReset: MetaReducer<PayloadAction<boolean>> = (state, action) => {
+    invariant(state.descriptor);
+
+    state.descriptor.disableUserFilterReset = action.payload;
+};
+
+const setDisableUserFilterSave: MetaReducer<PayloadAction<boolean>> = (state, action) => {
+    invariant(state.descriptor);
+
+    state.descriptor.disableUserFilterSave = action.payload;
+};
+
+const setDisableFilterViews: MetaReducer<PayloadAction<boolean>> = (state, action) => {
+    invariant(state.descriptor);
+
+    state.descriptor.disableFilterViews = action.payload;
+};
+
 export const metaReducers = {
     setMeta,
     setDashboardTitle,
     setDisableCrossFiltering,
+    setDisableUserFilterReset,
+    setDisableUserFilterSave,
+    setDisableFilterViews,
 };

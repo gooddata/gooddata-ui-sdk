@@ -125,7 +125,7 @@ exports[`PluggablePieChart > should return reference point with multiple metrics
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 20,
-        "title": "Measures",
+        "title": "Metrics",
       },
       "view": {
         "accepts": [
@@ -143,7 +143,7 @@ exports[`PluggablePieChart > should return reference point with multiple metrics
           "date": 1,
         },
         "title": "View by",
-        "warningMessage": "To view by, an insight can have only one measure",
+        "warningMessage": "To view by, an visualization can have only one metric",
       },
     },
     "exportConfig": {
@@ -216,7 +216,7 @@ exports[`PluggablePieChart > should return reference point with one metric and n
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 20,
-        "title": "Measures",
+        "title": "Metrics",
       },
       "view": {
         "accepts": [
@@ -315,7 +315,7 @@ exports[`PluggablePieChart > should return reference point with one metric and o
         "isShowInPercentEnabled": true,
         "isShowInPercentVisible": true,
         "itemsLimit": 1,
-        "title": "Measures",
+        "title": "Metrics",
       },
       "view": {
         "accepts": [
@@ -438,7 +438,7 @@ exports[`PluggablePieChart > should return reference point with only one metric 
         "isShowInPercentEnabled": true,
         "isShowInPercentVisible": true,
         "itemsLimit": 1,
-        "title": "Measures",
+        "title": "Metrics",
       },
       "view": {
         "accepts": [

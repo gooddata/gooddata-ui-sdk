@@ -6,6 +6,7 @@ import {
     IMeasure,
     IRelativeDateFilter,
     IAttributeElement,
+    IAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../../common/paging.js";
 import { ICancelable } from "../../../cancelation/index.js";
@@ -147,6 +148,14 @@ export interface IElementsQueryOptions {
      * The value is applied only on backends without the supportsElementUris capability.
      */
     excludePrimaryLabel?: boolean;
+
+    /**
+     * Provided filter uses values from primary label.
+     *
+     * @remarks
+     * This is to allow getting elements of requested label corresponding to primary label values in filter.
+     */
+    filterByPrimaryLabel?: boolean;
 
     /**
      * Cache ID to use when requesting subsequent elements from the backend.
@@ -294,7 +303,7 @@ export interface IElementsQuery extends ICancelable<IElementsQuery> {
      */
 
     // will add relativeDateFilters
-    withDateFilters(filters: IRelativeDateFilter[]): IElementsQuery;
+    withDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): IElementsQuery;
 }
 
 /**

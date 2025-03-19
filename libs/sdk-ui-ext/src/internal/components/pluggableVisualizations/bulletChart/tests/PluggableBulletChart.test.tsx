@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import noop from "lodash/noop.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import { PluggableBulletChart } from "../PluggableBulletChart.js";
@@ -606,7 +606,7 @@ describe("PluggableBulletChart", () => {
             [
                 "on outer viewby attribute",
                 sourceInsightDef,
-                Region,
+                Region.Default,
                 targetUri,
                 intersection,
                 expectedInsightDefRegion,
@@ -614,7 +614,7 @@ describe("PluggableBulletChart", () => {
             [
                 "on inner viewby attribute",
                 sourceInsightDef,
-                Department,
+                Department.Default,
                 targetUri,
                 intersection,
                 expectedInsightDefDepartment,

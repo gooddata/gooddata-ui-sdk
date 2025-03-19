@@ -11,6 +11,7 @@ import { invariant } from "ts-invariant";
 import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDateDatasetsMap,
+    selectAttributeFilterConfigsDisplayAsLabelMap,
     selectAttributeFilterDisplayFormsMap,
     selectFilterContextFilters,
     useDashboardSelector,
@@ -30,6 +31,7 @@ export const FilterConfiguration: React.FC<IFilterConfigurationProps> = (props) 
     const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
     const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);
     const ddsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
+    const displayAsLabelMap = useDashboardSelector(selectAttributeFilterConfigsDisplayAsLabelMap);
 
     const draggableFilters = useMemo(() => {
         return allFilters.filter(
@@ -77,10 +79,14 @@ export const FilterConfiguration: React.FC<IFilterConfigurationProps> = (props) 
                         ? attribute.title
                         : attribute.attribute.title;
 
+                    const localIdentifier = filter.attributeFilter.localIdentifier;
+                    const displayAsLabel = displayAsLabelMap.get(localIdentifier!);
+
                     return (
                         <AttributeFilterConfigurationItem
                             key={objRefToString(displayForm.ref)}
                             displayFormRef={displayForm.ref}
+                            displayAsLabel={displayAsLabel}
                             title={filter.attributeFilter.title ?? attributeTitle}
                             widget={widget}
                         />

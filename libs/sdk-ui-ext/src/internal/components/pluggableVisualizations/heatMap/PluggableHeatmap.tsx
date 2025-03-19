@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
 import isEmpty from "lodash/isEmpty.js";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -117,7 +117,7 @@ export class PluggableHeatmap extends PluggableBaseChart {
         const rowItems = allAttributes.filter((attribute) => {
             return !includes(stackItems, attribute);
         });
-        const columnItems = allAttributes.length > 1 ? tail(allAttributes) : stackItems;
+        const columnItems = rowItems.length > 1 ? tail(rowItems) : stackItems;
 
         set(newReferencePoint, BUCKETS, [
             {
@@ -163,7 +163,12 @@ export class PluggableHeatmap extends PluggableBaseChart {
                 isDrillIntersectionAttributeItem(i.header) &&
                 i.header.attributeHeader.localIdentifier === clicked,
         );
-        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
+        return addIntersectionFiltersToInsight(
+            source,
+            cutIntersection,
+            backendSupportsElementUris,
+            this.featureFlags.enableDuplicatedLabelValuesInAttributeFilter,
+        );
     }
 
     public getInsightWithDrillDownApplied(

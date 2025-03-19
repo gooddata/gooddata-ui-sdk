@@ -1,10 +1,11 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { Task, SagaIterator } from "redux-saga";
 import { put, delay, take, join, race, call, all, spawn, cancel, actionChannel } from "redux-saga/effects";
 import { v4 as uuidv4 } from "uuid";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { newDashboardEventPredicate } from "../../events/index.js";
 import { renderRequested, renderResolved } from "../../events/render.js";
+import { executedActions } from "../../store/executed/index.js";
 
 function* wait(ms: number): SagaIterator<true> {
     yield delay(ms);
@@ -67,6 +68,13 @@ export interface RenderingWorkerConfiguration {
      *
      */
     asyncRenderExpectedCount?: number;
+
+    /**
+     * Indicates whether rendering worker is triggered inside export mode
+     *
+     * Default: false
+     */
+    isExport?: boolean;
 }
 
 const baseConfig: RenderingWorkerConfiguration = {
@@ -74,13 +82,18 @@ const baseConfig: RenderingWorkerConfiguration = {
     asyncRenderResolvedTimeout: 2000,
     maxTimeout: 20 * 60000,
     correlationIdGenerator: uuidv4,
+    isExport: false,
 };
+
 export function newRenderingWorker(renderingWorkerConfig: Partial<RenderingWorkerConfiguration>) {
     return function* renderingWorker(ctx: DashboardContext): SagaIterator<void> {
         const config = { ...baseConfig, ...renderingWorkerConfig };
         try {
             // Provide a correlation id so that event handlers can correlate the start and end of the rendering
             const correlationId = config.correlationIdGenerator();
+
+            // set flag
+            yield put(executedActions.setDashboardExecutionStart());
 
             // First, notify that the rendering of the whole dashboard started.
             yield put(renderRequested(ctx, correlationId));
@@ -93,6 +106,9 @@ export function newRenderingWorker(renderingWorkerConfig: Partial<RenderingWorke
 
             // Wait for the resolution of all async rendering tasks.
             yield call(waitForAsyncRenderTasksResolution, asyncRenderTasks, config);
+
+            // set flag
+            yield put(executedActions.setDashboardExecutionDone());
 
             // Notify that the dashboard is fully rendered.
             yield put(renderResolved(ctx, correlationId));
@@ -114,6 +130,16 @@ function* collectAsyncRenderTasks(config: RenderingWorkerConfiguration): SagaIte
         });
 
         if (timeoutResolved) {
+            if (
+                config.asyncRenderExpectedCount !== undefined &&
+                config.asyncRenderExpectedCount !== 0 &&
+                config.isExport
+            ) {
+                // put as console.error in export mode to get to the exporter logs
+                console.error(
+                    `Rendering worker reached timeout with ${asyncRenderTasks.size} registered tasks, expected ${config.asyncRenderExpectedCount}`,
+                );
+            }
             break;
         }
 

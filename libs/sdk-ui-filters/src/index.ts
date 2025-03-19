@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 /**
  * This package provides several React components related to filters.
  *
@@ -9,15 +9,12 @@
  * @packageDocumentation
  */
 
-export {
-    DateFilter,
+export type {
     IDateFilterCallbackProps,
     IDateFilterOwnProps,
     IDateFilterProps,
     IDateFilterState,
     IDateFilterStatePropsIntersection,
-    DateFilterHelpers,
-    defaultDateFilterOptions,
     AbsoluteDateFilterOption,
     DateFilterOption,
     DateFilterRelativeOptionGroup,
@@ -26,52 +23,54 @@ export {
     IDateFilterAbsoluteFormErrors,
     IDateFilterRelativeFormErrors,
     RelativeDateFilterOption,
-    isAbsoluteDateFilterOption,
-    isRelativeDateFilterOption,
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
-    filterVisibleDateFilterOptions,
-    isUiRelativeDateFilterForm,
     GranularityIntlKey,
     IDateAndMessageTranslator,
     IDateTranslator,
     IMessageTranslator,
-    getLocalizedIcuDateFormatPattern,
     IFilterConfigurationProps,
 } from "./DateFilter/index.js";
 export {
-    MeasureValueFilter,
+    DateFilter,
+    DateFilterHelpers,
+    defaultDateFilterOptions,
+    isAbsoluteDateFilterOption,
+    isRelativeDateFilterOption,
+    filterVisibleDateFilterOptions,
+    isUiRelativeDateFilterForm,
+    getLocalizedIcuDateFormatPattern,
+} from "./DateFilter/index.js";
+export type {
     IMeasureValueFilterProps,
     IMeasureValueFilterState,
 } from "./MeasureValueFilter/MeasureValueFilter.js";
-export {
-    MeasureValueFilterDropdown,
-    IMeasureValueFilterDropdownProps,
-} from "./MeasureValueFilter/MeasureValueFilterDropdown.js";
-export {
+export { MeasureValueFilter } from "./MeasureValueFilter/MeasureValueFilter.js";
+export type { IMeasureValueFilterDropdownProps } from "./MeasureValueFilter/MeasureValueFilterDropdown.js";
+export { MeasureValueFilterDropdown } from "./MeasureValueFilter/MeasureValueFilterDropdown.js";
+export type {
     IMeasureValueFilterCommonProps,
     WarningMessage,
     IWarningMessage,
-    isWarningMessage,
 } from "./MeasureValueFilter/typings.js";
-export { RankingFilter, IRankingFilterProps } from "./RankingFilter/RankingFilter.js";
-export { RankingFilterDropdown, IRankingFilterDropdownProps } from "./RankingFilter/RankingFilterDropdown.js";
-export {
+export { isWarningMessage } from "./MeasureValueFilter/typings.js";
+export type { IRankingFilterProps } from "./RankingFilter/RankingFilter.js";
+export { RankingFilter } from "./RankingFilter/RankingFilter.js";
+export type { IRankingFilterDropdownProps } from "./RankingFilter/RankingFilterDropdown.js";
+export { RankingFilterDropdown } from "./RankingFilter/RankingFilterDropdown.js";
+export type {
     IMeasureDropdownItem,
     IAttributeDropdownItem,
     ICustomGranularitySelection,
 } from "./RankingFilter/types.js";
 
-export {
-    newAttributeFilterHandler,
-    // Base
+export type {
     Correlation,
     CallbackRegistration,
     Callback,
     CallbackPayloadWithCorrelation,
     Unsubscribe,
     AsyncOperationStatus,
-    // Loaders
     IAttributeLoader,
     IAttributeElementLoader,
     IAttributeFilterLoader,
@@ -108,31 +107,25 @@ export {
     OnLoadIrrelevantElementsSuccessCallbackPayload,
     OnLoadIrrelevantElementsCancelCallbackPayload,
     OnLoadIrrelevantElementsErrorCallbackPayload,
-    // Options
     IAttributeFilterHandlerOptions,
     IAttributeFilterHandlerOptionsBase,
-    // Selection
     AttributeElementKey,
-    // Single selection
     ISingleSelectionHandler,
     IStagedSingleSelectionHandler,
     ISingleSelectAttributeFilterHandlerOptions,
-    // Multi selection
     InvertableSelection,
     IInvertableSelectionHandler,
     IStagedInvertableSelectionHandler,
     IMultiSelectAttributeFilterHandlerOptions,
-    // Handlers
     InvertableAttributeElementSelection,
     IAttributeFilterHandler,
     ISingleSelectAttributeFilterHandler,
     IMultiSelectAttributeFilterHandler,
 } from "./AttributeFilterHandler/index.js";
+export { newAttributeFilterHandler } from "./AttributeFilterHandler/index.js";
 
-export {
-    AttributeFilter,
+export type {
     IAttributeFilterProps,
-    AttributeFilterButton,
     IAttributeFilterButtonProps,
     IAttributeFilterBaseProps,
     IAttributeFilterErrorProps,
@@ -149,15 +142,32 @@ export {
     IAttributeFilterEmptyResultProps,
     IAttributeFilterStatusBarProps,
     OnApplyCallbackType,
+    OnSelectCallbackType,
     ParentFilterOverAttributeType,
     IAttributeFilterCoreProps,
     IAttributeFilterCustomComponentProps,
-    useAttributeFilterController,
     IUseAttributeFilterControllerProps,
-    useAttributeFilterHandler,
     IUseAttributeFilterHandlerProps,
-    useAttributeFilterContext,
     IAttributeFilterContext,
+    IAttributeDatasetInfoProps,
+    IAttributeDisplayFormSelectProps,
+    IAttributeFilterAllValuesFilteredResultProps,
+    IAttributeFilterConfigurationButtonProps,
+    IAttributeFilterDeleteButtonProps,
+    IAttributeFilterFilteredStatusProps,
+    IAttributeFilterSelectionStatusProps,
+    IUseAttributeFilterSearchProps,
+    AttributeFilterController,
+    AttributeFilterControllerData,
+    AttributeFilterControllerCallbacks,
+    IAttributeFilterDependencyTooltipProps,
+} from "./AttributeFilter/index.js";
+export {
+    AttributeFilter,
+    AttributeFilterButton,
+    useAttributeFilterController,
+    useAttributeFilterHandler,
+    useAttributeFilterContext,
     AttributeDisplayFormSelect,
     AttributeFilterAllValuesFilteredResult,
     AttributeFilterConfigurationButton,
@@ -184,24 +194,13 @@ export {
     AttributeFilterStatusBar,
     SingleSelectionAttributeFilterStatusBar,
     AttributeDatasetInfo,
-    IAttributeDatasetInfoProps,
     AttributeFilterButtonTooltip,
     EmptyElementsSearchBar,
-    IAttributeDisplayFormSelectProps,
-    IAttributeFilterAllValuesFilteredResultProps,
-    IAttributeFilterConfigurationButtonProps,
-    IAttributeFilterDeleteButtonProps,
-    IAttributeFilterFilteredStatusProps,
-    IAttributeFilterSelectionStatusProps,
-    IUseAttributeFilterSearchProps,
     useAutoOpenAttributeFilterDropdownButton,
     useOnCloseAttributeFilterDropdownButton,
     useAttributeFilterSearch,
-    AttributeFilterController,
-    AttributeFilterControllerData,
-    AttributeFilterControllerCallbacks,
     AttributeFilterDependencyTooltip,
-    IAttributeFilterDependencyTooltipProps,
+    getAttributeFilterSubtitle,
 } from "./AttributeFilter/index.js";
 
-export { IFilterButtonCustomIcon, VisibilityMode } from "./shared/index.js";
+export type { IFilterButtonCustomIcon, VisibilityMode } from "./shared/index.js";

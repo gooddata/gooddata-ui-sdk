@@ -1,20 +1,30 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { IDashboardDateFilter } from "@gooddata/sdk-model";
 import classNames from "classnames";
-import { useDashboardSelector, selectIsInEditMode, selectCanAddMoreFilters } from "../../../model/index.js";
+import {
+    useDashboardSelector,
+    selectIsInEditMode,
+    selectCanAddMoreFilters,
+    selectEnableDashboardFiltersApplyModes,
+} from "../../../model/index.js";
 import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/DraggableFilterDropZoneHint.js";
 import { CustomDashboardDateFilterComponent, IDashboardDateFilterConfig } from "../../filterBar/types.js";
 import { useDashboardDrag } from "../useDashboardDrag.js";
 
 type DraggableDateFilterProps = {
     filter: IDashboardDateFilter;
+    workingFilter?: IDashboardDateFilter;
     filterIndex: number;
     config: IDashboardDateFilterConfig;
     autoOpen: boolean;
     readonly: boolean;
     FilterComponent: CustomDashboardDateFilterComponent;
-    onDateFilterChanged: (filter: IDashboardDateFilter | undefined) => void;
+    onDateFilterChanged: (
+        filter: IDashboardDateFilter | undefined,
+        dateFilterOptionLocalId?: string,
+        isWorkingSelectionChange?: boolean,
+    ) => void;
     onDateFilterAdded: (index: number) => void;
     onDateFilterClose: () => void;
 };
@@ -22,6 +32,7 @@ type DraggableDateFilterProps = {
 export function DraggableDateFilter({
     FilterComponent,
     filter,
+    workingFilter,
     filterIndex,
     autoOpen,
     readonly,
@@ -46,6 +57,8 @@ export function DraggableDateFilter({
 
     const showDropZones = isInEditMode && !isDragging;
 
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+
     return (
         <div className="draggable-attribute-filter">
             {showDropZones ? (
@@ -66,6 +79,7 @@ export function DraggableDateFilter({
             >
                 <FilterComponent
                     filter={filter}
+                    workingFilter={enableDashboardFiltersApplyModes ? workingFilter : undefined}
                     config={config}
                     onFilterChanged={onDateFilterChanged}
                     isDraggable={isInEditMode}

@@ -1,6 +1,6 @@
 // (C) 2023-2024 GoodData Corporation
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 import { Tabs, Overlay, IAlignPoint, Message } from "@gooddata/sdk-ui-kit";
@@ -25,7 +25,7 @@ import { ViewDialog } from "./ViewDialog.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
 import { OrganizationIdProvider } from "./OrganizationIdContext.js";
 import { extractUserName } from "./utils.js";
-import { UserEditDialogMode, IGrantedDataSource } from "./types.js";
+import { UserEditDialogMode, IGrantedDataSource, IGrantedWorkspace, UserTabId } from "./types.js";
 import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
 import { DataSourceList } from "./DataSources/DataSourceList.js";
 import { AddDataSource } from "./DataSources/AddDataSource.js";
@@ -47,6 +47,8 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     onSuccess: () => void;
     onClose: () => void;
     renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
+    areFilterViewsEnabled?: boolean;
+    selectedTab?: UserTabId;
 }
 
 const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
@@ -58,6 +60,8 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
     initialView = "VIEW",
     changeUserMembership = false,
     renderDataSourceIcon,
+    areFilterViewsEnabled = false,
+    selectedTab = undefined,
 }) => {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserDialogMode(initialView);
@@ -88,6 +92,7 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
         grantedUserGroups,
         grantedDataSources,
         isCurrentlyAdmin,
+        selectedTab,
     );
     const {
         isConfirmDeleteOpened,
@@ -133,6 +138,23 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
 
     const isOpenedInEditMode = initialView !== "VIEW";
 
+    const [workspaceToEdit, setWorkspaceToEdit] = useState<IGrantedWorkspace>(undefined);
+
+    const handleWorkspaceEdit = (workspace: IGrantedWorkspace) => {
+        setWorkspaceToEdit(workspace);
+        setDialogMode("WORKSPACE");
+    };
+
+    const handleWorkspaceChanged = (workspaces: IGrantedWorkspace[]) => {
+        setWorkspaceToEdit(undefined);
+        onWorkspacesChanged(workspaces);
+    };
+
+    const handleWorkspaceCancel = () => {
+        setWorkspaceToEdit(undefined);
+        setDialogMode("VIEW");
+    };
+
     return (
         <OrganizationIdProvider organizationId={organizationId}>
             {isConfirmDeleteOpened ? (
@@ -149,6 +171,7 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
                 isModal={true}
                 positionType="fixed"
                 className={dialogOverlayClassNames}
+                resizeObserverThreshold={0.2}
             >
                 <div className={dialogWrapperClassNames}>
                     {isLoading ? (
@@ -204,6 +227,8 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
                                             mode="VIEW"
                                             onDelete={removeGrantedWorkspace}
                                             onChange={updateGrantedWorkspace}
+                                            areFilterViewsEnabled={areFilterViewsEnabled}
+                                            onClick={handleWorkspaceEdit}
                                         />
                                     )}
                                     {selectedTabId.id === userDialogTabsMessages.userGroups.id && (
@@ -241,9 +266,11 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
                                     subjectType="user"
                                     grantedWorkspaces={grantedWorkspaces}
                                     enableBackButton={!isOpenedInEditMode}
-                                    onSubmit={onWorkspacesChanged}
-                                    onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
+                                    onSubmit={handleWorkspaceChanged}
+                                    onCancel={isOpenedInEditMode ? onClose : handleWorkspaceCancel}
                                     onClose={onClose}
+                                    areFilterViewsEnabled={areFilterViewsEnabled}
+                                    editWorkspace={workspaceToEdit}
                                 />
                             )}
                             {dialogMode === "USER_GROUPS" && (

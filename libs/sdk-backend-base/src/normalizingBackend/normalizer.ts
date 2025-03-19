@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     attributeAlias,
     attributeLocalId,
@@ -478,6 +478,22 @@ export class Normalizer {
                 [...attributes, measure].filter(isLocalIdRef).forEach((ref) => {
                     ref.localIdentifier = this.normalizedLocalId(ref.localIdentifier);
                 });
+            }
+
+            if (isPositiveAttributeFilter(filter)) {
+                const { displayForm } = filter.positiveAttributeFilter;
+
+                if (isLocalIdRef(displayForm)) {
+                    displayForm.localIdentifier = this.normalizedLocalId(displayForm.localIdentifier);
+                }
+            }
+
+            if (isNegativeAttributeFilter(filter)) {
+                const { displayForm } = filter.negativeAttributeFilter;
+
+                if (isLocalIdRef(displayForm)) {
+                    displayForm.localIdentifier = this.normalizedLocalId(displayForm.localIdentifier);
+                }
             }
         });
     };

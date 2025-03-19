@@ -1,8 +1,8 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { useEffect, useRef, useState, useCallback } from "react";
 import isEqual from "lodash/isEqual.js";
 import { usePrevious } from "@gooddata/sdk-ui";
-import { filterObjRef, IAttributeElement, IAttributeFilter } from "@gooddata/sdk-model";
+import { IAttributeElement, IAttributeFilter, ObjRef, filterObjRef } from "@gooddata/sdk-model";
 
 import {
     IMultiSelectAttributeFilterHandler,
@@ -19,9 +19,11 @@ export interface IUseAttributeFilterHandlerProps {
     workspace: string;
 
     filter: IAttributeFilter;
+    displayAsLabel: ObjRef;
 
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
+    enableDuplicatedLabelValuesInAttributeFilter: boolean;
 }
 
 /**
@@ -35,9 +37,11 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
         workspace,
 
         filter,
+        displayAsLabel,
 
         hiddenElements,
         staticElements,
+        enableDuplicatedLabelValuesInAttributeFilter = true,
     } = props;
 
     const [, setInvalidate] = useState(0);
@@ -49,7 +53,7 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
     const handlerRef = useRef<IMultiSelectAttributeFilterHandler>();
 
     const createNewHandler = useCallback(() => {
-        const newHandler = newAttributeFilterHandler(
+        handlerRef.current = newAttributeFilterHandler(
             backend.withTelemetry("AttributeFilter", { workspace, filter, hiddenElements, staticElements }),
             workspace,
             filter,
@@ -57,10 +61,19 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
                 selectionMode: "multi",
                 hiddenElements,
                 staticElements,
+                enableDuplicatedLabelValuesInAttributeFilter,
+                displayAsLabel,
             },
         );
-        handlerRef.current = newHandler;
-    }, [backend, workspace, filter, hiddenElements, staticElements]);
+    }, [
+        backend,
+        workspace,
+        filter,
+        hiddenElements,
+        staticElements,
+        enableDuplicatedLabelValuesInAttributeFilter,
+        displayAsLabel,
+    ]);
 
     if (!handlerRef.current) {
         createNewHandler();
@@ -75,21 +88,44 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
             invalidate();
         });
 
+        const filterChanged = (
+            filter: IAttributeFilter,
+            handler: IMultiSelectAttributeFilterHandler,
+            enableDuplicatedLabelValuesInAttributeFilter: boolean,
+        ) => {
+            if (enableDuplicatedLabelValuesInAttributeFilter) {
+                return (
+                    !isEqual(filterObjRef(filter), filterObjRef(handler.getFilter())) &&
+                    !isEqual(filterObjRef(filter), filterObjRef(handler.getOriginalFilter()))
+                );
+            }
+            return !isEqual(filterObjRef(filter), filterObjRef(handler.getFilter()));
+        };
+
         if (
             backend !== prevProps.backend ||
             workspace !== prevProps.workspace ||
-            !isEqual(filterObjRef(filter), filterObjRef(handler.getFilter())) ||
+            filterChanged(filter, handler, enableDuplicatedLabelValuesInAttributeFilter) ||
             !isEqual(staticElements, prevProps.staticElements) ||
             !isEqual(hiddenElements, prevProps.hiddenElements)
         ) {
             createNewHandler();
             invalidate();
         }
-
         return () => {
             unsubscribe();
         };
-    }, [backend, workspace, filter, staticElements, hiddenElements, prevProps, handler, createNewHandler]);
+    }, [
+        backend,
+        workspace,
+        filter,
+        staticElements,
+        hiddenElements,
+        prevProps,
+        handler,
+        createNewHandler,
+        enableDuplicatedLabelValuesInAttributeFilter,
+    ]);
 
     return handler;
 };

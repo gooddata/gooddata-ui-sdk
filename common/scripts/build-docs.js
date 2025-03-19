@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 const { mkdir, readdir, readFile, rm, unlink, writeFile } = require("fs/promises");
+// (C) 2024 GoodData Corporation
+
 const path = require("path");
 const util = require("util");
 const child_process = require("child_process");
@@ -7,9 +9,7 @@ const child_process = require("child_process");
 const exec = util.promisify(child_process.exec);
 
 const libsToBeRemoved = [
-    "api-client-bear",
     "api-client-tiger",
-    "api-model-bear",
     "sdk-backend-base",
     "sdk-backend-mockingbird",
     "sdk-embedding",
@@ -107,7 +107,7 @@ async function buildVersion(versionName, dev, shouldUpdateSymlink, onSuccess) {
     const rootDir = path.resolve(dir, "../..");
 
     // Root of the ApiDocs repo
-    const apiDocDir = path.resolve(rootDir, "../gooddata-ui-apidocs");
+    const apiDocDir = path.resolve(rootDir, "./gooddata-ui-apidocs");
 
     // Root of the affected version
     const apiDocDirVersioned = path.resolve(apiDocDir, `v${versionName}`);

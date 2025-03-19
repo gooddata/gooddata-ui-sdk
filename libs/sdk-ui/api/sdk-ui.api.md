@@ -10,6 +10,7 @@ import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
 import { ComponentType } from 'react';
 import { DataValue } from '@gooddata/sdk-model';
 import { DependencyList } from 'react';
+import { ForecastDataValue } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
@@ -17,6 +18,7 @@ import { IAttributeDescriptor } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
+import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
 import { IColor } from '@gooddata/sdk-model';
 import { IColorDescriptor } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
@@ -30,6 +32,7 @@ import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
+import { IForecastConfig } from '@gooddata/sdk-backend-spi';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureDefinitionType } from '@gooddata/sdk-model';
@@ -45,6 +48,7 @@ import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IRankingFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
+import { IRequestCorrelationMetadata } from '@gooddata/sdk-backend-spi';
 import { IResultAttributeHeader } from '@gooddata/sdk-model';
 import { IResultAttributeHeaderItem } from '@gooddata/sdk-model';
 import { IResultHeader } from '@gooddata/sdk-model';
@@ -109,6 +113,9 @@ export type AttributesOrPlaceholders = ValuesOrPlaceholders<IAttribute>;
 export const BackendProvider: React_2.FC<IBackendProviderProps>;
 
 // @public
+export const BackendProviderWithCorrelation: React_2.FC<IBackendProviderWithCorrelationProps>;
+
+// @public
 export class BadRequestSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
 }
@@ -158,10 +165,18 @@ export class CancelledSdkError extends GoodDataSdkError {
 export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell" | "target" | "primary" | "comparative";
 
 // @public (undocumented)
-export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pyramid" | "pareto" | "alluvial" | "sankey" | "dependencywheel";
+export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pyramid" | "pareto" | "alluvial" | "sankey" | "dependencywheel" | "repeater";
 
 // @alpha
 export const ClientWorkspaceProvider: React_2.FC<IClientWorkspaceProviderProps>;
+
+// @public
+export class ClusteringNotReceivedSdkError extends GoodDataSdkError {
+    constructor(message?: string, cause?: Error);
+}
+
+// @internal
+export function clusterTitleFromIntl(intl: IntlShape): string;
 
 // @public
 export function composedFromIdentifier(identifier: string): IHeaderPredicate;
@@ -177,6 +192,9 @@ export function convertDrillableItemsToPredicates(drillableItems: ExplicitDrill[
 
 // @public
 export function convertError(error: unknown): GoodDataSdkError;
+
+// @public
+export const CorrelationProvider: React_2.FC<ICorrelationProviderProps>;
 
 // @internal
 export function createExportErrorFunction(error: GoodDataSdkError): IExportFunction;
@@ -305,6 +323,7 @@ export class DataViewLoader {
     seriesFrom: (...measuresAndScopingAttributes: IAttributeOrMeasure[]) => DataViewLoader;
     slicesFrom: (...attributes: IAttribute[]) => DataViewLoader;
     sortBy: (...sorts: ISortItem[]) => DataViewLoader;
+    withSignal: (signal: AbortSignal) => DataViewLoader;
     withTotals: (...totals: ITotal[]) => DataViewLoader;
 }
 
@@ -360,6 +379,8 @@ export const ErrorCodes: {
     DYNAMIC_SCRIPT_LOAD_ERROR: string;
     TIMEOUT_ERROR: string;
     VISUALIZATION_CLASS_UNKNOWN: string;
+    FORECAST_NOT_RECEIVED: string;
+    CLUSTERING_NOT_RECEIVED: string;
 };
 
 // @public
@@ -402,6 +423,11 @@ export function fireDrillEvent(drillEventFunction: IDrillEventCallback, drillEve
 
 // @public
 export type Flatten<T> = T extends Array<infer A> ? A : T;
+
+// @public
+export class ForecastNotReceivedSdkError extends GoodDataSdkError {
+    constructor(message?: string, cause?: Error);
+}
 
 // @public
 export class GeoLocationMissingSdkError extends GoodDataSdkError {
@@ -532,6 +558,13 @@ export interface IBackendProviderProps {
     children?: React_2.ReactNode;
 }
 
+// @public
+export interface IBackendProviderWithCorrelationProps {
+    backend?: IAnalyticalBackend;
+    children?: React_2.ReactNode;
+    correlationData: IRequestCorrelationMetadata;
+}
+
 // @internal (undocumented)
 export interface ICancelablePromise<T> {
     // (undocumented)
@@ -608,6 +641,12 @@ export interface IComposedPlaceholder<TReturn, TValue extends any[], TContext> {
 }
 
 // @public
+export interface ICorrelationProviderProps {
+    children?: React_2.ReactNode;
+    correlationData: Record<string, string>;
+}
+
+// @public
 export interface IDataAccessMethods {
     // (undocumented)
     series(): IDataSeriesCollection;
@@ -656,7 +695,13 @@ export interface IDataSliceCollection extends Iterable<IDataSlice> {
 
 // @public
 export interface IDataVisualizationProps extends IVisualizationProps, IVisualizationCallbacks {
+    // @beta
+    clusteringConfig?: IClusteringConfig;
+    // @internal
+    enableExecutionCancelling?: boolean;
     execution: IPreparedExecution;
+    // @beta
+    forecastConfig?: IForecastConfig;
 }
 
 // @public
@@ -859,6 +904,7 @@ export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsight
     componentName?: string;
     dateFormat?: string | ((def: IExecutionDefinition, props: IExecuteInsightProps) => string);
     dimensions?: IDimension[] | ((def: IExecutionDefinition, props: IExecuteInsightProps) => IDimension[]);
+    enableExecutionCancelling?: boolean;
     ErrorComponent?: IExecuteErrorComponent;
     executeByReference?: boolean;
     exportTitle?: string;
@@ -879,6 +925,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     backend?: IAnalyticalBackend;
     children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
     componentName?: string;
+    enableExecutionCancelling?: boolean;
     ErrorComponent?: IExecuteErrorComponent;
     exportTitle?: string;
     filters?: NullableFiltersOrPlaceholders;
@@ -1104,6 +1151,7 @@ export interface IPushData {
 // @public
 export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
     children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
+    enableExecutionCancelling?: boolean;
     ErrorComponent?: IExecuteErrorComponent;
     execution: IPreparedExecution;
     exportTitle?: string;
@@ -1122,6 +1170,7 @@ export interface IResultDataMethods {
     dataAt(index: number): DataValue | DataValue[];
     // (undocumented)
     firstDimSize(): number;
+    forecastTwoDimData(): ForecastDataValue[][];
     hasColumnTotals(): boolean;
     hasRowTotals(): boolean;
     hasTotals(): boolean;
@@ -1177,6 +1226,9 @@ export const isCancelError: (obj: unknown) => obj is CancelError;
 export function isCancelledSdkError(obj: unknown): obj is CancelledSdkError;
 
 // @public
+export function isClusteringNotReceived(obj: unknown): obj is ClusteringNotReceivedSdkError;
+
+// @public
 export function isComposedPlaceholder<TReturn, TValue extends any[], TContext>(obj: unknown): obj is IComposedPlaceholder<TReturn, TValue, TContext>;
 
 // @public
@@ -1204,6 +1256,9 @@ export { ISeparators }
 
 // @public (undocumented)
 export function isExplicitDrill(obj: unknown): obj is ExplicitDrill;
+
+// @public
+export function isForecastNotReceived(obj: unknown): obj is ForecastNotReceivedSdkError;
 
 // @public
 export function isGeoLocationMissing(obj: unknown): obj is GeoLocationMissingSdkError;
@@ -1291,6 +1346,7 @@ export type IUseComposedPlaceholderHook<T extends IComposedPlaceholder<any, any,
 // @public
 export interface IUseExecutionDataViewConfig {
     backend?: IAnalyticalBackend;
+    enableExecutionCancelling?: boolean;
     execution?: IPreparedExecution | IExecutionConfiguration;
     window?: DataViewWindow;
     workspace?: string;
@@ -1301,6 +1357,7 @@ export interface IUseInsightDataViewConfig {
     backend?: IAnalyticalBackend;
     dateFormat?: string | ((def: IExecutionDefinition) => string);
     dimensions?: IDimension[] | ((def: IExecutionDefinition) => IDimension[]);
+    enableExecutionCancelling?: boolean;
     executeByReference?: boolean;
     filters?: INullableFilter[];
     insight?: ObjRef;
@@ -1352,6 +1409,7 @@ export interface IVisualizationProps {
 
 // @internal
 export interface IWithExecution<T> {
+    enableExecutionCancelling?: boolean | ((props: T) => boolean);
     events?: IWithLoadingEvents<T> | ((props: T) => IWithLoadingEvents<T>);
     execution: IPreparedExecution | ((props: T) => IPreparedExecution) | ((props: T) => Promise<IPreparedExecution>);
     exportTitle: string | ((props: T) => string);
@@ -1362,10 +1420,11 @@ export interface IWithExecution<T> {
 
 // @internal
 export interface IWithExecutionLoading<TProps> {
+    enableExecutionCancelling?: boolean | ((props: TProps) => boolean);
     events?: IWithLoadingEvents<TProps> | ((props: TProps) => IWithLoadingEvents<TProps>);
     exportTitle: string | ((props: TProps) => string);
     loadOnMount?: boolean | ((props: TProps) => boolean);
-    promiseFactory: (props: TProps, window?: DataViewWindow) => Promise<DataViewFacade>;
+    promiseFactory: (props: TProps, window?: DataViewWindow, signal?: AbortSignal) => Promise<DataViewFacade>;
     shouldRefetch?: (prevProps: TProps, nextProps: TProps) => boolean;
     window?: DataViewWindow | ((props: TProps) => DataViewWindow | undefined);
 }
@@ -1403,7 +1462,7 @@ export const LOCALES: string[];
 export function localIdentifierMatch(localIdOrMeasure: string | IMeasure): IHeaderPredicate;
 
 // @internal
-export function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T>;
+export function makeCancelable<T>(promise: (signal: AbortSignal) => Promise<T>, enableAbortController?: boolean): ICancelablePromise<T>;
 
 // @public
 export type MeasureOf<T extends IMeasureDefinitionType> = T extends any ? IMeasure<T> : never;
@@ -1608,6 +1667,9 @@ export const useBackend: (backend?: IAnalyticalBackend) => IAnalyticalBackend | 
 export const useBackendStrict: (backend?: IAnalyticalBackend, context?: string) => IAnalyticalBackend;
 
 // @public
+export const useBackendWithCorrelation: (backend?: IAnalyticalBackend, correlationMetadata?: IRequestCorrelationMetadata) => IAnalyticalBackend | undefined;
+
+// @public
 export function useCancelablePromise<TResult, TError = any>(options: UseCancelablePromiseOptions<TResult, TError>, deps?: DependencyList): UseCancelablePromiseState<TResult, TError>;
 
 // @public
@@ -1635,7 +1697,8 @@ export type UseCancelablePromiseLoadingState = {
 
 // @public
 export type UseCancelablePromiseOptions<TResult, TError> = UseCancelablePromiseCallbacks<TResult, TError> & {
-    promise: (() => Promise<TResult>) | undefined | null;
+    promise: ((signal: AbortSignal) => Promise<TResult>) | undefined | null;
+    enableAbortController?: boolean;
 };
 
 // @public
@@ -1674,6 +1737,9 @@ export const useClientWorkspaceStatus: () => UseCancelablePromiseStatus;
 export function useComposedPlaceholder<TContext, TPlaceholder extends IComposedPlaceholder<any, any, TContext>>(placeholder: TPlaceholder, resolutionContext?: TContext): PlaceholderResolvedValue<TPlaceholder>;
 
 // @public
+export const useCorrelationData: () => Record<string, string>;
+
+// @public
 export function useDataExport({ execution, exportConfig, onCancel, onError, onLoading, onPending, onSuccess, }: {
     execution: IPreparedExecution | undefined | null;
     exportConfig?: IExportConfig;
@@ -1696,6 +1762,9 @@ export function useInsightDataView(config: IUseInsightDataViewConfig & UseInsigh
 
 // @public
 export type UseInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
+
+// @public
+export const useLocalStorage: <T>(key: string, initialValue: T) => [T, (value: T) => void];
 
 // @public
 export function usePagedResource<TParams, TItem>(resourceFactory: (params: TParams) => Promise<IPagedResource<TItem>>, fetchParams: TParams[], fetchDeps: React.DependencyList, resetDeps: React.DependencyList, getCacheKey?: (params: TParams) => string, initialState?: IUsePagedResourceState<TItem>, preventResetPromises?: boolean): IUsePagedResourceResult<TItem>;
@@ -1776,6 +1845,7 @@ export const VisualizationTypes: {
     SANKEY: "sankey";
     DEPENDENCY_WHEEL: "dependencywheel";
     XIRR: "xirr";
+    REPEATER: "repeater";
 };
 
 // @internal

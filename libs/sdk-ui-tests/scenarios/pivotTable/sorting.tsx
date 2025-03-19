@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
@@ -18,7 +18,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     })
     .addScenario("single measure pivot sorted by second row attr", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
-        sortBy: [newAttributeSort(ReferenceMd.Department, "desc")],
+        sortBy: [newAttributeSort(ReferenceMd.Department.Default, "desc")],
     })
     .addScenario("two measures with single row attr sorted by first measure", {
         ...PivotTableWithTwoMeasuresAndSingleRowAttr,

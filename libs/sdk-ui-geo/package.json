@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-geo",
-    "version": "9.9.2",
+    "version": "10.23.0-alpha.43",
     "description": "GoodData.UI SDK - Geo Charts",
     "repository": {
         "type": "git",
@@ -14,6 +14,7 @@
     "exports": {
         ".": "./esm/index.js",
         "./styles/css/*": "./styles/css/*",
+        "./styles/scss/*": "./styles/scss/*",
         "./internal-tests/GeoChartOptionsWrapper": "./esm/core/geoChart/GeoChartOptionsWrapper.js"
     },
     "types": "./esm/index.d.ts",
@@ -45,13 +46,15 @@
         "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.cjs --output-type err-html src/ >./ci/results/dep-cruiser.html",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check",
-        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check",
+        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check && npm run validate-theming",
+        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check && npm run validate-theming",
         "validate-locales": "cd ../sdk-ui && npm run validate-locales",
-        "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci"
+        "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci",
+        "validate-theming": "npm run scss && node scripts/validateCss.js",
+        "scss": "sass --load-path=node_modules --load-path=node_modules/mapbox-gl/dist styles/scss/main.scss:styles/css/main.css"
     },
     "dependencies": {
-        "@gooddata/number-formatter": "^1.0.5",
+        "@gooddata/number-formatter": "^1.0.6",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/sdk-ui": "workspace:*",
@@ -60,7 +63,7 @@
         "@gooddata/sdk-ui-vis-commons": "workspace:*",
         "classnames": "^2.3.1",
         "default-import": "1.1.5",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "mapbox-gl": "^2.6.1",
         "react-intl": "^6.4.1",
         "react-measure": "^2.5.2",
@@ -74,7 +77,6 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.0",
-        "@gooddata/live-examples-workspace": "workspace:*",
         "@gooddata/sdk-backend-mockingbird": "workspace:*",
         "@gooddata/stylelint-config": "^5.0.0",
         "@microsoft/api-documenter": "^7.17.0",

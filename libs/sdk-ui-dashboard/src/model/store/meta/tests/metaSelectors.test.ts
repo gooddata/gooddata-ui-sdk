@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
 import {
     IInsightWidgetDefinition,
@@ -28,10 +28,6 @@ import {
     addSectionItem,
     replaceSectionItem,
     addLayoutSection,
-    changeKpiWidgetHeader,
-    changeKpiWidgetMeasure,
-    changeKpiWidgetComparison,
-    unignoreFilterOnKpiWidget,
     changeInsightWidgetHeader,
     unignoreFilterOnInsightWidget,
     changeInsightWidgetVisProperties,
@@ -101,47 +97,6 @@ describe("selectIsDashboardDirty", () => {
             replaceSectionItem(0, 0, insightWidget, TestCorrelation),
             "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
         ],
-        // kpi manipulations
-        [
-            "kpi rename",
-            changeKpiWidgetHeader(
-                ComplexDashboardWidgets.FirstSection.FirstKpi.ref,
-                { title: "New title" },
-                TestCorrelation,
-            ),
-            "GDC.DASH/EVT.KPI_WIDGET.HEADER_CHANGED",
-        ],
-        [
-            "kpi measure change",
-            changeKpiWidgetMeasure(
-                ComplexDashboardWidgets.FirstSection.FirstKpi.ref,
-                ComplexDashboardWidgets.FirstSection.LastKpi.kpi.metric,
-                "from-measure",
-                TestCorrelation,
-            ),
-            "GDC.DASH/EVT.KPI_WIDGET.MEASURE_CHANGED",
-        ],
-        [
-            "kpi filter change",
-            unignoreFilterOnKpiWidget(
-                ComplexDashboardWidgets.FirstSection.ThirdKpi.ref,
-                ComplexDashboardFilters.FirstAttribute.idRef,
-                TestCorrelation,
-            ),
-            "GDC.DASH/EVT.KPI_WIDGET.FILTER_SETTINGS_CHANGED",
-        ],
-        [
-            "kpi comparison change",
-            changeKpiWidgetComparison(
-                ComplexDashboardWidgets.FirstSection.FirstKpi.ref,
-                {
-                    comparisonDirection: "growIsBad",
-                    comparisonType: "previousPeriod",
-                },
-                TestCorrelation,
-            ),
-            "GDC.DASH/EVT.KPI_WIDGET.COMPARISON_CHANGED",
-        ],
         // insight manipulations
         [
             "insight rename",
@@ -190,7 +145,7 @@ describe("selectIsDashboardDirty", () => {
             applyAttributeFilter(
                 ComplexDashboardFilters.FirstAttribute.filter.attributeFilter.localIdentifier!,
                 newPositiveAttributeFilter(ComplexDashboardFilters.FirstAttribute.idRef, {
-                    uris: [ComplexDashboardFilters.FirstAttribute.sampleElementUri],
+                    values: [ComplexDashboardFilters.FirstAttribute.sampleElementValue],
                 }),
                 TestCorrelation,
             ),
@@ -215,7 +170,7 @@ describe("selectIsDashboardDirty", () => {
         ],
         [
             "attribute filter add",
-            addAttributeFilter(ReferenceMd.Department.attribute.displayForm, -1, TestCorrelation),
+            addAttributeFilter(ReferenceMd.Department.Default.attribute.displayForm, -1, TestCorrelation),
             "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED",
         ],
     ];

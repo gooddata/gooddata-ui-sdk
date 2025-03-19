@@ -20,7 +20,7 @@ jobs:
               id: check-input-version-param
               run: |
                   base="rel/${VERSION%.*}"
-                  if [[ $(git ls-remote --heads origin ${base} | grep -q ${base}) ]]; then
+                  if git ls-remote --heads origin ${base} | grep ${base}; then
                     echo "Branch ${base} exists for version ${VERSION}"
                     echo "branch=${base}" >> $GITHUB_OUTPUT
                   else

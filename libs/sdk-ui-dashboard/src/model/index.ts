@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 /*
  * The public API of the Dashboard model is exported from here.
@@ -12,10 +12,15 @@
  * -  all commands, their types & command factories
  */
 
-export {
+export type {
     DashboardContext,
+    DashboardItem,
+    DashboardItemVisualization,
+    DashboardItemVisualizationContent,
     ObjectAvailabilityConfig,
     DashboardConfig,
+    DashboardExportSlideConfig,
+    DashboardFocusObject,
     DashboardModelCustomizationFns,
     DashboardTransformFn,
     FiltersInfo,
@@ -28,19 +33,16 @@ export {
     IResolvedFilterValues,
     WidgetsOverlayFn,
     IDashboardWidgetOverlay,
+    PrivateDashboardContext,
+    DashboardLayoutExportTransformFn,
+    isDashboardItemVisualization,
+    isDashboardItemVisualizationContent,
 } from "./types/commonTypes.js";
-export {
+export type {
     ICustomWidget,
     ICustomWidgetDefinition,
     ICustomWidgetBase,
-    newCustomWidget,
-    newDashboardItem,
-    newDashboardSection,
-    isCustomWidgetDefinition,
-    isCustomWidgetBase,
-    isCustomWidget,
     ExtendedDashboardItem,
-    extendedWidgetDebugStr,
     ExtendedDashboardWidget,
     DashboardItemDefinition,
     StashedDashboardItemsId,
@@ -48,8 +50,20 @@ export {
     RelativeIndex,
     ExtendedDashboardItemType,
     ExtendedDashboardItemTypes,
+    ExtendedDashboardLayoutWidget,
+    FilterableDashboardWidget,
 } from "./types/layoutTypes.js";
 export {
+    newCustomWidget,
+    newDashboardItem,
+    newDashboardSection,
+    isCustomWidgetDefinition,
+    isCustomWidgetBase,
+    isCustomWidget,
+    extendedWidgetDebugStr,
+    isExtendedDashboardLayoutWidget,
+} from "./types/layoutTypes.js";
+export type {
     FilterOp,
     FilterOpReplaceAll,
     FilterOpUnignoreAttributeFilter,
@@ -65,18 +79,17 @@ export {
     WidgetDescription,
 } from "./types/widgetTypes.js";
 
-export {
+export type {
     BrokenAlertType,
     IBrokenAlertFilterBasicInfo,
     BrokenAlertDateFilterInfo,
     BrokenAlertAttributeFilterInfo,
-    isBrokenAlertDateFilterInfo,
-    isBrokenAlertAttributeFilterInfo,
 } from "./types/alertTypes.js";
+export { isBrokenAlertDateFilterInfo, isBrokenAlertAttributeFilterInfo } from "./types/alertTypes.js";
 
-export { ICsvExportConfig, IExportConfig, IXlsxExportConfig } from "./types/exportTypes.js";
+export type { ICsvExportConfig, IExportConfig, IXlsxExportConfig } from "./types/exportTypes.js";
 
-export {
+export type {
     IConnectingAttribute,
     IDashboardAttributeFilterDisplayForms,
     IDashboardAttributeFilterParentItem,
@@ -84,8 +97,11 @@ export {
     IUseAttributeElements,
 } from "./types/attributeFilterTypes.js";
 
+export type { IDashboardDependentDateFilter } from "./types/dateFilterTypes.js";
+export { isDashboardDependentDateFilter } from "./types/dateFilterTypes.js";
+
 export { DRILL_TO_URL_PLACEHOLDER } from "./types/drillTypes.js";
-export {
+export type {
     DashboardAccessibilityLimitation,
     IInaccessibleDashboard,
 } from "./types/inaccessibleDashboardTypes.js";
@@ -100,18 +116,21 @@ export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDa
 export { selectInsightAttributesMeta } from "./queryServices/queryInsightAttributesMeta.js";
 export { selectDateDatasetsForMeasure } from "./queryServices/queryMeasureDateDatasets.js";
 
-export {
+export type {
     DashboardEventHandler,
     DashboardEventHandlerFn,
+    DashboardEventEvalFn,
+} from "./eventHandlers/eventHandler.js";
+export {
     anyEventHandler,
     anyDashboardEventHandler,
     singleEventTypeHandler,
     commandStartedEventHandler,
     commandFailedEventHandler,
-    DashboardEventEvalFn,
 } from "./eventHandlers/eventHandler.js";
 export { newDrillToSameDashboardHandler } from "./eventHandlers/drillToSameDashboardHandlerFactory.js";
 export * from "./headlessDashboard/index.js";
 
 export { isTemporaryIdentity } from "./utils/dashboardItemUtils.js";
 export { existBlacklistHierarchyPredicate } from "./utils/attributeHierarchyUtils.js";
+export { getAuthor } from "./utils/author.js";

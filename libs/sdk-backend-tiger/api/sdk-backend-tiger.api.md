@@ -5,6 +5,7 @@
 ```ts
 
 import { ActionsApiProcessInvitationRequest } from '@gooddata/api-client-tiger';
+import { AfmExecution } from '@gooddata/api-client-tiger';
 import { AnalyzeCsvRequest } from '@gooddata/api-client-tiger';
 import { AnalyzeCsvResponse } from '@gooddata/api-client-tiger';
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
@@ -18,6 +19,7 @@ import { DeclarativeModel } from '@gooddata/api-client-tiger';
 import { DeclarativeWorkspaceDataFilters } from '@gooddata/api-client-tiger';
 import { DependentEntitiesRequest } from '@gooddata/api-client-tiger';
 import { DependentEntitiesResponse } from '@gooddata/api-client-tiger';
+import { GdStorageFile } from '@gooddata/api-client-tiger';
 import { GenerateLdmRequest } from '@gooddata/api-client-tiger';
 import { HierarchyObjectIdentification } from '@gooddata/api-client-tiger';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -26,15 +28,19 @@ import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IdentifierDuplications } from '@gooddata/api-client-tiger';
+import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { ImportCsvRequest } from '@gooddata/api-client-tiger';
+import { ImportCsvResponse } from '@gooddata/api-client-tiger';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
-import { JsonApiAnalyticalDashboardOutMetaOrigin } from '@gooddata/api-client-tiger';
 import { JsonApiDatasetOutList } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesCacheStrategyEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
+import { JsonApiDataSourceOutAttributesAuthenticationTypeEnum } from '@gooddata/api-client-tiger';
+import { JsonApiNotificationChannelOut } from '@gooddata/api-client-tiger';
 import { JsonApiOrganizationOutMetaPermissionsEnum } from '@gooddata/api-client-tiger';
+import { JsonApiVisualizationObjectOutMetaOrigin } from '@gooddata/api-client-tiger';
 import { JsonApiWorkspaceDataFilterInDocument } from '@gooddata/api-client-tiger';
 import { JsonApiWorkspaceDataFilterOutDocument } from '@gooddata/api-client-tiger';
 import { JsonApiWorkspaceDataFilterSettingInDocument } from '@gooddata/api-client-tiger';
@@ -45,10 +51,11 @@ import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { NotAuthenticatedHandler } from '@gooddata/sdk-backend-spi';
 import { ObjectType } from '@gooddata/sdk-model';
 import { PlatformUsage } from '@gooddata/api-client-tiger';
+import { ReadCsvFileManifestsResponse } from '@gooddata/api-client-tiger';
 import { ScanResultPdm } from '@gooddata/api-client-tiger';
 import { ScanSqlResponse } from '@gooddata/api-client-tiger';
-import { StagingUploadLocation } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
+import { UploadFileResponse } from '@gooddata/api-client-tiger';
 
 export { AnalyzeCsvRequest }
 
@@ -70,7 +77,12 @@ export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
 }
 
 // @public
-export function createTigerAuthenticationUrl(backend: IAnalyticalBackend, authenticationFlow: AuthenticationFlow, location: Location): string;
+export function createRedirectToTigerAuthenticationWithParams(params: IRedirectToTigerAuthenticationParams): RedirectToTigerAuthenticationHandler;
+
+// @public
+export function createTigerAuthenticationUrl(backend: IAnalyticalBackend, authenticationFlow: AuthenticationFlow, location: Location, additionalParams?: {
+    externalProviderId?: string;
+}): string;
 
 // @internal (undocumented)
 export type DataSourceDefinition = JsonApiDataSourceInDocument;
@@ -98,6 +110,8 @@ export interface Entitlement {
     // (undocumented)
     value?: string;
 }
+
+export { GdStorageFile }
 
 export { GenerateLdmRequest }
 
@@ -153,7 +167,11 @@ export type IDataSourceCacheStrategy = JsonApiDataSourceInAttributesCacheStrateg
 // @internal (undocumented)
 export interface IDataSourceConnectionInfo {
     // (undocumented)
+    authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum;
+    // (undocumented)
     cacheStrategy?: IDataSourceCacheStrategy;
+    // (undocumented)
+    clientId?: string;
     // (undocumented)
     decodedParameters?: Array<DataSourceParameter> | null;
     // (undocumented)
@@ -187,17 +205,25 @@ export interface IDataSourcePatchRequest {
     // (undocumented)
     cacheStrategy?: IDataSourceCacheStrategy;
     // (undocumented)
+    clientId?: string | null;
+    // (undocumented)
+    clientSecret?: string | null;
+    // (undocumented)
     id: string;
     // (undocumented)
     name?: string;
     // (undocumented)
     parameters?: Array<DataSourceParameter>;
     // (undocumented)
-    password?: string;
+    password?: string | null;
+    // (undocumented)
+    privateKey?: string | null;
+    // (undocumented)
+    privateKeyPassphrase?: string | null;
     // (undocumented)
     schema?: string;
     // (undocumented)
-    token?: string;
+    token?: string | null;
     // (undocumented)
     type?: IDataSourceType;
     // (undocumented)
@@ -212,9 +238,17 @@ export type IDataSourcePermission = "MANAGE" | "USE";
 // @internal (undocumented)
 export interface IDataSourceTestConnectionRequest {
     // (undocumented)
+    clientId?: string;
+    // (undocumented)
+    clientSecret?: string;
+    // (undocumented)
     parameters?: Array<DataSourceParameter>;
     // (undocumented)
     password?: string;
+    // (undocumented)
+    privateKey?: string;
+    // (undocumented)
+    privateKeyPassphrase?: string;
     // (undocumented)
     schema: string;
     // (undocumented)
@@ -243,6 +277,10 @@ export interface IDataSourceUpsertRequest {
     // (undocumented)
     cacheStrategy?: IDataSourceCacheStrategy;
     // (undocumented)
+    clientId?: string;
+    // (undocumented)
+    clientSecret?: string;
+    // (undocumented)
     id: string;
     // (undocumented)
     name: string;
@@ -250,6 +288,10 @@ export interface IDataSourceUpsertRequest {
     parameters?: Array<DataSourceParameter>;
     // (undocumented)
     password?: string;
+    // (undocumented)
+    privateKey?: string;
+    // (undocumented)
+    privateKeyPassphrase?: string;
     // (undocumented)
     schema: string;
     // (undocumented)
@@ -271,6 +313,17 @@ export interface IInvitationUserResponse {
 }
 
 export { ImportCsvRequest }
+
+export { ImportCsvResponse }
+
+// @internal (undocumented)
+export type INotificationChannel = Omit<JsonApiNotificationChannelOut, "type">;
+
+// @public
+export interface IRedirectToTigerAuthenticationParams {
+    // (undocumented)
+    externalProviderId: string;
+}
 
 // @alpha (undocumented)
 export const isTigerCompatibleType: (obj: unknown) => obj is TigerObjectType;
@@ -300,21 +353,32 @@ export const objectTypeToTigerIdType: {
     userGroup: TigerObjectType;
     dateHierarchyTemplate: TigerObjectType;
     dateAttributeHierarchy: TigerObjectType;
+    exportDefinition: TigerObjectType;
+    automation: TigerObjectType;
+    filterView: TigerObjectType;
+    workspaceDataFilter: TigerObjectType;
+    workspaceDataFilterSetting: TigerObjectType;
+    notificationChannel: TigerObjectType;
 };
 
 // @internal (undocumented)
 export type OrganizationPermission = JsonApiOrganizationOutMetaPermissionsEnum;
 
 // @internal (undocumented)
-export type OriginInfoWithId = JsonApiAnalyticalDashboardOutMetaOrigin & {
+export type OriginInfoWithId = JsonApiVisualizationObjectOutMetaOrigin & {
     id: string;
 };
 
 // @internal (undocumented)
 export type PutWorkspaceLayoutRequest = LayoutApiPutWorkspaceLayoutRequest;
 
+export { ReadCsvFileManifestsResponse }
+
 // @public
 export function redirectToTigerAuthentication(context: IAuthenticationContext, error: NotAuthenticated): void;
+
+// @public
+export type RedirectToTigerAuthenticationHandler = (context: IAuthenticationContext, error: NotAuthenticated) => void;
 
 // @internal (undocumented)
 export interface ScanRequest {
@@ -341,8 +405,6 @@ export type ScanSqlResult = ScanSqlResponse;
 // @alpha
 export type SetJwtCallback = (jwt: string, secondsBeforeTokenExpirationToCallReminder?: number) => void;
 
-export { StagingUploadLocation }
-
 // @public
 export type TigerAfmType = "label" | "metric" | "dataset" | "fact" | "attribute" | "prompt";
 
@@ -351,7 +413,7 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
     // (undocumented)
     abstract authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
     // (undocumented)
-    deauthenticate(context: IAuthenticationContext): Promise<void>;
+    deauthenticate(context: IAuthenticationContext, returnTo?: string): Promise<void>;
     // (undocumented)
     getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
     // (undocumented)
@@ -403,7 +465,7 @@ export type TigerSpecificFunctions = {
     scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
     createDemoWorkspace?: (sampleWorkspace: WorkspaceDefinition) => Promise<string>;
     createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
-    createWorkspace?: (id: string, name: string) => Promise<string>;
+    createWorkspace?: (id: string, name: string, parentId?: string) => Promise<string>;
     updateWorkspaceTitle?: (id: string, name: string) => Promise<void>;
     deleteWorkspace?: (id: string) => Promise<void>;
     canDeleteWorkspace?: (id: string) => Promise<boolean>;
@@ -445,9 +507,12 @@ export type TigerSpecificFunctions = {
     getEntityUser?: (id: string) => Promise<IUser>;
     scanSql?: (dataSourceId: string, sql: string) => Promise<ScanSqlResult>;
     checkEntityOverrides?: (workspaceId: string, entities: Array<HierarchyObjectIdentification>) => Promise<Array<IdentifierDuplications>>;
-    getStagingUploadLocation?: (dataSourceId: string) => Promise<StagingUploadLocation>;
-    analyzeCsv?: (dataSourceId: string, analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
-    importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<void>;
+    stagingUpload?: (file: File) => Promise<UploadFileResponse>;
+    analyzeCsv?: (analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
+    importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<Array<ImportCsvResponse>>;
+    listFiles?: (dataSourceId: string) => Promise<Array<GdStorageFile>>;
+    deleteFiles?: (dataSourceId: string, fileNames: string[]) => Promise<void>;
+    readFileManifests?: (dataSourceId: string, fileNames: string[]) => Promise<ReadCsvFileManifestsResponse[]>;
 };
 
 // @public
@@ -462,6 +527,11 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
     // (undocumented)
     updateApiToken: (apiToken: string) => void;
 }
+
+// @public
+export function toAfmExecution(def: IExecutionDefinition): AfmExecution;
+
+export { UploadFileResponse }
 
 // @internal (undocumented)
 export type WorkspaceDataFilter = JsonApiWorkspaceDataFilterInDocument;

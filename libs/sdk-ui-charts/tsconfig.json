@@ -1,6 +1,6 @@
 {
     "exclude": ["**/tests", "**/test"],
-    "include": ["src/**/*", "src/**/*.json"],
+    "include": ["src/**/*", "src/**/*.json", "scripts/validateCss.js"],
     "compilerOptions": {
         "baseUrl": ".",
         "rootDir": "./src",

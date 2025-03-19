@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import {
     ObjRef,
@@ -15,19 +15,27 @@ import {
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     DrillDefinition,
+    isVisualizationSwitcherWidget,
+    isDashboardLayout,
+    ScreenSize,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import partition from "lodash/partition.js";
 import isEmpty from "lodash/isEmpty.js";
 
 import { DashboardSelector, DashboardState } from "../types.js";
-import { ExtendedDashboardWidget, isCustomWidget } from "../../types/layoutTypes.js";
+import {
+    ExtendedDashboardWidget,
+    ICustomWidget,
+    isCustomWidget,
+    isExtendedDashboardLayoutWidget,
+} from "../../types/layoutTypes.js";
 import { UndoableCommand, createUndoableCommandsMapping } from "../_infra/undoEnhancer.js";
 import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors.js";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
-import { IDashboardFilter, ILayoutCoordinates } from "../../../types.js";
+import { IDashboardFilter, ILayoutItemPath, ILayoutCoordinates } from "../../../types.js";
 import {
     isInsightPlaceholderWidget,
     isKpiPlaceholderWidget,
@@ -37,7 +45,11 @@ import {
 import { LayoutStash, LayoutState } from "./layoutState.js";
 import { isItemWithBaseWidget, getWidgetCoordinates } from "./layoutUtils.js";
 import { DashboardLayoutCommands } from "../../commands/index.js";
-import { selectCrossFilteringFiltersLocalIdentifiersByWidgetRef } from "../drill/drillSelectors.js";
+import {
+    selectCrossFilteringFiltersLocalIdentifiers,
+    selectCrossFilteringFiltersLocalIdentifiersByWidgetRef,
+} from "../drill/drillSelectors.js";
+import { selectEnableIgnoreCrossFiltering } from "../config/configSelectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -84,6 +96,47 @@ export const selectLayout: DashboardSelector<IDashboardLayout<ExtendedDashboardW
 );
 
 /**
+ * This selector returns dashboard's current layout screen size. Valid screen size is provided after first render.
+ *
+ * @public
+ */
+export const selectScreen: DashboardSelector<ScreenSize | undefined> = createSelector(
+    selectSelf,
+    (layoutState: LayoutState) => {
+        return layoutState.screen;
+    },
+);
+
+const filterOutCustomWidgets = (layout: IDashboardLayout<ExtendedDashboardWidget>) => {
+    const dashboardLayout: IDashboardLayout<IWidget> = {
+        ...layout,
+        sections: layout.sections
+            .map((section) => {
+                return {
+                    ...section,
+                    items: section.items.filter(isItemWithBaseWidget).map((item) => {
+                        if (item.widget && isExtendedDashboardLayoutWidget(item.widget)) {
+                            const filteredLayout = filterOutCustomWidgets(item.widget);
+                            const widget: IWidget = item.widget;
+                            return {
+                                ...item,
+                                widget: {
+                                    ...widget,
+                                    sections: filteredLayout.sections,
+                                },
+                            };
+                        }
+                        return item;
+                    }),
+                };
+            })
+            .filter((section) => !isEmpty(section.items)),
+    };
+
+    return dashboardLayout;
+};
+
+/**
  * This selector returns the basic dashboard layout that does not contain any client-side extensions.
  *
  * This selector exists because analytical backend impls are not yet ready to handle persistence of custom
@@ -100,46 +153,45 @@ export const selectLayout: DashboardSelector<IDashboardLayout<ExtendedDashboardW
  */
 export const selectBasicLayout: DashboardSelector<IDashboardLayout<IWidget>> = createSelector(
     selectLayout,
-    (layout) => {
-        const dashboardLayout: IDashboardLayout<IWidget> = {
-            ...layout,
-            sections: layout.sections
-                .map((section) => {
-                    return {
-                        ...section,
-                        items: section.items.filter(isItemWithBaseWidget),
-                    };
-                })
-                .filter((section) => !isEmpty(section.items)),
-        };
-
-        return dashboardLayout;
-    },
+    filterOutCustomWidgets,
 );
 
 /**
  * Selects dashboard widgets in an obj ref an array. This map will include both analytical and custom
- * widgets that are placed on the dashboard.
+ * widgets that are placed on the dashboard and also all widgets from visualization switchers
+ *
+ * @internal
+ */
+const getLayoutWidgets = (layout: IDashboardLayout<ExtendedDashboardWidget>) => {
+    const items: ExtendedDashboardWidget[] = [];
+
+    for (const section of layout.sections) {
+        for (const item of section.items) {
+            if (!item.widget) {
+                continue;
+            }
+            if (isDashboardLayout(item.widget)) {
+                items.push(item.widget);
+                items.push(...getLayoutWidgets(item.widget));
+            } else {
+                items.push(item.widget);
+                if (isVisualizationSwitcherWidget(item.widget)) {
+                    items.push(...item.widget.visualizations);
+                }
+            }
+        }
+    }
+    return items;
+};
+/**
+ * Selects dashboard widgets in an obj ref an array. This map will include both analytical and custom
+ * widgets that are placed on the dashboard and also all widgets from visualization switchers
  *
  * @internal
  */
 export const selectWidgets: DashboardSelector<ExtendedDashboardWidget[]> = createSelector(
     selectLayout,
-    (layout) => {
-        const items: ExtendedDashboardWidget[] = [];
-
-        for (const section of layout.sections) {
-            for (const item of section.items) {
-                if (!item.widget) {
-                    continue;
-                }
-
-                items.push(item.widget);
-            }
-        }
-
-        return items;
-    },
+    getLayoutWidgets, // process layout recursively
 );
 
 /**
@@ -177,8 +229,33 @@ export const selectWidgetByRef: (
 );
 
 /**
+ * Selects filterable widget by its ref (including custom widgets).
+ * This selector will return undefined if the provided ref to non-filterable widget.
+ *
+ * @remarks
+ * To limit the scope only to analytical widgets, use {@link selectAnalyticalWidgetByRef}.
+ *
+ * @alpha
+ */
+export const selectFilterableWidgetByRef: (
+    ref: ObjRef | undefined,
+) => DashboardSelector<IWidget | ICustomWidget | undefined> = createMemoizedSelector(
+    (ref: ObjRef | undefined) =>
+        createSelector(selectWidgetsMap, (widgetMap): IWidget | ICustomWidget | undefined => {
+            if (!ref) {
+                return undefined;
+            }
+            const widget = widgetMap.get(ref);
+            if (!widget || isExtendedDashboardLayoutWidget(widget)) {
+                return undefined;
+            }
+            return widget;
+        }),
+);
+
+/**
  * Selects analytical widget by its ref. This selector will return undefined if the provided
- * widget ref is for a custom widget.
+ * widget ref is not analytical widget, eg. custom widget or nested layout.
  *
  * @remarks
  * To include custom widgets as well, use {@link selectWidgetByRef}.
@@ -195,7 +272,7 @@ export const selectAnalyticalWidgetByRef: (
 
         const widget = widgetMap.get(ref);
 
-        if (!widget || isCustomWidget(widget)) {
+        if (!widget || isCustomWidget(widget) || isExtendedDashboardLayoutWidget(widget)) {
             return undefined;
         }
 
@@ -239,8 +316,24 @@ export const selectAllFiltersForWidgetByRef: (
         selectWidgetByRef(ref),
         selectFilterContextFilters,
         selectCrossFilteringFiltersLocalIdentifiersByWidgetRef(ref),
-        (widget, dashboardFilters, crossFilteringFiltersLocalIdentifiers) => {
+        selectEnableIgnoreCrossFiltering,
+        selectWidgetIgnoreCrossFiltering(ref),
+        selectCrossFilteringFiltersLocalIdentifiers,
+        (
+            widget,
+            dashboardFilters,
+            crossFilteringFiltersLocalIdentifiers,
+            isIgnoreCrossFilteringEnabled,
+            shouldIgnoreCrossFiltering,
+            allCrossFilteringLocalIdentifiers,
+        ) => {
             invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
+
+            if (isExtendedDashboardLayoutWidget(widget)) {
+                return [[], []];
+            }
+
+            // Widget is the source of cross-filtering, so filtering out the cross-filtering filters
             const filtersWithoutCrossFilteringFilters = dashboardFilters.filter((f) => {
                 if (isDashboardAttributeFilter(f)) {
                     return !crossFilteringFiltersLocalIdentifiers?.includes(
@@ -251,8 +344,22 @@ export const selectAllFiltersForWidgetByRef: (
                 return true;
             });
 
+            // Widget ignores cross-filtering, so we should remove all cross-filtering filters
+            const filtersWithoutAllCrossFiltering =
+                isIgnoreCrossFilteringEnabled && shouldIgnoreCrossFiltering
+                    ? filtersWithoutCrossFilteringFilters.filter((f) => {
+                          if (isDashboardAttributeFilter(f)) {
+                              return !allCrossFilteringLocalIdentifiers.includes(
+                                  f.attributeFilter.localIdentifier!,
+                              );
+                          }
+
+                          return true;
+                      })
+                    : [...filtersWithoutCrossFilteringFilters];
+
             const [commonDateFilters, otherFilters] = partition(
-                filtersWithoutCrossFilteringFilters,
+                filtersWithoutAllCrossFiltering,
                 isDashboardCommonDateFilter,
             );
 
@@ -341,16 +448,35 @@ export const selectLayoutHasAnalyticalWidgets: DashboardSelector<boolean> = crea
 );
 
 /**
+ * Selects layout path for a given widget.
+ *
+ * @alpha
+ */
+export const selectWidgetPathByRef: (ref: ObjRef) => DashboardSelector<ILayoutItemPath> =
+    createMemoizedSelector((ref: ObjRef) => {
+        return createSelector(selectLayout, (layout): ILayoutItemPath => {
+            const coords = getWidgetCoordinates(layout, ref);
+            invariant(coords, `widget with ref ${objRefToString(ref)} does not exist in the state`);
+            return coords;
+        });
+    });
+
+/**
  * Selects layout coordinates for a given widget.
  *
  * @alpha
+ *
+ * @deprecated The selector returns coordinates in its parent layout. The information is not useful on its
+ *  own when dashboard uses nested layout. For this case use {@link selectWidgetPathByRef} instead.
+ *
+ *  TODO LX-648: remove this selector, exported only for backward compatible reasons.
  */
 export const selectWidgetCoordinatesByRef: (ref: ObjRef) => DashboardSelector<ILayoutCoordinates> =
     createMemoizedSelector((ref: ObjRef) => {
         return createSelector(selectLayout, (layout): ILayoutCoordinates => {
             const coords = getWidgetCoordinates(layout, ref);
             invariant(coords, `widget with ref ${objRefToString(ref)} does not exist in the state`);
-            return coords;
+            return coords[coords.length - 1];
         });
     });
 
@@ -367,9 +493,26 @@ export const selectWidgetPlaceholder: DashboardSelector<ExtendedDashboardWidget 
 /**
  * @internal
  */
+export const selectWidgetPlaceholderPath: DashboardSelector<ILayoutItemPath | undefined> = createSelector(
+    selectWidgetPlaceholder,
+    selectLayout,
+    (widgetPlaceholder, layout) => {
+        return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+    },
+);
+
+/**
+ * @internal
+ *
+ * @deprecated The selector returns coordinates in its parent layout. The information is not useful on its
+ *  own when dashboard uses nested layout. For this case use {@link selectWidgetPlaceholderPath} instead.
+ *
+ *  TODO LX-648: remove this selector, exported only for backward compatible reasons.
+ */
 export const selectWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoordinates | undefined> =
     createSelector(selectWidgetPlaceholder, selectLayout, (widgetPlaceholder, layout) => {
-        return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+        const path = widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+        return path === undefined ? undefined : path[path.length - 1];
     });
 
 /**
@@ -383,9 +526,23 @@ export const selectInsightWidgetPlaceholder: DashboardSelector<ExtendedDashboard
 /**
  * @internal
  */
-export const selectInsightWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoordinates | undefined> =
+export const selectInsightWidgetPlaceholderPath: DashboardSelector<ILayoutItemPath | undefined> =
     createSelector(selectInsightWidgetPlaceholder, selectLayout, (widgetPlaceholder, layout) => {
         return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+    });
+
+/**
+ * @internal
+ *
+ * @deprecated The selector returns coordinates in its parent layout. The information is not useful on its
+ *  own when dashboard uses nested layout. For this case use {@link selectInsightWidgetPlaceholderPath} instead.
+ *
+ *  TODO LX-648: remove this selector, exported only for backward compatible reasons.
+ */
+export const selectInsightWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoordinates | undefined> =
+    createSelector(selectInsightWidgetPlaceholder, selectLayout, (widgetPlaceholder, layout) => {
+        const path = widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+        return path === undefined ? undefined : path[path.length - 1];
     });
 
 /**
@@ -399,7 +556,36 @@ export const selectKpiWidgetPlaceholder: DashboardSelector<ExtendedDashboardWidg
 /**
  * @internal
  */
+export const selectKpiWidgetPlaceholderPath: DashboardSelector<ILayoutItemPath | undefined> = createSelector(
+    selectKpiWidgetPlaceholder,
+    selectLayout,
+    (widgetPlaceholder, layout) => {
+        return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+    },
+);
+
+/**
+ * @internal
+ *
+ * @deprecated The selector returns coordinates in its parent layout. The information is not useful on its
+ *  own when dashboard uses nested layout. For this case use {@link selectKpiWidgetPlaceholderPath} instead.
+ *
+ *  TODO LX-648: remove this selector, exported only for backward compatible reasons.
+ */
 export const selectKpiWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoordinates | undefined> =
     createSelector(selectKpiWidgetPlaceholder, selectLayout, (widgetPlaceholder, layout) => {
-        return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+        const path = widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+        return path === undefined ? undefined : path[path.length - 1];
     });
+
+/**
+ * Selects whether widget should ignore cross-filtering filters
+ *
+ * @alpha
+ */
+export const selectWidgetIgnoreCrossFiltering: (ref: ObjRef) => DashboardSelector<boolean> =
+    createMemoizedSelector((ref: ObjRef) =>
+        createSelector(selectAnalyticalWidgetByRef(ref), (widget) => {
+            return widget?.ignoreCrossFiltering ?? false;
+        }),
+    );

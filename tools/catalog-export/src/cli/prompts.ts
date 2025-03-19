@@ -1,32 +1,10 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import pkg, { DistinctQuestion } from "inquirer";
 const { prompt } = pkg;
 
 import { DEFAULT_OUTPUT_FILE_NAME } from "../base/constants.js";
 import * as path from "path";
 import * as fs from "fs";
-
-export async function promptUsername(wording: string = "username"): Promise<string> {
-    const usernameQuestion: DistinctQuestion = {
-        type: "input",
-        name: "username",
-        message: `Enter your ${wording}:`,
-    };
-    const usernameResponse = await prompt(usernameQuestion);
-
-    return usernameResponse.username;
-}
-
-export async function promptPassword(): Promise<string> {
-    const passwordQuestion: DistinctQuestion = {
-        type: "password",
-        name: "password",
-        message: "Enter your password:",
-    };
-    const passwordResponse = await prompt(passwordQuestion);
-
-    return passwordResponse.password;
-}
 
 export type WorkspaceChoices = {
     name: string;

@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { IColorPalette, Identifier, ISeparators } from "@gooddata/sdk-model";
 import { IDrillEventIntersectionElement, VisType } from "@gooddata/sdk-ui";
 import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
@@ -306,6 +306,193 @@ export interface IChartConfig {
      * @internal
      */
     selectedPoints?: IDrillEventIntersectionElement[][];
+
+    /**
+     * Configuration specific for hyperlinks in the chart.
+     * @beta
+     */
+    hyperLinks?: IDisplayFormHyperlinksConfig;
+
+    /**
+     * Configuration of row height of the chart.
+     * @beta
+     */
+    rowHeight?: ChartRowHeight;
+
+    /**
+     * Configuration of the vertical chart alignment.
+     * @beta
+     */
+    cellVerticalAlign?: ChartCellVerticalAlign;
+
+    /**
+     * Configuration of the text wrapping in the chart.
+     * @beta
+     */
+    cellTextWrapping?: ChartCellTextWrapping;
+
+    /**
+     * Configuration of the image sizing in the chart.
+     * @beta
+     */
+    cellImageSizing?: ChartCellImageSizing;
+
+    /**
+     * Configuration of the inline visualizations.
+     * @beta
+     */
+    inlineVisualizations?: IInlineVisualizationsConfig;
+
+    /**
+     * Configuration of the forecast.
+     * @beta
+     */
+    forecast?: IForecast;
+
+    /**
+     * Configuration of the clustering.
+     * @beta
+     */
+    clustering?: IChartClusteringConfig;
+
+    /**
+     * Temporary configuration for charts to use proper alias for attribute label
+     * @internal
+     */
+    enableAliasAttributeLabel?: boolean;
+
+    /**
+     * User provided override of the HighChart configuration.
+     * @internal
+     */
+    chartConfigOverride?: string;
+
+    /**
+     * Temporary configuration to enable fine-tuning of visualizations, i.e., usage of chartConfigOverride
+     * value during the charts rendering.
+     * @internal
+     */
+    enableVisualizationFineTuning?: boolean;
+
+    /**
+     * Whether to enable execution cancelling.
+     * @internal
+     */
+    enableExecutionCancelling?: boolean;
+}
+
+/**
+ * @beta
+ * Forecast configuration
+ */
+export interface IChartClusteringConfig {
+    /**
+     * Indicates whether the clustering is enabled or not.
+     */
+    enabled: boolean;
+
+    /**
+     * Number of clusters.
+     */
+    numberOfClusters: number;
+
+    /**
+     * Threshold for clustering.
+     */
+    threshold?: number;
+}
+
+/**
+ * @beta
+ * Forecast configuration
+ */
+export interface IForecast {
+    /**
+     * @beta
+     * Indicates whether the forecast is enabled or not.
+     */
+    enabled: boolean;
+
+    /**
+     * @beta
+     * Indicates the confidence level of the forecast.
+     * The value should be between (0, 1).
+     */
+    confidence: number;
+
+    /**
+     * @beta
+     * Indicates the number of periods to forecast.
+     */
+    period: number;
+
+    /**
+     * @beta
+     * Indicates whether the forecast is seasonal or not.
+     */
+    seasonal: boolean;
+}
+
+/**
+ * @beta
+ */
+export interface IInlineVisualizationsConfig {
+    /**
+     * Measure local identifier
+     */
+    [localIdentifier: string]: {
+        /**
+         * Visualization type
+         */
+        type: ChartInlineVisualizationType;
+    };
+}
+
+/**
+ * Possible types of the inline visualizations.
+ * @beta
+ */
+export type ChartInlineVisualizationType = "metric" | "line" | "column";
+
+/**
+ * Row height configuration for the chart.
+ * @beta
+ */
+export type ChartRowHeight = "small" | "medium" | "large";
+
+/**
+ * Vertical alignment configuration for the chart.
+ * @beta
+ */
+export type ChartCellVerticalAlign = "top" | "middle" | "bottom";
+
+/**
+ * Text wrapping configuration for the chart.
+ * @beta
+ */
+export type ChartCellTextWrapping = "clip" | "wrap";
+
+/**
+ * Image sizing configuration for the chart.
+ * @beta
+ */
+export type ChartCellImageSizing = "fit" | "fill";
+
+/**
+ * Customize behavior of the hyperlink display forms in the chart.
+ *
+ * @beta
+ */
+export interface IDisplayFormHyperlinksConfig {
+    /**
+     * Hyperlink display form local identifier
+     */
+    [displayFormLocalIdentifier: string]: {
+        /**
+         * Custom hyperlink text to display for the elements of the display form.
+         */
+        staticElementsText: string;
+    };
 }
 
 /**
@@ -539,4 +726,8 @@ export interface ITooltipConfig {
      * @defaultValue defaults to true, meaning the tooltip is shown
      */
     enabled?: boolean;
+    /**
+     * Additional class name to be added to the tooltip container
+     */
+    className?: string;
 }

@@ -2,81 +2,81 @@
 
 exports[`query insight date datasets > for datasets obtained from catalog > should order date datasets by relevance and title if tied 1`] = `
 [
-  "Date (Activity)",
-  "Date (Timeline)",
+  "Activity",
+  "Timeline",
 ]
 `;
 
 exports[`query insight date datasets > for datasets obtained from catalog > should order date datasets by relevance and title if tied 2`] = `
 {
-  "Date (Activity)": "Activity",
-  "Date (Timeline)": "Timeline",
+  "Activity": "Activity",
+  "Timeline": "Timeline",
 }
 `;
 
 exports[`query insight date datasets > for datasets obtained from catalog > should order date datasets by relevance desc 1`] = `
 [
-  "Date (Timeline)",
-  "Date (Activity)",
+  "Timeline",
+  "Activity",
 ]
 `;
 
 exports[`query insight date datasets > for datasets obtained from catalog > should order date datasets by relevance desc 2`] = `
 {
-  "Date (Activity)": "Activity",
-  "Date (Timeline)": "Timeline",
+  "Activity": "Activity",
+  "Timeline": "Timeline",
 }
 `;
 
 exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date attributes in buckets 1`] = `
 [
-  "Date (Closed)",
-  "Date (Created)",
+  "Closed",
+  "Created",
 ]
 `;
 
 exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date attributes in buckets 2`] = `
 [
-  "Date (Activity)",
-  "Date (Closed)",
-  "Date (Created)",
-  "Date (Snapshot)",
-  "Date (Timeline)",
+  "Activity",
+  "Closed",
+  "Created",
+  "Snapshot",
+  "Timeline",
 ]
 `;
 
 exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date attributes in buckets 3`] = `
 {
-  "Date (Activity)": "Activity",
-  "Date (Closed)": "Closed",
-  "Date (Created)": "Created",
-  "Date (Snapshot)": "Snapshot",
-  "Date (Timeline)": "Timeline",
+  "Activity": "Activity",
+  "Closed": "Closed",
+  "Created": "Created",
+  "Snapshot": "Snapshot",
+  "Timeline": "Timeline",
 }
 `;
 
 exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date filter 1`] = `
 [
-  "Date (Activity)",
+  "Activity",
 ]
 `;
 
 exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date filter 2`] = `
 [
-  "Date (Activity)",
-  "Date (Closed)",
-  "Date (Created)",
-  "Date (Snapshot)",
-  "Date (Timeline)",
+  "Activity",
+  "Closed",
+  "Created",
+  "Snapshot",
+  "Timeline",
 ]
 `;
 
 exports[`query insight date datasets > for insights that reference dates > should return date datasets for insight with date filter 3`] = `
 {
-  "Date (Activity)": "Activity",
-  "Date (Closed)": "Closed",
-  "Date (Created)": "Created",
-  "Date (Snapshot)": "Snapshot",
-  "Date (Timeline)": "Timeline",
+  "Activity": "Activity",
+  "Closed": "Closed",
+  "Created": "Created",
+  "Snapshot": "Snapshot",
+  "Timeline": "Timeline",
 }
 `;

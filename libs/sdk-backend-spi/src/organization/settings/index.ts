@@ -1,6 +1,13 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import { ISettings, IWhiteLabeling } from "@gooddata/sdk-model";
+import {
+    ISettings,
+    IWhiteLabeling,
+    IOpenAiConfig,
+    IAlertDefault,
+    ISeparators,
+    type DashboardFiltersApplyMode,
+} from "@gooddata/sdk-model";
 
 /**
  * This service provides access to organization settings
@@ -25,6 +32,15 @@ export interface IOrganizationSettingsService {
      * @returns promise
      */
     setLocale(locale: string): Promise<void>;
+
+    /**
+     * Set separators for the organization
+     *
+     * @param separators - separators for the organization
+     *
+     * @returns promise
+     */
+    setSeparators(separators: ISeparators): Promise<void>;
 
     /**
      * Sets timezone for organization.
@@ -64,6 +80,15 @@ export interface IOrganizationSettingsService {
     setTheme(themeId: string): Promise<void>;
 
     /**
+     * Sets alert default
+     *
+     * @param value - describes parameters for alerting.
+     *
+     * @returns promise
+     */
+    setAlertDefault(value: IAlertDefault): Promise<void>;
+
+    /**
      * Sets color palette for organization.
      *
      * @param colorPaletteId - ID of the color palette to apply to charts in organization.
@@ -71,6 +96,26 @@ export interface IOrganizationSettingsService {
      * @returns promise
      */
     setColorPalette(colorPaletteId: string): Promise<void>;
+
+    /**
+     * Sets OpenAI configuration for organization.
+     *
+     * @param config - describes parameters for OpenAI integration.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setOpenAiConfig(config: IOpenAiConfig): Promise<void>;
+
+    /**
+     * Sets DashboardFiltersApplyMode configuration for organization.
+     *
+     * @param dashboardFiltersApplyMode - describes new mode for applying dashboard filters.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
 
     /**
      * Deletes theme from organization settings returning workspace styling to default.

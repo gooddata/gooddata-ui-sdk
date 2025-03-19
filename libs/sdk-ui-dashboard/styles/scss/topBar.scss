@@ -1,3 +1,5 @@
+// (C) 2024 GoodData Corporation
+
 @use "variables";
 @use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
@@ -86,7 +88,7 @@
         white-space: nowrap;
 
         &::placeholder {
-            color: var(--gd-palette-complementary-6, inherit);
+            color: var(--gd-palette-complementary-6-from-theme, inherit);
         }
     }
 
@@ -101,6 +103,16 @@
 
     &.placeholder {
         color: kit-variables.$gd-color-state-blank;
+    }
+}
+
+.dash-header-options-wrapper {
+    @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
+        height: 100%;
+
+        button {
+            height: 100%;
+        }
     }
 }
 
@@ -129,6 +141,10 @@
     @media #{kit-variables.$medium-up} {
         margin-right: 10px;
     }
+}
+
+.dash-header-share-button {
+    margin-left: 10px;
 }
 
 .overlay-wrapper {

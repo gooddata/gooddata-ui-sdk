@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
@@ -139,6 +139,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
 
         this.renderFun(
             <CoreXirr
+                enableExecutionCancelling={config?.enableExecutionCancelling ?? false}
                 execution={execution}
                 drillableItems={drillableItems}
                 onDrill={this.onDrill}

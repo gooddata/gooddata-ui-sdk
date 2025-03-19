@@ -1,14 +1,35 @@
-// (C) 2021-2022 GoodData Corporation
-
-import { createSlice } from "@reduxjs/toolkit";
+// (C) 2021-2025 GoodData Corporation
+import { IListedDashboard } from "@gooddata/sdk-model";
+import { createSlice, PayloadAction, EntityState } from "@reduxjs/toolkit";
 import { accessibleDashboardsEntityAdapter } from "./accessibleDashboardsEntityAdapter.js";
+
+/**
+ * @alpha
+ */
+export interface AccessibleDashboardsState extends EntityState<IListedDashboard> {
+    isLoaded: boolean;
+}
 
 const accessibleDashboardsSlice = createSlice({
     name: "accessibleDashboards",
-    initialState: accessibleDashboardsEntityAdapter.getInitialState(),
+    initialState: accessibleDashboardsEntityAdapter.getInitialState({
+        isLoaded: false,
+    }),
     reducers: {
-        setAccessibleDashboards: accessibleDashboardsEntityAdapter.setAll,
-        addAccessibleDashboard: accessibleDashboardsEntityAdapter.upsertOne,
+        setAccessibleDashboards: (
+            state: AccessibleDashboardsState,
+            action: PayloadAction<IListedDashboard[]>,
+        ) => {
+            accessibleDashboardsEntityAdapter.setAll(state, action.payload);
+            state.isLoaded = true;
+        },
+        addAccessibleDashboard: (
+            state: AccessibleDashboardsState,
+            action: PayloadAction<IListedDashboard>,
+        ) => {
+            accessibleDashboardsEntityAdapter.upsertOne(state, action.payload);
+            state.isLoaded = true;
+        },
     },
 });
 

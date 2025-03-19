@@ -1,6 +1,6 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
-import { IFilterContextDefinition, IScheduledMailDefinition, ObjRef } from "@gooddata/sdk-model";
+import { IAutomationMetadataObjectDefinition, IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base.js";
 
 /**
@@ -11,11 +11,7 @@ export interface CreateScheduledEmailPayload {
     /**
      * The scheduled email to create.
      */
-    readonly scheduledEmail: IScheduledMailDefinition;
-    /**
-     * Filter context to use for the scheduled email. If no filter context is provided, stored dashboard filter context will be used.
-     */
-    readonly filterContext?: IFilterContextDefinition;
+    readonly scheduledEmail: IAutomationMetadataObjectDefinition;
 }
 
 /**
@@ -34,15 +30,13 @@ export interface CreateScheduledEmail extends IDashboardCommand {
  * Dispatching this command will result in the creating scheduled email on the backend.
  *
  * @param scheduledEmail - specify scheduled email to create.
- * @param filterContext - specify filter context to use for the scheduled email. If no filter context is provided, stored dashboard filter context will be used.
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
  * @beta
  */
 export function createScheduledEmail(
-    scheduledEmail: IScheduledMailDefinition,
-    filterContext?: IFilterContextDefinition,
+    scheduledEmail: IAutomationMetadataObjectDefinition,
     correlationId?: string,
 ): CreateScheduledEmail {
     return {
@@ -50,7 +44,6 @@ export function createScheduledEmail(
         correlationId,
         payload: {
             scheduledEmail,
-            filterContext,
         },
     };
 }
@@ -73,26 +66,21 @@ export interface SaveScheduledEmailPayload {
     /**
      * The scheduled email to save.
      */
-    readonly scheduledEmail: IScheduledMailDefinition;
-    /**
-     * optionally specify existing filter context reference to be used for all attachments
-     */
-    readonly filterContextRef?: ObjRef;
+    readonly scheduledEmail: IAutomationMetadataObject;
 }
 
 /**
  * Saves existing SaveScheduledEmail command. Dispatching this command will result in saving scheduled email on the backend.
  *
  * @param scheduledEmail - specify scheduled email to save.
- * @param filterContextRef - optionally specify existing filter context reference to be used for all attachments
+ * @param filters - optionally specify existing filter context filters to be used for all attachments
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
  * @beta
  */
 export function saveScheduledEmail(
-    scheduledEmail: IScheduledMailDefinition,
-    filterContextRef?: ObjRef,
+    scheduledEmail: IAutomationMetadataObject,
     correlationId?: string,
 ): SaveScheduledEmail {
     return {
@@ -100,7 +88,64 @@ export function saveScheduledEmail(
         correlationId,
         payload: {
             scheduledEmail,
-            filterContextRef,
         },
+    };
+}
+
+/**
+ * Initialize dashboard automations by loading essential data such as notification channels.
+ * This initialization is necessary for working with alerts and scheduled exports.
+ *
+ * @beta
+ */
+export interface InitializeAutomations extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.AUTOMATIONS.INITIALIZE";
+}
+
+/**
+ * Creates the InitializeAutomations command.
+ *
+ * Dispatching this command will result in the initializing dashboard automations.
+ * This initialization is necessary for working with alerts and scheduled exports.
+ *
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+
+ * @beta
+ */
+export function initializeAutomations(correlationId?: string): InitializeAutomations {
+    return {
+        type: "GDC.DASH/CMD.AUTOMATIONS.INITIALIZE",
+        correlationId,
+    };
+}
+
+/**
+ * Refresh the current dashboard's automation data.
+ * This is particularly useful after creating, updating, or removing alerts or scheduled exports,
+ * ensuring that the local data remains synchronized with the backend.
+ *
+ * @beta
+ */
+export interface RefreshAutomations extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.AUTOMATIONS.REFRESH";
+}
+
+/**
+ * Creates the RefreshAutomations command.
+ *
+ * Dispatching this command will result in refreshing the current dashboard's automation data.
+ * This is particularly useful after creating, updating, or removing alerts or scheduled exports,
+ * ensuring that the local data remains synchronized with the backend.
+ *
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+
+ * @beta
+ */
+export function refreshAutomations(correlationId?: string): RefreshAutomations {
+    return {
+        type: "GDC.DASH/CMD.AUTOMATIONS.REFRESH",
+        correlationId,
     };
 }

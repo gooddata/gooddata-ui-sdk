@@ -31,7 +31,6 @@ module.exports = (env, argv) => ({
     entry: {
         index: "./src/index",
         tigerBackend: "./src/tigerBackend",
-        bearBackend: "./src/bearBackend",
     },
     name: "index",
     resolve: {

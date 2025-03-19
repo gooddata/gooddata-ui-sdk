@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { EditMode } from "../../tools/editMode";
@@ -44,35 +44,39 @@ describe("RichText - isolated", { tags: ["pre-merge_isolated_tiger"] }, () => {
     });
 });
 
-describe("RichText - integrated", { tags: ["checklist_integrated_tiger"] }, () => {
-    beforeEach(() => {
-        Navigation.visit("dashboard/rich-text");
-    });
+describe(
+    "RichText - integrated",
+    { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+    () => {
+        beforeEach(() => {
+            Navigation.visit("dashboard/rich-text");
+        });
 
-    it("should remove rich text widget and save it", () => {
-        editMode.edit();
-        widget.getRichText().remove();
-        dashboardMenu.toggle();
-        header.saveAsNew("RichText With Removed Widget");
-        widget.getRichText().notExist();
-    });
+        it("should remove rich text widget and save it", () => {
+            editMode.edit();
+            widget.getRichText().remove();
+            dashboardMenu.toggle();
+            header.saveAsNew("RichText With Removed Widget");
+            widget.getRichText().notExist();
+        });
 
-    it("should add rich text widget and save it", () => {
-        editMode.edit();
+        it("should add rich text widget and save it", () => {
+            editMode.edit();
 
-        layoutRow.addRichTextWidget();
-        const addedRichText = addedWidget.getRichText();
-        addedRichText.exist();
-        addedRichText.updateContent("# Title 2\n\n![Image2](/image2.png)").confirmChanges();
+            layoutRow.addRichTextWidget();
+            const addedRichText = addedWidget.getRichText();
+            addedRichText.exist();
+            addedRichText.updateContent("# Title 2\n\n![Image2](/image2.png)").confirmChanges();
 
-        dashboardMenu.toggle();
-        header.saveAsNew("RichText With Added Widget");
+            dashboardMenu.toggle();
+            header.saveAsNew("RichText With Added Widget");
 
-        addedRichText
-            .getContentElement()
-            .find("img")
-            .should("exist")
-            .should("have.attr", "src", "/image2.png");
-        addedRichText.getContentElement().find("h1").should("exist").should("have.text", "Title 2");
-    });
-});
+            addedRichText
+                .getContentElement()
+                .find("img")
+                .should("exist")
+                .should("have.attr", "src", "/image2.png");
+            addedRichText.getContentElement().find("h1").should("exist").should("have.text", "Title 2");
+        });
+    },
+);

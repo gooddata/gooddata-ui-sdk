@@ -6,6 +6,7 @@ import identity from "lodash/identity.js";
 
 import enUS from "date-fns/locale/en-US/index.js";
 import enGB from "date-fns/locale/en-GB/index.js";
+import enAU from "date-fns/locale/en-AU/index.js";
 import cs from "date-fns/locale/cs/index.js";
 import de from "date-fns/locale/de/index.js";
 import es from "date-fns/locale/es/index.js";
@@ -17,6 +18,8 @@ import ptBR from "date-fns/locale/pt-BR/index.js";
 import zhCN from "date-fns/locale/zh-CN/index.js";
 import ru from "date-fns/locale/ru/index.js";
 import it from "date-fns/locale/it/index.js";
+import frCA from "date-fns/locale/fr-CA/index.js";
+import fi from "date-fns/locale/fi/index.js";
 
 const defaultLocaleCode = "en-US";
 
@@ -60,6 +63,12 @@ const localeConversions = {
     "zh-Hans": zhCN,
     "ru-RU": ru,
     "it-IT": it,
+    "es-419": es,
+    "fr-CA": frCA,
+    "zh-Hant": zhCN,
+    "en-AU": enAU,
+    "fi-FI": fi,
+    "zh-HK": zhCN,
 };
 
 export type FormattingLocale = keyof typeof localeConversions;
@@ -73,7 +82,9 @@ type PatternTransform = (pattern: string) => string;
  * of year do not shift.
  */
 const replaceWeekAndYearTokensByIsoTokens = (pattern: string) => {
+    // eslint-disable-next-line regexp/no-unused-capturing-group
     const searchForWeekPatternRegExp = /(w)(?=(?:[^']|'[^']*')*$)/g; // search for occurence of w not enclosed by ''
+    // eslint-disable-next-line regexp/no-unused-capturing-group
     const searchForYearPatternRegExp = /(y|Y)(?=(?:[^']|'[^']*')*$)/g; // search for occurence of y and Y not enclosed by ''
 
     return pattern.replace(searchForWeekPatternRegExp, "I").replace(searchForYearPatternRegExp, "R");

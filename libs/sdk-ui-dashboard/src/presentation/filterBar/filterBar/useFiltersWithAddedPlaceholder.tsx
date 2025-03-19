@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 import partition from "lodash/partition.js";
@@ -9,6 +9,7 @@ import {
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     isDashboardAttributeFilter,
+    isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isDashboardDateFilterWithDimension,
     isIdentifierRef,
@@ -21,11 +22,14 @@ import {
     dispatchAndWaitFor,
     selectAllCatalogDateDatasetsMap,
     selectCatalogAttributes,
+    selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectSelectedFilterIndex,
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
+    getFilterIdentifier,
 } from "../../../model/index.js";
+import find from "lodash/find.js";
 
 /**
  * @internal
@@ -49,6 +53,7 @@ export function isFilterBarFilterPlaceholder(object: any): object is FilterBarFi
 export type FilterBarAttributeFilterIndexed = {
     filter: IDashboardAttributeFilter;
     filterIndex: number;
+    workingFilter?: IDashboardAttributeFilter;
 };
 
 /**
@@ -66,6 +71,7 @@ export type FilterBarAttributeItems = FilterBarAttributeItem[];
 export type FilterBarDateFilterIndexed = {
     filter: IDashboardDateFilter;
     filterIndex: number;
+    workingFilter?: IDashboardDateFilter;
 };
 
 /**
@@ -102,9 +108,13 @@ function isNotDashboardCommonDateFilter(
 /**
  * @internal
  */
-export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
+export function useFiltersWithAddedPlaceholder(
+    filters: FilterContextItem[],
+    workingFilters?: FilterContextItem[],
+): [
     {
         commonDateFilter: IDashboardDateFilter;
+        commonWorkingDateFilter?: IDashboardDateFilter;
         draggableFiltersWithPlaceholder: FilterBarDraggableItems;
         draggableFiltersCount: number;
         autoOpenFilter: ObjRef | undefined;
@@ -120,7 +130,11 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
     const selectedFilterIndex = useDashboardSelector(selectSelectedFilterIndex);
     const allAttributes = useDashboardSelector(selectCatalogAttributes);
     const dateDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
+    const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
+        selectEnableDuplicatedLabelValuesInAttributeFilter,
+    );
 
+    const commonWorkingDateFilter = find(workingFilters, isDashboardCommonDateFilter);
     const [draggableFilters, [commonDateFilter]] = partition(filters, isNotDashboardCommonDateFilter);
     const [dateFiltersWithDimensions, attributeFilters] = partition(
         draggableFilters,
@@ -173,15 +187,25 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
     const draggableFiltersWithPlaceholder = useMemo(() => {
         const filterObjects: FilterBarDraggableItems = draggableFilters.map((filter, filterIndex) => {
             if (isDashboardAttributeFilter(filter)) {
+                const workingFilter =
+                    workingFilters
+                        ?.filter(isDashboardAttributeFilter)
+                        .find((wf) => getFilterIdentifier(wf) === getFilterIdentifier(filter)) ?? filter;
                 return {
                     filter,
                     filterIndex,
+                    workingFilter,
                 };
             }
 
+            const workingFilter =
+                workingFilters
+                    ?.filter(isDashboardDateFilter)
+                    .find((wf) => getFilterIdentifier(wf) === getFilterIdentifier(filter)) ?? filter;
             return {
                 filter,
                 filterIndex,
+                workingFilter,
             };
         });
 
@@ -237,19 +261,37 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
                 );
 
                 const usedDisplayForm = relatedAttribute?.displayForms.find((df) => {
-                    return attributeFilters.find((x) => areObjRefsEqual(x.attributeFilter.displayForm, df));
+                    return attributeFilters.find((x) =>
+                        areObjRefsEqual(x.attributeFilter.displayForm, df.ref),
+                    );
                 });
+
+                const primaryDisplayForm = enableDuplicatedLabelValuesInAttributeFilter
+                    ? relatedAttribute?.displayForms.find((df) => {
+                          return df.isPrimary;
+                      })
+                    : undefined;
 
                 // We allowed just one attributeFilter for one attribute,
                 if (!usedDisplayForm) {
                     setSelectedDisplayForm(ref);
-                    setAutoOpenFilter(ref);
+                    setAutoOpenFilter(primaryDisplayForm ? primaryDisplayForm.ref : ref);
                     dispatchAndWaitFor(
                         dispatch,
-                        addAttributeFilterAction(ref, addedAttributeFilter.filterIndex),
+                        addAttributeFilterAction(
+                            ref,
+                            addedAttributeFilter.filterIndex,
+                            undefined,
+                            undefined,
+                            undefined,
+                            undefined,
+                            undefined,
+                            undefined,
+                            primaryDisplayForm?.ref,
+                        ),
                     ).finally(clearAddedFilter);
                 } else {
-                    setAutoOpenFilter(usedDisplayForm);
+                    setAutoOpenFilter(usedDisplayForm.ref);
                     clearAddedFilter();
                 }
             }
@@ -262,6 +304,7 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
             allAttributes,
             clearAddedFilter,
             dispatch,
+            enableDuplicatedLabelValuesInAttributeFilter,
         ],
     );
 
@@ -271,6 +314,7 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
     return [
         {
             commonDateFilter,
+            commonWorkingDateFilter,
             draggableFiltersWithPlaceholder,
             draggableFiltersCount: draggableFilters.length,
             autoOpenFilter,

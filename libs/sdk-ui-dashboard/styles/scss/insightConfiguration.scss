@@ -1,13 +1,13 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
-$widget-title-color: var(--gd-palette-complementary-8, #454e56);
-$insight-panel-header-bg: var(--gd-palette-primary-dimmed, rgba(142, 220, 244, 0.2));
+$widget-title-color: var(--gd-palette-complementary-8-from-theme, #454e56);
+$insight-panel-header-bg: var(--gd-palette-primary-dimmed-from-theme, rgba(142, 220, 244, 0.2));
 $insight-arrow-panel-bg: #e9f8fc;
-$insight-original-title-color: var(--gd-palette-complementary-7, #454e56);
+$insight-original-title-color: var(--gd-palette-complementary-7-from-theme, #454e56);
 $insight-config-item-color: kit-variables.$gd-color-text;
-$insight-config-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
+$insight-config-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b1c1d1);
 $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
 
 %ellipsis {
@@ -67,6 +67,7 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
         .widget-title .insight-title {
             font: inherit;
             padding-bottom: 0;
+            text-align: left;
 
             .original-insight-title {
                 font: inherit;
@@ -126,7 +127,7 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
             color: $insight-config-item-color;
 
             &:hover {
-                color: var(--gd-palette-complementary-9, kit-variables.$default-gd-color-text);
+                color: var(--gd-palette-complementary-9-from-theme, kit-variables.$default-gd-color-text);
             }
 
             .item-icon {
@@ -177,11 +178,11 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
 }
 
 .bubble-light.arrow-left-direction.edit-insight-config-arrow-color .arrow {
-    border-right-color: var(--gd-palette-complementary-3, $insight-panel-header-bg);
+    border-right-color: var(--gd-palette-complementary-3-from-theme, $insight-panel-header-bg);
 }
 
 .bubble-light.arrow-right-direction.edit-insight-config-arrow-color .arrow {
-    border-left-color: var(--gd-palette-complementary-3, $insight-panel-header-bg);
+    border-left-color: var(--gd-palette-complementary-3-from-theme, $insight-panel-header-bg);
 }
 
 .bubble-light.arrow-left-direction.edit-insight-config-arrow-submenu-color .arrow {

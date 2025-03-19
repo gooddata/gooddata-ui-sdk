@@ -1,8 +1,9 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import {
     IAnalyticalBackend,
     IDataView,
+    IForecastView,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
@@ -11,6 +12,13 @@ import {
     NotSupported,
     isNoDataError,
     NoDataError,
+    IForecastResult,
+    IForecastConfig,
+    IAnomalyDetectionConfig,
+    IAnomalyDetectionResult,
+    IClusteringConfig,
+    IClusteringResult,
+    IPreparedExecutionOptions,
 } from "@gooddata/sdk-backend-spi";
 import { decoratedBackend } from "../decoratedBackend/index.js";
 import { DecoratedExecutionFactory, DecoratedPreparedExecution } from "../decoratedBackend/execution.js";
@@ -31,11 +39,15 @@ class WithNormalizationExecutionFactory extends DecoratedExecutionFactory {
         super(decorated);
     }
 
-    forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
+    forInsightByRef(
+        insight: IInsight,
+        filters?: IFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution {
         const isFallbackAllowed = this.config.executeByRefMode === "fallback";
 
         if (isFallbackAllowed) {
-            return this.forInsight(insight, filters);
+            return this.forInsight(insight, filters, options);
         }
 
         throw new NotSupported(
@@ -45,7 +57,7 @@ class WithNormalizationExecutionFactory extends DecoratedExecutionFactory {
     }
 
     protected wrap = (original: IPreparedExecution): IPreparedExecution => {
-        return new NormalizingPreparedExecution(original, this.decorated, this.config);
+        return new NormalizingPreparedExecution(original, this.decorated, this.config, original.signal);
     };
 }
 
@@ -63,14 +75,16 @@ class NormalizingPreparedExecution extends DecoratedPreparedExecution {
         decorated: IPreparedExecution,
         private readonly originalExecutionFactory: IExecutionFactory,
         private readonly config: NormalizationConfig,
+        public readonly signal: AbortSignal | undefined,
     ) {
-        super(decorated);
+        super(decorated, signal);
     }
 
     public execute = (): Promise<IExecutionResult> => {
         const normalizationState = Normalizer.normalize(this.definition);
         const normalizedExecution = this.originalExecutionFactory.forDefinition(
             normalizationState.normalized,
+            { signal: this.signal },
         );
 
         this.config.normalizationStatus?.(normalizationState);
@@ -80,8 +94,13 @@ class NormalizingPreparedExecution extends DecoratedPreparedExecution {
         });
     };
 
-    protected createNew = (decorated: IPreparedExecution): IPreparedExecution => {
-        return new NormalizingPreparedExecution(decorated, this.originalExecutionFactory, this.config);
+    protected createNew = (decorated: IPreparedExecution, signal?: AbortSignal): IPreparedExecution => {
+        return new NormalizingPreparedExecution(
+            decorated,
+            this.originalExecutionFactory,
+            this.config,
+            signal,
+        );
     };
 }
 
@@ -151,6 +170,18 @@ class DenormalizingExecutionResult implements IExecutionResult {
             .catch(this.handleDataViewError);
     };
 
+    public readForecastAll(config: IForecastConfig): Promise<IForecastResult> {
+        return this.normalizedResult.readForecastAll(config);
+    }
+
+    public readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult> {
+        return this.normalizedResult.readAnomalyDetectionAll(config);
+    }
+
+    public readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult> {
+        return this.normalizedResult.readClusteringAll(config);
+    }
+
     public equals = (other: IExecutionResult): boolean => {
         return this._fingerprint === other.fingerprint();
     };
@@ -181,6 +212,10 @@ class DenormalizingExecutionResult implements IExecutionResult {
 class DenormalizedDataView implements IDataView {
     public readonly definition: IExecutionDefinition;
     public readonly result: IExecutionResult;
+    public readonly forecastConfig?: IForecastConfig;
+    public readonly forecastResult?: IForecastResult;
+    public readonly clusteringConfig?: IClusteringConfig;
+    public readonly clusteringResult?: IClusteringResult;
 
     public readonly data: DataValue[][] | DataValue[];
     public readonly headerItems: IResultHeader[][][];
@@ -191,13 +226,25 @@ class DenormalizedDataView implements IDataView {
     public readonly totalTotals: DataValue[][][] | undefined;
 
     private readonly _fingerprint: string;
+    private readonly _denormalizer: Denormalizer;
 
     constructor(
         result: DenormalizingExecutionResult,
         private readonly normalizedDataView: IDataView,
         denormalizer: Denormalizer,
+        forecastConfig?: IForecastConfig,
+        forecastResult?: IForecastResult,
+        clusteringConfig?: IClusteringConfig,
+        clusteringResult?: IClusteringResult,
     ) {
+        this._denormalizer = denormalizer;
+
         this.result = result;
+        this.forecastConfig = forecastConfig;
+        this.forecastResult = forecastResult;
+        this.clusteringConfig = clusteringConfig;
+        this.clusteringResult = clusteringResult;
+
         this.definition = this.result.definition;
         this.count = cloneDeep(this.normalizedDataView.count);
         this.data = cloneDeep(this.normalizedDataView.data);
@@ -217,6 +264,45 @@ class DenormalizedDataView implements IDataView {
     public fingerprint = (): string => {
         return this._fingerprint;
     };
+
+    public forecast(): IForecastView {
+        const data = this.normalizedDataView.forecast();
+
+        return {
+            ...data,
+            headerItems: this._denormalizer.denormalizeHeaders(data.headerItems),
+        };
+    }
+
+    public clustering(): IClusteringResult {
+        return this.normalizedDataView.clustering();
+    }
+
+    public withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView {
+        const normalizedDataView = this.normalizedDataView.withForecast(config, result);
+        return new DenormalizedDataView(
+            this.result as DenormalizingExecutionResult,
+            normalizedDataView,
+            this._denormalizer,
+            normalizedDataView.forecastConfig,
+            normalizedDataView.forecastResult,
+            normalizedDataView.clusteringConfig,
+            normalizedDataView.clusteringResult,
+        );
+    }
+
+    public withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView {
+        const normalizedDataView = this.normalizedDataView.withClustering(config, result);
+        return new DenormalizedDataView(
+            this.result as DenormalizingExecutionResult,
+            normalizedDataView,
+            this._denormalizer,
+            normalizedDataView.forecastConfig,
+            normalizedDataView.forecastResult,
+            normalizedDataView.clusteringConfig,
+            normalizedDataView.clusteringResult,
+        );
+    }
 }
 
 /**

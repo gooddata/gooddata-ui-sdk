@@ -1,10 +1,11 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IMetadataObject,
     ObjRef,
     IMeasureMetadataObject,
     IMeasureMetadataObjectDefinition,
     IInsight,
+    IMeasure,
 } from "@gooddata/sdk-model";
 import { IMeasureExpressionToken } from "./measure.js";
 
@@ -19,12 +20,44 @@ export interface IMeasureReferencing {
 }
 
 /**
+ * Contains information about key drivers for a given measure.
+ *
+ * @alpha
+ */
+export interface IMeasureKeyDrivers {
+    /**
+     * Labels for the key drivers
+     */
+    labels: string[];
+
+    /**
+     * Effects for the key drivers
+     */
+    effects: number[];
+}
+
+/**
  * Service for create, update or delete measures and querying additional measures data.
  * If you want to query measures themselves, use catalog {@link IWorkspaceCatalogFactory}
  *
  * @public
  */
 export interface IWorkspaceMeasuresService {
+    /**
+     * Compute key drivers for a given measure.
+     *
+     * @param metric - the measure to compute key drivers for
+     * @param sortDirection - the direction to sort the key drivers by
+     * @returns promise of the key drivers
+     * @alpha
+     */
+    computeKeyDrivers: (
+        measure: IMeasure,
+        options?: {
+            sortDirection: "ASC" | "DESC";
+        },
+    ) => Promise<IMeasureKeyDrivers>;
+
     /**
      * Get measure expression tokens for provided measure identifier
      * @param ref - ref of the measure

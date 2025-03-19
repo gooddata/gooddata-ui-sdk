@@ -48,7 +48,7 @@ export class DateFilter {
     }
 
     open(): this {
-        cy.get(".s-date-filter-button").click();
+        this.getDateFilterElement().click();
         return this;
     }
 

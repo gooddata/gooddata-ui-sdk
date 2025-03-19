@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { IUser, uriRef, idRef } from "@gooddata/sdk-model";
 import {
@@ -7,6 +7,8 @@ import {
     JsonApiUserIdentifierToOneLinkage,
     JsonApiMetricOutIncludes,
     JsonApiAnalyticalDashboardOutIncludes,
+    JsonApiAutomationOutIncludes,
+    JsonApiAutomationOutWithLinks,
 } from "@gooddata/api-client-tiger";
 
 /**
@@ -14,14 +16,32 @@ import {
  * as a container for full name and lastname will be an empty string
  */
 export const convertUser = (user: IUserProfile): IUser => {
-    const { name, userId, links, organizationName, permissions } = user;
+    const {
+        name,
+        userId,
+        email,
+        links,
+        organizationName,
+        organizationId,
+        firstName,
+        lastName,
+        permissions,
+        entitlements,
+        deployment,
+    } = user;
 
     return {
         ref: uriRef(links!.user!),
         login: userId!,
         fullName: name,
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
         organizationName: organizationName,
+        organizationId: organizationId,
         permissions,
+        entitlements,
+        deployment,
     };
 };
 
@@ -41,7 +61,11 @@ function isJsonApiUserIdentifierOutAttributes(
     );
 }
 
-export type IIncludedWithUserIdentifier = JsonApiMetricOutIncludes | JsonApiAnalyticalDashboardOutIncludes;
+export type IIncludedWithUserIdentifier =
+    | JsonApiMetricOutIncludes
+    | JsonApiAutomationOutWithLinks
+    | JsonApiAnalyticalDashboardOutIncludes
+    | JsonApiAutomationOutIncludes;
 
 /**
  * Convert user identifier link from relationships.[createdBy/modifiedBy] to {@link IUser} object.

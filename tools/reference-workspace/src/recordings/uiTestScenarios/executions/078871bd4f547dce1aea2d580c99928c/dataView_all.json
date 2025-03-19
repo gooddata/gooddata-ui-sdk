@@ -1,0 +1,15 @@
+{
+    "count": [3],
+    "data": [116625456.54, 116625456.54, 1],
+    "headerItems": [
+        [
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 1 } },
+                { "measureHeaderItem": { "name": "m_6aea7862cb864bcedb6ff97fce8fbfae", "order": 2 } }
+            ]
+        ]
+    ],
+    "offset": [0],
+    "totalCount": [3]
+}

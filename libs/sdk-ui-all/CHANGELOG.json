@@ -2,10 +2,319 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.22.0",
+            "tag": "@gooddata/sdk-ui-all_v10.22.0",
+            "date": "Thu, 06 Mar 2025 08:46:39 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "New helper factory createRedirectToTigerAuthenticationWithParams to create a parametrized redirectToTigerAuthentication handler. Useful in Federated Identity Management context."
+                    },
+                    {
+                        "comment": "Add support for execution cancelling via AbortController."
+                    },
+                    {
+                        "comment": "Support workspace and organization level setting for Dashboard filters apply mode"
+                    },
+                    {
+                        "comment": "Make DashboardAttributeFilter component customizable by prop"
+                    },
+                    {
+                        "comment": "Add support for enableDashboardFiltersApplyModes feature flag"
+                    },
+                    {
+                        "comment": "Update HighCharts library to latest version"
+                    }
+                ]
+            }
+        },
+        {
+            "version": "10.20.0",
+            "tag": "@gooddata/sdk-ui-all_v10.20.0",
+            "date": "Thu, 20 Feb 2025 08:45:08 GMT",
+            "comments": {}
+        },
+        {
+            "version": "10.19.0",
+            "tag": "@gooddata/sdk-ui-all_v10.19.0",
+            "date": "Thu, 06 Feb 2025 07:58:07 GMT",
+            "comments": {}
+        },
+        {
+            "version": "10.18.0",
+            "tag": "@gooddata/sdk-ui-all_v10.18.0",
+            "date": "Thu, 23 Jan 2025 08:58:58 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Introduce NotificationPanel component."
+                    }
+                ]
+            }
+        },
+        {
+            "version": "10.17.0",
+            "tag": "@gooddata/sdk-ui-all_v10.17.0",
+            "date": "Thu, 09 Jan 2025 09:00:05 GMT",
+            "comments": {}
+        },
+        {
+            "version": "10.16.0",
+            "tag": "@gooddata/sdk-ui-all_v10.16.0",
+            "date": "Thu, 12 Dec 2024 07:29:13 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Add support for nested dashboard layouts (hidden behind a feature flag) "
+                    }
+                ]
+            }
+        },
+        {
+            "version": "10.15.0",
+            "tag": "@gooddata/sdk-ui-all_v10.15.0",
+            "date": "Thu, 28 Nov 2024 11:23:13 GMT",
+            "comments": {}
+        },
+        {
+            "version": "10.14.0",
+            "tag": "@gooddata/sdk-ui-all_v10.14.0",
+            "date": "Thu, 14 Nov 2024 11:46:42 GMT",
+            "comments": {}
+        },
+        {
+            "version": "10.13.0",
+            "tag": "@gooddata/sdk-ui-all_v10.13.0",
+            "date": "Thu, 31 Oct 2024 08:50:19 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "attribute filters now allow improved work with duplicate values by default"
+                    },
+                    {
+                        "comment": "Added new Visualization Switcher widget to render group of visualizations together on dashboard (available for GoodData.CN / GoodData Cloud only)."
+                    }
+                ]
+            }
+        },
+        {
+            "version": "10.12.0",
+            "tag": "@gooddata/sdk-ui-all_v10.12.0",
+            "date": "Thu, 17 Oct 2024 06:56:12 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Introduce support for saved filter views on dashboards. It allows to customize filter context for individual user and dashboard and save it for later use."
+                    }
+                ]
+            }
+        },
+        {
+            "version": "10.11.0",
+            "tag": "@gooddata/sdk-ui-all_v10.11.0",
+            "date": "Thu, 03 Oct 2024 07:11:15 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Introduce support for saved filter views on dashboards. It allows to customize filter context for individual user and dashboard and save it for later use."
+                    }
+                ]
+            }
+        },
+        {
+            "version": "10.10.0",
+            "tag": "@gooddata/sdk-ui-all_v10.10.0",
+            "date": "Thu, 19 Sep 2024 06:58:04 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Improved Handling of Secondary Labels in AttributeFilter"
+                    }
+                ]
+            }
+        },
+        {
+            "version": "10.9.0",
+            "tag": "@gooddata/sdk-ui-all_v10.9.0",
+            "date": "Thu, 05 Sep 2024 08:14:25 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Add possibility to ignore specified attributes in the drill down intersection. Modify addDrillDownForInsightWidget and modifyDrillDownForInsightWidget commands to be able to configure it (breaking)."
+                    }
+                ]
+            }
+        },
+        {
+            "version": "10.8.0",
+            "tag": "@gooddata/sdk-ui-all_v10.8.0",
+            "date": "Thu, 22 Aug 2024 07:33:19 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Introduce user filter views to dashboard component"
+                    }
+                ]
+            }
+        },
+        {
+            "version": "10.7.0",
+            "tag": "@gooddata/sdk-ui-all_v10.7.0",
+            "date": "Thu, 08 Aug 2024 09:46:36 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Introduced GenAI Service in sdk-backend-tiger to be able to consume semantic search feeds."
+                    },
+                    {
+                        "comment": "Introduced @gooddata/sdk-ui-semantic-search package in alpha stage"
+                    },
+                    {
+                        "comment": "Top menu UI component now supports a new search button"
+                    }
+                ]
+            }
+        },
+        {
+            "version": "10.6.0",
+            "tag": "@gooddata/sdk-ui-all_v10.6.0",
+            "date": "Thu, 25 Jul 2024 08:35:32 GMT",
+            "comments": {}
+        },
+        {
+            "version": "10.5.1",
+            "tag": "@gooddata/sdk-ui-all_v10.5.1",
+            "date": "Fri, 12 Jul 2024 11:00:39 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Fixed display of tooltips in drill dialog"
+                    }
+                ]
+            }
+        },
+        {
+            "version": "10.5.0",
+            "tag": "@gooddata/sdk-ui-all_v10.5.0",
+            "date": "Thu, 11 Jul 2024 08:01:45 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Allow specifying returnTo parameter with backend deauthenticate"
+                    },
+                    {
+                        "comment": "Adjusted export function to support pdf options."
+                    },
+                    {
+                        "comment": "Using visualizationObject whenever provided as alternative to executionResult for export."
+                    }
+                ]
+            }
+        },
+        {
+            "version": "10.4.0",
+            "tag": "@gooddata/sdk-ui-all_v10.4.0",
+            "date": "Thu, 27 Jun 2024 08:11:53 GMT",
+            "comments": {}
+        },
+        {
+            "version": "10.3.0",
+            "tag": "@gooddata/sdk-ui-all_v10.3.0",
+            "date": "Thu, 13 Jun 2024 08:17:52 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Allow different position of ellipsis in ShortenedText component "
+                    },
+                    {
+                        "comment": "F1-349 Implement webhooks api in tiger functions"
+                    },
+                    {
+                        "comment": "allow creating a workspace as a child"
+                    }
+                ]
+            }
+        },
+        {
+            "version": "10.2.0",
+            "tag": "@gooddata/sdk-ui-all_v10.2.0",
+            "date": "Thu, 30 May 2024 08:50:26 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "API method importCsv now returns update info about file"
+                    },
+                    {
+                        "comment": "Forecast implementation into line chart"
+                    },
+                    {
+                        "comment": "Include hierarchy data in workspace descriptor"
+                    },
+                    {
+                        "comment": "added filter for root workspaces only to workspaces query"
+                    },
+                    {
+                        "comment": "use only description attribute for workspace description"
+                    },
+                    {
+                        "comment": "Enhanced export function to support PDF format and added PDF configuration option."
+                    }
+                ]
+            }
+        },
+        {
+            "version": "10.1.0",
+            "tag": "@gooddata/sdk-ui-all_v10.1.0",
+            "date": "Thu, 16 May 2024 08:08:00 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Added a workspace service for working with export definitions metadata objects"
+                    }
+                ]
+            }
+        },
+        {
+            "version": "10.0.0",
+            "tag": "@gooddata/sdk-ui-all_v10.0.0",
+            "date": "Thu, 18 Apr 2024 08:07:32 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Drop support for the GoodData Platform (Bear) in all packages."
+                    },
+                    {
+                        "comment": "Removed the @gooddata/experimental-workspace and @gooddata/live-examples-workspace packages."
+                    },
+                    {
+                        "comment": "Removed the sdk-examples package."
+                    },
+                    {
+                        "comment": "Package @gooddata/reference-workspace migrated from GoodData Platform (Bear) to GoodData.CN (Panther/Tiger)."
+                    },
+                    {
+                        "comment": "Removed GoodData Platform (Bear) related packages: @gooddata/api-client-bear, @gooddata/sdk-backend-bear, @gooddata/api-model-bear."
+                    },
+                    {
+                        "comment": "Introduced a new visualization type - Repeater, currently in the @beta stage."
+                    },
+                    {
+                        "comment": "Introduce ability to limit attribute filter values by dependent date filters on GoodData Cloud dashboards."
+                    }
+                ]
+            }
+        },
+        {
             "version": "9.9.2",
             "tag": "@gooddata/sdk-ui-all_v9.9.2",
             "date": "Wed, 19 Mar 2025 11:50:06 GMT",
-            "comments": {}
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Update ag-grid-community and ag-grid-react library to latest version"
+                    }
+                ]
+            }
         },
         {
             "version": "9.9.1",
@@ -27,6 +336,18 @@
                     },
                     {
                         "comment": "Add tags to 'measure' objects"
+                    }
+                ]
+            }
+        },
+        {
+            "version": "9.8.1",
+            "tag": "@gooddata/sdk-ui-all_v9.8.1",
+            "date": "Fri, 15 Mar 2024 13:31:24 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Introduce theme loading status with better information about state of theme loading"
                     }
                 ]
             }

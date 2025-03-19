@@ -103,7 +103,3 @@ const measures = [
     measures={measures}
 />
 ```
-
-## More information
-
-See the [live examples](https://gdui-examples.herokuapp.com/arithmetic-measures).

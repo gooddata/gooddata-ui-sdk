@@ -25,12 +25,15 @@ describe("drillDownUtil", () => {
             const source = newInsightDefinition("visclass", (b) => {
                 return b
                     .title("sourceInsight")
-                    .buckets([newBucket("measure", Won), newBucket("attribute", Region, Department, Status)]);
+                    .buckets([
+                        newBucket("measure", Won),
+                        newBucket("attribute", Region.Default, Department.Default, Status),
+                    ]);
             });
 
             const drillConfig: IDrillDownDefinition = {
                 type: "drillDown",
-                origin: localIdRef(Department.attribute.localIdentifier),
+                origin: localIdRef(Department.Default.attribute.localIdentifier),
                 target: Account.Default.attribute.displayForm,
             };
 
@@ -38,7 +41,7 @@ describe("drillDownUtil", () => {
             const result = modifyBucketsAttributesForDrillDown(sourceInsight, drillConfig);
 
             const replacedDepartmentToAccount = newAttribute(Account.Default.attribute.displayForm, (b) =>
-                b.localId(Department.attribute.localIdentifier),
+                b.localId(Department.Default.attribute.localIdentifier),
             );
 
             const expected = newInsightDefinition("visclass", (b) => {
@@ -58,20 +61,24 @@ describe("drillDownUtil", () => {
             const source = newInsightDefinition("visclass", (b) => {
                 return b
                     .title("sourceInsight")
-                    .buckets([newBucket("measure", Won), newBucket("attribute", Region, Department)]);
+                    .buckets([
+                        newBucket("measure", Won),
+                        newBucket("attribute", Region.Default, Department.Default),
+                    ]);
             });
 
             const drillConfig: IDrillDownDefinition = {
                 type: "drillDown",
-                origin: localIdRef(Region.attribute.localIdentifier),
-                target: Department.attribute.displayForm,
+                origin: localIdRef(Region.Default.attribute.localIdentifier),
+                target: Department.Default.attribute.displayForm,
             };
 
             const sourceInsight = insightDefinitionToInsight(source, "uri", "id");
             const result = modifyBucketsAttributesForDrillDown(sourceInsight, drillConfig);
 
-            const replacedRegionToCustomDepartment = newAttribute(Department.attribute.displayForm, (b) =>
-                b.localId(Region.attribute.localIdentifier),
+            const replacedRegionToCustomDepartment = newAttribute(
+                Department.Default.attribute.displayForm,
+                (b) => b.localId(Region.Default.attribute.localIdentifier),
             );
 
             const expected = newInsightDefinition("visclass", (b) => {
@@ -91,40 +98,49 @@ describe("drillDownUtil", () => {
             const source = newInsightDefinition("visclass", (b) => {
                 return b
                     .title("sourceInsight")
-                    .buckets([newBucket("measure", Won), newBucket("attribute", Region, Department)])
-                    .sorts([newAttributeSort(Region, "desc"), newAttributeSort(Department, "asc")]);
+                    .buckets([
+                        newBucket("measure", Won),
+                        newBucket("attribute", Region.Default, Department.Default),
+                    ])
+                    .sorts([
+                        newAttributeSort(Region.Default, "desc"),
+                        newAttributeSort(Department.Default, "asc"),
+                    ]);
             });
 
             const drillConfig: IDrillDownDefinition = {
                 type: "drillDown",
-                origin: localIdRef(Region.attribute.localIdentifier),
-                target: Department.attribute.displayForm,
+                origin: localIdRef(Region.Default.attribute.localIdentifier),
+                target: Department.Default.attribute.displayForm,
             };
 
             const sourceInsight = insightDefinitionToInsight(source, "uri", "id");
             const result = modifyBucketsAttributesForDrillDown(sourceInsight, drillConfig);
 
             // using the direct reference, not insightSorts, because insightSorts will remove the invalid sorts as well
-            expect(result.insight.sorts).toEqual([newAttributeSort(Region, "desc")]);
+            expect(result.insight.sorts).toEqual([newAttributeSort(Region.Default, "desc")]);
         });
 
         it("should remove filters related to removed attributes", () => {
             const filters = [
                 newRankingFilter(Won, "TOP", 3),
-                newRankingFilter(Won, [Region], "TOP", 3),
-                newRankingFilter(Won, [Department], "BOTTOM", 3), // this one must go
+                newRankingFilter(Won, [Region.Default], "TOP", 3),
+                newRankingFilter(Won, [Department.Default], "BOTTOM", 3), // this one must go
             ];
             const source = newInsightDefinition("visclass", (b) => {
                 return b
                     .title("sourceInsight")
-                    .buckets([newBucket("measure", Won), newBucket("attribute", Region, Department)])
+                    .buckets([
+                        newBucket("measure", Won),
+                        newBucket("attribute", Region.Default, Department.Default),
+                    ])
                     .filters(filters);
             });
 
             const drillConfig: IDrillDownDefinition = {
                 type: "drillDown",
-                origin: localIdRef(Region.attribute.localIdentifier),
-                target: Department.attribute.displayForm,
+                origin: localIdRef(Region.Default.attribute.localIdentifier),
+                target: Department.Default.attribute.displayForm,
             };
 
             const sourceInsight = insightDefinitionToInsight(source, "uri", "id");

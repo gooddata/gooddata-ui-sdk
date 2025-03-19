@@ -1,5 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
-import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
+// (C) 2019-2025 GoodData Corporation
+import { IBackendCapabilities, IDataView, IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     IColorMappingItem,
     IDimension,
@@ -16,6 +16,7 @@ import {
     IChartConfig,
     IColorMapping,
     updateConfigWithSettings,
+    updateForecastWithSettings,
 } from "@gooddata/sdk-ui-charts";
 import React from "react";
 import compact from "lodash/compact.js";
@@ -81,6 +82,9 @@ import set from "lodash/set.js";
 import tail from "lodash/tail.js";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
 import { messages } from "../../../../locales.js";
+import { isForecastEnabled } from "../../../utils/forecastHelper.js";
+import omitBy from "lodash/omitBy.js";
+import { DEFAULT_NUMBER_OF_CLUSTERS, DEFAULT_CLUSTERING_THRESHOLD } from "../../../constants/scatter.js";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
@@ -90,6 +94,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected customControlsProperties: IVisualizationProperties;
     protected colors: IColorConfiguration;
     protected references: IReferences;
+    protected referencePoint: IReferencePoint | undefined;
     protected ignoreUndoRedo: boolean;
     protected axis: string;
     protected secondaryAxis: AxisType;
@@ -151,6 +156,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             newReferencePoint = removeSort(newReferencePoint);
         }
 
+        this.referencePoint = newReferencePoint;
+
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
@@ -160,7 +167,12 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         backendSupportsElementUris: boolean,
     ): IInsight {
         const intersection = drillDownContext.event.drillContext.intersection;
-        const withFilters = addIntersectionFiltersToInsight(source, intersection, backendSupportsElementUris);
+        const withFilters = addIntersectionFiltersToInsight(
+            source,
+            intersection,
+            backendSupportsElementUris,
+            this.featureFlags.enableDuplicatedLabelValuesInAttributeFilter,
+        );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 
@@ -264,6 +276,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
         this.renderFun(
             <BaseChart
+                enableExecutionCancelling={
+                    fullConfig.enableExecutionCancelling ??
+                    this.featureFlags.enableExecutionCancelling ??
+                    false
+                }
                 execution={execution}
                 afterRender={this.afterRender}
                 drillableItems={drillableItems}
@@ -275,10 +292,16 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 height={resultingHeight}
                 type={this.type}
                 locale={locale}
+                forecastConfig={updateForecastWithSettings(
+                    fullConfig,
+                    this.featureFlags,
+                    isForecastEnabled(this.referencePoint, insight, this.type),
+                )}
                 config={updateConfigWithSettings(fullConfig, this.featureFlags)}
                 LoadingComponent={null}
                 ErrorComponent={null}
                 theme={theme}
+                {...enhanceBaseChartWithClusteringConfiguration(fullConfig)}
             />,
             this.getElement(),
         );
@@ -368,12 +391,13 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     protected handlePushData = (data: any): void => {
-        const resultingData = data;
         if (data.colors) {
             this.handleConfirmedColorMapping(data);
         } else {
+            const updatedData = enhancePropertiesMetaWithPartialClusteringInfo(data, this.type);
+
             this.pushData({
-                ...resultingData,
+                ...updatedData,
                 references: this.references,
             });
         }
@@ -397,6 +421,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             separators: config.separators,
             colorPalette: config.colorPalette,
             forceDisableDrillOnAxes: config.forceDisableDrillOnAxes,
+            enableExecutionCancelling: config.enableExecutionCancelling,
             ...supportedControls,
             colorMapping: validColorMapping?.length > 0 ? validColorMapping : null,
             ...customVisualizationConfig,
@@ -460,4 +485,51 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const previousSort = properties?.sortItems;
         return validateCurrentSort(previousAvailableSorts, previousSort, availableSorts, defaultSort);
     }
+}
+
+function enhancePropertiesMetaWithPartialClusteringInfo(data: any, type: ChartType) {
+    let dataPropertiesMeta: { propertiesMeta?: any } = { propertiesMeta: data.propertiesMeta };
+
+    if (data.dataView && type === "scatter") {
+        const dataView = data.dataView as IDataView;
+        const numberOfDataPoints = dataView.count[0];
+        const numberOfClusters = dataView.clusteringConfig?.numberOfClusters;
+        const showingPartialClusters = !!numberOfClusters && numberOfDataPoints < numberOfClusters;
+
+        dataPropertiesMeta = {
+            propertiesMeta: {
+                ...dataPropertiesMeta.propertiesMeta,
+                showingPartialClusters,
+            },
+        };
+    }
+
+    return {
+        ...data,
+        ...omitBy(dataPropertiesMeta, isEmpty),
+    };
+}
+
+function enhanceBaseChartWithClusteringConfiguration(fullConfig: IChartConfig) {
+    const threshold = fullConfig?.clustering?.threshold
+        ? {
+              threshold:
+                  typeof fullConfig?.clustering?.threshold === "string"
+                      ? parseFloat(fullConfig.clustering.threshold)
+                      : fullConfig?.clustering?.threshold ?? DEFAULT_CLUSTERING_THRESHOLD,
+          }
+        : {};
+
+    return !isEmpty(fullConfig.clustering) && fullConfig.clustering.enabled
+        ? {
+              clusteringConfig: {
+                  ...(fullConfig.clustering ?? {}),
+                  numberOfClusters:
+                      typeof fullConfig?.clustering?.numberOfClusters === "string"
+                          ? parseInt(fullConfig.clustering.numberOfClusters, 10)
+                          : fullConfig?.clustering?.numberOfClusters ?? DEFAULT_NUMBER_OF_CLUSTERS,
+                  ...threshold,
+              },
+          }
+        : {};
 }

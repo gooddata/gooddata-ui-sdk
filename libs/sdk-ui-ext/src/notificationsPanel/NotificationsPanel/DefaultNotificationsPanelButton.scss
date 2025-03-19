@@ -1,0 +1,35 @@
+// (C) 2024-2025 GoodData Corporation
+
+.gd-ui-ext-notifications-panel-button {
+    color: inherit;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover,
+    &--isOpen {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    &__icon {
+        --gd-icon-fill-color: #fff;
+        opacity: 0.8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    &__unread-status {
+        width: 7px;
+        height: 7px;
+        border-radius: 51%;
+        background-color: var(--gd-palette-primary-base);
+        position: absolute;
+        top: -3px;
+        right: -4px;
+        z-index: 1;
+        box-sizing: content-box;
+    }
+}

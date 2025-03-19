@@ -8,13 +8,10 @@
                             "definition": {
                                 "measureDefinition": {
                                     "aggregation": "sum",
-                                    "item": {
-                                        "identifier": "fact.opportunitysnapshot.amount",
-                                        "type": "fact"
-                                    }
+                                    "item": { "identifier": "f_opportunitysnapshot.f_amount", "type": "fact" }
                                 }
                             },
-                            "localIdentifier": "m_fact.opportunitysnapshot.amount_sum"
+                            "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum"
                         }
                     }
                 ],
@@ -24,17 +21,20 @@
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                            "localIdentifier": "a_label.product.id.name"
+                            "displayForm": {
+                                "identifier": "label.f_product.product.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_product.product.name"
                         }
                     },
                     {
                         "attribute": {
                             "displayForm": {
-                                "identifier": "label.opportunity.id.name",
+                                "identifier": "label.f_opportunity.opportunity.name",
                                 "type": "displayForm"
                             },
-                            "localIdentifier": "a_label.opportunity.id.name"
+                            "localIdentifier": "a_label.f_opportunity.opportunity.name"
                         }
                     }
                 ],
@@ -46,7 +46,7 @@
             {
                 "measureValueFilter": {
                     "condition": { "comparison": { "operator": "GREATER_THAN", "value": 5000000 } },
-                    "measure": { "localIdentifier": "m_fact.opportunitysnapshot.amount_sum" }
+                    "measure": { "localIdentifier": "m_f_opportunitysnapshot.f_amount_sum" }
                 }
             }
         ],

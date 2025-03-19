@@ -1,11 +1,27 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     ObjRef,
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
     IMetadataObject,
+    IDataSetMetadataObject,
 } from "@gooddata/sdk-model";
 import { IElementsQueryFactory } from "./elements/index.js";
+
+/**
+ * @beta
+ */
+export interface IAttributeWithReferences {
+    /**
+     * Attribute metadata object
+     */
+    attribute: IAttributeMetadataObject;
+
+    /**
+     * Attribute related data set metadata object.
+     */
+    dataSet?: IDataSetMetadataObject;
+}
 
 /**
  * Service for querying additional attributes and attribute display forms data, and their elements.
@@ -96,6 +112,13 @@ export interface IWorkspaceAttributesService {
      * @returns promise of metadata object
      */
     getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
+
+    /**
+     * Get attributes with their related objects, by their respective display forms.
+     * @param refs - refs of the attributes
+     * @returns promise of attributes with their related objects
+     */
+    getAttributesWithReferences(displayFormRefs: ObjRef[]): Promise<IAttributeWithReferences[]>;
 
     /**
      * Request list of attributes that have a connection with specified display form in the data model.

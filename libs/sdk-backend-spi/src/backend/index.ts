@@ -1,7 +1,7 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import { IExecutionDefinition } from "@gooddata/sdk-model";
-import { IPreparedExecution } from "../workspace/execution/index.js";
+import { IPreparedExecution, IPreparedExecutionOptions } from "../workspace/execution/index.js";
 import { IWorkspacesQueryFactory, IAnalyticalWorkspace } from "../workspace/index.js";
 import { IUserService } from "../user/index.js";
 import { NotAuthenticated } from "../errors/index.js";
@@ -91,6 +91,16 @@ export interface IAnalyticalBackend {
     withTelemetry(componentName: string, props: object): IAnalyticalBackend;
 
     /**
+     * Sets request correlation metadata that will be included in HTTP requests to the backend.
+     * If the {@link IAnalyticalBackend} instance already has correlation metadata set, the new metadata will be merged with the existing one.
+     * This method provides more flexibility than withTelemetry by allowing arbitrary key-value pairs to be sent.
+     *
+     * @param correlationMetadata - key-value pairs to include as correlation metadata
+     * @returns a new instance of backend configured with the merged correlation metadata
+     */
+    withCorrelation(correlationMetadata: IRequestCorrelationMetadata): IAnalyticalBackend;
+
+    /**
      * Sets authentication provider to be used when backend discovers current session is
      * not authenticated.
      *
@@ -130,10 +140,11 @@ export interface IAnalyticalBackend {
 
     /**
      * Triggers deauthentication process against the backend.
+     * @param returnTo - url to redirect after successful relogin
      *
      * @returns promise of the completed process, or rejection if deauthentication failed.
      */
-    deauthenticate(): Promise<void>;
+    deauthenticate(returnTo?: string): Promise<void>;
 
     /**
      * Returns an organization available on the backend.
@@ -232,8 +243,9 @@ export interface IAuthenticationProvider {
      * Clear existing authentication.
      *
      * @param context - context in which the authentication is done
+     * @param returnTo - url to redirect after successful logout
      */
-    deauthenticate(context: IAuthenticationContext): Promise<void>;
+    deauthenticate(context: IAuthenticationContext, returnTo?: string): Promise<void>;
 }
 
 /**
@@ -284,6 +296,20 @@ export interface IAuthenticationContext {
     client: any;
 }
 
+/**
+ * Correlation metadata that will be included in HTTP requests.
+ * The exact mechanism for including correlation metadata in requests
+ * is determined by the specific sdk-backend-spi implementation.
+ *
+ * @public
+ */
+export interface IRequestCorrelationMetadata {
+    /**
+     * Key-value pairs for correlation metadata
+     */
+    readonly [key: string]: string;
+}
+
 //
 // Supporting / convenience functions
 //
@@ -302,6 +328,7 @@ export interface IAuthenticationContext {
 export function prepareExecution(
     backend: IAnalyticalBackend,
     definition: IExecutionDefinition,
+    options?: IPreparedExecutionOptions,
 ): IPreparedExecution {
-    return backend.workspace(definition.workspace).execution().forDefinition(definition);
+    return backend.workspace(definition.workspace).execution().forDefinition(definition, options);
 }

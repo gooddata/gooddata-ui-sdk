@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { LineChart } from "@gooddata/sdk-ui-charts";
 import { LineChartTwoMeasuresWithTrendyBy } from "./base.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
@@ -16,7 +16,7 @@ const simpleScenarios = responsiveScenarios(
     LineChart,
     {
         measures: [ReferenceMd.Amount],
-        trendBy: ReferenceMd.DateDatasets.Created.QuarterYear.USShort,
+        trendBy: ReferenceMd.DateDatasets.Created.CreatedQuarterYear.Default,
         config: { enableCompactSize: true, legend: { enabled: false } },
     },
     sizeVariantsSimple,

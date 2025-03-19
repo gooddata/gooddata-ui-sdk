@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ISettings, IWorkspacePermissions } from "@gooddata/sdk-model";
 import {
     isFreemiumEdition,
@@ -48,6 +48,11 @@ export const HEADER_ITEM_ID_MANAGE = "gs.header.manage";
 /**
  * @internal
  */
+export const HEADER_ITEM_ID_HOME = "gs.header.home";
+
+/**
+ * @internal
+ */
 export function generateHeaderMenuItemsGroups(
     featureFlags: ISettings,
     workspacePermissions: IWorkspacePermissions,
@@ -60,6 +65,7 @@ export function generateHeaderMenuItemsGroups(
     backendSupportsCsvUploader: boolean = true,
     hasMeasures: boolean = false,
     hasManage: boolean = true,
+    baseUrl: string = "",
 ): IHeaderMenuItem[][] {
     if (!workspaceId) {
         return [];
@@ -85,6 +91,7 @@ export function generateHeaderMenuItemsGroups(
         backendSupportsCsvUploader,
         backendSupportsDataItem,
         hasNoDataSet,
+        baseUrl,
     );
     const manageItemsGroup = createManageItemsGroup(
         workspacePermissions,
@@ -153,12 +160,19 @@ function createInsightsItemsGroup(
     backendSupportsCsvUploader: boolean,
     backendSupportsDataItem: boolean,
     hasNoDataSet: boolean,
+    baseUrl: string,
 ) {
     const isFreemiumCustomer = isFreemiumEdition(featureFlags.platformEdition);
 
     const insightItemsGroup: IHeaderMenuItem[] = [];
 
-    const kpisUrl = kpisItemUrl(workspaceRef, workspaceId);
+    pushConditionally(
+        insightItemsGroup,
+        createIHeaderMenuItem(HEADER_ITEM_ID_HOME, "s-menu-workspace-home", homeItemUrl(workspaceId)),
+        !!featureFlags.enableAnalyticalCatalog,
+    );
+
+    const kpisUrl = kpisItemUrl(baseUrl, workspaceRef, workspaceId);
     const kpisKey = shouldEnableNewNavigation(featureFlags) ? HEADER_ITEM_ID_KPIS_NEW : HEADER_ITEM_ID_KPIS;
     pushConditionally(
         insightItemsGroup,
@@ -166,14 +180,14 @@ function createInsightsItemsGroup(
         canShowKpisItem(featureFlags, workspacePermissions, hasAnalyticalDashboards),
     );
 
-    const analyzeUrl = analyzeItemUrl(workspaceId);
+    const analyzeUrl = analyzeItemUrl(baseUrl, workspaceId);
     pushConditionally(
         insightItemsGroup,
         createIHeaderMenuItem(HEADER_ITEM_ID_ANALYZE, "s-menu-analyze", analyzeUrl),
         canShowAnalyzeItem(featureFlags, workspacePermissions),
     );
 
-    const measuresUrl = measuresItemUrl(workspaceId);
+    const measuresUrl = measuresItemUrl(baseUrl, workspaceId);
     pushConditionally(
         insightItemsGroup,
         createIHeaderMenuItem(HEADER_ITEM_ID_METRICS, "s-menu-metrics", measuresUrl),
@@ -186,6 +200,7 @@ function createInsightsItemsGroup(
         workspacePermissions,
         backendSupportsDataItem,
         hasNoDataSet,
+        baseUrl,
     );
     pushConditionally(
         insightItemsGroup,
@@ -193,7 +208,7 @@ function createInsightsItemsGroup(
         canShowDataItem(featureFlags, workspacePermissions),
     );
 
-    const loadUrl = loadItemUrl(workspaceRef, workspaceId);
+    const loadUrl = loadItemUrl(baseUrl, workspaceRef, workspaceId);
     pushConditionally(
         insightItemsGroup,
         createIHeaderMenuItem(HEADER_ITEM_ID_LOAD, "s-menu-load", loadUrl),
@@ -216,18 +231,25 @@ function pushConditionally<T>(items: T[], item: T, cond: boolean) {
     }
 }
 
+const withBaseUrl = (baseUrl: string, uri: string): string =>
+    `${baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length - 2) : baseUrl}${uri}`;
+
+function homeItemUrl(workspaceId: string): string {
+    return `/workspaces/${workspaceId}/home`;
+}
+
 function manageItemUrl(workspaceRef: string, workspaceId: string): string {
     return `/#s=/gdc/${workspaceRef}s/${workspaceId}|dataPage|`;
 }
-function measuresItemUrl(workspaceId: string): string {
-    return `/metrics/#/${workspaceId}`;
+function measuresItemUrl(baseUrl: string, workspaceId: string): string {
+    return withBaseUrl(baseUrl, `/metrics/#/${workspaceId}`);
 }
 function canShowMetricsItem(hasMetrics: boolean, workspacePermissions: IWorkspacePermissions): boolean {
     return Boolean(workspacePermissions.canManageMetric === true && hasMetrics);
 }
 
-function kpisItemUrl(workspaceRef: string, workspaceId: string): string {
-    return `/dashboards/#/${workspaceRef}/${workspaceId}`;
+function kpisItemUrl(baseUrl: string, workspaceRef: string, workspaceId: string): string {
+    return withBaseUrl(baseUrl, `/dashboards/#/${workspaceRef}/${workspaceId}`);
 }
 function canShowKpisItem(
     featureFlags: ISettings,
@@ -241,8 +263,8 @@ function canShowKpisItem(
     );
 }
 
-function analyzeItemUrl(workspaceId: string): string {
-    return `/analyze/#/${workspaceId}/reportId/edit`;
+function analyzeItemUrl(baseUrl: string, workspaceId: string): string {
+    return withBaseUrl(baseUrl, `/analyze/#/${workspaceId}/reportId/edit`);
 }
 function canShowAnalyzeItem(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions): boolean {
     return Boolean(workspacePermissions.canCreateVisualization === true && featureFlags.analyticalDesigner);
@@ -254,14 +276,15 @@ function dataItemUrl(
     workspacePermissions: IWorkspacePermissions,
     backendSupportsDataItem: boolean,
     hasNoDataSet: boolean,
+    baseUrl: string,
 ): string {
     if (backendSupportsDataItem) {
-        return `/modeler/#/${workspaceId}`;
+        return withBaseUrl(baseUrl, `/modeler/#/${workspaceId}`);
     }
     if (workspacePermissions.canManageProject && hasNoDataSet) {
-        return `/admin/connect/#/${workspaceRef}s/${workspaceId}/datasource`;
+        return withBaseUrl(baseUrl, `/admin/connect/#/${workspaceRef}s/${workspaceId}/datasource`);
     }
-    return `/modeler/#/${workspaceRef}s/${workspaceId}`;
+    return withBaseUrl(baseUrl, `/modeler/#/${workspaceRef}s/${workspaceId}`);
 }
 function canShowDataItem(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions): boolean {
     return (
@@ -270,8 +293,8 @@ function canShowDataItem(featureFlags: ISettings, workspacePermissions: IWorkspa
     );
 }
 
-function loadItemUrl(workspaceRef: string, workspaceId: string): string {
-    return `/data/#/${workspaceRef}s/${workspaceId}/datasets`;
+function loadItemUrl(baseUrl: string, workspaceRef: string, workspaceId: string): string {
+    return withBaseUrl(baseUrl, `/data/#/${workspaceRef}s/${workspaceId}/datasets`);
 }
 function canShowLoadItem(
     featureFlags: ISettings,

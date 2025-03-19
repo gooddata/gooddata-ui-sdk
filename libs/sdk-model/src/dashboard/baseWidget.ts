@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { ObjRef } from "../objRef/index.js";
 import { DrillDefinition, IDrillDownReference } from "./drill.js";
 import { IDashboardFilterReference } from "./filterContext.js";
@@ -9,6 +9,7 @@ import { IDashboardFilterReference } from "./filterContext.js";
  * -  Date data set that should be used for date-filtering the data for the widget
  * -  An ignore-list containing references to dashboard attribute filters that should be ignored by
  *    the widget.
+ * -  Whether widget should ignore cross-filtering filters.
  *
  * @public
  */
@@ -22,6 +23,29 @@ export interface IFilterableWidget {
      * Date data set widget is connected to
      */
     readonly dateDataSet?: ObjRef;
+
+    /**
+     * Ignore cross-filtering filters
+     */
+    readonly ignoreCrossFiltering?: boolean;
+}
+
+/**
+ * Defines mapping between particular drill down hierarchy
+ * and attributes to ignore in the intersection during the drill down for this hierarchy.
+ *
+ * @alpha
+ */
+export interface IDrillDownIntersectionIgnoredAttributes {
+    /**
+     * Local identifiers of the attribute display forms to ignore for the drill down intersection.
+     */
+    readonly ignoredAttributes: string[];
+
+    /**
+     * Drill down hierarchy reference for which the ignored attributes are defined.
+     */
+    readonly drillDownReference: IDrillDownReference;
 }
 
 /**
@@ -41,6 +65,13 @@ export interface IDrillableWidget {
      * @alpha
      */
     readonly ignoredDrillDownHierarchies?: IDrillDownReference[];
+
+    /**
+     * List of mappings between drill down hierarchies
+     * and attributes to ignore in the intersection during the drill down for this hierarchy.
+     * @alpha
+     */
+    readonly drillDownIntersectionIgnoredAttributes?: IDrillDownIntersectionIgnoredAttributes[];
 }
 
 /**
@@ -72,6 +103,10 @@ export interface IBaseWidget {
      * @remarks see {@link BuiltInWidgetTypes} for list of built-in widget types.
      */
     readonly type: string;
+    /**
+     * Local identifier of widget
+     */
+    readonly localIdentifier?: string;
 }
 
 /**
@@ -79,4 +114,4 @@ export interface IBaseWidget {
  *
  * @alpha
  */
-export const BuiltInWidgetTypes: string[] = ["kpi", "insight"];
+export const BuiltInWidgetTypes: string[] = ["kpi", "insight", "richText", "visualizationSwitcher"];

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { PureComponent, ReactNode } from "react";
 import { injectIntl, FormattedMessage, WrappedComponentProps } from "react-intl";
 import { v4 as uuid } from "uuid";
@@ -30,20 +30,20 @@ class WrappedHeaderMenu extends PureComponent<IHeaderMenuProps & WrappedComponen
             });
 
             return (
-                <li key={item.key}>
-                    <a
-                        onClick={clickHandler} // eslint-disable-line react/jsx-no-bind
-                        href={item.href}
-                        className={classNames}
-                        target={item.target}
-                        rel={item.target === "_blank" ? "noreferrer noopener" : undefined}
-                    >
-                        {item.iconName ? <i className={cx(item.iconName, "gd-icon")} /> : null}
-                        <span className={item.className}>
-                            <FormattedMessage id={item.key} />
-                        </span>
-                    </a>
-                </li>
+                <a
+                    key={item.key}
+                    onClick={clickHandler} // eslint-disable-line react/jsx-no-bind
+                    href={item.href}
+                    className={classNames}
+                    target={item.target}
+                    rel={item.target === "_blank" ? "noreferrer noopener" : undefined}
+                >
+                    {item.icon ? item.icon : null}
+                    {item.iconName ? <i className={cx(item.iconName, "gd-icon")} /> : null}
+                    <span className={item.className}>
+                        <FormattedMessage id={item.key} />
+                    </span>
+                </a>
             );
         });
     }
@@ -51,9 +51,13 @@ class WrappedHeaderMenu extends PureComponent<IHeaderMenuProps & WrappedComponen
     renderSections(): ReactNode {
         return this.props.sections.map((items) => {
             return (
-                <ul key={`section-${uuid()}`} className="gd-header-menu-section gd-header-measure">
+                <nav
+                    aria-label={this.props.intl.formatMessage({ id: "gs.header.menu.accessibility.label" })}
+                    key={`section-${uuid()}`}
+                    className="gd-header-menu-section gd-header-measure"
+                >
                     {this.renderSection(items)}
-                </ul>
+                </nav>
             );
         });
     }

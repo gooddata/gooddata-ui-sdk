@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { ISettings, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { IHeadlineProps } from "@gooddata/sdk-ui-charts";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -113,10 +113,10 @@ export class HeadlineDescriptor implements IVisualizationDescriptor {
         }),
     });
 
-    public getMeta(): IVisualizationMeta {
+    public getMeta(settings?: ISettings): IVisualizationMeta {
         return {
             documentationUrl: "https://sdk.gooddata.com/gooddata-ui/docs/headline_component.html",
-            supportsExport: false,
+            supportsExport: settings?.enableHeadlineExport ?? true,
             supportsZooming: false,
         };
     }

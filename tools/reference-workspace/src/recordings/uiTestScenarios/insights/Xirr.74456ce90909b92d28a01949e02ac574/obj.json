@@ -7,10 +7,10 @@
                         "measure": {
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aadpHDMBecIy", "type": "measure" }
+                                    "item": { "identifier": "sample_xirr", "type": "measure" }
                                 }
                             },
-                            "localIdentifier": "m_aadpHDMBecIy"
+                            "localIdentifier": "m_sample_xirr"
                         }
                     }
                 ],

@@ -1,0 +1,134 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "attr.f_owner.salesrep", "type": "displayForm" },
+                "localIdentifier": "a_attr.f_owner.salesrep"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": {
+                    "identifier": "f_opportunitysnapshot.forecastcategory_id",
+                    "type": "displayForm"
+                },
+                "localIdentifier": "a_f_opportunitysnapshot.forecastcategory_id"
+            }
+        }
+    ],
+    "buckets": [
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa"
+                    }
+                }
+            ],
+            "localIdentifier": "measures"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "attr.f_owner.salesrep", "type": "displayForm" },
+                        "localIdentifier": "a_attr.f_owner.salesrep"
+                    }
+                }
+            ],
+            "localIdentifier": "attribute"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "f_opportunitysnapshot.forecastcategory_id",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_f_opportunitysnapshot.forecastcategory_id"
+                    }
+                }
+            ],
+            "localIdentifier": "columns",
+            "totals": [
+                {
+                    "attributeIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
+                    "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                    "type": "sum"
+                },
+                {
+                    "attributeIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
+                    "measureIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
+                    "type": "max"
+                }
+            ]
+        }
+    ],
+    "dimensions": [
+        { "itemIdentifiers": ["a_attr.f_owner.salesrep"] },
+        {
+            "itemIdentifiers": ["a_f_opportunitysnapshot.forecastcategory_id", "measureGroup"],
+            "totals": [
+                {
+                    "attributeIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
+                    "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                    "type": "sum"
+                },
+                {
+                    "attributeIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
+                    "measureIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
+                    "type": "max"
+                }
+            ]
+        }
+    ],
+    "filters": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": { "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050", "type": "measure" }
+                    }
+                },
+                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+            }
+        },
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": { "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa", "type": "measure" }
+                    }
+                },
+                "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa"
+            }
+        }
+    ],
+    "sortBy": [
+        { "attributeSortItem": { "attributeIdentifier": "a_attr.f_owner.salesrep", "direction": "asc" } }
+    ],
+    "workspace": "reference-workspace"
+}

@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-import { IMetadataObject, IMetadataObjectBase, isMetadataObject } from "../types.js";
+import { IMetadataObject, IMetadataObjectDefinition, isMetadataObject } from "../types.js";
 import { IAuditable } from "../../../base/metadata.js";
 
 /**
@@ -29,13 +29,6 @@ export interface IMeasureMetadataObjectBase {
      */
     tags?: string[];
 }
-
-/**
- * @public
- */
-export interface IMetadataObjectDefinition
-    extends Partial<IMetadataObjectBase>,
-        Partial<Pick<IMetadataObject, "id">> {}
 
 /**
  * Measure metadata object

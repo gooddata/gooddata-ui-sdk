@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import {
     IDashboardLayoutSizeByScreenSize,
     IInsight,
@@ -6,8 +6,13 @@ import {
     isInsightWidget,
     isKpiWidget,
     isRichTextWidget,
+    isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
-import { IVisualizationSizeInfo, WIDGET_DROPZONE_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
+import {
+    DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT,
+    IVisualizationSizeInfo,
+    WIDGET_DROPZONE_SIZE_INFO_DEFAULT,
+} from "@gooddata/sdk-ui-ext";
 import React, { useRef } from "react";
 import cx from "classnames";
 import {
@@ -23,8 +28,10 @@ import {
     selectWidgetsOverlayState,
     selectWidgetsModification,
     selectSectionModification,
+    selectIsInExportMode,
     selectIsExport,
     useWidgetSelection,
+    isExtendedDashboardLayoutWidget,
 } from "../../model/index.js";
 import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets/index.js";
 import { getSizeInfo, calculateWidgetMinHeight } from "../../_staging/layout/sizing.js";
@@ -34,12 +41,9 @@ import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 import {
     BaseDraggableLayoutItemSize,
     DraggableLayoutItem,
-    Hotspot,
-    ResizeOverlay,
     useDashboardDrag,
     useResizeItemStatus,
     useWidgetDragEndHandler,
-    WidthResizerHotspot,
 } from "../dragAndDrop/index.js";
 import { DashboardWidget, IDashboardWidgetProps } from "../widget/index.js";
 import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants.js";
@@ -50,6 +54,10 @@ import {
 } from "./DefaultDashboardLayoutRenderer/index.js";
 import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay.js";
 import { getRefsForSection, getRefsForItem } from "./refs.js";
+import { ResizeOverlay } from "./dragAndDrop/Resize/ResizeOverlay.js";
+import { WidthResizerHotspot } from "./dragAndDrop/Resize/WidthResizerHotspot.js";
+import { Hotspot } from "./dragAndDrop/draggableWidget/Hotspot.js";
+import { useWidgetExportData } from "../export/index.js";
 
 /**
  * Tests in KD require widget index for css selectors.
@@ -93,6 +101,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const insights = useDashboardSelector(selectInsightsMap);
     const settings = useDashboardSelector(selectSettings);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const isExportMode = useDashboardSelector(selectIsInExportMode);
     const isExport = useDashboardSelector(selectIsExport);
     const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
 
@@ -106,6 +115,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const { isSelected } = useWidgetSelection(widget.ref);
     const isRichText = isRichTextWidget(widget);
     const isRichTextWidgetInEditState = isSelected && isRichText;
+    const exportData = useWidgetExportData(widget);
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
@@ -124,7 +134,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
 
     const currentSize = item.size()[screen]!;
-    const minHeight = calculateWidgetMinHeight(widget, currentSize, insights, settings);
+    const minHeight = calculateWidgetMinHeight(item.raw(), currentSize, insights, settings, isExportMode);
     const height =
         currentSize.heightAsRatio && !currentSize.gridHeight
             ? getDashboardLayoutItemHeightForRatioAndScreen(currentSize, screen)
@@ -195,6 +205,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                     widget={widget as ExtendedDashboardWidget}
                     ErrorComponent={ErrorComponent}
                     LoadingComponent={LoadingComponent}
+                    exportData={exportData}
                 />
             </div>
 
@@ -293,7 +304,7 @@ function createDraggableItem(
         };
     } else if (isInsightWidget(widget)) {
         const insight = insights.get(widget.insight)!;
-        const sizeInfo = getSizeInfo(settings, "kpi", insight);
+        const sizeInfo = getSizeInfo(settings, "insight", insight);
 
         return {
             type: "insight",
@@ -312,6 +323,28 @@ function createDraggableItem(
             sectionIndex,
             itemIndex,
             title: widget.title,
+            isOnlyItemInSection,
+            size: getFilledSize(size, sizeInfo),
+        };
+    } else if (isVisualizationSwitcherWidget(widget)) {
+        const sizeInfo = getSizeInfo(settings, "visualizationSwitcher");
+
+        return {
+            type: "visualizationSwitcher",
+            sectionIndex,
+            itemIndex,
+            title: widget.title,
+            isOnlyItemInSection,
+            size: getFilledSize(size, sizeInfo),
+        };
+    } else if (isExtendedDashboardLayoutWidget(widget)) {
+        const sizeInfo = DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT;
+
+        return {
+            type: "dashboardLayout",
+            sectionIndex,
+            itemIndex,
+            title: "",
             isOnlyItemInSection,
             size: getFilledSize(size, sizeInfo),
         };

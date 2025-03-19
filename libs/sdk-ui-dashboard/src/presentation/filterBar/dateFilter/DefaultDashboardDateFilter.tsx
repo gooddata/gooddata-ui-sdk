@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -8,7 +8,11 @@ import {
     IDateFilterProps,
     IFilterConfigurationProps,
 } from "@gooddata/sdk-ui-filters";
-import { areObjRefsEqual, DashboardDateFilterConfigModeValues } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    DashboardDateFilterConfigModeValues,
+    DateFilterGranularity,
+} from "@gooddata/sdk-model";
 
 import { dateFilterOptionToDashboardDateFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
@@ -17,7 +21,8 @@ import { IDashboardDateFilterProps } from "./types.js";
 import {
     selectBackendCapabilities,
     selectCatalogDateDatasets,
-    selectIsEmbedded,
+    selectDashboardFiltersApplyMode,
+    selectEnableDashboardFiltersApplyModes,
     selectIsInEditMode,
     selectLocale,
     selectSettings,
@@ -43,15 +48,17 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const isEmbedded = useDashboardSelector(selectIsEmbedded);
     const weekStart = useDashboardSelector(selectWeekStart);
-    const { filter, onFilterChanged, config, readonly, autoOpen } = props;
+    const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+    const { filter, workingFilter, onFilterChanged, config, readonly, autoOpen } = props;
 
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     let defaultDateFilterName: string;
     if (filter?.dateFilter.dataSet) {
         const dateDataSetName = allDateDatasets.find((ds) =>
             areObjRefsEqual(ds.dataSet.ref, filter?.dateFilter.dataSet),
-        )!.dataSet.title;
-        defaultDateFilterName = config.customFilterName ?? dateDataSetName;
+        )?.dataSet?.title;
+        defaultDateFilterName = config.customFilterName ?? dateDataSetName ?? "";
     } else {
         defaultDateFilterName =
             config.customFilterName ?? intl.formatMessage({ id: "dateFilterDropdown.title" });
@@ -67,12 +74,33 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             ),
         [filter, config.dateFilterOptions, lastSelectedOptionId],
     );
+    const { dateFilterOption: workingFilterOption, excludeCurrentPeriod: workingExcludeCurrentPeriod } =
+        useMemo(
+            () =>
+                matchDateFilterToDateFilterOptionWithPreference(
+                    workingFilter,
+                    config.dateFilterOptions,
+                    lastSelectedOptionId,
+                ),
+            [workingFilter, config.dateFilterOptions, lastSelectedOptionId],
+        );
     const onApply = useCallback<IDateFilterProps["onApply"]>(
         (option, exclude) => {
             setLastSelectedOptionId(option.localIdentifier);
             onFilterChanged(
                 dateFilterOptionToDashboardDateFilter(option, exclude, filter?.dateFilter.dataSet),
                 option.localIdentifier,
+            );
+        },
+        [onFilterChanged, filter?.dateFilter.dataSet],
+    );
+    const onSelect = useCallback<NonNullable<IDateFilterProps["onSelect"]>>(
+        (option, exclude) => {
+            setLastSelectedOptionId(option.localIdentifier);
+            onFilterChanged(
+                dateFilterOptionToDashboardDateFilter(option, exclude, filter?.dateFilter.dataSet),
+                option.localIdentifier,
+                true,
             );
         },
         [onFilterChanged, filter?.dateFilter.dataSet],
@@ -87,6 +115,14 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
         !!capabilities.supportsHiddenAndLockedFiltersOnUI,
         intl,
     );
+
+    const hoursMinutesGranularities: DateFilterGranularity[] = ["GDC.time.minute", "GDC.time.hour"];
+    const hasHoursMinutesGranularities = hoursMinutesGranularities.every((granularity) =>
+        config.availableGranularities.includes(granularity),
+    );
+
+    const isTimeForAbsoluteRangeEnabled =
+        !!capabilities.supportsTimeGranularities && hasHoursMinutesGranularities;
 
     const isConfigurationEnabled =
         isInEditMode &&
@@ -109,6 +145,10 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
         <DateFilter
             excludeCurrentPeriod={excludeCurrentPeriod}
             selectedFilterOption={dateFilterOption}
+            workingExcludeCurrentPeriod={
+                enableDashboardFiltersApplyModes ? workingExcludeCurrentPeriod : undefined
+            }
+            workingSelectedFilterOption={enableDashboardFiltersApplyModes ? workingFilterOption : undefined}
             dateFilterMode={
                 readonly
                     ? DashboardDateFilterConfigModeValues.READONLY
@@ -118,9 +158,10 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             availableGranularities={config.availableGranularities}
             customFilterName={title}
             onApply={onApply}
+            onSelect={enableDashboardFiltersApplyModes ? onSelect : undefined}
             dateFormat={dateFormat}
             locale={locale}
-            isTimeForAbsoluteRangeEnabled={!!capabilities.supportsTimeGranularities}
+            isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
             isEditMode={isInEditMode}
             isEmbedded={isEmbedded}
             openOnInit={autoOpen}
@@ -128,6 +169,8 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             customIcon={visibilityIcon}
             showDropDownHeaderMessage={!filter?.dateFilter.dataSet}
             FilterConfigurationComponent={isConfigurationEnabled ? FilterConfigurationComponent : undefined}
+            withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes}
+            enableDashboardFiltersApplyModes={enableDashboardFiltersApplyModes}
         />
     );
 };

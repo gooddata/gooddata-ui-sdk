@@ -1,7 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+
+import React from "react";
 
 import { IIconProps } from "./typings.js";
-
 import { Book } from "./icons/Book.js";
 import { Lock } from "./icons/Lock.js";
 import { Refresh } from "./icons/Refresh.js";
@@ -26,6 +27,8 @@ import { AttributeFilter } from "./icons/AttributeFilter.js";
 import { LegendMenu } from "./icons/LegendMenu.js";
 import { ArrowDown } from "./icons/ArrowDown.js";
 import { ArrowUp } from "./icons/ArrowUp.js";
+import { ArrowLeft } from "./icons/ArrowLeft.js";
+import { ArrowRight } from "./icons/ArrowRight.js";
 import { Attribute } from "./icons/Attribute.js";
 import { Close } from "./icons/Close.js";
 import { Dataset } from "./icons/Dataset.js";
@@ -79,6 +82,34 @@ import { RichText } from "./icons/RichText.js";
 import { DataSource } from "./icons/DataSource.js";
 import { User } from "./icons/User.js";
 import { UserGroup } from "./icons/UserGroup.js";
+import { Repeater } from "./icons/InsightIcons/Repeater.js";
+import { Image } from "./icons/Image.js";
+import { Hash } from "./icons/Hash.js";
+import { Magic } from "./icons/Magic.js";
+import { Webhook } from "./icons/Webhook.js";
+import { Schedule } from "./icons/Schedule.js";
+import { Website } from "./icons/Website.js";
+import { Widget } from "./icons/Widget.js";
+import { SimplifiedDashboard } from "./icons/SimplifiedDashboard.js";
+import { HistoryBack } from "./icons/HistoryBack.js";
+import { Alert } from "./icons/Alert.js";
+import { AlertPaused } from "./icons/AlertPaused.js";
+import { Ellipsis } from "./icons/Ellipsis.js";
+import { Warning } from "./icons/Warning.js";
+import { Email } from "./icons/Email.js";
+import { VisualizationSwitcher } from "./icons/VisualizationSwitcher.js";
+import { Trash } from "./icons/Trash.js";
+import { GenAI } from "./icons/GenAI.js";
+import { Search } from "./icons/Search.js";
+import { NewVisualization } from "./icons/NewVisualization.js";
+import { ChatBubble } from "./icons/ChatBubble.js";
+import { Container } from "./icons/Container.js";
+import { ThumbsUp } from "./icons/ThumbsUp.js";
+import { ThumbsDown } from "./icons/ThumbsDown.js";
+import { SmallDragHandle } from "./icons/SmallDragHandle.js";
+import { Header } from "./icons/Header.js";
+import { Save } from "./icons/Save.js";
+import { Edit } from "./icons/Edit.js";
 
 /**
  * @internal
@@ -109,6 +140,8 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     LegendMenu,
     ArrowDown,
     ArrowUp,
+    ArrowLeft,
+    ArrowRight,
     Attribute,
     Close,
     Dataset,
@@ -158,9 +191,37 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Pyramid,
     Funnel,
     RichText,
+    VisualizationSwitcher,
     DataSource,
     User,
     UserGroup,
+    Repeater,
+    Image,
+    Hash,
+    Magic,
+    Webhook,
+    Schedule,
+    Website,
+    Widget,
+    SimplifiedDashboard,
+    HistoryBack,
+    Alert,
+    AlertPaused,
+    Ellipsis,
+    Warning,
+    Email,
+    Trash,
+    GenAI,
+    Search,
+    NewVisualization,
+    ChatBubble,
+    Container,
+    ThumbsUp,
+    ThumbsDown,
+    SmallDragHandle,
+    Header,
+    Save,
+    Edit,
 };
 
-export { IRowsIconProps, IColumnsIconProps };
+export type { IRowsIconProps, IColumnsIconProps };

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 /**
  * Mocking FeatureHub request to remove dependency on it
@@ -21,6 +21,31 @@ beforeEach(() => {
                         type: "BOOLEAN",
                         value: true,
                         strategies: [],
+                    },
+                    {
+                        id: "d154cf37-9ffe-4cae-b892-123678340327",
+                        key: "enableWidgetIdentifiersRollout",
+                        l: false,
+                        version: 42,
+                        type: "BOOLEAN",
+                        value: true,
+                        strategies: [],
+                    },
+                    {
+                        id: "cfcd98dd-00ff-465b-8bb6-c65f69306afe",
+                        key: "enableCriticalContentPerformanceOptimizations",
+                        l: false,
+                        version: 4,
+                        type: "BOOLEAN",
+                        value: true,
+                    },
+                    {
+                        id: "75c7f72d-34f8-43b1-adab-64a84f2a7fde",
+                        key: "enableDashboardAfterRenderDetection",
+                        l: false,
+                        version: 1,
+                        type: "BOOLEAN",
+                        value: true,
                     },
                 ],
             },

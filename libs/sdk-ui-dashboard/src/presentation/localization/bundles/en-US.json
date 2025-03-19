@@ -24,11 +24,6 @@
         "comment": "",
         "limit": 0
     },
-    "gs.list.only": {
-        "value": "Only",
-        "comment": "",
-        "limit": 0
-    },
     "messages.dashboardSaveSuccess": {
         "value": "Great. We saved your dashboard.",
         "comment": "",
@@ -45,7 +40,7 @@
         "limit": 0
     },
     "messages.dashboardSaveFailed": {
-        "value": "Failed to save dashboard, please try again.",
+        "value": "Dashboard save failed. Remove any unavailable visualizations, then try again, or contact your administrator.",
         "comment": "",
         "limit": 0
     },
@@ -122,19 +117,109 @@
         "comment": "",
         "limit": 0
     },
-    "options.menu.export.PDF": {
+    "filterBar.unappliedFiltersNotification": {
+        "value": "<link>Apply filters</link> to see updated data.",
+        "comment": "Message banner. Some filters are changed by user but not applied yet. Do not translate HTML markup enclosed in <>.",
+        "limit": 0
+    },
+    "filterBar.executionTimestampNotificationMessage": {
+        "value": "<bold>Note.</bold> You're viewing up-to-date data, but for any relative date filters the dashboard treats {date} as “today.”",
+        "comment": "Message banner describing dashboard with specific data timestamp. Don't translate placeholders enclosed in '{}'.",
+        "limit": 0
+    },
+    "filterBar.executionTimestampNotificationAction": {
+        "value": "<link>Reset to today</link>",
+        "comment": "Do not translate HTML markup enclosed in <>.",
+        "limit": 0
+    },
+    "options.menu.export": {
+        "value": "Export",
+        "comment": "Export submenu",
+        "limit": 0
+    },
+    "options.menu.export.header.data": {
+        "value": "Data",
+        "comment": "Export submenu for data",
+        "limit": 0
+    },
+    "options.menu.export_to_pdf": {
         "value": "Export to PDF",
         "comment": "Export whole KPI dashboard to PDF",
         "limit": 0
     },
+    "options.menu.export.PDF": {
+        "value": "Snapshot (PDF)",
+        "comment": "Export whole KPI dashboard to PDF",
+        "limit": 0
+    },
+    "options.menu.export.EXCEL": {
+        "value": "Data (XLSX)",
+        "comment": "Export whole KPI dashboard to EXCEL",
+        "limit": 0
+    },
+    "options.menu.export.presentation.PPTX": {
+        "value": "Slide Deck (PPTX)",
+        "comment": "Export whole KPI dashboard to PowerPoint",
+        "limit": 0
+    },
+    "options.menu.export.presentation.PDF": {
+        "value": "Slide Deck (PDF)",
+        "comment": "Export whole KPI dashboard to PowerPoint",
+        "limit": 0
+    },
+    "options.menu.export.presentation.unsupported.oldWidget": {
+        "value": "Unable to export. Please resave the dashboard or contact your administrator.",
+        "comment": "Message that explains that old widget cannot be exported without resaving the dashboard",
+        "limit": 0
+    },
+    "options.menu.export.in.progress": {
+        "value": "Export is in progress. Wait until it is finished before exporting again.",
+        "comment": "Export whole KPI dashboard to PowerPoint",
+        "limit": 0
+    },
     "options.menu.schedule.email": {
-        "value": "Schedule emailing",
+        "value": "Schedule export",
         "comment": "Translate as imperative. Schedule emailing whole KPI dashboard",
+        "limit": 0
+    },
+    "options.menu.schedule.email.tooltip": {
+        "value": "No destination available. To schedule an export, <a>create destination</a>.",
+        "comment": "Do not translate html tags <a>, </a>",
+        "limit": 0
+    },
+    "options.menu.schedule.email.edit": {
+        "value": "Show schedules",
+        "comment": "Translate as imperative. Schedule emailing edit whole KPI dashboard",
+        "limit": 0
+    },
+    "options.menu.schedule.email.edit.noCreatePermissions": {
+        "value": "Scheduled exports",
+        "comment": "Translate as imperative. Schedule emailing edit whole KPI dashboard, without create permissions.",
+        "limit": 0
+    },
+    "options.menu.alerts.edit": {
+        "value": "Show alerts",
+        "comment": "Translate as imperative. Schedule alerts for dashboard or widget",
+        "limit": 0
+    },
+    "options.menu.alerts.edit.noCreatePermissions": {
+        "value": "Alerts",
+        "comment": "Translate as imperative. Schedule alerts for dashboard or widget, without create permissions.",
         "limit": 0
     },
     "options.menu.delete": {
         "value": "Delete",
         "comment": "Delete Dashboard",
+        "limit": 0
+    },
+    "options.menu.addFilterViews": {
+        "value": "Create view",
+        "comment": "Open menu with dialog with form to create a new filter view.",
+        "limit": 0
+    },
+    "options.menu.listFilterViews": {
+        "value": "Show my views",
+        "comment": "Open menu with my saved filter views.",
         "limit": 0
     },
     "dialogs.export.cells": {
@@ -253,23 +338,48 @@
         "comment": "",
         "limit": 0
     },
-    "deleteDashboardDialog.alertsAndEmailsMessage": {
-        "value": "All alerts and scheduled emails set up for this dashboard will also be deleted.",
+    "deleteDashboardDialog.defaultMessage": {
+        "value": "Are you sure you want to delete dashboard {title}?",
+        "comment": "Do not translate placeholder {title}",
+        "limit": 0
+    },
+    "deleteDashboardDialog.objectsMessage": {
+        "value": "Following objects associated with the dashboard {title} will be permanently deleted:",
+        "comment": "Do not translate placeholder {title}",
+        "limit": 0
+    },
+    "deleteDashboardDialog.alerts": {
+        "value": "alerts",
         "comment": "",
         "limit": 0
     },
-    "deleteDashboardDialog.alertsMessage": {
-        "value": "All alerts set up for this dashboard will also be deleted.",
+    "deleteDashboardDialog.schedules": {
+        "value": "scheduled exports",
         "comment": "",
         "limit": 0
     },
-    "deleteDashboardDialog.emailsMessage": {
-        "value": "All scheduled emails set up for this dashboard will also be deleted.",
+    "deleteDashboardDialog.drills": {
+        "value": "drilling",
         "comment": "",
         "limit": 0
     },
-    "deleteDashboardDialog.drillMessage": {
-        "value": "All drilling into this dashboard from other dashboards will be removed.",
+    "deleteWidgetDialog.headline": {
+        "value": "Remove widget?",
+        "comment": "",
+        "limit": 0
+    },
+    "deleteWidgetDialog.objectsMessage": {
+        "value": "Following types objects associated with the widget {title} will no longer work:",
+        "comment": "Do not translate placeholder {title}",
+        "limit": 0
+    },
+    "deleteWidgetDialog.alerts": {
+        "value": "alerts",
+        "comment": "",
+        "limit": 0
+    },
+    "deleteWidgetDialog.schedules": {
+        "value": "scheduled exports",
         "comment": "",
         "limit": 0
     },
@@ -301,51 +411,6 @@
     "drillModal.backToTop": {
         "value": "Back to top",
         "comment": "",
-        "limit": 0
-    },
-    "filters.allTime.previousPeriod": {
-        "value": "prev. period",
-        "comment": "",
-        "limit": 0
-    },
-    "filters.allTime.lastYear": {
-        "value": "prev. year",
-        "comment": "",
-        "limit": 0
-    },
-    "filters.minute.previousPeriod": {
-        "value": "prev. minute",
-        "comment": "",
-        "limit": 0
-    },
-    "filters.hour.previousPeriod": {
-        "value": "prev. hour",
-        "comment": "",
-        "limit": 0
-    },
-    "filters.day.previousPeriod": {
-        "value": "prev. {n, plural, one {day} other {#d}}",
-        "comment": "In '{n, plural, one {DAY} other {#D}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#d}', wrong '{#d.}').",
-        "limit": 0
-    },
-    "filters.week.previousPeriod": {
-        "value": "prev. {n, plural, one {week} other {#w}}",
-        "comment": "In '{n, plural, one {WEEK} other {#W}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#w}', wrong '{#w.}').",
-        "limit": 0
-    },
-    "filters.month.previousPeriod": {
-        "value": "prev. {n, plural, one {month} other {#m}}",
-        "comment": "In '{n, plural, one {MONTH} other {#M}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#m}', wrong '{#m.}').",
-        "limit": 0
-    },
-    "filters.quarter.previousPeriod": {
-        "value": "prev. {n, plural, one {quarter} other {#q}}",
-        "comment": "In '{n, plural, one {QUARTER} other {#Q}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#q}', wrong '{#q.}').",
-        "limit": 0
-    },
-    "filters.year.previousPeriod": {
-        "value": "prev. {n, plural, one {year} other {#y}}",
-        "comment": "In '{n, plural, one {YEAR} other {#Y}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#y}', wrong '{#y.}').",
         "limit": 0
     },
     "filters.alertMessage.relativePreset": {
@@ -394,176 +459,138 @@
         "limit": 0
     },
     "filters.configurationPanel.header": {
-        "value": "Configuration",
-        "comment": "Cross-filtering configuration panel - header.",
-        "limit": 0
-    },
-    "filters.configurationPanel.sectionHeader.interactions": {
-        "value": "Interactions",
-        "comment": "Cross-filtering configuration panel - interactions sub section header.",
+        "value": "Filters Configuration",
+        "comment": "Filtering configuration panel - header.",
         "limit": 0
     },
     "filters.configurationPanel.crossFiltering.toggle": {
         "value": "Cross-filtering",
-        "comment": "Cross-filtering configuration panel - label for toggle that disables or enables cross-filtering.",
+        "comment": "Filters Configuration - label for toggle that disables or enables cross-filtering.",
         "limit": 0
     },
-
-    "kpi.noData": {
-        "value": "No data for current filter settings. Try changing the filters.",
-        "comment": "",
+    "filters.configurationPanel.crossFiltering.toggle.tooltip": {
+        "value": "Allow users to filter the dashboard by clicking data points in visualizations.",
+        "comment": "Filters Configuration - tooltip for toggle that disables or enables cross-filtering.",
         "limit": 0
     },
-    "kpiPop.change": {
-        "value": "change",
-        "comment": "",
+    "filters.configurationPanel.userFilterReset.toggle": {
+        "value": "Reset",
+        "comment": "Filters Configuration - label for toggle that disables or enables user reset of filters.",
         "limit": 0
     },
-    "dialogs.schedule.email.filters": {
-        "value": "Dashboard contains filter changes that will be saved in the schedule.",
-        "comment": "",
+    "filters.configurationPanel.userFilterReset.toggle.tooltip": {
+        "value": "Allow users to reset all filters to default.",
+        "comment": "Filters Configuration - tooltip for toggle that disables or enables user reset of filters.",
         "limit": 0
     },
-    "dialogs.schedule.email.filters.not.saved": {
-        "value": "Dashboard filters saved in the schedule will not be affected.",
-        "comment": "",
+    "filters.configurationPanel.userFilterSave.toggle": {
+        "value": "Auto-save last state",
+        "comment": "Filters Configuration - label for toggle that disables or enables user save of filters.",
         "limit": 0
     },
-    "dialogs.schedule.email.attachment.filter": {
-        "value": "(with currently set filters)",
-        "comment": "Keep the parentheses. Attachment with filters included.",
+    "filters.configurationPanel.userFilterSave.toggle.tooltip": {
+        "value": "Allow auto-save of the filters' last state. When users return, their filters will remain as they left them.",
+        "comment": "Filters Configuration - tooltip for toggle that disables or enables user save of filters.",
         "limit": 0
     },
-    "dialogs.schedule.email.attachment.label": {
-        "value": "Attachment:",
-        "comment": "Attachment of the scheduled email.",
+    "filters.configurationPanel.filterViews.toggle": {
+        "value": "Saved views",
+        "comment": "Filters Configuration - label for toggle that disables or enables filter views.",
+        "limit": 0
+    },
+    "filters.configurationPanel.filterViews.toggle.tooltip": {
+        "value": "<p>Allows users to save filters state as a personal views they can return to later.</p><p>Only the user who saved the view can access it and set it as their default view.</p>",
+        "comment": "Filters Configuration - tooltip for toggle that disables or enables filter views. Do not translate <p> and </p> tags.",
         "limit": 0
     },
     "dialogs.schedule.email.attachments.label": {
-        "value": "Attachments:",
+        "value": "Attachments",
         "comment": "Attachments of the scheduled email.",
         "limit": 0
     },
-    "dialogs.schedule.email.attachment.select": {
-        "value": "Select attachments",
-        "comment": "Label of a button that opens attachment selection",
+    "dialogs.schedule.email.title.placeholder": {
+        "value": "Untitled schedule",
+        "comment": "Placeholder for schedule title input",
         "limit": 0
     },
-    "dialogs.schedule.email.attachment.select.disabled.message|insight": {
-        "value": "This dashboard does not contain any insights.",
-        "comment": "Message for button to add insights to the export, if there are no insights.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.attachment.select.disabled.message|report": {
-        "value": "This dashboard does not contain any reports.",
-        "comment": "Message for button to add reports to the export, if there are no reports.",
-        "limit": 0,
-        "translate": false
-    },
-    "dialogs.schedule.email.attachment.select.dashboard.header": {
-        "value": "Dashboard (PDF)",
-        "comment": "Heading of checkbox that selects dashboard to be exported in PDF file format",
-        "limit": 0
-    },
-    "dialogs.schedule.email.attachment.select.widgets.header|report": {
-        "value": "Reports (CSV, XLSX)",
-        "comment": "Heading of section of checkboxes for selecting reports to be exported as CSV of XLSX file",
-        "limit": 0,
-        "translate": false
-    },
-    "dialogs.schedule.email.attachment.select.widgets.header|insight": {
-        "value": "Insights (CSV, XLSX)",
-        "comment": "Heading of section of checkboxes for selecting insights to be exported as CSV of XLSX file",
-        "limit": 0
-    },
-    "dialogs.schedule.email.headline": {
-        "value": "Schedule email delivery",
-        "comment": "Translate as imperative. Schedule emailing whole KPI dashboard.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.heading": {
-        "value": "Schedule export",
-        "comment": "Translate as imperative. Schedule exporting whole dashboard and insights",
+    "dialogs.schedule.accessibility.label.email.title": {
+        "value": "Schedule name",
+        "comment": "",
         "limit": 0
     },
     "dialogs.schedule.email.message.label": {
-        "value": "Message:",
+        "value": "Message",
         "comment": "Message of the scheduled email.",
         "limit": 0
     },
-    "dialogs.schedule.email.unsubscribed.recipients": {
-        "value": "{n, plural, one {1 recipient unsubscribed} other {# recipients unsubscribed}} from this schedule.",
-        "comment": "Translate only 'recipient unsubscribed'/'recipients unsubscribed' and 'from this schedule.' to form a proper sentence with correct plural form for given language",
+    "dialogs.schedule.email.max.recipients": {
+        "value": "You can select up to {maxRecipients} recipients.",
+        "comment": "Message for recipients input when the maximum number of recipients is reached",
         "limit": 0
     },
-    "dialogs.schedule.email.repeats.label": {
-        "value": "Repeats:",
-        "comment": "Count of repeats of the scheduled email.",
+    "dialogs.schedule.email.min.recipients": {
+        "value": "There must be at least one recipient.",
+        "comment": "Message for recipients input when the minimum number of recipients is reached",
         "limit": 0
     },
-    "dialogs.schedule.email.repeats.execute.on.dayOfMonth": {
-        "value": "on day {date}",
-        "comment": "Example 'on day 2 of January'. Placeholder '{date}' refers to ordinal number of day of the month. Don't translate placeholder '{date}'.",
+    "dialogs.schedule.email.user.missing.email": {
+        "value": "This user is missing an email address.",
+        "comment": "Message for recipients input when a user is missing an email address.",
         "limit": 0
     },
-    "dialogs.schedule.email.repeats.execute.on.dayOfWeek": {
-        "value": "on the {week, select, 1 {first} 2 {second} 3 {third} 4 {fourth} other {last}} {day}",
-        "comment": "Example: 'on the first Friday'. Translate only uppercase in 'ON THE {week, select, 1 {FIRST} 2 {SECOND} 3 {THIRD} 4 {FOURTH} other {LAST}} {day}'",
+    "dialogs.schedule.email.user.invalid.external": {
+        "value": "This user does not have access to the dashboard.",
+        "comment": "Message for recipients input when a user is external and not allowed.",
         "limit": 0
     },
-    "dialogs.schedule.email.repeats.every": {
-        "value": "every",
-        "comment": "Example 'every 1 month'. FIXME: This needs to be split into variants 'every day', 'every week', ... since some languages uses different gramatical gender for the 'every' based on the subject.",
+    "dialogs.schedule.email.user.used.external": {
+        "value": "The email “{email}” does not belong to this workspace. The recipient may receive sensitive data.",
+        "comment": "Message for recipients input when a user is external and allowed.",
         "limit": 0
     },
-    "dialogs.schedule.email.repeats.frequencies.day": {
-        "value": "{n, plural, one {day} other {days}}",
-        "comment": "Translate only uppercase in '{n, plural, one {DAY} other {DAYS}}'.",
+    "dialogs.schedule.email.user.warning.external": {
+        "value": "This email address does not belong to this workspace. The recipient may receive sensitive data.",
+        "comment": "Message for recipients input when a user is external",
         "limit": 0
     },
-    "dialogs.schedule.email.repeats.frequencies.month": {
-        "value": "{n, plural, one {month} other {months}}",
-        "comment": "Translate only uppercase in '{n, plural, one {MONTH} other {MONTHS}}'.",
+    "dialogs.schedule.email.user.unknown": {
+        "value": "This is an unknown user and cannot be added as a recipient.",
+        "comment": "Message for recipients input when a user is unknown",
         "limit": 0
     },
-    "dialogs.schedule.email.repeats.frequencies.week": {
-        "value": "{n, plural, one {week} other {weeks}}",
-        "comment": "Translate only uppercase in '{n, plural, one {WEEK} other {WEEKS}}'.",
+    "dialogs.schedule.email.user.notMe": {
+        "value": "This user is not allowed. There can be only you as a recipient.",
+        "comment": "Message for recipients input when a user is not allowed",
         "limit": 0
     },
-    "dialogs.schedule.email.repeats.types.custom": {
-        "value": "Custom",
-        "comment": "Repeats the schedule email using custom rules defined by the user.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.types.daily": {
-        "value": "Daily",
-        "comment": "Repeats the schedule email daily.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.types.monthly": {
-        "value": "Monthly on the {week, select, 1 {first} 2 {second} 3 {third} 4 {fourth} other {last}} {day}",
-        "comment": "Example: 'Monthly on the first Friday'. Translate only uppercase in 'MONTHLY ON THE {week, select, 1 {FIRST} 2 {SECOND} 3 {THIRD} 4 {FOURTH} other {LAST}} {day}'",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.types.weekly": {
-        "value": "Weekly on {day}",
-        "comment": "Example: 'Weekly on Friday'. Placeholder '{day}' refers to a day of a week. Don't translate placeholder '{day}'.",
+    "dialogs.schedule.email.user.guest": {
+        "value": "(guest)",
+        "comment": "Guest user label",
         "limit": 0
     },
     "dialogs.schedule.email.subject.label": {
-        "value": "Subject:",
+        "value": "Subject",
         "comment": "Subject of the schedule email.",
         "limit": 0
     },
-    "dialogs.schedule.email.time.label": {
-        "value": "First occurrence:",
-        "comment": "Translate as imperative. Date time of the schedule email.",
+    "dialogs.schedule.email.to.label": {
+        "value": "To",
+        "comment": "Emails of the schedule email.",
         "limit": 0
     },
-    "dialogs.schedule.email.to.label": {
-        "value": "To:",
-        "comment": "Emails of the schedule email.",
+    "dialogs.schedule.email.destination": {
+        "value": "Destination",
+        "comment": "Way how to send automated schedule",
+        "limit": 0
+    },
+    "dialogs.schedule.email.destination.missing": {
+        "value": "No destination available.",
+        "comment": "Title when no destination is created",
+        "limit": 0
+    },
+    "dialogs.schedule.email.destination.help": {
+        "value": "Create destination",
+        "comment": "Title of the help link for destination creation",
         "limit": 0
     },
     "dialogs.schedule.email.message.placeholder": {
@@ -571,9 +598,19 @@
         "comment": "Don't translate '\n\n' which adds 2 new lines to the text.",
         "limit": 0
     },
-    "dialogs.schedule.email.submit": {
-        "value": "Schedule",
-        "comment": "Translate as imperative. Submit the schedule config form.",
+    "dialogs.schedule.email.create": {
+        "value": "Create",
+        "comment": "Translate as imperative. Create the schedule by submitting form.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.footer.title": {
+        "value": "How to schedule export?",
+        "comment": "Title of a link to documentation",
+        "limit": 0
+    },
+    "dialogs.schedule.email.footer.title.short": {
+        "value": "Help",
+        "comment": "Title of a link to documentation",
         "limit": 0
     },
     "dialogs.schedule.email.save": {
@@ -581,30 +618,14 @@
         "comment": "Translate as imperative. It's caption of a button for saving scheduled mail",
         "limit": 0
     },
-    "dialogs.schedule.email.format.options": {
-        "value": "Format options",
-        "comment": "Header of a formatting dialog. Not an imperative!",
+    "dialogs.schedule.email.widgetError": {
+        "value": "The alert is not working because the source widget was deleted. Delete the alert or contact your administrator.",
+        "comment": "Invalid schedule error message",
         "limit": 0
     },
-    "dialogs.schedule.email.insight.format|insight": {
-        "value": "Insight format:",
-        "comment": "Label of a dropdown for selecting export format",
-        "limit": 0
-    },
-    "dialogs.schedule.email.insight.format|report": {
-        "value": "Report format:",
-        "comment": "Label of a dropdown for selecting export format",
-        "limit": 0,
-        "translate": false
-    },
-    "dialogs.schedule.email.attribute.merged": {
-        "value": "Keep attribute cells merged",
-        "comment": "Label of a checkbox field",
-        "limit": 0
-    },
-    "dialogs.schedule.email.show.filters": {
-        "value": "Show what filters are applied",
-        "comment": "Label of a checkbox field",
+    "dialogs.schedule.email.destinationWarning": {
+        "value": "The selected destination only supports sending the export to yourself.",
+        "comment": "Schedule warning message",
         "limit": 0
     },
     "dialogs.schedule.management.title": {
@@ -627,57 +648,80 @@
         "comment": "Do not translate html tags <b>, </b>",
         "limit": 0
     },
+    "dialogs.schedule.management.list.title": {
+        "value": "Your scheduled exports",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.schedule.management.create": {
+        "value": "Create",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.schedule.management.create.tooManyMessage": {
+        "value": "Your organization has reached the limit of scheduled exports. Contact your administrator to create more.",
+        "comment": "",
+        "limit": 0
+    },
     "dialogs.schedule.management.noSchedules": {
-        "value": "The dashboard contains no scheduled exports.{br}Add one now.",
+        "value": "There are no scheduled exports.{br}Create new.",
         "comment": "",
         "limit": 0
     },
-    "dialogs.schedule.management.noSchedules.byUser": {
-        "value": "You have not scheduled any exports yet.{br}Add one now.",
-        "comment": "",
+    "dialogs.schedule.management.attachments.xlsx.settings": {
+        "value": "XLSX options",
+        "comment": "Do not translate format 'XLSX'",
         "limit": 0
     },
-    "dialogs.schedule.management.addSchedule": {
-        "value": "Add schedule",
-        "comment": "",
+    "dialogs.schedule.management.attachments.cells.merged": {
+        "value": "Keep attribute cells merged",
+        "comment": "Label of a checkbox field",
         "limit": 0
     },
-    "dialogs.schedule.management.recipients": {
-        "value": "{n, plural, one {# recipient} other {# recipients}}",
-        "comment": "Translate only uppercase in '{n, plural, one {# RECIPIENT} other {# RECIPIENTS}}'.",
+    "dialogs.schedule.management.attachments.filters.title": {
+        "value": "Dashboard filters",
+        "comment": "Title of dropdown for selected type of dashboard filters for attachment",
         "limit": 0
     },
-    "dialogs.schedule.management.recipients.onlyYou": {
-        "value": "Only you",
-        "comment": "There is no other recipient than you.",
+    "dialogs.schedule.management.attachments.filters.using": {
+        "value": "using",
+        "comment": "Describes which filters will be used in the attachment",
         "limit": 0
     },
-    "dialogs.schedule.management.attachments.dashboard": {
-        "value": "Dashboard",
-        "comment": "Type of attachment.",
+    "dialogs.schedule.management.attachments.filters.default": {
+        "value": "default dashboard filters",
+        "comment": "Attachment filters type title",
         "limit": 0
     },
-    "dialogs.schedule.management.attachments.widgets|insight": {
-        "value": "{n, plural, one {# insight} other {# insights}}",
-        "comment": "Translate only uppercase in '{n, plural, one {# INSIGHT} other {# INSIGHTS}}'.",
+    "dialogs.schedule.management.attachments.filters.edited": {
+        "value": "edited dashboard filters",
+        "comment": "Attachment filters type title",
         "limit": 0
     },
-    "dialogs.schedule.management.attachments.widgets|report": {
-        "value": "{n, plural, one {# report} other {# reports}}",
-        "comment": "Translate only uppercase in '{n, plural, one {# REPORT} other {# REPORTS}}'.",
-        "limit": 0,
-        "translate": false
-    },
-    "dialogs.schedule.management.attachments.mixed|insight": {
-        "value": "Dashboard and {n, plural, one {# insight} other {# insights}}",
-        "comment": "In '{n, plural, one {# INSIGHT} other {# INSIGHTS}}', translate only uppercase words.",
+    "dialogs.schedule.management.attachments.filters.item.default": {
+        "value": "Use default filters",
+        "comment": "Attachment filters type item",
         "limit": 0
     },
-    "dialogs.schedule.management.attachments.mixed|report": {
-        "value": "Dashboard and {n, plural, one {# report} other {# reports}}",
-        "comment": "In '{n, plural, one {# REPORT} other {# REPORTS}}', translate only uppercase words.",
-        "limit": 0,
-        "translate": false
+    "dialogs.schedule.management.attachments.filters.item.edited": {
+        "value": "Use edited filters",
+        "comment": "Attachment filters type item",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.filters.item.tooltip": {
+        "value": "Default state of dashboard filters will be used in the scheduled export, even if the default values change in the future.",
+        "comment": "Attachment filters type tooltip",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.filters.item.tooltip.disabled": {
+        "value": "To schedule an export with default filters, create a new scheduled export.",
+        "comment": "Attachment filters type tooltip when filter option is disabled",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.message": {
+        "value": "<strong>Note</strong>. Cross-filtering will not be applied in the scheduled export.",
+        "comment": "Message about used filters. Do not translate HTML tags.",
+        "limit": 0
     },
     "dialogs.schedule.management.load.error": {
         "value": "Failed to load. Try again later.",
@@ -689,34 +733,99 @@
         "comment": "",
         "limit": 0
     },
-    "dialogs.schedule.management.tab.all": {
-        "value": "all",
+    "dialogs.alerting.management.title": {
+        "value": "Alerts",
         "comment": "",
         "limit": 0
     },
-    "dialogs.schedule.management.tab.user": {
-        "value": "created by me",
+    "dialogs.alerting.management.load.error": {
+        "value": "Failed to load. Try again later.",
         "comment": "",
         "limit": 0
     },
-    "options.menu.schedule.email.recipient.invalid": {
-        "value": "This is not a valid email address.",
-        "comment": "Translate as imperative. Error message for recipient email address",
+    "dialogs.alerting.management.delete.error": {
+        "value": "Failed to delete alert. Try again later.",
+        "comment": "",
         "limit": 0
     },
-    "options.menu.schedule.email.recipient.warning.existed": {
-        "value": "You have already added this recipient.",
-        "comment": "Translate as imperative. Warning email has been existed on recipient field in schedule email dialog",
+    "dialogs.alerting.management.pause.error": {
+        "value": "Failed to pause alert. Try again later.",
+        "comment": "",
         "limit": 0
     },
-    "options.menu.schedule.email.recipient.warning.belong.workspace": {
-        "value": "This email address does not belong to this workspace. The recipient may receive sensitive data.",
-        "comment": "Translate as imperative. Warning email on recipient field in schedule email dialog",
+    "dialogs.alerting.management.pause.success": {
+        "value": "Your alert has been paused.",
+        "comment": "",
         "limit": 0
     },
-    "options.menu.schedule.email.recipient.external.not.allowed": {
-        "value": "This email address does not belong to this workspace. Only the author of the schedule can add this email address.",
-        "comment": "Translate as imperative. Warning email on recipient field in schedule email dialog",
+    "dialogs.alerting.management.activate.error": {
+        "value": "Failed to un-pause alert. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.activate.success": {
+        "value": "Your alert has been un-paused.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.footer.title": {
+        "value": "How to create alert?",
+        "comment": "Title of a link to documentation",
+        "limit": 0
+    },
+    "dialogs.alerting.footer.title.short": {
+        "value": "Help",
+        "comment": "Title of a link to documentation",
+        "limit": 0
+    },
+    "dialogs.alerting.management.list.title": {
+        "value": "Your alerts",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.noAlerts": {
+        "value": "There are no alerts.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.title.placeholder": {
+        "value": "Untitled alert",
+        "comment": "Placeholder for alert title input",
+        "limit": 0
+    },
+    "dialogs.alerting.management.delete.dialog": {
+        "value": "Delete alert?",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.delete.dialog.confirm": {
+        "value": "<b>The alert</b> will be permanently deleted, along with all its notifications.",
+        "comment": "Do not translate html tags <b>, </b>",
+        "limit": 0
+    },
+    "dialogs.alerting.delete.success": {
+        "value": "Success! Your alert was deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.alert.menu.delete": {
+        "value": "Delete",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.alert.menu.pause": {
+        "value": "Pause",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.alert.menu.resume": {
+        "value": "Unpause",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.alert.menu.edit": {
+        "value": "Edit",
+        "comment": "",
         "limit": 0
     },
     "delete": {
@@ -734,8 +843,18 @@
         "comment": "",
         "limit": 0
     },
-    "gs.date.at": {
-        "value": "at",
+    "save": {
+        "value": "Save",
+        "comment": "",
+        "limit": 0
+    },
+    "create": {
+        "value": "Create",
+        "comment": "",
+        "limit": 0
+    },
+    "apply": {
+        "value": "Apply",
         "comment": "",
         "limit": 0
     },
@@ -752,151 +871,6 @@
     "gs.date.yesterday": {
         "value": "Yesterday",
         "comment": "",
-        "limit": 0
-    },
-    "kpi.alertBox.title": {
-        "value": "Set an alert on KPI change",
-        "comment": "",
-        "limit": 0
-    },
-    "kpi.alertBox.example": {
-        "value": "e.g.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpi.alertBox.unverifiedEmail": {
-        "value": "Sorry, you can't set an alert. Make sure your email is verified. If that doesn't help, ask your administrator to update your permissions.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpi.alertBox.disabledInReadOnly": {
-        "value": "Alerting is disabled in the read-only mode",
-        "comment": "",
-        "limit": 0
-    },
-    "kpi.error.view": {
-        "value": "KPI cannot be displayed. Contact your administrator to fix the KPI definition.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.delete": {
-        "value": "Delete",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.deleting": {
-        "value": "Deleting…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "kpiAlertDialog.emailMe": {
-        "value": "Email me",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.emailMeWhen": {
-        "value": "{emailMe} when this KPI is",
-        "comment": "Don't translate placeholder '{emailMe}'.",
-        "limit": 0
-    },
-    "kpiAlertDialog.emailInfo": {
-        "value": "Email will be sent to {userEmail}",
-        "comment": "Don't translate placeholder '{userEmail}'.",
-        "limit": 0
-    },
-    "kpiAlertDialog.invalidNumber": {
-        "value": "<strong>This number is not valid.</strong>{br}Double-check it and try again.",
-        "comment": "Do not translate HTML markup enclosed in <>.",
-        "limit": 0
-    },
-    "kpiAlertDialog.filtersDiffer": {
-        "value": "KPI is now filtered differently than when the alert was set up.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.filtersApply": {
-        "value": "Apply alert filters to dashboard",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.savingFailed": {
-        "value": "Saving alert failed. Please try again.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.deleteingFailed": {
-        "value": "Deleting alert failed. Please try again.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.brokenAlert": {
-        "value": "Broken alert",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.brokenAlertAppeal": {
-        "value": "To see correct KPI value, update the filters in this alert. You can also remove the alert.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.brokenAlertDefaultDateLabel": {
-        "value": "Date",
-        "comment": "Label used in broken alert dialog in case no other date label is found.",
-        "limit": 0
-    },
-    "kpiAlertDialog.removedFilters": {
-        "value": "Filters removed from dashboard",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.ignoredFilters": {
-        "value": "Filters ignored for this kpi",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.updateTitle": {
-        "value": "Update",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.updateBrokenTitle": {
-        "value": "Update filters",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.updatingTitle": {
-        "value": "Updating…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "kpiAlertDialog.updateBrokenFailed": {
-        "value": "Updating filters failed. Please try again.",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.setTitle": {
-        "value": "Set alert",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.settingTitle": {
-        "value": "Setting…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "kpiAlertDialog.threshold.above": {
-        "value": "above",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.threshold.below": {
-        "value": "below",
-        "comment": "",
-        "limit": 0
-    },
-    "kpiAlertDialog.withAttributeFilters": {
-        "value": "{numFilters} more {numFilters, select, 1 {filter} other {filters}} applied",
-        "comment": "Don't translate placeholder '{numFilters}'. In '{numFilters, select, 1 {FILTER} other {FILTERS}}' translate only uppercase words.",
         "limit": 0
     },
     "messages.exportResultError": {
@@ -960,11 +934,6 @@
         "comment": "",
         "limit": 0
     },
-    "visualization.alert_not_supported": {
-        "value": "Alerts are not supported for the static date period",
-        "comment": "",
-        "limit": 0
-    },
     "visualization.empty.headline": {
         "value": "No data for your filter selection",
         "comment": "",
@@ -984,27 +953,6 @@
     "visualization.error.text": {
         "value": "Contact your administrator.",
         "comment": "",
-        "limit": 0
-    },
-    "options.button.bubble|insight": {
-        "value": "Export insight data",
-        "comment": "Show this message when hovering on the options button",
-        "limit": 0
-    },
-    "options.button.bubble|report": {
-        "value": "Export report data",
-        "comment": "Show this message when hovering on the options button",
-        "limit": 0,
-        "translate": false
-    },
-    "options.menu.export.CSV": {
-        "value": "CSV",
-        "comment": "Export to file with CSV extension.",
-        "limit": 0
-    },
-    "options.menu.export.XLSX": {
-        "value": "XLSX",
-        "comment": "Export to file with XLSX extension.",
         "limit": 0
     },
     "options.menu.unsupported.error._measure|insight": {
@@ -1040,6 +988,31 @@
         "limit": 0,
         "translate": false
     },
+    "options.menu.unsupported.incompatibleWidget": {
+        "value": "Unable to schedule the export on custom widget.",
+        "comment": "",
+        "limit": 0
+    },
+    "options.menu.unsupported.schedulingForInsightNotEnabled": {
+        "value": "You cannot schedule an export for this widget.",
+        "comment": "Tooltip for the widget that does not support scheduling, because it's disabled on the insight.",
+        "limit": 0
+    },
+    "options.menu.unsupported.alertingForInsightNotEnabled": {
+        "value": "You cannot create an alert for this widget.",
+        "comment": "Tooltip for the widget that does not support alerting, because it's disabled on the insight.",
+        "limit": 0
+    },
+    "options.menu.unsupported.oldWidget": {
+        "value": "Unable to schedule the export. Please resave the dashboard or contact your administrator.",
+        "comment": "",
+        "limit": 0
+    },
+    "options.menu.unsupported.alertingOldWidget": {
+        "value": "Unable to create an alert. Please resave the dashboard or contact your administrator.",
+        "comment": "",
+        "limit": 0
+    },
     "export.defaultTitle|insight": {
         "value": "Untitled insight",
         "comment": "Default title for exported file",
@@ -1056,6 +1029,16 @@
         "comment": "Export to the file not supported.",
         "limit": 0
     },
+    "widget.options.description": {
+        "value": "Description",
+        "comment": "",
+        "limit": 0
+    },
+    "widget.options.menu": {
+        "value": "Options",
+        "comment": "",
+        "limit": 0
+    },
     "widget.options.menu.exportToCSV": {
         "value": "Export to CSV",
         "comment": "Export to file with CSV extension.",
@@ -1066,14 +1049,39 @@
         "comment": "Export to file with XLSX extension.",
         "limit": 0
     },
+    "widget.options.menu.alerts": {
+        "value": "Alerts",
+        "comment": "Item in the widget options menu",
+        "limit": 0
+    },
     "widget.options.menu.scheduleExport": {
         "value": "Schedule export",
+        "comment": "",
+        "limit": 0
+    },
+    "widget.options.menu.scheduleExport.edit": {
+        "value": "Show schedules",
+        "comment": "",
+        "limit": 0
+    },
+    "widget.error.missing_insight.message": {
+        "value": "No visualization available",
+        "comment": "",
+        "limit": 0
+    },
+    "widget.error.missing_insight.description": {
+        "value": "This visualization has been removed or is no longer accessible. Please contact your administrator or remove it from the dashboard.",
         "comment": "",
         "limit": 0
     },
     "share.button.text": {
         "value": "Share",
         "comment": "Text of button that opens share dialog",
+        "limit": 0
+    },
+    "share.button.tooltip": {
+        "value": "Share dashboard",
+        "comment": "Tooltip of button that opens share dialog",
         "limit": 0
     },
     "dashboard.error.empty.heading": {
@@ -1140,21 +1148,6 @@
     "attributesDropdown.configuration": {
         "value": "Configuration",
         "comment": "Configuration button label in attribute filter dropdown",
-        "limit": 0
-    },
-    "attributesDropdown.itemsFiltered": {
-        "value": "Items are filtered",
-        "comment": "This message is displayed when attribute elements are being filtered out by parent filters",
-        "limit": 0
-    },
-    "attributesDropdown.allItemsFiltered": {
-        "value": "All items are filtered out",
-        "comment": "This message is displayed when there are no items available because they were filtered out by parent filters",
-        "limit": 0
-    },
-    "attributesDropdown.itemsFiltered.tooltip": {
-        "value": "Items are filtered by: <strong>{filters}</strong>",
-        "comment": "Do not translate HTML markup enclosed in <> and {filters} placeholder as it will be replaced by list of filter names.",
         "limit": 0
     },
     "attributesDropdown.save": {
@@ -1247,13 +1240,18 @@
         "comment": "Add description component placeholder text",
         "limit": 0
     },
-    "error": {
-        "value": "Error",
+    "controlButtons.options.tooltip": {
+        "value": "More actions",
         "comment": "",
         "limit": 0
     },
     "controlButtons.edit.value": {
         "value": "Edit",
+        "comment": "",
+        "limit": 0
+    },
+    "controlButtons.edit.tooltip": {
+        "value": "Edit dashboard",
         "comment": "",
         "limit": 0
     },
@@ -1407,18 +1405,23 @@
         "comment": "",
         "limit": 0
     },
-    "addPanel.kpi.tooltip.no_measures._measure": {
-        "value": "The Key Performance Indicator requires a calculated measure.",
+    "addPanel.visualizationSwitcher": {
+        "value": "Visualization switcher",
         "comment": "",
         "limit": 0
     },
-    "addPanel.kpi.tooltip.no_measures._metric": {
-        "value": "The Key Performance Indicator requires a metric.",
+    "addPanel.visualizationSwitcher.tooltip": {
+        "value": "Combine multiple visualizations into a single element with a navigation dropdown for switching between them.",
         "comment": "",
         "limit": 0
     },
-    "addPanel.kpi.tooltip.no_measures.link": {
-        "value": "Learn more",
+    "addPanel.dashboardLayout": {
+        "value": "Container",
+        "comment": "",
+        "limit": 0
+    },
+    "addPanel.dashboardLayout.tooltip": {
+        "value": "Group and display multiple widgets together for more flexible layout. ",
         "comment": "",
         "limit": 0
     },
@@ -1493,103 +1496,8 @@
         "comment": "Label of widget configuration section",
         "limit": 0
     },
-    "configurationPanel.comparison": {
-        "value": "Comparison",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.compareWith": {
-        "value": "Compare with",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.increasingNumberIs": {
-        "value": "Increasing number is",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.comparisonTypeItems.previousPeriod": {
-        "value": "Previous period",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.comparisonTypeItems.samePeriodInPreviousYear": {
-        "value": "Same period in previous year",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.comparisonTypeItems.noComparison": {
-        "value": "No comparison",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.comparisonDirectionItems.green": {
-        "value": "Green",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.comparisonDirectionItems.red": {
-        "value": "Red",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.unlistedMetric._measure": {
-        "value": "Unlisted measure",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.unlistedMetric._metric": {
-        "value": "Unlisted metric",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.unlistedMetricIconTitle._measure": {
-        "value": "This measure is hidden. Only you can see it.",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.unlistedMetricIconTitle._metric": {
-        "value": "This metric is hidden. Only you can see it.",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.selectMeasurePlaceholder._measure": {
-        "value": "Select measure…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "configurationPanel.selectMeasurePlaceholder._metric": {
-        "value": "Select metric…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "configurationPanel.selectComparisonPlaceholder": {
-        "value": "Select comparison…",
-        "comment": "Use '…' as one character, not 3 dots ('...').",
-        "limit": 0
-    },
-    "configurationPanel.selectComparisonDirectionPlaceholder": {
-        "value": "Select positive/negative",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.measure._measure": {
-        "value": "Measure",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.measure._metric": {
-        "value": "Metric",
-        "comment": "",
-        "limit": 0
-    },
     "configurationPanel.filterBy": {
         "value": "Filter by",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.date": {
-        "value": "Date",
         "comment": "",
         "limit": 0
     },
@@ -1644,26 +1552,6 @@
     "configurationPanel.unrelatedKpiDateInfo": {
         "value": "\"{dateDataSet}\" can no longer be applied to the kpi. Select a different dimension or edit the kpi.",
         "comment": "Don't translate placeholder '{dateDataSet}' and keep '\"' characters as are.",
-        "limit": 0
-    },
-    "configurationPanel.breakAlertWarning": {
-        "value": "\n            Users have set up {numAlerts} {numAlerts, select, 1 {alert} other {alerts}}\n            for this KPI. Modifying the KPI will affect {numAlerts, select, 1 {this alert} other {these alerts}}.\n        ",
-        "comment": "Don't translate placeholder '{numAlerts}'. Translate only uppercase '{numAlerts, select, 1 {ALERT} other {ALERTS}}'",
-        "limit": 0
-    },
-    "configurationPanel.drillIntoDashboard": {
-        "value": "Drill into dashboard",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.noLinkableDashboards": {
-        "value": "No dashboard to link to",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.selectDashboard": {
-        "value": "Select a dashboard",
-        "comment": "",
         "limit": 0
     },
     "configurationPanel.interactions": {
@@ -1763,9 +1651,29 @@
         "translate": false,
         "limit": 0
     },
-    "configurationPanel.unlistedDashboardTab": {
-        "value": "Unlisted dashboard",
-        "comment": "",
+    "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.label": {
+        "value": "Pass as filter:",
+        "comment": "Label of the dropdown to select drill intersection ignored attributes.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.title": {
+        "value": "Pass as filters",
+        "comment": "Title of the dropdown to select drill intersection ignored attributes.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": {
+        "value": "Disable the attribute or date to exclude its value from being passed as a filter to the drill destination.",
+        "comment": "Tooltip of the dropdown to select drill intersection ignored attributes.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": {
+        "value": "All",
+        "comment": "Title of the dropdown, when all values are selected and none attribute is ignored.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": {
+        "value": "None",
+        "comment": "Title of the dropdown, when no values are selected and all attributes are ignored.",
         "limit": 0
     },
     "configurationPanel.visualprops.sectionTitle": {
@@ -1778,7 +1686,6 @@
         "comment": "",
         "limit": 0
     },
-
     "configurationPanel.visualprops.sectionDescription": {
         "value": "Description",
         "comment": "",
@@ -1800,16 +1707,6 @@
         "translate": false,
         "limit": 0
     },
-    "configurationPanel.visualprops.inheritKpiDescriptionHelp._metric": {
-        "value": "Inherit the description from the metric.",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.visualprops.inheritKpiDescriptionHelp._measure": {
-        "value": "Inherit the description from the measure.",
-        "comment": "",
-        "limit": 0
-    },
     "configurationPanel.visualprops.customDescription": {
         "value": "Custom",
         "comment": "",
@@ -1824,11 +1721,6 @@
         "value": "Add a custom description for this instance of the report.",
         "comment": "",
         "translate": false,
-        "limit": 0
-    },
-    "configurationPanel.visualprops.customKpiDescriptionHelp": {
-        "value": "Add a custom description.",
-        "comment": "",
         "limit": 0
     },
     "configurationPanel.visualprops.noneDescription": {
@@ -1873,7 +1765,6 @@
         "comment": "",
         "limit": 0
     },
-
     "configurationPanel.drillIntoUrl.defaultButtonValue": {
         "value": "Choose URL",
         "comment": "Default value of 'Drill into URL' dropdown button before a value is selected.",
@@ -2056,6 +1947,11 @@
         "comment": "Type label of URL display form in parameter detail in 'Custom URL' editor.",
         "limit": 0
     },
+    "configurationPanel.drillIntoUrl.editor.imageDisplayFormTypeLabel": {
+        "value": "Attribute image value",
+        "comment": "Type label of URL display form in parameter detail in 'Custom URL' editor.",
+        "limit": 0
+    },
     "configurationPanel.zoomInsight|insight": {
         "value": "Zoomable insight",
         "comment": "",
@@ -2184,6 +2080,11 @@
         "comment": "Used as placeholder when user drags some widget and tries to drop it on dashboard. Dropping the widget over such placeholder will cause adding the widget to an existing section of a dashboard. Do not translate HTML markup enclosed in <>. Translate words 'existing section'.",
         "limit": 0
     },
+    "dropzone.widget.last.in.container.row.desc": {
+        "value": "Drop to the <b>existing container</b>",
+        "comment": "Used as placeholder when user drags some widget and tries to drop it on dashboard. Dropping the widget over such placeholder will cause adding the widget to an existing container of a dashboard. Do not translate HTML markup enclosed in <>. Translate words 'existing container'.",
+        "limit": 0
+    },
     "deleteKpiConfirmationDialog.headline": {
         "value": "Delete KPI",
         "comment": "",
@@ -2251,9 +2152,24 @@
         "comment": "The tooltip of the reset button in the filter bar",
         "limit": 0
     },
+    "filter.crossFilterResetButton.tooltip": {
+        "value": "Reset cross filters",
+        "comment": "The tooltip of the reset button in the filter bar",
+        "limit": 0
+    },
     "dateFilterDropdown.save": {
         "value": "Save",
         "comment": "Save button label in date filter dropdown configuration",
+        "limit": 0
+    },
+    "dateFilterDropdown.configuration": {
+        "value": "Configuration",
+        "comment": "Configuration button label in date filter dropdown",
+        "limit": 0
+    },
+    "dateFilterDropdown.title": {
+        "value": "Date range",
+        "comment": "",
         "limit": 0
     },
     "filter.configuration.mode.title": {
@@ -2301,6 +2217,16 @@
         "comment": "Tooltip displayed when hierarchy object cannot be used again for drill down functionality.",
         "limit": 0
     },
+    "configurationPanel.respectCrossFiltering": {
+        "value": "Respect cross-filtering",
+        "comment": "Label of checkbox whether cross-filtering should be respected or not",
+        "limit": 0
+    },
+    "configurationPanel.respectCrossFiltering.tooltip": {
+        "value": "Disable this option to ignore cross-filtering from other visualizations.",
+        "comment": "Tooltip for checkbox whether cross-filtering should be respected or not",
+        "limit": 0
+    },
     "richText.formattingOptions": {
         "value": "Formatting options",
         "comment": "",
@@ -2319,6 +2245,116 @@
     "richText.emptyContent": {
         "value": "No rich text content",
         "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.emptyContent": {
+        "value": "No visualization in switcher",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.deleteDialog.header": {
+        "value": "Delete visualization switcher?",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.deleteDialog.message": {
+        "value": "The visualization switcher and all of its visualizations will be irreversibly deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.header": {
+        "value": "Visualizations",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.tooltip": {
+        "value": "Visualizations",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.prev": {
+        "value": "Previous",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.next": {
+        "value": "Next",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.empty": {
+        "value": "No visualization in switcher, add one to continue.",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.add": {
+        "value": "Add visualization",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.remove": {
+        "value": "Remove switcher",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.configurationPanel.remove.from.switcher": {
+        "value": "Remove from switcher",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.list.menu.move.up": {
+        "value": "Move up",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.list.menu.move.down": {
+        "value": "Move down",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.list.menu.remove": {
+        "value": "Remove",
+        "comment": "",
+        "limit": 0
+    },
+    "nestedLayoutToolbar.hideHeader": {
+        "value": "Hide title and description.",
+        "comment": "",
+        "limit": 0
+    },
+    "nestedLayoutToolbar.showHeader": {
+        "value": "Show title and description.",
+        "comment": "",
+        "limit": 0
+    },
+    "nestedLayoutToolbar.remove": {
+        "value": "Remove from dashboard.",
+        "comment": "",
+        "limit": 0
+    },
+    "nestedLayout.tab.title": {
+        "value": "Container",
+        "comment": "",
+        "limit": 0
+    },
+    "nestedLayout.deleteDialog.header": {
+        "value": "Delete container?",
+        "comment": "",
+        "limit": 0
+    },
+    "nestedLayout.deleteDialog.message": {
+        "value": "The container and all of its content will be irreversibly deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "nestedLayout.emptyDropZone.message": {
+        "value": "<b>Drag here</b>{br}to add to the container",
+        "comment": "<b>, </b> and {br} are HTML tags. Do not translate them.",
+        "limit": 0
+    },
+    "nestedLayout.emptyDropZone.active.message": {
+        "value": "<b>Drop here</b>{br}to add to the container",
+        "comment": "<b>, </b> and {br} are HTML tags. Do not translate them.",
         "limit": 0
     },
     "attributesDropdown.valuesLimiting.title": {
@@ -2404,6 +2440,551 @@
     "attributesDropdown.valuesLimiting.addLimitingItem.description": {
         "value": "Use a metric to hide irrelevant values. Only values with non-null results for the metric are shown. <a>Learn more</a>",
         "comment": "Description of section that describe the action user can choose. The action selects an existing dashboard filter to be used as a validation items to hide attribute filter elements. Do not translate <a> and </a> placeholders. They will be replaced with HTML tags in the runtime.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.commonDateFilterTitle": {
+        "value": "{dateFilterTitle} as {dataSetTitle}",
+        "comment": "Do not translate variables enclosed in {}.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.addDateTitle": {
+        "value": "Choose date",
+        "comment": "Title of popup with selection of date filters will available date datasets values.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.disableDateFilter": {
+        "value": "Filter not available: The <strong>{dateFilterTitle}</strong> filter is already using this date dataset.",
+        "comment": "Do not translate variable enclosed in {}.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.disableDataSet": {
+        "value": "Date dataset not available: The <strong>{dateFilterTitle}</strong> filter is already using this date dataset.",
+        "comment": "Do not translate variable enclosed in {}.",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.buttonEmpty": {
+        "value": "My views",
+        "comment": "Title of the dropdown button that opens list of filter views (saved values) saved by the user.",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.button": {
+        "value": "My views ({count})",
+        "comment": "Title of the dropdown button that opens list of filter views (saved values) saved by the user. Do not translate {count} placeholder.",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.title": {
+        "value": "My saved views",
+        "comment": "Title of the dropdown with list of filter views (saved values) saved by the user.",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.setAsDefault": {
+        "value": "Set as default",
+        "comment": "Label of button that sets the filter view as default one.",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.unsetAsDefault": {
+        "value": "Unset as default",
+        "comment": "Label of button that unsets the filter view as default one.",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.isDefault": {
+        "value": "(default)",
+        "comment": "Text displayed next to the name of the filter view if it was marked as a default one.",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.tooltip": {
+        "value": "<p>Views are saved sets of filters that let you quickly return to a specific filter state.</p><p>If you set a view as the default, it will apply automatically every time you open the dashboard.</p>",
+        "comment": "Tooltip of saved views dropdown. Do not translate <p> and </p> tags.",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.newButton": {
+        "value": "Create view",
+        "comment": "Label of button that adds a new item to the list",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.emptyList": {
+        "value": "You haven't saved any views for this dashboard.",
+        "comment": "Text shown when list of views does not have any items in it.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewSaved": {
+        "value": "Great! Your view is saved.",
+        "comment": "Text shown when filter view was saved.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewDeleted": {
+        "value": "Great! We deleted your view.",
+        "comment": "Text shown when filter view was deleted.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewApplied": {
+        "value": "Great! Your view is applied.",
+        "comment": "Text shown when filter view was applied.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewSetAsDefault": {
+        "value": "Great! Your view is set as default.",
+        "comment": "Text shown when filter view was saved as a default one.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewUnsetAsDefault": {
+        "value": "Great! Your view is no longer set as default.",
+        "comment": "Text shown when filter view was saved as a default one.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewNotSaved": {
+        "value": "Failure! Your view was not saved. Please try again.",
+        "comment": "Text shown when filter view was not saved.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewNotDeleted": {
+        "value": "Failure! Your view was not deleted. Please try again.",
+        "comment": "Text shown when filter view was not deleted.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewNotSetAsDefault": {
+        "value": "Failure! Your view was not set as default. Please try again.",
+        "comment": "Text shown when filter view was not saved as a default one.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewNotUnsetAsDefault": {
+        "value": "Failure! Your view is still set as default. Please try again.",
+        "comment": "Text shown when filter view was not saved as a default one.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewNotApplied": {
+        "value": "Failure! Your view was not applied. Please try again.",
+        "comment": "Text shown when filter view was not applied.",
+        "limit": 0
+    },
+    "filters.filterViews.add.title": {
+        "value": "Create view",
+        "comment": "Title of the dropdown with form that creates a new saved filter view.",
+        "limit": 0
+    },
+    "filters.filterViews.add.nameLabel": {
+        "value": "Name",
+        "comment": "Label of the input field used to enter the name of the saved filter view.",
+        "limit": 0
+    },
+    "filters.filterViews.add.namePlaceholder": {
+        "value": "Untitled view",
+        "comment": "Placeholder of the input field used to enter the name of the saved filter view.",
+        "limit": 0
+    },
+    "filters.filterViews.add.setAsDefaultLabel": {
+        "value": "Set as default",
+        "comment": "Label of checkbox that marks the view as a default one.",
+        "limit": 0
+    },
+    "filters.filterViews.add.deleteTooltip": {
+        "value": "Delete",
+        "comment": "Tooltip shown when user hovers over delete item icon.",
+        "limit": 0
+    },
+    "filters.filterViews.add.hint": {
+        "value": "All current dashboard filters will be included.",
+        "comment": "Hint in the form that creates a new dashboard filter view.",
+        "limit": 0
+    },
+    "filters.filterViews.add.saveButton": {
+        "value": "Save",
+        "comment": "Label of the button that saves the form.",
+        "limit": 0
+    },
+    "filters.filterViews.add.cancelButton": {
+        "value": "Cancel",
+        "comment": "Label of the button that cancels the form changes.",
+        "limit": 0
+    },
+    "filters.filterViews.delete.title": {
+        "value": "Delete view?",
+        "comment": "Label of the dialog that confirms deletion of the filter view entity.",
+        "limit": 0
+    },
+    "filters.filterViews.delete.body": {
+        "value": "Your view <b>{view}</b> will be permanently deleted.",
+        "comment": "The text shown in the body of the dialog that confirms deletion of the filter view entity. Do not translate tags <b> and </b> and placeholder {view} that will be replaced with the name of the deleted filter view in the runtime.",
+        "limit": 0
+    },
+    "filters.filterViews.delete.deleteButton": {
+        "value": "Delete",
+        "comment": "Label of the button that deletes the filter view.",
+        "limit": 0
+    },
+    "filters.filterViews.delete.cancelButton": {
+        "value": "Cancel",
+        "comment": "Label of the button that cancels and closes the dialog.",
+        "limit": 0
+    },
+    "insightAlert.config.action.edit": {
+        "value": "Edit",
+        "comment": "Action in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.action.pause": {
+        "value": "Pause",
+        "comment": "Action in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.action.resume": {
+        "value": "Unpause",
+        "comment": "Action in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.action.delete": {
+        "value": "Delete",
+        "comment": "Action in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.comparisonOperator.lessThan": {
+        "value": "Is less than",
+        "comment": "Comparison operator in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.comparisonOperator.lessThanOrEquals": {
+        "value": "Is less than or equal to",
+        "comment": "Comparison operator in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.comparisonOperator.greaterThan": {
+        "value": "Is greater than",
+        "comment": "Comparison operator in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.comparisonOperator.greaterThanOrEquals": {
+        "value": "Is greater than or equal to",
+        "comment": "Comparison operator in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.changeOperator.header": {
+        "value": "CHANGE %",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.changeOperator.header.info": {
+        "value": "Change{spacer}Calculates the relative change between primary (current time period) and secondary (previous time period) metric values.{spacer}FORMULA{spacer}(Primary - Secondary) / Secondary",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.differenceOperator.header": {
+        "value": "DIFFERENCE #",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.differenceOperator.header.info": {
+        "value": "Difference{spacer}Calculates the net difference between primary (current time period) and secondary (previous time period) metric values.{spacer}FORMULA{spacer}Primary - Secondary",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.changeOperator.increasesBy": {
+        "value": "Increases by",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.changeOperator.decreasesBy": {
+        "value": "Decreases by",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.changeOperator.changesBy": {
+        "value": "Changes by",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.differenceOperator.increasesBy": {
+        "value": "Increases by",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.differenceOperator.decreasesBy": {
+        "value": "Decreases by",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.differenceOperator.changesBy": {
+        "value": "Changes by",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.alerts": {
+        "value": "Alerts",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.alerts.empty": {
+        "value": "There are no alerts for this visualization.",
+        "comment": "Text shown when there are no alerts for this visualization.",
+        "limit": 0
+    },
+    "insightAlert.config.noAlertMeasures": {
+        "value": "Alerts",
+        "comment": "Text shown when there are no metrics available for the insight",
+        "limit": 0
+    },
+    "insightAlert.config.noAlertMeasures.title": {
+        "value": "No metrics available for alerting.",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.noAlertMeasures.description": {
+        "value": "Please add a metric to enable alerting.",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.createAlert": {
+        "value": "Create alert",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.editAlert": {
+        "value": "Edit alert",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.title": {
+        "value": "Configuration",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.trigger": {
+        "value": "Trigger",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.trigger.tooltip": {
+        "value": "How often to trigger the alert when the condition is met.",
+        "comment": "Tooltip for alert trigger configuration",
+        "limit": 0
+    },
+    "insightAlert.config.action": {
+        "value": "Action",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.name": {
+        "value": "Name",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.accessibility.title": {
+        "value": "Custom name of the alert",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.when": {
+        "value": "When",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.for": {
+        "value": "For",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.warning.destination": {
+        "value": "The selected destination only supports sending the alert to yourself.",
+        "comment": "Alert warning message",
+        "limit": 0
+    },
+    "insightAlert.config.filters": {
+        "value": "using {n} {n, plural, one {filter} other {filters}}",
+        "comment": "In 'USING {n} {n, plural, one {FILTER} other {FILTERS}}' translate only uppercase word.",
+        "limit": 0
+    },
+    "insightAlert.config.and": {
+        "value": "and",
+        "comment": "This is a part of sentence 'for This month and 1 filter'",
+        "limit": 0
+    },
+    "insightAlert.config.for.filter": {
+        "value": "for {granularity}",
+        "comment": "This is a part of sentence 'for This month and 1 filter'",
+        "limit": 0
+    },
+    "insightAlert.config.filters.info": {
+        "value": "Alerts respect the dashboard filters as set at the time of their creation.{spacer}To modify the time period used for comparison, adjust the date filter.",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.compare_with": {
+        "value": "compared with",
+        "comment": "This is a part of the sentence 'When {metric} {comparisonOperator} {value} compared with {comparisonType}'",
+        "limit": 0
+    },
+    "insightAlert.config.compare_with_sp": {
+        "value": "same period previous year",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.compare_with_pp": {
+        "value": "previous period",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.compare_with_sp_granularity": {
+        "value": "same {period} previous year",
+        "comment": "Do not translate placeholder {period}. It will be replaced with the name of the selected period in the runtime.",
+        "limit": 0
+    },
+    "insightAlert.config.compare_with_pp_granularity": {
+        "value": "previous {period}",
+        "comment": "Do not translate placeholder {period}. It will be replaced with the name of the selected period in the runtime.",
+        "limit": 0
+    },
+    "insightAlert.config.addAlert": {
+        "value": "Add alert",
+        "comment": "Action to create new alert",
+        "limit": 0
+    },
+    "insightAlert.config.triggerMode.always": {
+        "value": "Every time",
+        "comment": "How many times alert should be triggered",
+        "limit": 0
+    },
+    "insightAlert.config.triggerMode.once": {
+        "value": "Once, then pause",
+        "comment": "How many times alert should be triggered",
+        "limit": 0
+    },
+    "insightAlert.config.delete.success": {
+        "value": "Success. The alert has been deleted.",
+        "comment": "Alert action success message",
+        "limit": 0
+    },
+    "insightAlert.config.resume.success": {
+        "value": "Success. The alert has been resumed.",
+        "comment": "Alert action success message",
+        "limit": 0
+    },
+    "insightAlert.config.pause.success": {
+        "value": "Success. The alert has been paused.",
+        "comment": "Alert action success message",
+        "limit": 0
+    },
+    "insightAlert.config.update.success": {
+        "value": "Success. The alert has been updated.",
+        "comment": "Alert action success message",
+        "limit": 0
+    },
+    "insightAlert.config.add.success": {
+        "value": "Success. The alert has been added.",
+        "comment": "Alert action success message",
+        "limit": 0
+    },
+    "insightAlert.config.delete.title": {
+        "value": "Delete alert?",
+        "comment": "Alert action title",
+        "limit": 0
+    },
+    "insightAlert.config.delete.message": {
+        "value": "The alert for <b>{title}</b> will be permanently deleted, along with all its notifications.",
+        "comment": "Do not translate html tags <b>, </b> or {title} placeholder",
+        "limit": 0
+    },
+    "insightAlert.noDestination.tooltip": {
+        "value": "No destination available. <a>Create a destination</a> to set up an alert.",
+        "comment": "Do not translate html tags <a>, </a>",
+        "limit": 0
+    },
+    "insightAlert.maxAlertsReached": {
+        "value": "Your organization has reached the limit of alerts. Contact your administrator to create more.",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.loading.error": {
+        "value": "Failed to load necessary information. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.save.error": {
+        "value": "Failed to save alert. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.delete.error": {
+        "value": "Failed to delete alert. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.invalid": {
+        "value": "This alert configuration is incorrect. Please update it or contact your administrator.",
+        "comment": "Error message for alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.invalidWidget": {
+        "value": "The alert is not working because the source widget was deleted. Delete the alert or contact your administrator.",
+        "comment": "Error message for alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.selectMetric": {
+        "value": "Select a metric",
+        "comment": "Label of metric select dropdown",
+        "limit": 0
+    },
+    "insightAlert.config.selectAttribute": {
+        "value": "All",
+        "comment": "Label of attribute select dropdown",
+        "limit": 0
+    },
+    "insightAlert.config.accessbility.input": {
+        "value": "Condition value",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.accessbility.dropdown": {
+        "value": "Condition type",
+        "comment": "",
+        "limit": 0
+    },
+    "alert.accessibility.destination.label": {
+        "value": "Select how to send the alert",
+        "comment": "",
+        "limit": 0
+    },
+    "granularity.this_keyword": {
+        "value": "This",
+        "comment": "Label that says 'This' in the context of time period. For example 'This month', 'This year'.",
+        "limit": 0
+    },
+    "granularity.year": {
+        "value": "year",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.week": {
+        "value": "week",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.quarter": {
+        "value": "quarter",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.month": {
+        "value": "month",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.date": {
+        "value": "day",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.hour": {
+        "value": "hour",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.minute": {
+        "value": "minute",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "widget.options.menu.export": {
+        "value": "Export",
+        "comment": "Export to file with XLSX extension.",
         "limit": 0
     }
 }

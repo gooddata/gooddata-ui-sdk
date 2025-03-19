@@ -7,15 +7,22 @@
 import { AccessGranteeDetail } from '@gooddata/sdk-model';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
+import { DashboardFiltersApplyMode } from '@gooddata/sdk-model';
 import { DataValue } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { FilterContextItem } from '@gooddata/sdk-model';
+import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
+import { GenAIObjectType } from '@gooddata/sdk-model';
+import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
+import { IAlertDefault } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
+import { IAutomationMetadataObject } from '@gooddata/sdk-model';
+import { IAutomationMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IAvailableAccessGrantee } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
@@ -28,7 +35,10 @@ import { IColorPalette } from '@gooddata/sdk-model';
 import { IColorPaletteDefinition } from '@gooddata/sdk-model';
 import { IColorPaletteMetadataObject } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-model';
+import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
+import { IDashboardFilterView } from '@gooddata/sdk-model';
+import { IDashboardFilterViewSaveRequest } from '@gooddata/sdk-model';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem } from '@gooddata/sdk-model';
 import { IDashboardLayoutSection } from '@gooddata/sdk-model';
@@ -37,6 +47,7 @@ import { IDashboardPlugin } from '@gooddata/sdk-model';
 import { IDashboardPluginDefinition } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDataset } from '@gooddata/sdk-model';
+import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDataSourceIdentifierDescriptor } from '@gooddata/sdk-model';
 import { IDataSourcePermissionAssignment } from '@gooddata/sdk-model';
 import { IDateFilter } from '@gooddata/sdk-model';
@@ -48,19 +59,33 @@ import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExistingDashboard } from '@gooddata/sdk-model';
+import { IExportDefinitionMetadataObject } from '@gooddata/sdk-model';
+import { IExportDefinitionMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
+import { IGenAIChatInteraction } from '@gooddata/sdk-model';
+import { IGenAIChatRouting } from '@gooddata/sdk-model';
+import { IGenAICreatedVisualizations } from '@gooddata/sdk-model';
+import { IGenAIFoundObjects } from '@gooddata/sdk-model';
+import { IGenAIUserContext } from '@gooddata/sdk-model';
 import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IListedDashboard } from '@gooddata/sdk-model';
+import { ILlmEndpointOpenAI } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
+import { INotification } from '@gooddata/sdk-model';
+import { INotificationChannelMetadataObject } from '@gooddata/sdk-model';
+import { INotificationChannelMetadataObjectDefinition } from '@gooddata/sdk-model';
+import { INotificationChannelTestResponse } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IOpenAiConfig } from '@gooddata/sdk-model';
 import { IOrganizationAssignee } from '@gooddata/sdk-model';
 import { IOrganizationDescriptor } from '@gooddata/sdk-model';
+import { IOrganizationDescriptorUpdate } from '@gooddata/sdk-model';
 import { IOrganizationPermissionAssignment } from '@gooddata/sdk-model';
 import { IOrganizationUser } from '@gooddata/sdk-model';
 import { IOrganizationUserGroup } from '@gooddata/sdk-model';
@@ -69,6 +94,8 @@ import { IResultHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
+import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
+import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
@@ -83,14 +110,23 @@ import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
+import { IWorkspaceDataFilter } from '@gooddata/sdk-model';
+import { IWorkspaceDataFilterDefinition } from '@gooddata/sdk-model';
 import { IWorkspacePermissionAssignment } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
+import { LlmEndpointOpenAIPatch } from '@gooddata/sdk-model';
+import { NotificationChannelDestinationType } from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OrganizationPermissionAssignment } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
+
+// @public
+export class AbortError extends AnalyticalBackendError {
+    constructor(message: string);
+}
 
 // @public
 export abstract class AnalyticalBackendError extends Error {
@@ -114,6 +150,7 @@ export const AnalyticalBackendErrorTypes: {
     LIMIT_REACHED: string;
     CONTRACT_EXPIRED: string;
     TIMEOUT_ERROR: string;
+    ABORT: string;
 };
 
 // @public
@@ -124,6 +161,9 @@ export type AuthenticationFlow = {
     loginUrl: string;
     returnRedirectParam: string;
 };
+
+// @alpha
+export type AutomationType = "schedule" | "trigger";
 
 // @beta
 export type CancelableOptions = {
@@ -154,6 +194,18 @@ export type ExplainConfig<T extends ExplainType | undefined> = {
 // @internal
 export type ExplainType = "MAQL" | "GRPC_MODEL" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL";
 
+// @alpha
+export type ExportDefinitionOrdering = "id" | "title" | "updated";
+
+// @alpha
+export type ExportDefinitionQuerySort = ExportDefinitionQuerySortProperty | `${ExportDefinitionQuerySortProperty},${ExportDefinitionQuerySortDirection}`;
+
+// @alpha
+export type ExportDefinitionQuerySortDirection = "asc" | "desc";
+
+// @alpha
+export type ExportDefinitionQuerySortProperty = "id" | "title";
+
 // @public
 export type FilterWithResolvableElements = IAttributeFilter | IRelativeDateFilter;
 
@@ -164,13 +216,14 @@ export interface IAnalyticalBackend {
     readonly config: IAnalyticalBackendConfig;
     currentUser(): IUserService;
     dataSources(): IDataSourcesService;
-    deauthenticate(): Promise<void>;
+    deauthenticate(returnTo?: string): Promise<void>;
     entitlements(): IEntitlements;
     isAuthenticated(): Promise<IAuthenticatedPrincipal | null>;
     onHostname(hostname: string): IAnalyticalBackend;
     organization(organizationId: string): IOrganization;
     organizations(): IOrganizations;
     withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend;
+    withCorrelation(correlationMetadata: IRequestCorrelationMetadata): IAnalyticalBackend;
     withTelemetry(componentName: string, props: object): IAnalyticalBackend;
     workspace(id: string): IAnalyticalWorkspace;
     workspaces(): IWorkspacesQueryFactory;
@@ -187,23 +240,49 @@ export interface IAnalyticalWorkspace {
     // @alpha
     attributeHierarchies(): IAttributeHierarchiesService;
     attributes(): IWorkspaceAttributesService;
+    // @alpha
+    automations(): IWorkspaceAutomationService;
     catalog(): IWorkspaceCatalogFactory;
     dashboards(): IWorkspaceDashboardsService;
+    // @alpha
+    dataFilters(): IDataFiltersService;
     datasets(): IWorkspaceDatasetsService;
     dateFilterConfigs(): IDateFilterConfigsQuery;
     execution(): IExecutionFactory;
+    // @alpha
+    exportDefinitions(): IWorkspaceExportDefinitionsService;
     facts(): IWorkspaceFactsService;
-    getDescriptor(): Promise<IWorkspaceDescriptor>;
+    // @beta
+    genAI(): IGenAIService;
+    getDescriptor(includeParentPrefixes?: boolean): Promise<IWorkspaceDescriptor>;
     getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined>;
     insights(): IWorkspaceInsightsService;
+    // @internal
+    logicalModel(): IWorkspaceLogicalModelService;
     measures(): IWorkspaceMeasuresService;
     permissions(): IWorkspacePermissionsService;
     settings(): IWorkspaceSettingsService;
     styling(): IWorkspaceStylingService;
+    updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<IWorkspaceDescriptor>;
     userGroups(): IWorkspaceUserGroupsQuery;
     users(): IWorkspaceUsersQuery;
     // (undocumented)
     readonly workspace: string;
+}
+
+// @alpha (undocumented)
+export interface IAnomalyDetectionConfig {
+    sensitivity: number;
+}
+
+// @alpha (undocumented)
+export interface IAnomalyDetectionResult {
+    // (undocumented)
+    anomalyFlag: boolean[];
+    // (undocumented)
+    attribute: string[];
+    // (undocumented)
+    values: number[];
 }
 
 // @public
@@ -222,6 +301,12 @@ export interface IAttributeHierarchiesService {
     updateAttributeHierarchy(catalogAttributeHierarchy: ICatalogAttributeHierarchy): Promise<ICatalogAttributeHierarchy>;
 }
 
+// @beta (undocumented)
+export interface IAttributeWithReferences {
+    attribute: IAttributeMetadataObject;
+    dataSet?: IDataSetMetadataObject;
+}
+
 // @public
 export interface IAuthenticatedPrincipal {
     userId: string;
@@ -237,11 +322,31 @@ export interface IAuthenticationContext {
 // @public
 export interface IAuthenticationProvider {
     authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
-    deauthenticate(context: IAuthenticationContext): Promise<void>;
+    deauthenticate(context: IAuthenticationContext, returnTo?: string): Promise<void>;
     getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
     initializeClient?(client: any): void;
     onNotAuthenticated?: NotAuthenticatedHandler;
 }
+
+// @public
+export interface IAutomationsQuery {
+    query(): Promise<IAutomationsQueryResult>;
+    queryAll(): Promise<IAutomationMetadataObject[]>;
+    withAuthor(author: string): IAutomationsQuery;
+    withDashboard(dashboard: string): IAutomationsQuery;
+    withFilter(filter: {
+        title?: string;
+    }): IAutomationsQuery;
+    withPage(page: number): IAutomationsQuery;
+    withRecipient(recipient: string): IAutomationsQuery;
+    withSize(size: number): IAutomationsQuery;
+    withSorting(sort: string[]): IAutomationsQuery;
+    withType(type: AutomationType): IAutomationsQuery;
+    withUser(user: string): IAutomationsQuery;
+}
+
+// @public
+export type IAutomationsQueryResult = IPagedResource<IAutomationMetadataObject>;
 
 // @public
 export interface IBackendCapabilities {
@@ -262,6 +367,7 @@ export interface IBackendCapabilities {
     maxDimensions?: number;
     supportsAccessControl?: boolean;
     supportsAttributeFilterElementsLimiting?: boolean;
+    supportsAttributeFilterElementsLimitingByDependentDateFilters?: boolean;
     supportsAttributeHierarchies?: boolean;
     supportsBootstrapResource?: boolean;
     supportsCircularDependencyInFilters?: boolean;
@@ -312,6 +418,53 @@ export interface ICancelable<T> {
     withSignal(signal: AbortSignal): T;
 }
 
+// @beta
+export interface IChatThread {
+    loadHistory(fromInteractionId?: string, options?: {
+        signal?: AbortSignal;
+    }): Promise<IChatThreadHistory>;
+    query(userMessage: string): IChatThreadQuery;
+    reset(): Promise<void>;
+    saveUserFeedback(interactionId: string, feedback: GenAIChatInteractionUserFeedback): Promise<void>;
+}
+
+// @beta
+export interface IChatThreadHistory {
+    // (undocumented)
+    interactions: IGenAIChatInteraction[];
+    // (undocumented)
+    threadId: string;
+}
+
+// @beta
+export interface IChatThreadQuery {
+    query(options?: {
+        signal?: AbortSignal;
+    }): Promise<IGenAIChatEvaluation>;
+    stream(): ReadableStream<IGenAIChatEvaluation>;
+    withCreateLimit(createLimit: number): IChatThreadQuery;
+    withSearchLimit(searchLimit: number): IChatThreadQuery;
+    withUserContext(userContext: IGenAIUserContext): IChatThreadQuery;
+}
+
+// @alpha (undocumented)
+export interface IClusteringConfig {
+    numberOfClusters: number;
+    threshold?: number;
+}
+
+// @alpha (undocumented)
+export interface IClusteringResult {
+    // (undocumented)
+    attribute: string[];
+    // (undocumented)
+    clusters: number[];
+    // (undocumented)
+    xcoord: number[];
+    // (undocumented)
+    ycoord: number[];
+}
+
 // @public
 export interface ICommentExpressionToken {
     type: "comment";
@@ -320,6 +473,7 @@ export interface ICommentExpressionToken {
 
 // @alpha
 export interface IDashboardReferences {
+    dataSets?: IDataSetMetadataObject[];
     insights: IInsight[];
     plugins: IDashboardPlugin[];
 }
@@ -347,17 +501,40 @@ export interface IDashboardWithReferences {
 }
 
 // @alpha
+export interface IDataFiltersService {
+    createDataFilter(newDataFilter: IWorkspaceDataFilterDefinition): Promise<IWorkspaceDataFilter>;
+    deleteDataFilter(ref: ObjRef): Promise<void>;
+    getDataFilters(): Promise<IWorkspaceDataFilter[]>;
+    // @deprecated
+    getWorkspaceDataFilters(): Promise<IWorkspaceDataFilter[]>;
+    updateDataFilter(updatedDataFilter: IWorkspaceDataFilter): Promise<IWorkspaceDataFilter>;
+    updateDataFilterValue(dataFilter: ObjRef, values: string[]): Promise<void>;
+}
+
+// @alpha
 export interface IDataSourcesService {
     getDataSourceIdentifiers(): Promise<IDataSourceIdentifierDescriptor[]>;
 }
 
 // @public
 export interface IDataView {
+    // @beta
+    clustering(): IClusteringResult;
+    // @beta
+    readonly clusteringConfig?: IClusteringConfig;
+    // @beta
+    readonly clusteringResult?: IClusteringResult;
     readonly count: number[];
     readonly data: DataValue[][] | DataValue[];
     readonly definition: IExecutionDefinition;
     equals(other: IDataView): boolean;
     fingerprint(): string;
+    // @beta
+    forecast(): IForecastView;
+    // @beta
+    readonly forecastConfig?: IForecastConfig;
+    // @beta
+    readonly forecastResult?: IForecastResult;
     readonly headerItems: IResultHeader[][][];
     readonly offset: number[];
     readonly result: IExecutionResult;
@@ -365,11 +542,26 @@ export interface IDataView {
     readonly totals?: DataValue[][][];
     readonly totalTotals?: DataValue[][][];
     readonly warnings?: IResultWarning[];
+    // @beta
+    withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView;
+    // @beta
+    withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView;
+}
+
+// @internal
+export interface IDateDataset {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    title: string;
 }
 
 // @alpha
 export interface IDateFilterConfigsQuery {
     query(): Promise<IDateFilterConfigsQueryResult>;
+    queryCustomDateFilterConfig(): Promise<IDateFilterConfigsQueryResult>;
     withLimit(limit: number): IDateFilterConfigsQuery;
     withOffset(offset: number): IDateFilterConfigsQuery;
 }
@@ -382,7 +574,7 @@ export interface IElementsQuery extends ICancelable<IElementsQuery> {
     query(): Promise<IElementsQueryResult>;
     withAttributeFilters(filters: IElementsQueryAttributeFilter[]): IElementsQuery;
     withAvailableElementsOnly(validateBy: ObjRef[]): IElementsQuery;
-    withDateFilters(filters: IRelativeDateFilter[]): IElementsQuery;
+    withDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): IElementsQuery;
     withLimit(limit: number): IElementsQuery;
     withMeasures(measures: IMeasure[]): IElementsQuery;
     withOffset(offset: number): IElementsQuery;
@@ -410,6 +602,7 @@ export interface IElementsQueryOptions {
     elements?: ElementsQueryOptionsElementsSpecification;
     excludePrimaryLabel?: boolean;
     filter?: string;
+    filterByPrimaryLabel?: boolean;
     includeTotalCountWithoutFilters?: boolean;
     order?: SortDirection;
 }
@@ -439,11 +632,11 @@ export interface IEntitlements {
 
 // @public
 export interface IExecutionFactory {
-    forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
-    forDefinition(def: IExecutionDefinition): IPreparedExecution;
-    forInsight(insightDefinition: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
-    forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution;
-    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
+    forBuckets(buckets: IBucket[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
+    forDefinition(def: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution;
+    forInsight(insightDefinition: IInsightDefinition, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
+    forInsightByRef(insight: IInsight, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
 }
 
 // @public
@@ -456,7 +649,14 @@ export interface IExecutionResult {
     exportRaw?(): Promise<IExportResult>;
     fingerprint(): string;
     readAll(): Promise<IDataView>;
+    // @alpha
+    readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult>;
+    // @alpha
+    readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult>;
+    // @beta
+    readForecastAll(config: IForecastConfig): Promise<IForecastResult>;
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
+    readonly signal?: AbortSignal;
     transform(): IPreparedExecution;
 }
 
@@ -482,10 +682,44 @@ export type IExplainResult = {
 
 // @public
 export interface IExportConfig {
-    format?: "xlsx" | "csv" | "raw";
+    format?: "xlsx" | "csv" | "raw" | "pdf";
     mergeHeaders?: boolean;
+    pdfConfiguration?: IExportPdfConfig;
     showFilters?: boolean;
     title?: string;
+    visualizationObjectCustomFilters?: Array<IFilter>;
+    visualizationObjectId?: string;
+}
+
+// @alpha
+export interface IExportDefinitionsQuery {
+    query(): Promise<IExportDefinitionsQueryResult>;
+    withFilter(filter: {
+        title?: string;
+    }): IExportDefinitionsQuery;
+    withPage(page: number): IExportDefinitionsQuery;
+    withSize(size: number): IExportDefinitionsQuery;
+    withSorting(sort: ExportDefinitionQuerySort[]): IExportDefinitionsQuery;
+}
+
+// @alpha
+export interface IExportDefinitionsQueryOptions {
+    author?: string;
+    limit?: number;
+    loadUserData?: boolean;
+    offset?: number;
+    orderBy?: ExportDefinitionOrdering;
+    title?: string;
+}
+
+// @alpha
+export type IExportDefinitionsQueryResult = IPagedResource<IExportDefinitionMetadataObject>;
+
+// @public
+export interface IExportPdfConfig {
+    pdfPageSize?: string;
+    pdfTopLeftContent?: string;
+    pdfTopRightContent?: string;
 }
 
 // @public
@@ -502,15 +736,93 @@ export interface IFilterElementsQuery {
     withOffset(offset: number): IFilterElementsQuery;
 }
 
+// @beta (undocumented)
+export interface IForecastConfig {
+    confidenceLevel: number;
+    forecastPeriod: number;
+    seasonal: boolean;
+}
+
+// @beta (undocumented)
+export interface IForecastResult {
+    // (undocumented)
+    attribute: string[];
+    // (undocumented)
+    lowerBound: number[];
+    // (undocumented)
+    origin: number[];
+    // (undocumented)
+    prediction: number[];
+    // (undocumented)
+    upperBound: number[];
+}
+
+// @beta
+export interface IForecastView {
+    // (undocumented)
+    headerItems: IResultHeader[][][];
+    // (undocumented)
+    high: DataValue[][];
+    // (undocumented)
+    loading: boolean;
+    // (undocumented)
+    low: DataValue[][];
+    // (undocumented)
+    prediction: DataValue[][];
+}
+
+// @beta
+export interface IGenAIChatEvaluation {
+    // (undocumented)
+    chatHistoryInteractionId?: string;
+    // (undocumented)
+    chatHistoryThreadId?: string;
+    // (undocumented)
+    createdVisualizations?: IGenAICreatedVisualizations;
+    // (undocumented)
+    errorResponse?: string;
+    // (undocumented)
+    foundObjects?: IGenAIFoundObjects;
+    // (undocumented)
+    routing?: IGenAIChatRouting;
+    // (undocumented)
+    textResponse?: string;
+}
+
+// @beta
+export interface IGenAIService {
+    getChatThread(): IChatThread;
+    getSemanticSearchQuery(): ISemanticSearchQuery;
+    semanticSearchIndex(): Promise<void>;
+}
+
+// @alpha
+export interface IGetAutomationOptions {
+    loadUserData?: boolean;
+}
+
+// @alpha
+export interface IGetAutomationsOptions {
+    limit?: number;
+    loadUserData?: boolean;
+    offset?: number;
+}
+
 // @alpha
 export interface IGetDashboardOptions {
     exportId?: string;
+    exportType?: "visual" | "slides";
     includeAvailableViaLink?: boolean;
     loadUserData?: boolean;
 }
 
 // @alpha
 export interface IGetDashboardPluginOptions {
+    loadUserData?: boolean;
+}
+
+// @alpha
+export interface IGetExportDefinitionOptions {
     loadUserData?: boolean;
 }
 
@@ -568,6 +880,12 @@ export type IInsightsQueryResult = IPagedResource<IInsight>;
 // @public
 export type IMeasureExpressionToken = IObjectExpressionToken | IAttributeElementExpressionToken | ITextExpressionToken | ICommentExpressionToken | IBracketExpressionToken;
 
+// @alpha
+export interface IMeasureKeyDrivers {
+    effects: number[];
+    labels: string[];
+}
+
 // @public
 export interface IMeasureReferencing {
     // (undocumented)
@@ -575,6 +893,32 @@ export interface IMeasureReferencing {
     // (undocumented)
     measures?: IMetadataObject[];
 }
+
+// @beta
+export interface INotificationChannelsQuery {
+    query(): Promise<INotificationChannelsQueryResult>;
+    queryAll(): Promise<INotificationChannelMetadataObject[]>;
+    withPage(page: number): INotificationChannelsQuery;
+    withSize(size: number): INotificationChannelsQuery;
+    withSorting(sort: string[]): INotificationChannelsQuery;
+    withTypes(type: NotificationChannelDestinationType[]): INotificationChannelsQuery;
+}
+
+// @beta
+export type INotificationChannelsQueryResult = IPagedResource<INotificationChannelMetadataObject>;
+
+// @public
+export interface INotificationsQuery {
+    query(): Promise<INotificationsQueryResult>;
+    queryAll(): Promise<INotification[]>;
+    withPage(page: number): INotificationsQuery;
+    withSize(size: number): INotificationsQuery;
+    withStatus(status: "read" | "unread"): INotificationsQuery;
+    withWorkspace(workspaceId: string): INotificationsQuery;
+}
+
+// @beta
+export type INotificationsQueryResult = IPagedResource<INotification>;
 
 // @public
 export type InsightOrdering = "id" | "title" | "updated";
@@ -593,12 +937,46 @@ export interface IObjectExpressionToken {
 // @public
 export interface IOrganization {
     getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
+    llmEndpoints(): IOrganizationLlmEndpointsService;
+    notificationChannels(): IOrganizationNotificationChannelService;
+    notifications(): IOrganizationNotificationService;
     readonly organizationId: string;
     permissions(): IOrganizationPermissionService;
     securitySettings(): ISecuritySettingsService;
     settings(): IOrganizationSettingsService;
     styling(): IOrganizationStylingService;
+    updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<IOrganizationDescriptor>;
     users(): IOrganizationUserService;
+}
+
+// @alpha
+export interface IOrganizationLlmEndpointsService {
+    createLlmEndpoint(endpoint: ILlmEndpointOpenAI, token?: string): Promise<ILlmEndpointOpenAI>;
+    deleteLlmEndpoint(id: string): Promise<void>;
+    getAll(): Promise<ILlmEndpointOpenAI[]>;
+    getCount(): Promise<number>;
+    getLlmEndpoint(id: string): Promise<ILlmEndpointOpenAI | undefined>;
+    patchLlmEndpoint(endpoint: LlmEndpointOpenAIPatch, token?: string): Promise<ILlmEndpointOpenAI>;
+    updateLlmEndpoint(endpoint: ILlmEndpointOpenAI, token?: string): Promise<ILlmEndpointOpenAI>;
+}
+
+// @beta
+export interface IOrganizationNotificationChannelService {
+    // (undocumented)
+    createNotificationChannel(notificationChannel: INotificationChannelMetadataObjectDefinition): Promise<INotificationChannelMetadataObject>;
+    deleteNotificationChannel(id: string): Promise<void>;
+    // (undocumented)
+    getNotificationChannel(id: string): Promise<INotificationChannelMetadataObject>;
+    getNotificationChannelsQuery(): INotificationChannelsQuery;
+    testNotificationChannel(channel: INotificationChannelMetadataObjectDefinition): Promise<INotificationChannelTestResponse>;
+    updateNotificationChannel(notificationChannel: INotificationChannelMetadataObject): Promise<INotificationChannelMetadataObject>;
+}
+
+// @public
+export interface IOrganizationNotificationService {
+    getNotificationsQuery(): INotificationsQuery;
+    markAllNotificationsAsRead(): Promise<void>;
+    markNotificationAsRead(notificationId: string): Promise<void>;
 }
 
 // @alpha
@@ -628,9 +1006,15 @@ export interface IOrganizationSettingsService {
     deleteColorPalette(): Promise<void>;
     deleteTheme(): Promise<void>;
     getSettings(): Promise<ISettings>;
+    setAlertDefault(value: IAlertDefault): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
+    // @alpha
+    setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
+    // @alpha
+    setOpenAiConfig(config: IOpenAiConfig): Promise<void>;
+    setSeparators(separators: ISeparators): Promise<void>;
     setTheme(themeId: string): Promise<void>;
     setTimezone(timezone: string): Promise<void>;
     setWeekStart(weekStart: string): Promise<void>;
@@ -684,6 +1068,7 @@ export interface IOrganizationUserService {
     getUserGroupsOfUser(userId: string): Promise<IUserGroup[]>;
     getUserGroupsQuery(): IOrganizationUserGroupsQuery;
     getUsers(): Promise<IOrganizationUser[]>;
+    getUsersByEmail(email: string): Promise<IUser[]>;
     getUsersOfUserGroup(userGroupId: string): Promise<IUser[]>;
     getUsersQuery(): IOrganizationUsersQuery;
     removeUsersFromUserGroups(userIds: string[], userGroupIds: string[]): Promise<void>;
@@ -699,6 +1084,7 @@ export interface IOrganizationUsersQuery {
         group?: string;
         name?: string;
         dataSource?: string;
+        email?: string;
     }): IOrganizationUsersQuery;
     withPage(page: number): IOrganizationUsersQuery;
     withSize(size: number): IOrganizationUsersQuery;
@@ -733,13 +1119,14 @@ export interface IPermissionsAssignment {
 }
 
 // @public
-export interface IPreparedExecution {
+export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
     readonly definition: IExecutionDefinition;
     equals(other: IPreparedExecution): boolean;
     execute(): Promise<IExecutionResult>;
     // @internal
     explain<T extends ExplainType | undefined>(config: ExplainConfig<T>): IExplainProvider<typeof config["explainType"]>;
     fingerprint(): string;
+    readonly signal?: AbortSignal;
     // @internal
     withBuckets(...buckets: IBucket[]): IPreparedExecution;
     withDateFormat(dateFormat: string): IPreparedExecution;
@@ -747,6 +1134,30 @@ export interface IPreparedExecution {
     withExecConfig(config: IExecutionConfig): IPreparedExecution;
     withSorting(...items: ISortItem[]): IPreparedExecution;
 }
+
+// @public
+export interface IPreparedExecutionOptions {
+    signal?: AbortSignal;
+}
+
+// @alpha
+export interface IRawExportCustomOverride {
+    title: string;
+}
+
+// @alpha
+export interface IRawExportCustomOverrides {
+    displayForms?: Record<string, IRawExportCustomOverride>;
+    measures?: Record<string, IRawExportCustomOverride>;
+}
+
+// @public
+export interface IRequestCorrelationMetadata {
+    readonly [key: string]: string;
+}
+
+// @public
+export function isAbortError(obj: unknown): obj is AbortError;
 
 // @public
 export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackendError;
@@ -772,6 +1183,25 @@ export function isElementsQueryOptionsElementsByPrimaryDisplayFormValue(obj: unk
 
 // @public
 export function isElementsQueryOptionsElementsByValue(obj: unknown): obj is IElementsQueryOptionsElementsByValue;
+
+// @beta
+export interface ISemanticSearchQuery {
+    query(options?: {
+        signal?: AbortSignal;
+    }): Promise<ISemanticSearchResult>;
+    withDeepSearch(deepSearch: boolean): ISemanticSearchQuery;
+    withLimit(limit: number): ISemanticSearchQuery;
+    withObjectTypes(types: GenAIObjectType[]): ISemanticSearchQuery;
+    withQuestion(question: string): ISemanticSearchQuery;
+}
+
+// @beta
+export interface ISemanticSearchResult {
+    // (undocumented)
+    relationships: ISemanticSearchRelationship[];
+    // (undocumented)
+    results: ISemanticSearchResultItem[];
+}
 
 // @public
 export function isLimitReached(obj: unknown): obj is LimitReached;
@@ -809,6 +1239,7 @@ export interface ITextExpressionToken {
 // @public
 export interface IUserService {
     getUser(): Promise<IUser>;
+    getUserWithDetails(): Promise<IUser>;
     settings(): IUserSettingsService;
 }
 
@@ -823,6 +1254,7 @@ export interface IUserSettings extends ISettings {
 export interface IUserSettingsService {
     getSettings(): Promise<IUserSettings>;
     setLocale(locale: string): Promise<void>;
+    setSeparators(separators: ISeparators): Promise<void>;
 }
 
 // @public
@@ -869,9 +1301,21 @@ export interface IWorkspaceAttributesService {
     getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject>;
     getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]>;
     getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]>;
+    getAttributesWithReferences(displayFormRefs: ObjRef[]): Promise<IAttributeWithReferences[]>;
     getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
     getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
     getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]>;
+}
+
+// @alpha
+export interface IWorkspaceAutomationService {
+    createAutomation(automation: IAutomationMetadataObjectDefinition, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
+    deleteAutomation(id: string): Promise<void>;
+    getAutomation(id: string, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
+    getAutomations(options?: IGetAutomationsOptions): Promise<IAutomationMetadataObject[]>;
+    getAutomationsQuery(): IAutomationsQuery;
+    unsubscribeAutomation(id: string): Promise<void>;
+    updateAutomation(automation: IAutomationMetadataObject, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
 }
 
 // @public
@@ -945,14 +1389,22 @@ export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWork
 export interface IWorkspaceDashboardsService {
     createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
     createDashboardPlugin(plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin>;
+    createFilterView(filterView: IDashboardFilterViewSaveRequest): Promise<IDashboardFilterView>;
     createScheduledMail(scheduledMail: IScheduledMailDefinition, exportFilterContext?: IFilterContextDefinition): Promise<IScheduledMail>;
     createWidgetAlert(alert: IWidgetAlertDefinition): Promise<IWidgetAlert>;
     deleteDashboard(ref: ObjRef): Promise<void>;
     deleteDashboardPlugin(ref: ObjRef): Promise<void>;
+    deleteFilterView(ref: ObjRef): Promise<void>;
     deleteScheduledMail(ref: ObjRef): Promise<void>;
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
+    exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string, customOverrides?: IRawExportCustomOverrides): Promise<IExportResult>;
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
+    exportDashboardToPresentation(ref: ObjRef, format: "PDF" | "PPTX", filters?: FilterContextItem[], options?: {
+        widgetIds?: ObjRef[];
+        filename?: string;
+    }): Promise<IExportResult>;
+    exportDashboardToTabular(ref: ObjRef): Promise<IExportResult>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
     getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions>;
@@ -963,12 +1415,14 @@ export interface IWorkspaceDashboardsService {
     getDashboardsQuery(): IDashboardsQuery;
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
-    getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
-    getResolvedFiltersForWidgetWithMultipleDateFilters(widget: IWidget, commonDateFilters: IDateFilter[], otherFilters: IFilter[]): Promise<IFilter[]>;
+    getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]>;
+    getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[], attributeFilterConfigs: IDashboardAttributeFilterConfig[]): Promise<IFilter[]>;
+    getResolvedFiltersForWidgetWithMultipleDateFilters(widget: IWidget, commonDateFilters: IDateFilter[], otherFilters: IFilter[], attributeFilterConfigs: IDashboardAttributeFilterConfig[]): Promise<IFilter[]>;
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
     getScheduledMailsForDashboard(ref: ObjRef, options?: IGetScheduledMailOptions): Promise<IScheduledMail[]>;
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
     getWidgetReferencedObjects(widget: IWidget, types?: SupportedWidgetReferenceTypes[]): Promise<IWidgetReferences>;
+    setFilterViewAsDefault(ref: ObjRef, isDefault: boolean): Promise<void>;
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
     updateScheduledMail(ref: ObjRef, scheduledMail: IScheduledMailDefinition, filterContextRef?: ObjRef): Promise<void>;
     updateWidgetAlert(alert: IWidgetAlert | IWidgetAlertDefinition): Promise<IWidgetAlert>;
@@ -980,13 +1434,18 @@ export interface IWorkspaceDashboardsService {
 // @public
 export interface IWorkspaceDatasetsService {
     getAllDatasetsMeta(): Promise<IMetadataObject[]>;
+    getDataSets(refs: ObjRef[]): Promise<IDataSetMetadataObject[]>;
     getDatasets(): Promise<IDataset[]>;
 }
 
 // @public
 export interface IWorkspaceDescriptor {
+    childWorkspacesCount?: number;
     // (undocumented)
     description: string;
+    // @deprecated
+    earlyAccess?: string;
+    earlyAccessValues?: string[];
     // (undocumented)
     id: string;
     // (undocumented)
@@ -996,6 +1455,30 @@ export interface IWorkspaceDescriptor {
     prefix?: string;
     // (undocumented)
     title: string;
+}
+
+// @public
+export interface IWorkspaceDescriptorUpdate {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    earlyAccess?: string | null;
+    // (undocumented)
+    earlyAccessValues?: string[] | null;
+    // (undocumented)
+    prefix?: string | null;
+    // (undocumented)
+    title?: string;
+}
+
+// @alpha
+export interface IWorkspaceExportDefinitionsService {
+    createExportDefinition(exportDefinition: IExportDefinitionMetadataObjectDefinition): Promise<IExportDefinitionMetadataObject>;
+    deleteExportDefinition(ref: ObjRef): Promise<void>;
+    getExportDefinition(ref: ObjRef, options?: IGetExportDefinitionOptions): Promise<IExportDefinitionMetadataObject>;
+    getExportDefinitions(options?: IExportDefinitionsQueryOptions): Promise<IExportDefinitionsQueryResult>;
+    getExportDefinitionsQuery(): IExportDefinitionsQuery;
+    updateExportDefinition(ref: ObjRef, exportDefinition: IExportDefinitionMetadataObjectDefinition): Promise<IExportDefinitionMetadataObject>;
 }
 
 // @public
@@ -1018,8 +1501,17 @@ export interface IWorkspaceInsightsService {
     updateInsight(insight: IInsight): Promise<IInsight>;
 }
 
+// @internal
+export interface IWorkspaceLogicalModelService {
+    getDatasets(includeParents: boolean): Promise<IDateDataset[]>;
+}
+
 // @public
 export interface IWorkspaceMeasuresService {
+    // @alpha
+    computeKeyDrivers: (measure: IMeasure, options?: {
+        sortDirection: "ASC" | "DESC";
+    }) => Promise<IMeasureKeyDrivers>;
     createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;
     deleteMeasure(measureRef: ObjRef): Promise<void>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
@@ -1040,18 +1532,33 @@ export interface IWorkspaceSettings extends ISettings {
 
 // @public
 export interface IWorkspaceSettingsService {
+    deleteColorPalette(): Promise<void>;
+    // @alpha
+    deleteDashboardFiltersApplyMode(): Promise<void>;
+    deleteTheme(): Promise<void>;
     getSettings(): Promise<IWorkspaceSettings>;
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
+    setAlertDefault(value: IAlertDefault): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
+    // @alpha
+    setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
+    setDateFormat(dateFormat: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
+    setSeparators(separators: ISeparators): Promise<void>;
     setTheme(themeId: string): Promise<void>;
+    setTimezone(timezone: string): Promise<void>;
+    setWeekStart(weekStart: string): Promise<void>;
 }
 
 // @public
 export interface IWorkspacesQuery {
     query(): Promise<IWorkspacesQueryResult>;
+    // @alpha
+    withFilter(filter: IWorkspacesQueryFilter): IWorkspacesQuery;
     withLimit(limit: number): IWorkspacesQuery;
     withOffset(offset: number): IWorkspacesQuery;
+    // @alpha
+    withOptions(options: IWorkspacesQueryOptions): IWorkspacesQuery;
     withParent(workspaceId: string | undefined): IWorkspacesQuery;
     withSearch(search: string): IWorkspacesQuery;
 }
@@ -1063,12 +1570,31 @@ export interface IWorkspacesQueryFactory {
 }
 
 // @public
+export interface IWorkspacesQueryFilter {
+    description?: string;
+    earlyAccess?: string;
+    prefix?: string;
+    rootWorkspacesOnly?: boolean;
+}
+
+// @public
+export interface IWorkspacesQueryOptions {
+    includeChildWorkspacesCount?: boolean;
+}
+
+// @public
 export type IWorkspacesQueryResult = IPagedResource<IAnalyticalWorkspace>;
 
 // @public
 export interface IWorkspaceStylingService {
+    clearActiveColorPalette(): Promise<void>;
+    clearActiveTheme(): Promise<void>;
+    getActiveColorPalette(): Promise<ObjRef | undefined>;
+    getActiveTheme(): Promise<ObjRef | undefined>;
     getColorPalette(): Promise<IColorPalette>;
     getTheme(): Promise<ITheme>;
+    setActiveColorPalette(colorPaletteRef: ObjRef): Promise<void>;
+    setActiveTheme(themeRef: ObjRef): Promise<void>;
 }
 
 // @alpha
@@ -1148,7 +1674,7 @@ export class NotSupported extends AnalyticalBackendError {
 }
 
 // @public
-export function prepareExecution(backend: IAnalyticalBackend, definition: IExecutionDefinition): IPreparedExecution;
+export function prepareExecution(backend: IAnalyticalBackend, definition: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution;
 
 // @public
 export class ProtectedDataError extends AnalyticalBackendError {
@@ -1156,7 +1682,7 @@ export class ProtectedDataError extends AnalyticalBackendError {
 }
 
 // @alpha (undocumented)
-export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";
+export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet";
 
 // @public
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;

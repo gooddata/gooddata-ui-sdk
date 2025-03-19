@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { createRef } from "react";
 import cx from "classnames";
 import { Portal } from "react-portal";
@@ -40,14 +40,20 @@ export const POSITION_SAME_AS_TARGET = "sameAsTarget";
 const OVERLAY_CONTENT_CLASS = "gd-overlay-content";
 
 function exceedsThreshold(firstNumber: number, secondNumber: number) {
-    return Math.abs(firstNumber - secondNumber) > 2;
+    return (
+        (firstNumber === undefined && secondNumber !== undefined) ||
+        (firstNumber !== undefined && secondNumber === undefined) ||
+        Math.abs(firstNumber - secondNumber) > 2
+    );
 }
 
 function alignExceedsThreshold(firstAlignment: Alignment, secondAlignment: Alignment) {
     return (
         exceedsThreshold(firstAlignment.top, secondAlignment.top) ||
         exceedsThreshold(firstAlignment.left, secondAlignment.left) ||
-        exceedsThreshold(firstAlignment.right, secondAlignment.right)
+        exceedsThreshold(firstAlignment.right, secondAlignment.right) ||
+        exceedsThreshold(firstAlignment.width, secondAlignment.width) ||
+        exceedsThreshold(firstAlignment.height, secondAlignment.height)
     );
 }
 
@@ -76,8 +82,12 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         containerClassName: "",
         positionType: "absolute",
 
+        resizeObserverThreshold: 1,
+
         ignoreClicksOn: [],
         ignoreClicksOnByClass: [],
+
+        ensureVisibility: false,
 
         shouldCloseOnClick: () => true,
 
@@ -90,14 +100,19 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
 
     private overlayRef = createRef<HTMLDivElement>();
     private containerRef = createRef<HTMLSpanElement>();
-    private resizeHandler = debounce(() => this.align(), 100);
+    private resizeHandler = debounce(() => {
+        this.isInitialAlign = true;
+        this.align();
+    }, 100);
     private portalNode: HTMLDivElement | null = null;
     private isComponentMounted: boolean;
     private clickedInside: boolean;
     private id = uuid();
     private alignmentTimeoutId: number;
+    private isInitialAlign: boolean;
     static contextType = OverlayContext;
     declare context: React.ContextType<typeof OverlayContext>;
+    private observer: ResizeObserver | undefined;
 
     constructor(props: IOverlayProps<T>) {
         super(props);
@@ -108,12 +123,19 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
                 left: INIT_STATE_ALIGN,
                 top: INIT_STATE_ALIGN,
                 right: 0,
+                width: 0,
+                height: 0,
             },
+            initialVisiblePart: 0,
+            observedHeight: 0,
         };
+
+        this.observer = this.createResizeObserver();
 
         this.isComponentMounted = false;
         this.clickedInside = false;
         this.alignmentTimeoutId = 0;
+        this.isInitialAlign = true;
 
         bindAll(
             this,
@@ -133,6 +155,8 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         afterOverlayOpened();
 
         window.addEventListener("resize", this.resizeHandler);
+
+        this.observer?.observe(this.overlayRef.current);
 
         this.addListeners(this.props);
 
@@ -164,6 +188,8 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
 
         window.removeEventListener("resize", this.resizeHandler);
 
+        this.observer?.disconnect();
+
         this.removeListeners(this.props);
 
         this.removePortalNodeAfterAllTreeUnmount();
@@ -178,7 +204,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         // https://github.com/facebook/react/issues/11387
         return (
             <span
-                aria-label="portal-scroll-anchor"
+                data-testid="portal-scroll-anchor"
                 className="s-portal-scroll-anchor"
                 ref={this.containerRef}
             >
@@ -220,18 +246,88 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
             ignoreScrollOffsets: isSameAsTarget,
         });
 
-        if (alignExceedsThreshold(this.state.alignment, optimalAlign.alignment)) {
+        // process also if visiblePart is 1 to get dimensions of the overlay
+        const shouldApplyConstraints = this.props.ensureVisibility && optimalAlign.visiblePart > 0;
+
+        const constrainedAlignment = shouldApplyConstraints
+            ? this.calculateConstrainedAlignment(optimalAlign.alignment, overlay, positionType === "fixed")
+            : optimalAlign.alignment;
+
+        if (alignExceedsThreshold(this.state.alignment, constrainedAlignment)) {
             this.setState(
                 {
-                    alignment: optimalAlign.alignment,
+                    alignment: constrainedAlignment,
+                    initialVisiblePart: this.isInitialAlign
+                        ? optimalAlign.visiblePart
+                        : this.state.initialVisiblePart,
                 },
                 () => {
-                    this.props.onAlign(optimalAlign.alignment);
+                    this.isInitialAlign = false;
+                    this.props.onAlign(constrainedAlignment);
                 },
             );
         } else {
             this.props.onAlign(optimalAlign.alignment);
         }
+    };
+
+    private calculateConstrainedAlignment = (
+        alignment: Alignment,
+        overlay: HTMLElement,
+        ignoreScrollOffsets: boolean,
+    ): Alignment => {
+        const overlayRegion = elementRegion(overlay);
+        const { width: originalWidth, height: originalHeight } = overlayRegion;
+
+        const viewportWidth = window.visualViewport?.width || window.innerWidth;
+        const viewportHeight = window.visualViewport?.height || window.innerHeight;
+
+        const scrollTop = ignoreScrollOffsets
+            ? 0
+            : window.visualViewport?.pageTop || window.scrollY || document.documentElement.scrollTop;
+        const scrollLeft = ignoreScrollOffsets
+            ? 0
+            : window.visualViewport?.pageLeft || window.scrollX || document.documentElement.scrollLeft;
+
+        // Calculate the minimum allowed dimensions (50% of original)
+        const minWidth = originalWidth * 0.5;
+        const minHeight = originalHeight * 0.5;
+
+        const constrainedAlignment = { ...alignment };
+
+        if (constrainedAlignment.left < 0 + scrollLeft) {
+            constrainedAlignment.left = 0 + scrollLeft;
+        }
+
+        if (constrainedAlignment.top < 0 + scrollTop) {
+            constrainedAlignment.top = 0 + scrollTop;
+        }
+
+        // Step 2: Calculate if the overlay extends beyond viewport
+        const rightEdge = constrainedAlignment.left + originalWidth;
+        const bottomEdge = constrainedAlignment.top + originalHeight;
+
+        const exceedsRight = rightEdge > scrollLeft + viewportWidth;
+        const exceedsBottom = bottomEdge > scrollTop + viewportHeight;
+
+        if (exceedsRight) {
+            const availableWidth = scrollLeft + viewportWidth - constrainedAlignment.left;
+            const newWidth = Math.max(availableWidth, minWidth);
+            constrainedAlignment.width = newWidth;
+            constrainedAlignment.right = undefined;
+        } else {
+            constrainedAlignment.width = originalWidth;
+        }
+
+        if (exceedsBottom) {
+            const availableHeight = scrollTop + viewportHeight - constrainedAlignment.top;
+            const newHeight = Math.max(availableHeight, minHeight);
+            constrainedAlignment.height = newHeight;
+        } else {
+            constrainedAlignment.height = originalHeight;
+        }
+
+        return constrainedAlignment;
     };
 
     private clearAlignmentTimeout = () => {
@@ -268,17 +364,30 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
                 : "absolute"
             : positionType;
 
-        return {
+        // Base styles always applied
+        const styles: React.CSSProperties = {
             position,
             left: alignment.left,
             top: alignment.top,
             zIndex: this.getZIndex(),
             visibility: this.isAligned() ? undefined : "hidden",
+            ...(this.props.ensureVisibility &&
+                alignment.width && {
+                    width: alignment.width,
+                }),
+            ...(this.props.ensureVisibility &&
+                alignment.height && {
+                    height: alignment.height,
+                }),
+            width: this.props.width,
+            maxWidth: this.props.maxWidth,
         };
+
+        return styles;
     };
 
     private getOverlayClasses = (): string => {
-        return cx(this.props.className, this.getAlignClasses(), {
+        return cx(this.props.className, this.getAlignClasses(), this.getVisibilityClass(), {
             "overlay-wrapper": true,
         });
     };
@@ -288,9 +397,20 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
      * for position of arrows and stuff
      */
     private getAlignClasses = (): string => {
+        if (!this.isAligned()) {
+            return "";
+        }
         const align = this.state.alignment.align.split(" ");
 
         return `target-${align[0]} self-${align[1]}`;
+    };
+
+    private getVisibilityClass = (): string => {
+        if (!this.isAligned()) {
+            return "";
+        }
+
+        return this.props.ensureVisibility && this.state.initialVisiblePart < 1 ? "truncated" : "";
     };
 
     private createPortalNode(): void {
@@ -448,6 +568,25 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
             false
         );
     };
+
+    private createResizeObserver(): ResizeObserver | undefined {
+        // With 100% or more threshold, don't use ResizeObserver
+        if (this.props.resizeObserverThreshold >= 1) {
+            return undefined;
+        }
+
+        return new ResizeObserver((entries) => {
+            const newHeightCandidate = entries[0].contentRect.height;
+            const heightDiffersByThreshold =
+                Math.abs(this.state.observedHeight - newHeightCandidate) / this.state.observedHeight >
+                this.props.resizeObserverThreshold;
+
+            if (heightDiffersByThreshold) {
+                this.resizeHandler();
+                this.setState({ observedHeight: newHeightCandidate });
+            }
+        });
+    }
 }
 
 const overlayState = {

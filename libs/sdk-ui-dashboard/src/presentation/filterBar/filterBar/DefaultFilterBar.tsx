@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import classNames from "classnames";
 import { invariant } from "ts-invariant";
@@ -6,14 +6,18 @@ import {
     areObjRefsEqual,
     DashboardAttributeFilterConfigModeValues,
     DashboardDateFilterConfigModeValues,
+    FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     isAllTimeDashboardDateFilter,
+    isDashboardAttributeFilter,
+    ObjRef,
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
 import {
     changeAttributeFilterSelection,
+    changeMigratedAttributeFilterSelection,
     changeDateFilterSelection,
     clearDateFilterSelection,
     selectEffectiveDateFilterAvailableGranularities,
@@ -30,6 +34,16 @@ import {
     selectCanAddMoreFilters,
     selectCatalogDateDatasets,
     selectEffectiveDateFiltersModeMap,
+    selectAttributeFilterConfigsDisplayAsLabelMap,
+    selectEnableDuplicatedLabelValuesInAttributeFilter,
+    setAttributeFilterDisplayForm,
+    setDashboardAttributeFilterConfigDisplayAsLabel,
+    changeWorkingAttributeFilterSelection,
+    selectEnableDashboardFiltersApplyModes,
+    selectWorkingFilterContextFilters,
+    selectCrossFilteringFiltersLocalIdentifiers,
+    selectIsWorkingFilterContextChanged,
+    selectDashboardFiltersApplyMode,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
@@ -59,34 +73,118 @@ import { ResetFiltersButton } from "./ResetFiltersButton.js";
  */
 export const useFilterBarProps = (): IFilterBarProps => {
     const filters = useDashboardSelector(selectFilterContextFilters);
+    const workingFilters = useDashboardSelector(selectWorkingFilterContextFilters);
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
+    const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
+        selectEnableDuplicatedLabelValuesInAttributeFilter,
+    );
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
 
     const dispatch = useDashboardDispatch();
     const onAttributeFilterChanged = useCallback(
-        (filter: IDashboardAttributeFilter) => {
+        (
+            filter: IDashboardAttributeFilter,
+            displayAsLabel?: ObjRef,
+            isWorkingSelectionChange?: boolean,
+            isResultOfMigration?: boolean,
+        ) => {
             const convertedFilter = supportElementUris
                 ? filter
                 : convertDashboardAttributeFilterElementsValuesToUris(filter);
             const { attributeElements, negativeSelection, localIdentifier } = convertedFilter.attributeFilter;
+            if (enableDuplicatedLabelValuesInAttributeFilter) {
+                const getCurrentFilter = (
+                    existingFilter: FilterContextItem[],
+                    filterLocalId: string | undefined,
+                ) => {
+                    return existingFilter
+                        .filter(isDashboardAttributeFilter)
+                        .find(
+                            (existingFilter) =>
+                                existingFilter.attributeFilter.localIdentifier === filterLocalId,
+                        );
+                };
+                const currentFilter = getCurrentFilter(filters, localIdentifier);
+                if (
+                    !areObjRefsEqual(
+                        filter.attributeFilter.displayForm,
+                        currentFilter?.attributeFilter.displayForm,
+                    )
+                ) {
+                    dispatch(
+                        setAttributeFilterDisplayForm(
+                            localIdentifier!,
+                            filter.attributeFilter.displayForm,
+                            isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                            isResultOfMigration,
+                        ),
+                    );
+                }
+                if (displayAsLabel) {
+                    dispatch(
+                        setDashboardAttributeFilterConfigDisplayAsLabel(localIdentifier!, displayAsLabel),
+                    );
+                }
+            }
 
-            dispatch(
-                changeAttributeFilterSelection(
-                    localIdentifier!,
-                    attributeElements,
-                    negativeSelection ? "NOT_IN" : "IN",
-                ),
-            );
+            if (isWorkingSelectionChange && enableDashboardFiltersApplyModes) {
+                dispatch(
+                    changeWorkingAttributeFilterSelection(
+                        localIdentifier!,
+                        attributeElements,
+                        negativeSelection ? "NOT_IN" : "IN",
+                    ),
+                );
+            } else if (isResultOfMigration) {
+                dispatch(
+                    changeMigratedAttributeFilterSelection(
+                        localIdentifier!,
+                        attributeElements,
+                        negativeSelection ? "NOT_IN" : "IN",
+                    ),
+                );
+            } else {
+                dispatch(
+                    changeAttributeFilterSelection(
+                        localIdentifier!,
+                        attributeElements,
+                        negativeSelection ? "NOT_IN" : "IN",
+                    ),
+                );
+            }
         },
-        [dispatch, supportElementUris],
+        [
+            dispatch,
+            supportElementUris,
+            enableDuplicatedLabelValuesInAttributeFilter,
+            filters,
+            enableDashboardFiltersApplyModes,
+        ],
     );
 
     const onDateFilterChanged = useCallback(
-        (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => {
+        (
+            filter: IDashboardDateFilter | undefined,
+            dateFilterOptionLocalId?: string,
+            isWorkingSelectionChange?: boolean,
+        ) => {
             if (!filter) {
-                dispatch(clearDateFilterSelection());
+                dispatch(
+                    clearDateFilterSelection(
+                        undefined,
+                        undefined,
+                        isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                    ),
+                );
             } else if (isAllTimeDashboardDateFilter(filter)) {
                 // all time filter
-                dispatch(clearDateFilterSelection(undefined, filter?.dateFilter.dataSet));
+                dispatch(
+                    clearDateFilterSelection(
+                        undefined,
+                        filter?.dateFilter.dataSet,
+                        isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                    ),
+                );
             } else {
                 const { type, granularity, from, to, dataSet } = filter.dateFilter;
                 dispatch(
@@ -98,37 +196,47 @@ export const useFilterBarProps = (): IFilterBarProps => {
                         dateFilterOptionLocalId,
                         undefined,
                         dataSet,
+                        isWorkingSelectionChange && enableDashboardFiltersApplyModes,
                     ),
                 );
             }
         },
-        [dispatch],
+        [dispatch, enableDashboardFiltersApplyModes],
     );
 
-    return { filters, onAttributeFilterChanged, onDateFilterChanged, DefaultFilterBar };
+    return { filters, workingFilters, onAttributeFilterChanged, onDateFilterChanged, DefaultFilterBar };
 };
 
 /**
  * @alpha
  */
 export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
-    const { filters, onAttributeFilterChanged, onDateFilterChanged } = props;
+    const { filters, workingFilters, onAttributeFilterChanged, onDateFilterChanged } = props;
 
     const [
-        { commonDateFilter, draggableFiltersWithPlaceholder, draggableFiltersCount, autoOpenFilter },
+        {
+            commonDateFilter,
+            commonWorkingDateFilter,
+            draggableFiltersWithPlaceholder,
+            draggableFiltersCount,
+            autoOpenFilter,
+        },
         {
             addDraggableFilterPlaceholder,
             closeAttributeSelection,
             selectDraggableFilter,
             onCloseAttributeFilter,
         },
-    ] = useFiltersWithAddedPlaceholder(filters);
+    ] = useFiltersWithAddedPlaceholder(filters, workingFilters);
 
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
     const commonDateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
     const attributeFiltersModeMap = useDashboardSelector(selectEffectiveAttributeFiltersModeMap);
+    const attributeFiltersDisplayAsLabelMap = useDashboardSelector(
+        selectAttributeFilterConfigsDisplayAsLabelMap,
+    );
     const dateFiltersModeMap = useDashboardSelector(selectEffectiveDateFiltersModeMap);
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
 
@@ -144,6 +252,11 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
         attributeFiltersModeMap,
         dateFiltersModeMap,
     );
+
+    const crossFilterLocalIds = useDashboardSelector(selectCrossFilteringFiltersLocalIdentifiers);
+    const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
+    const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
 
     if (isExport || haveAllFiltersHidden) {
         return <HiddenFilterBar {...props} />;
@@ -169,6 +282,9 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     <>
                         <CustomCommonDateFilterComponent
                             filter={commonDateFilter}
+                            workingFilter={
+                                enableDashboardFiltersApplyModes ? commonWorkingDateFilter : undefined
+                            }
                             onFilterChanged={onDateFilterChanged}
                             config={commonDateFilterComponentConfig}
                             readonly={commonDateFilterMode === DashboardDateFilterConfigModeValues.READONLY}
@@ -195,13 +311,16 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                         />
                     );
                 } else if (isFilterBarAttributeFilter(filterOrPlaceholder)) {
-                    const { filter, filterIndex } = filterOrPlaceholder;
+                    const { filter, filterIndex, workingFilter } = filterOrPlaceholder;
                     const convertedFilter = supportElementUris
                         ? filter
                         : convertDashboardAttributeFilterElementsUrisToValues(filter);
                     const CustomAttributeFilterComponent =
                         AttributeFilterComponentSet.MainComponentProvider(convertedFilter);
                     const attributeFilterMode = attributeFiltersModeMap.get(
+                        filter.attributeFilter.localIdentifier!,
+                    );
+                    const displayAsLabel = attributeFiltersDisplayAsLabelMap.get(
                         filter.attributeFilter.localIdentifier!,
                     );
 
@@ -220,6 +339,16 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                         return null;
                     }
 
+                    if (
+                        filter.attributeFilter.localIdentifier &&
+                        crossFilterLocalIds.includes(filter.attributeFilter.localIdentifier) &&
+                        isWorkingFilterContextChanged &&
+                        filtersApplyMode.mode === "ALL_AT_ONCE" &&
+                        enableDashboardFiltersApplyModes
+                    ) {
+                        return null;
+                    }
+
                     return (
                         <DraggableAttributeFilter
                             key={`${objRefToString(displayForm.attribute)}-${
@@ -227,10 +356,12 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                             }`}
                             autoOpen={areObjRefsEqual(filter.attributeFilter.displayForm, autoOpenFilter)}
                             filter={filter}
+                            workingFilter={enableDashboardFiltersApplyModes ? workingFilter : undefined}
                             filterIndex={filterIndex}
                             readonly={
                                 attributeFilterMode === DashboardAttributeFilterConfigModeValues.READONLY
                             }
+                            displayAsLabel={displayAsLabel}
                             FilterComponent={CustomAttributeFilterComponent}
                             onAttributeFilterChanged={onAttributeFilterChanged}
                             onAttributeFilterAdded={addDraggableFilterPlaceholder}
@@ -239,7 +370,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     );
                 } else {
                     if (filterOrPlaceholder.filter.dateFilter.dataSet) {
-                        const { filter, filterIndex } = filterOrPlaceholder;
+                        const { filter, workingFilter, filterIndex } = filterOrPlaceholder;
 
                         const CustomDateFilterComponent = DashboardDateFilterComponentProvider(filter);
 
@@ -253,7 +384,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
 
                         const defaultDateFilterName = allDateDatasets.find((ds) =>
                             areObjRefsEqual(ds.dataSet.ref, filter.dateFilter.dataSet),
-                        )!.dataSet.title;
+                        )?.dataSet?.title;
 
                         return (
                             <DraggableDateFilter
@@ -263,6 +394,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                                     autoOpenFilter,
                                 )}
                                 filter={filter}
+                                workingFilter={enableDashboardFiltersApplyModes ? workingFilter : undefined}
                                 filterIndex={filterIndex}
                                 config={{
                                     ...commonDateFilterComponentConfig,

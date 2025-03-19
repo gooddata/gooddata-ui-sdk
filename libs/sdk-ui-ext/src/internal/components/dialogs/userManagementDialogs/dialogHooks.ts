@@ -20,6 +20,7 @@ import {
     IUserMember,
     UserGroupEditDialogMode,
     IGrantedDataSource,
+    UserTabId,
 } from "./types.js";
 import { useTelemetry } from "./TelemetryContext.js";
 
@@ -303,14 +304,29 @@ export const useUsers = (userGroupId: string, organizationId: string, onSuccess:
     };
 };
 
+const getTabMessageKey = (tabId: UserTabId) => {
+    switch (tabId) {
+        case "WORKSPACES":
+            return "workspaces";
+        case "USER_GROUPS":
+            return "userGroups";
+        case "DATA_SOURCES":
+            return "dataSources";
+        default:
+            return "details";
+    }
+};
+
 export const useUserDialogTabs = (
     grantedWorkspaces: IGrantedWorkspace[],
     grantedUserGroups: IGrantedUserGroup[],
     grantedDataSources: IGrantedDataSource[],
     isAdmin: boolean,
+    selectedTab?: UserTabId,
 ) => {
+    const selectedTabLabel = selectedTab ? userDialogTabsMessages[getTabMessageKey(selectedTab)] : undefined;
     const [selectedTabId, setSelectedTabId] = useState(
-        isAdmin ? userDialogTabsMessages.userGroups : userDialogTabsMessages.workspaces,
+        selectedTabLabel ?? (isAdmin ? userDialogTabsMessages.userGroups : userDialogTabsMessages.workspaces),
     );
 
     const tabs = useMemo<ITab[]>(() => {

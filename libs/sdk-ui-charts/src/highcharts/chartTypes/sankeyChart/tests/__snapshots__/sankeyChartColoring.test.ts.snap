@@ -10,7 +10,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "CompuSci",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+        "uri": "CompuSci",
       },
     },
   },
@@ -22,7 +22,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "Educationly",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+        "uri": "Educationly",
       },
     },
   },
@@ -34,7 +34,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "Explorer",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345",
+        "uri": "Explorer",
       },
     },
   },
@@ -46,7 +46,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "Grammar Plus",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+        "uri": "Grammar Plus",
       },
     },
   },
@@ -58,7 +58,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "PhoenixSoft",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339",
+        "uri": "PhoenixSoft",
       },
     },
   },
@@ -70,7 +70,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "WonderKid",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497",
+        "uri": "WonderKid",
       },
     },
   },
@@ -87,7 +87,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "East Coast",
-        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
+        "uri": "East Coast",
       },
     },
   },
@@ -99,7 +99,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "West Coast",
-        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489",
+        "uri": "West Coast",
       },
     },
   },
@@ -116,7 +116,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "CompuSci",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+        "uri": "CompuSci",
       },
     },
   },
@@ -128,7 +128,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "Educationly",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+        "uri": "Educationly",
       },
     },
   },
@@ -140,7 +140,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "Explorer",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345",
+        "uri": "Explorer",
       },
     },
   },
@@ -152,7 +152,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "Grammar Plus",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+        "uri": "Grammar Plus",
       },
     },
   },
@@ -164,7 +164,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "PhoenixSoft",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339",
+        "uri": "PhoenixSoft",
       },
     },
   },
@@ -176,7 +176,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "WonderKid",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497",
+        "uri": "WonderKid",
       },
     },
   },
@@ -188,7 +188,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "East Coast",
-        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
+        "uri": "East Coast",
       },
     },
   },
@@ -200,7 +200,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "West Coast",
-        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489",
+        "uri": "West Coast",
       },
     },
   },
@@ -217,7 +217,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "CompuSci",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+        "uri": "CompuSci",
       },
     },
   },
@@ -229,7 +229,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "Educationly",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+        "uri": "Educationly",
       },
     },
   },
@@ -245,7 +245,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "Explorer",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345",
+        "uri": "Explorer",
       },
     },
   },
@@ -257,7 +257,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "Grammar Plus",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+        "uri": "Grammar Plus",
       },
     },
   },
@@ -269,7 +269,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "PhoenixSoft",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339",
+        "uri": "PhoenixSoft",
       },
     },
   },
@@ -285,7 +285,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "WonderKid",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497",
+        "uri": "WonderKid",
       },
     },
   },
@@ -302,7 +302,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "East Coast",
-        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
+        "uri": "East Coast",
       },
     },
   },
@@ -314,7 +314,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "West Coast",
-        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489",
+        "uri": "West Coast",
       },
     },
   },
@@ -331,7 +331,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "CompuSci",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+        "uri": "CompuSci",
       },
     },
   },
@@ -343,7 +343,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "Educationly",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
+        "uri": "Educationly",
       },
     },
   },
@@ -359,7 +359,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "Explorer",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=342345",
+        "uri": "Explorer",
       },
     },
   },
@@ -371,7 +371,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "Grammar Plus",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=168737",
+        "uri": "Grammar Plus",
       },
     },
   },
@@ -383,7 +383,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "PhoenixSoft",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166339",
+        "uri": "PhoenixSoft",
       },
     },
   },
@@ -399,7 +399,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "WonderKid",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=166497",
+        "uri": "WonderKid",
       },
     },
   },
@@ -411,7 +411,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "East Coast",
-        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
+        "uri": "East Coast",
       },
     },
   },
@@ -423,7 +423,7 @@ exports[`SankeyChartColorStrategy > should return correct colors for each attrib
     "headerItem": {
       "attributeHeaderItem": {
         "name": "West Coast",
-        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460489",
+        "uri": "West Coast",
       },
     },
   },

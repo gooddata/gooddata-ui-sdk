@@ -68,7 +68,7 @@ In addition, proxying the `/*.html` pages allows you to easily establish a user 
 
 Setting up CORS allows you to develop and run web applications that can communicate directly with the GoodData APIs.
 
-This section does **not** address authentication. The easiest way to make sure that your API requests to the GoodData platform are authenticated is to be logged into your white-labeled domain in the same browser you are using for your local development.
+This section does **not** address authentication. The easiest way to make sure that your API requests to GoodData are authenticated is to be logged into your white-labeled domain in the same browser you are using for your local development.
 
 ### Step 1. Get a white-labeled GoodData domain.
 

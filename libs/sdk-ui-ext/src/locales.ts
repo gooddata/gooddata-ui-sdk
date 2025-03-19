@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { MessageDescriptor, defineMessages } from "react-intl";
 
 //NOTE: Follow up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
@@ -31,6 +31,7 @@ export const titles: Record<string, MessageDescriptor> = defineMessages({
     tertiary_measures_bubble: { id: "dashboard.bucket.tertiary_measures_title.bubble" },
     tertiary_measures_bullet: { id: "dashboard.bucket.tertiary_measures_title.bullet" },
     attribute_scatter: { id: "dashboard.bucket.attribute_title.scatter" },
+    segment_scatter: { id: "dashboard.bucket.segment_title.scatter" },
     attribute_xirr: { id: "dashboard.bucket.attribute_title.xirr" },
     attribute_table: { id: "dashboard.bucket.attribute_title.table" },
     attribute_from_sankey: { id: "dashboard.bucket.attribute_from_title.sankey" },
@@ -62,6 +63,9 @@ export const titles: Record<string, MessageDescriptor> = defineMessages({
     segment_pushpin: { id: "dashboard.bucket.segment_title.pushpin" },
     trend_line: { id: "dashboard.bucket.trend_title.line" },
     columns_table: { id: "dashboard.bucket.columns_title.table" },
+    attribute_repeater: { id: "dashboard.bucket.attribute_title.repeater" },
+    columns_repeater: { id: "dashboard.bucket.columns_title.repeater" },
+    view_repeater: { id: "dashboard.bucket.view_title.repeater" },
 });
 
 export const subtitles: Record<string, MessageDescriptor> = defineMessages({
@@ -210,6 +214,50 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     columnHeaderPositionLeft: { id: "properties.column.headers.position.left" },
     interactions: { id: "properties.interactions.title" },
     interactionsDrillDown: { id: "properties.interactions.drillDown" },
+    interactionsAlerts: { id: "properties.interactions.alerts" },
+    interactionsAlertsTooltip: { id: "properties.interactions.alerts.tooltip" },
+    interactionsScheduledExports: { id: "properties.interactions.scheduledExports" },
+    interactionsScheduledExportsTooltip: { id: "properties.interactions.scheduledExports.tooltip" },
+    rowHeight: { id: "properties.canvas.rowHeight" },
+    rowHeightSmall: { id: "properties.canvas.rowHeight.small" },
+    rowHeightMedium: { id: "properties.canvas.rowHeight.medium" },
+    rowHeightLarge: { id: "properties.canvas.rowHeight.large" },
+    verticalAlign: { id: "properties.canvas.verticalAlign" },
+    verticalAlignTop: { id: "properties.canvas.verticalAlign.top" },
+    verticalAlignMiddle: { id: "properties.canvas.verticalAlign.middle" },
+    verticalAlignBottom: { id: "properties.canvas.verticalAlign.bottom" },
+    textWrapping: { id: "properties.canvas.textWrapping" },
+    textWrappingClip: { id: "properties.canvas.textWrapping.clip" },
+    textWrappingWrap: { id: "properties.canvas.textWrapping.wrap" },
+    image: { id: "properties.canvas.image" },
+    imageFit: { id: "properties.canvas.image.fit" },
+    imageFill: { id: "properties.canvas.image.fill" },
+    forecastTitle: { id: "properties.forecast.title" },
+    forecastDisabledTooltip: { id: "properties.forecastDisabled.title" },
+    forecastPeriod: { id: "properties.forecastPeriod.title" },
+    forecastPeriodPlaceholder: { id: "properties.forecastPeriod.placeholder" },
+    forecastSeasonal: { id: "properties.forecastSeasonal.title" },
+    forecastConfidence: { id: "properties.forecastConfidence.title" },
+    forecastConfidence70: { id: "properties.forecastConfidence.70" },
+    forecastConfidence75: { id: "properties.forecastConfidence.75" },
+    forecastConfidence80: { id: "properties.forecastConfidence.80" },
+    forecastConfidence85: { id: "properties.forecastConfidence.85" },
+    forecastConfidence90: { id: "properties.forecastConfidence.90" },
+    forecastConfidence95: { id: "properties.forecastConfidence.95" },
+    forecastSlicedWarningTitle: { id: "properties.forecastSliced.title" },
+    forecastSlicedWarningDescription: { id: "properties.forecastSliced.description" },
+    clusteringTitle: { id: "properties.clustering.title" },
+    clusteringAmount: { id: "properties.clustering.amount" },
+    clusteringAmountPlaceholder: { id: "properties.clustering.amount.placeholder" },
+    clusteringThreshold: { id: "properties.clustering.threshold" },
+    clusteringThresholdPlaceholder: { id: "properties.clustering.threshold.placeholder" },
+    clusteringThresholdTooltip: { id: "properties.clustering.threshold.tooltip" },
+    advancedSection: { id: "properties.advanced.title" },
+    chartConfigOverrideNoValueLabel: { id: "properties.advanced.chartConfigOverride.noValueLabel" },
+    chartConfigOverrideLink: { id: "properties.advanced.chartConfigOverride.link" },
+    chartConfigOverrideEditorButton: { id: "properties.advanced.chartConfigOverride.editorButton" },
+    chartConfigOverrideTitle: { id: "properties.advanced.chartConfigOverride.title" },
+    snippetsHeader: { id: "properties.advanced.chartConfigOverride.snippets.header" },
 });
 
 export const comparisonMessages: Record<string, MessageDescriptor> = defineMessages({

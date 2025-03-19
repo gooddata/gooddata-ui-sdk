@@ -6,14 +6,15 @@ weight: 28
 no_list: true
 ---
 
-As of now, there is direct support only for [React](../../quick_start/) and [Angular 9+](./angular/) and indirect for [Next.js](./nextjs/)
+As of now, there is direct support only for [React](../../quick_start/) and [Web Components](../../learn/embed_dashboards/web_components/).
 
-There are no near-future plans to introduce guides for any other platforms or frameworks.
+There are no near-future plans to introduce comprehensive documentation for integrating GoodData.UI with any other platforms or frameworks.
 
-GoodData.UI also support [Web Components](../../learn/embed_dashboards/web_components/), as we understand, that sometimes, you don't want to use the React, due to the innert complexity it would bring.
+However GoodData.UI supports nearly all .js and .ts based applications, altough some of them will require more work. See [Limitations](../architecture_overview/limitations/) to learn about obstacles, that you might encounter when implementing GoodData.UI without frameworks and platforms mentioned below.
 
-{{% alert title="Support of other platforms and frameworks" color="info"%}}
-GoodData.UI supports nearly all .js and .ts based applications, altough some of them will require more work.
+We have written a Frontend Integration Series articles that should get you started using some of these other frameworks, if you do not use either React of Web Components:
 
-See [Limitations](../architecture_overview/limitations/) to learn about obstacles, that you might encounter when implementing GoodData.UI without frameworks and platforms mentioned below.
-{{% /alert %}}
+* [Angular](https://www.gooddata.com/blog/frontend-integration-series-angular/)
+* [Next.js](https://www.gooddata.com/blog/frontend-integration-series-nextjs/)
+* [Vue.js](https://www.gooddata.com/blog/frontend-integration-series-vue-js/)
+* [SvelteKit](https://www.gooddata.com/blog/frontend-integration-series-sveltekit/)

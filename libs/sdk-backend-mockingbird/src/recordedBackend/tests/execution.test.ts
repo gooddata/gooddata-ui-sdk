@@ -1,8 +1,8 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { describe, expect, it } from "vitest";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewAll, dataViewWindow, recordedDataView } from "../execution.js";
-import { isIdentifierRef, isUriRef, ObjRef, isAttributeDescriptor } from "@gooddata/sdk-model";
+import { isIdentifierRef, ObjRef, isAttributeDescriptor } from "@gooddata/sdk-model";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { recordedBackend } from "../index.js";
 
@@ -26,12 +26,6 @@ describe("recordedDataView", () => {
         expect(dv.result).toBeDefined();
     });
 
-    it("should load result with uriRefs by default", () => {
-        const dv = recordedDataView(ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy);
-
-        assertExpectedRefs(dv.result, isUriRef);
-    });
-
     it("should load result with idRefs if asked to", () => {
         const dv = recordedDataView(
             ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy,
@@ -44,18 +38,6 @@ describe("recordedDataView", () => {
 });
 
 describe("execution factory", () => {
-    it("should load result with uriRefs by default", async () => {
-        const result = await recordedBackend(ReferenceRecordings.Recordings)
-            .workspace("reference-workspace")
-            .execution()
-            .forDefinition(
-                ReferenceRecordings.Scenarios.BarChart.SingleMeasureWithViewBy.execution.definition,
-            )
-            .execute();
-
-        assertExpectedRefs(result, isUriRef);
-    });
-
     it("should load result with idRefs if asked to", async () => {
         const result = await recordedBackend(ReferenceRecordings.Recordings, { useRefType: "id" })
             .workspace("reference-workspace")

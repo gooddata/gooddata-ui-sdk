@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps } from "react-intl";
 
@@ -311,6 +311,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             LoadingComponent: null,
             ErrorComponent: null,
             theme,
+            enableExecutionCancelling: fullConfig.enableExecutionCancelling ?? false,
         };
 
         this.renderFun(<CoreGeoChart {...geoPushpinProps} />, this.getElement());

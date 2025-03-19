@@ -1,10 +1,7 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 @use "variables";
 @use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
-
-$gd-width-resizer-hotpost-width: 40px;
-$gd-width-resizer-hotpost-height: 40px;
 
 .dash-width-resizer-container {
     position: absolute;
@@ -26,7 +23,7 @@ $gd-width-resizer-hotpost-height: 40px;
 .dash-width-resizer-hotspot,
 .resizer-drag-preview {
     display: flex;
-    width: $gd-width-resizer-hotpost-width;
+    width: 40px;
     padding: 0 0 0 5px;
     cursor: col-resize;
 }
@@ -37,7 +34,7 @@ $gd-width-resizer-hotpost-height: 40px;
     display: flex;
     align-items: center;
     overflow: hidden;
-    height: $gd-width-resizer-hotpost-height;
+    height: 40px;
     cursor: row-resize;
 }
 
@@ -61,6 +58,9 @@ $gd-width-resizer-hotpost-height: 40px;
         height: 100%;
         border-left: 2px dashed;
 
+        &.default {
+            border-color: kit-variables.$gd-color-disabled;
+        }
         &.muted {
             border-color: kit-variables.$gd-color-text;
         }
@@ -92,6 +92,10 @@ $gd-width-resizer-hotpost-height: 40px;
         width: 100%;
         border-top: 2px dashed;
         border-color: kit-variables.$gd-palette-primary-base;
+
+        &.default {
+            border-color: kit-variables.$gd-color-disabled;
+        }
 
         &.muted {
             border-color: kit-variables.$gd-color-text;
@@ -145,6 +149,14 @@ $gd-width-resizer-hotpost-height: 40px;
         &.error {
             background: variables.$gd-palette-primary-base-mix15-white;
         }
+        &.squared {
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0;
+            border-radius: 0;
+        }
     }
 
     .gd-resize-overlay-text {
@@ -153,7 +165,7 @@ $gd-width-resizer-hotpost-height: 40px;
         justify-content: center;
         align-items: center;
         padding: 5px;
-        color: var(--gd-palette-complementary-6, variables.$info-text-color);
+        color: var(--gd-palette-complementary-6-from-theme, variables.$info-text-color);
         font-weight: bold;
         text-align: center;
     }
@@ -180,7 +192,7 @@ $gd-width-resizer-hotpost-height: 40px;
     }
 
     .passive {
-        fill: var(--gd-palette-complementary-6, kit-variables.$default-gd-color-disabled);
+        fill: var(--gd-palette-complementary-6-from-theme, kit-variables.$default-gd-color-disabled);
     }
 }
 
@@ -191,7 +203,171 @@ $gd-width-resizer-hotpost-height: 40px;
     width: 100%;
     padding: 10px 15px 8px;
     background: var(
-        --gd-dashboards-content-backgroundColor,
-        var(--gd-palette-complementary-0, rgba(255, 255, 255, 0.95))
+        --gd-dashboards-content-backgroundColor-from-theme,
+        var(--gd-palette-complementary-0-from-theme, rgba(255, 255, 255, 0.95))
     );
+}
+
+.gd-grid-layout-width-resizer-drag-preview {
+    padding: 0 0 0 30px;
+    &.gd-first-container-row-widget {
+        .gd-fluidlayout-width-resizer__container {
+            padding-top: 0;
+        }
+    }
+}
+
+.gd-grid-layout-resizer-drag-preview,
+.gd-grid-layout {
+    .gd-fluidlayout-width-resizer__container {
+        padding: 10px 0;
+        border-radius: 4px;
+    }
+    .gd-fluidlayout-width-resizer {
+        padding: 4px 0;
+        display: flex;
+        flex-direction: column;
+        border-radius: 4px;
+
+        .width-resizer-line {
+            flex: 1 0 auto;
+            width: 0;
+            margin-left: 4px;
+            height: unset;
+        }
+    }
+
+    .dash-height-resizer-container {
+        position: relative;
+        right: unset;
+        bottom: unset;
+        left: unset;
+        height: 0;
+    }
+
+    .width-resizer-drag-handler {
+        $width-resizer-center-size: 10px;
+
+        width: $width-resizer-center-size;
+        height: $width-resizer-center-size;
+        border: 2px solid;
+        border-radius: 3px;
+        flex: 0 0 $width-resizer-center-size;
+        &.default {
+            border-color: kit-variables.$gd-color-disabled;
+        }
+        &.muted {
+            border-color: kit-variables.$gd-color-text;
+        }
+
+        &.active {
+            border-color: kit-variables.$gd-palette-primary-base;
+        }
+
+        &.error {
+            border-color: kit-variables.$gd-palette-error-base;
+        }
+    }
+    .gd-fluidlayout-height-resizer {
+        padding: 0;
+        margin-top: 7px;
+        display: flex;
+        flex-direction: row;
+        border-radius: 4px;
+
+        .height-resizer-line {
+            flex: 1 0 auto;
+            margin-top: 4px;
+            width: unset;
+        }
+    }
+}
+
+.gd-grid-layout-resizer-drag-preview.height-resizer-drag-preview {
+    height: 20px;
+}
+
+.gd-grid-layout {
+    .dash-width-resizer-container {
+        position: relative;
+        left: -25px;
+        right: 0;
+        width: 0;
+        &.gd-first-container-row-widget {
+            .gd-fluidlayout-width-resizer__container {
+                padding-top: 0;
+            }
+        }
+    }
+
+    .gd-fluidlayout-width-resizer__container {
+        background: variables.$gd-dashboards-content-backgroundColor;
+        width: 100%;
+    }
+
+    .dash-height-resizer-hotspot {
+        position: absolute;
+        bottom: -6px;
+        display: flex;
+        height: 20px;
+    }
+
+    .gd-hover-detector {
+        width: 100%;
+        height: 100%;
+    }
+    .gd-resize-overlay {
+        top: 5px;
+        bottom: 5px;
+        left: -5px;
+        right: -5px;
+        border-radius: calc(#{variables.$gd-dashboards-content-widget-borderRadius});
+    }
+
+    .gd-resize-overlay.gd-first-container-row-widget {
+        top: -5px;
+    }
+}
+
+.sdk-edit-mode-on .gd-grid-layout {
+    .dash-width-resizer-hotspot {
+        position: unset;
+        left: unset;
+        padding: 0 0 0 30px;
+    }
+
+    .gd-resize-overlay-text {
+        right: -10px;
+        left: -10px;
+    }
+}
+
+.gd-grid-layout__ruler {
+    // layout must not jump when ruler is displayed and must be visible at the top also when page is scrolled out
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+
+    .gd-grid-layout__item--span-1 {
+        position: relative;
+    }
+
+    .gd-resize-bullet {
+        position: relative;
+        left: -13px;
+        width: 6px;
+        height: 6px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .gd-resize-bullet--last {
+        position: absolute;
+        top: 0;
+        right: -13px;
+        left: unset;
+    }
 }

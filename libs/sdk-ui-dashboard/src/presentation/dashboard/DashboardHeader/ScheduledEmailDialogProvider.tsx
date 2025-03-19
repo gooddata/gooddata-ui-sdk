@@ -1,55 +1,108 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import React from "react";
 
-import { ScheduledEmailDialog, ScheduledEmailManagementDialog } from "../../scheduledEmail/index.js";
+import {
+    IScheduledEmailDialogProps,
+    ScheduledEmailDialog,
+    ScheduledEmailManagementDialog,
+} from "../../scheduledEmail/index.js";
 
-import { useDashboardScheduledEmails } from "../../../model/index.js";
+import {
+    useDashboardScheduledEmails,
+    useDashboardScheduledEmailsFilters,
+    useWorkspaceUsers,
+} from "../../../model/index.js";
 
 export const ScheduledEmailDialogProvider = () => {
     const {
+        // Shared Local State
+        scheduledExportToEdit,
+        // Data
+        isInitialized,
+        widget,
+        insight,
+        automations,
+        automationsLoading,
+        automationsError,
+        notificationChannels,
+        // Single Schedule Dialog
         isScheduleEmailingDialogOpen,
-        isScheduleEmailingManagementDialogOpen,
         onScheduleEmailingCancel,
-        onScheduleEmailingCreateError,
         onScheduleEmailingCreateSuccess,
+        onScheduleEmailingCreateError,
+        onScheduleEmailingSaveSuccess,
+        onScheduleEmailingSaveError,
+        // Management / List Dialog
+        isScheduleEmailingManagementDialogOpen,
+        onScheduleEmailingManagementClose,
         onScheduleEmailingManagementAdd,
         onScheduleEmailingManagementEdit,
-        scheduledEmailToEdit,
-        users,
-        onScheduleEmailingSaveError,
-        onScheduleEmailingSaveSuccess,
-        onScheduleEmailingManagementClose,
-        onScheduleEmailingManagementLoadingError,
         onScheduleEmailingManagementDeleteSuccess,
         onScheduleEmailingManagementDeleteError,
     } = useDashboardScheduledEmails();
 
+    const { widgetFilters, dashboardFilters, widgetFiltersError, widgetFiltersLoading } =
+        useDashboardScheduledEmailsFilters({
+            scheduledExportToEdit,
+            widget,
+            insight,
+        });
+
+    const isLoading = [widgetFiltersLoading, automationsLoading].some(Boolean);
+    const loadingError = [widgetFiltersError, automationsError].find(Boolean);
+
+    if (!isInitialized) {
+        return null;
+    }
     return (
         <>
             {isScheduleEmailingManagementDialogOpen ? (
                 <ScheduledEmailManagementDialog
-                    isVisible={isScheduleEmailingManagementDialogOpen}
+                    automations={automations}
+                    notificationChannels={notificationChannels}
+                    scheduleDataError={loadingError}
+                    isLoadingScheduleData={isLoading}
                     onAdd={onScheduleEmailingManagementAdd}
                     onEdit={onScheduleEmailingManagementEdit}
                     onClose={onScheduleEmailingManagementClose}
                     onDeleteSuccess={onScheduleEmailingManagementDeleteSuccess}
-                    onLoadError={onScheduleEmailingManagementLoadingError}
                     onDeleteError={onScheduleEmailingManagementDeleteError}
                 />
             ) : null}
             {isScheduleEmailingDialogOpen ? (
-                <ScheduledEmailDialog
-                    isVisible={isScheduleEmailingDialogOpen}
+                <ScheduledEmailDialogWithUsers
+                    scheduledExportToEdit={scheduledExportToEdit}
+                    notificationChannels={notificationChannels}
+                    widget={widget}
+                    insight={insight}
+                    widgetFilters={widgetFilters}
+                    dashboardFilters={dashboardFilters}
+                    isLoading={isLoading}
                     onCancel={onScheduleEmailingCancel}
                     onError={onScheduleEmailingCreateError}
                     onSuccess={onScheduleEmailingCreateSuccess}
-                    editSchedule={scheduledEmailToEdit}
                     onSaveError={onScheduleEmailingSaveError}
                     onSaveSuccess={onScheduleEmailingSaveSuccess}
-                    users={users}
+                    onDeleteSuccess={onScheduleEmailingManagementDeleteSuccess}
+                    onDeleteError={onScheduleEmailingManagementDeleteError}
                 />
             ) : null}
         </>
     );
 };
+
+/**
+ * Load users only if dialog is open
+ */
+function ScheduledEmailDialogWithUsers(props: Omit<IScheduledEmailDialogProps, "users">) {
+    const { users, status: usersStatus } = useWorkspaceUsers();
+
+    return (
+        <ScheduledEmailDialog
+            {...props}
+            users={users ?? []}
+            isLoading={props.isLoading || usersStatus === "pending" || usersStatus === "loading"}
+        />
+    );
+}

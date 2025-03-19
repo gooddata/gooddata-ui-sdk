@@ -284,6 +284,85 @@
                 "content": {
                     "filterContextRef": {
                         "identifier": {
+                            "id": "1871b38a-de1e-439c-ba6c-2fc8aebf8111",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 38,
+                                                "gridWidth": 8
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "7906ebea-92ef-46eb-868f-afa99792be08",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Repeater",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "createdAt": "2024-04-09 05:06",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "14d22840-5851-41c1-9d72-71626471813e",
+                "modifiedAt": "2024-04-09 05:09",
+                "modifiedBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "permissions": [
+                    {
+                        "assigneeRule": {
+                            "type": "allWorkspaceUsers"
+                        },
+                        "name": "VIEW"
+                    },
+                    {
+                        "assignee": {
+                            "id": "admin",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "Repeater Dashboard"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
                             "id": "45d8ead4-7e44-4474-a99b-8f6ce211fbfc",
                             "type": "filterContext"
                         }
@@ -592,6 +671,85 @@
                 "description": "",
                 "id": "2dcc56ff-5ae6-49f1-ba97-9b76000ca4a1",
                 "title": "Header Tests"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
+                            "id": "2d1ca758-3240-4984-a84e-f2492c63ce8f",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "3fb464aa-4a2c-4412-8811-609e5d6e06a5",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Scatter plot segment by attribute",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "createdAt": "2024-05-27 09:57",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "3999bcb1-696c-4587-a075-c403eef07552",
+                "modifiedAt": "2024-05-27 11:38",
+                "modifiedBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "permissions": [
+                    {
+                        "assigneeRule": {
+                            "type": "allWorkspaceUsers"
+                        },
+                        "name": "VIEW"
+                    },
+                    {
+                        "assignee": {
+                            "id": "admin",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "Dashboard scatter plot segmentation"
             },
             {
                 "content": {
@@ -2643,6 +2801,15 @@
                     "version": "2"
                 },
                 "description": "",
+                "id": "1871b38a-de1e-439c-ba6c-2fc8aebf8111",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
                 "id": "19551c0c-62a1-40ee-898b-b46b95e59074",
                 "title": "filterContext"
             },
@@ -2823,6 +2990,15 @@
                 },
                 "description": "",
                 "id": "2b51da8e-fe92-400f-9cf6-dc4a3c9cfea7",
+                "title": "filterContext"
+            },
+            {
+                "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "2d1ca758-3240-4984-a84e-f2492c63ce8f",
                 "title": "filterContext"
             },
             {
@@ -4847,6 +5023,101 @@
                                                 "filters": [],
                                                 "item": {
                                                     "identifier": {
+                                                        "id": "amount_bop",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "e2443104dc0442dcadf04eb8a45996fe",
+                                        "title": "Amount [BOP]"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "avg._amount",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "218a741d464f47c1bd6e7607ba3ca1c3",
+                                        "title": "Avg. Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "secondary_measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "dt_closedate_timestamp.year",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "073f360b71214bbcab4002517983dc1f"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_owner.department_id",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "88027b1059024979a33227cfebad0638"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "segment"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:scatter"
+                },
+                "createdAt": "2024-05-27 09:56",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "3fb464aa-4a2c-4412-8811-609e5d6e06a5",
+                "title": "Scatter plot segment by attribute"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
                                                         "id": "best_case",
                                                         "type": "metric"
                                                     }
@@ -5224,6 +5495,194 @@
                 "description": "",
                 "id": "780f3759-65cc-4489-858d-9c318ecece75",
                 "title": "USA geography attribute table"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_product.product.name",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "fca86a662c8c4a7b9d7a151d02d2506c"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_product.product.image",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "fca86a662c8c4a7b9d7a151d02d2506c_cloned",
+                                        "showAllValues": true
+                                    }
+                                },
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "label.f_product.product.link",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "e863b33a5d0c4429b6036f1ff9576fd1"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "amount_bop",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "bd48d2166d2c49168604a3abf08f514c",
+                                        "title": "Amount [BOP]"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "avg._amount",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "ead544213ae94facaa21e2e59e7a522e",
+                                        "title": "Avg. Amount"
+                                    }
+                                },
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "654e6a7e7b1645e996377e687e4bfdcd",
+                                        "title": "Probability"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "columns"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "dt_closedate_timestamp.year",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "529a38e734e4477086ccd9f365aa95e7",
+                                        "showAllValues": false
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "filters": [
+                        {
+                            "negativeAttributeFilter": {
+                                "displayForm": {
+                                    "identifier": {
+                                        "id": "label.f_product.product.name",
+                                        "type": "label"
+                                    }
+                                },
+                                "notIn": {
+                                    "values": ["WonderKid"]
+                                }
+                            }
+                        }
+                    ],
+                    "properties": {
+                        "controls": {
+                            "cellImageSizing": "fill",
+                            "cellTextWrapping": "wrap",
+                            "cellVerticalAlign": "middle",
+                            "colorMapping": [
+                                {
+                                    "color": {
+                                        "type": "guid",
+                                        "value": "5"
+                                    },
+                                    "id": "654e6a7e7b1645e996377e687e4bfdcd"
+                                },
+                                {
+                                    "color": {
+                                        "type": "guid",
+                                        "value": "15"
+                                    },
+                                    "id": "ead544213ae94facaa21e2e59e7a522e"
+                                },
+                                {
+                                    "color": {
+                                        "type": "guid",
+                                        "value": "4"
+                                    },
+                                    "id": "bd48d2166d2c49168604a3abf08f514c"
+                                }
+                            ],
+                            "rowHeight": "large"
+                        },
+                        "hyperLinks": {
+                            "e863b33a5d0c4429b6036f1ff9576fd1": {
+                                "staticElementsText": "Show more when clicking"
+                            }
+                        },
+                        "inlineVisualizations": {
+                            "bd48d2166d2c49168604a3abf08f514c": {
+                                "type": "column"
+                            },
+                            "ead544213ae94facaa21e2e59e7a522e": {
+                                "type": "line"
+                            }
+                        }
+                    },
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:repeater"
+                },
+                "createdAt": "2024-04-09 05:05",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "7906ebea-92ef-46eb-868f-afa99792be08",
+                "title": "Repeater"
             },
             {
                 "content": {

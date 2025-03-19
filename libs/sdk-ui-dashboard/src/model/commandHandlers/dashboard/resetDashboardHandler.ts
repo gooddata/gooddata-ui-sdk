@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ResetDashboard } from "../../commands/index.js";
 import { SagaIterator } from "redux-saga";
@@ -8,17 +8,38 @@ import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { dashboardWasReset } from "../../events/dashboard.js";
 import { selectEffectiveDateFilterConfig } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { selectDateFilterConfig, selectSettings } from "../../store/config/configSelectors.js";
+import {
+    selectDateFilterConfig,
+    selectSettings,
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
+} from "../../store/config/configSelectors.js";
 import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,
 } from "./common/stateInitializers.js";
 import { batchActions } from "redux-batched-actions";
 import uniqWith from "lodash/uniqWith.js";
-import { areObjRefsEqual } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    IDashboardAttributeFilterConfig,
+    isDashboardAttributeFilter,
+    IDashboardAttributeFilter,
+} from "@gooddata/sdk-model";
 import { resolveInsights } from "../../utils/insightResolver.js";
 import { insightReferences } from "./common/insightReferences.js";
-import { selectCatalogDateDatasets } from "../../store/catalog/catalogSelectors.js";
+import {
+    selectCatalogDateDatasets,
+    selectAllCatalogDisplayFormsMap,
+} from "../../store/catalog/catalogSelectors.js";
+import { applyDefaultFilterView } from "./common/filterViews.js";
+import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
+import {
+    selectFilterContextAttributeFilters,
+    selectOriginalFilterContextDefinition,
+} from "../../store/filterContext/filterContextSelectors.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { getMigratedAttributeFilters } from "./common/migratedAttributeFilters.js";
+import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 
 export function* resetDashboardHandler(
     ctx: DashboardContext,
@@ -65,7 +86,58 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
          * Everything else can stay untouched.
          */
 
-        const insightRefsFromWidgets = insightReferences(persistedDashboard.layout);
+        const isImmediateAttributeFilterMigrationEnabled: ReturnType<
+            typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
+        > = yield select(selectEnableImmediateAttributeFilterDisplayAsLabelMigration);
+
+        const currentFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
+            selectFilterContextAttributeFilters,
+        );
+        const crossFilteringFiltersLocalIdentifiers: ReturnType<
+            typeof selectCrossFilteringFiltersLocalIdentifiers
+        > = yield select(selectCrossFilteringFiltersLocalIdentifiers);
+        const migratedAttributeFilters = isImmediateAttributeFilterMigrationEnabled
+            ? getMigratedAttributeFilters(
+                  persistedDashboard.filterContext?.filters.filter(isDashboardAttributeFilter),
+                  currentFilters,
+                  crossFilteringFiltersLocalIdentifiers,
+              )
+            : [];
+
+        // Attribute filter configs created in view mode by ad-hoc attribute filter displayAsLabel migration.
+        // The config must be preserved when mode is changed from view to edit (when this saga is called) so the
+        // user can save the dashboard changes, including the config that would get lost otherwise.
+        const adHocAttributeFilterConfigs: IDashboardAttributeFilterConfig[] = yield select(
+            selectAttributeFilterConfigsOverrides,
+        );
+        const effectiveAttributeFilterConfigs = isImmediateAttributeFilterMigrationEnabled
+            ? mergeDashboardAttributeFilterConfigs(
+                  persistedDashboard.attributeFilterConfigs,
+                  adHocAttributeFilterConfigs,
+                  migratedAttributeFilters,
+              )
+            : persistedDashboard.attributeFilterConfigs;
+
+        const originalFilterContext: ReturnType<typeof selectOriginalFilterContextDefinition> = yield select(
+            selectOriginalFilterContextDefinition,
+        );
+
+        const hasUnsavedFilterChanges = migratedAttributeFilters.length > 0;
+        const effectiveOriginalFilterContext =
+            isImmediateAttributeFilterMigrationEnabled && hasUnsavedFilterChanges
+                ? originalFilterContext
+                : undefined;
+        // end of ad-hoc migration content
+
+        const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
+        const filterViews: ReturnType<typeof selectFilterViews> = yield select(selectFilterViews);
+        const dashboardWithUpdatedFilterContext = applyDefaultFilterView(
+            persistedDashboard,
+            filterViews,
+            settings,
+        );
+
+        const insightRefsFromWidgets = insightReferences(dashboardWithUpdatedFilterContext.layout);
         const uniqueInsightRefsFromWidgets = uniqWith(insightRefsFromWidgets, areObjRefsEqual);
         const resolvedInsights: SagaReturnType<typeof resolveInsights> = yield call(
             resolveInsights,
@@ -73,26 +145,35 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             uniqueInsightRefsFromWidgets,
         );
 
-        const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
-        const effectiveConfig: ReturnType<typeof selectEffectiveDateFilterConfig> = yield select(
+        const effectiveDateFilterConfig: ReturnType<typeof selectEffectiveDateFilterConfig> = yield select(
             selectEffectiveDateFilterConfig,
         );
         const dateDataSets: ReturnType<typeof selectCatalogDateDatasets> = yield select(
             selectCatalogDateDatasets,
         );
 
+        const displayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
+            selectAllCatalogDisplayFormsMap,
+        );
         const resolvedInsightsValues = Array(...resolvedInsights.resolved.values());
 
         batch = yield call(
             actionsToInitializeExistingDashboard,
             ctx,
-            persistedDashboard,
+            dashboardWithUpdatedFilterContext,
             resolvedInsightsValues,
             settings,
-            effectiveConfig,
+            isImmediateAttributeFilterMigrationEnabled,
+            effectiveOriginalFilterContext,
+            migratedAttributeFilters,
+            effectiveAttributeFilterConfigs,
+            effectiveDateFilterConfig,
             dateDataSets,
+            displayForms,
         );
     } else {
+        const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
+
         /*
          * For dashboard that is not persisted, the dashboard component is reset to an 'empty' state.
          */
@@ -100,7 +181,23 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             selectDateFilterConfig,
         );
 
-        batch = actionsToInitializeNewDashboard(dateFilterConfig);
+        const dateDataSets: ReturnType<typeof selectCatalogDateDatasets> = yield select(
+            selectCatalogDateDatasets,
+        );
+
+        const displayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
+            selectAllCatalogDisplayFormsMap,
+        );
+
+        const { initActions }: SagaReturnType<typeof actionsToInitializeNewDashboard> = yield call(
+            actionsToInitializeNewDashboard,
+            ctx,
+            settings,
+            dateFilterConfig,
+            dateDataSets,
+            displayForms,
+        );
+        batch = initActions;
     }
 
     return {
@@ -108,3 +205,34 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
         persistedDashboard,
     };
 }
+
+const mergeDashboardAttributeFilterConfigs = (
+    originalConfigs: IDashboardAttributeFilterConfig[] = [],
+    overridingConfigs: IDashboardAttributeFilterConfig[] = [],
+    migratedAttributeFilters: IDashboardAttributeFilter[],
+): IDashboardAttributeFilterConfig[] => {
+    const sanitizedOverridingConfigs = overridingConfigs.filter((config) =>
+        migratedAttributeFilters.some(
+            (filter) => filter.attributeFilter.localIdentifier === config.localIdentifier,
+        ),
+    );
+    const overriddenConfigs = originalConfigs.map((originalConfig) => {
+        const overridingConfig = sanitizedOverridingConfigs.find(
+            (config) => config.localIdentifier === originalConfig.localIdentifier,
+        );
+        if (!overridingConfig) {
+            return originalConfig;
+        }
+        return {
+            ...originalConfig,
+            ...overridingConfig,
+        };
+    });
+    const additionalOverridingConfigs = sanitizedOverridingConfigs.filter(
+        (config) =>
+            !overriddenConfigs.some(
+                (mergedConfig) => mergedConfig.localIdentifier === config.localIdentifier,
+            ),
+    );
+    return [...overriddenConfigs, ...additionalOverridingConfigs];
+};

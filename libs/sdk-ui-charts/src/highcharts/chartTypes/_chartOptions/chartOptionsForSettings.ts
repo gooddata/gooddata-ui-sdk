@@ -1,49 +1,32 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
-import { ISettings } from "@gooddata/sdk-model";
+import { ISeparators, ISettings } from "@gooddata/sdk-model";
 import { IChartConfig } from "../../../interfaces/index.js";
 
 /**
  * @internal
  */
 export function updateConfigWithSettings(config: IChartConfig, settings: ISettings): IChartConfig {
-    let updatedConfig = config;
-    if (settings) {
-        if (settings["disableKpiDashboardHeadlineUnderline"] === true) {
-            updatedConfig = { ...updatedConfig, disableDrillUnderline: true };
-        }
-
-        if (settings["enableKDWidgetCustomHeight"] === true) {
-            updatedConfig = { ...updatedConfig, enableCompactSize: true };
-        }
-
-        if (settings["pixtab.enablePartialReports"] === true) {
-            updatedConfig = { ...updatedConfig, enablePartialResults: true };
-        }
-
-        if (updatedConfig === undefined || updatedConfig.enableJoinedAttributeAxisName === undefined) {
-            updatedConfig = {
-                ...updatedConfig,
-                enableJoinedAttributeAxisName: settings["enableAxisNameViewByTwoAttributes"],
-            };
-        }
-
-        if (settings.enableChartsSorting) {
-            updatedConfig = { ...updatedConfig, enableChartSorting: true };
-        }
-
-        if (settings.enableReversedStacking) {
-            updatedConfig = { ...updatedConfig, enableReversedStacking: true };
-        }
-
-        if (settings.enableSeparateTotalLabels) {
-            updatedConfig = { ...updatedConfig, enableSeparateTotalLabels: true };
-        }
-
-        if (settings.enableKDCrossFiltering) {
-            updatedConfig = { ...updatedConfig, useGenericInteractionTooltip: true };
-        }
+    if (!settings) {
+        return config;
     }
 
-    return updatedConfig;
+    return {
+        ...(config ? config : {}),
+        ...(settings.disableKpiDashboardHeadlineUnderline ? { disableDrillUnderline: true } : {}),
+        ...(settings.enableKDWidgetCustomHeight ? { enableCompactSize: true } : {}),
+        ...(config?.enableJoinedAttributeAxisName === undefined
+            ? {
+                  enableJoinedAttributeAxisName: settings.enableAxisNameViewByTwoAttributes,
+              }
+            : {}),
+        ...(settings.enableChartsSorting ? { enableChartSorting: true } : {}),
+        ...(settings.enableReversedStacking ? { enableReversedStacking: true } : {}),
+        ...(settings.enableSeparateTotalLabels ? { enableSeparateTotalLabels: true } : {}),
+        ...(settings.enableKDCrossFiltering ? { useGenericInteractionTooltip: true } : {}),
+        ...(settings.enableCrossFilteringAliasTitles ? { enableAliasAttributeLabel: true } : {}),
+        ...(settings.separators ? { separators: settings.separators as ISeparators } : {}),
+        ...(settings.enableVisualizationFineTuning ? { enableVisualizationFineTuning: true } : {}),
+        ...(settings.enableExecutionCancelling ? { enableExecutionCancelling: true } : {}),
+    };
 }

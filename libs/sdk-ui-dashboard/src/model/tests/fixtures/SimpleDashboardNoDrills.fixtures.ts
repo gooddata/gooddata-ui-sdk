@@ -1,11 +1,11 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { IFilterContext, IKpiWidget, IListedDashboard } from "@gooddata/sdk-model";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 
-export const SimpleDashboardNoDrillsIdentifier = "abpEJ9hwq9U8";
+export const SimpleDashboardNoDrillsIdentifier = "44a9d0ed-8a06-4ffd-b16c-6281707acfcf";
 export const SimpleDashboardNoDrillsWithReferences = ReferenceRecordings.Recordings.metadata.dashboards
-    .dash_abpEJ9hwq9U8.obj as IDashboardWithReferences;
+    .dash_44a9d0ed_8a06_4ffd_b16c_6281707acfcf.obj as IDashboardWithReferences;
 export const SimpleDashboardNoDrillsLayout = SimpleDashboardNoDrillsWithReferences.dashboard.layout!;
 export const SimpleDashboardNoDrillsFilterContext = SimpleDashboardNoDrillsWithReferences.dashboard
     .filterContext as IFilterContext;

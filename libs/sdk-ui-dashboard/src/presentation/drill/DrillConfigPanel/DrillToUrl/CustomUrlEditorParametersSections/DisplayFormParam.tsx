@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React from "react";
 import { useIntl } from "react-intl";
 import { AttributeDisplayFormParameterDetail } from "../ParameterDetails/AttributeDisplayFormParameterDetail.js";
@@ -54,6 +54,8 @@ const getDisplayFormIcon = (type: AttributeDisplayFormType | undefined) => {
     switch (type) {
         case "GDC.link":
             return "gd-icon-hyperlink-warning";
+        case "GDC.image":
+            return "gd-icon-image";
         case "GDC.geo.pin":
         case "GDC.geo.pin_latitude":
         case "GDC.geo.pin_longitude":

@@ -38,7 +38,7 @@ import { getResponsiveInfo, isAutoPositionWithPopup } from "./helpers/geoChart/r
 import { IColorPalette, ITheme } from "@gooddata/sdk-model";
 import { defaultImport } from "default-import";
 
-export { IGeoChartRendererProps, IGeoChartLegendRendererProps };
+export type { IGeoChartRendererProps, IGeoChartLegendRendererProps };
 
 const GeoChartRendererLazy = lazy(() => import("./GeoChartRenderer.js"));
 

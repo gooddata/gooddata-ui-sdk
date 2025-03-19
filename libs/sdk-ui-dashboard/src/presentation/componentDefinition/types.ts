@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { ComponentType } from "react";
 import {
     IDashboardAttributeFilterProps,
@@ -7,29 +7,38 @@ import {
 } from "../filterBar/types.js";
 import {
     IDashboardInsightProps,
-    IDashboardKpiProps,
     IDashboardRichTextProps,
+    IDashboardVisualizationSwitcherProps,
     IDashboardWidgetProps,
+    IDashboardNestedLayoutProps,
 } from "../widget/types.js";
 import {
     AttributeFilterDraggableItem,
     CustomDraggableItem,
+    DashboardLayoutDraggableItem,
     DateFilterDraggableItem,
     DraggableContentItemType,
     IWrapCreatePanelItemWithDragComponent,
     InsightDraggableItem,
     KpiDraggableItem,
     RichTextDraggableItem,
+    VisualizationSwitcherDraggableItem,
 } from "../dragAndDrop/types.js";
 import {
     AttributeFilterComponentProvider,
     DateFilterComponentProvider,
     InsightComponentProvider,
-    KpiComponentProvider,
     RichTextComponentProvider,
     WidgetComponentProvider,
+    VisualizationSwitcherComponentProvider,
+    DashboardLayoutComponentProvider,
 } from "../dashboardContexts/types.js";
-import { IInsightWidget, IKpiWidget, IRichTextWidget } from "@gooddata/sdk-model";
+import {
+    IDashboardLayout,
+    IInsightWidget,
+    IRichTextWidget,
+    IVisualizationSwitcherWidget,
+} from "@gooddata/sdk-model";
 import { ICustomWidget } from "../../model/index.js";
 
 /**
@@ -101,6 +110,22 @@ export type IRichTextDraggingComponentProps = {
 /**
  * @internal
  */
+export type IVisualizationSwitcherDraggingComponentProps = {
+    itemType: "visualizationSwitcher";
+    item: VisualizationSwitcherDraggableItem;
+};
+
+/**
+ * @internal
+ */
+export type IDashboardLayoutDraggingComponentProps = {
+    itemType: "dashboardLayout";
+    item: DashboardLayoutDraggableItem;
+};
+
+/**
+ * @internal
+ */
 export type ICustomDraggingComponentProps = {
     itemType: "custom";
     item: CustomDraggableItem;
@@ -130,6 +155,17 @@ export type KpiDraggingComponent = ComponentType<IKpiDraggingComponentProps>;
  * @internal
  */
 export type RichTextDraggingComponent = ComponentType<IRichTextDraggingComponentProps>;
+
+/**
+ * @internal
+ */
+export type VisualizationSwitcherDraggingComponent =
+    ComponentType<IVisualizationSwitcherDraggingComponentProps>;
+
+/**
+ * @internal
+ */
+export type DashboardLayoutDraggingComponent = ComponentType<IDashboardLayoutDraggingComponentProps>;
 
 /**
  * @internal
@@ -179,6 +215,22 @@ export type RichTextDraggableComponent = {
 /**
  * @internal
  */
+export type VisualizationSwitcherDraggableComponent = {
+    DraggingComponent?: VisualizationSwitcherDraggingComponent;
+    type: "visualizationSwitcher";
+};
+
+/**
+ * @internal
+ */
+export type DashboardLayoutDraggableComponent = {
+    DraggingComponent?: DashboardLayoutDraggingComponent;
+    type: "dashboardLayout";
+};
+
+/**
+ * @internal
+ */
 export type CustomDraggableComponent = {
     DraggingComponent: CustomDraggingComponent;
     type: "custom";
@@ -195,6 +247,8 @@ export type DraggableComponent = {
         | KpiDraggableComponent
         | InsightDraggableComponent
         | RichTextDraggableComponent
+        | VisualizationSwitcherDraggableComponent
+        | DashboardLayoutDraggableComponent
         | CustomDraggableComponent;
 };
 
@@ -314,19 +368,6 @@ export type DateFilterComponentSet = CustomComponentBase<
     CreatableByDragComponent;
 
 /**
- * Definition of KPI widget
- * @internal
- */
-export type KpiWidgetComponentSet = CustomComponentBase<
-    IDashboardKpiProps,
-    Parameters<KpiComponentProvider>
-> &
-    DraggableComponent &
-    CreatableByDragComponent &
-    CreatablePlaceholderComponent<IDashboardWidgetProps> &
-    ConfigurableWidget<IKpiWidget>;
-
-/**
  * Definition of Insight widget
  * @internal
  */
@@ -351,6 +392,32 @@ export type RichTextWidgetComponentSet = CustomComponentBase<
     Partial<CreatableByDragComponent> &
     Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> &
     ConfigurableWidget<IRichTextWidget>;
+
+/**
+ * Definition of VisualizationSwitcher widget
+ * @internal
+ */
+export type VisualizationSwitcherWidgetComponentSet = CustomComponentBase<
+    IDashboardVisualizationSwitcherProps,
+    Parameters<VisualizationSwitcherComponentProvider>
+> &
+    DraggableComponent &
+    Partial<CreatableByDragComponent> &
+    Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> &
+    ConfigurableWidget<IVisualizationSwitcherWidget>;
+
+/**
+ * Definition of Dashboard layout widget
+ * @internal
+ */
+export type DashboardLayoutWidgetComponentSet = CustomComponentBase<
+    IDashboardNestedLayoutProps,
+    Parameters<DashboardLayoutComponentProvider>
+> &
+    DraggableComponent &
+    Partial<CreatableByDragComponent> &
+    Partial<CreatablePlaceholderComponent<IDashboardNestedLayoutProps>> &
+    ConfigurableWidget<IDashboardLayout>;
 
 /**
  * Definition of widget

@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { ITheme } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
@@ -11,6 +11,7 @@ import {
     ExplicitDrill,
     emptyHeaderTitleFromIntl,
     totalColumnTitleFromIntl,
+    clusterTitleFromIntl,
 } from "@gooddata/sdk-ui";
 import { IChartConfig, OnLegendReady } from "../interfaces/index.js";
 import { getChartOptions } from "./chartTypes/_chartOptions/chartOptionsBuilder.js";
@@ -100,6 +101,7 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         emptyHeaderTitleFromIntl(intl),
         theme,
         totalColumnTitleFromIntl(intl),
+        clusterTitleFromIntl(intl),
     );
     const legendOptions: ILegendOptions = buildLegendOptions(config.legend, chartOptions, intl);
     const validationResult = validateData(config.limits, chartOptions);
@@ -112,20 +114,9 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         intl,
         theme,
     );
-    const rendererProps = {
-        chartOptions,
-        hcOptions,
-        height,
-        width,
-        afterRender,
-        onLegendReady,
-        locale,
-        legend: legendOptions,
-        theme,
-    };
 
     let isFilteringRecommended = false;
-    if (validationResult.dataTooLarge && !config.enablePartialResults) {
+    if (validationResult.dataTooLarge) {
         // always force onDataTooLarge error handling
         invariant(onDataTooLarge, "Visualization's onDataTooLarge callback is missing.");
         onDataTooLarge(chartOptions, getDataTooLargeErrorMessage(config.limits, chartOptions));
@@ -166,6 +157,7 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         Highcharts.setOptions({
             lang: {
                 numericSymbols,
+                thousandsSep: " ", // we need to set thousands separator to space to keep it consistent with previous version 9.3.0 this never respect user settings.
             },
         });
     }
@@ -176,7 +168,22 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
     const resetZoomButtonTooltip = intl
         ? intl.formatMessage({ id: "visualization.tooltip.resetZoom" })
         : null;
-    return renderer({ ...rendererProps, chartRenderer, legendRenderer, resetZoomButtonTooltip });
+
+    return renderer({
+        chartRenderer,
+        legendRenderer,
+        resetZoomButtonTooltip,
+        chartOptions,
+        hcOptions,
+        height,
+        width,
+        afterRender,
+        onLegendReady,
+        locale,
+        legend: legendOptions,
+        theme,
+        config,
+    });
 };
 
 /**

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { cleanupExpiredTigerWorkspaces } from "@gooddata/fixtures";
 import { log } from "@gooddata/fixtures/logger.js";
@@ -12,7 +12,7 @@ import {
 import "../../scripts/env.js";
 
 async function cleanupTigerWorkspace(kdTigerWorkspace) {
-    const { HOST, TIGER_API_TOKEN, SDK_BACKEND } = process.env;
+    const { HOST, TIGER_API_TOKEN } = process.env;
     await cleanupExpiredTigerWorkspaces(
         kdTigerWorkspace,
         EXPIRED_WORKSPACE_TIME,
@@ -20,7 +20,7 @@ async function cleanupTigerWorkspace(kdTigerWorkspace) {
         1000,
         TIGER_API_TOKEN,
         HOST,
-        SDK_BACKEND,
+        "TIGER",
     );
 }
 

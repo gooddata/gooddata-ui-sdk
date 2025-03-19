@@ -1685,6 +1685,57 @@ export const attributeAndDateInViewByAndDateInStackByReferencePoint: IReferenceP
     },
 };
 
+export const attributeAndColumnsReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "attribute",
+            items: [attributeItems[1]],
+        },
+        {
+            localIdentifier: "columns",
+            items: [attributeItems[1], ...masterMeasureItems.slice(0, 2)],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: attributeFilters.slice(0, 1),
+    },
+};
+
+export const attributesAndColumnsReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "attribute",
+            items: [...attributeItems.slice(0, 2)],
+        },
+        {
+            localIdentifier: "columns",
+            items: [...masterMeasureItems.slice(0, 2)],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: attributeFilters.slice(0, 1),
+    },
+};
+
+export const attributesAndColumnsWithDatesReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "attribute",
+            items: [dateItem, attributeItems[1]],
+        },
+        {
+            localIdentifier: "columns",
+            items: [dateItem, ...attributeItems.slice(0, 2), ...masterMeasureItems.slice(0, 2)],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: attributeFilters.slice(0, 1),
+    },
+};
+
 export const dateAsSecondViewByItemReferencePoint: IReferencePoint = {
     buckets: [
         {

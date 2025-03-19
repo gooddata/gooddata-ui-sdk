@@ -1,2 +1,3 @@
-// (C) 2020 GoodData Corporation
-export { Typography, ITypographyProps } from "./Typography.js";
+// (C) 2020-2024 GoodData Corporation
+export type { ITypographyProps, TypographyTagName } from "./Typography.js";
+export { Typography } from "./Typography.js";

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:meta";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-vis-commons/styles/scss/legend";
@@ -93,5 +93,19 @@
 
 .gd-contrast-label,
 .gd-contrast-label text {
-    fill: var(--gd-palette-complementary-9, "#000");
+    fill: var(--gd-palette-complementary-9, #000);
+}
+
+.gd-chart-forecasting {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+
+.gd-chart-forecasting-background {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }

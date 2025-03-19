@@ -21,8 +21,9 @@ const dashboardMenu = new DashboardMenu();
 const activityTypeFilter = new AttributeFilter("Activity Type");
 const widget = new Widget(0);
 
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
 // eslint-disable-next-line jest/no-disabled-tests
-describe("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () => {
+describe.skip("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () => {
     // eslint-disable-next-line jest/no-disabled-tests
     it.skip("AttributeFilterButton on dashboard (SEPARATE)", () => {
         Navigation.visit("dashboard/filtering");

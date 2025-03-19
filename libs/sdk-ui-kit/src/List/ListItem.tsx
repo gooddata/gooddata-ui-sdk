@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { Component, ReactNode, createRef } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -17,13 +17,14 @@ export type SingleSelectListItemType = "header" | "separator";
  */
 export interface ISingleSelectListItemProps {
     title?: string;
-    icon?: string;
+    icon?: string | ReactNode;
     type?: SingleSelectListItemType;
     className?: string;
     info?: string | ReactNode;
     eventsOnBubble?: boolean;
     hideDelayBubble?: number;
     isSelected?: boolean;
+    isMenu?: boolean;
 
     onClick?: (e: React.MouseEvent<HTMLElement>) => void;
     onMouseOver?: (e: React.MouseEvent<HTMLElement>) => void;
@@ -68,10 +69,13 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
     }
 
     private getClassNames = () => {
-        const { title, isSelected, className } = this.props;
+        const { title, isSelected, isMenu, className } = this.props;
         const generatedSeleniumClass = `s-${stringUtils.simplifyText(title)}`;
 
-        return cx("gd-list-item", className, generatedSeleniumClass, { "is-selected": isSelected });
+        return cx("gd-list-item", className, generatedSeleniumClass, {
+            "is-selected": isSelected,
+            "is-submenu": isMenu,
+        });
     };
 
     public render(): JSX.Element {
@@ -125,12 +129,19 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
         return titleElement;
     };
 
-    private renderIcon = (icon: string) => {
-        if (icon) {
+    private renderIcon = (icon: string | ReactNode) => {
+        if (icon && typeof icon === "string") {
             const iconClasses = cx("gd-list-icon", icon);
-            return <span role="icon" className={iconClasses} />;
+            return <span role="icon" aria-hidden={true} className={iconClasses} />;
         }
-
+        if (icon) {
+            const iconClasses = cx("gd-list-icon");
+            return (
+                <span role="icon" aria-hidden={true} className={iconClasses}>
+                    {icon}
+                </span>
+            );
+        }
         return null;
     };
 
@@ -155,6 +166,7 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
                 className={cx("gd-list-item", "gd-list-item-header", "s-list-header", this.props.className)}
             >
                 {this.props.title}
+                {this.renderInfo()}
             </div>
         );
     };

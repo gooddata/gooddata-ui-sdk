@@ -1,3 +1,5 @@
+// (C) 2024 GoodData Corporation
+
 /**
  * Rules suggested by Dependency Cruiser - keeping all of them as defaults for everyone to use
  */
@@ -288,6 +290,7 @@ const AvoidNonStandardImports = {
     from: {},
     to: {
         pathNot: "^.*.(tsx?|jsx?|json)$",
+        dependencyTypesNot: ["core"],
     },
 };
 

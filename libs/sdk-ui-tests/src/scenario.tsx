@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import identity from "lodash/identity.js";
 import isEmpty from "lodash/isEmpty.js";
 import React from "react";
@@ -56,7 +56,7 @@ export type SignificantTags =
     | "no-plug-viz-tests";
 export type ScenarioTag = SignificantTags | string;
 
-export type WorkspaceType = "reference-workspace" | "live-examples-workspace" | "experimental-workspace";
+export type WorkspaceType = "reference-workspace";
 
 /**
  * Fully describes a test scenario for particular visualization.

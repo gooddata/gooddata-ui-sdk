@@ -243,6 +243,14 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     // Lifecycle
     //
 
+    private abortController: AbortController = new AbortController();
+    private refreshAbortController = (): void => {
+        if (this.props.config?.enableExecutionCancelling) {
+            this.abortController.abort();
+            this.abortController = new AbortController();
+        }
+    };
+
     /**
      * Starts initialization of table that will show results of the provided prepared execution. If there is
      * already an initialization in progress for the table, this will abandon the previous initialization
@@ -259,8 +267,13 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
      */
     private initialize = (execution: IPreparedExecution): TableFacadeInitializer => {
         this.internal.abandonInitialization();
-
-        const initializer = new TableFacadeInitializer(execution, this.getTableMethods(), this.props);
+        this.refreshAbortController();
+        const initializer = new TableFacadeInitializer(
+            execution,
+            this.getTableMethods(),
+            this.props,
+            this.props.config?.enableExecutionCancelling ? this.abortController : undefined,
+        );
 
         initializer.initialize().then((result) => {
             if (!result || this.internal.initializer !== result.initializer) {
@@ -309,6 +322,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     }
 
     public componentWillUnmount(): void {
+        this.refreshAbortController();
         if (this.containerRef) {
             this.containerRef.removeEventListener("mousedown", this.onContainerMouseDown);
         }

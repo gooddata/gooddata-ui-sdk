@@ -1,6 +1,7 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
-export {
+export type {
+    IForecast,
     IChartConfig,
     PositionType,
     ILegendConfig,
@@ -19,9 +20,17 @@ export {
     ITotalConfig,
     IOrientationConfig,
     ChartOrientationType,
+    IDisplayFormHyperlinksConfig,
+    ChartRowHeight,
+    ChartCellTextWrapping,
+    ChartCellVerticalAlign,
+    ChartCellImageSizing,
+    ChartInlineVisualizationType,
+    IInlineVisualizationsConfig,
+    IChartClusteringConfig,
 } from "./chartConfig.js";
 
-export {
+export type {
     IBucketChartProps,
     IChartCallbacks,
     ICommonChartProps,
@@ -31,9 +40,7 @@ export {
     ILegendItem,
 } from "./chartProps.js";
 
-export {
-    CalculateAs,
-    ComparisonPositionValues,
+export type {
     CalculationType,
     ComparisonPosition,
     ComparisonFormat,
@@ -41,8 +48,9 @@ export {
     IComparison,
     IColorConfig,
 } from "./comparison.js";
+export { CalculateAs, ComparisonPositionValues } from "./comparison.js";
 
 export { ViewByAttributesLimit } from "./limits.js";
 
 import { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
-export { IColorMapping };
+export type { IColorMapping };

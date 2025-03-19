@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 /**
  * Descriptor for package sources
@@ -30,7 +30,7 @@ export type SourceDescriptor = {
  */
 export type PackageDescriptor = {
     /**
-     * Package name (e.g. `@gooddata/api-client-bear`)
+     * Package name (e.g. `@gooddata/api-client-tiger`)
      */
     packageName: string;
 
@@ -40,7 +40,7 @@ export type PackageDescriptor = {
     directory: string;
 
     /**
-     * Package's installation directory, split to segments (e.g. `['@gooddata', 'api-client-bear']`)
+     * Package's installation directory, split to segments (e.g. `['@gooddata', 'api-client-tiger']`)
      */
     installDir: string[];
 
@@ -65,7 +65,7 @@ export type RushPackageDescriptor = {
     packageName: string;
 
     /**
-     * Relative path to the package folder (libs/api-client-bear)
+     * Relative path to the package folder (libs/api-client-tiger)
      */
     projectFolder: string;
 

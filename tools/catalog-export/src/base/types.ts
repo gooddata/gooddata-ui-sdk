@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 
 /**
@@ -16,12 +16,6 @@ export class CatalogExportError extends Error {
     }
 }
 
-/*
- * Defines types used across catalog exporter
- */
-
-export type SupportedBackendTypes = "tiger" | "bear";
-
 /**
  * Exporter configuration
  */
@@ -37,16 +31,6 @@ export type CatalogExportConfig = {
     workspaceId: string | null;
 
     /**
-     * User to authenticate as.
-     */
-    username: string | null;
-
-    /**
-     * Password to use for authentication
-     */
-    password: string | null;
-
-    /**
      * Tiger API Token for authentication
      */
     token: string | null;
@@ -55,11 +39,6 @@ export type CatalogExportConfig = {
      * File to write output to.
      */
     catalogOutput: string | null;
-
-    /**
-     * Indicates type of backend
-     */
-    backend: SupportedBackendTypes | null;
 };
 
 export function getConfiguredWorkspaceId(config: CatalogExportConfig): string | null {

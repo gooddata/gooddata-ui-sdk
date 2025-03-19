@@ -210,22 +210,6 @@
             }
         },
         {
-            "directory": "/dev/targetApp/node_modules/@gooddata/sdk-backend-bear",
-            "version": "8.0.0-beta.80",
-            "pkg": {
-                "packageName": "@gooddata/sdk-backend-bear",
-                "installDir": ["@gooddata", "sdk-backend-bear"],
-                "directory": "/dev/gooddata-ui-sdk/libs/sdk-backend-bear",
-                "rushPackage": {
-                    "packageName": "@gooddata/sdk-backend-bear",
-                    "projectFolder": "libs/sdk-backend-bear",
-                    "reviewCategory": "production",
-                    "versionPolicyName": "sdk",
-                    "shouldPublish": true
-                }
-            }
-        },
-        {
             "directory": "/dev/targetApp/node_modules/@gooddata/sdk-model",
             "version": "8.0.0-beta.80",
             "pkg": {
@@ -267,38 +251,6 @@
                 "rushPackage": {
                     "packageName": "@gooddata/api-client-tiger",
                     "projectFolder": "libs/api-client-tiger",
-                    "reviewCategory": "production",
-                    "versionPolicyName": "sdk",
-                    "shouldPublish": true
-                }
-            }
-        },
-        {
-            "directory": "/dev/targetApp/node_modules/@gooddata/api-client-bear",
-            "version": "8.0.0-beta.80",
-            "pkg": {
-                "packageName": "@gooddata/api-client-bear",
-                "installDir": ["@gooddata", "api-client-bear"],
-                "directory": "/dev/gooddata-ui-sdk/libs/api-client-bear",
-                "rushPackage": {
-                    "packageName": "@gooddata/api-client-bear",
-                    "projectFolder": "libs/api-client-bear",
-                    "reviewCategory": "production",
-                    "versionPolicyName": "sdk",
-                    "shouldPublish": true
-                }
-            }
-        },
-        {
-            "directory": "/dev/targetApp/node_modules/@gooddata/api-model-bear",
-            "version": "8.0.0-beta.80",
-            "pkg": {
-                "packageName": "@gooddata/api-model-bear",
-                "installDir": ["@gooddata", "api-model-bear"],
-                "directory": "/dev/gooddata-ui-sdk/libs/api-model-bear",
-                "rushPackage": {
-                    "packageName": "@gooddata/api-model-bear",
-                    "projectFolder": "libs/api-model-bear",
                     "reviewCategory": "production",
                     "versionPolicyName": "sdk",
                     "shouldPublish": true

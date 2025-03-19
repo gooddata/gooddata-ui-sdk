@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { ReactNode } from "react";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, IAlignPoint, Item } from "@gooddata/sdk-ui-kit";
 import { IInsightMenuItemButton } from "../../types.js";
@@ -20,7 +20,7 @@ export const DashboardInsightMenuItemButton: React.FC<
             subMenu={submenu}
         >
             <span className={cx({ "gd-icon-wrapper": icon && typeof icon !== "string" })}>
-                {icon ? typeof icon === "string" ? <i className={icon} /> : icon : null}
+                {icon ? typeof icon === "string" ? <i aria-hidden={true} className={icon} /> : icon : null}
                 {itemName}
             </span>
         </Item>,
@@ -30,10 +30,15 @@ export const DashboardInsightMenuItemButton: React.FC<
     );
 };
 
-function renderButtonWithTooltip(button: JSX.Element, id: string, disabled?: boolean, tooltip?: string) {
+function renderButtonWithTooltip(
+    button: JSX.Element,
+    id: string,
+    disabled?: boolean,
+    tooltip?: string | ReactNode,
+) {
     if (tooltip && disabled) {
         return (
-            <BubbleHoverTrigger className="s-gd-bubble-trigger-options-menu-item">
+            <BubbleHoverTrigger className="s-gd-bubble-trigger-options-menu-item" eventsOnBubble>
                 {button}
                 <Bubble
                     className={`bubble-primary bubble-primary-${id} s-bubble-primary-${id}`}

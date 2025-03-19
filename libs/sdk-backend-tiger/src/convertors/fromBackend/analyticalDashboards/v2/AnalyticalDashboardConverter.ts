@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { v4 as uuidv4 } from "uuid";
 import {
     AnalyticalDashboardModelV2,
@@ -7,6 +7,7 @@ import {
     JsonApiDashboardPluginOutWithLinks,
     JsonApiFilterContextOutDocument,
     JsonApiAnalyticalDashboardOutIncludes,
+    isDataSetItem,
 } from "@gooddata/api-client-tiger";
 import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 
@@ -25,7 +26,10 @@ import {
     IDashboardPluginLink,
     IDashboardAttributeFilterConfig,
     IRichTextWidget,
-    isInsightWidget,
+    IVisualizationSwitcherWidget,
+    isVisualizationSwitcherWidget,
+    IDashboardLayoutWidget,
+    isDashboardLayout,
 } from "@gooddata/sdk-model";
 import updateWith from "lodash/updateWith.js";
 import { cloneWithSanitizedIds } from "../../IdSanitization.js";
@@ -35,6 +39,7 @@ import { getShareStatus, stripQueryParams } from "../../utils.js";
 import { sanitizeSelectionMode } from "../common/singleSelectionFilter.js";
 import { convertUserIdentifier } from "../../UsersConverter.js";
 import { convertLayout } from "../../../shared/layoutConverter.js";
+import { convertDataSetItem } from "../../DataSetConverter.js";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {
@@ -46,20 +51,54 @@ function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | unde
         widgetCallback: (_, widgetPath) => widgetsPaths.push(widgetPath),
     });
 
-    return widgetsPaths.reduce((layout, widgetPath, index) => {
-        return updateWith(layout, widgetPath, (widget: IInsightWidget | IRichTextWidget) => {
-            const baseId = isInsightWidget(widget) ? (widget.insight as IdentifierRef).identifier : uuidv4();
-            const temporaryWidgetId = baseId + "_widget-" + index;
+    return widgetsPaths.reduce((layout, widgetPath) => {
+        return updateWith(
+            layout,
+            widgetPath,
+            (
+                widget:
+                    | IInsightWidget
+                    | IRichTextWidget
+                    | IVisualizationSwitcherWidget
+                    | IDashboardLayoutWidget,
+            ) => {
+                const id = widget.localIdentifier ?? uuidv4();
 
-            const convertedWidget: IInsightWidget | IRichTextWidget = {
-                ...widget,
-                ref: idRef(temporaryWidgetId),
-                uri: temporaryWidgetId,
-                identifier: temporaryWidgetId,
-            };
+                const convertedWidget:
+                    | IInsightWidget
+                    | IRichTextWidget
+                    | IVisualizationSwitcherWidget
+                    | IDashboardLayoutWidget = {
+                    ...widget,
+                    ref: idRef(id),
+                    uri: id,
+                    identifier: id,
+                };
 
-            return fixWidgetLegacyElementUris(convertedWidget);
-        });
+                if (isDashboardLayout(convertedWidget)) {
+                    return convertedWidget;
+                }
+
+                const isSwitcher = isVisualizationSwitcherWidget(convertedWidget);
+
+                return fixWidgetLegacyElementUris({
+                    ...convertedWidget,
+                    ...(isSwitcher
+                        ? {
+                              visualizations: convertedWidget.visualizations.map((visualization) => {
+                                  const id = visualization.localIdentifier ?? uuidv4();
+                                  return {
+                                      ...visualization,
+                                      ref: idRef(id),
+                                      uri: id,
+                                      identifier: id,
+                                  };
+                              }),
+                          }
+                        : {}),
+                });
+            },
+        );
     }, layout);
 }
 
@@ -74,6 +113,9 @@ interface IAnalyticalDashboardContent {
     plugins?: IDashboardPluginLink[];
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     disableCrossFiltering?: boolean;
+    disableUserFilterReset?: boolean;
+    disableUserFilterSave?: boolean;
+    disableFilterViews?: boolean;
 }
 
 function convertDashboardPluginLink(
@@ -101,6 +143,9 @@ function getConvertedAnalyticalDashboardContent(
         ),
         plugins: analyticalDashboard.plugins?.map(convertDashboardPluginLink),
         disableCrossFiltering: analyticalDashboard.disableCrossFiltering,
+        disableUserFilterReset: analyticalDashboard.disableUserFilterReset,
+        disableUserFilterSave: analyticalDashboard.disableUserFilterSave,
+        disableFilterViews: analyticalDashboard.disableFilterViews,
     };
 }
 
@@ -121,6 +166,9 @@ export function convertDashboard(
         attributeFilterConfigs,
         dateFilterConfigs,
         disableCrossFiltering,
+        disableUserFilterReset,
+        disableUserFilterSave,
+        disableFilterViews,
     } = getConvertedAnalyticalDashboardContent(content as AnalyticalDashboardModelV2.IAnalyticalDashboard);
 
     return {
@@ -146,6 +194,10 @@ export function convertDashboard(
         layout,
         plugins,
         disableCrossFiltering,
+        disableUserFilterReset,
+        disableUserFilterSave,
+        disableFilterViews,
+        dataSets: included?.filter(isDataSetItem).map(convertDataSetItem) ?? [],
     };
 }
 
@@ -231,7 +283,11 @@ export function prepareDrillLocalIdentifierIfMissing(layout?: IDashboardLayout) 
 
     return widgetsPaths.reduce((layout, widgetPath) => {
         return updateWith(layout, widgetPath, (widget: IInsightWidget) => {
-            const drills = widget?.drills.map((it) => ({
+            if (!widget?.drills) {
+                return widget;
+            }
+
+            const drills = widget.drills.map((it) => ({
                 ...it,
                 localIdentifier: it.localIdentifier ?? uuidv4().replace(/-/g, ""),
             }));

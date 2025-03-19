@@ -10,6 +10,7 @@ import {
     IRelativeDateFilter,
     SortDirection,
     ObjRef,
+    IAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import {
@@ -53,11 +54,12 @@ export interface ILoadElementsOptions {
     order?: SortDirection;
     limitingAttributeFilters?: IElementsQueryAttributeFilter[];
     limitingMeasures?: IMeasure[];
-    limitingDateFilters?: IRelativeDateFilter[];
+    limitingDateFilters?: IRelativeDateFilter[] | IAbsoluteDateFilter[];
     limitingValidationItems?: ObjRef[];
     elements?: ElementsQueryOptionsElementsSpecification;
     includeTotalCountWithoutFilters?: boolean;
     excludePrimaryLabel?: boolean;
+    filterByPrimaryLabel?: boolean;
 }
 
 /**
@@ -148,7 +150,6 @@ export interface IAttributeElementLoader {
      *
      * You can provide a correlation that will be included in the payload of all callbacks fired as a result of calling this method.
      *
-     * @param options - options to apply for the custom elements load
      * @param correlation - correlation that will be included in all callbacks fired by this method
      */
     loadIrrelevantElements(correlation?: Correlation): void;
@@ -157,6 +158,21 @@ export interface IAttributeElementLoader {
      * Cancels the running irrelevant elements load, if it matches the specified correlation.
      */
     cancelIrrelevantElementsLoad(correlation?: Correlation): void;
+
+    /**
+     * Set attribute's display form
+     */
+    setDisplayForm(displayForm: ObjRef): void;
+
+    /**
+     * Set the label used for representing the attribute filter elements visually.
+     */
+    setDisplayAsLabel(displayAsLabel: ObjRef): void;
+
+    /**
+     * Get the label used for representing the attribute filter elements visually if defined.
+     */
+    getDisplayAsLabel(): ObjRef | undefined;
 
     /**
      * Set the limit for the upcoming attribute element loads.
@@ -230,7 +246,7 @@ export interface IAttributeElementLoader {
      *
      * @param filters - filters to use.
      */
-    setLimitingDateFilters(filters: IRelativeDateFilter[]): void;
+    setLimitingDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): void;
 
     /**
      * Returns the current offset used for the attribute element loads.
@@ -270,7 +286,7 @@ export interface IAttributeElementLoader {
     /**
      * Returns the current date filters used to filter the attribute element loads.
      */
-    getLimitingDateFilters(): IRelativeDateFilter[];
+    getLimitingDateFilters(): (IRelativeDateFilter | IAbsoluteDateFilter)[];
 
     /**
      * Returns all attribute elements loaded by initialElementsPageLoad and nextElementsPageLoad methods.

@@ -27,16 +27,15 @@ import {
 } from "@gooddata/sdk-model";
 import {
     jsonApiHeaders,
-    MetadataUtilities,
     VisualizationObjectModelV1,
     VisualizationObjectModelV2,
     JsonApiVisualizationObjectInTypeEnum,
-    ValidateRelationsHeader,
     EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
+    MetadataUtilities,
 } from "@gooddata/api-client-tiger";
 import {
     insightFromInsightDefinition,
-    visualizationObjectsItemToInsight,
+    convertVisualizationObjectsToInsights,
 } from "../../../convertors/fromBackend/InsightConverter.js";
 
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
@@ -46,10 +45,9 @@ import { convertGraphEntityNodeToAnalyticalDashboard } from "../../../convertors
 import { convertInsight } from "../../../convertors/toBackend/InsightConverter.js";
 
 import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses.js";
-import { InMemoryPaging } from "@gooddata/sdk-backend-base";
+import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { isInheritedObject } from "../../../convertors/fromBackend/ObjectInheritance.js";
 import { convertUserIdentifier } from "../../../convertors/fromBackend/UsersConverter.js";
-import { insightListComparator } from "./comparator.js";
 import { InsightsQuery } from "./insightsQuery.js";
 
 export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
@@ -72,43 +70,33 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public getInsights = async (options?: IInsightsQueryOptions): Promise<IInsightsQueryResult> => {
         const requestParameters = this.getInsightsRequestParameters(options);
-        const allInsights = await this.authCall((client) => {
-            return MetadataUtilities.getAllPagesOf(
-                client,
-                client.entities.getAllEntitiesVisualizationObjects,
-                requestParameters,
-                { headers: ValidateRelationsHeader },
-            )
-                .then(MetadataUtilities.mergeEntitiesResults)
-                .then(MetadataUtilities.filterValidEntities)
-                .then((res) => {
-                    if (options?.title) {
-                        const lowercaseSearch = options.title.toLocaleLowerCase();
-
-                        return res.data
-                            .filter((vo) => {
-                                const title = vo.attributes?.title;
-
-                                return title && title.toLowerCase().indexOf(lowercaseSearch) > -1;
-                            })
-                            .map((insight) => visualizationObjectsItemToInsight(insight, res.included));
-                    }
-                    return res.data.map((insight) =>
-                        visualizationObjectsItemToInsight(insight, res.included),
-                    );
-                });
-        });
-
-        // Remove when API starts to support sort=modifiedBy,createdBy,insight.title
-        // (first verify that modifiedBy,createdBy behave as the code below, i.e., use createdBy if modifiedBy is
-        // not defined as it is missing for the insights that were just created and never updated, also title
-        // should be compared in case-insensitive manner)
-        const sanitizedOrder =
-            requestParameters.sort === undefined && allInsights.length > 0
-                ? [...allInsights].sort(insightListComparator)
-                : allInsights;
-
-        return new InMemoryPaging(sanitizedOrder, options?.limit ?? 50, options?.offset ?? 0);
+        return ServerPaging.for(
+            async ({ limit, offset }) => {
+                const filterObj = requestParameters.filter
+                    ? {
+                          filter: requestParameters.filter,
+                      }
+                    : {};
+                return await this.authCall((client) =>
+                    client.entities.getAllEntitiesVisualizationObjects({
+                        ...requestParameters,
+                        metaInclude: ["page"],
+                        ...filterObj,
+                        size: limit,
+                        page: offset / limit,
+                    }),
+                )
+                    .then((res) => MetadataUtilities.filterValidEntities(res.data))
+                    .then((data) => {
+                        return {
+                            items: convertVisualizationObjectsToInsights(data),
+                            totalCount: data.meta?.page?.totalElements ?? 0,
+                        };
+                    });
+            },
+            options?.limit,
+            options?.offset,
+        );
     };
 
     public getInsightsQuery = (): IInsightsQuery => {
@@ -120,14 +108,22 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     ): EntitiesApiGetAllEntitiesVisualizationObjectsRequest => {
         const orderBy = options?.orderBy;
         const usesOrderingByUpdated = !orderBy || orderBy === "updated";
-        const sortConfiguration = usesOrderingByUpdated ? {} : { sort: [orderBy!] }; // sort: ["modifiedAt", "createdAt"]
+        const sortConfiguration = usesOrderingByUpdated
+            ? { sort: ["modifiedAt,createdAt,title,desc"] }
+            : { sort: [orderBy!] };
         const includeUser =
             options?.loadUserData || options?.author
                 ? { include: ["createdBy" as const, "modifiedBy" as const] }
                 : {};
-        const authorFilter = options?.author ? { filter: `createdBy.id=='${options?.author}'` } : {};
-
-        return { workspaceId: this.workspace, ...sortConfiguration, ...includeUser, ...authorFilter };
+        const filterParts = [];
+        if (options?.author) {
+            filterParts.push(`createdBy.id=='${options?.author}'`);
+        }
+        if (options?.title) {
+            filterParts.push(`title=containsic='${options?.title}'`);
+        }
+        const filterObj = filterParts.length ? { filter: filterParts.join(";") } : {};
+        return { workspaceId: this.workspace, ...sortConfiguration, ...includeUser, ...filterObj };
     };
 
     public getInsight = async (ref: ObjRef, options: IGetInsightOptions = {}): Promise<IInsight> => {

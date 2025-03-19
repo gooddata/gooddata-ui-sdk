@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { ActionOptions } from "../_base/types.js";
 import { logInfo } from "../_base/terminal/loggers.js";
 import { genericErrorReporter } from "../_base/utils.js";
@@ -6,20 +6,10 @@ import { getInspectCmdActionConfig, InspectCmdActionConfig } from "./actionConfi
 import { InspectObjectFn } from "./types.js";
 
 function printInspectConfigSummary(config: InspectCmdActionConfig) {
-    const {
-        identifier,
-        backend,
-        hostname,
-        workspace,
-        credentials: { username },
-    } = config;
+    const { identifier, hostname, workspace } = config;
 
     logInfo("Everything looks valid. Going to inspect object.");
-    logInfo(`  Hostname    : ${hostname}   (${backend === "bear" ? "GoodData platform" : "GoodData.CN"})`);
-
-    if (backend === "bear") {
-        logInfo(`  Username    : ${username}`);
-    }
+    logInfo(`  Hostname    : ${hostname}   (${"GoodData.CN"})`);
 
     logInfo(`  Workspace   : ${workspace}`);
     logInfo(`  Identifier  : ${identifier}`);

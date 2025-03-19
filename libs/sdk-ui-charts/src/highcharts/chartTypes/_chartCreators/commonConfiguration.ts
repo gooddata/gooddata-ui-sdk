@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import invoke from "lodash/invoke.js";
 import isEmpty from "lodash/isEmpty.js";
 import set from "lodash/set.js";
@@ -47,6 +47,9 @@ function getThemedConfiguration(theme: ITheme): any {
         credits: {
             enabled: false,
         },
+        accessibility: {
+            enabled: false, // when accessibility module will be enabled, this should be removed JIRA: LX-745
+        },
         title: {
             // setting title to empty string prevents it from being shown
             text: "",
@@ -80,9 +83,11 @@ function getThemedConfiguration(theme: ITheme): any {
                 enableMouseTracking: true, // !Status.exportMode,
                 turboThreshold: DEFAULT_CATEGORIES_LIMIT,
                 borderColor: backgroundColor,
+                borderRadius: 0,
                 dataLabels: {
                     style: {
                         textOutline: "none",
+                        whiteSpace: "nowrap",
                     },
                 },
                 events: {
@@ -162,8 +167,11 @@ function registerDrilldownHandler(configuration: any, chartOptions: any, drillCo
 export function handleChartLoad(chartType: ChartType) {
     return function (): void {
         if (!this.hasLoaded) {
-            // setup drill on initial render
-            setupDrilldown(this, chartType);
+            // setup drill on initial render we need to do in timeout because init of drill down module
+            // is registered on the same event and we need to wait for its job to be done
+            setTimeout(() => {
+                setupDrilldown(this, chartType);
+            });
         }
     };
 }

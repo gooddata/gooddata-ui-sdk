@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useState, useMemo, useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
@@ -10,8 +10,9 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { IInsightWidget, IInsightWidgetDescriptionConfiguration } from "@gooddata/sdk-model";
 import { InsightDescription } from "./InsightDescription.js";
-import { useDashboardSelector, selectInsightByRef } from "../../../../../model/index.js";
+import { useDashboardSelector, selectInsightByRef, useWidgetFilters } from "../../../../../model/index.js";
 import { IncludeMetrics } from "./IncludeMetrics.js";
+import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
 
 interface IInsightDescriptionConfigProps {
     widget: IInsightWidget;
@@ -88,7 +89,9 @@ export function InsightDescriptionConfig(props: IInsightDescriptionConfigProps) 
         [intl],
     );
 
+    const { LoadingComponent } = useDashboardComponentsContext();
     const insight = useDashboardSelector(selectInsightByRef(widget.insight));
+    const { result } = useWidgetFilters(widget, insight);
 
     const [widgetDescriptionState, setWidgetDescriptionState] = useState(
         getStateFromConfig(descriptionConfig, widget.description, insight?.insight?.summary),
@@ -209,6 +212,8 @@ export function InsightDescriptionConfig(props: IInsightDescriptionConfigProps) 
                             description={widgetDescriptionState.description ?? ""}
                             setDescription={handleDescriptionChange}
                             readOnly={widgetDescriptionState.config === "insight"}
+                            LoadingComponent={LoadingComponent}
+                            insightFilters={result}
                         />
                     ) : null}
                     {

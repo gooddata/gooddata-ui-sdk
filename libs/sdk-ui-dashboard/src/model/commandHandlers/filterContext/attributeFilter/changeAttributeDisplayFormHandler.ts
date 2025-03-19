@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { invariant } from "ts-invariant";
@@ -19,12 +19,17 @@ import { IAttributeMetadataObject } from "@gooddata/sdk-model";
 import { query } from "../../../store/_infra/queryCall.js";
 import { queryAttributeByDisplayForm } from "../../../queries/index.js";
 import { newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
+import {
+    selectEnableDashboardFiltersApplyModes,
+    selectEnableDuplicatedLabelValuesInAttributeFilter,
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
+} from "../../../store/config/configSelectors.js";
 
 export function* changeAttributeDisplayFormHandler(
     ctx: DashboardContext,
     cmd: SetAttributeFilterDisplayForm,
 ): SagaIterator<void> {
-    const { filterLocalId, displayForm } = cmd.payload;
+    const { filterLocalId, displayForm, isWorkingSelectionChange, isResultOfMigration } = cmd.payload;
     const {
         backend: {
             capabilities: { supportsElementUris },
@@ -67,6 +72,14 @@ export function* changeAttributeDisplayFormHandler(
 
         throw invalidArgumentsProvided(ctx, cmd, message);
     }
+    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
+        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
+    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
+    const enableImmediateAttributeFilterDisplayAsLabelMigration: ReturnType<
+        typeof selectEnableImmediateAttributeFilterDisplayAsLabelMigration
+    > = yield select(selectEnableImmediateAttributeFilterDisplayAsLabelMigration);
+    const enableDashboardFiltersApplyModes: ReturnType<typeof selectEnableDashboardFiltersApplyModes> =
+        yield select(selectEnableDashboardFiltersApplyModes);
 
     yield put(
         batchActions([
@@ -76,6 +89,13 @@ export function* changeAttributeDisplayFormHandler(
                 filterLocalId,
                 displayForm,
                 supportsElementUris,
+                enableDuplicatedLabelValuesInAttributeFilter,
+                isWorkingSelectionChange:
+                    isWorkingSelectionChange &&
+                    !enableImmediateAttributeFilterDisplayAsLabelMigration &&
+                    enableDashboardFiltersApplyModes,
+                enableImmediateAttributeFilterDisplayAsLabelMigration,
+                isResultOfMigration,
             }),
         ]),
     );
@@ -87,7 +107,6 @@ export function* changeAttributeDisplayFormHandler(
         changedFilter,
         "Inconsistent state in changeAttributeDisplayFormHandler, cannot update attribute filter for given local identifier.",
     );
-
     yield dispatchDashboardEvent(attributeDisplayFormChanged(ctx, changedFilter, cmd.correlationId));
     yield call(dispatchFilterContextChanged, ctx, cmd);
 }

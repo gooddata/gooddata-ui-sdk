@@ -1,11 +1,18 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IErrorProps, ILoadingProps, OnError } from "@gooddata/sdk-ui";
+import {
+    ObjRef,
+    ObjRefInScope,
+    FilterContextItem,
+    ScreenSize,
+    IDashboardLayoutSizeByScreenSize,
+} from "@gooddata/sdk-model";
 
-import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../../types.js";
-import { ObjRef, ObjRefInScope, FilterContextItem, ScreenSize } from "@gooddata/sdk-model";
+import { IDashboardFilter, OnFiredDashboardDrillEvent, ILayoutItemPath } from "../../../types.js";
 import { ExtendedDashboardWidget } from "../../../model/index.js";
+import { WidgetExportData } from "../../export/index.js";
 
 /**
  * Dashboard widget props.
@@ -44,6 +51,20 @@ export interface IDashboardWidgetProps {
      * @public
      */
     widget?: ExtendedDashboardWidget;
+
+    /**
+     * The size of layout item in which the item is nested. Undefined, when item is in the root layout.
+     *
+     * @alpha
+     */
+    parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
+
+    /**
+     * The path to the layout item in which the section is nested
+     *
+     * @alpha
+     */
+    parentLayoutPath?: ILayoutItemPath;
 
     /**
      * Specify date data set to use when passing dashboard date filter to rendered visualization.
@@ -119,6 +140,24 @@ export interface IDashboardWidgetProps {
      * @alpha
      */
     showMenu?: boolean;
+
+    /**
+     * Zero-based index of the row in which the item is rendered,
+     *
+     * @alpha
+     *
+     * @remarks
+     * Optional only for the compatibility reasons with old fluid layout.
+     * Once the flexible layout is the only one supported, it can be set as required.
+     */
+    rowIndex?: number;
+
+    /**
+     * Data attributes for export mode to be added to the widget.
+     *
+     * @alpha
+     */
+    exportData?: WidgetExportData;
 }
 
 ///

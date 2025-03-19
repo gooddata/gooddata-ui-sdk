@@ -1,0 +1,1250 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Repeater > with canvas - large row height > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname_cloned",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_attr.f_product.product",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname_cloned",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "inlineDefinition": {
+                "maql": "SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}",
+              },
+            },
+            "localIdentifier": "m_of_lost_opps._cloned",
+            "title": "# of Lost Opps.",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "of_lost_opps.",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_of_lost_opps.",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "attr.f_product.product",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_attr.f_product.product",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_f_city.id.cityname",
+        "a_f_city.id.cityname_cloned",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_attr.f_product.product",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "inlineDefinition": {
+            "maql": "SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}",
+          },
+        },
+        "localIdentifier": "m_of_lost_opps._cloned",
+        "title": "# of Lost Opps.",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "of_lost_opps.",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_of_lost_opps.",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Repeater > with canvas - large row height > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "inlineVisualizations": {
+      "m_of_lost_opps.": {
+        "type": "column",
+      },
+    },
+    "rowHeight": "large",
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Repeater",
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Repeater > with coloring - custom colors > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname_cloned",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_attr.f_product.product",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname_cloned",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "inlineDefinition": {
+                "maql": "SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}",
+              },
+            },
+            "localIdentifier": "m_of_lost_opps._cloned",
+            "title": "# of Lost Opps.",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "of_lost_opps.",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_of_lost_opps.",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "attr.f_product.product",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_attr.f_product.product",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_f_city.id.cityname",
+        "a_f_city.id.cityname_cloned",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_attr.f_product.product",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "inlineDefinition": {
+            "maql": "SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}",
+          },
+        },
+        "localIdentifier": "m_of_lost_opps._cloned",
+        "title": "# of Lost Opps.",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "of_lost_opps.",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_of_lost_opps.",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Repeater > with coloring - custom colors > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "colors": [
+      "rgb(33, 41, 195)",
+      "rgb(18, 194, 25)",
+      "rgb(243, 56, 47)",
+      "rgb(240, 239, 8)",
+      "rgb(131, 131, 131)",
+    ],
+    "inlineVisualizations": {
+      "m_of_lost_opps.": {
+        "type": "column",
+      },
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Repeater",
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Repeater > with coloring - custom palette > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname_cloned",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_attr.f_product.product",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname_cloned",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "inlineDefinition": {
+                "maql": "SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}",
+              },
+            },
+            "localIdentifier": "m_of_lost_opps._cloned",
+            "title": "# of Lost Opps.",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "of_lost_opps.",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_of_lost_opps.",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "attr.f_product.product",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_attr.f_product.product",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_f_city.id.cityname",
+        "a_f_city.id.cityname_cloned",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_attr.f_product.product",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "inlineDefinition": {
+            "maql": "SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}",
+          },
+        },
+        "localIdentifier": "m_of_lost_opps._cloned",
+        "title": "# of Lost Opps.",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "of_lost_opps.",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_of_lost_opps.",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Repeater > with coloring - custom palette > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "colorPalette": [
+      {
+        "fill": {
+          "b": 73,
+          "g": 49,
+          "r": 195,
+        },
+        "guid": "01",
+      },
+      {
+        "fill": {
+          "b": 86,
+          "g": 194,
+          "r": 168,
+        },
+        "guid": "02",
+      },
+      {
+        "fill": {
+          "b": 177,
+          "g": 217,
+          "r": 243,
+        },
+        "guid": "03",
+      },
+      {
+        "fill": {
+          "b": 121,
+          "g": 153,
+          "r": 194,
+        },
+        "guid": "04",
+      },
+      {
+        "fill": {
+          "b": 34,
+          "g": 37,
+          "r": 162,
+        },
+        "guid": "05",
+      },
+    ],
+    "inlineVisualizations": {
+      "m_of_lost_opps.": {
+        "type": "column",
+      },
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Repeater",
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Repeater > with coloring - custom palette preferred over colors > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname_cloned",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_attr.f_product.product",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname_cloned",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "inlineDefinition": {
+                "maql": "SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}",
+              },
+            },
+            "localIdentifier": "m_of_lost_opps._cloned",
+            "title": "# of Lost Opps.",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "of_lost_opps.",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_of_lost_opps.",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "attr.f_product.product",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_attr.f_product.product",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_f_city.id.cityname",
+        "a_f_city.id.cityname_cloned",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_attr.f_product.product",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "inlineDefinition": {
+            "maql": "SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}",
+          },
+        },
+        "localIdentifier": "m_of_lost_opps._cloned",
+        "title": "# of Lost Opps.",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "of_lost_opps.",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_of_lost_opps.",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Repeater > with coloring - custom palette preferred over colors > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "colorPalette": [
+      {
+        "fill": {
+          "b": 73,
+          "g": 49,
+          "r": 195,
+        },
+        "guid": "01",
+      },
+      {
+        "fill": {
+          "b": 86,
+          "g": 194,
+          "r": 168,
+        },
+        "guid": "02",
+      },
+      {
+        "fill": {
+          "b": 177,
+          "g": 217,
+          "r": 243,
+        },
+        "guid": "03",
+      },
+      {
+        "fill": {
+          "b": 121,
+          "g": 153,
+          "r": 194,
+        },
+        "guid": "04",
+      },
+      {
+        "fill": {
+          "b": 34,
+          "g": 37,
+          "r": 162,
+        },
+        "guid": "05",
+      },
+    ],
+    "colors": [
+      "rgb(33, 41, 195)",
+      "rgb(18, 194, 25)",
+      "rgb(243, 56, 47)",
+      "rgb(240, 239, 8)",
+      "rgb(131, 131, 131)",
+    ],
+    "inlineVisualizations": {
+      "m_of_lost_opps.": {
+        "type": "column",
+      },
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Repeater",
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Repeater > with coloring - default > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname_cloned",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_attr.f_product.product",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname_cloned",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "inlineDefinition": {
+                "maql": "SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}",
+              },
+            },
+            "localIdentifier": "m_of_lost_opps._cloned",
+            "title": "# of Lost Opps.",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "of_lost_opps.",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_of_lost_opps.",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "attr.f_product.product",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_attr.f_product.product",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_f_city.id.cityname",
+        "a_f_city.id.cityname_cloned",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_attr.f_product.product",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "inlineDefinition": {
+            "maql": "SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}",
+          },
+        },
+        "localIdentifier": "m_of_lost_opps._cloned",
+        "title": "# of Lost Opps.",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "of_lost_opps.",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_of_lost_opps.",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Repeater > with coloring - default > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "inlineVisualizations": {
+      "m_of_lost_opps.": {
+        "type": "column",
+      },
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Repeater",
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Repeater > with one attribute > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname_cloned",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname_cloned",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_f_city.id.cityname",
+        "a_f_city.id.cityname_cloned",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Repeater > with one attribute > should create expected props for core chart 1`] = `
+{
+  "enableExecutionCancelling": false,
+  "exportTitle": "Repeater",
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Repeater > with one attribute and one measure > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname_cloned",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname_cloned",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "of_lost_opps.",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_of_lost_opps.",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_f_city.id.cityname",
+        "a_f_city.id.cityname_cloned",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "of_lost_opps.",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_of_lost_opps.",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Repeater > with one attribute and one measure > should create expected props for core chart 1`] = `
+{
+  "enableExecutionCancelling": false,
+  "exportTitle": "Repeater",
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Repeater > with one attribute and one visualisation > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname_cloned",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_attr.f_product.product",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname_cloned",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "inlineDefinition": {
+                "maql": "SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}",
+              },
+            },
+            "localIdentifier": "m_of_lost_opps._cloned",
+            "title": "# of Lost Opps.",
+          },
+        },
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "of_lost_opps.",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_of_lost_opps.",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "attr.f_product.product",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_attr.f_product.product",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_f_city.id.cityname",
+        "a_f_city.id.cityname_cloned",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "a_attr.f_product.product",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "inlineDefinition": {
+            "maql": "SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}",
+          },
+        },
+        "localIdentifier": "m_of_lost_opps._cloned",
+        "title": "# of Lost Opps.",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "of_lost_opps.",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_of_lost_opps.",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Repeater > with one attribute and one visualisation > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "inlineVisualizations": {
+      "m_of_lost_opps.": {
+        "type": "column",
+      },
+    },
+  },
+  "enableExecutionCancelling": false,
+  "exportTitle": "Repeater",
+  "workspace": "reference-workspace",
+}
+`;

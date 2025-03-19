@@ -6,7 +6,7 @@ exports[`BaseHeadlineTransformationUtils > createBaseHeadlineItem > Should retur
   "data": {
     "format": "$#,##0.00",
     "isDrillable": false,
-    "localIdentifier": "m_acugFHNJgsBy",
+    "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
     "title": "Won",
     "value": "38310753.45",
   },
@@ -21,7 +21,7 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_acugFHNJgsBy",
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       "title": "Won",
       "value": "38310753.45",
     },
@@ -39,7 +39,7 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "$#,##0.00",
       "isDrillable": true,
-      "localIdentifier": "m_acugFHNJgsBy",
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       "title": "Won",
       "value": "38310753.45",
     },
@@ -50,7 +50,7 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "$#,##0.00",
       "isDrillable": true,
-      "localIdentifier": "m_aangOxLSeztu",
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "title": "Amount",
       "value": "116625456.54",
     },
@@ -61,9 +61,9 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "#,##0.0%",
       "isDrillable": false,
-      "localIdentifier": "m_abEgMnq5hyJQ",
+      "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
       "title": "Probability",
-      "value": "0.597501249375312",
+      "value": "0.5975012493753123",
     },
     "elementType": "secondaryValue",
   },
@@ -77,7 +77,7 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "$#,##0.00",
       "isDrillable": true,
-      "localIdentifier": "m_acugFHNJgsBy",
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       "title": "Won",
       "value": "38310753.45",
     },
@@ -88,7 +88,7 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "$#,##0.00",
       "isDrillable": true,
-      "localIdentifier": "m_aangOxLSeztu",
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "title": "Amount",
       "value": "116625456.54",
     },
@@ -99,9 +99,9 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "#,##0.0%",
       "isDrillable": true,
-      "localIdentifier": "m_abEgMnq5hyJQ",
+      "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
       "title": "Probability",
-      "value": "0.597501249375312",
+      "value": "0.5975012493753123",
     },
     "elementType": "secondaryValue",
   },
@@ -115,7 +115,7 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "$#,##0.00",
       "isDrillable": true,
-      "localIdentifier": "m_acugFHNJgsBy",
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       "title": "Won",
       "value": "38310753.45",
     },
@@ -126,7 +126,7 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_aangOxLSeztu",
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "title": "Amount",
       "value": "116625456.54",
     },
@@ -137,9 +137,9 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "#,##0.0%",
       "isDrillable": false,
-      "localIdentifier": "m_abEgMnq5hyJQ",
+      "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
       "title": "Probability",
-      "value": "0.597501249375312",
+      "value": "0.5975012493753123",
     },
     "elementType": "secondaryValue",
   },
@@ -153,7 +153,7 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_acugFHNJgsBy",
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       "title": "Won",
       "value": "38310753.45",
     },
@@ -164,7 +164,7 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_aangOxLSeztu",
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "title": "Amount",
       "value": "116625456.54",
     },
@@ -175,9 +175,9 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "#,##0.0%",
       "isDrillable": false,
-      "localIdentifier": "m_abEgMnq5hyJQ",
+      "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
       "title": "Probability",
-      "value": "0.597501249375312",
+      "value": "0.5975012493753123",
     },
     "elementType": "secondaryValue",
   },
@@ -191,7 +191,7 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_acugFHNJgsBy",
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       "title": "Won",
       "value": "38310753.45",
     },
@@ -202,7 +202,7 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_aangOxLSeztu",
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "title": "Amount",
       "value": "116625456.54",
     },
@@ -219,7 +219,7 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_acugFHNJgsBy",
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       "title": "Won",
       "value": "38310753.45",
     },
@@ -230,7 +230,7 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
+      "localIdentifier": "m_e40a8329_m_e519fa2a_86c3_4e32_8313_0c03062348j3_dt_closedate_timestamp.year",
       "title": "Won Last Year",
       "value": "38310753.45",
     },
@@ -247,7 +247,7 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_acugFHNJgsBy",
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       "title": "Won",
       "value": "38310753.45",
     },
@@ -258,7 +258,7 @@ exports[`BaseHeadlineTransformationUtils > getBaseHeadlineData > should transfor
     "data": {
       "format": "$#,##0.00",
       "isDrillable": false,
-      "localIdentifier": "m_aangOxLSeztu",
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "title": "Amount",
       "value": "116625456.54",
     },

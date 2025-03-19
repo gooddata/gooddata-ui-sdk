@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import {
     EntitiesApiGetEntityAnalyticalDashboardsRequest,
     isDashboardPluginsItem,
@@ -11,6 +11,14 @@ import {
     MetadataUtilities,
     ValidateRelationsHeader,
     ITigerClient,
+    JsonApiFilterViewOutDocument,
+    isDataSetItem,
+    RawExportActionsRequest,
+    AfmExport,
+    ActionsApiGetExportedFileRequest,
+    ActionsApiGetRawExportRequest,
+    ActionsApiGetSlidesExportRequest,
+    ActionsApiGetTabularExportRequest,
 } from "@gooddata/api-client-tiger";
 import {
     IDashboardReferences,
@@ -24,6 +32,7 @@ import {
     IExportResult,
     IGetDashboardPluginOptions,
     IDashboardsQuery,
+    IRawExportCustomOverrides,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -47,8 +56,14 @@ import {
     isAllTimeDashboardDateFilter,
     objRefToString,
     IDateFilter,
+    IDashboardFilterView,
+    IDashboardFilterViewSaveRequest,
+    IDashboardAttributeFilterConfig,
+    IExecutionDefinition,
 } from "@gooddata/sdk-model";
+import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
+import { v4 as uuid } from "uuid";
 import {
     convertAnalyticalDashboardToListItems,
     convertDashboard,
@@ -73,6 +88,12 @@ import { convertExportMetadata as convertFromBackendExportMetadata } from "../..
 import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
 import { DashboardsQuery } from "./dashboardsQuery.js";
+import { getSettingsForCurrentUser } from "../settings/index.js";
+import { convertFilterView } from "../../../convertors/fromBackend/FilterViewConvertor.js";
+import { invariant } from "ts-invariant";
+import { convertApiError } from "../../../utils/errorHandling.js";
+import { convertDataSetItem } from "../../../convertors/fromBackend/DataSetConverter.js";
+import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec.js";
 
 const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;
@@ -129,6 +150,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const filterContext = await this.prepareFilterContext(
             options?.exportId,
+            options?.exportType,
             filterContextRef,
             result?.data?.included,
         );
@@ -150,13 +172,21 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             .filter(isDashboardPluginsItem)
             .map((plugin) => convertDashboardPluginWithLinksFromBackend(plugin, included));
 
-        const filterContext = await this.prepareFilterContext(options?.exportId, filterContextRef, included);
+        const dataSets = included.filter(isDataSetItem).map(convertDataSetItem);
+
+        const filterContext = await this.prepareFilterContext(
+            options?.exportId,
+            options?.exportType,
+            filterContextRef,
+            included,
+        );
 
         return {
             dashboard: convertDashboard(dashboard, filterContext),
             references: {
                 insights,
                 plugins,
+                dataSets,
             },
         };
     };
@@ -175,12 +205,22 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 plugins: included
                     .filter(isDashboardPluginsItem)
                     .map((plugin) => convertDashboardPluginWithLinksFromBackend(plugin, included)),
+                dataSets: included.filter(isDataSetItem).map(convertDataSetItem),
             };
         });
     };
 
-    private getFilterContextFromExportId = async (exportId: string): Promise<IFilterContext | null> => {
+    private getFilterContextFromExportId = async (
+        exportId: string,
+        type: "visual" | "slides" | undefined,
+    ): Promise<IFilterContext | null> => {
         const metadata = await this.authCall((client) => {
+            if (type === "slides") {
+                return client.export.getSlidesExportMetadata({
+                    workspaceId: this.workspace,
+                    exportId,
+                });
+            }
             return client.export.getMetadata({
                 workspaceId: this.workspace,
                 exportId,
@@ -195,9 +235,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             return null;
         }
 
-        const { filters = [] } = convertFromBackendExportMetadata(metadata);
+        const convertedExportMetadata = convertFromBackendExportMetadata(metadata);
+
+        // Fallback to default filters if no filters are present in the export metadata
+        if (!convertedExportMetadata) {
+            return null;
+        }
+
         return {
-            filters,
+            filters: convertedExportMetadata.filters,
             title: `temp-filter-context-${exportId}`,
             description: "temp-filter-context-description",
             ref: { identifier: `identifier-${exportId}` },
@@ -219,6 +265,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         if (includes(types, "insight")) {
             include.push("visualizationObjects");
+        }
+
+        if (includes(types, "dataSet")) {
+            include.push("datasets");
         }
 
         if (includes(types, "dashboardPlugin")) {
@@ -250,7 +300,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 : dashboard.filterContext;
         }
 
-        const dashboardContent = convertAnalyticalDashboard(dashboard, filterContext?.ref);
+        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
+        const isWidgetIdentifiersEnabled = userSettings.enableWidgetIdentifiersRollout ?? true;
+
+        const dashboardContent = convertAnalyticalDashboard(
+            dashboard,
+            filterContext?.ref,
+            isWidgetIdentifiersEnabled,
+        );
         const result = await this.authCall((client) => {
             return client.entities.createEntityAnalyticalDashboards(
                 {
@@ -299,7 +356,13 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         );
 
         const objectId = await objRefToIdentifier(originalDashboard.ref, this.authCall);
-        const dashboardContent = convertAnalyticalDashboard(updatedDashboard, filterContext?.ref);
+        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
+        const isWidgetIdentifiersEnabled = userSettings.enableWidgetIdentifiersRollout ?? true;
+        const dashboardContent = convertAnalyticalDashboard(
+            updatedDashboard,
+            filterContext?.ref,
+            isWidgetIdentifiersEnabled,
+        );
 
         const result = await this.authCall((client) => {
             return client.entities.updateEntityAnalyticalDashboards(
@@ -372,26 +435,131 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
 
             const { title } = convertDashboard(dashboardResponse.data);
-            const pdfExportRequest = {
+            const visualExportRequest = {
                 fileName: title,
                 dashboardId,
                 metadata: convertToBackendExportMetadata({ filters: withoutAllTime }),
             };
             const pdfExport = await client.export.createPdfExport({
                 workspaceId: this.workspace,
-                pdfExportRequest,
+                visualExportRequest,
             });
 
-            return await this.handleExportResultPolling(client, {
+            return await this.handleExportResultPolling(client, "application/pdf", {
                 workspaceId: this.workspace,
                 exportId: pdfExport?.data?.exportResult,
             });
         });
     };
 
+    public exportDashboardToPresentation = async (
+        dashboardRef: ObjRef,
+        format: "PDF" | "PPTX",
+        filters?: FilterContextItem[],
+        options?: {
+            widgetIds?: ObjRef[];
+            filename?: string;
+        },
+    ): Promise<IExportResult> => {
+        const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
+
+        // skip all time date filter from stored filters, when missing, it's correctly
+        // restored to All time during the load later
+        const withoutAllTime = (filters || []).filter((f) => !isAllTimeDashboardDateFilter(f));
+
+        return this.authCall(async (client) => {
+            const dashboardResponse = await client.entities.getEntityAnalyticalDashboards(
+                {
+                    workspaceId: this.workspace,
+                    objectId: dashboardId,
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            );
+
+            const { title } = convertDashboard(dashboardResponse.data);
+            const slidesExportRequest = {
+                format,
+                dashboardId,
+                fileName: options?.filename ?? title,
+                widgetIds: options?.widgetIds?.map((widgetId) => objRefToString(widgetId)),
+                metadata: convertToBackendExportMetadata({ filters: withoutAllTime }),
+            };
+            const slideshowExport = await client.export.createSlidesExport({
+                workspaceId: this.workspace,
+                slidesExportRequest,
+            });
+
+            return await this.handleExportSlidesResultPolling(
+                client,
+                format === "PDF"
+                    ? "application/pdf"
+                    : "application/vnd.openxmlformats-officedocument.spreadsheetml.presentation",
+                {
+                    workspaceId: this.workspace,
+                    exportId: slideshowExport?.data?.exportResult,
+                },
+            );
+        });
+    };
+
+    public exportDashboardToTabular = async (dashboardRef: ObjRef): Promise<IExportResult> => {
+        const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
+
+        return this.authCall(async (client) => {
+            const slideshowExport = await client.export.createDashboardExportRequest({
+                workspaceId: this.workspace,
+                dashboardId,
+            });
+
+            return await this.handleExportTabularResultPolling(
+                client,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                {
+                    workspaceId: this.workspace,
+                    exportId: slideshowExport?.data?.exportResult,
+                },
+            );
+        });
+    };
+
+    public exportDashboardToCSVRaw = async (
+        definition: IExecutionDefinition,
+        filename: string,
+        customOverrides?: IRawExportCustomOverrides,
+    ): Promise<IExportResult> => {
+        const execution = toAfmExecution(definition);
+        const payload: RawExportActionsRequest = {
+            format: "CSV",
+            execution: execution.execution as AfmExport,
+            fileName: filename,
+            executionSettings: execution.settings,
+            customOverride: !isEmpty(customOverrides)
+                ? {
+                      metrics: customOverrides?.measures,
+                      labels: customOverrides?.displayForms,
+                  }
+                : undefined,
+        };
+
+        return this.authCall(async (client) => {
+            const rawExport = await client.export.createRawExport({
+                workspaceId: this.workspace,
+                rawExportRequest: payload,
+            });
+
+            return await this.handleExportRawResultPolling(client, {
+                workspaceId: this.workspace,
+                exportId: rawExport?.data?.exportResult,
+            });
+        });
+    };
+
     private async handleExportResultPolling(
         client: ITigerClient,
-        payload: { exportId: string; workspaceId: string },
+        type: "application/pdf",
+        payload: ActionsApiGetExportedFileRequest,
     ): Promise<IExportResult> {
         for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
             const result = await client.export.getExportedFile(payload, {
@@ -400,7 +568,91 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             });
 
             if (result?.status === 200) {
-                const blob = new Blob([result?.data as any], { type: "application/pdf" });
+                const blob = new Blob([result?.data as any], { type });
+                return {
+                    uri: result?.config?.url || "",
+                    objectUrl: URL.createObjectURL(blob),
+                    fileName: parseNameFromContentDisposition(result),
+                };
+            }
+
+            await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
+        }
+
+        throw new TimeoutError(
+            `Export timeout for export id "${payload.exportId}" in workspace "${payload.workspaceId}"`,
+        );
+    }
+
+    private async handleExportSlidesResultPolling(
+        client: ITigerClient,
+        type: "application/pdf" | "application/vnd.openxmlformats-officedocument.spreadsheetml.presentation",
+        payload: ActionsApiGetSlidesExportRequest,
+    ): Promise<IExportResult> {
+        for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
+            const result = await client.export.getSlidesExport(payload, {
+                transformResponse: (x) => x,
+                responseType: "blob",
+            });
+
+            if (result?.status === 200) {
+                const blob = new Blob([result?.data as any], { type });
+                return {
+                    uri: result?.config?.url || "",
+                    objectUrl: URL.createObjectURL(blob),
+                    fileName: parseNameFromContentDisposition(result),
+                };
+            }
+
+            await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
+        }
+
+        throw new TimeoutError(
+            `Export timeout for export id "${payload.exportId}" in workspace "${payload.workspaceId}"`,
+        );
+    }
+
+    private async handleExportTabularResultPolling(
+        client: ITigerClient,
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        payload: ActionsApiGetTabularExportRequest,
+    ): Promise<IExportResult> {
+        for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
+            const result = await client.export.getTabularExport(payload, {
+                transformResponse: (x) => x,
+                responseType: "blob",
+            });
+
+            if (result?.status === 200) {
+                const blob = new Blob([result?.data as any], { type });
+                return {
+                    uri: result?.config?.url || "",
+                    objectUrl: URL.createObjectURL(blob),
+                    fileName: parseNameFromContentDisposition(result),
+                };
+            }
+
+            await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
+        }
+
+        throw new TimeoutError(
+            `Export timeout for export id "${payload.exportId}" in workspace "${payload.workspaceId}"`,
+        );
+    }
+
+    private async handleExportRawResultPolling(
+        client: ITigerClient,
+        payload: ActionsApiGetRawExportRequest,
+    ): Promise<IExportResult> {
+        for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
+            const result = await client.export.getRawExport(payload, {
+                transformResponse: (x) => x,
+                responseType: "blob",
+            });
+
+            if (result?.status === 200) {
+                const type = "text/csv";
+                const blob = new Blob([result?.data as any], { type });
                 return {
                     uri: result?.config?.url || "",
                     objectUrl: URL.createObjectURL(blob),
@@ -471,9 +723,17 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         throw new NotSupported("Tiger backend does not support alerting.");
     };
 
-    public getResolvedFiltersForWidget = async (widget: IWidget, filters: IFilter[]): Promise<IFilter[]> => {
-        return resolveWidgetFilters(filters, widget.ignoreDashboardFilters, widget.dateDataSet, (refs) =>
-            objRefsToIdentifiers(refs, this.authCall),
+    public getResolvedFiltersForWidget = async (
+        widget: IWidget,
+        filters: IFilter[],
+        attributeFilterConfigs: IDashboardAttributeFilterConfig[],
+    ): Promise<IFilter[]> => {
+        return resolveWidgetFilters(
+            filters,
+            widget.ignoreDashboardFilters,
+            widget.dateDataSet,
+            (refs) => objRefsToIdentifiers(refs, this.authCall),
+            attributeFilterConfigs,
         );
     };
 
@@ -481,6 +741,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         widget: IWidget,
         commonDateFilters: IDateFilter[],
         otherFilters: IFilter[],
+        attributeFilterConfigs: IDashboardAttributeFilterConfig[],
     ): Promise<IFilter[]> => {
         return resolveWidgetFiltersWithMultipleDateFilters(
             commonDateFilters,
@@ -488,6 +749,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             widget.ignoreDashboardFilters,
             widget.dateDataSet,
             (refs) => objRefsToIdentifiers(refs, this.authCall),
+            attributeFilterConfigs,
         );
     };
 
@@ -601,6 +863,175 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             identifier: objRefToString(ref),
             uri: "", // uri is not available in entities graph
         }));
+    };
+
+    public getFilterViewsForCurrentUser = async (dashboard: ObjRef): Promise<IDashboardFilterView[]> => {
+        try {
+            const dashboardId = await objRefToIdentifier(dashboard, this.authCall);
+            const result = await this.authCall(async (client) => {
+                const profile = await client.profile.getCurrent();
+                return client.entities.getAllEntitiesFilterViews({
+                    workspaceId: this.workspace,
+                    include: ["user", "analyticalDashboard"],
+                    filter: `analyticalDashboard.id==${dashboardId};user.id==${profile.userId}`,
+                    origin: "NATIVE",
+
+                    // sort: ["name"], // TODO LX-422 remove comment and array sort below once sort is supported
+                });
+            });
+            const { data, included } = result.data;
+            return data
+                .map((itemData) => convertFilterView(itemData, included))
+                .sort((a, b) => a.name.localeCompare(b.name));
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    };
+
+    public createFilterView = async (
+        filterView: IDashboardFilterViewSaveRequest,
+    ): Promise<IDashboardFilterView> => {
+        try {
+            const { name, dashboard, isDefault, filterContext } = filterView;
+
+            const dashboardId = await objRefToIdentifier(dashboard, this.authCall);
+
+            return this.authCall(async (client) => {
+                if (isDefault) {
+                    // this should ideally be handled by the POST call below so all these calls are just
+                    // a single transaction and the action itself is more performant on UI
+                    await this.unsetDashboardDefaultFilterView(client, dashboardId);
+                }
+                const profile = await client.profile.getCurrent();
+                const result = await client.entities.createEntityFilterViews(
+                    {
+                        workspaceId: this.workspace,
+                        jsonApiFilterViewInDocument: {
+                            data: {
+                                type: "filterView",
+                                id: uuid(),
+                                attributes: {
+                                    isDefault,
+                                    title: name,
+                                    content: convertFilterContextToBackend(filterContext),
+                                },
+                                relationships: {
+                                    user: {
+                                        data: {
+                                            id: profile.userId,
+                                            type: "user",
+                                        },
+                                    },
+                                    analyticalDashboard: {
+                                        data: {
+                                            id: dashboardId,
+                                            type: "analyticalDashboard",
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    {
+                        headers: jsonApiHeaders,
+                    },
+                );
+
+                const { id, type, attributes } = result.data.data;
+                const { title, isDefault: persistedIsDefault } = attributes;
+
+                // let's save a one call and do not fetch the whole entity again as we have all the info here
+                return {
+                    ref: idRef(id, type),
+                    dashboard,
+                    user: idRef(profile.userId, "user"),
+                    name: title,
+                    filterContext,
+                    isDefault: persistedIsDefault ?? false,
+                };
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    };
+
+    public deleteFilterView = async (ref: ObjRef): Promise<void> => {
+        try {
+            const id = await objRefToIdentifier(ref, this.authCall);
+            await this.authCall((client) =>
+                client.entities.deleteEntityFilterViews({
+                    workspaceId: this.workspace,
+                    objectId: id,
+                }),
+            );
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    };
+
+    public setFilterViewAsDefault = async (ref: ObjRef, isDefault: boolean): Promise<void> => {
+        const id = await objRefToIdentifier(ref, this.authCall);
+        await this.authCall(async (client) => {
+            if (isDefault) {
+                // this should ideally be handled by the PATCH call below so all these calls are just
+                // a single transaction and the action itself is more performant on UI
+                const filterView = await this.getFilterView(client, id);
+                const dashboardId = filterView.data.relationships?.analyticalDashboard?.data?.id;
+                invariant(dashboardId, "Dashboard could not be determined for the filter view.");
+                await this.unsetDashboardDefaultFilterView(client, dashboardId);
+            }
+            await this.updateFilterViewDefaultStatus(client, id, isDefault);
+        });
+    };
+
+    private unsetDashboardDefaultFilterView = async (
+        client: ITigerClient,
+        dashboardId: string,
+    ): Promise<void> => {
+        const profile = await client.profile.getCurrent();
+        const defaultFilterViewsForDashboard = await client.entities.getAllEntitiesFilterViews({
+            workspaceId: this.workspace,
+            include: ["user", "analyticalDashboard"],
+            filter: `analyticalDashboard.id==${dashboardId};user.id==${profile.userId};filterView.isDefault==true`,
+            origin: "NATIVE",
+        });
+        await Promise.all(
+            defaultFilterViewsForDashboard.data.data.map((view) =>
+                this.updateFilterViewDefaultStatus(client, view.id, false),
+            ),
+        );
+    };
+
+    private updateFilterViewDefaultStatus = async (
+        client: ITigerClient,
+        id: string,
+        isDefault: boolean,
+    ): Promise<void> => {
+        await client.entities.patchEntityFilterViews({
+            workspaceId: this.workspace,
+            objectId: id,
+            jsonApiFilterViewPatchDocument: {
+                data: {
+                    id,
+                    type: "filterView",
+                    attributes: {
+                        isDefault,
+                    },
+                },
+            },
+        });
+    };
+    private getFilterView = async (
+        client: ITigerClient,
+        id: string,
+    ): Promise<JsonApiFilterViewOutDocument> => {
+        return client.entities
+            .getEntityFilterViews({
+                workspaceId: this.workspace,
+                objectId: id,
+                include: ["analyticalDashboard"],
+            })
+            .then((result) => result.data);
     };
 
     //
@@ -741,6 +1172,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     // prepare filter context with priority for given filtercontext options
     private prepareFilterContext = async (
         exportId: string | undefined,
+        type: "visual" | "slides" | undefined,
         filterContextRef: ObjRef | undefined,
         includedFilterContext: JsonApiAnalyticalDashboardOutDocument["included"] = [],
     ): Promise<IFilterContext | undefined> => {
@@ -749,7 +1181,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             : undefined;
 
         const filterContextByExportId = exportId
-            ? await this.getFilterContextFromExportId(exportId)
+            ? await this.getFilterContextFromExportId(exportId, type)
             : undefined;
 
         return (

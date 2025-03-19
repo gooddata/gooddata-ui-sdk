@@ -1,6 +1,20 @@
-// (C) 2019-2022 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2019-2025 GoodData Corporation
+import React, { useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
+import cx from "classnames";
+import { IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
+
+import {
+    changeLayoutSectionHeader,
+    selectEnableRichTextDescriptions,
+    uiActions,
+    useDashboardDispatch,
+    useDashboardSelector,
+    selectEnableDashboardDescriptionDynamicHeight,
+    selectEnableRichTextDynamicReferences,
+} from "../../../../model/index.js";
+import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
+import { useRichTextFilters } from "../../../../_staging/sharedHooks/useRichTextFilters.js";
 
 import { EditableLabelWithBubble } from "./EditableLabelWithBubble.js";
 import {
@@ -11,7 +25,13 @@ import {
     MAX_DESCRIPTION_LENGTH,
     DESCRIPTION_LENGTH_WARNING_LIMIT,
 } from "./sectionHeaderHelper.js";
-import { changeLayoutSectionHeader, uiActions, useDashboardDispatch } from "../../../../model/index.js";
+
+const richTextTooltipAlignPoints: IAlignPoint[] = [
+    { align: "bl tl", offset: { x: 6, y: 1 } },
+    { align: "tl bl", offset: { x: 6, y: -1 } },
+];
+
+const dynamicRichTextTooltipAlignPoints: IAlignPoint[] = [{ align: "tl bl", offset: { x: 6, y: -4 } }];
 
 export interface ISectionHeaderEditableProps {
     title: string;
@@ -20,10 +40,23 @@ export interface ISectionHeaderEditableProps {
 }
 
 export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.Element {
-    const description = getDescription(props.description);
+    const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
+    const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
+
+    const isDescriptionDynamicHeightEnabled = useDashboardSelector(
+        selectEnableDashboardDescriptionDynamicHeight,
+    );
+
+    const { LoadingComponent } = useDashboardComponentsContext();
+    const filters = useRichTextFilters();
+
+    const description = useRichText ? props.description : getDescription(props.description);
     const title = getTitle(props.title);
     const { index } = props;
     const intl = useIntl();
+    const placeholder = intl.formatMessage({
+        id: "layout.header.add.description.placeholder",
+    });
 
     const dispatch = useDashboardDispatch();
     const changeTitle = useCallback(
@@ -36,11 +69,16 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
     );
 
     const onEditingStart = useCallback(() => {
-        dispatch(uiActions.setActiveSectionIndex(index));
+        dispatch(
+            uiActions.setActiveSection({
+                parent: undefined, // root layout
+                sectionIndex: index,
+            }),
+        );
     }, [dispatch, index]);
 
     const onEditingEnd = useCallback(() => {
-        dispatch(uiActions.clearActiveSectionIndex());
+        dispatch(uiActions.clearActiveSection());
     }, [dispatch]);
 
     const onTitleSubmit = useCallback(
@@ -59,6 +97,30 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
         [changeDescription, onEditingEnd],
     );
 
+    const [isRichTextEditing, setIsRichTextEditing] = useState(false);
+    const [richTextValue, setRichTextValue] = useState<string>("");
+
+    const onDescriptionClick = useCallback(() => {
+        if (!isRichTextEditing) {
+            onEditingStart();
+            setIsRichTextEditing(true);
+        }
+    }, [isRichTextEditing, onEditingStart]);
+
+    const onDescriptionBlur = useCallback(() => {
+        changeDescription(richTextValue);
+        onEditingEnd();
+        setIsRichTextEditing(false);
+    }, [changeDescription, onEditingEnd, richTextValue]);
+
+    const onRichTextChange = useCallback((value: string) => {
+        setRichTextValue(value);
+    }, []);
+
+    useEffect(() => {
+        setRichTextValue(description);
+    }, [description]);
+
     return (
         <div className="gd-row-header-edit">
             <div className="gd-editable-label-container gd-row-header-title-wrapper">
@@ -76,20 +138,49 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
                 />
             </div>
             <div className="gd-editable-label-container gd-row-header-description-wrapper">
-                <EditableLabelWithBubble
-                    className={`gd-description-for-${index} s-fluid-layout-row-description-input description`}
-                    alignTo={`.gd-description-for-${index}`}
-                    maxRows={15}
-                    value={description || ""}
-                    maxLength={MAX_DESCRIPTION_LENGTH}
-                    warningLimit={DESCRIPTION_LENGTH_WARNING_LIMIT}
-                    placeholderMessage={intl.formatMessage({
-                        id: "layout.header.add.description.placeholder",
-                    })}
-                    onSubmit={onDescriptionSubmit}
-                    onEditingStart={onEditingStart}
-                    onCancel={onEditingEnd}
-                />
+                {useRichText ? (
+                    <div
+                        className={cx("gd-editable-label-richtext s-fluid-layout-row-description-input", {
+                            "is-editing": isRichTextEditing,
+                        })}
+                        onClick={onDescriptionClick}
+                        onBlur={onDescriptionBlur}
+                    >
+                        <RichTextWithTooltip
+                            value={richTextValue}
+                            renderMode={isRichTextEditing ? "edit" : "view"}
+                            onChange={onRichTextChange}
+                            editRows={10}
+                            editPlaceholder={placeholder}
+                            emptyElement={
+                                <div className="gd-editable-label-richtext-empty">{placeholder}</div>
+                            }
+                            showTooltip={isRichTextEditing}
+                            tooltipAlignPoints={
+                                isDescriptionDynamicHeightEnabled
+                                    ? dynamicRichTextTooltipAlignPoints
+                                    : richTextTooltipAlignPoints
+                            }
+                            autoResize={isDescriptionDynamicHeightEnabled}
+                            referencesEnabled={isRichTextReferencesEnabled}
+                            filters={filters}
+                            LoadingComponent={LoadingComponent}
+                        />
+                    </div>
+                ) : (
+                    <EditableLabelWithBubble
+                        className={`gd-description-for-${index} s-fluid-layout-row-description-input description`}
+                        alignTo={`.gd-description-for-${index}`}
+                        maxRows={15}
+                        value={description || ""}
+                        maxLength={MAX_DESCRIPTION_LENGTH}
+                        warningLimit={DESCRIPTION_LENGTH_WARNING_LIMIT}
+                        placeholderMessage={placeholder}
+                        onSubmit={onDescriptionSubmit}
+                        onEditingStart={onEditingStart}
+                        onCancel={onEditingEnd}
+                    />
+                )}
             </div>
         </div>
     );

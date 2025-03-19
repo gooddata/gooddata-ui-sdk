@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { IAttributeDisplayFormMetadataObject, ObjRef, AttributeDisplayFormType } from "@gooddata/sdk-model";
 import React from "react";
 import cx from "classnames";
@@ -9,6 +9,8 @@ const getDisplayFormIcon = (type?: AttributeDisplayFormType) => {
     switch (type) {
         case "GDC.link":
             return "gd-icon-hyperlink-warning";
+        case "GDC.image":
+            return "gd-icon-image";
         case "GDC.geo.pin":
         case "GDC.geo.pin_latitude":
         case "GDC.geo.pin_longitude":

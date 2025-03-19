@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
 @use "@gooddata/sdk-ui-kit/styles/scss/typo";
@@ -123,7 +123,8 @@ $gd-dashboards-section-description-color: var(
     .gd-row-header-title-wrapper {
         display: flex;
 
-        h2 {
+        h2,
+        h3 {
             color: $gd-dashboards-section-title-color;
         }
 
@@ -281,6 +282,48 @@ $gd-dashboards-section-description-color: var(
             color: kit-variables.$gd-color-state-blank;
         }
     }
+
+    .gd-layout-row-description-richtext {
+        white-space: initial;
+    }
+
+    .gd-editable-label-richtext {
+        padding: 0 5px;
+        margin-top: 3px;
+        border: 1px solid transparent;
+
+        textarea {
+            padding: 0;
+            font-size: 14px;
+            line-height: 19px;
+            color: var(--gd-palette-complementary-7, #6d7680);
+
+            &::placeholder {
+                color: var(--gd-palette-complementary-6, #94a1ad);
+            }
+        }
+
+        @include mixins.active-states {
+            border-color: variables.$editable-label-border;
+        }
+
+        &.is-editing {
+            border-color: variables.$editable-label-border;
+        }
+
+        .gd-editable-label-richtext-empty {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 19px;
+        }
+    }
+}
+
+.gd-rich-text-content-view .gd-editable-label-richtext-empty {
+    color: var(--gd-palette-complementary-6, #94a1ad);
 }
 
 .gd-visualization-content {
@@ -316,8 +359,8 @@ $gd-dashboards-section-description-color: var(
     &.added,
     &.modified {
         background: var(
-            --gd-dashboards-content-backgroundColor,
-            var(--gd-palette-complementary-0, rgba(255, 255, 255, 0.95))
+            --gd-dashboards-content-backgroundColor-from-theme,
+            var(--gd-palette-complementary-0-from-theme, rgba(255, 255, 255, 0.95))
         );
     }
 
@@ -365,4 +408,106 @@ $gd-dashboards-section-description-color: var(
         line-height: 19px;
         color: var(--gd-palette-complementary-6, #94a1ad);
     }
+}
+
+// The rules are scoped inside a class that's added dynamically based upon a feature flag value.
+// When ff is removed, class name envelope can be removed.
+.gd-auto-resized-dashboard-descriptions {
+    .gd-fluid-layout-row-header {
+        .gd-editable-label {
+            @include mixins.active-states {
+                border-color: variables.$editable-label-border;
+                border-radius: 3px;
+            }
+
+            &.is-editing {
+                border-radius: 3px;
+            }
+        }
+
+        .gd-editable-label-richtext {
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    }
+}
+
+// ****** FLEXIBLE NESTED LAYOUT ******
+
+// The styles counts with 12 grid columns. The matching constant is defined in
+// src/_staging/dashboard/flexibleLayout/config.ts
+
+.gd-grid-layout {
+    flex-direction: column;
+
+    .gd-fluid-layout-row-header {
+        position: relative;
+
+        .gd-row-header-edit--nested {
+            .title {
+                @include typo-mixins.gd-heading-3;
+
+                color: $gd-dashboards-section-title-color;
+            }
+
+            .placeholder {
+                color: kit-variables.$gd-color-state-blank;
+            }
+        }
+    }
+
+    .gd-fluid-layout-row-header-container--with-headers {
+        margin-top: 16px;
+    }
+
+    .gd-dashboard-nested-layout-content:not(.is-dragging-widget) {
+        .gd-fluid-layout-row-header-container--no-headers {
+            margin-top: 0;
+        }
+    }
+
+    .gd-fluidlayout-column-container {
+        display: flex;
+    }
+}
+
+.gd-grid-layout__container--root {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: 20px;
+    grid-auto-rows: min-content; // do not render empty row for potential next grid item (chrome weird behavior)
+    flex-grow: 1; // take the whole width of the page (parent flex container).
+}
+
+.gd-grid-layout__container--nested {
+    display: grid;
+    column-gap: 20px;
+}
+
+.gd-grid-layout__section {
+    display: grid;
+    grid-template-columns: subgrid;
+}
+
+.gd-grid-layout__item {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+// generate classes for grid span from 1 to 12
+@for $i from 1 through 12 {
+    .gd-grid-layout__item--span-#{$i} {
+        grid-column: span #{$i};
+    }
+
+    .gd-grid-layout__container--nested--width-#{$i} {
+        grid-template-columns: repeat(#{$i}, 1fr);
+    }
+}
+
+.rich-text-tooltip {
+    // override overlay z-index defined in style element as overlay's zIndex prop is not exposed to Bubble
+    // stylelint-disable-next-line declaration-no-important
+    z-index: zIndexes.$dashboard-canvas-tooltip !important;
 }

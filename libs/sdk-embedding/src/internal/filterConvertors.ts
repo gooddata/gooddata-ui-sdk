@@ -3,8 +3,9 @@ import isEmpty from "lodash/isEmpty.js";
 import isNumber from "lodash/isNumber.js";
 import isString from "lodash/isString.js";
 
-import { ObjQualifier, isLocalIdentifierQualifier } from "@gooddata/api-model-bear";
 import {
+    ObjQualifier,
+    isLocalIdentifierQualifier,
     AttributeFilterItem,
     DateFilterItem,
     FilterItem,
@@ -21,7 +22,8 @@ import {
     isRemoveAttributeFilter,
     isRemoveDateFilter,
     isRemoveRankingFilter,
-} from "../iframe/EmbeddedGdc.js";
+} from "../iframe/index.js";
+import { ObjRef, idRef } from "@gooddata/sdk-model";
 
 export const EXTERNAL_DATE_FILTER_FORMAT = "YYYY-MM-DD";
 
@@ -52,6 +54,7 @@ export interface ITransformedAttributeFilterItem {
     attributeElements: string[];
     dfIdentifier?: string;
     dfUri?: string;
+    displayAsLabel?: ObjRef;
 }
 
 const DATE_FORMAT_REGEX = /^\d{4}-\d{2}-\d{2}$/;
@@ -266,24 +269,34 @@ function transformAttributeFilterItem(
     if (isPositiveAttributeFilter(attributeFilterItem)) {
         const {
             positiveAttributeFilter: { in: attributeElements, displayForm },
+            displayAsLabel,
         } = attributeFilterItem;
         const { uri: dfUri, identifier: dfIdentifier } = getObjectUriIdentifier(displayForm);
+        const { identifier: displayAsLabelIdentifier } = getObjectUriIdentifier(displayAsLabel);
         return {
             negativeSelection: false,
             attributeElements,
             dfIdentifier,
             dfUri,
+            ...(displayAsLabelIdentifier
+                ? { displayAsLabel: idRef(displayAsLabelIdentifier, "displayForm") }
+                : {}),
         };
     } else {
         const {
             negativeAttributeFilter: { notIn: attributeElements, displayForm },
+            displayAsLabel,
         } = attributeFilterItem;
         const { uri: dfUri, identifier: dfIdentifier } = getObjectUriIdentifier(displayForm);
+        const { identifier: displayAsLabelIdentifier } = getObjectUriIdentifier(displayAsLabel);
         return {
             negativeSelection: true,
             attributeElements,
             dfIdentifier,
             dfUri,
+            ...(displayAsLabelIdentifier
+                ? { displayAsLabel: idRef(displayAsLabelIdentifier, "displayForm") }
+                : {}),
         };
     }
 }

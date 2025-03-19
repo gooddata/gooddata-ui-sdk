@@ -1,11 +1,13 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { DateFilter } from "../../tools/dateFilter";
 import { clickOutside } from "../../tools/utils";
 import { DateFilterAbsoluteForm } from "../../tools/dateFilterAbsoluteForm";
 import { DateFilterRelativeForm } from "../../tools/dateFilterRelativeForm";
 
-describe("DateFilter", { tags: ["pre-merge_isolated_bear"] }, () => {
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("DateFilter", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("filters/date-filter");
     });

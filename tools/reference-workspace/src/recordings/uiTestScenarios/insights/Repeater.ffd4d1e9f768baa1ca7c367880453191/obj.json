@@ -1,0 +1,45 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.cityname"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.cityname_cloned"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "of_lost_opps.", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_of_lost_opps."
+                        }
+                    }
+                ],
+                "localIdentifier": "columns"
+            }
+        ],
+        "filters": [],
+        "identifier": "Repeater.ffd4d1e9f768baa1ca7c367880453191",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "Repeater - one attribute and one measure",
+        "uri": "Repeater.ffd4d1e9f768baa1ca7c367880453191",
+        "visualizationUrl": "local:repeater"
+    }
+}

@@ -22,14 +22,17 @@ import {
     createWaterfallLegendItems,
 } from "./legendHelpers.js";
 import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities.js";
-import { IChartOptions, ISeriesNodeItem } from "../typings/unsafe.js";
+import { IChartOptions, ISeriesNodeItem, ISeriesItem } from "../typings/unsafe.js";
 import {
     LegendOptionsItemType,
     ILegendOptions,
     DEFAULT_LEGEND_CONFIG,
     ItemBorderRadiusPredicate,
+    IBaseLegendItem,
 } from "@gooddata/sdk-ui-vis-commons";
 import { ChartType } from "../typings/chartType.js";
+import uniqBy from "lodash/uniqBy.js";
+import sortBy from "lodash/sortBy.js";
 
 function isHeatmapWithMultipleValues(chartOptions: IChartOptions) {
     const { type } = chartOptions;
@@ -39,10 +42,16 @@ function isHeatmapWithMultipleValues(chartOptions: IChartOptions) {
 }
 
 export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
-    const seriesLength = chartOptions?.data?.series?.length;
+    const legendItemsLength = chartOptions?.data?.series?.reduce<number[]>((prev, cur: ISeriesItem) => {
+        if (prev.includes(cur.legendIndex)) {
+            return prev;
+        }
+        return [...prev, cur.legendIndex];
+    }, []).length;
+
     const { type, hasStackByAttribute, hasViewByAttribute } = chartOptions;
 
-    const hasMoreThanOneSeries = seriesLength > 1;
+    const hasMoreThanOneLegend = legendItemsLength > 1;
     const isLineChartStacked = isLineChart(type) && hasStackByAttribute;
     const isStacked = isStackedChart(chartOptions);
     const sliceTypes = [
@@ -56,18 +65,23 @@ export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
     const isSliceChartWithViewByAttributeOrMultipleMeasures =
         isOneOfTypes(type, sliceTypes) && (hasViewByAttribute || chartOptions.data.series[0].data.length > 1);
     const isBubbleWithViewByAttribute = isBubbleChart(type) && hasViewByAttribute;
-    const isScatterPlotWithAttribute = isScatterPlot(type) && chartOptions.data.series[0].name;
+    const isScatterPlotWithSegmentationOrClustering =
+        isScatterPlot(type) &&
+        !!(
+            chartOptions.data.series[0]?.data[0]?.segmentName ||
+            chartOptions.data.series[0]?.data[0]?.clusterName
+        );
     const isTreemapWithViewByAttribute = isTreemap(type) && hasViewByAttribute;
     const isTreemapWithManyCategories = isTreemap(type) && chartOptions.data.categories.length > 1;
     const isSankeyChart = isSankeyOrDependencyWheel(type);
     const isWaterfallChart = isWaterfall(type);
 
     return (
-        hasMoreThanOneSeries ||
+        hasMoreThanOneLegend ||
         isSliceChartWithViewByAttributeOrMultipleMeasures ||
         isStacked ||
         isLineChartStacked ||
-        isScatterPlotWithAttribute ||
+        isScatterPlotWithSegmentationOrClustering ||
         isTreemapWithViewByAttribute ||
         isBubbleWithViewByAttribute ||
         isTreemapWithManyCategories ||
@@ -133,6 +147,20 @@ export function getLegendItems(chartOptions: IChartOptions, intl?: IntlShape): L
 
     if (isComboChart(type)) {
         pickedProps = [...pickedProps, "type"];
+    }
+
+    if (isScatterPlot(type)) {
+        const uniqueItems = sortBy(
+            uniqBy(chartOptions.data.series[0]?.data, (it: ISeriesItem) => it.legendIndex),
+            (it) => it.legendIndex,
+        );
+        return uniqueItems.map((it: ISeriesItem, index: number): IBaseLegendItem => {
+            return {
+                name: it.clusterName || it.segmentName,
+                color: it.color,
+                legendIndex: index,
+            } as IBaseLegendItem;
+        });
     }
 
     return legendDataSource

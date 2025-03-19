@@ -1,9 +1,8 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 /**
  * This package provides a mock Analytical Backend implementation used mainly for testing.
  *
  * @remarks
- * For the GoodData platform version, see `@gooddata/sdk-backend-bear`.
  * For the GoodData Cloud and GoodData.CN version, see `@gooddata/sdk-backend-tiger`.
  *
  * @packageDocumentation
@@ -13,7 +12,7 @@ export { dummyBackend, dummyBackendEmptyData, dummyDataView };
 
 export { recordedBackend, defaultRecordedBackendCapabilities } from "./recordedBackend/index.js";
 
-export {
+export type {
     RecordingIndex,
     ExecutionRecording,
     InsightRecording,
@@ -35,6 +34,7 @@ export {
     AttributeElementsFilteringPredicate,
 } from "./recordedBackend/types.js";
 
+export type { NamedDataView } from "./recordedBackend/execution.js";
 export {
     recordedDataView,
     recordedDataViews,
@@ -43,7 +43,6 @@ export {
     DataViewAll,
     dataViewWindow,
     DataViewFirstPage,
-    NamedDataView,
 } from "./recordedBackend/execution.js";
 
 export {
@@ -52,14 +51,14 @@ export {
     newMeasureLimitingItem,
 } from "./recordedBackend/elementsUtils.js";
 
-export { CompositeBackendPart, compositeBackend } from "./compositeBackend/index.js";
+export type { CompositeBackendPart } from "./compositeBackend/index.js";
+export { compositeBackend } from "./compositeBackend/index.js";
 
-export {
+export type {
     LegacyExecutionRecording,
-    legacyRecordedBackend,
-    legacyRecordedDataView,
     LegacyRecordingIndex,
     LegacyWorkspaceRecordings,
 } from "./legacyRecordedBackend/index.js";
+export { legacyRecordedBackend, legacyRecordedDataView } from "./legacyRecordedBackend/index.js";
 
 export { objRefsToStringKey } from "./recordedBackend/utils.js";

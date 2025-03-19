@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { DependencyList, useEffect, useState } from "react";
 import { makeCancelable } from "./CancelablePromise.js";
 import noop from "lodash/noop.js";
@@ -94,7 +94,14 @@ export type UseCancelablePromiseCallbacks<TResult, TError> = {
  * @public
  */
 export type UseCancelablePromiseOptions<TResult, TError> = UseCancelablePromiseCallbacks<TResult, TError> & {
-    promise: (() => Promise<TResult>) | undefined | null;
+    promise: ((signal: AbortSignal) => Promise<TResult>) | undefined | null;
+    /**
+     * Optionally enable the AbortController that will be aborted when the dependency list changes, if the promise is still running.
+     *
+     * Note that the provided promise implementation must support cancellation by handling
+     * the AbortSignal parameter.
+     */
+    enableAbortController?: boolean;
 };
 
 /**
@@ -124,6 +131,7 @@ export function useCancelablePromise<TResult, TError = any>(
         onCancel = noop,
         onSuccess = noop,
         onError = noop,
+        enableAbortController = false,
     } = options;
 
     const getInitialState = (): UseCancelablePromiseState<TResult, TError> => ({
@@ -155,7 +163,7 @@ export function useCancelablePromise<TResult, TError = any>(
             onLoading();
         }
 
-        const cancelablePromise = makeCancelable(promise());
+        const cancelablePromise = makeCancelable((signal) => promise(signal), enableAbortController);
 
         cancelablePromise.promise
             .then((result) => {

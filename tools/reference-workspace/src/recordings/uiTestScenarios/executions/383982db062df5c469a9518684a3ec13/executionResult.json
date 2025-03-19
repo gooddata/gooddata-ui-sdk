@@ -1,0 +1,39 @@
+{
+    "dimensions": [
+        { "headers": [] },
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,#.##",
+                                    "identifier": "f_stagehistory.f_velocity",
+                                    "localIdentifier": "m_f_stagehistory.f_velocity_sum",
+                                    "name": "m_f_stagehistory.f_velocity_sum"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,#.##",
+                                    "identifier": "f_stagehistory.f_duration",
+                                    "localIdentifier": "m_f_stagehistory.f_duration_sum",
+                                    "name": "m_f_stagehistory.f_duration_sum"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,#.##",
+                                    "identifier": "f_density",
+                                    "localIdentifier": "m_f_density_sum",
+                                    "name": "m_f_density_sum"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

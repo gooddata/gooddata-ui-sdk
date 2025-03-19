@@ -4,10 +4,11 @@ import { put, call, takeLatest, select, cancelled, SagaReturnType } from "redux-
 
 import { getAttributeFilterContext } from "../common/sagas.js";
 import { selectElementsForm } from "../common/selectors.js";
-
+import { shouldExcludePrimaryLabel } from "../utils.js";
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { selectLoadElementsOptions, selectCacheId } from "../elements/elementsSelectors.js";
 import { actions } from "../store/slice.js";
+
 import { loadLimitingAttributeFiltersAttributes } from "./loadLimitingAttributeFiltersAttributes.js";
 
 /**
@@ -54,8 +55,7 @@ export function* loadInitialElementsPageSaga(
         const loadOptionsWithExcludePrimaryLabel: Parameters<typeof elementsSaga>[0] = {
             ...loadOptions,
             signal: abortController.signal,
-            excludePrimaryLabel:
-                !context.backend.capabilities.supportsElementUris && elementsForm === "values",
+            excludePrimaryLabel: shouldExcludePrimaryLabel(context, elementsForm),
         };
 
         const result: SagaReturnType<typeof elementsSaga> = yield call(
@@ -73,7 +73,14 @@ export function* loadInitialElementsPageSaga(
             actions.setLimitingAttributeFiltersAttributes({ attributes: limitingAttributeFiltersAttributes }),
         );
         yield put(actions.setCacheId({ cacheId: result.cacheId }));
-        yield put(actions.loadInitialElementsPageSuccess({ ...result, correlation }));
+        yield put(
+            actions.loadInitialElementsPageSuccess({
+                ...result,
+                correlation,
+                enableDuplicatedLabelValuesInAttributeFilter:
+                    context.enableDuplicatedLabelValuesInAttributeFilter,
+            }),
+        );
     } catch (error) {
         yield put(
             actions.loadInitialElementsPageError({

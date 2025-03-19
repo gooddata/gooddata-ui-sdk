@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
@@ -42,6 +42,11 @@ function parseDate(str: string, dateFormat: string): Date | undefined {
     }
 }
 
+interface IDateTimePickerAccessibilityConfig {
+    dateAriaLabel?: React.AriaAttributes["aria-label"];
+    timeAriaLabel?: React.AriaAttributes["aria-label"];
+}
+
 interface IDateTimePickerOwnProps {
     placeholderDate: string;
     dateFormat: string;
@@ -54,6 +59,7 @@ interface IDateTimePickerOwnProps {
     onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     defaultTime?: string;
     error?: boolean;
+    accessibilityConfig?: IDateTimePickerAccessibilityConfig;
 }
 
 type DateTimePickerComponentProps = IDateTimePickerOwnProps & WrappedComponentProps;
@@ -70,8 +76,11 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
             isTimeEnabled,
             onKeyDown,
             className,
+            accessibilityConfig,
             error = false,
         } = props;
+
+        const { dateAriaLabel, timeAriaLabel } = accessibilityConfig ?? {};
 
         // keeping local copy to enable time update onBlur
         const [pickerTime, setPickerTime] = useState<string>(getTimeStringFromDate(value));
@@ -147,6 +156,7 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
                             <input
                                 onKeyDown={onKeyDown}
                                 ref={ref}
+                                aria-label={dateAriaLabel}
                                 placeholder={placeholderDate}
                                 onChange={(event) => handleInputChange(event.target.value)}
                                 onClick={handleDayClick}
@@ -170,6 +180,7 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
                         <input
                             type="time"
                             className="input-text"
+                            aria-label={timeAriaLabel}
                             onChange={(event) => onTimeChange(event.target.value)}
                             value={pickerTime}
                         />
@@ -186,4 +197,5 @@ const DateTimePickerWithInt = injectIntl(DateTimePickerComponent, { forwardRef: 
 
 DateTimePickerWithInt.displayName = "DateTimePicker";
 
-export { DateTimePickerWithInt, DateTimePickerComponentProps };
+export type { DateTimePickerComponentProps };
+export { DateTimePickerWithInt };

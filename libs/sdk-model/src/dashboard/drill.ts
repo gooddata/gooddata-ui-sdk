@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { ObjRef, ObjRefInScope } from "../objRef/index.js";
 
@@ -171,6 +171,15 @@ export interface IDrill {
      * Drill origin
      */
     origin: DrillOrigin;
+
+    /**
+     * Local identifiers of the attribute display forms to ignore
+     * in the drill intersection.
+     *
+     * Values of these display forms won't be included
+     * in the drill intersection.
+     */
+    drillIntersectionIgnoredAttributes?: string[];
 }
 
 /**
@@ -360,10 +369,38 @@ export function isAttributeHierarchyReference(obj: unknown): obj is IAttributeHi
 }
 
 /**
+ * Type-guard testing whether the provided object is an instance of {@link IDateHierarchyReference}.
+ * @alpha
+ */
+export function isDateHierarchyReference(obj: unknown): obj is IDateHierarchyReference {
+    return !isEmpty(obj) && (obj as IDateHierarchyReference).type === "dateHierarchyReference";
+}
+
+/**
  *
  * @alpha
  */
 export type IDrillDownReference = IAttributeHierarchyReference | IDateHierarchyReference;
+
+/**
+ * Returns the attribute hierarchy reference for the provided drill down reference.
+ * @alpha
+ */
+export function drillDownReferenceHierarchyRef(drillDownReference: IDrillDownReference) {
+    return drillDownReference.type === "attributeHierarchyReference"
+        ? drillDownReference.attributeHierarchy
+        : drillDownReference.dateHierarchyTemplate;
+}
+
+/**
+ * Returns the attribute or date dataset attribute reference for the provided drill down reference.
+ * @alpha
+ */
+export function drillDownReferenceAttributeRef(drillDownReference: IDrillDownReference) {
+    return drillDownReference.type === "attributeHierarchyReference"
+        ? drillDownReference.attribute
+        : drillDownReference.dateDatasetAttribute;
+}
 
 /**
  * Cross-filtering

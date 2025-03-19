@@ -1,7 +1,7 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 /**
- * This package provides the Dashboard component that can be used to embed dashboards into your application as React components.
+ * This package provides a Dashboard component that enables you to embed dashboards into your application as React components.
  *
  * @remarks
  * The component also allows for customization of the embedded dashboard using plugins.
@@ -11,10 +11,11 @@
  */
 
 // exported only for api-extractor's sake
-export { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation.js";
+export type { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation.js";
 
 // ObjRefMap & factories will be part of the public API.. although in different package
-export { ObjRefMap, ObjRefMapConfig, newDisplayFormMap } from "./_staging/metadata/objRefMap.js";
+export type { ObjRefMapConfig } from "./_staging/metadata/objRefMap.js";
+export { ObjRefMap, newDisplayFormMap } from "./_staging/metadata/objRefMap.js";
 
 // TODO remove export after values resolver call from KD is obsolete
 export { resolveFilterValues } from "./model/commandHandlers/drill/common/filterValuesResolver.js";

@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import isEmpty from "lodash/isEmpty.js";
 import cx from "classnames";
@@ -67,6 +67,8 @@ export interface IDateFilterBodyProps {
     weekStart?: WeekStart;
     isConfigurationEnabled?: boolean;
     onConfigurationClick: () => void;
+
+    withoutApply?: boolean;
 }
 
 interface IDateFilterBodyState {
@@ -108,6 +110,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
             dateFilterButton,
             errors,
             isConfigurationEnabled,
+            withoutApply,
         } = this.props;
         const { route } = this.state;
 
@@ -144,22 +147,24 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                         </div>
                         <div className="gd-extended-date-filter-actions-buttons">
                             <DateFilterBodyButton
-                                messageId="cancel"
+                                messageId={withoutApply ? "close" : "cancel"}
                                 className="gd-button-secondary gd-button-small s-date-filter-cancel"
                                 onClick={() => {
                                     onCancelClick();
                                     closeDropdown();
                                 }}
                             />
-                            <DateFilterBodyButton
-                                messageId="apply"
-                                className="gd-button-action gd-button-small s-date-filter-apply"
-                                disabled={!isEmpty(errors)}
-                                onClick={() => {
-                                    onApplyClick();
-                                    closeDropdown();
-                                }}
-                            />
+                            {!withoutApply && (
+                                <DateFilterBodyButton
+                                    messageId="apply"
+                                    className="gd-button-action gd-button-small s-date-filter-apply"
+                                    disabled={!isEmpty(errors)}
+                                    onClick={() => {
+                                        onApplyClick();
+                                        closeDropdown();
+                                    }}
+                                />
+                            )}
                         </div>
                     </div>
                 </div>

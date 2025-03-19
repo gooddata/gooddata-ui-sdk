@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
 import { put, call, takeLatest, select, cancelled, SagaReturnType } from "redux-saga/effects";
@@ -7,12 +7,12 @@ import difference from "lodash/difference.js";
 
 import { getAttributeFilterContext } from "../common/sagas.js";
 import { selectElementsForm } from "../common/selectors.js";
-
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { selectLoadElementsOptions } from "../elements/elementsSelectors.js";
 import { actions } from "../store/slice.js";
 import { ILoadElementsOptions } from "../../../types/index.js";
 import { selectCommittedSelection } from "../store/selectors.js";
+import { shouldExcludePrimaryLabel } from "../utils.js";
 
 /**
  * @internal
@@ -63,8 +63,7 @@ export function* loadIrrelevantElementsSaga(
         const loadOptionsWithElements: ILoadElementsOptions & CancelableOptions = {
             ...loadOptions,
             signal: abortController.signal,
-            excludePrimaryLabel:
-                !context.backend.capabilities.supportsElementUris && elementsForm === "values",
+            excludePrimaryLabel: shouldExcludePrimaryLabel(context, elementsForm),
             search: "", // search is not relevant here
             elements,
         };
@@ -74,7 +73,9 @@ export function* loadIrrelevantElementsSaga(
             loadOptionsWithElements,
         );
 
-        const relevantElementTitles = relevantElementsResult.elements.map((elem) => elem.title);
+        const relevantElementTitles = relevantElementsResult.elements.map((elem) =>
+            context.enableDuplicatedLabelValuesInAttributeFilter ? elem.uri : elem.title,
+        );
         const irrelevantSelectionTitles = difference(allSelectedElementTitles, relevantElementTitles);
 
         yield put(

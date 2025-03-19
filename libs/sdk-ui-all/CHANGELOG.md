@@ -1,12 +1,205 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Wed, 19 Mar 2025 11:50:06 GMT and should not be manually modified.
+This log was last generated on Thu, 06 Mar 2025 08:46:39 GMT and should not be manually modified.
+
+## 10.22.0
+
+Thu, 06 Mar 2025 08:46:39 GMT
+
+### Updates
+
+-   New helper factory createRedirectToTigerAuthenticationWithParams to create a parametrized redirectToTigerAuthentication handler. Useful in Federated Identity Management context.
+-   Add support for execution cancelling via AbortController.
+-   Support workspace and organization level setting for Dashboard filters apply mode
+-   Make DashboardAttributeFilter component customizable by prop
+-   Add support for enableDashboardFiltersApplyModes feature flag
+-   Update HighCharts library to latest version
+
+## 10.20.0
+
+Thu, 20 Feb 2025 08:45:08 GMT
+
+_Version update only_
+
+## 10.19.0
+
+Thu, 06 Feb 2025 07:58:07 GMT
+
+_Version update only_
+
+## 10.18.0
+
+Thu, 23 Jan 2025 08:58:58 GMT
+
+### Updates
+
+-   Introduce NotificationPanel component.
+
+## 10.17.0
+
+Thu, 09 Jan 2025 09:00:05 GMT
+
+_Version update only_
+
+## 10.16.0
+
+Thu, 12 Dec 2024 07:29:13 GMT
+
+### Updates
+
+-   Add support for nested dashboard layouts (hidden behind a feature flag)
+
+## 10.15.0
+
+Thu, 28 Nov 2024 11:23:13 GMT
+
+_Version update only_
+
+## 10.14.0
+
+Thu, 14 Nov 2024 11:46:42 GMT
+
+_Version update only_
+
+## 10.13.0
+
+Thu, 31 Oct 2024 08:50:19 GMT
+
+### Updates
+
+-   attribute filters now allow improved work with duplicate values by default
+-   Added new Visualization Switcher widget to render group of visualizations together on dashboard (available for GoodData.CN / GoodData Cloud only).
+
+## 10.12.0
+
+Thu, 17 Oct 2024 06:56:12 GMT
+
+### Updates
+
+-   Introduce support for saved filter views on dashboards. It allows to customize filter context for individual user and dashboard and save it for later use.
+
+## 10.11.0
+
+Thu, 03 Oct 2024 07:11:15 GMT
+
+### Updates
+
+-   Introduce support for saved filter views on dashboards. It allows to customize filter context for individual user and dashboard and save it for later use.
+
+## 10.10.0
+
+Thu, 19 Sep 2024 06:58:04 GMT
+
+### Updates
+
+-   Improved Handling of Secondary Labels in AttributeFilter
+
+## 10.9.0
+
+Thu, 05 Sep 2024 08:14:25 GMT
+
+### Updates
+
+-   Add possibility to ignore specified attributes in the drill down intersection. Modify addDrillDownForInsightWidget and modifyDrillDownForInsightWidget commands to be able to configure it (breaking).
+
+## 10.8.0
+
+Thu, 22 Aug 2024 07:33:19 GMT
+
+### Updates
+
+-   Introduce user filter views to dashboard component
+
+## 10.7.0
+
+Thu, 08 Aug 2024 09:46:36 GMT
+
+### Updates
+
+-   Introduced GenAI Service in sdk-backend-tiger to be able to consume semantic search feeds.
+-   Introduced @gooddata/sdk-ui-semantic-search package in alpha stage
+-   Top menu UI component now supports a new search button
+
+## 10.6.0
+
+Thu, 25 Jul 2024 08:35:32 GMT
+
+_Version update only_
+
+## 10.5.1
+
+Fri, 12 Jul 2024 11:00:39 GMT
+
+### Updates
+
+-   Fixed display of tooltips in drill dialog
+
+## 10.5.0
+
+Thu, 11 Jul 2024 08:01:45 GMT
+
+### Updates
+
+-   Allow specifying returnTo parameter with backend deauthenticate
+-   Adjusted export function to support pdf options.
+-   Using visualizationObject whenever provided as alternative to executionResult for export.
+
+## 10.4.0
+
+Thu, 27 Jun 2024 08:11:53 GMT
+
+_Version update only_
+
+## 10.3.0
+
+Thu, 13 Jun 2024 08:17:52 GMT
+
+### Updates
+
+-   Allow different position of ellipsis in ShortenedText component
+-   F1-349 Implement webhooks api in tiger functions
+-   allow creating a workspace as a child
+
+## 10.2.0
+
+Thu, 30 May 2024 08:50:26 GMT
+
+### Updates
+
+-   API method importCsv now returns update info about file
+-   Forecast implementation into line chart
+-   Include hierarchy data in workspace descriptor
+-   added filter for root workspaces only to workspaces query
+-   use only description attribute for workspace description
+-   Enhanced export function to support PDF format and added PDF configuration option.
+
+## 10.1.0
+
+Thu, 16 May 2024 08:08:00 GMT
+
+### Updates
+
+-   Added a workspace service for working with export definitions metadata objects
+
+## 10.0.0
+
+Thu, 18 Apr 2024 08:07:32 GMT
+
+### Updates
+
+-   Drop support for the GoodData Platform (Bear) in all packages.
+-   Removed the @gooddata/experimental-workspace and @gooddata/live-examples-workspace packages.
+-   Removed the sdk-examples package.
+-   Package @gooddata/reference-workspace migrated from GoodData Platform (Bear) to GoodData.CN (Panther/Tiger).
+-   Removed GoodData Platform (Bear) related packages: @gooddata/api-client-bear, @gooddata/sdk-backend-bear, @gooddata/api-model-bear.
+-   Introduced a new visualization type - Repeater, currently in the @beta stage.
+-   Introduce ability to limit attribute filter values by dependent date filters on GoodData Cloud dashboards.
 
 ## 9.9.2
 
 Wed, 19 Mar 2025 11:50:06 GMT
 
-_Version update only_
+- Update ag-grid-community and ag-grid-react library to latest version
 
 ## 9.9.1
 
@@ -23,6 +216,14 @@ Thu, 21 Mar 2024 09:56:41 GMT
 -   To unify null values representation replace pattern fill by background color in Heatmap
 -   Introduce theme loading status with better information about state of theme loading
 -   Add tags to 'measure' objects
+
+## 9.8.1
+
+Fri, 15 Mar 2024 13:31:24 GMT
+
+### Updates
+
+-   Introduce theme loading status with better information about state of theme loading
 
 ## 9.8.0
 

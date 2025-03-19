@@ -1,5 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
-import React, { useCallback, useMemo, useState, CSSProperties } from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { useCallback, useMemo, useState, CSSProperties, useEffect } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
 import { idRef, insightSetFilters, insightVisualizationUrl, widgetTitle } from "@gooddata/sdk-model";
@@ -21,9 +21,9 @@ import {
     selectSettings,
     selectIsExport,
     selectDrillableItems,
+    useWidgetFilters,
 } from "../../../../../model/index.js";
 import { IDashboardInsightProps } from "../../types.js";
-import { useInsightExport, useWidgetFilters } from "../../../common/index.js";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
 import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
 import { CustomError } from "../CustomError/CustomError.js";
@@ -69,6 +69,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         onDrill: onDrillFn,
         onExportReady,
         onLoadingChanged,
+        onWidgetFiltersReady,
         pushData,
         ErrorComponent,
         LoadingComponent,
@@ -159,6 +160,10 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
     const insightWrapperStyle: CSSProperties | undefined = useMemo(() => {
         return isVisualizationLoading || effectiveError ? { height: 0 } : undefined;
     }, [isVisualizationLoading, effectiveError]);
+
+    useEffect(() => {
+        onWidgetFiltersReady?.(filtersForInsight);
+    }, [filtersForInsight, onWidgetFiltersReady]);
 
     return (
         <div style={insightStyle}>

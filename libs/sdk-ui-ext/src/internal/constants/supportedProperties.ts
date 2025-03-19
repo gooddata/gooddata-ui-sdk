@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { AXIS } from "./axis.js";
 import { HeadlineControlProperties } from "../interfaces/ControlProperties.js";
 import { CalculateAs } from "@gooddata/sdk-ui-charts";
@@ -11,7 +11,12 @@ const BASE_PROPERTIES = [
     "colorMapping",
     "zoomInsight",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
+    "chartConfigOverride",
 ];
+
+const FORECAST_PROPERTIES = ["forecast"];
 
 const BASE_X_AXIS_PROPERTIES = [
     "xaxis.rotation",
@@ -63,6 +68,7 @@ const CHART_TYPE_PROPERTIES = ["primaryChartType", "secondaryChartType", "dualAx
 
 export const BASE_CHART_SUPPORTED_PROPERTIES = [
     ...BASE_PROPERTIES,
+    ...FORECAST_PROPERTIES,
     ...BASE_X_AXIS_PROPERTIES,
     ...BASE_PRIMARY_AXIS_PROPERTIES,
 ];
@@ -95,6 +101,7 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
         ...BASE_PROPERTIES,
         ...BASE_X_AXIS_PROPERTIES,
         ...BASE_SECONDARY_AXIS_PROPERTIES,
+        ...FORECAST_PROPERTIES,
         "dataPoints.visible",
         "continuousLine.enabled",
     ],
@@ -176,10 +183,13 @@ export const BUBBLE_CHART_SUPPORTED_PROPERTIES = [
     "yaxis.name.position",
     "yaxis.format",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
 ];
 
 export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     "dataLabels.visible",
+    "legend",
     "grid",
     "xaxis.rotation",
     "xaxis.labelsEnabled",
@@ -201,6 +211,12 @@ export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     "zoomInsight",
     "yaxis.format",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
+    "clustering.enabled",
+    "clustering.numberOfClusters",
+    "clustering.threshold",
+    "chartConfigOverride",
 ];
 
 export const PIECHART_SUPPORTED_PROPERTIES = [
@@ -209,6 +225,9 @@ export const PIECHART_SUPPORTED_PROPERTIES = [
     "colorMapping",
     "chart.verticalAlign",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
+    "chartConfigOverride",
 ];
 
 export const FUNNELCHART_SUPPORTED_PROPERTIES = [
@@ -217,8 +236,10 @@ export const FUNNELCHART_SUPPORTED_PROPERTIES = [
     "legend",
     "colorMapping",
     "chart.verticalAlign",
-
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
+    "chartConfigOverride",
 ];
 
 export const TREEMAP_SUPPORTED_PROPERTIES = [
@@ -227,6 +248,9 @@ export const TREEMAP_SUPPORTED_PROPERTIES = [
     "colorMapping",
     "zoomInsight",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
+    "chartConfigOverride",
 ];
 
 export const HEATMAP_SUPPORTED_PROPERTIES = [
@@ -246,6 +270,9 @@ export const HEATMAP_SUPPORTED_PROPERTIES = [
     "colorMapping",
     "zoomInsight",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
+    "chartConfigOverride",
 ];
 
 export const BULLET_CHART_SUPPORTED_PROPERTIES = [
@@ -269,6 +296,9 @@ export const BULLET_CHART_SUPPORTED_PROPERTIES = [
     "colorMapping",
     "zoomInsight",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
+    "chartConfigOverride",
 ];
 
 export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
@@ -281,6 +311,9 @@ export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
     "points.maxSize",
     "viewport.area",
     "colorMapping",
+    "disableAlerts",
+    "disableScheduledExports",
+    "chartConfigOverride",
 ];
 
 export const PIVOT_TABLE_SUPPORTED_PROPERTIES = [
@@ -288,6 +321,9 @@ export const PIVOT_TABLE_SUPPORTED_PROPERTIES = [
     "measureGroupDimension",
     "columnHeadersPosition",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
+    "chartConfigOverride",
 ];
 
 export const SANKEY_CHART_SUPPORTED_PROPERTIES = [
@@ -295,6 +331,9 @@ export const SANKEY_CHART_SUPPORTED_PROPERTIES = [
     "legend",
     "colorMapping",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
+    "chartConfigOverride",
 ];
 
 const WATERFALL_PRIMARY_X_AXIS_PROPERTIES = [
@@ -302,6 +341,7 @@ const WATERFALL_PRIMARY_X_AXIS_PROPERTIES = [
     "xaxis.min",
     "xaxis.max",
     "xaxis.format",
+    "chartConfigOverride",
 ];
 
 export const WATERFALL_CHART_SUPPORTED_PROPERTIES = [
@@ -313,7 +353,18 @@ export const WATERFALL_CHART_SUPPORTED_PROPERTIES = [
     "orientation.position",
 ];
 
-export const HEADLINE_SUPPORTED_PROPERTIES = ["comparison"];
+export const REPEATER_SUPPORTER_PROPERTIES_LIST = [
+    "columnWidths",
+    "colorMapping",
+    "rowHeight",
+    "cellVerticalAlign",
+    "cellTextWrapping",
+    "cellImageSizing",
+    "disableAlerts",
+    "disableScheduledExports",
+];
+
+export const HEADLINE_SUPPORTED_PROPERTIES = ["comparison", "disableAlerts", "disableScheduledExports"];
 
 export const HEADLINE_DEFAULT_CONTROL_PROPERTIES: HeadlineControlProperties = {
     comparison: {

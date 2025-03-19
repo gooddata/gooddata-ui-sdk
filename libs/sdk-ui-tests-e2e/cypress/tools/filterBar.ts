@@ -1,5 +1,6 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { DashboardAttributeFilterConfigMode, DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
+import camelCase from "lodash/camelCase";
 import { getTestClassByTitle } from "../support/commands/tools/classes";
 import { DropZone } from "./enum/DropZone";
 import { DateFilter } from "./dateFilter";
@@ -49,12 +50,12 @@ export class AttributeFilter {
     }
 
     clearAllValues() {
-        this.getDropdownElement().find(".s-select-all-checkbox").click();
-        this.getDropdownElement()
-            .find(".gd-list-all-checkbox")
+        cy.get(".overlay.dropdown-body .s-select-all-checkbox").should("be.visible").click();
+        cy.get(".overlay.dropdown-body .gd-list-all-checkbox")
+            .should("be.visible")
             .then(($ele) => {
                 if ($ele.hasClass("gd-list-all-checkbox-checked")) {
-                    this.getDropdownElement().find(".s-select-all-checkbox").click();
+                    cy.get(".overlay.dropdown-body .s-select-all-checkbox").should("be.visible").click();
                 }
             });
         return this;
@@ -62,7 +63,9 @@ export class AttributeFilter {
 
     selectAttributesWithoutApply(name?: string) {
         this.clearAllValues();
-        this.getDropdownElement().find(`.s-attribute-filter-list-item[title="${name}"]`).click();
+        this.getDropdownElement()
+            .find(`.s-attribute-filter-list-item-${camelCase(name)}`)
+            .click();
         return this;
     }
 
@@ -134,7 +137,7 @@ export class AttributeFilter {
 
     search(attributeValue: string) {
         this.getDropdownElement()
-            .find(".gd-list-searchfield .gd-input-field")
+            .find(".gd-input-search .gd-input-field")
             .as("searchField")
             .should("be.visible")
             .clear();
@@ -143,11 +146,10 @@ export class AttributeFilter {
     }
 
     showAllElementValues() {
-        this.getDropdownElement()
-            .find(".s-attribute-filter-status-show-all")
-            .find(".s-action-show-all")
+        cy.get(".overlay.dropdown-body .s-attribute-filter-status-show-all .s-action-show-all")
             .should("be.visible")
-            .click();
+            .realClick();
+
         this.elementsAreLoaded();
         return this;
     }
@@ -160,11 +162,10 @@ export class AttributeFilter {
     }
 
     clearIrrelevantElementValues() {
-        this.getDropdownElement()
-            .find(".s-attribute-filter-status-irrelevant-message")
-            .find(".s-action-clear")
+        cy.get(".overlay.dropdown-body .s-attribute-filter-status-irrelevant-message .s-action-clear")
             .should("be.visible")
             .click();
+
         this.elementsAreLoaded();
         return this;
     }
@@ -187,7 +188,7 @@ export class AttributeFilter {
     }
 
     clearSearch() {
-        this.getDropdownElement().find(".gd-list-searchfield .gd-input-field").should("be.visible").clear();
+        this.getDropdownElement().find(".gd-input-search .gd-input-field").should("be.visible").clear();
         return this;
     }
 
@@ -198,14 +199,16 @@ export class AttributeFilter {
 
     isValueSelected(attributeValue: string, expected: boolean) {
         this.getDropdownElement()
-            .find(`.s-attribute-filter-list-item[title="${attributeValue}"]`)
+            .find(`.s-attribute-filter-list-item-${camelCase(attributeValue)}`)
             .should(expected ? "have.class" : "not.have.class", "s-attribute-filter-list-item-selected");
         return this;
     }
 
     searchAndSelectFilterItem(attributeValue: string) {
         this.search(attributeValue);
-        this.getDropdownElement().find(`.s-attribute-filter-list-item[title="${attributeValue}"]`).click();
+        this.getDropdownElement()
+            .find(`.s-attribute-filter-list-item-${camelCase(attributeValue)}`)
+            .click();
         return this;
     }
 
@@ -481,6 +484,82 @@ export class AttributeFilter {
             cy.get(".s-add").click();
             this.getAttributeFilterLimit().addMetric().selectMetricItem(metricName);
         });
+
+        this.getDropdownElement().find(".s-apply").click();
+        return this;
+    }
+
+    /**
+     * Open add limit dashboard filter dialog
+     */
+    openAddLimitDashboardFilter() {
+        cy.get(".s-add").click();
+        cy.get(".s-add-limit-dashboard_filter").click();
+    }
+
+    closeAddLimitDashboardFilter() {
+        cy.get(".configuration-panel-header-title.clickable").click();
+        return this;
+    }
+
+    /**
+     * Works only for Tiger backend (available filter values UI)
+     *
+     * @param parentFilterName - name of parent specific date filter that current filter belong to
+     * @param visible - visibility of the filter, default is true
+     */
+    isSpecificDateFilterVisible(parentFilterName: string, visible = true): this {
+        this.openAddLimitDashboardFilter();
+        cy.get(".s-dashboard-filter-" + parentFilterName).should(($element) => {
+            if (visible) {
+                // eslint-disable-next-line jest/valid-expect
+                expect($element).not.to.have.class("is-disabled");
+            } else {
+                // eslint-disable-next-line jest/valid-expect
+                expect($element).to.have.class("is-disabled");
+            }
+        });
+        this.closeAddLimitDashboardFilter();
+        return this;
+    }
+
+    /**
+     * Works only for Tiger backend (available filter values UI)
+     *
+     * @param parentFilterName - name of parent common date filter that current filter belong to
+     * @param visible - visibility of the filter, default is true
+     */
+    isCommonDateFilterVisible(parentFilterName: string, visible = true): this {
+        this.openAddLimitDashboardFilter();
+        cy.get(getTestClassByTitle("Date range", "dashboard-filter-")).click();
+        cy.get(".date-filter__limit__popup__item.s-" + parentFilterName).should(($element) => {
+            if (visible) {
+                // eslint-disable-next-line jest/valid-expect
+                expect($element).not.to.have.class("is-disabled");
+            } else {
+                // eslint-disable-next-line jest/valid-expect
+                expect($element).to.have.class("is-disabled");
+            }
+        });
+        this.closeAddLimitDashboardFilter();
+        return this;
+    }
+
+    /**
+     * Works only for Tiger backend (available filter values UI)
+     *
+     * @param parentFilterName - name(s) of parent filter that current filter belong to
+     * @param dateType - type of date filter (Date range or Date specific)
+     */
+    configureLimitingDateFilterDependency(parentFilterName: string, dateType: string) {
+        this.openAddLimitDashboardFilter();
+
+        if (dateType == "Date range") {
+            cy.get(getTestClassByTitle(dateType, "dashboard-filter-")).click();
+            cy.get(".date-filter__limit__popup__item.s-" + parentFilterName).click();
+        } else {
+            cy.get(".s-dashboard-filter-" + parentFilterName).click();
+        }
 
         this.getDropdownElement().find(".s-apply").click();
         return this;

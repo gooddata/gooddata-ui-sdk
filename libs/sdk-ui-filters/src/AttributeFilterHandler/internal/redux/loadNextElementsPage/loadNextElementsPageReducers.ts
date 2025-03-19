@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { PayloadAction } from "@reduxjs/toolkit";
 import identity from "lodash/identity.js";
@@ -21,18 +21,22 @@ const loadNextElementsPageSuccess: AttributeFilterReducer<
     PayloadAction<
         ILoadElementsResult & {
             correlation: Correlation;
+            enableDuplicatedLabelValuesInAttributeFilter: boolean;
         }
     >
 > = (state, action) => {
+    const { enableDuplicatedLabelValuesInAttributeFilter } = action.payload;
     state.elements.nextPageLoad.status = "success";
     action.payload.elements.forEach((el) => {
-        const cacheKey = getElementCacheKey(state, el);
+        const cacheKey = getElementCacheKey(state, el, enableDuplicatedLabelValuesInAttributeFilter);
         if (!state.elements.cache[cacheKey]) {
             state.elements.cache[cacheKey] = el;
         }
     });
     state.elements.data = state.elements.data.concat(
-        action.payload.elements.map((el) => getElementCacheKey(state, el)),
+        action.payload.elements.map((el) =>
+            getElementCacheKey(state, el, enableDuplicatedLabelValuesInAttributeFilter),
+        ),
     );
     state.elements.lastLoadedOptions = action.payload.options;
 };

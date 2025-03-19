@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
@@ -47,7 +47,9 @@ describe("Insights on dashboard", () => {
             .clearSearch();
     });
 
-    it("should keep the panel after clearing search", { tags: ["checklist_integrated_bear"] }, () => {
+    // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip("should keep the panel after clearing search", { tags: ["checklist_integrated_bear"] }, () => {
         insightCatalog
             .waitForCatalogReload()
             .clickTab("all")
@@ -74,7 +76,9 @@ describe("Insights on dashboard", () => {
     });
 
     //Cover ticket: RAIL-4783
-    it(
+    // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip(
         "Dashboard should be displayed well after drag and drop new insight",
         { tags: ["checklist_integrated_bear"] },
         () => {
@@ -92,7 +96,7 @@ describe("Date filtering on insight", () => {
 
     it(
         "remember last setting after selecting another insight",
-        { tags: ["checklist_integrated_tiger"] },
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
             widget.waitChartLoaded();
 
@@ -105,14 +109,18 @@ describe("Date filtering on insight", () => {
         },
     );
 
-    it("change filter on added insight", { tags: ["checklist_integrated_tiger"] }, () => {
-        widget.waitChartLoaded();
-        widgetConfiguration.open().openConfiguration().selectDateDataset(DATASET_CREATED);
+    it(
+        "change filter on added insight",
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        () => {
+            widget.waitChartLoaded();
+            widgetConfiguration.open().openConfiguration().selectDateDataset(DATASET_CREATED);
 
-        widget
-            .waitChartLoaded()
-            .getChart()
-            .getDataLabelValues()
-            .should("deep.equal", ["$4,108,360.80", "$2,267,528.48", "$3,461,373.87"]);
-    });
+            widget
+                .waitChartLoaded()
+                .getChart()
+                .getDataLabelValues()
+                .should("deep.equal", ["$4,108,360.80", "$2,267,528.48", "$3,461,373.87"]);
+        },
+    );
 });

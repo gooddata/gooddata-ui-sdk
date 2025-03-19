@@ -1,8 +1,9 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IWorkspaceMeasuresService,
     IMeasureExpressionToken,
     IMeasureReferencing,
+    IMeasureKeyDrivers,
 } from "@gooddata/sdk-backend-spi";
 import {
     JsonApiAttributeOut,
@@ -13,6 +14,7 @@ import {
     jsonApiHeaders,
     JsonApiMetricInTypeEnum,
     MetadataUtilities,
+    KeyDriversDimension,
 } from "@gooddata/api-client-tiger";
 import {
     ObjRef,
@@ -20,6 +22,8 @@ import {
     isIdentifierRef,
     IMeasureMetadataObjectDefinition,
     IMeasureMetadataObject,
+    IMeasure,
+    ObjectType,
 } from "@gooddata/sdk-model";
 import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter.js";
 import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter.js";
@@ -27,9 +31,61 @@ import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
 import { tokenizeExpression, IExpressionToken } from "./measureExpressionTokens.js";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter.js";
+import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter.js";
+
+const findDimensionality = (
+    dims: KeyDriversDimension[],
+    attributeId: string,
+): KeyDriversDimension | undefined =>
+    dims.find((dimensionality) => dimensionality.attribute.id === attributeId);
 
 export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
+
+    public async computeKeyDrivers(
+        measure: IMeasure,
+        options?: { sortDirection: "ASC" | "DESC" },
+    ): Promise<IMeasureKeyDrivers> {
+        const sortDirection = options?.sortDirection;
+
+        const keyDriverAnalysis = await this.authCall((client) =>
+            client.smartFunctions.keyDriverAnalysis({
+                keyDriversRequest: {
+                    metric: convertMeasure(measure),
+                    sortDirection,
+                },
+                workspaceId: this.workspace,
+            }),
+        );
+
+        const keyDriverResult = await this.authCall((client) =>
+            client.smartFunctions.keyDriverAnalysisResult({
+                resultId: keyDriverAnalysis.data.links.executionResult,
+                workspaceId: this.workspace,
+            }),
+        );
+
+        const {
+            effect: effects,
+            label,
+            labelElement,
+        } = keyDriverResult.data.data as {
+            effect: number[];
+            label: string[];
+            labelElement: string[];
+        };
+
+        const labels = label.map((attributeId, index) => {
+            const dimensionality = findDimensionality(keyDriverAnalysis.data.dimensions, attributeId);
+            const resolvedValue = dimensionality?.attributeName;
+            return `${resolvedValue} (${labelElement[index]})`;
+        });
+
+        return {
+            effects,
+            labels,
+        };
+    }
 
     public async getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]> {
         if (!isIdentifierRef(ref)) {
@@ -92,7 +148,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         }) as JsonApiMetricOut | JsonApiLabelOut | JsonApiAttributeOut | JsonApiFactOut;
 
         interface ITypeMapping {
-            [tokenObjectType: string]: IMeasureExpressionToken["type"];
+            [tokenObjectType: string]: ObjectType;
         }
         const typeMapping: ITypeMapping = {
             metric: "measure",
@@ -103,12 +159,14 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         };
 
         const value = includedObject?.attributes?.title || `${objectType}/${objectId}`;
-        return {
+        const token: IMeasureExpressionToken = {
             type: typeMapping[objectType],
             value,
             id: objectId,
             ref: idRef(identifier),
         };
+
+        return token;
     }
 
     async createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject> {

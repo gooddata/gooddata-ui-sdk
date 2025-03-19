@@ -1,5 +1,5 @@
-// (C) 2021-2023 GoodData Corporation
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+// (C) 2021-2025 GoodData Corporation
+import { IAnalyticalBackend, IDashboardReferences } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
     ObjRef,
@@ -8,6 +8,9 @@ import {
     ISettings,
     ISeparators,
     IEntitlementDescriptor,
+    Identifier,
+    IDashboardLayout,
+    IInsight,
 } from "@gooddata/sdk-model";
 import { ILocale } from "@gooddata/sdk-ui";
 import keys from "lodash/keys.js";
@@ -45,6 +48,53 @@ export interface ObjectAvailabilityConfig {
      * range of objects may be excluded at first and then a subset will be cherry-picked using this prop.
      */
     includeObjectsWithTags?: string[];
+}
+
+/**
+ * Dashboard item
+ *
+ * @public
+ */
+export type DashboardItem = DashboardItemVisualization | DashboardItemVisualizationContent;
+
+/**
+ * Dashboard item with visualization
+ *
+ * @public
+ */
+export type DashboardItemVisualization = {
+    visualization: ObjRef;
+};
+
+/**
+ * Tests whether the provided item is a dashboard item with visualization.
+ * @param item - item to test
+ *
+ * @public
+ */
+export function isDashboardItemVisualization(item: unknown): item is DashboardItemVisualization {
+    return (item as DashboardItemVisualization).visualization !== undefined;
+}
+
+/**
+ * Dashboard item with visualization content
+ *
+ * @public
+ */
+export type DashboardItemVisualizationContent = {
+    visualizationContent: IInsight;
+};
+
+/**
+ * Tests whether the provided item is a dashboard item with visualization content.
+ * @param item - item to test
+ *
+ * @public
+ */
+export function isDashboardItemVisualizationContent(
+    item: unknown,
+): item is DashboardItemVisualizationContent {
+    return (item as DashboardItemVisualizationContent).visualizationContent !== undefined;
 }
 
 /**
@@ -212,6 +262,123 @@ export interface DashboardConfig {
      * priority over other stored or supplied filter context.
      */
     exportId?: string;
+
+    /**
+     * Specify type of the currently performed dashboard export.
+     * This id is used to retrieve export-related metadata, such as currently active attribute filters.
+     */
+    exportType?: "visual" | "slides";
+
+    /**
+     * Disable cross filtering
+     *
+     * @remarks
+     * If set to true, cross filtering will be forced disabled even if the dashboard is configured to support it.
+     * If set to false or not set, cross filtering will be enabled if the dashboard is configured to support it.
+     */
+    disableCrossFiltering?: boolean;
+
+    /**
+     * Disable user filter reset
+     *
+     * @remarks
+     * If set to true, user filter reset will be disabled even if the dashboard is configured to support it.
+     * If set to false or not set, user filter reset will be enabled if the dashboard is configured to support it.
+     */
+    disableUserFilterReset?: boolean;
+
+    /**
+     * @beta
+     *
+     * Specify the focus object in which context the dashboard should be opened.
+     *
+     * @remarks Only provide one of the focus properties at a time.
+     */
+    focusObject?: DashboardFocusObject;
+
+    /**
+     * @alpha
+     *
+     * Specify the slide configuration for the dashboard. This sizes will be used in export mode as size
+     * of the slide where visualization will be fit and rendered.
+     *
+     */
+    slideConfig?: DashboardExportSlideConfig;
+
+    /**
+     * @alpha
+     *
+     * Dashboard referenced objects.
+     * If provided, initialization of the dashboard avoid additional requests to resolve them.
+     */
+    references?: IDashboardReferences;
+
+    /**
+     * @alpha
+     *
+     * Entitlements for the user who is rendering the dashboard
+     */
+    entitlements?: IEntitlementDescriptor[];
+
+    /**
+     * Initial content of the dashboard. In case of empty dashboard, this content will be filled
+     * into created section. If the dashboard is loaded from backend, this content will be ignored.
+     */
+    initialContent?: DashboardItem[];
+
+    /**
+     * @alpha
+     *
+     * Timestamp for the dashboard execution as ISO string
+     */
+    executionTimestamp?: string;
+}
+
+/**
+ * @alpha
+ *
+ * Specifies the size of the slide where visualization will be fit and rendered.
+ */
+export interface DashboardExportSlideConfig {
+    /**
+     * Preferred width of slide in export mode.
+     */
+    width: number;
+    /**
+     * Preferred height of slide in export mode.
+     */
+    height: number;
+}
+
+/**
+ * @beta
+ *
+ * Specifies the focus object for the dashboard.
+ */
+export interface DashboardFocusObject {
+    /**
+     * @beta
+     * If provided, the dashboard will be opened in the context of the given automation.
+     * This means, that target widget will be focused in the dashboard,
+     * and filter context will be set to the one used in the automation.
+     */
+    automationId?: Identifier;
+
+    /**
+     * @beta
+     * If provided, the dashboard will be opened in the context of the given widget.
+     * This means, that target widget will be focused in the dashboard.
+     *
+     * @remarks This property is not a formal MD identifier
+     */
+    widgetId?: string;
+
+    /**
+     * @beta
+     * If provided, the dashboard will be opened in the context of the given visualization.
+     * This means, that target visualizations represented by widgets will be focused in the dashboard.
+     */
+    visualizationId?: Identifier;
 }
 
 /**
@@ -227,7 +394,18 @@ export interface DashboardConfig {
  *
  * @public
  */
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId"> &
+export type ResolvedDashboardConfig = Omit<
+    Required<DashboardConfig>,
+    | "mapboxToken"
+    | "exportId"
+    | "exportType"
+    | "focusObject"
+    | "slideConfig"
+    | "references"
+    | "entitlements"
+    | "initialContent"
+    | "executionTimestamp"
+> &
     DashboardConfig;
 
 /**
@@ -344,6 +522,13 @@ export type DashboardTransformFn = (
 /**
  * @public
  */
+export type DashboardLayoutExportTransformFn = <TWidget>(
+    layout: IDashboardLayout<TWidget>,
+) => IDashboardLayout<TWidget> | undefined;
+
+/**
+ * @public
+ */
 export interface DashboardModelCustomizationFns {
     /**
      * Provide a function that will be used during dashboard initialization of an existing dashboard.
@@ -356,6 +541,18 @@ export interface DashboardModelCustomizationFns {
      *    dashboard will be used as-is.
      */
     existingDashboardTransformFn?: DashboardTransformFn;
+
+    /**
+     * Provide a function that will be used during dashboard export initialization of an existing dashboard.
+     *
+     * @remarks
+     * This function will be called after the dashboard is loaded from backend transformed by another plugins
+     * and before is rendered to the export. This will be not stored in the state.
+     *
+     *  - If the function is not defined, results in an error or returns `undefined`, then the original
+     *  dashboard export transformation will be used as-is.
+     */
+    existingExportTransformFn?: DashboardLayoutExportTransformFn;
 }
 
 /**

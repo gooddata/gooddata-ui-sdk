@@ -1,62 +1,74 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import {
-    JsonApiOrganizationOutMetaPermissionsEnum,
-    GenerateLdmRequest,
-    DeclarativeModel,
-    JsonApiDataSourceInDocument,
-    LayoutApiPutWorkspaceLayoutRequest,
-    jsonApiHeaders,
-    JsonApiOrganizationPatchTypeEnum,
-    JsonApiApiTokenOutList,
-    MetadataUtilities,
-    JsonApiApiTokenInDocument,
-    JsonApiApiTokenInTypeEnum,
-    JsonApiWorkspaceInTypeEnum,
-    ITigerClient,
-    JsonApiDataSourceInTypeEnum,
-    JsonApiDataSourceInAttributesTypeEnum,
-    OrganizationUtilities,
-    JsonApiDataSourceIdentifierOutWithLinks,
-    TestDefinitionRequestTypeEnum,
-    JsonApiDataSourceOutDocument,
-    JsonApiDataSourceIdentifierOutDocument,
-    DeclarativeAnalytics,
-    JsonApiWorkspaceInDocument,
-    DependentEntitiesRequest,
-    DependentEntitiesResponse,
-    ApiEntitlement,
     ActionsApiProcessInvitationRequest,
-    PlatformUsage,
-    DeclarativeWorkspaceDataFilters,
-    DataSourceParameter,
-    JsonApiCspDirectiveInTypeEnum,
-    JsonApiCspDirectiveInDocument,
-    JsonApiCustomApplicationSettingOutTypeEnum,
-    ScanSqlResponse,
-    HierarchyObjectIdentification,
-    IdentifierDuplications,
-    JsonApiCustomApplicationSettingOut,
-    JsonApiDatasetOutList,
-    JsonApiWorkspaceDataFilterInDocument,
-    JsonApiWorkspaceDataFilterOutDocument,
-    JsonApiWorkspaceDataFilterSettingOutDocument,
-    JsonApiWorkspaceDataFilterSettingInDocument,
-    ScanResultPdm,
-    StagingUploadLocation,
+    ActionsApiReadCsvFileManifestsRequest,
     AnalyzeCsvRequest,
     AnalyzeCsvResponse,
+    ApiEntitlement,
+    DataSourceParameter,
+    DeclarativeAnalytics,
+    DeclarativeModel,
+    DeclarativeWorkspaceDataFilters,
+    DependentEntitiesRequest,
+    DependentEntitiesResponse,
+    GdStorageFile,
+    GenerateLdmRequest,
+    HierarchyObjectIdentification,
+    IdentifierDuplications,
     ImportCsvRequest,
+    ImportCsvResponse,
+    ITigerClient,
+    JsonApiApiTokenInDocument,
+    JsonApiApiTokenInTypeEnum,
+    JsonApiApiTokenOutList,
+    JsonApiCspDirectiveInDocument,
+    JsonApiCspDirectiveInTypeEnum,
+    JsonApiCustomApplicationSettingOut,
+    JsonApiCustomApplicationSettingOutTypeEnum,
+    JsonApiDatasetOutList,
+    JsonApiDataSourceIdentifierOutDocument,
+    JsonApiDataSourceIdentifierOutWithLinks,
     JsonApiDataSourceInAttributesCacheStrategyEnum,
+    JsonApiDataSourceInAttributesTypeEnum,
+    JsonApiDataSourceInDocument,
+    JsonApiDataSourceInTypeEnum,
+    JsonApiDataSourceOutAttributesAuthenticationTypeEnum,
+    JsonApiDataSourceOutDocument,
+    jsonApiHeaders,
+    JsonApiNotificationChannelOut,
+    JsonApiOrganizationOutMetaPermissionsEnum,
+    JsonApiOrganizationPatchTypeEnum,
+    JsonApiWorkspaceDataFilterInDocument,
+    JsonApiWorkspaceDataFilterOutDocument,
+    JsonApiWorkspaceDataFilterSettingInDocument,
+    JsonApiWorkspaceDataFilterSettingOutDocument,
+    JsonApiWorkspaceInDocument,
+    JsonApiWorkspaceInTypeEnum,
+    LayoutApiPutWorkspaceLayoutRequest,
+    MetadataUtilities,
+    OrganizationUtilities,
+    PlatformUsage,
+    ReadCsvFileManifestsResponse,
+    ScanResultPdm,
+    ScanSqlResponse,
+    TestDefinitionRequestTypeEnum,
+    UploadFileResponse,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
 import toLower from "lodash/toLower.js";
-import { UnexpectedError, ErrorConverter, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import {
+    ErrorConverter,
+    IAnalyticalBackend,
+    isUnexpectedResponseError,
+    UnexpectedError,
+} from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty.js";
 import { AuthenticatedAsyncCall } from "@gooddata/sdk-backend-base";
 import { AxiosRequestConfig } from "axios";
 import { IUser } from "@gooddata/sdk-model";
+import { backOff } from "exponential-backoff";
 
 /**
  * @internal
@@ -122,11 +134,13 @@ export interface IDataSourceConnectionInfo {
     name: string;
     schema: string;
     username?: string;
+    clientId?: string;
     url?: string | null;
     permissions?: IDataSourcePermission[];
     parameters?: Array<DataSourceParameter> | null;
     decodedParameters?: Array<DataSourceParameter> | null;
     cacheStrategy?: IDataSourceCacheStrategy;
+    authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum;
 }
 
 /**
@@ -151,6 +165,10 @@ export interface IDataSourceUpsertRequest {
     username?: string;
     parameters?: Array<DataSourceParameter>;
     cacheStrategy?: IDataSourceCacheStrategy;
+    privateKey?: string;
+    privateKeyPassphrase?: string;
+    clientId?: string;
+    clientSecret?: string;
 }
 
 /**
@@ -159,14 +177,18 @@ export interface IDataSourceUpsertRequest {
 export interface IDataSourcePatchRequest {
     id: string;
     name?: string;
-    password?: string;
+    password?: string | null;
     schema?: string;
-    token?: string;
+    token?: string | null;
     type?: IDataSourceType;
     url?: string;
     username?: string;
     parameters?: Array<DataSourceParameter>;
     cacheStrategy?: IDataSourceCacheStrategy;
+    privateKey?: string | null;
+    privateKeyPassphrase?: string | null;
+    clientId?: string | null;
+    clientSecret?: string | null;
 }
 
 /**
@@ -180,6 +202,10 @@ export interface IDataSourceTestConnectionRequest {
     url: string;
     username?: string;
     parameters?: Array<DataSourceParameter>;
+    privateKey?: string;
+    privateKeyPassphrase?: string;
+    clientId?: string;
+    clientSecret?: string;
 }
 
 /**
@@ -219,6 +245,11 @@ export interface ICSPDirective {
         sources: Array<string>;
     };
 }
+
+/**
+ * @internal
+ */
+export type INotificationChannel = Omit<JsonApiNotificationChannelOut, "type">;
 
 /**
  * @internal
@@ -347,7 +378,10 @@ export type TigerSpecificFunctions = {
     scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
     createDemoWorkspace?: (sampleWorkspace: WorkspaceDefinition) => Promise<string>;
     createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
-    createWorkspace?: (id: string, name: string) => Promise<string>;
+    createWorkspace?: (id: string, name: string, parentId?: string) => Promise<string>;
+    /**
+     * @deprecated use IAnalyticalBackend.workspace(id).updateDescriptor(\{ title: name \})
+     */
     updateWorkspaceTitle?: (id: string, name: string) => Promise<void>;
     deleteWorkspace?: (id: string) => Promise<void>;
     canDeleteWorkspace?: (id: string) => Promise<boolean>;
@@ -480,26 +514,50 @@ export type TigerSpecificFunctions = {
     ) => Promise<Array<IdentifierDuplications>>;
 
     /**
-     * Get pre-signed S3 URL to upload a CSV file to the GDSTORAGE data source staging location
+     * Upload a CSV file to the GDSTORAGE data source staging location
      * @param dataSourceId - id of the data source
+     * @param file - the file to upload
      */
-    getStagingUploadLocation?: (dataSourceId: string) => Promise<StagingUploadLocation>;
+    stagingUpload?: (file: File) => Promise<UploadFileResponse>;
 
     /**
      * Analyze CSV files in GDSTORAGE data source staging location
      * @param analyzeRequest - the request to analyze CSV files
      */
-    analyzeCsv?: (
-        dataSourceId: string,
-        analyzeCsvRequest: AnalyzeCsvRequest,
-    ) => Promise<Array<AnalyzeCsvResponse>>;
+    analyzeCsv?: (analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
 
     /**
      * Import CSV files from GDSTORAGE data source staging location
      * @param dataSourceId - id of the data source
      * @param importRequest - the request to import CSV files
      */
-    importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<void>;
+    importCsv?: (
+        dataSourceId: string,
+        importCsvRequest: ImportCsvRequest,
+    ) => Promise<Array<ImportCsvResponse>>;
+
+    /**
+     * List CSV files from GDSTORAGE data source staging location
+     * @param dataSourceId - id of the data source
+     */
+    listFiles?: (dataSourceId: string) => Promise<Array<GdStorageFile>>;
+
+    /**
+     * Delete CSV files from GDSTORAGE data source
+     * @param dataSourceId - id of the data source
+     * @param fileNames - names of CSV files to delete
+     */
+    deleteFiles?: (dataSourceId: string, fileNames: string[]) => Promise<void>;
+
+    /**
+     * Delete CSV files from GDSTORAGE data source
+     * @param dataSourceId - id of the data source
+     * @param fileNames - names of CSV files to delete
+     */
+    readFileManifests?: (
+        dataSourceId: string,
+        fileNames: string[],
+    ) => Promise<ReadCsvFileManifestsResponse[]>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -513,7 +571,18 @@ const dataSourceResponseAsDataSourceConnectionInfo = (
     response: JsonApiDataSourceOutDocument,
 ): IDataSourceConnectionInfo => {
     const { id, meta, attributes } = response.data;
-    const { name, url, type, schema, username, parameters, decodedParameters, cacheStrategy } = attributes;
+    const {
+        name,
+        url,
+        type,
+        schema,
+        username,
+        parameters,
+        decodedParameters,
+        cacheStrategy,
+        authenticationType,
+        clientId,
+    } = attributes;
     return {
         id,
         type,
@@ -521,10 +590,12 @@ const dataSourceResponseAsDataSourceConnectionInfo = (
         schema,
         username: username ?? undefined,
         url,
+        clientId: clientId ?? undefined,
         permissions: meta?.permissions ?? [],
         parameters,
         decodedParameters,
         cacheStrategy,
+        authenticationType,
     };
 };
 
@@ -813,7 +884,7 @@ export const buildTigerSpecificFunctions = (
             throw convertApiError(error);
         }
     },
-    createWorkspace: async (id: string, name: string) => {
+    createWorkspace: async (id: string, name: string, parentId?: string) => {
         try {
             return await authApiCall(async (sdk) => {
                 const result = await sdk.entities.createEntityWorkspaces({
@@ -824,6 +895,16 @@ export const buildTigerSpecificFunctions = (
                             },
                             id,
                             type: JsonApiWorkspaceInTypeEnum.WORKSPACE,
+                            relationships: parentId
+                                ? {
+                                      parent: {
+                                          data: {
+                                              id: parentId,
+                                              type: JsonApiWorkspaceInTypeEnum.WORKSPACE,
+                                          },
+                                      },
+                                  }
+                                : undefined,
                         },
                     },
                 });
@@ -836,9 +917,9 @@ export const buildTigerSpecificFunctions = (
     updateWorkspaceTitle: async (id: string, name: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                await sdk.entities.updateEntityWorkspaces({
+                await sdk.entities.patchEntityWorkspaces({
                     id,
-                    jsonApiWorkspaceInDocument: {
+                    jsonApiWorkspacePatchDocument: {
                         data: {
                             attributes: {
                                 name,
@@ -951,8 +1032,22 @@ export const buildTigerSpecificFunctions = (
         }
     },
     createDataSource: async (requestData: IDataSourceUpsertRequest) => {
-        const { id, name, password, schema, token, type, url, username, parameters, cacheStrategy } =
-            requestData;
+        const {
+            id,
+            name,
+            password,
+            schema,
+            token,
+            type,
+            url,
+            username,
+            parameters,
+            cacheStrategy,
+            privateKey,
+            privateKeyPassphrase,
+            clientId,
+            clientSecret,
+        } = requestData;
         try {
             return await authApiCall(async (sdk) => {
                 return sdk.entities
@@ -969,6 +1064,10 @@ export const buildTigerSpecificFunctions = (
                                     username,
                                     parameters,
                                     cacheStrategy,
+                                    privateKey,
+                                    privateKeyPassphrase,
+                                    clientId,
+                                    clientSecret,
                                 },
                                 id,
                                 type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
@@ -995,6 +1094,10 @@ export const buildTigerSpecificFunctions = (
             username,
             parameters,
             cacheStrategy,
+            privateKey,
+            privateKeyPassphrase,
+            clientId,
+            clientSecret,
         } = requestData;
         try {
             return await authApiCall(async (sdk) => {
@@ -1013,6 +1116,10 @@ export const buildTigerSpecificFunctions = (
                                     username,
                                     parameters,
                                     cacheStrategy,
+                                    privateKey,
+                                    privateKeyPassphrase,
+                                    clientId,
+                                    clientSecret,
                                 },
                                 id: requestDataId,
                                 type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
@@ -1039,6 +1146,10 @@ export const buildTigerSpecificFunctions = (
             username,
             parameters,
             cacheStrategy,
+            privateKey,
+            privateKeyPassphrase,
+            clientId,
+            clientSecret,
         } = requestData;
         try {
             return await authApiCall(async (sdk) => {
@@ -1057,6 +1168,10 @@ export const buildTigerSpecificFunctions = (
                                     username,
                                     parameters,
                                     cacheStrategy,
+                                    privateKey,
+                                    privateKeyPassphrase,
+                                    clientId,
+                                    clientSecret,
                                 },
                                 id: requestDataId,
                                 type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
@@ -1475,28 +1590,53 @@ export const buildTigerSpecificFunctions = (
         }
     },
 
-    getStagingUploadLocation: async (dataSourceId: string) => {
-        try {
-            return await authApiCall(async (sdk) => {
+    stagingUpload: async (file: File): Promise<UploadFileResponse> => {
+        /*
+         * Since the upload API has some rate limiting in place, we need to retry the upload in case of 503 errors.
+         * To make the retries more efficient, we use exponential backoff with jitter so as not to overload the API.
+         * On any other error, we throw the error right away: no retries there.
+         */
+
+        const body = async () =>
+            await authApiCall(async (sdk) => {
                 return await sdk.result
-                    .getStagingUploadLocation({
-                        dataSourceId: dataSourceId,
+                    .stagingUpload({
+                        file,
                     })
                     .then((res) => {
                         return res?.data;
                     });
+            });
+
+        try {
+            return backOff(body, {
+                // add some randomness to the delay to avoid all clients retrying at the same time
+                jitter: "full",
+                // retry at most 3 times
+                numOfAttempts: 3,
+                // wait 1s before the first retry
+                startingDelay: 1000,
+                // but never wait more than 4s
+                maxDelay: 4000,
+                // retry only on 503 errors, on this API this means that the API is overloaded
+                retry: (e, _attempt) => {
+                    const converted = convertApiError(e);
+                    if (isUnexpectedResponseError(converted)) {
+                        return converted.httpStatus === 503;
+                    }
+                    return false;
+                },
             });
         } catch (error: any) {
             throw convertApiError(error);
         }
     },
 
-    analyzeCsv: async (dataSourceId: string, analyzeCsvRequest: AnalyzeCsvRequest) => {
+    analyzeCsv: async (analyzeCsvRequest: AnalyzeCsvRequest) => {
         try {
             return await authApiCall(async (sdk) => {
                 return await sdk.result
                     .analyzeCsv({
-                        dataSourceId: dataSourceId,
                         analyzeCsvRequest: analyzeCsvRequest,
                     })
                     .then((res) => {
@@ -1511,9 +1651,64 @@ export const buildTigerSpecificFunctions = (
     importCsv: async (dataSourceId: string, importCsvRequest: ImportCsvRequest) => {
         try {
             return await authApiCall(async (sdk) => {
-                await sdk.result.importCsv({
+                return await sdk.result
+                    .importCsv({
+                        dataSourceId: dataSourceId,
+                        importCsvRequest: importCsvRequest,
+                    })
+                    .then((res) => {
+                        return res?.data;
+                    });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    listFiles: async (dataSourceId: string) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return await sdk.result
+                    .listFiles({
+                        dataSourceId: dataSourceId,
+                    })
+                    .then((res) => {
+                        return res?.data;
+                    });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    deleteFiles: async (dataSourceId: string, fileNames: string[]) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                await sdk.result.deleteFiles({
                     dataSourceId: dataSourceId,
-                    importCsvRequest: importCsvRequest,
+                    deleteFilesRequest: {
+                        fileNames: fileNames,
+                    },
+                });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    readFileManifests: async (dataSourceId, fileNames) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const request: ActionsApiReadCsvFileManifestsRequest = {
+                    dataSourceId: dataSourceId,
+                    readCsvFileManifestsRequest: {
+                        manifestRequests: fileNames.map((fileName) => ({
+                            fileName,
+                        })),
+                    },
+                };
+                return await sdk.result.readCsvFileManifests(request).then((res) => {
+                    return res?.data;
                 });
             });
         } catch (error: any) {

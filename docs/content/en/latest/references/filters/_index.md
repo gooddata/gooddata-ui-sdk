@@ -24,7 +24,6 @@ You may want to display the data:
     ![gd_ui_date_filter](gd-ui/date_filter.png)
 
 2. only for a specific customer ([attributeFilter](./attribute_filter_button_component/)):
-
     - Kitti Jinki
     - Aaron Clements
     - some combination of customers
@@ -32,7 +31,6 @@ You may want to display the data:
     ![attribute_filter](gd-ui/attribute_filter_new.png)
 
 3. only the top/least sold products ([rankingFilter](./ranking_filter/)):
-
     - top 10 customers by # of orders
     - bottom 10 customers but their ARR
     - top 3 customers by their ARR
@@ -40,7 +38,6 @@ You may want to display the data:
     ![ranking filter](gd-ui/ranking_filter_combined.png)
 
 4. only products within the custom range ([measureValueFilter](./measure_value_filter/)):
-
     - customers with ARR over 1000k $
     - customers with ARR less than 100k $
     - customers with ARR between 100k $ and 1000k $

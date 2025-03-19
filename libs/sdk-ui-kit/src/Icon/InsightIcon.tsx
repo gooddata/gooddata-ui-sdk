@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { Icon } from "./Icon.js";
 import { IIconProps } from "./typings.js";
@@ -24,6 +24,7 @@ const INSIGHT_ICON_MAP: Record<string, React.FC<IIconProps>> = {
     "local:funnel": Icon.Funnel,
     "local:pyramid": Icon.Pyramid,
     "local:waterfall": Icon.Waterfall,
+    "local:repeater": Icon.Repeater,
 };
 
 /**

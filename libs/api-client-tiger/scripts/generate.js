@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import dotenv from "dotenv";
 import { program } from "commander";
 import axios from "axios";
@@ -24,10 +24,20 @@ program
     .parse(process.argv);
 
 const specs = [
-    { path: "/api/v1/schemas/metadata", name: "metadata-json-api" },
+    {
+        path: "/api/v1/schemas/metadata",
+        name: "metadata-json-api",
+        // modelNamePrefix: "Md", // we should consider prefixing in next major, due to lot of name clashes
+        // Remove when openapi-generator correctly generates null values in arrays
+        apiOverrides: (api) => {
+            // Replace AttributeFilterElements and DependsOn values;
+            return api.replaceAll("'values': Array<string>", "'values': Array<string | null>");
+        },
+    },
     {
         path: "/api/v1/schemas/afm",
         name: "afm-rest-api",
+        // modelNamePrefix: "Afm", // we should consider prefixing in next major, due to lot of name clashes
         // Remove schemaOverrides once null values are in the OpenApi spec
         // https://gooddata.atlassian.net/browse/NAS-4848
         schemaOverrides: (schema) => {
@@ -39,12 +49,33 @@ const specs = [
         apiOverrides: (api) => {
             // Replace AttributeFilterElements and DependsOn values
             return api.replaceAll("'values': Array<string>", "'values': Array<string | null>");
-        }
+        },
     },
-    { path: "/api/v1/schemas/scan", name: "scan-json-api" },
-    { path: "/api/v1/schemas/auth", name: "auth-json-api" },
-    { path: "/api/v1/schemas/export", name: "export-json-api" },
-    { path: "/api/v1/schemas/result", name: "result-json-api" },
+    {
+        path: "/api/v1/schemas/scan",
+        name: "scan-json-api",
+        // modelNamePrefix: "Scan" // we should consider prefixing in next major, due to lot of name clashes
+    },
+    {
+        path: "/api/v1/schemas/auth",
+        name: "auth-json-api",
+        // modelNamePrefix: "Auth" // we should consider prefixing in next major, due to lot of name clashes
+    },
+    {
+        path: "/api/v1/schemas/export",
+        name: "export-json-api",
+        // modelNamePrefix: "Export" // we should consider prefixing in next major, due to lot of name clashes
+    },
+    {
+        path: "/api/v1/schemas/result",
+        name: "result-json-api",
+        // modelNamePrefix: "Result" // we should consider prefixing in next major, due to lot of name clashes
+    },
+    {
+        path: "/api/v1/schemas/automation",
+        name: "automation-json-api",
+        // modelNamePrefix: "Result" // we should consider prefixing in next major, due to lot of name clashes
+    },
 ];
 
 const downloadSpec = async (specMeta, outputDir, outputFile) => {
@@ -64,7 +95,6 @@ const downloadSpec = async (specMeta, outputDir, outputFile) => {
 const generate = async (specMeta, outputDir, outputFile) => {
     const inputPath = path.resolve(outputDir, specMeta.name, outputFile);
     const outputPath = path.dirname(inputPath);
-
     /**
      * openapi-generator escapes language keywords by default, eg. property `in` converts to `_in`
      * we can disable mapping for individual items only.
@@ -81,9 +111,13 @@ const generate = async (specMeta, outputDir, outputFile) => {
      * force use of a single request parameter for everything instead of using separate parameters (that would make the functions hard to use, they have many params).
      * useSingleRequestParameter=true
      */
-    await execPromise(
-        `openapi-generator-cli generate -i ${inputPath} -g typescript-axios -o ${outputPath} -t openapi-generator -p withInterfaces=true --reserved-words-mappings in=in,function=function --type-mappings=set=Array --additional-properties=enumPropertyNaming=UPPERCASE,useSingleRequestParameter=true`,
-    );
+    let command = `openapi-generator-cli generate -i ${inputPath} -g typescript-axios -o ${outputPath} -t openapi-generator -p withInterfaces=true --reserved-words-mappings in=in,function=function --type-mappings=set=Array --additional-properties=enumPropertyNaming=UPPERCASE,useSingleRequestParameter=true`;
+
+    if (specMeta.modelNamePrefix) {
+        command += ` --model-name-prefix=${specMeta.modelNamePrefix}`;
+    }
+
+    await execPromise(command);
 
     if (specMeta.apiOverrides) {
         const apiPath = `${outputPath}/api.ts`;

@@ -6,10 +6,10 @@ exports[`Execute > with scoped series > should create expected execution definit
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
   ],
@@ -17,7 +17,7 @@ exports[`Execute > with scoped series > should create expected execution definit
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -29,12 +29,12 @@ exports[`Execute > with scoped series > should create expected execution definit
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -42,12 +42,12 @@ exports[`Execute > with scoped series > should create expected execution definit
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -63,19 +63,19 @@ exports[`Execute > with scoped series with slicing > should create expected exec
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "f_owner.region_id",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
+        "localIdentifier": "a_f_owner.region_id",
       },
     },
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -83,12 +83,12 @@ exports[`Execute > with scoped series with slicing > should create expected exec
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
+        "a_f_owner.region_id",
         "measureGroup",
       ],
     },
@@ -100,12 +100,12 @@ exports[`Execute > with scoped series with slicing > should create expected exec
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -113,12 +113,12 @@ exports[`Execute > with scoped series with slicing > should create expected exec
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -146,12 +146,12 @@ exports[`Execute > with single unscoped series > should create expected executio
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -179,12 +179,12 @@ exports[`Execute > with two unscoped series > should create expected execution d
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
     {
@@ -192,12 +192,12 @@ exports[`Execute > with two unscoped series > should create expected execution d
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],

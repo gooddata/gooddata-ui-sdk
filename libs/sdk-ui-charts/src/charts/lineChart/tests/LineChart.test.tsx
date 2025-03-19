@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
 import { LineChart } from "../LineChart.js";
@@ -31,15 +31,17 @@ describe("LineChart", () => {
                 workspace="foo"
                 backend={dummyBackend()}
                 measures={[ReferenceMd.Amount]}
-                trendBy={ReferenceMd.DateDatasets.Created.QuarterYear.USShort}
-                segmentBy={ReferenceMd.Region}
-                sortBy={[newAttributeSort(ReferenceMd.DateDatasets.Created.QuarterYear.USShort, "asc")]}
+                trendBy={ReferenceMd.DateDatasets.Created.CreatedQuarterYear.Default}
+                segmentBy={ReferenceMd.Region.Default}
+                sortBy={[
+                    newAttributeSort(ReferenceMd.DateDatasets.Created.CreatedQuarterYear.Default, "asc"),
+                ]}
             />,
         );
 
         const expectedDims = newTwoDimensional(
-            [ReferenceMd.Region],
-            [ReferenceMd.DateDatasets.Created.QuarterYear.USShort, MeasureGroupIdentifier],
+            [ReferenceMd.Region.Default],
+            [ReferenceMd.DateDatasets.Created.CreatedQuarterYear.Default, MeasureGroupIdentifier],
         );
 
         expect(CoreLineChart).toHaveBeenCalledWith(

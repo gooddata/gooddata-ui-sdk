@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:color";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables" as bubble-variables;
@@ -10,7 +10,7 @@ $paging-button-small-size: 22px;
 $responsive-legend: "only screen and (max-width: 767px)";
 $dialog-border: bubble-variables.$default-bubble-light-border-base;
 $dialog-background: kit-variables.$is-focused-background;
-$legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-complementary-0, white));
+$legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-complementary-0, #fff));
 
 @media #{$responsive-legend} {
     .viz-line-family-chart-wrap {
@@ -102,12 +102,12 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
 
             @include mixins.active-states-and-self {
                 text-decoration: none;
-                background-color: var(--gd-palette-complementary-2, $dialog-background);
+                background-color: var(--gd-palette-complementary-2-from-theme, $dialog-background);
 
                 // refactor?
                 // stylelint-disable-next-line max-nesting-depth
                 &::before {
-                    color: var(--gd-palette-complementary-7, kit-variables.$default-gd-color-dark);
+                    color: var(--gd-palette-complementary-7-from-theme, kit-variables.$default-gd-color-dark);
                 }
             }
 
@@ -124,7 +124,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
                 // stylelint-disable-next-line max-nesting-depth
                 @include mixins.active-states-and-self {
                     background-color: var(
-                        --gd-palette-complementary-1,
+                        --gd-palette-complementary-1-from-theme,
                         color.adjust(kit-variables.$default-is-focused-background, $alpha: -0.5)
                     );
 
@@ -200,6 +200,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
 
         &.position-dialog {
             margin-left: 0;
+            overflow-x: auto;
 
             .circle-min-value {
                 margin-left: 10px;
@@ -549,7 +550,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
     position: relative;
     z-index: 5002;
     min-height: 148px;
-    border: 1px solid var(--gd-palette-complementary-3, color.adjust($dialog-border, $alpha: -0.5));
+    border: 1px solid var(--gd-palette-complementary-3-from-theme, color.adjust($dialog-border, $alpha: -0.5));
     border-radius: 5px;
     box-shadow: 0 1px 3px 0 button-variables.$button-shadow-lighter,
         0 2px 9px 0 button-variables.$button-shadow-darker;
@@ -634,6 +635,18 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
     }
 }
 
+.truncated {
+    .legend-popup-dialog-content.zoomed {
+        width: 100%;
+        height: 100%;
+        .legend-content {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+        }
+    }
+}
+
 .target-cc.self-cr {
     .legend-popup-dialog-content {
         &::before,
@@ -652,7 +665,10 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
         }
 
         &::before {
-            border-right-color: var(--gd-palette-complementary-3, color.adjust($dialog-border, $alpha: -0.5));
+            border-right-color: var(
+                --gd-palette-complementary-3-from-theme,
+                color.adjust($dialog-border, $alpha: -0.5)
+            );
         }
 
         &::after {
@@ -675,7 +691,10 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
         }
 
         &::before {
-            border-left-color: var(--gd-palette-complementary-3, color.adjust($dialog-border, $alpha: -0.5));
+            border-left-color: var(
+                --gd-palette-complementary-3-from-theme,
+                color.adjust($dialog-border, $alpha: -0.5)
+            );
         }
     }
 }
@@ -737,7 +756,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
 
         &::before {
             border-bottom-color: var(
-                --gd-palette-complementary-3,
+                --gd-palette-complementary-3-from-theme,
                 color.adjust($dialog-border, $alpha: -0.5)
             );
         }
@@ -758,7 +777,10 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
         }
 
         &::before {
-            border-top-color: var(--gd-palette-complementary-3, color.adjust($dialog-border, $alpha: -0.5));
+            border-top-color: var(
+                --gd-palette-complementary-3-from-theme,
+                color.adjust($dialog-border, $alpha: -0.5)
+            );
         }
 
         &::after {

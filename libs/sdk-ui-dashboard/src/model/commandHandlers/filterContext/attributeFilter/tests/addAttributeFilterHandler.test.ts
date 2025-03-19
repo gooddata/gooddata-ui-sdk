@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { addAttributeFilter } from "../../../../commands/index.js";
@@ -47,7 +47,7 @@ describe("addAttributeFilterHandler", () => {
 
     it("should emit the appropriate events when trying to add a duplicate attribute filter", async () => {
         const event: DashboardCommandFailed = await Tester.dispatchAndWaitFor(
-            addAttributeFilter(ReferenceMd.Department.attribute.displayForm, 0, TestCorrelation),
+            addAttributeFilter(ReferenceMd.Department.Default.attribute.displayForm, 0, TestCorrelation),
             "GDC.DASH/EVT.COMMAND.FAILED",
         );
 
@@ -67,7 +67,7 @@ describe("addAttributeFilterHandler", () => {
         const originalFilters = selectFilterContextAttributeFilters(Tester.state());
 
         await Tester.dispatchAndWaitFor(
-            addAttributeFilter(ReferenceMd.Department.attribute.displayForm, 0, TestCorrelation),
+            addAttributeFilter(ReferenceMd.Department.Default.attribute.displayForm, 0, TestCorrelation),
             "GDC.DASH/EVT.COMMAND.FAILED",
         );
 

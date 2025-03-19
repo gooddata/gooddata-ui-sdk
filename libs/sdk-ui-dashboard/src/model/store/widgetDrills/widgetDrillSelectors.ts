@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import compact from "lodash/compact.js";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
@@ -20,8 +20,9 @@ import {
     ICatalogAttributeHierarchy,
     IDrillDownReference,
     ICatalogDateAttributeHierarchy,
-    isCatalogAttributeHierarchy,
     DrillOrigin,
+    getHierarchyAttributes,
+    getHierarchyRef,
 } from "@gooddata/sdk-model";
 import {
     ExplicitDrill,
@@ -38,11 +39,14 @@ import {
 } from "../layout/layoutSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../drillTargets/drillTargetsSelectors.js";
 import {
+    HierarchyDescendant,
+    HierarchyDescendantsByAttributeId,
     selectAllCatalogAttributeHierarchies,
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
     selectAttributesWithDisplayFormLink,
     selectAttributesWithHierarchyDescendants,
+    selectCatalogIsLoaded,
 } from "../catalog/catalogSelectors.js";
 import { selectDrillableItems } from "../drill/drillSelectors.js";
 import {
@@ -55,9 +59,13 @@ import {
     selectHideKpiDrillInEmbedded,
     selectIsEmbedded,
     selectEnableKDCrossFiltering,
+    selectIsDisabledCrossFiltering,
 } from "../config/configSelectors.js";
 import flatMap from "lodash/flatMap.js";
-import { selectAccessibleDashboardsMap } from "../accessibleDashboards/accessibleDashboardsSelectors.js";
+import {
+    selectAccessibleDashboardsMap,
+    selectAccessibleDashboardsLoaded,
+} from "../accessibleDashboards/accessibleDashboardsSelectors.js";
 import { selectInsightByWidgetRef, selectInsightsMap } from "../insights/insightsSelectors.js";
 import { DashboardSelector } from "../types.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
@@ -99,6 +107,7 @@ function createDrillDefinition(
     drill: IAvailableDrillTargetAttribute,
     descendantRef: ObjRef,
     allCatalogAttributesMap: ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>,
+    hierarchyRef: ObjRef,
 ): IImplicitDrillWithPredicates {
     /**
      * Here we need to distinguish how the drill is defined in the attribute hierarchy.
@@ -116,11 +125,14 @@ function createDrillDefinition(
               target: descendantRef,
           };
 
+    const hierarchyRefObj = { hierarchyRef };
+
     return {
         drillDefinition: {
             type: "drillDown",
             origin: localIdRef(drill.attribute.attributeHeader.localIdentifier),
             ...drillTargetDescriptionObj,
+            ...hierarchyRefObj,
         },
         predicates: [HeaderPredicates.localIdentifierMatch(drill.attribute.attributeHeader.localIdentifier)],
     };
@@ -128,7 +140,7 @@ function createDrillDefinition(
 
 function getDrillDownDefinitionsWithPredicates(
     availableDrillAttributes: IAvailableDrillTargetAttribute[],
-    attributesWithHierarchyDescendants: Record<string, ObjRef[]>,
+    attributesWithHierarchyDescendants: HierarchyDescendantsByAttributeId,
     allCatalogAttributesMap: ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>,
     allCatalogAttributeHierarchies: (ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy)[],
     ignoredDrillDownHierarchies: IDrillDownReference[],
@@ -141,17 +153,13 @@ function getDrillDownDefinitionsWithPredicates(
     if (ignoredDrillDownHierarchies?.length) {
         return availableDrillAttributes.flatMap((drill) => {
             const attributeRef = drill.attribute.attributeHeader.formOf.ref;
-            const attributeDescendants: ObjRef[] = [];
+            const attributeDescendants: HierarchyDescendant[] = [];
             allCatalogAttributeHierarchies.forEach((hierarchy) => {
-                const hierarchyRef = isCatalogAttributeHierarchy(hierarchy)
-                    ? hierarchy.attributeHierarchy.ref
-                    : hierarchy.dateDatasetRef;
-                const attributes = isCatalogAttributeHierarchy(hierarchy)
-                    ? hierarchy.attributeHierarchy.attributes
-                    : hierarchy.attributes;
+                const attributes = getHierarchyAttributes(hierarchy);
+                const hierarchyRef = getHierarchyRef(hierarchy);
                 const hierarchyAttributes = attributes.filter((attrRef) => {
                     const ignoredIndex = ignoredDrillDownHierarchies.findIndex((reference) =>
-                        existBlacklistHierarchyPredicate(reference, hierarchyRef, attrRef),
+                        existBlacklistHierarchyPredicate(reference, hierarchy, attrRef),
                     );
 
                     if (supportsAttributeHierarchies) {
@@ -177,11 +185,16 @@ function getDrillDownDefinitionsWithPredicates(
                     return;
                 }
 
-                attributeDescendants.push(foundDescendant);
+                attributeDescendants.push({ hierarchyRef, descendantRef: foundDescendant });
             });
 
-            return attributeDescendants.map((descendantRef) => {
-                return createDrillDefinition(drill, descendantRef, allCatalogAttributesMap);
+            return attributeDescendants.map((descendant) => {
+                return createDrillDefinition(
+                    drill,
+                    descendant.descendantRef,
+                    allCatalogAttributesMap,
+                    descendant.hierarchyRef,
+                );
             });
         });
     }
@@ -197,7 +210,12 @@ function getDrillDownDefinitionsWithPredicates(
         const attributeDrillDescendants = attributesWithHierarchyDescendants[objRefToString(drillRef)];
 
         return attributeDrillDescendants.map((descendantRef): IImplicitDrillWithPredicates => {
-            return createDrillDefinition(drill, descendantRef, allCatalogAttributesMap);
+            return createDrillDefinition(
+                drill,
+                descendantRef.descendantRef,
+                allCatalogAttributesMap,
+                descendantRef.hierarchyRef,
+            );
         });
     });
 }
@@ -261,35 +279,29 @@ function getGlobalDrillDownAttributeHierarchyDefinitions(
     const globalDrillDowns: IGlobalDrillDownAttributeHierarchyDefinition[] = [];
     catalogAttributeHierarchies
         .map((it) => {
-            const hierarchyRef = isCatalogAttributeHierarchy(it)
-                ? it.attributeHierarchy.ref
-                : it.dateDatasetRef;
-            const attributes = isCatalogAttributeHierarchy(it)
-                ? it.attributeHierarchy.attributes
-                : it.attributes;
+            const attributes = getHierarchyAttributes(it);
             // we need to remove the last attribute from the hierarchy
             // because it does not have any descendants so that the widget cannot drill down to it
             return {
-                attributeIdentifiers: attributes
-                    .slice(0, attributes.length - 1)
-                    .map((it) => objRefToString(it)),
-                ref: hierarchyRef,
+                attributeRefs: attributes.slice(0, attributes.length - 1),
+                hierarchy: it,
             };
         })
-        .forEach(({ attributeIdentifiers, ref }) => {
+        .forEach(({ attributeRefs, hierarchy }) => {
             availableAttributes.forEach((availableAttribute) => {
                 const attributeHeader = availableAttribute.attribute.attributeHeader;
-                const isAttributeInHierarchy = attributeIdentifiers.includes(
-                    objRefToString(attributeHeader.formOf.ref),
+                const isAttributeInHierarchy = attributeRefs.some((attrRef) =>
+                    areObjRefsEqual(attrRef, attributeHeader.formOf.ref),
                 );
                 const inBlacklistIndex = ignoredDrillDownHierarchies.findIndex((reference) =>
-                    existBlacklistHierarchyPredicate(reference, ref, attributeHeader.formOf.ref),
+                    existBlacklistHierarchyPredicate(reference, hierarchy, attributeHeader.formOf.ref),
                 );
                 if (isAttributeInHierarchy && inBlacklistIndex < 0) {
+                    const hierarchyRef = getHierarchyRef(hierarchy);
                     globalDrillDowns.push({
                         type: "drillDown",
                         origin: localIdRef(attributeHeader.localIdentifier),
-                        target: ref,
+                        target: hierarchyRef,
                     });
                 }
             });
@@ -355,18 +367,21 @@ const selectCrossFilteringByWidgetRef: (
         selectSupportsCrossFiltering,
         selectDrillTargetsByWidgetRef(ref),
         selectDisableDashboardCrossFiltering,
+        selectIsDisabledCrossFiltering,
         selectDrillableItems,
         (
             isCrossFilteringEnabled,
             isCrossFilteringSupported,
             availableDrillTargets,
             disableCrossFiltering,
+            disableCrossFilteringByConfig,
             drillableItems,
         ) => {
             if (
                 !isCrossFilteringEnabled ||
                 !isCrossFilteringSupported ||
                 disableCrossFiltering ||
+                disableCrossFilteringByConfig ||
                 // When some drillable items are present, we need to disable
                 // cross filtering so that drill events are still possible to do.
                 drillableItems.length > 0
@@ -484,6 +499,7 @@ export const selectConfiguredDrillsByWidgetRef: (
         selectHideKpiDrillInEmbedded,
         selectIsEmbedded,
         selectDisableDashboardCrossFiltering,
+        selectIsDisabledCrossFiltering,
         (
             drills = [],
             disableDefaultDrills,
@@ -495,6 +511,7 @@ export const selectConfiguredDrillsByWidgetRef: (
             hideKpiDrillInEmbedded,
             isEmbedded,
             disableCrossFiltering,
+            disableCrossFilteringByConfig,
         ) => {
             if (disableDefaultDrills) {
                 return [];
@@ -519,7 +536,9 @@ export const selectConfiguredDrillsByWidgetRef: (
                         return !(isEmbedded && hideKpiDrillInEmbedded);
                     }
                     case "crossFiltering": {
-                        return enableKDCrossFiltering && !disableCrossFiltering;
+                        return (
+                            enableKDCrossFiltering && !disableCrossFiltering && !disableCrossFilteringByConfig
+                        );
                     }
                     default: {
                         const unhandledType: never = drillType;
@@ -613,17 +632,30 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (
     ref: ObjRef,
 ) => DashboardSelector<IImplicitDrillWithPredicates[]> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
+        selectCatalogIsLoaded,
+        selectAccessibleDashboardsLoaded,
         selectValidConfiguredDrillsByWidgetRef(ref),
         selectImplicitDrillsDownByWidgetRef(ref),
         selectImplicitDrillsToUrlByWidgetRef(ref),
         selectCrossFilteringByWidgetRef(ref),
-        (configuredDrills, implicitDrillDownDrills, implicitDrillToUrlDrills, crossFiltering) => {
-            return compact([
-                ...configuredDrills,
-                ...implicitDrillDownDrills,
-                ...implicitDrillToUrlDrills,
-                crossFiltering,
-            ]);
+        (
+            catalogIsLoaded,
+            accessibleDashboardsLoaded,
+            configuredDrills,
+            implicitDrillDownDrills,
+            implicitDrillToUrlDrills,
+            crossFiltering,
+        ) => {
+            // disable drilling until all necessary items are loaded (catalog, dash list, ...)
+            const drillActive = catalogIsLoaded && accessibleDashboardsLoaded;
+            return drillActive
+                ? compact([
+                      ...configuredDrills,
+                      ...implicitDrillDownDrills,
+                      ...implicitDrillToUrlDrills,
+                      crossFiltering,
+                  ])
+                : [];
         },
     ),
 );

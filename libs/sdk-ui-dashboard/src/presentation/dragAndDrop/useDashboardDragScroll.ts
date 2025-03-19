@@ -16,6 +16,10 @@ const SCROLLING_ITEM_TYPES: DraggableItemType[] = [
     "kpi-placeholder",
     "richText",
     "richTextListItem",
+    "visualizationSwitcher",
+    "visualizationSwitcherListItem",
+    "dashboardLayout",
+    "dashboardLayoutListItem",
     "internal-width-resizer",
     "internal-height-resizer",
 ];

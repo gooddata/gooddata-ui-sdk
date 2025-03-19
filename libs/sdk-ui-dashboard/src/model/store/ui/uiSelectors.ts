@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
@@ -9,9 +9,16 @@ import { DashboardSelector, DashboardState } from "../types.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
-import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types.js";
+import {
+    IMenuButtonItemsVisibility,
+    IScheduleEmailDialogContext,
+    ILayoutItemPath,
+    ILayoutSectionPath,
+    ILayoutCoordinates,
+} from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
-import { InvalidCustomUrlDrillParameterInfo } from "./uiState.js";
+import { InvalidCustomUrlDrillParameterInfo, FilterViewDialogMode } from "./uiState.js";
+import { selectConfig } from "../config/configSelectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -29,6 +36,12 @@ export const selectIsScheduleEmailDialogOpen: DashboardSelector<boolean> = creat
 /**
  * @alpha
  */
+export const selectIsScheduleEmailDialogContext: DashboardSelector<IScheduleEmailDialogContext> =
+    createSelector(selectSelf, (state) => state.scheduleEmailDialog.context ?? {});
+
+/**
+ * @alpha
+ */
 export const selectScheduleEmailDialogDefaultAttachment: DashboardSelector<ObjRef | undefined> =
     createSelector(selectSelf, (state) => state.scheduleEmailDialog.defaultAttachmentRef ?? undefined);
 
@@ -38,6 +51,28 @@ export const selectScheduleEmailDialogDefaultAttachment: DashboardSelector<ObjRe
 export const selectIsScheduleEmailManagementDialogOpen: DashboardSelector<boolean> = createSelector(
     selectSelf,
     (state) => state.scheduleEmailManagementDialog.open,
+);
+
+/**
+ * @alpha
+ */
+export const selectIsScheduleEmailManagementDialogContext: DashboardSelector<IScheduleEmailDialogContext> =
+    createSelector(selectSelf, (state) => state.scheduleEmailManagementDialog.context ?? {});
+
+/**
+ * @alpha
+ */
+export const selectIsAlertingDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.alertsDialog.open,
+);
+
+/**
+ * @alpha
+ */
+export const selectIsAlertsManagementDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.alertsManagementDialog.open,
 );
 
 /**
@@ -67,6 +102,22 @@ export const selectIsDeleteDialogOpen: DashboardSelector<boolean> = createSelect
 /**
  * @internal
  */
+export const selectIsWidgetDeleteDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.widgetDeleteDialog.open,
+);
+
+/**
+ * @internal
+ */
+export const selectWidgetDeleteDialogWidgetRef: DashboardSelector<ObjRef | undefined> = createSelector(
+    selectSelf,
+    (state) => state.widgetDeleteDialog.widgetRef,
+);
+
+/**
+ * @internal
+ */
 export const selectIsKpiDeleteDialogOpen: DashboardSelector<boolean> = createSelector(
     selectSelf,
     (state) => !!state.kpiDeleteDialog.widgetCoordinates,
@@ -83,8 +134,22 @@ export const selectIsCancelEditModeDialogOpen: DashboardSelector<boolean> = crea
 /**
  * @internal
  */
-export const selectKpiDeleteDialogWidgetCoordinates: DashboardSelector<ILayoutCoordinates | undefined> =
+export const selectKpiDeleteDialogWidgetLayoutPath: DashboardSelector<ILayoutItemPath | undefined> =
     createSelector(selectSelf, (state) => state.kpiDeleteDialog.widgetCoordinates);
+
+/**
+ * @internal
+ *
+ * @deprecated The selector returns coordinates in its parent layout. The information is not useful on its
+ *  own when dashboard uses nested layout. For this case use {@link selectKpiDeleteDialogWidgetLayoutPath} instead.
+ *
+ *  TODO LX-648: remove this selector, exported only for backward compatible reasons.
+ */
+export const selectKpiDeleteDialogWidgetCoordinates: DashboardSelector<ILayoutCoordinates | undefined> =
+    createSelector(selectSelf, (state) => {
+        const coordinates = state.kpiDeleteDialog.widgetCoordinates;
+        return coordinates === undefined ? undefined : coordinates[coordinates.length - 1];
+    });
 
 /**
  * @alpha
@@ -168,6 +233,8 @@ export const selectMenuButtonItemsVisibility: DashboardSelector<IMenuButtonItems
 
 /**
  * @internal
+ *
+ * This selector provides selected widget on dashboard. It DOES NOT provide selected widget inside of selected visualization switcher.
  */
 export const selectSelectedWidgetRef: DashboardSelector<ObjRef | undefined> = createSelector(
     selectSelf,
@@ -238,11 +305,27 @@ export const selectIsDraggingWidget: DashboardSelector<boolean> = createSelector
 );
 
 /**
+ * The selector returns index of active section.
+ *
  * @internal
+ * @deprecated The selector returns index in its parent section layout. The information is not useful on its
+ *  own when dashboard uses nested layout. For this case use {@link selectActiveSection} instead.
+ *
+ *  TODO LX-648: remove this selector, exported only for backward compatible reasons.
  */
 export const selectActiveSectionIndex: DashboardSelector<number | undefined> = createSelector(
     selectSelf,
-    (state) => state.activeSectionIndex,
+    (state) => state.activeSection?.sectionIndex,
+);
+
+/**
+ * The selector returns layout path of active section.
+ *
+ * @internal
+ */
+export const selectActiveSection: DashboardSelector<ILayoutSectionPath | undefined> = createSelector(
+    selectSelf,
+    (state) => state.activeSection,
 );
 
 /**
@@ -310,9 +393,23 @@ export const selectDraggingWidgetSource: DashboardSelector<DraggableLayoutItem |
 /**
  * @internal
  */
+export const selectDraggingWidgetTargetLayoutPath: DashboardSelector<ILayoutItemPath | undefined> =
+    createSelector(selectSelf, (state) => state.draggingWidgetTarget);
+
+/**
+ * @internal
+ *
+ * @deprecated The selector returns coordinates in its parent section layout. The information is not useful on its
+ *  own when dashboard uses nested layout. For this case use {@link selectDraggingWidgetTargetLayoutPath} instead.
+ *
+ *  TODO LX-648: remove this selector, exported only for backward compatible reasons.
+ */
 export const selectDraggingWidgetTarget: DashboardSelector<ILayoutCoordinates | undefined> = createSelector(
     selectSelf,
-    (state) => state.draggingWidgetTarget,
+    (state) =>
+        state.draggingWidgetTarget === undefined
+            ? undefined
+            : state.draggingWidgetTarget[state.draggingWidgetTarget.length - 1],
 );
 
 /**
@@ -393,3 +490,41 @@ export const selectIsSectionInsertedByPlugin: (refs: (ObjRef | undefined)[]) => 
                 modifications.length > 0 && modifications.every((m) => m === "insertedByPlugin"),
         ),
     );
+
+/**
+ * @internal
+ */
+export const selectIsFilterViewsDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.filterViews.open ?? false,
+);
+
+/**
+ * @internal
+ */
+export const selectFilterViewsDialogMode: DashboardSelector<FilterViewDialogMode> = createSelector(
+    selectSelf,
+    (state) => state.filterViews.mode ?? "list",
+);
+
+/**
+ * @internal
+ */
+export const selectIgnoreExecutionTimestamp: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.ignoreExecutionTimestamp ?? false,
+);
+
+/**
+ * @internal
+ */
+export const selectExecutionTimestamp: DashboardSelector<string | undefined> = createSelector(
+    [selectConfig, selectIgnoreExecutionTimestamp],
+    (config, ignoreExecutionTimestamp) => {
+        if (ignoreExecutionTimestamp) {
+            return undefined;
+        }
+
+        return config.executionTimestamp ?? undefined;
+    },
+);

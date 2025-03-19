@@ -6,13 +6,10 @@ exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items wit
     "header": {
       "measureHeaderItem": {
         "format": "$#,##0.00",
-        "identifier": "aangOxLSeztu",
-        "localIdentifier": "m_aangOxLSeztu",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
         "name": "Amount",
-        "ref": {
-          "uri": "/gdc/md/referenceworkspace/obj/1271",
-        },
-        "uri": "/gdc/md/referenceworkspace/obj/1271",
+        "ref": undefined,
       },
     },
   },
@@ -20,24 +17,26 @@ exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items wit
     "header": {
       "attributeHeader": {
         "formOf": {
-          "identifier": "attr.owner.region",
+          "identifier": "f_owner.region_id",
           "name": "Region",
-          "ref": {
-            "uri": "/gdc/md/referenceworkspace/obj/1086",
-          },
-          "uri": "/gdc/md/referenceworkspace/obj/1086",
+          "ref": undefined,
+          "uri": "",
         },
-        "identifier": "label.owner.region",
-        "localIdentifier": "a_label.owner.region",
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
         "name": "Region",
-        "ref": {
-          "uri": "/gdc/md/referenceworkspace/obj/1087",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
         },
-        "uri": "/gdc/md/referenceworkspace/obj/1087",
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
       },
       "attributeHeaderItem": {
         "name": "East Coast",
-        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
+        "uri": "East Coast",
       },
     },
   },
@@ -45,24 +44,26 @@ exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items wit
     "header": {
       "attributeHeader": {
         "formOf": {
-          "identifier": "attr.product.id",
+          "identifier": "attr.f_product.product",
           "name": "Product",
-          "ref": {
-            "uri": "/gdc/md/referenceworkspace/obj/1054",
-          },
-          "uri": "/gdc/md/referenceworkspace/obj/1054",
+          "ref": undefined,
+          "uri": "",
         },
-        "identifier": "label.product.id.name",
-        "localIdentifier": "a_label.product.id.name",
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
         "name": "Product Name",
-        "ref": {
-          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
         },
-        "uri": "/gdc/md/referenceworkspace/obj/1055",
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
       },
       "attributeHeaderItem": {
         "name": "CompuSci",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+        "uri": "CompuSci",
       },
     },
   },
@@ -75,13 +76,10 @@ exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items wit
     "header": {
       "measureHeaderItem": {
         "format": "$#,##0.00",
-        "identifier": "aangOxLSeztu",
-        "localIdentifier": "m_aangOxLSeztu",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
         "name": "Amount",
-        "ref": {
-          "uri": "/gdc/md/referenceworkspace/obj/1271",
-        },
-        "uri": "/gdc/md/referenceworkspace/obj/1271",
+        "ref": undefined,
       },
     },
   },
@@ -89,24 +87,26 @@ exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items wit
     "header": {
       "attributeHeader": {
         "formOf": {
-          "identifier": "attr.owner.region",
+          "identifier": "f_owner.region_id",
           "name": "Region",
-          "ref": {
-            "uri": "/gdc/md/referenceworkspace/obj/1086",
-          },
-          "uri": "/gdc/md/referenceworkspace/obj/1086",
+          "ref": undefined,
+          "uri": "",
         },
-        "identifier": "label.owner.region",
-        "localIdentifier": "a_label.owner.region",
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
         "name": "Region",
-        "ref": {
-          "uri": "/gdc/md/referenceworkspace/obj/1087",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
         },
-        "uri": "/gdc/md/referenceworkspace/obj/1087",
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
       },
       "attributeHeaderItem": {
         "name": "East Coast",
-        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
+        "uri": "East Coast",
       },
     },
   },
@@ -114,24 +114,26 @@ exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items wit
     "header": {
       "attributeHeader": {
         "formOf": {
-          "identifier": "attr.product.id",
+          "identifier": "attr.f_product.product",
           "name": "Product",
-          "ref": {
-            "uri": "/gdc/md/referenceworkspace/obj/1054",
-          },
-          "uri": "/gdc/md/referenceworkspace/obj/1054",
+          "ref": undefined,
+          "uri": "",
         },
-        "identifier": "label.product.id.name",
-        "localIdentifier": "a_label.product.id.name",
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
         "name": "Product Name",
-        "ref": {
-          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
         },
-        "uri": "/gdc/md/referenceworkspace/obj/1055",
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
       },
       "attributeHeaderItem": {
         "name": "CompuSci",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+        "uri": "CompuSci",
       },
     },
   },
@@ -144,13 +146,10 @@ exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items wit
     "header": {
       "measureHeaderItem": {
         "format": "$#,##0.00",
-        "identifier": "aangOxLSeztu",
-        "localIdentifier": "m_aangOxLSeztu",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
         "name": "Amount",
-        "ref": {
-          "uri": "/gdc/md/referenceworkspace/obj/1271",
-        },
-        "uri": "/gdc/md/referenceworkspace/obj/1271",
+        "ref": undefined,
       },
     },
   },
@@ -158,24 +157,26 @@ exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items wit
     "header": {
       "attributeHeader": {
         "formOf": {
-          "identifier": "attr.owner.region",
+          "identifier": "f_owner.region_id",
           "name": "Region",
-          "ref": {
-            "uri": "/gdc/md/referenceworkspace/obj/1086",
-          },
-          "uri": "/gdc/md/referenceworkspace/obj/1086",
+          "ref": undefined,
+          "uri": "",
         },
-        "identifier": "label.owner.region",
-        "localIdentifier": "a_label.owner.region",
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
         "name": "Region",
-        "ref": {
-          "uri": "/gdc/md/referenceworkspace/obj/1087",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
         },
-        "uri": "/gdc/md/referenceworkspace/obj/1087",
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
       },
       "attributeHeaderItem": {
         "name": "East Coast",
-        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
+        "uri": "East Coast",
       },
     },
   },
@@ -183,24 +184,26 @@ exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items wit
     "header": {
       "attributeHeader": {
         "formOf": {
-          "identifier": "attr.product.id",
+          "identifier": "attr.f_product.product",
           "name": "Product",
-          "ref": {
-            "uri": "/gdc/md/referenceworkspace/obj/1054",
-          },
-          "uri": "/gdc/md/referenceworkspace/obj/1054",
+          "ref": undefined,
+          "uri": "",
         },
-        "identifier": "label.product.id.name",
-        "localIdentifier": "a_label.product.id.name",
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
         "name": "Product Name",
-        "ref": {
-          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
         },
-        "uri": "/gdc/md/referenceworkspace/obj/1055",
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
       },
       "attributeHeaderItem": {
         "name": "CompuSci",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+        "uri": "CompuSci",
       },
     },
   },
@@ -213,13 +216,10 @@ exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items wit
     "header": {
       "measureHeaderItem": {
         "format": "$#,##0.00",
-        "identifier": "aangOxLSeztu",
-        "localIdentifier": "m_aangOxLSeztu",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
         "name": "Amount",
-        "ref": {
-          "uri": "/gdc/md/referenceworkspace/obj/1271",
-        },
-        "uri": "/gdc/md/referenceworkspace/obj/1271",
+        "ref": undefined,
       },
     },
   },
@@ -227,24 +227,26 @@ exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items wit
     "header": {
       "attributeHeader": {
         "formOf": {
-          "identifier": "attr.owner.region",
+          "identifier": "f_owner.region_id",
           "name": "Region",
-          "ref": {
-            "uri": "/gdc/md/referenceworkspace/obj/1086",
-          },
-          "uri": "/gdc/md/referenceworkspace/obj/1086",
+          "ref": undefined,
+          "uri": "",
         },
-        "identifier": "label.owner.region",
-        "localIdentifier": "a_label.owner.region",
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
         "name": "Region",
-        "ref": {
-          "uri": "/gdc/md/referenceworkspace/obj/1087",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
         },
-        "uri": "/gdc/md/referenceworkspace/obj/1087",
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
       },
       "attributeHeaderItem": {
         "name": "East Coast",
-        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
+        "uri": "East Coast",
       },
     },
   },
@@ -252,24 +254,26 @@ exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items wit
     "header": {
       "attributeHeader": {
         "formOf": {
-          "identifier": "attr.product.id",
+          "identifier": "attr.f_product.product",
           "name": "Product",
-          "ref": {
-            "uri": "/gdc/md/referenceworkspace/obj/1054",
-          },
-          "uri": "/gdc/md/referenceworkspace/obj/1054",
+          "ref": undefined,
+          "uri": "",
         },
-        "identifier": "label.product.id.name",
-        "localIdentifier": "a_label.product.id.name",
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
         "name": "Product Name",
-        "ref": {
-          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
         },
-        "uri": "/gdc/md/referenceworkspace/obj/1055",
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
       },
       "attributeHeaderItem": {
         "name": "CompuSci",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+        "uri": "CompuSci",
       },
     },
   },
@@ -282,13 +286,10 @@ exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items wit
     "header": {
       "measureHeaderItem": {
         "format": "$#,##0.00",
-        "identifier": "aangOxLSeztu",
-        "localIdentifier": "m_aangOxLSeztu",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
         "name": "Amount",
-        "ref": {
-          "uri": "/gdc/md/referenceworkspace/obj/1271",
-        },
-        "uri": "/gdc/md/referenceworkspace/obj/1271",
+        "ref": undefined,
       },
     },
   },
@@ -296,24 +297,26 @@ exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items wit
     "header": {
       "attributeHeader": {
         "formOf": {
-          "identifier": "attr.owner.region",
+          "identifier": "f_owner.region_id",
           "name": "Region",
-          "ref": {
-            "uri": "/gdc/md/referenceworkspace/obj/1086",
-          },
-          "uri": "/gdc/md/referenceworkspace/obj/1086",
+          "ref": undefined,
+          "uri": "",
         },
-        "identifier": "label.owner.region",
-        "localIdentifier": "a_label.owner.region",
+        "granularity": null,
+        "identifier": "f_owner.region_id",
+        "localIdentifier": "a_f_owner.region_id",
         "name": "Region",
-        "ref": {
-          "uri": "/gdc/md/referenceworkspace/obj/1087",
+        "primaryLabel": {
+          "identifier": "f_owner.region_id",
+          "type": "displayForm",
         },
-        "uri": "/gdc/md/referenceworkspace/obj/1087",
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
       },
       "attributeHeaderItem": {
         "name": "East Coast",
-        "uri": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
+        "uri": "East Coast",
       },
     },
   },
@@ -321,24 +324,26 @@ exports[`getDrillableSeriesWithParentAttribute > should return 3 drill items wit
     "header": {
       "attributeHeader": {
         "formOf": {
-          "identifier": "attr.product.id",
+          "identifier": "attr.f_product.product",
           "name": "Product",
-          "ref": {
-            "uri": "/gdc/md/referenceworkspace/obj/1054",
-          },
-          "uri": "/gdc/md/referenceworkspace/obj/1054",
+          "ref": undefined,
+          "uri": "",
         },
-        "identifier": "label.product.id.name",
-        "localIdentifier": "a_label.product.id.name",
+        "granularity": null,
+        "identifier": "label.f_product.product.name",
+        "localIdentifier": "a_label.f_product.product.name",
         "name": "Product Name",
-        "ref": {
-          "uri": "/gdc/md/referenceworkspace/obj/1055",
+        "primaryLabel": {
+          "identifier": "attr.f_product.product",
+          "type": "displayForm",
         },
-        "uri": "/gdc/md/referenceworkspace/obj/1055",
+        "ref": undefined,
+        "totalItems": [],
+        "uri": "",
       },
       "attributeHeaderItem": {
         "name": "CompuSci",
-        "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+        "uri": "CompuSci",
       },
     },
   },

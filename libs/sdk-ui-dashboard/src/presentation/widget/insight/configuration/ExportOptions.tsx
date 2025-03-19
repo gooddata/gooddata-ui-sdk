@@ -1,6 +1,5 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
-import { IInsightDefinition, widgetTitle } from "@gooddata/sdk-model";
 import {
     OverlayControllerProvider,
     OverlayController,
@@ -8,15 +7,14 @@ import {
     Item,
     withBubble,
     IAlignPoint,
+    Header,
 } from "@gooddata/sdk-ui-kit";
-
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
-
 import { FormattedMessage, useIntl } from "react-intl";
-import { useInsightExport } from "../../common/useInsightExport.js";
 import {
+    IExecutionResultEnvelope,
     selectExecutionResultByRef,
-    selectInsightByRef,
+    selectSettings,
     useDashboardSelector,
 } from "../../../../model/index.js";
 import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
@@ -26,17 +24,31 @@ const alignPoints: IAlignPoint[] = [{ align: "tl bl", offset: { x: 20, y: 0 } }]
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
+const getExportTooltip = (execution?: IExecutionResultEnvelope, enableRawExports?: boolean): string => {
+    if (isDataErrorTooLarge(execution?.error)) {
+        return "options.menu.data.too.large";
+    } else if (isDataError(execution?.error)) {
+        if (enableRawExports) {
+            return "options.menu.unsupported.raw.error";
+        } else {
+            return "options.menu.unsupported.error";
+        }
+    }
+    return "options.menu.unsupported.loading";
+};
+
 interface IMenuItemProps {
     className: string;
+    icon: string;
     onClick?: () => void;
     messageId: string;
     disabled: boolean;
 }
 
-const MenuItem: React.FC<IMenuItemProps> = ({ className, disabled, messageId, onClick }) => {
+const MenuItem: React.FC<IMenuItemProps> = ({ className, disabled, messageId, onClick, icon }) => {
     return (
         <Item onClick={onClick} className={className} disabled={disabled}>
-            <div className="gd-icon-download" />
+            <div className={`gd-export-icon ${icon}`} />
             <FormattedMessage id={messageId} />
         </Item>
     );
@@ -44,34 +56,44 @@ const MenuItem: React.FC<IMenuItemProps> = ({ className, disabled, messageId, on
 
 const MenuItemWithBubble = withBubble(MenuItem);
 
-export const ExportOptions: React.FC<IInsightMenuSubmenuComponentProps> = ({ widget, onClose }) => {
+interface IExportOptionsProps extends IInsightMenuSubmenuComponentProps {
+    exportCsvDisabled: boolean;
+    exportXLSVDisabled: boolean;
+    isExportVisible: boolean;
+    isExportRawVisible: boolean;
+    exportCSVRawDisabled: boolean;
+    exportPdfPresentationDisabled: boolean;
+    exportPowerPointPresentationDisabled: boolean;
+    onExportCSV: () => void;
+    onExportRawCSV: () => void;
+    onExportXLSX: () => void;
+    onExportPowerPointPresentation: () => void;
+    onExportPdfPresentation: () => void;
+}
+
+export const ExportOptions: React.FC<IExportOptionsProps> = ({
+    widget,
+    onClose,
+    exportCsvDisabled,
+    exportXLSVDisabled,
+    exportCSVRawDisabled,
+    exportPdfPresentationDisabled,
+    exportPowerPointPresentationDisabled,
+    isExportRawVisible,
+    isExportVisible,
+    onExportCSV,
+    onExportRawCSV,
+    onExportXLSX,
+    onExportPowerPointPresentation,
+    onExportPdfPresentation,
+}) => {
     const intl = useIntl();
-
-    const insight: IInsightDefinition = useDashboardSelector(selectInsightByRef(widget.insight))!;
-
     const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));
+    const settings = useDashboardSelector(selectSettings);
 
-    const partialWarning =
-        execution?.warnings?.filter((warning) => warning.warningCode === "gdc.pixtab.partial") ?? [];
-
-    const tooltip =
-        isDataErrorTooLarge(execution?.error) || partialWarning.length > 0
-            ? "options.menu.data.too.large"
-            : isDataError(execution?.error)
-            ? "options.menu.unsupported.error"
-            : "options.menu.unsupported.loading";
-
-    const {
-        exportCSVEnabled,
-        exportXLSXEnabled,
-        isExportRawInNewUiVisible,
-        onExportCSV,
-        onExportRawCSV,
-        onExportXLSX,
-    } = useInsightExport({
-        widgetRef: widget.ref,
-        title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
-        insight,
+    const tooltip = getExportTooltip(execution, settings?.enableRawExports);
+    const presentationTooltip = intl.formatMessage({
+        id: "options.menu.export.presentation.unsupported.oldWidget",
     });
 
     return (
@@ -79,57 +101,123 @@ export const ExportOptions: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
             {/* Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be under header */}
             <OverlayControllerProvider overlayController={overlayController}>
                 <ItemsWrapper className="gd-configuration-export-options" smallItemsSpacing={true}>
-                    {isExportRawInNewUiVisible ? (
+                    {isExportVisible ? (
                         <>
-                            {exportXLSXEnabled ? (
+                            {!exportPdfPresentationDisabled ? (
+                                <MenuItem
+                                    onClick={() => {
+                                        onClose();
+                                        onExportPdfPresentation();
+                                    }}
+                                    disabled={exportPdfPresentationDisabled}
+                                    className="gd-export-options-pdf-presentation"
+                                    icon="gd-icon-type-pdf"
+                                    messageId="options.menu.export.presentation.PDF"
+                                />
+                            ) : (
+                                <MenuItemWithBubble
+                                    className="gd-export-options-pdf-presentation"
+                                    icon="gd-icon-type-pdf"
+                                    disabled={exportPdfPresentationDisabled}
+                                    messageId="options.menu.export.presentation.PDF"
+                                    showBubble={true}
+                                    alignPoints={alignPoints}
+                                    bubbleTextId={presentationTooltip}
+                                />
+                            )}
+                            {!exportPowerPointPresentationDisabled ? (
+                                <MenuItem
+                                    onClick={() => {
+                                        onClose();
+                                        onExportPowerPointPresentation();
+                                    }}
+                                    disabled={exportPowerPointPresentationDisabled}
+                                    className="gd-export-options-pptx-presentation"
+                                    icon="gd-icon-type-slides"
+                                    messageId="options.menu.export.presentation.PPTX"
+                                />
+                            ) : (
+                                <MenuItemWithBubble
+                                    className="gd-export-options-pptx-presentation"
+                                    icon="gd-icon-type-slides"
+                                    disabled={exportPowerPointPresentationDisabled}
+                                    messageId="options.menu.export.presentation.PPTX"
+                                    showBubble={true}
+                                    alignPoints={alignPoints}
+                                    bubbleTextId={presentationTooltip}
+                                />
+                            )}
+                        </>
+                    ) : null}
+                    {isExportRawVisible ? (
+                        <>
+                            <Header>{intl.formatMessage({ id: "options.menu.export.header.data" })}</Header>
+                            {!exportXLSVDisabled ? (
                                 <MenuItem
                                     className="gd-export-options-xlsx"
+                                    icon="gd-icon-type-sheet"
                                     onClick={() => {
                                         onClose();
                                         onExportXLSX();
                                     }}
-                                    disabled={!exportXLSXEnabled}
+                                    disabled={exportXLSVDisabled}
                                     messageId="widget.options.menu.XLSX"
                                 />
                             ) : (
                                 <MenuItemWithBubble
                                     className="gd-export-options-xlsx"
-                                    disabled={!exportXLSXEnabled}
+                                    icon="gd-icon-type-sheet"
+                                    disabled={exportXLSVDisabled}
                                     messageId="widget.options.menu.XLSX"
                                     showBubble={true}
                                     alignPoints={alignPoints}
                                     bubbleTextId={tooltip}
                                 />
                             )}
-                            {exportCSVEnabled ? (
+                            {!exportCsvDisabled ? (
                                 <MenuItem
                                     onClick={() => {
                                         onClose();
                                         onExportCSV();
                                     }}
                                     className="gd-export-options-csv"
-                                    disabled={!exportCSVEnabled}
+                                    icon="gd-icon-type-csv-formatted"
+                                    disabled={exportCsvDisabled}
                                     messageId="widget.options.menu.exportToCSV.formatted"
                                 />
                             ) : (
                                 <MenuItemWithBubble
                                     className="gd-export-options-csv"
-                                    disabled={!exportCSVEnabled}
+                                    icon="gd-icon-type-csv-formatted"
+                                    disabled={exportCsvDisabled}
                                     messageId="widget.options.menu.exportToCSV.formatted"
                                     showBubble={true}
                                     alignPoints={alignPoints}
                                     bubbleTextId={tooltip}
                                 />
                             )}
-                            <MenuItem
-                                onClick={() => {
-                                    onClose();
-                                    onExportRawCSV();
-                                }}
-                                className="gd-export-options-csv-raw"
-                                disabled={false}
-                                messageId="widget.options.menu.exportToCSV.raw"
-                            />
+                            {!exportCSVRawDisabled ? (
+                                <MenuItem
+                                    onClick={() => {
+                                        onClose();
+                                        onExportRawCSV();
+                                    }}
+                                    className="gd-export-options-csv"
+                                    icon="gd-icon-type-csv-raw"
+                                    disabled={exportCSVRawDisabled}
+                                    messageId="widget.options.menu.exportToCSV.raw"
+                                />
+                            ) : (
+                                <MenuItemWithBubble
+                                    className="gd-export-options-csv-raw"
+                                    icon="gd-icon-type-csv-raw"
+                                    disabled={exportCSVRawDisabled}
+                                    messageId="widget.options.menu.exportToCSV.raw"
+                                    showBubble={true}
+                                    alignPoints={alignPoints}
+                                    bubbleTextId={tooltip}
+                                />
+                            )}
                         </>
                     ) : null}
                 </ItemsWrapper>

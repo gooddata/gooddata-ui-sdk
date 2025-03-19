@@ -1,7 +1,18 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { ComponentType } from "react";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IColorPalette, IInsight, IInsightWidget, ISeparators } from "@gooddata/sdk-model";
+import {
+    IDataSetMetadataObject,
+    DateAttributeGranularity,
+    IAttribute,
+    IColorPalette,
+    IInsight,
+    IInsightWidget,
+    IMeasure,
+    ISeparators,
+    IFilter,
+    IExecutionConfig,
+} from "@gooddata/sdk-model";
 import {
     ExplicitDrill,
     IDrillEventIntersectionElement,
@@ -22,6 +33,7 @@ import {
     OnDrillToInsightSuccess,
     OnWidgetDrill,
 } from "../../drill/types.js";
+import { WidgetExportDataAttributes } from "../../export/index.js";
 
 ///
 /// Component props
@@ -136,6 +148,11 @@ export interface IDashboardInsightProps {
     onDrillToCustomUrl?: OnDrillToCustomUrlSuccess;
 
     /**
+     * @internal
+     */
+    onWidgetFiltersReady?: (filters?: IFilter[]) => void;
+
+    /**
      * @alpha
      */
     onError?: OnError;
@@ -154,6 +171,16 @@ export interface IDashboardInsightProps {
      * @internal
      */
     pushData?: (data: IPushData) => void;
+
+    /**
+     * @alpha
+     */
+    exportData?: WidgetExportDataAttributes;
+
+    /**
+     * @internal
+     */
+    afterRender?: () => void;
 }
 
 /**
@@ -225,6 +252,11 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
      * The current user settings.
      */
     settings: IUserWorkspaceSettings | undefined;
+
+    /**
+     * Contains configuration that should be part of insight execution
+     */
+    execConfig?: IExecutionConfig;
 }
 
 ///
@@ -245,3 +277,40 @@ export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightPro
  * @public
  */
 export type CustomInsightBodyComponent = ComponentType<IInsightBodyProps>;
+
+/**
+ * @internal
+ */
+export enum AlertMetricComparatorType {
+    PreviousPeriod,
+    SamePeriodPreviousYear,
+}
+
+/**
+ * @internal
+ */
+export type AlertMetricComparator = {
+    measure: IMeasure;
+    isPrimary: boolean;
+    comparator: AlertMetricComparatorType;
+    //date attribute related
+    dataset?: IDataSetMetadataObject;
+    granularity?: DateAttributeGranularity;
+};
+
+/**
+ * @internal
+ */
+export type AlertMetric = {
+    measure: IMeasure;
+    isPrimary: boolean;
+    comparators: AlertMetricComparator[];
+};
+
+/**
+ * @internal
+ */
+export type AlertAttribute = {
+    attribute: IAttribute;
+    type: "dateAttribute" | "attribute";
+};

@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import {
     IAnalyticalWorkspace,
     IExecutionFactory,
@@ -18,6 +18,12 @@ import {
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
     IAttributeHierarchiesService,
+    IWorkspaceExportDefinitionsService,
+    IDataFiltersService,
+    IWorkspaceDescriptorUpdate,
+    IWorkspaceLogicalModelService,
+    IWorkspaceAutomationService,
+    IGenAIService,
 } from "@gooddata/sdk-backend-spi";
 import { DecoratorFactories } from "./types.js";
 
@@ -32,8 +38,12 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
         this.workspace = decorated.workspace;
     }
 
-    public getDescriptor(): Promise<IWorkspaceDescriptor> {
-        return this.decorated.getDescriptor();
+    public getDescriptor(includeParentPrefixes?: boolean): Promise<IWorkspaceDescriptor> {
+        return this.decorated.getDescriptor(includeParentPrefixes);
+    }
+
+    public updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<IWorkspaceDescriptor> {
+        return this.decorated.updateDescriptor(descriptor);
     }
 
     public getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
@@ -132,5 +142,31 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public attributeHierarchies(): IAttributeHierarchiesService {
         return this.decorated.attributeHierarchies();
+    }
+
+    public exportDefinitions(): IWorkspaceExportDefinitionsService {
+        return this.decorated.exportDefinitions();
+    }
+
+    public dataFilters(): IDataFiltersService {
+        return this.decorated.dataFilters();
+    }
+
+    public logicalModel(): IWorkspaceLogicalModelService {
+        return this.decorated.logicalModel();
+    }
+
+    public automations(): IWorkspaceAutomationService {
+        const { automations } = this.factories;
+
+        if (automations) {
+            return automations(this.decorated.automations(), this.workspace);
+        }
+
+        return this.decorated.automations();
+    }
+
+    public genAI(): IGenAIService {
+        return this.decorated.genAI();
     }
 }

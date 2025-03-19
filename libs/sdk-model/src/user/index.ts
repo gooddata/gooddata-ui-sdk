@@ -1,9 +1,10 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
 import isEmpty from "lodash/isEmpty.js";
 
 import { ObjRef } from "../objRef/index.js";
 import { IDataSourcePermissionAssignment, IWorkspacePermissionAssignment } from "../organization/index.js";
+import { IEntitlementDescriptor } from "../entitlements/index.js";
 
 /**
  * Represents platform user.
@@ -45,6 +46,11 @@ export interface IUser {
     lastName?: string;
 
     /**
+     * Organization id - when backend implementations supports it.
+     */
+    organizationId?: string;
+
+    /**
      * Organization name - when backend implementations supports it.
      */
     organizationName?: string;
@@ -58,6 +64,16 @@ export interface IUser {
      * Authentication id of the user.
      */
     authenticationId?: string;
+
+    /**
+     * Entitlements for the user.
+     */
+    entitlements?: IEntitlementDescriptor[];
+
+    /**
+     * In which deployment the user was requested
+     */
+    deployment?: string;
 }
 
 /**

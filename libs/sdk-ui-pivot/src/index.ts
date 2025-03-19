@@ -11,7 +11,7 @@
 export { PivotTable, pivotTableMenuForCapabilities, getPivotTableDimensions } from "./PivotTable.js";
 export { CorePivotTable } from "./CorePivotTable.js";
 
-export {
+export type {
     IPivotTableBucketProps,
     IPivotTableBaseProps,
     IPivotTableProps,
@@ -25,10 +25,9 @@ export {
     ColumnHeadersPosition,
 } from "./publicTypes.js";
 
-export {
+export type {
     IWeakMeasureColumnWidthItem,
     IWeakMeasureColumnWidthItemBody,
-    isWeakMeasureColumnWidthItem,
     ColumnWidthItem,
     ColumnWidth,
     IAttributeColumnWidthItem,
@@ -39,15 +38,9 @@ export {
     ISliceMeasureColumnWidthItemBody,
     IMixedValuesColumnWidthItem,
     IMixedValuesColumnWidthItemBody,
-    isAttributeColumnWidthItem,
-    isMeasureColumnWidthItem,
-    isSliceMeasureColumnWidthItem,
-    isMixedValuesColumnWidthItem,
     IAbsoluteColumnWidth,
     IAllMeasureColumnWidthItem,
     IAllMeasureColumnWidthItemBody,
-    isAbsoluteColumnWidth,
-    isAllMeasureColumnWidthItem,
     IAutoColumnWidth,
     ColumnLocator,
     IAttributeColumnLocator,
@@ -56,6 +49,15 @@ export {
     ITotalColumnLocatorBody,
     IMeasureColumnLocator,
     IMeasureColumnLocatorBody,
+} from "./columnWidths.js";
+export {
+    isWeakMeasureColumnWidthItem,
+    isAttributeColumnWidthItem,
+    isMeasureColumnWidthItem,
+    isSliceMeasureColumnWidthItem,
+    isMixedValuesColumnWidthItem,
+    isAbsoluteColumnWidth,
+    isAllMeasureColumnWidthItem,
     isMeasureColumnLocator,
     isAttributeColumnLocator,
     isTotalColumnLocator,

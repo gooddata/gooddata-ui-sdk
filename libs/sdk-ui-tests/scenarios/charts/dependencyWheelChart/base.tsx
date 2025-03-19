@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { DependencyWheelChart, IDependencyWheelChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
@@ -6,7 +6,7 @@ import { ScenarioGroupNames } from "../_infra/groupNames.js";
 export const DependencyWheelChartWithMeasureAttributeFromAndTo = {
     measure: ReferenceMd.Amount,
     attributeFrom: ReferenceMd.Product.Name,
-    attributeTo: ReferenceMd.Region,
+    attributeTo: ReferenceMd.Region.Default,
 };
 export const DependencyWheelChartWithMeasureAndAttributeFrom = {
     measure: ReferenceMd.Amount,
@@ -14,7 +14,7 @@ export const DependencyWheelChartWithMeasureAndAttributeFrom = {
 };
 export const DependencyWheelChartWithMeasureAttributeTo = {
     measure: ReferenceMd.Amount,
-    attributeTo: ReferenceMd.Region,
+    attributeTo: ReferenceMd.Region.Default,
 };
 export default scenariosFor<IDependencyWheelChartProps>("DependencyWheelChart", DependencyWheelChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)

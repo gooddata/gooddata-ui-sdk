@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 /**
  * Entitlement name
@@ -20,8 +20,17 @@ export type IEntitlementsName =
     | "WhiteLabeling"
     | "WorkspaceCount"
     | "Hipaa"
-    | "UserTelemetryDisabled";
-
+    | "DailyAlertActionCount"
+    | "UnlimitedDailyAlertActions"
+    | "UserTelemetryDisabled"
+    | "AutomationCount"
+    | "UnlimitedAutomations"
+    | "AutomationRecipientCount"
+    | "UnlimitedAutomationRecipients"
+    | "DailyScheduledActionCount"
+    | "UnlimitedDailyScheduledActions"
+    | "ScheduledActionMinimumRecurrenceMinutes"
+    | "FederatedIdentityManagement";
 /**
  * Entitlement descriptor
  *

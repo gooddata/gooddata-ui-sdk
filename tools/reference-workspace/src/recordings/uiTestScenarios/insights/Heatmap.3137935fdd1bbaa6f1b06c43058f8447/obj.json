@@ -7,10 +7,13 @@
                         "measure": {
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
                                 }
                             },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
                         }
                     }
                 ],
@@ -20,8 +23,11 @@
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                            "localIdentifier": "a_label.product.id.name"
+                            "displayForm": {
+                                "identifier": "label.f_product.product.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_product.product.name"
                         }
                     }
                 ],
@@ -31,8 +37,8 @@
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
-                            "localIdentifier": "a_label.owner.region"
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
                         }
                     }
                 ],
@@ -45,7 +51,12 @@
             "controls": { "legend": { "position": "bottom", "responsive": "autoPositionWithPopup" } }
         },
         "sorts": [
-            { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "desc" } }
+            {
+                "attributeSortItem": {
+                    "attributeIdentifier": "a_label.f_product.product.name",
+                    "direction": "desc"
+                }
+            }
         ],
         "title": "Heatmap - 180x400 - Force position TOP, minimised variant - legend at bottom",
         "uri": "Heatmap.3137935fdd1bbaa6f1b06c43058f8447",

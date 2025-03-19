@@ -1,0 +1,127 @@
+// (C) 2024 GoodData Corporation
+
+@use "variables";
+
+$input-height: 28px;
+$input-width: 128px;
+
+.gd-recurrence-form {
+    display: flex;
+    flex-direction: column;
+
+    .gd-input-component {
+        margin-bottom: 20px;
+
+        label {
+            min-width: 100px;
+        }
+    }
+
+    .gd-recurrence-form-datetime {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        > :not(:first-of-type),
+        > :not(:last-of-type) {
+            margin-right: 10px;
+        }
+
+        input,
+        button {
+            height: $input-height;
+        }
+
+        .gd-datepicker-icon {
+            left: 8px;
+            font-size: 16px;
+            line-height: 28px;
+        }
+
+        .gd-recurrence-form-datetime-date {
+            width: $input-width;
+        }
+
+        .gd-recurrence-form-datetime-time {
+            height: $input-height;
+            max-width: $input-width;
+        }
+    }
+
+    .gd-recurrence-form-datetime-inner,
+    .gd-recurrence-form-repeat-inner {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .gd-recurrence-form-repeat {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        > :not(:first-of-type),
+        > :not(:last-of-type) {
+            margin-right: 10px;
+        }
+
+        .gd-recurrence-form-type {
+            &,
+            button {
+                height: $input-height;
+            }
+        }
+
+        .gd-recurrence-form-cron {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            input {
+                max-width: $input-width;
+                height: $input-height;
+            }
+
+            .gd-recurrence-form-cron-error-message {
+                color: variables.$gd-color-negative;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 13px;
+            }
+        }
+
+        .gd-recurrence-form-cron-icon {
+            display: flex;
+            align-items: center;
+            height: $input-height;
+        }
+
+        .gd-recurrence-form-repeat-type-description {
+            display: flex;
+            align-items: center;
+            color: variables.$gd-color-state-blank;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 19px;
+            gap: 5px;
+        }
+    }
+
+    @media #{variables.$small-only} {
+        .gd-recurrence-form-datetime,
+        .gd-recurrence-form-repeat {
+            display: block;
+        }
+
+        .gd-label {
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .gd-recurrence-form-datetime-timezone {
+            margin-top: 10px;
+            color: variables.$gd-color-link;
+        }
+    }
+}

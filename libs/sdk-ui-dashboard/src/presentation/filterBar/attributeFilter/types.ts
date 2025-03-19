@@ -1,8 +1,9 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { ComponentType } from "react";
 import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 
-import { IDashboardAttributeFilterParentItem } from "../../../model/index.js";
+import { IDashboardAttributeFilterParentItem, IDashboardDependentDateFilter } from "../../../model/index.js";
+import type { IAttributeFilterButtonProps } from "@gooddata/sdk-ui-filters";
 
 /**
  * @public
@@ -14,12 +15,27 @@ export interface IDashboardAttributeFilterProps {
     filter: IDashboardAttributeFilter;
 
     /**
+     * Working filter which selection will be used to render.
+     */
+    workingFilter?: IDashboardAttributeFilter;
+
+    /**
      * When the user interacts with the filter and changes its value, it MUST use this callback to propagate the
      * new filter value.
      *
      * @param filter - new attribute filter value.
+     * @param displayAsLabel - label used for presentation of attribute filter elements in UI
+     * @param isWorkingSelectionChange - if the change is to applied (application of filters) or un-applied filters (filters staged before application).
+     * @param isResultOfMigration - internal value, specifies that filter change was caused by displayAsLabel
+     *  ad-hoc migration, the param will be removed once the usage of displayAsLabel is migrated on database
+     *  metadata level.
      */
-    onFilterChanged: (filter: IDashboardAttributeFilter) => void;
+    onFilterChanged: (
+        filter: IDashboardAttributeFilter,
+        displayAsLabel?: ObjRef,
+        isWorkingSelectionChange?: boolean,
+        isResultOfMigration?: boolean,
+    ) => void;
 
     /**
      * Callback to be called, when user closes filter dropdown
@@ -42,6 +58,24 @@ export interface IDashboardAttributeFilterProps {
      * @alpha
      */
     readonly?: boolean;
+
+    /**
+     * Attribute label to use for UI representation of filter elements
+     */
+    displayAsLabel?: ObjRef;
+
+    /**
+     * Optional custom attribute filter component to change or extend the default rendered one.
+     * The default is AttributeFilterButton
+     * Other component which fits this interface provided by GD is AttributeFilter
+     *
+     * Note: Props provided to this component contains many filter customizations.
+     *       E.g. parent/child filtering, cross filtering, various subcomponents etc.
+     *       see {@link @gooddata/sdk-ui-filters#IAttributeFilterButtonProps} for more details.
+     *
+     * @alpha use at your own risk
+     */
+    AttributeFilterComponent?: ComponentType<IAttributeFilterButtonProps>;
 }
 
 /**
@@ -62,4 +96,4 @@ export interface IDashboardAttributeFilterPlaceholderProps {
 /**
  * @internal
  */
-export type ValuesLimitingItem = IDashboardAttributeFilterParentItem | ObjRef;
+export type ValuesLimitingItem = IDashboardAttributeFilterParentItem | ObjRef | IDashboardDependentDateFilter;

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 import * as referencePointMock from "../../../tests/mocks/referencePointMocks.js";
 import { setComboChartUiConfigDeprecated } from "../comboChartUiConfigHelperDeprecated.js";
@@ -24,8 +24,8 @@ describe("comboChartUiConfigHelper", () => {
             const secondaryMeasureBucket = referencePoint?.uiConfig?.buckets?.secondary_measures;
             const viewBucket = referencePoint?.uiConfig?.buckets?.view;
 
-            expect(primaryMeasureBucket.title).toEqual("Measures");
-            expect(secondaryMeasureBucket.title).toEqual("Measures");
+            expect(primaryMeasureBucket.title).toEqual("Metrics");
+            expect(secondaryMeasureBucket.title).toEqual("Metrics");
             expect(viewBucket.title).toEqual("View by");
         });
 

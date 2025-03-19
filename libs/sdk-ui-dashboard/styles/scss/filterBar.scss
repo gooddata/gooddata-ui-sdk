@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 @use "sass:color";
 @use "variables";
 @use "zIndexes";
@@ -26,6 +26,25 @@ $attribute-filter-drag-handle-left: 10px;
             display: flex;
             padding-top: 2px;
         }
+    }
+}
+
+.filters-message {
+    position: absolute;
+    left: 50%;
+    display: block;
+    transform: translateX(-50%);
+    // without any z-index, the message is hidden on mobile view
+    z-index: zIndexes.$dashboard-message;
+
+    a {
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .filters-message-spacer {
+        width: 10px;
+        display: inline-block;
     }
 }
 
@@ -127,9 +146,13 @@ $attribute-filter-drag-handle-left: 10px;
     display: flex;
     align-items: stretch;
     flex-wrap: wrap;
-    width: calc(100% - variables.$scrollbar-width);
+    width: calc(100% - 150px); // minus filters configuration buttons panel width
     min-height: variables.$filter-bar-height;
     margin-right: variables.$scrollbar-width;
+
+    .apply-all-at-once & {
+        width: calc(100% - 225px); // make space for global apply button too
+    }
 
     .dash-filters-date {
         max-width: 285px;
@@ -258,7 +281,7 @@ $attribute-filter-drag-handle-left: 10px;
     padding: 3px;
     border: 2px dashed
         var(
-            --gd-palette-complementary-3,
+            --gd-palette-complementary-3-from-theme,
             color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.55)
         );
     color: kit-variables.$gd-color-state-blank;
@@ -267,7 +290,7 @@ $attribute-filter-drag-handle-left: 10px;
 
     &:hover {
         border-color: var(
-            --gd-palette-complementary-5,
+            --gd-palette-complementary-5-from-theme,
             color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.15)
         );
         color: kit-variables.$gd-color-link;
@@ -362,8 +385,8 @@ $attribute-filter-drag-handle-left: 10px;
     border-radius: 3px;
     border-style: solid;
     border-width: 1px;
-    border-color: var(--gd-palette-complementary-3, #c9d5e0);
-    box-shadow: 0 1px 3px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1)),
+    border-color: var(--gd-palette-complementary-3-from-theme, #c9d5e0);
+    box-shadow: 0 1px 3px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1)),
         0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
     background: var(--gd-palette-complementary-0, #fff);
 
@@ -469,7 +492,7 @@ $attribute-filter-drag-handle-left: 10px;
     }
 }
 
-.gd-filters-configuration {
+.filter-bar-configuration {
     position: absolute;
     top: 0;
     right: 0;
@@ -477,18 +500,272 @@ $attribute-filter-drag-handle-left: 10px;
     align-items: start;
     justify-content: center;
     height: 100%;
-    width: 40px;
-    padding-top: 18px;
 }
 
 .gd-filters-configuration-button {
+    margin: 18px 11px 0;
     height: 18px;
     width: 18px;
     cursor: pointer;
 }
 
-.gd-configuration-bubble-wrapper.overlay-wrapper.sdk-edit-mode-on
-    .gd-configuration-bubble.gd-filters-configuration-panel
-    .arrow-position {
-    display: none;
+.gd-filters-configuration__header {
+    height: 35px;
+}
+
+.gd-filter-configuration__help-icon {
+    &::before {
+        color: kit-variables.$gd-color-state-blank;
+    }
+}
+
+.gd-filter-configuration__help-tooltip {
+    width: 220px;
+}
+
+// --- Filter Views configuration panel open button
+
+.gd-filter-views {
+    display: flex;
+    align-items: center;
+}
+
+.gd-button-primary.gd-filter-views-button {
+    border: 0;
+    box-shadow: none;
+    color: kit-variables.$gd-color-state-blank;
+    background: variables.$gd-dashboards-content-backgroundColor;
+    font-size: 14px;
+    margin-top: 7px;
+
+    // override .button behavior so text and icon does not "jump" (simulate pressed button)
+    &:not(.disabled):not(.gd-button-link) {
+        &:active {
+            &::before,
+            &::after {
+                top: 1px;
+            }
+
+            .gd-button-text {
+                top: 1px;
+            }
+
+            .gd-button-icon {
+                margin-top: 1px;
+            }
+        }
+    }
+
+    // keyboard navigation highlight
+    &:focus-visible {
+        outline: auto 5px Highlight; /* For Firefox */
+        // stylelint-disable-next-line declaration-block-no-duplicate-properties
+        outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
+    }
+}
+
+.gd-button-primary.gd-filter-views-button--open {
+    color: kit-variables.$gd-color-text;
+
+    .gd-button-icon::before {
+        color: kit-variables.$gd-color-highlight;
+    }
+}
+
+.gd-filters-views__panel__divider {
+    border-right: 1px solid kit-variables.$default-gd-border-color;
+    width: 1px;
+    height: 20px;
+    margin-top: 9px;
+}
+
+// --- Filter Views configuration panel
+
+.gd-configuration-bubble-wrapper.overlay-wrapper.sdk-edit-mode-on {
+    .gd-configuration-bubble {
+        &.gd-filters-configuration-panel,
+        &.gd-filters-views__panel {
+            .arrow-position {
+                display: none;
+            }
+        }
+
+        &.gd-filters-views__panel {
+            min-width: 350px;
+            max-width: 350px;
+
+            .configuration-panel-header {
+                display: flex;
+                align-items: center;
+                height: 35px;
+                padding: 0 10px;
+            }
+        }
+
+        .configuration-panel__filter-view__add {
+            .configuration-category {
+                margin: 10px 10px 0;
+            }
+
+            // it is not easily possible to override this otherwise
+            // stylelint-disable-next-line max-nesting-depth
+            .gd-filter-view-add-hint {
+                font-size: 12px;
+                margin: 5px 0;
+            }
+        }
+
+        .configuration-panel__filter-view__list .configuration-category {
+            margin: 10px 0 0;
+            overflow: auto;
+        }
+    }
+}
+
+.gd-filters-views__panel {
+    .gd-title-with-icon {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        .gd-bubble-trigger-wrapper {
+            line-height: 14px;
+        }
+    }
+
+    .configuration-panel-header-title {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .configuration-panel-footer__content {
+        text-align: right;
+    }
+
+    .gd-input-with-label {
+        .gd-input-label {
+            font-size: 12px;
+        }
+    }
+
+    .gd-filter-view-add-checkbox-row {
+        padding: 5px 0;
+    }
+}
+
+.configuration-panel__filter-view__list {
+    .configuration-panel-footer__content {
+        text-align: left;
+
+        .gd-button {
+            display: flex;
+            height: 23px;
+            align-items: center;
+            margin-left: -10px;
+        }
+    }
+}
+
+// --- Filter Views item
+
+.gd-filter-view__item {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    height: 28px;
+
+    .gd-filter-view__item__value {
+        display: flex;
+        flex-grow: 1;
+        gap: 5px;
+        overflow: hidden;
+        cursor: pointer;
+        color: kit-variables.$gd-color-text;
+        padding: 5px 10px;
+        align-items: center;
+    }
+
+    .gd-filter-view__item__value__title {
+        gap: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .gd-filter-view__item__value__suffix {
+        flex-shrink: 0;
+        color: kit-variables.$gd-color-disabled;
+    }
+
+    .gd-filter-view__item__button {
+        display: none;
+        flex-shrink: 0;
+        height: 28px;
+        padding: 0;
+        margin: 0;
+        transition: none;
+
+        .gd-button-icon::before {
+            font-size: 12px;
+        }
+    }
+
+    &:hover {
+        background: kit-variables.$default-is-focused-background;
+
+        .gd-filter-view__item__button {
+            display: block;
+            cursor: pointer;
+        }
+    }
+
+    .gd-filter-view__item__button--delete {
+        width: 16px;
+        margin-left: 5px;
+
+        .gd-button-icon::before {
+            color: kit-variables.$gd-color-link;
+        }
+
+        &:hover {
+            .gd-button-icon::before {
+                color: kit-variables.$gd-color-negative;
+            }
+        }
+    }
+
+    .gd-filter-view__item__delete-button-wrapper {
+        padding: 0 5px;
+
+        &:hover {
+            background-color: kit-variables.$gd-delete-item-background;
+
+            ~ .gd-filter-view__item__button,
+            ~ .gd-filter-view__item__value {
+                background-color: kit-variables.$gd-delete-item-background;
+            }
+        }
+    }
+}
+
+// --- Filter Views configuration miscellaneous
+
+.gd-filter-view__list__empty {
+    text-align: center;
+    color: kit-variables.$gd-color-disabled;
+    padding: 5px 0;
+}
+
+.gd-filter-view__list__tooltip {
+    width: 230px;
+}
+
+.overlay.gd-dialog.gd-filter-view__delete-dialog {
+    min-width: 450px;
+    max-width: 450px;
+
+    .gd-filter-view__delete-dialog__item {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
 }

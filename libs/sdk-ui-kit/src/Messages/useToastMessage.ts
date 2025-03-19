@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { useContext } from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
@@ -8,10 +8,15 @@ import { IMessageDefinition, MessageType } from "./typings.js";
 /**
  * @internal
  */
-export type AddMessageType = (
-    message: MessageDescriptor,
-    options?: Pick<IMessageDefinition, "duration" | "intensive" | "values">,
-) => string;
+export type MessageParameters = Pick<
+    IMessageDefinition,
+    "duration" | "intensive" | "values" | "showMore" | "showLess" | "errorDetail"
+>;
+
+/**
+ * @internal
+ */
+export type AddMessageType = (message: MessageDescriptor, options?: MessageParameters) => string;
 
 /**
  * @internal

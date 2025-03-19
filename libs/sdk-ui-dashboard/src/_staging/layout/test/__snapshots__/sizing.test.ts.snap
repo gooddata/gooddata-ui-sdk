@@ -46,6 +46,8 @@ exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight fals
 
 exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for unknown widget 1`] = `450`;
 
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight false > should get default height for visualization switcher widget 1`] = `440`;
+
 exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget area 1`] = `440`;
 
 exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for insight widget bar 1`] = `440`;
@@ -90,6 +92,8 @@ exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true
 
 exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for unknown widget 1`] = `440`;
 
+exports[`sizing > getDashboardLayoutWidgetDefaultHeight > with customHeight true > should get default height for visualization switcher widget 1`] = `440`;
+
 exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget area 1`] = `22.5`;
 
 exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for insight widget bar 1`] = `22.5`;
@@ -131,6 +135,8 @@ exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight fals
 exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for rich text widget 1`] = `40`;
 
 exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for unknown widget 1`] = `undefined`;
+
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight false > should get max height for visualization switcher widget 1`] = `40`;
 
 exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for insight widget area 1`] = `40`;
 
@@ -174,6 +180,8 @@ exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true
 
 exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for unknown widget 1`] = `40`;
 
+exports[`sizing > getDashboardLayoutWidgetMaxGridHeight > with customHeight true > should get max height for visualization switcher widget 1`] = `40`;
+
 exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget area 1`] = `22.5`;
 
 exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for insight widget bar 1`] = `22.5`;
@@ -214,9 +222,11 @@ exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight fals
 
 exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for kpi without pop widget 1`] = `12`;
 
-exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for rich text widget 1`] = `6`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for rich text widget 1`] = `2`;
 
 exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for unknown widget 1`] = `undefined`;
+
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight false > should get min height for visualization switcher widget 1`] = `12`;
 
 exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for insight widget area 1`] = `22`;
 
@@ -258,6 +268,8 @@ exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true
 
 exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for kpi without pop widget 1`] = `6`;
 
-exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for rich text widget 1`] = `6`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for rich text widget 1`] = `2`;
 
 exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for unknown widget 1`] = `22`;
+
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > with customHeight true > should get min height for visualization switcher widget 1`] = `12`;

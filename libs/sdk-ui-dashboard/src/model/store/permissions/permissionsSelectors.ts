@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardSelector, DashboardState } from "../types.js";
 import { invariant } from "ts-invariant";
@@ -255,6 +255,18 @@ export const selectCanManageScheduledMail: DashboardSelector<boolean> = createSe
 );
 
 /**
+ * Returns whether the current user has permissions to create automation.
+ *
+ * @internal
+ */
+export const selectCanCreateAutomation: DashboardSelector<boolean> = createSelector(
+    selectPermissions,
+    (state) => {
+        return state?.canCreateAutomation ?? false;
+    },
+);
+
+/**
  * Returns whether the current user has permissions to create/edit/delete attribute hierarchy.
  *
  * @internal
@@ -263,5 +275,17 @@ export const selectCanManageAttributeHierarchy: DashboardSelector<boolean> = cre
     selectCanManageWorkspace,
     (canManageWorkspace) => {
         return canManageWorkspace;
+    },
+);
+
+/**
+ * Returns whether the current user has permissions necessary to create a filter view
+ *
+ * @public
+ */
+export const selectCanCreateFilterView: DashboardSelector<boolean> = createSelector(
+    selectPermissions,
+    (state) => {
+        return state?.canCreateFilterView ?? false;
     },
 );

@@ -1,13 +1,19 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useMemo } from "react";
 import { Col, Row } from "react-grid-system";
 import reverse from "lodash/fp/reverse.js";
 
-import { HeightResizerHotspot, useIsDraggingWidget } from "../../dragAndDrop/index.js";
 import { DashboardLayoutGridRowProps } from "./DashboardLayoutGridRow.js";
 import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
 import { IDashboardLayoutItemKeyGetter } from "./interfaces.js";
-import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+import {
+    IDashboardLayoutItemFacade,
+    IDashboardLayoutSectionFacade,
+} from "../../../_staging/dashboard/legacyFluidLayout/index.js";
+import { HeightResizerHotspot } from "../dragAndDrop/Resize/HeightResizerHotspot.js";
+import { useIsDraggingWidget } from "../../dragAndDrop/index.js";
+import { ExtendedDashboardWidget } from "../../../model/index.js";
+import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
 
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) => item.index().toString();
 
@@ -30,6 +36,8 @@ export function DashboardLayoutGridRowEdit<TWidget>(
     } = props;
 
     const isDraggingWidget = useIsDraggingWidget();
+    const exportStyles = useSlideSizeStyle(renderMode, "nested");
+
     const rowItems = useMemo(
         () =>
             items.map((item) => (
@@ -58,8 +66,9 @@ export function DashboardLayoutGridRowEdit<TWidget>(
                                   key={`HeightResizerHotspot-${index}`}
                                   screen={screen}
                                   getLayoutDimensions={getLayoutDimensions}
-                                  section={section}
-                                  items={itemsInRow}
+                                  // TWidget to ExtendedDashboardWidget (originally unknown)
+                                  section={section as IDashboardLayoutSectionFacade<ExtendedDashboardWidget>}
+                                  items={itemsInRow as IDashboardLayoutItemFacade<ExtendedDashboardWidget>[]}
                               />
                           </Col>,
                       );
@@ -68,7 +77,7 @@ export function DashboardLayoutGridRowEdit<TWidget>(
     );
 
     return (
-        <Row className="gd-fluidlayout-row s-gd-fluid-layout-row">
+        <Row className="gd-fluidlayout-row s-gd-fluid-layout-row" style={exportStyles}>
             {gridRowRenderer
                 ? gridRowRenderer({
                       children: extendedRows,

@@ -1,10 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
-import {
-    ActionOptions,
-    SupportedPackageManager,
-    TargetAppLanguage,
-    TargetBackendType,
-} from "../_base/types.js";
+// (C) 2021-2024 GoodData Corporation
+import { ActionOptions, SupportedPackageManager, TargetAppLanguage } from "../_base/types.js";
 import {
     createHostnameValidator,
     languageValidator,
@@ -13,7 +8,6 @@ import {
     validOrDie,
 } from "../_base/inputHandling/validators.js";
 import {
-    promptBackend,
     promptDashboardIdWithoutChoice,
     promptHostname,
     promptLanguage,
@@ -21,7 +15,6 @@ import {
     promptWorkspaceIdWithoutChoice,
 } from "../_base/terminal/prompts.js";
 import {
-    getBackendFromOptions,
     getDashboardFromOptions,
     getHostnameFromOptions,
     getWorkspaceFromOptions,
@@ -60,7 +53,6 @@ export type InitCmdActionConfig = {
     name: string;
     pluginIdentifier: string;
     packageManager: SupportedPackageManager;
-    backend: TargetBackendType;
     hostname: string;
     workspace: string;
     dashboard: string;
@@ -87,15 +79,13 @@ export async function getInitCmdActionConfig(
         validOrDie("plugin-name", pluginName, pluginNameValidator);
     }
 
-    const backendFromOptions = getBackendFromOptions(options);
-    const hostnameFromOptions = getHostnameFromOptions(backendFromOptions, options);
+    const hostnameFromOptions = getHostnameFromOptions(options);
     const languageFromOptions = getLanguageFromOptions(options);
     const workspaceFromOptions = getWorkspaceFromOptions(options);
     const dashboardFromOptions = getDashboardFromOptions(options);
     const packageManagerFromOptions = getPackageManagerFromOptions(options);
     const name = pluginName ?? (await promptName());
-    const backend = backendFromOptions ?? (await promptBackend());
-    const hostname = hostnameFromOptions ?? (await promptHostname(backend));
+    const hostname = hostnameFromOptions ?? (await promptHostname());
     const language = languageFromOptions ?? (await promptLanguage());
     const workspace = workspaceFromOptions ?? (await promptWorkspaceIdWithoutChoice());
     const dashboard =
@@ -106,13 +96,12 @@ export async function getInitCmdActionConfig(
 
     // validate hostname once again; this is to catch the case when hostname is provided as
     // option but the backend is not and user is prompted for it. the user may select backend
-    // for which the protocol used in the hostname is not valid (http on bear)
-    validOrDie("hostname", hostname, createHostnameValidator(backend));
+    // for which the protocol used in the hostname is not valid
+    validOrDie("hostname", hostname, createHostnameValidator());
 
     return {
         name,
         pluginIdentifier: convertToPluginIdentifier(name),
-        backend,
         hostname,
         workspace,
         dashboard,

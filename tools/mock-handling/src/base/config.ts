@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import identity from "lodash/identity.js";
 import pick from "lodash/pick.js";
 import pickBy from "lodash/pickBy.js";
@@ -12,15 +12,7 @@ function mergeConfigs(config: DataRecorderConfig, prevConfig = DEFAULT_CONFIG): 
     return {
         ...prevConfig,
         ...pickBy(
-            pick(config, [
-                "hostname",
-                "projectId",
-                "username",
-                "password",
-                "recordingDir",
-                "backend",
-                "replaceProjectId",
-            ]),
+            pick(config, ["hostname", "projectId", "tigerToken", "recordingDir", "replaceProjectId"]),
             identity,
         ),
     };
@@ -30,10 +22,8 @@ function retrieveConfigFromObject(obj: OptionValues): DataRecorderConfig {
     return {
         hostname: obj.hostname ?? null,
         projectId: obj.projectId ?? null,
-        username: obj.username ?? null,
-        password: obj.password ?? null,
+        tigerToken: obj.tigerToken ?? null,
         recordingDir: obj.recordingDir ?? null,
-        backend: obj.backend ?? null,
         replaceProjectId: obj.replaceProjectId ?? null,
     };
 }

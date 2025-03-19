@@ -1,7 +1,7 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { FormattedMessage, defineMessage } from "react-intl";
+import { Bubble, BubbleHoverTrigger, Message } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
 import ConfigurationPanelContent from "./ConfigurationPanelContent.js";
@@ -17,10 +17,13 @@ import {
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import { insightHasAttributes } from "@gooddata/sdk-model";
+import { insightBucket, insightHasAttributes } from "@gooddata/sdk-model";
 import NameSubsection from "../configurationControls/axis/NameSubsection.js";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
 import { messages } from "../../../locales.js";
+import { NumberOfClustersControl } from "../configurationControls/clustering/NumberOfClustersControl.js";
+import { BucketNames } from "@gooddata/sdk-ui";
+import { ClusteringThresholdControl } from "../configurationControls/clustering/ClusteringThresholdControl.js";
 
 export default class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
     protected isControlDisabled(): boolean {
@@ -30,7 +33,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
     }
 
     protected renderConfigurationPanel(): React.ReactNode {
-        const { xAxisVisible, gridEnabled, yAxisVisible } = this.getControlProperties();
+        const { xAxisVisible, gridEnabled, yAxisVisible, clusteringEnabled } = this.getControlProperties();
 
         const { featureFlags, propertiesMeta, properties, pushData, insight, type } = this.props;
         const controls = properties?.controls;
@@ -40,11 +43,15 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
         const yAxisNameSectionDisabled = controlsDisabled || itemsOnYAxis !== 1;
         const isNameSubsectionVisible: boolean = featureFlags.enableAxisNameConfiguration as boolean;
         const isAxisLabelsFormatEnabled: boolean = featureFlags.enableAxisLabelFormat as boolean;
+        const showClusteringSection: boolean = featureFlags.enableScatterPlotClustering as boolean;
+        const isScatterPlotClusteringDisabled = this.isClusteringDisabled();
+        const showingPartialClusters = propertiesMeta?.showingPartialClusters;
 
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
                 <div>
                     {this.renderColorSection()}
+                    {this.renderLegendSection()}
                     <ConfigSection
                         id="xaxis_section"
                         title={messages.xaxisTitle.id}
@@ -131,6 +138,43 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                             pushData={pushData}
                         />
                     </ConfigSection>
+                    {showClusteringSection ? (
+                        <ConfigSection
+                            id="clustering_section"
+                            title={messages.clusteringTitle.id}
+                            propertiesMeta={propertiesMeta}
+                            properties={properties}
+                            pushData={pushData}
+                            valuePath="clustering.enabled"
+                            canBeToggled
+                            toggledOn={clusteringEnabled}
+                            toggleDisabled={controlsDisabled || isScatterPlotClusteringDisabled}
+                            showDisabledMessage={isScatterPlotClusteringDisabled}
+                            toggleMessageId={defineMessage({ id: "properties.clustering.disabled" }).id}
+                        >
+                            <NumberOfClustersControl
+                                valuePath="clustering.numberOfClusters"
+                                disabled={controlsDisabled || isScatterPlotClusteringDisabled}
+                                properties={properties}
+                                pushData={pushData}
+                            />
+                            <ClusteringThresholdControl
+                                valuePath="clustering.threshold"
+                                disabled={controlsDisabled || isScatterPlotClusteringDisabled}
+                                properties={properties}
+                                pushData={pushData}
+                            />
+                            {showingPartialClusters ? (
+                                <Message type="progress" className="adi-input-progress">
+                                    <h4>
+                                        <FormattedMessage id="properties.clustering.amount.partial.title" />
+                                    </h4>
+                                    <FormattedMessage id="properties.clustering.amount.partial.description" />
+                                </Message>
+                            ) : null}
+                        </ConfigSection>
+                    ) : null}
+                    {this.renderAdvancedSection()}
                 </div>
                 <Bubble
                     className={this.getBubbleClassNames()}
@@ -166,6 +210,29 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
         return !isDisabled && !insightHasAttributes(this.props.insight);
     }
 
+    private isClusteringDisabled() {
+        const isDisabled = super.isControlDisabled();
+        const segmentByBucket = this.props?.insight
+            ? insightBucket(this.props.insight, BucketNames.SEGMENT)
+            : undefined;
+        const viewByBucket = this.props?.insight
+            ? insightBucket(this.props.insight, BucketNames.ATTRIBUTE)
+            : undefined;
+        const measuresBucket = this.props?.insight
+            ? insightBucket(this.props.insight, BucketNames.MEASURES)
+            : undefined;
+        const secondaryMeasuresBucket = this.props?.insight
+            ? insightBucket(this.props.insight, BucketNames.SECONDARY_MEASURES)
+            : undefined;
+        const hasSegmentBucketItems = (segmentByBucket?.items?.length ?? 0) > 0;
+        const hasViewBucketItems = (viewByBucket?.items?.length ?? 0) > 0;
+        const hasXAxisMeasure = (measuresBucket?.items?.length ?? 0) === 1;
+        const hasYAxisMeasure = (secondaryMeasuresBucket?.items?.length ?? 0) === 1;
+        return (
+            isDisabled || hasSegmentBucketItems || !hasViewBucketItems || !hasXAxisMeasure || !hasYAxisMeasure
+        );
+    }
+
     private getBubbleClassNames() {
         return cx("bubble-primary", {
             invisible: !this.isControlDisabled(),
@@ -178,11 +245,13 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
         const xAxisVisible = propertiesControls?.xaxis?.visible ?? true;
         const yAxisVisible = propertiesControls?.yaxis?.visible ?? true;
         const gridEnabled = propertiesControls?.grid?.enabled ?? true;
+        const clusteringEnabled = propertiesControls?.clustering?.enabled ?? false;
 
         return {
             xAxisVisible,
             yAxisVisible,
             gridEnabled,
+            clusteringEnabled,
         };
     }
 }

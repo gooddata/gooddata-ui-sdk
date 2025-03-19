@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
 
 /*
@@ -40,8 +40,7 @@ export function pivotConfigToVisProperties(tableConfig: IPivotTableConfig = {}):
      * Indeed, the properties content is stored in 'properties' entry in insight AND the content itself
      * is wrapped in another object under 'properties' entry.
      *
-     * For more see: getSupportedProperties in propertiesHelper.ts or the code that creates insight from
-     * bear visualization object.
+     * For more see: getSupportedProperties in propertiesHelper.ts or the code that creates insight
      */
     return {
         controls: {

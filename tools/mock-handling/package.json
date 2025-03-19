@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/mock-handling",
-    "version": "9.9.2",
+    "version": "10.23.0-alpha.43",
     "author": "GoodData",
     "description": "GoodData SDK Mock data capture and management tool",
     "repository": {
@@ -24,6 +24,7 @@
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "build": "bash scripts/build.sh",
+        "build-generate-version": "bash scripts/build.sh --genVersionOnly",
         "test": "vitest watch",
         "test-once": "vitest run",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
@@ -38,15 +39,14 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/api-model-bear": "workspace:*",
-        "@gooddata/sdk-backend-bear": "workspace:*",
+        "@gooddata/sdk-backend-tiger": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "chalk": "^4.1.1",
         "commander": "^8.1.0",
         "inquirer": "^8.2.3",
         "json-stable-stringify": "^1.0.1",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "ora": "^5.3.0",
         "p-map": "^3.0.0",
         "prettier": "~2.5.0",

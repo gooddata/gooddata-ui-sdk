@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ScreenSize } from "@gooddata/sdk-model";
 import flatMap from "lodash/flatMap.js";
 import React, { useMemo } from "react";
@@ -6,7 +6,7 @@ import { RenderMode } from "../../../types.js";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
-} from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+} from "../../../_staging/dashboard/legacyFluidLayout/facade/interfaces.js";
 import { DashboardLayoutGridRow } from "./DashboardLayoutGridRow.js";
 import { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer.js";
 import { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer.js";
@@ -22,6 +22,8 @@ import {
 import { DashboardLayoutSectionOverlayController } from "../DashboardItemOverlay/DashboardItemOverlayController.js";
 import last from "lodash/last.js";
 import { DashboardLayoutGridRowEdit } from "./DashboardLayoutGridRowEdit.js";
+import { useSectionExportData } from "../../export/index.js";
+import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
 
 /**
  * @alpha
@@ -64,7 +66,9 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         screen,
         renderMode,
     } = props;
-    const renderProps = { section, screen, renderMode };
+    const exportData = useSectionExportData(0);
+    const exportStyles = useSlideSizeStyle(renderMode, "section");
+    const renderProps = { section, screen, renderMode, exportData: exportData?.section };
 
     const items = useMemo(() => {
         if (renderMode === "edit") {
@@ -126,6 +130,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
 
     return sectionRenderer({
         ...renderProps,
+        exportStyles,
         DefaultSectionRenderer: DashboardLayoutSectionRenderer,
         children: (
             <>
@@ -133,6 +138,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
                     section,
                     screen,
                     DefaultSectionHeaderRenderer: DashboardLayoutSectionHeaderRenderer,
+                    exportData,
                 })}
                 {items}
                 {renderMode === "edit" ? <DashboardLayoutSectionOverlayController section={section} /> : null}

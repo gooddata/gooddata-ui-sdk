@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
 import { localIdRef, uriRef } from "@gooddata/sdk-model";
 
@@ -17,7 +17,6 @@ import {
     DrillToDashboardFromProductAttributeDefinition,
     DrillToDashboardWithThreeSectionsLocalIdentifier,
     DrillToToInsightFromWonMeasureDefinition,
-    KpiWidgetRef,
     SimpleDashboardIdentifier,
     SimpleDashboardSimpleSortedTableWidgetDrillTargets,
     SimpleSortedTableWidgetRef,
@@ -95,18 +94,6 @@ describe("removeDrillsForInsightWidgetHandler", () => {
             const event: DashboardCommandFailed<RemoveDrillsForInsightWidget> =
                 await Tester.dispatchAndWaitFor(
                     removeDrillsForInsightWidget(uriRef("missing"), [localIdentifier], TestCorrelation),
-                    "GDC.DASH/EVT.COMMAND.FAILED",
-                );
-
-            expect(event.payload.message).toMatchSnapshot();
-            expect(event.payload.reason).toMatchSnapshot();
-            expect(event.correlationId).toEqual(TestCorrelation);
-        });
-
-        it("should fail if trying to remove drills of kpi widget", async () => {
-            const event: DashboardCommandFailed<RemoveDrillsForInsightWidget> =
-                await Tester.dispatchAndWaitFor(
-                    removeDrillsForInsightWidget(KpiWidgetRef, [localIdentifier], TestCorrelation),
                     "GDC.DASH/EVT.COMMAND.FAILED",
                 );
 

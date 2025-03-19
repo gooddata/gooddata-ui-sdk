@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback, useMemo } from "react";
 import { idRef, IdentifierRef, UriRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -12,17 +12,20 @@ import {
 import {
     DefaultDashboardWidget,
     DefaultDashboardInsightMenuButton,
-    LegacyDashboardInsightMenuButton,
     DefaultDashboardInsightMenu,
-    LegacyDashboardInsightMenu,
     DefaultInsightBody,
     DefaultDashboardInsight,
-    DefaultDashboardKpi,
     DefaultDashboardInsightComponentSetFactory,
-    DefaultDashboardKpiComponentSetFactory,
     DefaultDashboardInsightMenuTitle,
     DefaultDashboardRichText,
     DefaultDashboardRichTextComponentSetFactory,
+    DefaultDashboardVisualizationSwitcher,
+    DefaultDashboardVisualizationSwitcherComponentSetFactory,
+    DefaultVisualizationSwitcherToolbar,
+    DefaultDashboardNestedLayout,
+    DefaultDashboardLayoutComponentSetFactory,
+    DefaultDashboardRichTextMenu,
+    DefaultDashboardRichTextMenuTitle,
 } from "../../widget/index.js";
 import { IDashboardProps } from "../types.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -33,18 +36,23 @@ import {
     InsightBodyComponentProvider,
     InsightMenuButtonComponentProvider,
     InsightMenuComponentProvider,
-    KpiComponentProvider,
     DateFilterComponentProvider,
     InsightMenuTitleComponentProvider,
     DashboardContentComponentProvider,
     RichTextComponentProvider,
+    VisualizationSwitcherComponentProvider,
+    VisualizationSwitcherToolbarComponentProvider,
+    DashboardLayoutComponentProvider,
+    RichTextMenuComponentProvider,
+    RichTextMenuTitleComponentProvider,
 } from "../../dashboardContexts/index.js";
 import {
     AttributeFilterComponentSet,
+    DashboardLayoutWidgetComponentSet,
     DateFilterComponentSet,
     InsightWidgetComponentSet,
-    KpiWidgetComponentSet,
     RichTextWidgetComponentSet,
+    VisualizationSwitcherWidgetComponentSet,
 } from "../../componentDefinition/index.js";
 import { DefaultDashboardMainContent } from "../DefaultDashboardContent/DefaultDashboardMainContent.js";
 
@@ -60,15 +68,20 @@ interface IUseDashboardResult {
     insightBodyProvider: InsightBodyComponentProvider;
     insightMenuButtonProvider: InsightMenuButtonComponentProvider;
     insightMenuProvider: InsightMenuComponentProvider;
+    richTextMenuProvider: RichTextMenuComponentProvider;
     insightMenuTitleProvider: InsightMenuTitleComponentProvider;
-    kpiProvider: KpiComponentProvider;
+    richTextMenuTitleProvider: RichTextMenuTitleComponentProvider;
     dashboardContentProvider: DashboardContentComponentProvider;
     insightWidgetComponentSet: InsightWidgetComponentSet;
-    kpiWidgetComponentSet: KpiWidgetComponentSet;
     attributeFilterComponentSet: AttributeFilterComponentSet;
     dateFilterComponentSet: DateFilterComponentSet;
     richTextProvider: RichTextComponentProvider;
     richTextWidgetComponentSet: RichTextWidgetComponentSet;
+    visualizationSwitcherProvider: VisualizationSwitcherComponentProvider;
+    visualizationSwitcherWidgetComponentSet: VisualizationSwitcherWidgetComponentSet;
+    visualizationSwitcherToolbarComponentProvider: VisualizationSwitcherToolbarComponentProvider;
+    dashboardLayoutProvider: DashboardLayoutComponentProvider;
+    dashboardLayoutWidgetComponentSet: DashboardLayoutWidgetComponentSet;
 }
 
 export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
@@ -80,13 +93,16 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         InsightComponentProvider,
         InsightBodyComponentProvider,
         InsightMenuButtonComponentProvider,
-        insightMenuItemsProvider,
         InsightMenuComponentProvider,
         InsightMenuTitleComponentProvider,
         InsightComponentSetProvider,
-        KpiComponentProvider,
         DashboardContentComponentProvider,
         RichTextComponentProvider,
+        RichTextMenuComponentProvider,
+        RichTextMenuTitleComponentProvider,
+        VisualizationSwitcherComponentProvider,
+        VisualizationSwitcherToolbarComponentProvider,
+        DashboardLayoutComponentProvider,
     } = props;
 
     const backend = useBackendStrict(props.backend);
@@ -144,10 +160,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         (insight, widget) => {
             const userSpecified = InsightMenuButtonComponentProvider?.(insight, widget);
             // if user customizes the items, always use the "new" default menu button
-            const FallbackDashboardInsightMenuButtonInner = insightMenuItemsProvider
-                ? DefaultDashboardInsightMenuButton
-                : LegacyDashboardInsightMenuButton;
-            return userSpecified ?? FallbackDashboardInsightMenuButtonInner;
+            return userSpecified ?? DefaultDashboardInsightMenuButton;
         },
         [InsightMenuButtonComponentProvider],
     );
@@ -156,10 +169,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         (insight, widget) => {
             const userSpecified = InsightMenuComponentProvider?.(insight, widget);
             // if user customizes the items, always use the "new" default menu
-            const FallbackDashboardInsightMenuInner = insightMenuItemsProvider
-                ? DefaultDashboardInsightMenu
-                : LegacyDashboardInsightMenu;
-            return userSpecified ?? FallbackDashboardInsightMenuInner;
+            return userSpecified ?? DefaultDashboardInsightMenu;
         },
         [InsightMenuComponentProvider],
     );
@@ -172,13 +182,14 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         [InsightMenuTitleComponentProvider],
     );
 
-    const kpiProvider = useCallback<KpiComponentProvider>(
-        (kpi, widget) => {
-            const userSpecified = KpiComponentProvider?.(kpi, widget);
-            return userSpecified ?? DefaultDashboardKpi;
-        },
-        [KpiComponentProvider],
-    );
+    const visualizationSwitcherToolbarComponentProvider =
+        useCallback<VisualizationSwitcherToolbarComponentProvider>(
+            (widget) => {
+                const userSpecified = VisualizationSwitcherToolbarComponentProvider?.(widget);
+                return userSpecified ?? DefaultVisualizationSwitcherToolbar;
+            },
+            [VisualizationSwitcherToolbarComponentProvider],
+        );
 
     const dashboardOrRef = useMemo(() => {
         return typeof dashboard === "string" ? idRef(dashboard) : dashboard;
@@ -190,10 +201,6 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
             ? InsightComponentSetProvider(defaultComponentSet)
             : defaultComponentSet;
     }, [InsightComponentSetProvider, insightProvider]);
-
-    const kpiWidgetComponentSet = useMemo<KpiWidgetComponentSet>(() => {
-        return DefaultDashboardKpiComponentSetFactory(kpiProvider);
-    }, [kpiProvider]);
 
     const attributeFilterComponentSet = useMemo<AttributeFilterComponentSet>(() => {
         return DefaultDashboardAttributeFilterComponentSetFactory(attributeFilterProvider);
@@ -211,9 +218,50 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         [RichTextComponentProvider],
     );
 
+    const richTextMenuProvider = useCallback<RichTextMenuComponentProvider>(
+        (richText) => {
+            const userSpecified = RichTextMenuComponentProvider?.(richText);
+            // if user customizes the items, always use the "new" default menu
+            return userSpecified ?? DefaultDashboardRichTextMenu;
+        },
+        [RichTextMenuComponentProvider],
+    );
+
+    const richTextMenuTitleProvider = useCallback<RichTextMenuTitleComponentProvider>(
+        (widget) => {
+            const userSpecified = RichTextMenuTitleComponentProvider?.(widget);
+            return userSpecified ?? DefaultDashboardRichTextMenuTitle;
+        },
+        [RichTextMenuTitleComponentProvider],
+    );
+
     const richTextWidgetComponentSet = useMemo<RichTextWidgetComponentSet>(() => {
         return DefaultDashboardRichTextComponentSetFactory(richTextProvider);
     }, [richTextProvider]);
+
+    const visualizationSwitcherProvider = useCallback<VisualizationSwitcherComponentProvider>(
+        (visualizationSwitcher) => {
+            const userSpecified = VisualizationSwitcherComponentProvider?.(visualizationSwitcher);
+            return userSpecified ?? DefaultDashboardVisualizationSwitcher;
+        },
+        [VisualizationSwitcherComponentProvider],
+    );
+
+    const visualizationSwitcherWidgetComponentSet = useMemo<VisualizationSwitcherWidgetComponentSet>(() => {
+        return DefaultDashboardVisualizationSwitcherComponentSetFactory(visualizationSwitcherProvider);
+    }, [visualizationSwitcherProvider]);
+
+    const dashboardLayoutProvider = useCallback<DashboardLayoutComponentProvider>(
+        (dashboardLayout) => {
+            const userSpecified = DashboardLayoutComponentProvider?.(dashboardLayout);
+            return userSpecified ?? DefaultDashboardNestedLayout;
+        },
+        [DashboardLayoutComponentProvider],
+    );
+
+    const dashboardLayoutWidgetComponentSet = useMemo<DashboardLayoutWidgetComponentSet>(() => {
+        return DefaultDashboardLayoutComponentSetFactory(dashboardLayoutProvider);
+    }, [dashboardLayoutProvider]);
 
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
@@ -231,13 +279,18 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         insightMenuButtonProvider,
         insightMenuProvider,
         insightMenuTitleProvider,
-        kpiProvider,
         dashboardContentProvider,
         insightWidgetComponentSet,
-        kpiWidgetComponentSet,
         attributeFilterComponentSet,
         dateFilterComponentSet,
         richTextProvider,
+        richTextMenuProvider,
+        richTextMenuTitleProvider,
         richTextWidgetComponentSet,
+        visualizationSwitcherProvider,
+        visualizationSwitcherWidgetComponentSet,
+        visualizationSwitcherToolbarComponentProvider,
+        dashboardLayoutProvider,
+        dashboardLayoutWidgetComponentSet,
     };
 };

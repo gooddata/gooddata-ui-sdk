@@ -1,0 +1,751 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "OpenAPI definition",
+        "version": "v0"
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": "GoodData.CN endpoint"
+        }
+    ],
+    "tags": [
+        {
+            "name": "actions",
+            "description": "| execution of some form of computation (RPC over JSON)"
+        }
+    ],
+    "paths": {
+        "/api/v1/actions/notifications/{notificationId}/markAsRead": {
+            "post": {
+                "tags": ["actions"],
+                "summary": "Mark notification as read.",
+                "description": "Mark in-platform notification by its ID as read.",
+                "operationId": "markAsReadNotification",
+                "parameters": [
+                    {
+                        "name": "notificationId",
+                        "in": "path",
+                        "description": "Notification ID to mark as read.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/notifications/markAsRead": {
+            "post": {
+                "tags": ["actions"],
+                "summary": "Mark all notifications as read.",
+                "description": "Mark all user in-platform notifications as read.",
+                "operationId": "markAsReadNotificationAll",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "query",
+                        "description": "Workspace ID where to mark notifications as read.",
+                        "required": false,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/notificationChannels/{notificationChannelId}/test": {
+            "post": {
+                "tags": ["Notification Channels", "actions"],
+                "summary": "Test existing notification channel.",
+                "description": "Tests the existing notification channel by sending a test notification.",
+                "operationId": "testExistingNotificationChannel",
+                "parameters": [
+                    {
+                        "name": "notificationChannelId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TestDestinationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The result of the test of a notification channel connection.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestResponse"
+                                },
+                                "examples": {
+                                    "An example of a successful connection": {
+                                        "description": "An example of a successful connection",
+                                        "value": {
+                                            "successful": true
+                                        }
+                                    },
+                                    "An example of an unsuccessful connection": {
+                                        "description": "An example of an unsuccessful connection",
+                                        "value": {
+                                            "successful": false,
+                                            "error": "Authentication failed"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/notificationChannels/test": {
+            "post": {
+                "tags": ["Notification Channels", "actions"],
+                "summary": "Test notification channel.",
+                "description": "Tests the notification channel by sending a test notification.",
+                "operationId": "testNotificationChannel",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TestDestinationRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "The result of the test of a notification channel connection.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestResponse"
+                                },
+                                "examples": {
+                                    "An example of a successful connection": {
+                                        "description": "An example of a successful connection",
+                                        "value": {
+                                            "successful": true
+                                        }
+                                    },
+                                    "An example of an unsuccessful connection": {
+                                        "description": "An example of an unsuccessful connection",
+                                        "value": {
+                                            "successful": false,
+                                            "error": "Authentication failed"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/notifications": {
+            "get": {
+                "tags": ["Notification Channels", "actions"],
+                "summary": "Get latest notifications.",
+                "description": "Get latest in-platform notifications for the current user.",
+                "operationId": "getNotifications",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "query",
+                        "description": "Workspace ID to filter notifications by.",
+                        "required": false,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "isRead",
+                        "in": "query",
+                        "description": "Filter notifications by read status.",
+                        "required": false,
+                        "style": "form",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Zero-based page index (0..N)",
+                        "required": false,
+                        "style": "form",
+                        "schema": {
+                            "minimum": 0,
+                            "type": "string",
+                            "default": "0"
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "The size of the page to be returned.",
+                        "required": false,
+                        "style": "form",
+                        "schema": {
+                            "minimum": 1,
+                            "type": "string",
+                            "default": "20"
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Additional meta information to include in the response.",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": ["total", "ALL"]
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Notifications"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "TestResponse": {
+                "required": ["successful"],
+                "type": "object",
+                "properties": {
+                    "successful": {
+                        "type": "boolean",
+                        "description": "A flag indicating whether test passed or not.",
+                        "example": true
+                    },
+                    "error": {
+                        "type": "string",
+                        "description": "Field containing more details in case of a failure. Details are available to a privileged user only.",
+                        "example": "Authentication failed"
+                    }
+                },
+                "description": "Response from notification channel testing."
+            },
+            "DefaultSmtp": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {
+                    "fromEmail": {
+                        "type": "string",
+                        "description": "E-mail address to send notifications from. Currently this does not have any effect. E-mail 'no-reply@gooddata.com' is used instead.",
+                        "format": "email",
+                        "default": "no-reply@gooddata.com"
+                    },
+                    "fromEmailName": {
+                        "type": "string",
+                        "description": "An optional e-mail name to send notifications from. Currently this does not have any effect. E-mail from name 'GoodData' is used instead.",
+                        "default": "GoodData"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The destination type.",
+                        "enum": ["DEFAULT_SMTP"]
+                    }
+                },
+                "description": "Default SMTP destination for notifications."
+            },
+            "InPlatform": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "The destination type.",
+                        "enum": ["IN_PLATFORM"]
+                    }
+                },
+                "description": "In-platform destination for notifications."
+            },
+            "NotificationChannelDestination": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/Webhook"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Smtp"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DefaultSmtp"
+                    },
+                    {
+                        "$ref": "#/components/schemas/InPlatform"
+                    }
+                ]
+            },
+            "Smtp": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {
+                    "fromEmail": {
+                        "type": "string",
+                        "description": "E-mail address to send notifications from.",
+                        "format": "email",
+                        "default": "no-reply@gooddata.com"
+                    },
+                    "fromEmailName": {
+                        "type": "string",
+                        "description": "An optional e-mail name to send notifications from.",
+                        "default": "GoodData"
+                    },
+                    "host": {
+                        "type": "string",
+                        "description": "The SMTP server address."
+                    },
+                    "port": {
+                        "type": "integer",
+                        "description": "The SMTP server port.",
+                        "format": "int32",
+                        "enum": [25, 465, 587, 2525]
+                    },
+                    "username": {
+                        "type": "string",
+                        "description": "The SMTP server username."
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "The SMTP server password.",
+                        "writeOnly": true
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The destination type.",
+                        "enum": ["SMTP"]
+                    }
+                },
+                "description": "Custom SMTP destination for notifications. The properties host, port, username, and password are required on create and update"
+            },
+            "TestDestinationRequest": {
+                "required": ["destination"],
+                "type": "object",
+                "properties": {
+                    "destination": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/DefaultSmtp"
+                            },
+                            {
+                                "$ref": "#/components/schemas/InPlatform"
+                            },
+                            {
+                                "$ref": "#/components/schemas/Smtp"
+                            },
+                            {
+                                "$ref": "#/components/schemas/Webhook"
+                            }
+                        ]
+                    }
+                },
+                "description": "Request body with notification channel destination to test."
+            },
+            "Webhook": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {
+                    "url": {
+                        "maxLength": 255,
+                        "pattern": "https?\\://.*",
+                        "type": "string",
+                        "description": "The webhook URL.",
+                        "example": "https://webhook.site/something"
+                    },
+                    "token": {
+                        "maxLength": 10000,
+                        "type": "string",
+                        "description": "Bearer token for the webhook.",
+                        "nullable": true,
+                        "writeOnly": true,
+                        "example": "secret"
+                    },
+                    "hasToken": {
+                        "maxLength": 10000,
+                        "type": "boolean",
+                        "description": "Flag indicating if webhook has a token.",
+                        "nullable": true,
+                        "readOnly": true
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The destination type.",
+                        "enum": ["WEBHOOK"]
+                    }
+                },
+                "description": "Webhook destination for notifications. The property url is required on create and update."
+            },
+            "AlertDescription": {
+                "required": ["condition", "metric"],
+                "type": "object",
+                "properties": {
+                    "metric": {
+                        "type": "string"
+                    },
+                    "condition": {
+                        "type": "string"
+                    },
+                    "currentValues": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AlertEvaluationRow"
+                        }
+                    },
+                    "attribute": {
+                        "type": "string"
+                    },
+                    "filterCount": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalValueCount": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "triggeredCount": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "threshold": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "formattedThreshold": {
+                        "type": "string"
+                    },
+                    "lowerThreshold": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "upperThreshold": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "remainingAlertEvaluationCount": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": ["SUCCESS", "ERROR", "INTERNAL_ERROR", "TIMEOUT"]
+                    },
+                    "errorMessage": {
+                        "type": "string"
+                    },
+                    "traceId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AlertEvaluationRow": {
+                "type": "object",
+                "properties": {
+                    "primaryMetric": {
+                        "$ref": "#/components/schemas/MetricRecord"
+                    },
+                    "secondaryMetric": {
+                        "$ref": "#/components/schemas/MetricRecord"
+                    },
+                    "computedMetric": {
+                        "$ref": "#/components/schemas/MetricRecord"
+                    },
+                    "labelValue": {
+                        "type": "string"
+                    }
+                }
+            },
+            "AutomationNotification": {
+                "required": ["content"],
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/NotificationContent"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "content": {
+                                "$ref": "#/components/schemas/WebhookMessage"
+                            }
+                        }
+                    }
+                ]
+            },
+            "ExportResult": {
+                "required": ["exportId", "fileName", "status"],
+                "type": "object",
+                "properties": {
+                    "fileName": {
+                        "type": "string"
+                    },
+                    "exportId": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": ["SUCCESS", "ERROR", "INTERNAL_ERROR", "TIMEOUT"]
+                    },
+                    "fileUri": {
+                        "type": "string"
+                    },
+                    "errorMessage": {
+                        "type": "string"
+                    },
+                    "traceId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "MetricRecord": {
+                "required": ["value"],
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "formattedValue": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Notification": {
+                "required": ["createdAt", "data", "id", "isRead"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "workspaceId": {
+                        "type": "string"
+                    },
+                    "automationId": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/AutomationNotification"
+                            },
+                            {
+                                "$ref": "#/components/schemas/TestNotification"
+                            }
+                        ]
+                    },
+                    "isRead": {
+                        "type": "boolean"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "NotificationContent": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "AUTOMATION": "#/components/schemas/AutomationNotification",
+                        "TEST": "#/components/schemas/TestNotification"
+                    }
+                }
+            },
+            "Notifications": {
+                "required": ["data", "meta"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Notification"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/NotificationsMeta"
+                    }
+                }
+            },
+            "NotificationsMeta": {
+                "type": "object",
+                "properties": {
+                    "total": {
+                        "$ref": "#/components/schemas/NotificationsMetaTotal"
+                    }
+                }
+            },
+            "NotificationsMetaTotal": {
+                "required": ["all", "unread"],
+                "type": "object",
+                "properties": {
+                    "unread": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "all": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                }
+            },
+            "TestNotification": {
+                "required": ["message"],
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/NotificationContent"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "message": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ]
+            },
+            "WebhookAutomationInfo": {
+                "required": ["dashboardURL", "id", "isCustomDashboardURL"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "dashboardURL": {
+                        "type": "string"
+                    },
+                    "isCustomDashboardURL": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "WebhookMessage": {
+                "required": ["data", "timestamp", "type"],
+                "type": "object",
+                "properties": {
+                    "timestamp": {
+                        "type": "string"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/WebhookMessageData"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["automation-task.completed", "automation-task.limit-exceeded"]
+                    }
+                }
+            },
+            "WebhookMessageData": {
+                "required": ["automation"],
+                "type": "object",
+                "properties": {
+                    "automation": {
+                        "$ref": "#/components/schemas/WebhookAutomationInfo"
+                    },
+                    "recipients": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/WebhookRecipient"
+                        }
+                    },
+                    "details": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string"
+                        }
+                    },
+                    "remainingActionCount": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "tabularExports": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ExportResult"
+                        }
+                    },
+                    "visualExports": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ExportResult"
+                        }
+                    },
+                    "alert": {
+                        "$ref": "#/components/schemas/AlertDescription"
+                    }
+                }
+            },
+            "WebhookRecipient": {
+                "required": ["email", "id"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

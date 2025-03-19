@@ -15,7 +15,6 @@ Here are couple of hints to achieve optimal setup:
     -   `common/temp`
     -   All `dist` directories in all packages (in both `libs` and `tools`)
     -   All `esm` directories in all packages (in `libs`)
-    -   In `libs/api-client-bear` exclude `umd`
     -   If IntelliJ does not automatically exclude `node_modules`, then mark them as excludes as well
 
 ## Refactoring

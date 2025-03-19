@@ -162,7 +162,7 @@
             &:hover,
             &:active {
                 background-color: var(
-                    --gd-palette-complementary-2,
+                    --gd-palette-complementary-2-from-theme,
                     color.adjust(variables.$default-gd-border-color, $alpha: -0.8)
                 );
             }

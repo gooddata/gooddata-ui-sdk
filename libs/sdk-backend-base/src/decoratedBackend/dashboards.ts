@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     IWorkspaceDashboardsService,
     IGetDashboardOptions,
@@ -12,6 +12,7 @@ import {
     IExportResult,
     IGetDashboardPluginOptions,
     IDashboardsQuery,
+    IRawExportCustomOverrides,
 } from "@gooddata/sdk-backend-spi";
 import {
     IFilter,
@@ -31,6 +32,9 @@ import {
     IDashboardPermissions,
     IExistingDashboard,
     IDateFilter,
+    IDashboardFilterView,
+    IDashboardAttributeFilterConfig,
+    IExecutionDefinition,
 } from "@gooddata/sdk-model";
 
 /**
@@ -85,6 +89,30 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
 
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult> {
         return this.decorated.exportDashboardToPdf(ref, filters);
+    }
+
+    exportDashboardToPresentation(
+        ref: ObjRef,
+        format: "PPTX" | "PDF",
+        filters?: FilterContextItem[],
+        options?: {
+            widgetIds?: ObjRef[];
+            filename?: string;
+        },
+    ): Promise<IExportResult> {
+        return this.decorated.exportDashboardToPresentation(ref, format, filters, options);
+    }
+
+    exportDashboardToTabular(ref: ObjRef): Promise<IExportResult> {
+        return this.decorated.exportDashboardToTabular(ref);
+    }
+
+    exportDashboardToCSVRaw(
+        definition: IExecutionDefinition,
+        fileName: string,
+        customOverrides?: IRawExportCustomOverrides,
+    ): Promise<IExportResult> {
+        return this.decorated.exportDashboardToCSVRaw(definition, fileName, customOverrides);
     }
 
     createScheduledMail(
@@ -152,16 +180,25 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         return this.decorated.getWidgetReferencedObjects(widget, types);
     }
 
-    getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]> {
-        return this.decorated.getResolvedFiltersForWidget(widget, filters);
+    getResolvedFiltersForWidget(
+        widget: IWidget,
+        filters: IFilter[],
+        attributeFilterConfigs: IDashboardAttributeFilterConfig[],
+    ): Promise<IFilter[]> {
+        return this.decorated.getResolvedFiltersForWidget(widget, filters, attributeFilterConfigs);
     }
 
     getResolvedFiltersForWidgetWithMultipleDateFilters(
         widget: IWidget,
         commonDateFilters: IDateFilter[],
         otherFilters: IFilter[],
+        attributeFilterConfigs: IDashboardAttributeFilterConfig[],
     ): Promise<IFilter[]> {
-        return this.decorated.getResolvedFiltersForWidget(widget, [...commonDateFilters, ...otherFilters]);
+        return this.decorated.getResolvedFiltersForWidget(
+            widget,
+            [...commonDateFilters, ...otherFilters],
+            attributeFilterConfigs,
+        );
     }
 
     getDashboardPlugins(options?: IGetDashboardPluginOptions): Promise<IDashboardPlugin[]> {
@@ -186,5 +223,21 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
 
     validateDashboardsExistence(dashboardRefs: ObjRef[]): Promise<IExistingDashboard[]> {
         return this.decorated.validateDashboardsExistence(dashboardRefs);
+    }
+
+    getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]> {
+        return this.decorated.getFilterViewsForCurrentUser(dashboardRef);
+    }
+
+    createFilterView(filterView: IDashboardFilterView): Promise<IDashboardFilterView> {
+        return this.decorated.createFilterView(filterView);
+    }
+
+    deleteFilterView(ref: ObjRef): Promise<void> {
+        return this.decorated.deleteFilterView(ref);
+    }
+
+    setFilterViewAsDefault(ref: ObjRef, isDefault: boolean): Promise<void> {
+        return this.decorated.setFilterViewAsDefault(ref, isDefault);
     }
 }

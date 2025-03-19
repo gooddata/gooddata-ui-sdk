@@ -1,5 +1,6 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
+export type { IDrillToUrlPlaceholder } from "./dashboard/drillUrl.js";
 export {
     joinDrillUrlParts,
     splitDrillUrlParts,

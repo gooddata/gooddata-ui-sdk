@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { MouseEvent } from "react";
 
 import { DashboardItemContent } from "./DashboardItemContent.js";
@@ -12,7 +12,7 @@ export interface IDashboardItemBaseProps {
     /**
      * Render prop for the item headline.
      */
-    renderHeadline?: (clientHeight?: number) => React.ReactNode;
+    renderHeadline?: (clientHeight?: number, clientWidth?: number) => React.ReactNode;
     /**
      * Render prop for content rendered inside the main content before the visualization container.
      */
@@ -49,10 +49,18 @@ export interface IDashboardItemBaseProps {
      * Flag indicating the given item is selected.
      */
     isSelected?: boolean;
+
+    /**
+     * Is export flag.
+     */
+    isExport?: boolean;
     /**
      * Callback to call when an item is selected. Called with the relevant mouse event if originating from a click.
      */
     onSelected?: (e?: MouseEvent) => void;
+
+    onEnter?: () => void;
+    onLeave?: () => void;
 }
 
 const noopRender = () => null;
@@ -69,7 +77,10 @@ export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
     contentRef,
     isSelectable = false,
     isSelected = false,
+    isExport = false,
     onSelected,
+    onEnter,
+    onLeave,
 }) => {
     return (
         <DashboardItemContentWrapper>
@@ -81,11 +92,14 @@ export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
                         ref={contentRef}
                         isSelectable={isSelectable}
                         isSelected={isSelected}
+                        isExport={isExport}
                         onSelected={onSelected}
+                        onEnter={onEnter}
+                        onLeave={onLeave}
                     >
                         {renderBeforeVisualization()}
                         <div className={visualizationClassName}>
-                            {renderHeadline(clientHeight)}
+                            {renderHeadline(clientHeight, clientWidth)}
                             {children({ clientWidth, clientHeight })}
                         </div>
                         {renderAfterVisualization()}

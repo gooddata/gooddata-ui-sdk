@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IPagedResource } from "../common/paging.js";
 import { IExecutionFactory } from "./execution/index.js";
 import { IWorkspaceInsightsService } from "./insights/index.js";
@@ -16,6 +16,11 @@ import { IWorkspaceFactsService } from "./facts/index.js";
 import { IWorkspaceAccessControlService } from "./accessControl/index.js";
 import { IWorkspaceUserGroupsQuery } from "./userGroups/index.js";
 import { IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
+import { IWorkspaceExportDefinitionsService } from "./exportDefinitions/index.js";
+import { IDataFiltersService } from "./dataFilter/index.js";
+import { IWorkspaceLogicalModelService } from "./ldm/model.js";
+import { IWorkspaceAutomationService } from "./automations/index.js";
+import { IGenAIService } from "./genAI/index.js";
 
 /**
  * Represents an analytical workspace hosted on a backend.
@@ -32,13 +37,30 @@ export interface IAnalyticalWorkspace {
     /**
      * Returns details about the analytical workspace.
      * Throws error in case the workspace does not exist.
+     *
+     * @param includeParentPrefixes - Optional parameter to include parent prefixes in the workspace descriptor.
      */
-    getDescriptor(): Promise<IWorkspaceDescriptor>;
+    getDescriptor(includeParentPrefixes?: boolean): Promise<IWorkspaceDescriptor>;
+
+    /**
+     * Updates the details of the workspace.
+     * Throws error in case the workspace does not exist.
+     *
+     * @param descriptor - properties to update
+     */
+    updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<IWorkspaceDescriptor>;
 
     /**
      * Returns parent analytical workspace when this workspace has a parent, undefined otherwise.
      */
     getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined>;
+
+    /**
+     * Returns service that can be used to query and update workspace automations.
+     *
+     * @alpha
+     */
+    automations(): IWorkspaceAutomationService;
 
     /**
      * Returns factory that can be used to query workspace catalog items - attributes, measures, facts and date data sets.
@@ -122,6 +144,30 @@ export interface IAnalyticalWorkspace {
      * @alpha
      */
     attributeHierarchies(): IAttributeHierarchiesService;
+
+    /**
+     * Returns service that operates over export definitions
+     * @alpha
+     */
+    exportDefinitions(): IWorkspaceExportDefinitionsService;
+
+    /**
+     * Returns service that operates over Data Filters.
+     * @alpha
+     */
+    dataFilters(): IDataFiltersService;
+
+    /**
+     * Returns experimental service that operates over logical data model.
+     * @internal
+     */
+    logicalModel(): IWorkspaceLogicalModelService;
+
+    /**
+     * Returns service that can be used to access GenAI services.
+     * @beta
+     */
+    genAI(): IGenAIService;
 }
 
 /**
@@ -147,6 +193,36 @@ export interface IWorkspaceDescriptor {
      * Prefixes of parent workspaces
      */
     parentPrefixes?: string[];
+    /**
+     * Early access attribute value of the workspace
+     * @deprecated - use earlyAccessValues instead
+     */
+    earlyAccess?: string;
+
+    /**
+     * Early access flags of the workspace
+     */
+    earlyAccessValues?: string[];
+
+    /**
+     * Number of child workspaces
+     */
+    childWorkspacesCount?: number;
+}
+
+/**
+ * Workspace descriptor properties to update.
+ * Optional properties can be set to null to delete the value.
+ *
+ * @see IWorkspaceDescriptor
+ * @public
+ */
+export interface IWorkspaceDescriptorUpdate {
+    title?: string;
+    description?: string;
+    prefix?: string | null;
+    earlyAccess?: string | null;
+    earlyAccessValues?: string[] | null;
 }
 
 /**
@@ -169,6 +245,43 @@ export interface IWorkspacesQueryFactory {
      * @public
      */
     forCurrentUser(): IWorkspacesQuery;
+}
+
+/**
+ * Filter options for workspaces query.
+ *
+ * @public
+ */
+export interface IWorkspacesQueryFilter {
+    /**
+     * Filter by description of the workspace
+     */
+    description?: string;
+    /**
+     * Filter by earlyAccess property on the workspace
+     */
+    earlyAccess?: string;
+
+    /**
+     * Filter by entity identifiers prefix in the workspace
+     */
+    prefix?: string;
+    /**
+     * When applied, only root workspaces without a parent workspace are queried
+     */
+    rootWorkspacesOnly?: boolean;
+}
+
+/**
+ * Additional options for workspaces query.
+ *
+ * @public
+ */
+export interface IWorkspacesQueryOptions {
+    /**
+     * Include count of child workspaces in the result
+     */
+    includeChildWorkspacesCount?: boolean;
 }
 
 /**
@@ -196,6 +309,20 @@ export interface IWorkspacesQuery {
      * @param workspaceId - identifier of the parent workspace
      */
     withParent(workspaceId: string | undefined): IWorkspacesQuery;
+
+    /**
+     * Sets filter of workspaces by given attributes
+     * @param filter - an object of attributes and values to filter by
+     * @alpha
+     */
+    withFilter(filter: IWorkspacesQueryFilter): IWorkspacesQuery;
+
+    /**
+     * Sets additional options for the query.
+     * @param options - an object of options to modify the query behavior
+     * @alpha
+     */
+    withOptions(options: IWorkspacesQueryOptions): IWorkspacesQuery;
 
     /**
      * Sets a text to search.

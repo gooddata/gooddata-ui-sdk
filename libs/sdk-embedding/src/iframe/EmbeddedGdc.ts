@@ -1,49 +1,50 @@
 // (C) 2020-2024 GoodData Corporation
-import {
-    ILocalIdentifierQualifier as IBearLocalIdentifierQualifier,
-    ObjQualifier as BearObjQualifier,
-    isObjIdentifierQualifier as isBearObjIdentifierQualifier,
-    isObjectUriQualifier as isBearObjectUriQualifier,
-} from "@gooddata/api-model-bear";
+import { ILocalIdentifierQualifier, ObjQualifier, RankingFilterOperator } from "./legacyTypes.js";
+
 import { DashboardDateFilterConfigMode, DashboardAttributeFilterConfigMode } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 
+/**
+ * Attribute filter config with props non relevant for execution, but important for UI.
+ * @public
+ */
+export interface IAttributeFilterConfig {
+    /**
+     * Configures the visibility mode of the attribute filter.
+     *
+     * @alpha
+     */
+    mode?: DashboardAttributeFilterConfigMode;
+    /**
+     * Configures the label used for representing attribute filter elements in UI.
+     *
+     * @alpha
+     */
+    displayAsLabel?: ObjQualifier;
+}
 /**
  * Attribute filters were exposed in the 'old' format that did not match backend and used the
  * textFilter boolean indicator. We have to honor this for the public API.
  * @public
  */
-export interface IPositiveAttributeFilter {
+export interface IPositiveAttributeFilter extends IAttributeFilterConfig {
     positiveAttributeFilter: {
         displayForm: ObjQualifier;
         in: string[];
         textFilter?: boolean;
         selectionMode?: AttributeFilterItemSelectionMode;
     };
-    /**
-     * Configures the visibility mode of the attribute filter.
-     *
-     * @alpha
-     */
-    mode?: DashboardAttributeFilterConfigMode;
 }
-
 /**
  * @public
  */
-export interface INegativeAttributeFilter {
+export interface INegativeAttributeFilter extends IAttributeFilterConfig {
     negativeAttributeFilter: {
         displayForm: ObjQualifier;
         notIn: string[];
         textFilter?: boolean;
         selectionMode?: "multi";
     };
-    /**
-     * Configures the visibility mode of the attribute filter.
-     *
-     * @alpha
-     */
-    mode?: DashboardAttributeFilterConfigMode;
 }
 
 /**
@@ -98,11 +99,6 @@ export interface IRelativeDateFilter {
 /**
  * @public
  */
-export type RankingFilterOperator = "TOP" | "BOTTOM";
-
-/**
- * @public
- */
 export interface IRankingFilter {
     rankingFilter: {
         measure: ILocalIdentifierQualifier;
@@ -126,16 +122,6 @@ export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
  * @public
  */
 export type FilterItem = DateFilterItem | AttributeFilterItem | IRankingFilter;
-
-/**
- * @public
- */
-export type ILocalIdentifierQualifier = IBearLocalIdentifierQualifier;
-
-/**
- * @public
- */
-export type ObjQualifier = BearObjQualifier;
 
 /**
  * @public
@@ -209,16 +195,6 @@ export function isPositiveAttributeFilter(filter: unknown): filter is IPositiveA
 export function isNegativeAttributeFilter(filter: unknown): filter is INegativeAttributeFilter {
     return !isEmpty(filter) && (filter as INegativeAttributeFilter).negativeAttributeFilter !== undefined;
 }
-
-/**
- * @public
- */
-export const isObjIdentifierQualifier = isBearObjIdentifierQualifier;
-
-/**
- * @public
- */
-export const isObjectUriQualifier = isBearObjectUriQualifier;
 
 /**
  * @public

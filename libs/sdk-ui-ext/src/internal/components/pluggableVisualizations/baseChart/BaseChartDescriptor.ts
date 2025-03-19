@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { IInsight, IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import {
@@ -28,8 +28,8 @@ export abstract class BaseChartDescriptor implements IVisualizationDescriptor {
     ): IVisualizationSizeInfo {
         return {
             width: {
-                default: 6,
-                min: 4,
+                default: settings.enableDashboardFlexibleLayout ? 4 : 6,
+                min: 2,
                 max: layoutDescriptor.gridColumnsCount,
             },
             height: {
@@ -65,12 +65,14 @@ export abstract class BaseChartDescriptor implements IVisualizationDescriptor {
         insight: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
+        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ): IInsight {
         const intersection = drillDownContext.event.drillContext.intersection;
         const withFilters = addIntersectionFiltersToInsight(
             insight,
             intersection,
             backendSupportsElementUris,
+            enableDuplicatedLabelValuesInAttributeFilter,
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }

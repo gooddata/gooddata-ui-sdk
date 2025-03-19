@@ -1,6 +1,14 @@
-// (C) 2022-2024 GoodData Corporation
-import { IDashboardAttributeFilter, IDashboardDateFilter, IInsight, IKpi } from "@gooddata/sdk-model";
+// (C) 2022-2025 GoodData Corporation
+import React from "react";
+import {
+    IDashboardAttributeFilter,
+    IDashboardDateFilter,
+    IFilter,
+    IInsight,
+    IKpi,
+} from "@gooddata/sdk-model";
 import { ICustomWidget } from "../../model/types/layoutTypes.js";
+import { ILayoutItemPath, ILayoutSectionPath } from "../../types.js";
 
 /**
  * @internal
@@ -16,6 +24,10 @@ export type DraggableContentItemType =
     | "kpi-placeholder"
     | "richText"
     | "richTextListItem"
+    | "visualizationSwitcher"
+    | "visualizationSwitcherListItem"
+    | "dashboardLayout"
+    | "dashboardLayoutListItem"
     | "custom";
 
 /**
@@ -94,15 +106,22 @@ export function isBaseDraggableLayoutItem(item: any): item is BaseDraggableMovin
 export type BaseDraggableMovingItem = BaseDraggableLayoutItem & {
     title: string;
     isOnlyItemInSection: boolean;
+    // TODO LX-608: remove
     sectionIndex: number;
+    // TODO LX-608: remove
     itemIndex: number;
+    // TODO LX-608: make required
+    layoutPath?: ILayoutItemPath;
 };
 
 /**
  * @internal
  */
 export function isBaseDraggableMovingItem(item: any): item is BaseDraggableMovingItem {
-    return isBaseDraggableLayoutItem(item) && item.sectionIndex !== undefined && item.itemIndex !== undefined;
+    return (
+        isBaseDraggableLayoutItem(item) &&
+        (item.layoutPath !== undefined || (item.sectionIndex !== undefined && item.itemIndex !== undefined))
+    );
 }
 
 /**
@@ -161,6 +180,64 @@ export type RichTextDraggableListItem = BaseDraggableLayoutItem & {
  */
 export function isRichTextDraggableListItem(item: any): item is RichTextDraggableListItem {
     return item.type === "richTextListItem";
+}
+
+/**
+ * @internal
+ */
+export type VisualizationSwitcherDraggableItem = BaseDraggableMovingItem & {
+    type: "visualizationSwitcher";
+};
+
+/**
+ * @internal
+ */
+export function isVisualizationSwitcherDraggableItem(item: any): item is VisualizationSwitcherDraggableItem {
+    return item.type === "visualizationSwitcher";
+}
+
+/**
+ * @internal
+ */
+export type VisualizationSwitcherDraggableListItem = BaseDraggableLayoutItem & {
+    type: "visualizationSwitcherListItem";
+};
+
+/**
+ * @internal
+ */
+export function isVisualizationSwitcherDraggableListItem(
+    item: any,
+): item is VisualizationSwitcherDraggableListItem {
+    return item.type === "visualizationSwitcherListItem";
+}
+
+/**
+ * @internal
+ */
+export type DashboardLayoutDraggableItem = BaseDraggableMovingItem & {
+    type: "dashboardLayout";
+};
+
+/**
+ * @internal
+ */
+export function isDashboardLayoutDraggableItem(item: any): item is DashboardLayoutDraggableItem {
+    return item.type === "dashboardLayout";
+}
+
+/**
+ * @internal
+ */
+export type DashboardLayoutDraggableListItem = BaseDraggableLayoutItem & {
+    type: "dashboardLayoutListItem";
+};
+
+/**
+ * @internal
+ */
+export function isDashboardLayoutDraggableListItem(item: any): item is DashboardLayoutDraggableListItem {
+    return item.type === "dashboardLayoutListItem";
 }
 
 /**
@@ -252,6 +329,10 @@ export type DraggableContentItem =
     | KpiPlaceholderDraggableItem
     | RichTextDraggableItem
     | RichTextDraggableListItem
+    | VisualizationSwitcherDraggableItem
+    | VisualizationSwitcherDraggableListItem
+    | DashboardLayoutDraggableItem
+    | DashboardLayoutDraggableListItem
     | CustomWidgetDraggableItem
     | CustomDraggableItem;
 
@@ -262,6 +343,8 @@ export type DraggableLayoutItem =
     | InsightDraggableItem
     | KpiDraggableItem
     | RichTextDraggableItem
+    | VisualizationSwitcherDraggableItem
+    | DashboardLayoutDraggableItem
     | CustomWidgetDraggableItem;
 
 /**
@@ -293,6 +376,10 @@ export type DraggableItemComponentTypeMapping = {
     "kpi-placeholder": KpiPlaceholderDraggableItem;
     richText: RichTextDraggableItem;
     richTextListItem: RichTextDraggableListItem;
+    visualizationSwitcher: VisualizationSwitcherDraggableItem;
+    visualizationSwitcherListItem: VisualizationSwitcherDraggableListItem;
+    dashboardLayout: DashboardLayoutDraggableItem;
+    dashboardLayoutListItem: DashboardLayoutDraggableListItem;
     custom: CustomDraggableItem;
 };
 
@@ -301,7 +388,10 @@ export type DraggableItemComponentTypeMapping = {
  */
 export interface HeightResizerDragItem {
     type: "internal-height-resizer";
+    // TODO LX-608: remove
     sectionIndex: number;
+    // TODO LX-608: make required
+    sectionPath?: ILayoutSectionPath;
     itemIndexes: number[];
     widgetHeights: number[];
     initialLayoutDimensions: DOMRect;
@@ -314,14 +404,20 @@ export interface HeightResizerDragItem {
  */
 export interface WidthResizerDragItem {
     type: "internal-width-resizer";
+    // TODO LX-608: remove
     sectionIndex: number;
+    // TODO LX-608: remove
     itemIndex: number;
+    // TODO LX-608: make required
+    layoutPath?: ILayoutItemPath;
     gridColumnWidth: number;
     gridColumnHeightInPx: number;
     currentWidth: number;
     initialLayoutDimensions: DOMRect;
     minLimit: number;
     maxLimit: number;
+    // TODO LX-608: make required
+    rowIndex?: number;
 }
 
 /**
@@ -345,6 +441,10 @@ export type CustomDashboardInsightListItemComponentProps = {
     showDescriptionPanel?: boolean;
     onDescriptionPanelOpen?: () => void;
     metadataTimeZone?: string;
+    filters?: IFilter[];
+    useRichText?: boolean;
+    useReferences?: boolean;
+    LoadingComponent?: React.ComponentType;
 };
 
 /**
@@ -361,6 +461,7 @@ export type IWrapCreatePanelItemWithDragProps = {
     dragItem: DraggableItem;
     hideDefaultPreview?: boolean;
     disabled?: boolean;
+    onDragStart?: (item: DraggableItem) => void;
 };
 
 /**
@@ -387,6 +488,7 @@ export type IWrapCreatePanelItemWithDragComponent = React.ComponentType<IWrapCre
 export interface IWrapInsightListItemWithDragProps {
     children: JSX.Element;
     insight: IInsight;
+    onDragStart?: (item: DraggableItem) => void;
 }
 
 /**

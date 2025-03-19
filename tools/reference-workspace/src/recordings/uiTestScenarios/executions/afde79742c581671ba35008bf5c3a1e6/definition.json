@@ -1,0 +1,64 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "dt_oppcreated_timestamp.quarter", "type": "displayForm" },
+                "localIdentifier": "a_dt_oppcreated_timestamp.quarter"
+            }
+        }
+    ],
+    "buckets": [
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "localIdentifier": "measures"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "dt_oppcreated_timestamp.quarter",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_dt_oppcreated_timestamp.quarter"
+                    }
+                }
+            ],
+            "localIdentifier": "trend"
+        },
+        { "items": [], "localIdentifier": "segment" }
+    ],
+    "dimensions": [
+        { "itemIdentifiers": ["measureGroup"] },
+        { "itemIdentifiers": ["a_dt_oppcreated_timestamp.quarter"] }
+    ],
+    "filters": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": { "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050", "type": "measure" }
+                    }
+                },
+                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+            }
+        }
+    ],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

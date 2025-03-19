@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import {
     Dimension,
     SortKeyAttribute,
@@ -72,7 +72,7 @@ function convertAttributeSortType(sortItem: ISortItem): SortKeyAttributeAttribut
  */
 function extractItemValueFromElement(elementUri: string | null): string | null {
     // no reasonable way to avoid the super-linear backtracking right now
-    // eslint-disable-next-line regexp/no-super-linear-backtracking
+    // eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/no-unused-capturing-group
     const parsedUri = elementUri?.match(/obj\/([^/]*)(\/elements\?id=)?(.*)$/);
 
     if (parsedUri?.[3]) {

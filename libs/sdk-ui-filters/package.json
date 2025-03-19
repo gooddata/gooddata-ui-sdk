@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-filters",
-    "version": "9.9.2",
+    "version": "10.23.0-alpha.43",
     "description": "GoodData.UI SDK - Filter Components",
     "repository": {
         "type": "git",
@@ -14,6 +14,7 @@
     "exports": {
         ".": "./esm/index.js",
         "./styles/css/*": "./styles/css/*",
+        "./styles/scss/*": "./styles/scss/*",
         "./internal": "./esm/internal.js"
     },
     "types": "./esm/index.d.ts",
@@ -45,10 +46,12 @@
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check",
-        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check",
+        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check && npm run validate-theming",
+        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check && npm run validate-theming",
         "validate-locales": "cd ../sdk-ui && npm run validate-locales",
-        "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci"
+        "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci",
+        "validate-theming": "npm run scss && node scripts/validateCss.js",
+        "scss": "sass --load-path=node_modules --load-path=node_modules/fixed-data-table-2/dist styles/scss:styles/css"
     },
     "dependencies": {
         "@gooddata/sdk-backend-spi": "workspace:*",
@@ -63,7 +66,7 @@
         "downshift": "^3.4.7",
         "fixed-data-table-2": "^1.2.0",
         "json-stable-stringify": "^1.0.1",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "moment": "^2.29.4",
         "react-day-picker": "^8.7.1",
         "react-intl": "^6.4.1",
@@ -82,6 +85,7 @@
         "@gooddata/eslint-config": "^4.1.0",
         "@gooddata/reference-workspace": "workspace:*",
         "@gooddata/sdk-backend-mockingbird": "workspace:*",
+        "@gooddata/sdk-ui-theme-provider": "workspace:*",
         "@gooddata/stylelint-config": "^5.0.0",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.36.0",

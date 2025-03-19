@@ -1,35 +1,45 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import { ComponentType } from "react";
+import { ILoadingProps } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     CustomDashboardInsightComponent,
     CustomDashboardInsightMenuButtonComponent,
     CustomDashboardInsightMenuComponent,
     CustomDashboardInsightMenuTitleComponent,
-    CustomDashboardKpiComponent,
     CustomDashboardWidgetComponent,
     CustomInsightBodyComponent,
     IInsightMenuItem,
     CustomDashboardRichTextComponent,
+    CustomDashboardVisualizationSwitcherComponent,
+    CustomVisualizationSwitcherToolbarComponent,
+    CustomDashboardNestedLayoutComponent,
+    CustomDashboardRichTextMenuComponent,
+    IRichTextMenuItem,
+    CustomDashboardRichTextMenuTitleComponent,
 } from "../widget/types.js";
 import { DashboardConfig, ExtendedDashboardWidget } from "../../model/index.js";
+import { CustomTitleComponent, CustomTopBarComponent, ITitleProps, ITopBarProps } from "../topBar/types.js";
 import {
     CustomDashboardAttributeFilterComponent,
     CustomDashboardDateFilterComponent,
+    CustomFilterBarComponent,
+    IFilterBarProps,
 } from "../filterBar/types.js";
+import { CustomDashboardLayoutComponent, IDashboardLayoutProps } from "../layout/types.js";
 import { RenderMode } from "../../types.js";
 import {
     IInsight,
     IDashboardAttributeFilter,
-    IKpiWidget,
     IInsightWidget,
-    IKpi,
     IDashboardDateFilter,
     ObjRef,
     IDashboard,
     IWorkspacePermissions,
     IRichTextWidget,
+    IVisualizationSwitcherWidget,
+    IDashboardLayout,
 } from "@gooddata/sdk-model";
-import { ComponentType } from "react";
 
 /**
  * @public
@@ -78,7 +88,7 @@ export type OptionalInsightBodyComponentProvider = OptionalProvider<InsightBodyC
  * @alpha
  */
 export type InsightMenuButtonComponentProvider = (
-    insight: IInsight,
+    insight: IInsight | undefined,
     widget: IInsightWidget,
 ) => CustomDashboardInsightMenuButtonComponent;
 
@@ -91,7 +101,7 @@ export type OptionalInsightMenuButtonComponentProvider = OptionalProvider<Insigh
  * @alpha
  */
 export type InsightMenuComponentProvider = (
-    insight: IInsight,
+    insight: IInsight | undefined,
     widget: IInsightWidget,
 ) => CustomDashboardInsightMenuComponent;
 
@@ -101,10 +111,20 @@ export type InsightMenuComponentProvider = (
 export type OptionalInsightMenuComponentProvider = OptionalProvider<InsightMenuComponentProvider>;
 
 /**
+ * @alpha
+ */
+export type RichTextMenuComponentProvider = (widget: IRichTextWidget) => CustomDashboardRichTextMenuComponent;
+
+/**
+ * @alpha
+ */
+export type OptionalRichTextMenuComponentProvider = OptionalProvider<RichTextMenuComponentProvider>;
+
+/**
  * @internal
  */
 export type InsightMenuTitleComponentProvider = (
-    insight: IInsight,
+    insight: IInsight | undefined,
     widget: IInsightWidget,
 ) => CustomDashboardInsightMenuTitleComponent;
 
@@ -125,14 +145,14 @@ export type InsightMenuItemsProvider = (
 ) => IInsightMenuItem[];
 
 /**
- * @public
+ * @alpha
  */
-export type KpiComponentProvider = (kpi: IKpi, widget: IKpiWidget) => CustomDashboardKpiComponent;
-
-/**
- * @public
- */
-export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider>;
+export type RichTextMenuItemsProvider = (
+    widget: IRichTextWidget,
+    defaultItems: IRichTextMenuItem[],
+    closeMenu: () => void,
+    renderMode: RenderMode,
+) => IRichTextMenuItem[];
 
 /**
  * @public
@@ -143,6 +163,56 @@ export type RichTextComponentProvider = (widget: IRichTextWidget) => CustomDashb
  * @public
  */
 export type OptionalRichTextComponentProvider = OptionalProvider<RichTextComponentProvider>;
+
+/**
+ * @internal
+ */
+export type RichTextMenuTitleComponentProvider = (
+    widget: IRichTextWidget,
+) => CustomDashboardRichTextMenuTitleComponent;
+
+/**
+ * @internal
+ */
+export type OptionalRichTextMenuTitleComponentProvider = OptionalProvider<RichTextMenuTitleComponentProvider>;
+
+/**
+ * @public
+ */
+export type VisualizationSwitcherComponentProvider = (
+    visualizationSwitcher: IVisualizationSwitcherWidget,
+) => CustomDashboardVisualizationSwitcherComponent;
+
+/**
+ * @alpha
+ */
+export type DashboardLayoutComponentProvider = (
+    widget: IDashboardLayout,
+) => CustomDashboardNestedLayoutComponent;
+
+/**
+ * @alpha
+ */
+export type VisualizationSwitcherToolbarComponentProvider = (
+    widget: IVisualizationSwitcherWidget,
+) => CustomVisualizationSwitcherToolbarComponent;
+
+/**
+ * @alpha
+ */
+export type OptionalVisualizationSwitcherToolbarComponentProvider =
+    OptionalProvider<VisualizationSwitcherToolbarComponentProvider>;
+
+/**
+ * @alpha
+ */
+export type OptionalVisualizationSwitcherComponentProvider =
+    OptionalProvider<VisualizationSwitcherComponentProvider>;
+
+/**
+ * @alpha
+ */
+export type OptionalDashboardLayoutComponentProvider = OptionalProvider<DashboardLayoutComponentProvider>;
 
 /**
  * @public
@@ -167,6 +237,56 @@ export type AttributeFilterComponentProvider = (
  * @public
  */
 export type OptionalAttributeFilterComponentProvider = OptionalProvider<AttributeFilterComponentProvider>;
+
+/**
+ * @public
+ */
+export type TopBarComponentProvider = (props: ITopBarProps) => CustomTopBarComponent;
+
+/**
+ * @public
+ */
+export type OptionalTopBarComponentProvider = OptionalProvider<TopBarComponentProvider>;
+
+/**
+ * @public
+ */
+export type FilterBarComponentProvider = (props: IFilterBarProps) => CustomFilterBarComponent;
+
+/**
+ * @public
+ */
+export type OptionalTitleComponentProvider = OptionalProvider<TitleComponentProvider>;
+
+/**
+ * @public
+ */
+export type TitleComponentProvider = (props: ITitleProps) => CustomTitleComponent;
+
+/**
+ * @public
+ */
+export type OptionalFilterBarComponentProvider = OptionalProvider<FilterBarComponentProvider>;
+
+/**
+ * @public
+ */
+export type OptionalLayoutComponentProvider = OptionalProvider<LayoutComponentProvider>;
+
+/**
+ * @public
+ */
+export type LayoutComponentProvider = (props: IDashboardLayoutProps) => CustomDashboardLayoutComponent;
+
+/**
+ * @public
+ */
+export type OptionalLoadingComponentProvider = OptionalProvider<LoadingComponentProvider>;
+
+/**
+ * @public
+ */
+export type LoadingComponentProvider = (props: ILoadingProps) => ComponentType<ILoadingProps>;
 
 /**
  * @alpha

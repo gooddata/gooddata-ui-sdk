@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import {
     IInsightDefinition,
@@ -28,14 +28,17 @@ export const intersection: IDrillEventIntersectionElement[] = [
                 uri: directSalesUri,
             },
             attributeHeader: {
-                name: Department.attribute.alias,
-                localIdentifier: Department.attribute.localIdentifier,
+                name: Department.Default.attribute.alias!,
+                localIdentifier: Department.Default.attribute.localIdentifier,
                 uri: departmentUri,
                 ref: {
                     uri: departmentUri,
                 },
                 identifier: null,
                 formOf: null,
+                primaryLabel: {
+                    uri: departmentUri,
+                },
             },
         },
     },
@@ -46,21 +49,24 @@ export const intersection: IDrillEventIntersectionElement[] = [
                 uri: westCoastUri,
             },
             attributeHeader: {
-                name: Region.attribute.alias,
-                localIdentifier: Region.attribute.localIdentifier,
+                name: Region.Default.attribute.alias!,
+                localIdentifier: Region.Default.attribute.localIdentifier,
                 uri: regionUri,
                 ref: {
                     uri: regionUri,
                 },
                 identifier: null,
                 formOf: null,
+                primaryLabel: {
+                    uri: regionUri,
+                },
             },
         },
     },
     {
         header: {
             measureHeaderItem: {
-                name: Won.measure.title,
+                name: Won.measure.title!,
                 format: "#,##0.00",
                 localIdentifier: Won.measure.localIdentifier,
                 uri: "/gdc/md/lmnivlu3sowt63jvr2mo1wlse5fyv203/obj/9203",
@@ -73,16 +79,20 @@ export const intersection: IDrillEventIntersectionElement[] = [
 export const sourceInsightDef: IInsightDefinition = newInsightDefinition("visualizationClass-url", (b) => {
     return b
         .title("sourceInsight")
-        .buckets([newBucket("measure", Won), newBucket("view", Department), newBucket("segment", Region)])
-        .filters([newNegativeAttributeFilter(Department, [])]);
+        .buckets([
+            newBucket("measure", Won),
+            newBucket("view", Department.Default),
+            newBucket("segment", Region.Default),
+        ])
+        .filters([newNegativeAttributeFilter(Department.Default, [])]);
 });
 
 const replacedAttributeRegion = newAttribute(uriRef(targetUri), (b) =>
-    b.localId(Region.attribute.localIdentifier),
+    b.localId(Region.Default.attribute.localIdentifier),
 );
 
 const replacedAttributeDepartment = newAttribute(uriRef(targetUri), (b) =>
-    b.localId(Department.attribute.localIdentifier),
+    b.localId(Department.Default.attribute.localIdentifier),
 );
 
 export const expectedInsightDefRegion: IInsightDefinition = newInsightDefinition(
@@ -92,11 +102,11 @@ export const expectedInsightDefRegion: IInsightDefinition = newInsightDefinition
             .title("sourceInsight")
             .buckets([
                 newBucket("measure", Won),
-                newBucket("view", Department),
+                newBucket("view", Department.Default),
                 newBucket("segment", replacedAttributeRegion),
             ])
             .filters([
-                newNegativeAttributeFilter(Department, []),
+                newNegativeAttributeFilter(Department.Default, []),
                 newPositiveAttributeFilter(newAttribute(uriRef(regionUri)), {
                     uris: [westCoastUri],
                 }),
@@ -115,10 +125,10 @@ export const expectedInsightDefDepartment: IInsightDefinition = newInsightDefini
             .buckets([
                 newBucket("measure", Won),
                 newBucket("view", replacedAttributeDepartment),
-                newBucket("segment", Region),
+                newBucket("segment", Region.Default),
             ])
             .filters([
-                newNegativeAttributeFilter(Department, []),
+                newNegativeAttributeFilter(Department.Default, []),
                 newPositiveAttributeFilter(newAttribute(uriRef(departmentUri)), {
                     uris: [directSalesUri],
                 }),

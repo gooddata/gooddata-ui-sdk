@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
@@ -110,7 +110,6 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         // resize map when component is updated
         // for example: toggle legend, change position of legend
         this.chart.resize();
-        this.updateViewport();
 
         // only update map when style is ready
         // work around for ticket SD-898
@@ -148,6 +147,7 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         this.createMap();
         this.createMapControls();
         this.handleMapEvent();
+        this.updateViewport();
     }
 
     private generateLocale() {
@@ -283,7 +283,19 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         }
 
         const action = isViewportFrozen ? "disable" : "enable";
-        INTERACTION_EVENTS.forEach((interactionEvent): void => chart[interactionEvent]?.[action]?.());
+        try {
+            INTERACTION_EVENTS.forEach((interactionEvent): void => chart[interactionEvent]?.[action]?.());
+        } catch (e) {
+            const { config } = this.props;
+            const { isExportMode = false } = config || {};
+            const message = `GeoChart: toggle interaction events failed. Error: ${e}`;
+            // put as console.error in export mode to get to the exporter logs
+            if (isExportMode) {
+                console.error(message);
+            } else {
+                console.warn(message);
+            }
+        }
     };
 
     private updatePanAndZoom = (): void => {
@@ -299,7 +311,11 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         const { bounds } = getViewportOptions(data, config);
 
         if (bounds) {
-            this.chart.fitBounds(bounds, DEFAULT_MAPBOX_OPTIONS.fitBoundsOptions);
+            try {
+                this.chart.fitBounds(bounds, DEFAULT_MAPBOX_OPTIONS.fitBoundsOptions);
+            } catch (error) {
+                // sometimes fitBounds is called before this.chart.resize() takes all effects and map area is invisible/small which leads to error in mapbox division by 0 -> NaN. Next re-render will fix it.
+            }
         }
     };
 
@@ -329,6 +345,7 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         chart.on("moveend", this.handlePushpinMoveEnd);
         chart.on("zoomend", this.handlePushpinZoomEnd);
         chart.on("error", this.handleMapboxError);
+        chart.on("resize", this.updateViewport);
     };
 
     /*

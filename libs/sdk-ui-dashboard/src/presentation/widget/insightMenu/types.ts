@@ -1,5 +1,5 @@
 // (C) 2020-2024 GoodData Corporation
-import { ComponentType, MouseEvent } from "react";
+import { ComponentType, MouseEvent, ReactNode } from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import { RenderMode } from "../../../types.js";
 
@@ -18,7 +18,7 @@ export interface IInsightMenuItemButton {
     /**
      * If specified, the value is shown on hover of the item as a tooltip.
      */
-    tooltip?: string;
+    tooltip?: string | ReactNode;
     disabled?: boolean;
     icon?: JSX.Element | string;
     /**
@@ -46,6 +46,16 @@ export interface IInsightMenuSubmenuComponentProps {
      * Closes the insight menu.
      */
     onClose: () => void;
+    /**
+     * Go back to the root menu.
+     */
+    onGoBack: () => void;
+
+    /**
+     * If true, the title configuration is shown in submenu.
+     * default: true
+     */
+    enableTitleConfig?: boolean;
 }
 
 /**
@@ -58,9 +68,16 @@ export interface IInsightMenuSubmenu {
     /** @alpha */
     SubmenuComponent: ComponentType<IInsightMenuSubmenuComponentProps>;
     /**
+     * Should the submenu component be rendered only?
+     * If so, it won't be wrapped inside the default container
+     * and the default header won't be rendered.
+     * @alpha
+     */
+    renderSubmenuComponentOnly?: boolean;
+    /**
      * If specified, the value is shown on hover of the item as a tooltip.
      */
-    tooltip?: string;
+    tooltip?: string | ReactNode;
     disabled?: boolean;
     icon?: JSX.Element | string;
     /**
@@ -68,6 +85,10 @@ export interface IInsightMenuSubmenu {
      */
     className?: string;
     onClick?: (e: MouseEvent) => void;
+}
+
+export function isIInsightMenuSubmenu(obj: IInsightMenuItem): obj is IInsightMenuSubmenu {
+    return obj !== null && obj.type === "submenu";
 }
 
 /**
@@ -80,7 +101,7 @@ export type IInsightMenuItem = IInsightMenuItemButton | IInsightMenuItemSeparato
  */
 export interface IDashboardInsightMenuButtonProps {
     widget: IInsightWidget;
-    insight: IInsight;
+    insight?: IInsight;
     isOpen: boolean;
     onClick: () => void;
     items: IInsightMenuItem[];
@@ -91,7 +112,7 @@ export interface IDashboardInsightMenuButtonProps {
  */
 export interface IDashboardInsightMenuProps {
     widget: IInsightWidget;
-    insight: IInsight;
+    insight?: IInsight;
     isOpen: boolean;
     onClose: () => void;
     items: IInsightMenuItem[];
@@ -102,7 +123,7 @@ export interface IDashboardInsightMenuProps {
  */
 export interface IDashboardInsightMenuTitleProps {
     widget: IInsightWidget;
-    insight: IInsight;
+    insight?: IInsight;
     renderMode: RenderMode;
 }
 

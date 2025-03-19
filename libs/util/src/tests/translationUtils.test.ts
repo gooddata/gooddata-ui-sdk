@@ -57,8 +57,8 @@ describe("sanitizeLocaleForMoment", () => {
         "ru-RU",
         "it-IT",
         "es-419",
-        "en-GB",
         "fr-CA",
+        "en-GB",
         "en-AU",
         "fi-FI",
     ])("should not touch %s locale", (value: string) => {

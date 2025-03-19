@@ -202,4 +202,18 @@ export class Chart {
             .should(isStroked ? "have.attr" : "not.have.attr", "stroke");
         return this;
     }
+
+    verifyTotalPointsOfChart(group: number, count: number) {
+        this.getElement().find(`.highcharts-series-${group} .highcharts-point`).should("have.length", count);
+        return this;
+    }
+
+    hasScatterSerieColor(index: number, value: string) {
+        this.getElement()
+            .find(`.highcharts-series-0 path`)
+            .eq(index)
+            .invoke("attr", "fill")
+            .should("eq", value);
+        return this;
+    }
 }

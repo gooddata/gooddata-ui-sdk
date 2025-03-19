@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import { CustomDashboardInsightMenuTitleComponent } from "../types.js";
@@ -22,7 +22,7 @@ export const DefaultDashboardInsightMenuTitle: CustomDashboardInsightMenuTitleCo
     const { widget, insight, renderMode } = props;
 
     const title = widgetTitle(widget);
-    const originalTitle = insightTitle(insight);
+    const originalTitle = insight ? insightTitle(insight) : title;
 
     const titlesDiffer = title !== originalTitle;
 

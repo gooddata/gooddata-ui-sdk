@@ -1,16 +1,14 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 export * from "./EmbeddedGdc.js";
 export * from "./EmbeddedAnalyticalDesigner.js";
 export * from "./EmbeddedKpiDashboard.js";
+export * from "./legacyTypes.js";
 
-export {
+export type {
     IObjectMeta,
     IPostMessageContextPayload,
-    GdcErrorType,
-    GdcEventType,
     GdcMessageEventListener,
-    GdcProductName,
     IGdcMessage,
     IGdcMessageEnvelope,
     IGdcMessageEvent,
@@ -20,6 +18,5 @@ export {
     ICommandFailedBody,
     IDrillableItemsCommandBody,
     ISimpleDrillableItemsCommandBody,
-    isCommandFailedData,
-    getEventType,
 } from "./common.js";
+export { GdcErrorType, GdcEventType, GdcProductName, isCommandFailedData, getEventType } from "./common.js";

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { createRef } from "react";
 import ReactMeasure, { MeasuredComponentProps } from "react-measure";
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
@@ -20,6 +20,8 @@ import {
 } from "@gooddata/sdk-ui-vis-commons";
 import { defaultImport } from "default-import";
 import { HeadlineFiredDrillEvent } from "../interfaces/DrillEvents.js";
+
+const RESIZE_GUARD_TIMEOUT = 3000;
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -48,19 +50,38 @@ export default class LegacyHeadline extends React.Component<IHeadlineVisualizati
         disableDrillUnderline: false,
     };
 
-    public componentDidMount(): void {
-        this.props.onAfterRender();
-    }
-
-    public componentDidUpdate(): void {
-        this.props.onAfterRender();
-    }
-
     private secondaryItemTitleWrapperRef = createRef<HTMLDivElement>();
+    private afterRenderGuardTimeoutId;
+    private afterRenderCalled = false;
+
+    public componentDidMount(): void {
+        // guard if onResize would fail to resize the widget
+        this.afterRenderGuardTimeoutId = setTimeout(() => {
+            if (!this.afterRenderCalled) {
+                this.props.onAfterRender();
+            }
+        }, RESIZE_GUARD_TIMEOUT);
+    }
+
+    public componentWillUnmount() {
+        clearTimeout(this.afterRenderGuardTimeoutId);
+    }
 
     public render() {
         return (
-            <Measure client>
+            <Measure
+                client={true}
+                onResize={(dimensions) => {
+                    if (
+                        dimensions?.client?.width > 0 &&
+                        dimensions?.client?.height > 0 &&
+                        !this.afterRenderCalled
+                    ) {
+                        this.props.onAfterRender();
+                        this.afterRenderCalled = true;
+                    }
+                }}
+            >
                 {({ measureRef, contentRect }: MeasuredComponentProps) => {
                     return (
                         <div className="headline" ref={measureRef}>

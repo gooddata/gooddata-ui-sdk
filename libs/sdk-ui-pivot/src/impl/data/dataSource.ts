@@ -41,8 +41,9 @@ export function createAgGridDatasource(
     initialDv: DataViewFacade,
     gridApiProvider: GridApiProvider,
     intl: IntlShape,
+    abortController?: AbortController,
 ): AgGridDatasource {
-    return new AgGridDatasource(config, initialDv, gridApiProvider, intl);
+    return new AgGridDatasource(config, initialDv, gridApiProvider, intl, abortController);
 }
 
 export type GridApiProvider = () => GridApi | undefined;
@@ -59,6 +60,7 @@ export class AgGridDatasource implements IDatasource {
         private readonly initialDv: DataViewFacade,
         private readonly gridApiProvider: GridApiProvider,
         private readonly intl: IntlShape,
+        private readonly abortController?: AbortController,
     ) {
         this.currentResult = initialDv.result();
         this.currentSorts = initialDv.meta().effectiveSortItems();
@@ -185,12 +187,15 @@ export class AgGridDatasource implements IDatasource {
         params: IGetRowsParams,
     ): void => {
         const { startRow, endRow, failCallback } = params;
+        let effectiveExecution = execution;
+        if (this.abortController) {
+            effectiveExecution = execution.withSignal(this.abortController.signal);
+        }
 
-        execution
+        effectiveExecution
             .execute()
             .then((newResult) => {
                 this.currentResult = newResult;
-
                 newResult
                     .readWindow([startRow, 0], [endRow - startRow, COLS_PER_PAGE])
                     .then((data) => {
@@ -238,6 +243,7 @@ export class AgGridDatasource implements IDatasource {
             return;
         }
 
+        this.abortController?.abort();
         this.destroyed = true;
         this.onDestroy();
     };
@@ -268,7 +274,13 @@ export class AgGridDatasource implements IDatasource {
             !isEqual(currentTotals, desiredTotals) ||
             !isEqual(currentRowTotals, desiredRowTotals)
         ) {
-            this.transformResult(params, desiredSorts, desiredTotals, desiredRowTotals);
+            // Due to timing issues in react18, transform result needs to be deferred so that remaining
+            // re-renders can finish in the meantime -- this fixes the cases in AD: immediate undo after
+            // performing sort and also repeated sort on the same attribute (also note that due to
+            // other timeouts, setTimeout(...,0) is not enough).
+            setTimeout(() => {
+                this.transformResult(params, desiredSorts, desiredTotals, desiredRowTotals);
+            }, 100);
         } else if (!startRow && result.definition === this.initialDv.definition) {
             /*
              * > Loading first page of data
@@ -307,7 +319,7 @@ export class AgGridDatasource implements IDatasource {
 function isSortedByFirstAttribute(tableDescriptor: TableDescriptor, sortingCols: ColDef[]): boolean {
     if (!sortingCols.length) {
         // this is somewhat dangerous assumption: no explicit sort == sorted by first col
-        //  (bear and tiger backend behaves thusly)
+        //  (the backend behaves thusly)
         return true;
     }
 
@@ -322,7 +334,7 @@ function isDataViewSortedByFirstAttribute(dv: DataViewFacade): boolean {
     const { sortBy } = dv.definition;
     if (!sortBy?.length) {
         // this is somewhat dangerous assumption: no explicit sort == sorted by first col
-        //  (bear and tiger backend behaves thusly)
+        //  (the backend behaves thusly)
         return true;
     }
 

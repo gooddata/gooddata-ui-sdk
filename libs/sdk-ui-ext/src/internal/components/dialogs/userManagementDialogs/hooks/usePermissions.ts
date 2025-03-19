@@ -38,8 +38,8 @@ export const usePermissions = (
     // load initial permissions
     useEffect(() => {
         getPermissions(id).then((assignments) => {
-            const workspaces = assignments.workspacePermissions.map(
-                workspacePermissionsAssignmentToGrantedWorkspace,
+            const workspaces = assignments.workspacePermissions.map((w) =>
+                workspacePermissionsAssignmentToGrantedWorkspace(w),
             );
             const dataSources = assignments.dataSourcePermissions.map(
                 dataSourcePermissionsAssignmentToGrantedDataSource,

@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useCallback, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 // eslint-disable-next-line react/no-deprecated
@@ -16,6 +16,7 @@ import {
     ITheme,
     insightSetProperties,
     insightVisualizationUrl,
+    insightVisualizationType,
 } from "@gooddata/sdk-model";
 
 import {
@@ -50,16 +51,14 @@ import { Root, _createRoot } from "../internal/createRootProvider.js";
  * @internal
  */
 export interface IInsightRendererProps
-    extends Omit<
-        IInsightViewProps,
-        "insight" | "TitleComponent" | "onInsightLoaded" | "showTitle" | "afterRender"
-    > {
+    extends Omit<IInsightViewProps, "insight" | "TitleComponent" | "onInsightLoaded" | "showTitle"> {
     insight: IInsightDefinition | undefined;
     locale: ILocale;
     settings: IUserWorkspaceSettings | undefined;
     colorPalette: IColorPalette | undefined;
     onError?: OnError;
     theme?: ITheme;
+    afterRender?: () => void;
 }
 
 const getElementId = () => `gd-vis-${uuidv4()}`;
@@ -88,7 +87,13 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
 
     public static defaultProps: Pick<
         IInsightRendererProps,
-        "ErrorComponent" | "filters" | "drillableItems" | "LoadingComponent" | "pushData" | "locale"
+        | "ErrorComponent"
+        | "filters"
+        | "drillableItems"
+        | "LoadingComponent"
+        | "pushData"
+        | "locale"
+        | "afterRender"
     > = {
         ErrorComponent,
         filters: [],
@@ -96,6 +101,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
         LoadingComponent,
         pushData: noop,
         locale: DefaultLocale,
+        afterRender: () => {},
     };
 
     private unmountVisualization = () => {
@@ -133,15 +139,27 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
                 forceDisableDrillOnAxes: config.forceDisableDrillOnAxes,
                 isInEditMode: config.isInEditMode,
                 isExportMode: config.isExportMode,
+                enableExecutionCancelling: config.enableExecutionCancelling,
             },
             executionConfig: this.props.execConfig,
             customVisualizationConfig: config,
             theme: this.props.theme,
         };
 
-        const insight = fillMissingFormats(
-            ignoreTitlesForSimpleMeasures(fillMissingTitles(this.props.insight, this.props.locale)),
-        );
+        const visClass = insightVisualizationType(this.props.insight);
+        let insight = fillMissingFormats(fillMissingTitles(this.props.insight, this.props.locale));
+
+        /**
+         * Ignore titles for simple measures in all visualizations except for repeater.
+         * This is not nice, and InsightRenderer should not be aware of the visualization types.
+         * However, repeater is transforming simple measures to inline ones, so we need to keep the titles for them.
+         * We can remove this once we have a better solution on execution level,
+         * or all the visualizations start to use actual measure titles specified in AD, and not measure metadata titles.
+         * See also https://gooddata.atlassian.net/browse/SD-1012
+         */
+        if (visClass !== "repeater") {
+            insight = ignoreTitlesForSimpleMeasures(insight);
+        }
         this.visualization.update(visProps, insight, {}, this.getExecutionFactory());
     };
 
@@ -169,6 +187,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
                 pushData: this.props.pushData,
                 onDrill: this.props.onDrill,
                 onExportReady: this.onExportReadyDecorator,
+                afterRender: this.props.afterRender,
             },
             configPanelElement: () => {
                 const rootNode =

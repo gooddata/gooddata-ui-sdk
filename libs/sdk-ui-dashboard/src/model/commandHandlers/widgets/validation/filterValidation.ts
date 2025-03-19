@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     InsightDateDatasets,
     MeasureDateDatasets,
@@ -21,6 +21,7 @@ import {
     IInsightWidget,
     ICatalogDateDataset,
     IDashboardDateFilter,
+    IRichTextWidget,
 } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../../types/commonTypes.js";
 import { SagaIterator } from "redux-saga";
@@ -36,6 +37,8 @@ import {
     selectAllCatalogDateDatasetsMap,
     selectCatalogDateDatasets,
 } from "../../../store/catalog/catalogSelectors.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { newInsight } from "../../../../_staging/insight/insightBuilder.js";
 
 /**
  * This generator validates that a date dataset with the provided ref can be used for date filtering of insight in
@@ -69,6 +72,52 @@ export function* validateDatasetForInsightWidgetDateFilter(
     const insightDateDatasets: InsightDateDatasets = yield call(
         query,
         queryDateDatasetsForInsight(resolvedInsight ? resolvedInsight : widget.insight),
+    );
+    const enableUnavailableItemsVisible = yield select(selectEnableUnavailableItemsVisibility);
+    const dateDataSetsToValidate = enableUnavailableItemsVisible
+        ? yield select(selectCatalogDateDatasets)
+        : insightDateDatasets.allAvailableDateDatasets;
+    const catalogDataSet = newCatalogDateDatasetMap(dateDataSetsToValidate).get(dateDataSet);
+
+    if (!catalogDataSet) {
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            `Attempting to use date dataset ${objRefToString(dateDataSet)}
+            to filter rich text widget ${objRefToString(widget.ref)} but the data set either does not exist or
+            is not valid to use for filtering the rich text.`,
+        );
+    }
+
+    return catalogDataSet;
+}
+
+/**
+ * This generator validates that a date dataset with the provided ref can be used for date filtering of rich text in
+ * particular rich text widget. If the result is positive, a catalog entry of the date dataset will be returned.
+ *
+ * If the result is negative a DashboardCommandFailed will be thrown.
+ *
+ * The validation will trigger the QueryRichTextDateDatasets to obtain a list of all available, valid date datasets for
+ * the rich text widget - that's where the actual complex logic takes place.
+ *
+ * Note that the query is a cached query - first execution will cache all available date dataset information in state and
+ * the subsequent calls will be instant.
+ *
+ * @param ctx - dashboard context in which the validation is done
+ * @param cmd - dashboard command it the context of which the validation is done
+ * @param widget - insight that whose date filter is about to change
+ * @param dateDataSet - ref of a date dataset to validate
+ */
+export function* validateDatasetForRichTextWidgetDateFilter(
+    ctx: DashboardContext,
+    cmd: IDashboardCommand,
+    widget: IRichTextWidget,
+    dateDataSet: ObjRef,
+): SagaIterator<ICatalogDateDataset> {
+    const insightDateDatasets: InsightDateDatasets = yield call(
+        query,
+        queryDateDatasetsForInsight(newInsight("local:table")),
     );
     const enableUnavailableItemsVisible = yield select(selectEnableUnavailableItemsVisibility);
     const dateDataSetsToValidate = enableUnavailableItemsVisible
@@ -179,13 +228,20 @@ export function* validateAttributeFiltersToIgnore(
     const existingFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
         selectFilterContextAttributeFilters,
     );
+    const displayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> = yield select(
+        selectAttributeFilterConfigsDisplayAsLabelMap,
+    );
     const badIgnores: ObjRef[] = [];
     const filtersToIgnore: IDashboardAttributeFilter[] = [];
 
     for (const toIgnore of resolved.values()) {
-        const filterForDisplayForm = existingFilters.find((filter) =>
-            areObjRefsEqual(filter.attributeFilter.displayForm, toIgnore.ref),
-        );
+        const filterForDisplayForm = existingFilters.find((filter) => {
+            const displayAsLabel = displayAsLabelMap.get(filter.attributeFilter.localIdentifier!);
+            return (
+                areObjRefsEqual(filter.attributeFilter.displayForm, toIgnore.ref) ||
+                areObjRefsEqual(displayAsLabel, toIgnore.ref)
+            );
+        });
 
         if (!filterForDisplayForm) {
             badIgnores.push(toIgnore.ref);

@@ -1,0 +1,175 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`adhocDashboard > should build adhoc dashboard as empty 1`] = `
+{
+  "dashboard": {
+    "created": "",
+    "description": "",
+    "identifier": "",
+    "layout": {
+      "sections": [
+        {
+          "header": {},
+          "items": [],
+          "type": "IDashboardLayoutSection",
+        },
+      ],
+      "type": "IDashboardLayout",
+    },
+    "ref": {
+      "identifier": "",
+      "type": "analyticalDashboard",
+    },
+    "shareStatus": "private",
+    "title": "",
+    "type": "IDashboard",
+    "updated": "",
+    "uri": "",
+  },
+  "insights": [],
+}
+`;
+
+exports[`adhocDashboard > should build adhoc dashboard with one insight 1`] = `
+{
+  "dashboard": {
+    "created": "",
+    "description": "",
+    "identifier": "",
+    "layout": {
+      "sections": [
+        {
+          "header": {},
+          "items": [
+            {
+              "size": {
+                "xl": {
+                  "gridHeight": 22,
+                  "gridWidth": 12,
+                },
+              },
+              "type": "IDashboardLayoutItem",
+              "widget": {
+                "description": "",
+                "drills": [],
+                "identifier": undefined,
+                "ignoreDashboardFilters": [],
+                "insight": {
+                  "identifier": "test",
+                  "type": "insight",
+                },
+                "localIdentifier": "undefined_0",
+                "ref": {
+                  "identifier": "test",
+                  "type": "insight",
+                },
+                "title": "Test",
+                "type": "insight",
+                "uri": undefined,
+              },
+            },
+          ],
+          "type": "IDashboardLayoutSection",
+        },
+      ],
+      "type": "IDashboardLayout",
+    },
+    "ref": {
+      "identifier": "",
+      "type": "analyticalDashboard",
+    },
+    "shareStatus": "private",
+    "title": "",
+    "type": "IDashboard",
+    "updated": "",
+    "uri": "",
+  },
+  "insights": [
+    {
+      "insight": {
+        "buckets": [],
+        "ref": {
+          "identifier": "test",
+          "type": "insight",
+        },
+        "title": "Test",
+      },
+    },
+  ],
+}
+`;
+
+exports[`adhocDashboard > should build adhoc dashboard with one insight content 1`] = `
+{
+  "dashboard": {
+    "created": "",
+    "description": "",
+    "identifier": "",
+    "layout": {
+      "sections": [
+        {
+          "header": {},
+          "items": [
+            {
+              "size": {
+                "xl": {
+                  "gridHeight": 22,
+                  "gridWidth": 12,
+                },
+              },
+              "type": "IDashboardLayoutItem",
+              "widget": {
+                "description": "",
+                "drills": [],
+                "identifier": "test",
+                "ignoreDashboardFilters": [],
+                "insight": {
+                  "identifier": "test",
+                  "type": "insight",
+                },
+                "localIdentifier": "test_0",
+                "ref": {
+                  "identifier": "test",
+                  "type": "insight",
+                },
+                "title": "Test",
+                "type": "insight",
+                "uri": "/uri",
+              },
+            },
+          ],
+          "type": "IDashboardLayoutSection",
+        },
+      ],
+      "type": "IDashboardLayout",
+    },
+    "ref": {
+      "identifier": "",
+      "type": "analyticalDashboard",
+    },
+    "shareStatus": "private",
+    "title": "",
+    "type": "IDashboard",
+    "updated": "",
+    "uri": "",
+  },
+  "insights": [
+    {
+      "insight": {
+        "buckets": [],
+        "filters": [],
+        "identifier": "test",
+        "properties": {},
+        "ref": {
+          "identifier": "test",
+          "type": "insight",
+        },
+        "sorts": [],
+        "title": "Test",
+        "uri": "/uri",
+        "visualizationUrl": "/url",
+      },
+    },
+  ],
+}
+`;

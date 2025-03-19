@@ -1,3 +1,5 @@
+// (C) 2024 GoodData Corporation
+
 @use "sass:color";
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
@@ -11,7 +13,10 @@ $gd-dashboards-navigation-backgroundColor: var(
 );
 $gd-dashboards-navigation-borderColor: var(
     --gd-dashboards-navigation-borderColor,
-    var(--gd-palette-complementary-4, color.adjust(kit-variables.$default-gd-color-state-blank, $alpha: -0.8))
+    var(
+        --gd-palette-complementary-4-from-theme,
+        color.adjust(kit-variables.$default-gd-color-state-blank, $alpha: -0.8)
+    )
 );
 $gd-dashboards-navigation-title-color: var(
     --gd-dashboards-navigation-title-color,
@@ -19,15 +24,15 @@ $gd-dashboards-navigation-title-color: var(
 );
 $gd-dashboards-navigation-item-color: var(
     --gd-dashboards-navigation-item-color,
-    var(--gd-palette-complementary-8, kit-variables.$default-gd-color-state-blank)
+    var(--gd-palette-complementary-8-from-theme, kit-variables.$default-gd-color-state-blank)
 );
 $gd-dashboards-navigation-item-hoverColor: var(
     --gd-dashboards-navigation-item-hoverColor,
-    var(--gd-palette-complementary-9, kit-variables.$default-gd-color-text-light)
+    var(--gd-palette-complementary-9-from-theme, kit-variables.$default-gd-color-text-light)
 );
 $gd-dashboards-navigation-item-selectedColor: var(
     --gd-dashboards-navigation-item-selectedColor,
-    var(--gd-palette-complementary-9, kit-variables.$default-gd-color-text-light)
+    var(--gd-palette-complementary-9-from-theme, kit-variables.$default-gd-color-text-light)
 );
 $gd-dashboards-navigation-item-selectedBackgroundColor: var(
     --gd-dashboards-navigation-item-selectedBackgroundColor,
@@ -167,7 +172,7 @@ $grouped-navigation-item-height: 36px;
     &:hover {
         color: $gd-dashboards-navigation-item-hoverColor;
         border-color: var(
-            --gd-palette-complementary-6,
+            --gd-palette-complementary-6-from-theme,
             color.adjust(kit-variables.$default-gd-color-text-light, $alpha: -0.5)
         );
     }
@@ -300,7 +305,7 @@ $grouped-navigation-item-height: 36px;
     }
 }
 
-$mobile-navigation-background: var(--gd-palette-complementary-2, rgba(221, 228, 235, 0.2));
+$mobile-navigation-background: var(--gd-palette-complementary-2-from-theme, rgba(221, 228, 235, 0.2));
 $dashboard-group-height: 45px;
 
 .grouped-mobile-navigation-dropdown {

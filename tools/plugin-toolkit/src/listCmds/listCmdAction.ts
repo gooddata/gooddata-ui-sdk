@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { ActionOptions } from "../_base/types.js";
 import { logInfo, logSuccess } from "../_base/terminal/loggers.js";
 import { genericErrorReporter } from "../_base/utils.js";
@@ -7,19 +7,10 @@ import { ListObjectsFn } from "./types.js";
 import columnify from "columnify";
 
 function printListConfigSummary(config: ListCmdActionConfig) {
-    const {
-        backend,
-        hostname,
-        workspace,
-        credentials: { username },
-    } = config;
+    const { hostname, workspace } = config;
 
     logInfo("Everything looks valid. Going to list objects.");
-    logInfo(`  Hostname    : ${hostname}   (${backend === "bear" ? "GoodData platform" : "GoodData.CN"})`);
-
-    if (backend === "bear") {
-        logInfo(`  Username    : ${username}`);
-    }
+    logInfo(`  Hostname    : ${hostname}   (${"GoodData.CN"}`);
 
     logInfo(`  Workspace   : ${workspace}`);
 }

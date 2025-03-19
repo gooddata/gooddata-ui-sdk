@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { createContext, useContext } from "react";
 import {
     ErrorComponent,
@@ -32,19 +32,24 @@ import {
     InsightMenuButtonComponentProvider,
     InsightMenuComponentProvider,
     InsightMenuTitleComponentProvider,
-    KpiComponentProvider,
     RichTextComponentProvider,
+    RichTextMenuComponentProvider,
+    RichTextMenuTitleComponentProvider,
+    VisualizationSwitcherComponentProvider,
+    VisualizationSwitcherToolbarComponentProvider,
     WidgetComponentProvider,
 } from "./types.js";
 import { CustomSidebarComponent } from "../dashboard/DashboardSidebar/types.js";
 import {
     AttributeFilterComponentSet,
+    DashboardLayoutWidgetComponentSet,
     DateFilterComponentSet,
     InsightWidgetComponentSet,
-    KpiWidgetComponentSet,
     RichTextWidgetComponentSet,
+    VisualizationSwitcherWidgetComponentSet,
 } from "../componentDefinition/types.js";
 import { CustomToolbarComponent } from "../toolbar/types.js";
+import { CustomAlertingDialogComponent, CustomAlertingManagementDialogComponent } from "../alerting/types.js";
 
 /**
  * @internal
@@ -58,9 +63,12 @@ interface IDashboardComponentsContext {
     InsightBodyComponentProvider: InsightBodyComponentProvider;
     InsightMenuButtonComponentProvider: InsightMenuButtonComponentProvider;
     InsightMenuComponentProvider: InsightMenuComponentProvider;
+    RichTextMenuComponentProvider: RichTextMenuComponentProvider;
     InsightMenuTitleComponentProvider: InsightMenuTitleComponentProvider;
-    KpiComponentProvider: KpiComponentProvider;
+    RichTextMenuTitleComponentProvider: RichTextMenuTitleComponentProvider;
+    VisualizationSwitcherToolbarComponentProvider: VisualizationSwitcherToolbarComponentProvider;
     RichTextComponentProvider: RichTextComponentProvider;
+    VisualizationSwitcherComponentProvider: VisualizationSwitcherComponentProvider;
     ButtonBarComponent: CustomButtonBarComponent;
     MenuButtonComponent: CustomMenuButtonComponent;
     TitleComponent: CustomTitleComponent;
@@ -68,6 +76,8 @@ interface IDashboardComponentsContext {
     ToolbarComponent: CustomToolbarComponent;
     ScheduledEmailDialogComponent: CustomScheduledEmailDialogComponent;
     ScheduledEmailManagementDialogComponent: CustomScheduledEmailManagementDialogComponent;
+    AlertingManagementDialogComponent: CustomAlertingManagementDialogComponent;
+    AlertingDialogComponent: CustomAlertingDialogComponent;
     ShareDialogComponent: CustomShareDialogComponent;
     SaveAsDialogComponent: CustomSaveAsDialogComponent;
     DashboardAttributeFilterComponentProvider: AttributeFilterComponentProvider;
@@ -75,8 +85,9 @@ interface IDashboardComponentsContext {
     FilterBarComponent: CustomFilterBarComponent;
     SidebarComponent: CustomSidebarComponent;
     InsightWidgetComponentSet: InsightWidgetComponentSet;
-    KpiWidgetComponentSet: KpiWidgetComponentSet;
     RichTextWidgetComponentSet: RichTextWidgetComponentSet;
+    VisualizationSwitcherWidgetComponentSet: VisualizationSwitcherWidgetComponentSet;
+    DashboardLayoutWidgetComponentSet: DashboardLayoutWidgetComponentSet;
     AttributeFilterComponentSet: AttributeFilterComponentSet;
     DateFilterComponentSet: DateFilterComponentSet;
     EmptyLayoutDropZoneBodyComponent: CustomEmptyLayoutDropZoneBodyComponent;
@@ -102,8 +113,10 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     InsightMenuButtonComponentProvider: ThrowMissingComponentError("InsightMenuButtonComponent"),
     InsightMenuComponentProvider: ThrowMissingComponentError("InsightMenuComponent"),
     InsightMenuTitleComponentProvider: ThrowMissingComponentError("InsightMenuTitleComponent"),
-    KpiComponentProvider: ThrowMissingComponentError("KpiComponent"),
+    RichTextMenuComponentProvider: ThrowMissingComponentError("RichTextMenuComponent"),
+    RichTextMenuTitleComponentProvider: ThrowMissingComponentError("RichTextMenuTitleComponentProvider"),
     RichTextComponentProvider: ThrowMissingComponentError("RichTextComponent"),
+    VisualizationSwitcherComponentProvider: ThrowMissingComponentError("VisualizationSwitcherComponent"),
     WidgetComponentProvider: ThrowMissingComponentError("WidgetComponent"),
     ButtonBarComponent: ThrowMissingComponentError("ButtonBarComponent"),
     MenuButtonComponent: ThrowMissingComponentError("MenuButtonComponent"),
@@ -114,6 +127,8 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     ScheduledEmailManagementDialogComponent: ThrowMissingComponentError(
         "ScheduledEmailManagementDialogComponent",
     ),
+    AlertingManagementDialogComponent: ThrowMissingComponentError("AlertingManagementDialogComponent"),
+    AlertingDialogComponent: ThrowMissingComponentError("AlertingDialogComponent"),
     ShareDialogComponent: ThrowMissingComponentError("ShareDialogComponent"),
     SaveAsDialogComponent: ThrowMissingComponentError("SaveAsDialogComponent"),
     DashboardAttributeFilterComponentProvider: ThrowMissingComponentError(
@@ -123,13 +138,17 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     FilterBarComponent: ThrowMissingComponentError("FilterBarComponent"),
     SidebarComponent: ThrowMissingComponentError("SidebarComponent"),
     InsightWidgetComponentSet: null as any, // TODO how to throw here
-    KpiWidgetComponentSet: null as any, // TODO how to throw here
     RichTextWidgetComponentSet: null as any, // TODO how to throw here
+    VisualizationSwitcherWidgetComponentSet: null as any, // TODO how to throw here
+    DashboardLayoutWidgetComponentSet: null as any, // TODO how to throw here
     AttributeFilterComponentSet: null as any, // TODO how to throw here
     DateFilterComponentSet: null as any, // TODO how to throw here
     EmptyLayoutDropZoneBodyComponent: ThrowMissingComponentError("EmptyLayoutDropZoneBodyComponent"),
     SaveButtonComponent: ThrowMissingComponentError("SaveButtonComponent"),
     DashboardContentComponentProvider: ThrowMissingComponentError("DashboardContentComponentProvider"),
+    VisualizationSwitcherToolbarComponentProvider: ThrowMissingComponentError(
+        "VisualizationSwitcherToolbarComponentProvider",
+    ),
 });
 DashboardComponentsContext.displayName = "DashboardComponentsContext";
 

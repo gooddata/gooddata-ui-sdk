@@ -30,51 +30,32 @@ exports[`PluggableScatterPlot > should return reference point after switching fr
       "localIdentifier": "secondary_measures",
     },
     {
+      "items": [],
+      "localIdentifier": "attribute",
+    },
+    {
       "items": [
         {
           "aggregation": null,
-          "attribute": "attr.owner.country",
-          "dfRef": {
-            "uri": "/geo/attribute/displayform/uri/2",
-          },
-          "localIdentifier": "a1",
-          "locationDisplayFormRef": {
-            "uri": "/geo/attribute/displayform/uri/1",
-          },
+          "attribute": "attr.owner.city",
+          "localIdentifier": "a2",
           "type": "attribute",
         },
       ],
-      "localIdentifier": "attribute",
+      "localIdentifier": "segment",
     },
   ],
   "filters": {
-    "items": [
-      {
-        "aggregation": null,
-        "attribute": "attr.owner.country",
-        "filters": [
-          {
-            "attribute": "attr.owner.country",
-            "displayFormRef": {
-              "uri": "owner/attribute/df/uri",
-            },
-            "isInverted": false,
-            "selectedElements": [
-              {
-                "title": "string",
-                "uri": "string",
-              },
-            ],
-            "totalElementsCount": 10,
-          },
-        ],
-        "localIdentifier": "a1",
-        "type": "attribute",
-      },
-    ],
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": {},
+  "properties": {
+    "controls": {
+      "clustering": {
+        "enabled": false,
+      },
+    },
+  },
   "uiConfig": {
     "buckets": {
       "attribute": {
@@ -83,16 +64,16 @@ exports[`PluggableScatterPlot > should return reference point after switching fr
           "date",
         ],
         "allowsReordering": false,
-        "allowsSwapping": false,
+        "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:scatter/bucket-title-attribute.svg",
+        "icon": "local:scatter/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "itemsLimitByType": {
           "date": 1,
         },
-        "title": "Attribute",
+        "title": "View by",
       },
       "filters": {
         "accepts": [
@@ -123,7 +104,7 @@ exports[`PluggableScatterPlot > should return reference point after switching fr
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "X-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "secondary_measures": {
         "accepts": [
@@ -141,7 +122,20 @@ exports[`PluggableScatterPlot > should return reference point after switching fr
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "Y-axis",
-        "title": "Measure",
+        "title": "Metric",
+      },
+      "segment": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
       },
     },
     "exportConfig": {
@@ -182,12 +176,22 @@ exports[`PluggableScatterPlot > should return reference point with one secondary
       "items": [],
       "localIdentifier": "attribute",
     },
+    {
+      "items": [],
+      "localIdentifier": "segment",
+    },
   ],
   "filters": {
     "items": [],
     "localIdentifier": "filters",
   },
-  "properties": {},
+  "properties": {
+    "controls": {
+      "clustering": {
+        "enabled": false,
+      },
+    },
+  },
   "uiConfig": {
     "buckets": {
       "attribute": {
@@ -196,16 +200,16 @@ exports[`PluggableScatterPlot > should return reference point with one secondary
           "date",
         ],
         "allowsReordering": false,
-        "allowsSwapping": false,
+        "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:scatter/bucket-title-attribute.svg",
+        "icon": "local:scatter/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "itemsLimitByType": {
           "date": 1,
         },
-        "title": "Attribute",
+        "title": "View by",
       },
       "filters": {
         "accepts": [
@@ -236,7 +240,7 @@ exports[`PluggableScatterPlot > should return reference point with one secondary
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "X-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "secondary_measures": {
         "accepts": [
@@ -254,7 +258,20 @@ exports[`PluggableScatterPlot > should return reference point with one secondary
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "Y-axis",
-        "title": "Measure",
+        "title": "Metric",
+      },
+      "segment": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
       },
     },
     "exportConfig": {
@@ -301,48 +318,25 @@ exports[`PluggableScatterPlot > should return reference point with primary and s
       "localIdentifier": "secondary_measures",
     },
     {
-      "items": [
-        {
-          "aggregation": null,
-          "attribute": "attr.owner.department",
-          "dfRef": {
-            "uri": "a1/df",
-          },
-          "localIdentifier": "a1",
-          "type": "attribute",
-        },
-      ],
+      "items": [],
       "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
     },
   ],
   "filters": {
-    "items": [
-      {
-        "aggregation": null,
-        "attribute": "attr.owner.department",
-        "filters": [
-          {
-            "attribute": "attr.owner.department",
-            "displayFormRef": {
-              "uri": "owner/attribute/df/uri",
-            },
-            "isInverted": false,
-            "selectedElements": [
-              {
-                "title": "string",
-                "uri": "string",
-              },
-            ],
-            "totalElementsCount": 10,
-          },
-        ],
-        "localIdentifier": "a1",
-        "type": "attribute",
-      },
-    ],
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": {},
+  "properties": {
+    "controls": {
+      "clustering": {
+        "enabled": false,
+      },
+    },
+  },
   "uiConfig": {
     "buckets": {
       "attribute": {
@@ -351,16 +345,16 @@ exports[`PluggableScatterPlot > should return reference point with primary and s
           "date",
         ],
         "allowsReordering": false,
-        "allowsSwapping": false,
+        "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:scatter/bucket-title-attribute.svg",
+        "icon": "local:scatter/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "itemsLimitByType": {
           "date": 1,
         },
-        "title": "Attribute",
+        "title": "View by",
       },
       "filters": {
         "accepts": [
@@ -391,7 +385,7 @@ exports[`PluggableScatterPlot > should return reference point with primary and s
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "X-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "secondary_measures": {
         "accepts": [
@@ -409,7 +403,20 @@ exports[`PluggableScatterPlot > should return reference point with primary and s
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "Y-axis",
-        "title": "Measure",
+        "title": "Metric",
+      },
+      "segment": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
       },
     },
     "exportConfig": {
@@ -447,48 +454,25 @@ exports[`PluggableScatterPlot > should return reference point with primary measu
       "localIdentifier": "secondary_measures",
     },
     {
-      "items": [
-        {
-          "aggregation": null,
-          "attribute": "attr.owner.department",
-          "dfRef": {
-            "uri": "a1/df",
-          },
-          "localIdentifier": "a1",
-          "type": "attribute",
-        },
-      ],
+      "items": [],
       "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
     },
   ],
   "filters": {
-    "items": [
-      {
-        "aggregation": null,
-        "attribute": "attr.owner.department",
-        "filters": [
-          {
-            "attribute": "attr.owner.department",
-            "displayFormRef": {
-              "uri": "owner/attribute/df/uri",
-            },
-            "isInverted": false,
-            "selectedElements": [
-              {
-                "title": "string",
-                "uri": "string",
-              },
-            ],
-            "totalElementsCount": 10,
-          },
-        ],
-        "localIdentifier": "a1",
-        "type": "attribute",
-      },
-    ],
+    "items": [],
     "localIdentifier": "filters",
   },
-  "properties": {},
+  "properties": {
+    "controls": {
+      "clustering": {
+        "enabled": false,
+      },
+    },
+  },
   "uiConfig": {
     "buckets": {
       "attribute": {
@@ -497,16 +481,16 @@ exports[`PluggableScatterPlot > should return reference point with primary measu
           "date",
         ],
         "allowsReordering": false,
-        "allowsSwapping": false,
+        "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:scatter/bucket-title-attribute.svg",
+        "icon": "local:scatter/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "itemsLimitByType": {
           "date": 1,
         },
-        "title": "Attribute",
+        "title": "View by",
       },
       "filters": {
         "accepts": [
@@ -537,7 +521,7 @@ exports[`PluggableScatterPlot > should return reference point with primary measu
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "X-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "secondary_measures": {
         "accepts": [
@@ -555,7 +539,20 @@ exports[`PluggableScatterPlot > should return reference point with primary measu
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "Y-axis",
-        "title": "Measure",
+        "title": "Metric",
+      },
+      "segment": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
       },
     },
     "exportConfig": {
@@ -605,12 +602,22 @@ exports[`PluggableScatterPlot > should return reference point with two measures 
       "items": [],
       "localIdentifier": "attribute",
     },
+    {
+      "items": [],
+      "localIdentifier": "segment",
+    },
   ],
   "filters": {
     "items": [],
     "localIdentifier": "filters",
   },
-  "properties": {},
+  "properties": {
+    "controls": {
+      "clustering": {
+        "enabled": false,
+      },
+    },
+  },
   "uiConfig": {
     "buckets": {
       "attribute": {
@@ -619,16 +626,16 @@ exports[`PluggableScatterPlot > should return reference point with two measures 
           "date",
         ],
         "allowsReordering": false,
-        "allowsSwapping": false,
+        "allowsSwapping": true,
         "canAddItems": true,
         "enabled": true,
-        "icon": "local:scatter/bucket-title-attribute.svg",
+        "icon": "local:scatter/bucket-title-view.svg",
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "itemsLimitByType": {
           "date": 1,
         },
-        "title": "Attribute",
+        "title": "View by",
       },
       "filters": {
         "accepts": [
@@ -659,7 +666,7 @@ exports[`PluggableScatterPlot > should return reference point with two measures 
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "X-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "secondary_measures": {
         "accepts": [
@@ -677,7 +684,20 @@ exports[`PluggableScatterPlot > should return reference point with two measures 
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "Y-axis",
-        "title": "Measure",
+        "title": "Metric",
+      },
+      "segment": {
+        "accepts": [
+          "attribute",
+          "date",
+        ],
+        "allowsReordering": false,
+        "allowsSwapping": true,
+        "enabled": true,
+        "icon": "local:scatter/bucket-title-segment.svg",
+        "isShowInPercentEnabled": false,
+        "itemsLimit": 1,
+        "title": "Segment by",
       },
     },
     "exportConfig": {

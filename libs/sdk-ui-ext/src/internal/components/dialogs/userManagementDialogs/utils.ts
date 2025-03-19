@@ -11,6 +11,7 @@ import {
     IDataSourcePermissionAssignment,
     AssignedDataSourcePermission,
     IDataSourceIdentifierDescriptor,
+    isAssignedWorkspacePermission,
 } from "@gooddata/sdk-model";
 
 import {
@@ -22,6 +23,7 @@ import {
     DataSourcePermissionSubject,
     IGrantedDataSource,
     DataSourcePermission,
+    WorkspacePermissions,
 } from "./types.js";
 
 export interface IComparableItemWithTitle {
@@ -53,8 +55,12 @@ const asPermissions = (permission: WorkspacePermission): AssignedWorkspacePermis
     switch (permission) {
         case "VIEW":
             return ["VIEW"];
+        case "VIEW_AND_SAVE_VIEWS":
+            return ["VIEW", "CREATE_FILTER_VIEW"];
         case "VIEW_AND_EXPORT":
             return ["VIEW", "EXPORT"];
+        case "VIEW_AND_EXPORT_AND_SAVE_VIEWS":
+            return ["VIEW", "EXPORT", "CREATE_FILTER_VIEW"];
         case "ANALYZE":
             return ["ANALYZE"];
         case "ANALYZE_AND_EXPORT":
@@ -64,6 +70,10 @@ const asPermissions = (permission: WorkspacePermission): AssignedWorkspacePermis
         default:
             throw Error("Unsupported permission value");
     }
+};
+
+const asGranularPermissions = (permissions: WorkspacePermissions): AssignedWorkspacePermission[] => {
+    return permissions.filter(isAssignedWorkspacePermission);
 };
 
 const asDataSourcePermissions = (permission: DataSourcePermission): AssignedDataSourcePermission[] => {
@@ -96,6 +106,9 @@ export const asPermission = (permissions: AssignedWorkspacePermission[]): Worksp
         return permissions.includes("EXPORT") ? "ANALYZE_AND_EXPORT" : "ANALYZE"; // TODO what about EXPORT_PDF granularity?
     }
     if (permissions.includes("VIEW")) {
+        if (permissions.includes("CREATE_FILTER_VIEW")) {
+            return permissions.includes("EXPORT") ? "VIEW_AND_EXPORT_AND_SAVE_VIEWS" : "VIEW_AND_SAVE_VIEWS";
+        }
         return permissions.includes("EXPORT") ? "VIEW_AND_EXPORT" : "VIEW";
     }
     return "VIEW";
@@ -141,7 +154,7 @@ export const asPermissionAssignment = (
     subjectType: WorkspacePermissionSubject,
     workspace: IGrantedWorkspace,
 ): IWorkspacePermissionAssignment => {
-    const permissions = asPermissions(workspace.permission);
+    const permissions = asPermissions(workspace.permissions[0]);
     return {
         assigneeIdentifier: {
             id: subjectId,
@@ -190,7 +203,7 @@ export const extractUserGroupName = (userGroup: IOrganizationUserGroup | IUserGr
 export const grantedWorkspaceAsPermissionAssignment = (
     grantedWorkspace: IGrantedWorkspace,
 ): Omit<IWorkspacePermissionAssignment, "assigneeIdentifier"> => {
-    const permissions = asPermissions(grantedWorkspace.permission);
+    const permissions = asGranularPermissions(grantedWorkspace.permissions);
     return {
         workspace: {
             id: grantedWorkspace.id,
@@ -216,13 +229,12 @@ export const workspacePermissionsAssignmentToGrantedWorkspace = (
     assignment: IWorkspacePermissionAssignment,
 ): IGrantedWorkspace => {
     const { workspace } = assignment;
-    const permission = asPermission(
-        assignment.hierarchyPermissions.length > 0 ? assignment.hierarchyPermissions : assignment.permissions,
-    );
+    const assignedPermissions =
+        assignment.hierarchyPermissions.length > 0 ? assignment.hierarchyPermissions : assignment.permissions;
     return {
         id: workspace.id,
         title: workspace.name,
-        permission,
+        permissions: assignedPermissions,
         isHierarchical: assignment.hierarchyPermissions.length > 0,
     };
 };

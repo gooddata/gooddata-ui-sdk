@@ -1,10 +1,13 @@
-// (C) 2021-2023 GoodData Corporation
-import { IOrganizationDescriptor } from "@gooddata/sdk-model";
+// (C) 2021-2024 GoodData Corporation
+import { IOrganizationDescriptor, IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
 import { IOrganizationSettingsService } from "./settings/index.js";
 import { ISecuritySettingsService } from "./securitySettings/index.js";
 import { IOrganizationStylingService } from "./styling/index.js";
 import { IOrganizationUserService } from "./users/index.js";
 import { IOrganizationPermissionService } from "./permissions/index.js";
+import { IOrganizationNotificationChannelService } from "./notificationChannels/index.js";
+import { IOrganizationLlmEndpointsService } from "./llmEndpoints/index.js";
+import { IOrganizationNotificationService } from "./notifications/index.js";
 
 /**
  * Represents an organization that services analytical workspaces.
@@ -23,6 +26,13 @@ export interface IOrganization {
      * @param includeAdditionalDetails - include additional details such as bootstrap user and user group.
      */
     getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
+
+    /**
+     * Updates details about the organization.
+     *
+     * @param descriptor - properties to update
+     */
+    updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<IOrganizationDescriptor>;
 
     /**
      * Returns service that can be used to query and update organization security settings.
@@ -48,6 +58,21 @@ export interface IOrganization {
      * Returns service that can be used to query and manage permissions to organization.
      */
     permissions(): IOrganizationPermissionService;
+
+    /**
+     * Returns service that can be used to query and manage organization notification channels.
+     */
+    notificationChannels(): IOrganizationNotificationChannelService;
+
+    /**
+     * Returns service that can be used to query and manage organization LLM endpoints.
+     */
+    llmEndpoints(): IOrganizationLlmEndpointsService;
+
+    /**
+     * Returns service that can be used to query and manage organization notifications.
+     */
+    notifications(): IOrganizationNotificationService;
 }
 
 /**

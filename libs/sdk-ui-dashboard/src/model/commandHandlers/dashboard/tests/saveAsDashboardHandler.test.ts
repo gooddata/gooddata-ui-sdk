@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { addLayoutSection, saveDashboard, saveDashboardAs } from "../../../commands/index.js";
@@ -8,15 +8,9 @@ import { DashboardCopySaved, DashboardSaved } from "../../../events/index.js";
 import { selectBasicLayout } from "../../../store/layout/layoutSelectors.js";
 import { isTemporaryIdentity } from "../../../utils/dashboardItemUtils.js";
 import { selectFilterContextIdentity } from "../../../store/filterContext/filterContextSelectors.js";
-import {
-    selectDashboardDescriptor,
-    selectDashboardTitle,
-    selectPersistedDashboard,
-} from "../../../store/meta/metaSelectors.js";
-import {
-    LockedDashboardIdentifier,
-    TestCorrelation as TestCorrelationLocked,
-} from "../../../tests/fixtures/LockedDashboard.fixtures.js";
+import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
+
+import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 
 describe("save as dashboard handler", () => {
     describe("for a new dashboard", () => {
@@ -130,23 +124,18 @@ describe("save as dashboard handler", () => {
         beforeEach(async () => {
             await preloadedTesterFactory((tester) => {
                 Tester = tester;
-            }, LockedDashboardIdentifier);
+            }, SimpleDashboardIdentifier);
         });
 
         const TestDashboardTitle = "My Dashboard Copy";
 
-        it("should save an existing locked dashboard as a copy with isLocked flag cleaned", async () => {
-            const originalState = Tester.state();
-            expect(selectDashboardDescriptor(originalState).isLocked).toBeTruthy();
-
+        it("should save an existing emit correct events", async () => {
             await Tester.dispatchAndWaitFor(
-                saveDashboardAs(TestDashboardTitle, true, undefined, TestCorrelationLocked),
+                saveDashboardAs(TestDashboardTitle, true, undefined, TestCorrelation),
                 "GDC.DASH/EVT.COPY_SAVED",
             );
 
-            const newState = Tester.state();
-
-            expect(selectDashboardDescriptor(newState).isLocked).toBeFalsy();
+            expect(Tester.emittedEventsDigest()).toMatchSnapshot();
         });
     });
 });

@@ -1,6 +1,10 @@
+// (C) 2025 GoodData Corporation
+
 // Derived from https://github.com/blacklabel/grouped_categories
 // Original licence https://github.com/blacklabel/grouped_categories/blob/master/license.txt
 // see "GoodData change" to find altered code
+
+// migrated from version 1.2.0 to version 1.3.2 to support Highcharts > 11
 
 /* eslint-disable */
 // @ts-nocheck
@@ -135,13 +139,46 @@ export function groupedCategories(HC) {
         }
     }
 
+    // Create local function `fontMetrics` to provide compatibility with HC 11 (#200)
+    function fontMetrics(fontSize, elem) {
+        if (
+            (HC.SVGRenderer.styledMode || !/px/.test(fontSize)) &&
+            HC.win.getComputedStyle // old IE doesn't support it
+        ) {
+            fontSize = elem && HC.SVGElement.prototype.getStyle.call(elem, "font-size");
+        } else {
+            fontSize =
+                fontSize ||
+                // When the elem is a DOM element (#5932)
+                (elem && elem.style && elem.style.fontSize) ||
+                // Fall back on the renderer style default
+                (HC.SVGRenderer.style && HC.SVGRenderer.style.fontSize);
+        }
+        // Handle different units
+        if (/px/.test(fontSize)) {
+            fontSize = HC.pInt(fontSize);
+        } else {
+            fontSize = 12;
+        }
+        // Empirical values found by comparing font size and bounding box
+        // height. Applies to the default font family.
+        // https://jsfiddle.net/highcharts/7xvn7/
+        var lineHeight = fontSize < 24 ? fontSize + 3 : Math.round(fontSize * 1.2),
+            baseline = Math.round(lineHeight * 0.8);
+        return {
+            h: lineHeight,
+            b: baseline,
+            f: fontSize,
+        };
+    }
+
     //
     // Axis prototype
     //
 
-    axisProto.init = function (chart, options) {
+    axisProto.init = function (chart, options, coll) {
         // default behaviour
-        protoAxisInit.call(this, chart, options);
+        protoAxisInit.call(this, chart, options, coll);
 
         if (typeof options === "object" && options.categories) {
             this.setupGroups(options);
@@ -177,9 +214,7 @@ export function groupedCategories(HC) {
         for (var i = 0; i <= stats.depth; i++) {
             var hasOptions = userAttr && userAttr[i - 1],
                 mergedCSS = hasOptions && userAttr[i - 1].style ? merge(css, userAttr[i - 1].style) : css;
-            this.groupFontHeights[i] = Math.round(
-                this.chart.renderer.fontMetrics(mergedCSS ? mergedCSS.fontSize : 0).b * 0.3,
-            );
+            this.groupFontHeights[i] = Math.round(fontMetrics(mergedCSS ? mergedCSS.fontSize : 0).b * 0.3);
         }
     };
 
@@ -500,7 +535,7 @@ export function groupedCategories(HC) {
     tickProto.render = function (index, old, opacity) {
         protoTickRender.call(this, index, old, opacity);
 
-        var treeCat = this.axis.categories[this.pos];
+        var treeCat = this.axis.categories && this.axis.categories[this.pos];
 
         if (!this.axis.isGrouped || !treeCat || this.pos > this.axis.max) {
             return;
@@ -519,9 +554,7 @@ export function groupedCategories(HC) {
             tickWidth = axis.tickWidth,
             xy = tickPosition(tick, tickPos),
             start = horiz ? xy.y : xy.x,
-            baseLine = axis.chart.renderer.fontMetrics(
-                axis.options.labels.style ? axis.options.labels.style.fontSize : 0,
-            ).b,
+            baseLine = fontMetrics(axis.options.labels.style ? axis.options.labels.style.fontSize : 0).b,
             depth = 1,
             reverseCrisp = (horiz && xy.x === axis.pos + axis.len) || (!horiz && xy.y === axis.pos) ? -1 : 0, // adjust grid lines for edges
             gridAttrs,

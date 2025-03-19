@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import {
     factoryNotationFor,
     isColorMappingItem,
@@ -6,6 +6,7 @@ import {
     insightProperties,
 } from "@gooddata/sdk-model";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
+import { IForecastConfig } from "@gooddata/sdk-backend-spi";
 import filter from "lodash/fp/filter.js";
 import flow from "lodash/fp/flow.js";
 import fromPairs from "lodash/fromPairs.js";
@@ -50,6 +51,12 @@ const supportedChartConfigProperties = new Set<keyof IChartConfig>([
     "total",
     "orientation",
     "comparison",
+    "cellImageSizing",
+    "cellTextWrapping",
+    "cellVerticalAlign",
+    "rowHeight",
+    "inlineVisualizations",
+    "hyperLinks",
 ]);
 
 export function chartConfigFromInsight(
@@ -59,7 +66,13 @@ export function chartConfigFromInsight(
     const properties = insightProperties(insight);
     const controls = properties?.controls ?? {};
     const includeColorPalette = ctx?.backend?.capabilities.supportsCustomColorPalettes ?? false;
+    const { inlineVisualizations, hyperLinks } = properties;
+
     const withValuesFromContext = {
+        ...{
+            inlineVisualizations,
+            hyperLinks,
+        },
         ...controls,
         ...(ctx?.colorPalette && includeColorPalette ? { colorPalette: ctx.colorPalette } : {}),
         ...(ctx?.settings?.separators ? { separators: ctx.settings.separators } : {}),
@@ -75,6 +88,29 @@ export function chartConfigFromInsight(
         (c) => getChartSupportedControls(c, insight, ctx?.settings),
         removeUseless,
     )(withValuesFromContext);
+}
+
+export function chartForecastConfigFromInsight(
+    insight: IInsightDefinition,
+    _ctx?: IEmbeddingCodeContext,
+): IForecastConfig | undefined {
+    const properties = insightProperties(insight);
+    const controls = properties?.controls ?? {};
+
+    if (!controls.forecast || controls.forecast?.enabled === false) {
+        return undefined;
+    }
+
+    const parsedPeriod = controls.forecast?.period?.toString();
+    const forecastPeriod = parsedPeriod ? parseInt(parsedPeriod, 10) : 3;
+    const confidenceLevel = controls.forecast?.confidence ?? 0.95;
+    const seasonal = controls.forecast?.seasonal;
+
+    return flow(removeUseless)({
+        confidenceLevel,
+        forecastPeriod,
+        seasonal,
+    });
 }
 
 export function chartAdditionalFactories(options?: {
@@ -113,4 +149,19 @@ export function chartConfigInsightConversion<TProps extends object, TPropKey ext
     propName: TPropKey,
 ): IInsightToPropConversion<TProps, TPropKey, IChartConfig> {
     return insightConversion(propName, chartConfigPropMeta, chartConfigFromInsight);
+}
+
+const chartForecastConfigPropMeta: PropMeta = {
+    typeImport: {
+        importType: "named",
+        name: "IForecastConfig",
+        package: "@gooddata/sdk-backend-spi",
+    },
+    cardinality: "scalar",
+};
+
+export function chartForecastConfigInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
+    propName: TPropKey,
+): IInsightToPropConversion<TProps, TPropKey, IForecastConfig> {
+    return insightConversion(propName, chartForecastConfigPropMeta, chartForecastConfigFromInsight);
 }

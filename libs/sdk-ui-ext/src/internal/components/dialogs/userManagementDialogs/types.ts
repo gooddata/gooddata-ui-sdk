@@ -2,12 +2,19 @@
 
 import isEmpty from "lodash/isEmpty.js";
 import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
-import { IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
+import { AssignedWorkspacePermission, IDataSourceIdentifierDescriptor } from "@gooddata/sdk-model";
 
 export interface IAddWorkspaceSelectProps {
     onSelectWorkspace: (workspace: IWorkspaceDescriptor) => void;
     addedWorkspaces: IGrantedWorkspace[];
     grantedWorkspaces: IGrantedWorkspace[];
+}
+
+export interface IAddSingleWorkspaceSelectProps {
+    onSelectWorkspace: (workspace: IWorkspaceDescriptor) => void;
+    addedWorkspace: IGrantedWorkspace | undefined;
+    grantedWorkspaces: IGrantedWorkspace[];
+    mode?: "VIEW" | "EDIT";
 }
 
 export interface IAddDataSourceSelectProps {
@@ -46,7 +53,26 @@ export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DATA_SOU
 
 export type ListMode = "VIEW" | "EDIT";
 
-export type WorkspacePermission = "VIEW" | "VIEW_AND_EXPORT" | "ANALYZE" | "ANALYZE_AND_EXPORT" | "MANAGE";
+/**
+ * @internal
+ */
+export type UserTabId = "WORKSPACES" | "USER_GROUPS" | "DETAILS" | "DATA_SOURCES";
+
+/**
+ * We should get rid of the permission combinations and keep only the AssignedWorkspacePermission
+ * once the flat permissions are fully in the use.
+ */
+export type WorkspacePermission =
+    | "VIEW"
+    | "VIEW_AND_SAVE_VIEWS"
+    | "VIEW_AND_EXPORT"
+    | "VIEW_AND_EXPORT_AND_SAVE_VIEWS"
+    | "ANALYZE"
+    | "ANALYZE_AND_EXPORT"
+    | "MANAGE"
+    | AssignedWorkspacePermission;
+
+export type WorkspacePermissions = WorkspacePermission[];
 
 /**
  * @internal
@@ -66,7 +92,7 @@ export type DataSourcePermissionSubject = "user" | "userGroup";
 export interface IGrantedWorkspace {
     id: string;
     title: string;
-    permission: WorkspacePermission;
+    permissions: WorkspacePermission[];
     isHierarchical: boolean;
 }
 
@@ -82,6 +108,7 @@ export interface IGrantedDataSource {
 export interface IPermissionsItem {
     id: WorkspacePermission;
     enabled: boolean;
+    group?: boolean;
 }
 
 export interface IDataSourcePermissionsItem {

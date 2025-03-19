@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2025 GoodData Corporation
 
 /* eslint-disable */
 /**
@@ -88,6 +88,12 @@ export interface AuthUser {
 export interface FeatureFlagsContext {
     /**
      *
+     * @type {Array<string>}
+     * @memberof FeatureFlagsContext
+     */
+    earlyAccessValues: Array<string>;
+    /**
+     *
      * @type {string}
      * @memberof FeatureFlagsContext
      */
@@ -118,6 +124,24 @@ export interface Invitation {
      * @memberof Invitation
      */
     email: string;
+    /**
+     *
+     * @type {string}
+     * @memberof Invitation
+     */
+    userId?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof Invitation
+     */
+    firstName?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof Invitation
+     */
+    lastName?: string;
 }
 /**
  *

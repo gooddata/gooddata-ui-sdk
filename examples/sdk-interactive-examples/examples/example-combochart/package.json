@@ -1,9 +1,9 @@
 {
     "name": "@gooddata/sdk-interactive-example-combochart",
-    "version": "9.9.2",
+    "version": "10.23.0-alpha.43",
     "title": "ComboChart",
     "description": "Example demonstrates ComboChart secondaryMeasures definition. ",
-    "author": "GoodData Corporation",
+    "author": "GoodData",
     "private": false,
     "license": "LicenseRef-LICENSE",
     "type": "module",
@@ -25,12 +25,11 @@
         "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "validate": "npm run prettier-check",
-        "validate-ci": "npm run build-example-ci && npm run prettier-check"
+        "validate-ci": "npm run prettier-check"
     },
     "exampleDependencies": [],
     "dependencies": {
         "@gooddata/sdk-backend-base": "workspace:*",
-        "@gooddata/sdk-backend-bear": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
@@ -54,7 +53,7 @@
         "prettier": "~2.5.0",
         "process": "^0.11.10",
         "typescript": "5.3.3",
-        "vite": "~5.0.8",
+        "vite": "^5.4.3",
         "vite-plugin-html": "~3.2.0"
     }
 }

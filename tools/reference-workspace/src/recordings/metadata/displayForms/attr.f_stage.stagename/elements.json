@@ -1,0 +1,10 @@
+[
+    { "title": "Interest", "uri": "Interest" },
+    { "title": "Discovery", "uri": "Discovery" },
+    { "title": "Short List", "uri": "Short List" },
+    { "title": "Risk Assessment", "uri": "Risk Assessment" },
+    { "title": "Conviction", "uri": "Conviction" },
+    { "title": "Negotiation", "uri": "Negotiation" },
+    { "title": "Closed Won", "uri": "Closed Won" },
+    { "title": "Closed Lost", "uri": "Closed Lost" }
+]

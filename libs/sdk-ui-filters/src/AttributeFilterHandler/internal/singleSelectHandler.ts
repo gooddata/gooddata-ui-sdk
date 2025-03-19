@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import {
     filterObjRef,
     newNegativeAttributeFilter,
@@ -6,6 +6,7 @@ import {
     filterAttributeElements,
     isAttributeElementsByRef,
     isPositiveAttributeFilter,
+    filterLocalIdentifier,
 } from "@gooddata/sdk-model";
 
 import {
@@ -35,8 +36,16 @@ export class SingleSelectAttributeFilterHandler
         return {
             ...config,
             attributeFilter: isPositiveAttributeFilter(config.attributeFilter)
-                ? newPositiveAttributeFilter(filterObjRef(config.attributeFilter), sanitizedItems)
-                : newNegativeAttributeFilter(filterObjRef(config.attributeFilter), sanitizedItems),
+                ? newPositiveAttributeFilter(
+                      filterObjRef(config.attributeFilter),
+                      sanitizedItems,
+                      filterLocalIdentifier(config.attributeFilter),
+                  )
+                : newNegativeAttributeFilter(
+                      filterObjRef(config.attributeFilter),
+                      sanitizedItems,
+                      filterLocalIdentifier(config.attributeFilter),
+                  ),
         };
     }
 

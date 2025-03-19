@@ -1,51 +1,83 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { call } from "redux-saga/effects";
-import { IExecutionResult, IExportResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { call, select } from "redux-saga/effects";
+import { IExportResult, IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
-
 import { ExportRawInsightWidget } from "../../commands/index.js";
 import { DashboardInsightWidgetExportResolved, insightWidgetExportResolved } from "../../events/insight.js";
-
 import { DashboardContext } from "../../types/commonTypes.js";
-import { createExportRawFunction } from "@gooddata/sdk-ui";
 import { PromiseFnReturnType } from "../../types/sagas.js";
-import { defaultDimensionsGenerator, defWithDimensions, newDefForInsight } from "@gooddata/sdk-model";
+import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors.js";
 
-async function performExport(execution: IExecutionResult): Promise<IExportResult> {
-    return createExportRawFunction(execution);
-}
+import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
+import {
+    defaultDimensionsGenerator,
+    defWithDimensions,
+    IExecutionDefinition,
+    insightRef,
+    INullableFilter,
+    newDefForInsight,
+} from "@gooddata/sdk-model";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
+import { selectRawExportOverridesForInsightByRef } from "../../store/insights/insightsSelectors.js";
 
-function getExecutionResult(preparedExecution: IPreparedExecution) {
-    return preparedExecution.execute();
+async function exportDashboardToCSVRaw(
+    ctx: DashboardContext,
+    definition: IExecutionDefinition,
+    filename: string,
+    overrides?: IRawExportCustomOverrides,
+): Promise<IExportResult> {
+    const { backend, workspace } = ctx;
+
+    return backend.workspace(workspace).dashboards().exportDashboardToCSVRaw(definition, filename, overrides);
 }
 
 export function* exportRawInsightWidgetHandler(
     ctx: DashboardContext,
     cmd: ExportRawInsightWidget,
 ): SagaIterator<DashboardInsightWidgetExportResolved> {
-    const { insight } = cmd.payload;
-    const { workspace, backend } = ctx;
+    const { ref, widget, insight, filename } = cmd.payload;
+    const { workspace } = ctx;
 
-    const definition = defWithDimensions(newDefForInsight(workspace, insight!), defaultDimensionsGenerator);
-
-    const preparedExecution = backend.workspace(workspace).execution().forDefinition(definition);
-
-    const executionResult: PromiseFnReturnType<typeof getExecutionResult> = yield call(
-        getExecutionResult,
-        preparedExecution,
+    const executionEnvelope: ReturnType<ReturnType<typeof selectExecutionResultByRef>> = yield select(
+        selectExecutionResultByRef(ref),
     );
 
-    // executionResult must be defined at this point
-    invariant(executionResult);
+    const filterContextFilters: ReturnType<typeof selectFilterContextFilters> = yield select(
+        selectFilterContextFilters,
+    );
 
-    const result: PromiseFnReturnType<typeof performExport> = yield call(performExport, executionResult);
+    const mergedFilters: INullableFilter[] = [
+        ...insight.insight.filters,
+        ...filterContextItemsToDashboardFiltersByWidget(filterContextFilters, widget),
+    ];
+
+    const definition = defWithDimensions(
+        newDefForInsight(workspace, insight!, mergedFilters),
+        defaultDimensionsGenerator,
+    );
+
+    const preparedExecutionDefinition = executionEnvelope?.executionResult?.definition ?? definition;
+
+    // execution definition must be defined at this point
+    invariant(preparedExecutionDefinition);
+
+    const overrides: ReturnType<ReturnType<typeof selectRawExportOverridesForInsightByRef>> = yield select(
+        selectRawExportOverridesForInsightByRef(insightRef(insight)),
+    );
+
+    const result: PromiseFnReturnType<typeof exportDashboardToCSVRaw> = yield call(
+        exportDashboardToCSVRaw,
+        ctx,
+        preparedExecutionDefinition,
+        filename,
+        overrides,
+    );
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted
     const fullUri = ctx.backend.config.hostname
         ? new URL(result.uri, ctx.backend.config.hostname).href
         : result.uri;
-
     const sanitizedResult: IExportResult = {
         ...result,
         uri: fullUri,

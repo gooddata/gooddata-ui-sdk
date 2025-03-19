@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IAuthenticatedPrincipal,
@@ -60,6 +60,9 @@ export function compositeBackend(...components: CompositeBackendPart[]): IAnalyt
             return backend;
         },
         withTelemetry(_component: string, _props: object): IAnalyticalBackend {
+            return backend;
+        },
+        withCorrelation(_correlationMetadata: Record<string, string>): IAnalyticalBackend {
             return backend;
         },
         withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {

@@ -1,17 +1,7 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { LayoutState } from "./layoutState.js";
 import { invariant } from "ts-invariant";
-import { resetUndoReducer, undoReducer, withUndo } from "../_infra/undoEnhancer.js";
-import {
-    ExtendedDashboardItem,
-    ExtendedDashboardLayoutSection,
-    ExtendedDashboardWidget,
-    RelativeIndex,
-    StashedDashboardItemsId,
-    isCustomWidget,
-} from "../../types/layoutTypes.js";
-import { addArrayElements, moveArrayElement, removeArrayElement } from "../../utils/arrayOps.js";
+import { Draft } from "immer";
 import {
     areObjRefsEqual,
     ObjRef,
@@ -31,14 +21,34 @@ import {
     IDrillDownReference,
     isDashboardAttributeFilterReference,
     isRichTextWidget,
+    IDrillDownIntersectionIgnoredAttributes,
+    IInsightWidget,
+    isVisualizationSwitcherWidget,
+    isDashboardLayout,
+    IDashboardLayoutSection,
+    ScreenSize,
+    isDashboardLayoutItem,
 } from "@gooddata/sdk-model";
+import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
+
 import { WidgetDescription, WidgetHeader } from "../../types/widgetTypes.js";
-import flatMap from "lodash/flatMap.js";
-import { Draft } from "immer";
 import { newMapForObjectWithIdentity, ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import { IdentityMapping } from "../../../_staging/dashboard/dashboardLayout.js";
 import { setOrDelete } from "../../../_staging/objectUtils/setOrDelete.js";
-import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
+import { ILayoutSectionPath, ILayoutItemPath } from "../../../types.js";
+import { findSections, findSection, findItem, getItemIndex } from "../../../_staging/layout/coordinates.js";
+import { resetUndoReducer, undoReducer, withUndo } from "../_infra/undoEnhancer.js";
+import {
+    ExtendedDashboardItem,
+    ExtendedDashboardLayoutSection,
+    ExtendedDashboardWidget,
+    StashedDashboardItemsId,
+    isCustomWidget,
+    IItemWithHeight,
+} from "../../types/layoutTypes.js";
+import { addArrayElements, removeArrayElement } from "../../utils/arrayOps.js";
+
+import { LayoutState } from "./layoutState.js";
 import { getWidgetCoordinatesAndItem, resizeInsightWidget } from "./layoutUtils.js";
 
 type LayoutReducer<A> = CaseReducer<LayoutState, PayloadAction<A>>;
@@ -64,6 +74,10 @@ function recurseLayoutAndUpdateWidgetIds(
     layout.sections.forEach((section) => {
         section.items.forEach((item) => {
             const widget = item.widget;
+
+            if (isDashboardLayout(widget)) {
+                return recurseLayoutAndUpdateWidgetIds(widget, mapping);
+            }
 
             if (!isInsightWidget(widget) && !isKpiWidget(widget)) {
                 return;
@@ -94,7 +108,7 @@ const updateWidgetIdentities: LayoutReducer<ObjRefMap<IdentityMapping>> = (state
 
 type AddSectionActionPayload = {
     section: ExtendedDashboardLayoutSection;
-    index: RelativeIndex;
+    index: ILayoutSectionPath;
     usedStashes: StashedDashboardItemsId[];
 };
 
@@ -102,8 +116,9 @@ const addSection: LayoutReducer<AddSectionActionPayload> = (state, action) => {
     invariant(state.layout);
 
     const { index, section, usedStashes } = action.payload;
+    const sections = findSections(state.layout, index);
 
-    addArrayElements(state.layout.sections, index, [section]);
+    addArrayElements(sections, index.sectionIndex, [section]);
 
     usedStashes.forEach((stashIdentifier) => {
         delete state.stash[stashIdentifier];
@@ -114,7 +129,7 @@ const addSection: LayoutReducer<AddSectionActionPayload> = (state, action) => {
 //
 //
 
-type RemoveSectionActionPayload = { index: RelativeIndex; stashIdentifier?: StashedDashboardItemsId };
+type RemoveSectionActionPayload = { index: ILayoutSectionPath; stashIdentifier?: StashedDashboardItemsId };
 
 const removeSection: LayoutReducer<RemoveSectionActionPayload> = (state, action) => {
     invariant(state.layout);
@@ -122,55 +137,85 @@ const removeSection: LayoutReducer<RemoveSectionActionPayload> = (state, action)
     const { index, stashIdentifier } = action.payload;
 
     if (stashIdentifier) {
-        const items = state.layout.sections[index].items;
-
-        state.stash[stashIdentifier] = items;
+        state.stash[stashIdentifier] = findSection(state.layout, index).items;
     }
 
-    removeArrayElement(state.layout.sections, index);
+    const sections = findSections(state.layout, index);
+    removeArrayElement(sections, index.sectionIndex);
 };
 
 //
 //
 //
 
-type ChangeSectionActionPayload = { index: number; header: IDashboardLayoutSectionHeader };
+type ChangeSectionActionPayload = { index: ILayoutSectionPath; header: IDashboardLayoutSectionHeader };
 
 const changeSectionHeader: LayoutReducer<ChangeSectionActionPayload> = (state, action) => {
     invariant(state.layout);
 
     const { index, header } = action.payload;
 
-    state.layout.sections[index].header = header;
+    findSection(state.layout, index).header = header;
 };
 
 //
 //
 //
 
-type changeItemsHeightActionPayload = { sectionIndex: number; itemIndexes: number[]; height: number };
+type ToggleLayoutSectionHeadersPayload = {
+    layoutPath: ILayoutItemPath | undefined;
+    enableSectionHeaders: boolean;
+};
+
+const toggleLayoutSectionHeaders: LayoutReducer<ToggleLayoutSectionHeadersPayload> = (state, action) => {
+    invariant(state.layout);
+
+    const { layoutPath, enableSectionHeaders } = action.payload;
+    const layout = layoutPath === undefined ? state.layout : findItem(state.layout, layoutPath);
+
+    if (isDashboardLayoutItem(layout) && isDashboardLayout(layout.widget)) {
+        layout.widget = {
+            ...layout.widget,
+            configuration: {
+                ...(layout.widget.configuration ?? {}),
+                sections: {
+                    ...(layout.widget.configuration?.sections ?? {}),
+                    enableHeader: enableSectionHeaders,
+                },
+            },
+        };
+    }
+};
+
+//
+//
+//
+
+type changeItemsHeightActionPayload = {
+    sectionIndex: ILayoutSectionPath;
+    itemIndexes: number[];
+    height: number;
+};
 
 const changeItemsHeight: LayoutReducer<changeItemsHeightActionPayload> = (state, action) => {
     invariant(state.layout);
 
     const { sectionIndex, itemIndexes, height } = action.payload;
 
-    const section = state.layout.sections[sectionIndex];
+    const section = findSection(state.layout, sectionIndex);
     itemIndexes.forEach((itemIndex) => {
         const item = section.items[itemIndex];
         if (isCustomWidget(item.widget)) {
             return;
         }
 
-        const newSize = {
+        item.size = {
             ...item.size,
             xl: {
                 ...item.size.xl,
                 gridHeight: height,
             },
         };
-
-        item.size = newSize;
     });
 };
 
@@ -178,39 +223,71 @@ const changeItemsHeight: LayoutReducer<changeItemsHeightActionPayload> = (state,
 //
 //
 
-type changeItemWidthActionPayload = { sectionIndex: number; itemIndex: number; width: number };
+type updateHeightOfMultipleItemsActionPayload = {
+    itemsWithSizes: IItemWithHeight[];
+};
 
-const changeItemWidth: LayoutReducer<changeItemWidthActionPayload> = (state, action) => {
+const updateHeightOfMultipleItems: LayoutReducer<updateHeightOfMultipleItemsActionPayload> = (
+    state,
+    action,
+) => {
     invariant(state.layout);
+    const rootLayout = state.layout;
+    const { itemsWithSizes } = action.payload;
 
-    const { sectionIndex, itemIndex, width } = action.payload;
-
-    const section = state.layout.sections[sectionIndex];
-    const item = section.items[itemIndex];
-
-    const newSize = {
-        ...item.size,
-        xl: {
-            ...item.size.xl,
-            gridWidth: width,
-        },
-    };
-
-    item.size = newSize;
+    itemsWithSizes.forEach(({ itemPath, height }) => {
+        const item = findItem(rootLayout, itemPath);
+        if (isCustomWidget(item.widget)) {
+            return;
+        }
+        item.size = {
+            ...item.size,
+            xl: {
+                ...item.size.xl,
+                gridHeight: height,
+            },
+        };
+    });
 };
 
 //
 //
 //
 
-type MoveSectionActionPayload = { sectionIndex: number; toIndex: RelativeIndex };
+type changeItemWidthActionPayload = { layoutPath: ILayoutItemPath; width: number };
+
+const changeItemWidth: LayoutReducer<changeItemWidthActionPayload> = (state, action) => {
+    invariant(state.layout);
+
+    const { layoutPath, width } = action.payload;
+
+    const item = findItem(state.layout, layoutPath);
+
+    item.size = {
+        ...item.size,
+        xl: {
+            ...item.size.xl,
+            gridWidth: width,
+        },
+    };
+};
+
+//
+//
+//
+
+type MoveSectionActionPayload = { sectionIndex: ILayoutSectionPath; toIndex: ILayoutSectionPath };
 
 const moveSection: LayoutReducer<MoveSectionActionPayload> = (state, action) => {
     invariant(state.layout);
 
     const { sectionIndex, toIndex } = action.payload;
 
-    moveArrayElement(state.layout.sections, sectionIndex, toIndex);
+    const originalSections = findSections(state.layout, sectionIndex);
+    const movedSection = removeArrayElement(originalSections, sectionIndex.sectionIndex);
+
+    const targetSections = findSections(state.layout, toIndex);
+    addArrayElements(targetSections, toIndex.sectionIndex, [movedSection]);
 };
 
 //
@@ -218,8 +295,7 @@ const moveSection: LayoutReducer<MoveSectionActionPayload> = (state, action) => 
 //
 
 type AddSectionItemsActionPayload = {
-    sectionIndex: number;
-    itemIndex: number;
+    layoutPath: ILayoutItemPath;
     items: ExtendedDashboardItem[];
     usedStashes: StashedDashboardItemsId[];
 };
@@ -227,12 +303,13 @@ type AddSectionItemsActionPayload = {
 const addSectionItems: LayoutReducer<AddSectionItemsActionPayload> = (state, action) => {
     invariant(state.layout);
 
-    const { sectionIndex, itemIndex, items, usedStashes } = action.payload;
-    const section = state.layout.sections[sectionIndex];
+    const { layoutPath, items, usedStashes } = action.payload;
+    const section = findSection(state.layout, layoutPath);
 
     invariant(section);
 
-    addArrayElements(section.items, itemIndex, items);
+    const itemIndexAtTargetSection = getItemIndex(layoutPath);
+    addArrayElements(section.items, itemIndexAtTargetSection, items);
 
     usedStashes.forEach((stashIdentifier) => {
         delete state.stash[stashIdentifier];
@@ -244,27 +321,27 @@ const addSectionItems: LayoutReducer<AddSectionItemsActionPayload> = (state, act
 //
 
 type MoveSectionItemActionPayload = {
-    sectionIndex: number;
-    itemIndex: number;
-    toSectionIndex: number;
-    toItemIndex: RelativeIndex;
+    itemIndex: ILayoutItemPath;
+    toItemIndex: ILayoutItemPath;
 };
 
 const moveSectionItem: LayoutReducer<MoveSectionItemActionPayload> = (state, action) => {
     invariant(state.layout);
 
-    const { sectionIndex, itemIndex, toSectionIndex, toItemIndex } = action.payload;
-    const fromSection = state.layout.sections[sectionIndex];
-    const toSection = state.layout.sections[toSectionIndex];
+    const { itemIndex, toItemIndex } = action.payload;
+    const fromSection = findSection(state.layout, itemIndex);
+    const toSection = findSection(state.layout, toItemIndex);
 
     invariant(fromSection);
     invariant(toSection);
 
-    const item = removeArrayElement(fromSection.items, itemIndex);
+    const itemIndexAtSourceSection = getItemIndex(itemIndex);
+    const item = removeArrayElement(fromSection.items, itemIndexAtSourceSection);
 
     invariant(item);
 
-    addArrayElements(toSection.items, toItemIndex, [item]);
+    const itemIndexAtTargetSection = getItemIndex(toItemIndex);
+    addArrayElements(toSection.items, itemIndexAtTargetSection, [item]);
 };
 
 //
@@ -272,20 +349,19 @@ const moveSectionItem: LayoutReducer<MoveSectionItemActionPayload> = (state, act
 //
 
 type RemoveSectionItemActionPayload = {
-    sectionIndex: number;
-    itemIndex: number;
+    itemIndex: ILayoutItemPath;
     stashIdentifier?: StashedDashboardItemsId;
 };
 
 const removeSectionItem: LayoutReducer<RemoveSectionItemActionPayload> = (state, action) => {
     invariant(state.layout);
 
-    const { sectionIndex, itemIndex, stashIdentifier } = action.payload;
-    const section = state.layout.sections[sectionIndex];
+    const { itemIndex, stashIdentifier } = action.payload;
+    const section = findSection(state.layout, itemIndex);
 
     invariant(section);
 
-    const item = removeArrayElement(section.items, itemIndex);
+    const item = removeArrayElement(section.items, getItemIndex(itemIndex));
 
     invariant(item);
 
@@ -299,8 +375,7 @@ const removeSectionItem: LayoutReducer<RemoveSectionItemActionPayload> = (state,
 //
 
 type ReplaceSectionItemActionPayload = {
-    sectionIndex: number;
-    itemIndex: number;
+    layoutPath: ILayoutItemPath;
     newItems: ExtendedDashboardItem[];
     stashIdentifier?: StashedDashboardItemsId;
     usedStashes: StashedDashboardItemsId[];
@@ -309,12 +384,13 @@ type ReplaceSectionItemActionPayload = {
 const replaceSectionItem: LayoutReducer<ReplaceSectionItemActionPayload> = (state, action) => {
     invariant(state.layout);
 
-    const { sectionIndex, itemIndex, newItems, stashIdentifier, usedStashes } = action.payload;
-    const section = state.layout.sections[sectionIndex];
+    const { layoutPath, newItems, stashIdentifier, usedStashes } = action.payload;
+    const section = findSection(state.layout, layoutPath);
 
     invariant(section);
 
-    const item = removeArrayElement(section.items, itemIndex);
+    const itemIndexAtSourceSection = getItemIndex(layoutPath);
+    const item = removeArrayElement(section.items, itemIndexAtSourceSection);
 
     invariant(item);
 
@@ -322,7 +398,7 @@ const replaceSectionItem: LayoutReducer<ReplaceSectionItemActionPayload> = (stat
         state.stash[stashIdentifier] = [item];
     }
 
-    addArrayElements(section.items, itemIndex, newItems);
+    addArrayElements(section.items, itemIndexAtSourceSection, newItems);
 
     usedStashes.forEach((usedStash) => {
         /*
@@ -341,15 +417,31 @@ const replaceSectionItem: LayoutReducer<ReplaceSectionItemActionPayload> = (stat
 // Layout-widget specific reducers
 //
 
-const getWidgetByRef = (state: Draft<LayoutState>, widgetRef: ObjRef) => {
-    const allWidgets = flatMap(state?.layout?.sections, (section) =>
-        section.items.map((item) => item.widget),
-    );
+const processSection = (section: IDashboardLayoutSection<ExtendedDashboardWidget>) => {
+    return section.items.flatMap((item) => {
+        let result: typeof item.widget[] = [];
+        const widget = item.widget;
+        if (widget === undefined) {
+            return [];
+        }
+        if (isVisualizationSwitcherWidget(widget)) {
+            result = [widget, ...widget.visualizations];
+            return result;
+        } else if (isDashboardLayout(widget)) {
+            result = [widget, ...widget.sections.flatMap(processSection)];
+            return result;
+        }
+        return [widget];
+    }) as ExtendedDashboardWidget[];
+};
 
+const getWidgetByRef = (
+    state: Draft<LayoutState>,
+    widgetRef: ObjRef,
+): Draft<ExtendedDashboardWidget> | undefined => {
+    const allWidgets = state?.layout?.sections.flatMap(processSection) ?? [];
     const widgets = allWidgets.filter(Boolean) as NonNullable<typeof allWidgets[number]>[];
-    const widgetMap = newMapForObjectWithIdentity(widgets);
-
-    return widgetMap.get(widgetRef);
+    return newMapForObjectWithIdentity(widgets).get(widgetRef);
 };
 
 //
@@ -429,6 +521,7 @@ type ReplaceWidgetBlacklistHierarchies = {
     blacklistHierarchies: IDrillDownReference[];
 };
 
+//
 const replaceWidgetBlacklistHierarchies: LayoutReducer<ReplaceWidgetBlacklistHierarchies> = (
     state,
     action,
@@ -441,6 +534,29 @@ const replaceWidgetBlacklistHierarchies: LayoutReducer<ReplaceWidgetBlacklistHie
     invariant(widget && (isKpiWidget(widget) || isInsightWidget(widget)));
 
     widget.ignoredDrillDownHierarchies = blacklistHierarchies ?? [];
+};
+
+//
+//
+//
+
+type ReplaceWidgetDrillDownIntersectionIgnoredAttributes = {
+    ref: ObjRef;
+    ignoredDrillDownIntersectionIgnoredAttributes: IDrillDownIntersectionIgnoredAttributes[];
+};
+
+//
+const replaceWidgetDrillDownIntersectionIgnoredAttributes: LayoutReducer<
+    ReplaceWidgetDrillDownIntersectionIgnoredAttributes
+> = (state, action) => {
+    invariant(state.layout);
+
+    const { ignoredDrillDownIntersectionIgnoredAttributes, ref } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    invariant(widget && (isKpiWidget(widget) || isInsightWidget(widget)));
+
+    widget.drillDownIntersectionIgnoredAttributes = ignoredDrillDownIntersectionIgnoredAttributes ?? [];
 };
 
 //
@@ -536,7 +652,7 @@ const replaceWidgetFilterSettings: LayoutReducer<ReplaceWidgetFilterSettings> = 
     const { ignoreDashboardFilters, dateDataSet, ref } = action.payload;
     const widget = getWidgetByRef(state, ref);
 
-    invariant(widget && (isInsightWidget(widget) || isKpiWidget(widget)));
+    invariant(widget && (isInsightWidget(widget) || isKpiWidget(widget) || isRichTextWidget(widget)));
 
     widget.dateDataSet = dateDataSet;
     widget.ignoreDashboardFilters = ignoreDashboardFilters ?? [];
@@ -550,17 +666,16 @@ type RemoveIgnoredAttributeFilter = {
     displayFormRefs: ObjRef[];
 };
 
-const removeIgnoredAttributeFilter: LayoutReducer<RemoveIgnoredAttributeFilter> = (state, action) => {
-    invariant(state.layout);
-
-    const { displayFormRefs } = action.payload;
-
-    state.layout.sections.forEach((section) => {
+const removeIgnoredAttributeFilterFromLayout = (
+    layout: Draft<IDashboardLayout<ExtendedDashboardWidget>>,
+    displayFormRefs: ObjRef[],
+) => {
+    layout.sections.forEach((section) => {
         section.items.forEach((item) => {
             const widget = item.widget;
 
             if (isInsightWidget(widget) || isKpiWidget(widget)) {
-                const updatedFilters = widget.ignoreDashboardFilters.filter((filter) => {
+                widget.ignoreDashboardFilters = widget.ignoreDashboardFilters.filter((filter) => {
                     if (isDashboardDateFilterReference(filter)) {
                         return true;
                     }
@@ -570,11 +685,17 @@ const removeIgnoredAttributeFilter: LayoutReducer<RemoveIgnoredAttributeFilter> 
                         undefined
                     );
                 });
-
-                widget.ignoreDashboardFilters = updatedFilters;
+            } else if (isDashboardLayout(widget)) {
+                removeIgnoredAttributeFilterFromLayout(widget, displayFormRefs);
             }
         });
     });
+};
+
+const removeIgnoredAttributeFilter: LayoutReducer<RemoveIgnoredAttributeFilter> = (state, action) => {
+    invariant(state.layout);
+
+    removeIgnoredAttributeFilterFromLayout(state.layout, action.payload.displayFormRefs);
 };
 
 //
@@ -604,17 +725,16 @@ type RemoveIgnoredDateFilter = {
     dateDataSets: ObjRef[];
 };
 
-const removeIgnoredDateFilter: LayoutReducer<RemoveIgnoredDateFilter> = (state, action) => {
-    invariant(state.layout);
-
-    const { dateDataSets } = action.payload;
-
-    state.layout.sections.forEach((section) => {
+const removeIgnoredDateFilterFromLayout = (
+    layout: Draft<IDashboardLayout<ExtendedDashboardWidget>>,
+    dateDataSets: ObjRef[],
+) => {
+    layout.sections.forEach((section) => {
         section.items.forEach((item) => {
             const widget = item.widget;
 
             if (isInsightWidget(widget) || isKpiWidget(widget)) {
-                const updatedFilters = widget.ignoreDashboardFilters.filter((filter) => {
+                widget.ignoreDashboardFilters = widget.ignoreDashboardFilters.filter((filter) => {
                     if (isDashboardAttributeFilterReference(filter)) {
                         return true;
                     }
@@ -623,11 +743,17 @@ const removeIgnoredDateFilter: LayoutReducer<RemoveIgnoredDateFilter> = (state, 
                         dateDataSets.find((removed) => areObjRefsEqual(removed, filter.dataSet)) === undefined
                     );
                 });
-
-                widget.ignoreDashboardFilters = updatedFilters;
+            } else if (isDashboardLayout(widget)) {
+                removeIgnoredDateFilterFromLayout(widget, dateDataSets);
             }
         });
     });
+};
+
+const removeIgnoredDateFilter: LayoutReducer<RemoveIgnoredDateFilter> = (state, action) => {
+    invariant(state.layout);
+
+    removeIgnoredDateFilterFromLayout(state.layout, action.payload.dateDataSets);
 };
 
 //
@@ -730,8 +856,104 @@ const replaceRichTextWidgetContent: LayoutReducer<ReplaceRichTextWidgetContent> 
     setOrDelete(widget, "content", content);
 };
 
+type ChangeWidgetIgnoreCrossFiltering = {
+    ref: ObjRef;
+    ignoreCrossFiltering?: boolean;
+};
+
+const changeWidgetIgnoreCrossFiltering: LayoutReducer<ChangeWidgetIgnoreCrossFiltering> = (state, action) => {
+    invariant(state.layout);
+
+    const { ignoreCrossFiltering, ref } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    invariant(widget && (isInsightWidget(widget) || isKpiWidget(widget)));
+
+    widget.ignoreCrossFiltering = ignoreCrossFiltering;
+};
+
+//
+//
+//
+
+type AddVisualizationSwitcherWidgetVisualization = {
+    ref: ObjRef;
+    visualization: IInsightWidget;
+    newSize?: IVisualizationSizeInfo;
+};
+
+const addVisualizationSwitcherWidgetVisualization: LayoutReducer<
+    AddVisualizationSwitcherWidgetVisualization
+> = (state, action) => {
+    invariant(state.layout);
+
+    const { visualization, ref, newSize } = action.payload;
+    const widgetRef = getWidgetByRef(state, ref);
+    const data = getWidgetCoordinatesAndItem(state.layout, ref);
+
+    invariant(widgetRef && isVisualizationSwitcherWidget(widgetRef));
+
+    widgetRef.visualizations.push(visualization);
+
+    if (newSize && data?.item) {
+        data.item.size.xl = resizeInsightWidget(data.item.size.xl, newSize);
+    }
+};
+
+type UpdateVisualizationSwitcherWidgetVisualizations = {
+    ref: ObjRef;
+    visualizations: IInsightWidget[];
+};
+
+const updateVisualizationSwitcherWidgetVisualizations: LayoutReducer<
+    UpdateVisualizationSwitcherWidgetVisualizations
+> = (state, action) => {
+    invariant(state.layout);
+
+    const { visualizations, ref } = action.payload;
+    const widgetRef = getWidgetByRef(state, ref);
+
+    invariant(widgetRef && isVisualizationSwitcherWidget(widgetRef));
+
+    widgetRef.visualizations = visualizations;
+};
+
+type ResizeVisualizationSwitcherOnInsightChanged = {
+    ref: ObjRef;
+    newSize?: IVisualizationSizeInfo;
+};
+
+const resizeVisualizationSwitcherOnInsightChanged: LayoutReducer<
+    ResizeVisualizationSwitcherOnInsightChanged
+> = (state, action) => {
+    invariant(state.layout);
+
+    const { ref, newSize } = action.payload;
+    const widgetRef = getWidgetByRef(state, ref);
+    const data = getWidgetCoordinatesAndItem(state.layout, ref);
+
+    invariant(widgetRef && isVisualizationSwitcherWidget(widgetRef));
+
+    if (newSize && data?.item) {
+        data.item.size.xl = resizeInsightWidget(data.item.size.xl, newSize);
+    }
+};
+
+//
+// Reducers that manipulate the layout itself - the sections and items
+//
+
+type SetScreenActionPayload = {
+    screen: ScreenSize;
+};
+
+const setScreen: LayoutReducer<SetScreenActionPayload> = (state, action) => {
+    state.screen = action.payload.screen;
+};
+
 export const layoutReducers = {
     setLayout,
+    setScreen,
     updateWidgetIdentities,
     removeIgnoredAttributeFilter,
     removeIgnoredDateFilter,
@@ -748,6 +970,9 @@ export const layoutReducers = {
     replaceWidgetDrillWithoutUndo: replaceWidgetDrill, // useful in internal sanitization use cases
     replaceWidgetDrills: withUndo(replaceWidgetDrill),
     replaceWidgetBlacklistHierarchies: withUndo(replaceWidgetBlacklistHierarchies),
+    replaceWidgetDrillDownIntersectionIgnoredAttributes: withUndo(
+        replaceWidgetDrillDownIntersectionIgnoredAttributes,
+    ),
     replaceInsightWidgetVisProperties: withUndo(replaceInsightWidgetVisProperties),
     replaceInsightWidgetVisConfiguration: withUndo(replaceInsightWidgetVisConfiguration),
     replaceInsightWidgetInsight: withUndo(replaceInsightWidgetInsight),
@@ -759,8 +984,16 @@ export const layoutReducers = {
     replaceKpiWidgetDrill: withUndo(replaceKpiWidgetDrill),
     replaceKpiWidgetConfiguration: withUndo(replaceKpiWidgetConfiguration),
     replaceRichTextWidgetContent: withUndo(replaceRichTextWidgetContent),
+    addVisualizationSwitcherWidgetVisualization: withUndo(addVisualizationSwitcherWidgetVisualization),
+    updateVisualizationSwitcherWidgetVisualizations: withUndo(
+        updateVisualizationSwitcherWidgetVisualizations,
+    ),
     undoLayout: undoReducer,
     clearLayoutHistory: resetUndoReducer,
     changeItemsHeight: changeItemsHeight,
     changeItemWidth: changeItemWidth,
+    changeWidgetIgnoreCrossFiltering: withUndo(changeWidgetIgnoreCrossFiltering),
+    resizeVisualizationSwitcherOnInsightChanged: withUndo(resizeVisualizationSwitcherOnInsightChanged),
+    toggleLayoutSectionHeaders: withUndo(toggleLayoutSectionHeaders),
+    updateHeightOfMultipleItems,
 };

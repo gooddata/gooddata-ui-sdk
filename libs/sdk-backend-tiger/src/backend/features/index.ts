@@ -1,10 +1,12 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import {
     IStaticFeatures,
     IUserProfile,
     ILiveFeatures,
     FeatureContext,
-    JsonApiWorkspaceOutAttributes,
+    DeclarativeWorkspace,
+    ApiEntitlement,
+    ApiEntitlementNameEnum,
 } from "@gooddata/api-client-tiger";
 import { LRUCache } from "lru-cache";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
@@ -12,9 +14,12 @@ import { ITigerFeatureFlags, DefaultFeatureFlags } from "../uiFeatures.js";
 
 import { getFeatureHubFeatures } from "./hub.js";
 import { getStaticFeatures } from "./static.js";
+import { LIB_VERSION } from "../../__version.js";
 
 const getKeyFromContext = (wsContext?: Partial<FeatureContext>): string => {
-    return `${wsContext?.organizationId}-${wsContext?.earlyAccess}`;
+    return `${wsContext?.organizationId}-${wsContext?.tier}-${
+        wsContext?.jsSdkVersion
+    }-${wsContext?.earlyAccessValues?.join(",")}`;
 };
 const responseMap: LRUCache<string, Promise<ITigerFeatureFlags>> = new LRUCache<
     string,
@@ -30,20 +35,24 @@ export class TigerFeaturesService {
         profile?: IUserProfile,
         wsContext?: Partial<FeatureContext>,
     ): Promise<ITigerFeatureFlags> {
-        const cachedResponse = responseMap.get(getKeyFromContext(wsContext));
+        const contextWithVersion: Partial<FeatureContext> = {
+            ...wsContext,
+            jsSdkVersion: LIB_VERSION,
+        };
+        const cachedResponse = responseMap.get(getKeyFromContext(contextWithVersion));
         if (cachedResponse) {
             return cachedResponse;
         }
         const response = this.authCall(async (client) => {
             const prof = profile || (await client.profile.getCurrent());
-            const results = await loadFeatures(prof, wsContext);
+            const results = await loadFeatures(prof, contextWithVersion);
 
             return {
                 ...DefaultFeatureFlags,
                 ...results,
             };
         });
-        responseMap.set(getKeyFromContext(wsContext), response);
+        responseMap.set(getKeyFromContext(contextWithVersion), response);
         return response;
     }
 }
@@ -73,17 +82,36 @@ function featuresAreStatic(item: any): item is IStaticFeatures {
 }
 
 export function pickContext(
-    attributes: JsonApiWorkspaceOutAttributes | undefined,
+    attributes: Partial<DeclarativeWorkspace> | undefined,
     organizationId: string | undefined,
+    entitlements: ApiEntitlement[],
+    jsSdkVersion?: string,
 ): Partial<FeatureContext> {
-    const context: Partial<FeatureContext> = {};
+    const context: Partial<FeatureContext> = {
+        jsSdkVersion: jsSdkVersion ?? LIB_VERSION,
+    };
 
-    if (attributes?.earlyAccess !== undefined) {
-        context.earlyAccess = attributes.earlyAccess;
+    const tier = getOrganizationTier(entitlements);
+
+    if (attributes?.earlyAccessValues !== undefined) {
+        context.earlyAccessValues = attributes.earlyAccessValues;
     }
 
     if (organizationId !== undefined) {
         context.organizationId = organizationId;
     }
+
+    if (tier !== undefined) {
+        context.tier = tier.toUpperCase();
+    }
+
     return context;
 }
+
+export const getOrganizationTier = (entitlements: ApiEntitlement[] = []) => {
+    const tierEntitlement = entitlements.find(
+        (entitlement) => entitlement.name === ApiEntitlementNameEnum.TIER,
+    );
+
+    return tierEntitlement?.value;
+};

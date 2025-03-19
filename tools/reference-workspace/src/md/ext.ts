@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     modifyMeasure,
     newArithmeticMeasure,
@@ -48,7 +48,7 @@ export const CalculatedWonLostRatio = newArithmeticMeasure([CalculatedLost, Refe
  */
 export const WonPopClosedYear = newPopMeasure(
     ReferenceMd.Won,
-    ReferenceMd.DateDatasets.Closed.Year.ref,
+    ReferenceMd.DateDatasets.Closed.ClosedYear.ref,
     (m) => m.alias("Won Last Year"),
 );
 
@@ -72,6 +72,6 @@ export const StageHistoryAttributeRef: ObjRef = idRef("attr.stagehistory.id");
  * Copy of ClosedYear attribute
  */
 export const ModifiedClosedYear: IAttribute = modifyAttribute(
-    ReferenceMd.DateDatasets.Closed.Year.Default,
+    ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
     (m) => m.localId("closed.second"),
 );

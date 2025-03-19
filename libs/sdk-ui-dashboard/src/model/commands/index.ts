@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import {
     InitializeDashboard,
@@ -7,6 +7,7 @@ import {
     SaveDashboard,
     SaveDashboardAs,
     ExportDashboardToPdf,
+    ExportDashboardToExcel,
     DeleteDashboard,
     ChangeSharing,
     SetDashboardDateFilterConfigMode,
@@ -14,6 +15,9 @@ import {
     SetDashboardDateFilterWithDimensionConfigMode,
     SetDateFilterConfigTitle,
     SetAttributeFilterLimitingItems,
+    SetDashboardAttributeFilterConfigDisplayAsLabel,
+    ExportDashboardToPdfPresentation,
+    ExportDashboardToPptPresentation,
 } from "./dashboard.js";
 import { TriggerEvent } from "./events.js";
 import { UpsertExecutionResult } from "./executionResults.js";
@@ -31,6 +35,14 @@ import {
     AddDateFilter,
     RemoveDateFilters,
     MoveDateFilter,
+    SetAttributeFilterDependentDateFilters,
+    SaveFilterView,
+    ApplyFilterView,
+    DeleteFilterView,
+    SetFilterViewAsDefault,
+    ReloadFilterViews,
+    ApplyFilterContextWorkingSelection,
+    ResetFilterContextWorkingSelection,
 } from "./filters.js";
 import {
     ChangeInsightWidgetFilterSettings,
@@ -48,6 +60,8 @@ import {
     AddDrillDownForInsightWidget,
     ModifyDrillDownForInsightWidget,
     AttributeHierarchyModified,
+    ChangeInsightWidgetIgnoreCrossFiltering,
+    ExportSlidesInsightWidget,
 } from "./insight.js";
 import {
     ChangeKpiWidgetComparison,
@@ -60,7 +74,11 @@ import {
     SetDrillForKpiWidget,
     RemoveDrillForKpiWidget,
 } from "./kpi.js";
-import { ChangeRichTextWidgetContent } from "./richText.js";
+import { ChangeRichTextWidgetContent, ChangeRichTextWidgetFilterSettings } from "./richText.js";
+import {
+    AddVisualizationToVisualizationSwitcherWidgetContent,
+    UpdateVisualizationsFromVisualizationSwitcherWidgetContent,
+} from "./visualizationSwitcher.js";
 import {
     AddLayoutSection,
     AddSectionItems,
@@ -75,9 +93,16 @@ import {
     ResizeHeight,
     ResizeWidth,
     RemoveSectionItemByWidgetRef,
+    SetScreenSize,
+    ToggleLayoutSectionHeaders,
 } from "./layout.js";
-import { CreateAlert, RemoveAlerts, UpdateAlert } from "./alerts.js";
-import { CreateScheduledEmail, SaveScheduledEmail } from "./scheduledEmail.js";
+import { CreateAlert, SaveAlert } from "./alerts.js";
+import {
+    CreateScheduledEmail,
+    SaveScheduledEmail,
+    RefreshAutomations,
+    InitializeAutomations,
+} from "./scheduledEmail.js";
 import {
     Drill,
     DrillDown,
@@ -92,170 +117,229 @@ import {
 import { AddDrillTargets } from "./drillTargets.js";
 import { RequestAsyncRender, ResolveAsyncRender } from "./render.js";
 import { ChangeRenderMode } from "./renderMode.js";
+import { LoadAllWorkspaceUsers } from "./users.js";
 
-export { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base.js";
-export {
-    InitialLoadCorrelationId,
+export type { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base.js";
+export type {
     InitializeDashboard,
     InitializeDashboardPayload,
-    initializeDashboard,
-    initializeDashboardWithPersistedDashboard,
     SaveDashboardAs,
     SaveDashboardAsPayload,
-    saveDashboardAs,
     SaveDashboard,
     SaveDashboardPayload,
-    saveDashboard,
     RenameDashboard,
     RenameDashboardPayload,
-    renameDashboard,
     ResetDashboard,
-    resetDashboard,
     ExportDashboardToPdf,
-    exportDashboardToPdf,
+    ExportDashboardToPptPresentation,
+    ExportDashboardToPdfPresentation,
+    ExportDashboardToExcel,
     DeleteDashboard,
-    deleteDashboard,
     ChangeSharing,
     ChangeSharingPayload,
-    changeSharing,
     SetDashboardDateFilterConfigMode,
     SetDashboardDateFilterConfigModePayload,
-    setDashboardDateFilterConfigMode,
     SetDashboardDateFilterWithDimensionConfigMode,
     SetDashboardDateFilterWithDimensionConfigModePayload,
-    setDashboardDateFilterWithDimensionConfigMode,
     SetDashboardAttributeFilterConfigMode,
-    setDashboardAttributeFilterConfigMode,
     SetDashboardAttributeFilterConfigModePayload,
     SetDateFilterConfigTitle,
     SetDateFilterConfigTitlePayload,
-    setDateFilterConfigTitle,
     SetAttributeFilterLimitingItems,
     SetAttributeFilterLimitingItemsPayload,
+    SetDashboardAttributeFilterConfigDisplayAsLabel,
+    SetDashboardAttributeFilterConfigDisplayAsLabelPayload,
+} from "./dashboard.js";
+export {
+    InitialLoadCorrelationId,
+    initializeDashboard,
+    initializeDashboardWithPersistedDashboard,
+    saveDashboardAs,
+    saveDashboard,
+    renameDashboard,
+    resetDashboard,
+    exportDashboardToPdf,
+    exportDashboardToExcel,
+    exportDashboardToPdfPresentation,
+    exportDashboardToPptPresentation,
+    deleteDashboard,
+    changeSharing,
+    setDashboardDateFilterConfigMode,
+    setDashboardDateFilterWithDimensionConfigMode,
+    setDashboardAttributeFilterConfigMode,
+    setDateFilterConfigTitle,
     setAttributeFilterLimitingItems,
+    setDashboardAttributeFilterConfigDisplayAsLabel,
 } from "./dashboard.js";
 
-export { TriggerEvent, TriggerEventPayload, triggerEvent } from "./events.js";
+export type { TriggerEvent, TriggerEventPayload } from "./events.js";
+export { triggerEvent } from "./events.js";
 
-export {
+export type {
     ChangeDateFilterSelection,
-    changeDateFilterSelection,
-    clearDateFilterSelection,
     AddAttributeFilter,
     AddAttributeFilterPayload,
-    addAttributeFilter,
     MoveAttributeFilter,
     MoveAttributeFilterPayload,
-    moveAttributeFilter,
     RemoveAttributeFilters,
     RemoveAttributeFiltersPayload,
-    removeAttributeFilter,
-    removeAttributeFilters,
     AddDateFilter,
     AddDateFilterPayload,
-    addDateFilter,
     RemoveDateFilters,
     RemoveDateFiltersPayload,
-    removeDateFilter,
     MoveDateFilter,
     MoveDateFilterPayload,
-    moveDateFilter,
     ChangeAttributeFilterSelection,
     AttributeFilterSelectionType,
-    resetAttributeFilterSelection,
-    changeAttributeFilterSelection,
     SetAttributeFilterParents,
     SetAttributeFilterParentsPayload,
-    setAttributeFilterParents,
     ChangeAttributeFilterSelectionPayload,
     ChangeFilterContextSelection,
     ChangeFilterContextSelectionPayload,
     DateFilterSelection,
-    changeFilterContextSelection,
-    applyAttributeFilter,
-    applyDateFilter,
+    ChangeFilterContextSelectionParams,
     SetAttributeFilterDisplayForm,
     SetAttributeFilterDisplayFormPayload,
-    setAttributeFilterDisplayForm,
     SetAttributeFilterTitle,
     SetAttributeFilterTitlePayload,
-    setAttributeFilterTitle,
     SetAttributeFilterSelectionMode,
     SetAttributeFilterSelectionModePayload,
+    SetAttributeFilterDependentDateFilters,
+    SetAttributeFilterDependentDateFiltersPayload,
+    SaveFilterView,
+    SaveFilterViewPayload,
+    DeleteFilterView,
+    DeleteFilterViewPayload,
+    ApplyFilterView,
+    ApplyFilterViewPayload,
+    SetFilterViewAsDefault,
+    SetFilterViewAsDefaultPayload,
+    ReloadFilterViews,
+    ApplyFilterContextWorkingSelection,
+    ResetFilterContextWorkingSelection,
+} from "./filters.js";
+export {
+    changeDateFilterSelection,
+    clearDateFilterSelection,
+    addAttributeFilter,
+    moveAttributeFilter,
+    removeAttributeFilter,
+    removeAttributeFilters,
+    addDateFilter,
+    removeDateFilter,
+    moveDateFilter,
+    resetAttributeFilterSelection,
+    changeAttributeFilterSelection,
+    changeMigratedAttributeFilterSelection,
+    changeWorkingAttributeFilterSelection,
+    setAttributeFilterParents,
+    changeFilterContextSelection,
+    changeFilterContextSelectionByParams,
+    applyAttributeFilter,
+    applyDateFilter,
+    setAttributeFilterDisplayForm,
+    setAttributeFilterTitle,
     setAttributeFilterSelectionMode,
+    setAttributeFilterDependentDateFilters,
+    saveFilterView,
+    deleteFilterView,
+    applyFilterView,
+    setFilterViewAsDefault,
+    reloadFilterViews,
+    applyFilterContextWorkingSelection,
+    resetFilterContextWorkingSelection,
 } from "./filters.js";
 
-export {
+export type {
     AddLayoutSection,
     AddLayoutSectionPayload,
-    addLayoutSection,
     MoveLayoutSection,
     MoveLayoutSectionPayload,
-    moveLayoutSection,
     RemoveLayoutSection,
     RemoveLayoutSectionPayload,
-    removeLayoutSection,
     ChangeLayoutSectionHeader,
     ChangeLayoutSectionHeaderPayload,
-    changeLayoutSectionHeader,
     AddSectionItems,
     AddSectionItemsPayload,
-    addSectionItem,
     ReplaceSectionItem,
     ReplaceSectionItemPayload,
-    replaceSectionItem,
     MoveSectionItem,
     MoveSectionItemPayload,
-    moveSectionItem,
-    moveSectionItemAndRemoveOriginalSectionIfEmpty,
     MoveSectionItemToNewSection,
     MoveSectionItemToNewSectionPayload,
-    moveSectionItemToNewSection,
-    moveSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty,
     RemoveSectionItem,
     RemoveSectionItemPayload,
-    removeSectionItem,
-    eagerRemoveSectionItem,
     RemoveSectionItemByWidgetRef,
     RemoveSectionItemByWidgetRefPayload,
-    removeSectionItemByWidgetRef,
-    eagerRemoveSectionItemByWidgetRef,
     UndoLayoutChanges,
     UndoLayoutChangesPayload,
-    undoLayoutChanges,
-    revertLastLayoutChange,
     DashboardLayoutCommands,
     UndoPointSelector,
     ResizeHeight,
     ResizeHeightPayload,
-    resizeHeight,
     ResizeWidth,
     ResizeWidthPayload,
+    SetScreenSize,
+    SetScreenSizePayload,
+    ToggleLayoutSectionHeaders,
+    ToggleLayoutSectionHeadersPayload,
+} from "./layout.js";
+export {
+    addLayoutSection,
+    addNestedLayoutSection,
+    moveLayoutSection,
+    moveNestedLayoutSection,
+    removeLayoutSection,
+    removeNestedLayoutSection,
+    changeLayoutSectionHeader,
+    changeNestedLayoutSectionHeader,
+    addSectionItem,
+    addNestedLayoutSectionItem,
+    replaceSectionItem,
+    replaceNestedLayoutSectionItem,
+    moveSectionItem,
+    moveNestedLayoutSectionItem,
+    moveSectionItemAndRemoveOriginalSectionIfEmpty,
+    moveNestedLayoutSectionItemAndRemoveOriginalSectionIfEmpty,
+    moveSectionItemToNewSection,
+    moveNestedLayoutSectionItemToNewSection,
+    moveSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty,
+    moveNestedLayoutSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty,
+    removeSectionItem,
+    removeNestedLayoutSectionItem,
+    eagerRemoveSectionItem,
+    eagerRemoveNestedLayoutSectionItem,
+    removeSectionItemByWidgetRef,
+    eagerRemoveSectionItemByWidgetRef,
+    undoLayoutChanges,
+    revertLastLayoutChange,
+    resizeHeight,
+    resizeNestedLayoutItemsHeight,
     resizeWidth,
+    resizeNestedLayoutItemWidth,
+    setScreenSize,
+    toggleLayoutSectionHeaders,
 } from "./layout.js";
 
-export {
-    CreateAlert,
-    CreateAlertPayload,
-    createAlert,
-    RemoveAlerts,
-    RemoveAlertsPayload,
-    removeAlerts,
-    UpdateAlert,
-    UpdateAlertPayload,
-    updateAlert,
-} from "./alerts.js";
+export type { CreateAlert, CreateAlertPayload, SaveAlert, SaveAlertPayload } from "./alerts.js";
+export { createAlert, saveAlert } from "./alerts.js";
 
-export {
+export type {
     CreateScheduledEmail,
     CreateScheduledEmailPayload,
-    createScheduledEmail,
     SaveScheduledEmail,
     SaveScheduledEmailPayload,
+    RefreshAutomations,
+    InitializeAutomations,
+} from "./scheduledEmail.js";
+export {
+    createScheduledEmail,
     saveScheduledEmail,
+    refreshAutomations,
+    initializeAutomations,
 } from "./scheduledEmail.js";
 
-export {
+export type {
     Drill,
     DrillPayload,
     DrillDown,
@@ -275,6 +359,8 @@ export {
     DashboardDrillCommand,
     CrossFiltering,
     CrossFilteringPayload,
+} from "./drill.js";
+export {
     drill,
     drillDown,
     drillToAttributeUrl,
@@ -286,58 +372,91 @@ export {
     crossFiltering,
 } from "./drill.js";
 
+export type { UpsertExecutionResult } from "./executionResults.js";
 export {
-    UpsertExecutionResult,
     setExecutionResultData,
     setExecutionResultError,
     setExecutionResultLoading,
 } from "./executionResults.js";
 
-export {
+export type {
     ChangeKpiWidgetHeader,
     ChangeKpiWidgetHeaderPayload,
-    changeKpiWidgetHeader,
     ChangeKpiWidgetDescription,
     ChangeKpiWidgetDescriptionPayload,
-    changeKpiWidgetDescription,
     ChangeKpiWidgetConfiguration,
     ChangeKpiWidgetConfigurationPayload,
-    changeKpiWidgetConfiguration,
     ChangeKpiWidgetMeasure,
     ChangeKpiWidgetMeasurePayload,
-    changeKpiWidgetMeasure,
     ChangeKpiWidgetFilterSettings,
     ChangeKpiWidgetFilterSettingsPayload,
+    ChangeKpiWidgetComparison,
+    ChangeKpiWidgetComparisonPayload,
+    RefreshKpiWidget,
+    RefreshKpiWidgetPayload,
+    KpiWidgetComparison,
+    RemoveDrillForKpiWidget,
+    RemoveDrillForKpiWidgetPayload,
+    SetDrillForKpiWidget,
+    SetDrillForKpiWidgetPayload,
+} from "./kpi.js";
+export {
+    changeKpiWidgetHeader,
+    changeKpiWidgetDescription,
+    changeKpiWidgetConfiguration,
+    changeKpiWidgetMeasure,
     replaceKpiWidgetFilterSettings,
     enableKpiWidgetDateFilter,
     disableKpiWidgetDateFilter,
     replaceKpiWidgetIgnoredFilters,
     ignoreFilterOnKpiWidget,
     unignoreFilterOnKpiWidget,
-    ChangeKpiWidgetComparison,
-    ChangeKpiWidgetComparisonPayload,
     changeKpiWidgetComparison,
-    RefreshKpiWidget,
-    RefreshKpiWidgetPayload,
     refreshKpiWidget,
-    KpiWidgetComparison,
-    RemoveDrillForKpiWidget,
-    RemoveDrillForKpiWidgetPayload,
     removeDrillForKpiWidget,
-    SetDrillForKpiWidget,
-    SetDrillForKpiWidgetPayload,
     setDrillForKpiWidget,
 } from "./kpi.js";
 
-export {
+export type {
     ChangeInsightWidgetHeader,
     ChangeInsightWidgetHeaderPayload,
-    changeInsightWidgetHeader,
     ChangeInsightWidgetDescription,
     ChangeInsightWidgetDescriptionPayload,
-    changeInsightWidgetDescription,
+    ChangeInsightWidgetIgnoreCrossFiltering,
+    ChangeInsightWidgetIgnoreCrossFilteringPayload,
     ChangeInsightWidgetFilterSettings,
     ChangeInsightWidgetFilterSettingsPayload,
+    ChangeInsightWidgetVisProperties,
+    ChangeInsightWidgetVisPropertiesPayload,
+    ChangeInsightWidgetVisConfiguration,
+    ChangeInsightWidgetVisConfigurationPayload,
+    ChangeInsightWidgetInsight,
+    ChangeInsightWidgetInsightPayload,
+    ModifyDrillsForInsightWidget,
+    ModifyDrillsForInsightWidgetPayload,
+    RemoveDrillsForInsightWidget,
+    RemoveDrillsForInsightWidgetPayload,
+    RemoveDrillDownForInsightWidget,
+    RemoveDrillDownForInsightWidgetPayload,
+    AddDrillDownForInsightWidget,
+    AddDrillDownForInsightWidgetPayload,
+    ModifyDrillDownForInsightWidget,
+    ModifyDrillDownForInsightWidgetPayload,
+    RemoveDrillsSelector,
+    RefreshInsightWidget,
+    RefreshInsightWidgetPayload,
+    ExportInsightWidget,
+    ExportInsightWidgetPayload,
+    AttributeHierarchyModified,
+    ExportRawInsightWidget,
+    ExportRawInsightWidgetPayload,
+    ExportSlidesInsightWidget,
+    ExportSlidesInsightWidgetPayload,
+} from "./insight.js";
+export {
+    changeInsightWidgetHeader,
+    changeInsightWidgetDescription,
+    changeInsightWidgetIgnoreCrossFiltering,
     replaceInsightWidgetFilterSettings,
     enableInsightWidgetDateFilter,
     disableInsightWidgetDateFilter,
@@ -346,69 +465,55 @@ export {
     unignoreFilterOnInsightWidget,
     ignoreDateFilterOnInsightWidget,
     unignoreDateFilterOnInsightWidget,
-    ChangeInsightWidgetVisProperties,
-    ChangeInsightWidgetVisPropertiesPayload,
     changeInsightWidgetVisProperties,
-    ChangeInsightWidgetVisConfiguration,
-    ChangeInsightWidgetVisConfigurationPayload,
     changeInsightWidgetVisConfiguration,
-    ChangeInsightWidgetInsight,
-    ChangeInsightWidgetInsightPayload,
     changeInsightWidgetInsight,
-    ModifyDrillsForInsightWidget,
-    ModifyDrillsForInsightWidgetPayload,
     modifyDrillsForInsightWidget,
-    RemoveDrillsForInsightWidget,
-    RemoveDrillsForInsightWidgetPayload,
     removeDrillsForInsightWidget,
-    RemoveDrillDownForInsightWidget,
-    RemoveDrillDownForInsightWidgetPayload,
     removeDrillDownForInsightWidget,
-    AddDrillDownForInsightWidget,
-    AddDrillDownForInsightWidgetPayload,
     addDrillDownForInsightWidget,
-    ModifyDrillDownForInsightWidget,
-    ModifyDrillDownForInsightWidgetPayload,
     modifyDrillDownForInsightWidget,
-    RemoveDrillsSelector,
-    RefreshInsightWidget,
-    RefreshInsightWidgetPayload,
     refreshInsightWidget,
-    ExportInsightWidget,
-    ExportInsightWidgetPayload,
     exportInsightWidget,
-    ExportRawInsightWidget,
-    ExportRawInsightWidgetPayload,
     exportRawInsightWidget,
-    AttributeHierarchyModified,
+    exportSlidesInsightWidget,
     attributeHierarchyModified,
 } from "./insight.js";
+export { loadAllWorkspaceUsers } from "./users.js";
+export type { LoadAllWorkspaceUsers } from "./users.js";
 
-export {
+export type {
     ChangeRichTextWidgetContent,
     ChangeRichTextWidgetContentPayload,
-    changeRichTextWidgetContent,
+    ChangeRichTextWidgetFilterSettings,
+    ChangeRichTextWidgetFilterSettingsPayload,
 } from "./richText.js";
+export { changeRichTextWidgetContent, enableRichTextWidgetDateFilter } from "./richText.js";
 
+export type {
+    AddVisualizationToVisualizationSwitcherWidgetContent,
+    AddVisualizationToVisualizationSwitcherWidgetContentPayload,
+    UpdateVisualizationsFromVisualizationSwitcherWidgetContent,
+    UpdateVisualizationsFromVisualizationSwitcherWidgetontentPayload,
+} from "./visualizationSwitcher.js";
 export {
+    addVisualizationToSwitcherWidgetContent,
+    updateVisualizationsFromSwitcherWidgetContent,
+} from "./visualizationSwitcher.js";
+
+export type {
     RequestAsyncRender,
     RequestAsyncRenderPayload,
     ResolveAsyncRender,
     ResolveAsyncRenderPayload,
-    requestAsyncRender,
-    resolveAsyncRender,
 } from "./render.js";
+export { requestAsyncRender, resolveAsyncRender } from "./render.js";
 
-export {
-    changeRenderMode,
-    cancelEditRenderMode,
-    switchToEditRenderMode,
-    ChangeRenderMode,
-    ChangeRenderModePayload,
-    RenderModeChangeOptions,
-} from "./renderMode.js";
+export type { ChangeRenderMode, ChangeRenderModePayload, RenderModeChangeOptions } from "./renderMode.js";
+export { changeRenderMode, cancelEditRenderMode, switchToEditRenderMode } from "./renderMode.js";
 
-export { AddDrillTargets, AddDrillTargetsPayload, addDrillTargets } from "./drillTargets.js";
+export type { AddDrillTargets, AddDrillTargetsPayload } from "./drillTargets.js";
+export { addDrillTargets } from "./drillTargets.js";
 
 /**
  * Union type that contains all available built-in dashboard commands.
@@ -435,6 +540,9 @@ export type DashboardCommands =
     | RenameDashboard
     | ResetDashboard
     | ExportDashboardToPdf
+    | ExportDashboardToExcel
+    | ExportDashboardToPdfPresentation
+    | ExportDashboardToPptPresentation
     | DeleteDashboard
     | TriggerEvent
     | UpsertExecutionResult
@@ -442,6 +550,7 @@ export type DashboardCommands =
     | RemoveAttributeFilters
     | MoveAttributeFilter
     | SetAttributeFilterParents
+    | SetAttributeFilterDependentDateFilters
     | AddLayoutSection
     | MoveLayoutSection
     | RemoveLayoutSection
@@ -466,6 +575,7 @@ export type DashboardCommands =
     | RemoveDrillForKpiWidget
     | ChangeInsightWidgetHeader
     | ChangeInsightWidgetDescription
+    | ChangeInsightWidgetIgnoreCrossFiltering
     | ChangeInsightWidgetFilterSettings
     | ChangeInsightWidgetVisProperties
     | ChangeInsightWidgetVisConfiguration
@@ -475,8 +585,7 @@ export type DashboardCommands =
     | RefreshInsightWidget
     | ExportInsightWidget
     | CreateAlert
-    | UpdateAlert
-    | RemoveAlerts
+    | SaveAlert
     | CreateScheduledEmail
     | SaveScheduledEmail
     | ChangeSharing
@@ -484,6 +593,9 @@ export type DashboardCommands =
     | SetAttributeFilterTitle
     | SetAttributeFilterSelectionMode
     | ChangeRichTextWidgetContent
+    | ChangeRichTextWidgetFilterSettings
+    | AddVisualizationToVisualizationSwitcherWidgetContent
+    | UpdateVisualizationsFromVisualizationSwitcherWidgetContent
     //alpha
     | Drill
     | DrillDown
@@ -496,6 +608,7 @@ export type DashboardCommands =
     | AddDrillTargets
     | SetDashboardDateFilterConfigMode
     | SetDashboardAttributeFilterConfigMode
+    | SetDashboardAttributeFilterConfigDisplayAsLabel
     | RemoveDrillDownForInsightWidget
     | AddDrillDownForInsightWidget
     | ModifyDrillDownForInsightWidget
@@ -506,5 +619,19 @@ export type DashboardCommands =
     | MoveDateFilter
     | SetDashboardDateFilterWithDimensionConfigMode
     | SetDateFilterConfigTitle
+    | InitializeAutomations
+    | RefreshAutomations
     | SetAttributeFilterLimitingItems
-    | ExportRawInsightWidget;
+    | SaveFilterView
+    | DeleteFilterView
+    | ApplyFilterView
+    | SetFilterViewAsDefault
+    | ReloadFilterViews
+    | ToggleLayoutSectionHeaders
+    | ApplyFilterContextWorkingSelection
+    | ResetFilterContextWorkingSelection
+    //internal
+    | SetScreenSize
+    | LoadAllWorkspaceUsers
+    | ExportRawInsightWidget
+    | ExportSlidesInsightWidget;

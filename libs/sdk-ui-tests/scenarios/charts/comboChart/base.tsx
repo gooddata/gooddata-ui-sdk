@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { ComboChart, IComboChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
@@ -50,7 +50,7 @@ export const ComboChartWithManyDataPoints = {
 export const ComboChartViewByDate = {
     primaryMeasures: [ReferenceMd.Amount],
     secondaryMeasures: [ReferenceMd.Won],
-    viewBy: ReferenceMd.DateDatasets.Closed.Year.Default,
+    viewBy: ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
 };
 
 export default scenariosFor<IComboChartProps>("ComboChart", ComboChart)

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { ComponentType } from "react";
 import { ReactReduxContextValue } from "react-redux";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -31,21 +31,27 @@ import { CustomSaveAsDialogComponent } from "../saveAs/index.js";
 import { CustomShareDialogComponent } from "../shareDialog/index.js";
 import {
     InsightMenuItemsProvider,
+    RichTextMenuItemsProvider,
     OptionalAttributeFilterComponentProvider,
     OptionalInsightComponentProvider,
     OptionalInsightMenuButtonComponentProvider,
     OptionalInsightMenuComponentProvider,
     OptionalInsightBodyComponentProvider,
-    OptionalKpiComponentProvider,
     OptionalWidgetComponentProvider,
     OptionalDateFilterComponentProvider,
     OptionalInsightMenuTitleComponentProvider,
     OptionalDashboardContentComponentProvider,
     OptionalRichTextComponentProvider,
+    OptionalVisualizationSwitcherComponentProvider,
+    OptionalVisualizationSwitcherToolbarComponentProvider,
+    OptionalDashboardLayoutComponentProvider,
+    OptionalRichTextMenuComponentProvider,
+    OptionalRichTextMenuTitleComponentProvider,
 } from "../dashboardContexts/index.js";
 import { CustomSidebarComponent } from "./DashboardSidebar/types.js";
 import { InsightComponentSetProvider } from "../componentDefinition/types.js";
 import { CustomToolbarComponent } from "../toolbar/index.js";
+import { CustomAlertingDialogComponent, CustomAlertingManagementDialogComponent } from "../alerting/types.js";
 
 /**
  * These props allow you to specify custom components or custom component providers that the Dashboard
@@ -148,8 +154,7 @@ export interface IDashboardCustomComponentProps {
      * Specify function to obtain custom component to use for rendering an insight menu button.
      *
      * @remarks
-     * -  If not provided, the default implementation {@link DefaultDashboardInsightMenuButton} will be used
-     *    if insightMenuItemsProvider property is specified, otherwise {@link LegacyDashboardInsightMenuButton} will be used.
+     * -  If not provided, the default implementation {@link DefaultDashboardInsightMenuButton} will be used.
      * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardInsightMenuButton} will be used.
      *    This is useful if you want to customize just one particular insight and keep default rendering for
      *    the other insights.
@@ -162,8 +167,7 @@ export interface IDashboardCustomComponentProps {
      * Specify function to obtain custom component to use for rendering an insight menu.
      *
      * @remarks
-     * -  If not provided, the default implementation {@link DefaultDashboardInsightMenu} will be used
-     *    if insightMenuItemsProvider property is specified, otherwise {@link LegacyDashboardInsightMenu} will be used.
+     * -  If not provided, the default implementation {@link DefaultDashboardInsightMenu} will be used.
      * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardInsightMenu} will be used.
      *    This is useful if you want to customize just one particular insight and keep default rendering for
      *    the other insights.
@@ -171,6 +175,19 @@ export interface IDashboardCustomComponentProps {
      * @alpha
      */
     InsightMenuComponentProvider?: OptionalInsightMenuComponentProvider;
+
+    /**
+     * Specify function to obtain custom component to use for rendering an rich text menu.
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link DefaultDashboardRichTextMenu} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardRichTextMenu} will be used.
+     *    This is useful if you want to customize just one particular insight and keep default rendering for
+     *    the other rich texts.
+     *
+     * @alpha
+     */
+    RichTextMenuComponentProvider?: OptionalRichTextMenuComponentProvider;
 
     /**
      * Specify function to obtain custom component to use for rendering the title of the insight menu.
@@ -186,6 +203,19 @@ export interface IDashboardCustomComponentProps {
     InsightMenuTitleComponentProvider?: OptionalInsightMenuTitleComponentProvider;
 
     /**
+     * Specify function to obtain custom component to use for rendering the title of the rich text menu.
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link DefaultDashboardRichTextMenuTitle} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardRichTextMenuTitle} will be used.
+     *    This is useful if you want to customize just one particular rich text and keep default rendering for
+     *    the other insights.
+     *
+     * @internal
+     */
+    RichTextMenuTitleComponentProvider?: OptionalRichTextMenuTitleComponentProvider;
+
+    /**
      * Specify function to obtain insight component set.
      *
      * @remarks
@@ -194,19 +224,6 @@ export interface IDashboardCustomComponentProps {
      * @internal
      */
     InsightComponentSetProvider?: InsightComponentSetProvider;
-
-    /**
-     * Specify function to obtain custom component to use for rendering a KPI.
-     *
-     * @remarks
-     * -  If not provided, the default implementation {@link DefaultDashboardKpi} will be used.
-     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardKpi}.
-     *    This is useful if you want to customize just one particular KPI and keep default rendering for
-     *    the other insights.
-     *
-     * @public
-     */
-    KpiComponentProvider?: OptionalKpiComponentProvider;
 
     /**
      * Specify function to obtain custom component to use for rendering a rich text.
@@ -222,6 +239,45 @@ export interface IDashboardCustomComponentProps {
     RichTextComponentProvider?: OptionalRichTextComponentProvider;
 
     /**
+     * Specify function to obtain custom component to use for rendering a visualization switcher.
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link DefaultDashboardVisualizationSwitcher} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardVisualizationSwitcher}.
+     *    This is useful if you want to customize just one particular visualization switcher and keep default rendering for
+     *    the other visualization switchers.
+     *
+     * @public
+     */
+    VisualizationSwitcherComponentProvider?: OptionalVisualizationSwitcherComponentProvider;
+
+    /**
+     * Specify function to obtain custom component to use for rendering a dashboard layout (nested).
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link DefaultDashboardLayout} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardLayout}.
+     *    This is useful if you want to customize just one particular nested layout and keep default rendering for
+     *    the other nested layouts.
+     *
+     * @public
+     */
+    DashboardLayoutComponentProvider?: OptionalDashboardLayoutComponentProvider;
+
+    /**
+     * Specify function to obtain custom component to use for rendering a visualization switcher toolbar.
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link DefaultVisualizationSwitcherToolbar} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultVisualizationSwitcherToolbar}.
+     *    This is useful if you want to customize just one particular visualization switcher toolbar and keep default rendering for
+     *    the other visualization switchers.
+     *
+     * @public
+     */
+    VisualizationSwitcherToolbarComponentProvider?: OptionalVisualizationSwitcherToolbarComponentProvider;
+
+    /**
      * Specify component to use for rendering the scheduled email dialog.
      *
      * @alpha
@@ -234,6 +290,20 @@ export interface IDashboardCustomComponentProps {
      * @alpha
      */
     ScheduledEmailManagementDialogComponent?: CustomScheduledEmailManagementDialogComponent;
+
+    /**
+     * Specify component to use for rendering the alerting management dialog.
+     *
+     * @alpha
+     */
+    AlertingManagementDialogComponent?: CustomAlertingManagementDialogComponent;
+
+    /**
+     * Specify component to use for rendering the alerting dialog.
+     *
+     * @alpha
+     */
+    AlertingDialogComponent?: CustomAlertingDialogComponent;
 
     /**
      * Specify component to use for rendering the share dialog.
@@ -402,6 +472,16 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
     insightMenuItemsProvider?: InsightMenuItemsProvider;
 
     /**
+     * Provide custom provider to change items rendered in rich text menus.
+     *
+     * @remarks
+     * If the function returns an empty array, the menu will not be rendered at all.
+     *
+     * @alpha
+     */
+    richTextMenuItemsProvider?: RichTextMenuItemsProvider;
+
+    /**
      * Specify customization functions.
      *
      * @remarks
@@ -524,6 +604,47 @@ export interface IDashboardEventing {
 }
 
 /**
+ * @internal
+ */
+export enum DashboardPartId {
+    MainContent = "mainContent",
+    FiltersBar = "filtersBar",
+    Sidebar = "sidebar",
+}
+
+/**
+ * Configuration for keyboard navigation
+ *
+ * @internal
+ */
+export interface IKeyboardNavigationConfigItem {
+    /**
+     * id which will be set to the target element
+     */
+    targetElementId?: string;
+    /**
+     * tabIndex which will be set to the target element
+     */
+    tabIndex?: number;
+    /**
+     * aria-label which will be set to the target element
+     */
+    ariaLabel?: string;
+    /**
+     * onFocus callback which will be called when the target element is focused
+     */
+    onFocus?: () => void;
+}
+
+/**
+ * Configurations for keyboard navigation for individual parts of the dashboard
+ * @internal
+ */
+export type KeyboardNavigationConfig = {
+    [key in DashboardPartId]?: IKeyboardNavigationConfigItem;
+};
+
+/**
  * @public
  */
 export interface IDashboardBaseProps {
@@ -585,6 +706,11 @@ export interface IDashboardBaseProps {
      * logged-in user.
      */
     permissions?: IWorkspacePermissions;
+
+    /**
+     * Specify tab index and addressable id for the dashboard components used by keyboard navigation
+     */
+    keyboardNavigation?: KeyboardNavigationConfig;
 }
 
 /**

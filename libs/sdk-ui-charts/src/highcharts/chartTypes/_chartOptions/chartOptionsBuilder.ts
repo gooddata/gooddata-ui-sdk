@@ -66,6 +66,7 @@ import {
     buildTooltipFactory,
     generateTooltipHeatmapFn,
     generateTooltipSankeyChartFn,
+    generateTooltipScatterPlotFn,
     generateTooltipXYFn,
     getTooltipFactory,
     getTooltipWaterfallChart,
@@ -77,6 +78,7 @@ import {
     getColorAssignment,
     getWaterfallChartCategories,
 } from "../waterfallChart/waterfallChartOptions.js";
+import { assignForecastAxes } from "./chartForecast.js";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
@@ -162,7 +164,6 @@ function getStackingConfig(
 }
 
 export const HEAT_MAP_CATEGORIES_COUNT = 7;
-export const HIGHCHARTS_PRECISION = 15;
 export const DEFAULT_HEATMAP_COLOR_INDEX = 1;
 
 export function getHeatmapDataClasses(
@@ -182,8 +183,6 @@ export function getHeatmapDataClasses(
 
     const min = Math.min(...values);
     const max = Math.max(...values);
-    const safeMin = parseFloat(Number(min).toPrecision(HIGHCHARTS_PRECISION));
-    const safeMax = parseFloat(Number(max).toPrecision(HIGHCHARTS_PRECISION));
     const dataClasses = [];
 
     if (min === max) {
@@ -193,12 +192,12 @@ export function getHeatmapDataClasses(
             color: colorStrategy.getColorByIndex(DEFAULT_HEATMAP_COLOR_INDEX),
         });
     } else {
-        const step = (safeMax - safeMin) / HEAT_MAP_CATEGORIES_COUNT;
-        let currentSum = safeMin;
+        const step = (max - min) / HEAT_MAP_CATEGORIES_COUNT;
+        let currentSum = min;
         for (let i = 0; i < HEAT_MAP_CATEGORIES_COUNT; i += 1) {
             dataClasses.push({
                 from: currentSum,
-                to: i === HEAT_MAP_CATEGORIES_COUNT - 1 ? safeMax : currentSum + step,
+                to: i === HEAT_MAP_CATEGORIES_COUNT - 1 ? max : currentSum + step,
                 color: colorStrategy.getColorByIndex(i),
             });
             currentSum += step;
@@ -279,6 +278,27 @@ export function getTreemapAttributes(dv: DataViewFacade): ChartedAttributes {
     };
 }
 
+export function getScatterPlotAttributes(dv: DataViewFacade): ChartedAttributes {
+    const dimensions = dv.meta().dimensions();
+    const attributeHeaderItems = dv.meta().attributeHeaders();
+
+    const viewByAttribute = findAttributeInDimension(
+        dimensions[STACK_BY_DIMENSION_INDEX],
+        attributeHeaderItems[STACK_BY_DIMENSION_INDEX],
+    );
+
+    const stackByAttribute = findAttributeInDimension(
+        dimensions[STACK_BY_DIMENSION_INDEX],
+        attributeHeaderItems[STACK_BY_DIMENSION_INDEX],
+        1,
+    );
+
+    return {
+        viewByAttribute,
+        stackByAttribute,
+    };
+}
+
 type ChartedAttributes = {
     viewByAttribute?: IUnwrappedAttributeHeadersWithItems;
     viewByParentAttribute?: IUnwrappedAttributeHeadersWithItems;
@@ -328,6 +348,10 @@ function chartedAttributeDiscovery(dv: DataViewFacade, chartType: string): Chart
         return getTreemapAttributes(dv);
     }
 
+    if (isScatterPlot(chartType)) {
+        return getScatterPlotAttributes(dv);
+    }
+
     return defaultChartedAttributeDiscovery(dv);
 }
 
@@ -363,6 +387,7 @@ export function getChartOptions(
     emptyHeaderTitle: string,
     theme?: ITheme,
     totalColumnTitle?: string,
+    clusterTitle?: string,
 ): IChartOptions {
     const dv = DataViewFacade.for(dataView);
     const dimensions = dv.meta().dimensions();
@@ -392,6 +417,7 @@ export function getChartOptions(
         dv,
         type,
         theme,
+        clusterTitle,
     );
 
     const gridEnabled = config?.grid?.enabled ?? true;
@@ -421,7 +447,7 @@ export function getChartOptions(
         type,
     );
 
-    const series = assignYAxes(drillableSeries, yAxes);
+    let series = assignYAxes(drillableSeries, yAxes);
 
     let categories = viewByParentAttribute
         ? getCategoriesForTwoAttributes(viewByAttribute, viewByParentAttribute, emptyHeaderTitle)
@@ -439,7 +465,7 @@ export function getChartOptions(
     }
 
     // When custom sorting is enabled and is chart which does the auto-sorting,
-    // need to skip this, so the sort specified by the user does not get overriden.
+    // need to skip this, so the sort specified by the user does not get override.
     if (isAutoSortableChart(type, viewByAttribute) && !config.enableChartSorting) {
         // dataPoints are sorted by default by value in descending order
         const dataPoints = series[0].data;
@@ -467,6 +493,9 @@ export function getChartOptions(
         );
         series[0].data = sortedDataPoints;
     }
+
+    //Forecast
+    series = assignForecastAxes(type, series, dv.rawData().forecastTwoDimData());
 
     const colorAssignments = colorStrategy.getColorAssignment();
     const { colorPalette } = config;
@@ -528,7 +557,13 @@ export function getChartOptions(
                 categories,
             },
             actions: {
-                tooltip: generateTooltipXYFn(measures, stackByAttribute, config),
+                tooltip: generateTooltipScatterPlotFn(
+                    measures,
+                    stackByAttribute,
+                    viewByAttribute,
+                    config,
+                    clusterTitle,
+                ),
             },
             grid: {
                 enabled: gridEnabled,

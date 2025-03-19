@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { combineReducers, configureStore, EnhancedStore, Middleware } from "@reduxjs/toolkit";
 import defaultReduxSaga, { Saga, SagaIterator, Task } from "redux-saga";
 import { enableBatching } from "redux-batched-actions";
@@ -16,7 +16,6 @@ import { configSliceReducer } from "./config/index.js";
 import { entitlementsSliceReducer } from "./entitlements/index.js";
 import { dateFilterConfigSliceReducer } from "./dateFilterConfig/index.js";
 import { permissionsSliceReducer } from "./permissions/index.js";
-import { alertsSliceReducer } from "./alerts/index.js";
 import { catalogSliceReducer } from "./catalog/index.js";
 import { call, fork } from "redux-saga/effects";
 import { userSliceReducer } from "./user/index.js";
@@ -40,12 +39,17 @@ import { drillSliceReducer } from "./drill/index.js";
 import { uiSliceReducer } from "./ui/index.js";
 import { getDashboardContext } from "./_infra/contexts.js";
 import { RenderMode } from "../../types.js";
-import { legacyDashboardsSliceReducer } from "./legacyDashboards/index.js";
 import { renderModeSliceReducer } from "./renderMode/index.js";
 import { dashboardPermissionsSliceReducer } from "./dashboardPermissions/index.js";
 import { defaultImport } from "default-import";
 import { attributeFilterConfigsSliceReducer } from "./attributeFilterConfigs/index.js";
 import { dateFilterConfigsSliceReducer } from "./dateFilterConfigs/index.js";
+import { automationsSliceReducer } from "./automations/index.js";
+import { usersSliceReducer } from "./users/index.js";
+import { objRefToString } from "@gooddata/sdk-model";
+import { filterViewsSliceReducer } from "./filterViews/index.js";
+import { executedSliceReducer } from "./executed/index.js";
+import { notificationChannelsSliceReducer } from "./notificationChannels/index.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -97,6 +101,7 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "layout/updateWidgetIdentities",
     "executionResults/upsertExecutionResult",
     "loadingSlice/setLoadingError",
+    "automations/setAutomationsError",
 ];
 
 /*
@@ -285,16 +290,18 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
     const queryProcessing = createQueryProcessingModule(
         mergeQueryServices(AllQueryServices, config.queryServices),
     );
+    const privateContext = config.privateContext ?? {};
     const sagaMiddleware = createSagaMiddleware({
         context: {
             dashboardContext: config.dashboardContext,
-            privateContext: config.privateContext ?? {},
+            privateContext,
         },
     });
 
     const rootReducer = combineReducers<DashboardState>({
         loading: loadingSliceReducer,
         saving: savingSliceReducer,
+        executed: executedSliceReducer,
         backendCapabilities: backendCapabilitiesSliceReducer,
         config: configSliceReducer,
         entitlements: entitlementsSliceReducer,
@@ -305,7 +312,6 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         attributeFilterConfigs: attributeFilterConfigsSliceReducer,
         dateFilterConfigs: dateFilterConfigsSliceReducer,
         insights: insightsSliceReducer,
-        alerts: alertsSliceReducer,
         drillTargets: drillTargetsReducer,
         catalog: catalogSliceReducer,
         user: userSliceReducer,
@@ -314,11 +320,14 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         listedDashboards: listedDashboardsSliceReducer,
         accessibleDashboards: accessibleDashboardsSliceReducer,
         inaccessibleDashboards: inaccessibleDashboardsSliceReducer,
-        legacyDashboards: legacyDashboardsSliceReducer,
         executionResults: executionResultsSliceReducer,
         renderMode: renderModeSliceReducer,
         ui: uiSliceReducer,
         dashboardPermissions: dashboardPermissionsSliceReducer,
+        notificationChannels: notificationChannelsSliceReducer,
+        automations: automationsSliceReducer,
+        users: usersSliceReducer,
+        filterViews: filterViewsSliceReducer,
         _queryCache: queryProcessing.queryCacheReducer,
     });
 
@@ -347,6 +356,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
                         "drill.drillableItems",
                         // executions can have Errors stored, also some decorated execution results are non-serializable too
                         "executionResults",
+                        "automations.error",
                     ],
                     // prolong the check limit, otherwise this will flood the logs on CI with non-actionable warnings
                     warnAfter: 128,
@@ -359,7 +369,11 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
                 );
         },
         devTools: {
-            name: "Dashboard component state",
+            name: `Dashboard component state: ${config.dashboardContext.workspace?.substring(0, 5)} - ${
+                config.dashboardContext.dashboardRef
+                    ? objRefToString(config.dashboardContext.dashboardRef).substring(0, 5)
+                    : ""
+            }`,
         },
     });
 

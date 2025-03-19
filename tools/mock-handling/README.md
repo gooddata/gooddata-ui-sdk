@@ -13,7 +13,7 @@ The mock tooling is invoked through command line and takes the following argumen
 -   `recordingDir` - directory where input and outputs of recordings live
 -   `projectId` - identifier of project from which to capture data
 -   `username` - username to authenticate as
--   `hostname` - GoodData platform hostname (default is secure.gooddata.com)
+-   `hostname` - GoodData backend hostname
 -   `config` - optionally provide path to tool configuration (by default looks for .gdmockrc in current dir)
 
 Config is a JSON file containing an object with pre-defined values of the command line arguments. The keys match
@@ -21,7 +21,7 @@ names of command line arguments.
 
 If the tool does not receive mandatory argument via either CLI or from config, then it will prompt interactively.
 
-> Note: by default, the tool will fail when connecting to non-production deployment of GoodData platform where
+> Note: by default, the tool will fail when connecting to non-production deployment where
 > the X.509 certificates are not setup correctly (self-signed, internal authority): node.js will reject the
 > connection due to invalid certificates. You can use the `--accept-untrusted-ssl` option to disable this
 > check (under the covers this sets the node.js documented ENV var `NODE_TLS_REJECT_UNAUTHORIZED` to `0`)

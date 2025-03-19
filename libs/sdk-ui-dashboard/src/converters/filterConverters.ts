@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
@@ -71,12 +71,14 @@ export function dashboardAttributeFilterToAttributeFilter(
         return newNegativeAttributeFilter(
             filter.attributeFilter.displayForm,
             filter.attributeFilter.attributeElements,
+            filter.attributeFilter.localIdentifier,
         );
     }
 
     return newPositiveAttributeFilter(
         filter.attributeFilter.displayForm,
         filter.attributeFilter.attributeElements,
+        filter.attributeFilter.localIdentifier,
     );
 }
 
@@ -89,18 +91,18 @@ export function dashboardAttributeFilterToAttributeFilter(
  */
 export function dashboardDateFilterToDateFilterByWidget(
     filter: IDashboardDateFilter,
-    widget: Partial<IFilterableWidget>,
+    widget?: Partial<IFilterableWidget>,
 ): IDateFilter {
     if (filter.dateFilter.type === "relative") {
         return newRelativeDateFilter(
-            filter.dateFilter.dataSet || widget.dateDataSet!,
+            widget ? filter.dateFilter.dataSet || widget.dateDataSet! : filter.dateFilter.dataSet!,
             filter.dateFilter.granularity,
             numberOrStringToNumber(filter.dateFilter.from!),
             numberOrStringToNumber(filter.dateFilter.to!),
         );
     } else {
         return newAbsoluteDateFilter(
-            filter.dateFilter.dataSet || widget.dateDataSet!,
+            widget ? filter.dateFilter.dataSet || widget.dateDataSet! : filter.dateFilter.dataSet!,
             filter.dateFilter.from!.toString(),
             filter.dateFilter.to!.toString(),
         );
@@ -152,6 +154,28 @@ export function filterContextItemsToDashboardFiltersByWidget(
             return dashboardDateFilterToDateFilterByWidget(filter, widget);
         }
     });
+}
+
+/**
+ * Gets {@link IDashboardFilter} items for filters specified as {@link @gooddata/sdk-backend-spi#FilterContextItem} instances.
+ *
+ * @param filterContextItems - filter context items to get filters for
+ * @param widget - widget to use to get dateDataSet for date filters
+ * @public
+ */
+export function filterContextItemsToDashboardFiltersByRichTextWidget(
+    filterContextItems: FilterContextItem[],
+    widget?: Partial<IFilterableWidget>,
+): IDashboardFilter[] {
+    return filterContextItems
+        .map((filter) => {
+            if (isDashboardAttributeFilter(filter)) {
+                return dashboardAttributeFilterToAttributeFilter(filter);
+            } else {
+                return dashboardDateFilterToDateFilterByWidget(filter, widget);
+            }
+        })
+        .filter(Boolean) as IDashboardFilter[];
 }
 
 /**

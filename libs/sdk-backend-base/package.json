@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-base",
-    "version": "9.9.2",
+    "version": "10.23.0-alpha.43",
     "author": "GoodData",
     "description": "GoodData.UI SDK - Base for backend implementations",
     "repository": {
@@ -43,7 +43,7 @@
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/util": "workspace:*",
         "json-stable-stringify": "^1.0.1",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "spark-md5": "^3.0.0",
         "ts-invariant": "^0.7.5",
         "tslib": "^2.5.0",

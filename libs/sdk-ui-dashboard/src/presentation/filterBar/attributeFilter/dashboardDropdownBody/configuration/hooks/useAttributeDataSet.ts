@@ -1,10 +1,14 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useEffect, useMemo } from "react";
 import { IDataSetMetadataObject, ObjRef } from "@gooddata/sdk-model";
 import {
     queryAttributeDataSet,
     QueryAttributeDataSet,
+    selectPreloadedAttributesWithReferences,
+    selectEnableCriticalContentPerformanceOptimizations,
     useDashboardQueryProcessing,
+    useDashboardSelector,
+    selectIsNewDashboard,
 } from "../../../../../../model/index.js";
 
 /**
@@ -24,11 +28,24 @@ export function useAttributeDataSet(displayForm: ObjRef, loadQuery = true) {
         queryCreator: queryAttributeDataSet,
     });
 
+    // First wait for preloaded filter attributes, otherwise we might be spawning lot of unnecessary requests
+    const attributesWithReferences = useDashboardSelector(selectPreloadedAttributesWithReferences);
+    const enablePerfOptimizations = useDashboardSelector(selectEnableCriticalContentPerformanceOptimizations);
+    const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
+
     useEffect(() => {
-        if (loadQuery) {
+        const shouldLoad = enablePerfOptimizations ? isNewDashboard || attributesWithReferences : true;
+        if (loadQuery && shouldLoad) {
             getAttributeDataSet(displayForm);
         }
-    }, [displayForm, loadQuery, getAttributeDataSet]);
+    }, [
+        displayForm,
+        isNewDashboard,
+        loadQuery,
+        getAttributeDataSet,
+        enablePerfOptimizations,
+        attributesWithReferences,
+    ]);
 
     const attributesDataSetLoading = useMemo(() => {
         return attributesDataSetLoadingStatus === "pending" || attributesDataSetLoadingStatus === "running";

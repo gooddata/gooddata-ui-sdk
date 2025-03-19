@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import { AxiosPromise } from "axios";
 import flatMap from "lodash/flatMap.js";
@@ -19,6 +19,10 @@ import {
     JsonApiThemeOutList,
     JsonApiColorPaletteOutList,
     JsonApiVisualizationObjectOutList,
+    JsonApiExportDefinitionOutList,
+    JsonApiAutomationOutList,
+    JsonApiUserOutList,
+    JsonApiNotificationChannelOutList,
 } from "./generated/metadata-json-api/index.js";
 
 const DefaultPageSize = 250;
@@ -118,7 +122,11 @@ export type MetadataGetEntitiesResult =
     | JsonApiFilterContextOutList
     | JsonApiApiTokenOutList
     | JsonApiThemeOutList
-    | JsonApiColorPaletteOutList;
+    | JsonApiColorPaletteOutList
+    | JsonApiExportDefinitionOutList
+    | JsonApiAutomationOutList
+    | JsonApiUserOutList
+    | JsonApiNotificationChannelOutList;
 
 /**
  * All API client getEntities* functions follow this signature.
@@ -180,6 +188,50 @@ export class MetadataUtilities {
         }
 
         return results;
+    };
+
+    /**
+     * Given a function to get a paged list of metadata entities, API call parameters and options, this function will
+     * retrieve all pages from the metadata.
+     * Unlike to the getAllPagesOf, the requests will not be done in series. Instead, a first request will be done
+     * with metaInclude=page to get the number of pages and all subsequent pages will be fetched in parallel.
+     *
+     * The parameters are passed to the function as is. The options will be used as a 'template'. If the options specify
+     * page `size`, it will be retained and used for paging.
+     *
+     * @param client - API client to use, this is required so that function can correctly bind 'this' for
+     *  the entitiesGet function
+     * @param entitiesGet - function to get pages list of entities
+     * @param params - parameters accepted by the function
+     * @param options - options accepted by the function
+     * @internal
+     */
+    public static getAllPagesOfParallel = async <
+        T extends MetadataGetEntitiesResult,
+        P extends MetadataGetEntitiesParams,
+    >(
+        client: ITigerClient,
+        entitiesGet: MetadataGetEntitiesFn<T, P>,
+        params: P,
+        options: MetadataGetEntitiesOptions = {},
+    ): Promise<T[]> => {
+        const boundGet = entitiesGet.bind(client.entities);
+
+        const initialOptions = createOptionsForPage(0, options);
+        const initialGet = await boundGet({ ...params, metaInclude: ["page"] }, initialOptions);
+
+        const total = initialGet.data?.meta?.page?.totalPages || 1;
+
+        const range = Array.from({ length: total - 1 }, (_v, i) => i + 1);
+
+        const morePages = await Promise.all(
+            range.map((page) => {
+                const optionsToUse = createOptionsForPage(page, options);
+                return boundGet(params, optionsToUse);
+            }),
+        );
+
+        return [initialGet, ...morePages].map((item) => item.data);
     };
 
     /**

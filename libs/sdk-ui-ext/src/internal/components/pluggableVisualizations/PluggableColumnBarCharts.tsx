@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import set from "lodash/set.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import {
@@ -128,7 +128,12 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
 
         const reorderedIntersection = this.adjustIntersectionForColumnBar(source, event);
         const cutIntersection = getIntersectionPartAfter(reorderedIntersection, clicked);
-        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
+        return addIntersectionFiltersToInsight(
+            source,
+            cutIntersection,
+            backendSupportsElementUris,
+            this.featureFlags.enableDuplicatedLabelValuesInAttributeFilter,
+        );
     }
 
     public getInsightWithDrillDownApplied(

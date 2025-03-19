@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "sass:color";
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
@@ -7,10 +7,16 @@
     position: relative;
     border-radius: 3px;
     font-family: variables.$font-stack-roman;
-    color: var(--gd-chart-tooltipLabelColor, var(--gd-palette-complementary-6, kit-variables.$gd-color-dark));
+    color: var(
+        --gd-chart-tooltipLabelColor,
+        var(--gd-palette-complementary-6-from-theme, kit-variables.$gd-color-dark)
+    );
     background-color: var(
         --gd-chart-tooltipBackgroundColor,
-        var(--gd-palette-complementary-0, color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05))
+        var(
+            --gd-palette-complementary-0-from-theme,
+            color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05)
+        )
     );
 
     .tt-name {
@@ -34,7 +40,7 @@
     right: 0;
     left: 0;
     height: 0;
-    border-top: 3px solid var(--gd-palette-complementary-3, #848484);
+    border-top: 3px solid var(--gd-palette-complementary-3-from-theme, #848484);
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
@@ -46,9 +52,9 @@
     border: 1px solid;
     border-color: var(
         --gd-chart-tooltipBorderColor,
-        var(--gd-palette-complementary-3, color.adjust(#c9d5e0, $alpha: -0.3))
+        var(--gd-palette-complementary-3-from-theme, color.adjust(#c9d5e0, $alpha: -0.3))
     );
-    box-shadow: 0 1px 3px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1)),
+    box-shadow: 0 1px 3px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1)),
         0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
     line-height: 1.3;
     white-space: normal;
@@ -75,7 +81,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     text-align: left;
-    color: var(--gd-chart-tooltipLabelColor, kit-variables.$gd-color-label);
+    color: var(--gd-chart-tooltipLabelColor-from-theme, kit-variables.$gd-color-label);
 }
 
 .gd-viz-tooltip-value-wraper {
@@ -112,7 +118,7 @@
         background: var(
             --gd-chart-tooltipBackgroundColor,
             var(
-                --gd-palette-complementary-0,
+                --gd-palette-complementary-0-from-theme,
                 color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05)
             )
         );
@@ -176,4 +182,8 @@
     text-align: left;
     border-top: 1px solid kit-variables.$gd-border-color;
     padding-top: 9px;
+
+    @media only screen and (min-width: kit-variables.$small-breakpoint) and (max-width: 720px) {
+        white-space: normal;
+    }
 }

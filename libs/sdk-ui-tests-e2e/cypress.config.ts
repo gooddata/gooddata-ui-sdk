@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import cypressGrepPlugin from "@cypress/grep/src/plugin";
@@ -6,12 +6,15 @@ import { defineConfig } from "cypress";
 import axios from "axios";
 import readPdf from "./cypress/plugins/readPdf";
 import parseXlsx from "./cypress/plugins/parseXlsx";
+import removePassingTestVideosPlugin from "./cypress/plugins/removePassingTestVideos";
+import installLogsPrinter from "cypress-terminal-report/src/installLogsPrinter";
 
 export default defineConfig({
     e2e: {
         excludeSpecPattern: "*.js",
         supportFile: "cypress/support/index.ts",
         setupNodeEvents(on, _config) {
+            removePassingTestVideosPlugin(on, _config);
             cypressGrepPlugin(_config);
             on("task", {
                 async resetRecordingsScenarios(mockServerUrl: string) {
@@ -33,6 +36,13 @@ export default defineConfig({
             });
             readPdf(on, _config);
             parseXlsx(on, _config);
+            installLogsPrinter(on, {
+                outputRoot: "cypress/results/",
+                specRoot: "cypress/integration",
+                outputTarget: {
+                    "logs|txt": "txt",
+                },
+            });
             return _config;
         },
         viewportWidth: 1400,
@@ -54,7 +64,6 @@ export default defineConfig({
             },
         },
         specPattern: "./cypress/integration/**/*.spec.ts",
-        videoUploadOnPasses: false,
     },
     scrollBehavior: false,
     video: true,

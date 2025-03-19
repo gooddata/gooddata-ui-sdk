@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import * as AnalyticalDashboardModelV1 from "./AnalyticalDashboardModelV1.js";
 import * as AnalyticalDashboardModelV2 from "./AnalyticalDashboardModelV2.js";
 import * as VisualizationObjectModelV1 from "./VisualizationObjectModelV1.js";
@@ -34,6 +34,9 @@ export {
     isResultMeasureHeader,
     isResultTotalHeader,
     isVisualizationObjectsItem,
+    isAfmObjectLocalIdentifier,
     isFilterContextData,
     isDashboardPluginsItem,
+    isDataSetItem,
+    isLabelItem,
 } from "./typeGuards.js";

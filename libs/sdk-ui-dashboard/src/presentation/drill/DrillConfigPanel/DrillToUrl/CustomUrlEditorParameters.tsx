@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
@@ -26,7 +26,9 @@ export const ParametersPanel: React.FC<IParametersPanelProps> = ({
     onAdd,
     intl,
     dashboardFilters,
+    attributeFilterConfigs,
     insightFilters,
+    widgetRef,
 }) => (
     <div>
         <label className="gd-label">
@@ -46,13 +48,19 @@ export const ParametersPanel: React.FC<IParametersPanelProps> = ({
                 intl={intl}
                 insightFilters={insightFilters}
             />
-            <DashboardParametersSection intl={intl} onAdd={onAdd} dashboardFilters={dashboardFilters} />
+            <DashboardParametersSection
+                intl={intl}
+                onAdd={onAdd}
+                dashboardFilters={dashboardFilters}
+                attributeFilterConfigs={attributeFilterConfigs}
+            />
             <IdentifierParametersSection
                 enableClientIdParameter={enableClientIdParameter}
                 enableDataProductIdParameter={enableDataProductIdParameter}
                 enableWidgetIdParameter={enableWidgetIdParameter}
                 onAdd={onAdd}
                 intl={intl}
+                widgetRef={widgetRef}
             />
         </div>
     </div>

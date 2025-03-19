@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { CalculateAs, ComparisonPositionValues } from "@gooddata/sdk-ui-charts";
 
 import { IDropdownItem } from "../interfaces/Dropdown.js";
@@ -45,6 +45,15 @@ export const formatDropdownItems: IDropdownItem[] = [
     },
 ];
 
+export const confidenceDropdownItems: IDropdownItem[] = [
+    { title: messages.forecastConfidence70.id, value: 0.7 },
+    { title: messages.forecastConfidence75.id, value: 0.75 },
+    { title: messages.forecastConfidence80.id, value: 0.8 },
+    { title: messages.forecastConfidence85.id, value: 0.85 },
+    { title: messages.forecastConfidence90.id, value: 0.9 },
+    { title: messages.forecastConfidence95.id, value: 0.95 },
+];
+
 export const legendPositionDropdownItems: IDropdownItem[] = [
     { title: messages.autoDefault.id, value: "auto" },
     { type: "separator" },
@@ -64,6 +73,28 @@ export const dataLabelsDropdownItems: IDropdownItem[] = [
     { type: "separator" },
     { title: messages.dataLabelsShow.id, value: true },
     { title: messages.dataLabelsHide.id, value: false },
+];
+
+export const rowSizingDropdownItems: IDropdownItem[] = [
+    { title: messages.rowHeightSmall.id, value: "small" },
+    { title: messages.rowHeightMedium.id, value: "medium" },
+    { title: messages.rowHeightLarge.id, value: "large" },
+];
+
+export const verticalAlignmentDropdownItems: IDropdownItem[] = [
+    { title: messages.verticalAlignTop.id, value: "top" },
+    { title: messages.verticalAlignMiddle.id, value: "middle" },
+    { title: messages.verticalAlignBottom.id, value: "bottom" },
+];
+
+export const textWrappingDropdownItems: IDropdownItem[] = [
+    { title: messages.textWrappingClip.id, value: "clip" },
+    { title: messages.textWrappingWrap.id, value: "wrap" },
+];
+
+export const imageDropdownItems: IDropdownItem[] = [
+    { title: messages.imageFit.id, value: "fit" },
+    { title: messages.imageFill.id, value: "fill" },
 ];
 
 export const totalLabelsDropdownItems: IDropdownItem[] = [

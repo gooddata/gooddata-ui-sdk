@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardSelector, DashboardState } from "../types.js";
 import { invariant } from "ts-invariant";
@@ -17,12 +17,22 @@ import {
     isDashboardDateFilterWithDimension,
     isObjRef,
     isDashboardCommonDateFilter,
+    getAttributeElementsItems,
 } from "@gooddata/sdk-model";
 import { ObjRefMap, newDisplayFormMap } from "../../../_staging/metadata/objRefMap.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
 import compact from "lodash/compact.js";
 import isEmpty from "lodash/isEmpty.js";
 import { selectSupportsCircularDependencyInFilters } from "../backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectCrossFilteringFiltersLocalIdentifiers } from "../drill/drillSelectors.js";
+import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
+import identity from "lodash/identity.js";
+import isEqual from "lodash/isEqual.js";
+import keyBy from "lodash/keyBy.js";
+import keys from "lodash/keys.js";
+import sortBy from "lodash/sortBy.js";
+import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../config/configSelectors.js";
+import { applyFilterContext, getFilterIdentifier } from "./filterContextUtils.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -67,7 +77,7 @@ export const selectOriginalFilterContextFilters: DashboardSelector<FilterContext
 );
 
 /**
- * This selector returns current dashboard's filter context definition.
+ * This selector returns current applied dashboard's filter context definition.
  *
  * @remarks
  * It is expected that the selector is called only after the filter context state is correctly initialized.
@@ -82,10 +92,91 @@ export const selectFilterContextDefinition: DashboardSelector<IFilterContextDefi
     (filterContextState) => {
         invariant(
             filterContextState.filterContextDefinition,
-            "attempting to access uninitialized filter context state",
+            "attempting to access uninitialized applied filter context state",
         );
 
         return filterContextState.filterContextDefinition!;
+    },
+);
+
+/**
+ * This selector returns current working dashboard's filter context definition.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the wokring filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @returns a {@link @gooddata/sdk-backend-spi#IFilterContextDefinition}
+ *
+ * @alpha
+ */
+export const selectWorkingFilterContextDefinition: DashboardSelector<IFilterContextDefinition> =
+    createSelector(selectSelf, (state) => {
+        invariant(
+            state.filterContextDefinition,
+            "attempting to access uninitialized working filter context state",
+        );
+
+        return applyFilterContext(state.filterContextDefinition, state.workingFilterContextDefinition)!;
+    });
+
+/**
+ * Returns true if working filters and applied filters are same.
+ *
+ * Attribute filters are considered equal if
+ *  - they have same localIdentifier
+ *  - they have same elements (order does not matter)
+ *  - all other fields are deep equal EXCEPT displayForm
+ * We exclude diplayForm becuase of primary display form migration code.
+ * Which changes display forms after update.
+ *
+ * @alpha
+ */
+export const selectIsWorkingFilterContextChanged: DashboardSelector<boolean | undefined> = createSelector(
+    selectFilterContextDefinition,
+    selectWorkingFilterContextDefinition,
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
+    (filterContext, workingFilterContext, enableImmediateAttributeFilterDisplayAsLabelMigration) => {
+        if (filterContext.filters.length !== workingFilterContext.filters.length) {
+            return true;
+        }
+
+        const appliedFilters = keyBy(filterContext.filters, getFilterIdentifier);
+        const workingFilters = keyBy(workingFilterContext.filters, getFilterIdentifier);
+
+        return !keys(appliedFilters)
+            .map((key): boolean => {
+                const appliedFilter = appliedFilters[key];
+                const workingFilter = workingFilters[key];
+
+                if (isDashboardAttributeFilter(appliedFilter) && isDashboardAttributeFilter(workingFilter)) {
+                    const { attributeElements: appliedElements, ...appliedFilterWithoutElements } =
+                        appliedFilter.attributeFilter;
+                    const { attributeElements: workingElements, ...workingFilterWithoutElements } =
+                        workingFilter.attributeFilter;
+
+                    // This code can be removed when enableImmediateAttributeFilterDisplayAsLabelMigration is removed
+                    const partialAppliedFilter: Partial<IDashboardAttributeFilter["attributeFilter"]> =
+                        appliedFilterWithoutElements;
+                    const partialWorkingFilter: Partial<IDashboardAttributeFilter["attributeFilter"]> =
+                        workingFilterWithoutElements;
+                    if (!enableImmediateAttributeFilterDisplayAsLabelMigration) {
+                        delete partialAppliedFilter.displayForm;
+                        delete partialWorkingFilter.displayForm;
+                    }
+
+                    return (
+                        isEqual(partialAppliedFilter, partialWorkingFilter) &&
+                        isEqual(
+                            sortBy(getAttributeElementsItems(appliedElements)),
+                            sortBy(getAttributeElementsItems(workingElements)),
+                        )
+                    );
+                }
+                // Date filters
+                return isEqual(appliedFilter, workingFilter);
+            })
+            .every(identity);
     },
 );
 
@@ -163,7 +254,7 @@ export const selectAttributeFilterDisplayFormsMap: DashboardSelector<
 });
 
 /**
- * This selector returns dashboard's filter context filters.
+ * This selector returns dashboard's applied filter context filters.
  *
  * @remarks
  * It is expected that the selector is called only after the filter context state is correctly initialized.
@@ -177,7 +268,21 @@ export const selectFilterContextFilters: DashboardSelector<FilterContextItem[]> 
 );
 
 /**
- * This selector returns dashboard's filter context attribute filters.
+ * This selector returns dashboard's working filter context filters.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectWorkingFilterContextFilters: DashboardSelector<FilterContextItem[]> = createSelector(
+    selectWorkingFilterContextDefinition,
+    (filterContext): FilterContextItem[] => filterContext.filters,
+);
+
+/**
+ * This selector returns dashboard's applied filter context attribute filters.
  *
  * @remarks
  * It is expected that the selector is called only after the filter context state is correctly initialized.
@@ -191,7 +296,21 @@ export const selectFilterContextAttributeFilters: DashboardSelector<IDashboardAt
     );
 
 /**
- * This selector returns dashboard's filter context date filter.
+ * This selector returns dashboard's working filter context attribute filters.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectWorkingFilterContextAttributeFilters: DashboardSelector<IDashboardAttributeFilter[]> =
+    createSelector(selectWorkingFilterContextFilters, (filters): IDashboardAttributeFilter[] =>
+        filters.filter(isDashboardAttributeFilter),
+    );
+
+/**
+ * This selector returns dashboard's applied filter context date filter.
  *
  * @remarks
  * It is expected that the selector is called only after the filter context state is correctly initialized.
@@ -201,6 +320,20 @@ export const selectFilterContextAttributeFilters: DashboardSelector<IDashboardAt
  */
 export const selectFilterContextDateFilter: DashboardSelector<IDashboardDateFilter | undefined> =
     createSelector(selectFilterContextFilters, (filters): IDashboardDateFilter | undefined =>
+        filters.find(isDashboardCommonDateFilter),
+    );
+
+/**
+ * This selector returns dashboard's working filter context date filter.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectWorkingFilterContextDateFilter: DashboardSelector<IDashboardDateFilter | undefined> =
+    createSelector(selectWorkingFilterContextFilters, (filters): IDashboardDateFilter | undefined =>
         filters.find(isDashboardCommonDateFilter),
     );
 
@@ -222,7 +355,7 @@ export const selectFilterContextDraggableFilters: DashboardSelector<
 );
 
 /**
- * This selector returns dashboard's filter context date filter with dimension specified.
+ * This selector returns dashboard's applied filter context date filter with dimension specified.
  *
  * @remarks
  * It is expected that the selector is called only after the filter context state is correctly initialized.
@@ -232,6 +365,20 @@ export const selectFilterContextDraggableFilters: DashboardSelector<
  */
 export const selectFilterContextDateFiltersWithDimension: DashboardSelector<IDashboardDateFilter[]> =
     createSelector(selectFilterContextFilters, (filters): IDashboardDateFilter[] =>
+        filters.filter(isDashboardDateFilterWithDimension),
+    );
+
+/**
+ * This selector returns dashboard's working filter context date filter with dimension specified.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectWorkingFilterContextDateFiltersWithDimension: DashboardSelector<IDashboardDateFilter[]> =
+    createSelector(selectWorkingFilterContextFilters, (filters): IDashboardDateFilter[] =>
         filters.filter(isDashboardDateFilterWithDimension),
     );
 
@@ -470,8 +617,12 @@ const MAX_DRAGGABLE_FILTERS_COUNT = 30;
 export const selectCanAddMoreAttributeFilters: DashboardSelector<boolean> = createSelector(
     selectFilterContextAttributeFilters,
     selectFilterContextDateFiltersWithDimension,
-    (attributeFilters, dateFiltersWithDimension) => {
-        return attributeFilters.length + dateFiltersWithDimension.length < MAX_DRAGGABLE_FILTERS_COUNT;
+    selectCrossFilteringFiltersLocalIdentifiers,
+    (attributeFilters, dateFiltersWithDimension, crossFilters) => {
+        return (
+            attributeFilters.length + dateFiltersWithDimension.length - crossFilters.length <
+            MAX_DRAGGABLE_FILTERS_COUNT
+        );
     },
 );
 
@@ -497,7 +648,21 @@ export const selectIsAttributeFilterDependentByLocalIdentifier: (
     createSelector(
         selectFilterContextAttributeFilterByLocalId(attributeFilterLocalIdentifier),
         (filterContextAttributeFilter) => {
-            return !isEmpty(filterContextAttributeFilter?.attributeFilter?.filterElementsBy);
+            return (
+                !isEmpty(filterContextAttributeFilter?.attributeFilter?.filterElementsBy) ||
+                !isEmpty(filterContextAttributeFilter?.attributeFilter?.filterElementsByDate)
+            );
         },
     ),
 );
+
+/**
+ * Select preloaded attribute metadata objects with references for attribute filters.
+ *
+ * @internal
+ */
+export const selectPreloadedAttributesWithReferences: DashboardSelector<
+    IAttributeWithReferences[] | undefined
+> = createSelector(selectSelf, (state) => {
+    return state.attributesWithReferences;
+});

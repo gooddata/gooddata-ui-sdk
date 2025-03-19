@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     IAnalyticalWorkspace,
@@ -20,6 +20,11 @@ import {
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
     IAttributeHierarchiesService,
+    IWorkspaceExportDefinitionsService,
+    IDataFiltersService,
+    IWorkspaceLogicalModelService,
+    IWorkspaceAutomationService,
+    IGenAIService,
 } from "@gooddata/sdk-backend-spi";
 import { CustomExecutionFactory } from "./execution.js";
 import { CustomBackendConfig, CustomBackendState } from "./config.js";
@@ -36,6 +41,10 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public getDescriptor(): Promise<IWorkspaceDescriptor> {
         throw new NotSupported("getting workspace descriptor is not supported");
+    }
+
+    public updateDescriptor(): Promise<IWorkspaceDescriptor> {
+        throw new NotSupported("updating workspace descriptor is not supported");
     }
 
     public getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
@@ -114,5 +123,25 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public attributeHierarchies(): IAttributeHierarchiesService {
         throw new NotSupported("attribute hierarchy is not supported");
+    }
+
+    public exportDefinitions(): IWorkspaceExportDefinitionsService {
+        throw new NotSupported("export definitions are not supported");
+    }
+
+    public dataFilters(): IDataFiltersService {
+        throw new NotSupported("data filters are not supported");
+    }
+
+    public logicalModel(): IWorkspaceLogicalModelService {
+        throw new NotSupported("logical model is not supported");
+    }
+
+    public automations(): IWorkspaceAutomationService {
+        throw new NotSupported("automations are not supported");
+    }
+
+    public genAI(): IGenAIService {
+        throw new NotSupported("genAI is not supported");
     }
 }

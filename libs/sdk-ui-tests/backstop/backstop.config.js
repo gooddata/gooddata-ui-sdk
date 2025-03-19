@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 const scenarios = require("./scenarios.config");
 
@@ -16,6 +16,7 @@ const backstopConfig = {
             height: 768,
         },
     ],
+    onBeforeScript: "puppet/onBefore.js",
     onReadyScript: "puppet/onReady.js",
     scenarios,
     paths: {

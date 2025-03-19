@@ -1,8 +1,10 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
+    IClusteringConfig,
     IDataView,
     IExecutionResult,
+    IForecastConfig,
     IPreparedExecution,
     isNoDataError,
     isUnexpectedResponseError,
@@ -12,12 +14,17 @@ import React from "react";
 import { injectIntl, IntlShape } from "react-intl";
 import noop from "lodash/noop.js";
 import omit from "lodash/omit.js";
+import isEqual from "lodash/isEqual.js";
 
 import { IExportFunction, ILoadingState } from "../../vis/Events.js";
 import {
     DataTooLargeToDisplaySdkError,
     GoodDataSdkError,
     NegativeValuesSdkError,
+    ForecastNotReceivedSdkError,
+    isForecastNotReceived,
+    ClusteringNotReceivedSdkError,
+    isClusteringNotReceived,
 } from "../../errors/GoodDataSdkError.js";
 import { createExportErrorFunction, createExportFunction } from "../../vis/export.js";
 import { DataViewFacade } from "../../results/facade.js";
@@ -92,6 +99,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         public static defaultProps = InnerComponent.defaultProps || {};
 
         private hasUnmounted: boolean = false;
+        private abortController: AbortController;
 
         /**
          * Fingerprint of the last execution definition the initialize was called with.
@@ -111,10 +119,15 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             this.onLoadingChanged = this.onLoadingChanged.bind(this);
             this.onDataTooLarge = this.onDataTooLarge.bind(this);
             this.onNegativeValues = this.onNegativeValues.bind(this);
+            this.abortController = new AbortController();
         }
 
         public componentDidMount() {
-            this.initDataLoading(this.props.execution);
+            this.initDataLoading(
+                this.props.execution,
+                this.props.forecastConfig,
+                this.props.clusteringConfig,
+            );
         }
 
         public render() {
@@ -139,8 +152,17 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
 
         public UNSAFE_componentWillReceiveProps(nextProps: Readonly<T & ILoadingInjectedProps>) {
             //  we need strict equality here in case only the buckets changed (not measures or attributes)
-            if (!this.props.execution.equals(nextProps.execution)) {
-                this.initDataLoading(nextProps.execution);
+            if (
+                !this.props.execution.equals(nextProps.execution) ||
+                !isEqual(this.props.forecastConfig, nextProps.forecastConfig) ||
+                !isEqual(this.props.clusteringConfig, nextProps.clusteringConfig)
+            ) {
+                this.refreshAbortController();
+                this.initDataLoading(
+                    nextProps.execution,
+                    nextProps.forecastConfig,
+                    nextProps.clusteringConfig,
+                );
             }
         }
 
@@ -148,6 +170,14 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             this.hasUnmounted = true;
             this.onLoadingChanged = noop;
             this.onError = noop;
+            this.refreshAbortController();
+        }
+
+        private refreshAbortController() {
+            if (this.props.enableExecutionCancelling) {
+                this.abortController.abort();
+                this.abortController = new AbortController();
+            }
         }
 
         private onLoadingChanged(loadingState: ILoadingState) {
@@ -169,7 +199,10 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         private onError(error: GoodDataSdkError) {
             const { onExportReady } = this.props;
 
-            this.setState({ error: error.getMessage(), dataView: null });
+            if (!isForecastNotReceived(error) && !isClusteringNotReceived(error)) {
+                const err = error as GoodDataSdkError;
+                this.setState({ error: err.getMessage(), dataView: null });
+            }
             this.onLoadingChanged({ isLoading: false });
 
             if (onExportReady) {
@@ -187,7 +220,15 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             this.onError(new NegativeValuesSdkError());
         }
 
-        private async initDataLoading(execution: IPreparedExecution) {
+        private async initDataLoading(
+            originalExecution: IPreparedExecution,
+            forecastConfig?: IForecastConfig,
+            clusteringConfig?: IClusteringConfig,
+        ) {
+            let execution = originalExecution;
+            if (this.props.enableExecutionCancelling) {
+                execution = execution.withSignal(this.abortController.signal);
+            }
             const { onExportReady, pushData, exportTitle } = this.props;
             this.onLoadingChanged({ isLoading: true });
             this.setState({ dataView: null });
@@ -203,7 +244,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                     return;
                 }
 
-                const dataView = await executionResult.readAll().catch((err) => {
+                const originalDataView = await executionResult.readAll().catch((err) => {
                     /**
                      * When execution result is received successfully,
                      * but data load fails with unexpected http response,
@@ -223,12 +264,39 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                     return;
                 }
 
-                if (this.lastInitRequestFingerprint !== defFingerprint(dataView.definition)) {
+                if (this.lastInitRequestFingerprint !== defFingerprint(originalDataView.definition)) {
                     /*
                      * Stop right now if the data are not relevant anymore because there was another
                      * initialize request in the meantime.
                      */
                     return;
+                }
+
+                let dataView = originalDataView;
+
+                if (forecastConfig) {
+                    dataView = originalDataView.withForecast(forecastConfig);
+                }
+
+                if (clusteringConfig) {
+                    dataView = originalDataView.withClustering(clusteringConfig);
+                    try {
+                        const clusteringResult = await executionResult.readClusteringAll(clusteringConfig);
+                        dataView = dataView.withClustering(clusteringConfig, clusteringResult);
+                    } catch (e) {
+                        dataView = dataView.withClustering(clusteringConfig, {
+                            attribute: [],
+                            clusters: [],
+                            xcoord: [],
+                            ycoord: [],
+                        });
+
+                        const err = e as any;
+                        throw new ClusteringNotReceivedSdkError(
+                            err.responseBody?.reason || err.message || "Unknown error",
+                            err,
+                        );
+                    }
                 }
 
                 this.setState({ dataView, error: null, executionResult });
@@ -242,6 +310,43 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                     const availableDrillTargets = getAvailableDrillTargets(DataViewFacade.for(dataView));
 
                     pushData({ dataView, availableDrillTargets });
+                }
+
+                if (this.hasUnmounted) {
+                    return;
+                }
+
+                if (dataView.forecastConfig && forecastConfig) {
+                    try {
+                        const forecastResult = await executionResult.readForecastAll(dataView.forecastConfig);
+                        const updatedDataView = dataView.withForecast(
+                            dataView.forecastConfig,
+                            forecastResult,
+                        );
+                        this.setState((s) => ({ ...s, dataView: updatedDataView }));
+                        if (pushData) {
+                            pushData({
+                                dataView: updatedDataView,
+                                propertiesMeta: {
+                                    slicedForecast:
+                                        forecastConfig.forecastPeriod !==
+                                        dataView.forecastConfig?.forecastPeriod,
+                                },
+                            });
+                        }
+                    } catch (e) {
+                        const updatedDataView = dataView.withForecast(undefined);
+                        this.setState((s) => ({ ...s, dataView: updatedDataView }));
+                        if (pushData) {
+                            pushData({ dataView: updatedDataView });
+                        }
+
+                        const err = e as any;
+                        throw new ForecastNotReceivedSdkError(
+                            err.responseBody?.reason || err.message || "Unknown error",
+                            err,
+                        );
+                    }
                 }
             } catch (error) {
                 if (this.lastInitRequestFingerprint !== defFingerprint(execution.definition)) {

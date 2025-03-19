@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import {
     IAbsoluteDateFilter,
@@ -98,6 +98,12 @@ export interface IDrillDownDefinition {
      * Title for the target attribute.
      */
     title?: string;
+
+    /**
+     * Reference to the attribute hierarchy that triggered the drill down.
+     * Is required if enableDrillDownIntersectionIgnoredAttributes feature flag is set to true.
+     */
+    hierarchyRef?: ObjRef;
 }
 
 /**
@@ -182,9 +188,21 @@ export interface IMenuButtonItemsVisibility {
      */
     pdfExportButton?: boolean;
     /**
+     * If set to true, the Export to EXCEL button will be visible. Defaults to true.
+     */
+    excelExportButton?: boolean;
+    /**
+     * If set to true, the Export to PowerPoint button will be visible. Defaults to true.
+     */
+    powerPointExportButton?: boolean;
+    /**
      * If set to true, the Schedule emailing button will be visible. Defaults to true.
      */
     scheduleEmailButton?: boolean;
+    /**
+     * If set to true, the Alerting button will be visible. Defaults to true.
+     */
+    alertingButton?: boolean;
     /**
      * If set to true, the Delete button will be visible. Defaults to true.
      */
@@ -194,7 +212,7 @@ export interface IMenuButtonItemsVisibility {
 /**
  * @beta
  */
-export type RenderMode = "view" | "edit";
+export type RenderMode = "view" | "edit" | "export";
 
 /**
  * @public
@@ -263,6 +281,58 @@ export interface ILayoutCoordinates {
 }
 
 /**
+ *  Tests whenever the provided object is layout coordinates object.
+ *  @alpha
+ */
+export function isLayoutCoordinates(obj: unknown): obj is ILayoutCoordinates {
+    return (
+        !isEmpty(obj) &&
+        (obj as ILayoutCoordinates).sectionIndex !== undefined &&
+        (obj as ILayoutCoordinates).itemIndex !== undefined
+    );
+}
+
+/**
+ *  Coordinates of an item in a nested layout.
+ *  @alpha
+ */
+export type ILayoutItemPath = ILayoutCoordinates[];
+
+/**
+ *  Tests whenever the provided object is section path.
+ *  @alpha
+ */
+export function isLayoutItemPath(obj: unknown): obj is ILayoutItemPath {
+    return !isEmpty(obj) && Array.isArray(obj) && obj.every(isLayoutCoordinates);
+}
+
+/**
+ *  Coordinates of a section in a nested layout.
+ *  @alpha
+ */
+export interface ILayoutSectionPath {
+    /**
+     * The path to the parent item that contains this section.
+     *
+     * Undefined when section is in the root layout, otherwise leads to the layout widget in which the section
+     * is nested.
+     */
+    parent?: ILayoutItemPath;
+    /**
+     * Zero based index.
+     */
+    sectionIndex: number;
+}
+
+/**
+ *  Tests whenever the provided object is section path.
+ *  @alpha
+ */
+export function isLayoutSectionPath(obj: unknown): obj is ILayoutSectionPath {
+    return !isEmpty(obj) && (obj as ILayoutSectionPath).sectionIndex !== undefined;
+}
+
+/**
  * @internal
  */
 export interface IGlobalDrillDownAttributeHierarchyDefinition {
@@ -277,4 +347,24 @@ export interface IGlobalDrillDownAttributeHierarchyDefinition {
      * Target attribute hierarchy for drill down.
      */
     target: ObjRef;
+}
+
+/**
+ * @internal
+ */
+export interface IScheduleEmailContext {
+    /**
+     * Widget to schedule email for.
+     */
+    widgetRef?: ObjRef | undefined;
+}
+
+/**
+ * @internal
+ */
+export interface IScheduleEmailDialogContext {
+    /**
+     * Widget to schedule email for.
+     */
+    widgetRef?: ObjRef | undefined;
 }

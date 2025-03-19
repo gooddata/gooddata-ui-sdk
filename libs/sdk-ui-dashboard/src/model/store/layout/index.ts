@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { createSlice } from "@reduxjs/toolkit";
 import { layoutInitialState } from "./layoutState.js";
 import { layoutReducers } from "./layoutReducers.js";
@@ -10,4 +10,9 @@ const layoutSlice = createSlice({
 });
 
 export const layoutSliceReducer = layoutSlice.reducer;
+/**
+ * Actions to control dashboard layout.
+ *
+ * @internal
+ */
 export const layoutActions = layoutSlice.actions;

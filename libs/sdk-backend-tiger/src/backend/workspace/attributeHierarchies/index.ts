@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import { v4 as uuid } from "uuid";
 import uniqBy from "lodash/uniqBy.js";
 import flatMap from "lodash/flatMap.js";
@@ -126,7 +126,7 @@ export class TigerAttributeHierarchiesService implements IAttributeHierarchiesSe
         return Promise.resolve([
             {
                 type: "dateHierarchyTemplate",
-                ref: idRef("default"),
+                ref: idRef("default", "dateHierarchyTemplate"),
                 id: "default",
                 uri: "/default",
                 title: "Year, quarter, month, date, hour, minute",

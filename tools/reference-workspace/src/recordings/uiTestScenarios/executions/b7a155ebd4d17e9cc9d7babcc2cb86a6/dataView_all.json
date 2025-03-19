@@ -1,0 +1,39 @@
+{
+    "count": [7, 3],
+    "data": [
+        [18939790.52, 9459230.78, null],
+        [53688663.75, 20528222.66, 9459230.78],
+        [39648366.14, 8323300.01, 20528222.66],
+        [4318364.55, null, 8323300.01],
+        [26627.58, null, null],
+        [null, null, null],
+        [3644, null, null]
+    ],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "formattedName": "2010", "name": "2010", "uri": "2010" } },
+                { "attributeHeaderItem": { "formattedName": "2011", "name": "2011", "uri": "2011" } },
+                { "attributeHeaderItem": { "formattedName": "2012", "name": "2012", "uri": "2012" } },
+                { "attributeHeaderItem": { "formattedName": "2013", "name": "2013", "uri": "2013" } },
+                { "attributeHeaderItem": { "formattedName": "2014", "name": "2014", "uri": "2014" } },
+                { "attributeHeaderItem": { "formattedName": "2016", "name": "2016", "uri": "2016" } },
+                { "attributeHeaderItem": { "formattedName": "2017", "name": "2017", "uri": "2017" } }
+            ]
+        ],
+        [
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                {
+                    "measureHeaderItem": {
+                        "name": "m_m_e519fa2a_86c3_4e32_8313_0c03062348j3_dt_closedate_timestamp.year",
+                        "order": 2
+                    }
+                }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [7, 3]
+}

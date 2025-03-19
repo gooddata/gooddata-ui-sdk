@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 
 import { AttributeFilterButton } from "../../tools/attributeFilterButton";
@@ -8,7 +8,9 @@ const SEARCH_QUERY = "101 Financial";
 
 const ATTRIBUTE_FILTER_BUTTON_SELECTOR = ".s-attribute-filter.s-opportunity";
 
-describe("Single selection AttributeFilterButton", { tags: ["pre-merge_isolated_bear"] }, () => {
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("Single selection AttributeFilterButton", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("filters/single-selection-attribute-filter-button");
     });

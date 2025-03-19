@@ -1,7 +1,7 @@
 // (C) 2019-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
-import { ObjRef, ObjRefInScope } from "../../objRef/index.js";
+import { Identifier, isObjRef, ObjRef, ObjRefInScope } from "../../objRef/index.js";
 import { DateAttributeGranularity, AllTimeGranularity } from "../../base/dateGranularities.js";
 
 /**
@@ -43,11 +43,11 @@ export type IAttributeElements = IAttributeElementsByRef | IAttributeElementsByV
  *
  * @public
  */
-export interface IPositiveAttributeFilterBody {
+export interface IPositiveAttributeFilterBody extends IIdentifiableFilter {
     /**
      * Display form whose attribute elements are included in the 'in' list.
      */
-    displayForm: ObjRef;
+    displayForm: ObjRef | ObjRefInScope;
 
     /**
      * Attribute elements to filter in. The attribute elements can be specified either using
@@ -82,11 +82,11 @@ export interface IPositiveAttributeFilter {
  *
  * @public
  */
-export interface INegativeAttributeFilterBody {
+export interface INegativeAttributeFilterBody extends IIdentifiableFilter {
     /**
      * Display form whose attribute elements are included in the 'notIn' list.
      */
-    displayForm: ObjRef;
+    displayForm: ObjRef | ObjRefInScope;
 
     /**
      * Attribute elements to filter out. The attribute elements can be specified either using
@@ -123,22 +123,29 @@ export interface INegativeAttributeFilter {
  * @public
  */
 export interface IAbsoluteDateFilter {
-    absoluteDateFilter: {
-        /**
-         * Date data set for filtering
-         */
-        dataSet: ObjRef;
+    absoluteDateFilter: IAbsoluteDateFilterBody;
+}
 
-        /**
-         * Start date (including): this is in format 'YYYY-MM-DD'
-         */
-        from: string;
+/**
+ * Object defining the {@link IAbsoluteDateFilter} object body.
+ *
+ * @public
+ */
+export interface IAbsoluteDateFilterBody extends IIdentifiableFilter {
+    /**
+     * Date data set for filtering
+     */
+    dataSet: ObjRef;
 
-        /**
-         * End date (including): this is in format 'YYYY-MM-DD'
-         */
-        to: string;
-    };
+    /**
+     * Start date (including): this is in format 'YYYY-MM-DD'
+     */
+    from: string;
+
+    /**
+     * End date (including): this is in format 'YYYY-MM-DD'
+     */
+    to: string;
 }
 
 /**
@@ -153,21 +160,35 @@ export interface IAbsoluteDateFilter {
  */
 export type IRelativeDateFilter =
     | {
-          relativeDateFilter: {
-              dataSet: ObjRef;
-              granularity: DateAttributeGranularity;
-              from: number;
-              to: number;
-          };
+          relativeDateFilter: IRelativeDateFilterBody;
       }
     | {
-          relativeDateFilter: {
-              dataSet: ObjRef;
-              granularity: AllTimeGranularity;
-              from: 0;
-              to: 0;
-          };
+          relativeDateFilter: IRelativeDateFilterAllTimeBody;
       };
+
+/**
+ * Object defining the {@link IRelativeDateFilter} object body.
+ *
+ * @public
+ */
+export interface IRelativeDateFilterBody extends IIdentifiableFilter {
+    dataSet: ObjRef;
+    granularity: DateAttributeGranularity;
+    from: number;
+    to: number;
+}
+
+/**
+ * Object defining the {@link IRelativeDateFilter} object body.
+ *
+ * @public
+ */
+export interface IRelativeDateFilterAllTimeBody extends IIdentifiableFilter {
+    dataSet: ObjRef;
+    granularity: AllTimeGranularity;
+    from: 0;
+    to: 0;
+}
 
 /**
  * Attribute filters limit results of execution to data pertaining to attributes that are or are not specified
@@ -245,7 +266,7 @@ export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition
  *
  * @public
  */
-export interface IMeasureValueFilterBody {
+export interface IMeasureValueFilterBody extends IIdentifiableFilter {
     measure: ObjRefInScope;
     condition?: MeasureValueFilterCondition;
 }
@@ -267,7 +288,7 @@ export type RankingFilterOperator = "TOP" | "BOTTOM";
  *
  * @public
  */
-export interface IRankingFilterBody {
+export interface IRankingFilterBody extends IIdentifiableFilter {
     measure: ObjRefInScope;
     attributes?: ObjRefInScope[];
     operator: RankingFilterOperator;
@@ -295,6 +316,15 @@ export type IFilter =
     | IRankingFilter;
 
 /**
+ * Filter able to identify itself via local identifier
+ *
+ * @public
+ */
+export interface IIdentifiableFilter {
+    localIdentifier?: Identifier;
+}
+
+/**
  * Represents a filter specification variant where either the actual filter or a 'null' filter is
  * provided. Null filters will be ignored during processing.
  *
@@ -316,6 +346,20 @@ export type IMeasureFilter =
 //
 // Type guards
 //
+
+/**
+ * Type guard checking whether the provided object is a positive attribute filter.
+ *
+ * @public
+ */
+export function isSimpleMeasureFilter(obj: unknown): obj is IMeasureFilter {
+    return (
+        isPositiveAttributeFilter(obj) ||
+        isNegativeAttributeFilter(obj) ||
+        isAbsoluteDateFilter(obj) ||
+        isRelativeDateFilter(obj)
+    );
+}
 
 /**
  * Type guard checking whether the provided object is a positive attribute filter.
@@ -632,10 +676,10 @@ export function filterObjRef(filter: IFilter): ObjRef | undefined;
 export function filterObjRef(filter: IFilter): ObjRef | undefined {
     invariant(filter, "filter must be specified");
 
-    if (isPositiveAttributeFilter(filter)) {
+    if (isPositiveAttributeFilter(filter) && isObjRef(filter.positiveAttributeFilter.displayForm)) {
         return filter.positiveAttributeFilter.displayForm;
     }
-    if (isNegativeAttributeFilter(filter)) {
+    if (isNegativeAttributeFilter(filter) && isObjRef(filter.negativeAttributeFilter.displayForm)) {
         return filter.negativeAttributeFilter.displayForm;
     }
     if (isAbsoluteDateFilter(filter)) {
@@ -643,6 +687,33 @@ export function filterObjRef(filter: IFilter): ObjRef | undefined {
     }
     if (isRelativeDateFilter(filter)) {
         return filter.relativeDateFilter.dataSet;
+    }
+    return undefined;
+}
+
+/**
+ * Gets local identifier of filter.
+ *
+ * @remarks
+ * So far valid only for attribute filters.
+ *
+ * @param filter - filter to work with
+ * @returns local identifier of filter object if defined, undefined otherwise
+ * @public
+ */
+export function filterLocalIdentifier(filter: IFilter): string | undefined;
+export function filterLocalIdentifier(filter: IFilter): string | undefined {
+    invariant(filter, "filter must be specified");
+
+    if (!isAttributeFilter(filter)) {
+        return undefined;
+    }
+
+    if (isPositiveAttributeFilter(filter)) {
+        return filter.positiveAttributeFilter.localIdentifier;
+    }
+    if (isNegativeAttributeFilter(filter)) {
+        return filter.negativeAttributeFilter.localIdentifier;
     }
     return undefined;
 }

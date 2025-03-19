@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IAnalyticalBackend, IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     ISettings,
@@ -9,6 +9,7 @@ import {
     IVisualizationClass,
     visClassUrl,
     IExecutionConfig,
+    isInsight,
 } from "@gooddata/sdk-model";
 import React from "react";
 // eslint-disable-next-line react/no-deprecated
@@ -118,8 +119,19 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
 
     constructor(props: IBaseVisualizationProps) {
         super(props);
+        const { insight } = props;
+        let visualizationId;
+        if (isInsight(insight)) {
+            visualizationId = insight.insight.identifier;
+        } else {
+            visualizationId = "__new_visualization__";
+        }
+
         this.visElementId = uuidv4();
-        this.executionFactory = props.backend.workspace(props.projectId).execution();
+        this.executionFactory = props.backend
+            .withCorrelation({ visualizationId })
+            .workspace(props.projectId)
+            .execution();
         this.containerRef = React.createRef();
     }
 
@@ -142,6 +154,18 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
 
         if (newDerivedBucketItemsChanged) {
             this.triggerPlaceNewDerivedBucketItems(nextProps);
+            return;
+        }
+
+        // buckets changed from within inner visualization logic
+        const bucketsToUpdate = this.visualization.getBucketsToUpdate(
+            this.props.referencePoint,
+            nextProps.referencePoint,
+        );
+
+        if (bucketsToUpdate) {
+            this.triggerPlaceNewDerivedBucketItems(nextProps, bucketsToUpdate);
+            this.triggerExtendedReferencePointChanged(nextProps, this.props);
             return;
         }
 
@@ -215,6 +239,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
 
     private setupVisualization(props: IBaseVisualizationProps) {
         const {
+            insight,
             visualizationClass,
             environment,
             locale,
@@ -238,12 +263,19 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             console.error(`Error: unsupported visualization type - ${visUri}`);
         }
 
+        let visualizationId;
+        if (isInsight(insight)) {
+            visualizationId = insight.insight.identifier;
+        } else {
+            visualizationId = "__new_visualization__";
+        }
+
         if (visFactory) {
             const constructorParams: IVisConstruct = {
                 projectId,
                 locale,
                 environment,
-                backend: props.backend,
+                backend: props.backend.withCorrelation({ visualizationId }),
                 element: () => {
                     const rootNode =
                         (this.containerRef.current?.getRootNode() as Document | ShadowRoot) ?? document;
@@ -309,12 +341,21 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         );
     }
 
-    private triggerPlaceNewDerivedBucketItems(props: IBaseVisualizationProps) {
+    private triggerPlaceNewDerivedBucketItems(
+        props: IBaseVisualizationProps,
+        newBucketItemsFromVisualization?: IBucketItem[],
+    ) {
         const { newDerivedBucketItems, referencePoint, onNewDerivedBucketItemsPlaced } = props;
+        const newDerivedBucketItemsToPlace = newBucketItemsFromVisualization ?? newDerivedBucketItems;
 
-        if (this.visualization && referencePoint && newDerivedBucketItems && onNewDerivedBucketItemsPlaced) {
+        if (
+            this.visualization &&
+            referencePoint &&
+            newDerivedBucketItemsToPlace &&
+            onNewDerivedBucketItemsPlaced
+        ) {
             this.visualization
-                .addNewDerivedBucketItems(referencePoint, newDerivedBucketItems)
+                .addNewDerivedBucketItems(referencePoint, newDerivedBucketItemsToPlace)
                 .then(onNewDerivedBucketItemsPlaced);
         }
     }

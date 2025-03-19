@@ -1,8 +1,9 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { Component } from "react";
 import { storiesOf } from "../../../_infra/storyRepository.js";
 import { UiKit } from "../../../_infra/storyGroups.js";
 import { withIntl } from "@gooddata/sdk-ui";
+import { action } from "@storybook/addon-actions";
 import {
     AppHeader,
     IAppHeaderProps,
@@ -329,6 +330,7 @@ const messages = {
     "gs.header.load": "Load",
     "gs.header.manage": "Manage",
     "gs.header.help": "Help",
+    "gs.header.search": "Search",
     "gs.header.documentation": "Documentation",
     "gs.header.visitSupportPortal": "Visit Support Portal",
     "gs.header.submitTicket": "Submit Ticket",
@@ -337,7 +339,9 @@ const messages = {
     "gs.header.logout": "Logout",
     "gs.header.projectPicker.demo": "Demo data",
     "gs.header.projectPicker.searchPlaceholder": "Search...",
+    "gs.header.projectPicker.searchLabel": "Search",
     "gs.header.projectPicker.workspaces": "Workspaces",
+    "gs.header.account.title": "Account",
 };
 const WithIntl = withIntl(HeaderExamples, "en-US", messages);
 
@@ -422,4 +426,39 @@ storiesOf(`${UiKit}/AppHeader`)
             );
         },
         { screenshot: screenshotProps.openedHelp },
+    )
+    .add(
+        "with search menu item",
+        () => {
+            return (
+                <IntlProvider locale="en-US" messages={messages}>
+                    <div className="screenshot-target">
+                        <AppHeader
+                            className="s-default-header"
+                            onLogoClick={action("onLogoClick")}
+                            onMenuItemClick={action("onMenuItemClick")}
+                            menuItemsGroups={info.headerMenuSections}
+                            accountMenuItems={info.headerAccountItems}
+                            helpMenuItems={[
+                                {
+                                    key: "gs.header.helpMenu.manage.ws",
+                                    href: "https://www.gooddata.com/developers/cloud-native/doc/hosted/manage-deployment/manage-workspaces/",
+                                },
+                                ...info.headerHelpItems,
+                            ]}
+                            search={<div>Search contents mock</div>}
+                            logoUrl={gd}
+                            logoTitle="GoodData"
+                            documentationUrl="https://help.gooddata.com/doc"
+                            userName="John Doe"
+                            workspacePicker={getPicker({
+                                title: "GoodSales",
+                                id: "0",
+                            })}
+                        />
+                    </div>
+                </IntlProvider>
+            );
+        },
+        { screenshot: true },
     );

@@ -2,22 +2,11 @@
 
 exports[`createExecution > should create correct definition for scoped series only 1`] = `
 {
-  "attributes": [
-    {
-      "attribute": {
-        "displayForm": {
-          "identifier": "label.owner.region",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-  ],
+  "attributes": [],
   "buckets": [],
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
         "measureGroup",
       ],
     },
@@ -29,12 +18,12 @@ exports[`createExecution > should create correct definition for scoped series on
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -50,19 +39,10 @@ exports[`createExecution > should create correct definition for scoped series wi
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-    {
-      "attribute": {
-        "displayForm": {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -70,12 +50,11 @@ exports[`createExecution > should create correct definition for scoped series wi
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
         "measureGroup",
       ],
     },
@@ -87,12 +66,12 @@ exports[`createExecution > should create correct definition for scoped series wi
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -108,19 +87,10 @@ exports[`createExecution > should create correct definition for scoped series wi
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-    {
-      "attribute": {
-        "displayForm": {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -128,12 +98,11 @@ exports[`createExecution > should create correct definition for scoped series wi
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
         "measureGroup",
       ],
     },
@@ -142,7 +111,7 @@ exports[`createExecution > should create correct definition for scoped series wi
     {
       "positiveAttributeFilter": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
         "in": {
@@ -159,12 +128,12 @@ exports[`createExecution > should create correct definition for scoped series wi
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -180,19 +149,10 @@ exports[`createExecution > should create correct definition for scoped series wi
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-    {
-      "attribute": {
-        "displayForm": {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -200,12 +160,11 @@ exports[`createExecution > should create correct definition for scoped series wi
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
         "measureGroup",
       ],
     },
@@ -217,12 +176,12 @@ exports[`createExecution > should create correct definition for scoped series wi
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -230,7 +189,7 @@ exports[`createExecution > should create correct definition for scoped series wi
   "sortBy": [
     {
       "attributeSortItem": {
-        "attributeIdentifier": "a_label.product.id.name",
+        "attributeIdentifier": "a_label.f_product.product.name",
         "direction": "desc",
       },
     },
@@ -245,19 +204,10 @@ exports[`createExecution > should create correct definition for scoped series wi
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.owner.region",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.owner.region",
-      },
-    },
-    {
-      "attribute": {
-        "displayForm": {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -265,19 +215,18 @@ exports[`createExecution > should create correct definition for scoped series wi
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
       "totals": [
         {
-          "attributeIdentifier": "a_label.product.id.name",
-          "measureIdentifier": "m_aangOxLSeztu",
+          "attributeIdentifier": "a_label.f_product.product.name",
+          "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           "type": "sum",
         },
       ],
     },
     {
       "itemIdentifiers": [
-        "a_label.owner.region",
         "measureGroup",
       ],
     },
@@ -289,12 +238,12 @@ exports[`createExecution > should create correct definition for scoped series wi
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -322,12 +271,12 @@ exports[`createExecution > should create correct definition for unscoped series 
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -343,10 +292,10 @@ exports[`createExecution > should create correct definition for unscoped series 
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -354,7 +303,7 @@ exports[`createExecution > should create correct definition for unscoped series 
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
   ],
@@ -372,10 +321,10 @@ exports[`createExecution > should create correct definition for unscoped series 
     {
       "attribute": {
         "displayForm": {
-          "identifier": "label.product.id.name",
+          "identifier": "label.f_product.product.name",
           "type": "displayForm",
         },
-        "localIdentifier": "a_label.product.id.name",
+        "localIdentifier": "a_label.f_product.product.name",
       },
     },
   ],
@@ -383,7 +332,7 @@ exports[`createExecution > should create correct definition for unscoped series 
   "dimensions": [
     {
       "itemIdentifiers": [
-        "a_label.product.id.name",
+        "a_label.f_product.product.name",
       ],
     },
     {
@@ -399,12 +348,12 @@ exports[`createExecution > should create correct definition for unscoped series 
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],

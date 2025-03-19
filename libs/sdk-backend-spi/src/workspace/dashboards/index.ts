@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IFilter,
     ObjRef,
@@ -12,6 +12,7 @@ import {
     IScheduledMail,
     IScheduledMailDefinition,
     IInsight,
+    IDataSetMetadataObject,
     IDashboardPlugin,
     IDashboard,
     IListedDashboard,
@@ -20,6 +21,10 @@ import {
     IDashboardPermissions,
     IExistingDashboard,
     IDateFilter,
+    IDashboardFilterView,
+    IDashboardFilterViewSaveRequest,
+    IDashboardAttributeFilterConfig,
+    IExecutionDefinition,
 } from "@gooddata/sdk-model";
 import { IExportResult } from "../execution/export.js";
 import { IPagedResource } from "../../common/paging.js";
@@ -38,6 +43,11 @@ export interface IDashboardReferences {
      * Referenced plugins. Empty if no plugins on dashboard or referenced plugins were not requested.
      */
     plugins: IDashboardPlugin[];
+
+    /**
+     * Referenced dataSets. Only direct references, does not include dataSets linked from filter context.
+     */
+    dataSets?: IDataSetMetadataObject[];
 }
 
 /**
@@ -126,6 +136,12 @@ export interface IGetDashboardOptions {
      * The id is missing when the dashboard is not loaded in the export mode
      */
     exportId?: string;
+
+    /**
+     * Specify type of the currently performed dashboard export.
+     * This id is used to retrieve export-related metadata, such as currently active attribute filters.
+     */
+    exportType?: "visual" | "slides";
 }
 
 /**
@@ -171,7 +187,36 @@ export interface IGetScheduledMailOptions {
 /**
  * @alpha
  */
-export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";
+export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet";
+
+/**
+ * Custom title override for raw exports.
+ *
+ * @alpha
+ */
+export interface IRawExportCustomOverride {
+    /**
+     * Custom title for the object.
+     */
+    title: string;
+}
+
+/**
+ * Custom title overrides for raw exports.
+ *
+ * @alpha
+ */
+export interface IRawExportCustomOverrides {
+    /**
+     * Mapping of localId - custom override.
+     */
+    measures?: Record<string, IRawExportCustomOverride>;
+
+    /**
+     * Mapping of localId - custom override.
+     */
+    displayForms?: Record<string, IRawExportCustomOverride>;
+}
 
 /**
  * Service to list, create and update analytical dashboards
@@ -275,6 +320,54 @@ export interface IWorkspaceDashboardsService {
      * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
      */
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
+
+    /**
+     * Export dashboard to pdf. You can override dashboard filters with custom filters.
+     * When no custom filters are set, the persisted dashboard filters will be used.
+     *
+     * PDF file is downloaded and attached as Blob data to the current window instance.
+     *
+     * @param ref - dashboard reference
+     * @param format - export format
+     * @param filters - Override stored dashboard filters with custom filters
+     * @param options - additional options
+     * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
+     */
+    exportDashboardToPresentation(
+        ref: ObjRef,
+        format: "PDF" | "PPTX",
+        filters?: FilterContextItem[],
+        options?: {
+            widgetIds?: ObjRef[];
+            filename?: string;
+        },
+    ): Promise<IExportResult>;
+
+    /**
+     * Export dashboard to tabular.
+     *
+     * Tabular file is downloaded and attached as Blob data to the current window instance.
+     *
+     * @param ref - dashboard reference
+     * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
+     */
+    exportDashboardToTabular(ref: ObjRef): Promise<IExportResult>;
+
+    /**
+     * Export dashboard to CSV raw.
+     *
+     * CSV raw file is downloaded and attached as Blob data to the current window instance.
+     *
+     * @param definition - execution definition
+     * @param fileName - name of the file
+     * @param customOverrides - custom title overrides for measures and display forms
+     * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
+     */
+    exportDashboardToCSVRaw(
+        definition: IExecutionDefinition,
+        fileName: string,
+        customOverrides?: IRawExportCustomOverrides,
+    ): Promise<IExportResult>;
 
     /**
      * Create scheduled mail for the dashboard
@@ -406,9 +499,14 @@ export interface IWorkspaceDashboardsService {
      *
      * @param widget - widget to get filters for
      * @param filters - filters to apply on the widget
+     * @param attributeFilterConfigs - filter configs
      * @returns promise with the filters with the ignored filters removed
      */
-    getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
+    getResolvedFiltersForWidget(
+        widget: IWidget,
+        filters: IFilter[],
+        attributeFilterConfigs: IDashboardAttributeFilterConfig[],
+    ): Promise<IFilter[]>;
 
     /**
      * Takes a widget, commonDateFilters and a list of other filters and returns filters that can be used for the widget.
@@ -423,12 +521,14 @@ export interface IWorkspaceDashboardsService {
      * @param widget - widget to get filters for
      * @param commonDateFilters - date filters to apply on the widget only when matching its date dataSet
      * @param otherFilters - filters to apply on the widget
+     * @param attributeFilterConfigs - filter configs
      * @returns promise with the filters with the ignored filters removed
      */
     getResolvedFiltersForWidgetWithMultipleDateFilters(
         widget: IWidget,
         commonDateFilters: IDateFilter[],
         otherFilters: IFilter[],
+        attributeFilterConfigs: IDashboardAttributeFilterConfig[],
     ): Promise<IFilter[]>;
 
     /**
@@ -488,6 +588,38 @@ export interface IWorkspaceDashboardsService {
      * @param dashboardRefs - dashboard references to validate
      */
     validateDashboardsExistence(dashboardRefs: ObjRef[]): Promise<IExistingDashboard[]>;
+
+    /**
+     * Get a list of filter views for the current user.
+     *
+     * @param dashboardRef - ref of the dashboard for which we want to get the filter views.
+     */
+    getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]>;
+
+    /**
+     * Create a new filter view.
+     *
+     * @param filterView - filter view that must be created.
+     */
+    createFilterView(filterView: IDashboardFilterViewSaveRequest): Promise<IDashboardFilterView>;
+
+    /**
+     * Delete a filter view identified by the provided ref.
+     *
+     * @param ref - ref of the filter view that must be deleted.
+     */
+    deleteFilterView(ref: ObjRef): Promise<void>;
+
+    /**
+     * Set a filter view identified by the provided ref as the default one.
+     * The other filter views for the same dashboard that are marked as default ones will be unmarked.
+     *
+     * @param ref - ref of the filter view that must be set as default.
+     * @param isDefault - determine if filter view identified by the provided ref should be marked as a default
+     *      one. If yes, any existing filter view for the same user and dashboard will be marked as non default
+     *      as only one can be set as default at the same time.
+     */
+    setFilterViewAsDefault(ref: ObjRef, isDefault: boolean): Promise<void>;
 }
 
 /**

@@ -29,6 +29,10 @@ exports[`catalogSelectors > should return adhoc date hierarchies 1`] = `
       "identifier": "order_date",
       "type": "dataSet",
     },
+    "ref": {
+      "identifier": "default/order_date",
+      "type": "dateAttributeHierarchy",
+    },
     "templateId": "default",
     "title": "Order date",
     "type": "dateAttributeHierarchy",
@@ -63,6 +67,10 @@ exports[`catalogSelectors > should return adhoc date hierarchies 1`] = `
     "dateDatasetRef": {
       "identifier": "return_date",
       "type": "dataSet",
+    },
+    "ref": {
+      "identifier": "default/return_date",
+      "type": "dateAttributeHierarchy",
     },
     "templateId": "default",
     "title": "Return date",

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { useEffect, useRef, useState } from "react";
 import { useBackendStrict, useClientWorkspaceIdentifiers, usePrevious, useWorkspace } from "@gooddata/sdk-ui";
 import { useMapboxToken, enrichMapboxToken } from "@gooddata/sdk-ui-geo";
@@ -71,7 +71,7 @@ function useNotifyDeinitializedOnUnmount(
 export const useInitializeDashboardStore = (
     props: IDashboardStoreProviderProps,
 ): ReduxedDashboardStore | null => {
-    const { dashboard, persistedDashboard } = props;
+    const { dashboard, persistedDashboard, config } = props;
     const backend = useBackendStrict(props.backend);
     const workspace = useWorkspace(props.workspace);
     const mapboxToken = useMapboxToken(props.config?.mapboxToken);
@@ -110,11 +110,16 @@ export const useInitializeDashboardStore = (
 
             let asyncRenderExpectedCount = undefined;
             if (isDashboard(dashboard) && dashboard.layout !== undefined && !dashboard.plugins) {
-                asyncRenderExpectedCount = getWidgetsOfType(dashboard.layout, ["kpi", "insight"]).length;
+                asyncRenderExpectedCount = getWidgetsOfType(dashboard.layout, [
+                    "kpi",
+                    "insight",
+                    "visualizationSwitcher",
+                ]).length;
             }
             const backgroundWorkers = [
                 newRenderingWorker({
                     asyncRenderExpectedCount,
+                    isExport: config?.isExport,
                 }),
             ];
 
@@ -127,6 +132,7 @@ export const useInitializeDashboardStore = (
                     filterContextRef: currentInitProps.filterContextRef,
                     clientId: currentInitProps.clientId,
                     dataProductId: currentInitProps.dataProductId,
+                    config,
                 },
                 eventing: {
                     initialEventHandlers: props.eventHandlers,

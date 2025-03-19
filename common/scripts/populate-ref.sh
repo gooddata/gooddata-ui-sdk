@@ -6,9 +6,3 @@ rushx populate-ref
 
 cd ../../tools/reference-workspace
 rushx prettier-write
-
-cd ../live-examples-workspace
-rushx prettier-write
-
-cd ../experimental-workspace
-rushx prettier-write

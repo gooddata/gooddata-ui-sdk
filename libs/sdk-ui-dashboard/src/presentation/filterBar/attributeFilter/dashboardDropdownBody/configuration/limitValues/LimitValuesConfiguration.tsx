@@ -3,7 +3,14 @@
 import React, { useState } from "react";
 import { FormattedMessage, useIntl, WrappedComponentProps } from "react-intl";
 import { Typography, Button, NoData } from "@gooddata/sdk-ui-kit";
-import { isObjRef, serializeObjRef, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import {
+    isObjRef,
+    serializeObjRef,
+    ObjRef,
+    areObjRefsEqual,
+    ICatalogDateDataset,
+    IDashboardDateFilter,
+} from "@gooddata/sdk-model";
 
 import { messages } from "../../../../../../locales.js";
 import { ValuesLimitingItem } from "../../../types.js";
@@ -14,8 +21,12 @@ import {
     IMetricsAndFacts,
     selectBackendCapabilities,
     useDashboardUserInteraction,
+    IDashboardDependentDateFilter,
+    selectEnableKDAttributeFilterDatesValidation,
+    isDashboardDependentDateFilter,
 } from "../../../../../../model/index.js";
 import { IntlWrapper } from "../../../../../localization/index.js";
+import { useCommonDateFilterTitle } from "../../../../../../_staging/sharedHooks/useCommonDateFilterTitle.js";
 
 import { LimitingItem } from "./shared/LimitingItem.js";
 import { useLimitingItems } from "./shared/limitingItemsHook.js";
@@ -30,8 +41,16 @@ interface ILimitValuesConfigurationProps {
     validParentFilters: ObjRef[];
     validateElementsBy: ObjRef[];
     metricsAndFacts: IMetricsAndFacts;
+    availableDatasets: ICatalogDateDataset[];
+    dependentDateFilters: IDashboardDependentDateFilter[];
+    dependentCommonDateFilter: IDashboardDateFilter;
     onLimitingItemUpdate: (items: ObjRef[]) => void;
     onParentFilterUpdate: (localId: string, isSelected: boolean, overAttributes?: ObjRef[]) => void;
+    onDependentDateFilterUpdate: (
+        item: IDashboardDependentDateFilter,
+        isSelected: boolean,
+        isCommonDate: boolean,
+    ) => void;
 }
 
 const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
@@ -40,10 +59,17 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     validParentFilters,
     validateElementsBy,
     metricsAndFacts,
+    availableDatasets,
+    dependentDateFilters,
+    dependentCommonDateFilter,
     onLimitingItemUpdate,
     onParentFilterUpdate,
+    onDependentDateFilterUpdate,
 }) => {
     const intl = useIntl();
+    const isEnabledKDAttributeFilterDatesValidation = useDashboardSelector(
+        selectEnableKDAttributeFilterDatesValidation,
+    );
     const { attributeFilterInteraction } = useDashboardUserInteraction();
     const [isDropdownOpened, setIsDropdownOpened] = useState(false);
     const itemsWithTitles = useLimitingItems(
@@ -51,7 +77,13 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
         validParentFilters,
         validateElementsBy,
         metricsAndFacts,
+        dependentDateFilters,
+        availableDatasets,
+        isEnabledKDAttributeFilterDatesValidation,
+        true,
+        intl,
     );
+    const commonDateFilterTitle = useCommonDateFilterTitle(intl);
 
     const onOpenAddDialog = () => {
         setIsDropdownOpened(true);
@@ -59,7 +91,9 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     };
 
     const onAdd = (addedItem: ValuesLimitingItem) => {
-        if (isObjRef(addedItem)) {
+        if (isDashboardDependentDateFilter(addedItem)) {
+            onDependentDateFilterUpdate(addedItem, true, addedItem.isCommonDate);
+        } else if (isObjRef(addedItem)) {
             onLimitingItemUpdate([...validateElementsBy, addedItem]);
         } else {
             onParentFilterUpdate(addedItem.localIdentifier, true);
@@ -67,7 +101,10 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
     };
 
     const onDelete = (deletedItem: ValuesLimitingItem) => {
-        if (isObjRef(deletedItem)) {
+        if (isDashboardDependentDateFilter(deletedItem)) {
+            onDependentDateFilterUpdate(deletedItem, false, deletedItem.isCommonDate);
+            attributeFilterInteraction("attributeFilterLimitRemoveDependentDateFilterClicked");
+        } else if (isObjRef(deletedItem)) {
             onLimitingItemUpdate(validateElementsBy.filter((item) => !areObjRefsEqual(deletedItem, item)));
             attributeFilterInteraction("attributeFilterLimitRemoveMetricClicked");
         } else {
@@ -84,6 +121,10 @@ const LimitValuesConfiguration: React.FC<ILimitValuesConfigurationProps> = ({
                     currentlySelectedItems={validateElementsBy}
                     parentFilters={parentFilters}
                     validParentFilters={validParentFilters}
+                    dependentDateFilters={dependentDateFilters}
+                    dependentCommonDateFilter={dependentCommonDateFilter}
+                    availableDatasets={availableDatasets}
+                    commonDateFilterTitle={commonDateFilterTitle}
                     onSelect={onAdd}
                     onClose={() => setIsDropdownOpened(false)}
                 />

@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { TableConfigAccessors, TableDataCallbacks, TableLegacyCallbacks } from "./privateTypes.js";
 import {
     IDataView,
@@ -26,6 +26,7 @@ export class TableFacadeInitializer {
         private readonly execution: IPreparedExecution,
         private readonly tableMethods: TableDataCallbacks & TableLegacyCallbacks & TableConfigAccessors,
         private readonly props: Readonly<ICorePivotTableProps>,
+        private readonly abortController?: AbortController | undefined,
     ) {}
 
     /**
@@ -34,7 +35,6 @@ export class TableFacadeInitializer {
      */
     public abandon = (): void => {
         invariant(!this.abandoned);
-
         this.abandoned = true;
     };
 
@@ -60,11 +60,15 @@ export class TableFacadeInitializer {
      */
     public initialize = (): Promise<InitializerResult | undefined> => {
         const { execution, tableMethods } = this;
-
         tableMethods.onLoadingChanged({ isLoading: true });
 
-        return execution
-            .execute()
+        let effectiveExecution = execution;
+        if (this.abortController) {
+            effectiveExecution = execution.withSignal(this.abortController.signal);
+        }
+
+        return effectiveExecution
+            .execute() //
             .then((result) => {
                 return result
                     .readWindow([0, 0], [this.props.pageSize!, COLS_PER_PAGE])
@@ -143,6 +147,6 @@ export class TableFacadeInitializer {
     };
 
     private createTableFacade = (result: IExecutionResult, dataView: IDataView): TableFacade => {
-        return new TableFacade(result, dataView, this.tableMethods, this.props);
+        return new TableFacade(result, dataView, this.tableMethods, this.props, this.abortController);
     };
 }

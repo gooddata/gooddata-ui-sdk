@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 @use "sass:color";
 @use "variables";
 @use "zIndexes";
@@ -31,7 +31,7 @@
         &::after {
             border-color: kit-variables.$gd-border-color;
             background: var(
-                --gd-palette-complementary-0,
+                --gd-palette-complementary-0-from-theme,
                 color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05)
             );
         }
@@ -285,7 +285,7 @@
         }
     }
 
-    background-color: var(--gd-palette-complementary-0, white);
+    background-color: var(--gd-palette-complementary-0, #fff);
 }
 
 .row-hotspot-container {
@@ -361,6 +361,10 @@
         }
     }
 
+    .drop-target-message {
+        display: block;
+    }
+
     &.type-loading {
         display: flex;
         justify-content: center;
@@ -411,10 +415,13 @@
     border-radius: 15px;
     border: 2px dashed
         var(
-            --gd-palette-complementary-3,
+            --gd-palette-complementary-3-from-theme,
             color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.55)
         );
-    background: var(--gd-palette-complementary-1, color.adjust(variables.$dialog-border, $alpha: -0.95));
+    background: var(
+        --gd-palette-complementary-1-from-theme,
+        color.adjust(variables.$dialog-border, $alpha: -0.95)
+    );
     text-align: center;
 
     h2 {
@@ -441,6 +448,16 @@
     }
 }
 
+.gd-dashboard-nested-layout-widget-visualization-content {
+    .drag-info-placeholder-box p {
+        margin-top: 0;
+    }
+
+    .drop-target-message {
+        line-height: 28px;
+    }
+}
+
 .drag-info-placeholder-drop-target,
 .drop-target-inner {
     position: absolute;
@@ -457,6 +474,7 @@
     border-radius: 15px;
     background-color: kit-variables.$gd-palette-primary-dimmed;
 }
+
 .drop-target-inner {
     $inner-padding: 8px;
 
@@ -561,7 +579,7 @@
     padding: 0 10px 0 50px;
     font-size: 12px;
     border: 1px solid transparentize(variables.$dialog-border, 1);
-    border-color: var(--gd-palette-complementary-5, transparentize(variables.$dialog-border, 0.5));
+    border-color: var(--gd-palette-complementary-5-from-theme, transparentize(variables.$dialog-border, 0.5));
     border-radius: 2px;
     box-shadow: 0 1px 3px 0 kit-button-variables.$button-shadow-lighter,
         0 2px 9px 0 kit-button-variables.$button-shadow-darker;
@@ -596,7 +614,7 @@
     width: 215px;
     height: 42px;
     border: 1px solid transparentize(variables.$dialog-border, 1);
-    border-color: var(--gd-palette-complementary-5, transparentize(variables.$dialog-border, 0.5));
+    border-color: var(--gd-palette-complementary-5-from-theme, transparentize(variables.$dialog-border, 0.5));
     border-radius: 2px;
     box-shadow: 0 1px 3px 0 kit-button-variables.$button-shadow-lighter,
         0 2px 9px 0 kit-button-variables.$button-shadow-darker;
@@ -637,5 +655,203 @@
         // no pointer events for charts in edit mode,
         // this kills tooltips but allows dragging
         pointer-events: none;
+    }
+}
+
+.gd-grid-layout {
+    .new-row-dropzone {
+        position: absolute;
+        height: unset;
+
+        .widget-dropzone-box {
+            position: unset;
+            height: unset;
+            padding: unset;
+
+            .can-drop {
+                margin: unset;
+            }
+        }
+    }
+
+    .widget-dropzone {
+        height: 100%;
+
+        .widget-dropzone-box {
+            position: relative;
+            height: 100%;
+            padding: 10px;
+            .can-drop {
+                margin: 0;
+            }
+        }
+
+        .drag-info-placeholder-drop-target,
+        .drop-target-inner {
+            position: absolute;
+        }
+
+        .drag-info-placeholder-drop-target {
+            $outter-padding: 10px;
+
+            top: $outter-padding;
+            right: $outter-padding;
+            bottom: $outter-padding;
+            left: $outter-padding;
+        }
+        .drop-target-inner {
+            $inner-padding: 10px;
+
+            top: $inner-padding;
+            right: $inner-padding;
+            bottom: $inner-padding;
+            left: $inner-padding;
+            align-content: center;
+        }
+    }
+
+    .dropzone {
+        &.next {
+            .drop-hint {
+                float: unset;
+            }
+        }
+    }
+
+    .row-hotspot-container {
+        .row-hotspot {
+            top: -20px; // move active dropzone over the section hotspot row
+            right: unset;
+            bottom: unset;
+            left: unset;
+            height: 100%;
+        }
+
+        &.last {
+            top: unset;
+            height: 70px;
+        }
+    }
+
+    .gd-fluid-layout-row-header {
+        .row-hotspot-container {
+            z-index: zIndexes.$drag-and-drop-drop-zone;
+        }
+    }
+
+    .drag-info-placeholder {
+        position: unset;
+
+        .can-drop {
+            margin: unset;
+        }
+    }
+
+    .drag-info-placeholder-inner {
+        padding: 0 20px;
+    }
+
+    .drag-info-placeholder-drop-target {
+        top: unset;
+        right: unset;
+        bottom: unset;
+        left: unset;
+        padding: 10px;
+    }
+
+    .drag-info-placeholder-drop-target,
+    .drop-target-inner {
+        position: unset;
+    }
+
+    .drop-target-inner {
+        top: unset;
+        right: unset;
+        bottom: unset;
+        left: unset;
+        padding: 10px;
+    }
+
+    .drop-target-message {
+        position: unset;
+        top: unset;
+        right: unset;
+        left: unset;
+        transform: unset;
+    }
+
+    .gd-fluidlayout-row-separator {
+        position: unset;
+        right: unset;
+        left: unset;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+        height: 20px;
+        background-color: unset;
+
+        &-icon {
+            position: unset;
+            top: unset;
+
+            &-left {
+                left: unset;
+            }
+
+            &-right {
+                right: 0;
+            }
+        }
+
+        &-line {
+            flex-grow: 1;
+            height: 2px;
+            background-color: kit-variables.$gd-color-disabled;
+        }
+
+        &.active {
+            background-color: unset;
+
+            .gd-fluidlayout-row-separator-line {
+                height: 2px;
+                background-color: kit-variables.$gd-palette-primary-base;
+            }
+        }
+    }
+
+    .dashboard-widget-draggable-wrapper {
+        z-index: auto;
+    }
+
+    // fix for grid layout after some classes at the top were removed
+    .dashboard-widget-draggable-wrapper:not(.gd-nested-layout-widget-wrapper) {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .gd-fluidlayout-column-row-end-hotspot {
+        min-height: unset;
+        .widget-dropzone-box {
+            padding: 10px 0;
+        }
+        .drag-info-placeholder-inner {
+            padding: 0;
+        }
+        &.gd-first-container-row-dropzone .widget-dropzone-box {
+            padding-top: 0;
+        }
+        .drag-info-placeholder-drop-target,
+        .drop-target-inner {
+            position: unset;
+            height: 100%;
+        }
+    }
+
+    .gd-fluidlayout-column-row-end-hotspot.gd-fluidlayout-column-dropzone__text--hidden {
+        .drop-target-message.kpi-drop-target {
+            display: none;
+        }
     }
 }

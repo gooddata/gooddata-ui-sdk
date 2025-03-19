@@ -17,9 +17,6 @@ However, we believe and recommend that the API client should be used as a last r
 components and abstractions are insufficient: please check out the [`@gooddata/sdk-backend-spi`](https://www.npmjs.com/package/@gooddata/sdk-backend-spi) and
 [`@gooddata/sdk-backend-tiger`](https://www.npmjs.com/package/@gooddata/sdk-backend-tiger) to learn about a more convenient API to work with analytical backends.
 
-> Note: if you are using the API client to drive custom executions on GoodData platform then there is no reason to
-> use the API client directly.
-
 ## Usage
 
 ```js

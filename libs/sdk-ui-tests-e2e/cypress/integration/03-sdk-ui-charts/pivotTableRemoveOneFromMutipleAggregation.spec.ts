@@ -1,10 +1,12 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { nonEmptyValue, Table } from "../../tools/table";
 
 import { TotalTypes } from "../../tools/enum/TotalTypes";
 
-describe("Pivot Table Aggregations remove all row totals", { tags: ["pre-merge_isolated_bear"] }, () => {
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("Pivot Table Aggregations remove all row totals", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("visualizations/pivot-table/pivot-table-all-total-aggregations-menu");
     });

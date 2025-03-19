@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import {
@@ -16,9 +16,11 @@ import {
     selectFilterContextDateFilterByDataSet,
 } from "../../../store/filterContext/filterContextSelectors.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
-import { canApplyDateFilter, dispatchFilterContextChanged } from "../common.js";
+import { canApplyDateFilter, dispatchFilterContextChanged, resetCrossFiltering } from "../common.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
+import { selectIsCrossFiltering } from "../../../store/drill/drillSelectors.js";
+import { selectEnableDashboardFiltersApplyModes } from "../../../store/config/configSelectors.js";
 
 export function* changeDateFilterSelectionHandler(
     ctx: DashboardContext,
@@ -42,19 +44,30 @@ export function* changeDateFilterSelectionHandler(
         );
     }
 
+    const enableDashboardFiltersApplyModes: ReturnType<typeof selectEnableDashboardFiltersApplyModes> =
+        yield select(selectEnableDashboardFiltersApplyModes);
+    const isWorkingSelectionChange = cmd.payload.isWorkingSelectionChange && enableDashboardFiltersApplyModes;
     yield put(
         filterContextActions.upsertDateFilter(
             isAllTime
-                ? { type: "allTime", dataSet: cmd.payload.dataSet }
+                ? { type: "allTime", dataSet: cmd.payload.dataSet, isWorkingSelectionChange }
                 : {
                       type: cmd.payload.type,
                       granularity: cmd.payload.granularity,
                       from: cmd.payload.from,
                       to: cmd.payload.to,
                       dataSet: cmd.payload.dataSet,
+                      isWorkingSelectionChange,
                   },
         ),
     );
+
+    if (!isWorkingSelectionChange) {
+        const isCrossFiltering = yield select(selectIsCrossFiltering);
+        if (isCrossFiltering) {
+            yield call(resetCrossFiltering, cmd);
+        }
+    }
 
     const affectedFilter: ReturnType<typeof selectFilterContextDateFilter> = cmd.payload.dataSet
         ? yield select(selectFilterContextDateFilterByDataSet(cmd.payload.dataSet))

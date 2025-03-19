@@ -1,11 +1,13 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { useCallback, useRef } from "react";
 import { isProtectedDataError, IExportResult } from "@gooddata/sdk-backend-spi";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile.js";
 import { messages } from "../../../locales.js";
-
-type ExportHandler = (exportFunction: () => Promise<IExportResult>, title: string) => Promise<void>;
+type ExportHandler = (
+    exportFunction: (filename: string) => Promise<IExportResult>,
+    title: string,
+) => Promise<void>;
 
 export const useRawExportHandler = (): ExportHandler => {
     const { addProgress, addSuccess, addError, removeMessage } = useToastMessage();
@@ -17,25 +19,16 @@ export const useRawExportHandler = (): ExportHandler => {
                 // make sure the message stays there until removed by either success or error
                 { duration: 0 },
             );
-
-            const exportResult: IExportResult = await exportFunction();
-
+            const exportResult: IExportResult = await exportFunction(title);
             if (lastExportMessageId.current) {
                 removeMessage(lastExportMessageId.current);
             }
             addSuccess(messages.messagesExportResultSuccess);
-
-            const updatedExportResult: IExportResult = {
-                ...exportResult,
-                fileName: `${title}.csv`,
-            };
-
-            downloadFile(updatedExportResult);
+            downloadFile(exportResult);
         } catch (err) {
             if (lastExportMessageId.current) {
                 removeMessage(lastExportMessageId.current);
             }
-
             if (isProtectedDataError(err)) {
                 addError(messages.messagesExportResultRestrictedError);
             } else {

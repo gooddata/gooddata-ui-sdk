@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import {
     RankingFilter,
@@ -7,7 +7,7 @@ import {
     RankingFilterDropdown,
 } from "@gooddata/sdk-ui-filters";
 import { newRankingFilter, measureLocalId, attributeLocalId, localIdRef } from "@gooddata/sdk-model";
-import { ExperimentalMd } from "@gooddata/experimental-workspace";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 import { storiesOf } from "../../../_infra/storyRepository.js";
 import { action } from "@storybook/addon-actions";
 import { FilterStories } from "../../../_infra/storyGroups.js";
@@ -18,10 +18,6 @@ const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
 const dropdownScenarios = {
     default: {},
-    operatorDropdownOpened: { clickSelector: ".s-rf-operator-dropdown-button", postInteractionWait: 200 },
-    valueDropdownOpened: { clickSelector: ".s-rf-value-dropdown-button", postInteractionWait: 200 },
-    attributeDropdownOpened: { clickSelector: ".s-rf-attribute-dropdown-button", postInteractionWait: 200 },
-    measureDropdownOpened: { clickSelector: ".s-rf-measure-dropdown-button", postInteractionWait: 200 },
 };
 
 const dropdownWithOneAttributeItemScenarios = {
@@ -41,23 +37,18 @@ const buttonScenarios = {
     opened: { clickSelector: ".s-rf-dropdown-button", postInteractionWait: 200 },
 };
 
-const rankingFilter = newRankingFilter(ExperimentalMd.Amount_1.Sum, "TOP", 10);
-const nonStandardRankingFilter = newRankingFilter(
-    ExperimentalMd.Velocity.Sum,
-    [ExperimentalMd.Status],
-    "TOP",
-    42,
-);
+const rankingFilter = newRankingFilter(ReferenceMd.Amount, "TOP", 10);
+const nonStandardRankingFilter = newRankingFilter(ReferenceMd.Velocity.Sum, [ReferenceMd.Status], "TOP", 42);
 
 const measureDropdownItems: IMeasureDropdownItem[] = [
     {
         title: "Sum of amount",
-        ref: localIdRef(measureLocalId(ExperimentalMd.Amount_1.Sum)),
+        ref: localIdRef(measureLocalId(ReferenceMd.Amount)),
         sequenceNumber: "M1",
     },
     {
         title: "Sum of velocity with very long name",
-        ref: localIdRef(measureLocalId(ExperimentalMd.Velocity.Sum)),
+        ref: localIdRef(measureLocalId(ReferenceMd.Velocity.Sum)),
         sequenceNumber: "M2",
     },
 ];
@@ -65,17 +56,17 @@ const measureDropdownItems: IMeasureDropdownItem[] = [
 const attributeDropdownItems: IAttributeDropdownItem[] = [
     {
         title: "Account",
-        ref: localIdRef(attributeLocalId(ExperimentalMd.Account.Name)),
+        ref: localIdRef(attributeLocalId(ReferenceMd.Account.Name)),
         type: "ATTRIBUTE",
     },
     {
         title: "Status attribute with very long name",
-        ref: localIdRef(attributeLocalId(ExperimentalMd.Status)),
+        ref: localIdRef(attributeLocalId(ReferenceMd.Status)),
         type: "ATTRIBUTE",
     },
     {
         title: "Date",
-        ref: localIdRef(attributeLocalId(ExperimentalMd.DateDatasets.Closed.Date.DdMmYyyy)),
+        ref: localIdRef(attributeLocalId(ReferenceMd.DateDatasets.Closed.ClosedDate.Default)),
         type: "DATE",
     },
 ];

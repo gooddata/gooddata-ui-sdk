@@ -1,0 +1,17 @@
+{
+    "count": [4, 1],
+    "data": [[116625456.54], [38310753.45], [78314703.09], [2.0441963688396214]],
+    "headerItems": [
+        [
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Won", "order": 1 } },
+                { "measureHeaderItem": { "name": "m_9fa7cb9ce4d2947059b490e24a925317", "order": 2 } },
+                { "measureHeaderItem": { "name": "m_aebe46cecdb5eb3b5c069ce97a80535f", "order": 3 } }
+            ]
+        ],
+        []
+    ],
+    "offset": [0, 0],
+    "totalCount": [4, 1]
+}

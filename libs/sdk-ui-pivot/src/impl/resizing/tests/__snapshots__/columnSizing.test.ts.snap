@@ -5,11 +5,11 @@ exports[`ResizedColumnStore > addWeekMeasureColumn > should add weak column 1`] 
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": {},
   "weakMeasuresColumnWidths": {
-    "m_aangOxLSeztu": {
+    "m_87a053b0_3947_49f3_b0c5_de53fd01f050": {
       "measureColumnWidthItem": {
         "locator": {
           "measureLocatorItem": {
-            "measureIdentifier": "m_aangOxLSeztu",
+            "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
         "width": {
@@ -34,11 +34,11 @@ exports[`ResizedColumnStore > addWeekMeasureColumn > should replace single row m
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": {},
   "weakMeasuresColumnWidths": {
-    "m_aangOxLSeztu": {
+    "m_87a053b0_3947_49f3_b0c5_de53fd01f050": {
       "measureColumnWidthItem": {
         "locator": {
           "measureLocatorItem": {
-            "measureIdentifier": "m_aangOxLSeztu",
+            "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
         "width": {
@@ -55,11 +55,11 @@ exports[`ResizedColumnStore > initial state > should create valid store for all 
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": {},
   "weakMeasuresColumnWidths": {
-    "m_aangOxLSeztu": {
+    "m_87a053b0_3947_49f3_b0c5_de53fd01f050": {
       "measureColumnWidthItem": {
         "locator": {
           "measureLocatorItem": {
-            "measureIdentifier": "m_aangOxLSeztu",
+            "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
         "width": {
@@ -76,11 +76,11 @@ exports[`ResizedColumnStore > initial state > should create valid store for all 
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": {},
   "weakMeasuresColumnWidths": {
-    "m_acugFHNJgsBy": {
+    "m_e519fa2a_86c3_4e32_8313_0c03062348j3": {
       "measureColumnWidthItem": {
         "locator": {
           "measureLocatorItem": {
-            "measureIdentifier": "m_acugFHNJgsBy",
+            "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
         "width": {
@@ -119,7 +119,7 @@ exports[`ResizedColumnStore > initial state > should create valid store for auto
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": {
     "c_4": {
-      "measureIdentifier": "m_aangOxLSeztu",
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "width": {
         "value": "auto",
       },
@@ -134,13 +134,13 @@ exports[`ResizedColumnStore > initial state > should create valid store for auto
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": {
     "c_4": {
-      "measureIdentifier": "m_aangOxLSeztu",
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "width": {
         "value": "auto",
       },
     },
     "c_5": {
-      "measureIdentifier": "m_acugFHNJgsBy",
+      "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       "width": {
         "value": "auto",
       },
@@ -174,13 +174,13 @@ exports[`ResizedColumnStore > initial state > should create valid store for both
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": {
     "c_0": {
-      "measureIdentifier": "m_aangOxLSeztu",
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "width": {
         "value": 100,
       },
     },
     "c_1": {
-      "measureIdentifier": "m_acugFHNJgsBy",
+      "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       "width": {
         "value": 200,
       },
@@ -195,7 +195,7 @@ exports[`ResizedColumnStore > initial state > should create valid store for comb
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": {
     "c_4": {
-      "measureIdentifier": "m_aangOxLSeztu",
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "width": {
         "value": 200,
       },
@@ -207,11 +207,11 @@ exports[`ResizedColumnStore > initial state > should create valid store for comb
     },
   },
   "weakMeasuresColumnWidths": {
-    "m_acugFHNJgsBy": {
+    "m_e519fa2a_86c3_4e32_8313_0c03062348j3": {
       "measureColumnWidthItem": {
         "locator": {
           "measureLocatorItem": {
-            "measureIdentifier": "m_acugFHNJgsBy",
+            "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
         "width": {
@@ -228,18 +228,18 @@ exports[`ResizedColumnStore > initial state > should create valid store for comb
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": {
     "c_4": {
-      "measureIdentifier": "m_aangOxLSeztu",
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "width": {
         "value": 200,
       },
     },
   },
   "weakMeasuresColumnWidths": {
-    "m_acugFHNJgsBy": {
+    "m_e519fa2a_86c3_4e32_8313_0c03062348j3": {
       "measureColumnWidthItem": {
         "locator": {
           "measureLocatorItem": {
-            "measureIdentifier": "m_acugFHNJgsBy",
+            "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
         "width": {
@@ -256,7 +256,7 @@ exports[`ResizedColumnStore > initial state > should create valid store for exac
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": {
     "c_4": {
-      "measureIdentifier": "m_aangOxLSeztu",
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "width": {
         "value": 100,
       },
@@ -271,13 +271,13 @@ exports[`ResizedColumnStore > initial state > should create valid store for exac
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": {
     "c_2": {
-      "measureIdentifier": "m_aangOxLSeztu",
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "width": {
         "value": 200,
       },
     },
     "c_4": {
-      "measureIdentifier": "m_aangOxLSeztu",
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "width": {
         "value": 100,
       },
@@ -292,13 +292,13 @@ exports[`ResizedColumnStore > initial state > should create valid store for exac
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": {
     "c_4": {
-      "measureIdentifier": "m_aangOxLSeztu",
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "width": {
         "value": 100,
       },
     },
     "c_5": {
-      "measureIdentifier": "m_acugFHNJgsBy",
+      "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       "width": {
         "value": 200,
       },
@@ -327,7 +327,7 @@ exports[`ResizedColumnStore > initial state > should create valid store for firs
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": {
     "c_0": {
-      "measureIdentifier": "m_aangOxLSeztu",
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "width": {
         "value": 100,
       },
@@ -371,7 +371,7 @@ exports[`ResizedColumnStore > initial state > should create valid store for seco
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": {
     "c_1": {
-      "measureIdentifier": "m_acugFHNJgsBy",
+      "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       "width": {
         "value": 100,
       },
@@ -386,7 +386,7 @@ exports[`ResizedColumnStore > removeFromManuallyResizedColumn > should set auto-
   "allMeasureColumnWidth": 155,
   "manuallyResizedColumns": {
     "c_0": {
-      "measureIdentifier": "m_aangOxLSeztu",
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "width": {
         "value": "auto",
       },
@@ -401,7 +401,7 @@ exports[`ResizedColumnStore > removeFromManuallyResizedColumn > should set auto-
   "allMeasureColumnWidth": 155,
   "manuallyResizedColumns": {
     "c_0": {
-      "measureIdentifier": "m_aangOxLSeztu",
+      "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       "width": {
         "value": "auto",
       },

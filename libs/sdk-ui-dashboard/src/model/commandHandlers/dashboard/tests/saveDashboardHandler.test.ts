@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { addLayoutSection, saveDashboard } from "../../../commands/index.js";
@@ -129,34 +129,6 @@ describe("getDashboardWithSharing", () => {
                 sharingEnabled,
                 sharingSupported,
                 true,
-            );
-            expect(shareStatus).toBe(expectedResult.shareStatus);
-            expect(isLocked).toBe(expectedResult.isLocked);
-            expect(isUnderStrictControl).toBe(expectedResult.isUnderStrictControl);
-        },
-    );
-
-    it.each([
-        [true, true, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
-        [false, false, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
-        [false, true, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
-        [true, false, { shareStatus: "public", isLocked: false, isUnderStrictControl: undefined }],
-    ])(
-        "should set proper sharing on dashboard for existing public dashboard when enableAnalyticalDashboardPermissions %s, supportsAccessControl %s",
-        (sharingEnabled, sharingSupported, expectedResult) => {
-            const publicDashboard: IDashboardDefinition = {
-                ...SimpleDashboardWithReferences.dashboard,
-                type: "IDashboard",
-                filterContext: {
-                    ...filterContextDefinition,
-                },
-                shareStatus: "public",
-            };
-            const { shareStatus, isLocked, isUnderStrictControl } = getDashboardWithSharing(
-                publicDashboard,
-                sharingEnabled,
-                sharingSupported,
-                false,
             );
             expect(shareStatus).toBe(expectedResult.shareStatus);
             expect(isLocked).toBe(expectedResult.isLocked);

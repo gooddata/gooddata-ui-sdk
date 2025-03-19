@@ -21,12 +21,15 @@ export const SingleSelectionAttributeFilterStatusBar: React.FC<IAttributeFilterS
         onShowFilteredElements,
         irrelevantSelection,
         isFilteredByLimitingValidationItems,
+        isFilteredByDependentDateFilters,
     } = props;
 
     if (enableShowingFilteredElements) {
         return (
             <div className="gd-attribute-filter-status-bar__next">
-                {isFilteredByParentFilters || isFilteredByLimitingValidationItems ? (
+                {isFilteredByParentFilters ||
+                isFilteredByLimitingValidationItems ||
+                isFilteredByDependentDateFilters ? (
                     <AttributeFilterShowFilteredElements
                         attributeTitle={attributeTitle}
                         onClick={onShowFilteredElements}

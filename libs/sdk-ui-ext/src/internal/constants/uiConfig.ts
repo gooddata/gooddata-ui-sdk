@@ -126,9 +126,11 @@ export const DEFAULT_SCATTERPLOT_UICONFIG: IUiConfig = {
         attribute: {
             ...viewBase,
             allowsReordering: false,
-            allowsSwapping: false,
             canAddItems: true,
             itemsLimit: MAX_STACKS_COUNT,
+        },
+        segment: {
+            ...stackBaseWithDate,
         },
         ...defaultFilters,
     },
@@ -757,6 +759,42 @@ export const DEFAULT_SANKEY_UI_CONFIG: IUiConfig = {
         ...defaultFilters,
     },
     ...defaultRootUiConfigProperties,
+};
+
+export const DEFAULT_REPEATER_UI_CONFIG: IUiConfig = {
+    buckets: {
+        attribute: {
+            ...viewBase,
+            accepts: [ATTRIBUTE],
+            itemsLimit: 1,
+            canAddItems: true,
+            allowsSwapping: true,
+        },
+        columns: {
+            ...measuresBase,
+            canAddItems: true,
+            allowsReordering: true,
+            allowsDuplicateItems: true,
+            allowsDifferentAttributes: false,
+            transformAttributeToMeasure: false,
+            allowsStaticHyperLinkDisplayFormText: true,
+            allowsInlineVisualizations: true,
+            supportedInlineVisualizationTypes: ["metric", "line", "column"],
+            disableMeasureFilters: true,
+        },
+        view: {
+            ...viewBase,
+            canAddItems: true,
+            itemsLimit: 1,
+        },
+        ...defaultFilters,
+    },
+    ...defaultRootUiConfigProperties,
+    ...disabledExportConfig,
+    supportedEmptyCanvasDragTypes: [ATTRIBUTE],
+    recommendations: {
+        supportsFilteringRecommendation: false,
+    },
 };
 
 export function getTreemapUiConfig(

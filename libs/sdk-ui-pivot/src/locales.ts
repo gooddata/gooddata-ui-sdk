@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { MessageDescriptor, defineMessages } from "react-intl";
 
 //NOTE: Follow up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050

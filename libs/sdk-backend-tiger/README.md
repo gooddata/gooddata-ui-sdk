@@ -11,8 +11,6 @@ This package provides the [Analytical Backend](https://www.npmjs.com/package/@go
 
 You can use this package to communicate with GoodData Cloud and GoodData.CN in a convenient way without concerning yourself with low-level details. The functionality includes but is not limited to: getting and creating metadata objects, running executions, getting settings, getting available workspaces, and more.
 
-For the similar package for the GoodData platform, see [`@gooddata/sdk-backend-bear`](https://www.npmjs.com/package/@gooddata/sdk-backend-bear).
-
 ## Documentation how to play with sdk-backend-tiger and run compatibility matrix test
 
 https://gooddata.atlassian.net/wiki/spaces/Quality/pages/1454276716/Play+with+sdk-backend-tiger+on+UI-SDK

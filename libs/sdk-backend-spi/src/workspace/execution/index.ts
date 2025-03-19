@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IAttributeOrMeasure,
     IBucket,
@@ -16,6 +16,92 @@ import {
     IResultWarning,
 } from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "./export.js";
+import { ICancelable } from "../../cancelation/index.js";
+
+/**
+ * @beta
+ */
+export interface IForecastConfig {
+    /**
+     * Forecast period in number of periods - e.g. 3
+     */
+    forecastPeriod: number;
+    /**
+     * Confidence level of the forecast in percents - e.g. 0.95
+     */
+    confidenceLevel: number;
+    /**
+     * Defines, whether the forecast should be seasonal.
+     */
+    seasonal: boolean;
+}
+
+/**
+ * @beta
+ */
+export interface IForecastResult {
+    attribute: string[];
+    origin: number[];
+    prediction: number[];
+    lowerBound: number[];
+    upperBound: number[];
+}
+
+/**
+ * @alpha
+ */
+export interface IAnomalyDetectionConfig {
+    /**
+     * Sensitivity of the anomaly detection - e.g. 1.5
+     */
+    sensitivity: number;
+}
+
+/**
+ * @alpha
+ */
+export interface IAnomalyDetectionResult {
+    attribute: string[];
+    values: number[];
+    anomalyFlag: boolean[];
+}
+
+/**
+ * @alpha
+ */
+export interface IClusteringConfig {
+    /**
+     * Number of clusters - e.g. 3
+     */
+    numberOfClusters: number;
+
+    /**
+     * Threshold for clustering - e.g. 0.03
+     */
+    threshold?: number;
+}
+
+/**
+ * @alpha
+ */
+export interface IClusteringResult {
+    attribute: string[];
+    clusters: number[];
+    xcoord: number[];
+    ycoord: number[];
+}
+
+/**
+ * Additional options for the prepared execution.
+ *
+ * @public
+ */
+export interface IPreparedExecutionOptions {
+    /**
+     * Signal to abort the execution or its result.
+     */
+    signal?: AbortSignal;
+}
 
 /**
  * Execution factory provides several methods to create a prepared execution from different types
@@ -37,9 +123,10 @@ export interface IExecutionFactory {
      * generated dimensions.
      *
      * @param def - execution definition
+     * @param options - additional options for the prepared execution
      * @returns new prepared execution
      */
-    forDefinition(def: IExecutionDefinition): IPreparedExecution;
+    forDefinition(def: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution;
 
     /**
      * Prepares a new execution for a list of attributes and measures, filtered using the
@@ -50,9 +137,14 @@ export interface IExecutionFactory {
      * pre-filled dimensions created using the {@link @gooddata/sdk-model#defaultDimensionsGenerator}.
      *
      * @param items - list of attributes and measures, must not be empty
+     * @param options - additional options for the prepared execution
      * @param filters - list of filters, may not be provided
      */
-    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
+    forItems(
+        items: IAttributeOrMeasure[],
+        filters?: INullableFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution;
 
     /**
      * Prepares a new execution for a list of buckets.
@@ -72,8 +164,13 @@ export interface IExecutionFactory {
      *
      * @param buckets - list of buckets with attributes and measures, must be non empty, must have at least one attr or measure
      * @param filters - optional, may not be provided, may contain null or undefined values which must be ignored
+     * @param options - additional options for the prepared execution
      */
-    forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
+    forBuckets(
+        buckets: IBucket[],
+        filters?: INullableFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution;
 
     /**
      * Prepares a new execution for the provided insight.
@@ -91,8 +188,13 @@ export interface IExecutionFactory {
      *
      * @param insightDefinition - insight definition to create execution for, must have buckets which must have some attributes or measures in them
      * @param filters - optional, may not be provided, may contain null or undefined values which must be ignored
+     * @param options - additional options for the prepared execution
      */
-    forInsight(insightDefinition: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
+    forInsight(
+        insightDefinition: IInsightDefinition,
+        filters?: INullableFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution;
 
     /**
      * Prepares new, by-reference execution for an existing insight.
@@ -110,8 +212,13 @@ export interface IExecutionFactory {
      *
      * @param insight - saved insight
      * @param filters - optional list of filters to merge with filters already defined in the insight, may contain null or undefined values which must be ignored
+     * @param options - additional options for the prepared execution
      */
-    forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution;
+    forInsightByRef(
+        insight: IInsight,
+        filters?: INullableFilter[],
+        options?: IPreparedExecutionOptions,
+    ): IPreparedExecution;
 }
 
 /**
@@ -165,13 +272,23 @@ export interface IExplainProvider<T extends ExplainType | undefined> {
  * The contract for creating these new instances is that the new prepared execution MUST be created using the
  * execution factory that created current execution.
  *
+ * Note that even though the prepared executions are immutable, the abort signal itself is stateful
+ * and is always propagated through the whole immutable chain.
+ * If you don't want to cancel multiple executions simultaneously via single abort signal,
+ * you need to set it on the outermost execution only, just before calling the execute method.
+ *
  * @public
  */
-export interface IPreparedExecution {
+export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
     /**
      * Definition of the execution accumulated to so far.
      */
     readonly definition: IExecutionDefinition;
+
+    /**
+     * Abort signal to cancel the execution or its result.
+     */
+    readonly signal?: AbortSignal;
 
     /**
      * Changes sorting of the resulting data. Any sorting settings accumulated so far WILL be wiped out.
@@ -272,6 +389,15 @@ export interface IExecutionResult {
     readonly dimensions: IDimensionDescriptor[];
 
     /**
+     * Abort signal to cancel the result retrieval.
+     *
+     * Note that the abort signal is shared with the prepared execution that created this result,
+     * so if you cancel the result and want to retrieve it later again,
+     * you should always create also a new execution for it.
+     */
+    readonly signal?: AbortSignal;
+
+    /**
      * Asynchronously reads all data for this result into a single data view.
      *
      * @returns Promise of data view
@@ -292,6 +418,24 @@ export interface IExecutionResult {
      * @returns Promise of data view
      */
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
+
+    /**
+     * Reads forecast for the execution result.
+     * @beta
+     */
+    readForecastAll(config: IForecastConfig): Promise<IForecastResult>;
+
+    /**
+     * Reads anomaly detection for the execution result.
+     * @alpha
+     */
+    readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult>;
+
+    /**
+     * Reads anomaly detection for the execution result.
+     * @alpha
+     */
+    readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult>;
 
     /**
      * Transforms this execution result - changing the result sorting, dimensionality and available
@@ -439,6 +583,30 @@ export interface IDataView {
     readonly result: IExecutionResult;
 
     /**
+     * Configuration for the forecasting, if available.
+     * @beta
+     */
+    readonly forecastConfig?: IForecastConfig;
+
+    /**
+     * Forecasting result, if available.
+     * @beta
+     */
+    readonly forecastResult?: IForecastResult;
+
+    /**
+     * Configuration for the clustering, if available.
+     * @beta
+     */
+    readonly clusteringConfig?: IClusteringConfig;
+
+    /**
+     * Clustering result, if available.
+     * @beta
+     */
+    readonly clusteringResult?: IClusteringResult;
+
+    /**
      * Result warnings.
      *
      * @remarks
@@ -467,4 +635,49 @@ export interface IDataView {
      * Thus, two data views on the same result, with same offset and limit will have the same fingerprint.
      */
     fingerprint(): string;
+
+    /**
+     * Return forecast data view. This object is empty if not `withForecast` was called
+     * @see IDataView.withForecast
+     * @beta
+     */
+    forecast(): IForecastView;
+
+    /**
+     * Return clustering data view. This object is empty if `withClustering` was not called
+     * @see IDataView.withClustering
+     * @beta
+     */
+    clustering(): IClusteringResult;
+
+    /**
+     * Adds forecast for this data view.
+     *
+     * @beta
+     * @param config - forecast configuration
+     * @param result - forecast result
+     * @returns new data view with forecasting enabled
+     */
+    withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView;
+
+    /**
+     * Adds clustering for this data view.
+     * @beta
+     * @param config - clustering configuration
+     * @param result - clustering result
+     * @returns new data view with clustering enabled
+     */
+    withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView;
+}
+
+/**
+ * Represents a prediction, lower bound and upper bound for a forecast.
+ * @beta
+ */
+export interface IForecastView {
+    headerItems: IResultHeader[][][];
+    prediction: DataValue[][];
+    low: DataValue[][];
+    high: DataValue[][];
+    loading: boolean;
 }

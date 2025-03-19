@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import { parseUrl } from "../parseUrl.js";
 import { describe, expect, it } from "vitest";
@@ -30,7 +30,7 @@ describe("parseUrl", () => {
         expect(workspaceId).toBeUndefined();
     });
 
-    it.each(["sso", "bearSso", "bear"])("should parse '%s' authType from the URL", (auth) => {
+    it.each(["sso"])("should parse '%s' authType from the URL", (auth) => {
         const { authType } = parseUrl(`https://somehost.com/components/workspace-id.js?auth=${auth}`);
 
         expect(authType).toEqual(auth);

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { Component, createRef } from "react";
 import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -29,6 +29,10 @@ import { HeaderAccount } from "./HeaderAccount.js";
 import { HeaderMenu } from "./HeaderMenu.js";
 import { HeaderUpsellButton } from "./HeaderUpsellButton.js";
 import { HeaderInvite } from "./HeaderInvite.js";
+import { Typography } from "../Typography/index.js";
+import { HeaderSearchButton } from "./HeaderSearchButton.js";
+import { HeaderSearchProvider } from "./headerSearchContext.js";
+import { HeaderChatButton } from "./HeaderChatButton.js";
 
 function getOuterWidth(element: HTMLDivElement) {
     const width = element.offsetWidth;
@@ -47,13 +51,21 @@ function getWidthOfChildren(element: HTMLDivElement, selector = "> *") {
 class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, IAppHeaderState> {
     public static defaultProps: Pick<
         IAppHeaderProps,
-        "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "helpMenuDropdownAlignPoints"
+        | "logoHref"
+        | "accountMenuItems"
+        | "helpMenuItems"
+        | "menuItemsGroups"
+        | "helpMenuDropdownAlignPoints"
+        | "search"
+        | "notificationsPanel"
     > = {
         logoHref: "/",
         helpMenuDropdownAlignPoints: "br tr",
         accountMenuItems: [],
         helpMenuItems: [],
         menuItemsGroups: [],
+        search: null,
+        notificationsPanel: null,
     };
 
     private nodeRef = createRef<HTMLDivElement>();
@@ -69,11 +81,13 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
             isOverlayMenuOpen: false,
             responsiveMode: false,
             isHelpMenuOpen: false,
+            isSearchMenuOpen: false,
+            isNotificationsMenuOpen: false,
         };
     }
 
     public render() {
-        const { logoUrl, logoTitle, workspacePicker } = this.props;
+        const { workspacePicker, isAccessibilityCompliant, intl } = this.props;
 
         this.createStyles();
 
@@ -83,20 +97,23 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
             "gd-header-shrink": this.state.responsiveMode,
         });
 
+        const applicationHeaderAccessibilityLabel = intl.formatMessage({
+            id: "gs.header.accessibility.label",
+        });
+
         return (
-            <div className={this.getClassNames()} ref={this.nodeRef}>
-                <a href={this.props.logoHref} onClick={this.props.onLogoClick} className={logoLinkClassName}>
-                    <img
-                        src={logoUrl}
-                        title={logoTitle}
-                        onLoad={this.measureChildren}
-                        onError={this.measureChildren}
-                        alt=""
-                    />
-                </a>
+            <header
+                aria-label={applicationHeaderAccessibilityLabel}
+                className={this.getClassNames()}
+                ref={this.nodeRef}
+            >
+                {isAccessibilityCompliant
+                    ? this.renderAccessibilityLogo(logoLinkClassName)
+                    : this.renderLogo(logoLinkClassName)}
+
                 {workspacePicker}
                 {this.renderNav()}
-            </div>
+            </header>
         );
     }
 
@@ -107,6 +124,50 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     public componentWillUnmount() {
         window.removeEventListener("resize", this.resizeHandler);
         removeFromDom(this.stylesheet);
+    }
+
+    private renderLogo(logoLinkClassName: string) {
+        const { logoUrl, logoTitle } = this.props;
+        return (
+            <a href={this.props.logoHref} onClick={this.props.onLogoClick} className={logoLinkClassName}>
+                <img
+                    src={logoUrl}
+                    title={logoTitle}
+                    onLoad={this.measureChildren}
+                    onError={this.measureChildren}
+                    alt=""
+                />
+            </a>
+        );
+    }
+
+    private renderAccessibilityLogo(logoLinkClassName: string) {
+        const { logoUrl, logoTitle, intl } = this.props;
+
+        const logoHrefAccesibilityText = intl.formatMessage({
+            id: "gs.header.href.accessibility",
+        });
+        const imageAltAccessibilityText = intl.formatMessage({
+            id: "gs.header.logo.title.accessibility",
+        });
+
+        return (
+            <a
+                aria-label={logoHrefAccesibilityText}
+                title={logoHrefAccesibilityText}
+                href={this.props.logoHref}
+                onClick={this.props.onLogoClick}
+                className={logoLinkClassName}
+            >
+                <img
+                    src={logoUrl}
+                    title={logoTitle}
+                    onLoad={this.measureChildren}
+                    onError={this.measureChildren}
+                    alt={imageAltAccessibilityText}
+                />
+            </a>
+        );
     }
 
     private getClassNames = () => {
@@ -145,6 +206,8 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                 responsiveMode,
                 isOverlayMenuOpen: false,
                 isHelpMenuOpen: false,
+                isSearchMenuOpen: false,
+                isNotificationsMenuOpen: false,
             });
         }
     };
@@ -164,7 +227,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         css.push(`.${guid} .gd-header-menu-section { border-color: ${separatorColor}}`);
         css.push(`.${guid} .gd-header-menu-item:hover { border-color: ${itemHoverColor}}`);
         css.push(
-            `.${guid} .gd-header-menu-item.active { border-color: var(--gd-palette-primary-base, ${itemActiveColor})}`,
+            `.${guid} .gd-header-menu-item.active { border-color: var(--gd-palette-primary-base-from-theme, ${itemActiveColor})}`,
         );
         css.push(`.${guid} .gd-header-project { border-color: ${separatorColor}}`);
         css.push(
@@ -181,12 +244,41 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         this.setState({
             isOverlayMenuOpen,
             isHelpMenuOpen: false,
+            isSearchMenuOpen: false,
+            isNotificationsMenuOpen: false,
         });
+    };
+
+    private toggleSearchMenu = () => {
+        this.setState(({ isSearchMenuOpen }) => ({
+            isSearchMenuOpen: !isSearchMenuOpen,
+            isHelpMenuOpen: false,
+            isNotificationsMenuOpen: false,
+        }));
+    };
+
+    private toggleNotificationsMenu = () => {
+        this.setState(({ isNotificationsMenuOpen }) => ({
+            isNotificationsMenuOpen: !isNotificationsMenuOpen,
+            isHelpMenuOpen: false,
+            isSearchMenuOpen: false,
+        }));
+    };
+
+    private closeNotificationsMenu = () => {
+        this.setState(() => ({
+            isNotificationsMenuOpen: false,
+            isHelpMenuOpen: false,
+            isSearchMenuOpen: false,
+            isOverlayMenuOpen: false,
+        }));
     };
 
     private setHelpMenu = (isHelpMenuOpen: boolean) => {
         this.setState({
             isHelpMenuOpen,
+            isSearchMenuOpen: false,
+            isNotificationsMenuOpen: false,
         });
     };
 
@@ -201,6 +293,36 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
 
     private addHelpItemGroup = (itemGroups: IHeaderMenuItem[][]): IHeaderMenuItem[][] => {
         return !this.props.documentationUrl ? itemGroups : [...itemGroups, [this.getHelpMenuLink()]];
+    };
+
+    private addAdditionalItems = (itemGroups: IHeaderMenuItem[][]): IHeaderMenuItem[][] => {
+        const additionalItems = [];
+        if (this.props.search) {
+            additionalItems.push({
+                key: "gs.header.search",
+                className: "gd-icon-header-search",
+                onClick: this.toggleSearchMenu,
+            });
+        }
+
+        if (this.props.notificationsPanel) {
+            additionalItems.push({
+                key: "gs.header.notifications",
+                className: "gd-icon-header-notifications",
+                icon: (
+                    <span className="gd-header-notifications-icon">
+                        <Icon.Alert width={16} height={16} />
+                    </span>
+                ),
+                onClick: this.toggleNotificationsMenu,
+            });
+        }
+
+        if (!additionalItems.length) {
+            return itemGroups;
+        }
+
+        return [...itemGroups, additionalItems];
     };
 
     private getHelpMenu = () => [
@@ -255,6 +377,8 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         const iconClasses = cx({
             "hamburger-icon": true,
             "is-open": this.state.isOverlayMenuOpen,
+            "search-open": this.state.isSearchMenuOpen,
+            "notifications-open": this.state.isNotificationsMenuOpen,
         });
 
         return (
@@ -276,12 +400,23 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     };
 
     private renderOverlayMenu = () => {
+        let content = this.renderVerticalMenu();
+        if (this.state.isSearchMenuOpen) {
+            content = this.renderSearchMenu();
+        }
+        if (this.state.isNotificationsMenuOpen) {
+            content = this.renderNotificationsOverlay();
+        }
+
         return (
             <Overlay
                 key="header-overlay-menu"
                 alignPoints={[
                     {
-                        align: "tr tr",
+                        align:
+                            this.state.isSearchMenuOpen || this.state.isNotificationsMenuOpen
+                                ? "tl tl"
+                                : "tr tr",
                     },
                 ]}
                 closeOnOutsideClick={this.state.isOverlayMenuOpen}
@@ -293,10 +428,40 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
             >
                 <TransitionGroup>
                     <CSSTransition classNames="gd-header" timeout={300}>
-                        {this.renderVerticalMenu()}
+                        {content}
                     </CSSTransition>
                 </TransitionGroup>
             </Overlay>
+        );
+    };
+
+    private renderSearchMenu = () => {
+        return (
+            <div className="gd-header-menu-search">
+                <Typography tagName="h3" className="gd-header-menu-search-title">
+                    <FormattedMessage id="gs.header.search" />
+                </Typography>
+                <HeaderSearchProvider isOpen={this.state.isSearchMenuOpen} toggleOpen={this.toggleSearchMenu}>
+                    {this.props.search}
+                </HeaderSearchProvider>
+            </div>
+        );
+    };
+
+    private renderNotificationsOverlay = () => {
+        if (!this.props.notificationsPanel) {
+            return null;
+        }
+        return (
+            <div className="gd-header-menu-notifications">
+                <Typography tagName="h3" className="gd-header-menu-notifications-title">
+                    <FormattedMessage id="gs.header.notifications" />
+                </Typography>
+                {this.props.notificationsPanel({
+                    isMobile: true,
+                    closeNotificationsOverlay: this.closeNotificationsMenu,
+                })}
+            </div>
         );
     };
 
@@ -325,7 +490,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         const menuItemsGroups = !this.state.isHelpMenuOpen
             ? this.props.showStaticHelpMenu
                 ? [[this.getHelpMenuLink()]]
-                : this.addHelpItemGroup(this.props.menuItemsGroups)
+                : this.addHelpItemGroup(this.addAdditionalItems(this.props.menuItemsGroups))
             : this.getHelpMenu();
 
         return (
@@ -388,6 +553,26 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                 />
 
                 {this.renderTrialItems()}
+
+                {this.props.showChatItem ? <HeaderChatButton onClick={this.props.onChatItemClick} /> : null}
+
+                {this.props.notificationsPanel
+                    ? this.props.notificationsPanel({
+                          isMobile: false,
+                          closeNotificationsOverlay: this.closeNotificationsMenu,
+                      })
+                    : null}
+
+                {this.props.search ? (
+                    <HeaderSearchProvider
+                        isOpen={this.state.isSearchMenuOpen}
+                        toggleOpen={this.toggleSearchMenu}
+                    >
+                        <HeaderSearchButton title={this.props.intl.formatMessage({ id: "gs.header.search" })}>
+                            {this.props.search}
+                        </HeaderSearchButton>
+                    </HeaderSearchProvider>
+                ) : null}
 
                 {this.props.helpMenuItems.length ? (
                     <HeaderHelp

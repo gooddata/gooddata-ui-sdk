@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import { TableDescriptor } from "../../structure/tableDescriptor.js";
 import {
@@ -61,13 +61,13 @@ describe("ResizedColumnStore", () => {
         [
             "for second attribute column width on table with two row attributes",
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
-            [newWidthForAttributeColumn(ReferenceMd.Department, 200)],
+            [newWidthForAttributeColumn(ReferenceMd.Department.Default, 200)],
         ],
         [
             "for both attribute columns width on table with two row attributes",
             TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
             [
-                newWidthForAttributeColumn(ReferenceMd.Department, 200),
+                newWidthForAttributeColumn(ReferenceMd.Department.Default, 200),
                 newWidthForAttributeColumn(ReferenceMd.Product.Name, 300),
             ],
         ],
@@ -100,7 +100,10 @@ describe("ResizedColumnStore", () => {
                             ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(
+                            ReferenceMd.Region.Default,
+                            ReferenceData.Region.EastCoast.uri,
+                        ),
                     ],
                     100,
                 ),
@@ -117,7 +120,10 @@ describe("ResizedColumnStore", () => {
                             ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(
+                            ReferenceMd.Region.Default,
+                            ReferenceData.Region.EastCoast.uri,
+                        ),
                     ],
                     "auto",
                 ),
@@ -134,7 +140,10 @@ describe("ResizedColumnStore", () => {
                             ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(
+                            ReferenceMd.Region.Default,
+                            ReferenceData.Region.EastCoast.uri,
+                        ),
                     ],
                     100,
                 ),
@@ -145,7 +154,10 @@ describe("ResizedColumnStore", () => {
                             ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Exclude.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.WestCoast.uri),
+                        newAttributeColumnLocator(
+                            ReferenceMd.Region.Default,
+                            ReferenceData.Region.WestCoast.uri,
+                        ),
                     ],
                     200,
                 ),
@@ -162,7 +174,10 @@ describe("ResizedColumnStore", () => {
                             ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(
+                            ReferenceMd.Region.Default,
+                            ReferenceData.Region.EastCoast.uri,
+                        ),
                     ],
                     100,
                 ),
@@ -173,7 +188,10 @@ describe("ResizedColumnStore", () => {
                             ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(
+                            ReferenceMd.Region.Default,
+                            ReferenceData.Region.EastCoast.uri,
+                        ),
                     ],
                     200,
                 ),
@@ -190,7 +208,10 @@ describe("ResizedColumnStore", () => {
                             ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(
+                            ReferenceMd.Region.Default,
+                            ReferenceData.Region.EastCoast.uri,
+                        ),
                     ],
                     "auto",
                 ),
@@ -201,7 +222,10 @@ describe("ResizedColumnStore", () => {
                             ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(
+                            ReferenceMd.Region.Default,
+                            ReferenceData.Region.EastCoast.uri,
+                        ),
                     ],
                     "auto",
                 ),
@@ -233,7 +257,10 @@ describe("ResizedColumnStore", () => {
                             ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(
+                            ReferenceMd.Region.Default,
+                            ReferenceData.Region.EastCoast.uri,
+                        ),
                     ],
                     200,
                 ),
@@ -251,7 +278,10 @@ describe("ResizedColumnStore", () => {
                             ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(
+                            ReferenceMd.Region.Default,
+                            ReferenceData.Region.EastCoast.uri,
+                        ),
                     ],
                     200,
                 ),
@@ -514,7 +544,10 @@ describe("ResizedColumnStore", () => {
                             ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Include.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(
+                            ReferenceMd.Region.Default,
+                            ReferenceData.Region.EastCoast.uri,
+                        ),
                     ],
                     100,
                 ),
@@ -721,7 +754,10 @@ describe("ResizedColumnStore", () => {
                             ReferenceMd.ForecastCategory,
                             ReferenceData.ForecastCategory.Exclude.uri,
                         ),
-                        newAttributeColumnLocator(ReferenceMd.Region, ReferenceData.Region.EastCoast.uri),
+                        newAttributeColumnLocator(
+                            ReferenceMd.Region.Default,
+                            ReferenceData.Region.EastCoast.uri,
+                        ),
                     ],
                     125,
                 ),

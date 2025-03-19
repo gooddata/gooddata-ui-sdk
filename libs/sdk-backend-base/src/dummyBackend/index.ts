@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IAnalyticalBackendConfig,
     IAuthenticatedPrincipal,
@@ -60,6 +60,29 @@ import {
     IOrganizationUserService,
     IAttributeHierarchiesService,
     IDataSourcesService,
+    IWorkspaceExportDefinitionsService,
+    IDataFiltersService,
+    IWorkspaceLogicalModelService,
+    IForecastResult,
+    IForecastConfig,
+    IForecastView,
+    IMeasureKeyDrivers,
+    IAnomalyDetectionResult,
+    IClusteringResult,
+    IOrganizationNotificationChannelService,
+    IClusteringConfig,
+    IWorkspaceAutomationService,
+    IGenAIService,
+    ISemanticSearchQuery,
+    IGetAutomationOptions,
+    IGetAutomationsOptions,
+    IAutomationsQuery,
+    IAutomationsQueryResult,
+    AutomationType,
+    IChatThread,
+    IOrganizationLlmEndpointsService,
+    IOrganizationNotificationService,
+    IAttributeWithReferences,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -96,15 +119,25 @@ import {
     IAttributeOrMeasure,
     IMeasure,
     IMeasureDefinitionType,
-    IRelativeDateFilter,
     IAttributeElement,
     ICatalogAttributeHierarchy,
     IBucket,
     defWithBuckets,
+    IRelativeDateFilter,
+    IAbsoluteDateFilter,
+    IAutomationMetadataObjectDefinition,
+    IAutomationMetadataObject,
+    ILlmEndpointOpenAI,
+    ISeparators,
+    INotificationChannelMetadataObject,
+    IAlertDefault,
+    type DashboardFiltersApplyMode,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
 import { AbstractExecutionFactory } from "../toolkit/execution.js";
+import { DummySemanticSearchQueryBuilder } from "./DummySemanticSearch.js";
+import { DummyGenAIChatThread } from "./DummyGenAIChatThread.js";
 
 /**
  * @internal
@@ -158,6 +191,9 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
         },
         withTelemetry(_component: string, _props: object): IAnalyticalBackend {
             return noopBackend;
+        },
+        withCorrelation(_correlationMetadata: Record<string, string>): IAnalyticalBackend {
+            return this;
         },
         withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
             return this;
@@ -252,6 +288,24 @@ export function dummyDataView(
         equals(other: IDataView): boolean {
             return fp === other.fingerprint();
         },
+        forecast(): IForecastView {
+            return {
+                headerItems: [],
+                prediction: [],
+                low: [],
+                high: [],
+                loading: false,
+            };
+        },
+        withForecast(_config: IForecastConfig, _result?: IForecastResult): IDataView {
+            throw new NotSupported("not supported");
+        },
+        clustering(): IClusteringResult {
+            throw new NotSupported("clustering is not supported in this dummy backend");
+        },
+        withClustering(_config?: IClusteringConfig, _result?: IClusteringResult): IDataView {
+            throw new NotSupported("clustering is not supported in this dummy backend");
+        },
     };
 }
 
@@ -264,6 +318,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         workspace,
         async getDescriptor(): Promise<IWorkspaceDescriptor> {
             return dummyDescriptor(this.workspace);
+        },
+        async updateDescriptor(): Promise<IWorkspaceDescriptor> {
+            throw new NotSupported("not supported");
         },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
             throw new NotSupported("not supported");
@@ -315,6 +372,31 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         },
         attributeHierarchies(): IAttributeHierarchiesService {
             throw new NotSupported("not supported");
+        },
+        exportDefinitions(): IWorkspaceExportDefinitionsService {
+            throw new NotSupported("not supported");
+        },
+        dataFilters(): IDataFiltersService {
+            throw new NotSupported("not supported");
+        },
+        logicalModel(): IWorkspaceLogicalModelService {
+            throw new NotSupported("not supported");
+        },
+        automations(): IWorkspaceAutomationService {
+            return new DummyWorkspaceAutomationService(workspace);
+        },
+        genAI(): IGenAIService {
+            return {
+                getChatThread(): IChatThread {
+                    return new DummyGenAIChatThread();
+                },
+                getSemanticSearchQuery(): ISemanticSearchQuery {
+                    return new DummySemanticSearchQueryBuilder(workspace);
+                },
+                async semanticSearchIndex(): Promise<void> {
+                    throw new NotSupported("not supported");
+                },
+            };
         },
     };
 }
@@ -369,6 +451,15 @@ function dummyExecutionResult(
         readWindow(_1: number[], _2: number[]): Promise<IDataView> {
             return dummyRead();
         },
+        readForecastAll(): Promise<IForecastResult> {
+            throw new NotSupported("Forecasting is not supported in dummy backend.");
+        },
+        readAnomalyDetectionAll(): Promise<IAnomalyDetectionResult> {
+            throw new NotSupported("Anomaly detection is not supported in dummy backend.");
+        },
+        readClusteringAll(): Promise<IClusteringResult> {
+            throw new NotSupported("Clustering is not supported in dummy backend.");
+        },
         fingerprint(): string {
             return fp;
         },
@@ -406,6 +497,9 @@ function dummyPreparedExecution(
         },
         withBuckets(...buckets: IBucket[]) {
             return executionFactory.forDefinition(defWithBuckets(definition, ...buckets));
+        },
+        withSignal(_signal: AbortSignal): IPreparedExecution {
+            return dummyPreparedExecution(definition, executionFactory, config);
         },
         execute(): Promise<IExecutionResult> {
             return Promise.resolve(dummyExecutionResult(definition, executionFactory, config));
@@ -664,6 +758,14 @@ class DummyOrganization implements IOrganization {
         });
     }
 
+    // eslint-disable-next-line sonarjs/no-identical-functions
+    updateDescriptor(): Promise<IOrganizationDescriptor> {
+        return Promise.resolve({
+            id: this.organizationId,
+            title: "dummy organization",
+        });
+    }
+
     securitySettings(): ISecuritySettingsService {
         return {
             scope: `/gdc/domains/${this.organizationId}`,
@@ -730,14 +832,18 @@ class DummyOrganization implements IOrganization {
         return {
             setWhiteLabeling: () => Promise.resolve(),
             setLocale: () => Promise.resolve(),
+            setSeparators: () => Promise.resolve(),
             setTimezone: () => Promise.resolve(),
             setDateFormat: () => Promise.resolve(),
             setWeekStart: () => Promise.resolve(),
             setTheme: () => Promise.resolve(),
             setColorPalette: () => Promise.resolve(),
+            setOpenAiConfig: () => Promise.resolve(),
+            setDashboardFiltersApplyMode: () => Promise.resolve(),
             deleteTheme: () => Promise.resolve(),
             deleteColorPalette: () => Promise.resolve(),
             getSettings: () => Promise.resolve({}),
+            setAlertDefault: () => Promise.resolve(),
         };
     }
 
@@ -776,9 +882,68 @@ class DummyOrganization implements IOrganization {
             getUserGroupsOfUser: () => Promise.resolve([]),
             getUsersOfUserGroup: () => Promise.resolve([]),
             getUsers: () => Promise.resolve([]),
+            getUsersByEmail: () => Promise.resolve([]),
             removeUsersFromUserGroups: () => Promise.resolve(),
             updateUser: () => Promise.resolve(),
             updateUserGroup: () => Promise.resolve(),
+        };
+    }
+
+    notificationChannels(): IOrganizationNotificationChannelService {
+        return {
+            testNotificationChannel: () =>
+                Promise.resolve({
+                    successful: true,
+                }),
+            getNotificationChannel: () => Promise.resolve({} as INotificationChannelMetadataObject),
+            createNotificationChannel: () => Promise.resolve({} as INotificationChannelMetadataObject),
+            updateNotificationChannel: () => Promise.resolve({} as INotificationChannelMetadataObject),
+            deleteNotificationChannel: () => Promise.resolve(),
+            getNotificationChannelsQuery: () => {
+                throw new NotSupported("not supported");
+            },
+        };
+    }
+
+    llmEndpoints(): IOrganizationLlmEndpointsService {
+        const dummyEndpoint: ILlmEndpointOpenAI = {
+            id: "dummyLlmEndpoint",
+            title: "Dummy Llm Endpoint",
+            provider: "OPENAI",
+            model: "gpt-4o-mini",
+            workspaceIds: [],
+        };
+
+        return {
+            getCount: () => Promise.resolve(0),
+            getAll: () => Promise.resolve([]),
+            deleteLlmEndpoint: () => Promise.resolve(),
+            getLlmEndpoint: () =>
+                Promise.resolve({
+                    ...dummyEndpoint,
+                }),
+            createLlmEndpoint: () =>
+                Promise.resolve({
+                    ...dummyEndpoint,
+                }),
+            updateLlmEndpoint: () =>
+                Promise.resolve({
+                    ...dummyEndpoint,
+                }),
+            patchLlmEndpoint: () =>
+                Promise.resolve({
+                    ...dummyEndpoint,
+                }),
+        };
+    }
+
+    public notifications(): IOrganizationNotificationService {
+        return {
+            markNotificationAsRead: () => Promise.reject(new NotSupported("not supported")),
+            markAllNotificationsAsRead: () => Promise.reject(new NotSupported("not supported")),
+            getNotificationsQuery: () => {
+                throw new NotSupported("not supported");
+            },
         };
     }
 }
@@ -806,15 +971,15 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
         });
     }
 
+    setAlertDefault(_value: IAlertDefault): Promise<void> {
+        return Promise.resolve();
+    }
+
     setLocale(_locale: string): Promise<void> {
         return Promise.resolve();
     }
 
-    setTheme(_themeId: string): Promise<void> {
-        return Promise.resolve();
-    }
-
-    setColorPalette(_colorPaletteId: string): Promise<void> {
+    setSeparators(_separators: ISeparators): Promise<void> {
         return Promise.resolve();
     }
 
@@ -827,6 +992,30 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     setWeekStart(_weekStart: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setDashboardFiltersApplyMode(_dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void> {
+        return Promise.resolve();
+    }
+
+    deleteDashboardFiltersApplyMode(): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setTheme(_themeId: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setColorPalette(_colorPaletteId: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    deleteTheme(): Promise<void> {
+        return Promise.resolve();
+    }
+
+    deleteColorPalette(): Promise<void> {
         return Promise.resolve();
     }
 }
@@ -887,7 +1076,7 @@ class DummyElementsQuery implements IElementsQuery {
     query = async (): Promise<IElementsQueryResult> => {
         return new DummyElementsQueryResult([], this.limit, this.offset, 0);
     };
-    withDateFilters(_filters: IRelativeDateFilter[]): IElementsQuery {
+    withDateFilters(_filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): IElementsQuery {
         throw new NotSupported("not supported");
     }
     withSignal(_: AbortSignal): IElementsQuery {
@@ -974,6 +1163,9 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
     getAttributeDatasetMeta(_ref: ObjRef): Promise<IMetadataObject> {
         throw new NotSupported("not supported");
     }
+    getAttributesWithReferences(_refs: ObjRef[]): Promise<IAttributeWithReferences[]> {
+        throw new NotSupported("not supported");
+    }
     getConnectedAttributesByDisplayForm(_ref: ObjRef): Promise<ObjRef[]> {
         throw new NotSupported("Not supported");
     }
@@ -981,6 +1173,10 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
 
 class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
     constructor(public readonly workspace: string) {}
+
+    async computeKeyDrivers(): Promise<IMeasureKeyDrivers> {
+        throw new NotSupported("not supported");
+    }
 
     createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject> {
         return Promise.resolve({
@@ -1013,5 +1209,201 @@ class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
 
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
         return Promise.resolve({ ...measure });
+    }
+}
+
+class DummyWorkspaceAutomationService implements IWorkspaceAutomationService {
+    constructor(public readonly workspace: string) {}
+
+    async computeKeyDrivers(): Promise<IMeasureKeyDrivers> {
+        throw new NotSupported("not supported");
+    }
+
+    createAutomation(
+        automation: IAutomationMetadataObjectDefinition,
+        _options?: IGetAutomationOptions,
+    ): Promise<IAutomationMetadataObject> {
+        return Promise.resolve({
+            ...automation,
+            id: automation.id ?? "automation_id",
+            uri: automation.id ?? "automation_id",
+            ref: idRef(automation.id ?? "automation_id", "automation"),
+            type: "automation",
+        } as IAutomationMetadataObject);
+    }
+
+    deleteAutomation(_id: string): Promise<void> {
+        return Promise.resolve(undefined);
+    }
+
+    getAutomation(id: string, _options?: IGetAutomationOptions): Promise<IAutomationMetadataObject> {
+        return Promise.resolve({
+            id: id,
+            uri: id,
+            ref: idRef(id, "automation"),
+            type: "automation",
+            exportDefinitions: [],
+            deprecated: false,
+            production: true,
+            description: "",
+            title: "",
+            unlisted: false,
+            details: {
+                subject: "",
+                message: "",
+            },
+        } as IAutomationMetadataObject);
+    }
+
+    getAutomations(_options?: IGetAutomationsOptions): Promise<IAutomationMetadataObject[]> {
+        return Promise.resolve([
+            {
+                id: "automation_id",
+                uri: "automation_id",
+                ref: idRef("automation_id", "automation"),
+                type: "automation",
+                exportDefinitions: [],
+                deprecated: false,
+                production: true,
+                description: "",
+                title: "",
+                unlisted: false,
+                details: {
+                    subject: "",
+                    message: "",
+                },
+            },
+        ] as IAutomationMetadataObject[]);
+    }
+
+    updateAutomation(
+        automation: IAutomationMetadataObject,
+        _options?: IGetAutomationOptions,
+    ): Promise<IAutomationMetadataObject> {
+        return Promise.resolve({
+            exportDefinitions: [],
+            details: {
+                subject: "",
+                message: "",
+            },
+            ...automation,
+        } as IAutomationMetadataObject);
+    }
+
+    unsubscribeAutomation(_id: string): Promise<void> {
+        return Promise.resolve(undefined);
+    }
+
+    getAutomationsQuery(): IAutomationsQuery {
+        return new DummyAutomationsQuery();
+    }
+}
+
+class DummyAutomationsQuery implements IAutomationsQuery {
+    private settings: {
+        size: number;
+        page: number;
+        author: string | null;
+        user: string | null;
+        recipient: string | null;
+        dashboard: string | null;
+        filter: { title?: string };
+        sort: NonNullable<unknown>;
+        type: AutomationType | undefined;
+        totalCount: number | undefined;
+    } = {
+        size: 100,
+        page: 0,
+        author: null,
+        user: null,
+        recipient: null,
+        dashboard: null,
+        filter: {},
+        sort: {},
+        type: undefined,
+        totalCount: undefined,
+    };
+
+    query(): Promise<IAutomationsQueryResult> {
+        return Promise.resolve(
+            new DummyAutomationsQueryResult([], this.settings.size, this.settings.page, 0),
+        );
+    }
+
+    async queryAll(): Promise<IAutomationMetadataObject[]> {
+        const firstQuery = await this.query();
+        return firstQuery.all();
+    }
+
+    withFilter(filter: { title?: string }): IAutomationsQuery {
+        this.settings.filter = filter;
+        return this;
+    }
+
+    withPage(page: number): IAutomationsQuery {
+        this.settings.page = page;
+        return this;
+    }
+
+    withSize(size: number): IAutomationsQuery {
+        this.settings.size = size;
+        return this;
+    }
+
+    withSorting(sort: string[]): IAutomationsQuery {
+        this.settings.sort = sort;
+        return this;
+    }
+
+    withType(type: AutomationType): IAutomationsQuery {
+        this.settings.type = type;
+        return this;
+    }
+
+    withAuthor(author: string): IAutomationsQuery {
+        this.settings.author = author;
+        return this;
+    }
+
+    withRecipient(recipient: string): IAutomationsQuery {
+        this.settings.recipient = recipient;
+        return this;
+    }
+
+    withUser(user: string): IAutomationsQuery {
+        this.settings.user = user;
+        return this;
+    }
+
+    withDashboard(dashboard: string): IAutomationsQuery {
+        this.settings.dashboard = dashboard;
+        return this;
+    }
+}
+
+class DummyAutomationsQueryResult implements IAutomationsQueryResult {
+    constructor(
+        public items: IAutomationMetadataObject[],
+        public limit: number,
+        public offset: number,
+        public totalCount: number,
+    ) {}
+
+    all(): Promise<IAutomationMetadataObject[]> {
+        throw new NotSupported("not supported");
+    }
+
+    allSorted(
+        _compareFn: (a: IAutomationMetadataObject, b: IAutomationMetadataObject) => number,
+    ): Promise<IAutomationMetadataObject[]> {
+        throw new NotSupported("not supported");
+    }
+
+    goTo(_pageIndex: number): Promise<IPagedResource<IAutomationMetadataObject>> {
+        throw new NotSupported("not supported");
+    }
+
+    next(): Promise<IPagedResource<IAutomationMetadataObject>> {
+        throw new NotSupported("not supported");
     }
 }

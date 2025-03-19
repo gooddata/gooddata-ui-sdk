@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     isBadRequest,
     isDataTooLargeToCompute,
@@ -34,7 +34,6 @@ export const isNonExportableError = typesUtils.combineGuards(
  */
 export const isNonExportableErrorExceptTooLarge = typesUtils.combineGuards(
     isUnknownSdkError,
-    isBadRequest,
     isNoDataSdkError,
     isProtectedReport,
     isEmptyAfm,
@@ -59,7 +58,6 @@ export const isDataError = typesUtils.combineGuards(
  */
 export const isDataErrorExceptTooLarge = typesUtils.combineGuards(
     isUnknownSdkError,
-    isBadRequest,
     isNoDataSdkError,
     isProtectedReport,
     isEmptyAfm,

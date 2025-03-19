@@ -1,8 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { useCallback, useState } from "react";
 import { invariant } from "ts-invariant";
 import { IExtendedExportConfig } from "@gooddata/sdk-ui";
-import { IInsightDefinition, ObjRef } from "@gooddata/sdk-model";
+import { IInsight, IInsightWidget, ObjRef } from "@gooddata/sdk-model";
 import { getInsightVisualizationMeta } from "@gooddata/sdk-ui-ext";
 import { v4 as uuid } from "uuid";
 
@@ -16,19 +16,26 @@ import {
     exportInsightWidget,
     ExportInsightWidget,
     DashboardInsightWidgetExportResolved,
-    exportRawInsightWidget,
     ExportRawInsightWidget,
+    exportRawInsightWidget,
+    ExportSlidesInsightWidget,
+    exportSlidesInsightWidget,
+    selectSlideShowExportVisible,
+    selectIsExportableToCSV,
+    selectIsExportableToXLSX,
 } from "../../../model/index.js";
 import { useExportHandler } from "./useExportHandler.js";
 import { useExportDialogContext } from "../../dashboardContexts/index.js";
 import { useRawExportHandler } from "./useRawExportHandler.js";
+import { useSlidesExportHandler } from "./useSlidesExportHandler.js";
 
 export const useInsightExport = (config: {
     title: string;
     widgetRef: ObjRef;
-    insight: IInsightDefinition;
+    insight?: IInsight;
+    widget?: IInsightWidget;
 }) => {
-    const { title, widgetRef, insight } = config;
+    const { title, widgetRef, insight, widget } = config;
     const [isExporting, setIsExporting] = useState(false);
 
     const dispatch = useDashboardDispatch();
@@ -49,22 +56,33 @@ export const useInsightExport = (config: {
     );
 
     const exportRawFunction = useCallback(
-        () =>
+        (title: string) =>
             dispatchAndWaitFor<ExportRawInsightWidget, DashboardInsightWidgetExportResolved>(
                 dispatch,
-                exportRawInsightWidget(insight, uuid()),
+                exportRawInsightWidget(widgetRef, widget!, insight!, title, uuid()),
             ).then((result) => result.payload.result),
-        [],
+        [widgetRef, widget, insight],
     );
 
-    const isInsightExportable = getInsightVisualizationMeta(insight).supportsExport;
+    const exportSlidesFunction = useCallback(
+        (title: string, exportType: "pdf" | "pptx") =>
+            dispatchAndWaitFor<ExportSlidesInsightWidget, DashboardInsightWidgetExportResolved>(
+                dispatch,
+                exportSlidesInsightWidget(widgetRef!, title, exportType, uuid()),
+            ).then((result) => result.payload.result),
+        [widgetRef],
+    );
+
+    const settings = useDashboardSelector(selectSettings);
+    const isInsightExportable = insight
+        ? getInsightVisualizationMeta(insight, settings).supportsExport
+        : false;
     const isExportableToCsv = useDashboardSelector(selectIsExecutionResultExportableToCsvByRef(widgetRef));
     const isExportableToXlsx = useDashboardSelector(selectIsExecutionResultExportableToXlsxByRef(widgetRef));
 
-    const settings = useDashboardSelector(selectSettings);
-
     const exportHandler = useExportHandler();
     const exportRawHandler = useRawExportHandler();
+    const exportSlidesHandler = useSlidesExportHandler();
     const { openDialog, closeDialog } = useExportDialogContext();
 
     const onExportCSV = useCallback(() => {
@@ -76,7 +94,28 @@ export const useInsightExport = (config: {
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportFunction);
         exportHandler(exportFunction, exportConfig).then(() => setIsExporting(false));
-    }, [exportFunction, title]);
+    }, [exportFunction, setIsExporting, title]);
+
+    const onExportRawCSV = useCallback(() => {
+        setIsExporting(true);
+        // if this bombs there is an issue with the logic enabling the buttons
+        invariant(exportRawFunction);
+        exportRawHandler(exportRawFunction, title).then(() => setIsExporting(false));
+    }, [exportRawFunction, title]);
+
+    const onExportPowerPointPresentation = useCallback(() => {
+        setIsExporting(true);
+        // if this bombs there is an issue with the logic enabling the buttons
+        invariant(exportSlidesFunction);
+        exportSlidesHandler(exportSlidesFunction, title, "pptx").then(() => setIsExporting(false));
+    }, [exportSlidesFunction, title]);
+
+    const onExportPdfPresentation = useCallback(() => {
+        setIsExporting(true);
+        // if this bombs there is an issue with the logic enabling the buttons
+        invariant(exportSlidesFunction);
+        exportSlidesHandler(exportSlidesFunction, title, "pdf").then(() => setIsExporting(false));
+    }, [exportSlidesFunction, title]);
 
     const onExportRawCSV = useCallback(() => {
         setIsExporting(true);
@@ -108,15 +147,34 @@ export const useInsightExport = (config: {
 
     const exportCSVEnabled = !isExporting && isInsightExportable && isExportableToCsv;
     const exportXLSXEnabled = !isExporting && isInsightExportable && isExportableToXlsx;
+    const exportCSVRawEnabled = !isExporting;
+
+    const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
+
+    const canExportCSV = useDashboardSelector(selectIsExportableToCSV);
+    const canExportXLSX = useDashboardSelector(selectIsExportableToXLSX);
+    const canExportCSVAndXLSX = isInsightExportable && canExportCSV && canExportXLSX;
+    const isExportRawVisible = settings.enableRawExports === true && canExportCSVAndXLSX;
+
+    const exportPdfPresentationDisabled = !!widget && !widget.localIdentifier;
+    const exportPowerPointPresentationDisabled = !!widget && !widget.localIdentifier;
 
     const isExportRawInNewUiVisible = settings.enableRawExportsInNewUI === true;
 
     return {
         exportCSVEnabled,
         exportXLSXEnabled,
-        isExportRawInNewUiVisible,
+        exportCSVRawEnabled,
+        isExporting,
+        isExportRawVisible,
+        isExportVisible,
         onExportCSV,
         onExportRawCSV,
         onExportXLSX,
+        onExportRawCSV,
+        onExportPdfPresentation,
+        onExportPowerPointPresentation,
+        exportPdfPresentationDisabled,
+        exportPowerPointPresentationDisabled,
     };
 };

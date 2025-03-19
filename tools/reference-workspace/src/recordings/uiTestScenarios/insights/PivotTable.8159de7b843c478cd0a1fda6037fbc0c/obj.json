@@ -7,11 +7,14 @@
                         "measure": {
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
                                 }
                             },
                             "format": "[backgroundColor=ffff00][green]#,##0.00 €",
-                            "localIdentifier": "m_76bde438_aangOxLSeztu"
+                            "localIdentifier": "m_76bde438_87a053b0_3947_49f3_b0c5_de53fd01f050"
                         }
                     }
                 ],
@@ -21,14 +24,17 @@
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
-                            "localIdentifier": "a_label.product.id.name"
+                            "displayForm": {
+                                "identifier": "label.f_product.product.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.f_product.product.name"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
-                            "localIdentifier": "a_label.owner.department"
+                            "displayForm": { "identifier": "f_owner.department_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.department_id"
                         }
                     }
                 ],
@@ -38,17 +44,14 @@
                 "items": [
                     {
                         "attribute": {
-                            "displayForm": {
-                                "identifier": "label.stage.name.stagename",
-                                "type": "displayForm"
-                            },
-                            "localIdentifier": "a_label.stage.name.stagename"
+                            "displayForm": { "identifier": "attr.f_stage.stagename", "type": "displayForm" },
+                            "localIdentifier": "a_attr.f_stage.stagename"
                         }
                     },
                     {
                         "attribute": {
-                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
-                            "localIdentifier": "a_label.owner.region"
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
                         }
                     }
                 ],

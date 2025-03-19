@@ -1,0 +1,15 @@
+{
+    "count": [1, 2],
+    "data": [[28017096.42, 88608360.12]],
+    "headerItems": [
+        [[{ "measureHeaderItem": { "name": "Amount", "order": 0 } }]],
+        [
+            [
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [1, 2]
+}

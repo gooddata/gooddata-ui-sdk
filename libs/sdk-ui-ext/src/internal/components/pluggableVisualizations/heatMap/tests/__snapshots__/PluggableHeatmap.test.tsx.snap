@@ -213,7 +213,7 @@ exports[`PluggableHeatmap > heatmap should allow date attribute in column bucket
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
-        "title": "Measure",
+        "title": "Metric",
       },
       "stack": {
         "accepts": [
@@ -383,7 +383,7 @@ exports[`PluggableHeatmap > should return reference point with one metric, categ
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
-        "title": "Measure",
+        "title": "Metric",
       },
       "stack": {
         "accepts": [

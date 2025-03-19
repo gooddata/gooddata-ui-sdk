@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop.js";
 import hoistNonReactStatics from "hoist-non-react-statics";
@@ -131,8 +131,9 @@ export interface IWithExecutionLoading<TProps> {
      *
      * @param props - wrapped component props
      * @param window - data view window to retrieve, not specified in case all data should be retrieved
+     * @param signal - abort signal, will be used to cancel the execution
      */
-    promiseFactory: (props: TProps, window?: DataViewWindow) => Promise<DataViewFacade>;
+    promiseFactory: (props: TProps, window?: DataViewWindow, signal?: AbortSignal) => Promise<DataViewFacade>;
 
     /**
      * Specify data view window to retrieve from backend.
@@ -163,6 +164,16 @@ export interface IWithExecutionLoading<TProps> {
      * @param nextProps - next props
      */
     shouldRefetch?: (prevProps: TProps, nextProps: TProps) => boolean;
+
+    /**
+     * Optionally enable real execution cancellation.
+     *
+     * This means that if the execution request is not yet finished and the execution changes,
+     * the request will be cancelled and the new execution will be started.
+     *
+     * Default: false
+     */
+    enableExecutionCancelling?: boolean | ((props: TProps) => boolean);
 }
 
 type WithLoadingState = {
@@ -189,6 +200,7 @@ export function withExecutionLoading<TProps>(
         shouldRefetch = () => false,
         window,
         exportTitle,
+        enableExecutionCancelling = false,
     } = params;
 
     return (
@@ -292,8 +304,15 @@ export function withExecutionLoading<TProps>(
                 this.startLoading();
 
                 const readWindow = typeof window === "function" ? window(this.props) : window;
-                const promise = promiseFactory(this.props, readWindow);
-                this.cancelablePromise = makeCancelable(promise);
+                const enableRealCancellation =
+                    typeof enableExecutionCancelling === "function"
+                        ? enableExecutionCancelling(this.props)
+                        : enableExecutionCancelling;
+                const promise = (signal?: AbortSignal) => promiseFactory(this.props, readWindow, signal);
+                this.cancelablePromise = makeCancelable(
+                    (signal) => promise(enableRealCancellation ? signal : undefined),
+                    enableRealCancellation,
+                );
 
                 try {
                     const result = await this.cancelablePromise.promise;

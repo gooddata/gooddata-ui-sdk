@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useState, useCallback, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
@@ -10,12 +10,14 @@ import DrillModalRawExportOptions from "./DrillModalRawExportOptions.js";
 export interface IDrillModalFooterProps {
     exportAvailable: boolean;
     exportXLSXEnabled: boolean;
+    exportCSVRawEnabled: boolean;
     onExportXLSX: () => void;
     exportCSVEnabled: boolean;
     onExportCSV: () => void;
     onExportCSVRaw: () => void;
     isLoading: boolean;
-    isExportRawInNewUiVisible: boolean;
+    isExporting: boolean;
+    isExportRawVisible: boolean;
 }
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "tc bc" }];
@@ -25,10 +27,12 @@ export const DrillModalFooter: React.FC<IDrillModalFooterProps> = ({
     exportXLSXEnabled,
     onExportXLSX,
     exportCSVEnabled,
+    exportCSVRawEnabled,
     onExportCSV,
     onExportCSVRaw,
     isLoading,
-    isExportRawInNewUiVisible,
+    isExporting,
+    isExportRawVisible,
 }) => {
     const [showDropdown, setShowDropdown] = useState(false);
 
@@ -56,7 +60,7 @@ export const DrillModalFooter: React.FC<IDrillModalFooterProps> = ({
             <button
                 onClick={toggleShowDropdown}
                 className={cx("gd-button-link-dimmed gd-button gd-icon-download export-menu-toggle-button", {
-                    disabled: isExportRawInNewUiVisible ? false : exportDisabled,
+                    disabled: isExportRawVisible ? false : exportDisabled,
                 })}
                 type="button"
             >
@@ -71,10 +75,10 @@ export const DrillModalFooter: React.FC<IDrillModalFooterProps> = ({
     return (
         <div
             className={cx("s-export-drilled-insight export-drilled-insight", {
-                "is-disabled": isExportRawInNewUiVisible ? false : exportDisabled,
+                "is-disabled": isExportRawVisible ? false : exportDisabled,
             })}
         >
-            {isExportRawInNewUiVisible ? (
+            {isExportRawVisible ? (
                 <>
                     {toggleButton}
                     <DrillModalRawExportOptions
@@ -82,9 +86,11 @@ export const DrillModalFooter: React.FC<IDrillModalFooterProps> = ({
                         toggleShowDropdown={toggleShowDropdown}
                         exportXLSXEnabled={exportXLSXEnabled}
                         exportCSVEnabled={exportCSVEnabled}
+                        exportCSVRawEnabled={exportCSVRawEnabled}
                         onExportXLSX={handleOnExportXLSX}
                         onExportCSV={handleOnExportCSV}
                         onExportCSVRaw={handleOnExportCSVRaw}
+                        isExporting={isExporting}
                     />
                 </>
             ) : exportDisabled && !isLoading ? (

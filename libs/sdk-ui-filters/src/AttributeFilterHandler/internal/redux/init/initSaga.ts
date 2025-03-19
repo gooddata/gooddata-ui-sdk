@@ -10,6 +10,7 @@ import { initAttributeElementsPageSaga } from "./initElementsPageSaga.js";
 import { initTotalCountSaga } from "./initTotalCount.js";
 import {
     selectLimitingAttributeFilters,
+    selectLimitingDateFilters,
     selectLimitingValidationItems,
 } from "../elements/elementsSelectors.js";
 import { isLimitingAttributeFiltersEmpty } from "../../../utils.js";
@@ -42,13 +43,18 @@ function* initSaga(action: ReturnType<typeof actions.init>): SagaIterator<void> 
         const limitingValidationItems: ReturnType<typeof selectLimitingValidationItems> = yield select(
             selectLimitingValidationItems,
         );
+        const limitingDateFilters: ReturnType<typeof selectLimitingDateFilters> = yield select(
+            selectLimitingDateFilters,
+        );
         const isWorkingSelectionEmpty: ReturnType<typeof selectIsWorkingSelectionEmpty> = yield select(
             selectIsWorkingSelectionEmpty,
         );
         const supportsShowingFilteredElements = context.backend.capabilities.supportsShowingFilteredElements;
 
         const loadTotal =
-            !isLimitingAttributeFiltersEmpty(limitingFilters) || limitingValidationItems.length > 0;
+            !isLimitingAttributeFiltersEmpty(limitingFilters) ||
+            limitingValidationItems.length > 0 ||
+            limitingDateFilters.length > 0;
 
         const sagas = [initSelectionSaga, initAttributeElementsPageSaga];
         if (hiddenElements?.length > 0) {

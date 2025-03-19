@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 /**
  * @internal
@@ -30,6 +30,7 @@ export const VisualizationTypes = {
     SANKEY: "sankey" as const,
     DEPENDENCY_WHEEL: "dependencywheel" as const,
     XIRR: "xirr" as const,
+    REPEATER: "repeater" as const,
 };
 
 /**
@@ -58,7 +59,8 @@ export type ChartType =
     | "pareto"
     | "alluvial"
     | "sankey"
-    | "dependencywheel";
+    | "dependencywheel"
+    | "repeater";
 
 /**
  * @public

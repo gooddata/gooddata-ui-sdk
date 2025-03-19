@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React, { CSSProperties } from "react";
 import { withIntl } from "@gooddata/sdk-ui";
 import {
@@ -150,4 +150,4 @@ const WithIntl = withIntl(DropdownExamples, undefined, customMessages);
 
 storiesOf(`${UiKit}/Dropdown`)
     .add("full-featured", () => <WithIntl />, { screenshot: true })
-    .add("themed", () => wrapWithTheme(<WithIntl />), { screenshot: true });
+    .add("themed", () => wrapWithTheme(<WithIntl />));

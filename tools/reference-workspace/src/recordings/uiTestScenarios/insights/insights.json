@@ -3558,11 +3558,6 @@
         "scenarioName": "two measures and grand totals and multiple subtotals",
         "visName": "PivotTable"
     },
-    "PivotTable.342daf6d78ebd15b4a08bffc7d597cf5": {
-        "comment": "Auto-generated insight for test scenario PivotTable - two measures and single grand total and single subtotal sorted by second attribute.",
-        "scenarioName": "two measures and single grand total and single subtotal sorted by second attribute",
-        "visName": "PivotTable"
-    },
     "PivotTable.3495df66ed7cc8ec1f7ca4f9f4b12f24": {
         "comment": "Auto-generated insight for test scenario PivotTable - single measure pivot sorted by second row attr.",
         "scenarioName": "single measure pivot sorted by second row attr",
@@ -4121,6 +4116,37 @@
     "PyramidChart.fdc00c1bad1d5d19ccac21804f66bd05": {
         "comment": "Auto-generated insight for test scenario PyramidChart - vertical alignment - default."
     },
+    "Repeater.625b2a599c13b5a7c1ed64260616f59d": {
+        "comment": "Auto-generated insight for test scenario Repeater - canvas - large row height."
+    },
+    "Repeater.7913aa1d19190897ce5cf885f9bf798f": {
+        "comment": "Auto-generated insight for test scenario Repeater - one attribute.",
+        "scenarioName": "one attribute",
+        "visName": "Repeater"
+    },
+    "Repeater.85a283be3d4d3ad21263155a16700543": {
+        "comment": "Auto-generated insight for test scenario Repeater - themed.",
+        "scenarioName": "themed",
+        "visName": "Repeater"
+    },
+    "Repeater.a2395468f97d492674ca8ef91ff46e46": {
+        "comment": "Auto-generated insight for test scenario Repeater - one attribute and one visualisation.",
+        "scenarioName": "one attribute and one visualisation",
+        "visName": "Repeater"
+    },
+    "Repeater.bdfa144f7f2918445ac731bea382285b": {
+        "comment": "Auto-generated insight for test scenario Repeater - font.",
+        "scenarioName": "font",
+        "visName": "Repeater"
+    },
+    "Repeater.c509fb9165eb4180f50442d1e7c5f53f": {
+        "comment": "Auto-generated insight for test scenario Repeater - coloring - custom palette."
+    },
+    "Repeater.ffd4d1e9f768baa1ca7c367880453191": {
+        "comment": "Auto-generated insight for test scenario Repeater - one attribute and one measure.",
+        "scenarioName": "one attribute and one measure",
+        "visName": "Repeater"
+    },
     "SankeyChart.028319311f1a319d889aee5ec859c3bc": {
         "comment": "Auto-generated insight for test scenario SankeyChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on right."
     },
@@ -4358,6 +4384,11 @@
     "SankeyChart.fbe0abecfb74e515153ae491b739c9ba": {
         "comment": "Auto-generated insight for test scenario SankeyChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend at bottom."
     },
+    "ScatterPlot.02f16ac8fc6831e976c4503ba9cc1b90": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot - x and y axis measures, attribute and segmentation.",
+        "scenarioName": "x and y axis measures, attribute and segmentation",
+        "visName": "ScatterPlot"
+    },
     "ScatterPlot.0596d6b98f5e4ea7da9b7efd2acd2ee2": {
         "comment": "Auto-generated insight for test scenario ScatterPlot - themed.",
         "scenarioName": "themed",
@@ -4370,6 +4401,9 @@
     },
     "ScatterPlot.1f76e8e82586bdebd707271a42784586": {
         "comment": "Auto-generated insight for test scenario ScatterPlot - axis name configuration - low."
+    },
+    "ScatterPlot.286e1e470deb063849a2aa3ce49d1112": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot - coloring with segmentation - custom palette."
     },
     "ScatterPlot.384e6595215e2e9ffbcf2f0ce6a12185": {
         "comment": "Auto-generated insight for test scenario ScatterPlot - data labels - default."

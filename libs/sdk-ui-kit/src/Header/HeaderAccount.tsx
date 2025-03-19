@@ -1,72 +1,60 @@
-// (C) 2007-2021 GoodData Corporation
-import React, { PureComponent, ReactNode } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { useState, useRef, ReactNode, useCallback } from "react";
 import cx from "classnames";
-import { injectIntl, FormattedMessage, WrappedComponentProps } from "react-intl";
+import { useIntl, FormattedMessage } from "react-intl";
 
 import { Overlay } from "../Overlay/index.js";
+import { Button } from "../Button/index.js";
 
-import { IHeaderAccountState, IHeaderMenuItem, IHeaderAccountProps } from "./typings.js";
+import { IHeaderMenuItem, IHeaderAccountProps } from "./typings.js";
+import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
+import { useId } from "../utils/useId.js";
+import { isActionKey } from "../utils/events.js";
 
-class WrappedHeaderAccount extends PureComponent<
-    IHeaderAccountProps & WrappedComponentProps,
-    IHeaderAccountState
-> {
-    static defaultProps: Pick<IHeaderAccountProps, "className" | "items" | "userName"> = {
-        className: "",
-        items: [],
-        userName: "",
-    };
+export const HeaderAccount: React.FC<IHeaderAccountProps> = ({
+    className = "",
+    items = [],
+    userName = "",
+    onMenuItemClick,
+}) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const intl = useIntl();
+    const id = useId();
+    const dropdownId = `account-dropdown-${id}`;
 
-    constructor(props: IHeaderAccountProps & WrappedComponentProps) {
-        super(props);
+    const classNames = cx("gd-header-button", {
+        "gd-header-account": true,
+        "is-open": isOpen,
+        [className]: !!className,
+    });
 
-        this.state = {
-            isOpen: false,
-        };
-    }
+    const toggleAccountMenu = useCallback(
+        (newIsOpen = !isOpen): void => {
+            setIsOpen(newIsOpen);
+        },
+        [isOpen],
+    );
 
-    getClassNames(): string {
-        return cx({
-            "gd-header-account": true,
-            "is-open": this.state.isOpen,
-            [this.props.className]: !!this.props.className,
-        });
-    }
+    const toggleAccountMenuHandler = useCallback((): void => {
+        toggleAccountMenu();
+    }, [toggleAccountMenu]);
 
-    getMenuItems() {
-        return this.props.items.map((item) => {
+    const getMenuItems = () => {
+        return items.map((item) => {
             return (
-                <a
+                <MenuItem
                     key={item.key}
-                    href={item.href}
-                    onClick={(e) => {
-                        this.menuItemClicked(item, e);
-                    }}
-                    className={`gd-list-item ${item.className}`}
-                >
-                    <FormattedMessage id={item.key} />
-                </a>
+                    item={item}
+                    toggleMenu={toggleAccountMenu}
+                    onMenuItemClick={onMenuItemClick}
+                />
             );
         });
-    }
-
-    toggleAccountMenu = (isOpen = !this.state.isOpen): void => {
-        this.setState({
-            isOpen,
-        });
     };
 
-    toggleAccountMenuHandler = (): void => {
-        this.toggleAccountMenu();
-    };
-
-    menuItemClicked(item: IHeaderMenuItem, e: React.MouseEvent<HTMLAnchorElement>): void {
-        this.toggleAccountMenu(false);
-        this.props.onMenuItemClick(item, e);
-    }
-
-    renderAccountMenu(): ReactNode {
-        return this.state.isOpen ? (
+    const renderAccountMenu = (): ReactNode => {
+        return isOpen ? (
             <Overlay
                 alignTo=".gd-header-account"
                 alignPoints={[
@@ -77,29 +65,80 @@ class WrappedHeaderAccount extends PureComponent<
                 closeOnOutsideClick
                 closeOnMouseDrag
                 closeOnParentScroll
+                closeOnEscape
                 onClose={() => {
-                    this.toggleAccountMenu(false);
+                    toggleAccountMenu(false);
                 }}
             >
-                <div className="gd-dialog gd-dropdown overlay gd-header-account-dropdown">
-                    <div className="gd-list small">{this.getMenuItems()}</div>
+                <div className="gd-dialog gd-dropdown overlay gd-header-account-dropdown" id={dropdownId}>
+                    <div className="gd-list small">
+                        <UiFocusTrap returnFocusTo={buttonRef} autofocusOnOpen={true}>
+                            {getMenuItems()}
+                        </UiFocusTrap>
+                    </div>
                 </div>
             </Overlay>
         ) : (
             false
         );
-    }
+    };
 
-    render(): ReactNode {
-        return (
-            <div className={this.getClassNames()} onClick={this.toggleAccountMenuHandler}>
-                <span className="gd-header-account-icon gd-icon-user" />
-                <span className="gd-header-account-user">{this.props.userName}</span>
+    return (
+        <Button
+            buttonRef={buttonRef}
+            className={classNames}
+            onClick={toggleAccountMenuHandler}
+            title={intl.formatMessage({ id: "gs.header.account.title" })}
+            accessibilityConfig={{
+                isExpanded: isOpen,
+                popupId: dropdownId,
+            }}
+        >
+            <span className="gd-header-account-icon gd-icon-user" />
+            <span className="gd-header-account-user">{userName}</span>
+            {renderAccountMenu()}
+        </Button>
+    );
+};
 
-                {this.renderAccountMenu()}
-            </div>
-        );
-    }
-}
+const MenuItem: React.FC<{
+    item: IHeaderMenuItem;
+    toggleMenu: (isOpen: boolean) => void;
+    onMenuItemClick: (
+        item: IHeaderMenuItem,
+        e: React.MouseEvent<HTMLAnchorElement> | React.KeyboardEvent,
+    ) => void;
+}> = ({ item, toggleMenu, onMenuItemClick }) => {
+    const tabIndexProp = item.href ? {} : { tabIndex: 0 };
 
-export const HeaderAccount = injectIntl(WrappedHeaderAccount);
+    const handleClick = useCallback(
+        (e: React.MouseEvent<HTMLAnchorElement>): void => {
+            toggleMenu(false);
+            onMenuItemClick(item, e);
+        },
+        [item, toggleMenu, onMenuItemClick],
+    );
+
+    const handleKeyDown = useCallback(
+        (e: React.KeyboardEvent): void => {
+            if (isActionKey(e)) {
+                e.preventDefault();
+                toggleMenu(false);
+                onMenuItemClick(item, e);
+            }
+        },
+        [item, toggleMenu, onMenuItemClick],
+    );
+
+    return (
+        <a
+            href={item.href}
+            onClick={handleClick}
+            className={`gd-list-item ${item.className}`}
+            onKeyDown={handleKeyDown}
+            {...tabIndexProp}
+        >
+            <FormattedMessage id={item.key} />
+        </a>
+    );
+};

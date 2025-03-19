@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 
@@ -11,7 +11,7 @@ import {
 import { IDefaultDashboardRichTextWidgetProps } from "./types.js";
 import { widgetRef } from "@gooddata/sdk-model";
 import { DashboardRichText } from "../../richText/DashboardRichText.js";
-
+import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
 /**
  * @internal
  */
@@ -23,12 +23,13 @@ export const EditableDashboardRichTextWidget: React.FC<IDefaultDashboardRichText
     const { isSelectable, isSelected, onSelected } = useWidgetSelection(widgetRef(widget));
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
     const isEditable = !isSaving;
+    const isDraggingWidget = useIsDraggingWidget();
 
     return (
         <DashboardItem
             className={cx(
                 dashboardItemClasses,
-                "type-visualization",
+                "type-rich-text",
                 "gd-dashboard-view-widget",
                 "is-edit-mode",
                 { "is-selected": isSelected },
@@ -39,8 +40,8 @@ export const EditableDashboardRichTextWidget: React.FC<IDefaultDashboardRichText
                 isSelectable={isSelectable}
                 isSelected={isSelected}
                 onSelected={onSelected}
-                contentClassName={cx({ "is-editable": isEditable })}
-                visualizationClassName="gd-rich-text-wrapper"
+                contentClassName={cx({ "is-editable": isEditable, "is-dragging-widget": isDraggingWidget })}
+                visualizationClassName="gd-rich-text-widget-wrapper"
             >
                 {({ clientWidth, clientHeight }) => (
                     <DashboardRichText

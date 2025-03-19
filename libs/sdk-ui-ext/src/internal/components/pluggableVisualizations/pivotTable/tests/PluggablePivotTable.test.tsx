@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     createPivotTableConfig,
     getColumnAttributes,
@@ -561,9 +561,8 @@ describe("PluggablePivotTable", () => {
             });
         });
 
-        it("should not remove native total if ranking filter is present", () => {
+        it("should remove native total if ranking filter is present", () => {
             const pivotTable = createComponent();
-            const validColTotals = referencePointMocks.tableWithRowColTotalAndRankingFilter.buckets[2].totals;
 
             return pivotTable
                 .getExtendedReferencePoint(
@@ -572,7 +571,7 @@ describe("PluggablePivotTable", () => {
                 )
                 .then((extendedReferencePoint) => {
                     expect(extendedReferencePoint.buckets[1].totals).toBeUndefined();
-                    expect(extendedReferencePoint.buckets[2].totals).toEqual(validColTotals);
+                    expect(extendedReferencePoint.buckets[2].totals).toBeUndefined();
                 });
         });
 

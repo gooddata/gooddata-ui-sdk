@@ -42,7 +42,6 @@
         "applink": "node esm/index.js $*"
     },
     "dependenciesInfo": "This is package is SDK tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation",
-    "dependencies": {},
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.0",
         "@types/blessed": "^0.1.17",
@@ -69,7 +68,7 @@
         "eslint-plugin-tsdoc": "^0.2.14",
         "find-up": "^5.0.0",
         "json5": "^2.1.3",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "prettier": "~2.5.0",
         "ts-node": "^10.4.0",
         "tslib": "^2.5.0",

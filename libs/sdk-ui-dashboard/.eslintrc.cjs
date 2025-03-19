@@ -11,5 +11,5 @@ module.exports = {
         "plugin:react-hooks/recommended",
         "../../.eslintrc.react.js",
     ],
-    parserOptions: { tsconfigRootDir: __dirname },
+    parserOptions: { tsconfigRootDir: __dirname, project: "tsconfig.json" },
 };

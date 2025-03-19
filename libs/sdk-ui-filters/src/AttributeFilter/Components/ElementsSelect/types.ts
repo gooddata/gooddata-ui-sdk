@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { IAttributeElement } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -121,6 +121,13 @@ export interface IAttributeFilterElementsSelectProps {
     enableShowingFilteredElements?: boolean;
 
     /**
+     * Indicate that elements are filtered by dependent date filters
+     *
+     * @beta
+     */
+    isFilteredByDependentDateFilters?: boolean;
+
+    /**
      * Title of the attribute
      * @remarks Used only when showing filtered elements is enabled.
      */
@@ -197,4 +204,11 @@ export interface IAttributeFilterElementsSelectItemProps {
      * @beta
      */
     fullscreenOnMobile?: boolean;
+
+    /**
+     * Title of attribute's primary label
+     *
+     * @beta
+     */
+    primaryLabelTitle?: string;
 }

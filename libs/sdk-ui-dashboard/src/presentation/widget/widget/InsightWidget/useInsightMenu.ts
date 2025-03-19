@@ -1,34 +1,50 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { useCallback, useMemo, useState, Dispatch, SetStateAction } from "react";
 import { useIntl } from "react-intl";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
-import { selectExecutionResultByRef, useDashboardSelector } from "../../../../model/index.js";
+import {
+    selectCanCreateAutomation,
+    selectExecutionResultByRef,
+    useDashboardSelector,
+} from "../../../../model/index.js";
 
 import { isDataError } from "../../../../_staging/errors/errorPredicates.js";
-import {
-    useDashboardCustomizationsContext,
-    InsightMenuItemsProvider,
-} from "../../../dashboardContexts/index.js";
+import { useDashboardCustomizationsContext } from "../../../dashboardContexts/index.js";
 import {
     getDefaultInsightMenuItems,
-    getDefaultLegacyInsightMenuItems,
     IInsightMenuItem,
+    AlertingDisabledReason,
+    SchedulingDisabledReason,
 } from "../../insightMenu/index.js";
 
 type UseInsightMenuConfig = {
-    insight: IInsight;
+    insight?: IInsight;
     widget: IInsightWidget;
     exportCSVEnabled: boolean;
     exportXLSXEnabled: boolean;
-    scheduleExportEnabled: boolean;
-    isScheduleExportVisible: boolean;
-    isExportRawInNewUiVisible: boolean;
+    exportCSVRawEnabled: boolean;
+    isExporting: boolean;
+    isExportRawVisible: boolean;
+    isExportVisible: boolean;
     onExportCSV: () => void;
     onExportXLSX: () => void;
     onExportRawCSV: () => void;
     onScheduleExport: () => void;
+    onScheduleManagementExport: () => void;
+    onExportPowerPointPresentation: () => void;
+    onExportPdfPresentation: () => void;
+    isScheduleExportVisible: boolean;
+    isScheduleExportManagementVisible: boolean;
+    isAlertingVisible: boolean;
+    alertingDisabled: boolean;
+    scheduleExportDisabled: boolean;
+    scheduleExportManagementDisabled: boolean;
+    scheduleExportDisabledReason?: SchedulingDisabledReason;
+    alertingDisabledReason?: AlertingDisabledReason;
+    exportPdfPresentationDisabled: boolean;
+    exportPowerPointPresentationDisabled: boolean;
 };
 
 export const useInsightMenu = (
@@ -41,10 +57,10 @@ export const useInsightMenu = (
     const openMenu = useCallback(() => setIsMenuOpen(true), []);
 
     const { insightMenuItemsProvider } = useDashboardCustomizationsContext();
-    const defaultMenuItems = useDefaultMenuItems(config, insightMenuItemsProvider, setIsMenuOpen);
+    const defaultMenuItems = useDefaultMenuItems(config, setIsMenuOpen);
 
     const menuItems = useMemo<IInsightMenuItem[]>(() => {
-        return insightMenuItemsProvider
+        return insightMenuItemsProvider && insight
             ? insightMenuItemsProvider(insight, widget, defaultMenuItems, closeMenu, "view")
             : defaultMenuItems;
     }, [insightMenuItemsProvider, insight, widget, defaultMenuItems, closeMenu]);
@@ -52,39 +68,56 @@ export const useInsightMenu = (
     return { menuItems, isMenuOpen, openMenu, closeMenu };
 };
 
-function useDefaultMenuItems(
-    config: UseInsightMenuConfig,
-    insightMenuItemsProvider: InsightMenuItemsProvider | undefined,
-    setIsMenuOpen: Dispatch<SetStateAction<boolean>>,
-) {
+function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispatch<SetStateAction<boolean>>) {
     const {
         exportCSVEnabled,
         exportXLSXEnabled,
-        scheduleExportEnabled,
+        exportCSVRawEnabled,
+        isExporting,
         onExportCSV,
+        onExportRawCSV,
         onExportXLSX,
         onScheduleExport,
+        onScheduleManagementExport,
+        onExportPdfPresentation,
+        onExportPowerPointPresentation,
         isScheduleExportVisible,
+        isScheduleExportManagementVisible,
+        isAlertingVisible,
+        alertingDisabled,
+        scheduleExportDisabled,
+        scheduleExportManagementDisabled,
+        scheduleExportDisabledReason,
+        alertingDisabledReason,
         widget,
-        isExportRawInNewUiVisible,
+        isExportRawVisible,
+        isExportVisible,
+        exportPdfPresentationDisabled,
+        exportPowerPointPresentationDisabled,
     } = config;
 
     const intl = useIntl();
     const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));
+    const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
 
     return useMemo<IInsightMenuItem[]>(() => {
-        const defaultMenuItemsGetter = !insightMenuItemsProvider
-            ? getDefaultLegacyInsightMenuItems
-            : getDefaultInsightMenuItems;
-
-        return defaultMenuItemsGetter(intl, {
+        return getDefaultInsightMenuItems(intl, {
             exportCSVDisabled: !exportCSVEnabled,
             exportXLSXDisabled: !exportXLSXEnabled,
-            scheduleExportDisabled: !scheduleExportEnabled,
-            isExportRawInNewUiVisible: isExportRawInNewUiVisible,
+            exportCSVRawDisabled: !exportCSVRawEnabled,
+            isExporting,
+            scheduleExportManagementDisabled,
+            scheduleExportDisabled,
+            scheduleExportDisabledReason,
+            isExportRawVisible,
+            isExportVisible,
             onExportCSV: () => {
                 setIsMenuOpen(false);
                 onExportCSV();
+            },
+            onExportRawCSV: () => {
+                setIsMenuOpen(false);
+                onExportRawCSV();
             },
             onExportXLSX: () => {
                 setIsMenuOpen(false);
@@ -94,21 +127,55 @@ function useDefaultMenuItems(
                 setIsMenuOpen(false);
                 onScheduleExport();
             },
+            onScheduleManagementExport: () => {
+                setIsMenuOpen(false);
+                onScheduleManagementExport();
+            },
+            onExportPdfPresentation: () => {
+                setIsMenuOpen(false);
+                onExportPdfPresentation();
+            },
+            onExportPowerPointPresentation: () => {
+                setIsMenuOpen(false);
+                onExportPowerPointPresentation();
+            },
             isScheduleExportVisible,
+            isScheduleExportManagementVisible,
             isDataError: isDataError(execution?.error),
+            isAlertingVisible,
+            alertingDisabled,
+            alertingDisabledReason,
+            canCreateAutomation,
+            exportPdfPresentationDisabled,
+            exportPowerPointPresentationDisabled,
         });
     }, [
-        insightMenuItemsProvider,
-        execution,
+        intl,
         exportCSVEnabled,
         exportXLSXEnabled,
-        scheduleExportEnabled,
+        exportCSVRawEnabled,
+        scheduleExportManagementDisabled,
+        scheduleExportDisabled,
+        isScheduleExportVisible,
+        isScheduleExportManagementVisible,
+        execution?.error,
+        isAlertingVisible,
+        alertingDisabled,
+        isExportVisible,
+        setIsMenuOpen,
         onExportCSV,
+        onExportRawCSV,
         onExportXLSX,
         onScheduleExport,
-        isScheduleExportVisible,
-        intl,
-        setIsMenuOpen,
-        isExportRawInNewUiVisible,
+        onScheduleManagementExport,
+        onExportPdfPresentation,
+        onExportPowerPointPresentation,
+        scheduleExportDisabledReason,
+        alertingDisabledReason,
+        canCreateAutomation,
+        isExportRawVisible,
+        isExporting,
+        exportPdfPresentationDisabled,
+        exportPowerPointPresentationDisabled,
     ]);
 }

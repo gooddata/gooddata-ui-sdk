@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
@@ -368,7 +368,7 @@
         width: 100%;
         height: 100%;
         padding: 10px;
-        background-color: var(--gd-palette-complementary-2, #e3e9f0);
+        background-color: var(--gd-palette-complementary-2-from-theme, #e3e9f0);
 
         .empty-attribute-hierarchy-info-content {
             position: relative;
@@ -611,7 +611,7 @@ $gd-gd-drill-to-url-body-width: 230px;
     }
 
     .gd-icon-circle-question {
-        color: var(--gd-palette-complementary-5, inherit);
+        color: var(--gd-palette-complementary-5-from-theme, inherit);
         pointer-events: all;
     }
 
@@ -628,7 +628,7 @@ $gd-gd-drill-to-url-body-width: 230px;
         overflow: auto;
         width: 200px;
         height: 270px;
-        border: 1px solid var(--gd-palette-complementary-3, variables.$dialog-border);
+        border: 1px solid var(--gd-palette-complementary-3-from-theme, variables.$dialog-border);
         border-radius: 3px 3px 0 0;
 
         .gd-list-item {
@@ -683,7 +683,7 @@ $gd-gd-drill-to-url-body-width: 230px;
         font-size: 12px;
 
         .gd-icon-circle-question {
-            color: var(--gd-palette-complementary-5, inherit);
+            color: var(--gd-palette-complementary-5-from-theme, inherit);
             margin-right: 4px;
         }
 
@@ -786,4 +786,82 @@ $gd-gd-drill-to-url-body-width: 230px;
 
 .attribute-hierarchy-list-footer {
     padding: 0 0 10px;
+}
+
+.gd-drill-intersection-ignored-attributes-select-section {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+.gd-drill-intersection-ignored-attributes-select-label {
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    line-height: 16.4px;
+    color: kit-variables.$gd-color-link;
+}
+
+.gd-drill-intersection-ignored-attributes-select {
+    .input-radio-label .input-label-text,
+    .input-checkbox-label .input-label-text {
+        display: inline;
+        font-size: 12px;
+    }
+
+    .gd-drill-intersection-ignored-attributes-select-item-icon {
+        margin-right: 5px;
+        vertical-align: middle;
+        width: 14px;
+        height: 14px;
+
+        &-date {
+            path {
+                fill: kit-variables.$gd-palette-primary-base;
+            }
+        }
+    }
+}
+
+.gd-drill-intersection-ignored-attributes-select-title {
+    padding: 5px 10px;
+    width: 100%;
+    background-color: kit-variables.$is-focused-background;
+    color: kit-variables.$gd-color-state-blank;
+    line-height: 15px;
+    font-size: 11px;
+    font-weight: 700;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.gd-drill-intersection-ignored-attributes-select-title-tooltip {
+    margin-left: 5px;
+    margin-top: 2px;
+
+    path {
+        fill: kit-variables.$gd-color-state-blank;
+    }
+}
+
+.gd-drill-intersection-ignored-attributes-select-title-tooltip-content {
+    width: 190px;
+}
+
+.drill-config-target .gd-button-small.gd-drill-intersection-ignored-attributes-select-button {
+    margin-top: 0;
+    width: 95px;
+
+    &:not(&.gd-is-open, &:hover, &:active, &:focus) {
+        box-shadow: none;
+        border-color: transparent;
+    }
+
+    &:not(&.gd-is-open, &:active, &:focus) {
+        background: transparent;
+    }
 }

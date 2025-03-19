@@ -236,6 +236,46 @@
                 }
             }
         },
+        "/api/v1/actions/dataSources/{dataSourceId}/computeColumnStatistics": {
+            "post": {
+                "tags": ["actions"],
+                "summary": "(EXPERIMENTAL) Compute column statistics",
+                "description": "(EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.",
+                "operationId": "columnStatistics",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ColumnStatisticsRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ColumnStatisticsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/dataSource/test": {
             "post": {
                 "tags": ["Test Connection", "actions"],
@@ -418,16 +458,21 @@
                         "type": "string",
                         "description": "Secret for token based authentication for data sources which supports it."
                     },
-                    "enableCaching": {
-                        "type": "boolean",
-                        "description": "Enable caching of intermediate results.",
-                        "example": false
+                    "privateKey": {
+                        "type": "string",
+                        "description": "Private key for data sources which supports key-pair authentication."
                     },
-                    "cachePath": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
+                    "privateKeyPassphrase": {
+                        "type": "string",
+                        "description": "Passphrase for a encrypted version of a private key."
+                    },
+                    "clientId": {
+                        "type": "string",
+                        "description": "Id for client based authentication for data sources which supports it."
+                    },
+                    "clientSecret": {
+                        "type": "string",
+                        "description": "Secret for client based authentication for data sources which supports it."
                     },
                     "parameters": {
                         "type": "array",
@@ -675,6 +720,223 @@
                 },
                 "description": "A request containing all information critical to model scanning."
             },
+            "ColumnLocation": {
+                "type": "object"
+            },
+            "ColumnStatisticsRequest": {
+                "required": ["columnName", "from"],
+                "type": "object",
+                "properties": {
+                    "from": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/SqlQuery"
+                            },
+                            {
+                                "$ref": "#/components/schemas/Table"
+                            }
+                        ]
+                    },
+                    "columnName": {
+                        "type": "string"
+                    },
+                    "statistics": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "COUNT",
+                                "COUNT_NULL",
+                                "COUNT_UNIQUE",
+                                "AVG",
+                                "STDDEV",
+                                "MIN",
+                                "MAX",
+                                "PERCENTILE_25",
+                                "PERCENTILE_50",
+                                "PERCENTILE_75"
+                            ]
+                        }
+                    },
+                    "histogram": {
+                        "$ref": "#/components/schemas/HistogramProperties"
+                    },
+                    "frequency": {
+                        "$ref": "#/components/schemas/FrequencyProperties"
+                    }
+                },
+                "description": "A request to retrieve statistics for a column."
+            },
+            "FrequencyProperties": {
+                "type": "object",
+                "properties": {
+                    "valueLimit": {
+                        "type": "integer",
+                        "description": "The maximum number of distinct values to return.",
+                        "format": "int32",
+                        "default": 10
+                    }
+                }
+            },
+            "HistogramProperties": {
+                "required": ["bucketCount"],
+                "type": "object",
+                "properties": {
+                    "bucketCount": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "SqlQuery": {
+                "required": ["sql"],
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ColumnLocation"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "sql": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ]
+            },
+            "Table": {
+                "required": ["tableName"],
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ColumnLocation"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "tableName": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ]
+            },
+            "ColumnStatistic": {
+                "required": ["type"],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "COUNT",
+                            "COUNT_NULL",
+                            "COUNT_UNIQUE",
+                            "AVG",
+                            "STDDEV",
+                            "MIN",
+                            "MAX",
+                            "PERCENTILE_25",
+                            "PERCENTILE_50",
+                            "PERCENTILE_75"
+                        ]
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ColumnStatisticWarning": {
+                "required": ["action", "message"],
+                "type": "object",
+                "properties": {
+                    "action": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ColumnStatisticsResponse": {
+                "type": "object",
+                "properties": {
+                    "statistics": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ColumnStatistic"
+                        }
+                    },
+                    "histogram": {
+                        "$ref": "#/components/schemas/Histogram"
+                    },
+                    "frequency": {
+                        "$ref": "#/components/schemas/Frequency"
+                    },
+                    "warnings": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ColumnStatisticWarning"
+                        }
+                    }
+                }
+            },
+            "Frequency": {
+                "required": ["buckets"],
+                "type": "object",
+                "properties": {
+                    "buckets": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FrequencyBucket"
+                        }
+                    }
+                }
+            },
+            "FrequencyBucket": {
+                "required": ["count"],
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Histogram": {
+                "required": ["buckets"],
+                "type": "object",
+                "properties": {
+                    "buckets": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/HistogramBucket"
+                        }
+                    }
+                }
+            },
+            "HistogramBucket": {
+                "required": ["count", "lowerBound", "upperBound"],
+                "type": "object",
+                "properties": {
+                    "count": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "lowerBound": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "upperBound": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
             "TestDefinitionRequest": {
                 "required": ["type"],
                 "type": "object",
@@ -701,7 +963,12 @@
                             "GDSTORAGE",
                             "CLICKHOUSE",
                             "MYSQL",
-                            "MARIADB"
+                            "MARIADB",
+                            "ORACLE",
+                            "PINOT",
+                            "SINGLESTORE",
+                            "MOTHERDUCK",
+                            "FLEXCONNECT"
                         ]
                     },
                     "url": {
@@ -727,6 +994,22 @@
                     "token": {
                         "type": "string",
                         "description": "Secret for token based authentication for data sources which supports it."
+                    },
+                    "privateKey": {
+                        "type": "string",
+                        "description": "Private key for data sources which supports key-pair authentication."
+                    },
+                    "privateKeyPassphrase": {
+                        "type": "string",
+                        "description": "Passphrase for a encrypted version of a private key."
+                    },
+                    "clientId": {
+                        "type": "string",
+                        "description": "Id for client based authentication for data sources which supports it."
+                    },
+                    "clientSecret": {
+                        "type": "string",
+                        "description": "Secret for client based authentication for data sources which supports it."
                     },
                     "parameters": {
                         "type": "array",

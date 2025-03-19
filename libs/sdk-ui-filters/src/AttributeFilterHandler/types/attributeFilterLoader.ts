@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { IAttributeFilter } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import {
@@ -17,9 +17,21 @@ import { IAttributeElementLoader } from "./elementsLoader.js";
  */
 export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElementLoader {
     /**
-     * Get the effective filter.
+     * Get the effective filter for execution.
      */
     getFilter(): IAttributeFilter;
+
+    /**
+     * Get the filter to display in component, including custom displayAsLabel applied.
+     * Note: This filter is not used for execution and can be completely the same as getFilter one.
+     */
+    getFilterToDisplay(): IAttributeFilter;
+
+    /**
+     * Get original filter used for initialization
+     * During initialization process of migration to primary label could happen
+     */
+    getOriginalFilter(): IAttributeFilter;
 
     /**
      * Loads all the required data to initialize the attribute filter handler:

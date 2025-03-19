@@ -3,7 +3,7 @@
 exports[`createSortItem > creates valid attribute sort 1`] = `
 {
   "attributeSortItem": {
-    "attributeIdentifier": "a_label.product.id.name",
+    "attributeIdentifier": "a_label.f_product.product.name",
     "direction": "asc",
   },
 }
@@ -16,7 +16,7 @@ exports[`createSortItem > creates valid measure sort item when no column attribu
     "locators": [
       {
         "measureLocatorItem": {
-          "measureIdentifier": "m_aangOxLSeztu",
+          "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
         },
       },
     ],
@@ -31,13 +31,13 @@ exports[`createSortItem > creates valid measure sort item when single column att
     "locators": [
       {
         "attributeLocatorItem": {
-          "attributeIdentifier": "a_label.owner.region",
-          "element": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
+          "attributeIdentifier": "a_f_owner.region_id",
+          "element": "East Coast",
         },
       },
       {
         "measureLocatorItem": {
-          "measureIdentifier": "m_aangOxLSeztu",
+          "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
         },
       },
     ],
@@ -52,19 +52,19 @@ exports[`createSortItem > creates valid measure sort item when two attributes 1`
     "locators": [
       {
         "attributeLocatorItem": {
-          "attributeIdentifier": "a_label.stage.name.stagename",
-          "element": "/gdc/md/referenceworkspace/obj/1091/elements?id=166498",
+          "attributeIdentifier": "a_attr.f_stage.stagename",
+          "element": "Interest",
         },
       },
       {
         "attributeLocatorItem": {
-          "attributeIdentifier": "a_label.owner.region",
-          "element": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
+          "attributeIdentifier": "a_f_owner.region_id",
+          "element": "East Coast",
         },
       },
       {
         "measureLocatorItem": {
-          "measureIdentifier": "m_aangOxLSeztu",
+          "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
         },
       },
     ],

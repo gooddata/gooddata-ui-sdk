@@ -10,6 +10,7 @@ import {
     IRelativeDateFilter,
     SortDirection,
     ObjRef,
+    IAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -87,6 +88,9 @@ import {
     selectInitTotalCountStatus,
     selectInitTotalCountError,
     selectLimitingValidationItems,
+    selectAttributeFilterToDisplay,
+    selectOriginalFilter,
+    selectAttributeFilterDisplayAsLabel,
 } from "./redux/index.js";
 import { newAttributeFilterCallbacks } from "./callbacks.js";
 import { AttributeFilterHandlerConfig } from "./types.js";
@@ -385,6 +389,18 @@ export class AttributeFilterReduxBridge {
     // Elements options
     //
 
+    setDisplayAsLabel = (displayAsLabel: ObjRef, correlation?: Correlation): void => {
+        this.redux.dispatch(actions.setDisplayAsLabel({ displayAsLabel, correlation }));
+    };
+
+    getDisplayAsLabel = (): ObjRef | undefined => {
+        return this.redux.select(selectAttributeFilterDisplayAsLabel);
+    };
+
+    setDisplayForm = (displayForm: ObjRef, correlation?: Correlation): void => {
+        this.redux.dispatch(actions.setDisplayFormRef({ displayForm, correlation }));
+    };
+
     getOffset = (): number => {
         return this.redux.select(selectOffset);
     };
@@ -437,11 +453,11 @@ export class AttributeFilterReduxBridge {
         return this.redux.select(selectLimitingAttributeFilters);
     };
 
-    setLimitingDateFilters = (filters: IRelativeDateFilter[]): void => {
+    setLimitingDateFilters = (filters: IRelativeDateFilter[] | IAbsoluteDateFilter[]): void => {
         this.redux.dispatch(actions.setLimitingDateFilters({ filters }));
     };
 
-    getLimitingDateFilters = (): IRelativeDateFilter[] => {
+    getLimitingDateFilters = (): IRelativeDateFilter[] | IAbsoluteDateFilter[] => {
         return this.redux.select(selectLimitingDateFilters);
     };
 
@@ -597,6 +613,14 @@ export class AttributeFilterReduxBridge {
 
     getFilter = (): IAttributeFilter => {
         return this.redux.select(selectAttributeFilter);
+    };
+
+    getFilterToDisplay = (): IAttributeFilter => {
+        return this.redux.select(selectAttributeFilterToDisplay);
+    };
+
+    getOriginalFilter = (): IAttributeFilter => {
+        return this.redux.select(selectOriginalFilter);
     };
 
     onUpdate: CallbackRegistration<void> = (cb) => {

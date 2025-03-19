@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { OptionValues } from "commander";
 
@@ -16,11 +16,6 @@ export type ActionOptions = {
      */
     commandOpts: OptionValues;
 };
-
-/**
- * Supported backend types that the tool can target.
- */
-export type TargetBackendType = "bear" | "tiger";
 
 /**
  * Supported languages to use in plugin projects bootstrapped by the app.

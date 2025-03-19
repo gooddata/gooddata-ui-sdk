@@ -1,11 +1,14 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import isEmpty from "lodash/isEmpty.js";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { EllipsisText } from "./EllipsisText.js";
 import { ArrowOffsets, Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 import { useMediaQuery } from "../responsive/index.js";
+import { RichText } from "../RichText/index.js";
+import { IFilter } from "@gooddata/sdk-model";
 import cx from "classnames";
+import { ZOOM_THRESHOLD, useIsZoomed } from "../ZoomContext/ZoomContext.js";
 
 /**
  * @internal
@@ -66,6 +69,10 @@ export interface IDescriptionPanelProps {
     className?: string;
     onBubbleOpen?: () => void;
     arrowOffsets?: ArrowOffsets;
+    useRichText?: boolean;
+    useReferences?: boolean;
+    LoadingComponent?: React.ComponentType;
+    filters?: IFilter[];
 }
 
 /**
@@ -116,6 +123,7 @@ const DescriptionPanelCore: React.FC<IDescriptionPanelProps> = (props) => {
                 alignPoints={DESCRIPTION_PANEL_ALIGN_POINTS}
                 arrowOffsets={arrowOffsets}
                 arrowStyle={{ display: "none" }}
+                ensureVisibility={true}
             >
                 <DescriptionPanelContentCore {...props} />
             </Bubble>
@@ -124,14 +132,37 @@ const DescriptionPanelCore: React.FC<IDescriptionPanelProps> = (props) => {
 };
 
 const DescriptionPanelContentCore: React.FC<IDescriptionPanelProps> = (props) => {
-    const { title, description } = props;
+    const {
+        title,
+        description,
+        useRichText = false,
+        useReferences = false,
+        LoadingComponent,
+        filters,
+    } = props;
+
+    const isZoomed = useIsZoomed(ZOOM_THRESHOLD); // ignore slight zoom in
+
+    const className = cx("gd-description-panel s-gd-description-panel", {
+        zoomed: isZoomed,
+    });
 
     return (
-        <div className="gd-description-panel s-gd-description-panel">
+        <div className={className}>
             {!isEmpty(title) && <div className="gd-description-panel-title">{title}</div>}
             {!isEmpty(description) && (
                 <div className="gd-description-panel-content">
-                    <EllipsisText text={description} />
+                    {useRichText ? (
+                        <RichText
+                            value={description}
+                            renderMode="view"
+                            referencesEnabled={useReferences}
+                            filters={filters}
+                            LoadingComponent={LoadingComponent}
+                        />
+                    ) : (
+                        <EllipsisText text={description} />
+                    )}
                 </div>
             )}
         </div>

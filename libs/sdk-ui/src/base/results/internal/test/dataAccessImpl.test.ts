@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, dummyDataView, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
@@ -49,7 +49,7 @@ describe("DataAccessMethods", () => {
             const firstSeries = dataAccess.series().toArray()[0];
             const firstSeriesDataPoints = Array.from(firstSeries);
 
-            expect(firstSeriesDataPoints[0].rawValue).toEqual("116625456.54");
+            expect(firstSeriesDataPoints[0].rawValue).toEqual(116625456.54);
             expect(firstSeriesDataPoints[0].formattedValue()).toEqual("$116,625,456.54");
         });
     });
@@ -193,7 +193,7 @@ describe("DataAccessMethods", () => {
             const dataAccess = newDataAccessMethods(DataViewWithSeriesAndSlices);
             const slices = dataAccess.slices().toArray();
 
-            expect(slices.length).toEqual(30);
+            expect(slices.length).toEqual(24);
         });
 
         it("should correctly extract data for series", () => {
@@ -203,7 +203,7 @@ describe("DataAccessMethods", () => {
                 const dataPoints = Array.from(s);
                 const rawData = s.rawData();
 
-                expect(dataPoints.length).toEqual(30);
+                expect(dataPoints.length).toEqual(24);
                 expect(dataPoints.map((dp) => dp.rawValue)).toEqual(rawData);
                 expect({
                     series: `${s.scopeTitles().join(" > ")} > ${s.measureTitle()}`,

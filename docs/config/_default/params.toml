@@ -7,15 +7,6 @@
 # - "latestTag" - docker image tag for the latest patch version. Must be changed
 #                 on every patch release of respective branch
 [[versions]]
-    version = "9.0"
+    version = "local"
     dirpath = "latest"
     url = "/latest/"
-[[versions]]
-    version = "8.12"
-    url = "https://sdk.gooddata.com/gooddata-ui/"
-[[versions]]
-    version = "8.11"
-    url = "https://sdk.gooddata.com/gooddata-ui/docs/8.11.0/about_gooddataui.html"
-[[versions]]
-    version = "Older"
-    url = "https://sdk.gooddata.com/gooddata-ui/versions.html"

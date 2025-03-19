@@ -7,17 +7,21 @@
                         "measure": {
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
                                 }
                             },
-                            "localIdentifier": "m_aangOxLSeztu"
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
                         }
                     }
                 ],
                 "localIdentifier": "measures"
             },
             { "items": [], "localIdentifier": "secondary_measures" },
-            { "items": [], "localIdentifier": "attribute" }
+            { "items": [], "localIdentifier": "attribute" },
+            { "items": [], "localIdentifier": "segment" }
         ],
         "filters": [],
         "identifier": "ScatterPlot.1e8ea5cd5007cf4882be17f68da9b629",

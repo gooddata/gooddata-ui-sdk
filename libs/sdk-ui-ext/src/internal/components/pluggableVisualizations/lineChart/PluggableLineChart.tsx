@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
 import isEmpty from "lodash/isEmpty.js";
@@ -136,6 +136,8 @@ export class PluggableLineChart extends PluggableBaseChart {
             newReferencePoint = removeSort(newReferencePoint);
         }
 
+        this.referencePoint = newReferencePoint;
+
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
@@ -246,6 +248,7 @@ export class PluggableLineChart extends PluggableBaseChart {
                 <LineChartBasedConfigurationPanel
                     locale={this.locale}
                     references={this.references}
+                    referencePoint={this.referencePoint}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
                     insight={insight}
@@ -320,7 +323,12 @@ export class PluggableLineChart extends PluggableBaseChart {
         backendSupportsElementUris: boolean,
     ) {
         const cutIntersection = reverseAndTrimIntersection(drillConfig, event.drillContext.intersection);
-        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
+        return addIntersectionFiltersToInsight(
+            source,
+            cutIntersection,
+            backendSupportsElementUris,
+            this.featureFlags.enableDuplicatedLabelValuesInAttributeFilter,
+        );
     }
 
     private getDefaultAndAvailableSort(referencePoint: IReferencePoint): {

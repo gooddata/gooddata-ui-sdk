@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { ILiveFeatures, FeatureContext } from "@gooddata/api-client-tiger";
 import axios, { AxiosResponse } from "axios";
 
@@ -88,6 +88,26 @@ async function getFeatureHubData(
     context: FeatureContext,
     state?: HubServiceState[string],
 ): Promise<AxiosResponse<FeatureHubResponse>> {
+    const featureHubFlags: string[] = [];
+    if (context.organizationId) {
+        featureHubFlags.push(`organizationId=${encodeURIComponent(context.organizationId)}`);
+    }
+    if (context.earlyAccessValues?.length > 0) {
+        featureHubFlags.push(
+            `earlyAccess=${context.earlyAccessValues
+                .filter(Boolean)
+                .map((v) => encodeURIComponent(v))
+                .join(";")}`,
+        );
+    }
+    if (context.tier) {
+        featureHubFlags.push(`tier=${encodeURIComponent(context.tier)}`);
+    }
+
+    if (context.jsSdkVersion) {
+        featureHubFlags.push(`jsSdkVersion=${encodeURIComponent(context.jsSdkVersion)}`);
+    }
+
     return axios.get("/features", {
         method: "GET",
         baseURL: host,
@@ -97,14 +117,7 @@ async function getFeatureHubData(
         timeout: FH_TIMEOUT,
         headers: {
             "Content-type": "application/json",
-            "X-FeatureHub": Object.keys(context)
-                .reduce((prev, item) => {
-                    return [
-                        ...prev,
-                        `${item}=${encodeURIComponent(context[item as keyof typeof context].toString())}`,
-                    ];
-                }, [] as Array<string>)
-                .join(","),
+            "X-FeatureHub": featureHubFlags.join(","),
             ...(state ? { "if-none-match": state.etag } : {}),
         },
         validateStatus: (status) => {

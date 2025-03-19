@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useMemo } from "react";
 import cx from "classnames";
 import { IInsight, insightVisualizationType, widgetRef } from "@gooddata/sdk-model";
@@ -20,6 +20,7 @@ import { useEditableInsightMenu } from "./useEditableInsightMenu.js";
 import { IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { EditableDashboardInsightWidgetHeader } from "./EditableDashboardInsightWidgetHeader.js";
+import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
 
 export const EditableDashboardInsightWidget: React.FC<
     Omit<IDefaultDashboardInsightWidgetProps, "insight">
@@ -31,9 +32,9 @@ export const EditableDashboardInsightWidget: React.FC<
  * @internal
  */
 const EditableDashboardInsightWidgetCore: React.FC<
-    IDefaultDashboardInsightWidgetProps & { insight: IInsight }
+    IDefaultDashboardInsightWidgetProps & { insight?: IInsight }
 > = ({ widget, insight, screen, onError, onExportReady, onLoadingChanged, dashboardItemClasses }) => {
-    const visType = insightVisualizationType(insight) as VisType;
+    const visType = insight ? (insightVisualizationType(insight) as VisType) : undefined;
 
     const { isSelectable, isSelected, onSelected, closeConfigPanel, hasConfigPanelOpen } = useWidgetSelection(
         widgetRef(widget),
@@ -51,6 +52,7 @@ const EditableDashboardInsightWidgetCore: React.FC<
 
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
     const isEditable = !isSaving;
+    const isDraggingWidget = useIsDraggingWidget();
 
     return (
         <DashboardItem
@@ -98,7 +100,7 @@ const EditableDashboardInsightWidgetCore: React.FC<
                         </>
                     );
                 }}
-                contentClassName={cx({ "is-editable": isEditable })}
+                contentClassName={cx({ "is-editable": isEditable, "is-dragging-widget": isDraggingWidget })}
                 visualizationClassName={cx({ "is-editable": isEditable })}
             >
                 {({ clientHeight, clientWidth }) => (

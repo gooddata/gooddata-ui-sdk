@@ -21,7 +21,12 @@ export type DataSourceType =
     | "GDSTORAGE"
     | "CLICKHOUSE"
     | "MYSQL"
-    | "MARIADB";
+    | "MARIADB"
+    | "ORACLE"
+    | "PINOT"
+    | "SINGLESTORE"
+    | "MOTHERDUCK"
+    | "FLEXCONNECT";
 
 /**
  * @alpha

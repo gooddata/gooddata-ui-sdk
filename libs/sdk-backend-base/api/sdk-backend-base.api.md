@@ -7,14 +7,20 @@
 import { AttributeModifications } from '@gooddata/sdk-model';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
+import { DashboardFiltersApplyMode } from '@gooddata/sdk-model';
 import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { ErrorConverter } from '@gooddata/sdk-backend-spi';
 import { ExplainConfig } from '@gooddata/sdk-backend-spi';
 import { ExplainType } from '@gooddata/sdk-backend-spi';
 import { FilterContextItem } from '@gooddata/sdk-model';
+import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
+import { GenAIObjectType } from '@gooddata/sdk-model';
+import { IAlertDefault } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
+import { IAnomalyDetectionConfig } from '@gooddata/sdk-backend-spi';
+import { IAnomalyDetectionResult } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
@@ -30,9 +36,16 @@ import { ICatalogDateDataset } from '@gooddata/sdk-model';
 import { ICatalogFact } from '@gooddata/sdk-model';
 import { ICatalogGroup } from '@gooddata/sdk-model';
 import { ICatalogMeasure } from '@gooddata/sdk-model';
+import { IChatThread } from '@gooddata/sdk-backend-spi';
+import { IChatThreadHistory } from '@gooddata/sdk-backend-spi';
+import { IChatThreadQuery } from '@gooddata/sdk-backend-spi';
+import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
+import { IClusteringResult } from '@gooddata/sdk-backend-spi';
 import { IDashboard } from '@gooddata/sdk-model';
+import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
+import { IDashboardFilterView } from '@gooddata/sdk-model';
 import { IDashboardMetadataObject } from '@gooddata/sdk-model';
 import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardPlugin } from '@gooddata/sdk-model';
@@ -56,6 +69,8 @@ import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
+import { IForecastConfig } from '@gooddata/sdk-backend-spi';
+import { IForecastResult } from '@gooddata/sdk-backend-spi';
 import { IGetDashboardOptions } from '@gooddata/sdk-backend-spi';
 import { IGetDashboardPluginOptions } from '@gooddata/sdk-backend-spi';
 import { IGetScheduledMailOptions } from '@gooddata/sdk-backend-spi';
@@ -78,10 +93,16 @@ import { INullableFilter } from '@gooddata/sdk-model';
 import { IPagedResource } from '@gooddata/sdk-backend-spi';
 import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
+import { IPreparedExecutionOptions } from '@gooddata/sdk-backend-spi';
+import { IRawExportCustomOverrides } from '@gooddata/sdk-backend-spi';
+import { IRequestCorrelationMetadata } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
 import { ISecuritySettingsService } from '@gooddata/sdk-backend-spi';
+import { ISemanticSearchQuery } from '@gooddata/sdk-backend-spi';
+import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
+import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
@@ -93,6 +114,7 @@ import { IWidgetAlertCount } from '@gooddata/sdk-backend-spi';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { IWidgetReferences } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceAttributesService } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceAutomationService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalog } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogAvailableItemsFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
@@ -114,15 +136,15 @@ import { VisualizationProperties } from '@gooddata/sdk-model';
 export abstract class AbstractExecutionFactory implements IExecutionFactory {
     constructor(workspace: string);
     // (undocumented)
-    forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
+    forBuckets(buckets: IBucket[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    abstract forDefinition(def: IExecutionDefinition): IPreparedExecution;
+    abstract forDefinition(def: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
+    forInsight(insight: IInsightDefinition, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution;
+    forInsightByRef(insight: IInsight, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
     protected readonly workspace: string;
 }
@@ -136,6 +158,8 @@ export type AnalyticalBackendCallbacks = {
     failedResultReadAll?: (error: any, executionId: string) => void;
     successfulResultReadWindow?: (offset: number[], size: number[], dataView: IDataView, executionId: string) => void;
     failedResultReadWindow?: (offset: number[], size: number[], error: any, executionId: string) => void;
+    successfulForecastResultReadAll?: (forecastResult: IForecastResult, executionId: string) => void;
+    failedForecastResultReadAll?: (error: any, executionId: string) => void;
 };
 
 // @public
@@ -161,6 +185,8 @@ export class AttributeDisplayFormMetadataObjectBuilder<T extends IAttributeDispl
     displayFormType(type: string | undefined): this;
     // (undocumented)
     isDefault(value: boolean | undefined): this;
+    // (undocumented)
+    isPrimary(value: boolean | undefined): this;
 }
 
 // @beta
@@ -188,7 +214,7 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
     // (undocumented)
     authenticate: (context: IAuthenticationContext) => Promise<IAuthenticatedPrincipal>;
     // (undocumented)
-    deauthenticate(context: IAuthenticationContext): Promise<void>;
+    deauthenticate(context: IAuthenticationContext, returnTo?: string): Promise<void>;
     // (undocumented)
     getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
     // (undocumented)
@@ -198,6 +224,9 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
     // (undocumented)
     reset: () => void;
 }
+
+// @alpha (undocumented)
+export type AutomationsDecoratorFactory = (automations: IWorkspaceAutomationService, workspace: string) => IWorkspaceAutomationService;
 
 // @beta
 export class Builder<T> implements IBuilder<T> {
@@ -244,6 +273,7 @@ export type CachingConfiguration = {
     maxSecuritySettingsOrgUrls?: number;
     maxSecuritySettingsOrgUrlsAge?: number;
     maxAttributeWorkspaces?: number;
+    maxAutomationsWorkspaces?: number;
     maxAttributeDisplayFormsPerWorkspace?: number;
     maxAttributesPerWorkspace?: number;
     maxAttributeElementResultsPerWorkspace?: number;
@@ -254,6 +284,8 @@ export type CachingConfiguration = {
 export class CatalogAttributeBuilder<T extends ICatalogAttribute = ICatalogAttribute> extends GroupableCatalogItemBuilder<T> {
     // (undocumented)
     attribute(attributeOrRef: IAttributeMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeMetadataObjectBuilder>): this;
+    // (undocumented)
+    dataSet(dataSet: IDataSetMetadataObject | undefined): this;
     // (undocumented)
     defaultDisplayForm(displayFormOrRef: IAttributeDisplayFormMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>): this;
     // (undocumented)
@@ -370,21 +402,21 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
     // (undocumented)
     protected readonly decorated: IExecutionFactory;
     // (undocumented)
-    forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
+    forBuckets(buckets: IBucket[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forDefinition(def: IExecutionDefinition): IPreparedExecution;
+    forDefinition(def: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
+    forInsight(insight: IInsightDefinition, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution;
+    forInsightByRef(insight: IInsight, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     protected wrap: (execution: IPreparedExecution) => IPreparedExecution;
 }
 
 // @alpha
 export abstract class DecoratedExecutionResult implements IExecutionResult {
-    protected constructor(decorated: IExecutionResult, wrapper?: PreparedExecutionWrapper);
+    protected constructor(decorated: IExecutionResult, wrapper?: PreparedExecutionWrapper, signal?: AbortSignal | undefined);
     // (undocumented)
     definition: IExecutionDefinition;
     // (undocumented)
@@ -400,15 +432,23 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     // (undocumented)
     readAll(): Promise<IDataView>;
     // (undocumented)
+    readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult>;
+    // (undocumented)
+    readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult>;
+    // (undocumented)
+    readForecastAll(config: IForecastConfig): Promise<IForecastResult>;
+    // (undocumented)
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
+    // (undocumented)
+    readonly signal: AbortSignal | undefined;
     // (undocumented)
     transform(): IPreparedExecution;
 }
 
 // @alpha
 export abstract class DecoratedPreparedExecution implements IPreparedExecution {
-    protected constructor(decorated: IPreparedExecution);
-    protected abstract createNew(decorated: IPreparedExecution): IPreparedExecution;
+    protected constructor(decorated: IPreparedExecution, signal?: AbortSignal | undefined);
+    protected abstract createNew(decorated: IPreparedExecution, signal?: AbortSignal): IPreparedExecution;
     // (undocumented)
     protected readonly decorated: IPreparedExecution;
     // (undocumented)
@@ -422,6 +462,8 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     // (undocumented)
     fingerprint(): string;
     // (undocumented)
+    readonly signal: AbortSignal | undefined;
+    // (undocumented)
     withBuckets(...buckets: IBucket[]): IPreparedExecution;
     // (undocumented)
     withDateFormat(dateFormat: string): IPreparedExecution;
@@ -429,6 +471,8 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
     // (undocumented)
     withExecConfig(config: IExecutionConfig): IPreparedExecution;
+    // (undocumented)
+    withSignal(signal: AbortSignal): IPreparedExecution;
     // (undocumented)
     withSorting(...items: ISortItem[]): IPreparedExecution;
 }
@@ -499,6 +543,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     createDashboardPlugin(plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin>;
     // (undocumented)
+    createFilterView(filterView: IDashboardFilterView): Promise<IDashboardFilterView>;
+    // (undocumented)
     createScheduledMail(scheduledMail: IScheduledMailDefinition, exportFilterContext?: IFilterContextDefinition): Promise<IScheduledMail>;
     // (undocumented)
     createWidgetAlert(alert: IWidgetAlertDefinition): Promise<IWidgetAlert>;
@@ -509,13 +555,24 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     deleteDashboardPlugin(ref: ObjRef): Promise<void>;
     // (undocumented)
+    deleteFilterView(ref: ObjRef): Promise<void>;
+    // (undocumented)
     deleteScheduledMail(ref: ObjRef): Promise<void>;
     // (undocumented)
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     // (undocumented)
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     // (undocumented)
+    exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string, customOverrides?: IRawExportCustomOverrides): Promise<IExportResult>;
+    // (undocumented)
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
+    // (undocumented)
+    exportDashboardToPresentation(ref: ObjRef, format: "PPTX" | "PDF", filters?: FilterContextItem[], options?: {
+        widgetIds?: ObjRef[];
+        filename?: string;
+    }): Promise<IExportResult>;
+    // (undocumented)
+    exportDashboardToTabular(ref: ObjRef): Promise<IExportResult>;
     // (undocumented)
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     // (undocumented)
@@ -537,9 +594,11 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
     // (undocumented)
-    getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
+    getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]>;
     // (undocumented)
-    getResolvedFiltersForWidgetWithMultipleDateFilters(widget: IWidget, commonDateFilters: IDateFilter[], otherFilters: IFilter[]): Promise<IFilter[]>;
+    getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[], attributeFilterConfigs: IDashboardAttributeFilterConfig[]): Promise<IFilter[]>;
+    // (undocumented)
+    getResolvedFiltersForWidgetWithMultipleDateFilters(widget: IWidget, commonDateFilters: IDateFilter[], otherFilters: IFilter[], attributeFilterConfigs: IDashboardAttributeFilterConfig[]): Promise<IFilter[]>;
     // (undocumented)
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
     // (undocumented)
@@ -548,6 +607,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
     // (undocumented)
     getWidgetReferencedObjects(widget: IWidget, types?: SupportedWidgetReferenceTypes[]): Promise<IWidgetReferences>;
+    // (undocumented)
+    setFilterViewAsDefault(ref: ObjRef, isDefault: boolean): Promise<void>;
     // (undocumented)
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
     // (undocumented)
@@ -566,15 +627,33 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     protected decorated: IWorkspaceSettingsService;
     // (undocumented)
+    deleteColorPalette(): Promise<void>;
+    // (undocumented)
+    deleteDashboardFiltersApplyMode(): Promise<void>;
+    // (undocumented)
+    deleteTheme(): Promise<void>;
+    // (undocumented)
     getSettings(): Promise<IWorkspaceSettings>;
     // (undocumented)
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
     // (undocumented)
+    setAlertDefault(value: IAlertDefault): Promise<void>;
+    // (undocumented)
     setColorPalette(colorPaletteId: string): Promise<void>;
+    // (undocumented)
+    setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
+    // (undocumented)
+    setDateFormat(dateFormat: string): Promise<void>;
     // (undocumented)
     setLocale(locale: string): Promise<void>;
     // (undocumented)
+    setSeparators(separators: ISeparators): Promise<void>;
+    // (undocumented)
     setTheme(themeId: string): Promise<void>;
+    // (undocumented)
+    setTimezone(timezone: string): Promise<void>;
+    // (undocumented)
+    setWeekStart(weekStart: string): Promise<void>;
 }
 
 // @alpha
@@ -584,6 +663,7 @@ export type DecoratorFactories = {
     securitySettings?: SecuritySettingsDecoratorFactory;
     workspaceSettings?: WorkspaceSettingsDecoratorFactory;
     attributes?: AttributesDecoratorFactory;
+    automations?: AutomationsDecoratorFactory;
     dashboards?: DashboardsDecoratorFactory;
 };
 
@@ -611,6 +691,56 @@ export function dummyBackendEmptyData(): IAnalyticalBackend;
 // @internal
 export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult, config?: DummyBackendConfig): IDataView;
 
+// @internal
+export class DummyGenAIChatThread implements IChatThread {
+    // (undocumented)
+    loadHistory(_fromInteractionId: string, { signal }: {
+        signal?: AbortSignal;
+    }): Promise<IChatThreadHistory>;
+    // (undocumented)
+    query(_userMessage: string): IChatThreadQuery;
+    // (undocumented)
+    reset(): Promise<void>;
+    // (undocumented)
+    saveUserFeedback(_interactionId: string, _feedback: GenAIChatInteractionUserFeedback): Promise<void>;
+}
+
+// @internal
+export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
+    constructor(workspaceId: string);
+    // (undocumented)
+    query({ signal }?: {
+        signal?: AbortSignal;
+    }): Promise<{
+        results: {
+            id: string;
+            type: GenAIObjectType;
+            workspaceId: string;
+            title: string;
+            description: string;
+            tags: string[];
+            createdAt: string;
+            modifiedAt: string;
+            visualizationUrl: string | undefined;
+            score: number;
+            scoreTitle: number;
+            scoreDescriptor: number;
+            scoreExactMatch: number;
+        }[];
+        relationships: ISemanticSearchRelationship[];
+    }>;
+    // (undocumented)
+    question: string;
+    // (undocumented)
+    withDeepSearch(): this;
+    // (undocumented)
+    withLimit(): this;
+    // (undocumented)
+    withObjectTypes(): this;
+    // (undocumented)
+    withQuestion(question: string): this;
+}
+
 // @alpha (undocumented)
 export type ExecutionDecoratorFactory = (executionFactory: IExecutionFactory) => IExecutionFactory;
 
@@ -618,20 +748,20 @@ export type ExecutionDecoratorFactory = (executionFactory: IExecutionFactory) =>
 export class ExecutionFactoryUpgradingToExecByReference extends DecoratedExecutionFactory {
     constructor(decorated: IExecutionFactory);
     // (undocumented)
-    forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
+    forInsight(insight: IInsightDefinition, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
 }
 
 // @internal
 export class ExecutionFactoryWithFixedFilters extends DecoratedExecutionFactory {
     constructor(decorated: IExecutionFactory, filters?: INullableFilter[]);
     // (undocumented)
-    forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
+    forBuckets(buckets: IBucket[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
+    forInsight(insight: IInsightDefinition, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution;
+    forInsightByRef(insight: IInsight, filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
     // (undocumented)
-    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[], options?: IPreparedExecutionOptions): IPreparedExecution;
 }
 
 // @beta
@@ -756,6 +886,7 @@ export type IServerPagingParams = {
     offset: number;
     limit: number;
     cacheId?: string;
+    totalCount?: number;
 };
 
 // @internal (undocumented)
@@ -998,6 +1129,7 @@ export type SettingsWrapper = (settings: IWorkspaceSettings) => IWorkspaceSettin
 export type TelemetryData = {
     componentName?: string;
     props?: string[];
+    correlationMetadata?: IRequestCorrelationMetadata;
 };
 
 // @public

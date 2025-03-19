@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { IDashboardCommand } from "./base.js";
 import {
@@ -9,7 +9,8 @@ import {
     InsightDrillDefinition,
     IInsightWidgetConfiguration,
     IDrillDownReference,
-    IInsightDefinition,
+    IInsightWidget,
+    IInsight,
 } from "@gooddata/sdk-model";
 import {
     FilterOpReplaceAll,
@@ -679,6 +680,7 @@ export interface RemoveDrillDownForInsightWidgetPayload {
 
     /**
      * Specify drill localIdentifier and its hierarchy should be removed.
+     * Ignored intersection attributes for specified herarchies will be removed as well.
      */
     readonly blacklistHierarchies: IDrillDownReference[];
 }
@@ -745,6 +747,11 @@ export interface AddDrillDownForInsightWidgetPayload {
      * Specify drill down hierarchy reference that should be added.
      */
     readonly drillDownAttributeHierarchyRef: ObjRef;
+
+    /**
+     * Specify local identifiers of attributes that should be ignored in drill intersection.
+     */
+    readonly intersectionIgnoredAttributes: string[];
 }
 
 /**
@@ -755,6 +762,7 @@ export interface AddDrillDownForInsightWidgetPayload {
  * @param attributeIdentifier - drill localIdentifier that should be added.
  * @param drillDownIdentifier - drill down hierarchy localIdentifier that should be added.
  * @param drillDownAttributeHierarchyRef - drill down hierarchy reference that should be added.
+ * @param intersectionIgnoredAttributes - specify local identifiers of attributes that should be ignored in drill intersection during drill down.
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -765,6 +773,7 @@ export function addDrillDownForInsightWidget(
     attributeIdentifier: ObjRef,
     drillDownIdentifier: string,
     drillDownAttributeHierarchyRef: ObjRef,
+    intersectionIgnoredAttributes: string[] = [],
     correlationId?: string,
 ): AddDrillDownForInsightWidget {
     return {
@@ -775,6 +784,7 @@ export function addDrillDownForInsightWidget(
             attributeIdentifier,
             drillDownIdentifier,
             drillDownAttributeHierarchyRef,
+            intersectionIgnoredAttributes,
         },
     };
 }
@@ -812,9 +822,17 @@ export interface ModifyDrillDownForInsightWidgetPayload {
     readonly attributeHierarchyRef: ObjRef;
 
     /**
-     * Specify drill localIdentifier and its hierarchy should be modified.
+     * Specify hierarchies that should be added to the ignored hierarchies of the widget.
+     * If no blacklistHierarchies are provided, ignored hierarchies keep unchanged.
      */
     readonly blacklistHierarchies: IDrillDownReference[];
+
+    /**
+     * Specify local identifiers of attributes that should be ignored in drill intersection
+     * during drill down.
+     * If no intersectionIgnoredAttributes are provided, ignored attributes keep unchanged.
+     */
+    readonly intersectionIgnoredAttributes?: string[];
 }
 
 /**
@@ -825,6 +843,7 @@ export interface ModifyDrillDownForInsightWidgetPayload {
  * @param attributeIdentifier - drill localIdentifier and its hierarchy should be modified.
  * @param attributeHierarchyRef - drill attribute hierarchy ref to be modified.
  * @param blacklistHierarchies - drill localIdentifiers and its hierarchy should be modified
+ * @param intersectionIgnoredAttributes - specify local identifiers of attributes that should be ignored in drill intersection during drill down.
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -835,6 +854,7 @@ export function modifyDrillDownForInsightWidget(
     attributeIdentifier: ObjRef,
     attributeHierarchyRef: ObjRef,
     blacklistHierarchies: IDrillDownReference[],
+    intersectionIgnoredAttributes?: string[],
     correlationId?: string,
 ): ModifyDrillDownForInsightWidget {
     return {
@@ -845,6 +865,7 @@ export function modifyDrillDownForInsightWidget(
             attributeIdentifier,
             attributeHierarchyRef,
             blacklistHierarchies,
+            intersectionIgnoredAttributes,
         },
     };
 }
@@ -945,9 +966,24 @@ export function exportInsightWidget(
  */
 export interface ExportRawInsightWidgetPayload {
     /**
-     * Reference to Insight to export.
+     * Reference to Insight Widget to export.
      */
-    readonly insight: IInsightDefinition;
+    readonly ref: ObjRef;
+
+    /**
+     * Reference to Insight Widget to export.
+     */
+    readonly widget: IInsightWidget;
+
+    /**
+     * Reference to Insight definition to export.
+     */
+    readonly insight: IInsight;
+
+    /**
+     * Reference to Insight title to export.
+     */
+    readonly filename: string;
 }
 
 /**
@@ -957,25 +993,87 @@ export interface ExportRawInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW";
     readonly payload: ExportRawInsightWidgetPayload;
 }
-
 /**
  * Creates the ExportRawInsightWidget command. Dispatching this command will result in exporting of the widget to a CSV.
  *
- * @param ref - reference to the Insight widget to refresh
+ * @param insight - insight to export
+ * @param filename - filename of the exported file
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @alpha
  */
 export function exportRawInsightWidget(
-    insight: IInsightDefinition,
+    ref: ObjRef,
+    widget: IInsightWidget,
+    insight: IInsight,
+    filename: string,
     correlationId?: string,
 ): ExportRawInsightWidget {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW",
         correlationId,
         payload: {
+            ref,
+            widget,
             insight,
+            filename,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link ExportRawInsightWidget} command.
+ * @alpha
+ */
+export interface ExportSlidesInsightWidgetPayload {
+    /**
+     * Reference to Insight to export.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Reference to Insight title to export.
+     */
+    readonly filename: string;
+
+    /**
+     * Type of export to perform.
+     */
+    readonly exportType: "pdf" | "pptx";
+}
+
+/**
+ * @alpha
+ */
+export interface ExportSlidesInsightWidget extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_SLIDES";
+    readonly payload: ExportSlidesInsightWidgetPayload;
+}
+/**
+ * Creates the ExportSlidesInsightWidget command. Dispatching this command will result in exporting of the widget to a slides type (pdf, pptx).
+ *
+ * @param ref - reference to the Insight to export
+ * @param filename - filename of the exported file
+ * @param exportType - type of export to perform
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function exportSlidesInsightWidget(
+    ref: ObjRef,
+    filename: string,
+    exportType: "pdf" | "pptx",
+    correlationId?: string,
+): ExportSlidesInsightWidget {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_SLIDES",
+        correlationId,
+        payload: {
+            ref,
+            filename,
+            exportType,
         },
     };
 }
@@ -1108,6 +1206,56 @@ export function unignoreDateFilterOnInsightWidget(
                 type: "unignoreDateFilter",
                 dateDataSetRefs,
             },
+        },
+    };
+}
+
+/**
+ * Payload of the {@link ChangeInsightWidgetIgnoreCrossFiltering} command.
+ * @alpha
+ */
+export interface ChangeInsightWidgetIgnoreCrossFilteringPayload {
+    /**
+     * Reference to Insight Widget whose ignore cross-filtering setting to change.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Value for the ignore cross-filtering setting.
+     */
+    readonly ignoreCrossFiltering: boolean;
+}
+
+/**
+ * @alpha
+ */
+export interface ChangeInsightWidgetIgnoreCrossFiltering extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_IGNORE_CROSS_FILTERING";
+    readonly payload: ChangeInsightWidgetIgnoreCrossFilteringPayload;
+}
+
+/**
+ * Creates the ChangeInsightWidgetCrossFiltering command. Dispatching this command will result in change of the Insight widget's
+ * cross-filtering setting.
+ *
+ * @param ref - reference of the insight widget to modify
+ * @param value - new value to use
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function changeInsightWidgetIgnoreCrossFiltering(
+    ref: ObjRef,
+    ignoreCrossFiltering: boolean,
+    correlationId?: string,
+): ChangeInsightWidgetIgnoreCrossFiltering {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_IGNORE_CROSS_FILTERING",
+        correlationId,
+        payload: {
+            ref,
+            ignoreCrossFiltering,
         },
     };
 }

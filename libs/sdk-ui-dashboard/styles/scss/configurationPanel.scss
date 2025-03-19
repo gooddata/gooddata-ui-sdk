@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "variables";
 @use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
@@ -35,6 +35,24 @@
 
     .gd-button {
         max-width: 100%;
+    }
+
+    .gd-rich-text-insight-description {
+        height: 85px;
+        overflow: auto;
+
+        textarea {
+            font-weight: 400;
+            font-size: 14px;
+            font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+            line-height: 19px;
+            color: var(--gd-palette-complementary-7, #6d7680);
+            padding: 0;
+        }
+
+        .gd-bubble-trigger {
+            margin: revert;
+        }
     }
 }
 
@@ -105,6 +123,22 @@
             padding-left: 0;
         }
 
+        .configuration-category-item {
+            display: block;
+            padding: variables.$filter-config-padding 0;
+            font-size: 12px;
+            line-height: 20px;
+
+            .input-label-text {
+                display: flex;
+            }
+
+            // Same selector and rule as in KD to have consistent look in Dashboard component and in KD.
+            label .gd-bubble-trigger {
+                margin: 0 5px;
+            }
+        }
+
         .configuration-panel-header-title {
             color: kit-variables.$gd-color-state-blank;
             font-size: 11px;
@@ -151,6 +185,15 @@
             width: 100%;
             padding: 3px 10px 3px 15px;
             background: kit-variables.$is-focused-background;
+        }
+
+        .configuration-panel-footer {
+            padding: 10px 10px 0;
+
+            .configuration-panel-footer__content {
+                border-top: 1px solid kit-variables.$gd-border-color;
+                padding: 10px 0;
+            }
         }
     }
 }
@@ -487,11 +530,11 @@
             margin-top: -3px;
 
             &:hover::before {
-                color: var(--gd-palette-complementary-5, #999);
+                color: var(--gd-palette-complementary-5-from-theme, #999);
             }
             &::before {
                 font: 14px/1 "Indigo", sans-serif;
-                color: var(--gd-palette-complementary-5, #bbb);
+                color: var(--gd-palette-complementary-5-from-theme, #bbb);
             }
         }
 
@@ -551,16 +594,27 @@
     }
 }
 
+.gd-cross-filtering-configuration {
+    margin-top: 10px;
+
+    .question-mark-icon {
+        margin-left: 5px;
+        position: relative;
+        top: 4px;
+    }
+}
+
 .gd-configuration-export-options {
     width: 100%;
-
+    .gd-export-options-pdf-presentation,
+    .gd-export-options-pptx-presentation,
     .gd-export-options-xlsx,
     .gd-export-options-csv,
     .gd-export-options-csv-raw {
         justify-content: flex-start;
     }
-
-    .gd-icon-download {
+    .gd-export-icon {
         margin-right: 10px;
+        display: flex;
     }
 }

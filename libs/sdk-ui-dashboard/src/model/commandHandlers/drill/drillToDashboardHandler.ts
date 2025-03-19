@@ -1,8 +1,9 @@
 // (C) 2021-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { call, put, select } from "redux-saga/effects";
+import { SagaReturnType, call, put, select } from "redux-saga/effects";
 import compact from "lodash/compact.js";
 import isEmpty from "lodash/isEmpty.js";
+import isEqual from "lodash/isEqual.js";
 import { invariant } from "ts-invariant";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { DrillToDashboard } from "../../commands/drill.js";
@@ -38,13 +39,27 @@ import {
     FilterContextItem,
     isDashboardAttributeFilter,
     IDateFilter,
+    IDashboardAttributeFilterConfig,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { DashboardState } from "../../store/types.js";
-import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
+import {
+    IConversionResult,
+    convertIntersectionToAttributeFilters,
+    removeIgnoredValuesFromDrillIntersection,
+} from "./common/intersectionUtils.js";
 import { selectSupportsMultipleDateFilters } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectEnableMultipleDateFilters } from "../../store/config/configSelectors.js";
+import {
+    selectEnableDuplicatedLabelValuesInAttributeFilter,
+    selectEnableMultipleDateFilters,
+} from "../../store/config/configSelectors.js";
+import {
+    selectAttributeFilterConfigsDisplayAsLabelMap,
+    selectAttributeFilterConfigsOverrides,
+} from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
 
 export function* drillToDashboardHandler(
     ctx: DashboardContext,
@@ -82,34 +97,136 @@ export function* drillToDashboardHandler(
     const enableMultipleDateFilters = yield select(selectEnableMultipleDateFilters);
     const includeOtherDateFilters = supportsMultipleDateFilters && enableMultipleDateFilters;
 
+    const allOtherFilters: ReturnType<typeof selectAllOtherFilters> = yield select(selectAllOtherFilters);
+    const allAttributeFilters: ReturnType<typeof selectAllAttributeFilters> = yield select(
+        selectAllAttributeFilters,
+    );
+
+    const widgetAwareFilters: SagaReturnType<typeof getWidgetAwareDashboardFilters> = !isDrillingToSelf
+        ? yield call(getWidgetAwareDashboardFilters, ctx, widget, includeOtherDateFilters)
+        : [];
+
     const dashboardFilters = isDrillingToSelf
         ? // if drilling to self, just take all filters
           includeOtherDateFilters
-            ? yield select(selectAllOtherFilters)
-            : yield select(selectAllAttributeFilters)
+            ? allOtherFilters
+            : allAttributeFilters
         : // if drilling to other, resolve widget filter ignores
-          yield call(getWidgetAwareFilters, ctx, widget, includeOtherDateFilters);
+          widgetAwareFilters;
 
     const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> = yield select(
         selectCatalogDateAttributes,
     );
+
+    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
+        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
+    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
+
+    const filteredIntersection = cmd.payload.drillDefinition.drillIntersectionIgnoredAttributes
+        ? removeIgnoredValuesFromDrillIntersection(
+              cmd.payload.drillEvent.drillContext.intersection ?? [],
+              cmd.payload.drillDefinition.drillIntersectionIgnoredAttributes ?? [],
+          )
+        : cmd.payload.drillEvent.drillContext.intersection!;
+
+    const filtersCount = dashboardFilters.length;
     const drillIntersectionFilters = convertIntersectionToAttributeFilters(
-        cmd.payload.drillEvent.drillContext.intersection!,
+        filteredIntersection,
         dateAttributes.map((dA) => dA.attribute.ref),
         ctx.backend.capabilities.supportsElementUris ?? true,
+        enableDuplicatedLabelValuesInAttributeFilter,
+        false,
+        filtersCount,
     );
 
+    const [transformedFilters, attributeFilterConfigsFromTransformation] = transformToPrimaryLabelFilters(
+        drillIntersectionFilters,
+        filtersCount,
+    );
+
+    const attributeFilterConfigs: IDashboardAttributeFilterConfig[] =
+        enableDuplicatedLabelValuesInAttributeFilter ? attributeFilterConfigsFromTransformation : [];
+    const intersectionFilters = enableDuplicatedLabelValuesInAttributeFilter
+        ? transformedFilters
+        : drillIntersectionFilters.map((f) => f.attributeFilter);
+
+    const attributeFilterDisplayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> =
+        yield select(selectAttributeFilterConfigsDisplayAsLabelMap);
+
+    if (enableDuplicatedLabelValuesInAttributeFilter) {
+        const dashboardFilterConfigs = getDashboardFilterConfigs(
+            dashboardFilters,
+            attributeFilterDisplayAsLabelMap,
+        );
+        attributeFilterConfigs.push(...dashboardFilterConfigs);
+    }
+
     // concat everything, order is important – drill filters must go first
-    const resultingFilters = compact([commonDateFilter, ...drillIntersectionFilters, ...dashboardFilters]);
+    const resultingFilters = compact([commonDateFilter, ...intersectionFilters, ...dashboardFilters]);
 
     // put end event
     return drillToDashboardResolved(
         ctx,
         resultingFilters,
+        attributeFilterConfigs,
         cmd.payload.drillDefinition,
         cmd.payload.drillEvent,
         cmd.correlationId,
     );
+}
+
+function getDashboardFilterConfigs(
+    dashboardFilters: FilterContextItem[] | IDashboardAttributeFilter[],
+    attributeFilterDisplayAsLabelMap: Map<string, ObjRef>,
+): IDashboardAttributeFilterConfig[] {
+    return dashboardFilters.reduce((result, filter) => {
+        if (isDashboardAttributeFilter(filter)) {
+            const localIdentifier = filter.attributeFilter.localIdentifier;
+            const displayAsLabel = localIdentifier
+                ? attributeFilterDisplayAsLabelMap.get(localIdentifier)
+                : undefined;
+            if (displayAsLabel && localIdentifier) {
+                result.push({
+                    localIdentifier,
+                    displayAsLabel,
+                });
+            }
+        }
+        return result;
+    }, [] as IDashboardAttributeFilterConfig[]);
+}
+
+function transformToPrimaryLabelFilters(
+    drillIntersectionFilters: IConversionResult[],
+    filtersCount: number = 0,
+): [IDashboardAttributeFilter[], IDashboardAttributeFilterConfig[]] {
+    const attributeFilterConfigs: IDashboardAttributeFilterConfig[] = [];
+    const transformedFilters = drillIntersectionFilters.map((f, i) => {
+        if (
+            f.primaryLabel &&
+            !areObjRefsEqual(f.primaryLabel, f.attributeFilter.attributeFilter.displayForm)
+        ) {
+            const localIdentifier =
+                f.attributeFilter.attributeFilter.localIdentifier ??
+                generateFilterLocalIdentifier(
+                    f.attributeFilter.attributeFilter.displayForm,
+                    filtersCount + i,
+                );
+            attributeFilterConfigs.push({
+                localIdentifier,
+                displayAsLabel: f.attributeFilter.attributeFilter.displayForm,
+            });
+            return {
+                attributeFilter: {
+                    ...f.attributeFilter.attributeFilter,
+                    localIdentifier, // in case uuid was generated
+                    displayForm: f.primaryLabel,
+                },
+            };
+        }
+        return f.attributeFilter;
+    });
+    return [transformedFilters, attributeFilterConfigs];
 }
 
 // result needs to be IDashboardDateFilter to allow optional dateDataSet
@@ -136,18 +253,34 @@ function convertFilterItemsToFilters(
         : dashboardDateFilterToDateFilterByWidget(filter, widget);
 }
 
-function* getWidgetAwareFilters(
+function* getWidgetAwareDashboardFilters(
     ctx: DashboardContext,
     widget: IInsightWidget,
     includeOtherDateFilters: boolean,
-): SagaIterator<IAttributeFilter[]> {
+): SagaIterator<IDashboardAttributeFilter[]> {
     const filterContextItems: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
         includeOtherDateFilters ? selectFilterContextDraggableFilters : selectFilterContextAttributeFilters,
     );
 
-    const filters = filterContextItems.map((filter) => convertFilterItemsToFilters(filter, widget));
+    const attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides> = yield select(
+        selectAttributeFilterConfigsOverrides,
+    );
 
-    return yield call(getResolvedFiltersForWidget, ctx, widget, filters);
+    const filtersPairs = filterContextItems.map((filter) => ({
+        filter: convertFilterItemsToFilters(filter, widget),
+        originalFilter: filter,
+    }));
+
+    const widgetFilters = yield call(
+        getResolvedFiltersForWidget,
+        ctx,
+        widget,
+        filtersPairs.map((pair) => pair.filter),
+        attributeFilterConfigs,
+    );
+    return filtersPairs
+        .filter((pair) => widgetFilters.some((wf: IFilter) => isEqual(wf, pair.filter)))
+        .map((pair) => pair.originalFilter);
 }
 
 function isDateFilterDisabled(insight: IInsight): boolean {
@@ -168,9 +301,10 @@ function getResolvedFiltersForWidget(
     ctx: DashboardContext,
     widget: IInsightWidget,
     filters: IDashboardFilter[],
+    attributeFilterConfigs: IDashboardAttributeFilterConfig[],
 ): Promise<IFilter[]> {
     return ctx.backend
         .workspace(ctx.workspace)
         .dashboards()
-        .getResolvedFiltersForWidgetWithMultipleDateFilters(widget, [], filters);
+        .getResolvedFiltersForWidgetWithMultipleDateFilters(widget, [], filters, attributeFilterConfigs);
 }

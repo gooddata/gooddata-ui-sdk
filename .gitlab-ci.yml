@@ -1,5 +1,5 @@
 # (C) 2020 GoodData Corporation
-# This file is used to produce GD.UI Web Components artifacts for the usage with Tiger, Panther and Bear.
+# This file is used to produce GD.UI Web Components artifacts for the usage with Tiger and Panther.
 #
 # Repository is registered on GitLab using the "CI/CD for external repo" so after the successful merge or PRs in Github,
 # this pipeline definition is executed. It's not in any way blocking the existing delivery and deployment in Gitflow delivery process.

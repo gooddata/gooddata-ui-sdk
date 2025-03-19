@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import isEmpty from "lodash/isEmpty.js";
 import { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -32,6 +32,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { IAvailableSortsGroup, ISortConfig } from "./SortConfig.js";
 import { IDefaultControlProperties } from "./ControlProperties.js";
+import { ChartInlineVisualizationType } from "@gooddata/sdk-ui-charts";
 
 export type RenderFunction = (component: any, target: Element) => void;
 
@@ -254,6 +255,8 @@ export interface IBucketUiConfig {
     subtitle?: string;
     icon?: string;
     allowsDuplicateItems?: boolean;
+    allowsDifferentAttributes?: boolean;
+    transformAttributeToMeasure?: boolean;
 
     // allow more than one date item in the bucket, regardless of date dimension
     allowsDuplicateDates?: boolean;
@@ -278,6 +281,19 @@ export interface IBucketUiConfig {
 
     // indicates that the visualization prefers date items in the bucket to have the same dimension
     preferSynchronizedDates?: boolean;
+
+    // Allows override hyperlink text for the hyperlink display form
+    // elements with custom static text. (e.g. "Show more" instead of url link text)
+    allowsStaticHyperLinkDisplayFormText?: boolean;
+
+    // Allows metric of the bucket to be displayed as a inline visualization
+    allowsInlineVisualizations?: true;
+
+    // Supported visualization types for inline visualization
+    supportedInlineVisualizationTypes?: ChartInlineVisualizationType[];
+
+    // Disables measure filters for the bucket.
+    disableMeasureFilters?: boolean;
 }
 
 export interface IBucketsUiConfig {
@@ -321,6 +337,7 @@ export interface IUiConfig {
     axis?: string;
     optionalStacking?: IOptionalStacking;
     supportedLocationIcon?: ISupportedLocationIcon;
+    supportedEmptyCanvasDragTypes?: string[];
 }
 
 export interface IVisualizationProperties<
@@ -444,6 +461,18 @@ export interface IVisualization {
         currentReferencePoint: IReferencePoint,
         nextReferencePoint: IReferencePoint,
     ): boolean;
+
+    /**
+     * Detects whether the reference point needs to update buckets from withing the pluggable visualization.
+     *
+     * @param currentReferencePoint - the current reference point
+     * @param nextReferencePoint - the new reference point
+     * @returns array of buckets to update
+     */
+    getBucketsToUpdate(
+        currentReferencePoint: IReferencePoint,
+        nextReferencePoint: IReferencePoint,
+    ): IBucketItem[] | undefined;
 }
 
 export interface IGdcConfig {
@@ -455,6 +484,7 @@ export interface IGdcConfig {
     maxWidth?: number;
     maxHeight?: number;
     forceDisableDrillOnAxes?: boolean;
+    enableExecutionCancelling?: boolean;
 }
 
 /**
@@ -474,6 +504,12 @@ export const PluggableVisualizationErrorCodes = {
      * then this is the error code to communicate the fact.
      */
     INVALID_BUCKETS: "INVALID_BUCKETS",
+
+    /**
+     * If pluggable visualization is asked to render itself but its columns bucket do not contain the right 'stuff',
+     * then this is the error code to communicate the fact.
+     */
+    INVALID_COLUMNS: "INVALID_COLUMNS",
 
     /**
      * This error means that empty AFM was went to the GoodData.UI and as such can't be executed.
@@ -496,6 +532,23 @@ export class InvalidBucketsSdkError extends GoodDataSdkError {
         super(ErrorCodes.UNKNOWN_ERROR as SdkErrorType, undefined, cause);
 
         this.pveType = "INVALID_BUCKETS";
+    }
+
+    public getErrorCode(): string {
+        return this.pveType;
+    }
+}
+
+/**
+ * @alpha
+ */
+export class InvalidColumnsSdkError extends GoodDataSdkError {
+    public readonly pveType: PluggableVisualizationErrorType;
+
+    constructor(cause?: Error) {
+        super(ErrorCodes.UNKNOWN_ERROR as SdkErrorType, undefined, cause);
+
+        this.pveType = "INVALID_COLUMNS";
     }
 
     public getErrorCode(): string {
@@ -537,6 +590,13 @@ export function isPluggableVisualizationError(obj: unknown): obj is PluggableVis
  */
 export function isInvalidBuckets(obj: unknown): obj is InvalidBucketsSdkError {
     return !isEmpty(obj) && (obj as InvalidBucketsSdkError).pveType === "INVALID_BUCKETS";
+}
+
+/**
+ * @alpha
+ */
+export function isInvalidColumns(obj: unknown): obj is InvalidColumnsSdkError {
+    return !isEmpty(obj) && (obj as InvalidColumnsSdkError).pveType === "INVALID_COLUMNS";
 }
 
 /**

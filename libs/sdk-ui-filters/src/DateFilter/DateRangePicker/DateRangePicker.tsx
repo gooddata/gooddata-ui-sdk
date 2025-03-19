@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import {
@@ -31,6 +31,10 @@ import ptBR from "date-fns/locale/pt-BR/index.js";
 import zhCN from "date-fns/locale/zh-CN/index.js";
 import ru from "date-fns/locale/ru/index.js";
 import it from "date-fns/locale/it/index.js";
+import enGB from "date-fns/locale/en-GB/index.js";
+import frCA from "date-fns/locale/fr-CA/index.js";
+import enAU from "date-fns/locale/en-AU/index.js";
+import fi from "date-fns/locale/fi/index.js";
 
 const convertedLocales: Record<string, Locale> = {
     "en-US": enUS,
@@ -44,6 +48,13 @@ const convertedLocales: Record<string, Locale> = {
     "zh-Hans": zhCN,
     "ru-RU": ru,
     "it-IT": it,
+    "es-419": es,
+    "en-GB": enGB,
+    "fr-CA": frCA,
+    "zh-Hant": zhCN,
+    "en-AU": enAU,
+    "fi-FI": fi,
+    "zh-HK": zhCN,
 };
 
 const ALIGN_POINTS = [{ align: "bl tl", offset: { x: 0, y: 1 } }];
@@ -184,6 +195,10 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                 onKeyDown={this.onKeyDown}
                 ref={this.dateRangePickerInputFrom}
                 placeholderDate={intl.formatMessage({ id: "filters.from" })}
+                accessibilityConfig={{
+                    dateAriaLabel: intl.formatMessage({ id: "filters.date.accessibility.label.from" }),
+                    timeAriaLabel: intl.formatMessage({ id: "filters.time.accessibility.label.from" }),
+                }}
                 onChange={this.handleFromChange}
                 value={this.state.inputFromValue}
                 dateFormat={dateFormat}
@@ -200,6 +215,10 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                 onKeyDown={this.onKeyDown}
                 ref={this.dateRangePickerInputTo}
                 placeholderDate={intl.formatMessage({ id: "filters.to" })}
+                accessibilityConfig={{
+                    dateAriaLabel: intl.formatMessage({ id: "filters.date.accessibility.label.to" }),
+                    timeAriaLabel: intl.formatMessage({ id: "filters.time.accessibility.label.to" }),
+                }}
                 onChange={this.handleToChange}
                 value={this.state.inputToValue}
                 dateFormat={dateFormat}

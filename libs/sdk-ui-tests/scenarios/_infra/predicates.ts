@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { measureIdentifier, attributeIdentifier } from "@gooddata/sdk-model";
@@ -32,7 +32,7 @@ export const SampleXirrMeasurePredicate = HeaderPredicates.identifierMatch(
 );
 
 export const DepartmentPredicate = HeaderPredicates.identifierMatch(
-    attributeIdentifier(ReferenceMd.Department)!,
+    attributeIdentifier(ReferenceMd.Department.Default)!,
 );
 
 export const ProductPredicate = HeaderPredicates.identifierMatch(
@@ -40,7 +40,9 @@ export const ProductPredicate = HeaderPredicates.identifierMatch(
 );
 
 export const SalesRepPredicate = HeaderPredicates.identifierMatch(
-    attributeIdentifier(ReferenceMd.SalesRep.OwnerName)!,
+    attributeIdentifier(ReferenceMd.SalesRep.Default)!,
 );
 
-export const RegionPredicate = HeaderPredicates.identifierMatch(attributeIdentifier(ReferenceMd.Region)!);
+export const RegionPredicate = HeaderPredicates.identifierMatch(
+    attributeIdentifier(ReferenceMd.Region.Default)!,
+);

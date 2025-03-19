@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useMemo } from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import compact from "lodash/compact.js";
@@ -14,6 +14,8 @@ import {
     selectSettings,
     selectEnableKDRichText,
     selectSupportsRichTextWidgets,
+    selectEnableVisualizationSwitcher,
+    selectEnableFlexibleLayout,
 } from "../../../model/index.js";
 import cx from "classnames";
 import {
@@ -23,18 +25,20 @@ import {
 import {
     AttributeFilterComponentSet,
     InsightWidgetComponentSet,
-    KpiWidgetComponentSet,
     RichTextWidgetComponentSet,
+    VisualizationSwitcherWidgetComponentSet,
+    DashboardLayoutWidgetComponentSet,
 } from "../../componentDefinition/index.js";
 
 interface ICreationPanelProps {
     className?: string;
     WrapCreatePanelItemWithDragComponent?: IWrapCreatePanelItemWithDragComponent;
     WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;
-    KpiWidgetComponentSet?: KpiWidgetComponentSet;
     AttributeFilterComponentSet?: AttributeFilterComponentSet;
     InsightWidgetComponentSet?: InsightWidgetComponentSet;
     RichTextWidgetComponentSet?: RichTextWidgetComponentSet;
+    VisualizationSwitcherWidgetComponentSet?: VisualizationSwitcherWidgetComponentSet;
+    DashboardLayoutWidgetComponentSet?: DashboardLayoutWidgetComponentSet;
 }
 
 export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
@@ -42,19 +46,23 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
     const supportsKpis = useDashboardSelector(selectSupportsKpiWidgetCapability);
     const supportsRichText = useDashboardSelector(selectSupportsRichTextWidgets);
     const enableRichText = useDashboardSelector(selectEnableKDRichText);
+    const enableVisualizationSwitcher = useDashboardSelector(selectEnableVisualizationSwitcher);
+    const enableFlexibleLayout = useDashboardSelector(selectEnableFlexibleLayout);
     const isAnalyticalDesignerEnabled = useDashboardSelector(selectIsAnalyticalDesignerEnabled);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const settings = useDashboardSelector(selectSettings);
-    const KpiWidgetComponentSet = props.KpiWidgetComponentSet!;
     const AttributeFilterComponentSet = props.AttributeFilterComponentSet!;
     const InsightWidgetComponentSet = props.InsightWidgetComponentSet!;
     const RichTextWidgetComponentSet = props.RichTextWidgetComponentSet!;
+    const VisualizationSwitcherWidgetComponentSet = props.VisualizationSwitcherWidgetComponentSet!;
+    const DashboardLayoutWidgetComponentSet = props.DashboardLayoutWidgetComponentSet!;
 
     const addItemPanelItems = useMemo(() => {
         const items = compact([
-            supportsKpis && KpiWidgetComponentSet.creating,
-            AttributeFilterComponentSet.creating,
             InsightWidgetComponentSet.creating,
+            AttributeFilterComponentSet.creating,
+            enableFlexibleLayout && DashboardLayoutWidgetComponentSet.creating,
+            enableVisualizationSwitcher && VisualizationSwitcherWidgetComponentSet.creating,
             supportsRichText && enableRichText && RichTextWidgetComponentSet.creating,
         ]);
 
@@ -68,12 +76,15 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
         });
     }, [
         AttributeFilterComponentSet,
-        KpiWidgetComponentSet,
         InsightWidgetComponentSet,
         RichTextWidgetComponentSet,
+        VisualizationSwitcherWidgetComponentSet,
+        DashboardLayoutWidgetComponentSet,
         supportsKpis,
         supportsRichText,
         enableRichText,
+        enableVisualizationSwitcher,
+        enableFlexibleLayout,
         WrapCreatePanelItemWithDragComponent,
     ]);
 

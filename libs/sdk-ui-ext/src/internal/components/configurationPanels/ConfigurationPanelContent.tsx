@@ -2,12 +2,13 @@
 import React from "react";
 import noop from "lodash/noop.js";
 import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
-import { IInsightDefinition, insightHasMeasures, ISettings } from "@gooddata/sdk-model";
+import { IInsightDefinition, ISettings, insightHasMeasures } from "@gooddata/sdk-model";
 
 import {
     IReferences,
     IVisualizationProperties,
     IConfigurationPanelRenderers,
+    IReferencePoint,
 } from "../../interfaces/Visualization.js";
 import { IColorConfiguration } from "../../interfaces/Colors.js";
 import ColorsSection from "../configurationControls/colors/ColorsSection.js";
@@ -15,10 +16,18 @@ import LegendSection from "../configurationControls/legend/LegendSection.js";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider.js";
 import { getMeasuresFromMdObject } from "../../utils/bucketHelper.js";
 import InteractionsSection from "../configurationControls/interactions/InteractionsSection.js";
+import ForecastSection from "../configurationControls/forecast/ForecastSection.js";
+import { isForecastEnabled } from "../../utils/forecastHelper.js";
+import {
+    isInsightSupportedForAlerts,
+    isInsightSupportedForScheduledExports,
+} from "../pluggableVisualizations/alerts.js";
+import AdvancedSection from "../configurationControls/advanced/AdvancedSection.js";
 
 export interface IConfigurationPanelContentProps<PanelConfig = any> {
     properties?: IVisualizationProperties;
     references?: IReferences;
+    referencePoint?: IReferencePoint;
     propertiesMeta?: any;
     colors?: IColorConfiguration;
     locale: string;
@@ -39,6 +48,7 @@ export default abstract class ConfigurationPanelContent<
     public static defaultProps: IConfigurationPanelContentProps = {
         properties: null,
         references: null,
+        referencePoint: null,
         propertiesMeta: null,
         colors: null,
         locale: DefaultLocale,
@@ -107,15 +117,70 @@ export default abstract class ConfigurationPanelContent<
     }
 
     protected renderInteractionsSection(): React.ReactNode {
-        const { pushData, properties, propertiesMeta, panelConfig, configurationPanelRenderers } = this.props;
+        const {
+            pushData,
+            properties,
+            propertiesMeta,
+            panelConfig,
+            configurationPanelRenderers,
+            featureFlags,
+            insight,
+        } = this.props;
 
-        return panelConfig.supportsAttributeHierarchies ? (
+        const isAlertingEnabled = featureFlags.enableAlerting;
+        const isScheduledExportsEnabled = featureFlags.enableScheduling;
+        const insightSupportsScheduledExports = isInsightSupportedForScheduledExports(insight);
+        const insightSupportsAlerts = isInsightSupportedForAlerts(insight);
+        const supportsAlertsConfiguration = insightSupportsAlerts && isAlertingEnabled;
+        const supportsScheduledExportsConfiguration =
+            insightSupportsScheduledExports && isScheduledExportsEnabled;
+
+        return supportsAlertsConfiguration || panelConfig.supportsAttributeHierarchies ? (
             <InteractionsSection
                 controlsDisabled={this.isControlDisabled()}
                 properties={properties}
                 propertiesMeta={propertiesMeta}
                 pushData={pushData}
+                supportsAlertConfiguration={supportsAlertsConfiguration}
+                supportsDrillDownConfiguration={panelConfig.supportsAttributeHierarchies}
+                supportsScheduledExportsConfiguration={supportsScheduledExportsConfiguration}
                 InteractionsDetailRenderer={configurationPanelRenderers?.InteractionsDetailRenderer}
+            />
+        ) : null;
+    }
+
+    protected renderForecastSection(): React.ReactNode {
+        const { pushData, properties, propertiesMeta, type, featureFlags, referencePoint, insight } =
+            this.props;
+
+        if (!featureFlags.enableSmartFunctions) {
+            return null;
+        }
+
+        const { enabled, visible } = isForecastEnabled(referencePoint, insight, type);
+        if (!visible) {
+            return null;
+        }
+
+        return (
+            <ForecastSection
+                controlsDisabled={this.isControlDisabled()}
+                properties={properties}
+                propertiesMeta={propertiesMeta}
+                enabled={enabled}
+                pushData={pushData}
+            />
+        );
+    }
+
+    protected renderAdvancedSection(): React.ReactNode {
+        const { pushData, properties, propertiesMeta, featureFlags } = this.props;
+        return featureFlags.enableVisualizationFineTuning ? (
+            <AdvancedSection
+                controlsDisabled={this.isControlDisabled()}
+                properties={properties}
+                propertiesMeta={propertiesMeta}
+                pushData={pushData}
             />
         ) : null;
     }

@@ -349,3 +349,23 @@
 .attribute-filter__limit__popup__list--searchable {
     padding: 0 0 10px;
 }
+
+.attribute-filter__limit__popup__list--dates {
+    padding: 10px 0;
+}
+
+.date-filter__limit__popup__item {
+    span {
+        display: flex;
+        margin-left: 5px;
+    }
+
+    &::before {
+        content: "";
+        position: relative;
+        display: block;
+        width: 18px;
+        height: 24px;
+        background: url("~@gooddata/sdk-ui-dashboard/esm/assets/date-dropdown.svg") no-repeat center;
+    }
+}

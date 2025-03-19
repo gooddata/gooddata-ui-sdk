@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import isString from "lodash/isString.js";
 import SparkMD5 from "spark-md5";
@@ -30,7 +30,7 @@ export interface IPostProcessing {
 }
 
 /**
- * Contains any configiration that should be part of execution
+ * Contains any configuration that should be part of execution
  *
  * @public
  */
@@ -39,6 +39,13 @@ export interface IExecutionConfig {
      * Data sampling is only available in Tiger for specific databases
      */
     dataSamplingPercentage?: number;
+
+    /**
+     * Execution timestamp as ISO string
+     *
+     * @remarks This may alter the data for computation when using date filters (e.g. last year)
+     */
+    timestamp?: string;
 }
 
 /**
@@ -282,8 +289,7 @@ export function defFingerprint(def: IExecutionDefinition): string {
      * - dimensions must be fingerprinted in the defined order
      *
      * This simple approach can lead to 'false negatives' => code says executions are different while in
-     * fact are the same. This does not lead to functional issues as the bear can deal with that and will
-     * reuse cached and all. The only drawback is frontend cache misses.
+     * fact are the same.
      */
 
     const hashFun = hasher.append.bind(hasher);
@@ -296,6 +302,9 @@ export function defFingerprint(def: IExecutionDefinition): string {
     def.dimensions.map(dimensionFingerprint).forEach(hashFun);
     if (def.executionConfig?.dataSamplingPercentage) {
         hashFun(dataSamplingFingerprint(def.executionConfig?.dataSamplingPercentage));
+    }
+    if (def.executionConfig?.timestamp) {
+        hashFun(def.executionConfig.timestamp);
     }
 
     return hasher.end();

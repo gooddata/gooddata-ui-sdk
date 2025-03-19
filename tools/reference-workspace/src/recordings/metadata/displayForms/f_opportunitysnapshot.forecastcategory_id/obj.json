@@ -1,0 +1,10 @@
+{
+    "attribute": { "identifier": "f_opportunitysnapshot.forecastcategory_id", "type": "attribute" },
+    "description": "Forecast Category",
+    "id": "f_opportunitysnapshot.forecastcategory_id",
+    "isDefault": true,
+    "ref": { "identifier": "f_opportunitysnapshot.forecastcategory_id", "type": "displayForm" },
+    "title": "Forecast Category",
+    "type": "displayForm",
+    "uri": "https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/referenceworkspace/labels/f_opportunitysnapshot.forecastcategory_id"
+}

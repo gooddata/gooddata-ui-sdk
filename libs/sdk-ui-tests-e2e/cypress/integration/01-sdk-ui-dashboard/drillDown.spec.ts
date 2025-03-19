@@ -5,19 +5,13 @@ import { Widget } from "../../tools/widget";
 import { DrillToModal } from "../../tools/drillToModal";
 import { DateFilter } from "../../tools/dateFilter";
 import { DateFilterValue } from "../../tools/enum/DateFilterValue";
-import { Api } from "../../tools/api";
 import { DateFilterAbsoluteForm } from "../../tools/dateFilterAbsoluteForm";
 
 const drillModal = new DrillToModal();
-const api = new Api();
 const firstWidget = new Widget(0);
 const DIRECT_SALES = "Direct Sales";
 const INSIDE_SALES = "Inside Sales";
 const YEAR_2010 = "2010";
-const DEPARTMENT_ID = "1090";
-const PRODUCT_ID = "1057";
-const YEAR_CLOSE = "521";
-const DISPLAYFORM_PRODUCT = "1056";
 
 const dashboardTable = [
     {
@@ -85,15 +79,17 @@ const heatmapInsights = [
 describe("Drilling", () => {
     beforeEach(() => {
         // Sets drilling on Department attribute into Product attribute
-        api.setUpDrillDownAttribute(DEPARTMENT_ID, PRODUCT_ID);
+        // api.setUpDrillDownAttribute(DEPARTMENT_ID, PRODUCT_ID);
     });
 
     afterEach(() => {
         // Removes drilling from Department attribute
-        api.setUpDrillDownAttribute(DEPARTMENT_ID);
+        // api.setUpDrillDownAttribute(DEPARTMENT_ID);
     });
 
-    describe("Basic drill down", { tags: ["checklist_integrated_bear"] }, () => {
+    // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+    // eslint-disable-next-line jest/no-disabled-tests
+    describe.skip("Basic drill down", { tags: ["checklist_integrated_bear"] }, () => {
         it("Should drill down on table with one drillable", () => {
             Navigation.visit("dashboard/dashboard-table-drill-down");
             dashboardTable.forEach((insight, index) => {
@@ -146,7 +142,7 @@ describe("Drilling", () => {
             const assertInsightValues = ["69.6%", "68.22%", "71.1%", "30.4%", "31.78%", "28.9%"];
 
             Navigation.visit("dashboard/insight");
-            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
+            //api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
             firstWidget.waitChartLoaded().getChart().waitLoaded();
             new DateFilter()
                 .openAndSelectDateFilterByName(DateFilterValue.ALL_TIME)
@@ -189,7 +185,7 @@ describe("Drilling", () => {
                 .selectDropdownAttribute("Q2/" + YEAR_2010)
                 .hasTitleHeader("Column chart with years › " + YEAR_2010 + " › Q2/" + YEAR_2010);
             drillModal.getChart().hasDataLabelValues(valueAttribute);
-            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
+            //api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
         });
 
         it("Drilling down continue on a table ", () => {
@@ -197,7 +193,7 @@ describe("Drilling", () => {
             const YEAR_LIST_CLOSE = ["2010", "2011", "2012", "2013", "2014"];
 
             Navigation.visit("dashboard/dashboard-table-drill-down");
-            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
+            //api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
             [DIRECT_SALES, INSIDE_SALES].forEach((value, index) => {
                 firstWidget.waitTableLoaded().getTable().hasCellValue(index, 0, value);
             });
@@ -223,12 +219,12 @@ describe("Drilling", () => {
                 drillModal.getTable().hasCellValue(index, 0, value);
             });
             drillModal.close();
-            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
+            //api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
         });
 
         it("Drilling down on a table that has two drillable attributes separate", () => {
             Navigation.visit("dashboard/implicit-drill");
-            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
+            //api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
             const TABLE_WITH_YEAR = [
                 "$6,583,208.52",
                 "$2,876,022.26",
@@ -261,7 +257,7 @@ describe("Drilling", () => {
             drillModal.getTable().waitLoaded().click(0, 0);
             drillModal.hasTitleHeader("Table with years › " + DIRECT_SALES + " › CompuSci");
             drillModal.back();
-            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
+            //api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
         });
 
         it("Can not drill down with table that only has measures and columns", () => {
@@ -276,7 +272,7 @@ describe("Drilling", () => {
 
         it("Should drill down on heat map chart", () => {
             Navigation.visit("dashboard/heatmap-drill-down");
-            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
+            //api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
             heatmapInsights.forEach((insight, index) => {
                 new Widget(index)
                     .scrollIntoView()
@@ -306,7 +302,7 @@ describe("Drilling", () => {
 
         it("Drilling down on heat map chart with two drillable attributes", () => {
             Navigation.visit("dashboard/heatmap-drill-down");
-            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
+            //api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
             firstWidget.waitChartLoaded().getChart().clickCellHeatMap(0);
             drillModal
                 .hasTitleHeader("heat map only row measure › " + INSIDE_SALES)
@@ -325,13 +321,13 @@ describe("Drilling", () => {
                     "$1,382,467.58",
                 ]);
             drillModal.back().getChart().hasDataLabelValues(PRODUCT_VALUE);
-            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
+            //api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
         });
 
         it("drilling down on heat map that have two drillable attributes on the difference bucket", () => {
             const secondWidget = new Widget(2);
             Navigation.visit("dashboard/heatmap-drill-down");
-            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
+            //api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
             secondWidget.scrollIntoView().waitChartLoaded().getChart().clickCellHeatMap(0);
 
             drillModal
@@ -374,13 +370,13 @@ describe("Drilling", () => {
                     "$5,639,031.41",
                     "$777,279.71",
                 ]);
-            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
+            //api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
         });
 
         it("Drilling down on chart that have two attribute same bucket with two drillable attributes", () => {
             Navigation.visit("dashboard/drilldown-on-chart");
             const bulletWidget = new Widget(1);
-            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
+            //api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT, YEAR_CLOSE);
             bulletWidget
                 .scrollIntoView()
                 .waitChartLoaded()
@@ -426,7 +422,7 @@ describe("Drilling", () => {
                 .hasTooltipContents(0, 0, ["Year (Closed)", "2010", "Amount", "$3,476,276.54"]);
 
             drillModal.close();
-            api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
+            //api.setUpDrillDownAttribute(DISPLAYFORM_PRODUCT);
         });
 
         it("Drilling down on charts that have two drillable attributes separates with date filter", () => {
@@ -485,7 +481,9 @@ describe("Drilling", () => {
         });
     });
 
-    describe("implicit drill to attribute url", { tags: ["post-merge_integrated_bear"] }, () => {
+    // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+    // eslint-disable-next-line jest/no-disabled-tests
+    describe.skip("implicit drill to attribute url", { tags: ["post-merge_integrated_bear"] }, () => {
         beforeEach(() => {
             Navigation.visit("dashboard/implicit-drill-to-attribute-url");
         });
@@ -519,7 +517,9 @@ describe("Drilling", () => {
         });
     });
 
-    describe("Advanced drill down", { tags: ["post-merge_integrated_bear"] }, () => {
+    // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+    // eslint-disable-next-line jest/no-disabled-tests
+    describe.skip("Advanced drill down", { tags: ["post-merge_integrated_bear"] }, () => {
         it("Drill down on column with one drillable on drill to insight", () => {
             Navigation.visit("dashboard/drill-to-insight");
             new Widget(2).waitTableLoaded().getTable().click(0, 0);

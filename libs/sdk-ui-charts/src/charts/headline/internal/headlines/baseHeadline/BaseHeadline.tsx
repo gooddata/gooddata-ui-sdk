@@ -1,5 +1,5 @@
-// (C) 2023 GoodData Corporation
-import React, { useCallback, useEffect } from "react";
+// (C) 2023-2025 GoodData Corporation
+import React, { useCallback, useEffect, useRef } from "react";
 import { defaultImport } from "default-import";
 import ReactMeasure, { MeasuredComponentProps } from "react-measure";
 
@@ -13,6 +13,7 @@ import { BaseHeadlineContext } from "./BaseHeadlineContext.js";
 import { IBaseHeadlineData } from "../../interfaces/BaseHeadlines.js";
 import { IHeadlineDataItem } from "../../interfaces/Headlines.js";
 
+const RESIZE_GUARD_TIMEOUT = 3000;
 const Measure = defaultImport(ReactMeasure);
 
 interface IHeadlineProps {
@@ -24,6 +25,8 @@ interface IHeadlineProps {
 
 const BaseHeadline: React.FC<IHeadlineProps> = ({ data, config, onDrill, onAfterRender }) => {
     const { primaryItem, secondaryItem, tertiaryItem } = data;
+
+    const afterRenderCalled = useRef(false);
 
     const fireDrillEvent = useCallback(
         (item: IHeadlineDataItem, elementType: HeadlineElementType, elementTarget: EventTarget) => {
@@ -41,11 +44,33 @@ const BaseHeadline: React.FC<IHeadlineProps> = ({ data, config, onDrill, onAfter
     );
 
     useEffect(() => {
-        onAfterRender();
-    });
+        // guard if onResize would fail to resize the widget
+        const timeoutId = setTimeout(() => {
+            if (!afterRenderCalled.current) {
+                onAfterRender?.();
+                afterRenderCalled.current = true;
+            }
+        }, RESIZE_GUARD_TIMEOUT);
+
+        return () => clearTimeout(timeoutId);
+    }, [onAfterRender]);
 
     return (
-        <Measure client={true}>
+        <Measure
+            client={true}
+            onResize={(dimensions) => {
+                // onResize is called also initially when dimensions
+                // are not yet fully materialized, defer afterRender
+                if (
+                    dimensions?.client?.width > 0 &&
+                    dimensions?.client?.height > 0 &&
+                    !afterRenderCalled.current
+                ) {
+                    afterRenderCalled.current = true;
+                    onAfterRender();
+                }
+            }}
+        >
             {({ measureRef, contentRect }: MeasuredComponentProps) => {
                 return (
                     <BaseHeadlineContext.Provider

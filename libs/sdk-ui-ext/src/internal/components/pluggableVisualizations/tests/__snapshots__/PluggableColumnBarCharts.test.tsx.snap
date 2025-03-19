@@ -71,8 +71,8 @@ exports[`PluggableColumnBarCharts > optional stacking > should cut out measures 
         "isShowInPercentVisible": true,
         "isShowOnSecondaryAxisVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [
@@ -281,8 +281,8 @@ exports[`PluggableColumnBarCharts > optional stacking > should place third attri
         "isShowInPercentVisible": true,
         "isShowOnSecondaryAxisVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [
@@ -422,7 +422,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should return reference 
         "isShowInPercentVisible": true,
         "isShowOnSecondaryAxisVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
+        "title": "Metrics",
       },
       "stack": {
         "accepts": [
@@ -640,7 +640,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse all measure
         "isShowInPercentVisible": true,
         "isShowOnSecondaryAxisVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
+        "title": "Metrics",
       },
       "stack": {
         "accepts": [
@@ -654,7 +654,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse all measure
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "title": "Stack by",
-        "warningMessage": "To stack by an attribute, an insight can have only one measure",
+        "warningMessage": "To stack by an attribute, an visualization can have only one metric",
       },
       "view": {
         "accepts": [
@@ -850,8 +850,8 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse one measure
         "isShowInPercentVisible": true,
         "isShowOnSecondaryAxisVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">stack by</span>",
       },
       "stack": {
         "accepts": [

@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
 import { ChangeInsightWidgetInsight, changeInsightWidgetInsight } from "../../../commands/index.js";
 import { DashboardCommandFailed, DashboardInsightWidgetInsightSwitched } from "../../../events/index.js";
@@ -9,7 +9,6 @@ import { selectAnalyticalWidgetByRef } from "../../../store/layout/layoutSelecto
 import {
     SimpleDashboardIdentifier,
     SimpleSortedTableWidgetRef,
-    KpiWidgetRef,
 } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";
 import { IInsightWidget, insightRef, uriRef } from "@gooddata/sdk-model";
 
@@ -48,19 +47,6 @@ describe("change insight widget vis properties handler", () => {
 
         const widgetState = selectAnalyticalWidgetByRef(ref)(Tester.state()) as IInsightWidget;
         expect(widgetState!.properties).toEqual(properties);
-    });
-
-    it("should fail if trying to change the insight of KPI widget", async () => {
-        const ref = KpiWidgetRef;
-        const insight = insightRef(PivotTableWithRowAndColumnAttributes);
-
-        const event: DashboardCommandFailed<ChangeInsightWidgetInsight> = await Tester.dispatchAndWaitFor(
-            changeInsightWidgetInsight(ref, insight, undefined, TestCorrelation),
-            "GDC.DASH/EVT.COMMAND.FAILED",
-        );
-
-        expect(event.payload.reason).toEqual("USER_ERROR");
-        expect(event.correlationId).toEqual(TestCorrelation);
     });
 
     it("should fail if trying to change the insight of non-existent widget", async () => {

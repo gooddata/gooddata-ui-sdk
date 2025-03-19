@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React, { useMemo, CSSProperties } from "react";
 import { AttributeFilterEmptySearchResult } from "./AttributeFilterEmptySearchResult.js";
 import { AttributeFilterEmptyAttributeResult } from "./AttributeFilterEmptyAttributeResult.js";
@@ -23,6 +23,13 @@ export interface IAttributeFilterEmptyResultProps {
      * Indicate that items are filtered or not
      */
     isFilteredByParentFilters: boolean;
+
+    /**
+     * Indicate that items are filtered or not by dependent date filters
+     *
+     * @beta
+     */
+    isFilteredByDependentDateFilters?: boolean;
 
     /**
      * Current search string
@@ -50,6 +57,7 @@ export const AttributeFilterEmptyResult: React.VFC<IAttributeFilterEmptyResultPr
     totalItemsCount,
     searchString,
     isFilteredByParentFilters,
+    isFilteredByDependentDateFilters,
     parentFilterTitles = [],
     enableShowingFilteredElements = false,
 }) => {
@@ -63,7 +71,7 @@ export const AttributeFilterEmptyResult: React.VFC<IAttributeFilterEmptyResultPr
 
     if (totalItemsCount === 0) {
         renderEmptyResult = <AttributeFilterEmptyAttributeResult />;
-    } else if (isFilteredByParentFilters) {
+    } else if (isFilteredByParentFilters || isFilteredByDependentDateFilters) {
         renderEmptyResult = (
             <AttributeFilterAllValuesFilteredResult
                 parentFilterTitles={parentFilterTitles}

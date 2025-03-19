@@ -1,7 +1,7 @@
 version: "3.7"
 services:
     isolated-tests:
-        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/tools/gdc-frontend-cypress-factory:202311211156.11759a0
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/tools/gdc-frontend-cypress-factory:202501151356.a6074a3
         entrypoint: "node ./scripts/run_isolated_compose.js --$MODE --filter=$FILTER"
         volumes:
             - ../../:/gooddata-ui-sdk-e2e:rw
@@ -16,11 +16,10 @@ services:
             - FILTER
             - BUILD_URL
             - HOST
-            - USER_NAME
-            - PASSWORD
             - TEST_WORKSPACE_ID
             - TIGER_API_TOKEN
-            - SDK_BACKEND
+            - TIGER_DATASOURCES_NAME
+            - FIXTURE_TYPE
             - CYPRESS_TEST_TAGS
             - NO_COLOR
             - ZUUL_PIPELINE=$ZUUL_PIPELINE
@@ -36,8 +35,7 @@ services:
     backend-mock:
         image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/wiremock/wiremock:3.3.1
         # Use "--print-all-network-traffic --verbose" for verbose logging
-        # Note that we need --preserve-host-header for BEAR backend only and it must be missing for TIGER (see run_isolated.sh)
-        command: "${PRESERVE_HOST_HEADER_OPTION} --proxy-all=${HOST:-https://staging3.intgdc.com} --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer"
+        command: "--proxy-all=${HOST:-https://staging3.intgdc.com} --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer"
         user: "$USER_UID:$USER_GID"
         volumes:
             - ./recordings/wiremock_extension/jar/:/var/wiremock/extensions:ro

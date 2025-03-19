@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { IAuditableDates, IAuditableUsers, IAuditable } from "../base/metadata.js";
 import {
@@ -10,6 +10,7 @@ import { Identifier, ObjRef } from "../objRef/index.js";
 import { IDashboardObjectIdentity } from "./common.js";
 import { IFilterContext, ITempFilterContext, IFilterContextDefinition } from "./filterContext.js";
 import { IDashboardWidget, IDashboardLayout } from "./layout.js";
+import { IDataSetMetadataObject } from "../ldm/metadata/dataSet/index.js";
 
 /**
  * Date filter configuration mode
@@ -111,6 +112,11 @@ export interface IDashboardAttributeFilterConfig {
      * Control visibility mode of the attribute filter
      */
     mode?: DashboardAttributeFilterConfigMode;
+
+    /**
+     * Display form to use to show elements of attribute filter in UI
+     */
+    displayAsLabel?: ObjRef;
 }
 
 /**
@@ -296,6 +302,26 @@ export interface IDashboard<TWidget = IDashboardWidget>
      * Disables cross filtering for this dashboard.
      */
     readonly disableCrossFiltering?: boolean;
+
+    /**
+     * Disables reset of user filters for this dashboard.
+     */
+    readonly disableUserFilterReset?: boolean;
+
+    /**
+     * Disables save of user filters for this dashboard.
+     */
+    readonly disableUserFilterSave?: boolean;
+
+    /**
+     * Disables listing and saving of filter views for this dashboard.
+     */
+    readonly disableFilterViews?: boolean;
+
+    /**
+     * Data sets related to the dashboard, as defined by the includes directive
+     */
+    readonly dataSets?: IDataSetMetadataObject[];
 }
 
 /**
@@ -343,6 +369,21 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
      * Disables cross filtering for this dashboard.
      */
     readonly disableCrossFiltering?: boolean;
+
+    /**
+     * Disables reset of user filters for this dashboard.
+     */
+    readonly disableUserFilterReset?: boolean;
+
+    /**
+     * Disables save of user filters for this dashboard.
+     */
+    readonly disableUserFilterSave?: boolean;
+
+    /**
+     * Disables listing and saving of filter views for this dashboard.
+     */
+    readonly disableFilterViews?: boolean;
 }
 
 /**

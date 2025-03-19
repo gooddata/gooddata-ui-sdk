@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -13,11 +13,10 @@ export class Button extends React.Component<IButtonProps> {
         className: "",
         disabled: false,
         onClick: noop,
-        tabIndex: -1,
+        tabIndex: 0,
         tagName: "button",
         title: "",
         type: "button",
-        value: "",
         iconLeft: null as string,
         iconRight: null as string,
     };
@@ -25,39 +24,76 @@ export class Button extends React.Component<IButtonProps> {
     public buttonNode: HTMLElement;
 
     public render() {
-        const { id, tagName, title, value, tabIndex, type, iconLeft, iconRight } = this.props;
+        const {
+            id,
+            tagName,
+            title,
+            disabled,
+            tabIndex,
+            type,
+            iconLeft,
+            iconRight,
+            accessibilityConfig,
+            buttonRef,
+        } = this.props;
+        const { isExpanded, popupId, ariaLabel, ariaLabelledBy } = accessibilityConfig ?? {};
         const TagName = tagName as any;
+        const effectiveValue = this.getEffectiveValue();
+
+        const ariaDropdownProps = {
+            ...(popupId ? { "aria-haspopup": !!popupId } : {}),
+            ...(popupId && isExpanded ? { "aria-controls": popupId, "aria-expanded": isExpanded } : {}),
+        };
 
         return (
             <TagName
                 id={id}
                 ref={(ref: HTMLElement) => {
                     this.buttonNode = ref;
+                    if (buttonRef) {
+                        buttonRef.current = ref;
+                    }
                 }}
-                title={title}
+                title={title || ariaLabel}
                 className={this.getClassnames()}
                 type={type}
                 onClick={this._onClick}
                 tabIndex={tabIndex}
+                aria-disabled={disabled}
+                aria-label={ariaLabel}
+                aria-labelledby={ariaLabelledBy}
+                {...ariaDropdownProps}
+                role="button"
             >
                 {this.renderIcon(iconLeft)}
-                {value ? <span className="gd-button-text">{value}</span> : null}
+                {effectiveValue ? <span className="gd-button-text">{effectiveValue}</span> : null}
                 {this.renderIcon(iconRight)}
             </TagName>
         );
     }
 
-    private getClassnames() {
-        const { value } = this.props;
-        const generatedSeleniumClass =
-            value && typeof value === "string" ? `s-${stringUtils.simplifyText(value)}` : "";
+    private getEffectiveValue() {
+        return this.props.value ?? this.props.children;
+    }
 
-        return cx({
-            [this.props.className]: !!this.props.className,
-            [generatedSeleniumClass]: true,
-            ["gd-button"]: true,
-            disabled: this.props.disabled,
-        });
+    private getClassnames() {
+        const { className, variant, size, intent, disabled } = this.props;
+        const effectiveValue = this.getEffectiveValue();
+        const generatedSeleniumClass =
+            effectiveValue && typeof effectiveValue === "string"
+                ? `s-${stringUtils.simplifyText(effectiveValue)}`
+                : "";
+        return cx([
+            "gd-button",
+            generatedSeleniumClass,
+            className,
+            {
+                [`gd-button-${variant}`]: !!variant,
+                [`gd-button-${size}`]: !!size,
+                [`gd-button-${intent}`]: !!intent,
+                disabled: disabled,
+            },
+        ]);
     }
 
     private _onClick = (e: React.MouseEvent) => {
@@ -71,6 +107,6 @@ export class Button extends React.Component<IButtonProps> {
             return null;
         }
 
-        return <span className={cx("gd-button-icon", icon)} role="button-icon" />;
+        return <span className={cx("gd-button-icon", icon)} data-testid="gd-button-icon" />;
     }
 }

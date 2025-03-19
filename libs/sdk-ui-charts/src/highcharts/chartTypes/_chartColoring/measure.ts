@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import {
     ColorStrategy,
@@ -54,27 +54,28 @@ export class MeasureColorStrategy extends ColorStrategy {
 
         const nonDerivedMeasuresAssignment: IColorAssignment[] = [];
         const measureGroup = findMeasureGroupInDimensions(dv.meta().dimensions());
-        const allMeasuresAssignment = measureGroup.items.map((headerItem, index) => {
-            if (dv.meta().isDerivedMeasure(measureGroup.items[index])) {
-                return {
+        const allMeasuresAssignment =
+            measureGroup?.items.map((headerItem, index) => {
+                if (dv.meta().isDerivedMeasure(measureGroup.items[index])) {
+                    return {
+                        headerItem,
+                        color: emptyColorPaletteItem,
+                    };
+                }
+
+                const mappedMeasure: IColorAssignment = this.mapMeasureColor(
                     headerItem,
-                    color: emptyColorPaletteItem,
-                };
-            }
+                    currentColorPaletteIndex,
+                    colorPalette,
+                    colorMapping,
+                    dv,
+                );
 
-            const mappedMeasure: IColorAssignment = this.mapMeasureColor(
-                headerItem,
-                currentColorPaletteIndex,
-                colorPalette,
-                colorMapping,
-                dv,
-            );
+                currentColorPaletteIndex++;
+                nonDerivedMeasuresAssignment.push(mappedMeasure);
 
-            currentColorPaletteIndex++;
-            nonDerivedMeasuresAssignment.push(mappedMeasure);
-
-            return mappedMeasure;
-        });
+                return mappedMeasure;
+            }) ?? [];
 
         return {
             allMeasuresAssignment,

@@ -1,0 +1,101 @@
+{
+    "count": [20, 2],
+    "data": [
+        [2555560.95, 1552799.85],
+        [1545646.98, 721881.5],
+        [2399135.49, 1062238.38],
+        [1151921.55, 1224178.86],
+        [1338590.52, 1456436.03],
+        [1715091.46, 1495320.45],
+        [1254667.41, 2505226.03],
+        [1415235.79, 2494904.83],
+        [1042452.58, 1085807.76],
+        [2554681.18, 2029446.29],
+        [1662922.33, 1148869.39],
+        [2167088.59, 1961557.6],
+        [1740874.32, 1893293.06],
+        [4052085.02, 4710674.62],
+        [4558382.41, 6347776.18],
+        [4865834.3, 18734144.21],
+        [3696555.26, 3109904.94],
+        [3243476.86, 3802152.53],
+        [2994463.64, 3256668.6],
+        [2977972.95, 7099535.84]
+    ],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "name": "Adam Bradley", "uri": "Adam Bradley" } },
+                { "attributeHeaderItem": { "name": "Alejandro Vabiano", "uri": "Alejandro Vabiano" } },
+                { "attributeHeaderItem": { "name": "Alexsandr Fyodr", "uri": "Alexsandr Fyodr" } },
+                { "attributeHeaderItem": { "name": "Cory Owens", "uri": "Cory Owens" } },
+                { "attributeHeaderItem": { "name": "Dale Perdadtin", "uri": "Dale Perdadtin" } },
+                { "attributeHeaderItem": { "name": "Dave Bostadt", "uri": "Dave Bostadt" } },
+                { "attributeHeaderItem": { "name": "Ellen Jones", "uri": "Ellen Jones" } },
+                { "attributeHeaderItem": { "name": "Huey Jonas", "uri": "Huey Jonas" } },
+                { "attributeHeaderItem": { "name": "Jessica Traven", "uri": "Jessica Traven" } },
+                { "attributeHeaderItem": { "name": "John Jovi", "uri": "John Jovi" } },
+                { "attributeHeaderItem": { "name": "Jon Jons", "uri": "Jon Jons" } },
+                { "attributeHeaderItem": { "name": "Lea Forbes", "uri": "Lea Forbes" } },
+                { "attributeHeaderItem": { "name": "Monique Babonas", "uri": "Monique Babonas" } },
+                { "attributeHeaderItem": { "name": "Paul Gomez", "uri": "Paul Gomez" } },
+                { "attributeHeaderItem": { "name": "Paul Jacobs", "uri": "Paul Jacobs" } },
+                { "attributeHeaderItem": { "name": "Ravi Deetri", "uri": "Ravi Deetri" } },
+                { "attributeHeaderItem": { "name": "Thomas Gones", "uri": "Thomas Gones" } },
+                { "attributeHeaderItem": { "name": "Tom Stickler", "uri": "Tom Stickler" } },
+                { "attributeHeaderItem": { "name": "Trevor Deegan", "uri": "Trevor Deegan" } },
+                { "attributeHeaderItem": { "name": "Victor Crushetz", "uri": "Victor Crushetz" } }
+            ]
+        ],
+        [
+            [
+                { "attributeHeaderItem": { "name": "Exclude", "uri": "Exclude" } },
+                { "attributeHeaderItem": { "name": "Include", "uri": "Include" } },
+                { "totalHeaderItem": { "name": "sum", "type": "SUM" } },
+                { "totalHeaderItem": { "name": "min", "type": "MIN" } }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "sum", "type": "SUM" } },
+                { "totalHeaderItem": { "measureIndex": 0, "name": "min", "type": "MIN" } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [20, 2],
+    "totalTotals": [
+        [
+            [116625456.53999999, null],
+            [null, 721881.5]
+        ]
+    ],
+    "totals": [
+        [
+            [48932639.59, 67692816.95],
+            [1042452.58, 721881.5]
+        ],
+        [
+            [4108360.8000000003, 1552799.85],
+            [2267528.48, 721881.5],
+            [3461373.87, 1062238.38],
+            [2376100.41, 1151921.55],
+            [2795026.55, 1338590.52],
+            [3210411.91, 1495320.45],
+            [3759893.4399999995, 1254667.41],
+            [3910140.62, 1415235.79],
+            [2128260.34, 1042452.58],
+            [4584127.470000001, 2029446.29],
+            [2811791.7199999997, 1148869.39],
+            [4128646.19, 1961557.6],
+            [3634167.38, 1740874.32],
+            [8762759.64, 4052085.02],
+            [10906158.59, 4558382.41],
+            [23599978.51, 4865834.3],
+            [6806460.199999999, 3109904.94],
+            [7045629.39, 3243476.86],
+            [6251132.24, 2994463.64],
+            [10077508.79, 2977972.95]
+        ]
+    ]
+}

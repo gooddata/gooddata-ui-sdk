@@ -1,17 +1,31 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     CustomDashboardInsightComponent,
     CustomDashboardWidgetComponent,
     InsightComponentProvider,
-    KpiComponentProvider,
     OptionalInsightComponentProvider,
     OptionalInsightBodyComponentProvider,
-    OptionalKpiComponentProvider,
     OptionalDateFilterComponentProvider,
     OptionalAttributeFilterComponentProvider,
     AttributeFilterComponentProvider,
     DashboardContentComponentProvider,
     OptionalDashboardContentComponentProvider,
+    OptionalTopBarComponentProvider,
+    TopBarComponentProvider,
+    OptionalFilterBarComponentProvider,
+    FilterBarComponentProvider,
+    OptionalTitleComponentProvider,
+    TitleComponentProvider,
+    OptionalLayoutComponentProvider,
+    LayoutComponentProvider,
+    OptionalLoadingComponentProvider,
+    LoadingComponentProvider,
+    OptionalRichTextComponentProvider,
+    RichTextComponentProvider,
+    OptionalVisualizationSwitcherComponentProvider,
+    VisualizationSwitcherComponentProvider,
+    OptionalVisualizationSwitcherToolbarComponentProvider,
+    VisualizationSwitcherToolbarComponentProvider,
 } from "../presentation/index.js";
 import {
     DashboardDispatch,
@@ -25,6 +39,7 @@ import {
     ICustomWidget,
 } from "../model/index.js";
 import { IDashboardLayout, IDashboardLayoutSection, IDashboardLayoutItem } from "@gooddata/sdk-model";
+import { ILayoutItemPath, ILayoutSectionPath } from "../types.js";
 
 /**
  * Set of functions you can use to customize how insights are rendered.
@@ -141,81 +156,6 @@ export interface IDashboardInsightCustomizer {
 }
 
 /**
- * Set of functions you can use to customize how KPIs are rendered.
- *
- * @public
- */
-export interface IDashboardKpiCustomizer {
-    /**
-     * Register a provider for React components to render insights.
-     *
-     * @remarks
-     * A provider takes the insight and
-     * widget that it is part of as input and is expected to return a React component that should be
-     * used to render that insight.
-     *
-     * If the provider returns `undefined` then:
-     *
-     * -  if there are other providers registered, they will be called to see if they can provide
-     *    a component to render the insight
-     * -  if there are no other providers registered, the default, built-in component will be used.
-     *
-     * You may register multiple providers. They will be evaluated in the order you register them.
-     *
-     * @param provider - provider to register
-     * @returns self, for call chaining sakes
-     */
-    withCustomProvider(provider: OptionalKpiComponentProvider): IDashboardKpiCustomizer;
-
-    /**
-     * Register a factory for insight decorator providers.
-     *
-     * @remarks
-     * Decorators are a way to add customizations or embellishments on top
-     * of an existing component. Decorators are more complex to write because they need to work with the component
-     * they should decorate and add 'something' on top of that component.
-     *
-     * This is best illustrated on an example:
-     *
-     * @example
-     * ```
-     * withCustomDecorator((next) => {
-     *     return (kpi, widget) => {
-     *         if (some_condition_to_prevent_decoration) {
-     *             return undefined;
-     *         }
-     *
-     *         function MyCustomDecorator(props) {
-     *              const Decorated = next(kpi, widget);
-     *
-     *              return (
-     *                  <div>
-     *                      <p>My Custom Decoration</p>
-     *                      <Decorated {...props}/>
-     *                  </div>
-     *              )
-     *         }
-     *
-     *         return MyCustomDecorator;
-     *     }
-     * })
-     * ```
-     *
-     * The above shows how to register a decorator that will use some condition to determine whether particular
-     * insight is eligible for decoration. If yes, it will add some extra text in front of the insight. Decorator
-     * defers rendering of the actual insight to the underlying provider.
-     *
-     * Note: the factory function that you specify will be called immediately at the registration time. The
-     * provider that it returns will be called at render time.
-     *
-     * @param providerFactory - factory
-     */
-    withCustomDecorator(
-        providerFactory: (next: KpiComponentProvider) => OptionalKpiComponentProvider,
-    ): IDashboardKpiCustomizer;
-}
-
-/**
  * Set of functions you can use to customize custom widgets.
  *
  * @public
@@ -256,8 +196,25 @@ export interface IFluidLayoutCustomizer {
      * @param sectionIdx - index to add the new section at
      * @param section - section to add; note: customizer will make a deep copy of the item before adding it
      *  onto a dashboard. At this moment, the newly added items are read-only.
+     * @deprecated Use {@link IFluidLayoutCustomizer.addSectionToPath} with sectionPath param instead.
      */
     addSection(sectionIdx: number, section: IDashboardLayoutSection<ICustomWidget>): IFluidLayoutCustomizer;
+
+    /**
+     * Adds a new section with one or more custom widgets onto the layout even to the nested layout.
+     *
+     * @remarks
+     * The section to add must not be empty - it must contain at least one item. Attempts to add empty sections
+     * will be ignored and warnings will be reported.
+     *
+     * @param sectionPath - path in layout to add the new section at
+     * @param section - section to add; note: customizer will make a deep copy of the item before adding it
+     *  onto a dashboard. At this moment, the newly added items are read-only.
+     */
+    addSectionToPath(
+        sectionPath: ILayoutSectionPath,
+        section: IDashboardLayoutSection<ICustomWidget>,
+    ): IFluidLayoutCustomizer;
 
     /**
      * Adds a new item containing a custom widget onto the dashboard.
@@ -270,17 +227,40 @@ export interface IFluidLayoutCustomizer {
      * problems down the line if you are adding more items at specific indexes into the same section.
      *
      * Note: new items will be added into existing sections before new sections will be added using the
-     * {@link IFluidLayoutCustomizer.addSection} method. Therefore,
+     * {@link IFluidLayoutCustomizer.addSectionToPath} method. Therefore,
      *
      * @param sectionIdx - index of section where to add the new item
      * @param itemIdx - index within the section where to add new item; you may specify -1 to add the
      *  item at the end of the section
      * @param item - item containing custom widget; note: customizer will make a deep copy of the item before adding it
      *  onto a dashboard. At this moment, the newly added items are read-only.
+     * @deprecated Use {@link IFluidLayoutCustomizer.addItemToPath} with itemPath param instead.
      */
     addItem(
         sectionIdx: number,
         itemIdx: number,
+        item: IDashboardLayoutItem<ICustomWidget>,
+    ): IFluidLayoutCustomizer;
+
+    /**
+     * Adds a new item containing a custom widget onto the dashboard.
+     *
+     * @remarks
+     * New item will be added to
+     * position defined by provided path allowing target also nested layouts/sections. All sections in path already need to exist. The item
+     * to add must contain a custom widget data. Attempts to add item that does not contain any widget data
+     * will be ignored and warnings will be reported. Keep in mind that this can lead to further errors or
+     * problems down the line if you are adding more items at specific indexes into the same section.
+     *
+     * Note: new items will be added into existing sections before new sections will be added using the
+     * IFluidLayoutCustomizer.addSection method. Therefore,
+     *
+     * @param itemPath - layout path where to add new item
+     * @param item - item containing custom widget; note: customizer will make a deep copy of the item before adding it
+     *  onto a dashboard. At this moment, the newly added items are read-only.
+     */
+    addItemToPath(
+        itemPath: ILayoutItemPath,
         item: IDashboardLayoutItem<ICustomWidget>,
     ): IFluidLayoutCustomizer;
 }
@@ -292,6 +272,138 @@ export type FluidLayoutCustomizationFn = (
     layout: IDashboardLayout<ExtendedDashboardWidget>,
     customizer: IFluidLayoutCustomizer,
 ) => void;
+
+/**
+ * Set of functions you can use to customize the export layout of the dashboard rendered.
+ *
+ * @alpha
+ */
+export interface IExportLayoutCustomizer<TWidget> {
+    addTransformer(fn: SectionSlidesTransformer<TWidget>): IExportLayoutCustomizer<TWidget>;
+}
+
+/**
+ * @alpha
+ */
+export type ExportLayoutCustomizationFn = <TWidget>(
+    layout: IDashboardLayout,
+    customizer: IExportLayoutCustomizer<TWidget>,
+) => void;
+
+/**
+ * @alpha
+ */
+export type SectionSlidesTransformer<TWidget> = (
+    section: IDashboardLayoutSection<TWidget>,
+    fn: SectionSlidesTransformerFunction<TWidget>,
+) => IDashboardLayoutSection<TWidget>[] | undefined;
+
+/**
+ * @alpha
+ */
+export interface SectionSlidesTransformerFunction<TWidget> {
+    /**
+     * Default transformer for the section. This is used as default transformation method for the section in
+     * case that no plugin override it. Can be used to provide default transformation for the section in custom
+     * plugin.
+     *
+     * @param section - Section to transform
+     */
+    defaultSection: (
+        section: IDashboardLayoutSection<TWidget>,
+    ) => IDashboardLayoutSection<TWidget>[] | undefined;
+    /**
+     * Default transformer for the items. This is used as default transformation method for the items in
+     * section in case that no plugin override it. Can be used to provide default transformation for the items in
+     * custom plugin.
+     *
+     * @param section - Section to transform
+     */
+    defaultItems: (
+        section: IDashboardLayoutSection<TWidget>,
+    ) => IDashboardLayoutSection<TWidget>[] | undefined;
+
+    /**
+     * This transformer ís used to extract break up slide from current section. Break up slide is created
+     * from section title and description. This transformer only create slide when section has title or description.
+     *
+     * @param section - Section to transform
+     */
+    breakUpSlide: (
+        section: IDashboardLayoutSection<TWidget>,
+    ) => IDashboardLayoutSection<TWidget>[] | undefined;
+
+    /**
+     * This transformer is used to extract widget slide from current section and provided item. Widget slide is created from
+     * provided item. Widget slide always contains only one item that mean there will be one item on created slide.
+     *
+     * @param item - Layout item (widget, kpi, ...) to transform
+     */
+    widgetSlide: (item: IDashboardLayoutItem<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
+
+    /**
+     * This transformer is used to create multiple slides from switcher widget. Each slide contains one visualization
+     * that is part of the switcher.
+     *
+     * @param item - Layout item specifically visualization switcher to transform
+     */
+    switcherSlide: (item: IDashboardLayoutItem<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
+
+    /**
+     * This is more complex transformer that is used to transform container item in the layout to a slide. Container item is
+     * transformed as a structured slide, but if it contains a visualization switcher, it is transformed to a flat list of visualizations
+     * that are part of container item.
+     *
+     * @param item - Layout item specifically  container to transform
+     * @param transform - function to transform each section in the layout
+     */
+    containerSlide: (
+        item: IDashboardLayoutItem<TWidget>,
+        transform: (
+            section: IDashboardLayoutSection<TWidget>,
+        ) => IDashboardLayoutSection<TWidget>[] | undefined,
+    ) => IDashboardLayoutSection<TWidget>[] | undefined;
+
+    /**
+     * This is more complex transformer that is used to transform container item in the layout to a slide. Container item is
+     * transformed as a structured slide, but if it contains a visualization switcher, switcher is spread into multiple slides
+     * where each slide contains one visualization from each switcher.
+     *
+     * @remarks
+     * If there are 2 switchers in the container, one with 3 visualizations and the other with 2 visualizations, then
+     * this transformer will create 3 slides. First slide will contain first visualizations from both switchers, second slide
+     * will contain second visualizations from both switchers and last slide will contain third visualization from the first
+     * switcher and empty item from the second switcher.
+     *
+     * @param item - Layout item specifically  container to transform
+     * @param transform - function to transform each section in the layout
+     */
+    containerSwitcherSlide: (
+        item: IDashboardLayoutItem<TWidget>,
+        transform: (
+            section: IDashboardLayoutSection<TWidget>,
+        ) => IDashboardLayoutSection<TWidget>[] | undefined,
+    ) => IDashboardLayoutSection<TWidget>[] | undefined;
+
+    /**
+     * This is helper function that is used to iterate all items in the section. On every item
+     * it calls provided transform function. This function is used to transform all items in the section.
+     *
+     * @param section - Section to transform
+     * @param transform - function to transform each item in the layout
+     */
+    itemsSlide: (
+        section: IDashboardLayoutSection<TWidget>,
+        transform: (item: IDashboardLayoutItem<TWidget>) => IDashboardLayoutSection<TWidget>[],
+    ) => IDashboardLayoutSection<TWidget>[] | undefined;
+
+    /**
+     * This function is used to determine if the section contains visualization switcher.
+     *
+     * @param section - Section to check
+     */
+    containsVisualisationSwitcher: (section: IDashboardLayoutSection<TWidget>) => boolean;
+}
 
 /**
  * @alpha
@@ -371,6 +483,92 @@ export interface IDashboardLayoutCustomizer {
      * be called.
      */
     customizeFluidLayout(fun: FluidLayoutCustomizationFn): IDashboardLayoutCustomizer;
+
+    /**
+     * Register customization of the export layout that is used to render the dashboard.
+     *
+     * @remarks
+     * At this point, you can register a function which will be called after dashboard component loads
+     * the dashboard and before it starts rendering the layout itself. The function will be called
+     * with two arguments:
+     *
+     * -  The actual dashboard layout
+     * -  Customizer that allows the plugin to work with export definition
+     *
+     * Your customization function may introspect the original layout and then register its customizations.
+     *
+     * If the dashboard is not rendering export layout, then the registered function will not
+     * be called.
+     */
+    customizeExportLayout(fun: ExportLayoutCustomizationFn): IDashboardLayoutCustomizer;
+
+    /**
+     * Register a provider for React components to render layout.
+     *
+     * @remarks
+     * A provider takes the layout as input and is expected to return
+     * a React component that should be used to render that layout.
+     *
+     * If the provider returns `undefined` then:
+     *
+     * -  if there are other providers registered, they will be called to see if they can provide
+     *    a component to render the layout
+     * -  if there are no other providers registered, the default, built-in component will be used.
+     *
+     * You may register multiple providers. They will be evaluated in the order you register them.
+     *
+     * @param provider - provider to register
+     * @returns self, for call chaining sakes
+     */
+    withCustomProvider(provider: OptionalLayoutComponentProvider): IDashboardLayoutCustomizer;
+
+    /**
+     * Register a factory for top bar decorator providers.
+     *
+     * @remarks
+     * Decorators are a way to add customizations or embellishments on top
+     * of an existing component. Decorators are more complex to write because they need to work with the component
+     * they should decorate and add 'something' on top of that component.
+     *
+     * This is best illustrated on an example:
+     *
+     * @example
+     * ```
+     * withCustomDecorator((next) => {
+     *     return (filter) => {
+     *         if (some_condition_to_prevent_decoration) {
+     *             return undefined;
+     *         }
+     *
+     *         // Make sure you call this outside the component render function,
+     *         // otherwise a new instance of the decorated component is created on each re-render.
+     *         const Decorated = next(filter);
+     *
+     *         function MyCustomDecorator(props) {
+     *              return (
+     *                  <div>
+     *                      <p>My Custom Decoration</p>
+     *                      <Decorated {...props} />
+     *                  </div>
+     *              )
+     *         }
+     *
+     *         return MyCustomDecorator;
+     *     }
+     * })
+     * ```
+     *
+     * The above shows how to register a decorator that will use some condition to determine whether particular
+     * attribute filter is eligible for decoration.
+     *
+     * Note: the factory function that you specify will be called immediately at the registration time. The
+     * provider that it returns will be called at render time.
+     *
+     * @param providerFactory - factory
+     */
+    withCustomDecorator(
+        providerFactory: (next: LayoutComponentProvider) => OptionalLayoutComponentProvider,
+    ): IDashboardLayoutCustomizer;
 }
 
 /**
@@ -397,6 +595,525 @@ export interface IFilterBarCustomizer {
      * @param mode - the mode to use, see {@link FilterBarRenderingMode} for info on individual values
      */
     setRenderingMode(mode: FilterBarRenderingMode): IFilterBarCustomizer;
+
+    /**
+     * Register a provider for React components to render filter bar.
+     *
+     * @remarks
+     * A provider takes the filter bar as input and is expected to return
+     * a React component that should be used to render that filter bar.
+     *
+     * If the provider returns `undefined` then:
+     *
+     * -  if there are other providers registered, they will be called to see if they can provide
+     *    a component to render the filter bar
+     * -  if there are no other providers registered, the default, built-in component will be used.
+     *
+     * You may register multiple providers. They will be evaluated in the order you register them.
+     *
+     * @param provider - provider to register
+     * @returns self, for call chaining sakes
+     */
+    withCustomProvider(provider: OptionalFilterBarComponentProvider): IFilterBarCustomizer;
+
+    /**
+     * Register a factory for top bar decorator providers.
+     *
+     * @remarks
+     * Decorators are a way to add customizations or embellishments on top
+     * of an existing component. Decorators are more complex to write because they need to work with the component
+     * they should decorate and add 'something' on top of that component.
+     *
+     * This is best illustrated on an example:
+     *
+     * @example
+     * ```
+     * withCustomDecorator((next) => {
+     *     return (filter) => {
+     *         if (some_condition_to_prevent_decoration) {
+     *             return undefined;
+     *         }
+     *
+     *         // Make sure you call this outside the component render function,
+     *         // otherwise a new instance of the decorated component is created on each re-render.
+     *         const Decorated = next(filter);
+     *
+     *         function MyCustomDecorator(props) {
+     *              return (
+     *                  <div>
+     *                      <p>My Custom Decoration</p>
+     *                      <Decorated {...props} />
+     *                  </div>
+     *              )
+     *         }
+     *
+     *         return MyCustomDecorator;
+     *     }
+     * })
+     * ```
+     *
+     * The above shows how to register a decorator that will use some condition to determine whether particular
+     * attribute filter is eligible for decoration.
+     *
+     * Note: the factory function that you specify will be called immediately at the registration time. The
+     * provider that it returns will be called at render time.
+     *
+     * @param providerFactory - factory
+     */
+    withCustomDecorator(
+        providerFactory: (next: FilterBarComponentProvider) => OptionalFilterBarComponentProvider,
+    ): IFilterBarCustomizer;
+}
+
+/**
+ * Set of functions you can use to customize some aspects of the TopBar.
+ *
+ * @public
+ */
+export interface ITopBarCustomizer {
+    /**
+     * Register a provider for React components to render top bar.
+     *
+     * @remarks
+     * A provider takes the top bar as input and is expected to return
+     * a React component that should be used to render that top bar.
+     *
+     * If the provider returns `undefined` then:
+     *
+     * -  if there are other providers registered, they will be called to see if they can provide
+     *    a component to render the top bar
+     * -  if there are no other providers registered, the default, built-in component will be used.
+     *
+     * You may register multiple providers. They will be evaluated in the order you register them.
+     *
+     * @param provider - provider to register
+     * @returns self, for call chaining sakes
+     */
+    withCustomProvider(provider: OptionalTopBarComponentProvider): ITopBarCustomizer;
+
+    /**
+     * Register a factory for top bar decorator providers.
+     *
+     * @remarks
+     * Decorators are a way to add customizations or embellishments on top
+     * of an existing component. Decorators are more complex to write because they need to work with the component
+     * they should decorate and add 'something' on top of that component.
+     *
+     * This is best illustrated on an example:
+     *
+     * @example
+     * ```
+     * withCustomDecorator((next) => {
+     *     return (filter) => {
+     *         if (some_condition_to_prevent_decoration) {
+     *             return undefined;
+     *         }
+     *
+     *         // Make sure you call this outside the component render function,
+     *         // otherwise a new instance of the decorated component is created on each re-render.
+     *         const Decorated = next(filter);
+     *
+     *         function MyCustomDecorator(props) {
+     *              return (
+     *                  <div>
+     *                      <p>My Custom Decoration</p>
+     *                      <Decorated {...props} />
+     *                  </div>
+     *              )
+     *         }
+     *
+     *         return MyCustomDecorator;
+     *     }
+     * })
+     * ```
+     *
+     * The above shows how to register a decorator that will use some condition to determine whether particular
+     * attribute filter is eligible for decoration.
+     *
+     * Note: the factory function that you specify will be called immediately at the registration time. The
+     * provider that it returns will be called at render time.
+     *
+     * @param providerFactory - factory
+     */
+    withCustomDecorator(
+        providerFactory: (next: TopBarComponentProvider) => OptionalTopBarComponentProvider,
+    ): ITopBarCustomizer;
+}
+
+/**
+ * Set of functions you can use to customize some aspects of the Title.
+ *
+ * @public
+ */
+export interface ITitleCustomizer {
+    /**
+     * Register a provider for React components to render Title.
+     *
+     * @remarks
+     * A provider takes the Title as input and is expected to return
+     * a React component that should be used to render that Title.
+     *
+     * If the provider returns `undefined` then:
+     *
+     * -  if there are other providers registered, they will be called to see if they can provide
+     *    a component to render the Title
+     * -  if there are no other providers registered, the default, built-in component will be used.
+     *
+     * You may register multiple providers. They will be evaluated in the order you register them.
+     *
+     * @param provider - provider to register
+     * @returns self, for call chaining sakes
+     */
+    withCustomProvider(provider: OptionalTitleComponentProvider): ITitleCustomizer;
+
+    /**
+     * Register a factory for Title decorator providers.
+     *
+     * @remarks
+     * Decorators are a way to add customizations or embellishments on top
+     * of an existing component. Decorators are more complex to write because they need to work with the component
+     * they should decorate and add 'something' on top of that component.
+     *
+     * This is best illustrated on an example:
+     *
+     * @example
+     * ```
+     * withCustomDecorator((next) => {
+     *     return (filter) => {
+     *         if (some_condition_to_prevent_decoration) {
+     *             return undefined;
+     *         }
+     *
+     *         // Make sure you call this outside the component render function,
+     *         // otherwise a new instance of the decorated component is created on each re-render.
+     *         const Decorated = next(filter);
+     *
+     *         function MyCustomDecorator(props) {
+     *              return (
+     *                  <div>
+     *                      <p>My Custom Decoration</p>
+     *                      <Decorated {...props} />
+     *                  </div>
+     *              )
+     *         }
+     *
+     *         return MyCustomDecorator;
+     *     }
+     * })
+     * ```
+     *
+     * The above shows how to register a decorator that will use some condition to determine whether particular
+     * attribute filter is eligible for decoration.
+     *
+     * Note: the factory function that you specify will be called immediately at the registration time. The
+     * provider that it returns will be called at render time.
+     *
+     * @param providerFactory - factory
+     */
+    withCustomDecorator(
+        providerFactory: (next: TitleComponentProvider) => OptionalTitleComponentProvider,
+    ): ITitleCustomizer;
+}
+
+/**
+ * Set of functions you can use to customize some aspects of the RichText.
+ *
+ * @public
+ */
+export interface IRichTextCustomizer {
+    /**
+     * Register a provider for React components to render RichText.
+     *
+     * @remarks
+     * A provider takes the RichText as input and is expected to return
+     * a React component that should be used to render that RichText.
+     *
+     * If the provider returns `undefined` then:
+     *
+     * -  if there are other providers registered, they will be called to see if they can provide
+     *    a component to render the RichText
+     * -  if there are no other providers registered, the default, built-in component will be used.
+     *
+     * You may register multiple providers. They will be evaluated in the order you register them.
+     *
+     * @param provider - provider to register
+     * @returns self, for call chaining sakes
+     */
+    withCustomProvider(provider: OptionalRichTextComponentProvider): IRichTextCustomizer;
+
+    /**
+     * Register a factory for RichText decorator providers.
+     *
+     * @remarks
+     * Decorators are a way to add customizations or embellishments on top
+     * of an existing component. Decorators are more complex to write because they need to work with the component
+     * they should decorate and add 'something' on top of that component.
+     *
+     * This is best illustrated on an example:
+     *
+     * @example
+     * ```
+     * withCustomDecorator((next) => {
+     *     return (filter) => {
+     *         if (some_condition_to_prevent_decoration) {
+     *             return undefined;
+     *         }
+     *
+     *         // Make sure you call this outside the component render function,
+     *         // otherwise a new instance of the decorated component is created on each re-render.
+     *         const Decorated = next(filter);
+     *
+     *         function MyCustomDecorator(props) {
+     *              return (
+     *                  <div>
+     *                      <p>My Custom Decoration</p>
+     *                      <Decorated {...props} />
+     *                  </div>
+     *              )
+     *         }
+     *
+     *         return MyCustomDecorator;
+     *     }
+     * })
+     * ```
+     *
+     * The above shows how to register a decorator that will use some condition to determine whether particular
+     * attribute filter is eligible for decoration.
+     *
+     * Note: the factory function that you specify will be called immediately at the registration time. The
+     * provider that it returns will be called at render time.
+     *
+     * @param providerFactory - factory
+     */
+    withCustomDecorator(
+        providerFactory: (next: RichTextComponentProvider) => OptionalRichTextComponentProvider,
+    ): IRichTextCustomizer;
+}
+
+/**
+ * Set of functions you can use to customize some aspects of the VisualizationSwitcher.
+ *
+ * @public
+ */
+export interface IVisualizationSwitcherCustomizer {
+    /**
+     * Register a provider for React components to render VisualizationSwitcher.
+     *
+     * @remarks
+     * A provider takes the VisualizationSwitcher as input and is expected to return
+     * a React component that should be used to render that VisualizationSwitcher.
+     *
+     * If the provider returns `undefined` then:
+     *
+     * -  if there are other providers registered, they will be called to see if they can provide
+     *    a component to render the VisualizationSwitcher
+     * -  if there are no other providers registered, the default, built-in component will be used.
+     *
+     * You may register multiple providers. They will be evaluated in the order you register them.
+     *
+     * @param provider - provider to register
+     * @returns self, for call chaining sakes
+     */
+    withCustomSwitcherProvider(
+        provider: OptionalVisualizationSwitcherComponentProvider,
+    ): IVisualizationSwitcherCustomizer;
+
+    /**
+     * Register a factory for RichText decorator providers.
+     *
+     * @remarks
+     * Decorators are a way to add customizations or embellishments on top
+     * of an existing component. Decorators are more complex to write because they need to work with the component
+     * they should decorate and add 'something' on top of that component.
+     *
+     * This is best illustrated on an example:
+     *
+     * @example
+     * ```
+     * withCustomDecorator((next) => {
+     *     return (filter) => {
+     *         if (some_condition_to_prevent_decoration) {
+     *             return undefined;
+     *         }
+     *
+     *         // Make sure you call this outside the component render function,
+     *         // otherwise a new instance of the decorated component is created on each re-render.
+     *         const Decorated = next(filter);
+     *
+     *         function MyCustomDecorator(props) {
+     *              return (
+     *                  <div>
+     *                      <p>My Custom Decoration</p>
+     *                      <Decorated {...props} />
+     *                  </div>
+     *              )
+     *         }
+     *
+     *         return MyCustomDecorator;
+     *     }
+     * })
+     * ```
+     *
+     * The above shows how to register a decorator that will use some condition to determine whether particular
+     * attribute filter is eligible for decoration.
+     *
+     * Note: the factory function that you specify will be called immediately at the registration time. The
+     * provider that it returns will be called at render time.
+     *
+     * @param providerFactory - factory
+     */
+    withCustomSwitcherDecorator(
+        providerFactory: (
+            next: VisualizationSwitcherComponentProvider,
+        ) => OptionalVisualizationSwitcherComponentProvider,
+    ): IVisualizationSwitcherCustomizer;
+
+    /**
+     * Register a provider for React components to render VisualizationSwitcherToolbar.
+     *
+     * @remarks
+     * A provider takes the VisualizationSwitcherToolbar as input and is expected to return
+     * a React component that should be used to render that VisualizationSwitcherToolbar.
+     *
+     * If the provider returns `undefined` then:
+     *
+     * -  if there are other providers registered, they will be called to see if they can provide
+     *    a component to render the VisualizationSwitcherToolbar
+     * -  if there are no other providers registered, the default, built-in component will be used.
+     *
+     * You may register multiple providers. They will be evaluated in the order you register them.
+     *
+     * @param provider - provider to register
+     * @returns self, for call chaining sakes
+     */
+    withCustomToolbarProvider(
+        provider: OptionalVisualizationSwitcherToolbarComponentProvider,
+    ): IVisualizationSwitcherCustomizer;
+
+    /**
+     * Register a factory for RichText decorator providers.
+     *
+     * @remarks
+     * Decorators are a way to add customizations or embellishments on top
+     * of an existing component. Decorators are more complex to write because they need to work with the component
+     * they should decorate and add 'something' on top of that component.
+     *
+     * This is best illustrated on an example:
+     *
+     * @example
+     * ```
+     * withCustomDecorator((next) => {
+     *     return (filter) => {
+     *         if (some_condition_to_prevent_decoration) {
+     *             return undefined;
+     *         }
+     *
+     *         // Make sure you call this outside the component render function,
+     *         // otherwise a new instance of the decorated component is created on each re-render.
+     *         const Decorated = next(filter);
+     *
+     *         function MyCustomDecorator(props) {
+     *              return (
+     *                  <div>
+     *                      <p>My Custom Decoration</p>
+     *                      <Decorated {...props} />
+     *                  </div>
+     *              )
+     *         }
+     *
+     *         return MyCustomDecorator;
+     *     }
+     * })
+     * ```
+     *
+     * The above shows how to register a decorator that will use some condition to determine whether particular
+     * attribute filter is eligible for decoration.
+     *
+     * Note: the factory function that you specify will be called immediately at the registration time. The
+     * provider that it returns will be called at render time.
+     *
+     * @param providerFactory - factory
+     */
+    withCustomToolbarDecorator(
+        providerFactory: (
+            next: VisualizationSwitcherToolbarComponentProvider,
+        ) => OptionalVisualizationSwitcherToolbarComponentProvider,
+    ): IVisualizationSwitcherCustomizer;
+}
+
+/**
+ * Set of functions you can use to customize some aspects of the Loading.
+ *
+ * @public
+ */
+export interface ILoadingCustomizer {
+    /**
+     * Register a provider for React components to render Loading.
+     *
+     * @remarks
+     * A provider takes the Loading as input and is expected to return
+     * a React component that should be used to render that Loading.
+     *
+     * If the provider returns `undefined` then:
+     *
+     * -  if there are other providers registered, they will be called to see if they can provide
+     *    a component to render the Loading
+     * -  if there are no other providers registered, the default, built-in component will be used.
+     *
+     * You may register multiple providers. They will be evaluated in the order you register them.
+     *
+     * @param provider - provider to register
+     * @returns self, for call chaining sakes
+     */
+    withCustomProvider(provider: OptionalLoadingComponentProvider): ILoadingCustomizer;
+
+    /**
+     * Register a factory for Loading decorator providers.
+     *
+     * @remarks
+     * Decorators are a way to add customizations or embellishments on top
+     * of an existing component. Decorators are more complex to write because they need to work with the component
+     * they should decorate and add 'something' on top of that component.
+     *
+     * This is best illustrated on an example:
+     *
+     * @example
+     * ```
+     * withCustomDecorator((next) => {
+     *     return (filter) => {
+     *         if (some_condition_to_prevent_decoration) {
+     *             return undefined;
+     *         }
+     *
+     *         // Make sure you call this outside the component render function,
+     *         // otherwise a new instance of the decorated component is created on each re-render.
+     *         const Decorated = next(filter);
+     *
+     *         function MyCustomDecorator(props) {
+     *              return (
+     *                  <div>
+     *                      <p>My Custom Decoration</p>
+     *                      <Decorated {...props} />
+     *                  </div>
+     *              )
+     *         }
+     *
+     *         return MyCustomDecorator;
+     *     }
+     * })
+     * ```
+     *
+     * The above shows how to register a decorator that will use some condition to determine whether particular
+     * attribute filter is eligible for decoration.
+     *
+     * Note: the factory function that you specify will be called immediately at the registration time. The
+     * provider that it returns will be called at render time.
+     *
+     * @param providerFactory - factory
+     */
+    withCustomDecorator(
+        providerFactory: (next: LoadingComponentProvider) => OptionalLoadingComponentProvider,
+    ): ILoadingCustomizer;
 }
 
 /**
@@ -528,14 +1245,19 @@ export interface IDashboardCustomizer {
     insightWidgets(): IDashboardInsightCustomizer;
 
     /**
-     * Customize how rendering of KPI widgets is done.
-     */
-    kpiWidgets(): IDashboardKpiCustomizer;
-
-    /**
      * Register custom widget types.
      */
     customWidgets(): IDashboardWidgetCustomizer;
+
+    /**
+     * Customize the rich text widget.
+     */
+    richTextWidgets(): IRichTextCustomizer;
+
+    /**
+     * Customize the visualisation switcher widget.
+     */
+    visualizationSwitcherWidgets(): IVisualizationSwitcherCustomizer;
 
     /**
      * Customize dashboard layout.
@@ -561,6 +1283,21 @@ export interface IDashboardCustomizer {
      * Customize dashboard content.
      */
     dashboard(): IDashboardContentCustomizer;
+
+    /**
+     * Customize topBar content.
+     */
+    topBar(): ITopBarCustomizer;
+
+    /**
+     * Customize title content.
+     */
+    title(): ITitleCustomizer;
+
+    /**
+     * Customize loading content.
+     */
+    loading(): ILoadingCustomizer;
 }
 
 /**

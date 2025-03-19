@@ -1,5 +1,10 @@
-// (C) 2019-2022 GoodData Corporation
-import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+// (C) 2019-2025 GoodData Corporation
+import {
+    IAnalyticalBackend,
+    IClusteringConfig,
+    IForecastConfig,
+    IPreparedExecution,
+} from "@gooddata/sdk-backend-spi";
 import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 import { IExecutionConfig } from "@gooddata/sdk-model";
 import { IChartConfig } from "./chartConfig.js";
@@ -109,4 +114,20 @@ export interface ICoreChartProps extends ICommonChartProps {
      * Prepared execution, which when executed, will provide data to visualize in the chart.
      */
     execution: IPreparedExecution;
+
+    /**
+     * Whether to enable execution cancelling.
+     * @internal
+     */
+    enableExecutionCancelling?: boolean;
+
+    /**
+     * Forecast configuration to apply to the chart data.
+     */
+    forecastConfig?: IForecastConfig;
+
+    /**
+     * Clustering configuration to apply to the chart data.
+     */
+    clusteringConfig?: IClusteringConfig;
 }

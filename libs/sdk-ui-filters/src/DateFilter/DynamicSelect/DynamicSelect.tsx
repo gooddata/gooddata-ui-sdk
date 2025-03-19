@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import DefaultDownshift, { ControllerStateAndHelpers } from "downshift";
 import cx from "classnames";
@@ -30,6 +30,7 @@ export interface IDynamicSelectProps {
     style?: React.CSSProperties;
     optionClassName?: string;
     visibleItemsRange?: number;
+    ariaLabel?: string;
     customValueValidator?: (value: string) => boolean;
 }
 
@@ -112,6 +113,7 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
             style,
             optionClassName,
             visibleItemsRange,
+            ariaLabel,
         } = this.props;
 
         const items = getItems(this.state.inputValue);
@@ -166,12 +168,18 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
                     };
 
                     return (
-                        <div className={cx("gd-dynamic-select", className)} style={style}>
+                        <div
+                            className={cx("gd-dynamic-select", className)}
+                            style={style}
+                            aria-labelledby={undefined}
+                        >
                             <div className="gd-dynamic-select-input-wrapper">
                                 <input
                                     type="text"
                                     className="s-relative-range-input gd-input-field"
+                                    aria-label={ariaLabel}
                                     {...getInputProps({
+                                        "aria-labelledby": undefined,
                                         ref: this.inputRef,
                                         placeholder: selectedItem ? selectedItem.label : placeholder,
                                         value: inputValue,

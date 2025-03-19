@@ -21,7 +21,7 @@ Start your GoodData.UI journey with hands-on experience:
 {{< blocks/card sectionLink="/learn/visualize_data" description="Visualize your data ">}}
 {{< /blocks/card >}}
 
-{{< blocks/card sectionLink="/learn/embed_dashboards" description="Embed dashboards and insights in minutes!">}}
+{{< blocks/card sectionLink="/learn/embed_dashboards" description="Embed dashboards and visualizations in minutes!">}}
 {{< /blocks/card >}}
 
 {{< blocks/card sectionLink="/learn/apply_theming" description="Personalize your experience with theming!">}}
@@ -36,7 +36,7 @@ As a developer, make use of our development kits and API:
 {{< blocks/cards-container aligned="true">}}
 
 {{< blocks/card title="Web Components" icon="webcomponents-logo.svg" iconPosition="top" extLink="./learn/embed_dashboards/web_components/">}}
-Embed GoodData insights and dashboards into a web application in a framework agnostic way.
+Embed GoodData visualizations and dashboards into a web application in a framework agnostic way.
 {{< /blocks/card >}}
 
 {{< blocks/card icon="react-logo.svg" title="React" iconPosition="top" extLink="./quick_start/">}}

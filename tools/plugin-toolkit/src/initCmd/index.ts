@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { ActionOptions, TargetAppLanguage } from "../_base/types.js";
 import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import * as path from "path";
@@ -12,7 +12,6 @@ import {
     readJsonSync,
     writeAsJsonSync,
 } from "../_base/utils.js";
-import { processTigerFiles } from "./processTigerFiles.js";
 import { getInitCmdActionConfig, InitCmdActionConfig } from "./actionConfig.js";
 import { FileReplacementSpec, replaceInFiles } from "./replaceInFiles.js";
 import { sync as spawnSync } from "cross-spawn";
@@ -31,8 +30,6 @@ function unpackProject(target: string, language: TargetAppLanguage) {
     });
 }
 
-const TigerBackendPackage = "@gooddata/sdk-backend-tiger";
-const BearBackendPackage = "@gooddata/sdk-backend-bear";
 const unnecessaryDevPkg = [
     "eslint-plugin-header",
     "eslint-plugin-import",
@@ -44,23 +41,18 @@ const unnecessaryDevPkg = [
 ];
 
 /**
- * The original package.json can be tweaked now. The plugin name will be used for package name and
- * the dependency on unnecessary analytical backend impl will be dropped (bear backend dropped if tiger is
- * being used etc).
+ * The original package.json can be tweaked now. The plugin name will be used for package name
  *
  * @param target - target directory where the plugin template was expanded
  * @param config - config for the initialization action
  */
 function modifyPackageJson(target: string, config: InitCmdActionConfig) {
-    const { name, backend, packageManager } = config;
+    const { name, packageManager } = config;
     const packageJsonFile = path.resolve(target, "package.json");
     const packageJson = readJsonSync(packageJsonFile);
-    const { peerDependencies, devDependencies, overrides } = packageJson;
-    const unnecessaryBackendPkg = backend === "bear" ? TigerBackendPackage : BearBackendPackage;
+    const { devDependencies, overrides } = packageJson;
 
     packageJson.name = name;
-    delete peerDependencies[unnecessaryBackendPkg];
-    delete devDependencies[unnecessaryBackendPkg];
 
     unnecessaryDevPkg.forEach((key) => {
         delete devDependencies[key];
@@ -96,17 +88,10 @@ function renamePluginDirectories(target: string, config: InitCmdActionConfig) {
 }
 
 function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): Promise<void> {
-    const { backend, hostname, workspace, dashboard, pluginIdentifier, language, packageManager } = config;
-    const isTiger = backend === "tiger";
+    const { hostname, workspace, dashboard, pluginIdentifier, language, packageManager } = config;
+
     const { protocol } = url.parse(hostname);
     const replacements: FileReplacementSpec = {
-        "webpack.config.cjs": [
-            {
-                regex: /"\/gdc"/g,
-                value: '"/api"',
-                apply: isTiger,
-            },
-        ],
         ".env": [
             {
                 regex: /BACKEND_URL=/g,
@@ -141,11 +126,6 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
         ],
         scripts: {
             "refresh-md.js": [
-                {
-                    regex: /const backend = "bear"/g,
-                    value: 'const backend = "tiger"',
-                    apply: isTiger,
-                },
                 {
                     regex: /full\.ts/g,
                     value: "full.js",
@@ -198,12 +178,11 @@ function performReplacementsInFiles(dir: string, config: InitCmdActionConfig): P
  * @param config - config for the initialization action
  */
 async function prepareProject(target: string, config: InitCmdActionConfig): Promise<void> {
-    const { language, backend } = config;
+    const { language } = config;
 
     await unpackProject(target, language);
     modifyPackageJson(target, config);
 
-    await processTigerFiles(target, backend === "tiger");
     renamePluginDirectories(target, config);
     await performReplacementsInFiles(target, config);
 }

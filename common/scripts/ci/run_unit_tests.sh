@@ -1,7 +1,6 @@
 #!/bin/bash
 
 DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
-WIREMOCK_DIR="${DIR}/../../../libs/sdk-backend-bear/tests/wiremock"
 
 # Network for the wiremock server(s) & the test code to share; this is exported and propagated to dockerized
 # rush runs.
@@ -36,9 +35,6 @@ fi
 # Stop wiremock server(s) & destroy the network
 #
 stop_wiremocks() {
-  echo "Stopping wiremock server for bear integrated tests."
-  $_WIREMOCK_STOP
-
   echo "Stopping wiremock server for tiger integrated tests."
   $_TIGER_WIREMOCK_STOP
 
@@ -50,10 +46,6 @@ stop_wiremocks() {
 # that will be used by the containers.
 #
 start_wiremocks() {
-  WIREMOCK_DIR="${DIR}/../../../libs/sdk-backend-bear/tests/wiremock"
-  _WIREMOCK_START="${WIREMOCK_DIR}/start_wiremock.sh"
-  _WIREMOCK_STOP="${WIREMOCK_DIR}/stop_wiremock.sh"
-
   TIGER_WIREMOCK_DIR="${DIR}/../../../libs/sdk-backend-tiger/tests/wiremock"
   _TIGER_WIREMOCK_START="${TIGER_WIREMOCK_DIR}/start_wiremock.sh"
   _TIGER_WIREMOCK_STOP="${TIGER_WIREMOCK_DIR}/stop_wiremock.sh"
@@ -61,8 +53,6 @@ start_wiremocks() {
   docker network create ${WIREMOCK_NET} || { echo "Network creation failed" && exit 1; }
   trap stop_wiremocks EXIT
 
-  echo "Starting wiremock server for bear integrated tests"
-  $_WIREMOCK_START detached
   echo "Starting wiremock server for tiger integrated tests"
   $_TIGER_WIREMOCK_START detached
 }

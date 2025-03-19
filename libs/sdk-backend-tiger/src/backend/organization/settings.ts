@@ -1,6 +1,13 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { IOrganizationSettingsService } from "@gooddata/sdk-backend-spi";
-import { ISettings, IWhiteLabeling } from "@gooddata/sdk-model";
+import {
+    ISettings,
+    IWhiteLabeling,
+    IOpenAiConfig,
+    IAlertDefault,
+    ISeparators,
+    type DashboardFiltersApplyMode,
+} from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../types/index.js";
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter.js";
@@ -22,6 +29,10 @@ export class OrganizationSettingsService
         return this.setSetting("TIMEZONE", { value: timezone });
     }
 
+    public async setSeparators(separators: ISeparators): Promise<void> {
+        return this.setSetting("SEPARATORS", separators);
+    }
+
     public async setDateFormat(dateFormat: string): Promise<void> {
         return this.setSetting("FORMAT_LOCALE", { value: dateFormat });
     }
@@ -34,12 +45,24 @@ export class OrganizationSettingsService
         return this.setSetting("ACTIVE_THEME", { id: activeThemeId, type: "theme" });
     }
 
+    public async setAlertDefault(value: IAlertDefault): Promise<void> {
+        return this.setSetting("ALERT", value);
+    }
+
     public async deleteTheme() {
         return this.deleteSettingByType("ACTIVE_THEME");
     }
 
     public async setColorPalette(activeColorPaletteId: string) {
         return this.setSetting("ACTIVE_COLOR_PALETTE", { id: activeColorPaletteId, type: "colorPalette" });
+    }
+
+    public async setOpenAiConfig(config: IOpenAiConfig) {
+        return this.setSetting("OPENAI_CONFIG", config);
+    }
+
+    public async setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode) {
+        return this.setSetting("DASHBOARD_FILTERS_APPLY_MODE", dashboardFiltersApplyMode);
     }
 
     public async deleteColorPalette() {

@@ -1,30 +1,21 @@
-// (C) 2020 GoodData Corporation
-import { IAnalyticalBackend, NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
-import bearFactory, { FixedLoginAndPasswordAuthProvider } from "@gooddata/sdk-backend-bear";
-
-import { BackendType } from "./base/types.js";
+// (C) 2020-2024 GoodData Corporation
+import { IAnalyticalBackend, UnexpectedError } from "@gooddata/sdk-backend-spi";
+import tigerFactory, { TigerTokenAuthProvider } from "@gooddata/sdk-backend-tiger";
 
 let backend: IAnalyticalBackend | null = null;
 
-export const getOrInitBackend = (
-    username: string,
-    password: string,
-    hostname: string,
-    backendType: BackendType,
-): IAnalyticalBackend => {
+export const getOrInitBackend = (tigerToken: string, hostname: string): IAnalyticalBackend => {
     // return the current backend if we have one
     if (backend) {
         return backend;
     }
 
-    if (backendType === "tiger") {
-        throw new NotSupported("Tiger backend does not support auth yet");
+    if (!tigerToken) {
+        throw new UnexpectedError("Tiger token not provided");
     }
 
-    backend = bearFactory({ hostname }).withAuthentication(
-        new FixedLoginAndPasswordAuthProvider(username, password),
-    );
-
+    // assign to global and return
+    backend = tigerFactory({ hostname }).withAuthentication(new TigerTokenAuthProvider(tigerToken));
     return backend;
 };
 

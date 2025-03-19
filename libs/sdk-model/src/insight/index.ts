@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import intersection from "lodash/intersection.js";
 import { ISortItem, sortEntityIds, SortEntityIds } from "../execution/base/sort.js";
@@ -46,7 +46,7 @@ import { IUser } from "../user/index.js";
 import { IAuditable } from "../base/metadata.js";
 
 /**
- * Represents an Insight defined in GoodData platform. Insight is typically created using Analytical Designer
+ * Represents an Insight. Insight is typically created using Analytical Designer
  * and can be embedded using UI SDK.
  *
  * @remarks
@@ -77,6 +77,25 @@ export type IInsight = IInsightDefinition & {
          */
         isLocked?: boolean;
     };
+};
+
+/**
+ * Attribute filter config
+ *
+ * @public
+ */
+export type IAttributeFilterConfig = {
+    displayAsLabel: ObjRef;
+};
+
+/**
+ * Definition of UI specific attribute filters configs.
+ * These influence how the filters are displayed in the UI not the execution.
+ *
+ * @public
+ */
+export type IAttributeFilterConfigs = {
+    [filterLocalIdentifier: string]: IAttributeFilterConfig;
 };
 
 /**
@@ -133,6 +152,8 @@ export type IInsightDefinition = {
          * Filters to apply on the data.
          */
         filters: IFilter[];
+
+        attributeFilterConfigs?: IAttributeFilterConfigs;
 
         /**
          * Sorting to apply on the data.
@@ -409,6 +430,20 @@ export function insightFilters(insight: IInsightDefinition): IFilter[] {
     invariant(insight, "insight must be specified");
 
     return insight.insight.filters;
+}
+
+/**
+ * Gets attribute filters configs used in an insight if defined.
+ *
+ * @param insight - insight to work with
+ * @public
+ */
+export function insightAttributeFilterConfigs(
+    insight: IInsightDefinition,
+): IAttributeFilterConfigs | undefined {
+    invariant(insight, "insight must be specified");
+
+    return insight.insight.attributeFilterConfigs;
 }
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { LayoutRow } from "./layoutRow";
 import { Widget } from "./widget";
 
@@ -39,6 +39,12 @@ export class Dashboard {
 
     dashboardBodyExist(exist = true): this {
         this.getDashboardBodyElement().should(exist ? "exist" : "not.exist");
+        return this;
+    }
+
+    waitForDashboardLoaded() {
+        cy.get(".catalog-is-loaded").should("exist");
+        cy.get(".accessible-dashboards-loaded").should("exist");
         return this;
     }
 
@@ -111,7 +117,7 @@ export class TopBar {
     }
 
     enterEditMode() {
-        cy.get(".s-top-bar .s-edit").click();
+        cy.get(".s-top-bar .s-edit:not(.disabled)").click();
         return this;
     }
 

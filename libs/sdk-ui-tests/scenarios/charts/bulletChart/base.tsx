@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { BulletChart, IBulletChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
@@ -16,19 +16,19 @@ export const BulletChartWithAllMeasuresAndTwoViewBy = {
     primaryMeasure: ReferenceMd.Won,
     targetMeasure: ReferenceMd.Amount,
     comparativeMeasure: ReferenceMdExt.CalculatedLost,
-    viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
+    viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region.Default],
 };
 
 export const BulletChartWithPrimaryMeasureAndTwoViewByDates = {
     primaryMeasure: ReferenceMd.Won,
-    viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default, ReferenceMdExt.ModifiedClosedYear],
+    viewBy: [ReferenceMd.DateDatasets.Closed.ClosedYear.Default, ReferenceMdExt.ModifiedClosedYear],
 };
 
 export const BulletChartWithAllMeasuresMeasuresAndTwoViewByDates = {
     primaryMeasure: ReferenceMd.Won,
     targetMeasure: ReferenceMd.Amount,
     comparativeMeasure: ReferenceMdExt.CalculatedLost,
-    viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default, ReferenceMdExt.ModifiedClosedYear],
+    viewBy: [ReferenceMd.DateDatasets.Closed.ClosedYear.Default, ReferenceMdExt.ModifiedClosedYear],
 };
 
 export default scenariosFor<IBulletChartProps>("BulletChart", BulletChart)

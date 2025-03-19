@@ -1,17 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AttributeFilterHandler > getElementsByKey() should return selection elements after successful initialization 1`] = `
-[
-  {
-    "title": "CompuSci",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
-  },
-  {
-    "title": "Educationly",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
-  },
-]
-`;
+exports[`AttributeFilterHandler > getElementsByKey() should return selection elements after successful initialization 1`] = `[]`;
 
 exports[`AttributeFilterHandler > getInitError() should return error 1`] = `[Error: NOT_FOUND]`;
 

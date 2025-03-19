@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { EditMode } from "../../tools/editMode";
@@ -12,7 +12,9 @@ const dashboardHeader = new DashboardHeader();
 const editMode = new EditMode();
 const dashboardMenu = new DashboardMenu();
 
-describe("Dashboard Date Related", { tags: "pre-merge_isolated_bear" }, () => {
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("Dashboard Date Related", { tags: "pre-merge_isolated_bear" }, () => {
     it("Make no change on unrelated date insight", () => {
         Navigation.visit("dashboard/date-filtering");
 

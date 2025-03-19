@@ -324,8 +324,8 @@ exports[`PluggableLineChart > should cut out measures tail when getting nM 0Vb 1
         "isShowInPercentVisible": true,
         "isShowOnSecondaryAxisVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">segment by</span>",
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">segment by</span>",
       },
       "segment": {
         "accepts": [
@@ -456,8 +456,8 @@ exports[`PluggableLineChart > should handle wrong order of buckets in reference 
         "isShowInPercentVisible": true,
         "isShowOnSecondaryAxisVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">segment by</span>",
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">segment by</span>",
       },
       "segment": {
         "accepts": [
@@ -578,8 +578,8 @@ exports[`PluggableLineChart > should return reference point when no categories a
         "isShowInPercentVisible": true,
         "isShowOnSecondaryAxisVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">segment by</span>",
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">segment by</span>",
       },
       "segment": {
         "accepts": [
@@ -710,8 +710,8 @@ exports[`PluggableLineChart > should return reference point with Date in categor
         "isShowInPercentVisible": true,
         "isShowOnSecondaryAxisVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">segment by</span>",
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">segment by</span>",
       },
       "segment": {
         "accepts": [
@@ -842,8 +842,8 @@ exports[`PluggableLineChart > should return reference point with one category an
         "isShowInPercentVisible": true,
         "isShowOnSecondaryAxisVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">segment by</span>",
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">segment by</span>",
       },
       "segment": {
         "accepts": [
@@ -1021,7 +1021,7 @@ exports[`PluggableLineChart > should reuse all measures, only one category and n
         "isShowInPercentVisible": true,
         "isShowOnSecondaryAxisVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
+        "title": "Metrics",
       },
       "segment": {
         "accepts": [
@@ -1035,7 +1035,7 @@ exports[`PluggableLineChart > should reuse all measures, only one category and n
         "isShowInPercentEnabled": false,
         "itemsLimit": 1,
         "title": "Segment by",
-        "warningMessage": "To segment by, an insight can have only one measure",
+        "warningMessage": "To segment by, an visualization can have only one metric",
       },
       "trend": {
         "accepts": [
@@ -1198,8 +1198,8 @@ exports[`PluggableLineChart > should reuse one measure, only one category and on
         "isShowInPercentVisible": true,
         "isShowOnSecondaryAxisVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">segment by</span>",
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">segment by</span>",
       },
       "segment": {
         "accepts": [

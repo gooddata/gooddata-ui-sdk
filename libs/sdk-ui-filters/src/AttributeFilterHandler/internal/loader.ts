@@ -10,6 +10,7 @@ import {
     IRelativeDateFilter,
     SortDirection,
     ObjRef,
+    IAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -356,6 +357,17 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
     };
 
     // Elements options
+    setDisplayAsLabel = (displayAsLabel: ObjRef): void => {
+        this.bridge.setDisplayAsLabel(displayAsLabel);
+    };
+
+    getDisplayAsLabel = (): ObjRef | undefined => {
+        return this.bridge.getDisplayAsLabel();
+    };
+
+    setDisplayForm = (label: ObjRef): void => {
+        this.bridge.setDisplayForm(label);
+    };
 
     getOffset = (): number => {
         return this.bridge.getOffset();
@@ -409,11 +421,11 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
         return this.bridge.getLimitingAttributeFilters();
     };
 
-    setLimitingDateFilters = (filters: IRelativeDateFilter[]): void => {
+    setLimitingDateFilters = (filters: IRelativeDateFilter[] | IAbsoluteDateFilter[]): void => {
         this.bridge.setLimitingDateFilters(filters);
     };
 
-    getLimitingDateFilters = (): IRelativeDateFilter[] => {
+    getLimitingDateFilters = (): IRelativeDateFilter[] | IAbsoluteDateFilter[] => {
         return this.bridge.getLimitingDateFilters();
     };
 
@@ -439,6 +451,14 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
 
     getFilter = (): IAttributeFilter => {
         return this.bridge.getFilter();
+    };
+
+    getFilterToDisplay = (): IAttributeFilter => {
+        return this.bridge.getFilterToDisplay();
+    };
+
+    getOriginalFilter = (): IAttributeFilter => {
+        return this.bridge.getOriginalFilter();
     };
 
     onUpdate: CallbackRegistration<void> = (cb) => {

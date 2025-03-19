@@ -24,6 +24,7 @@ import {
     testItemWithFilterIgnoreList,
     TestKpiPlaceholderItem,
     TestRichTextItem,
+    TestVisualizationSwitcherItem,
 } from "../../../tests/fixtures/Layout.fixtures.js";
 import { ActivityDateDatasetRef } from "../../../tests/fixtures/CatalogAvailability.fixtures.js";
 
@@ -86,6 +87,7 @@ describe("add layout section handler", () => {
                     TestKpiPlaceholderItem,
                     TestInsightPlaceholderItem,
                     TestRichTextItem,
+                    TestVisualizationSwitcherItem,
                 ]),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
@@ -93,6 +95,7 @@ describe("add layout section handler", () => {
                 TestKpiPlaceholderItem,
                 TestInsightPlaceholderItem,
                 TestRichTextItem,
+                TestVisualizationSwitcherItem,
             ]);
 
             const layout = selectLayout(Tester.state());
@@ -267,19 +270,18 @@ describe("add layout section handler", () => {
         it("should add a new section between two existing sections", async () => {
             const originalLayout = selectLayout(Tester.state());
 
-            const lastSectionAdded: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+            await Tester.dispatchAndWaitFor(
                 addLayoutSection(-1, undefined, [TestKpiPlaceholderItem]),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
-            const middleSectionAdded: DashboardLayoutSectionAdded = await Tester.dispatchAndWaitFor(
+
+            await Tester.dispatchAndWaitFor(
                 addLayoutSection(1, undefined, [TestInsightPlaceholderItem]),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
 
             const layout = selectLayout(Tester.state());
             expect(layout.sections.length).toBe(originalLayout.sections.length + 2);
-            expect(layout.sections[4]).toEqual(lastSectionAdded.payload.section);
-            expect(layout.sections[1]).toEqual(middleSectionAdded.payload.section);
         });
 
         it("should be undoable and revert to original layout", async () => {

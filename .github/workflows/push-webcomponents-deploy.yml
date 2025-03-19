@@ -1,11 +1,10 @@
 ---
-# (C) 2023 GoodData Corporation
-# yamllint disable rule:line-length
+# (C) 2024 GoodData Corporation
 name: Push ~ Build web component's container image
 
 on:
     push:
-        branches: ["master", "release", "hotfix/tiger", "hotfix/panther", "fast_track"]
+        branches: ["master"]
 
 concurrency:
     group: ${{ github.ref }}
@@ -17,38 +16,40 @@ env:
 jobs:
   build-web-components:
     if: ${{ startsWith(github.event.head_commit.message, 'Release ') || startsWith(github.event.head_commit.message, format('chore{0} bump versions to', ':')) }}
-    runs-on: [infra1-medium]  # need the bigger runner than small because Web component build consume more resource
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-rxa-xlarge
     permissions:
       contents: read
       id-token: write
-    container:
-      image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/library/node:18
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Add repository to git safe directories to avoid dubious ownership issue
         run: git config --global --add safe.directory $GITHUB_WORKSPACE
-      - name: Cache pnpm dependencies
-        id: cache-pnpm
-        uses: actions/cache@v3
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
         with:
-          key: web-components-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-          path: |
-            common/temp/node_modules
-            common/temp/pnpm-store
+          name: git-action
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
       - name: Run build web components app
         run: |
-          npm i -g @microsoft/rush
-          rush install
-          rush build --to @gooddata/sdk-ui-web-components
+            node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-web-components
+      - name: Collect build artifacts
+        run: |
           tar czvf ./libs/sdk-ui-web-components/web-components.tar.gz -C ./$WEB_COMPONENTS_DIR/esm .
       - name: Archive the build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: web-components-artifact
           path: ./${{ env.WEB_COMPONENTS_DIR }}/web-components.tar.gz
   docker-build-web-components:
-    runs-on: [infra1-small]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
     needs: [build-web-components]
     permissions:
       contents: read
@@ -89,7 +90,7 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: web-components-artifact
           path: ./${{ env.WEB_COMPONENTS_DIR }}
@@ -108,7 +109,9 @@ jobs:
     outputs:
       github_short_sha: ${{ env.GITHUB_SHORT_SHA }}
   generate-update:
-    runs-on: [infra1-small]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
     needs: [docker-build-web-components]
     steps:
       - name: Repository Dispatch

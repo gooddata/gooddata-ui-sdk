@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     SingleAttribute,
     SingleColumn,
@@ -108,7 +108,7 @@ describe("TableDescriptor", () => {
                 TableDescriptor.for(
                     SingleMeasureWithTwoRowAndTwoColumnAttributes,
                     "empty value",
-                ).matchAttributeWidthItem(newWidthForAttributeColumn(ReferenceMd.Region, 100)),
+                ).matchAttributeWidthItem(newWidthForAttributeColumn(ReferenceMd.Region.Default, 100)),
             ).toBeUndefined();
         });
     });

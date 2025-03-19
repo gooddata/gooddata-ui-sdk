@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { invariant } from "ts-invariant";
 import isNil from "lodash/isNil.js";
 import {
@@ -14,17 +14,34 @@ import {
     RankingFilterOperator,
 } from "./index.js";
 import { attributeDisplayFormRef, IAttribute, isAttribute, attributeLocalId } from "../attribute/index.js";
-import { Identifier, isObjRef, LocalIdRef, ObjRef, ObjRefInScope } from "../../objRef/index.js";
+import {
+    Identifier,
+    isObjRef,
+    LocalIdRef,
+    ObjRef,
+    ObjRefInScope,
+    objRefToString,
+} from "../../objRef/index.js";
 import { IMeasure, isMeasure, measureLocalId } from "../measure/index.js";
 import { idRef, localIdRef } from "../../objRef/factory.js";
 import { DateAttributeGranularity } from "../../base/dateGranularities.js";
+import SparkMD5 from "spark-md5";
+import { sanitizeLocalId } from "../../sanitizeLocalId.js";
+
+export function generateLocalId(prefix: string, objRef: ObjRef, inObject: IAttributeElements): string {
+    const hasher = new SparkMD5();
+    hasher.append(JSON.stringify(inObject));
+
+    const hash = hasher.end().substr(0, 8);
+    return sanitizeLocalId(`${prefix}_${objRefToString(objRef)}_${hash}`);
+}
 
 /**
  * Creates a new positive attribute filter.
  *
  * @remarks
  * NOTE: when specifying attribute element using URIs (primary keys), please keep in mind that they MAY NOT be transferable
- * across workspaces. On some backends (such as bear) same element WILL have different URI in each workspace.
+ * across workspaces. On some backends same element WILL have different URI in each workspace.
  * In general we recommend using URIs only if your code retrieves them at runtime from backend using elements query
  * or from the data view's headers. Hardcoding URIs is never a good idea, if you find yourself doing that,
  * please consider specifying attribute elements by value
@@ -37,6 +54,7 @@ import { DateAttributeGranularity } from "../../base/dateGranularities.js";
 export function newPositiveAttributeFilter(
     attributeOrRef: IAttribute | ObjRef | Identifier,
     inValues: IAttributeElements | string[],
+    localIdentifier?: string,
 ): IPositiveAttributeFilter {
     const objRef = isObjRef(attributeOrRef)
         ? attributeOrRef
@@ -48,6 +66,7 @@ export function newPositiveAttributeFilter(
 
     return {
         positiveAttributeFilter: {
+            ...(localIdentifier ? { localIdentifier } : {}),
             displayForm: objRef,
             in: inObject,
         },
@@ -59,7 +78,7 @@ export function newPositiveAttributeFilter(
  *
  * @remarks
  * NOTE: when specifying attribute element using URIs (primary keys), please keep in mind that they MAY NOT be transferable
- * across workspaces. On some backends (such as bear) same element WILL have different URI in each workspace.
+ * across workspaces. On some backends same element WILL have different URI in each workspace.
  * In general we recommend using URIs only if your code retrieves them at runtime from backend using elements query
  * or from the data view's headers. Hardcoding URIs is never a good idea, if you find yourself doing that,
  * please consider specifying attribute elements by value
@@ -72,6 +91,7 @@ export function newPositiveAttributeFilter(
 export function newNegativeAttributeFilter(
     attributeOrRef: IAttribute | ObjRef | Identifier,
     notInValues: IAttributeElements | string[],
+    localIdentifier?: string,
 ): INegativeAttributeFilter {
     const objRef = isObjRef(attributeOrRef)
         ? attributeOrRef
@@ -85,6 +105,7 @@ export function newNegativeAttributeFilter(
 
     return {
         negativeAttributeFilter: {
+            ...(localIdentifier ? { localIdentifier } : {}),
             displayForm: objRef,
             notIn: notInObject,
         },

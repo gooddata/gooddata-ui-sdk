@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     IColorPalette,
     IDateFilterConfig,
@@ -6,11 +6,16 @@ import {
     ISettings,
     PlatformEdition,
     WeekStart,
+    type DashboardFiltersApplyMode,
 } from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardSelector, DashboardState } from "../types.js";
 import { invariant } from "ts-invariant";
-import { ObjectAvailabilityConfig, ResolvedDashboardConfig } from "../../types/commonTypes.js";
+import {
+    DashboardFocusObject,
+    ObjectAvailabilityConfig,
+    ResolvedDashboardConfig,
+} from "../../types/commonTypes.js";
 import { ILocale } from "@gooddata/sdk-ui";
 import { selectSupportsAttributeHierarchies } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 
@@ -69,6 +74,15 @@ export const selectSettings: DashboardSelector<ISettings> = createSelector(selec
  */
 export const selectLocale: DashboardSelector<ILocale> = createSelector(selectConfig, (state) => {
     return state.locale ?? undefined;
+});
+
+/**
+ * Returns timezone
+ *
+ * @public
+ */
+export const selectTimezone: DashboardSelector<string | undefined> = createSelector(selectConfig, (state) => {
+    return state.settings.timezone ?? undefined;
 });
 
 /**
@@ -407,6 +421,51 @@ export const selectEnableInsightExportScheduling: DashboardSelector<boolean> = c
 );
 
 /**
+ * @alpha
+ */
+export const selectEnableScheduling: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
+    return state.settings?.enableScheduling ?? true;
+});
+
+/**
+ * @alpha
+ */
+export const selectEnableAlerting: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
+    return state.settings?.enableAlerting ?? true;
+});
+
+/**
+ * @alpha
+ */
+export const selectEnableAlertAttributes: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableAlertAttributes ?? true;
+    },
+);
+
+/**
+ * @alpha
+ */
+export const selectEnableComparisonInAlerting: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableComparisonInAlerting ?? true;
+    },
+);
+
+/**
+ * @alpha
+ */
+export const selectEnableAutomations: DashboardSelector<boolean> = createSelector(
+    selectEnableScheduling,
+    selectEnableAlerting,
+    (enableScheduling, enableAlerting) => {
+        return enableScheduling || enableAlerting;
+    },
+);
+
+/**
  * Returns whether analytical dashboard permissions are enabled
  *
  * @internal
@@ -450,7 +509,7 @@ export const selectEnableRenamingProjectToWorkspace: DashboardSelector<boolean> 
 export const selectEnableRenamingMeasureToMetric: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return !!(state.settings?.enableRenamingMeasureToMetric ?? false);
+        return state.settings?.enableRenamingMeasureToMetric ?? true;
     },
 );
 
@@ -567,6 +626,30 @@ export const selectIsShareButtonHidden: DashboardSelector<boolean> = createSelec
 });
 
 /**
+ * Returns whether cross filtering is disabled by config
+ *
+ * @internal
+ */
+export const selectIsDisabledCrossFiltering: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.disableCrossFiltering ?? false;
+    },
+);
+
+/**
+ * Returns whether user filter reset is disabled by config
+ *
+ * @internal
+ */
+export const selectIsDisableUserFilterReset: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.disableUserFilterReset ?? false;
+    },
+);
+
+/**
  * Returns whether drill down is enabled.
  *
  * On Bear, drill down is driven by isKPIDashboardImplicitDrillDown.
@@ -638,5 +721,257 @@ export const selectEnableAttributeFilterValuesValidation: DashboardSelector<bool
     selectConfig,
     (state) => {
         return state.settings?.enableAttributeFilterValuesValidation ?? true;
+    },
+);
+
+/**
+ * Returns whether KD attribute filter by dates validation/filtering is enabled.
+ *
+ * @internal
+ */
+export const selectEnableKDAttributeFilterDatesValidation: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKDAttributeFilterDatesValidation ?? true;
+    },
+);
+
+/**
+ * Returns whether attribute filter displays duplicated values when filter uses secondary label value.
+ *
+ * @internal
+ */
+export const selectEnableDuplicatedLabelValuesInAttributeFilter: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDuplicatedLabelValuesInAttributeFilter ?? true;
+    },
+);
+
+/**
+ * Returns whether attribute filter displays duplicated values when filter uses secondary label value.
+ *
+ * @internal
+ */
+export const selectEnableImmediateAttributeFilterDisplayAsLabelMigration: DashboardSelector<boolean> =
+    createSelector(selectConfig, (state) => {
+        return state.settings?.enableImmediateAttributeFilterDisplayAsLabelMigration ?? false;
+    });
+
+/**
+ * Returns whether rich text in descriptions is enabled.
+ *
+ * @internal
+ */
+export const selectEnableRichTextDescriptions: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableRichTextDescriptions ?? false;
+    },
+);
+
+/**
+ * Returns whether filter views are enabled.
+ *
+ * @internal
+ */
+export const selectEnableFilterViews: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
+    return state.settings?.enableDashboardFilterViews ?? true;
+});
+
+/**
+ * Returns whether rich text widgets are enabled.
+ *
+ * @internal
+ */
+export const selectEnableVisualizationSwitcher: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKDVisualizationSwitcher ?? true;
+    },
+);
+
+/**
+ * Returns whether ignore cross-filtering enabled.
+ *
+ * @internal
+ */
+export const selectEnableIgnoreCrossFiltering: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableIgnoreCrossFiltering ?? true;
+    },
+);
+
+/**
+ * Returns whether cross filtering should use alias titles.
+ *
+ * @internal
+ */
+export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableCrossFilteringAliasTitles ?? false;
+    },
+);
+
+/**
+ * Returns whether nested layout is enabled.
+ *
+ * @internal
+ */
+export const selectEnableFlexibleLayout: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardFlexibleLayout ?? false;
+    },
+);
+
+/**
+ * Returns whether in-platform notifications are enabled.
+ *
+ * @internal
+ */
+export const selectEnableInPlatformNotifications: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableInPlatformNotifications ?? true;
+    },
+);
+
+/**
+ * Returns dashboard focus object.
+ *
+ * @beta
+ */
+export const selectFocusObject: DashboardSelector<DashboardFocusObject> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.focusObject ?? {};
+    },
+);
+
+/**
+ * Returns whether external recipients are enabled.
+ *
+ * @internal
+ */
+export const selectEnableExternalRecipients: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableExternalRecipients ?? true;
+    },
+);
+
+/**
+ *
+ *
+ * @internal
+ */
+export const selectEnableDashboardTabularExport: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardTabularExport ?? false;
+    },
+);
+
+/**
+ *
+ *
+ * @internal
+ */
+export const selectEnableOrchestratedTabularExports: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableOrchestratedTabularExports ?? false;
+    },
+);
+
+/**
+ * Returns whether drill dialog tooltip is enabled.
+ *
+ * @internal
+ */
+export const selectEnableDrilledTooltip: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDrilledTooltip ?? true;
+    },
+);
+
+/**
+ * Returns whether dynamic height of the dashboard section description fields in dashboard edit mode is enabled.
+ *
+ * @internal
+ */
+export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardDescriptionDynamicHeight ?? false;
+    },
+);
+
+/**
+ * @internal
+ */
+export const selectEnableCriticalContentPerformanceOptimizations: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableCriticalContentPerformanceOptimizations ?? false;
+    },
+);
+
+/**
+ * @internal
+ */
+export const selectEnableSlideshowExports: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableSlideshowExports ?? false;
+    },
+);
+
+/**
+ * @internal
+ */
+export const selectEnableRichTextDynamicReferences: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableRichTextDynamicReferences ?? false;
+    },
+);
+
+/**
+ * Feature flag
+ * @internal
+ */
+export const selectEnableDashboardFiltersApplyModes: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardFiltersApplyModes ?? false;
+    },
+);
+
+/**
+ * Setting of dashboard filters apply mode. The value is resolved in the following order:
+ * If set on workspace level, workspace setting is used.
+ * If not set on workspace level, organization setting is used.
+ * If none of them are set, INDIVIDIAL mode is default.
+ * @alpha
+ */
+export const selectDashboardFiltersApplyMode: DashboardSelector<DashboardFiltersApplyMode> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.dashboardFiltersApplyMode ?? { mode: "INDIVIDUAL" };
+    },
+);
+
+/**
+ * @internal
+ */
+export const selectEnableExecutionCancelling: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableExecutionCancelling ?? false;
     },
 );

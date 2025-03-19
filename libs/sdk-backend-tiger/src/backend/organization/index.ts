@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import {
     IOrganization,
@@ -8,8 +8,11 @@ import {
     ISecuritySettingsService,
     IOrganizationUserService,
     IOrganizationPermissionService,
+    IOrganizationNotificationChannelService,
+    IOrganizationLlmEndpointsService,
+    IOrganizationNotificationService,
 } from "@gooddata/sdk-backend-spi";
-import { IOrganizationDescriptor, idRef } from "@gooddata/sdk-model";
+import { IOrganizationDescriptor, idRef, IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
 
 import { SecuritySettingsService } from "./securitySettings.js";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
@@ -17,6 +20,9 @@ import { OrganizationStylingService } from "./styling.js";
 import { OrganizationSettingsService } from "./settings.js";
 import { OrganizationUsersService } from "./users.js";
 import { OrganizationPermissionService } from "./permissions.js";
+import { OrganizationNotificationChannelService } from "./notificationChannels.js";
+import { OrganizationLlmEndpointsService } from "./llmEndpoints.js";
+import { OrganizationNotificationService } from "./notifications.js";
 
 export class TigerOrganization implements IOrganization {
     constructor(
@@ -55,6 +61,8 @@ export class TigerOrganization implements IOrganization {
                 title: organizationName,
                 bootstrapUser: idRef(bootstrapUser.id, bootstrapUser.type),
                 bootstrapUserGroup: idRef(bootstrapUserGroup.id, bootstrapUserGroup.type),
+                earlyAccess: result.data.data.attributes?.earlyAccess ?? undefined,
+                earlyAccessValues: result.data.data.attributes?.earlyAccessValues ?? undefined,
             };
         }
 
@@ -64,6 +72,49 @@ export class TigerOrganization implements IOrganization {
         return {
             id: organizationId,
             title: organizationName,
+        };
+    }
+
+    public async updateDescriptor(
+        descriptor: IOrganizationDescriptorUpdate,
+    ): Promise<IOrganizationDescriptor> {
+        const result = await this.authCall((client) =>
+            client.entities.patchEntityOrganizations({
+                id: this.organizationId,
+                include: ["bootstrapUser", "bootstrapUserGroup"],
+                jsonApiOrganizationPatchDocument: {
+                    data: {
+                        id: this.organizationId,
+                        type: "organization",
+                        attributes: {
+                            name: descriptor.title,
+                            // type casts are necessary because nulls are not allowed in the type definition,
+                            // but backend expects them in case we want to delete the value
+                            earlyAccess: descriptor.earlyAccess as string | undefined,
+                            earlyAccessValues: descriptor.earlyAccessValues as string[] | undefined,
+                        },
+                    },
+                },
+            }),
+        );
+
+        const resultData = result.data.data;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+        const organizationName = resultData.attributes?.name!;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+        const bootstrapUser = resultData.relationships?.bootstrapUser?.data!;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+        const bootstrapUserGroup = resultData.relationships?.bootstrapUserGroup?.data!;
+        const earlyAccess = resultData.attributes?.earlyAccess ?? undefined;
+        const earlyAccessValues = resultData.attributes?.earlyAccessValues ?? undefined;
+
+        return {
+            id: this.organizationId,
+            title: organizationName,
+            bootstrapUser: idRef(bootstrapUser.id, bootstrapUser.type),
+            bootstrapUserGroup: idRef(bootstrapUserGroup.id, bootstrapUserGroup.type),
+            earlyAccess,
+            earlyAccessValues,
         };
     }
 
@@ -85,6 +136,18 @@ export class TigerOrganization implements IOrganization {
 
     public permissions(): IOrganizationPermissionService {
         return new OrganizationPermissionService(this.authCall);
+    }
+
+    public notificationChannels(): IOrganizationNotificationChannelService {
+        return new OrganizationNotificationChannelService(this.authCall);
+    }
+
+    public llmEndpoints(): IOrganizationLlmEndpointsService {
+        return new OrganizationLlmEndpointsService(this.authCall);
+    }
+
+    public notifications(): IOrganizationNotificationService {
+        return new OrganizationNotificationService(this.authCall);
     }
 }
 

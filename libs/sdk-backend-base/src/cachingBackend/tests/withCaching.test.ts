@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { describe, it, expect } from "vitest";
 import { IAnalyticalBackend, IElementsQueryResult, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { CacheControl, withCaching } from "../index.js";
@@ -36,6 +36,7 @@ function withCachingForTests(
         maxAttributeElementResultsPerWorkspace: 1,
         maxAttributeWorkspaces: 1,
         maxWorkspaceSettings: 1,
+        maxAutomationsWorkspaces: 1,
         onCacheReady,
     });
 }
@@ -233,6 +234,57 @@ describe("withCaching", () => {
 
         // now back to default options, will be new promise
         const second = backend.workspace("test").catalog().load();
+
+        expect(second).not.toBe(first);
+    });
+
+    it("evicts workspace automations list", () => {
+        const backend = withCachingForTests();
+
+        const first = backend.workspace("test").automations().getAutomations();
+        const second = backend.workspace("test").automations().getAutomations();
+
+        expect(second).toBe(first);
+    });
+
+    it("evicts workspace automations query with same settings", () => {
+        const backend = withCachingForTests();
+
+        const first = backend
+            .workspace("test")
+            .automations()
+            .getAutomationsQuery()
+            .withPage(2)
+            .withSize(5)
+            .query();
+        const second = backend
+            .workspace("test")
+            .automations()
+            .getAutomationsQuery()
+            .withPage(2)
+            .withSize(5)
+            .query();
+
+        expect(second).toBe(first);
+    });
+
+    it("evicts workspace automations query with different settings", () => {
+        const backend = withCachingForTests();
+
+        const first = backend
+            .workspace("test")
+            .automations()
+            .getAutomationsQuery()
+            .withPage(2)
+            .withSize(5)
+            .query();
+        const second = backend
+            .workspace("test")
+            .automations()
+            .getAutomationsQuery()
+            .withPage(2)
+            .withSize(3)
+            .query();
 
         expect(second).not.toBe(first);
     });

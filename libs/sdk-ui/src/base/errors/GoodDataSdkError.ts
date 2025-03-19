@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import isEmpty from "lodash/isEmpty.js";
 import { AuthenticationFlow } from "@gooddata/sdk-backend-spi";
@@ -24,6 +24,8 @@ export const ErrorCodes = {
     DYNAMIC_SCRIPT_LOAD_ERROR: "DYNAMIC_SCRIPT_LOAD_ERROR",
     TIMEOUT_ERROR: "TIMEOUT_ERROR",
     VISUALIZATION_CLASS_UNKNOWN: "VISUALIZATION_CLASS_UNKNOWN",
+    FORECAST_NOT_RECEIVED: "FORECAST_NOT_RECEIVED",
+    CLUSTERING_NOT_RECEIVED: "CLUSTERING_NOT_RECEIVED",
 };
 
 /**
@@ -137,8 +139,30 @@ export class DataTooLargeToDisplaySdkError extends GoodDataSdkError {
 }
 
 /**
+ * This error means that execution of forecast ended with error.
+ *
+ * @public
+ */
+export class ForecastNotReceivedSdkError extends GoodDataSdkError {
+    constructor(message?: string, cause?: Error) {
+        super(ErrorCodes.FORECAST_NOT_RECEIVED as SdkErrorType, message, cause);
+    }
+}
+
+/**
+ * This error means that execution of forecast ended with error.
+ *
+ * @public
+ */
+export class ClusteringNotReceivedSdkError extends GoodDataSdkError {
+    constructor(message?: string, cause?: Error) {
+        super(ErrorCodes.CLUSTERING_NOT_RECEIVED as SdkErrorType, message, cause);
+    }
+}
+
+/**
  * This error means that processed request would generate a result too large to be processed
- * by GoodData platform.
+ * by the backend.
  *
  * @public
  */
@@ -178,12 +202,12 @@ export class NoDataSdkError extends GoodDataSdkError {
  */
 export class NotFoundSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error) {
-        super(ErrorCodes.NO_DATA as SdkErrorType, message, cause);
+        super(ErrorCodes.NOT_FOUND as SdkErrorType, message, cause);
     }
 }
 
 /**
- * This error means that requested visualization is restricted by access rules within the GoodData platform.
+ * This error means that requested visualization is restricted by access rules.
  * Please contact your administrator.
  *
  * @public
@@ -292,6 +316,24 @@ export function isDataTooLargeToDisplay(obj: unknown): obj is DataTooLargeToDisp
  */
 export function isDataTooLargeToCompute(obj: unknown): obj is DataTooLargeToComputeSdkError {
     return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "DATA_TOO_LARGE_TO_COMPUTE";
+}
+
+/**
+ * Typeguard checking whether input is an instance of {@link ForecastNotReceivedSdkError}
+ *
+ * @public
+ */
+export function isForecastNotReceived(obj: unknown): obj is ForecastNotReceivedSdkError {
+    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "FORECAST_NOT_RECEIVED";
+}
+
+/**
+ * Typeguard checking whether input is an instance of {@link ClusteringNotReceivedSdkError}
+ *
+ * @public
+ */
+export function isClusteringNotReceived(obj: unknown): obj is ClusteringNotReceivedSdkError {
+    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "CLUSTERING_NOT_RECEIVED";
 }
 
 /**

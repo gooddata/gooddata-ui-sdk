@@ -11,12 +11,12 @@ exports[`Headline > with drilling on single measure > should create expected exe
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -41,12 +41,12 @@ exports[`Headline > with drilling on single measure > should create expected exe
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -61,6 +61,7 @@ exports[`Headline > with drilling on single measure > should create expected pro
   "drillableItems": [
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -78,12 +79,12 @@ exports[`Headline > with drilling on single measure with underlining disabled > 
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -108,12 +109,12 @@ exports[`Headline > with drilling on single measure with underlining disabled > 
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -131,6 +132,7 @@ exports[`Headline > with drilling on single measure with underlining disabled > 
   "drillableItems": [
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -148,12 +150,12 @@ exports[`Headline > with drilling on two measures > should create expected execu
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -166,12 +168,12 @@ exports[`Headline > with drilling on two measures > should create expected execu
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -192,12 +194,12 @@ exports[`Headline > with drilling on two measures > should create expected execu
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -205,12 +207,12 @@ exports[`Headline > with drilling on two measures > should create expected execu
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -226,6 +228,7 @@ exports[`Headline > with drilling on two measures > should create expected props
     [Function],
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -243,12 +246,12 @@ exports[`Headline > with drilling on two measures with underlining disabled > sh
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -261,12 +264,12 @@ exports[`Headline > with drilling on two measures with underlining disabled > sh
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -287,12 +290,12 @@ exports[`Headline > with drilling on two measures with underlining disabled > sh
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -300,12 +303,12 @@ exports[`Headline > with drilling on two measures with underlining disabled > sh
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -324,6 +327,7 @@ exports[`Headline > with drilling on two measures with underlining disabled > sh
     [Function],
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -341,12 +345,12 @@ exports[`Headline > with multi measures with drilling on single measure > should
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -371,12 +375,12 @@ exports[`Headline > with multi measures with drilling on single measure > should
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -391,6 +395,7 @@ exports[`Headline > with multi measures with drilling on single measure > should
   "drillableItems": [
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -408,12 +413,12 @@ exports[`Headline > with multi measures with drilling on single measure with und
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -438,12 +443,12 @@ exports[`Headline > with multi measures with drilling on single measure with und
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -461,6 +466,7 @@ exports[`Headline > with multi measures with drilling on single measure with und
   "drillableItems": [
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -478,12 +484,12 @@ exports[`Headline > with multi measures with drilling on three measures > should
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -496,12 +502,12 @@ exports[`Headline > with multi measures with drilling on three measures > should
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abEgMnq5hyJQ",
+                  "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abEgMnq5hyJQ",
+            "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
           },
         },
         {
@@ -509,12 +515,12 @@ exports[`Headline > with multi measures with drilling on three measures > should
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -535,12 +541,12 @@ exports[`Headline > with multi measures with drilling on three measures > should
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -548,12 +554,12 @@ exports[`Headline > with multi measures with drilling on three measures > should
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abEgMnq5hyJQ",
+              "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abEgMnq5hyJQ",
+        "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
       },
     },
     {
@@ -561,12 +567,12 @@ exports[`Headline > with multi measures with drilling on three measures > should
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -583,6 +589,7 @@ exports[`Headline > with multi measures with drilling on three measures > should
     [Function],
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "secondaryMeasures": [
@@ -591,12 +598,12 @@ exports[`Headline > with multi measures with drilling on three measures > should
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abEgMnq5hyJQ",
+              "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abEgMnq5hyJQ",
+        "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
       },
     },
     {
@@ -604,12 +611,12 @@ exports[`Headline > with multi measures with drilling on three measures > should
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -628,12 +635,12 @@ exports[`Headline > with multi measures with drilling on three measures with und
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -646,12 +653,12 @@ exports[`Headline > with multi measures with drilling on three measures with und
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abEgMnq5hyJQ",
+                  "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abEgMnq5hyJQ",
+            "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
           },
         },
         {
@@ -659,12 +666,12 @@ exports[`Headline > with multi measures with drilling on three measures with und
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -685,12 +692,12 @@ exports[`Headline > with multi measures with drilling on three measures with und
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -698,12 +705,12 @@ exports[`Headline > with multi measures with drilling on three measures with und
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abEgMnq5hyJQ",
+              "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abEgMnq5hyJQ",
+        "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
       },
     },
     {
@@ -711,12 +718,12 @@ exports[`Headline > with multi measures with drilling on three measures with und
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -736,6 +743,7 @@ exports[`Headline > with multi measures with drilling on three measures with und
     [Function],
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "secondaryMeasures": [
@@ -744,12 +752,12 @@ exports[`Headline > with multi measures with drilling on three measures with und
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abEgMnq5hyJQ",
+              "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abEgMnq5hyJQ",
+        "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
       },
     },
     {
@@ -757,12 +765,12 @@ exports[`Headline > with multi measures with drilling on three measures with und
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -781,12 +789,12 @@ exports[`Headline > with multi measures with drilling on two measures > should c
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -799,12 +807,12 @@ exports[`Headline > with multi measures with drilling on two measures > should c
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -825,12 +833,12 @@ exports[`Headline > with multi measures with drilling on two measures > should c
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -838,12 +846,12 @@ exports[`Headline > with multi measures with drilling on two measures > should c
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -864,6 +872,7 @@ exports[`Headline > with multi measures with drilling on two measures > should c
     [Function],
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "secondaryMeasures": [
@@ -872,12 +881,12 @@ exports[`Headline > with multi measures with drilling on two measures > should c
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -896,12 +905,12 @@ exports[`Headline > with multi measures with drilling on two measures with under
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -914,12 +923,12 @@ exports[`Headline > with multi measures with drilling on two measures with under
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -940,12 +949,12 @@ exports[`Headline > with multi measures with drilling on two measures with under
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -953,12 +962,12 @@ exports[`Headline > with multi measures with drilling on two measures with under
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -980,6 +989,7 @@ exports[`Headline > with multi measures with drilling on two measures with under
     [Function],
     [Function],
   ],
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "secondaryMeasures": [
@@ -988,12 +998,12 @@ exports[`Headline > with multi measures with drilling on two measures with under
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1012,12 +1022,12 @@ exports[`Headline > with multi measures with only primary measure > should creat
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -1042,12 +1052,12 @@ exports[`Headline > with multi measures with only primary measure > should creat
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -1059,6 +1069,7 @@ exports[`Headline > with multi measures with only primary measure > should creat
 
 exports[`Headline > with multi measures with only primary measure > should create expected props for core chart 1`] = `
 {
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -1076,12 +1087,12 @@ exports[`Headline > with multi measures with three measures > should create expe
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -1094,12 +1105,12 @@ exports[`Headline > with multi measures with three measures > should create expe
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abEgMnq5hyJQ",
+                  "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abEgMnq5hyJQ",
+            "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
           },
         },
         {
@@ -1107,12 +1118,12 @@ exports[`Headline > with multi measures with three measures > should create expe
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1133,12 +1144,12 @@ exports[`Headline > with multi measures with three measures > should create expe
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -1146,12 +1157,12 @@ exports[`Headline > with multi measures with three measures > should create expe
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abEgMnq5hyJQ",
+              "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abEgMnq5hyJQ",
+        "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
       },
     },
     {
@@ -1159,12 +1170,12 @@ exports[`Headline > with multi measures with three measures > should create expe
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1176,6 +1187,7 @@ exports[`Headline > with multi measures with three measures > should create expe
 
 exports[`Headline > with multi measures with three measures > should create expected props for core chart 1`] = `
 {
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "secondaryMeasures": [
@@ -1184,12 +1196,12 @@ exports[`Headline > with multi measures with three measures > should create expe
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abEgMnq5hyJQ",
+              "identifier": "b4e3e3c7-ead3-4d69-8be4-23bcfe5ff7aa",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abEgMnq5hyJQ",
+        "localIdentifier": "m_b4e3e3c7_ead3_4d69_8be4_23bcfe5ff7aa",
       },
     },
     {
@@ -1197,12 +1209,12 @@ exports[`Headline > with multi measures with three measures > should create expe
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1221,12 +1233,12 @@ exports[`Headline > with multi measures with two measures > should create expect
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -1239,12 +1251,12 @@ exports[`Headline > with multi measures with two measures > should create expect
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1265,12 +1277,12 @@ exports[`Headline > with multi measures with two measures > should create expect
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -1278,12 +1290,12 @@ exports[`Headline > with multi measures with two measures > should create expect
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1300,6 +1312,7 @@ exports[`Headline > with multi measures with two measures > should create expect
       "enabled": false,
     },
   },
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -1317,12 +1330,12 @@ exports[`Headline > with multi measures with two measures one PoP > should creat
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -1335,14 +1348,14 @@ exports[`Headline > with multi measures with two measures one PoP > should creat
             "alias": "Won Last Year",
             "definition": {
               "popMeasureDefinition": {
-                "measureIdentifier": "m_acugFHNJgsBy",
+                "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
                 "popAttribute": {
-                  "identifier": "closed.year",
+                  "identifier": "dt_closedate_timestamp.year",
                   "type": "attribute",
                 },
               },
             },
-            "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
+            "localIdentifier": "m_e40a8329_m_e519fa2a_86c3_4e32_8313_0c03062348j3_dt_closedate_timestamp.year",
           },
         },
       ],
@@ -1363,12 +1376,12 @@ exports[`Headline > with multi measures with two measures one PoP > should creat
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -1376,14 +1389,14 @@ exports[`Headline > with multi measures with two measures one PoP > should creat
         "alias": "Won Last Year",
         "definition": {
           "popMeasureDefinition": {
-            "measureIdentifier": "m_acugFHNJgsBy",
+            "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
             "popAttribute": {
-              "identifier": "closed.year",
+              "identifier": "dt_closedate_timestamp.year",
               "type": "attribute",
             },
           },
         },
-        "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
+        "localIdentifier": "m_e40a8329_m_e519fa2a_86c3_4e32_8313_0c03062348j3_dt_closedate_timestamp.year",
       },
     },
   ],
@@ -1400,6 +1413,7 @@ exports[`Headline > with multi measures with two measures one PoP > should creat
       "enabled": false,
     },
   },
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "secondaryMeasures": [
@@ -1408,14 +1422,14 @@ exports[`Headline > with multi measures with two measures one PoP > should creat
         "alias": "Won Last Year",
         "definition": {
           "popMeasureDefinition": {
-            "measureIdentifier": "m_acugFHNJgsBy",
+            "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
             "popAttribute": {
-              "identifier": "closed.year",
+              "identifier": "dt_closedate_timestamp.year",
               "type": "attribute",
             },
           },
         },
-        "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
+        "localIdentifier": "m_e40a8329_m_e519fa2a_86c3_4e32_8313_0c03062348j3_dt_closedate_timestamp.year",
       },
     },
   ],
@@ -1434,12 +1448,12 @@ exports[`Headline > with multi measures with two measures with german separators
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -1452,12 +1466,12 @@ exports[`Headline > with multi measures with two measures with german separators
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1478,12 +1492,12 @@ exports[`Headline > with multi measures with two measures with german separators
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -1491,12 +1505,12 @@ exports[`Headline > with multi measures with two measures with german separators
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1517,6 +1531,7 @@ exports[`Headline > with multi measures with two measures with german separators
       "thousand": ".",
     },
   },
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -1534,12 +1549,12 @@ exports[`Headline > with single measure > should create expected execution defin
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -1564,12 +1579,12 @@ exports[`Headline > with single measure > should create expected execution defin
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
   ],
@@ -1581,6 +1596,7 @@ exports[`Headline > with single measure > should create expected execution defin
 
 exports[`Headline > with single measure > should create expected props for core chart 1`] = `
 {
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -1598,12 +1614,12 @@ exports[`Headline > with two measures > should create expected execution definit
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -1616,12 +1632,12 @@ exports[`Headline > with two measures > should create expected execution definit
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1642,12 +1658,12 @@ exports[`Headline > with two measures > should create expected execution definit
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -1655,12 +1671,12 @@ exports[`Headline > with two measures > should create expected execution definit
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1672,6 +1688,7 @@ exports[`Headline > with two measures > should create expected execution definit
 
 exports[`Headline > with two measures > should create expected props for core chart 1`] = `
 {
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -1689,12 +1706,12 @@ exports[`Headline > with two measures one PoP > should create expected execution
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -1707,14 +1724,14 @@ exports[`Headline > with two measures one PoP > should create expected execution
             "alias": "Won Last Year",
             "definition": {
               "popMeasureDefinition": {
-                "measureIdentifier": "m_acugFHNJgsBy",
+                "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
                 "popAttribute": {
-                  "identifier": "closed.year",
+                  "identifier": "dt_closedate_timestamp.year",
                   "type": "attribute",
                 },
               },
             },
-            "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
+            "localIdentifier": "m_e40a8329_m_e519fa2a_86c3_4e32_8313_0c03062348j3_dt_closedate_timestamp.year",
           },
         },
       ],
@@ -1735,12 +1752,12 @@ exports[`Headline > with two measures one PoP > should create expected execution
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -1748,14 +1765,14 @@ exports[`Headline > with two measures one PoP > should create expected execution
         "alias": "Won Last Year",
         "definition": {
           "popMeasureDefinition": {
-            "measureIdentifier": "m_acugFHNJgsBy",
+            "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
             "popAttribute": {
-              "identifier": "closed.year",
+              "identifier": "dt_closedate_timestamp.year",
               "type": "attribute",
             },
           },
         },
-        "localIdentifier": "m_e40a8329_m_acugFHNJgsBy_closed.year",
+        "localIdentifier": "m_e40a8329_m_e519fa2a_86c3_4e32_8313_0c03062348j3_dt_closedate_timestamp.year",
       },
     },
   ],
@@ -1767,6 +1784,7 @@ exports[`Headline > with two measures one PoP > should create expected execution
 
 exports[`Headline > with two measures one PoP > should create expected props for core chart 1`] = `
 {
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",
@@ -1784,12 +1802,12 @@ exports[`Headline > with two measures with german separators > should create exp
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_acugFHNJgsBy",
+            "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
           },
         },
       ],
@@ -1802,12 +1820,12 @@ exports[`Headline > with two measures with german separators > should create exp
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aangOxLSeztu",
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
           },
         },
       ],
@@ -1828,12 +1846,12 @@ exports[`Headline > with two measures with german separators > should create exp
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "acugFHNJgsBy",
+              "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_acugFHNJgsBy",
+        "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       },
     },
     {
@@ -1841,12 +1859,12 @@ exports[`Headline > with two measures with german separators > should create exp
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aangOxLSeztu",
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     },
   ],
@@ -1864,6 +1882,7 @@ exports[`Headline > with two measures with german separators > should create exp
       "thousand": ".",
     },
   },
+  "enableExecutionCancelling": false,
   "exportTitle": "Headline",
   "headlineTransformation": [Function],
   "workspace": "reference-workspace",

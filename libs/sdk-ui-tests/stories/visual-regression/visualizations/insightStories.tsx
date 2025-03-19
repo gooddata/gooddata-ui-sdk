@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -28,10 +28,9 @@ import {
     createElementCountResolver,
     ScreenshotReadyWrapper,
 } from "../../_infra/ScreenshotReadyWrapper.js";
-import { ShortPostInteractionTimeout } from "../../_infra/backstopWrapper.js";
+import { LongPostInteractionTimeout, ShortPostInteractionTimeout } from "../../_infra/backstopWrapper.js";
 import { ConfigurationPanelWrapper } from "../../_infra/ConfigurationPanelWrapper.js";
 import { StorybookBackend } from "../../_infra/backend.js";
-import { ExamplesRecordings } from "@gooddata/live-examples-workspace";
 import { storyGroupFor } from "./storyGroupFactory.js";
 import groupBy from "lodash/groupBy.js";
 import keyBy from "lodash/keyBy.js";
@@ -95,10 +94,7 @@ function getAvailableInsights(recordings: RecordingIndex): IInsight[] {
     return values(recordings.metadata?.insights ?? {}).map((rec) => rec.obj);
 }
 
-const Insights = [
-    ...getAvailableInsights(ReferenceRecordings.Recordings),
-    ...getAvailableInsights(ExamplesRecordings.Recordings),
-];
+const Insights = [...getAvailableInsights(ReferenceRecordings.Recordings)];
 const InsightById = keyBy(Insights, insightId);
 
 const ScenarioGroupsByVis = sortBy(
@@ -284,12 +280,11 @@ ScenarioGroupsByVis.forEach((groups) => {
             const insight = InsightById[scenario.insightId];
 
             if (!insight) {
-                if (window.location.hostname === "localhost") {
+                if (window.location.hostname === "localhost" && !scenario.tags.includes("mock-no-insight")) {
                     console.warn(
                         `Ignoring test scenario for ${scenario.vis}: ${scenario.name} - insight does not exist.`,
                     );
                 }
-
                 return;
             }
 
@@ -297,9 +292,11 @@ ScenarioGroupsByVis.forEach((groups) => {
                 screenshot: {
                     clickSelector: `.${ConfigurationPanelWrapper.DefaultExpandAllClassName}`,
                     readySelector: `.${ScreenshotReadyWrapper.OnReadyClassName}`,
-                    // give tables some more time to finish rendering
+                    // give specific charts some more time to finish rendering
                     postInteractionWait: insightVisualizationUrl(insight).includes("table")
                         ? ShortPostInteractionTimeout
+                        : insightVisualizationUrl(insight).includes("repeater")
+                        ? LongPostInteractionTimeout
                         : 200,
                 },
             });

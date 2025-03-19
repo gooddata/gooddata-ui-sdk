@@ -1,7 +1,8 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { ReactNode } from "react";
 import cx from "classnames";
 import { Button } from "../Button/Button.js";
+import { IAccessibilityConfigBase } from "../typings/accessibility.js";
 
 /**
  * @internal
@@ -9,6 +10,7 @@ import { Button } from "../Button/Button.js";
 export interface IDropdownButtonProps {
     id?: string;
     className?: string;
+    accessibilityConfig?: IAccessibilityConfigBase;
 
     value?: ReactNode;
     title?: string;
@@ -19,6 +21,10 @@ export interface IDropdownButtonProps {
     iconLeft?: string;
 
     onClick?: (e: React.MouseEvent) => void;
+
+    children?: ReactNode;
+    dropdownId?: string;
+    buttonRef?: React.MutableRefObject<HTMLElement>;
 }
 
 /**
@@ -27,6 +33,7 @@ export interface IDropdownButtonProps {
 export const DropdownButton: React.FC<IDropdownButtonProps> = ({
     id,
     className,
+    accessibilityConfig,
 
     value,
     title = value,
@@ -37,7 +44,12 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
     iconLeft,
 
     onClick,
+    children,
+    dropdownId,
+    buttonRef,
 }) => {
+    const { ariaLabel, ariaLabelledBy } = accessibilityConfig ?? {};
+
     const buttonClasses = cx(
         "gd-button-primary",
         "button-dropdown",
@@ -50,9 +62,22 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
         className,
     );
 
+    const buttonAccessibilityConfig = dropdownId
+        ? {
+              isExpanded: isOpen,
+              popupId: dropdownId,
+              ariaLabel,
+              ariaLabelledBy,
+          }
+        : {
+              ariaLabel,
+              ariaLabelledBy,
+          };
+
     return (
         <Button
             id={id}
+            accessibilityConfig={buttonAccessibilityConfig}
             title={title && typeof title === "string" ? title : undefined}
             className={buttonClasses}
             value={value}
@@ -60,6 +85,9 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
             iconRight={isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
             disabled={disabled}
             onClick={onClick}
-        />
+            buttonRef={buttonRef}
+        >
+            {children}
+        </Button>
     );
 };

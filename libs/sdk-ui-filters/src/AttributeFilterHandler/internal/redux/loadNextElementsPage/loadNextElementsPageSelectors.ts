@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { createSelector } from "@reduxjs/toolkit";
 import isEqual from "lodash/isEqual.js";
@@ -61,8 +61,10 @@ export const selectIsLoadElementsOptionsChanged: FilterSelector<boolean> = creat
     selectLastLoadedElementsOptions,
     (loadOptions, lastLoadedOptions) => {
         return !isEqual(
-            omit(loadOptions, "offset", "excludePrimaryLabel"),
-            omit(lastLoadedOptions, "offset", "excludePrimaryLabel"),
+            // omit offset as it changes for each page
+            // omit options which can not be set externally by user and thus are not stored in state
+            omit(loadOptions, "offset", "excludePrimaryLabel", "filterByPrimaryLabel"),
+            omit(lastLoadedOptions, "offset", "excludePrimaryLabel", "filterByPrimaryLabel"),
         );
     },
 );

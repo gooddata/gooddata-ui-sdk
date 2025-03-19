@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     DashboardInitialized,
     DashboardDeinitialized,
@@ -10,6 +10,12 @@ import {
     DashboardExportToPdfResolved,
     DashboardExportToPdfRequested,
     DashboardSharingChanged,
+    DashboardExportToExcelRequested,
+    DashboardExportToExcelResolved,
+    DashboardExportToPdfPresentationRequested,
+    DashboardExportToPdfPresentationResolved,
+    DashboardExportToPptPresentationRequested,
+    DashboardExportToPptPresentationResolved,
 } from "./dashboard.js";
 import {
     DashboardCommandFailed,
@@ -41,6 +47,7 @@ import {
     DashboardLayoutSectionItemsAdded,
     DashboardLayoutSectionMoved,
     DashboardLayoutSectionRemoved,
+    DashboardLayoutSectionItemMovedToNewSection,
 } from "./layout.js";
 import {
     DashboardKpiWidgetChanged,
@@ -67,14 +74,25 @@ import {
     DashboardInsightWidgetExportResolved,
     DashboardInsightWidgetRefreshed,
 } from "./insight.js";
-import { DashboardRichTextWidgetContentChanged } from "./richText.js";
+import {
+    DashboardRichTextWidgetContentChanged,
+    DashboardRichTextWidgetFilterSettingsChanged,
+} from "./richText.js";
+import {
+    DashboardVisualizationSwitcherWidgetVisualizationAdded,
+    DashboardVisualizationSwitcherWidgetVisualizationsUpdated,
+} from "./visualizationSwitcher.js";
 import {
     DashboardWidgetExecutionStarted,
     DashboardWidgetExecutionSucceeded,
     DashboardWidgetExecutionFailed,
 } from "./widget.js";
-import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertsRemoved } from "./alerts.js";
-import { DashboardScheduledEmailCreated, DashboardScheduledEmailSaved } from "./scheduledEmail.js";
+import { DashboardAlertCreated, DashboardAlertSaved } from "./alerts.js";
+import {
+    DashboardScheduledEmailCreated,
+    DashboardScheduledEmailSaved,
+    DashboardAutomationsRefreshed,
+} from "./scheduledEmail.js";
 import { DashboardUserInteractionTriggered } from "./userInteraction.js";
 import { Action } from "@reduxjs/toolkit";
 import {
@@ -107,17 +125,15 @@ import {
     DeleteAttributeHierarchyRequested,
 } from "./attributeHierarchies.js";
 
-export {
+export type {
     IDashboardEvent,
     DashboardEventType,
-    isDashboardEvent,
     ICustomDashboardEvent,
-    isCustomDashboardEvent,
-    isDashboardEventOrCustomDashboardEvent,
     DashboardEventBody,
 } from "./base.js";
+export { isDashboardEvent, isCustomDashboardEvent, isDashboardEventOrCustomDashboardEvent } from "./base.js";
 
-export {
+export type {
     DateFilterValidationFailed,
     DateFilterValidationFailedPayload,
     DashboardInitialized,
@@ -139,6 +155,17 @@ export {
     DashboardExportToPdfResolvedPayload,
     DashboardSharingChanged,
     DashboardSharingChangedPayload,
+    DashboardExportToExcelRequested,
+    DashboardExportToExcelResolved,
+    DashboardExportToPdfPresentationRequested,
+    DashboardExportToPdfPresentationResolved,
+    DashboardExportToPptPresentationRequested,
+    DashboardExportToPptPresentationResolved,
+    DashboardExportToExcelResolvedPayload,
+    DashboardExportToPdfPresentationResolvedPayload,
+    DashboardExportToPptPresentationResolvedPayload,
+} from "./dashboard.js";
+export {
     isDashboardSaved,
     isDashboardCopySaved,
     isDashboardInitialized,
@@ -150,17 +177,21 @@ export {
     isDashboardExportToPdfRequested,
     isDashboardExportToPdfResolved,
     isDashboardSharingChanged,
+    isDashboardExportToExcelRequested,
+    isDashboardExportToExcelResolved,
+    isDashboardExportToPdfPresentationRequested,
+    isDashboardExportToPdfPresentationResolved,
+    isDashboardExportToPptPresentationResolved,
+    isDashboardExportToPptPresentationRequested,
 } from "./dashboard.js";
 
-export {
+export type {
     DashboardCommandStarted,
     DashboardCommandStartedPayload,
     DashboardCommandRejected,
     DashboardCommandFailed,
     DashboardCommandFailedPayload,
     ActionFailedErrorReason,
-    isDashboardCommandStarted,
-    isDashboardCommandFailed,
     DashboardQueryRejected,
     DashboardQueryFailed,
     DashboardQueryFailedPayload,
@@ -168,6 +199,10 @@ export {
     DashboardQueryStartedPayload,
     DashboardQueryCompleted,
     DashboardQueryCompletedPayload,
+} from "./general.js";
+export {
+    isDashboardCommandStarted,
+    isDashboardCommandFailed,
     isDashboardQueryFailed,
     isDashboardCommandRejected,
     isDashboardQueryCompleted,
@@ -175,7 +210,7 @@ export {
     isDashboardQueryStarted,
 } from "./general.js";
 
-export {
+export type {
     DashboardDateFilterSelectionChanged,
     DashboardDateFilterSelectionChangedPayload,
     DashboardAttributeFilterSelectionChangedPayload,
@@ -198,6 +233,21 @@ export {
     DashboardAttributeFilterConfigModeChangedPayload,
     DashboardAttributeFilterConfigLimitingItemsChanged,
     DashboardAttributeFilterConfigLimitingItemsChangedPayload,
+    DashboardFilterViewCreationSucceeded,
+    DashboardFilterViewCreationSucceededPayload,
+    DashboardFilterViewCreationFailed,
+    DashboardFilterViewDeletionSucceeded,
+    DashboardFilterViewDeletionSucceededPayload,
+    DashboardFilterViewDeletionFailed,
+    DashboardFilterViewApplicationSucceeded,
+    DashboardFilterViewApplicationSucceededPayload,
+    DashboardFilterViewApplicationFailed,
+    DashboardFilterViewDefaultStatusChangeSucceeded,
+    DashboardFilterViewDefaultStatusChangeSucceededPayload,
+    DashboardFilterViewDefaultStatusChangeFailed,
+    DashboardFilterViewDefaultStatusChangeFailedPayload,
+} from "./filters.js";
+export {
     isDashboardAttributeFilterAdded,
     isDashboardAttributeFilterMoved,
     isDashboardAttributeFilterParentChanged,
@@ -209,9 +259,17 @@ export {
     isDashboardFilterContextChanged,
     isDashboardAttributeFilterConfigModeChanged,
     isDashboardAttributeFilterConfigLimitingItemsChanged,
+    isDashboardFilterViewCreationSucceeded,
+    isDashboardFilterViewCreationFailed,
+    isDashboardFilterViewDeletionSucceeded,
+    isDashboardFilterViewDeletionFailed,
+    isDashboardFilterViewApplicationSucceeded,
+    isDashboardFilterViewApplicationFailed,
+    isDashboardFilterViewDefaultStatusChangeSucceeded,
+    isDashboardFilterViewDefaultStatusChangeFailed,
 } from "./filters.js";
 
-export {
+export type {
     DashboardLayoutSectionAdded,
     DashboardLayoutSectionAddedPayload,
     DashboardLayoutSectionMoved,
@@ -228,20 +286,31 @@ export {
     DashboardLayoutSectionItemMovedPayload,
     DashboardLayoutSectionItemRemoved,
     DashboardLayoutSectionItemRemovedPayload,
+    DashboardLayoutSectionItemMovedToNewSection,
+    DashboardLayoutSectionItemMovedToNewSectionPayload,
     DashboardLayoutChanged,
     DashboardLayoutChangedPayload,
+    LayoutSectionHeadersToggled,
+    LayoutSectionHeadersToggledPayload,
+    ScreenSizeChanged,
+    ScreenSizeChangedPayload,
+} from "./layout.js";
+export {
     isDashboardLayoutChanged,
     isDashboardLayoutSectionAdded,
     isDashboardLayoutSectionHeaderChanged,
     isDashboardLayoutSectionItemMoved,
+    isDashboardLayoutSectionItemMovedToNewSection,
     isDashboardLayoutSectionItemRemoved,
     isDashboardLayoutSectionItemReplaced,
     isDashboardLayoutSectionItemsAdded,
     isDashboardLayoutSectionMoved,
     isDashboardLayoutSectionRemoved,
+    isScreenSizeChanged,
+    isLayoutSectionHeadersToggled,
 } from "./layout.js";
 
-export {
+export type {
     DashboardKpiWidgetHeaderChanged,
     DashboardKpiWidgetHeaderChangedPayload,
     DashboardKpiWidgetDescriptionChanged,
@@ -260,6 +329,8 @@ export {
     DashboardKpiWidgetDrillSetPayload,
     DashboardKpiWidgetChanged,
     DashboardKpiWidgetChangedPayload,
+} from "./kpi.js";
+export {
     isDashboardKpiWidgetChanged,
     isDashboardKpiWidgetComparisonChanged,
     isDashboardKpiWidgetFilterSettingsChanged,
@@ -271,7 +342,7 @@ export {
     isDashboardKpiWidgetDrillSet,
 } from "./kpi.js";
 
-export {
+export type {
     DashboardInsightWidgetHeaderChanged,
     DashboardInsightWidgetHeaderChangedPayload,
     DashboardInsightWidgetDescriptionChanged,
@@ -296,6 +367,8 @@ export {
     DashboardInsightWidgetExportResolvedPayload,
     DashboardInsightWidgetRefreshed,
     DashboardInsightWidgetRefreshedPayload,
+} from "./insight.js";
+export {
     isDashboardInsightWidgetChanged,
     isDashboardInsightWidgetDrillsModified,
     isDashboardInsightWidgetDrillsRemoved,
@@ -310,46 +383,63 @@ export {
     isDashboardInsightWidgetRefreshed,
 } from "./insight.js";
 
-export {
+export type {
     DashboardRichTextWidgetContentChanged,
     DashboardRichTextWidgetContentChangedPayload,
+    DashboardRichTextWidgetFilterSettingsChanged,
+    DashboardRichTextWidgetFilterSettingsChangedPayload,
+} from "./richText.js";
+export {
     isDashboardRichTextWidgetContentChanged,
     richTextWidgetContentChanged,
+    isDashboardRichTextWidgetFilterSettingsChanged,
+    richTextWidgetFilterSettingsChanged,
 } from "./richText.js";
 
+export type {
+    DashboardVisualizationSwitcherWidgetVisualizationAdded,
+    DashboardVisualizationSwitcherWidgetVisualizationAddedPayload,
+    DashboardVisualizationSwitcherWidgetVisualizationsUpdated,
+    DashboardVisualizationSwitcherWidgetVisualizationsUpdatedPayload,
+} from "./visualizationSwitcher.js";
+
 export {
+    isDashboardVisualizationSwitcherWidgetVisualizationAdded,
+    visualizationSwitcherWidgetVisualizationAdded,
+    isDashboardVisualizationSwitcherWidgetVisualizationsUpdated,
+    visualizationSwitcherWidgetVisualizationsUpdated,
+} from "./visualizationSwitcher.js";
+
+export type {
     DashboardWidgetExecutionStarted,
     DashboardWidgetExecutionStartedPayload,
     DashboardWidgetExecutionSucceeded,
     DashboardWidgetExecutionSucceededPayload,
     DashboardWidgetExecutionFailed,
     DashboardWidgetExecutionFailedPayload,
+} from "./widget.js";
+export {
     isDashboardWidgetExecutionStarted,
     isDashboardWidgetExecutionSucceeded,
     isDashboardWidgetExecutionFailed,
 } from "./widget.js";
 
-export {
-    DashboardAlertCreated,
-    DashboardAlertCreatedPayload,
-    DashboardAlertsRemoved,
-    DashboardAlertsRemovedPayload,
-    DashboardAlertUpdated,
-    DashboardAlertUpdatedPayload,
-    isDashboardAlertCreated,
-    isDashboardAlertsRemoved,
-    isDashboardAlertUpdated,
-} from "./alerts.js";
+export type { DashboardAlertCreated, DashboardAlertCreatedPayload, DashboardAlertSaved } from "./alerts.js";
+export { isDashboardAlertCreated, isDashboardAlertSaved } from "./alerts.js";
 
-export {
+export type {
     DashboardScheduledEmailCreated,
     DashboardScheduledEmailCreatedPayload,
-    isDashboardScheduledEmailCreated,
     DashboardScheduledEmailSaved,
+    DashboardAutomationsRefreshed,
+} from "./scheduledEmail.js";
+export {
+    isDashboardScheduledEmailCreated,
     isDashboardScheduledEmailSaved,
+    isDashboardAutomationsRefreshed,
 } from "./scheduledEmail.js";
 
-export {
+export type {
     DashboardDrillRequested,
     DashboardDrillRequestedPayload,
     DashboardDrillResolved,
@@ -384,6 +474,8 @@ export {
     DashboardCrossFilteringRequestedPayload,
     DashboardCrossFilteringResolved,
     DashboardCrossFilteringResolvedPayload,
+} from "./drill.js";
+export {
     isDashboardDrillDownRequested,
     isDashboardDrillDownResolved,
     isDashboardDrillRequested,
@@ -403,42 +495,40 @@ export {
     isDashboardCrossFilteringResolved,
 } from "./drill.js";
 
-export {
-    DrillTargetsAdded,
-    DrillTargetsAddedPayload,
-    drillTargetsAdded,
-    isDrillTargetsAdded,
-} from "./drillTargets.js";
+export type { DrillTargetsAdded, DrillTargetsAddedPayload } from "./drillTargets.js";
+export { drillTargetsAdded, isDrillTargetsAdded } from "./drillTargets.js";
 
 export * from "./userInteraction.js";
 
-export {
+export type {
     DashboardRenderRequested,
     DashboardAsyncRenderRequestedPayload,
     DashboardAsyncRenderRequested,
     DashboardAsyncRenderResolved,
     DashboardAsyncRenderResolvedPayload,
     DashboardRenderResolved,
+} from "./render.js";
+export {
     isDashboardAsyncRenderRequested,
     isDashboardAsyncRenderResolved,
     isDashboardRenderRequested,
     isDashboardRenderResolved,
 } from "./render.js";
 
-export {
-    DashboardRenderModeChanged,
-    DashboardRenderModeChangedPayload,
-    isDashboardRenderModeChanged,
-} from "./renderMode.js";
+export type { DashboardRenderModeChanged, DashboardRenderModeChangedPayload } from "./renderMode.js";
+export { isDashboardRenderModeChanged } from "./renderMode.js";
 
-export { createInsightRequested, CreateInsightRequested, isCreateInsightRequested } from "./lab.js";
+export type { CreateInsightRequested } from "./lab.js";
+export { createInsightRequested, isCreateInsightRequested } from "./lab.js";
 
+export type {
+    CreateAttributeHierarchyRequested,
+    DeleteAttributeHierarchyRequested,
+} from "./attributeHierarchies.js";
 export {
     createAttributeHierarchyRequested,
-    CreateAttributeHierarchyRequested,
     isCreateAttributeHierarchyRequested,
     deleteAttributeHierarchyRequested,
-    DeleteAttributeHierarchyRequested,
     isDeleteAttributeHierarchyRequested,
 } from "./attributeHierarchies.js";
 
@@ -477,6 +567,12 @@ export type DashboardEvents =
     | DashboardWasReset
     | DashboardExportToPdfRequested
     | DashboardExportToPdfResolved
+    | DashboardExportToExcelRequested
+    | DashboardExportToExcelResolved
+    | DashboardExportToPdfPresentationRequested
+    | DashboardExportToPdfPresentationResolved
+    | DashboardExportToPptPresentationResolved
+    | DashboardExportToPptPresentationRequested
     | DashboardUserInteractionTriggered
     | DashboardDateFilterSelectionChanged
     | DashboardAttributeFilterAdded
@@ -495,6 +591,7 @@ export type DashboardEvents =
     | DashboardLayoutSectionItemReplaced
     | DashboardLayoutSectionItemMoved
     | DashboardLayoutSectionItemRemoved
+    | DashboardLayoutSectionItemMovedToNewSection
     | DashboardLayoutChanged
     | DashboardKpiWidgetHeaderChanged
     | DashboardKpiWidgetDescriptionChanged
@@ -518,14 +615,17 @@ export type DashboardEvents =
     | DashboardInsightWidgetExportResolved
     | DashboardInsightWidgetRefreshed
     | DashboardRichTextWidgetContentChanged
+    | DashboardRichTextWidgetFilterSettingsChanged
+    | DashboardVisualizationSwitcherWidgetVisualizationAdded
+    | DashboardVisualizationSwitcherWidgetVisualizationsUpdated
     | DashboardWidgetExecutionStarted
     | DashboardWidgetExecutionSucceeded
     | DashboardWidgetExecutionFailed
     | DashboardAlertCreated
-    | DashboardAlertsRemoved
-    | DashboardAlertUpdated
+    | DashboardAlertSaved
     | DashboardScheduledEmailCreated
     | DashboardScheduledEmailSaved
+    | DashboardAutomationsRefreshed
     //alpha
     | DashboardDrillDownResolved
     | DashboardDrillToAttributeUrlResolved

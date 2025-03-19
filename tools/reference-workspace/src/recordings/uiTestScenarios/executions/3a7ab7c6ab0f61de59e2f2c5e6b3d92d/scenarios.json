@@ -1,0 +1,56 @@
+[
+    {
+        "n2oMap": {
+            "a_f_city.id.cityname": "a_f_city.id.cityname",
+            "a_f_city.id.cityname_1": "a_f_city.id.cityname_cloned"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                        "localIdentifier": "a_f_city.id.cityname"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                        "localIdentifier": "a_f_city.id.cityname_cloned"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                                "localIdentifier": "a_f_city.id.cityname"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "attribute"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                                "localIdentifier": "a_f_city.id.cityname_cloned"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "columns"
+                }
+            ],
+            "dimensions": [{ "itemIdentifiers": ["a_f_city.id.cityname", "a_f_city.id.cityname_cloned"] }],
+            "filters": [],
+            "measures": [],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "one attribute",
+        "vis": "Repeater"
+    }
+]

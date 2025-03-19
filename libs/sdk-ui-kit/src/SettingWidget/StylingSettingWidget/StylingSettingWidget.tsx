@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -17,6 +17,7 @@ import { useMediaQuery } from "../../responsive/index.js";
 import { Title } from "../Title.js";
 import { FooterButtons } from "../FooterButtons.js";
 import { Hyperlink } from "../../Hyperlink/index.js";
+import { LoadingSpinner } from "../../LoadingSpinner/index.js";
 
 /**
  * @internal
@@ -45,6 +46,8 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
     onHelpClick?: () => void;
     onItemMenuToggle?: (ref: ObjRef) => void;
     onItemSelect?: (ref: ObjRef) => void;
+    isEditingSupported?: boolean;
+    isSavingActionInProgress?: boolean;
 }
 
 const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
@@ -73,6 +76,8 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
         onHelpClick,
         onItemSelect = noop,
         onItemMenuToggle,
+        isEditingSupported = true,
+        isSavingActionInProgress = false,
     } = props;
     const intl = useIntl();
     const isMobileDevice = useMediaQuery("mobileDevice");
@@ -132,6 +137,7 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
                 onItemEdit={onItemEdit}
                 onItemDelete={onItemDelete}
                 onItemMenuToggle={onItemMenuToggle}
+                isEditingSupported={isEditingSupported}
             />
             <Separator />
             <Footer>
@@ -149,6 +155,7 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
                     />
                 ) : null}
                 <FooterButtons>
+                    {isSavingActionInProgress ? <LoadingSpinner className="gd-dialog-spinner small" /> : null}
                     <Button
                         className="gd-button-secondary"
                         onClick={handleCancel}
@@ -158,7 +165,9 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
                     <Button
                         className="gd-button-action"
                         onClick={handleApply}
-                        disabled={shouldDisableApplyButton ?? isApplyButtonDisabled}
+                        disabled={
+                            (shouldDisableApplyButton ?? isApplyButtonDisabled) || isSavingActionInProgress
+                        }
                         value={intl.formatMessage({ id: "apply" })}
                     />
                 </FooterButtons>

@@ -111,16 +111,6 @@ where:
 -  `from` is the relative start time.
 -  `to` is the relative end time.
 
-> If you use date filters by _weeks_ and compare the data to the [previous period or the same period of the last year](../../add_interactivity/time_over_time/) in those filters, you have to enable the GoodData platform to properly process such week filters. To do so, complete the following steps:
-
-1. Switch the version of the [Extensible Analytics Engine](https://help.gooddata.com/pages/viewpage.action?pageId=86795616) to 3.
-
-    To do so, set the `xae_version` platform setting to 3 (see [Configure Various Features via Platform Settings](https://help.gooddata.com/pages/viewpage.action?pageId=86796826)).
-
-2. Migrate the Date datasets in your workspace to the `urn:custom_v2:date` date dimension.
-
-    To do so, see "Migrate from a Legacy Date Dimension to urn:custom_v2:date" in [Manage Custom Date Dimensions](https://help.gooddata.com/pages/viewpage.action?pageId=86795635).
-
 ### Relative filter examples
 
 **Last 7 days \(yesterday and 6 days before\):**
@@ -209,7 +199,7 @@ When a visualization is filtered by a measure that is shown in % (that is, the m
 
 For example, if the visualization renders the values `100`, `200`, and `700` as `10%`, `20%`, and `70%`, the filter that filters out the first two values would use a comparison condition with the operator `GREATER_THAN` and the condition value `200`. The result would contain only the value `700` rendered as `100%` in the visualization.
 
-The reason is that the percentage values are always computed for the current execution result. By applying the measure value filter, the result changes and so the percentage values will change as well. That would result in the filter and the values displayed to have a different scale which would be confusing. For instance, accepting only values lower than 50% could still produce insights with values higher than 50%.
+The reason is that the percentage values are always computed for the current execution result. By applying the measure value filter, the result changes and so the percentage values will change as well. That would result in the filter and the values displayed to have a different scale which would be confusing. For instance, accepting only values lower than 50% could still produce visualizations with values higher than 50%.
 
 #### Measures in charts stacked to 100%
 When a visualization is filtered by a measure that is stacked to 100%, the filter value is based on the range of the actual measure values and not on the percentage values rendered by the visualization.
@@ -347,6 +337,4 @@ const style = { height: 300 };
 ### Attribute Filter component filter
 
 The Attribute Filter component renders a dropdown list of all values of the selected attribute. The Attribute Filter component has the `onApply` function property. This function is called when the user clicks the **Apply** button in the filter dropdown. The function receives an attribute filter with either selected attribute values (positive filter) or not selected attribute values (negative filter).
-
-See the [live example](https://gdui-examples.herokuapp.com/attribute-filter-components/attribute-filter).
 

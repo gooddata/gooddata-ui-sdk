@@ -34,6 +34,14 @@ export const selectCrossFilteringItems: DashboardSelector<ICrossFilteringItem[]>
 /**
  * @beta
  */
+export const selectIsCrossFiltering: DashboardSelector<boolean> = createSelector(
+    selectCrossFilteringItems,
+    (items) => items.length > 0,
+);
+
+/**
+ * @beta
+ */
 export const selectCrossFilteringItemByWidgetRef: (
     ref: ObjRef | undefined,
 ) => DashboardSelector<ICrossFilteringItem | undefined> = createMemoizedSelector((ref: ObjRef | undefined) =>

@@ -15,7 +15,7 @@ const UISDK_WORKSPACE_PREFIX = "Test UISDK reference workspace";
 
 async function main() {
     try {
-        const { HOST, SDK_BACKEND, TIGER_API_TOKEN, WORKSPACE_ID, FIXTURE_TYPE, TIGER_DATASOURCES_NAME } =
+        const { HOST, TIGER_API_TOKEN, WORKSPACE_ID, FIXTURE_TYPE, TIGER_DATASOURCES_NAME } =
             process.env;
         if (!(HOST && TIGER_API_TOKEN)) {
             log("HOST, TIGER_API_TOKEN need to be set in the .env file\n");
@@ -32,7 +32,7 @@ async function main() {
             UISDK_WORKSPACE_PREFIX,
             TIGER_API_TOKEN,
             HOST,
-            SDK_BACKEND,
+            "TIGER",
         );
 
         // set layout from latest declarative layout on gdc-test-fixture
@@ -42,7 +42,7 @@ async function main() {
             TIGER_DATASOURCES_NAME,
             TIGER_API_TOKEN,
             HOST,
-            SDK_BACKEND,
+            "TIGER",
             {},
         );
 

@@ -17,9 +17,15 @@ import {
     IWorkspaceMeasuresService,
     IWorkspaceFactsService,
     IWorkspaceDescriptor,
+    IWorkspaceDescriptorUpdate,
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
     IAttributeHierarchiesService,
+    IWorkspaceExportDefinitionsService,
+    IDataFiltersService,
+    IWorkspaceLogicalModelService,
+    IWorkspaceAutomationService,
+    IGenAIService,
 } from "@gooddata/sdk-backend-spi";
 import { TigerExecution } from "./execution/executionFactory.js";
 import { TigerWorkspaceCatalogFactory } from "./catalog/factory.js";
@@ -39,6 +45,13 @@ import { TigerWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs/index.
 import { TigerWorkspaceAccessControlService } from "./accessControl/index.js";
 import { TigerAttributeHierarchiesService } from "./attributeHierarchies/index.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "./constants.js";
+import { TigerWorkspaceExportDefinitions } from "./exportDefinitions/index.js";
+import { convertWorkspaceUpdate } from "../../convertors/toBackend/WorkspaceConverter.js";
+import { TigerDataFiltersService } from "./dataFilters/index.js";
+import { TigerWorkspaceLogicalModelService } from "./ldm/index.js";
+import { TigerWorkspaceAutomationService } from "./automations/index.js";
+import { TigerWorkspaceUsersQuery } from "./users/index.js";
+import { GenAIService } from "./genAI/index.js";
 
 export class TigerWorkspace implements IAnalyticalWorkspace {
     constructor(
@@ -48,7 +61,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
         private readonly descriptor?: IWorkspaceDescriptor,
     ) {}
 
-    public async getDescriptor(): Promise<IWorkspaceDescriptor> {
+    public async getDescriptor(includeParentPrefixes: boolean = false): Promise<IWorkspaceDescriptor> {
         if (!this.descriptor) {
             return workspaceConverter(
                 (
@@ -59,10 +72,31 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
                         });
                     })
                 ).data.data,
-                [],
+                includeParentPrefixes
+                    ? (
+                          await this.authCall(async (client) => {
+                              return client.actions.inheritedEntityPrefixes({
+                                  workspaceId: this.workspace,
+                              });
+                          })
+                      ).data
+                    : [],
             );
         }
         return this.descriptor;
+    }
+
+    public async updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<IWorkspaceDescriptor> {
+        const result = await this.authCall(async (client) => {
+            return client.entities.patchEntityWorkspaces({
+                id: this.workspace,
+                jsonApiWorkspacePatchDocument: {
+                    data: convertWorkspaceUpdate(descriptor, this.workspace),
+                },
+            });
+        });
+
+        return workspaceConverter(result.data.data, []);
     }
 
     public async getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
@@ -118,7 +152,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
     }
 
     public users(): IWorkspaceUsersQuery {
-        throw new NotSupported("Not supported");
+        return new TigerWorkspaceUsersQuery(this.authCall, this.workspace);
     }
 
     public userGroups(): IWorkspaceUserGroupsQuery {
@@ -130,10 +164,30 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
     }
 
     public dateFilterConfigs(): IDateFilterConfigsQuery {
-        return new TigerWorkspaceDateFilterConfigsQuery();
+        return new TigerWorkspaceDateFilterConfigsQuery(this.authCall, this.workspace);
     }
 
     public attributeHierarchies(): IAttributeHierarchiesService {
         return new TigerAttributeHierarchiesService(this.authCall, this.workspace);
+    }
+
+    public exportDefinitions(): IWorkspaceExportDefinitionsService {
+        return new TigerWorkspaceExportDefinitions(this.authCall, this.workspace);
+    }
+
+    public dataFilters(): IDataFiltersService {
+        return new TigerDataFiltersService(this.authCall, this.workspace);
+    }
+
+    public logicalModel(): IWorkspaceLogicalModelService {
+        return new TigerWorkspaceLogicalModelService(this.authCall, this.workspace);
+    }
+
+    public automations(): IWorkspaceAutomationService {
+        return new TigerWorkspaceAutomationService(this.authCall, this.workspace);
+    }
+
+    public genAI(): IGenAIService {
+        return new GenAIService(this.authCall, this.workspace);
     }
 }

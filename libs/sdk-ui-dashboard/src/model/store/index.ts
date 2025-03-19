@@ -1,11 +1,16 @@
-// (C) 2021-2024 GoodData Corporation
-export { DashboardDispatch, DashboardState, DashboardSelector, DashboardSelectorEvaluator } from "./types.js";
+// (C) 2021-2025 GoodData Corporation
+export type {
+    DashboardDispatch,
+    DashboardState,
+    DashboardSelector,
+    DashboardSelectorEvaluator,
+} from "./types.js";
 
 export { selectDashboardLoading, selectIsDashboardLoading } from "./loading/loadingSelectors.js";
-export { LoadingState } from "./loading/loadingState.js";
+export type { LoadingState } from "./loading/loadingState.js";
 export { selectDashboardSaving, selectIsDashboardSaving } from "./saving/savingSelectors.js";
-export { SavingState } from "./saving/savingState.js";
-export { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState.js";
+export type { SavingState } from "./saving/savingState.js";
+export type { BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState.js";
 export {
     selectBackendCapabilities,
     selectSupportsElementsQueryParentFiltering,
@@ -23,7 +28,7 @@ export {
     selectSupportsMultipleDateFilters,
     selectSupportsRichTextWidgets,
 } from "./backendCapabilities/backendCapabilitiesSelectors.js";
-export { ConfigState } from "./config/configState.js";
+export type { ConfigState } from "./config/configState.js";
 export {
     selectConfig,
     selectLocale,
@@ -69,7 +74,7 @@ export {
     selectEnableKPIDashboardDrillFromAttribute,
     selectIsShareButtonHidden,
     selectWeekStart,
-    selectIsFilterResetEnabled,
+    selectTimezone,
     selectIsDrillDownEnabled,
     selectEnableUnavailableItemsVisibility,
     selectEnableKDDependentFilters,
@@ -78,11 +83,46 @@ export {
     selectEnableMultipleDateFilters,
     selectEnableKDRichText,
     selectEnableAttributeFilterValuesValidation,
+    selectEnableKDAttributeFilterDatesValidation,
+    selectEnableDuplicatedLabelValuesInAttributeFilter,
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
+    selectEnableRichTextDescriptions,
+    selectIsDisabledCrossFiltering,
+    selectIsDisableUserFilterReset,
+    selectEnableScheduling,
+    selectEnableFilterViews,
+    selectEnableAlerting,
+    selectEnableAlertAttributes,
+    selectEnableComparisonInAlerting,
+    selectEnableVisualizationSwitcher,
+    selectEnableIgnoreCrossFiltering,
+    selectEnableAutomations,
+    selectEnableCrossFilteringAliasTitles,
+    selectEnableFlexibleLayout,
+    selectEnableInPlatformNotifications,
+    selectEnableExternalRecipients,
+    selectEnableDrilledTooltip,
+    selectFocusObject,
+    selectEnableDashboardDescriptionDynamicHeight,
+    selectEnableCriticalContentPerformanceOptimizations,
+    selectEnableSlideshowExports,
+    selectEnableRichTextDynamicReferences,
+    selectEnableDashboardFiltersApplyModes,
+    selectDashboardFiltersApplyMode,
+    selectEnableExecutionCancelling,
+    selectEnableOrchestratedTabularExports,
+    selectEnableDashboardTabularExport,
 } from "./config/configSelectors.js";
-export { EntitlementsState } from "./entitlements/entitlementsState.js";
-export { selectEntitlementExportPdf } from "./entitlements/entitlementsSelectors.js";
+export type { EntitlementsState } from "./entitlements/entitlementsState.js";
+export {
+    selectEntitlementExportPdf,
+    selectEntitlementMaxAutomationRecipients,
+    selectEntitlementMaxAutomations,
+    selectEntitlementMinimumRecurrenceMinutes,
+    selectEntitlementUnlimitedAutomations,
+} from "./entitlements/entitlementsSelectors.js";
 
-export { PermissionsState } from "./permissions/permissionsState.js";
+export type { PermissionsState } from "./permissions/permissionsState.js";
 export {
     selectPermissions,
     selectCanListUsersInWorkspace,
@@ -104,8 +144,10 @@ export {
     selectCanRefreshData,
     selectCanManageScheduledMail,
     selectCanManageAttributeHierarchy,
+    selectCanCreateFilterView,
+    selectCanCreateAutomation,
 } from "./permissions/permissionsSelectors.js";
-export { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState.js";
+export type { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState.js";
 export {
     selectCanViewDashboardPermission,
     selectCanShareDashboardPermission,
@@ -114,7 +156,12 @@ export {
     selectCanEditLockedDashboardPermission,
     selectDashboardPermissions,
 } from "./dashboardPermissions/dashboardPermissionsSelectors.js";
-export { FilterContextState } from "./filterContext/filterContextState.js";
+export type {
+    FilterContextState,
+    IWorkingFilterContextDefinition,
+    WorkingDashboardAttributeFilter,
+    WorkingFilterContextItem,
+} from "./filterContext/filterContextState.js";
 export {
     selectFilterContextDefinition,
     selectFilterContextIdentity,
@@ -122,9 +169,16 @@ export {
     selectFilterContextDateFilter,
     selectFilterContextDateFiltersWithDimension,
     selectFilterContextAttributeFilters,
+    selectWorkingFilterContextDefinition,
+    selectWorkingFilterContextFilters,
+    selectWorkingFilterContextAttributeFilters,
+    selectWorkingFilterContextDateFilter,
+    selectWorkingFilterContextDateFiltersWithDimension,
+    selectIsWorkingFilterContextChanged,
     selectOtherContextAttributeFilters,
     selectAttributeFilterDisplayFormsMap,
     selectAttributeFilterDisplayForms,
+    selectFilterContextAttributeFilterByLocalId,
     selectFilterContextAttributeFilterByDisplayForm,
     selectOriginalFilterContextDefinition,
     selectOriginalFilterContextFilters,
@@ -135,30 +189,53 @@ export {
     selectCanAddMoreFilters,
     selectIsAttributeFilterDependentByLocalIdentifier,
     selectFilterContextDateFilterByDataSet,
+    selectPreloadedAttributesWithReferences,
 } from "./filterContext/filterContextSelectors.js";
+export { getFilterIdentifier } from "./filterContext/filterContextUtils.js";
+export type { IImplicitDrillWithPredicates } from "./widgetDrills/widgetDrillSelectors.js";
 export {
-    // Core drills
     selectImplicitDrillsDownByWidgetRef,
     selectConfiguredDrillsByWidgetRef,
     selectDrillableItemsByWidgetRef,
     selectConfiguredAndImplicitDrillsByWidgetRef,
     selectValidConfiguredDrillsByWidgetRef,
-    // Local drills for drill dialog
     selectImplicitDrillsByAvailableDrillTargets,
     selectDrillableItemsByAvailableDrillTargets,
     selectImplicitDrillsToUrlByWidgetRef,
     selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
-    IImplicitDrillWithPredicates,
 } from "./widgetDrills/widgetDrillSelectors.js";
-export { selectLegacyDashboards } from "./legacyDashboards/legacyDashboardsSelectors.js";
 
-export { UndoEnhancedState, UndoEntry } from "./_infra/undoEnhancer.js";
-export { LayoutState, LayoutStash } from "./layout/layoutState.js";
+export { selectIsExportableToCSV, selectIsExportableToXLSX } from "./widgetExports/widgetExportsSelectors.js";
+
+export {
+    selectDeleteVisible,
+    selectFilterViewsVisible,
+    selectPdfExportVisible,
+    selectSaveAsVisible,
+    selectCommonExportAvailable,
+    selectSlideShowExportAvailable,
+    selectSlideShowExportVisible,
+    selectCanEnterEditModeAndIsLoaded,
+    selectIsShareButtonVisible,
+    selectIsSaveAsNewButtonVisible,
+    hasEditDashboardPermission,
+    hasEditLockedDashboardPermission,
+    selectCanSaveDashboard,
+    selectCanEnterEditMode,
+    selectIsPrivateDashboard,
+    selectIsCurrentDashboardVisibleInList,
+} from "./topBar/topBarSelectors.js";
+
+export type { UndoEnhancedState, UndoEntry } from "./_infra/undoEnhancer.js";
+export type { LayoutState, LayoutStash } from "./layout/layoutState.js";
+
 export {
     selectLayout,
     selectStash,
+    selectScreen,
     selectWidgetByRef,
     selectAnalyticalWidgetByRef,
+    selectFilterableWidgetByRef,
     selectWidgets,
     selectWidgetsMap,
     selectAllInsightWidgets,
@@ -168,16 +245,20 @@ export {
     selectIsLayoutEmpty,
     selectLayoutHasAnalyticalWidgets,
     selectWidgetDrills,
+    selectWidgetPathByRef,
     selectWidgetCoordinatesByRef,
     selectWidgetPlaceholder,
+    selectWidgetPlaceholderPath,
     selectWidgetPlaceholderCoordinates,
     selectInsightWidgetPlaceholder,
+    selectInsightWidgetPlaceholderPath,
     selectInsightWidgetPlaceholderCoordinates,
     selectKpiWidgetPlaceholder,
+    selectKpiWidgetPlaceholderPath,
     selectKpiWidgetPlaceholderCoordinates,
     selectIgnoredDrillDownHierarchiesByWidgetRef,
 } from "./layout/layoutSelectors.js";
-export { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState.js";
+export type { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState.js";
 export {
     selectDateFilterConfigOverrides,
     selectEffectiveDateFilterConfig,
@@ -187,13 +268,14 @@ export {
     selectEffectiveDateFilterAvailableGranularities,
     selectDateFilterConfigValidationWarnings,
 } from "./dateFilterConfig/dateFilterConfigSelectors.js";
-export { AttributeFilterConfigsState } from "./attributeFilterConfigs/attributeFilterConfigsState.js";
+export type { AttributeFilterConfigsState } from "./attributeFilterConfigs/attributeFilterConfigsState.js";
 export {
     selectAttributeFilterConfigsOverrides,
     selectAttributeFilterConfigsModeMap,
     selectEffectiveAttributeFiltersModeMap,
+    selectAttributeFilterConfigsDisplayAsLabelMap,
 } from "./attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-export { DateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
+export type { DateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
 export {
     selectDateFilterConfigsOverrides,
     selectDateFilterConfigsModeMap,
@@ -205,9 +287,11 @@ export {
     selectInsightsMap,
     selectInsightByRef,
     selectInsightByWidgetRef,
+    selectRawExportOverridesForInsightByRef,
 } from "./insights/insightsSelectors.js";
-export { CatalogState } from "./catalog/catalogState.js";
+export type { CatalogState } from "./catalog/catalogState.js";
 export {
+    selectCatalogIsLoaded,
     selectAttributesWithDrillDown,
     selectCatalogAttributes,
     selectCatalogAttributeDisplayForms,
@@ -227,11 +311,13 @@ export {
     selectDateHierarchyTemplates,
     selectAdhocDateHierarchies,
     selectAllCatalogAttributeHierarchies,
+    selectCatalogAttributeDisplayFormsById,
 } from "./catalog/catalogSelectors.js";
 export { catalogActions } from "./catalog/index.js";
 export { drillActions } from "./drill/index.js";
 export {
     selectDrillableItems,
+    selectIsCrossFiltering,
     selectCrossFilteringItems,
     selectCrossFilteringItemByWidgetRef,
     selectCrossFilteringFiltersLocalIdentifiers,
@@ -239,18 +325,11 @@ export {
     selectCrossFilteringSelectedPointsByWidgetRef,
     selectIsFilterFromCrossFilteringByLocalIdentifier,
 } from "./drill/drillSelectors.js";
-export { DrillState } from "./drill/drillState.js";
-export { ICrossFilteringItem } from "./drill/types.js";
-export { AlertsState } from "./alerts/alertsState.js";
-export {
-    selectAlerts,
-    selectAlertByWidgetRef,
-    selectAlertsMap,
-    selectAlertByRef,
-} from "./alerts/alertsSelectors.js";
-export { UserState } from "./user/userState.js";
+export type { DrillState } from "./drill/drillState.js";
+export type { ICrossFilteringItem } from "./drill/types.js";
+export type { UserState } from "./user/userState.js";
 export { selectCurrentUser, selectCurrentUserRef } from "./user/userSelectors.js";
-export { DashboardMetaState, DashboardDescriptor } from "./meta/metaState.js";
+export type { DashboardMetaState, DashboardDescriptor } from "./meta/metaState.js";
 export {
     selectDashboardRef,
     selectDashboardUriRef,
@@ -265,10 +344,15 @@ export {
     selectPersistedDashboard,
     selectDashboardLockStatus,
     selectIsNewDashboard,
+    selectIsNewDashboardWithContent,
     selectIsDashboardDirty,
     selectIsDashboardPrivate,
     selectDashboardWorkingDefinition,
     selectDisableDashboardCrossFiltering,
+    selectDisableDashboardUserFilterReset,
+    selectDisableDashboardUserFilterSave,
+    selectDisableFilterViews,
+    selectDashboardDescriptor,
 } from "./meta/metaSelectors.js";
 export {
     selectListedDashboards,
@@ -276,6 +360,7 @@ export {
 } from "./listedDashboards/listedDashboardsSelectors.js";
 export {
     selectAccessibleDashboards,
+    selectAccessibleDashboardsLoaded,
     selectAccessibleDashboardsMap,
 } from "./accessibleDashboards/accessibleDashboardsSelectors.js";
 export {
@@ -283,20 +368,23 @@ export {
     selectInaccessibleDashboardsMap,
 } from "./inaccessibleDashboards/inaccessibleDashboardsSelectors.js";
 export { selectDrillTargetsByWidgetRef, selectDrillTargets } from "./drillTargets/drillTargetsSelectors.js";
-export { IDrillTargets } from "./drillTargets/drillTargetsTypes.js";
+export type { IDrillTargets } from "./drillTargets/drillTargetsTypes.js";
 export {
     selectExecutionResult,
     selectExecutionResultByRef,
     selectIsExecutionResultExportableToCsvByRef,
     selectIsExecutionResultExportableToXlsxByRef,
     selectIsExecutionResultReadyForExportByRef,
+    selectHasSomeExecutionResult,
     selectIsExecutionResultExportableToCsvRawByRef,
 } from "./executionResults/executionResultsSelectors.js";
-export { IExecutionResultEnvelope } from "./executionResults/types.js";
-export { UiState, InvalidCustomUrlDrillParameterInfo } from "./ui/uiState.js";
+export type { IExecutionResultEnvelope } from "./executionResults/types.js";
+export type { UiState, InvalidCustomUrlDrillParameterInfo, FilterViewDialogMode } from "./ui/uiState.js";
 export {
     selectIsScheduleEmailDialogOpen,
     selectIsScheduleEmailManagementDialogOpen,
+    selectIsScheduleEmailDialogContext,
+    selectIsScheduleEmailManagementDialogContext,
     selectIsSaveAsDialogOpen,
     selectIsShareDialogOpen,
     selectFilterBarExpanded,
@@ -309,15 +397,18 @@ export {
     selectWidgetDateDatasetAutoSelect,
     selectIsDeleteDialogOpen,
     selectIsKpiDeleteDialogOpen,
+    selectKpiDeleteDialogWidgetLayoutPath,
     selectKpiDeleteDialogWidgetCoordinates,
     selectInsightListLastUpdateRequested,
     selectIsWidgetLoadingAdditionalDataByWidgetRef,
     selectIsFilterAttributeSelectionOpen,
     selectSelectedFilterIndex,
     selectIsDraggingWidget,
+    selectActiveSection,
     selectActiveSectionIndex,
     selectIsCancelEditModeDialogOpen,
     selectDraggingWidgetSource,
+    selectDraggingWidgetTargetLayoutPath,
     selectDraggingWidgetTarget,
     selectWidgetsOverlay,
     selectWidgetsOverlayState,
@@ -328,20 +419,28 @@ export {
     selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef,
     selectInvalidUrlDrillParameterWidgetRefs,
     selectInvalidUrlDrillParameterWidgetWarnings,
+    selectFilterViewsDialogMode,
+    selectIsFilterViewsDialogOpen,
+    selectIsAlertingDialogOpen,
+    selectIsAlertsManagementDialogOpen,
+    selectIsWidgetDeleteDialogOpen,
+    selectWidgetDeleteDialogWidgetRef,
+    selectIgnoreExecutionTimestamp,
+    selectExecutionTimestamp,
 } from "./ui/uiSelectors.js";
 export { uiActions } from "./ui/index.js";
-export { RenderModeState } from "./renderMode/renderModeState.js";
+export type { RenderModeState } from "./renderMode/renderModeState.js";
 export {
     selectIsInEditMode,
+    selectIsInExportMode,
     selectIsInViewMode,
     selectRenderMode,
 } from "./renderMode/renderModeSelectors.js";
 export { renderModeActions } from "./renderMode/index.js";
-export { LegacyDashboardsState } from "./legacyDashboards/legacyDashboardsState.js";
 
 export { queryAndWaitFor } from "./_infra/queryAndWaitFor.js";
 export { dispatchAndWaitFor } from "./_infra/dispatchAndWaitFor.js";
-export {
+export type {
     IDashboardQueryService,
     QueryCache,
     QueryActions,
@@ -355,3 +454,33 @@ export {
     DashboardStoreAccessorRepository,
     SingleDashboardStoreAccessor,
 } from "./storeAccessors/index.js";
+export {
+    selectNotificationChannels,
+    selectNotificationChannelsCount,
+    selectNotificationChannelsForScheduledExports,
+    selectNotificationChannelsCountForScheduledExports,
+} from "./notificationChannels/notificationChannelsSelectors.js";
+export type { NotificationChannelsState } from "./notificationChannels/notificationChannelsState.js";
+export type { AutomationsState } from "./automations/automationsState.js";
+export {
+    selectAutomationsIsInitialized,
+    selectAllAutomationsCount,
+    selectDashboardUserAutomations,
+    selectDashboardUserAutomationAlerts,
+    selectDashboardUserAutomationSchedules,
+    selectDashboardUserAutomationAlertsInContext,
+    selectDashboardUserAutomationSchedulesInContext,
+    selectAutomationsIsLoading,
+    selectAutomationsError,
+} from "./automations/automationsSelectors.js";
+
+export type { UsersState } from "./users/usersState.js";
+export { selectUsers, selectErrorUsers, selectUsersLoadingStatus } from "./users/usersSelectors.js";
+
+export type { IFilterViews, FilterViewsState } from "./filterViews/index.js";
+export { selectFilterViews, selectFilterViewsAreLoading } from "./filterViews/index.js";
+
+export type { ExecutedState } from "./executed/executedState.js";
+export { selectIsDashboardExecuted } from "./executed/executedSelectors.js";
+
+export type { AccessibleDashboardsState } from "./accessibleDashboards/index.js";

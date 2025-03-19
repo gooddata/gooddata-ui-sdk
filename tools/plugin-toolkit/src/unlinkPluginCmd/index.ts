@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { ActionOptions } from "../_base/types.js";
 import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { getUnlinkCmdActionConfig, UnlinkCmdActionConfig } from "./actionConfig.js";
@@ -8,21 +8,10 @@ import ora from "ora";
 import { genericErrorReporter } from "../_base/utils.js";
 
 function printUnlinkConfigSummary(config: UnlinkCmdActionConfig) {
-    const {
-        backend,
-        hostname,
-        workspace,
-        dashboard,
-        identifier,
-        credentials: { username },
-    } = config;
+    const { hostname, workspace, dashboard, identifier } = config;
 
     logInfo("Everything looks valid. Going to unlink plugin from dashboard.");
-    logInfo(`  Hostname    : ${hostname}   (${backend === "bear" ? "GoodData platform" : "GoodData.CN"})`);
-
-    if (backend === "bear") {
-        logInfo(`  Username    : ${username}`);
-    }
+    logInfo(`  Hostname    : ${hostname}   (${"GoodData.CN"})`);
 
     logInfo(`  Workspace   : ${workspace}`);
     logInfo(`  Dashboard   : ${dashboard}`);

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:color";
 @use "variables";
 @use "mixins";
@@ -107,7 +107,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     width: 240px;
     white-space: nowrap;
     color: variables.$gd-color-state-blank;
-    background-color: var(--gd-palette-complementary-1, #2c343f);
+    background-color: var(--gd-palette-complementary-1-from-theme, #2c343f);
 
     * {
         box-sizing: border-box;
@@ -148,7 +148,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
         padding: 9px 15px;
         line-height: 24px;
         white-space: normal;
-        color: var(--gd-palette-complementary-8, variables.$default-gd-color-state-blank);
+        color: var(--gd-palette-complementary-8-from-theme, variables.$default-gd-color-state-blank);
         cursor: pointer;
         font-size: 16px;
 
@@ -173,17 +173,17 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
             height: 1px;
             border-bottom: 1px solid
                 var(
-                    --gd-palette-complementary-4,
+                    --gd-palette-complementary-4-from-theme,
                     color.adjust(variables.$default-gd-color-state-blank, $alpha: -0.8)
                 );
         }
 
         &:hover {
             border: none;
-            color: var(--gd-palette-complementary-9, variables.$default-gd-color-text-light);
+            color: var(--gd-palette-complementary-9-from-theme, variables.$default-gd-color-text-light);
 
             &::before {
-                background-color: var(--gd-palette-complementary-6, inherit);
+                background-color: var(--gd-palette-complementary-6-from-theme, inherit);
             }
 
             &::after {
@@ -193,8 +193,8 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
 
         &.active {
             border: none;
-            color: var(--gd-palette-complementary-9, variables.$default-gd-color-text-light);
-            background-color: var(--gd-palette-complementary-0, #131c28);
+            color: var(--gd-palette-complementary-9-from-theme, variables.$default-gd-color-text-light);
+            background-color: var(--gd-palette-complementary-0-from-theme, #131c28);
             font-weight: bold;
 
             &::after {
@@ -235,7 +235,10 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     overflow-x: hidden;
     overflow-y: auto;
     border-top: 1px solid
-        var(--gd-palette-complementary-4, color.adjust(variables.$default-gd-color-state-blank, $alpha: -0.8));
+        var(
+            --gd-palette-complementary-4-from-theme,
+            color.adjust(variables.$default-gd-color-state-blank, $alpha: -0.8)
+        );
 
     .gd-header-menu {
         display: block;
@@ -244,7 +247,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     .gd-header-menu li:last-child a {
         border-bottom: 1px solid
             var(
-                --gd-palette-complementary-4,
+                --gd-palette-complementary-4-from-theme,
                 color.adjust(variables.$default-gd-color-state-blank, $alpha: -0.8)
             );
 
@@ -259,7 +262,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
         padding: 15px;
         border-bottom: 1px solid
             var(
-                --gd-palette-complementary-4,
+                --gd-palette-complementary-4-from-theme,
                 color.adjust(variables.$default-gd-color-state-blank, $alpha: -0.8)
             );
     }
@@ -301,7 +304,10 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     left: 0;
     padding: 0 0 15px;
     border-top: 1px solid
-        var(--gd-palette-complementary-4, color.adjust(variables.$default-gd-color-state-blank, $alpha: -0.8));
+        var(
+            --gd-palette-complementary-4-from-theme,
+            color.adjust(variables.$default-gd-color-state-blank, $alpha: -0.8)
+        );
 }
 
 .gd-list-help-menu-item {
@@ -338,6 +344,20 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
             height: 1px;
             background-color: variables.$default-gd-border-color;
         }
+    }
+}
+a.gd-list-help-menu-item.gd-list-item {
+    &:focus-visible {
+        // disable outline and use box-shadow instead.
+        // outline highlights both element and ::after content added as divider
+        // needs to be rewriten in https: //gooddata.atlassian.net/browse/LX-769
+        outline: none;
+        box-shadow: 0 0 0 2px black;
+        text-decoration: none;
+    }
+
+    &:focus {
+        text-decoration: none;
     }
 }
 
@@ -385,6 +405,180 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
 .gd-header-menu-trial {
     display: flex;
     align-items: center;
+}
+
+.gd-header-menu-search,
+.gd-header-menu-notifications {
+    display: flex;
+    flex-direction: column;
+    background-color: variables.$gd-color-white;
+    width: 100vw;
+    height: 100vh;
+
+    &-title {
+        height: 45px;
+        line-height: 45px;
+        background-color: variables.$gd-color-white;
+        // TODO - looks like these are colors from the old palette
+        border-bottom: 1px solid var(--gd-palette-complementary-4-from-theme, #c9d5e0);
+        box-shadow: 0 1px 2px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1));
+        padding: 0 15px;
+    }
+}
+
+.gd-header-search {
+    height: 100%;
+    margin: 0;
+    line-height: 42px;
+    opacity: 0.8;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    font-weight: 400;
+    position: relative;
+    box-sizing: border-box;
+    padding: 0 34px 2px 13px;
+
+    @include mixins.text-overflow;
+
+    &:hover,
+    &.is-open {
+        opacity: 1;
+    }
+
+    &::after {
+        content: "\e612";
+        position: absolute;
+        top: 0;
+        right: 11px;
+        margin-left: 11px;
+        width: 12px;
+        opacity: 0.5;
+        text-align: center;
+        font-family: variables.$gd-font-indigo;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    &.is-open::after {
+        content: "\e613";
+    }
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    &.is-open {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    &-dropdown {
+        overflow: hidden;
+
+        .gd-list {
+            min-width: 210px;
+
+            .gd-list-item {
+                font-family: variables.$gd-font-primary;
+                font-weight: 400;
+            }
+        }
+    }
+}
+
+.gd-header-notifications-icon {
+    padding-right: 5px;
+}
+
+.gd-header-notifications {
+    height: 100%;
+    margin: 0;
+    line-height: 42px;
+    opacity: 0.8;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    font-weight: 400;
+    position: relative;
+    box-sizing: border-box;
+    padding: 0 34px 2px 13px;
+
+    @include mixins.text-overflow;
+
+    &:hover,
+    &.is-open {
+        opacity: 1;
+    }
+
+    &::after {
+        content: "\e612";
+        position: absolute;
+        top: 0;
+        right: 11px;
+        margin-left: 11px;
+        width: 12px;
+        opacity: 0.5;
+        text-align: center;
+        font-family: variables.$gd-font-indigo;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    &.is-open::after {
+        content: "\e613";
+    }
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    &.is-open {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    &-dropdown {
+        overflow: hidden;
+
+        .gd-list {
+            min-width: 210px;
+
+            .gd-list-item {
+                font-family: variables.$gd-font-primary;
+                font-weight: 400;
+            }
+        }
+    }
+}
+
+.gd-header-chat {
+    height: 100%;
+    margin: 0;
+    line-height: 42px;
+    opacity: 0.8;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    font-weight: 400;
+    position: relative;
+    box-sizing: border-box;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    & .gd-button-text {
+        display: flex;
+    }
+}
+
+.gd-icon-header-search-button {
+    vertical-align: middle;
+    opacity: 0.8;
+    margin-right: 6px;
+
+    &::before {
+        content: "\e62b";
+    }
 }
 
 .gd-header-expiration-date {
@@ -497,6 +691,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     transition: all 0.2s;
     font-size: 14px;
     font-weight: 400;
+    padding-bottom: 2px;
 
     @include mixins.text-overflow;
 
@@ -588,6 +783,13 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     }
 }
 
+.gd-header-menu-vertical span.gd-icon-header-search::before {
+    content: "\e62b";
+    vertical-align: bottom;
+    opacity: 0.8;
+    padding-right: 6px;
+}
+
 .gd-header-username {
     &::before {
         margin-right: 8px;
@@ -645,7 +847,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
             top: 21px;
             right: 9px;
             left: 9px;
-            border-color: var(--gd-palette-complementary-6, inherit);
+            border-color: var(--gd-palette-complementary-6-from-theme, inherit);
         }
 
         &::before {
@@ -660,8 +862,13 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
             right: 50%;
             left: 50%;
             opacity: 0;
-            border-color: var(--gd-palette-complementary-6, inherit);
+            border-color: var(--gd-palette-complementary-6-from-theme, inherit);
         }
+    }
+
+    &.search-open,
+    &.notifications-open {
+        color: variables.$gd-color-text;
     }
 }
 
@@ -672,7 +879,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     height: 33px;
     margin: 0 15px;
     border: 1px solid color.adjust(variables.$default-gd-color-disabled, $alpha: -0.6);
-    box-shadow: 0 1px 1px 0 var(--gd-shadow-color, color.adjust(#14395d, $alpha: -0.95));
+    box-shadow: 0 1px 1px 0 var(--gd-shadow-color-from-theme, color.adjust(#14395d, $alpha: -0.95));
     color: variables.$gd-color-text-light;
     cursor: pointer;
     transition: 0.2s;
@@ -700,6 +907,9 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
 }
 
 .gd-list-item.gd-project-list-item {
+    width: 100%;
+    background: none;
+    border: none;
     justify-content: flex-start;
     font-size: 14px;
     font-family: variables.$gd-font-primary;
@@ -730,6 +940,11 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     &.gd-is-selected {
         font-weight: bold;
     }
+
+    &:focus-visible {
+        border: none;
+        outline: auto;
+    }
 }
 
 .gd-header-account-dropdown {
@@ -741,6 +956,15 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
         .gd-list-item {
             font-family: variables.$gd-font-primary;
             font-weight: 400;
+        }
+        a.gd-list-item {
+            &:focus-visible {
+                outline: auto;
+                text-decoration: none;
+            }
+            &:focus {
+                text-decoration: none;
+            }
         }
     }
 }
@@ -1057,5 +1281,32 @@ button.gd-button-primary.gd-upsell-button {
 
     &:focus {
         outline: 0;
+    }
+}
+
+.gd-header-button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: inherit;
+    font-family: inherit;
+
+    &.gd-button + &.gd-button {
+        margin: 0;
+    }
+
+    &:focus-visible {
+        outline: revert;
+        opacity: 1;
+    }
+}
+
+.gd-workspace-picker-button {
+    width: 100%;
+    padding: 0;
+    text-align: left;
+
+    &:focus-visible {
+        outline-offset: -2px;
     }
 }

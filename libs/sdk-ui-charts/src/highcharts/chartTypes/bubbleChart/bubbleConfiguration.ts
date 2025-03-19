@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
 import { IChartOptions } from "../../typings/unsafe.js";
 import { styleVariables } from "../_chartCreators/styles/variables.js";
@@ -24,9 +24,9 @@ export function getBubbleConfiguration(
             type: "bubble",
         },
         plotOptions: {
-            bubble: {
-                stickyTracking: false,
+            series: {
                 marker: {
+                    enabled: true,
                     symbol: "circle",
                     radius: 5,
                     states: {
@@ -39,14 +39,23 @@ export function getBubbleConfiguration(
                         },
                     },
                 },
+            },
+            bubble: {
+                stickyTracking: false,
                 dataLabels: {
                     enabled: false, // TODO remove once FF for config panel is removed
                     allowOverlap: false,
+                },
+                marker: {
+                    radius: null,
                 },
             },
         },
         xAxis: [
             {
+                labels: {
+                    distance: 7,
+                },
                 startOnTick: true,
             },
         ],

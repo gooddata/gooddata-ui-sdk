@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import { ISortItem, newAttributeLocator, newMeasureSort } from "@gooddata/sdk-model";
 import { ReferenceRecordings, ReferenceMd, ReferenceData } from "@gooddata/reference-workspace";
@@ -50,7 +50,7 @@ describe("resultMetaMethods", () => {
             DataViewFirstPage,
             [
                 newMeasureSort(ReferenceMd.Amount, "desc", [
-                    newAttributeLocator(ReferenceMd.Region, "invalid"),
+                    newAttributeLocator(ReferenceMd.Region.Default, "invalid"),
                 ]),
             ],
         ],

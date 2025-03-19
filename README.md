@@ -37,7 +37,6 @@ The most notable packages in this monorepo
 | [`@gooddata/sdk-model`](./libs/sdk-model)                         | Domain models for GoodData.UI                                                                      |
 | [`@gooddata/sdk-backend-spi`](./libs/sdk-backend-spi)             | Definitions of the Service Provider Interface (SPI) for the Analytical Backend                     |
 | [`@gooddata/sdk-backend-tiger`](./libs/sdk-backend-tiger)         | Analytical Backend implementation for GoodData Cloud and GoodData.CN                               |
-| [`@gooddata/sdk-backend-bear`](./libs/sdk-backend-bear)           | Analytical Backend implementation for the GoodData platform                                        |
 | [`@gooddata/sdk-ui-charts`](./libs/sdk-ui-charts)                 | React-based chart visualizations that you can use to visualize your data                           |
 | [`@gooddata/sdk-ui-pivot`](./libs/sdk-ui-pivot)                   | React-based PivotTable component that you can use to visualize your data in a table-based manner   |
 | [`@gooddata/sdk-ui-geo`](./libs/sdk-ui-geo)                       | React components that you can use to visualize your location-based data                            |

@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:math";
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 
@@ -6,10 +6,13 @@
 @use "layout";
 @use "kpi";
 @use "kpi_alert_dialog";
-@use "scheduled_mail";
+@use "notifications_channels_dialog";
 @use "scheduled_mail_recipients";
 @use "item-states";
+@use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+$dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b1c1d1);
 
 // this must be used on the body element in gdc-dashboards
 .gd-dashboards-root {
@@ -45,6 +48,7 @@
     align-items: stretch;
     min-height: variables.$item-min-height;
     padding: variables.$item-outer-padding;
+
     // Grid definition
 
     @media #{kit-variables.$small-up} {
@@ -97,18 +101,26 @@
         }
     }
 
+    &.type-rich-text {
+        .viz-line-family-chart {
+            width: 100%;
+            min-width: 0;
+        }
+        min-height: 55px;
+    }
+
     &:hover {
         a.kpi-link {
             .kpi-value {
                 color: var(
                     --gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor,
-                    var(--gd-palette-complementary-9, kit-variables.$default-gd-color-link)
+                    var(--gd-palette-complementary-9-from-theme, kit-variables.$default-gd-color-link)
                 );
             }
             .kpi-value.is-empty-value {
                 color: var(
-                    --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor,
-                    var(--gd-palette-complementary-6, inherit)
+                    --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor-from-theme,
+                    var(--gd-palette-complementary-6-from-theme, inherit)
                 );
             }
         }
@@ -158,6 +170,10 @@
         }
     }
 
+    &.gd-highlighted > .dash-item-content-wrapper > .dash-item-content {
+        border-color: kit-variables.$gd-palette-primary-base;
+    }
+
     &.is-selected {
         .dash-item-action-lw-options {
             display: block;
@@ -165,6 +181,20 @@
             &::before {
                 color: var(--gd-palette-complementary-0, #fff);
             }
+        }
+    }
+
+    &:focus-visible {
+        outline: auto 5px Highlight; /* For Firefox */
+        // stylelint-disable-next-line declaration-block-no-duplicate-properties
+        outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
+
+        .dash-item-action-options {
+            display: block;
+        }
+
+        .dash-item-action-description .dash-item-action-description-trigger {
+            display: flex;
         }
     }
 }
@@ -193,7 +223,6 @@
     flex: 1 1 auto;
     flex-direction: column;
     justify-content: flex-start;
-    max-width: 99.999%; /* 100% has issue in IE (wrong kpi width) */
 }
 
 .dash-item-content {
@@ -235,6 +264,11 @@
         left: 50%;
         display: block;
         border-radius: inherit;
+    }
+
+    &.is-export {
+        padding: 0;
+        border-width: 0;
     }
 }
 
@@ -291,22 +325,24 @@
     }
 }
 
-.item-headline {
-    position: relative;
+.item-headline,
+.item-headline-inner {
     display: inline-block;
-    width: 100%;
-    max-height: (variables.$item-headline-lineHeight + variables.$item-headline-padding-vertical) * 2;
+    vertical-align: middle;
     font-size: 17px;
     line-height: variables.$item-headline-lineHeight;
-    vertical-align: middle;
+}
+
+.item-headline {
+    position: relative;
+    width: 100%;
+    max-height: (variables.$item-headline-lineHeight + variables.$item-headline-padding-vertical) * 2;
     text-align: variables.$gd-dashboards-content-widget-title-textAlign;
     color: variables.$gd-dashboards-content-widget-title-color;
 }
 
 .item-headline-inner {
-    display: inline-block;
     overflow: hidden;
-    vertical-align: middle;
 }
 
 .viz-zoom-out {
@@ -325,7 +361,7 @@
     background-color: variables.$button-grey-background;
 
     &:hover {
-        background-color: var(--gd-palette-complementary-7, kit-variables.$gd-color-text-dimmed);
+        background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
 
         svg path {
             fill: kit-variables.$gd-color-white;
@@ -380,7 +416,7 @@
     .dash-item-action-options:not(.disabled):hover,
     .dash-item-action-widget-options-active {
         color: kit-variables.$gd-color-text-light;
-        background-color: var(--gd-palette-complementary-7, kit-variables.$gd-color-text-dimmed);
+        background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
     }
 }
 
@@ -418,8 +454,8 @@
     }
 
     &:hover:not(.disabled) {
-        color: var(--gd-palette-complementary-0, inherit);
-        background-color: var(--gd-palette-complementary-7, inherit);
+        color: var(--gd-palette-complementary-0-from-theme, inherit);
+        background-color: var(--gd-palette-complementary-7-from-theme, inherit);
     }
 }
 
@@ -449,6 +485,16 @@
 .dash-item-action-placeholder {
     width: variables.$item-action-width;
     height: variables.$item-action-width;
+
+    &:focus-visible {
+        outline: auto 5px Highlight; /* For Firefox */
+        // stylelint-disable-next-line declaration-block-no-duplicate-properties
+        outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
+
+        .dash-item-action-options {
+            display: block;
+        }
+    }
 }
 
 .dash-item-action-placeholder-headline {
@@ -461,6 +507,16 @@
 .dash-item-action-description {
     .dash-item-action-description-trigger:not(.is-mobile) {
         display: none;
+    }
+
+    &:focus-visible {
+        outline: auto 5px Highlight; /* For Firefox */
+        // stylelint-disable-next-line declaration-block-no-duplicate-properties
+        outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
+
+        .dash-item-action-description-trigger {
+            display: flex;
+        }
     }
 }
 
@@ -484,7 +540,7 @@
     }
 
     &:hover {
-        background-color: var(--gd-palette-complementary-7, kit-variables.$gd-color-text-dimmed);
+        background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
 
         .gd-icon-circle-question {
             color: kit-variables.$gd-color-text-light;
@@ -493,7 +549,7 @@
 }
 
 .dash-item-action-description-active .dash-item-action-description-trigger {
-    background-color: var(--gd-palette-complementary-7, kit-variables.$gd-color-text-dimmed);
+    background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
 
     .gd-icon-circle-question {
         color: kit-variables.$gd-color-text-light;
@@ -582,6 +638,7 @@
 
     &:hover,
     &.dash-item-action-widget-options-active {
+        background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
         &::before {
             color: kit-variables.$gd-color-white;
         }
@@ -593,7 +650,7 @@
     right: 30px;
     display: none;
     border-radius: 50%;
-    background-color: var(--gd-palette-complementary-2, variables.$grey-background);
+    background-color: var(--gd-palette-complementary-2-from-theme, variables.$grey-background);
     width: 36px;
     height: 36px;
     transition: variables.$transition-length;
@@ -661,6 +718,14 @@
     height: 100%;
 }
 
+.insight-view-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
 .bubble.options-menu-bubble {
     background-color: #fff;
 
@@ -674,7 +739,58 @@
 }
 
 .gd-fluidlayout-column-container {
-    z-index: 10;
+    z-index: zIndexes.$dashboard-layout-column;
+}
+
+.gd-header-menu-overlay {
+    .gd-menu-item {
+        //stylelint-disable-next-line declaration-no-important
+        padding: 5px 10px !important;
+
+        .gd-list-icon {
+            color: $dashboard-menu-item-icon-color;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+    }
+}
+
+.gd-grid-layout {
+    .dash-item {
+        height: 100%;
+        width: 100%;
+        padding: 0; // no place between widgets, render only containers for resizers
+
+        // reset @media rules set for the .dash-item above,
+        // otherwise widgets width will get messed up on screen resize
+        flex: unset;
+        max-width: unset;
+
+        .is-dragging-widget {
+            &.dash-item-content {
+                border-color: kit-variables.$is-focused-background;
+            }
+        }
+        &:not(.gd-dashboard-nested-layout-widget):not(.gd-first-container-row-widget):not(.drag-info-placeholder) {
+            padding: 10px 0; // no place between widgets, render only containers for resizers
+        }
+        &.gd-first-container-row-widget:not(.gd-dashboard-nested-layout-widget) {
+            padding: 0 0 10px 0;
+        }
+    }
+
+    .gd-empty-nested-layout {
+        padding: 10px 0;
+    }
+
+    .gd-fluidlayout-column-container {
+        display: flex;
+    }
+
+    .dash-item-action-lw-options {
+        top: 20px;
+        right: 20px;
+    }
 }
 
 .gd-partial-result-warning {

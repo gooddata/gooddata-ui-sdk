@@ -33,7 +33,6 @@ export function runCypress(configParams = {}) {
         updateSnapshots,
         config,
         browser,
-        sdkBackend,
         tigerPermissionDatasourceName,
         tigerPermissionDatasourcePassword,
         tigerApiToken,
@@ -69,10 +68,6 @@ export function runCypress(configParams = {}) {
 
     if (!visual) {
         cypressProps["CYPRESS_COMMAND_DELAY"] = 0;
-    }
-
-    if (sdkBackend) {
-        cypressProps["CYPRESS_SDK_BACKEND"] = sdkBackend;
     }
 
     if (recording) {

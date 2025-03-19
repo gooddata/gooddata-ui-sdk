@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import noop from "lodash/noop.js";
 import cloneDeep from "lodash/cloneDeep.js";
 
@@ -742,7 +742,7 @@ describe("PluggableAreaChart", () => {
             [
                 "on segmentby attribute",
                 sourceInsightDef,
-                Region,
+                Region.Default,
                 targetUri,
                 intersection,
                 expectedInsightDefRegion,
@@ -750,7 +750,7 @@ describe("PluggableAreaChart", () => {
             [
                 "on viewby attribute",
                 sourceInsightDef,
-                Department,
+                Department.Default,
                 targetUri,
                 intersection,
                 expectedInsightDefDepartment,

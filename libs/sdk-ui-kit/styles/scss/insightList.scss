@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "variables";
 @use "Button/variables" as button-variables;
 @use "indigoFont";
@@ -6,7 +6,7 @@
 $base-path: "~@gooddata/sdk-ui-kit/styles/images/visualization-types/";
 $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, funnel, pyramid, headline,
     heatmap, line, pie, scatter, table, treemap, unknown, xirr, pushpin, region, bullet, dependencywheel,
-    sankey, waterfall;
+    sankey, waterfall, repeater;
 
 %visualisation-icon {
     display: inline-block;
@@ -61,7 +61,7 @@ $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, fun
 
     &:hover {
         position: relative;
-        border-color: var(--gd-palette-complementary-5, transparent);
+        border-color: var(--gd-palette-complementary-5-from-theme, transparent);
         box-shadow: 0 1px 3px 0 button-variables.$button-shadow-lighter,
             0 2px 9px 0 button-variables.$button-shadow-darker;
         background-color: var(--gd-palette-complementary-0, #fff);

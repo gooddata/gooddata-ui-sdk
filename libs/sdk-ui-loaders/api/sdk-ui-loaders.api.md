@@ -5,6 +5,7 @@
 ```ts
 
 import { DashboardContext } from '@gooddata/sdk-ui-dashboard';
+import { DashboardItem } from '@gooddata/sdk-ui-dashboard';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IClientWorkspaceIdentifiers } from '@gooddata/sdk-ui';
 import { IDashboard } from '@gooddata/sdk-model';
@@ -83,6 +84,7 @@ export interface IDashboardLoader {
 // @public
 export interface IDashboardLoadOptions extends IDashboardBasePropsForLoader {
     adaptiveLoadOptions?: AdaptiveLoadOptions;
+    adhocItems?: DashboardItem[];
     allowUnfinishedFeatures?: "staticOnly" | "alwaysAllow" | "alwaysPrevent";
     clientWorkspace?: IClientWorkspaceIdentifiers;
     extraPlugins?: IEmbeddedPlugin | IEmbeddedPlugin[];

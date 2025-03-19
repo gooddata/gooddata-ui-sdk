@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`loading customizer > loading rendering mode > should render with decorator 1`] = `"<div>Decorator</div>"`;
+
+exports[`loading customizer > loading rendering mode > should render with default 1`] = `null`;
+
+exports[`loading customizer > loading rendering mode > should render with provider 1`] = `"<div>Provider</div>"`;

@@ -9,6 +9,17 @@ import { ITheme } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 
 // @internal (undocumented)
+export interface IScopedThemeProviderProps {
+    backend?: IAnalyticalBackend;
+    children?: React_2.ReactNode;
+    enableComplementaryPalette?: boolean;
+    modifier?: ThemeModifier;
+    removeGlobalStylesOnUnmout?: boolean;
+    theme?: ITheme;
+    workspace?: string;
+}
+
+// @internal (undocumented)
 export const isDarkTheme: (theme: ITheme) => boolean;
 
 // @public (undocumented)
@@ -31,6 +42,9 @@ export interface IThemeProviderProps {
     workspace?: string;
 }
 
+// @internal
+export const ScopedThemeProvider: React_2.FC<IScopedThemeProviderProps>;
+
 // @public
 export const ThemeContextProvider: React_2.FC<IThemeContextProviderProps>;
 
@@ -42,6 +56,9 @@ export const ThemeProvider: React_2.FC<IThemeProviderProps>;
 
 // @public (undocumented)
 export type ThemeStatus = "pending" | "loading" | "success";
+
+// @public
+export const useIsDarkTheme: () => boolean;
 
 // @public
 export const useTheme: (theme?: ITheme) => ITheme | undefined;

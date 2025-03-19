@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import { program } from "commander";
 import ora from "ora";
@@ -9,9 +9,9 @@ import * as path from "path";
 import pmap from "p-map";
 import { log, logError, logInfo, logSuccess } from "./cli/loggers.js";
 import { clearLine, clearTerminal } from "./cli/clear.js";
-import { promptPassword, promptProjectId, promptUsername } from "./cli/prompts.js";
+import { promptProjectId, promptTigerToken } from "./cli/prompts.js";
 import { getConfigFromConfigFile, getConfigFromOptions } from "./base/config.js";
-import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_BACKEND } from "./base/constants.js";
+import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME } from "./base/constants.js";
 import { DataRecorderConfig, DataRecorderError, isDataRecorderError } from "./base/types.js";
 import { generateAllFiles } from "./codegen/index.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -29,10 +29,9 @@ program
     .version(LIB_VERSION)
     .option("--recordingDir <path>", "Directory with recording inputs and outputs")
     .option("--project-id <id>", "Project id from which you want to capture mock data")
-    .option("--username <email>", "Your username that you use to log in to GoodData platform.")
-    .option("--hostname <url>", `Instance of GoodData platform. The default is ${DEFAULT_HOSTNAME}`)
+    .option("--tigerToken <token>", "GoodData tiger platform auth token.")
+    .option("--hostname <url>", `Instance of the backend. The default is ${DEFAULT_HOSTNAME}`)
     .option("--config <path>", `Custom config file (default ${DEFAULT_CONFIG_FILE_NAME})`)
-    .option("--backend <type>", `Backend (default ${DEFAULT_BACKEND})`)
     .option(
         "--replace-project-id <id>",
         `Replace projectId with this value when writing out recordings. By default not specified and projectId will stay in recordings as-is.`,
@@ -41,26 +40,16 @@ program
     .parse(process.argv);
 
 async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataRecorderConfig> {
-    const { hostname, backend } = config;
-    let { projectId, username, password } = config;
+    const { hostname } = config;
+    let { projectId, tigerToken } = config;
 
     const logInSpinner = ora();
     try {
-        if (username) {
-            log("Username", username);
-        } else {
-            username = await promptUsername();
-        }
-
-        password = password || (await promptPassword());
+        tigerToken = tigerToken || (await promptTigerToken());
 
         logInSpinner.start("Logging in...");
-        await getOrInitBackend(
-            username,
-            password,
-            hostname || DEFAULT_HOSTNAME,
-            backend || DEFAULT_BACKEND,
-        ).authenticate();
+
+        await getOrInitBackend(tigerToken, hostname || DEFAULT_HOSTNAME);
         logInSpinner.succeed();
         clearLine();
     } catch (err) {
@@ -68,6 +57,7 @@ async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataR
         clearLine();
         logError(`Unable to log in to platform. The error was: ${err}`);
 
+        // eslint-disable-next-line regexp/no-unused-capturing-group
         if ((err as Error).message?.search(/.*(certificate|self-signed).*/) > -1) {
             logError(
                 "It seems that this error is due to invalid certificates used on the server. " +
@@ -79,6 +69,8 @@ async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataR
         throw new DataRecorderError("Authentication failed", 1);
     }
 
+    console.log("Project ID", projectId);
+
     if (projectId) {
         log("Project ID", projectId);
     } else {
@@ -88,8 +80,7 @@ async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataR
     return {
         ...config,
         projectId,
-        username,
-        password,
+        tigerToken,
     };
 }
 
@@ -195,12 +186,7 @@ async function run() {
          * Instantiate analytical backend to run requests against; it is enough to do this once for the whole
          * run.
          */
-        const backend = getOrInitBackend(
-            fullConfig.username!,
-            fullConfig.password!,
-            options.hostname || DEFAULT_HOSTNAME,
-            options.backend || DEFAULT_BACKEND,
-        );
+        const backend = getOrInitBackend(fullConfig.tigerToken!, options.hostname || DEFAULT_HOSTNAME);
 
         const newRecordings = await captureRecordings(incompleteRecordings, backend, fullConfig);
 
@@ -231,11 +217,10 @@ run().catch((err) => {
 // Type exports
 //
 
-export {
+export type {
     DataViewRequests,
     RequestedWindow,
-    RecordingFiles,
     ScenarioDescriptor,
     InsightRecordingSpec,
-    requestPages,
 } from "./interface.js";
+export { RecordingFiles, requestPages } from "./interface.js";

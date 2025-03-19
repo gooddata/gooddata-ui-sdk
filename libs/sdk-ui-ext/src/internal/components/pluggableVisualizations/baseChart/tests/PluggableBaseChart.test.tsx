@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
 import { IBucketOfFun, IVisConstruct, IVisProps } from "../../../../interfaces/Visualization.js";
 import {
@@ -499,7 +499,7 @@ describe("PluggableBaseChart", () => {
             [
                 "on viewby attribute",
                 sourceInsightDef,
-                Region,
+                Region.Default,
                 targetUri,
                 intersection,
                 expectedInsightDefRegion,

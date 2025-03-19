@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import {
     BackendProvider,
     WorkspaceProvider,
@@ -19,20 +19,20 @@ import {
     DashboardComponentsProvider,
     DashboardConfigProvider,
 } from "../../dashboardContexts/index.js";
-import { DefaultFilterBar } from "../../filterBar/index.js";
 import { DefaultDashboardLayout } from "../../layout/index.js";
 import { DefaultSaveAsDialog } from "../../saveAs/index.js";
 import {
     DefaultScheduledEmailDialog,
     DefaultScheduledEmailManagementDialog,
 } from "../../scheduledEmail/index.js";
+import { DefaultAlertingManagementDialog, DefaultAlertingDialog } from "../../alerting/index.js";
 import { DefaultShareDialog } from "../../shareDialog/index.js";
 import {
     DefaultButtonBar,
     DefaultMenuButton,
     DefaultSaveButton,
-    DefaultTopBar,
     RenderModeAwareTitle,
+    RenderModeAwareTopBar,
 } from "../../topBar/index.js";
 import { HiddenToolbar } from "../../toolbar/index.js";
 import { defaultDashboardThemeModifier } from "../defaultDashboardThemeModifier.js";
@@ -41,9 +41,15 @@ import { IDashboardProps } from "../types.js";
 import { DashboardLoading } from "./DashboardLoading.js";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { DefaultEmptyLayoutDropZoneBody, LayoutResizeStateProvider } from "../../dragAndDrop/index.js";
+import {
+    DefaultEmptyLayoutDropZoneBody,
+    LayoutResizeStateProvider,
+    HoveredWidgetProvider,
+} from "../../dragAndDrop/index.js";
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
 import { DASHBOARD_OVERLAYS_Z_INDEX } from "../../constants/index.js";
+import { DashboardItemPathAndSizeProvider } from "./DashboardItemPathAndSizeContext.js";
+import { RenderModeAwareFilterBar } from "../../filterBar/index.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_Z_INDEX);
 /**
@@ -63,14 +69,18 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
         insightMenuButtonProvider,
         dashboardContentProvider,
         insightMenuProvider,
+        richTextMenuProvider,
+        richTextMenuTitleProvider,
         insightMenuTitleProvider,
-        kpiProvider,
         insightWidgetComponentSet,
-        kpiWidgetComponentSet,
         attributeFilterComponentSet,
         dateFilterComponentSet,
         richTextProvider,
+        visualizationSwitcherProvider,
         richTextWidgetComponentSet,
+        visualizationSwitcherWidgetComponentSet,
+        visualizationSwitcherToolbarComponentProvider,
+        dashboardLayoutWidgetComponentSet,
     } = useDashboard(props);
 
     const dashboardRender = (
@@ -96,6 +106,11 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                             <ExportDialogContextProvider>
                                 <DashboardCustomizationsProvider
                                     insightMenuItemsProvider={props.insightMenuItemsProvider}
+                                    richTextMenuItemsProvider={props.richTextMenuItemsProvider}
+                                    existingExportTransformFn={
+                                        props.customizationFns?.existingExportTransformFn
+                                    }
+                                    slideConfig={props.config?.slideConfig}
                                 >
                                     <DashboardComponentsProvider
                                         ErrorComponent={props.ErrorComponent ?? DefaultError}
@@ -106,12 +121,17 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         InsightMenuButtonComponentProvider={insightMenuButtonProvider}
                                         InsightMenuTitleComponentProvider={insightMenuTitleProvider}
                                         InsightMenuComponentProvider={insightMenuProvider}
-                                        KpiComponentProvider={kpiProvider}
+                                        VisualizationSwitcherToolbarComponentProvider={
+                                            visualizationSwitcherToolbarComponentProvider
+                                        }
                                         RichTextComponentProvider={richTextProvider}
+                                        RichTextMenuComponentProvider={richTextMenuProvider}
+                                        RichTextMenuTitleComponentProvider={richTextMenuTitleProvider}
+                                        VisualizationSwitcherComponentProvider={visualizationSwitcherProvider}
                                         WidgetComponentProvider={widgetProvider}
                                         ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBar}
                                         MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButton}
-                                        TopBarComponent={props.TopBarComponent ?? DefaultTopBar}
+                                        TopBarComponent={props.TopBarComponent ?? RenderModeAwareTopBar}
                                         ToolbarComponent={props.ToolbarComponent ?? HiddenToolbar}
                                         TitleComponent={props.TitleComponent ?? RenderModeAwareTitle}
                                         ScheduledEmailDialogComponent={
@@ -124,18 +144,30 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         ShareDialogComponent={
                                             props.ShareDialogComponent ?? DefaultShareDialog
                                         }
+                                        AlertingManagementDialogComponent={
+                                            props.AlertingManagementDialogComponent ??
+                                            DefaultAlertingManagementDialog
+                                        }
+                                        AlertingDialogComponent={
+                                            props.AlertingDialogComponent ?? DefaultAlertingDialog
+                                        }
                                         SaveAsDialogComponent={
                                             props.SaveAsDialogComponent ?? DefaultSaveAsDialog
                                         }
                                         DashboardAttributeFilterComponentProvider={attributeFilterProvider}
                                         DashboardDateFilterComponentProvider={dateFilterProvider}
-                                        FilterBarComponent={props.FilterBarComponent ?? DefaultFilterBar}
+                                        FilterBarComponent={
+                                            props.FilterBarComponent ?? RenderModeAwareFilterBar
+                                        }
                                         SidebarComponent={
                                             props.SidebarComponent ?? RenderModeAwareDashboardSidebar
                                         }
                                         InsightWidgetComponentSet={insightWidgetComponentSet}
-                                        KpiWidgetComponentSet={kpiWidgetComponentSet}
                                         RichTextWidgetComponentSet={richTextWidgetComponentSet}
+                                        VisualizationSwitcherWidgetComponentSet={
+                                            visualizationSwitcherWidgetComponentSet
+                                        }
+                                        DashboardLayoutWidgetComponentSet={dashboardLayoutWidgetComponentSet}
                                         AttributeFilterComponentSet={attributeFilterComponentSet}
                                         DateFilterComponentSet={dateFilterComponentSet}
                                         EmptyLayoutDropZoneBodyComponent={
@@ -148,7 +180,11 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
                                             <DndProvider backend={HTML5Backend}>
                                                 <LayoutResizeStateProvider>
-                                                    <DashboardLoading {...props} />
+                                                    <DashboardItemPathAndSizeProvider>
+                                                        <HoveredWidgetProvider>
+                                                            <DashboardLoading {...props} />
+                                                        </HoveredWidgetProvider>
+                                                    </DashboardItemPathAndSizeProvider>
                                                 </LayoutResizeStateProvider>
                                             </DndProvider>
                                         </DashboardConfigProvider>

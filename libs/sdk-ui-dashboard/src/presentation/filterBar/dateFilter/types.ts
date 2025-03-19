@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { ComponentType } from "react";
 import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-model";
 import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
@@ -37,13 +37,23 @@ export interface IDashboardDateFilterProps {
     filter: IDashboardDateFilter | undefined;
 
     /**
+     * Definition of working filter used to render selected options.
+     */
+    workingFilter: IDashboardDateFilter | undefined;
+
+    /**
      * When the user interacts with the filter and changes its value, it MUST use this callback to propagate the
      * new filter value.
      *
      * @param filter - new date filter value
      * @param dateFilterOptionLocalId - localId of the {@link @gooddata/sdk-backend-spi#IDateFilterOption} selected
+     * @param isWorkingSelectionChange - determines if the change is in working filter state (staged for application but not applied yet)
      */
-    onFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
+    onFilterChanged: (
+        filter: IDashboardDateFilter | undefined,
+        dateFilterOptionLocalId?: string,
+        isWorkingSelectionChange?: boolean,
+    ) => void;
 
     /**
      * Additional DateFilter configuration.

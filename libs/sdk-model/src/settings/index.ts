@@ -1,4 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import { IDateFilterConfig } from "../dateFilterConfig/index.js";
 
 /**
  * Settings are obtained from backend and are effectively a collection of feature flags or settings with
@@ -11,6 +12,77 @@
  * @public
  */
 export interface ISettings {
+    //
+    // Platform Settings
+    //
+
+    /**
+     * Represents whiteLabeling configuration
+     */
+    whiteLabeling?: IWhiteLabeling;
+
+    /**
+     * Represents alert default configuration
+     */
+    alertDefault?: IAlertDefault;
+
+    /**
+     * Represents configuration for OpenAI integration
+     * @alpha
+     */
+    openAiConfig?: IOpenAiConfig;
+
+    /**
+     * Represents configuration for Dashboard Filters Apply Mode
+     * @alpha
+     */
+    dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
+
+    /**
+     * Indicates current platform edition.
+     */
+    platformEdition?: PlatformEdition;
+
+    /**
+     * Early access features configuration.
+     * @beta
+     */
+    earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
+
+    /**
+     * Week start day
+     */
+    weekStart?: WeekStart;
+
+    /**
+     * Locale code to use for date formatting.
+     */
+    formatLocale?: string;
+
+    /**
+     * Indicates whether "Treat null as zero" option should be displayed in measure value filter configuration and its default state"
+     */
+    ADMeasureValueFilterNullAsZeroOption?: string;
+
+    /**
+     * Indicates the format in which the dates will be displayed
+     */
+    responsiveUiDateFormat?: string;
+
+    /**
+     * IANA identifier of time zone in which the platform metadata are stored.
+     */
+    metadataTimeZone?: string;
+
+    /**
+     * Timezone
+     */
+    timezone?: string;
+
+    //
+    // Feature Flags
+    //
+
     /**
      * Indicates whether the Headline's improvements is available.
      */
@@ -73,11 +145,6 @@ export interface ISettings {
     enableCustomColorPicker?: boolean;
 
     /**
-     * Indicates whether "Treat null as zero" option should be displayed in measure value filter configuration and its default state"
-     */
-    ADMeasureValueFilterNullAsZeroOption?: string;
-
-    /**
      * Indicates whether the catalog groups in analytical designer are expanded by default.
      */
     ADCatalogGroupsExpanded?: boolean;
@@ -86,11 +153,6 @@ export interface ISettings {
      * Indicates whether data point visibility configuration is available in AD
      */
     enableHidingOfDataPoints?: boolean;
-
-    /**
-     * Indicates the format in which the dates will be displayed
-     */
-    responsiveUiDateFormat?: string;
 
     /**
      * Indicates whether multiple dates can be put into buckets
@@ -186,11 +248,6 @@ export interface ISettings {
     enableDataSampling?: boolean;
 
     /**
-     * Indicates current platform edition.
-     */
-    platformEdition?: PlatformEdition;
-
-    /**
      * Indicates whether the company logo should be visible in the embedded dashboard.
      */
     enableCompanyLogoInEmbeddedUI?: boolean;
@@ -256,16 +313,6 @@ export interface ISettings {
     enableSeparateTotalLabels?: boolean;
 
     /**
-     * Represents whiteLabeling configuration
-     */
-    whiteLabeling?: IWhiteLabeling;
-
-    /**
-     * Enable custom non-production dataset in AD/Modeler
-     */
-    ["msf.enableTenantCustomModel"]?: boolean;
-
-    /**
      * Enable usage of insights, widgets, kpis descriptions.
      */
     enableDescriptions?: boolean;
@@ -276,19 +323,9 @@ export interface ISettings {
     enableAdDescriptionEdit?: boolean;
 
     /**
-     * Locale code to use for date formatting.
-     */
-    formatLocale?: string;
-
-    /**
      * Enable use of composite grain
      */
     enableCompositeGrain?: boolean;
-
-    /**
-     * Week start day
-     */
-    weekStart?: WeekStart;
 
     /**
      * Enable table transposition (metrics in rows)
@@ -299,11 +336,6 @@ export interface ISettings {
      * Enable moving column attribute headers to the left.
      */
     enableColumnHeadersPosition?: boolean;
-
-    /**
-     * IANA identifier of time zone in which the platform metadata are stored.
-     */
-    metadataTimeZone?: string;
 
     /**
      * Enable new max bucket size items limit for Pivot Table
@@ -336,6 +368,11 @@ export interface ISettings {
     enableKDRichText?: boolean;
 
     /**
+     * Enables visualization switcher widgets on dashboards.
+     */
+    enableKDVisualizationSwitcher?: boolean;
+
+    /**
      * Enable attribute filter values validation by metric, attribute, fact.
      * The configuration of filter values validation is merged with parent filters UI.
      */
@@ -347,14 +384,252 @@ export interface ISettings {
     enableCreateUser?: boolean;
 
     /**
-     * Enable partial reports data.
+     * Enable attribute filter values validation by date filters.
      */
-    ["pixtab.enablePartialReports"]?: boolean;
+    enableKDAttributeFilterDatesValidation?: boolean;
+
+    /**
+     * Enable upload of multiple CSVs to data source and multiple CSV data sources.
+     */
+    enableMultipleCSVs?: boolean;
+
+    /**
+     * Enable possibility to set non-existing value into attribute filter in AD and KD via postMessage.
+     */
+    enableInvalidValuesInAttributeFilter?: boolean;
+
+    /**
+     * Enable listing of the non-unique (duplicated) secondary label values in attribute filter.
+     */
+    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
+
+    /**
+     * Enable multiple data sources to be used in a single workspace.
+     */
+    enableMultipleDataSourcesInWorkspace?: boolean;
+
+    /**
+     * Enables segmentation in scatter plot.
+     */
+    enableScatterPlotSegmentation?: boolean;
+
+    /**
+     * Enable clustering in scatter plot.
+     */
+    enableScatterPlotClustering?: boolean;
+
+    /**
+     * Enables rich text in descriptions.
+     */
+    enableRichTextDescriptions?: boolean;
+
+    /**
+     * Enables scheduling of the dashboard pdf export.
+     */
+    enableScheduling?: boolean;
+
+    /**
+     * Enables alerting of the dashboard widgets.
+     */
+    enableAlerting?: boolean;
+
+    /**
+     * Enables attributes in alerts.
+     */
+    enableAlertAttributes?: boolean;
+
+    /**
+     * Enables comparison in alerting.
+     */
+    enableComparisonInAlerting?: boolean;
+
+    /**
+     * Enables alerting rollout of the dashboard widgets.
+     */
+    enableAlertingRollout?: boolean;
+
+    /**
+     * Enables smtp settings.
+     */
+    enableSmtp?: boolean;
+
+    /**
+     * Enables storing widget identifiers.
+     */
+    enableWidgetIdentifiersRollout?: boolean;
+
+    enableDataSection?: boolean;
+    enableRenamingProjectToWorkspace?: boolean;
+    enableCsvUploader?: boolean;
+    enableAnalyticalDashboards?: boolean;
+    enablePixelPerfectExperience?: boolean;
+    hidePixelPerfectExperience?: boolean;
+    enableNewNavigationForResponsiveUi?: boolean;
+    enableMySqlDataSource?: boolean;
+    enableMariaDbDataSource?: boolean;
+    enableOracleDataSource?: boolean;
+    enableSnowflakeKeyPairAuthentication?: boolean;
+    enableMotherDuckDataSource?: boolean;
+    enableSingleStoreDataSource?: boolean;
+
+    /**
+     * Enables new dashboard layout renderer with nesting support.
+     */
+    enableDashboardFlexibleLayout?: boolean;
+
+    /**
+     * Enable GenAI-powered functionality, such as semantic-search.
+     * @deprecated Use separate flags for semantic search and GenAI chat below.
+     */
+    enableAIFunctions?: boolean;
+
+    /**
+     * Enable Semantic Search in the UI.
+     */
+    enableSemanticSearch?: boolean;
+
+    /**
+     * Enable Semantic Search rollout in the UI.
+     */
+    enableSemanticSearchRollout?: boolean;
+
+    /**
+     * Enable Gen AI Chatbot in UI.
+     */
+    enableGenAIChat?: boolean;
+
+    /**
+     * Enable Gen AI Chatbot rollout in UI.
+     */
+    enableGenAIChatRollout?: boolean;
+
+    /**
+     * Enable multiple data sources to be used in a single workspace.
+     */
+    enableDashboardFilterViews?: boolean;
+
+    /**
+     * Enables ignore cross-filtering in widgets on dashboard.
+     */
+    enableIgnoreCrossFiltering?: boolean;
+
+    /**
+     * Enables manual headline exports on dashboard.
+     */
+    enableHeadlineExport?: boolean;
+
+    /**
+     * Enable early access features rollout.
+     */
+    enableEarlyAccessFeaturesRollout?: boolean;
+
+    /**
+     * Enable the use of alias filter titles in cross filtering.
+     * @internal
+     */
+    enableCrossFilteringAliasTitles?: boolean;
+
+    /**
+     * Enable the use of default SMTP in destinations.
+     */
+    enableDefaultSmtp?: boolean;
+
+    /**
+     * Enable number separators configuration in home-ui (both organization and workspace level).
+     */
+    enableNumberSeparators?: boolean;
+
+    /**
+     * Enable the use of new user creation flow.
+     */
+    enableNewUserCreationFlow?: boolean;
+
+    /**
+     * Enable the possibility to test destinations (emails, webhooks) in the UI.
+     */
+    enableDestinationTesting?: boolean;
+
+    /**
+     * Enable in-platform notifications.
+     */
+    enableInPlatformNotifications?: boolean;
+
+    /**
+     * Enable fine-tuning options for visualization in AD configuration panel.
+     */
+    enableVisualizationFineTuning?: boolean;
+
+    /**
+     * Enable external recipients options
+     */
+    enableExternalRecipients?: boolean;
+
+    /**
+     * Enable drilled tooltip in drill dialog
+     */
+    enableDrilledTooltip?: boolean;
+
+    /**
+     * Enable dashboard tabular export
+     */
+    enableDashboardTabularExport?: boolean;
+
+    /**
+     * Enable orchestrated tabular exports
+     */
+    enableOrchestratedTabularExports?: boolean;
+
+    /**
+     * Enable dynamic height of the dashboard section description fields in dashboard edit mode.
+     */
+    enableDashboardDescriptionDynamicHeight?: boolean;
+
+    /**
+     * Enables tracking events to Amplitude.
+     */
+    enableAmplitudeTracker?: boolean;
+
+    /**
+     * Enables critical content performance optimizations.
+     * @alpha
+     */
+    enableCriticalContentPerformanceOptimizations?: boolean;
+
+    /**
+     * Enable slideshow exports using the new export render mode in KD.
+     */
+    enableSlideshowExports?: boolean;
+
+    /**
+     * Enable rich text dynamic references.
+     */
+    enableRichTextDynamicReferences?: boolean;
 
     /**
      * Enable insights export of raw data when limit is reached.
      */
-    enableRawExportsInNewUI?: boolean;
+    enableRawExports?: boolean;
+
+    /**
+     * Enable config for a single global "Apply" button on the dashboard, replacing individual apply buttons next to each filter.
+     */
+    enableDashboardFiltersApplyModes?: boolean;
+
+    /**
+     * Date filter configuration.
+     * @alpha
+     */
+    dateFilterConfig?: IDateFilterConfig;
+
+    /**
+     * Enable execution cancelling.
+     */
+    enableExecutionCancelling?: boolean;
+
+    /**
+     * Enable immediate attribute filter displayAsLabel migration information propagation right upon the load of the component.
+     */
+    enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }
@@ -411,8 +686,79 @@ export interface IWhiteLabeling {
 }
 
 /**
+ * Alert Default
+ *
+ * @public
+ */
+export interface IAlertDefault {
+    /**
+     * Default evaluation frequency
+     */
+    defaultCron: string;
+    /**
+     * Default timezone
+     */
+    defaultTimezone: string;
+}
+
+/**
+ * Configuration of integration of OpenAI.
+ *
+ * @alpha
+ */
+export interface IOpenAiConfig {
+    /**
+     * OpenAI organization ID
+     */
+    org: string;
+
+    /**
+     * OpenAI API token
+     */
+    token: string;
+}
+
+/**
+ * Values of Dashboard Filters Apply Mode setting. Used for organization and workspace.
+ * INDIVIDUAL mean that each filter has its own apply button.
+ * ALL_AT_ONCE mean that there is a single apply button for all dashboard filters.
+ *
+ * @public
+ */
+export type DashboardFiltersApplyMode = { mode: "INDIVIDUAL" } | { mode: "ALL_AT_ONCE" };
+
+/**
  * Week start day
  *
  * @public
  */
 export type WeekStart = "Sunday" | "Monday";
+
+/**
+ * @beta
+ */
+export type EarlyAccessFeatureContext = "WORKSPACE" | "ORGANIZATION";
+
+/**
+ * @beta
+ */
+export type EarlyAccessFeatureStatus = "EXPERIMENTAL" | "BETA";
+
+/**
+ * @beta
+ */
+export interface IEarlyAccessFeatureConfig {
+    title: string;
+    description: string;
+    docs?: string;
+    earlyAccess: string;
+    context: EarlyAccessFeatureContext;
+    status: EarlyAccessFeatureStatus;
+}
+
+/**
+ * @beta
+ */
+export interface IEarlyAccessFeaturesConfig {
+    features: IEarlyAccessFeatureConfig[];
+}

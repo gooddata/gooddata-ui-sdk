@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 const stories = require("./stories");
 
@@ -25,9 +25,18 @@ const stories = require("./stories");
 
 const ScenarioConfig = [
     {
+        /*
+         * Tests for repeater stories - either created automatically for test scenarios or created manually.
+         */
+        idRegex: /(01).*Repeater.*/g,
+        config: {
+            delay: 2500,
+        },
+    },
+    {
         // this is for customization stories that generate multiple variants with different config; we have
         // a special ready wrapper for these
-        idRegex: /.*(data labels|coloring|legend)/g,
+        idRegex: /.*(data labels|coloring|legend|canvas)/g,
         config: {
             readySelector: ".screenshot-ready-wrapper-done",
         },
@@ -127,6 +136,24 @@ const ScenarioConfig = [
         config: {
             misMatchThreshold: 0.01,
             delay: 1000, // wait for a bit for the async import to resolve
+        },
+    },
+    {
+        /*
+         * Tests for GenAI
+         */
+        idRegex: /(14).*/g,
+        config: {
+            misMatchThreshold: 0.01,
+        },
+    },
+    {
+        /*
+         * Tests for new Ui-Kit Components
+         */
+        idRegex: /(15).*/g,
+        config: {
+            readySelector: ".screenshot-target",
         },
     },
 ];

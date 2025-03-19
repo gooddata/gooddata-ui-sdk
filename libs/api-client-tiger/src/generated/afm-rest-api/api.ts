@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2025 GoodData Corporation
 
 /* eslint-disable */
 /**
@@ -37,7 +37,7 @@ export interface AFM {
      */
     attributes: Array<AttributeItem>;
     /**
-     * Various filter types to filter execution result.
+     * Various filter types to filter the execution result.
      * @type {Array<FilterDefinition>}
      * @memberof AFM
      */
@@ -88,6 +88,12 @@ export interface AbsoluteDateFilterAbsoluteDateFilter {
     to: string;
     /**
      *
+     * @type {string}
+     * @memberof AbsoluteDateFilterAbsoluteDateFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
      * @type {boolean}
      * @memberof AbsoluteDateFilterAbsoluteDateFilter
      */
@@ -108,6 +114,31 @@ export type AbstractMeasureValueFilter =
     | RangeMeasureValueFilter
     | RankingFilter;
 
+/**
+ * Object, with which the user is actively working.
+ * @export
+ * @interface ActiveObjectIdentification
+ */
+export interface ActiveObjectIdentification {
+    /**
+     * Object ID.
+     * @type {string}
+     * @memberof ActiveObjectIdentification
+     */
+    id: string;
+    /**
+     * Object type, e.g. dashboard.
+     * @type {string}
+     * @memberof ActiveObjectIdentification
+     */
+    type: string;
+    /**
+     * Workspace ID.
+     * @type {string}
+     * @memberof ActiveObjectIdentification
+     */
+    workspaceId: string;
+}
 /**
  *
  * @export
@@ -134,7 +165,7 @@ export interface AfmExecution {
     settings?: ExecutionSettings;
 }
 /**
- *
+ * Response to AFM execution request
  * @export
  * @interface AfmExecutionResponse
  */
@@ -148,6 +179,7 @@ export interface AfmExecutionResponse {
 }
 /**
  * @type AfmIdentifier
+ * Reference to the attribute label to which the filter should be applied.
  * @export
  */
 export type AfmIdentifier = AfmLocalIdentifier | AfmObjectIdentifier;
@@ -179,7 +211,7 @@ export interface AfmObjectIdentifier {
     identifier: AfmObjectIdentifierIdentifier;
 }
 /**
- *
+ * Reference to the date attribute to use.
  * @export
  * @interface AfmObjectIdentifierAttribute
  */
@@ -219,7 +251,7 @@ export type AfmObjectIdentifierAttributeIdentifierTypeEnum =
     typeof AfmObjectIdentifierAttributeIdentifierTypeEnum[keyof typeof AfmObjectIdentifierAttributeIdentifierTypeEnum];
 
 /**
- *
+ * Reference to the metric, fact or attribute object to use for the metric.
  * @export
  * @interface AfmObjectIdentifierCore
  */
@@ -262,7 +294,7 @@ export type AfmObjectIdentifierCoreIdentifierTypeEnum =
     typeof AfmObjectIdentifierCoreIdentifierTypeEnum[keyof typeof AfmObjectIdentifierCoreIdentifierTypeEnum];
 
 /**
- *
+ * Reference to the date dataset to which the filter should be applied.
  * @export
  * @interface AfmObjectIdentifierDataset
  */
@@ -446,7 +478,45 @@ export interface AfmValidObjectsResponse {
     items: Array<RestApiIdentifier>;
 }
 /**
- * Metric representing arithmetics between metrics.
+ *
+ * @export
+ * @interface AnomalyDetectionRequest
+ */
+export interface AnomalyDetectionRequest {
+    /**
+     * Anomaly detection sensitivity.
+     * @type {number}
+     * @memberof AnomalyDetectionRequest
+     */
+    sensitivity: number;
+}
+/**
+ *
+ * @export
+ * @interface AnomalyDetectionResult
+ */
+export interface AnomalyDetectionResult {
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AnomalyDetectionResult
+     */
+    attribute: Array<string>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof AnomalyDetectionResult
+     */
+    values: Array<number>;
+    /**
+     *
+     * @type {Array<boolean>}
+     * @memberof AnomalyDetectionResult
+     */
+    anomalyFlag: Array<boolean>;
+}
+/**
+ * Metric representing arithmetics between other metrics.
  * @export
  * @interface ArithmeticMeasureDefinition
  */
@@ -523,19 +593,19 @@ export interface AttributeFilterElements {
     values: Array<string | null>;
 }
 /**
- *
+ * Attribute format describes formatting information to effectively format attribute values when needed.
  * @export
  * @interface AttributeFormat
  */
 export interface AttributeFormat {
     /**
-     * Format locale
+     * Format locale code like \'en-US\', \'cs-CZ\', etc.
      * @type {string}
      * @memberof AttributeFormat
      */
     locale: string;
     /**
-     * Format pattern
+     * ICU formatting pattern like \'y\', \'dd.MM.y\', etc.
      * @type {string}
      * @memberof AttributeFormat
      */
@@ -544,73 +614,79 @@ export interface AttributeFormat {
 /**
  *
  * @export
- * @interface AttributeHeaderOut
+ * @interface AttributeHeader
  */
-export interface AttributeHeaderOut {
+export interface AttributeHeader {
     /**
      *
-     * @type {AttributeHeaderOutAttributeHeader}
-     * @memberof AttributeHeaderOut
+     * @type {AttributeHeaderAttributeHeader}
+     * @memberof AttributeHeader
      */
-    attributeHeader: AttributeHeaderOutAttributeHeader;
+    attributeHeader: AttributeHeaderAttributeHeader;
 }
 /**
  *
  * @export
- * @interface AttributeHeaderOutAttributeHeader
+ * @interface AttributeHeaderAttributeHeader
  */
-export interface AttributeHeaderOutAttributeHeader {
+export interface AttributeHeaderAttributeHeader {
     /**
-     *
+     * Local identifier of the attribute this header relates to.
      * @type {string}
-     * @memberof AttributeHeaderOutAttributeHeader
+     * @memberof AttributeHeaderAttributeHeader
      */
     localIdentifier: string;
     /**
      *
      * @type {RestApiIdentifier}
-     * @memberof AttributeHeaderOutAttributeHeader
+     * @memberof AttributeHeaderAttributeHeader
      */
     label: RestApiIdentifier;
     /**
-     *
+     * Label name.
      * @type {string}
-     * @memberof AttributeHeaderOutAttributeHeader
+     * @memberof AttributeHeaderAttributeHeader
      */
     labelName: string;
     /**
      *
      * @type {RestApiIdentifier}
-     * @memberof AttributeHeaderOutAttributeHeader
+     * @memberof AttributeHeaderAttributeHeader
      */
     attribute: RestApiIdentifier;
     /**
-     *
+     * Attribute name.
      * @type {string}
-     * @memberof AttributeHeaderOutAttributeHeader
+     * @memberof AttributeHeaderAttributeHeader
      */
     attributeName: string;
     /**
-     *
+     * Date granularity of the attribute, only filled for date attributes.
      * @type {string}
-     * @memberof AttributeHeaderOutAttributeHeader
+     * @memberof AttributeHeaderAttributeHeader
      */
-    granularity?: AttributeHeaderOutAttributeHeaderGranularityEnum;
+    granularity?: AttributeHeaderAttributeHeaderGranularityEnum;
     /**
      *
      * @type {RestApiIdentifier}
-     * @memberof AttributeHeaderOutAttributeHeader
+     * @memberof AttributeHeaderAttributeHeader
      */
     primaryLabel: RestApiIdentifier;
     /**
      *
      * @type {AttributeFormat}
-     * @memberof AttributeHeaderOutAttributeHeader
+     * @memberof AttributeHeaderAttributeHeader
      */
     format?: AttributeFormat;
+    /**
+     * Attribute value type.
+     * @type {string}
+     * @memberof AttributeHeaderAttributeHeader
+     */
+    valueType?: AttributeHeaderAttributeHeaderValueTypeEnum;
 }
 
-export const AttributeHeaderOutAttributeHeaderGranularityEnum = {
+export const AttributeHeaderAttributeHeaderGranularityEnum = {
     MINUTE: "MINUTE",
     HOUR: "HOUR",
     DAY: "DAY",
@@ -628,8 +704,19 @@ export const AttributeHeaderOutAttributeHeaderGranularityEnum = {
     QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
 } as const;
 
-export type AttributeHeaderOutAttributeHeaderGranularityEnum =
-    typeof AttributeHeaderOutAttributeHeaderGranularityEnum[keyof typeof AttributeHeaderOutAttributeHeaderGranularityEnum];
+export type AttributeHeaderAttributeHeaderGranularityEnum =
+    typeof AttributeHeaderAttributeHeaderGranularityEnum[keyof typeof AttributeHeaderAttributeHeaderGranularityEnum];
+export const AttributeHeaderAttributeHeaderValueTypeEnum = {
+    TEXT: "TEXT",
+    HYPERLINK: "HYPERLINK",
+    GEO: "GEO",
+    GEO_LONGITUDE: "GEO_LONGITUDE",
+    GEO_LATITUDE: "GEO_LATITUDE",
+    IMAGE: "IMAGE",
+} as const;
+
+export type AttributeHeaderAttributeHeaderValueTypeEnum =
+    typeof AttributeHeaderAttributeHeaderValueTypeEnum[keyof typeof AttributeHeaderAttributeHeaderValueTypeEnum];
 
 /**
  *
@@ -638,7 +725,7 @@ export type AttributeHeaderOutAttributeHeaderGranularityEnum =
  */
 export interface AttributeItem {
     /**
-     *
+     * Local identifier of the attribute. This can be used to reference the attribute in other parts of the execution definition.
      * @type {string}
      * @memberof AttributeItem
      */
@@ -650,11 +737,87 @@ export interface AttributeItem {
      */
     label: AfmObjectIdentifierLabel;
     /**
-     * Specifies that the label should be outer-joined.
+     * Indicates whether to show all values of given attribute even if the data bound to those values is not available.
      * @type {boolean}
      * @memberof AttributeItem
      */
     showAllValues?: boolean;
+}
+/**
+ *
+ * @export
+ * @interface AttributeNegativeFilter
+ */
+export interface AttributeNegativeFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof AttributeNegativeFilter
+     */
+    using: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AttributeNegativeFilter
+     */
+    exclude: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface AttributeNegativeFilterAllOf
+ */
+export interface AttributeNegativeFilterAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof AttributeNegativeFilterAllOf
+     */
+    using?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AttributeNegativeFilterAllOf
+     */
+    exclude?: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface AttributePositiveFilter
+ */
+export interface AttributePositiveFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof AttributePositiveFilter
+     */
+    using: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AttributePositiveFilter
+     */
+    include: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface AttributePositiveFilterAllOf
+ */
+export interface AttributePositiveFilterAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof AttributePositiveFilterAllOf
+     */
+    using?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AttributePositiveFilterAllOf
+     */
+    include?: Array<string>;
 }
 /**
  * Header containing the information related to attributes.
@@ -676,6 +839,315 @@ export interface AttributeResultHeader {
     primaryLabelValue: string;
 }
 /**
+ * List of chat history interactions.
+ * @export
+ * @interface ChatHistoryInteraction
+ */
+export interface ChatHistoryInteraction {
+    /**
+     * User question
+     * @type {string}
+     * @memberof ChatHistoryInteraction
+     */
+    question: string;
+    /**
+     * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
+     * @type {string}
+     * @memberof ChatHistoryInteraction
+     */
+    threadIdSuffix?: string;
+    /**
+     * Chat History interaction ID. Unique ID for each interaction.
+     * @type {string}
+     * @memberof ChatHistoryInteraction
+     */
+    chatHistoryInteractionId: string;
+    /**
+     * Has the interaction already finished? Can be used for polling when interaction is in progress.
+     * @type {boolean}
+     * @memberof ChatHistoryInteraction
+     */
+    interactionFinished: boolean;
+    /**
+     *
+     * @type {RouteResult}
+     * @memberof ChatHistoryInteraction
+     */
+    routing: RouteResult;
+    /**
+     * Text response for general questions.
+     * @type {string}
+     * @memberof ChatHistoryInteraction
+     */
+    textResponse?: string;
+    /**
+     * Error response in anything fails.
+     * @type {string}
+     * @memberof ChatHistoryInteraction
+     */
+    errorResponse?: string;
+    /**
+     *
+     * @type {FoundObjects}
+     * @memberof ChatHistoryInteraction
+     */
+    foundObjects?: FoundObjects;
+    /**
+     *
+     * @type {CreatedVisualizations}
+     * @memberof ChatHistoryInteraction
+     */
+    createdVisualizations?: CreatedVisualizations;
+    /**
+     * User feedback.
+     * @type {string}
+     * @memberof ChatHistoryInteraction
+     */
+    userFeedback?: ChatHistoryInteractionUserFeedbackEnum;
+}
+
+export const ChatHistoryInteractionUserFeedbackEnum = {
+    POSITIVE: "POSITIVE",
+    NEGATIVE: "NEGATIVE",
+    NONE: "NONE",
+} as const;
+
+export type ChatHistoryInteractionUserFeedbackEnum =
+    typeof ChatHistoryInteractionUserFeedbackEnum[keyof typeof ChatHistoryInteractionUserFeedbackEnum];
+
+/**
+ *
+ * @export
+ * @interface ChatHistoryRequest
+ */
+export interface ChatHistoryRequest {
+    /**
+     * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
+     * @type {string}
+     * @memberof ChatHistoryRequest
+     */
+    threadIdSuffix?: string;
+    /**
+     * Return chat history records only after this interaction ID. If empty, complete chat history is returned.
+     * @type {string}
+     * @memberof ChatHistoryRequest
+     */
+    chatHistoryInteractionId?: string;
+    /**
+     * User feedback.
+     * @type {string}
+     * @memberof ChatHistoryRequest
+     */
+    userFeedback?: ChatHistoryRequestUserFeedbackEnum;
+    /**
+     * User feedback.
+     * @type {boolean}
+     * @memberof ChatHistoryRequest
+     */
+    reset?: boolean;
+}
+
+export const ChatHistoryRequestUserFeedbackEnum = {
+    POSITIVE: "POSITIVE",
+    NEGATIVE: "NEGATIVE",
+    NONE: "NONE",
+} as const;
+
+export type ChatHistoryRequestUserFeedbackEnum =
+    typeof ChatHistoryRequestUserFeedbackEnum[keyof typeof ChatHistoryRequestUserFeedbackEnum];
+
+/**
+ *
+ * @export
+ * @interface ChatHistoryResult
+ */
+export interface ChatHistoryResult {
+    /**
+     * List of chat history interactions.
+     * @type {Array<ChatHistoryInteraction>}
+     * @memberof ChatHistoryResult
+     */
+    interactions: Array<ChatHistoryInteraction>;
+    /**
+     * The conversation thread ID.
+     * @type {string}
+     * @memberof ChatHistoryResult
+     */
+    threadId: string;
+}
+/**
+ *
+ * @export
+ * @interface ChatRequest
+ */
+export interface ChatRequest {
+    /**
+     * User question
+     * @type {string}
+     * @memberof ChatRequest
+     */
+    question: string;
+    /**
+     * Maximum number of search results.
+     * @type {number}
+     * @memberof ChatRequest
+     */
+    limitSearch?: number;
+    /**
+     * Maximum number of relevant objects included into context for LLM (for each object type).
+     * @type {number}
+     * @memberof ChatRequest
+     */
+    limitCreateContext?: number;
+    /**
+     * Maximum number of created results.
+     * @type {number}
+     * @memberof ChatRequest
+     */
+    limitCreate?: number;
+    /**
+     * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
+     * @type {string}
+     * @memberof ChatRequest
+     */
+    threadIdSuffix?: string;
+    /**
+     *
+     * @type {UserContext}
+     * @memberof ChatRequest
+     */
+    userContext?: UserContext;
+    /**
+     * Temporary for experiments. Ratio of title score to descriptor score.
+     * @type {number}
+     * @memberof ChatRequest
+     */
+    titleToDescriptorRatio?: number;
+    /**
+     * Score, above which we return found object(s) and don\'t call LLM to create new objects.
+     * @type {number}
+     * @memberof ChatRequest
+     */
+    searchScoreThreshold?: number;
+    /**
+     * Score, above which we return found objects. Below this score objects are not relevant.
+     * @type {number}
+     * @memberof ChatRequest
+     */
+    relevantScoreThreshold?: number;
+}
+/**
+ *
+ * @export
+ * @interface ChatResult
+ */
+export interface ChatResult {
+    /**
+     *
+     * @type {RouteResult}
+     * @memberof ChatResult
+     */
+    routing?: RouteResult;
+    /**
+     * Text response for general questions.
+     * @type {string}
+     * @memberof ChatResult
+     */
+    textResponse?: string;
+    /**
+     * Error response in anything fails.
+     * @type {string}
+     * @memberof ChatResult
+     */
+    errorResponse?: string;
+    /**
+     *
+     * @type {FoundObjects}
+     * @memberof ChatResult
+     */
+    foundObjects?: FoundObjects;
+    /**
+     *
+     * @type {CreatedVisualizations}
+     * @memberof ChatResult
+     */
+    createdVisualizations?: CreatedVisualizations;
+    /**
+     * Chat History thread suffix appended to ID generated by backend. Enables more chat windows.
+     * @type {string}
+     * @memberof ChatResult
+     */
+    threadIdSuffix?: string;
+    /**
+     * Chat History interaction ID. Unique ID for each interaction.
+     * @type {string}
+     * @memberof ChatResult
+     */
+    chatHistoryInteractionId?: string;
+}
+/**
+ *
+ * @export
+ * @interface ClusteringRequest
+ */
+export interface ClusteringRequest {
+    /**
+     * Number of clusters to create
+     * @type {number}
+     * @memberof ClusteringRequest
+     */
+    numberOfClusters: number;
+    /**
+     * Threshold used for algorithm
+     * @type {number}
+     * @memberof ClusteringRequest
+     */
+    threshold?: number;
+}
+/**
+ *
+ * @export
+ * @interface ClusteringResult
+ */
+export interface ClusteringResult {
+    /**
+     *
+     * @type {Array<object>}
+     * @memberof ClusteringResult
+     */
+    attribute: Array<object>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ClusteringResult
+     */
+    xCoord?: Array<number>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ClusteringResult
+     */
+    yCoord?: Array<number>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ClusteringResult
+     */
+    clusters: Array<number>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ClusteringResult
+     */
+    ycoord: Array<number>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ClusteringResult
+     */
+    xcoord: Array<number>;
+}
+/**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
  * @export
  * @interface ComparisonMeasureValueFilter
@@ -695,7 +1167,13 @@ export interface ComparisonMeasureValueFilter {
  */
 export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
     /**
-     *
+     * References to the attributes to be used when filtering.
+     * @type {Array<AfmIdentifier>}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    dimensionality?: Array<AfmIdentifier>;
+    /**
+     * A value that will be substituted for null values in the metric for the comparisons.
      * @type {number}
      * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
      */
@@ -712,6 +1190,12 @@ export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
      * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
      */
     value: number;
+    /**
+     *
+     * @type {string}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    localIdentifier?: string;
     /**
      *
      * @type {boolean}
@@ -739,6 +1223,89 @@ export type ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum
     typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum[keyof typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
 
 /**
+ * List of created visualization objects
+ * @export
+ * @interface CreatedVisualization
+ */
+export interface CreatedVisualization {
+    /**
+     * Proposed ID of the new visualization
+     * @type {string}
+     * @memberof CreatedVisualization
+     */
+    id: string;
+    /**
+     * Proposed title of the new visualization
+     * @type {string}
+     * @memberof CreatedVisualization
+     */
+    title: string;
+    /**
+     * Visualization type requested in question
+     * @type {string}
+     * @memberof CreatedVisualization
+     */
+    visualizationType: CreatedVisualizationVisualizationTypeEnum;
+    /**
+     * List of metrics to be used in the new visualization
+     * @type {Array<Metric>}
+     * @memberof CreatedVisualization
+     */
+    metrics: Array<Metric>;
+    /**
+     * List of attributes representing the dimensionality of the new visualization
+     * @type {Array<DimAttribute>}
+     * @memberof CreatedVisualization
+     */
+    dimensionality: Array<DimAttribute>;
+    /**
+     * List of filters to be applied to the new visualization
+     * @type {Array<AttributeNegativeFilter | AttributePositiveFilter | DateAbsoluteFilter | DateRelativeFilter>}
+     * @memberof CreatedVisualization
+     */
+    filters: Array<
+        AttributeNegativeFilter | AttributePositiveFilter | DateAbsoluteFilter | DateRelativeFilter
+    >;
+    /**
+     * Suggestions for next steps
+     * @type {Array<Suggestion>}
+     * @memberof CreatedVisualization
+     */
+    suggestions: Array<Suggestion>;
+}
+
+export const CreatedVisualizationVisualizationTypeEnum = {
+    TABLE: "TABLE",
+    HEADLINE: "HEADLINE",
+    BAR: "BAR",
+    LINE: "LINE",
+    PIE: "PIE",
+    COLUMN: "COLUMN",
+} as const;
+
+export type CreatedVisualizationVisualizationTypeEnum =
+    typeof CreatedVisualizationVisualizationTypeEnum[keyof typeof CreatedVisualizationVisualizationTypeEnum];
+
+/**
+ * Visualization definitions created by AI.
+ * @export
+ * @interface CreatedVisualizations
+ */
+export interface CreatedVisualizations {
+    /**
+     * List of created visualization objects
+     * @type {Array<CreatedVisualization>}
+     * @memberof CreatedVisualizations
+     */
+    objects: Array<CreatedVisualization>;
+    /**
+     * Reasoning from LLM. Description of how and why the answer was generated.
+     * @type {string}
+     * @memberof CreatedVisualizations
+     */
+    reasoning: string;
+}
+/**
  * Mapping from dimension items (either \'localIdentifier\' from \'AttributeItem\', or \"measureGroup\") to their respective values. This effectively specifies the path (location) of the data column used for sorting. Therefore values for all dimension items must be specified.
  * @export
  * @interface DataColumnLocator
@@ -752,7 +1319,7 @@ export interface DataColumnLocator {
     properties: { [key: string]: string };
 }
 /**
- *
+ * Data column locators for the values.
  * @export
  * @interface DataColumnLocators
  */
@@ -765,11 +1332,167 @@ export interface DataColumnLocators {
     properties?: { [key: string]: DataColumnLocator };
 }
 /**
+ *
+ * @export
+ * @interface DateAbsoluteFilter
+ */
+export interface DateAbsoluteFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilter
+     */
+    using: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilter
+     */
+    from: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilter
+     */
+    to: string;
+}
+/**
+ *
+ * @export
+ * @interface DateAbsoluteFilterAllOf
+ */
+export interface DateAbsoluteFilterAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilterAllOf
+     */
+    using?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilterAllOf
+     */
+    from?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilterAllOf
+     */
+    to?: string;
+}
+/**
  * @type DateFilter
  * Abstract filter definition type for dates.
  * @export
  */
 export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
+
+/**
+ *
+ * @export
+ * @interface DateRelativeFilter
+ */
+export interface DateRelativeFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof DateRelativeFilter
+     */
+    using: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateRelativeFilter
+     */
+    granularity: DateRelativeFilterGranularityEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof DateRelativeFilter
+     */
+    from: number;
+    /**
+     *
+     * @type {number}
+     * @memberof DateRelativeFilter
+     */
+    to: number;
+}
+
+export const DateRelativeFilterGranularityEnum = {
+    MINUTE: "MINUTE",
+    HOUR: "HOUR",
+    DAY: "DAY",
+    WEEK: "WEEK",
+    MONTH: "MONTH",
+    QUARTER: "QUARTER",
+    YEAR: "YEAR",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+} as const;
+
+export type DateRelativeFilterGranularityEnum =
+    typeof DateRelativeFilterGranularityEnum[keyof typeof DateRelativeFilterGranularityEnum];
+
+/**
+ *
+ * @export
+ * @interface DateRelativeFilterAllOf
+ */
+export interface DateRelativeFilterAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof DateRelativeFilterAllOf
+     */
+    using?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateRelativeFilterAllOf
+     */
+    granularity?: DateRelativeFilterAllOfGranularityEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof DateRelativeFilterAllOf
+     */
+    from?: number;
+    /**
+     *
+     * @type {number}
+     * @memberof DateRelativeFilterAllOf
+     */
+    to?: number;
+}
+
+export const DateRelativeFilterAllOfGranularityEnum = {
+    MINUTE: "MINUTE",
+    HOUR: "HOUR",
+    DAY: "DAY",
+    WEEK: "WEEK",
+    MONTH: "MONTH",
+    QUARTER: "QUARTER",
+    YEAR: "YEAR",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+} as const;
+
+export type DateRelativeFilterAllOfGranularityEnum =
+    typeof DateRelativeFilterAllOfGranularityEnum[keyof typeof DateRelativeFilterAllOfGranularityEnum];
 
 /**
  * Filter definition type specified by label and values.
@@ -847,6 +1570,38 @@ export interface DependsOnDateFilterAllOf {
      */
     dateFilter?: DateFilter;
 }
+/**
+ * List of attributes representing the dimensionality of the new visualization
+ * @export
+ * @interface DimAttribute
+ */
+export interface DimAttribute {
+    /**
+     * ID of the object
+     * @type {string}
+     * @memberof DimAttribute
+     */
+    id: string;
+    /**
+     * Object type
+     * @type {string}
+     * @memberof DimAttribute
+     */
+    type: DimAttributeTypeEnum;
+    /**
+     * Title of attribute.
+     * @type {string}
+     * @memberof DimAttribute
+     */
+    title: string;
+}
+
+export const DimAttributeTypeEnum = {
+    ATTRIBUTE: "attribute",
+} as const;
+
+export type DimAttributeTypeEnum = typeof DimAttributeTypeEnum[keyof typeof DimAttributeTypeEnum];
+
 /**
  * Single dimension description.
  * @export
@@ -953,13 +1708,13 @@ export interface ElementsRequest {
      */
     exactFilter?: Array<string>;
     /**
-     * Return only items, whose are not filtered out by the parent filters.
+     * Return only items that are not filtered-out by the parent filters.
      * @type {Array<DependsOn | DependsOnDateFilter>}
      * @memberof ElementsRequest
      */
     dependsOn?: Array<DependsOn | DependsOnDateFilter>;
     /**
-     * Return only items, what are computable on metric.
+     * Return only items that are computable on metric.
      * @type {Array<ValidateByItem>}
      * @memberof ElementsRequest
      */
@@ -1053,26 +1808,26 @@ export type ElementsResponseGranularityEnum =
     typeof ElementsResponseGranularityEnum[keyof typeof ElementsResponseGranularityEnum];
 
 /**
- *
+ * Links to the execution result.
  * @export
  * @interface ExecutionLinks
  */
 export interface ExecutionLinks {
     /**
-     *
+     * Link to the result data.
      * @type {string}
      * @memberof ExecutionLinks
      */
     executionResult: string;
 }
 /**
- *
+ * Response to AFM execution request body
  * @export
  * @interface ExecutionResponse
  */
 export interface ExecutionResponse {
     /**
-     *
+     * Dimensions of the result
      * @type {Array<ResultDimension>}
      * @memberof ExecutionResponse
      */
@@ -1232,6 +1987,87 @@ export type FilterDefinition =
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
 
 /**
+ *
+ * @export
+ * @interface ForecastRequest
+ */
+export interface ForecastRequest {
+    /**
+     * Number of future periods that should be forecasted
+     * @type {number}
+     * @memberof ForecastRequest
+     */
+    forecastPeriod: number;
+    /**
+     * Confidence interval boundary value.
+     * @type {number}
+     * @memberof ForecastRequest
+     */
+    confidenceLevel?: number;
+    /**
+     * Whether the input data is seasonal
+     * @type {boolean}
+     * @memberof ForecastRequest
+     */
+    seasonal?: boolean;
+}
+/**
+ *
+ * @export
+ * @interface ForecastResult
+ */
+export interface ForecastResult {
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof ForecastResult
+     */
+    attribute: Array<string>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ForecastResult
+     */
+    origin: Array<number>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ForecastResult
+     */
+    prediction: Array<number>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ForecastResult
+     */
+    lowerBound: Array<number>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof ForecastResult
+     */
+    upperBound: Array<number>;
+}
+/**
+ * List of objects found by similarity search and post-processed by LLM.
+ * @export
+ * @interface FoundObjects
+ */
+export interface FoundObjects {
+    /**
+     * List of objects found with a similarity search.
+     * @type {Array<SearchResultObject>}
+     * @memberof FoundObjects
+     */
+    objects: Array<SearchResultObject>;
+    /**
+     * Reasoning from LLM. Description of how and why the answer was generated.
+     * @type {string}
+     * @memberof FoundObjects
+     */
+    reasoning: string;
+}
+/**
  * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
  * @export
  * @interface HeaderGroup
@@ -1264,11 +2100,17 @@ export interface InlineFilterDefinition {
  */
 export interface InlineFilterDefinitionInline {
     /**
-     *
+     * MAQL query representing the filter.
      * @type {string}
      * @memberof InlineFilterDefinitionInline
      */
     filter: string;
+    /**
+     *
+     * @type {string}
+     * @memberof InlineFilterDefinitionInline
+     */
+    localIdentifier?: string;
     /**
      *
      * @type {boolean}
@@ -1296,11 +2138,159 @@ export interface InlineMeasureDefinition {
  */
 export interface InlineMeasureDefinitionInline {
     /**
-     *
+     * MAQL query defining the metric.
      * @type {string}
      * @memberof InlineMeasureDefinitionInline
      */
     maql: string;
+}
+/**
+ *
+ * @export
+ * @interface KeyDriversDimension
+ */
+export interface KeyDriversDimension {
+    /**
+     *
+     * @type {RestApiIdentifier}
+     * @memberof KeyDriversDimension
+     */
+    label: RestApiIdentifier;
+    /**
+     *
+     * @type {string}
+     * @memberof KeyDriversDimension
+     */
+    labelName: string;
+    /**
+     *
+     * @type {RestApiIdentifier}
+     * @memberof KeyDriversDimension
+     */
+    attribute: RestApiIdentifier;
+    /**
+     *
+     * @type {string}
+     * @memberof KeyDriversDimension
+     */
+    attributeName: string;
+    /**
+     *
+     * @type {string}
+     * @memberof KeyDriversDimension
+     */
+    granularity?: KeyDriversDimensionGranularityEnum;
+    /**
+     *
+     * @type {AttributeFormat}
+     * @memberof KeyDriversDimension
+     */
+    format?: AttributeFormat;
+    /**
+     *
+     * @type {string}
+     * @memberof KeyDriversDimension
+     */
+    valueType?: KeyDriversDimensionValueTypeEnum;
+}
+
+export const KeyDriversDimensionGranularityEnum = {
+    MINUTE: "MINUTE",
+    HOUR: "HOUR",
+    DAY: "DAY",
+    WEEK: "WEEK",
+    MONTH: "MONTH",
+    QUARTER: "QUARTER",
+    YEAR: "YEAR",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+} as const;
+
+export type KeyDriversDimensionGranularityEnum =
+    typeof KeyDriversDimensionGranularityEnum[keyof typeof KeyDriversDimensionGranularityEnum];
+export const KeyDriversDimensionValueTypeEnum = {
+    TEXT: "TEXT",
+    HYPERLINK: "HYPERLINK",
+    GEO: "GEO",
+    GEO_LONGITUDE: "GEO_LONGITUDE",
+    GEO_LATITUDE: "GEO_LATITUDE",
+    IMAGE: "IMAGE",
+} as const;
+
+export type KeyDriversDimensionValueTypeEnum =
+    typeof KeyDriversDimensionValueTypeEnum[keyof typeof KeyDriversDimensionValueTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface KeyDriversRequest
+ */
+export interface KeyDriversRequest {
+    /**
+     *
+     * @type {MeasureItem}
+     * @memberof KeyDriversRequest
+     */
+    metric: MeasureItem;
+    /**
+     * Additional metrics to be included in the computation, but excluded from the analysis.
+     * @type {Array<MeasureItem>}
+     * @memberof KeyDriversRequest
+     */
+    auxMetrics?: Array<MeasureItem>;
+    /**
+     * Sorting elements - ascending/descending order.
+     * @type {string}
+     * @memberof KeyDriversRequest
+     */
+    sortDirection?: KeyDriversRequestSortDirectionEnum;
+}
+
+export const KeyDriversRequestSortDirectionEnum = {
+    ASC: "ASC",
+    DESC: "DESC",
+} as const;
+
+export type KeyDriversRequestSortDirectionEnum =
+    typeof KeyDriversRequestSortDirectionEnum[keyof typeof KeyDriversRequestSortDirectionEnum];
+
+/**
+ *
+ * @export
+ * @interface KeyDriversResponse
+ */
+export interface KeyDriversResponse {
+    /**
+     *
+     * @type {Array<KeyDriversDimension>}
+     * @memberof KeyDriversResponse
+     */
+    dimensions: Array<KeyDriversDimension>;
+    /**
+     *
+     * @type {ExecutionLinks}
+     * @memberof KeyDriversResponse
+     */
+    links: ExecutionLinks;
+}
+/**
+ *
+ * @export
+ * @interface KeyDriversResult
+ */
+export interface KeyDriversResult {
+    /**
+     *
+     * @type {object}
+     * @memberof KeyDriversResult
+     */
+    data: object;
 }
 /**
  * @type MeasureDefinition
@@ -1327,51 +2317,63 @@ export interface MeasureExecutionResultHeader {
     measureHeader: MeasureResultHeader;
 }
 /**
- *
+ * Measure group headers
  * @export
  * @interface MeasureGroupHeaders
  */
 export interface MeasureGroupHeaders {
     /**
      *
-     * @type {Array<MeasureHeaderOut>}
+     * @type {Array<MeasureHeader>}
      * @memberof MeasureGroupHeaders
      */
-    measureGroupHeaders?: Array<MeasureHeaderOut>;
+    measureGroupHeaders?: Array<MeasureHeader>;
+    /**
+     *
+     * @type {MeasureHeader}
+     * @memberof MeasureGroupHeaders
+     */
+    first?: MeasureHeader;
+    /**
+     *
+     * @type {MeasureHeader}
+     * @memberof MeasureGroupHeaders
+     */
+    last?: MeasureHeader;
 }
 /**
  *
  * @export
- * @interface MeasureHeaderOut
+ * @interface MeasureHeader
  */
-export interface MeasureHeaderOut {
+export interface MeasureHeader {
     /**
-     *
+     * Local identifier of the measure this header relates to.
      * @type {string}
-     * @memberof MeasureHeaderOut
+     * @memberof MeasureHeader
      */
     localIdentifier: string;
     /**
-     *
+     * Format to be used to format the measure data.
      * @type {string}
-     * @memberof MeasureHeaderOut
+     * @memberof MeasureHeader
      */
     format?: string;
     /**
-     *
+     * Name of the measure.
      * @type {string}
-     * @memberof MeasureHeaderOut
+     * @memberof MeasureHeader
      */
     name?: string;
 }
 /**
- *
+ * Metric is a quantity that is calculated from the data.
  * @export
  * @interface MeasureItem
  */
 export interface MeasureItem {
     /**
-     *
+     * Local identifier of the metric. This can be used to reference the metric in other parts of the execution definition.
      * @type {string}
      * @memberof MeasureItem
      */
@@ -1404,6 +2406,56 @@ export interface MeasureResultHeader {
 export type MeasureValueFilter = ComparisonMeasureValueFilter | RangeMeasureValueFilter;
 
 /**
+ * List of metrics to be used in the new visualization
+ * @export
+ * @interface Metric
+ */
+export interface Metric {
+    /**
+     * ID of the object
+     * @type {string}
+     * @memberof Metric
+     */
+    id: string;
+    /**
+     * Object type
+     * @type {string}
+     * @memberof Metric
+     */
+    type: MetricTypeEnum;
+    /**
+     * Title of metric.
+     * @type {string}
+     * @memberof Metric
+     */
+    title: string;
+    /**
+     * Agg function. Empty if a stored metric is used.
+     * @type {string}
+     * @memberof Metric
+     */
+    aggFunction?: MetricAggFunctionEnum;
+}
+
+export const MetricTypeEnum = {
+    METRIC: "metric",
+    FACT: "fact",
+    ATTRIBUTE: "attribute",
+} as const;
+
+export type MetricTypeEnum = typeof MetricTypeEnum[keyof typeof MetricTypeEnum];
+export const MetricAggFunctionEnum = {
+    COUNT: "COUNT",
+    SUM: "SUM",
+    MIN: "MIN",
+    MAX: "MAX",
+    AVG: "AVG",
+    MEDIAN: "MEDIAN",
+} as const;
+
+export type MetricAggFunctionEnum = typeof MetricAggFunctionEnum[keyof typeof MetricAggFunctionEnum];
+
+/**
  * Filter able to limit element values by label and related selected negated elements.
  * @export
  * @interface NegativeAttributeFilter
@@ -1428,6 +2480,12 @@ export interface NegativeAttributeFilterNegativeAttributeFilter {
      * @memberof NegativeAttributeFilterNegativeAttributeFilter
      */
     notIn: AttributeFilterElements;
+    /**
+     *
+     * @type {string}
+     * @memberof NegativeAttributeFilterNegativeAttributeFilter
+     */
+    localIdentifier?: string;
     /**
      *
      * @type {boolean}
@@ -1473,7 +2531,7 @@ export interface Paging {
     next?: string;
 }
 /**
- *
+ * Combination of the date data set to use and how many periods ago to calculate the previous period for.
  * @export
  * @interface PopDataset
  */
@@ -1485,7 +2543,7 @@ export interface PopDataset {
      */
     dataset: AfmObjectIdentifierDataset;
     /**
-     *
+     * Number of periods ago to calculate the previous period for.
      * @type {number}
      * @memberof PopDataset
      */
@@ -1517,14 +2575,14 @@ export interface PopDatasetMeasureDefinitionPreviousPeriodMeasure {
      */
     measureIdentifier: AfmLocalIdentifier;
     /**
-     *
+     * Specification of which date data sets to use for determining the period to calculate the previous period for.
      * @type {Array<PopDataset>}
      * @memberof PopDatasetMeasureDefinitionPreviousPeriodMeasure
      */
     dateDatasets: Array<PopDataset>;
 }
 /**
- *
+ * Combination of the date attribute to use and how many periods ago to calculate the PoP for.
  * @export
  * @interface PopDate
  */
@@ -1536,7 +2594,7 @@ export interface PopDate {
      */
     attribute: AfmObjectIdentifierAttribute;
     /**
-     *
+     * Number of periods ago to calculate the previous period for.
      * @type {number}
      * @memberof PopDate
      */
@@ -1568,7 +2626,7 @@ export interface PopDateMeasureDefinitionOverPeriodMeasure {
      */
     measureIdentifier: AfmLocalIdentifier;
     /**
-     *
+     * Attributes to use for determining the period to calculate the PoP for.
      * @type {Array<PopDate>}
      * @memberof PopDateMeasureDefinitionOverPeriodMeasure
      */
@@ -1607,6 +2665,12 @@ export interface PositiveAttributeFilterPositiveAttributeFilter {
     in: AttributeFilterElements;
     /**
      *
+     * @type {string}
+     * @memberof PositiveAttributeFilterPositiveAttributeFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
      * @type {boolean}
      * @memberof PositiveAttributeFilterPositiveAttributeFilter
      */
@@ -1638,7 +2702,13 @@ export interface RangeMeasureValueFilter {
  */
 export interface RangeMeasureValueFilterRangeMeasureValueFilter {
     /**
-     *
+     * References to the attributes to be used when filtering.
+     * @type {Array<AfmIdentifier>}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    dimensionality?: Array<AfmIdentifier>;
+    /**
+     * A value that will be substituted for null values in the metric for the comparisons.
      * @type {number}
      * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
      */
@@ -1661,6 +2731,12 @@ export interface RangeMeasureValueFilterRangeMeasureValueFilter {
      * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
      */
     to: number;
+    /**
+     *
+     * @type {string}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    localIdentifier?: string;
     /**
      *
      * @type {boolean}
@@ -1703,23 +2779,35 @@ export interface RankingFilter {
  */
 export interface RankingFilterRankingFilter {
     /**
-     *
+     * References to the attributes to be used when filtering.
+     * @type {Array<AfmIdentifier>}
+     * @memberof RankingFilterRankingFilter
+     */
+    dimensionality?: Array<AfmIdentifier>;
+    /**
+     * References to the metrics to be used when filtering.
      * @type {Array<AfmIdentifier>}
      * @memberof RankingFilterRankingFilter
      */
     measures: Array<AfmIdentifier>;
     /**
-     *
+     * The type of ranking to use, TOP or BOTTOM.
      * @type {string}
      * @memberof RankingFilterRankingFilter
      */
     operator: RankingFilterRankingFilterOperatorEnum;
     /**
-     *
+     * Number of top/bottom values to filter.
      * @type {number}
      * @memberof RankingFilterRankingFilter
      */
     value: number;
+    /**
+     *
+     * @type {string}
+     * @memberof RankingFilterRankingFilter
+     */
+    localIdentifier?: string;
     /**
      *
      * @type {boolean}
@@ -1773,6 +2861,12 @@ export interface RelativeDateFilterRelativeDateFilter {
      * @memberof RelativeDateFilterRelativeDateFilter
      */
     to: number;
+    /**
+     *
+     * @type {string}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    localIdentifier?: string;
     /**
      *
      * @type {boolean}
@@ -1859,7 +2953,7 @@ export interface ResultCacheMetadata {
     resultSize: number;
 }
 /**
- *
+ * Single result dimension
  * @export
  * @interface ResultDimension
  */
@@ -1871,7 +2965,7 @@ export interface ResultDimension {
      */
     headers: Array<ResultDimensionHeader>;
     /**
-     *
+     * Local identifier of the dimension.
      * @type {string}
      * @memberof ResultDimension
      */
@@ -1879,9 +2973,10 @@ export interface ResultDimension {
 }
 /**
  * @type ResultDimensionHeader
+ * One of the headers in a result dimension.
  * @export
  */
-export type ResultDimensionHeader = AttributeHeaderOut | MeasureGroupHeaders;
+export type ResultDimensionHeader = AttributeHeader | MeasureGroupHeaders;
 
 /**
  * Specifies how the result data will be formatted (```dimensions```) and which additional data shall be computed (```totals```).
@@ -1903,7 +2998,261 @@ export interface ResultSpec {
     totals?: Array<Total>;
 }
 /**
+ * Question -> Use Case routing. May contain final answer is a special use case is not required.
+ * @export
+ * @interface RouteResult
+ */
+export interface RouteResult {
+    /**
+     * Use case where LLM routed based on question.
+     * @type {string}
+     * @memberof RouteResult
+     */
+    useCase: RouteResultUseCaseEnum;
+    /**
+     * Explanation why LLM picked this use case.
+     * @type {string}
+     * @memberof RouteResult
+     */
+    reasoning: string;
+}
+
+export const RouteResultUseCaseEnum = {
+    INVALID: "INVALID",
+    GENERAL: "GENERAL",
+    SEARCH: "SEARCH",
+    CREATE_VISUALIZATION: "CREATE_VISUALIZATION",
+    EXTEND_VISUALIZATION: "EXTEND_VISUALIZATION",
+    HOWTO: "HOWTO",
+} as const;
+
+export type RouteResultUseCaseEnum = typeof RouteResultUseCaseEnum[keyof typeof RouteResultUseCaseEnum];
+
+/**
  *
+ * @export
+ * @interface SearchRelationshipObject
+ */
+export interface SearchRelationshipObject {
+    /**
+     * Source workspace ID. If relationship is dashboard->visualization, this is the workspace where the dashboard is located.
+     * @type {string}
+     * @memberof SearchRelationshipObject
+     */
+    sourceWorkspaceId: string;
+    /**
+     * Source object ID.
+     * @type {string}
+     * @memberof SearchRelationshipObject
+     */
+    sourceObjectId: string;
+    /**
+     * Source object type, e.g. dashboard.
+     * @type {string}
+     * @memberof SearchRelationshipObject
+     */
+    sourceObjectType: string;
+    /**
+     * Source object title.
+     * @type {string}
+     * @memberof SearchRelationshipObject
+     */
+    sourceObjectTitle: string;
+    /**
+     * Target workspace ID. If relationship is dashboard->visualization, this is the workspace where the visualization is located.
+     * @type {string}
+     * @memberof SearchRelationshipObject
+     */
+    targetWorkspaceId: string;
+    /**
+     * Target object ID.
+     * @type {string}
+     * @memberof SearchRelationshipObject
+     */
+    targetObjectId: string;
+    /**
+     * Target object type, e.g. visualization.
+     * @type {string}
+     * @memberof SearchRelationshipObject
+     */
+    targetObjectType: string;
+    /**
+     * Target object title.
+     * @type {string}
+     * @memberof SearchRelationshipObject
+     */
+    targetObjectTitle: string;
+}
+/**
+ *
+ * @export
+ * @interface SearchRequest
+ */
+export interface SearchRequest {
+    /**
+     * Keyword/sentence is input for search.
+     * @type {string}
+     * @memberof SearchRequest
+     */
+    question: string;
+    /**
+     * List of object types to search for.
+     * @type {Array<string>}
+     * @memberof SearchRequest
+     */
+    objectTypes?: Array<SearchRequestObjectTypesEnum>;
+    /**
+     * Turn on deep search. If true, content of complex objects will be searched as well, e.g. metrics in visualizations.
+     * @type {boolean}
+     * @memberof SearchRequest
+     */
+    deepSearch?: boolean;
+    /**
+     * Maximum number of results to return. There is a hard limit and the actual number of returned results may be lower than what is requested.
+     * @type {number}
+     * @memberof SearchRequest
+     */
+    limit?: number;
+    /**
+     * Temporary for experiments. Ratio of title score to descriptor score.
+     * @type {number}
+     * @memberof SearchRequest
+     */
+    titleToDescriptorRatio?: number;
+    /**
+     * Score, above which we return found objects. Below this score objects are not relevant.
+     * @type {number}
+     * @memberof SearchRequest
+     */
+    relevantScoreThreshold?: number;
+}
+
+export const SearchRequestObjectTypesEnum = {
+    ATTRIBUTE: "attribute",
+    METRIC: "metric",
+    FACT: "fact",
+    LABEL: "label",
+    DATE: "date",
+    DATASET: "dataset",
+    VISUALIZATION: "visualization",
+    DASHBOARD: "dashboard",
+} as const;
+
+export type SearchRequestObjectTypesEnum =
+    typeof SearchRequestObjectTypesEnum[keyof typeof SearchRequestObjectTypesEnum];
+
+/**
+ *
+ * @export
+ * @interface SearchResult
+ */
+export interface SearchResult {
+    /**
+     *
+     * @type {Array<SearchResultObject>}
+     * @memberof SearchResult
+     */
+    results: Array<SearchResultObject>;
+    /**
+     *
+     * @type {Array<SearchRelationshipObject>}
+     * @memberof SearchResult
+     */
+    relationships: Array<SearchRelationshipObject>;
+    /**
+     * If something is not working properly this field will contain explanation.
+     * @type {string}
+     * @memberof SearchResult
+     */
+    reasoning: string;
+}
+/**
+ *
+ * @export
+ * @interface SearchResultObject
+ */
+export interface SearchResultObject {
+    /**
+     * Object ID.
+     * @type {string}
+     * @memberof SearchResultObject
+     */
+    id: string;
+    /**
+     * Object type, e.g. dashboard.
+     * @type {string}
+     * @memberof SearchResultObject
+     */
+    type: string;
+    /**
+     * Workspace ID.
+     * @type {string}
+     * @memberof SearchResultObject
+     */
+    workspaceId: string;
+    /**
+     * Object title.
+     * @type {string}
+     * @memberof SearchResultObject
+     */
+    title: string;
+    /**
+     * Object description.
+     * @type {string}
+     * @memberof SearchResultObject
+     */
+    description?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof SearchResultObject
+     */
+    tags?: Array<string>;
+    /**
+     * Timestamp when object was created.
+     * @type {string}
+     * @memberof SearchResultObject
+     */
+    createdAt?: string;
+    /**
+     * Timestamp when object was last modified.
+     * @type {string}
+     * @memberof SearchResultObject
+     */
+    modifiedAt?: string;
+    /**
+     * If the object is visualization, this field defines the type of visualization.
+     * @type {string}
+     * @memberof SearchResultObject
+     */
+    visualizationUrl?: string;
+    /**
+     * Result score calculated by a similarity search algorithm (cosine_distance).
+     * @type {number}
+     * @memberof SearchResultObject
+     */
+    score?: number;
+    /**
+     * Result score for object title.
+     * @type {number}
+     * @memberof SearchResultObject
+     */
+    scoreTitle?: number;
+    /**
+     * Result score for descriptor containing(now) description and tags.
+     * @type {number}
+     * @memberof SearchResultObject
+     */
+    scoreDescriptor?: number;
+    /**
+     * Result score for exact match(id/title). 1/1000. Other scores are multiplied by this.
+     * @type {number}
+     * @memberof SearchResultObject
+     */
+    scoreExactMatch?: number;
+}
+/**
+ * Metric defined by referencing a MAQL metric or an LDM fact object with aggregation.
  * @export
  * @interface SimpleMeasureDefinition
  */
@@ -1934,7 +3283,7 @@ export interface SimpleMeasureDefinitionMeasure {
      */
     aggregation?: SimpleMeasureDefinitionMeasureAggregationEnum;
     /**
-     * If true compute the percentage of given metric values (broken down by AFM attributes) to the total (not broken down).
+     * If true, compute the percentage of given metric values (broken down by AFM attributes) to the total (not broken down).
      * @type {boolean}
      * @memberof SimpleMeasureDefinitionMeasure
      */
@@ -1961,6 +3310,19 @@ export const SimpleMeasureDefinitionMeasureAggregationEnum = {
 export type SimpleMeasureDefinitionMeasureAggregationEnum =
     typeof SimpleMeasureDefinitionMeasureAggregationEnum[keyof typeof SimpleMeasureDefinitionMeasureAggregationEnum];
 
+/**
+ *
+ * @export
+ * @interface SmartFunctionResponse
+ */
+export interface SmartFunctionResponse {
+    /**
+     *
+     * @type {ExecutionLinks}
+     * @memberof SmartFunctionResponse
+     */
+    links: ExecutionLinks;
+}
 /**
  * @type SortKey
  * @export
@@ -1993,7 +3355,7 @@ export interface SortKeyAttributeAttribute {
      */
     attributeIdentifier: string;
     /**
-     * Mechanism by which this attribute should be sorted. Available options are: - DEFAULT: sorting based on default rules (using sort column if defined, otherwise this label)  - LABEL: sorting by this label values  - ATTRIBUTE: sorting by values of this label\'s attribute (or rather the primary label)  - AREA: sorting by area (total or subtotal) corresponding to each attribute value. The area is computed by summing up all metric values in all other dimensions.
+     * Mechanism by which this attribute should be sorted. Available options are: - DEFAULT: sorting based on default rules (using sort column if defined, otherwise this label)  - LABEL: sorting by this label values  - ATTRIBUTE: sorting by values of this label\'s attribute (or rather the primary label)  - ATTRIBUTE: sorting by values of this label\'s attribute (or rather the primary label)- AREA: sorting by area (total or subtotal) corresponding to each attribute value. The area is computed by summing up all metric values in all other dimensions.
      * @type {string}
      * @memberof SortKeyAttributeAttribute
      */
@@ -2043,7 +3405,7 @@ export interface SortKeyTotal {
  */
 export interface SortKeyTotalTotal {
     /**
-     *
+     * Local identifier of the total to sort by.
      * @type {string}
      * @memberof SortKeyTotalTotal
      */
@@ -2112,6 +3474,25 @@ export type SortKeyValueValueDirectionEnum =
     typeof SortKeyValueValueDirectionEnum[keyof typeof SortKeyValueValueDirectionEnum];
 
 /**
+ * Suggestions for next steps
+ * @export
+ * @interface Suggestion
+ */
+export interface Suggestion {
+    /**
+     * Suggestion query
+     * @type {string}
+     * @memberof Suggestion
+     */
+    query: string;
+    /**
+     * Suggestion button label
+     * @type {string}
+     * @memberof Suggestion
+     */
+    label: string;
+}
+/**
  * Definition of a total. There are two types of totals: grand totals and subtotals. Grand total data will be returned in a separate section of the result structure while subtotals are fully integrated into the main result data. The mechanism for this distinction is automatic and it\'s described in `TotalDimension`
  * @export
  * @interface Total
@@ -2149,6 +3530,7 @@ export const TotalFunctionEnum = {
     MAX: "MAX",
     AVG: "AVG",
     MED: "MED",
+    NAT: "NAT",
 } as const;
 
 export type TotalFunctionEnum = typeof TotalFunctionEnum[keyof typeof TotalFunctionEnum];
@@ -2199,6 +3581,19 @@ export interface TotalResultHeader {
     function: string;
 }
 /**
+ * User context, which can affect the behavior of the underlying AI features.
+ * @export
+ * @interface UserContext
+ */
+export interface UserContext {
+    /**
+     *
+     * @type {ActiveObjectIdentification}
+     * @memberof UserContext
+     */
+    activeObject: ActiveObjectIdentification;
+}
+/**
  *
  * @export
  * @interface ValidateByItem
@@ -2224,6 +3619,450 @@ export interface ValidateByItem {
  */
 export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChat: async (
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiChat", "workspaceId", workspaceId);
+            // verify required parameter 'chatRequest' is not null or undefined
+            assertParamExists("aiChat", "chatRequest", chatRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chat`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof chatRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
+                : chatRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
+         * @summary (BETA) Get Chat History
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatHistoryRequest} chatHistoryRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatHistory: async (
+            workspaceId: string,
+            chatHistoryRequest: ChatHistoryRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiChatHistory", "workspaceId", workspaceId);
+            // verify required parameter 'chatHistoryRequest' is not null or undefined
+            assertParamExists("aiChatHistory", "chatHistoryRequest", chatHistoryRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatHistory`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof chatHistoryRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(chatHistoryRequest !== undefined ? chatHistoryRequest : {})
+                : chatHistoryRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatStream: async (
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiChatStream", "workspaceId", workspaceId);
+            // verify required parameter 'chatRequest' is not null or undefined
+            assertParamExists("aiChatStream", "chatRequest", chatRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatStream`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof chatRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
+                : chatRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+         * @summary (BETA) Semantic Search in Metadata
+         * @param {string} workspaceId Workspace identifier
+         * @param {SearchRequest} searchRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiSearch: async (
+            workspaceId: string,
+            searchRequest: SearchRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiSearch", "workspaceId", workspaceId);
+            // verify required parameter 'searchRequest' is not null or undefined
+            assertParamExists("aiSearch", "searchRequest", searchRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/search`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof searchRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(searchRequest !== undefined ? searchRequest : {})
+                : searchRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Computes anomaly detection.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {AnomalyDetectionRequest} anomalyDetectionRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        anomalyDetection: async (
+            workspaceId: string,
+            resultId: string,
+            anomalyDetectionRequest: AnomalyDetectionRequest,
+            skipCache?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("anomalyDetection", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("anomalyDetection", "resultId", resultId);
+            // verify required parameter 'anomalyDetectionRequest' is not null or undefined
+            assertParamExists("anomalyDetection", "anomalyDetectionRequest", anomalyDetectionRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof anomalyDetectionRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(anomalyDetectionRequest !== undefined ? anomalyDetectionRequest : {})
+                : anomalyDetectionRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Gets anomalies.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        anomalyDetectionResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("anomalyDetectionResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("anomalyDetectionResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {ClusteringRequest} clusteringRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        clustering: async (
+            workspaceId: string,
+            resultId: string,
+            clusteringRequest: ClusteringRequest,
+            skipCache?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("clustering", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("clustering", "resultId", resultId);
+            // verify required parameter 'clusteringRequest' is not null or undefined
+            assertParamExists("clustering", "clusteringRequest", clusteringRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof clusteringRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(clusteringRequest !== undefined ? clusteringRequest : {})
+                : clusteringRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Gets clustering result.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        clusteringResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("clusteringResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("clusteringResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
@@ -2538,6 +4377,239 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * (BETA) Computes forecasted data points from the provided execution result and parameters.
+         * @summary (BETA) Smart functions - Forecast
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {ForecastRequest} forecastRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        forecast: async (
+            workspaceId: string,
+            resultId: string,
+            forecastRequest: ForecastRequest,
+            skipCache?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("forecast", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("forecast", "resultId", resultId);
+            // verify required parameter 'forecastRequest' is not null or undefined
+            assertParamExists("forecast", "forecastRequest", forecastRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof forecastRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(forecastRequest !== undefined ? forecastRequest : {})
+                : forecastRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (BETA) Gets forecast result.
+         * @summary (BETA) Smart functions - Forecast Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        forecastResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("forecastResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("forecastResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+         * @summary (EXPERIMENTAL) Compute key driver analysis
+         * @param {string} workspaceId Workspace identifier
+         * @param {KeyDriversRequest} keyDriversRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        keyDriverAnalysis: async (
+            workspaceId: string,
+            keyDriversRequest: KeyDriversRequest,
+            skipCache?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("keyDriverAnalysis", "workspaceId", workspaceId);
+            // verify required parameter 'keyDriversRequest' is not null or undefined
+            assertParamExists("keyDriverAnalysis", "keyDriversRequest", keyDriversRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof keyDriversRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(keyDriversRequest !== undefined ? keyDriversRequest : {})
+                : keyDriversRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Gets key driver analysis.
+         * @summary (EXPERIMENTAL) Get key driver analysis result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        keyDriverAnalysisResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("keyDriverAnalysisResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("keyDriverAnalysisResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {string} workspaceId Workspace identifier
@@ -2655,6 +4727,190 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
 export const ActionsApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = ActionsApiAxiosParamCreator(configuration);
     return {
+        /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiChat(
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChat(
+                workspaceId,
+                chatRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
+         * @summary (BETA) Get Chat History
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatHistoryRequest} chatHistoryRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiChatHistory(
+            workspaceId: string,
+            chatHistoryRequest: ChatHistoryRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatHistoryResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChatHistory(
+                workspaceId,
+                chatHistoryRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiChatStream(
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<object>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChatStream(
+                workspaceId,
+                chatRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+         * @summary (BETA) Semantic Search in Metadata
+         * @param {string} workspaceId Workspace identifier
+         * @param {SearchRequest} searchRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiSearch(
+            workspaceId: string,
+            searchRequest: SearchRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiSearch(
+                workspaceId,
+                searchRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Computes anomaly detection.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {AnomalyDetectionRequest} anomalyDetectionRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async anomalyDetection(
+            workspaceId: string,
+            resultId: string,
+            anomalyDetectionRequest: AnomalyDetectionRequest,
+            skipCache?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.anomalyDetection(
+                workspaceId,
+                resultId,
+                anomalyDetectionRequest,
+                skipCache,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Gets anomalies.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async anomalyDetectionResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnomalyDetectionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.anomalyDetectionResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {ClusteringRequest} clusteringRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async clustering(
+            workspaceId: string,
+            resultId: string,
+            clusteringRequest: ClusteringRequest,
+            skipCache?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.clustering(
+                workspaceId,
+                resultId,
+                clusteringRequest,
+                skipCache,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Gets clustering result.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async clusteringResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusteringResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.clusteringResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
         /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
@@ -2784,6 +5040,107 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * (BETA) Computes forecasted data points from the provided execution result and parameters.
+         * @summary (BETA) Smart functions - Forecast
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {ForecastRequest} forecastRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async forecast(
+            workspaceId: string,
+            resultId: string,
+            forecastRequest: ForecastRequest,
+            skipCache?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.forecast(
+                workspaceId,
+                resultId,
+                forecastRequest,
+                skipCache,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (BETA) Gets forecast result.
+         * @summary (BETA) Smart functions - Forecast Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async forecastResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ForecastResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.forecastResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+         * @summary (EXPERIMENTAL) Compute key driver analysis
+         * @param {string} workspaceId Workspace identifier
+         * @param {KeyDriversRequest} keyDriversRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async keyDriverAnalysis(
+            workspaceId: string,
+            keyDriversRequest: KeyDriversRequest,
+            skipCache?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.keyDriverAnalysis(
+                workspaceId,
+                keyDriversRequest,
+                skipCache,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Gets key driver analysis.
+         * @summary (EXPERIMENTAL) Get key driver analysis result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async keyDriverAnalysisResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.keyDriverAnalysisResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {string} workspaceId Workspace identifier
@@ -2846,6 +5203,150 @@ export const ActionsApiFactory = function (
 ) {
     const localVarFp = ActionsApiFp(configuration);
     return {
+        /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {ActionsApiAiChatRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChat(
+            requestParameters: ActionsApiAiChatRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ChatResult> {
+            return localVarFp
+                .aiChat(requestParameters.workspaceId, requestParameters.chatRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
+         * @summary (BETA) Get Chat History
+         * @param {ActionsApiAiChatHistoryRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatHistory(
+            requestParameters: ActionsApiAiChatHistoryRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ChatHistoryResult> {
+            return localVarFp
+                .aiChatHistory(requestParameters.workspaceId, requestParameters.chatHistoryRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {ActionsApiAiChatStreamRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatStream(
+            requestParameters: ActionsApiAiChatStreamRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<Array<object>> {
+            return localVarFp
+                .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+         * @summary (BETA) Semantic Search in Metadata
+         * @param {ActionsApiAiSearchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiSearch(
+            requestParameters: ActionsApiAiSearchRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<SearchResult> {
+            return localVarFp
+                .aiSearch(requestParameters.workspaceId, requestParameters.searchRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Computes anomaly detection.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+         * @param {ActionsApiAnomalyDetectionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        anomalyDetection(
+            requestParameters: ActionsApiAnomalyDetectionRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<SmartFunctionResponse> {
+            return localVarFp
+                .anomalyDetection(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.anomalyDetectionRequest,
+                    requestParameters.skipCache,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Gets anomalies.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+         * @param {ActionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        anomalyDetectionResult(
+            requestParameters: ActionsApiAnomalyDetectionResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AnomalyDetectionResult> {
+            return localVarFp
+                .anomalyDetectionResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering
+         * @param {ActionsApiClusteringRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        clustering(
+            requestParameters: ActionsApiClusteringRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<SmartFunctionResponse> {
+            return localVarFp
+                .clustering(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.clusteringRequest,
+                    requestParameters.skipCache,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Gets clustering result.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+         * @param {ActionsApiClusteringResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        clusteringResult(
+            requestParameters: ActionsApiClusteringResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ClusteringResult> {
+            return localVarFp
+                .clusteringResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
         /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
@@ -2948,6 +5449,89 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * (BETA) Computes forecasted data points from the provided execution result and parameters.
+         * @summary (BETA) Smart functions - Forecast
+         * @param {ActionsApiForecastRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        forecast(
+            requestParameters: ActionsApiForecastRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<SmartFunctionResponse> {
+            return localVarFp
+                .forecast(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.forecastRequest,
+                    requestParameters.skipCache,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (BETA) Gets forecast result.
+         * @summary (BETA) Smart functions - Forecast Result
+         * @param {ActionsApiForecastResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        forecastResult(
+            requestParameters: ActionsApiForecastResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ForecastResult> {
+            return localVarFp
+                .forecastResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+         * @summary (EXPERIMENTAL) Compute key driver analysis
+         * @param {ActionsApiKeyDriverAnalysisRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        keyDriverAnalysis(
+            requestParameters: ActionsApiKeyDriverAnalysisRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<KeyDriversResponse> {
+            return localVarFp
+                .keyDriverAnalysis(
+                    requestParameters.workspaceId,
+                    requestParameters.keyDriversRequest,
+                    requestParameters.skipCache,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Gets key driver analysis.
+         * @summary (EXPERIMENTAL) Get key driver analysis result
+         * @param {ActionsApiKeyDriverAnalysisResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        keyDriverAnalysisResult(
+            requestParameters: ActionsApiKeyDriverAnalysisResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<KeyDriversResult> {
+            return localVarFp
+                .keyDriverAnalysisResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {ActionsApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
@@ -2993,6 +5577,110 @@ export const ActionsApiFactory = function (
  * @interface ActionsApi
  */
 export interface ActionsApiInterface {
+    /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {ActionsApiAiChatRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    aiChat(
+        requestParameters: ActionsApiAiChatRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ChatResult>;
+
+    /**
+     * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
+     * @summary (BETA) Get Chat History
+     * @param {ActionsApiAiChatHistoryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    aiChatHistory(
+        requestParameters: ActionsApiAiChatHistoryRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ChatHistoryResult>;
+
+    /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {ActionsApiAiChatStreamRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    aiChatStream(
+        requestParameters: ActionsApiAiChatStreamRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<Array<object>>;
+
+    /**
+     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+     * @summary (BETA) Semantic Search in Metadata
+     * @param {ActionsApiAiSearchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    aiSearch(
+        requestParameters: ActionsApiAiSearchRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<SearchResult>;
+
+    /**
+     * (EXPERIMENTAL) Computes anomaly detection.
+     * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+     * @param {ActionsApiAnomalyDetectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    anomalyDetection(
+        requestParameters: ActionsApiAnomalyDetectionRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<SmartFunctionResponse>;
+
+    /**
+     * (EXPERIMENTAL) Gets anomalies.
+     * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+     * @param {ActionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    anomalyDetectionResult(
+        requestParameters: ActionsApiAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AnomalyDetectionResult>;
+
+    /**
+     * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+     * @summary (EXPERIMENTAL) Smart functions - Clustering
+     * @param {ActionsApiClusteringRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    clustering(
+        requestParameters: ActionsApiClusteringRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<SmartFunctionResponse>;
+
+    /**
+     * (EXPERIMENTAL) Gets clustering result.
+     * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+     * @param {ActionsApiClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    clusteringResult(
+        requestParameters: ActionsApiClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ClusteringResult>;
+
     /**
      * Returns paged list of elements (values) of given label satisfying given filtering criteria.
      * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
@@ -3059,6 +5747,58 @@ export interface ActionsApiInterface {
     ): AxiosPromise<any>;
 
     /**
+     * (BETA) Computes forecasted data points from the provided execution result and parameters.
+     * @summary (BETA) Smart functions - Forecast
+     * @param {ActionsApiForecastRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    forecast(
+        requestParameters: ActionsApiForecastRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<SmartFunctionResponse>;
+
+    /**
+     * (BETA) Gets forecast result.
+     * @summary (BETA) Smart functions - Forecast Result
+     * @param {ActionsApiForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    forecastResult(
+        requestParameters: ActionsApiForecastResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ForecastResult>;
+
+    /**
+     * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+     * @summary (EXPERIMENTAL) Compute key driver analysis
+     * @param {ActionsApiKeyDriverAnalysisRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    keyDriverAnalysis(
+        requestParameters: ActionsApiKeyDriverAnalysisRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<KeyDriversResponse>;
+
+    /**
+     * (EXPERIMENTAL) Gets key driver analysis.
+     * @summary (EXPERIMENTAL) Get key driver analysis result
+     * @param {ActionsApiKeyDriverAnalysisResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    keyDriverAnalysisResult(
+        requestParameters: ActionsApiKeyDriverAnalysisResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<KeyDriversResult>;
+
+    /**
      * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
      * @summary Get a single execution result\'s metadata.
      * @param {ActionsApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
@@ -3083,6 +5823,230 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiRetrieveResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ExecutionResult>;
+}
+
+/**
+ * Request parameters for aiChat operation in ActionsApi.
+ * @export
+ * @interface ActionsApiAiChatRequest
+ */
+export interface ActionsApiAiChatRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiAiChat
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ChatRequest}
+     * @memberof ActionsApiAiChat
+     */
+    readonly chatRequest: ChatRequest;
+}
+
+/**
+ * Request parameters for aiChatHistory operation in ActionsApi.
+ * @export
+ * @interface ActionsApiAiChatHistoryRequest
+ */
+export interface ActionsApiAiChatHistoryRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiAiChatHistory
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ChatHistoryRequest}
+     * @memberof ActionsApiAiChatHistory
+     */
+    readonly chatHistoryRequest: ChatHistoryRequest;
+}
+
+/**
+ * Request parameters for aiChatStream operation in ActionsApi.
+ * @export
+ * @interface ActionsApiAiChatStreamRequest
+ */
+export interface ActionsApiAiChatStreamRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiAiChatStream
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ChatRequest}
+     * @memberof ActionsApiAiChatStream
+     */
+    readonly chatRequest: ChatRequest;
+}
+
+/**
+ * Request parameters for aiSearch operation in ActionsApi.
+ * @export
+ * @interface ActionsApiAiSearchRequest
+ */
+export interface ActionsApiAiSearchRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiAiSearch
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {SearchRequest}
+     * @memberof ActionsApiAiSearch
+     */
+    readonly searchRequest: SearchRequest;
+}
+
+/**
+ * Request parameters for anomalyDetection operation in ActionsApi.
+ * @export
+ * @interface ActionsApiAnomalyDetectionRequest
+ */
+export interface ActionsApiAnomalyDetectionRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiAnomalyDetection
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result ID to be used in the computation
+     * @type {string}
+     * @memberof ActionsApiAnomalyDetection
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {AnomalyDetectionRequest}
+     * @memberof ActionsApiAnomalyDetection
+     */
+    readonly anomalyDetectionRequest: AnomalyDetectionRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ActionsApiAnomalyDetection
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for anomalyDetectionResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiAnomalyDetectionResultRequest
+ */
+export interface ActionsApiAnomalyDetectionResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiAnomalyDetectionResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ActionsApiAnomalyDetectionResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiAnomalyDetectionResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiAnomalyDetectionResult
+     */
+    readonly limit?: number;
+}
+
+/**
+ * Request parameters for clustering operation in ActionsApi.
+ * @export
+ * @interface ActionsApiClusteringRequest
+ */
+export interface ActionsApiClusteringRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiClustering
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result ID to be used in the computation
+     * @type {string}
+     * @memberof ActionsApiClustering
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {ClusteringRequest}
+     * @memberof ActionsApiClustering
+     */
+    readonly clusteringRequest: ClusteringRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ActionsApiClustering
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for clusteringResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiClusteringResultRequest
+ */
+export interface ActionsApiClusteringResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiClusteringResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ActionsApiClusteringResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiClusteringResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiClusteringResult
+     */
+    readonly limit?: number;
 }
 
 /**
@@ -3243,6 +6207,139 @@ export interface ActionsApiExplainAFMRequest {
 }
 
 /**
+ * Request parameters for forecast operation in ActionsApi.
+ * @export
+ * @interface ActionsApiForecastRequest
+ */
+export interface ActionsApiForecastRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiForecast
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result ID to be used in the computation
+     * @type {string}
+     * @memberof ActionsApiForecast
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {ForecastRequest}
+     * @memberof ActionsApiForecast
+     */
+    readonly forecastRequest: ForecastRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ActionsApiForecast
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for forecastResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiForecastResultRequest
+ */
+export interface ActionsApiForecastResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiForecastResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ActionsApiForecastResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiForecastResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiForecastResult
+     */
+    readonly limit?: number;
+}
+
+/**
+ * Request parameters for keyDriverAnalysis operation in ActionsApi.
+ * @export
+ * @interface ActionsApiKeyDriverAnalysisRequest
+ */
+export interface ActionsApiKeyDriverAnalysisRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiKeyDriverAnalysis
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {KeyDriversRequest}
+     * @memberof ActionsApiKeyDriverAnalysis
+     */
+    readonly keyDriversRequest: KeyDriversRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ActionsApiKeyDriverAnalysis
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for keyDriverAnalysisResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiKeyDriverAnalysisResultRequest
+ */
+export interface ActionsApiKeyDriverAnalysisResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiKeyDriverAnalysisResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ActionsApiKeyDriverAnalysisResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiKeyDriverAnalysisResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiKeyDriverAnalysisResult
+     */
+    readonly limit?: number;
+}
+
+/**
  * Request parameters for retrieveExecutionMetadata operation in ActionsApi.
  * @export
  * @interface ActionsApiRetrieveExecutionMetadataRequest
@@ -3312,6 +6409,151 @@ export interface ActionsApiRetrieveResultRequest {
  * @extends {BaseAPI}
  */
 export class ActionsApi extends BaseAPI implements ActionsApiInterface {
+    /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {ActionsApiAiChatRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public aiChat(requestParameters: ActionsApiAiChatRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .aiChat(requestParameters.workspaceId, requestParameters.chatRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
+     * @summary (BETA) Get Chat History
+     * @param {ActionsApiAiChatHistoryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public aiChatHistory(requestParameters: ActionsApiAiChatHistoryRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .aiChatHistory(requestParameters.workspaceId, requestParameters.chatHistoryRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {ActionsApiAiChatStreamRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public aiChatStream(requestParameters: ActionsApiAiChatStreamRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+     * @summary (BETA) Semantic Search in Metadata
+     * @param {ActionsApiAiSearchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public aiSearch(requestParameters: ActionsApiAiSearchRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .aiSearch(requestParameters.workspaceId, requestParameters.searchRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Computes anomaly detection.
+     * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+     * @param {ActionsApiAnomalyDetectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public anomalyDetection(
+        requestParameters: ActionsApiAnomalyDetectionRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .anomalyDetection(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.anomalyDetectionRequest,
+                requestParameters.skipCache,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Gets anomalies.
+     * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+     * @param {ActionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public anomalyDetectionResult(
+        requestParameters: ActionsApiAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .anomalyDetectionResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+     * @summary (EXPERIMENTAL) Smart functions - Clustering
+     * @param {ActionsApiClusteringRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .clustering(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.clusteringRequest,
+                requestParameters.skipCache,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Gets clustering result.
+     * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+     * @param {ActionsApiClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public clusteringResult(
+        requestParameters: ActionsApiClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .clusteringResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Returns paged list of elements (values) of given label satisfying given filtering criteria.
      * @summary Listing of label values. The resulting data are limited by the static platform limit to the maximum of 10000 rows.
@@ -3412,6 +6654,91 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.afmExecution,
                 requestParameters.explainType,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Computes forecasted data points from the provided execution result and parameters.
+     * @summary (BETA) Smart functions - Forecast
+     * @param {ActionsApiForecastRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .forecast(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.forecastRequest,
+                requestParameters.skipCache,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Gets forecast result.
+     * @summary (BETA) Smart functions - Forecast Result
+     * @param {ActionsApiForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .forecastResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+     * @summary (EXPERIMENTAL) Compute key driver analysis
+     * @param {ActionsApiKeyDriverAnalysisRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public keyDriverAnalysis(
+        requestParameters: ActionsApiKeyDriverAnalysisRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .keyDriverAnalysis(
+                requestParameters.workspaceId,
+                requestParameters.keyDriversRequest,
+                requestParameters.skipCache,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Gets key driver analysis.
+     * @summary (EXPERIMENTAL) Get key driver analysis result
+     * @param {ActionsApiKeyDriverAnalysisResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public keyDriverAnalysisResult(
+        requestParameters: ActionsApiKeyDriverAnalysisResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .keyDriverAnalysisResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -3776,6 +7103,121 @@ export const ComputationApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+         * @summary (EXPERIMENTAL) Compute key driver analysis
+         * @param {string} workspaceId Workspace identifier
+         * @param {KeyDriversRequest} keyDriversRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        keyDriverAnalysis: async (
+            workspaceId: string,
+            keyDriversRequest: KeyDriversRequest,
+            skipCache?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("keyDriverAnalysis", "workspaceId", workspaceId);
+            // verify required parameter 'keyDriversRequest' is not null or undefined
+            assertParamExists("keyDriverAnalysis", "keyDriversRequest", keyDriversRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof keyDriversRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(keyDriversRequest !== undefined ? keyDriversRequest : {})
+                : keyDriversRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Gets key driver analysis.
+         * @summary (EXPERIMENTAL) Get key driver analysis result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        keyDriverAnalysisResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("keyDriverAnalysisResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("keyDriverAnalysisResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {string} workspaceId Workspace identifier
@@ -4022,6 +7464,55 @@ export const ComputationApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+         * @summary (EXPERIMENTAL) Compute key driver analysis
+         * @param {string} workspaceId Workspace identifier
+         * @param {KeyDriversRequest} keyDriversRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async keyDriverAnalysis(
+            workspaceId: string,
+            keyDriversRequest: KeyDriversRequest,
+            skipCache?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.keyDriverAnalysis(
+                workspaceId,
+                keyDriversRequest,
+                skipCache,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Gets key driver analysis.
+         * @summary (EXPERIMENTAL) Get key driver analysis result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async keyDriverAnalysisResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.keyDriverAnalysisResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {string} workspaceId Workspace identifier
@@ -4186,6 +7677,47 @@ export const ComputationApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+         * @summary (EXPERIMENTAL) Compute key driver analysis
+         * @param {ComputationApiKeyDriverAnalysisRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        keyDriverAnalysis(
+            requestParameters: ComputationApiKeyDriverAnalysisRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<KeyDriversResponse> {
+            return localVarFp
+                .keyDriverAnalysis(
+                    requestParameters.workspaceId,
+                    requestParameters.keyDriversRequest,
+                    requestParameters.skipCache,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Gets key driver analysis.
+         * @summary (EXPERIMENTAL) Get key driver analysis result
+         * @param {ComputationApiKeyDriverAnalysisResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        keyDriverAnalysisResult(
+            requestParameters: ComputationApiKeyDriverAnalysisResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<KeyDriversResult> {
+            return localVarFp
+                .keyDriverAnalysisResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {ComputationApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
@@ -4295,6 +7827,32 @@ export interface ComputationApiInterface {
         requestParameters: ComputationApiExplainAFMRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<any>;
+
+    /**
+     * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+     * @summary (EXPERIMENTAL) Compute key driver analysis
+     * @param {ComputationApiKeyDriverAnalysisRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    keyDriverAnalysis(
+        requestParameters: ComputationApiKeyDriverAnalysisRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<KeyDriversResponse>;
+
+    /**
+     * (EXPERIMENTAL) Gets key driver analysis.
+     * @summary (EXPERIMENTAL) Get key driver analysis result
+     * @param {ComputationApiKeyDriverAnalysisResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    keyDriverAnalysisResult(
+        requestParameters: ComputationApiKeyDriverAnalysisResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<KeyDriversResult>;
 
     /**
      * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
@@ -4481,6 +8039,69 @@ export interface ComputationApiExplainAFMRequest {
 }
 
 /**
+ * Request parameters for keyDriverAnalysis operation in ComputationApi.
+ * @export
+ * @interface ComputationApiKeyDriverAnalysisRequest
+ */
+export interface ComputationApiKeyDriverAnalysisRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiKeyDriverAnalysis
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {KeyDriversRequest}
+     * @memberof ComputationApiKeyDriverAnalysis
+     */
+    readonly keyDriversRequest: KeyDriversRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ComputationApiKeyDriverAnalysis
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for keyDriverAnalysisResult operation in ComputationApi.
+ * @export
+ * @interface ComputationApiKeyDriverAnalysisResultRequest
+ */
+export interface ComputationApiKeyDriverAnalysisResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiKeyDriverAnalysisResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ComputationApiKeyDriverAnalysisResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ComputationApiKeyDriverAnalysisResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ComputationApiKeyDriverAnalysisResult
+     */
+    readonly limit?: number;
+}
+
+/**
  * Request parameters for retrieveExecutionMetadata operation in ComputationApi.
  * @export
  * @interface ComputationApiRetrieveExecutionMetadataRequest
@@ -4659,6 +8280,51 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
     }
 
     /**
+     * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+     * @summary (EXPERIMENTAL) Compute key driver analysis
+     * @param {ComputationApiKeyDriverAnalysisRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public keyDriverAnalysis(
+        requestParameters: ComputationApiKeyDriverAnalysisRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .keyDriverAnalysis(
+                requestParameters.workspaceId,
+                requestParameters.keyDriversRequest,
+                requestParameters.skipCache,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Gets key driver analysis.
+     * @summary (EXPERIMENTAL) Get key driver analysis result
+     * @param {ComputationApiKeyDriverAnalysisResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public keyDriverAnalysisResult(
+        requestParameters: ComputationApiKeyDriverAnalysisResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .keyDriverAnalysisResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
      * @summary Get a single execution result\'s metadata.
      * @param {ComputationApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
@@ -4694,6 +8360,1656 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
                 requestParameters.offset,
                 requestParameters.limit,
                 requestParameters.excludedTotalDimensions,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
+ * SmartFunctionsApi - axios parameter creator
+ * @export
+ */
+export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChat: async (
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiChat", "workspaceId", workspaceId);
+            // verify required parameter 'chatRequest' is not null or undefined
+            assertParamExists("aiChat", "chatRequest", chatRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chat`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof chatRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
+                : chatRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
+         * @summary (BETA) Get Chat History
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatHistoryRequest} chatHistoryRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatHistory: async (
+            workspaceId: string,
+            chatHistoryRequest: ChatHistoryRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiChatHistory", "workspaceId", workspaceId);
+            // verify required parameter 'chatHistoryRequest' is not null or undefined
+            assertParamExists("aiChatHistory", "chatHistoryRequest", chatHistoryRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatHistory`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof chatHistoryRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(chatHistoryRequest !== undefined ? chatHistoryRequest : {})
+                : chatHistoryRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatStream: async (
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiChatStream", "workspaceId", workspaceId);
+            // verify required parameter 'chatRequest' is not null or undefined
+            assertParamExists("aiChatStream", "chatRequest", chatRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatStream`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof chatRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
+                : chatRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+         * @summary (BETA) Semantic Search in Metadata
+         * @param {string} workspaceId Workspace identifier
+         * @param {SearchRequest} searchRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiSearch: async (
+            workspaceId: string,
+            searchRequest: SearchRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiSearch", "workspaceId", workspaceId);
+            // verify required parameter 'searchRequest' is not null or undefined
+            assertParamExists("aiSearch", "searchRequest", searchRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/search`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof searchRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(searchRequest !== undefined ? searchRequest : {})
+                : searchRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Computes anomaly detection.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {AnomalyDetectionRequest} anomalyDetectionRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        anomalyDetection: async (
+            workspaceId: string,
+            resultId: string,
+            anomalyDetectionRequest: AnomalyDetectionRequest,
+            skipCache?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("anomalyDetection", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("anomalyDetection", "resultId", resultId);
+            // verify required parameter 'anomalyDetectionRequest' is not null or undefined
+            assertParamExists("anomalyDetection", "anomalyDetectionRequest", anomalyDetectionRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof anomalyDetectionRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(anomalyDetectionRequest !== undefined ? anomalyDetectionRequest : {})
+                : anomalyDetectionRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Gets anomalies.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        anomalyDetectionResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("anomalyDetectionResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("anomalyDetectionResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {ClusteringRequest} clusteringRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        clustering: async (
+            workspaceId: string,
+            resultId: string,
+            clusteringRequest: ClusteringRequest,
+            skipCache?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("clustering", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("clustering", "resultId", resultId);
+            // verify required parameter 'clusteringRequest' is not null or undefined
+            assertParamExists("clustering", "clusteringRequest", clusteringRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof clusteringRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(clusteringRequest !== undefined ? clusteringRequest : {})
+                : clusteringRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Gets clustering result.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        clusteringResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("clusteringResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("clusteringResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/clustering/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (BETA) Computes forecasted data points from the provided execution result and parameters.
+         * @summary (BETA) Smart functions - Forecast
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {ForecastRequest} forecastRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        forecast: async (
+            workspaceId: string,
+            resultId: string,
+            forecastRequest: ForecastRequest,
+            skipCache?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("forecast", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("forecast", "resultId", resultId);
+            // verify required parameter 'forecastRequest' is not null or undefined
+            assertParamExists("forecast", "forecastRequest", forecastRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof forecastRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(forecastRequest !== undefined ? forecastRequest : {})
+                : forecastRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (BETA) Gets forecast result.
+         * @summary (BETA) Smart functions - Forecast Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        forecastResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("forecastResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("forecastResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    };
+};
+
+/**
+ * SmartFunctionsApi - functional programming interface
+ * @export
+ */
+export const SmartFunctionsApiFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = SmartFunctionsApiAxiosParamCreator(configuration);
+    return {
+        /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiChat(
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChat(
+                workspaceId,
+                chatRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
+         * @summary (BETA) Get Chat History
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatHistoryRequest} chatHistoryRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiChatHistory(
+            workspaceId: string,
+            chatHistoryRequest: ChatHistoryRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatHistoryResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChatHistory(
+                workspaceId,
+                chatHistoryRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiChatStream(
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<object>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChatStream(
+                workspaceId,
+                chatRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+         * @summary (BETA) Semantic Search in Metadata
+         * @param {string} workspaceId Workspace identifier
+         * @param {SearchRequest} searchRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiSearch(
+            workspaceId: string,
+            searchRequest: SearchRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiSearch(
+                workspaceId,
+                searchRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Computes anomaly detection.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {AnomalyDetectionRequest} anomalyDetectionRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async anomalyDetection(
+            workspaceId: string,
+            resultId: string,
+            anomalyDetectionRequest: AnomalyDetectionRequest,
+            skipCache?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.anomalyDetection(
+                workspaceId,
+                resultId,
+                anomalyDetectionRequest,
+                skipCache,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Gets anomalies.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async anomalyDetectionResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnomalyDetectionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.anomalyDetectionResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {ClusteringRequest} clusteringRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async clustering(
+            workspaceId: string,
+            resultId: string,
+            clusteringRequest: ClusteringRequest,
+            skipCache?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.clustering(
+                workspaceId,
+                resultId,
+                clusteringRequest,
+                skipCache,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Gets clustering result.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async clusteringResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusteringResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.clusteringResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (BETA) Computes forecasted data points from the provided execution result and parameters.
+         * @summary (BETA) Smart functions - Forecast
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {ForecastRequest} forecastRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async forecast(
+            workspaceId: string,
+            resultId: string,
+            forecastRequest: ForecastRequest,
+            skipCache?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.forecast(
+                workspaceId,
+                resultId,
+                forecastRequest,
+                skipCache,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (BETA) Gets forecast result.
+         * @summary (BETA) Smart functions - Forecast Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async forecastResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ForecastResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.forecastResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    };
+};
+
+/**
+ * SmartFunctionsApi - factory interface
+ * @export
+ */
+export const SmartFunctionsApiFactory = function (
+    configuration?: Configuration,
+    basePath?: string,
+    axios?: AxiosInstance,
+) {
+    const localVarFp = SmartFunctionsApiFp(configuration);
+    return {
+        /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {SmartFunctionsApiAiChatRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChat(
+            requestParameters: SmartFunctionsApiAiChatRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ChatResult> {
+            return localVarFp
+                .aiChat(requestParameters.workspaceId, requestParameters.chatRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
+         * @summary (BETA) Get Chat History
+         * @param {SmartFunctionsApiAiChatHistoryRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatHistory(
+            requestParameters: SmartFunctionsApiAiChatHistoryRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ChatHistoryResult> {
+            return localVarFp
+                .aiChatHistory(requestParameters.workspaceId, requestParameters.chatHistoryRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {SmartFunctionsApiAiChatStreamRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatStream(
+            requestParameters: SmartFunctionsApiAiChatStreamRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<Array<object>> {
+            return localVarFp
+                .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+         * @summary (BETA) Semantic Search in Metadata
+         * @param {SmartFunctionsApiAiSearchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiSearch(
+            requestParameters: SmartFunctionsApiAiSearchRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<SearchResult> {
+            return localVarFp
+                .aiSearch(requestParameters.workspaceId, requestParameters.searchRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Computes anomaly detection.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+         * @param {SmartFunctionsApiAnomalyDetectionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        anomalyDetection(
+            requestParameters: SmartFunctionsApiAnomalyDetectionRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<SmartFunctionResponse> {
+            return localVarFp
+                .anomalyDetection(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.anomalyDetectionRequest,
+                    requestParameters.skipCache,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Gets anomalies.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+         * @param {SmartFunctionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        anomalyDetectionResult(
+            requestParameters: SmartFunctionsApiAnomalyDetectionResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AnomalyDetectionResult> {
+            return localVarFp
+                .anomalyDetectionResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering
+         * @param {SmartFunctionsApiClusteringRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        clustering(
+            requestParameters: SmartFunctionsApiClusteringRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<SmartFunctionResponse> {
+            return localVarFp
+                .clustering(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.clusteringRequest,
+                    requestParameters.skipCache,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Gets clustering result.
+         * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+         * @param {SmartFunctionsApiClusteringResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        clusteringResult(
+            requestParameters: SmartFunctionsApiClusteringResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ClusteringResult> {
+            return localVarFp
+                .clusteringResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (BETA) Computes forecasted data points from the provided execution result and parameters.
+         * @summary (BETA) Smart functions - Forecast
+         * @param {SmartFunctionsApiForecastRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        forecast(
+            requestParameters: SmartFunctionsApiForecastRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<SmartFunctionResponse> {
+            return localVarFp
+                .forecast(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.forecastRequest,
+                    requestParameters.skipCache,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (BETA) Gets forecast result.
+         * @summary (BETA) Smart functions - Forecast Result
+         * @param {SmartFunctionsApiForecastResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        forecastResult(
+            requestParameters: SmartFunctionsApiForecastResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ForecastResult> {
+            return localVarFp
+                .forecastResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * SmartFunctionsApi - interface
+ * @export
+ * @interface SmartFunctionsApi
+ */
+export interface SmartFunctionsApiInterface {
+    /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {SmartFunctionsApiAiChatRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    aiChat(
+        requestParameters: SmartFunctionsApiAiChatRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ChatResult>;
+
+    /**
+     * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
+     * @summary (BETA) Get Chat History
+     * @param {SmartFunctionsApiAiChatHistoryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    aiChatHistory(
+        requestParameters: SmartFunctionsApiAiChatHistoryRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ChatHistoryResult>;
+
+    /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {SmartFunctionsApiAiChatStreamRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    aiChatStream(
+        requestParameters: SmartFunctionsApiAiChatStreamRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<Array<object>>;
+
+    /**
+     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+     * @summary (BETA) Semantic Search in Metadata
+     * @param {SmartFunctionsApiAiSearchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    aiSearch(
+        requestParameters: SmartFunctionsApiAiSearchRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<SearchResult>;
+
+    /**
+     * (EXPERIMENTAL) Computes anomaly detection.
+     * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+     * @param {SmartFunctionsApiAnomalyDetectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    anomalyDetection(
+        requestParameters: SmartFunctionsApiAnomalyDetectionRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<SmartFunctionResponse>;
+
+    /**
+     * (EXPERIMENTAL) Gets anomalies.
+     * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+     * @param {SmartFunctionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    anomalyDetectionResult(
+        requestParameters: SmartFunctionsApiAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AnomalyDetectionResult>;
+
+    /**
+     * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+     * @summary (EXPERIMENTAL) Smart functions - Clustering
+     * @param {SmartFunctionsApiClusteringRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    clustering(
+        requestParameters: SmartFunctionsApiClusteringRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<SmartFunctionResponse>;
+
+    /**
+     * (EXPERIMENTAL) Gets clustering result.
+     * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+     * @param {SmartFunctionsApiClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    clusteringResult(
+        requestParameters: SmartFunctionsApiClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ClusteringResult>;
+
+    /**
+     * (BETA) Computes forecasted data points from the provided execution result and parameters.
+     * @summary (BETA) Smart functions - Forecast
+     * @param {SmartFunctionsApiForecastRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    forecast(
+        requestParameters: SmartFunctionsApiForecastRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<SmartFunctionResponse>;
+
+    /**
+     * (BETA) Gets forecast result.
+     * @summary (BETA) Smart functions - Forecast Result
+     * @param {SmartFunctionsApiForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    forecastResult(
+        requestParameters: SmartFunctionsApiForecastResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ForecastResult>;
+}
+
+/**
+ * Request parameters for aiChat operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiAiChatRequest
+ */
+export interface SmartFunctionsApiAiChatRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiAiChat
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ChatRequest}
+     * @memberof SmartFunctionsApiAiChat
+     */
+    readonly chatRequest: ChatRequest;
+}
+
+/**
+ * Request parameters for aiChatHistory operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiAiChatHistoryRequest
+ */
+export interface SmartFunctionsApiAiChatHistoryRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiAiChatHistory
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ChatHistoryRequest}
+     * @memberof SmartFunctionsApiAiChatHistory
+     */
+    readonly chatHistoryRequest: ChatHistoryRequest;
+}
+
+/**
+ * Request parameters for aiChatStream operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiAiChatStreamRequest
+ */
+export interface SmartFunctionsApiAiChatStreamRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiAiChatStream
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ChatRequest}
+     * @memberof SmartFunctionsApiAiChatStream
+     */
+    readonly chatRequest: ChatRequest;
+}
+
+/**
+ * Request parameters for aiSearch operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiAiSearchRequest
+ */
+export interface SmartFunctionsApiAiSearchRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiAiSearch
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {SearchRequest}
+     * @memberof SmartFunctionsApiAiSearch
+     */
+    readonly searchRequest: SearchRequest;
+}
+
+/**
+ * Request parameters for anomalyDetection operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiAnomalyDetectionRequest
+ */
+export interface SmartFunctionsApiAnomalyDetectionRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiAnomalyDetection
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result ID to be used in the computation
+     * @type {string}
+     * @memberof SmartFunctionsApiAnomalyDetection
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {AnomalyDetectionRequest}
+     * @memberof SmartFunctionsApiAnomalyDetection
+     */
+    readonly anomalyDetectionRequest: AnomalyDetectionRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof SmartFunctionsApiAnomalyDetection
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for anomalyDetectionResult operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiAnomalyDetectionResultRequest
+ */
+export interface SmartFunctionsApiAnomalyDetectionResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiAnomalyDetectionResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof SmartFunctionsApiAnomalyDetectionResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof SmartFunctionsApiAnomalyDetectionResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof SmartFunctionsApiAnomalyDetectionResult
+     */
+    readonly limit?: number;
+}
+
+/**
+ * Request parameters for clustering operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiClusteringRequest
+ */
+export interface SmartFunctionsApiClusteringRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiClustering
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result ID to be used in the computation
+     * @type {string}
+     * @memberof SmartFunctionsApiClustering
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {ClusteringRequest}
+     * @memberof SmartFunctionsApiClustering
+     */
+    readonly clusteringRequest: ClusteringRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof SmartFunctionsApiClustering
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for clusteringResult operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiClusteringResultRequest
+ */
+export interface SmartFunctionsApiClusteringResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiClusteringResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof SmartFunctionsApiClusteringResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof SmartFunctionsApiClusteringResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof SmartFunctionsApiClusteringResult
+     */
+    readonly limit?: number;
+}
+
+/**
+ * Request parameters for forecast operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiForecastRequest
+ */
+export interface SmartFunctionsApiForecastRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiForecast
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result ID to be used in the computation
+     * @type {string}
+     * @memberof SmartFunctionsApiForecast
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {ForecastRequest}
+     * @memberof SmartFunctionsApiForecast
+     */
+    readonly forecastRequest: ForecastRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof SmartFunctionsApiForecast
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for forecastResult operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiForecastResultRequest
+ */
+export interface SmartFunctionsApiForecastResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiForecastResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof SmartFunctionsApiForecastResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof SmartFunctionsApiForecastResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof SmartFunctionsApiForecastResult
+     */
+    readonly limit?: number;
+}
+
+/**
+ * SmartFunctionsApi - object-oriented interface
+ * @export
+ * @class SmartFunctionsApi
+ * @extends {BaseAPI}
+ */
+export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInterface {
+    /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {SmartFunctionsApiAiChatRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public aiChat(requestParameters: SmartFunctionsApiAiChatRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsApiFp(this.configuration)
+            .aiChat(requestParameters.workspaceId, requestParameters.chatRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.
+     * @summary (BETA) Get Chat History
+     * @param {SmartFunctionsApiAiChatHistoryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public aiChatHistory(
+        requestParameters: SmartFunctionsApiAiChatHistoryRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .aiChatHistory(requestParameters.workspaceId, requestParameters.chatHistoryRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {SmartFunctionsApiAiChatStreamRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public aiChatStream(
+        requestParameters: SmartFunctionsApiAiChatStreamRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+     * @summary (BETA) Semantic Search in Metadata
+     * @param {SmartFunctionsApiAiSearchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public aiSearch(requestParameters: SmartFunctionsApiAiSearchRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsApiFp(this.configuration)
+            .aiSearch(requestParameters.workspaceId, requestParameters.searchRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Computes anomaly detection.
+     * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+     * @param {SmartFunctionsApiAnomalyDetectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public anomalyDetection(
+        requestParameters: SmartFunctionsApiAnomalyDetectionRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .anomalyDetection(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.anomalyDetectionRequest,
+                requestParameters.skipCache,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Gets anomalies.
+     * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+     * @param {SmartFunctionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public anomalyDetectionResult(
+        requestParameters: SmartFunctionsApiAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .anomalyDetectionResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
+     * @summary (EXPERIMENTAL) Smart functions - Clustering
+     * @param {SmartFunctionsApiClusteringRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public clustering(requestParameters: SmartFunctionsApiClusteringRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsApiFp(this.configuration)
+            .clustering(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.clusteringRequest,
+                requestParameters.skipCache,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Gets clustering result.
+     * @summary (EXPERIMENTAL) Smart functions - Clustering Result
+     * @param {SmartFunctionsApiClusteringResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public clusteringResult(
+        requestParameters: SmartFunctionsApiClusteringResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .clusteringResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Computes forecasted data points from the provided execution result and parameters.
+     * @summary (BETA) Smart functions - Forecast
+     * @param {SmartFunctionsApiForecastRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public forecast(requestParameters: SmartFunctionsApiForecastRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsApiFp(this.configuration)
+            .forecast(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.forecastRequest,
+                requestParameters.skipCache,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Gets forecast result.
+     * @summary (BETA) Smart functions - Forecast Result
+     * @param {SmartFunctionsApiForecastResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public forecastResult(
+        requestParameters: SmartFunctionsApiForecastResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .forecastResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));

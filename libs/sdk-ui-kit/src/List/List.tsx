@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useEffect, useCallback, useMemo } from "react";
 import { Table, Column, Cell } from "fixed-data-table-2";
 import cx from "classnames";
@@ -136,7 +136,7 @@ export function List<T>(props: IListProps<T>): JSX.Element {
 
     return (
         <div
-            role="list"
+            data-testid="gd-list"
             className={cx("gd-list gd-infinite-list", className)}
             style={styles}
             onMouseOver={disablePageScrolling}
@@ -155,6 +155,7 @@ export function List<T>(props: IListProps<T>): JSX.Element {
                 onScrollEnd={handleScrollEnd}
                 scrollToRow={scrollToItemRowIndex}
                 touchScrollEnabled={isTouchDevice()}
+                keyboardScrollEnabled={true}
             >
                 <Column
                     flexGrow={1}

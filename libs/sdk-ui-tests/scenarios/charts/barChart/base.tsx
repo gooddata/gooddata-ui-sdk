@@ -1,5 +1,5 @@
-// (C) 2007-2019 GoodData Corporation
-import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
+// (C) 2007-2024 GoodData Corporation
+import { ReferenceMd, ReferenceData, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
@@ -13,7 +13,7 @@ export const BarChartWithSingleMeasureAndViewBy = {
 export const BarChartWithSingleMeasureViewByAndStackBy = {
     measures: [ReferenceMd.Amount],
     viewBy: [ReferenceMd.Product.Name],
-    stackBy: ReferenceMd.Region,
+    stackBy: ReferenceMd.Region.Default,
 };
 
 export const BarChartWithTwoMeasuresAndViewBy = {
@@ -23,74 +23,81 @@ export const BarChartWithTwoMeasuresAndViewBy = {
 
 export const BarChartWithTwoMeasuresAndTwoViewBy = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won],
-    viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
+    viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region.Default],
 };
 
 export const BarChartWithTwoMeasuresAndTwoViewByFiltered = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won],
-    viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
+    viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region.Default],
     filters: [
         newPositiveAttributeFilter(ReferenceMd.Product.Name, ["WonderKid"]),
-        newPositiveAttributeFilter(ReferenceMd.Region, ["East Coast"]),
+        newPositiveAttributeFilter(ReferenceMd.Region.Default, ["East Coast"]),
     ],
 };
 
 export const BarChartWithSingleMeasureAndViewByAndStackMultipleItems = {
     measures: [ReferenceMd.Amount],
-    viewBy: [ReferenceMd.Region],
+    viewBy: [ReferenceMd.Region.Default],
     stackBy: ReferenceMd.Product.Name,
 };
 
 export const BarChartWithSingleMeasureAndTwoViewByAndStack = {
     measures: [ReferenceMd.Amount],
-    viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
-    stackBy: ReferenceMd.Department,
+    viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region.Default],
+    stackBy: ReferenceMd.Department.Default,
 };
 
 const arrayOfAccountUris = [
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1426",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1427",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2872",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2873",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1428",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2874",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2871",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2875",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1429",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2876",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1430",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1432",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1431",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1433",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1434",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1435",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2877",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2878",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1436",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1437",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2879",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2880",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1438",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2881",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1439",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1440",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=9",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2882",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1441",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=10",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4513",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4514",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2888",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=13",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4672",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=14",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=2889",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=16",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1446",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=15",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1447",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=4515",
-    "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057/elements?id=1448",
+    ReferenceData.Name.AddVentures.uri,
+    ReferenceData.Name.Blank.uri,
+    ReferenceData.Name.MtMediaTemple.uri,
+    ReferenceData.Name.Decimal.uri,
+    ReferenceData.Name.$1SourceConsulting.uri,
+    ReferenceData.Name.$1800Postcards.uri,
+    ReferenceData.Name.$1800WeAnswer.uri,
+    ReferenceData.Name.$1888OhioComp.uri,
+    ReferenceData.Name.$1000BulbsCom.uri,
+    ReferenceData.Name.$101Financial.uri,
+    ReferenceData.Name.$123Exteriors.uri,
+    ReferenceData.Name.$14West.uri,
+    ReferenceData.Name.$1SourceInternational.uri,
+    ReferenceData.Name.$1stChoiceStaffingAndConsulting.uri,
+    ReferenceData.Name.$1stInVideoMusicWorld.uri,
+    ReferenceData.Name.$2WheelBikes.uri,
+    ReferenceData.Name.$2HBSoftwareDesigns.uri,
+    ReferenceData.Name.$352MediaGroup.uri,
+    ReferenceData.Name.$3Degrees.uri,
+    ReferenceData.Name.$3E.uri,
+    ReferenceData.Name.$3ballsCom.uri,
+    ReferenceData.Name.$3dCartShoppingCartSoftware.uri,
+    ReferenceData.Name.$49erCommunications.uri,
+    ReferenceData.Name.$4WallEntertainment.uri,
+    ReferenceData.Name.$4thSource.uri,
+    ReferenceData.Name.$5LINXEnterprises.uri,
+    ReferenceData.Name.$614MediaGroup.uri,
+    ReferenceData.Name.$6KSystems.uri,
+    ReferenceData.Name.$7MedicalSystems.uri,
+    ReferenceData.Name.$7SimpleMachines.uri,
+    ReferenceData.Name.$7Eleven.uri,
+    ReferenceData.Name.$720Strategies.uri,
+    ReferenceData.Name.$90octane.uri,
+    ReferenceData.Name.$919Marketing.uri,
+    ReferenceData.Name.Properties.uri,
+    ReferenceData.Name.AMainHobbies.uri,
+    ReferenceData.Name.APlaceForMom.uri,
+    ReferenceData.Name.ASquaredGroup.uri,
+    ReferenceData.Name.AWhiteOrchidWedding.uri,
+    ReferenceData.Name.AAndCPlastics.uri,
+    ReferenceData.Name.AAndPConsultingTransportationEngineers.uri,
+    ReferenceData.Name.AAndRTarpaulins.uri,
+    ReferenceData.Name.AMortgageServices.uri,
+    ReferenceData.Name.ATutorU.uri,
+    ReferenceData.Name.A1Textiles.uri,
+    ReferenceData.Name.ALifeMedical.uri,
+    ReferenceData.Name.ATSolutions.uri,
+    ReferenceData.Name.APomerantzAndCo.uri,
+    ReferenceData.Name.ABData.uri,
+    ReferenceData.Name.ARMSolutions.uri,
 ];
 
 export const BarChartWithLargeLegend = {
@@ -111,17 +118,17 @@ export const BarChartWithArithmeticMeasuresAndViewBy = {
 
 export const BarChartViewByDateAndPop = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
-    viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default],
+    viewBy: [ReferenceMd.DateDatasets.Closed.ClosedYear.Default],
 };
 
 export const BarChartViewByTwoDates = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
-    viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default, ReferenceMdExt.ModifiedClosedYear],
+    viewBy: [ReferenceMd.DateDatasets.Closed.ClosedYear.Default, ReferenceMdExt.ModifiedClosedYear],
 };
 
 export const BarChartStackByDate = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMdExt.WonPopClosedYear],
-    stackBy: ReferenceMd.DateDatasets.Closed.Year.Default,
+    stackBy: ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
 };
 
 export default scenariosFor<IBarChartProps>("BarChart", BarChart)
@@ -159,7 +166,7 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
             ReferenceMdExt.CalculatedLost,
             ReferenceMdExt.CalculatedWonLostRatio,
         ],
-        viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default],
+        viewBy: [ReferenceMd.DateDatasets.Closed.ClosedYear.Default],
     })
     .addScenario("viewBy with two dates", BarChartViewByTwoDates)
     .addScenario("stackBy with one date", BarChartStackByDate);

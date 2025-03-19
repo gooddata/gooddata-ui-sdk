@@ -7,9 +7,7 @@ no_list: true
 ---
 
 Starting from version 2.2.0, GoodData.CN includes a Web Components library that you can import into your application
-to embed dashboards or individual insights. The library is also hosted at GoodData Cloud.
-
-> Currently, we do not provide the WebComponents library for GoodData Platform.
+to embed dashboards or individual visualizations. The library is also hosted at GoodData Cloud.
 
 The Web Components library is a thin wrapper around the [InsightView](../../visualize_data/insightview/) and [Dashboard](../../../references/dashboard_component/) components. While keeping the embedding easy, it allows a high level of integration with the host application. 
 
@@ -19,7 +17,7 @@ In the simplest form, the integration could look something like this:
 <script type="module" src="https://example.gooddata.com/components/my-workspace-id.js?auth=sso"></script>
 
 <gd-dashboard dashboard="my-dashboard-id"></gd-dashboard>
-<gd-insight insight="my-insight-id"></gd-insight>
+<gd-insight insight="my-visualization-id"></gd-insight>
 ```
 
 > The **Web Components** library is using **GoodData.UI** under the hood. 
@@ -28,12 +26,12 @@ In the simplest form, the integration could look something like this:
 
 ## Choosing the right embedding option
 
-GoodData provides several options for embedding, such as **iframe embedding** for dashboards or the  **GoodData.UI React library** for dashboards and insights. The Web Components library is the middle ground between those two options. It is more flexible than iframe embedding, yet simpler to integrate comparing to the React library. 
+GoodData provides several options for embedding, such as **iframe embedding** for dashboards or the  **GoodData.UI React library** for dashboards and visualizations. The Web Components library is the middle ground between those two options. It is more flexible than iframe embedding, yet simpler to integrate comparing to the React library. 
 
 ### When to use Web Components library?
 
 * You do not want to use **iframe embedding** to avoid an overhead it creates or due to the security and compliance requirements of your company.
-* You want to embed **a single insight**, but the iframe embedding only works for a complete dashboard.
+* You want to embed **a single visualization**, but the iframe embedding only works for a complete dashboard.
 * You are using **Angular**, **Vue** or any other non-React framework for the host application.
 * You are using **a specific version of React** in your application, that is not compatible with GoodData.UI.
 
@@ -68,18 +66,18 @@ The script **must be** of the type `module`, as we are using JavaScript modules 
 
 The library will parse its own URL to pre-configure and allow you to skip the boilerplate code:
 * The domain name `{your-gd-server-url}` must be the domain of your GoodData Cloud or GoodData.CN instance.
-  This is the domain where the script will be loaded from as well as the domain that will be used to load your insight and dashboard data. You cannot load the script from one instance to use it with data from another instance.
+  This is the domain where the script will be loaded from as well as the domain that will be used to load your visualization and dashboard data. You cannot load the script from one instance to use it with data from another instance.
   **At the moment it's not possible to connect to multiple GoodData instances from a single runtime.**
-* The `{workspace-id}` is the ID of the default workspace from where the library will be loading your insights and dashboards.
-  It is possible to override this value for a specific insight or dashboard.
+* The `{workspace-id}` is the ID of the default workspace from where the library will be loading your visualizations and dashboards.
+  It is possible to override this value for a specific visualization or dashboard.
 
-### Embed insights and dashboards
+### Embed visualizations and dashboards
 
 Once the library is loaded to the application runtime, it will register two custom elements that you can use anywhere
 on the page:
 
 * `<gd-dashboard />` for [dashboard embedding](../embed_dashboards/).
-* `<gd-insight />` for [insight embedding](../embed_insights/).
+* `<gd-insight />` for [visualization embedding](../embed_insights/).
 
 ## Prerequisites and limitations
 

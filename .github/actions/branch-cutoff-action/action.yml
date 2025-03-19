@@ -9,6 +9,9 @@ inputs:
     required: true
     description: target branch
     default: r1
+  token:
+    required: true
+    description: GitHub token
 
 runs:
   using: 'composite'
@@ -17,12 +20,9 @@ runs:
       uses: actions/checkout@v4
       with:
         ref: ${{ inputs.source-branch }}
+        token: ${{ inputs.token }}
     - name: Create and push branch
       run: |
-        if git ls-remote --heads origin ${{ inputs.target-branch }} | grep ${{ inputs.target-branch }}; then
-          echo "Branch '${{ inputs.target-branch }}' already exists on remote"
-          exit 1
-        fi
         git checkout -b ${{ inputs.target-branch }}
-        git push origin ${{ inputs.target-branch }}
+        git push -f origin ${{ inputs.target-branch }}
       shell: bash

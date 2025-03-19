@@ -14,6 +14,7 @@ import { DateString } from '@gooddata/sdk-model';
 import { ElementsQueryOptionsElementsSpecification } from '@gooddata/sdk-backend-spi';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { GranularityIntlKey as GranularityIntlKey_2 } from './constants/i18n.js';
+import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
 import { IAlignPoint } from '@gooddata/sdk-ui-kit';
@@ -23,6 +24,7 @@ import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
+import { IDashboardDateFilter } from '@gooddata/sdk-model';
 import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDateAndMessageTranslator as IDateAndMessageTranslator_2 } from './utils/Translations/Translators.js';
 import { IDateFilter } from '@gooddata/sdk-model';
@@ -111,6 +113,7 @@ export type AttributeFilterControllerData = {
     elements: IAttributeElement[];
     totalElementsCount: number;
     totalElementsCountWithCurrentSettings: number;
+    isSelectionInvalid: boolean;
     isApplyDisabled: boolean;
     isWorkingSelectionInverted: boolean;
     workingSelectionElements: IAttributeElement[];
@@ -121,9 +124,12 @@ export type AttributeFilterControllerData = {
     parentFilterAttributes: IAttributeMetadataObject[];
     displayForms: IAttributeDisplayFormMetadataObject[];
     currentDisplayFormRef: ObjRef;
+    currentDisplayAsDisplayFormRef: ObjRef;
     enableShowingFilteredElements?: boolean;
     irrelevantSelection?: IAttributeElement[];
     limitingValidationItems?: ObjRef[];
+    isFilteredByDependentDateFilters?: boolean;
+    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
 };
 
 // @internal (undocumented)
@@ -257,6 +263,9 @@ export const EmptyElementsSearchBar: React_2.VFC<IAttributeFilterElementsSearchB
 // @public
 export function filterVisibleDateFilterOptions(dateFilterOptions: IDateFilterOptionsByType): IDateFilterOptionsByType;
 
+// @internal (undocumented)
+export function getAttributeFilterSubtitle(isCommittedSelectionInverted: boolean, committedSelectionElements: IAttributeElement[], intl: IntlShape): string;
+
 // @internal
 export const getLocalizedIcuDateFormatPattern: (locale: string) => string;
 
@@ -298,6 +307,7 @@ export interface IAttributeElementLoader {
     cancelIrrelevantElementsLoad(correlation?: Correlation): void;
     cancelNextElementsPageLoad(): void;
     getAllElements(): IAttributeElement[];
+    getDisplayAsLabel(): ObjRef | undefined;
     getElementsByKey(keys: AttributeElementKey[]): IAttributeElement[];
     getInitialElementsPageError(): GoodDataSdkError | undefined;
     getInitialElementsPageStatus(): AsyncOperationStatus;
@@ -306,7 +316,7 @@ export interface IAttributeElementLoader {
     getLimit(): number;
     getLimitingAttributeFilters(): IElementsQueryAttributeFilter[];
     getLimitingAttributeFiltersAttributes(): IAttributeMetadataObject[];
-    getLimitingDateFilters(): IRelativeDateFilter[];
+    getLimitingDateFilters(): (IRelativeDateFilter | IAbsoluteDateFilter)[];
     getLimitingMeasures(): IMeasure[];
     getLimitingValidationItems(): ObjRef[];
     getNextElementsPageError(): GoodDataSdkError | undefined;
@@ -341,9 +351,11 @@ export interface IAttributeElementLoader {
     onLoadNextElementsPageError: CallbackRegistration<OnLoadNextElementsPageErrorCallbackPayload>;
     onLoadNextElementsPageStart: CallbackRegistration<OnLoadNextElementsPageStartCallbackPayload>;
     onLoadNextElementsPageSuccess: CallbackRegistration<OnLoadNextElementsPageSuccessCallbackPayload>;
+    setDisplayAsLabel(displayAsLabel: ObjRef): void;
+    setDisplayForm(displayForm: ObjRef): void;
     setLimit(limit: number): void;
     setLimitingAttributeFilters(filters: IElementsQueryAttributeFilter[]): void;
-    setLimitingDateFilters(filters: IRelativeDateFilter[]): void;
+    setLimitingDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): void;
     setLimitingMeasures(measures: IMeasure[]): void;
     setLimitingValidationItems(validateBy: ObjRef[]): void;
     setOrder(order: SortDirection): void;
@@ -376,7 +388,7 @@ export interface IAttributeFilterConfigurationButtonProps {
 }
 
 // @beta
-export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon">;
+export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon" | "withoutApply" | "workingFilter">;
 
 // @public (undocumented)
 export interface IAttributeFilterCoreProps {
@@ -384,14 +396,22 @@ export interface IAttributeFilterCoreProps {
     connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
     // @alpha
     customIcon?: IFilterButtonCustomIcon;
+    // @beta
+    dependentDateFilters?: IDashboardDateFilter[];
     // @alpha
     disabled?: boolean;
+    // @alpha
+    displayAsLabel?: ObjRef;
+    enableDashboardFiltersApplyModes?: boolean;
+    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
+    enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     filter?: IAttributeFilter;
     fullscreenOnMobile?: boolean;
     hiddenElements?: string[];
     locale?: ILocale;
     onApply?: OnApplyCallbackType;
     onError?: (error: GoodDataSdkError) => void;
+    onSelect?: OnSelectCallbackType;
     parentFilterOverAttribute?: ParentFilterOverAttributeType;
     parentFilters?: AttributeFiltersOrPlaceholders;
     // @internal (undocumented)
@@ -401,6 +421,10 @@ export interface IAttributeFilterCoreProps {
     staticElements?: IAttributeElement[];
     title?: string;
     validateElementsBy?: ObjRef[];
+    // @alpha
+    withoutApply?: boolean;
+    // @alpha @deprecated
+    workingFilter?: IAttributeFilter;
     workspace?: string;
 }
 
@@ -451,6 +475,8 @@ export interface IAttributeFilterDropdownActionsProps {
     isApplyDisabled?: boolean;
     onApplyButtonClick: () => void;
     onCancelButtonClick: () => void;
+    // @alpha
+    withoutApply?: boolean;
 }
 
 // @beta
@@ -518,6 +544,7 @@ export interface IAttributeFilterElementsSelectItemProps {
     onDeselect: () => void;
     onSelect: () => void;
     onSelectOnly: () => void;
+    primaryLabelTitle?: string;
 }
 
 // @beta
@@ -531,6 +558,7 @@ export interface IAttributeFilterElementsSelectProps {
     enableShowingFilteredElements?: boolean;
     error?: GoodDataSdkError;
     irrelevantSelection?: IAttributeElement[];
+    isFilteredByDependentDateFilters?: boolean;
     isFilteredByParentFilters: boolean;
     isInverted: boolean;
     isLoading: boolean;
@@ -553,6 +581,7 @@ export interface IAttributeFilterElementsSelectProps {
 export interface IAttributeFilterEmptyResultProps {
     enableShowingFilteredElements?: boolean;
     height: number;
+    isFilteredByDependentDateFilters?: boolean;
     isFilteredByParentFilters: boolean;
     parentFilterTitles?: string[];
     searchString: string;
@@ -581,6 +610,8 @@ export type IAttributeFilterHandlerOptions = ISingleSelectAttributeFilterHandler
 
 // @public
 export interface IAttributeFilterHandlerOptionsBase {
+    displayAsLabel?: ObjRef;
+    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
 }
@@ -588,8 +619,10 @@ export interface IAttributeFilterHandlerOptionsBase {
 // @public
 export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElementLoader {
     getFilter(): IAttributeFilter;
+    getFilterToDisplay(): IAttributeFilter;
     getInitError(): GoodDataSdkError | undefined;
     getInitStatus(): AsyncOperationStatus;
+    getOriginalFilter(): IAttributeFilter;
     init(correlation?: Correlation): void;
     onInitCancel: CallbackRegistration<OnInitCancelCallbackPayload>;
     onInitError: CallbackRegistration<OnInitErrorCallbackPayload>;
@@ -624,6 +657,7 @@ export interface IAttributeFilterStatusBarProps {
     enableShowingFilteredElements?: boolean;
     getItemTitle: (item: IAttributeElement) => string;
     irrelevantSelection?: IAttributeElement[];
+    isFilteredByDependentDateFilters?: boolean;
     isFilteredByLimitingValidationItems?: boolean;
     isFilteredByParentFilters: boolean;
     isInverted: boolean;
@@ -678,6 +712,8 @@ export interface IDateFilterCallbackProps {
     onClose?: () => void;
     // (undocumented)
     onOpen?: () => void;
+    // (undocumented)
+    onSelect?: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
 }
 
 // @public
@@ -701,6 +737,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     dateFilterMode: VisibilityMode;
     // (undocumented)
     dateFormat?: string;
+    enableDashboardFiltersApplyModes?: boolean;
     // @alpha
     FilterConfigurationComponent?: React_2.ComponentType<IFilterConfigurationProps>;
     // (undocumented)
@@ -719,6 +756,12 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     showDropDownHeaderMessage?: boolean;
     // (undocumented)
     weekStart?: WeekStart;
+    // @alpha
+    withoutApply?: boolean;
+    // @alpha @deprecated
+    workingExcludeCurrentPeriod?: boolean;
+    // @alpha @deprecated
+    workingSelectedFilterOption?: DateFilterOption;
 }
 
 // @public
@@ -739,6 +782,10 @@ export interface IDateFilterState extends IDateFilterStatePropsIntersection {
     initExcludeCurrentPeriod: boolean;
     // (undocumented)
     initSelectedFilterOption: DateFilterOption;
+    // (undocumented)
+    initWorkingExcludeCurrentPeriod: boolean;
+    // (undocumented)
+    initWorkingSelectedFilterOption: DateFilterOption;
     // (undocumented)
     isExcludeCurrentPeriodEnabled: boolean;
 }
@@ -793,13 +840,15 @@ export interface ILoadElementsOptions {
     // (undocumented)
     excludePrimaryLabel?: boolean;
     // (undocumented)
+    filterByPrimaryLabel?: boolean;
+    // (undocumented)
     includeTotalCountWithoutFilters?: boolean;
     // (undocumented)
     limit?: number;
     // (undocumented)
     limitingAttributeFilters?: IElementsQueryAttributeFilter[];
     // (undocumented)
-    limitingDateFilters?: IRelativeDateFilter[];
+    limitingDateFilters?: IRelativeDateFilter[] | IAbsoluteDateFilter[];
     // (undocumented)
     limitingMeasures?: IMeasure[];
     // (undocumented)
@@ -1044,6 +1093,10 @@ export interface IUseAttributeFilterHandlerProps {
     // (undocumented)
     backend: IAnalyticalBackend;
     // (undocumented)
+    displayAsLabel: ObjRef;
+    // (undocumented)
+    enableDuplicatedLabelValuesInAttributeFilter: boolean;
+    // (undocumented)
     filter: IAttributeFilter;
     // (undocumented)
     hiddenElements?: string[];
@@ -1090,7 +1143,7 @@ export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace
 export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, attributeFilter: IAttributeFilter, options: IMultiSelectAttributeFilterHandlerOptions): IMultiSelectAttributeFilterHandler;
 
 // @public (undocumented)
-export type OnApplyCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode) => void;
+export type OnApplyCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode, selectionTitles?: IAttributeElement[], displayAsLabel?: ObjRef, isResultOfMigration?: boolean) => void;
 
 // @public
 export type OnInitCancelCallbackPayload = CallbackPayloadWithCorrelation;
@@ -1191,6 +1244,9 @@ export type OnLoadNextElementsPageStartCallbackPayload = CallbackPayloadWithCorr
 
 // @public
 export type OnLoadNextElementsPageSuccessCallbackPayload = CallbackPayloadWithCorrelation<ILoadElementsResult>;
+
+// @public (undocumented)
+export type OnSelectCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode, selectionTitles?: IAttributeElement[], displayAsLabel?: ObjRef) => void;
 
 // @public
 export type OnSelectionChangedCallbackPayload<T> = {

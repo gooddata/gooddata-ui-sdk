@@ -48,19 +48,6 @@ the same package MUST be imported directly. In other words: never import through
 
 ### Layer 1: API Clients and platform specific data models
 
-##### @gooddata/api-client-bear
-
-REST API Client for the GoodData 'bear' platform is implemented here. When APIs used by frontend are added or updated
-in 'bear', they SHOULD be added or updated in this package.
-
-##### @gooddata/api-model-bear
-
-Data types fundamental to bear's domain model SHOULD be implemented here, together with any and all functions
-needed to manipulate these types.
-
-**Rule of thumb**: if you're writing a function whose first parameter is the type defined in this package, then it
-is highly likely that the function SHOULD be located here as well.
-
 ##### @gooddata/api-client-tiger
 
 REST API Client for the GoodData 'tiger' platform is implemented here. Majority of the client is generated from
@@ -92,12 +79,8 @@ realizations that support that feature.
 
 **Backend capabilities**:
 If you need to enable / disable specific feature, but only for the particular backend implementation,
-you should not check in the code what is the currently running backend implementation (eg bear / tiger).
+you should not check in the code what is the currently running backend implementation.
 Use `IBackendCapabilities` so your code will stay backend agnostic.
-
-##### @gooddata/sdk-backend-bear
-
-Code in this package realizes Analytical Backend SPI using the GoodData 'bear' platform.
 
 ##### @gooddata/sdk-backend-tiger
 

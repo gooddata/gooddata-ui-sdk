@@ -1,7 +1,22 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { IUserSettings } from "@gooddata/sdk-backend-spi";
 import { ISettings } from "@gooddata/sdk-model";
 import { DefaultFeatureFlags } from "./uiFeatures.js";
+
+/**
+ * Locale for the applications.
+ */
+export const DefaultLocale: string = "en-US";
+
+export const DefaultWeekStart: string = "Sunday";
+
+/**
+ * Number separators.
+ */
+export const DefaultSeparators = {
+    thousand: ",",
+    decimal: ".",
+};
 
 /**
  * Tiger does not yet have endpoints for settings. All the UI-specific
@@ -26,7 +41,6 @@ export const DefaultUiSettings: ISettings = {
     enableHidingOfDataPoints: true,
     enableAdCatalogRefresh: true,
     enableAdRankingFilter: true,
-    enableDomainHomepage: true,
     enableKPIDashboardDependentFilters: false,
     enableKDWidgetCustomHeight: true,
     enableSectionHeaders: true,
@@ -79,7 +93,6 @@ export const DefaultUiSettings: ISettings = {
     enableKPIDashboardExport: true,
     enableKDZooming: true,
     enableAdDescriptionEdit: true,
-    ["msf.enableTenantCustomModel"]: false,
     drillIntoUrlDocumentationLink:
         "https://www.gooddata.com/developers/cloud-native/doc/cloud/create-dashboards/drilling-in-dashboards/set-drill-into-hyperlink/",
 
@@ -88,22 +101,8 @@ export const DefaultUiSettings: ISettings = {
     enablePivotTableTransposition: true,
     enableColumnHeadersPosition: true,
     metadataTimeZone: "UTC", // Panther/Tiger metadata are always stored in UTC time zone
+    separators: DefaultSeparators,
     ...DefaultFeatureFlags,
-};
-
-/**
- * Locale for the applications.
- */
-export const DefaultLocale: string = "en-US";
-
-export const DefaultWeekStart: string = "Sunday";
-
-/**
- * Number separators.
- */
-export const DefaultSeparators = {
-    thousand: ",",
-    decimal: ".",
 };
 
 /**

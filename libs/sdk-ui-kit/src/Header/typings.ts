@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
 import { ITheme } from "@gooddata/sdk-model";
@@ -14,6 +14,7 @@ export interface IHeaderMenuItem {
     className?: string;
     target?: string;
     iconName?: string;
+    icon?: React.ReactNode;
     onClick?: (obj: any) => void;
 }
 
@@ -35,6 +36,8 @@ export interface IAppHeaderProps {
     logoUrl?: string;
     logoHref?: string;
     logoTitle?: string;
+
+    isAccessibilityCompliant?: boolean;
 
     documentationUrl?: string;
 
@@ -60,6 +63,14 @@ export interface IAppHeaderProps {
 
     showInviteItem?: boolean;
     onInviteItemClick?: (e: React.MouseEvent) => void;
+
+    search?: React.ReactNode;
+    notificationsPanel?: (props: {
+        isMobile: boolean;
+        closeNotificationsOverlay: () => void;
+    }) => React.ReactNode;
+    showChatItem?: boolean;
+    onChatItemClick?: (e: React.MouseEvent) => void;
 }
 
 /**
@@ -71,6 +82,8 @@ export interface IAppHeaderState {
     isOverlayMenuOpen: boolean;
     responsiveMode: boolean;
     isHelpMenuOpen: boolean;
+    isSearchMenuOpen: boolean;
+    isNotificationsMenuOpen: boolean;
 }
 
 /**
@@ -79,7 +92,7 @@ export interface IAppHeaderState {
 export interface IHeaderAccountProps {
     className?: string;
     items?: IHeaderMenuItem[];
-    onMenuItemClick: (menuItem: IHeaderMenuItem, e?: React.MouseEvent) => void;
+    onMenuItemClick: (menuItem: IHeaderMenuItem, e?: React.MouseEvent | React.KeyboardEvent) => void;
     userName?: string;
 }
 

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
@@ -35,16 +35,31 @@ export const selectExecutionResult = adapterSelectors.selectById;
 /**
  * @alpha
  */
+export const selectHasSomeExecutionResult: DashboardSelector<boolean> = createSelector(
+    selectExecutionResultEntities,
+    (executionResults): boolean => {
+        // Empty results can be resolved as error, so consider error also as resolved
+        return Object.values(executionResults).filter((e) => !!e?.executionResult || !!e?.error).length >= 1;
+    },
+);
+
+/**
+ * @alpha
+ */
 export const selectExecutionResultByRef: (
-    ref: ObjRef,
-) => DashboardSelector<IExecutionResultEnvelope | undefined> = createMemoizedSelector((ref: ObjRef) =>
-    createSelector(
-        selectExecutionResultEntities,
-        (executionResults): IExecutionResultEnvelope | undefined => {
-            const key = serializeObjRef(ref);
-            return executionResults[key];
-        },
-    ),
+    ref: ObjRef | undefined,
+) => DashboardSelector<IExecutionResultEnvelope | undefined> = createMemoizedSelector(
+    (ref: ObjRef | undefined) =>
+        createSelector(
+            selectExecutionResultEntities,
+            (executionResults): IExecutionResultEnvelope | undefined => {
+                if (!ref) {
+                    return undefined;
+                }
+                const key = serializeObjRef(ref);
+                return executionResults[key];
+            },
+        ),
 );
 
 /**
@@ -145,6 +160,43 @@ export const selectIsExecutionResultExportableToXlsxByRef: (ref: ObjRef) => Dash
             (supportCapabilityXlsx, isReadyForExport, canExportTabular, settings): boolean => {
                 const isExportEnabled = Boolean(settings.enableKPIDashboardExport && canExportTabular);
                 return supportCapabilityXlsx && isReadyForExport && isExportEnabled;
+            },
+        ),
+    );
+
+/**
+ * @alpha
+ */
+export const selectIsExecutionResultReadyForExportRawByRef: (ref: ObjRef) => DashboardSelector<boolean> =
+    createMemoizedSelector((ref: ObjRef) =>
+        createSelector(
+            selectExecutionResultByRef(ref),
+            selectAnalyticalWidgetByRef(ref),
+            (widgetExecution): boolean => {
+                if (!widgetExecution) {
+                    return false;
+                }
+                const { isLoading, error } = widgetExecution;
+                return !isLoading && !isNonExportableErrorExceptTooLarge(error);
+            },
+        ),
+    );
+
+/**
+ * @alpha
+ */
+export const selectIsExecutionResultExportableToCsvRawByRef: (ref: ObjRef) => DashboardSelector<boolean> =
+    createMemoizedSelector((ref: ObjRef) =>
+        createSelector(
+            selectSupportsExportToCsv,
+            selectIsExecutionResultReadyForExportRawByRef(ref),
+            selectCanExportTabular,
+            selectCanExecuteRaw,
+            selectSettings,
+            (supportsCapabilityCsv, isReadyForExport, canExportTabular, canExecuteRaw, settings): boolean => {
+                const isExportEnabled = Boolean(settings.enableKPIDashboardExport && canExportTabular);
+                const isRawExportEnabled = Boolean(isExportEnabled && canExecuteRaw);
+                return supportsCapabilityCsv && isReadyForExport && isRawExportEnabled;
             },
         ),
     );

@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     addIntersectionFiltersToInsight,
@@ -218,7 +218,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             : [];
 
         const rowTotals = removeInvalidTotals(getTotalsFromBucket(buckets, BucketNames.ATTRIBUTE), filters);
-        const colTotals = getTotalsFromBucket(buckets, BucketNames.COLUMNS);
+        const colTotals = removeInvalidTotals(getTotalsFromBucket(buckets, BucketNames.COLUMNS), filters);
 
         newReferencePoint.buckets = removeDuplicateBucketItems([
             {
@@ -339,6 +339,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             drillDownInsight,
             drillDownContext.event.drillContext.intersection,
             backendSupportsElementUris,
+            this.settings?.enableDuplicatedLabelValuesInAttributeFilter,
         );
         return sanitizeTableProperties(insightSanitize(drillDownInsightWithFilters));
     }
@@ -674,6 +675,7 @@ export function createPivotTableConfig(
 ): IPivotTableConfig {
     let tableConfig: IPivotTableConfig = {
         separators: config.separators,
+        enableExecutionCancelling: settings.enableExecutionCancelling ?? false,
     };
 
     const enableTableTotalRows = settings.enableTableTotalRows;

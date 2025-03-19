@@ -1,5 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
+    IAttributeWithReferences,
     IElementsQueryFactory,
     IWorkspaceAttributesService,
     NotSupported,
@@ -15,6 +16,7 @@ import {
     IDataSetMetadataObject,
     IdentifierRef,
     objRefToString,
+    idRef,
 } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { TigerWorkspaceElements } from "./elements/index.js";
@@ -28,13 +30,15 @@ import {
     AfmValidObjectsQuery,
     AttributeItem,
 } from "@gooddata/api-client-tiger";
-import flatMap from "lodash/flatMap.js";
 import { invariant } from "ts-invariant";
 
 import {
+    convertAttributeLabels,
     convertAttributesWithSideloadedLabels,
     convertAttributeWithSideloadedLabels,
     convertDatasetWithLinks,
+    createDataSetMap,
+    createLabelMap,
 } from "../../../convertors/fromBackend/MetadataConverter.js";
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { getIdOrigin } from "../../../convertors/fromBackend/ObjectInheritance.js";
@@ -61,12 +65,41 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     };
 
     public getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
-        return this.authCall(async (client) => {
-            const allAttributes = await loadAttributes(client, this.workspace);
+        if (refs.length === 0) {
+            return Promise.resolve([]);
+        }
 
-            return flatMap(allAttributes, (attr) => attr.displayForms).filter((df) =>
-                refs.find((ref) => areObjRefsEqual(ref, df.ref)),
-            );
+        return this.authCall(async (client) => {
+            const filter = refs
+                .filter(isIdentifierRef)
+                .map((ref) => `id==${ref.identifier}`)
+                .join(",");
+            const allDisplayForms = await client.entities.getAllEntitiesLabels({
+                include: ["attribute"],
+                workspaceId: this.workspace,
+                origin: "ALL",
+                filter,
+                size: refs.length,
+            });
+            const result = allDisplayForms?.data?.data;
+
+            return result?.map((item) => ({
+                attribute: {
+                    identifier: item.relationships?.attribute?.data?.id || "",
+                    type: item.relationships?.attribute?.data?.type || "attribute",
+                },
+                ref: { identifier: item.id, type: "displayForm" },
+                title: item?.attributes?.title || "",
+                description: item?.attributes?.description || "",
+                tags: item?.attributes?.tags,
+                primary: item?.attributes?.primary,
+                deprecated: false,
+                uri: item.id,
+                type: "displayForm", // item.type is "label", set here as displayForm
+                production: true,
+                unlisted: false,
+                id: item.id,
+            }));
         });
     }
 
@@ -90,9 +123,50 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
         throw new NotSupported("not supported");
     }
 
+    //
     getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject> {
         return this.authCall((client) => {
             return loadAttributeDataset(client, this.workspace, ref);
+        });
+    }
+
+    getAttributesWithReferences(refs: ObjRef[]): Promise<IAttributeWithReferences[]> {
+        return this.authCall(async (client) => {
+            const filter = refs
+                .filter(isIdentifierRef)
+                .map((ref) => `labels.id==${ref.identifier}`)
+                .join(",");
+
+            const allAttributes = await client.entities.getAllEntitiesAttributes({
+                include: ["labels", "datasets"],
+                workspaceId: this.workspace,
+                origin: "ALL",
+                filter,
+                size: refs.length,
+            });
+
+            const labelsMap = createLabelMap(allAttributes.data.included);
+            const datasetMap = createDataSetMap(allAttributes.data.included);
+            return allAttributes.data.data.map((attr): IAttributeWithReferences => {
+                const dataset = attr.relationships?.dataset?.data?.id
+                    ? datasetMap[attr.relationships?.dataset?.data?.id]
+                    : undefined;
+                return {
+                    attribute: {
+                        type: "attribute",
+                        id: attr.id,
+                        uri: attr.id,
+                        ref: idRef(attr.id, "attribute"),
+                        title: attr.attributes?.title ?? "",
+                        description: attr.attributes?.description ?? "",
+                        displayForms: convertAttributeLabels(attr, labelsMap),
+                        unlisted: false,
+                        deprecated: false,
+                        production: true,
+                    },
+                    dataSet: dataset ? convertDatasetWithLinks(dataset) : undefined,
+                };
+            });
         });
     }
 
@@ -211,7 +285,7 @@ function loadAttributeByDisplayForm(
 }
 
 function loadAttributes(client: ITigerClient, workspaceId: string): Promise<IAttributeMetadataObject[]> {
-    return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesAttributes, {
+    return MetadataUtilities.getAllPagesOfParallel(client, client.entities.getAllEntitiesAttributes, {
         workspaceId,
         include: ["labels"],
     })

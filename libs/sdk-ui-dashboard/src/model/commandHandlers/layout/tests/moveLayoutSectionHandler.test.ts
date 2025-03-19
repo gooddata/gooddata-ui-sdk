@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
@@ -29,16 +29,6 @@ describe("move section command handler", () => {
             const originalLayout = selectLayout(Tester.state());
             const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
                 moveLayoutSection(originalLayout.sections.length, -1, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
-
-            expect(event.payload.reason).toEqual("USER_ERROR");
-            expect(event.correlationId).toEqual(TestCorrelation);
-        });
-
-        it("should fail if no move would happen", async () => {
-            const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
-                moveLayoutSection(2, -1, TestCorrelation),
                 "GDC.DASH/EVT.COMMAND.FAILED",
             );
 

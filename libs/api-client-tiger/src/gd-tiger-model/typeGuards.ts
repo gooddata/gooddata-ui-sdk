@@ -1,9 +1,10 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
+    AfmLocalIdentifier,
     AfmObjectIdentifier,
     AttributeExecutionResultHeader,
-    AttributeHeaderOut,
+    AttributeHeader,
     ExecutionResultHeader,
     ResultDimensionHeader,
     MeasureExecutionResultHeader,
@@ -16,13 +17,17 @@ import {
     JsonApiDashboardPluginOutWithLinksTypeEnum,
     JsonApiFilterContextInTypeEnum,
     JsonApiVisualizationObjectOutWithLinksTypeEnum,
+    JsonApiDatasetOutWithLinksTypeEnum,
+    JsonApiDatasetOutWithLinks,
+    JsonApiLabelOutWithLinksTypeEnum,
+    JsonApiLabelOutWithLinks,
 } from "../generated/metadata-json-api/index.js";
 
 /**
  * @public
  */
-export function isAttributeHeader(header: ResultDimensionHeader): header is AttributeHeaderOut {
-    return header && (header as AttributeHeaderOut).attributeHeader !== undefined;
+export function isAttributeHeader(header: ResultDimensionHeader): header is AttributeHeader {
+    return header && (header as AttributeHeader).attributeHeader !== undefined;
 }
 
 /**
@@ -33,6 +38,13 @@ export const isAfmObjectIdentifier = (value: unknown): value is AfmObjectIdentif
         (value as Partial<AfmObjectIdentifier>)?.identifier?.id &&
         (value as Partial<AfmObjectIdentifier>)?.identifier?.type
     );
+};
+
+/**
+ * @public
+ */
+export const isAfmObjectLocalIdentifier = (value: unknown): value is AfmLocalIdentifier => {
+    return !!(value as Partial<AfmLocalIdentifier>)?.localIdentifier;
 };
 
 /**
@@ -87,4 +99,18 @@ export function isDashboardPluginsItem(
         (dashboardPlugin as JsonApiDashboardPluginOutWithLinks).type ===
         JsonApiDashboardPluginOutWithLinksTypeEnum.DASHBOARD_PLUGIN
     );
+}
+
+/**
+ * @public
+ */
+export function isDataSetItem(dataSet: unknown): dataSet is JsonApiDatasetOutWithLinks {
+    return (dataSet as JsonApiDatasetOutWithLinks).type === JsonApiDatasetOutWithLinksTypeEnum.DATASET;
+}
+
+/**
+ * @public
+ */
+export function isLabelItem(label: unknown): label is JsonApiLabelOutWithLinks {
+    return (label as JsonApiLabelOutWithLinks).type === JsonApiLabelOutWithLinksTypeEnum.LABEL;
 }

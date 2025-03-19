@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { IntlShape } from "react-intl";
 import compact from "lodash/compact.js";
@@ -10,20 +10,23 @@ import { InsightInteractions } from "../../insight/configuration/InsightInteract
 import { Icon } from "@gooddata/sdk-ui-kit";
 import {
     useDashboardDispatch,
-    eagerRemoveSectionItemByWidgetRef,
     useDashboardEventDispatch,
     userInteractionTriggered,
+    uiActions,
+    eagerRemoveSectionItemByWidgetRef,
 } from "../../../../model/index.js";
 import { IInsightWidget } from "@gooddata/sdk-model";
 
 /**
  * @internal
  */
-export type MenuItemDependencies = {
+export type InsightMenuItemDependencies = {
     intl: IntlShape;
     dispatch: ReturnType<typeof useDashboardDispatch>;
     eventDispatch: ReturnType<typeof useDashboardEventDispatch>;
     includeInteractions?: boolean;
+    includeConfigurations?: boolean;
+    useWidgetDeleteDialog?: boolean;
 };
 
 /**
@@ -31,10 +34,17 @@ export type MenuItemDependencies = {
  */
 export function getDefaultInsightEditMenuItems(
     widget: IInsightWidget,
-    { intl, dispatch, eventDispatch, includeInteractions = true }: MenuItemDependencies,
+    {
+        intl,
+        dispatch,
+        eventDispatch,
+        includeInteractions = true,
+        includeConfigurations = true,
+        useWidgetDeleteDialog = false,
+    }: InsightMenuItemDependencies,
 ): IInsightMenuItem[] {
     return compact([
-        {
+        includeConfigurations && {
             type: "submenu",
             itemId: "ConfigurationPanelSubmenu",
             tooltip: "",
@@ -55,7 +65,7 @@ export function getDefaultInsightEditMenuItems(
             SubmenuComponent: InsightInteractions,
             onClick: () => eventDispatch(userInteractionTriggered("interactionPanelOpened")),
         },
-        {
+        (includeConfigurations || includeInteractions) && {
             type: "separator",
             itemId: "InteractionPanelRemoveSeparator",
         },
@@ -67,7 +77,10 @@ export function getDefaultInsightEditMenuItems(
             icon: "gd-icon-trash",
             disabled: false,
             className: "s-delete-insight-item",
-            onClick: () => dispatch(eagerRemoveSectionItemByWidgetRef(widget.ref)),
+            onClick: () =>
+                useWidgetDeleteDialog
+                    ? dispatch(uiActions.openWidgetDeleteDialog(widget.ref))
+                    : dispatch(eagerRemoveSectionItemByWidgetRef(widget.ref)),
         },
     ]);
 }

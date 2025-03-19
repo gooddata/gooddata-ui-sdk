@@ -1,0 +1,14 @@
+// (C) 2024 GoodData Corporation
+
+.gd-separator {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
+
+.gd-separator-line {
+    background-color: var(--gd-palette-complementary-3, #dde4eb);
+    width: 100%;
+}

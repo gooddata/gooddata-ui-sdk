@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { EditMode } from "../../tools/editMode";
@@ -17,7 +17,9 @@ const dashboardMenu = new DashboardMenu();
 const widget = new Widget(0);
 const dashboard = new Dashboard();
 
-describe("Dashboard Drag and Drop", { tags: ["pre-merge_isolated_bear"] }, () => {
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("Dashboard Drag and Drop", { tags: ["pre-merge_isolated_bear"] }, () => {
     describe("Delete attribute filter", () => {
         it("Display trash when performing filter drag", () => {
             Navigation.visit("dashboard/attribute-filtering");

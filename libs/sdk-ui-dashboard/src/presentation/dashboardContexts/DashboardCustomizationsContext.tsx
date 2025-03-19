@@ -1,13 +1,18 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { createContext, useContext } from "react";
 
-import { InsightMenuItemsProvider } from "./types.js";
+import { DashboardLayoutExportTransformFn, DashboardExportSlideConfig } from "../../model/index.js";
+
+import { InsightMenuItemsProvider, RichTextMenuItemsProvider } from "./types.js";
 
 /**
  * @internal
  */
 interface IDashboardCustomizationsContext {
     insightMenuItemsProvider?: InsightMenuItemsProvider;
+    richTextMenuItemsProvider?: RichTextMenuItemsProvider;
+    existingExportTransformFn?: DashboardLayoutExportTransformFn;
+    slideConfig?: DashboardExportSlideConfig;
 }
 
 /**

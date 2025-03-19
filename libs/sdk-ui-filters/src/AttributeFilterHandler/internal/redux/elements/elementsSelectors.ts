@@ -7,6 +7,7 @@ import {
     IRelativeDateFilter,
     SortDirection,
     ObjRef,
+    IAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 import { createSelector } from "@reduxjs/toolkit";
 import compact from "lodash/compact.js";
@@ -155,10 +156,8 @@ export const selectLimitingValidationItems: FilterSelector<ObjRef[]> = createSel
 /**
  * @internal
  */
-export const selectLimitingDateFilters: FilterSelector<IRelativeDateFilter[]> = createSelector(
-    selectState,
-    (state) => state.elements.currentOptions.limitingDateFilters,
-);
+export const selectLimitingDateFilters: FilterSelector<IRelativeDateFilter[] | IAbsoluteDateFilter[]> =
+    createSelector(selectState, (state) => state.elements.currentOptions.limitingDateFilters);
 
 /**
  * @internal

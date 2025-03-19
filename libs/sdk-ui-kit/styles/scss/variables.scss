@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:color";
 
 $include-html-classes: false;
@@ -17,7 +17,7 @@ $gd-color-warning-text: #f18600;
 $default-gd-color-white: #fff;
 $gd-color-white: var(--gd-palette-complementary-0, $default-gd-color-white);
 $default-gd-color-light: #fcfcfd;
-$gd-color-light: var(--gd-palette-complementary-0, $default-gd-color-light);
+$gd-color-light: var(--gd-palette-complementary-0-from-theme, $default-gd-color-light);
 $default-gd-color-disabled: #b0beca;
 $gd-color-disabled: var(--gd-palette-complementary-5, $default-gd-color-disabled);
 $default-gd-color-state-blank: #94a1ad;
@@ -73,7 +73,7 @@ $gd-palette-success-dimmed: var(
 
 // warning colors
 $gd-palette-warning-base: var(--gd-palette-warning-base, $gd-color-warning);
-$gd-palette-warning-base-text: var(--gd-palette-warning-base, $gd-color-warning-text);
+$gd-palette-warning-base-text: var(--gd-palette-warning-base-from-theme, $gd-color-warning-text);
 $gd-palette-warning-dimmed: var(
     --gd-palette-warning-dimmed,
     color.mix($gd-color-warning, $default-gd-color-text-light, 20%)
@@ -117,13 +117,10 @@ $is-selected-focused-color: $gd-palette-primary-base;
 $is-selected-focused-background: $gd-palette-primary-dimmed;
 
 $is-negative-focused-color: #fff;
-$is-negative-focused-background: var(
-    --gd-palette-error-dimmed90,
-    color.mix($gd-color-negative, $default-gd-color-text-light, 90%)
-);
+$is-negative-focused-background: var(--gd-palette-error-dimmed90, #e75e54);
 
-$navigation-bg: var(--gd-palette-complementary-1, #303442);
-$navigation-active-item-bg: var(--gd-palette-complementary-0, #131c28);
+$navigation-bg: var(--gd-palette-complementary-1-from-theme, #303442);
+$navigation-active-item-bg: var(--gd-palette-complementary-0-from-theme, #131c28);
 
 $gd-widget-background: var(--gd-dashboards-content-widget-backgroundColor, $gd-color-white);
 $gd-chart-background: var(--gd-chart-backgroundColor, $gd-color-white);
@@ -137,7 +134,7 @@ $importantFlag: "";
 // from goodstrap Form/mixins
 $default-gd-input-text-border: #ccd8e2;
 $gd-input-text-border: var(--gd-palette-complementary-4, $default-gd-input-text-border);
-$gd-input-text-hover-border: var(--gd-palette-complementary-5, #b1c1d1);
+$gd-input-text-hover-border: var(--gd-palette-complementary-5-from-theme, #b1c1d1);
 $gd-input-text-box-shadow-color: #1f354a;
 
 $gd-outside-background-color: #eff1f3;
@@ -195,4 +192,5 @@ $measure_sequence_number_font: menlo, monaco, consolas, "Courier New", monospace
 
 //This is a temporary solution to introduce new design colors
 $default-gd-medium-gray: #687581;
-$gd-medium-gray: var(--gd-palette-complementary-7, $default-gd-medium-gray);
+$gd-medium-gray: var(--gd-palette-complementary-7-from-theme, $default-gd-medium-gray);
+$gd-delete-item-background: var(--gd-palette-error-lightest, #fff2f1);

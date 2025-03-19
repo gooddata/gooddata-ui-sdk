@@ -1,4 +1,5 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
+import type mapboxgl from "mapbox-gl";
 import { IAttribute, IColorPalette, IExecutionConfig } from "@gooddata/sdk-model";
 import {
     AttributeOrPlaceholder,
@@ -183,6 +184,7 @@ export interface IGeoConfig {
     colorMapping?: IColorMapping[];
     showLabels?: boolean;
     cooperativeGestures?: boolean;
+    enableExecutionCancelling?: boolean;
 }
 
 /**

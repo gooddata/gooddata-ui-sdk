@@ -1,10 +1,11 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { ComponentType } from "react";
 import {
     AttributeFilterComponentSet,
+    DashboardLayoutWidgetComponentSet,
     InsightWidgetComponentSet,
-    KpiWidgetComponentSet,
     RichTextWidgetComponentSet,
+    VisualizationSwitcherWidgetComponentSet,
 } from "../../componentDefinition/index.js";
 import {
     IWrapCreatePanelItemWithDragComponent,
@@ -43,14 +44,6 @@ export interface ISidebarProps {
     WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;
 
     /**
-     * Kpi widget component set.
-     * Do not set or override this property, it's injected by the Dashboard.
-     *
-     * @internal
-     */
-    KpiWidgetComponentSet?: KpiWidgetComponentSet;
-
-    /**
      * Attribute filter component set.
      * Do not set or override this property, it's injected by the Dashboard.
      *
@@ -73,6 +66,22 @@ export interface ISidebarProps {
      * @internal
      */
     RichTextWidgetComponentSet?: RichTextWidgetComponentSet;
+
+    /**
+     * Visualization switcher widget component set.
+     * Do not set or override this property, it's injected by the Dashboard.
+     *
+     * @internal
+     */
+    VisualizationSwitcherWidgetComponentSet?: VisualizationSwitcherWidgetComponentSet;
+
+    /**
+     * Layout (nested) widget component set.
+     * Do not set or override this property, it's injected by the Dashboard.
+     *
+     * @internal
+     */
+    DashboardLayoutWidgetComponentSet?: DashboardLayoutWidgetComponentSet;
 
     /**
      * Component, that renders delete drop zone.

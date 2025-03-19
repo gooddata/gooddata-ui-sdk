@@ -1,10 +1,14 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
-import isEqual from "lodash/isEqual.js";
 import {
     areObjRefsEqual,
+    ICatalogAttributeHierarchy,
+    ICatalogDateAttributeHierarchy,
     IDrillDownReference,
     isAttributeHierarchyReference,
+    isCatalogAttributeHierarchy,
+    isCatalogDateAttributeHierarchy,
+    isDateHierarchyReference,
     ObjRef,
     objRefToString,
 } from "@gooddata/sdk-model";
@@ -14,17 +18,20 @@ import {
  */
 export function existBlacklistHierarchyPredicate(
     reference: IDrillDownReference,
-    attributeHierarchyRef: ObjRef,
+    attributeHierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy,
     attributeIdentifier?: ObjRef,
 ): boolean {
-    if (isAttributeHierarchyReference(reference)) {
+    if (isAttributeHierarchyReference(reference) && isCatalogAttributeHierarchy(attributeHierarchy)) {
         return (
-            areObjRefsEqual(reference.attributeHierarchy, attributeHierarchyRef) &&
+            areObjRefsEqual(reference.attributeHierarchy, attributeHierarchy.attributeHierarchy.ref) &&
             areObjRefsEqual(reference.attribute, attributeIdentifier)
         );
     }
-    return (
-        isEqual(objRefToString(reference.dateHierarchyTemplate), objRefToString(attributeHierarchyRef)) &&
-        areObjRefsEqual(reference.dateDatasetAttribute, attributeIdentifier)
-    );
+    if (isDateHierarchyReference(reference) && isCatalogDateAttributeHierarchy(attributeHierarchy)) {
+        return (
+            objRefToString(reference.dateHierarchyTemplate) === attributeHierarchy.templateId &&
+            areObjRefsEqual(reference.dateDatasetAttribute, attributeIdentifier)
+        );
+    }
+    return false;
 }

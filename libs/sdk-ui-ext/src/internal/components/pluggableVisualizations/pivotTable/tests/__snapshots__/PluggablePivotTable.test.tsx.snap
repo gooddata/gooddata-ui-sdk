@@ -67,7 +67,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given an empty refere
       "isShowInPercentEnabled": false,
       "isShowInPercentVisible": true,
       "itemsLimit": 40,
-      "title": "Measures",
+      "title": "Metrics",
     },
   },
   "exportConfig": {
@@ -153,7 +153,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given multipleMetrics
       "isShowInPercentEnabled": false,
       "isShowInPercentVisible": true,
       "itemsLimit": 40,
-      "title": "Measures",
+      "title": "Metrics",
     },
   },
   "exportConfig": {
@@ -239,7 +239,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given simpleStackedRe
       "isShowInPercentEnabled": true,
       "isShowInPercentVisible": true,
       "itemsLimit": 40,
-      "title": "Measures",
+      "title": "Metrics",
     },
   },
   "exportConfig": {
@@ -390,7 +390,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given simpleStackedRe
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 100,
-        "title": "Measures",
+        "title": "Metrics",
       },
     },
     "exportConfig": {
@@ -868,7 +868,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given simpleStackedRe
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
+        "title": "Metrics",
         "warningMessage": "To add up to 60 more, remove all items from columns section",
       },
     },
@@ -1338,7 +1338,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given simpleStackedRe
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
+        "title": "Metrics",
       },
     },
     "exportConfig": {
@@ -1784,7 +1784,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given simpleStackedRe
           "date": 1,
         },
         "title": "Columns",
-        "warningMessage": "Cannot add columns: limit is 40 measures and 20 rows. Follow the limits to add more",
+        "warningMessage": "Cannot add columns: limit is 40 metrics and 20 rows. Follow the limits to add more",
       },
       "filters": {
         "accepts": [
@@ -1814,7 +1814,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given simpleStackedRe
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 100,
-        "title": "Measures",
+        "title": "Metrics",
       },
     },
     "exportConfig": {
@@ -1901,7 +1901,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > should return a new r
       "isShowInPercentEnabled": true,
       "isShowInPercentVisible": true,
       "itemsLimit": 40,
-      "title": "Measures",
+      "title": "Metrics",
     },
   },
   "exportConfig": {
@@ -1988,7 +1988,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > should return a new r
       "isShowInPercentVisible": true,
       "itemsLimit": 40,
       "subtitle": "in columns",
-      "title": "Measures",
+      "title": "Metrics",
     },
   },
   "exportConfig": {
@@ -2012,6 +2012,7 @@ exports[`createPivotTableConfig > should create valid config with auto-resize if
   "columnSizing": {
     "defaultWidth": "autoresizeAll",
   },
+  "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
@@ -2023,6 +2024,7 @@ exports[`createPivotTableConfig > should create valid config with auto-resize if
 exports[`createPivotTableConfig > should create valid config with growToFit if feature flag on and environment !== dashboards 1`] = `
 {
   "columnSizing": {},
+  "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
@@ -2036,6 +2038,7 @@ exports[`createPivotTableConfig > should create valid config with growToFit if f
   "columnSizing": {
     "growToFit": false,
   },
+  "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
@@ -2049,6 +2052,7 @@ exports[`createPivotTableConfig > should create valid config with growToFit if f
   "columnSizing": {
     "growToFit": true,
   },
+  "enableExecutionCancelling": false,
   "separators": undefined,
 }
 `;
@@ -2056,6 +2060,7 @@ exports[`createPivotTableConfig > should create valid config with growToFit if f
 exports[`createPivotTableConfig > should create valid config with manualResizing if feature flag off and configs are provided 1`] = `
 {
   "columnSizing": {},
+  "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
@@ -2067,6 +2072,7 @@ exports[`createPivotTableConfig > should create valid config with manualResizing
 exports[`createPivotTableConfig > should create valid config with manualResizing if feature flag on and configs are empty 1`] = `
 {
   "columnSizing": {},
+  "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
@@ -2078,6 +2084,7 @@ exports[`createPivotTableConfig > should create valid config with manualResizing
 exports[`createPivotTableConfig > should create valid config with manualResizing if feature flag on and configs are not defined 1`] = `
 {
   "columnSizing": {},
+  "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
@@ -2100,6 +2107,7 @@ exports[`createPivotTableConfig > should create valid config with manualResizing
       },
     ],
   },
+  "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
@@ -2111,6 +2119,7 @@ exports[`createPivotTableConfig > should create valid config with manualResizing
 exports[`createPivotTableConfig > should create valid config with menus for non-dashboard env 1`] = `
 {
   "columnSizing": {},
+  "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
@@ -2122,6 +2131,7 @@ exports[`createPivotTableConfig > should create valid config with menus for non-
 exports[`createPivotTableConfig > should create valid config with menus for undefined env 1`] = `
 {
   "columnSizing": {},
+  "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
@@ -2133,6 +2143,7 @@ exports[`createPivotTableConfig > should create valid config with menus for unde
 exports[`createPivotTableConfig > should create valid config with separators 1`] = `
 {
   "columnSizing": {},
+  "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
@@ -2147,6 +2158,7 @@ exports[`createPivotTableConfig > should create valid config with separators 1`]
 exports[`createPivotTableConfig > should create valid config with total rows if feature flag off 1`] = `
 {
   "columnSizing": {},
+  "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
@@ -2158,6 +2170,7 @@ exports[`createPivotTableConfig > should create valid config with total rows if 
 exports[`createPivotTableConfig > should create valid config with total rows if feature flag on 1`] = `
 {
   "columnSizing": {},
+  "enableExecutionCancelling": false,
   "menu": {
     "aggregations": true,
     "aggregationsSubMenu": true,
@@ -2170,6 +2183,7 @@ exports[`createPivotTableConfig > should create valid config with total rows if 
 exports[`createPivotTableConfig > should create valid config without menus for dashboard env 1`] = `
 {
   "columnSizing": {},
+  "enableExecutionCancelling": false,
   "separators": undefined,
 }
 `;

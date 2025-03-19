@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     AnalyticalBackendError,
     isAnalyticalBackendError,
@@ -7,8 +7,9 @@ import {
     LimitReached,
     ContractExpired,
     UnexpectedResponseError,
+    AbortError,
 } from "@gooddata/sdk-backend-spi";
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse, isCancel } from "axios";
 
 export function convertApiError(error: Error): AnalyticalBackendError {
     if (isAnalyticalBackendError(error)) {
@@ -33,6 +34,10 @@ export function convertApiError(error: Error): AnalyticalBackendError {
     const unexpectedResponseError = createUnexpectedResponseError(error);
     if (unexpectedResponseError) {
         return unexpectedResponseError;
+    }
+
+    if (isCancel(error)) {
+        throw new AbortError("The request was cancelled");
     }
 
     return new UnexpectedError("An unexpected error has occurred", error);

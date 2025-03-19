@@ -1,12 +1,17 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { all, call, put } from "redux-saga/effects";
+import includes from "lodash/includes.js";
 import { IDateFilterConfigsQueryResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { ILocale, resolveLocale } from "@gooddata/sdk-ui";
-import { IColorPalette, ISeparators, ISettings } from "@gooddata/sdk-model";
+import { IColorPalette, IDateFilterConfig, ISeparators, ISettings } from "@gooddata/sdk-model";
 
 import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
-import { getValidDateFilterConfig } from "../../../../_staging/dateFilterConfig/validation.js";
+import {
+    FallbackToDefault,
+    getValidDateFilterConfig,
+    validateDateFilterConfig,
+} from "../../../../_staging/dateFilterConfig/validation.js";
 import { stripUserAndWorkspaceProps } from "../../../../_staging/settings/conversion.js";
 import { InitializeDashboard } from "../../../commands/index.js";
 import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
@@ -19,6 +24,7 @@ import {
 import { PromiseFnReturnType } from "../../../types/sagas.js";
 import { sanitizeUnfinishedFeatureSettings } from "./sanitizeUnfinishedFeatureSettings.js";
 import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError.js";
+import { loadAutomationsData } from "../common/loadAutomationsData.js";
 
 function loadDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfigsQueryResult | undefined> {
     const { backend, workspace } = ctx;
@@ -45,6 +51,27 @@ function loadSettingsForCurrentUser(ctx: DashboardContext): Promise<IUserWorkspa
     return backend.workspace(workspace).settings().getSettingsForCurrentUser();
 }
 
+///
+async function loadCustomDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfig | undefined> {
+    const { backend, workspace } = ctx;
+
+    const customDateFilterConfig = await backend
+        .workspace(workspace)
+        .dateFilterConfigs()
+        .withLimit(1)
+        .queryCustomDateFilterConfig();
+
+    if (!customDateFilterConfig.items[0]) {
+        return undefined;
+    }
+
+    const configValidation = validateDateFilterConfig(customDateFilterConfig.items[0]);
+
+    const validConfig = !includes(FallbackToDefault, configValidation);
+
+    return validConfig ? customDateFilterConfig.items[0] : undefined;
+}
+
 function loadColorPalette(ctx: DashboardContext): Promise<IColorPalette> {
     const { backend, workspace } = ctx;
 
@@ -52,23 +79,37 @@ function loadColorPalette(ctx: DashboardContext): Promise<IColorPalette> {
 }
 
 function* resolveDateFilterConfig(ctx: DashboardContext, config: DashboardConfig, cmd: InitializeDashboard) {
-    if (config.dateFilterConfig !== undefined) {
+    if (config.dateFilterConfig) {
         return config.dateFilterConfig;
+    } else if (config?.settings?.dateFilterConfig) {
+        return config.settings.dateFilterConfig;
     }
 
-    const result: PromiseFnReturnType<typeof loadDateFilterConfig> = yield call(loadDateFilterConfig, ctx);
+    const customDateFilterConfig: PromiseFnReturnType<typeof loadCustomDateFilterConfig> = yield call(
+        loadCustomDateFilterConfig,
+        ctx,
+    );
 
-    if ((result?.totalCount ?? 0) > 1) {
-        yield call(onDateFilterConfigValidationError, ctx, "TOO_MANY_CONFIGS", cmd.correlationId);
+    if (customDateFilterConfig) {
+        return customDateFilterConfig;
+    } else {
+        const result: PromiseFnReturnType<typeof loadDateFilterConfig> = yield call(
+            loadDateFilterConfig,
+            ctx,
+        );
+
+        if ((result?.totalCount ?? 0) > 1) {
+            yield call(onDateFilterConfigValidationError, ctx, "TOO_MANY_CONFIGS", cmd.correlationId);
+        }
+
+        const firstConfig = result?.items[0];
+
+        if (!firstConfig) {
+            yield call(onDateFilterConfigValidationError, ctx, "NO_CONFIG", cmd.correlationId);
+        }
+
+        return result?.items[0] ?? defaultDateFilterConfig;
     }
-
-    const firstConfig = result?.items[0];
-
-    if (!firstConfig) {
-        yield call(onDateFilterConfigValidationError, ctx, "NO_CONFIG", cmd.correlationId);
-    }
-
-    return result?.items[0] ?? defaultDateFilterConfig;
 }
 
 type UserSettings = {
@@ -187,6 +228,30 @@ function applyConfigDefaults<T extends DashboardConfig>(config: T) {
         initialRenderMode: config.initialRenderMode ?? "view",
         hideSaveAsNewButton: config.hideSaveAsNewButton ?? false,
         hideShareButton: config.hideShareButton ?? false,
+        disableCrossFiltering: config.disableCrossFiltering ?? false,
+        disableUserFilterReset: config.disableUserFilterReset ?? false,
         widgetsOverlay: config.widgetsOverlay ?? {},
+    };
+}
+
+/**
+ * Resolves dashboard config
+ */
+export function* resolveDashboardConfigAndFeatureFlagDependentCalls(
+    ctx: DashboardContext,
+    cmd: InitializeDashboard,
+): SagaIterator<{
+    resolvedConfig: ResolvedDashboardConfig;
+    additionalData: {
+        notificationChannelsCount: number;
+        workspaceAutomationsCount: number;
+    };
+}> {
+    const resolvedConfig = yield call(resolveDashboardConfig, ctx, cmd);
+    const additionalData = yield call(loadAutomationsData, ctx, resolvedConfig.settings);
+
+    return {
+        resolvedConfig,
+        additionalData,
     };
 }

@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 /* eslint-disable import/export */
 /**
  * This is an all-in-one package that has all GoodData.UI packages as dependencies and re-exports their public API.
@@ -11,7 +11,9 @@
  */
 
 export * from "@gooddata/sdk-model";
+export type { IExportResult as IExportResultModel } from "@gooddata/sdk-model";
 export * from "@gooddata/sdk-backend-spi";
+export type { IExportResult } from "@gooddata/sdk-model";
 export * from "@gooddata/sdk-ui";
 export * from "@gooddata/sdk-ui-charts";
 export * from "@gooddata/sdk-ui-geo";

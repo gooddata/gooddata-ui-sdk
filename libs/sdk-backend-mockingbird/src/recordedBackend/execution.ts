@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IDataView,
@@ -11,6 +11,12 @@ import {
     NotSupported,
     IExplainProvider,
     ExplainType,
+    IForecastResult,
+    IForecastConfig,
+    IForecastView,
+    IAnomalyDetectionResult,
+    IClusteringResult,
+    IClusteringConfig,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -134,6 +140,9 @@ function recordedPreparedExecution(
                 console.warn("Backend does not support data sampling, result will be not affected");
             }
             return executionFactory.forDefinition(definition);
+        },
+        withSignal(_signal: AbortSignal): IPreparedExecution {
+            return recordedPreparedExecution(definition, executionFactory, resultRefType, recordings);
         },
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {
@@ -285,6 +294,18 @@ class RecordedExecutionResult implements IExecutionResult {
         return Promise.resolve(new RecordedDataView(this, this.definition, windowData, this.denormalizer));
     };
 
+    public readForecastAll(): Promise<IForecastResult> {
+        throw new NotSupported("Forecasting is not supported by the recorded backend.");
+    }
+
+    public readAnomalyDetectionAll(): Promise<IAnomalyDetectionResult> {
+        throw new NotSupported("Anomaly detection is not supported by the recorded backend.");
+    }
+
+    public readClusteringAll(): Promise<IClusteringResult> {
+        throw new NotSupported("Clustering is not supported by the recorded backend.");
+    }
+
     public transform = (): IPreparedExecution => {
         return this.executionFactory.forDefinition(this.definition);
     };
@@ -312,8 +333,12 @@ class RecordedDataView implements IDataView {
     constructor(
         public readonly result: IExecutionResult,
         public readonly definition: IExecutionDefinition,
-        recordedDataView: any,
-        denormalizer?: Denormalizer,
+        private readonly recordedDataView: any,
+        private readonly denormalizer?: Denormalizer,
+        public readonly forecastConfig?: IForecastConfig,
+        public readonly forecastResult?: IForecastResult,
+        public readonly clusteringConfig?: IClusteringConfig,
+        public readonly clusteringResult?: IClusteringResult,
     ) {
         this.data = recordedDataView.data;
         this.headerItems = denormalizer
@@ -338,6 +363,54 @@ class RecordedDataView implements IDataView {
     public fingerprint = (): string => {
         return this._fp;
     };
+
+    public withForecast(config: IForecastConfig, result: IForecastResult): IDataView {
+        return new RecordedDataView(
+            this.result,
+            this.definition,
+            this.recordedDataView,
+            this.denormalizer,
+            config,
+            result,
+            this.clusteringConfig,
+            this.clusteringResult,
+        );
+    }
+
+    forecast(): IForecastView {
+        return (
+            this.recordedDataView.forecast ?? {
+                headerItems: [],
+                low: [],
+                high: [],
+                prediction: [],
+            }
+        );
+    }
+
+    clustering(): IClusteringResult {
+        return (
+            this.recordedDataView.clusteringResult ?? {
+                attribute: [],
+                clusters: [],
+                xcoord: [],
+                ycoord: [],
+            }
+        );
+    }
+
+    withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView {
+        return new RecordedDataView(
+            this.result,
+            this.definition,
+            this.recordedDataView,
+            this.denormalizer,
+            this.forecastConfig,
+            this.forecastResult,
+            config,
+            result,
+        );
+    }
 }
 
 //
@@ -486,7 +559,7 @@ function normalizedDataView(
  *
  * @param recording - recording (as obtained from the index, typically using the Scenario mapping)
  * @param dataViewId - Identifier of the data view; defaults to view with all data
- * @param resultRefType - Specify what types of refs should the backend create in the result's dimension descriptors (uri refs returned by bear, id refs returned by tiger)
+ * @param resultRefType - Specify what types of refs should the backend create in the result's dimension descriptors (id refs returned by tiger)
  * @internal
  */
 export function recordedDataView(

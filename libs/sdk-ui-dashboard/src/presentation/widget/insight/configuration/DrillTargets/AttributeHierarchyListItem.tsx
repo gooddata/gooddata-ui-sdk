@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import React, { MouseEvent } from "react";
 import cx from "classnames";
@@ -10,8 +10,9 @@ import {
     ICatalogAttributeHierarchy,
     ICatalogDateAttribute,
     ICatalogDateAttributeHierarchy,
+    getHierarchyAttributes,
+    getHierarchyTitle,
     isCatalogAttribute,
-    isCatalogAttributeHierarchy,
     isCatalogDateAttributeHierarchy,
 } from "@gooddata/sdk-model";
 import {
@@ -46,9 +47,7 @@ function buildAttributeHierarchyDetailItems(
     hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy,
     allCatalogAttributes: ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>,
 ) {
-    const attributeRefs = isCatalogAttributeHierarchy(hierarchy)
-        ? hierarchy.attributeHierarchy.attributes
-        : hierarchy.attributes;
+    const attributeRefs = getHierarchyAttributes(hierarchy);
     const items: IAttributeHierarchyDetailItem[] = [];
     attributeRefs.forEach((ref) => {
         const attribute = allCatalogAttributes.get(ref);
@@ -77,7 +76,7 @@ export const AttributeHierarchyListItem: React.FC<IAttributeHierarchyListItemPro
         props.onEdit(item);
     };
 
-    const hierarchyTitle = isCatalogAttributeHierarchy(item) ? item.attributeHierarchy.title : item.title;
+    const hierarchyTitle = getHierarchyTitle(item);
 
     const hierarchyListItemClassname = cx(
         "attribute-hierarchy-list-item s-attribute-hierarchy-list-item",
