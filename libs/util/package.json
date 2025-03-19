@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/util",
-    "version": "9.9.2-beta.22",
+    "version": "9.9.2",
     "author": "GoodData",
     "description": "GoodData Utility Functions",
     "repository": {
