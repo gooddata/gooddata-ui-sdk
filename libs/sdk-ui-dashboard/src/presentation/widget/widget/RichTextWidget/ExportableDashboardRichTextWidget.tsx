@@ -16,7 +16,7 @@ export const ExportableDashboardRichTextWidget: React.FC<IDefaultDashboardRichTe
 }) => {
     return (
         <DashboardItem
-            className={cx(dashboardItemClasses, "type-visualization", "gd-dashboard-view-widget")}
+            className={cx(dashboardItemClasses, "type-rich-text", "gd-dashboard-view-widget")}
             screen={screen}
             exportData={exportData?.section}
         >

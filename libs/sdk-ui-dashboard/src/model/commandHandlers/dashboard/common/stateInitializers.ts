@@ -193,8 +193,9 @@ function* actionsToInitializeOrFillNewDashboard(
     const modifiedWidgets = privateCtx?.widgetsOverlayFn?.(customizedDashboard) ?? {};
 
     const filterContextDefinition = dashboardFilterContextDefinition(customizedDashboard, dateFilterConfig);
+    const effectiveAttributeFilterConfigs = dashboard.attributeFilterConfigs;
     const filterContextIdentity = dashboardFilterContextIdentity(customizedDashboard);
-    const displayAsLabels = getDisplayAsLabels(dashboard);
+    const displayAsLabels = getDisplayAsLabels(effectiveAttributeFilterConfigs);
     // load DFs for both filter refs and displayAsLabels
     const attributeFilterDisplayForms = yield call(
         resolveFilterDisplayForms,

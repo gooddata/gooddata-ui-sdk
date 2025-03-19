@@ -1297,6 +1297,15 @@ export type CustomDashboardNestedLayoutComponent = ComponentType<IDashboardNeste
 // @public (undocumented)
 export type CustomDashboardRichTextComponent = ComponentType<IDashboardRichTextProps>;
 
+// @alpha (undocumented)
+export type CustomDashboardRichTextMenuButtonComponent = ComponentType<IDashboardRichTextMenuButtonProps>;
+
+// @alpha (undocumented)
+export type CustomDashboardRichTextMenuComponent = ComponentType<IDashboardRichTextMenuProps>;
+
+// @internal (undocumented)
+export type CustomDashboardRichTextMenuTitleComponent = ComponentType<IDashboardRichTextMenuTitleProps>;
+
 // @public (undocumented)
 export type CustomDashboardVisualizationSwitcherComponent = ComponentType<IDashboardVisualizationSwitcherProps>;
 
@@ -3358,6 +3367,12 @@ export const DefaultDashboardRichText: ComponentType<IDashboardRichTextProps_2>;
 // @internal (undocumented)
 export function DefaultDashboardRichTextComponentSetFactory(richTextProvider: RichTextComponentProvider): RichTextWidgetComponentSet;
 
+// @alpha (undocumented)
+export const DefaultDashboardRichTextMenu: (props: IDashboardRichTextMenuProps) => JSX.Element;
+
+// @internal (undocumented)
+export const DefaultDashboardRichTextMenuTitle: CustomDashboardRichTextMenuTitleComponent;
+
 // @beta
 export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
 
@@ -4049,7 +4064,7 @@ export type FluidLayoutCustomizationFn = (layout: IDashboardLayout<ExtendedDashb
 export function getAuthor(capabilities: IBackendCapabilities, user: IUser): string | undefined;
 
 // @internal (undocumented)
-export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch, eventDispatch, includeInteractions, includeConfigurations, useWidgetDeleteDialog, }: MenuItemDependencies): IInsightMenuItem[];
+export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch, eventDispatch, includeInteractions, includeConfigurations, useWidgetDeleteDialog, }: InsightMenuItemDependencies): IInsightMenuItem[];
 
 // @internal (undocumented)
 export function getDefaultInsightMenuItems(intl: IntlShape, config: {
@@ -4079,6 +4094,9 @@ export function getDefaultInsightMenuItems(intl: IntlShape, config: {
     alertingDisabledReason?: AlertingDisabledReason;
     canCreateAutomation: boolean;
 }): IInsightMenuItem[];
+
+// @internal (undocumented)
+export function getDefaultRichTextEditMode(widget: IRichTextWidget, { intl, dispatch, useWidgetDeleteDialog }: RichTextMenuItemDependencies): IRichTextMenuItem[];
 
 // @internal (undocumented)
 export function getDrillDownTitle(drillDefinition: IDrillDownDefinition, drillEvent: IDrillEvent, drillDownIntersectionIgnoredAttributes?: IDrillDownIntersectionIgnoredAttributes[], drillTargetDisplayForm?: IAttributeDisplayFormMetadataObject): string | null;
@@ -4451,6 +4469,10 @@ export interface IDashboardCustomComponentProps {
     MenuButtonComponent?: CustomMenuButtonComponent;
     RichTextComponentProvider?: OptionalRichTextComponentProvider;
     // @alpha
+    RichTextMenuComponentProvider?: OptionalRichTextMenuComponentProvider;
+    // @internal
+    RichTextMenuTitleComponentProvider?: OptionalRichTextMenuTitleComponentProvider;
+    // @alpha
     SaveAsDialogComponent?: CustomSaveAsDialogComponent;
     // @internal
     SaveButtonComponent?: CustomSaveButtonComponent;
@@ -4480,6 +4502,8 @@ export interface IDashboardCustomizationProps extends IDashboardCustomComponentP
     insightMenuItemsProvider?: InsightMenuItemsProvider;
     // @alpha
     menuButtonConfig?: IMenuButtonConfiguration;
+    // @alpha
+    richTextMenuItemsProvider?: RichTextMenuItemsProvider;
 }
 
 // @public (undocumented)
@@ -4757,6 +4781,38 @@ export interface IDashboardQueryService<TQuery extends IDashboardQuery, TResult>
     generator: (ctx: DashboardContext, query: TQuery, refresh: boolean) => SagaIterator<TResult>;
     // (undocumented)
     name: DashboardQueryType;
+}
+
+// @alpha (undocumented)
+export interface IDashboardRichTextMenuButtonProps {
+    // (undocumented)
+    isOpen: boolean;
+    // (undocumented)
+    items: IRichTextMenuItem[];
+    // (undocumented)
+    onClick: () => void;
+    // (undocumented)
+    widget: IRichTextWidget;
+}
+
+// @alpha (undocumented)
+export interface IDashboardRichTextMenuProps {
+    // (undocumented)
+    isOpen: boolean;
+    // (undocumented)
+    items: IRichTextMenuItem[];
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    widget: IRichTextWidget;
+}
+
+// @internal (undocumented)
+export interface IDashboardRichTextMenuTitleProps {
+    // (undocumented)
+    renderMode: RenderMode;
+    // (undocumented)
+    widget: IRichTextWidget;
 }
 
 // @public
@@ -5194,6 +5250,14 @@ export interface IInsightMenuSubmenuComponentProps {
     widget: IInsightWidget;
 }
 
+// @alpha (undocumented)
+export interface IIRichTextMenuItemSeparator {
+    // (undocumented)
+    itemId: string;
+    // (undocumented)
+    type: "separator";
+}
+
 // @internal
 export interface IKeyboardNavigationConfigItem {
     ariaLabel?: string;
@@ -5454,6 +5518,16 @@ export type InsightMenuButtonComponentProvider = (insight: IInsight | undefined,
 // @alpha (undocumented)
 export type InsightMenuComponentProvider = (insight: IInsight | undefined, widget: IInsightWidget) => CustomDashboardInsightMenuComponent;
 
+// @internal (undocumented)
+export type InsightMenuItemDependencies = {
+    intl: IntlShape;
+    dispatch: ReturnType<typeof useDashboardDispatch>;
+    eventDispatch: ReturnType<typeof useDashboardEventDispatch>;
+    includeInteractions?: boolean;
+    includeConfigurations?: boolean;
+    useWidgetDeleteDialog?: boolean;
+};
+
 // @beta (undocumented)
 export type InsightMenuItemsProvider = (insight: IInsight, widget: IInsightWidget, defaultItems: IInsightMenuItem[], closeMenu: () => void, renderMode: RenderMode) => IInsightMenuItem[];
 
@@ -5558,6 +5632,56 @@ export type IRichTextDraggingComponentProps = {
     itemType: "richText";
     item: RichTextDraggableItem;
 };
+
+// @alpha (undocumented)
+export type IRichTextMenuItem = IRichTextMenuItemButton | IIRichTextMenuItemSeparator | IRichTextMenuSubmenu;
+
+// @alpha (undocumented)
+export interface IRichTextMenuItemButton {
+    className?: string;
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    icon?: JSX.Element | string;
+    // (undocumented)
+    itemId: string;
+    // (undocumented)
+    itemName: string;
+    // (undocumented)
+    onClick?: (e: MouseEvent_2) => void;
+    tooltip?: string | ReactNode;
+    // (undocumented)
+    type: "button";
+}
+
+// @alpha (undocumented)
+export interface IRichTextMenuSubmenu {
+    className?: string;
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    icon?: JSX.Element | string;
+    // (undocumented)
+    itemId: string;
+    // (undocumented)
+    itemName: string;
+    // (undocumented)
+    onClick?: (e: MouseEvent_2) => void;
+    renderSubmenuComponentOnly?: boolean;
+    // (undocumented)
+    SubmenuComponent: ComponentType<IRichTextMenuSubmenuComponentProps>;
+    tooltip?: string | ReactNode;
+    // (undocumented)
+    type: "submenu";
+}
+
+// @alpha (undocumented)
+export interface IRichTextMenuSubmenuComponentProps {
+    enableTitleConfig?: boolean;
+    onClose: () => void;
+    onGoBack: () => void;
+    widget: IRichTextWidget;
+}
 
 // @alpha
 export function isAnyPlaceholderWidget(obj: unknown): obj is PlaceholderWidget | InsightPlaceholderWidget | KpiPlaceholderWidget;
@@ -6468,16 +6592,6 @@ export interface MeasureDateDatasets {
 // @internal (undocumented)
 export const MenuButton: (props: IMenuButtonProps) => JSX.Element;
 
-// @internal (undocumented)
-export type MenuItemDependencies = {
-    intl: IntlShape;
-    dispatch: ReturnType<typeof useDashboardDispatch>;
-    eventDispatch: ReturnType<typeof useDashboardEventDispatch>;
-    includeInteractions?: boolean;
-    includeConfigurations?: boolean;
-    useWidgetDeleteDialog?: boolean;
-};
-
 // @alpha
 export type MetaExportData = {
     root?: CommonExportDataAttributes;
@@ -6858,6 +6972,12 @@ export type OptionalProvider<T> = T extends (...args: infer TArgs) => infer TRes
 
 // @public (undocumented)
 export type OptionalRichTextComponentProvider = OptionalProvider<RichTextComponentProvider>;
+
+// @alpha (undocumented)
+export type OptionalRichTextMenuComponentProvider = OptionalProvider<RichTextMenuComponentProvider>;
+
+// @internal (undocumented)
+export type OptionalRichTextMenuTitleComponentProvider = OptionalProvider<RichTextMenuTitleComponentProvider>;
 
 // @public (undocumented)
 export type OptionalTitleComponentProvider = OptionalProvider<TitleComponentProvider>;
@@ -7594,6 +7714,23 @@ export type RichTextDraggingComponent = ComponentType<IRichTextDraggingComponent
 export type RichTextExportData = {
     markdown?: RichTextDataAttributes;
 };
+
+// @alpha (undocumented)
+export type RichTextMenuComponentProvider = (widget: IRichTextWidget) => CustomDashboardRichTextMenuComponent;
+
+// @internal (undocumented)
+export type RichTextMenuItemDependencies = {
+    intl: IntlShape;
+    dispatch: ReturnType<typeof useDashboardDispatch>;
+    eventDispatch: ReturnType<typeof useDashboardEventDispatch>;
+    useWidgetDeleteDialog?: boolean;
+};
+
+// @alpha (undocumented)
+export type RichTextMenuItemsProvider = (widget: IRichTextWidget, defaultItems: IRichTextMenuItem[], closeMenu: () => void, renderMode: RenderMode) => IRichTextMenuItem[];
+
+// @internal (undocumented)
+export type RichTextMenuTitleComponentProvider = (widget: IRichTextWidget) => CustomDashboardRichTextMenuTitleComponent;
 
 // @internal
 export type RichTextWidgetComponentSet = CustomComponentBase<IDashboardRichTextProps, Parameters<RichTextComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> & ConfigurableWidget<IRichTextWidget>;

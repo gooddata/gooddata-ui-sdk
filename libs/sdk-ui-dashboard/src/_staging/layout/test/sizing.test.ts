@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { newKpiWidget } from "@gooddata/sdk-backend-base";
 import {
     getDashboardLayoutWidgetDefaultHeight,
@@ -175,7 +175,7 @@ describe("sizing", () => {
             });
 
             it("should get minimum width for rich text widget", () => {
-                expect(getDashboardLayoutWidgetMinGridWidth(settings, "richText")).toBe(2);
+                expect(getDashboardLayoutWidgetMinGridWidth(settings, "richText")).toBe(1);
             });
 
             it("should get minimum width for visualization switcher widget", () => {

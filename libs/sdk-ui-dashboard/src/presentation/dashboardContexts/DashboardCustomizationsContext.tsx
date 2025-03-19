@@ -3,13 +3,14 @@ import React, { createContext, useContext } from "react";
 
 import { DashboardLayoutExportTransformFn, DashboardExportSlideConfig } from "../../model/index.js";
 
-import { InsightMenuItemsProvider } from "./types.js";
+import { InsightMenuItemsProvider, RichTextMenuItemsProvider } from "./types.js";
 
 /**
  * @internal
  */
 interface IDashboardCustomizationsContext {
     insightMenuItemsProvider?: InsightMenuItemsProvider;
+    richTextMenuItemsProvider?: RichTextMenuItemsProvider;
     existingExportTransformFn?: DashboardLayoutExportTransformFn;
     slideConfig?: DashboardExportSlideConfig;
 }

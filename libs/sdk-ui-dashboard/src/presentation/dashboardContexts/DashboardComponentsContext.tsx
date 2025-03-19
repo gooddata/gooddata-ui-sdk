@@ -33,6 +33,8 @@ import {
     InsightMenuComponentProvider,
     InsightMenuTitleComponentProvider,
     RichTextComponentProvider,
+    RichTextMenuComponentProvider,
+    RichTextMenuTitleComponentProvider,
     VisualizationSwitcherComponentProvider,
     VisualizationSwitcherToolbarComponentProvider,
     WidgetComponentProvider,
@@ -61,7 +63,9 @@ interface IDashboardComponentsContext {
     InsightBodyComponentProvider: InsightBodyComponentProvider;
     InsightMenuButtonComponentProvider: InsightMenuButtonComponentProvider;
     InsightMenuComponentProvider: InsightMenuComponentProvider;
+    RichTextMenuComponentProvider: RichTextMenuComponentProvider;
     InsightMenuTitleComponentProvider: InsightMenuTitleComponentProvider;
+    RichTextMenuTitleComponentProvider: RichTextMenuTitleComponentProvider;
     VisualizationSwitcherToolbarComponentProvider: VisualizationSwitcherToolbarComponentProvider;
     RichTextComponentProvider: RichTextComponentProvider;
     VisualizationSwitcherComponentProvider: VisualizationSwitcherComponentProvider;
@@ -109,6 +113,8 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     InsightMenuButtonComponentProvider: ThrowMissingComponentError("InsightMenuButtonComponent"),
     InsightMenuComponentProvider: ThrowMissingComponentError("InsightMenuComponent"),
     InsightMenuTitleComponentProvider: ThrowMissingComponentError("InsightMenuTitleComponent"),
+    RichTextMenuComponentProvider: ThrowMissingComponentError("RichTextMenuComponent"),
+    RichTextMenuTitleComponentProvider: ThrowMissingComponentError("RichTextMenuTitleComponentProvider"),
     RichTextComponentProvider: ThrowMissingComponentError("RichTextComponent"),
     VisualizationSwitcherComponentProvider: ThrowMissingComponentError("VisualizationSwitcherComponent"),
     WidgetComponentProvider: ThrowMissingComponentError("WidgetComponent"),

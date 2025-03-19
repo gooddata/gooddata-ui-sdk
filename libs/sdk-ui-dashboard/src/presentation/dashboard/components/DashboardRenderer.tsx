@@ -69,6 +69,8 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
         insightMenuButtonProvider,
         dashboardContentProvider,
         insightMenuProvider,
+        richTextMenuProvider,
+        richTextMenuTitleProvider,
         insightMenuTitleProvider,
         insightWidgetComponentSet,
         attributeFilterComponentSet,
@@ -104,6 +106,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                             <ExportDialogContextProvider>
                                 <DashboardCustomizationsProvider
                                     insightMenuItemsProvider={props.insightMenuItemsProvider}
+                                    richTextMenuItemsProvider={props.richTextMenuItemsProvider}
                                     existingExportTransformFn={
                                         props.customizationFns?.existingExportTransformFn
                                     }
@@ -122,6 +125,8 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                             visualizationSwitcherToolbarComponentProvider
                                         }
                                         RichTextComponentProvider={richTextProvider}
+                                        RichTextMenuComponentProvider={richTextMenuProvider}
+                                        RichTextMenuTitleComponentProvider={richTextMenuTitleProvider}
                                         VisualizationSwitcherComponentProvider={visualizationSwitcherProvider}
                                         WidgetComponentProvider={widgetProvider}
                                         ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBar}
