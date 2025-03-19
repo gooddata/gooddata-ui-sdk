@@ -195,6 +195,18 @@ Thu, 18 Apr 2024 08:07:32 GMT
 -   Introduced a new visualization type - Repeater, currently in the @beta stage.
 -   Introduce ability to limit attribute filter values by dependent date filters on GoodData Cloud dashboards.
 
+## 9.9.2
+
+Wed, 19 Mar 2025 11:50:06 GMT
+
+-   Update ag-grid-community and ag-grid-react library to latest version
+
+## 9.9.1
+
+Thu, 18 Apr 2024 11:19:00 GMT
+
+_Version update only_
+
 ## 9.9.0
 
 Thu, 21 Mar 2024 09:56:41 GMT
