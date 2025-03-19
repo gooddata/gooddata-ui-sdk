@@ -99,6 +99,10 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
             width: 100%;
             min-width: 0;
         }
+
+        &.viz-type-headline {
+            box-sizing: content-box;
+        }
     }
 
     &.type-rich-text {
