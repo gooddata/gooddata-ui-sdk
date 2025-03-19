@@ -14,6 +14,11 @@
         "comment": "",
         "limit": 0
     },
+    "gs.header.help.label": {
+        "value": "Help links",
+        "comment": "",
+        "limit": 0
+    },
     "gs.header.search": {
         "value": "Search",
         "comment": "A global semantic search button label in the main menu",

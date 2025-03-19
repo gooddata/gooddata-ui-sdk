@@ -4,7 +4,7 @@ import cx from "classnames";
 import { UiIcon } from "@gooddata/sdk-ui-kit";
 import { bem } from "../bem.js";
 import { useIntl } from "react-intl";
-
+import { NOTIFICATIONS_PANEL_ID } from "./DefaultNotificationsPanel.js";
 const { b, e } = bem("gd-ui-ext-notifications-panel-button");
 
 /**
@@ -54,12 +54,16 @@ export function DefaultNotificationsPanelButton({
     hasUnreadNotifications,
 }: INotificationsPanelButtonComponentProps) {
     const intl = useIntl();
+    const ariaControls = isNotificationPanelOpen ? { "aria-controls": NOTIFICATIONS_PANEL_ID } : {};
     return (
         <button
             ref={buttonRef}
             className={cx(`gd-button gd-header-button ${b({ isOpen: isNotificationPanelOpen })}`)}
             onClick={toggleNotificationPanel}
             aria-label={intl.formatMessage({ id: "notifications.panel.button.label" })}
+            aria-expanded={isNotificationPanelOpen}
+            aria-haspopup="true"
+            {...ariaControls}
         >
             <span className={e("icon")}>
                 {hasUnreadNotifications ? <span className={e("unread-status")} /> : null}

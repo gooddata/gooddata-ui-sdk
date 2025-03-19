@@ -40,6 +40,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
     disableDropdown,
     onHelpClicked,
     helpRedirectUrl,
+    intl,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const helpMenuRef = useRef<Button>(null);
@@ -60,6 +61,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
         return (
             <a
                 key={item.key}
+                role="option"
                 href={item.href}
                 target={item.target}
                 rel={item.target === "_blank" ? "noreferrer noopener" : undefined}
@@ -132,7 +134,12 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
             >
                 {!disableDropdown ? (
                     <UiFocusTrap returnFocusTo={helpMenuButtonRef} autofocusOnOpen={true}>
-                        <div className="gd-dialog gd-dropdown overlay gd-header-help-dropdown">
+                        <div
+                            id={dropdownId}
+                            className="gd-dialog gd-dropdown overlay gd-header-help-dropdown"
+                            role="listbox"
+                            aria-label={intl.formatMessage({ id: "gs.header.help.label" })}
+                        >
                             <div className="gd-list small">{menuItems}</div>
                         </div>
                     </UiFocusTrap>

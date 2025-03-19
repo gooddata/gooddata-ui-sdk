@@ -41,8 +41,9 @@ export class Button extends React.Component<IButtonProps> {
         const effectiveValue = this.getEffectiveValue();
 
         const ariaDropdownProps = {
+            ...(popupId && isExpanded ? { "aria-controls": popupId } : {}),
             ...(popupId ? { "aria-haspopup": !!popupId } : {}),
-            ...(popupId && isExpanded ? { "aria-controls": popupId, "aria-expanded": isExpanded } : {}),
+            ...(isExpanded !== undefined ? { "aria-expanded": isExpanded } : {}),
         };
 
         return (

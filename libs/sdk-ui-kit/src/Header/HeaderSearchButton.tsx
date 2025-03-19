@@ -71,7 +71,10 @@ export const HeaderSearchButton: React.FC<HeaderSearchProps> = ({ children, titl
                     ignoreClicksOnByClass={[".gd-bubble"]}
                 >
                     <UiFocusTrap returnFocusTo={buttonRef} autofocusOnOpen={true}>
-                        <div className="gd-dialog gd-dropdown overlay gd-header-search-dropdown">
+                        <div
+                            id={dropdownId}
+                            className="gd-dialog gd-dropdown overlay gd-header-search-dropdown"
+                        >
                             {children}
                         </div>
                     </UiFocusTrap>

@@ -13,6 +13,8 @@ import { INotificationsPanelView } from "../types.js";
 
 const { b } = bem("gd-ui-ext-notifications-panel");
 
+export const NOTIFICATIONS_PANEL_ID = "gd-ui-ext-notifications-panel-id";
+
 /**
  * NotificationsPanel component props.
  *
@@ -185,7 +187,7 @@ export function DefaultNotificationsPanel({
     maxListHeight,
 }: INotificationsPanelComponentProps) {
     return (
-        <div className={b()}>
+        <div className={b()} id={NOTIFICATIONS_PANEL_ID}>
             <NotificationsPanelHeader
                 activeView={activeView}
                 changeActiveView={changeActiveView}
