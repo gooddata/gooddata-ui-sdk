@@ -510,21 +510,21 @@ export const selectFilterViewsDialogMode: DashboardSelector<FilterViewDialogMode
 /**
  * @internal
  */
-export const selectIgnoreSnapshotTime: DashboardSelector<boolean> = createSelector(
+export const selectIgnoreExecutionTimestamp: DashboardSelector<boolean> = createSelector(
     selectSelf,
-    (state) => state.ignoreSnapshotTime ?? false,
+    (state) => state.ignoreExecutionTimestamp ?? false,
 );
 
 /**
  * @internal
  */
-export const selectSnapshotTime: DashboardSelector<string | undefined> = createSelector(
-    [selectConfig, selectIgnoreSnapshotTime],
-    (config, ignoreSnapshotTime) => {
-        if (ignoreSnapshotTime) {
+export const selectExecutionTimestamp: DashboardSelector<string | undefined> = createSelector(
+    [selectConfig, selectIgnoreExecutionTimestamp],
+    (config, ignoreExecutionTimestamp) => {
+        if (ignoreExecutionTimestamp) {
             return undefined;
         }
 
-        return config.snapshotTime ?? undefined;
+        return config.executionTimestamp ?? undefined;
     },
 );

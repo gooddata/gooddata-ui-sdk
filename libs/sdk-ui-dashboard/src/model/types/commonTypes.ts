@@ -329,9 +329,9 @@ export interface DashboardConfig {
     /**
      * @alpha
      *
-     * Snapshot timestamp for the dashboard execution as ISO string
+     * Timestamp for the dashboard execution as ISO string
      */
-    snapshotTime?: string;
+    executionTimestamp?: string;
 }
 
 /**
@@ -404,7 +404,7 @@ export type ResolvedDashboardConfig = Omit<
     | "references"
     | "entitlements"
     | "initialContent"
-    | "snapshotTime"
+    | "executionTimestamp"
 > &
     DashboardConfig;
 

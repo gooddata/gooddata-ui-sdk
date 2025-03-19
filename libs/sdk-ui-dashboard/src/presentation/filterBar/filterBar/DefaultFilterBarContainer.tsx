@@ -31,7 +31,7 @@ import { FilterViews } from "./filterViews/FilterViews.js";
 import { BulletsBar as FlexibleBulletsBar } from "../../flexibleLayout/dragAndDrop/Resize/BulletsBar/BulletsBar.js";
 import { BulletsBar as FluidBulletsBar } from "../../layout/dragAndDrop/Resize/BulletsBar/BulletsBar.js";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useSnapshotModeMessage } from "./useSnapshotModeMessage.js";
+import { useExecutionTimestampMessage } from "./useExecutionTimestampMessage.js";
 
 const selectShowFiltersConfigurationPanel = createSelector(
     selectIsInEditMode,
@@ -63,7 +63,8 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
     const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
     const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
     const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
-    const { showSnapshotModeMessage, formattedDate, onShowLiveDashboard } = useSnapshotModeMessage();
+    const { showExecutionTimestampMessage, formattedDate, onShowCurrentTimestampDashboard } =
+        useExecutionTimestampMessage();
     const dispatch = useDashboardDispatch();
 
     const applyAllDashboardFilters = useCallback(() => {
@@ -126,11 +127,11 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                     </Message>
                 </div>
             ) : null}
-            {showSnapshotModeMessage ? (
+            {showExecutionTimestampMessage ? (
                 <div className="filters-message" style={{ marginTop: rows.length > 1 ? "35px" : "10px" }}>
                     <Message type="progress">
                         <FormattedMessage
-                            id="filterBar.snapshotModeNotificationMessage"
+                            id="filterBar.executionTimestampNotificationMessage"
                             values={{
                                 bold: (chunks) => <strong>{chunks}</strong>,
                                 date: formattedDate,
@@ -138,9 +139,9 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                         />
                         <span className="filters-message-spacer" />
                         <FormattedMessage
-                            id="filterBar.snapshotModeNotificationAction"
+                            id="filterBar.executionTimestampNotificationAction"
                             values={{
-                                link: (chunks) => <a onClick={onShowLiveDashboard}>{chunks}</a>,
+                                link: (chunks) => <a onClick={onShowCurrentTimestampDashboard}>{chunks}</a>,
                             }}
                         />
                     </Message>

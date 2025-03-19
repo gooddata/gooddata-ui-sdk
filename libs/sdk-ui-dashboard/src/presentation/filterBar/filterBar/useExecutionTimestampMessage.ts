@@ -3,7 +3,7 @@
 import { ILocale } from "@gooddata/sdk-ui";
 import {
     selectLocale,
-    selectSnapshotTime,
+    selectExecutionTimestamp,
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
@@ -31,21 +31,21 @@ function formatDate(isoString: string | undefined, locale: ILocale) {
     return `${formattedDate}, ${formattedTime}`;
 }
 
-export const useSnapshotModeMessage = () => {
+export const useExecutionTimestampMessage = () => {
     const locale = useDashboardSelector(selectLocale);
-    const dashboardSnapshotTime = useDashboardSelector(selectSnapshotTime);
-    const showSnapshotModeMessage = dashboardSnapshotTime !== undefined;
-    const formattedDate = formatDate(dashboardSnapshotTime, locale);
+    const dashboardExecutionTimestamp = useDashboardSelector(selectExecutionTimestamp);
+    const showExecutionTimestampMessage = dashboardExecutionTimestamp !== undefined;
+    const formattedDate = formatDate(dashboardExecutionTimestamp, locale);
 
     const dispatch = useDashboardDispatch();
 
-    const onShowLiveDashboard = useCallback(() => {
-        dispatch(uiActions.ignoreSnapshotTime());
+    const onShowCurrentTimestampDashboard = useCallback(() => {
+        dispatch(uiActions.ignoreExecutionTimestamp());
     }, [dispatch]);
 
     return {
-        showSnapshotModeMessage,
+        showExecutionTimestampMessage,
         formattedDate,
-        onShowLiveDashboard,
+        onShowCurrentTimestampDashboard,
     };
 };

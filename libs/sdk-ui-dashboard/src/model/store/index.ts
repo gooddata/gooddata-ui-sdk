@@ -425,8 +425,8 @@ export {
     selectIsAlertsManagementDialogOpen,
     selectIsWidgetDeleteDialogOpen,
     selectWidgetDeleteDialogWidgetRef,
-    selectIgnoreSnapshotTime,
-    selectSnapshotTime,
+    selectIgnoreExecutionTimestamp,
+    selectExecutionTimestamp,
 } from "./ui/uiSelectors.js";
 export { uiActions } from "./ui/index.js";
 export type { RenderModeState } from "./renderMode/renderModeState.js";

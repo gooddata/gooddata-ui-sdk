@@ -56,7 +56,6 @@ export class TigerPreparedExecution implements IPreparedExecution {
                 {
                     workspaceId: this.definition.workspace,
                     afmExecution,
-                    timestamp: this.definition.executionConfig?.timestamp,
                 },
                 { ...new TigerCancellationConverter(this.options?.signal ?? null).forAxios() },
             ),

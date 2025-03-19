@@ -1618,6 +1618,8 @@ export interface DashboardConfig {
     enableFilterValuesResolutionInDrillEvents?: boolean;
     // @alpha
     entitlements?: IEntitlementDescriptor[];
+    // @alpha
+    executionTimestamp?: string;
     // @internal
     exportId?: string;
     exportType?: "visual" | "slides";
@@ -1645,8 +1647,6 @@ export interface DashboardConfig {
     settings?: ISettings;
     // @alpha
     slideConfig?: DashboardExportSlideConfig;
-    // @alpha
-    snapshotTime?: string;
     // @internal
     widgetsOverlay?: Record<string, IDashboardWidgetOverlay>;
 }
@@ -7549,7 +7549,7 @@ export interface ResolveAsyncRenderPayload {
 }
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "snapshotTime"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
@@ -8347,6 +8347,9 @@ export const selectExecutionResult: (state: DashboardState, id: EntityId) => IEx
 // @alpha (undocumented)
 export const selectExecutionResultByRef: (ref: ObjRef | undefined) => DashboardSelector<IExecutionResultEnvelope | undefined>;
 
+// @internal (undocumented)
+export const selectExecutionTimestamp: DashboardSelector<string | undefined>;
+
 // @alpha
 export const selectFilterableWidgetByRef: (ref: ObjRef | undefined) => DashboardSelector<IWidget | ICustomWidget | undefined>;
 
@@ -8420,7 +8423,7 @@ export const selectHideKpiDrillInEmbedded: DashboardSelector<boolean>;
 export const selectIgnoredDrillDownHierarchiesByWidgetRef: (ref: ObjRef) => DashboardSelector<IDrillDownReference[]>;
 
 // @internal (undocumented)
-export const selectIgnoreSnapshotTime: DashboardSelector<boolean>;
+export const selectIgnoreExecutionTimestamp: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectImplicitDrillsByAvailableDrillTargets: (availableDrillTargets: IAvailableDrillTargets | undefined, ignoredDrillDownHierarchies: IDrillDownReference[] | undefined) => DashboardSelector<IImplicitDrillWithPredicates[]>;
@@ -8769,9 +8772,6 @@ export const selectSlideShowExportAvailable: DashboardSelector<boolean>;
 
 // @internal
 export const selectSlideShowExportVisible: DashboardSelector<boolean>;
-
-// @internal (undocumented)
-export const selectSnapshotTime: DashboardSelector<string | undefined>;
 
 // @internal
 export const selectStash: DashboardSelector<LayoutStash>;
@@ -9415,7 +9415,7 @@ payload: ObjRef;
 type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
 closeWidgetDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-ignoreSnapshotTime: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+ignoreExecutionTimestamp: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 }, "uiSlice">;
 
 // @beta (undocumented)
@@ -9461,7 +9461,7 @@ export interface UiState {
         mode: FilterViewDialogMode;
     };
     // (undocumented)
-    ignoreSnapshotTime: boolean;
+    ignoreExecutionTimestamp: boolean;
     // (undocumented)
     insightListLastUpdateRequested: number;
     // (undocumented)
