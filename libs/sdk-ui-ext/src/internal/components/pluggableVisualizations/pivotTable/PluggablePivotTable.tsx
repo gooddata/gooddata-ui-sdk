@@ -286,6 +286,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const controlsObj = columnWidths
             ? {
                   controls: {
+                      ...newReferencePoint.properties?.controls,
                       columnWidths,
                       ...measureGroupDimensionProp,
                       ...columnHeaderPositionProp,
@@ -293,6 +294,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
               }
             : {
                   controls: {
+                      ...newReferencePoint.properties?.controls,
                       ...measureGroupDimensionProp,
                       ...columnHeaderPositionProp,
                   },
