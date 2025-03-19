@@ -11,10 +11,7 @@ import { batchActions } from "redux-batched-actions";
 import { executionResultsActions } from "../../store/executionResults/index.js";
 import { selectDateFilterConfig, selectSettings } from "../../store/config/configSelectors.js";
 import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
-import {
-    selectAllCatalogDisplayFormsMap,
-    selectCatalogDateDatasets,
-} from "../../store/catalog/catalogSelectors.js";
+import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";
 import { dashboardDeleted } from "../../events/dashboard.js";
 import { invariant } from "ts-invariant";
 import { actionsToInitializeNewDashboard } from "./common/stateInitializers.js";
@@ -34,9 +31,6 @@ function deleteDashboard(ctx: DashboardContext, dashboardRef: ObjRef): Promise<v
 function* resetToNewDashboard(ctx: DashboardContext): SagaIterator<void> {
     const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
     const dateFilterConfig: ReturnType<typeof selectDateFilterConfig> = yield select(selectDateFilterConfig);
-    const dateDataSets: ReturnType<typeof selectCatalogDateDatasets> = yield select(
-        selectCatalogDateDatasets,
-    );
     const displayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
         selectAllCatalogDisplayFormsMap,
     );
@@ -46,7 +40,6 @@ function* resetToNewDashboard(ctx: DashboardContext): SagaIterator<void> {
         ctx,
         settings,
         dateFilterConfig,
-        dateDataSets,
         displayForms,
     );
 

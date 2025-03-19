@@ -15,7 +15,6 @@ import {
     IDashboardLayout,
     IDashboard,
     ISettings,
-    ICatalogDateDataset,
     isDashboardDateFilterWithDimension,
     ObjRef,
     isObjRef,
@@ -67,8 +66,6 @@ import { mergedMigratedAttributeFilters } from "./migratedAttributeFilters.js";
  * @param dateFilterConfig - effective date filter config to use; note that this function will not store
  *  the date filter config anywhere; it uses the config during filter context sanitization & determining
  *  which date option is selected
- * @param dateDataSets - all catalog date datasets used to validate date filters. May not be given when
- *  catalog load is being deferred
  * @param displayForms - specify display forms that should be used for in-memory resolution of
  *  attribute filter display forms to metadata objects
  */
@@ -76,7 +73,6 @@ export function* actionsToInitializeNewDashboard(
     ctx: DashboardContext,
     settings: ISettings,
     dateFilterConfig: IDateFilterConfig,
-    dateDataSets: ICatalogDateDataset[] | null,
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
 ): SagaIterator<{
     initActions: Array<PayloadAction<any>>;
@@ -93,14 +89,7 @@ export function* actionsToInitializeNewDashboard(
         filterContextDefinition,
         originalFilterContextDefinition,
         initialContent,
-    } = yield call(
-        actionsToInitializeOrFillNewDashboard,
-        ctx,
-        settings,
-        dateFilterConfig,
-        dateDataSets,
-        displayForms,
-    );
+    } = yield call(actionsToInitializeOrFillNewDashboard, ctx, settings, dateFilterConfig, displayForms);
 
     return {
         initActions: [
@@ -145,7 +134,6 @@ function* actionsToInitializeOrFillNewDashboard(
     ctx: DashboardContext,
     settings: ISettings,
     dateFilterConfig: IDateFilterConfig,
-    dateDataSets: ICatalogDateDataset[] | null,
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
 ): SagaIterator<{
     dashboard?: IDashboard<ExtendedDashboardWidget>;
@@ -175,10 +163,8 @@ function* actionsToInitializeOrFillNewDashboard(
         sanitizeFilterContext,
         ctx,
         dashboard.filterContext,
-        dateDataSets,
         dashboard.dataSets,
         displayForms,
-        settings,
     );
 
     const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> = {
@@ -261,10 +247,8 @@ export function loadDataSets(
 function* sanitizeFilterContext(
     ctx: DashboardContext,
     filterContext: IDashboard["filterContext"],
-    catalogDateDataSets: ICatalogDateDataset[] | null,
     dataSets: IDataSetMetadataObject[] = [],
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
-    settings?: ISettings,
 ): SagaIterator<IDashboard["filterContext"]> {
     // we don't need sanitize filter references, if backend guarantees consistent references
     if (!ctx.backend.capabilities.allowsInconsistentRelations) {
@@ -301,39 +285,27 @@ function* sanitizeFilterContext(
         availableRefs = yield call(loadAvailableDisplayFormRefs, ctx, usedFilterDisplayForms);
     }
 
-    if (settings?.enableCriticalContentPerformanceOptimizations) {
-        // full catalog may not be available here, just related datasets to the dashboard
-        // -- find out if some datasets are still missing and if needed, fetch them
+    // full catalog may not be available here, just related datasets to the dashboard
+    // -- find out if some datasets are still missing and if needed, fetch them
 
-        // additional date filters, let them validate
-        const additionalDateFilters = filterContext.filters
-            .filter((filter) => !isDashboardAttributeFilter(filter))
-            .filter(isDashboardDateFilterWithDimension)
-            .map((filter) => filter.dateFilter.dataSet!);
+    // additional date filters, let them validate
+    const additionalDateFilters = filterContext.filters
+        .filter((filter) => !isDashboardAttributeFilter(filter))
+        .filter(isDashboardDateFilterWithDimension)
+        .map((filter) => filter.dateFilter.dataSet!);
 
-        // check which are missing and load them
-        const missingDataSets = additionalDateFilters
-            .filter(isIdentifierRef)
-            .filter((filter) => !dataSets.find((dataSet) => dataSet.id === filter.identifier));
-        const loadedMissing = yield call(loadDataSets, ctx, missingDataSets);
+    // check which are missing and load them
+    const missingDataSets = additionalDateFilters
+        .filter(isIdentifierRef)
+        .filter((filter) => !dataSets.find((dataSet) => dataSet.id === filter.identifier));
+    const loadedMissing = yield call(loadDataSets, ctx, missingDataSets);
 
-        const resolvedDataSetsIds = [...dataSets, ...loadedMissing].map((dataSet) => dataSet.id);
-        return update(
-            "filters",
-            (filters: FilterContextItem[]) =>
-                filters.filter((filter) => {
-                    return keepOnlyFiltersWithValidRef(filter, availableRefs, resolvedDataSetsIds);
-                }),
-            filterContext,
-        );
-    }
-
-    const dataSetIds = (catalogDateDataSets || []).map((dataSet) => dataSet.dataSet.id);
+    const resolvedDataSetsIds = [...dataSets, ...loadedMissing].map((dataSet) => dataSet.id);
     return update(
         "filters",
         (filters: FilterContextItem[]) =>
             filters.filter((filter) => {
-                return keepOnlyFiltersWithValidRef(filter, availableRefs, dataSetIds);
+                return keepOnlyFiltersWithValidRef(filter, availableRefs, resolvedDataSetsIds);
             }),
         filterContext,
     );
@@ -395,7 +367,6 @@ export function* actionsToInitializeExistingDashboard(
     migratedAttributeFilters: IDashboardAttributeFilter[],
     migratedAttributeFilterConfigs: IDashboardAttributeFilterConfig[] = [],
     dateFilterConfig: IDateFilterConfig,
-    dateDataSets: ICatalogDateDataset[] | null,
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     persistedDashboard?: IDashboard,
 ): SagaIterator<Array<PayloadAction<any>>> {
@@ -403,10 +374,8 @@ export function* actionsToInitializeExistingDashboard(
         sanitizeFilterContext,
         ctx,
         dashboard.filterContext,
-        dateDataSets,
         dashboard.dataSets,
         displayForms,
-        settings,
     );
 
     const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> = {

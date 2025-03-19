@@ -5,7 +5,6 @@ import {
     queryAttributeDataSet,
     QueryAttributeDataSet,
     selectPreloadedAttributesWithReferences,
-    selectEnableCriticalContentPerformanceOptimizations,
     useDashboardQueryProcessing,
     useDashboardSelector,
     selectIsNewDashboard,
@@ -30,22 +29,14 @@ export function useAttributeDataSet(displayForm: ObjRef, loadQuery = true) {
 
     // First wait for preloaded filter attributes, otherwise we might be spawning lot of unnecessary requests
     const attributesWithReferences = useDashboardSelector(selectPreloadedAttributesWithReferences);
-    const enablePerfOptimizations = useDashboardSelector(selectEnableCriticalContentPerformanceOptimizations);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
 
     useEffect(() => {
-        const shouldLoad = enablePerfOptimizations ? isNewDashboard || attributesWithReferences : true;
+        const shouldLoad = isNewDashboard || attributesWithReferences;
         if (loadQuery && shouldLoad) {
             getAttributeDataSet(displayForm);
         }
-    }, [
-        displayForm,
-        isNewDashboard,
-        loadQuery,
-        getAttributeDataSet,
-        enablePerfOptimizations,
-        attributesWithReferences,
-    ]);
+    }, [displayForm, isNewDashboard, loadQuery, getAttributeDataSet, attributesWithReferences]);
 
     const attributesDataSetLoading = useMemo(() => {
         return attributesDataSetLoadingStatus === "pending" || attributesDataSetLoadingStatus === "running";

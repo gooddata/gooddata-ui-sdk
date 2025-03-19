@@ -914,16 +914,6 @@ export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<bo
 /**
  * @internal
  */
-export const selectEnableCriticalContentPerformanceOptimizations: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableCriticalContentPerformanceOptimizations ?? false;
-    },
-);
-
-/**
- * @internal
- */
 export const selectEnableSlideshowExports: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {

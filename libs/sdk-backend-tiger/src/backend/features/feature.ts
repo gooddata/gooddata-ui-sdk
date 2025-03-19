@@ -634,13 +634,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableCriticalContentPerformanceOptimizations,
-            "enableCriticalContentPerformanceOptimizations",
-            "BOOLEAN",
-            FeatureFlagsValues.enableCriticalContentPerformanceOptimizations,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableSlideshowExports,
             "enableSlideshowExports",
             "BOOLEAN",
