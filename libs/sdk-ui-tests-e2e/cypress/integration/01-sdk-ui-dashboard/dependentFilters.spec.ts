@@ -134,7 +134,7 @@ describe("Dependent filter", () => {
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
             topBar.enterEditMode().editButtonIsVisible(false);
-
+            new InsightsCatalog().waitForCatalogLoad();
             table
                 .waitLoaded()
                 .getColumnValues(1)
@@ -157,6 +157,7 @@ describe("Dependent filter", () => {
                 .hasSubtitle("All")
                 .hasFilterListSize(48)
                 .configureLimitingParentFilterDependency("Region")
+                .elementsAreLoaded()
                 .hasFilterListSize(7)
                 .hasSelectedValueList([
                     "Connecticut",
@@ -260,8 +261,8 @@ describe("Dependent filter", () => {
                 .showAllElementValuesIsVisible(true);
 
             topBar.cancelEditMode().discardChanges().editButtonIsVisible(true);
-
-            table.waitLoadStarted().waitLoaded();
+            new Dashboard().waitForDashboardLoaded();
+            table.waitLoaded();
 
             regionFilter.isLoaded().open().elementsAreLoaded().hasSubtitle("East Coast").hasFilterListSize(4);
             stateFilter.isLoaded().open().elementsAreLoaded().hasSubtitle("All").hasFilterListSize(48);
@@ -288,7 +289,8 @@ describe("Dependent filter", () => {
         () => {
             topBar.enterEditMode().editButtonIsVisible(false);
             new InsightsCatalog().waitForCatalogLoad();
-            stateFilter.open().selectAttributesWithoutApply("Alabama").apply();
+            stateFilter.open().elementsAreLoaded().selectAttributesWithoutApply("Alabama").apply();
+            new Widget(0).hasNoDataForFilter();
             cityFilter
                 .open()
                 .elementsAreLoaded()
@@ -324,9 +326,11 @@ describe("Dependent filter", () => {
             table.waitLoadStarted().waitLoaded();
 
             stateFilter
+                .isLoaded()
                 .open()
                 .elementsAreLoaded()
                 .configureLimitingParentFilterDependency("City")
+                .isLoaded()
                 .elementsAreLoaded()
                 .hasFilterListSize(2)
                 .selectAttribute(["Massachusetts"])
@@ -334,6 +338,7 @@ describe("Dependent filter", () => {
             table.waitLoadStarted().waitLoaded();
 
             stateFilter
+                .isLoaded()
                 .open()
                 .elementsAreLoaded()
                 .hasFilterListSize(2)
