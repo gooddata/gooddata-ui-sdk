@@ -2,7 +2,7 @@
 import React, { useCallback, useMemo, useState, CSSProperties, useEffect } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
-import { insightSetFilters, insightVisualizationUrl } from "@gooddata/sdk-model";
+import { IExecutionConfig, insightSetFilters, insightVisualizationUrl } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IPushData,
@@ -22,6 +22,7 @@ import {
     selectIsExport,
     selectDrillableItems,
     useWidgetFilters,
+    selectExecutionTimestamp,
 } from "../../../../../model/index.js";
 import { IDashboardInsightProps } from "../../types.js";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
@@ -149,6 +150,12 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         onWidgetFiltersReady?.(filtersForInsight);
     }, [filtersForInsight, onWidgetFiltersReady]);
 
+    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
+    const execConfig: IExecutionConfig = useMemo(
+        () => ({ timestamp: executionTimestamp }),
+        [executionTimestamp],
+    );
+
     return (
         <div style={insightStyle}>
             <div style={insightPositionStyle}>
@@ -180,6 +187,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
                                 pushData={handlePushData}
                                 ErrorComponent={ErrorComponent}
                                 LoadingComponent={LoadingComponent}
+                                execConfig={execConfig}
                             />
                         </div>
                     ) : null}
