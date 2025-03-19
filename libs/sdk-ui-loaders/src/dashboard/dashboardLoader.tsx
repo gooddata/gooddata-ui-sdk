@@ -293,11 +293,7 @@ export class DashboardLoader implements IDashboardLoader {
         let dashboardConfig = config;
 
         let dashboardWithPlugins: IDashboardWithReferences | undefined;
-        if (
-            config?.settings?.enableCriticalContentPerformanceOptimizations &&
-            isDashboard(dashboard) &&
-            config?.references
-        ) {
+        if (isDashboard(dashboard) && config?.references) {
             dashboardWithPlugins = {
                 dashboard,
                 references: config.references,

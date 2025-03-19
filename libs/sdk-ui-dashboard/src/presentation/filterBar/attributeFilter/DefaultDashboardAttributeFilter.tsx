@@ -39,7 +39,6 @@ import {
     selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     selectHasSomeExecutionResult,
-    selectEnableCriticalContentPerformanceOptimizations,
     selectPreloadedAttributesWithReferences,
     selectIsDashboardExecuted,
     selectDashboardFiltersApplyMode,
@@ -79,12 +78,9 @@ export const DefaultDashboardAttributeFilter = (
     const hasSomeExecutionResult = useDashboardSelector(selectHasSomeExecutionResult);
     const filtersPreloaded = useDashboardSelector(selectPreloadedAttributesWithReferences);
     const isDashboardExecuted = useDashboardSelector(selectIsDashboardExecuted);
-    const enableCriticalContentPerformanceOptimizations = useDashboardSelector(
-        selectEnableCriticalContentPerformanceOptimizations,
-    );
     const showFilter = isInEditMode || isDashboardExecuted || (hasSomeExecutionResult && filtersPreloaded);
 
-    if (enableCriticalContentPerformanceOptimizations && !showFilter) {
+    if (!showFilter) {
         return <AttributeFilterLoading />;
     }
 

@@ -596,12 +596,6 @@ export interface ISettings {
     enableAmplitudeTracker?: boolean;
 
     /**
-     * Enables critical content performance optimizations.
-     * @alpha
-     */
-    enableCriticalContentPerformanceOptimizations?: boolean;
-
-    /**
      * Enable slideshow exports using the new export render mode in KD.
      */
     enableSlideshowExports?: boolean;

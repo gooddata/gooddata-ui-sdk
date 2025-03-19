@@ -6,7 +6,6 @@ import {
     QueryAttributeByDisplayForm,
     useDashboardQueryProcessing,
     selectPreloadedAttributesWithReferences,
-    selectEnableCriticalContentPerformanceOptimizations,
     useDashboardSelector,
     selectIsNewDashboard,
 } from "../../model/index.js";
@@ -30,15 +29,14 @@ export function useAttributes(displayForms: ObjRef[]) {
 
     // First wait for preloaded filter attributes, otherwise we might be spawning lot of unnecessary requests
     const attributesWithReferences = useDashboardSelector(selectPreloadedAttributesWithReferences);
-    const enablePerfOptimizations = useDashboardSelector(selectEnableCriticalContentPerformanceOptimizations);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
 
     useEffect(() => {
-        const shouldLoad = enablePerfOptimizations ? isNewDashboard || attributesWithReferences : true;
+        const shouldLoad = isNewDashboard || attributesWithReferences;
         if (shouldLoad) {
             getAttributes(displayForms);
         }
-    }, [displayForms, getAttributes, enablePerfOptimizations, isNewDashboard, attributesWithReferences]);
+    }, [displayForms, getAttributes, isNewDashboard, attributesWithReferences]);
 
     const attributesLoading = useMemo(() => {
         return attributesLoadingStatus === "pending" || attributesLoadingStatus === "running";

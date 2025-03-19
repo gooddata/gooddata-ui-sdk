@@ -75,10 +75,7 @@ async function loadDashboardFromBackend(
         // as our version of dashboard differs from what is on the backend
         // hence we must do the resolution on the client
         if (hasPersistedDashboard) {
-            if (
-                ctx.config?.settings?.enableCriticalContentPerformanceOptimizations &&
-                ctx.config?.references
-            ) {
+            if (ctx.config?.references) {
                 return {
                     dashboard: preloadedDashboard,
                     references: ctx.config.references,
@@ -161,25 +158,6 @@ type DashboardLoadResult = {
     event: DashboardInitialized;
 };
 
-function* decideAndLoadFullCatalog(ctx: DashboardContext, cmd: InitializeDashboard) {
-    // defer catalog loading when optimizations enabled
-    if (cmd.payload.config?.settings?.enableCriticalContentPerformanceOptimizations) {
-        return null;
-    }
-
-    const fullCatalog: PromiseFnReturnType<typeof loadCatalog> = yield call(loadCatalog, ctx, cmd);
-    return fullCatalog;
-}
-
-function* decideAndLoadDashboardsList(ctx: DashboardContext, cmd: InitializeDashboard) {
-    if (cmd.payload.config?.settings?.enableCriticalContentPerformanceOptimizations) {
-        return null;
-    }
-
-    const dashboardsList: PromiseFnReturnType<typeof loadDashboardList> = yield call(loadDashboardList, ctx);
-    return dashboardsList;
-}
-
 function* loadExistingDashboard(
     ctx: DashboardContext,
     cmd: InitializeDashboard,
@@ -193,9 +171,7 @@ function* loadExistingDashboard(
         call(resolveDashboardConfigAndFeatureFlagDependentCalls, ctx, cmd),
         call(resolvePermissions, ctx, cmd),
         call(resolveEntitlements, ctx, cmd),
-        call(decideAndLoadFullCatalog, ctx, cmd),
         call(loadUser, ctx),
-        call(decideAndLoadDashboardsList, ctx, cmd),
         call(loadDashboardPermissions, ctx),
         call(loadDateHierarchyTemplates, ctx),
         call(loadFilterViews, ctx),
@@ -209,9 +185,7 @@ function* loadExistingDashboard(
         },
         permissions,
         entitlements,
-        catalog,
         user,
-        listedDashboards,
         dashboardPermissions,
         dateHierarchyTemplates,
         filterViews,
@@ -220,9 +194,7 @@ function* loadExistingDashboard(
         SagaReturnType<typeof resolveDashboardConfigAndFeatureFlagDependentCalls>,
         SagaReturnType<typeof resolvePermissions>,
         PromiseFnReturnType<typeof resolveEntitlements>,
-        PromiseFnReturnType<typeof decideAndLoadFullCatalog>,
         PromiseFnReturnType<typeof loadUser>,
-        PromiseFnReturnType<typeof decideAndLoadDashboardsList>,
         PromiseFnReturnType<typeof loadDashboardPermissions>,
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
         PromiseFnReturnType<typeof loadFilterViews>,
@@ -254,30 +226,14 @@ function* loadExistingDashboard(
         [],
         dashboard.attributeFilterConfigs,
         effectiveDateFilterConfig.config,
-        catalog ? catalog.dateDatasets() : [],
-        catalog ? createDisplayFormMapFromCatalog(catalog) : createDisplayFormMap([], []),
+        [],
+        createDisplayFormMap([], []),
         cmd.payload.persistedDashboard,
     );
 
     const catalogPayload = {
         dateHierarchyTemplates,
-        ...(catalog
-            ? {
-                  attributes: catalog.attributes(),
-                  dateDatasets: catalog.dateDatasets(),
-                  facts: catalog.facts(),
-                  measures: catalog.measures(),
-                  attributeHierarchies: catalog.attributeHierarchies(),
-              }
-            : {}),
     };
-
-    const dashboardsListActions = cmd.payload.config?.settings?.enableCriticalContentPerformanceOptimizations
-        ? []
-        : [
-              listedDashboardsActions.setListedDashboards(listedDashboards),
-              accessibleDashboardsActions.setAccessibleDashboards(listedDashboards),
-          ];
 
     const batch: BatchAction = batchActions(
         [
@@ -299,7 +255,6 @@ function* loadExistingDashboard(
             dateFilterConfigsActions.setDateFilterConfigs({
                 dateFilterConfigs: dashboard.dateFilterConfigs,
             }),
-            ...dashboardsListActions,
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
             renderModeActions.setRenderMode(config.initialRenderMode),
             dashboardPermissionsActions.setDashboardPermissions(dashboardPermissions),
@@ -481,10 +436,7 @@ export function* initializeDashboardHandler(ctx: DashboardContext, cmd: Initiali
 
         yield put(result.event);
 
-        if (
-            result.event.payload.config.settings?.enableCriticalContentPerformanceOptimizations &&
-            dashboardRef
-        ) {
+        if (dashboardRef) {
             // let's run effects which are not essential for the existing
             // dashboard to be rendered, such as catalog load
             yield spawn(advancedLoader, ctx, cmd, result.event.payload.dashboard);
