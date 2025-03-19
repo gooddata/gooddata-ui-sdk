@@ -1,0 +1,265 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`testing remark plugin to extract references > replace references inside link nodes 1`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "position": {
+            "end": {
+              "column": 23,
+              "line": 1,
+              "offset": 22,
+            },
+            "start": {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "text",
+          "value": "Hello, there are some ",
+        },
+        {
+          "children": [
+            {
+              "position": {
+                "end": {
+                  "column": 32,
+                  "line": 1,
+                  "offset": 31,
+                },
+                "start": {
+                  "column": 22,
+                  "line": 1,
+                  "offset": 21,
+                },
+              },
+              "type": "text",
+              "value": "link with ",
+            },
+            {
+              "position": {
+                "end": {
+                  "column": 49,
+                  "line": 1,
+                  "offset": 48,
+                },
+                "start": {
+                  "column": 32,
+                  "line": 1,
+                  "offset": 31,
+                },
+              },
+              "type": "text",
+              "value": "{metric/metric_1}",
+            },
+            {
+              "position": {
+                "end": {
+                  "column": 60,
+                  "line": 1,
+                  "offset": 59,
+                },
+                "start": {
+                  "column": 49,
+                  "line": 1,
+                  "offset": 48,
+                },
+              },
+              "type": "text",
+              "value": " references",
+            },
+          ],
+          "title": null,
+          "type": "link",
+          "url": "/metric/metric_1",
+        },
+        {
+          "position": {
+            "end": {
+              "column": 65,
+              "line": 1,
+              "offset": 66,
+            },
+            "start": {
+              "column": 60,
+              "line": 1,
+              "offset": 61,
+            },
+          },
+          "type": "text",
+          "value": " and ",
+        },
+        {
+          "children": [
+            {
+              "position": {
+                "end": {
+                  "column": 67,
+                  "line": 1,
+                  "offset": 68,
+                },
+                "start": {
+                  "column": 60,
+                  "line": 1,
+                  "offset": 61,
+                },
+              },
+              "type": "text",
+              "value": "second ",
+            },
+            {
+              "position": {
+                "end": {
+                  "column": 84,
+                  "line": 1,
+                  "offset": 85,
+                },
+                "start": {
+                  "column": 67,
+                  "line": 1,
+                  "offset": 68,
+                },
+              },
+              "type": "text",
+              "value": "{metric/metric_2}",
+            },
+            {
+              "position": {
+                "end": {
+                  "column": 89,
+                  "line": 1,
+                  "offset": 90,
+                },
+                "start": {
+                  "column": 84,
+                  "line": 1,
+                  "offset": 85,
+                },
+              },
+              "type": "text",
+              "value": " link",
+            },
+          ],
+          "title": null,
+          "type": "link",
+          "url": "/metric/metric_2",
+        },
+        {
+          "position": {
+            "end": {
+              "column": 101,
+              "line": 1,
+              "offset": 102,
+            },
+            "start": {
+              "column": 89,
+              "line": 1,
+              "offset": 90,
+            },
+          },
+          "type": "text",
+          "value": " references.",
+        },
+      ],
+      "type": "paragraph",
+    },
+  ],
+  "type": "root",
+}
+`;
+
+exports[`testing remark plugin to extract references > replace references inside text node 1`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "position": {
+            "end": {
+              "column": 23,
+              "line": 1,
+              "offset": 22,
+            },
+            "start": {
+              "column": 1,
+              "line": 1,
+              "offset": 0,
+            },
+          },
+          "type": "text",
+          "value": "Hello, there are some ",
+        },
+        {
+          "position": {
+            "end": {
+              "column": 40,
+              "line": 1,
+              "offset": 39,
+            },
+            "start": {
+              "column": 23,
+              "line": 1,
+              "offset": 22,
+            },
+          },
+          "type": "text",
+          "value": "{metric/metric_1}",
+        },
+        {
+          "position": {
+            "end": {
+              "column": 45,
+              "line": 1,
+              "offset": 44,
+            },
+            "start": {
+              "column": 40,
+              "line": 1,
+              "offset": 39,
+            },
+          },
+          "type": "text",
+          "value": " and ",
+        },
+        {
+          "position": {
+            "end": {
+              "column": 62,
+              "line": 1,
+              "offset": 61,
+            },
+            "start": {
+              "column": 45,
+              "line": 1,
+              "offset": 44,
+            },
+          },
+          "type": "text",
+          "value": "{metric/metric_2}",
+        },
+        {
+          "position": {
+            "end": {
+              "column": 74,
+              "line": 1,
+              "offset": 73,
+            },
+            "start": {
+              "column": 62,
+              "line": 1,
+              "offset": 61,
+            },
+          },
+          "type": "text",
+          "value": " references.",
+        },
+      ],
+      "type": "paragraph",
+    },
+  ],
+  "type": "root",
+}
+`;
