@@ -89,7 +89,7 @@ export interface UiState {
     filterAttributeSelectionOpen: boolean;
     selectedFilterIndex: number | undefined;
     activeSection: ILayoutSectionPath | undefined;
-    ignoreSnapshotTime: boolean;
+    ignoreExecutionTimestamp: boolean;
     /** @alpha */
     drillValidationMessages: {
         invalidDrillWidgetRefs: ObjRef[];
@@ -163,5 +163,5 @@ export const uiInitialState: UiState = {
     draggingWidgetSource: undefined,
     draggingWidgetTarget: undefined,
     widgetsOverlay: {},
-    ignoreSnapshotTime: false,
+    ignoreExecutionTimestamp: false,
 };

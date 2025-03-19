@@ -349,8 +349,8 @@ const hideAllWidgetsOverlay: UiReducer = (state) => {
     }, {} as Record<string, IDashboardWidgetOverlay>);
 };
 
-const ignoreSnapshotTime: UiReducer = (state) => {
-    state.ignoreSnapshotTime = true;
+const ignoreExecutionTimestamp: UiReducer = (state) => {
+    state.ignoreExecutionTimestamp = true;
 };
 
 export const uiReducers = {
@@ -408,5 +408,5 @@ export const uiReducers = {
     toggleFilterViewsDialog,
     openWidgetDeleteDialog,
     closeWidgetDeleteDialog,
-    ignoreSnapshotTime,
+    ignoreExecutionTimestamp,
 };

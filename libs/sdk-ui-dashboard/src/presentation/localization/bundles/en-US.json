@@ -122,13 +122,13 @@
         "comment": "Message banner. Some filters are changed by user but not applied yet. Do not translate HTML markup enclosed in <>.",
         "limit": 0
     },
-    "filterBar.snapshotModeNotificationMessage": {
-        "value": "<bold>Note.</bold> This is a snapshot from {date}.",
-        "comment": "Message banner describing dashboard snapshot mode. Don't translate placeholders enclosed in '{}'.",
+    "filterBar.executionTimestampNotificationMessage": {
+        "value": "<bold>Note.</bold> You're viewing up-to-date data, but for any relative date filters the dashboard treats {date} as “today.”",
+        "comment": "Message banner describing dashboard with specific data timestamp. Don't translate placeholders enclosed in '{}'.",
         "limit": 0
     },
-    "filterBar.snapshotModeNotificationAction": {
-        "value": "<link>View live</link>",
+    "filterBar.executionTimestampNotificationAction": {
+        "value": "<link>Reset to today</link>",
         "comment": "Do not translate HTML markup enclosed in <>.",
         "limit": 0
     },

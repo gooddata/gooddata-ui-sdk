@@ -37,7 +37,7 @@ import {
     selectCrossFilteringSelectedPointsByWidgetRef,
     useWidgetFilters,
     selectEnableExecutionCancelling,
-    selectSnapshotTime,
+    selectExecutionTimestamp,
 } from "../../../../../model/index.js";
 
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
@@ -287,8 +287,11 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         !!effectiveError,
     );
 
-    const snapshotTime = useDashboardSelector(selectSnapshotTime);
-    const execConfig: IExecutionConfig = useMemo(() => ({ timestamp: snapshotTime }), [snapshotTime]);
+    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
+    const execConfig: IExecutionConfig = useMemo(
+        () => ({ timestamp: executionTimestamp }),
+        [executionTimestamp],
+    );
 
     const renderComponent = () => {
         if (effectiveError) {
