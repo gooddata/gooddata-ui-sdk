@@ -305,6 +305,24 @@
             }
         },
         {
+            "version": "9.9.2",
+            "tag": "@gooddata/sdk-ui-all_v9.9.2",
+            "date": "Wed, 19 Mar 2025 11:50:06 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Update ag-grid-community and ag-grid-react library to latest version"
+                    }
+                ]
+            }
+        },
+        {
+            "version": "9.9.1",
+            "tag": "@gooddata/sdk-ui-all_v9.9.1",
+            "date": "Thu, 18 Apr 2024 11:19:00 GMT",
+            "comments": {}
+        },
+        {
             "version": "9.9.0",
             "tag": "@gooddata/sdk-ui-all_v9.9.0",
             "date": "Thu, 21 Mar 2024 09:56:41 GMT",
