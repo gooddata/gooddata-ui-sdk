@@ -804,7 +804,7 @@ export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean> =
 );
 
 /**
- * Returns whether nested layout is enabled.
+ * Returns whether flexible layout renderer is enabled.
  *
  * @internal
  */
@@ -812,6 +812,18 @@ export const selectEnableFlexibleLayout: DashboardSelector<boolean> = createSele
     selectConfig,
     (state) => {
         return state.settings?.enableDashboardFlexibleLayout ?? false;
+    },
+);
+
+/**
+ * Returns whether nesting is enabled in flexible layout renderer.
+ *
+ * @internal
+ */
+export const selectEnableFlexibleLayoutContainer: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardFlexibleLayoutContainer ?? false;
     },
 );
 

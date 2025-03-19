@@ -474,8 +474,14 @@ export interface ISettings {
 
     /**
      * Enables new dashboard layout renderer with nesting support.
+     * The nesting itself needs to be enabled by enableDashboardFlexibleLayoutContainer.
      */
     enableDashboardFlexibleLayout?: boolean;
+
+    /**
+     * Enables container support in the new dashboard layout renderer.
+     */
+    enableDashboardFlexibleLayoutContainer?: boolean;
 
     /**
      * Enable GenAI-powered functionality, such as semantic-search.

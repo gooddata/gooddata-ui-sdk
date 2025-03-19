@@ -99,6 +99,7 @@ export {
     selectEnableAutomations,
     selectEnableCrossFilteringAliasTitles,
     selectEnableFlexibleLayout,
+    selectEnableFlexibleLayoutContainer,
     selectEnableInPlatformNotifications,
     selectEnableExternalRecipients,
     selectEnableDrilledTooltip,

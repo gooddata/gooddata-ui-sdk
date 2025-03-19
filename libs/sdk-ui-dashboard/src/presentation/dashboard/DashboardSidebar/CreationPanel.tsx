@@ -16,6 +16,7 @@ import {
     selectSupportsRichTextWidgets,
     selectEnableVisualizationSwitcher,
     selectEnableFlexibleLayout,
+    selectEnableFlexibleLayoutContainer,
 } from "../../../model/index.js";
 import cx from "classnames";
 import {
@@ -48,6 +49,7 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
     const enableRichText = useDashboardSelector(selectEnableKDRichText);
     const enableVisualizationSwitcher = useDashboardSelector(selectEnableVisualizationSwitcher);
     const enableFlexibleLayout = useDashboardSelector(selectEnableFlexibleLayout);
+    const enableFlexibleLayoutContainer = useDashboardSelector(selectEnableFlexibleLayoutContainer);
     const isAnalyticalDesignerEnabled = useDashboardSelector(selectIsAnalyticalDesignerEnabled);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const settings = useDashboardSelector(selectSettings);
@@ -61,7 +63,9 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
         const items = compact([
             InsightWidgetComponentSet.creating,
             AttributeFilterComponentSet.creating,
-            enableFlexibleLayout && DashboardLayoutWidgetComponentSet.creating,
+            enableFlexibleLayout &&
+                enableFlexibleLayoutContainer &&
+                DashboardLayoutWidgetComponentSet.creating,
             enableVisualizationSwitcher && VisualizationSwitcherWidgetComponentSet.creating,
             supportsRichText && enableRichText && RichTextWidgetComponentSet.creating,
         ]);

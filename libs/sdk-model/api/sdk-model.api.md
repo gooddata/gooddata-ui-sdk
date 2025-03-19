@@ -3371,6 +3371,7 @@ export interface ISettings {
     enableDashboardFiltersApplyModes?: boolean;
     enableDashboardFilterViews?: boolean;
     enableDashboardFlexibleLayout?: boolean;
+    enableDashboardFlexibleLayoutContainer?: boolean;
     enableDashboardTabularExport?: boolean;
     enableDataSampling?: boolean;
     // (undocumented)

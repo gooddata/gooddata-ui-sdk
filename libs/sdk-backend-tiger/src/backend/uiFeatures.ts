@@ -116,6 +116,7 @@ export enum TigerFeaturesNames {
     EnableCrossFilteringAliasTitles = "enableCrossFilteringAliasTitles",
     EnableDefaultSmtp = "enableDefaultSmtp",
     EnableDashboardFlexibleLayout = "enableDashboardFlexibleLayout",
+    EnableDashboardFlexibleLayoutContainer = "enableDashboardFlexibleLayoutContainer",
     EnableNumberSeparators = "enableNumberSeparators",
     EnableNewUserCreationFlow = "enableNewUserCreationFlow",
     EnableDestinationTesting = "enableDestinationTesting",
@@ -215,6 +216,7 @@ export type ITigerFeatureFlags = {
     enableCrossFilteringAliasTitles: typeof FeatureFlagsValues["enableCrossFilteringAliasTitles"][number];
     enableDefaultSmtp: typeof FeatureFlagsValues["enableDefaultSmtp"][number];
     enableDashboardFlexibleLayout: typeof FeatureFlagsValues["enableDashboardFlexibleLayout"][number];
+    enableDashboardFlexibleLayoutContainer: typeof FeatureFlagsValues["enableDashboardFlexibleLayoutContainer"][number];
     enableNumberSeparators: typeof FeatureFlagsValues["enableNumberSeparators"][number];
     enableNewUserCreationFlow: typeof FeatureFlagsValues["enableNewUserCreationFlow"][number];
     enableDestinationTesting: typeof FeatureFlagsValues["enableDestinationTesting"][number];
@@ -314,6 +316,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCrossFilteringAliasTitles: true,
     enableDefaultSmtp: false,
     enableDashboardFlexibleLayout: false,
+    enableDashboardFlexibleLayoutContainer: false,
     enableNumberSeparators: true,
     enableNewUserCreationFlow: false,
     enableDestinationTesting: true,
@@ -417,6 +420,7 @@ export const FeatureFlagsValues = {
     enableCrossFilteringAliasTitles: [true, false] as const,
     enableDefaultSmtp: [true, false] as const,
     enableDashboardFlexibleLayout: [true, false] as const,
+    enableDashboardFlexibleLayoutContainer: [true, false] as const,
     enableNumberSeparators: [true, false] as const,
     enableNewUserCreationFlow: [true, false] as const,
     enableDestinationTesting: [true, false] as const,

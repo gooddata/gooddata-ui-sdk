@@ -557,6 +557,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableDashboardFlexibleLayoutContainer,
+            "enableDashboardFlexibleLayoutContainer",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDashboardFlexibleLayoutContainer,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableNumberSeparators,
             "enableNumberSeparators",
             "BOOLEAN",
