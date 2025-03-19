@@ -23,11 +23,13 @@ import { selectBackendCapabilities } from "../backendCapabilities/backendCapabil
 import { createMemoizedSelector } from "../_infra/selectors.js";
 import { selectWidgetByRef } from "../layout/layoutSelectors.js";
 import { IRawExportCustomOverride, IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
+import { fillMissingTitles } from "@gooddata/sdk-ui";
 import {
     selectCatalogAttributeDisplayForms,
     selectCatalogDateDatasets,
     selectCatalogMeasures,
 } from "../catalog/catalogSelectors.js";
+import { selectLocale } from "../config/configSelectors.js";
 
 const entitySelectors = insightsAdapter.getSelectors((state: DashboardState) => state.insights);
 
@@ -110,38 +112,51 @@ const selectRawExportMeasureOverridesForInsightByRef: (
     ref: ObjRef | undefined,
 ) => DashboardSelector<IRawExportCustomOverrides["measures"] | undefined> = createMemoizedSelector(
     (ref: ObjRef | undefined) => {
-        return createSelector(selectInsightByRef(ref), selectCatalogMeasures, (insight, catalogMeasures) => {
-            if (!insight) {
-                return undefined;
-            }
+        return createSelector(
+            selectInsightByRef(ref),
+            selectCatalogMeasures,
+            selectLocale,
+            (insight, catalogMeasures, locale) => {
+                if (!insight) {
+                    return undefined;
+                }
 
-            return insightMeasures(insight).reduce((overrides, measure) => {
-                const localId = measureLocalId(measure);
+                // fill the missing titles for derived and arithmetic measures,
+                // we need to do this because the rest of the logic needs the titles of the measures
+                // explicitly set in the insight definition if possible
+                const filledInsight = fillMissingTitles(insight, locale);
 
-                // first, try getting the title from the insight itself, giving precedence to the alias over the title
-                const titleFromInsightMeasure = measureAlias(measure) || measureTitle(measure);
-                if (titleFromInsightMeasure) {
-                    overrides[localId] = {
-                        title: titleFromInsightMeasure,
-                    };
+                return insightMeasures(filledInsight).reduce((overrides, measure) => {
+                    const localId = measureLocalId(measure);
+
+                    // first, try getting the title from the insight itself,
+                    // giving precedence to the alias over the title.
+                    // this should also cover the case of derived measures without renames,
+                    // because they have been processed by fillMissingTitles
+                    const titleFromInsightMeasure = measureAlias(measure) || measureTitle(measure);
+                    if (titleFromInsightMeasure) {
+                        overrides[localId] = {
+                            title: titleFromInsightMeasure,
+                        };
+                        return overrides;
+                    }
+
+                    // otherwise, get it from the catalog.
+                    // we only need to look at the measures, any fact-based measures should have the title set in the
+                    // insight itself
+                    const catalogMeasure = catalogMeasures.find((m) =>
+                        areObjRefsEqual(m.measure.ref, measureItem(measure)),
+                    );
+                    if (catalogMeasure) {
+                        overrides[localId] = {
+                            title: catalogMeasure.measure.title,
+                        };
+                    }
+
                     return overrides;
-                }
-
-                // otherwise, get it from the catalog.
-                // we only need to look at the measures, any fact-based measures should have the title set in the
-                // insight itself
-                const catalogMeasure = catalogMeasures.find((m) =>
-                    areObjRefsEqual(m.measure.ref, measureItem(measure)),
-                );
-                if (catalogMeasure) {
-                    overrides[localId] = {
-                        title: catalogMeasure.measure.title,
-                    };
-                }
-
-                return overrides;
-            }, {} as Record<string, IRawExportCustomOverride>);
-        });
+                }, {} as Record<string, IRawExportCustomOverride>);
+            },
+        );
     },
 );
 
