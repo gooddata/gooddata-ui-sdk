@@ -76,6 +76,7 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
     autofocusOnOpen = false,
 }) => {
     const trapRef = useRef<HTMLDivElement>(null);
+    const defaultReturnFocusToRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
         const getNextElement = (focusableElements, firstElement, lastElement, shiftKey: boolean) => {
@@ -110,13 +111,16 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
                 if (onDeactivate) {
                     onDeactivate();
                 }
-                if (returnFocusTo.current) {
+                if (returnFocusTo?.current) {
                     returnFocusTo.current.focus();
+                } else if (defaultReturnFocusToRef.current) {
+                    defaultReturnFocusToRef.current.focus();
                 }
             }
         };
 
         document.addEventListener("keydown", handleKeyDown);
+        defaultReturnFocusToRef.current = document.activeElement as HTMLElement;
 
         const focusTrapTimeout = setTimeout(() => {
             if (autofocusOnOpen) {
