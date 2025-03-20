@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { SyntheticEvent } from "react";
 import cx from "classnames";
 import compact from "lodash/compact.js";
@@ -50,7 +50,7 @@ export const DrillSelectListItem = (props: DrillSelectListItemProps): JSX.Elemen
     const title = compact([name, attributeLabel]).join(" ");
 
     return (
-        <a onClick={onClick} className={itemClassName} title={title}>
+        <a href="" onClick={onClick} className={itemClassName} title={title}>
             <div className="gd-drill-modal-picker-icon-wrapper">
                 <IconComponent color={theme?.palette?.complementary?.c5} />
             </div>

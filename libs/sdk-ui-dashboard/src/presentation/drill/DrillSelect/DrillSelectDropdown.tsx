@@ -1,11 +1,11 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import React, { useMemo } from "react";
 import stringify from "json-stable-stringify";
 import { useIntl, IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 import { IDrillEvent, UnexpectedSdkError } from "@gooddata/sdk-ui";
-import { Overlay } from "@gooddata/sdk-ui-kit";
+import { Overlay, UiFocusTrap } from "@gooddata/sdk-ui-kit";
 import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types.js";
 import {
     IInsight,
@@ -91,7 +91,9 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = (props) =
                 alignTo={`.${dropDownAnchorClass}`}
                 onClose={onClose}
             >
-                <DrillSelectListBody items={drillSelectItems} onSelect={onSelect} />
+                <UiFocusTrap autofocusOnOpen={true}>
+                    <DrillSelectListBody items={drillSelectItems} onSelect={onSelect} />
+                </UiFocusTrap>
             </Overlay>
         </div>
     ) : null;
