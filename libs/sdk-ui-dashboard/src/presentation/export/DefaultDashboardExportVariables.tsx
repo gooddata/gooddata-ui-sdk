@@ -88,8 +88,13 @@ function MetaImage({
 }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
-    const onError = useCallback(() => setError(true), []);
-    const onLoad = useCallback(() => setLoading(false), []);
+    const onLoad = useCallback(() => {
+        setLoading(false);
+    }, []);
+    const onError = useCallback(() => {
+        setError(true);
+        setLoading(false);
+    }, []);
 
     const exportData = useMetaExportImageData(type, loading, error);
     const url = useMemo(() => image?.replace(/url\((.*)\)/, "$1"), [image]);
