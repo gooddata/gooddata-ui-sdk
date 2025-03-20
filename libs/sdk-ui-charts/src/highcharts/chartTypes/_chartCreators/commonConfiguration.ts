@@ -48,7 +48,7 @@ function getThemedConfiguration(theme: ITheme): any {
             enabled: false,
         },
         accessibility: {
-            enabled: false, // when accessibility module will be enabled, this should be removed JIRA: LX-745
+            enabled: true,
         },
         title: {
             // setting title to empty string prevents it from being shown

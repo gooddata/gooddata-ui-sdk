@@ -16,6 +16,7 @@ import "highcharts/modules/heatmap.js";
 import "highcharts/modules/pattern-fill.js";
 import "highcharts/modules/sankey.js";
 import "highcharts/modules/dependency-wheel.js";
+import "highcharts/modules/accessibility.js";
 
 initChartPlugins(Highcharts);
 
