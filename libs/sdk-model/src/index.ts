@@ -566,6 +566,8 @@ export {
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
     isFilterContextItem,
+    dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
 } from "./dashboard/filterContext.js";
 
 export type { IWidgetAlert, IWidgetAlertBase, IWidgetAlertDefinition } from "./dashboard/alert.js";

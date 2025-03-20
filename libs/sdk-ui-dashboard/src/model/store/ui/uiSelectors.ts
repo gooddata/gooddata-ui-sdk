@@ -528,3 +528,9 @@ export const selectExecutionTimestamp: DashboardSelector<string | undefined> = c
         return config.executionTimestamp ?? undefined;
     },
 );
+
+/**
+ * @internal
+ */
+export const selectFilterValidationIncompatibleDefaultFiltersOverride: DashboardSelector<boolean> =
+    createSelector(selectSelf, (state) => state.filterValidationMessages.incompatibleDefaultFiltersOverride);

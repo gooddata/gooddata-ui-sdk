@@ -353,6 +353,14 @@ const ignoreExecutionTimestamp: UiReducer = (state) => {
     state.ignoreExecutionTimestamp = true;
 };
 
+const setIncompatibleDefaultFiltersOverrideMessage: UiReducer = (state) => {
+    state.filterValidationMessages.incompatibleDefaultFiltersOverride = true;
+};
+
+const resetIncompatibleDefaultFiltersOverrideMessage: UiReducer = (state) => {
+    state.filterValidationMessages.incompatibleDefaultFiltersOverride = false;
+};
+
 export const uiReducers = {
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
@@ -409,4 +417,6 @@ export const uiReducers = {
     openWidgetDeleteDialog,
     closeWidgetDeleteDialog,
     ignoreExecutionTimestamp,
+    setIncompatibleDefaultFiltersOverrideMessage,
+    resetIncompatibleDefaultFiltersOverrideMessage,
 };

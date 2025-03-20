@@ -44,6 +44,11 @@
         "comment": "",
         "limit": 0
     },
+    "messages.dashboard.incompatibleDefaultFilters.title": {
+        "value": "<b>Warning</b> Some dashboard filters couldn’t be applied. Check the filters to make sure you’re viewing the right data.",
+        "comment": "Title of the warning message shown if default filter overrides are incompatible with the current dashboard filters.",
+        "limit": 0
+    },
     "messages.dashboard.invalidDrills.title": {
         "value": "<b>Some interactions were removed</b>",
         "comment": "Title of the warning message shown while editing KPI dashboard with some invalid drills.",

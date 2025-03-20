@@ -965,3 +965,15 @@ export const selectEnableExecutionCancelling: DashboardSelector<boolean> = creat
         return state.settings?.enableExecutionCancelling ?? false;
     },
 );
+
+/**
+ * Selector for the dashboard share link feature flag
+ *
+ * @internal
+ */
+export const selectEnableDashboardShareLink: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return Boolean(state.settings?.enableDashboardShareLink) ?? false;
+    },
+);
