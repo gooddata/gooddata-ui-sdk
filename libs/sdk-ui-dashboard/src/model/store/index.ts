@@ -112,6 +112,7 @@ export {
     selectEnableExecutionCancelling,
     selectEnableOrchestratedTabularExports,
     selectEnableDashboardTabularExport,
+    selectEnableDashboardShareLink,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -427,6 +428,7 @@ export {
     selectWidgetDeleteDialogWidgetRef,
     selectIgnoreExecutionTimestamp,
     selectExecutionTimestamp,
+    selectFilterValidationIncompatibleDefaultFiltersOverride,
 } from "./ui/uiSelectors.js";
 export { uiActions } from "./ui/index.js";
 export type { RenderModeState } from "./renderMode/renderModeState.js";

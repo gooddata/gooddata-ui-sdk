@@ -90,6 +90,9 @@ export interface UiState {
     selectedFilterIndex: number | undefined;
     activeSection: ILayoutSectionPath | undefined;
     ignoreExecutionTimestamp: boolean;
+    filterValidationMessages: {
+        incompatibleDefaultFiltersOverride: boolean;
+    };
     /** @alpha */
     drillValidationMessages: {
         invalidDrillWidgetRefs: ObjRef[];
@@ -156,6 +159,9 @@ export const uiInitialState: UiState = {
     filterAttributeSelectionOpen: false,
     selectedFilterIndex: undefined,
     activeSection: undefined,
+    filterValidationMessages: {
+        incompatibleDefaultFiltersOverride: false,
+    },
     drillValidationMessages: {
         invalidDrillWidgetRefs: [],
         invalidCustomUrlDrillParameterWidgets: [],

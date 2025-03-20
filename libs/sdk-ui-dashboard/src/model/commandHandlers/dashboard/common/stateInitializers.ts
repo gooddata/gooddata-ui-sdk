@@ -36,6 +36,7 @@ import {
     dashboardFilterContextDefinition,
     dashboardFilterContextIdentity,
 } from "../../../../_staging/dashboard/dashboardFilterContext.js";
+import { mergeFilterContextFilters } from "../../../../_staging/dashboard/dashboardFilterContextValidation.js";
 import { dashboardLayoutSanitize } from "../../../../_staging/dashboard/dashboardLayout.js";
 import { resolveFilterDisplayForms } from "../../../utils/filterResolver.js";
 import {
@@ -54,6 +55,7 @@ import { drillActions } from "../../../store/drill/index.js";
 
 import { dashboardInitialize, EmptyDashboardLayout } from "./dashboardInitialize.js";
 import { mergedMigratedAttributeFilters } from "./migratedAttributeFilters.js";
+import compact from "lodash/compact.js";
 
 /**
  * Returns a list of actions which when processed will initialize the essential parts of the dashboard
@@ -389,8 +391,28 @@ export function* actionsToInitializeExistingDashboard(
         privateCtx?.existingDashboardTransformFn?.(sanitizedDashboard) ?? sanitizedDashboard;
     const modifiedWidgets = privateCtx?.widgetsOverlayFn?.(customizedDashboard) ?? {};
 
-    const filterContextDefinition = dashboardFilterContextDefinition(customizedDashboard, dateFilterConfig);
+    const originalSanitizedFilterContextDefinition = dashboardFilterContextDefinition(
+        customizedDashboard,
+        dateFilterConfig,
+    );
     const filterContextIdentity = dashboardFilterContextIdentity(customizedDashboard);
+    const overrideDefaultFilters = ctx.config?.overrideDefaultFilters;
+    const { mergedFilters, validationResults } = mergeFilterContextFilters(
+        originalSanitizedFilterContextDefinition.filters,
+        overrideDefaultFilters ?? [],
+        {
+            dateFilterConfig: sanitizedDashboard.dateFilterConfig,
+            dateFilterConfigs: sanitizedDashboard.dateFilterConfigs,
+            attributeFilterConfigs: sanitizedDashboard.attributeFilterConfigs,
+        },
+    );
+
+    const filterContextDefinition = overrideDefaultFilters
+        ? {
+              ...originalSanitizedFilterContextDefinition,
+              filters: mergedFilters,
+          }
+        : originalSanitizedFilterContextDefinition;
 
     const migratedFilterContext: IFilterContextDefinition = isImmediateAttributeFilterMigrationEnabled
         ? mergedMigratedAttributeFilters(filterContextDefinition, migratedAttributeFilters)
@@ -428,7 +450,7 @@ export function* actionsToInitializeExistingDashboard(
         insights,
         settings,
     );
-    return [
+    return compact([
         filterContextActions.setFilterContext({
             originalFilterContextDefinition: migratedOriginalFilterContext,
             filterContextDefinition: migratedFilterContext,
@@ -451,6 +473,7 @@ export function* actionsToInitializeExistingDashboard(
         metaActions.setDashboardTitle(dashboard.title), // even when using persistedDashboard, use the working title of the dashboard
         uiActions.clearWidgetSelection(),
         uiActions.setWidgetsOverlay(modifiedWidgets),
+        validationResults.length > 0 ? uiActions.setIncompatibleDefaultFiltersOverrideMessage() : null,
         drillActions.resetCrossFiltering(),
-    ];
+    ]);
 }

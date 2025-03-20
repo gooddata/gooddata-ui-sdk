@@ -631,6 +631,11 @@ export interface ISettings {
      */
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
 
+    /**
+     * Enable the URL sharing functionality in the dashboard share dialog.
+     */
+    enableDashboardShareLink?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

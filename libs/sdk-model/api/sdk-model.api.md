@@ -323,6 +323,12 @@ export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 export const DashboardDateFilterConfigModeValues: Record<Uppercase<DashboardDateFilterConfigMode>, DashboardDateFilterConfigMode>;
 
 // @alpha
+export function dashboardFilterLocalIdentifier(filter: FilterContextItem): string | undefined;
+
+// @alpha
+export function dashboardFilterObjRef(filter: FilterContextItem): ObjRef | undefined;
+
+// @alpha
 export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): ObjRef;
 
 // @public
@@ -3370,6 +3376,7 @@ export interface ISettings {
     enableDashboardFilterViews?: boolean;
     enableDashboardFlexibleLayout?: boolean;
     enableDashboardFlexibleLayoutContainer?: boolean;
+    enableDashboardShareLink?: boolean;
     enableDashboardTabularExport?: boolean;
     enableDataSampling?: boolean;
     // (undocumented)

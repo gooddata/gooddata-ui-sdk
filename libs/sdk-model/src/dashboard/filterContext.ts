@@ -337,6 +337,40 @@ export function isAllValuesDashboardAttributeFilter(obj: unknown): boolean {
 }
 
 /**
+ * Returns objRef of the dashboard filter.
+ *
+ * For attribute filters, this will be reference to the display form.
+ * For date filters, it's reference to the data set, or undefined if it's the default date filter.
+ *
+ * @alpha
+ */
+export function dashboardFilterObjRef(filter: FilterContextItem): ObjRef | undefined {
+    if (isDashboardAttributeFilter(filter)) {
+        return filter.attributeFilter.displayForm;
+    }
+    if (isDashboardDateFilter(filter)) {
+        return filter.dateFilter.dataSet;
+    }
+    return undefined;
+}
+
+/**
+ * Returns local identifier of the dashboard filter.
+ *
+ * @alpha
+ */
+export function dashboardFilterLocalIdentifier(filter: FilterContextItem): string | undefined {
+    if (isDashboardAttributeFilter(filter)) {
+        return filter.attributeFilter.localIdentifier;
+    }
+    if (isDashboardDateFilter(filter)) {
+        return filter.dateFilter.localIdentifier;
+    }
+
+    return undefined;
+}
+
+/**
  * Supported filter context items
  * @alpha
  */

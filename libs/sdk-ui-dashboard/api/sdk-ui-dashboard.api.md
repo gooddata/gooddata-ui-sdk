@@ -1650,6 +1650,7 @@ export interface DashboardConfig {
     // @beta
     menuButtonItemsVisibility?: IMenuButtonItemsVisibility;
     objectAvailability?: ObjectAvailabilityConfig;
+    overrideDefaultFilters?: FilterContextItem[];
     // @alpha
     references?: IDashboardReferences;
     separators?: ISeparators;
@@ -7669,7 +7670,7 @@ export interface ResolveAsyncRenderPayload {
 }
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
@@ -8349,6 +8350,9 @@ export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<bo
 // @internal
 export const selectEnableDashboardFiltersApplyModes: DashboardSelector<boolean>;
 
+// @internal
+export const selectEnableDashboardShareLink: DashboardSelector<boolean>;
+
 // @internal (undocumented)
 export const selectEnableDashboardTabularExport: DashboardSelector<boolean>;
 
@@ -8519,6 +8523,9 @@ export const selectFilterContextFilters: DashboardSelector<FilterContextItem[]>;
 
 // @internal
 export const selectFilterContextIdentity: DashboardSelector<IDashboardObjectIdentity | undefined>;
+
+// @internal (undocumented)
+export const selectFilterValidationIncompatibleDefaultFiltersOverride: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
 export const selectFilterViews: DashboardSelector<IDashboardFilterView[]>;
@@ -9553,6 +9560,8 @@ type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
 closeWidgetDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 ignoreExecutionTimestamp: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+setIncompatibleDefaultFiltersOverrideMessage: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+resetIncompatibleDefaultFiltersOverrideMessage: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 }, "uiSlice">;
 
 // @beta (undocumented)
@@ -9591,6 +9600,10 @@ export interface UiState {
     // (undocumented)
     filterBar: {
         expanded: boolean;
+    };
+    // (undocumented)
+    filterValidationMessages: {
+        incompatibleDefaultFiltersOverride: boolean;
     };
     // (undocumented)
     filterViews: {

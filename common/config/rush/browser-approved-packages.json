@@ -135,10 +135,6 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "@gooddata/sdk-ui-charts",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
       "name": "@gooddata/sdk-ui-dashboard",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -156,6 +152,10 @@
     },
     {
       "name": "@gooddata/sdk-ui-geo",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "@gooddata/sdk-ui-charts",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
@@ -329,6 +329,10 @@
     {
       "name": "@types/lodash",
       "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "@types/lz-string",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@types/mapbox-gl",
@@ -533,14 +537,6 @@
     {
       "name": "case-sensitive-paths-webpack-plugin",
       "allowedCategories": [ "examples", "tools" ]
-    },
-    {
-      "name": "chalk",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "chokidar",
-      "allowedCategories": [ "tools" ]
     },
     {
       "name": "circular-dependency-plugin",
@@ -787,6 +783,14 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "chalk",
+      "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "chokidar",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "immer",
       "allowedCategories": [ "production" ]
     },
@@ -836,6 +840,10 @@
     },
     {
       "name": "lru-cache",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "lz-string",
       "allowedCategories": [ "production" ]
     },
     {
@@ -1047,10 +1055,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "recharts",
-      "allowedCategories": [ "examples" ]
-    },
-    {
       "name": "redux-batched-actions",
       "allowedCategories": [ "production" ]
     },
@@ -1059,11 +1063,15 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "remark-emoji",
-      "allowedCategories": [ "production" ]
+      "name": "recharts",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "remark",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "remark-emoji",
       "allowedCategories": [ "production" ]
     },
     {
@@ -1123,11 +1131,11 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-checkstyle-formatter",
+      "name": "stylelint-config-prettier",
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-config-prettier",
+      "name": "stylelint-checkstyle-formatter",
       "allowedCategories": [ "production" ]
     },
     {

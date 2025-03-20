@@ -370,3 +370,8 @@ export type { DataAccessConfig, ValueFormatter, HeaderTranslator } from "./resul
 export { createNumberJsFormatter, DefaultDataAccessConfig } from "./results/dataAccessConfig.js";
 
 export { getTotalInfo } from "./results/internal/utils.js";
+
+/*
+ * URL utilities
+ */
+export { compressForUrl, decompressFromUrl } from "./url/compression.js";

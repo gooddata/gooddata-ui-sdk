@@ -136,6 +136,7 @@ export enum TigerFeaturesNames {
     EnableImmediateAttributeFilterDisplayAsLabelMigration = "enableImmediateAttributeFilterDisplayAsLabelMigration",
     EnableRichTextDynamicReferences = "enableRichTextDynamicReferences",
     EnableAnalyticalDesignerCatalogSideload = "enableAnalyticalDesignerCatalogSideload",
+    EnableDashboardShareLink = "enableDashboardShareLink",
 }
 
 export type ITigerFeatureFlags = {
@@ -235,6 +236,7 @@ export type ITigerFeatureFlags = {
     enableImmediateAttributeFilterDisplayAsLabelMigration: typeof FeatureFlagsValues["enableImmediateAttributeFilterDisplayAsLabelMigration"][number];
     enableRichTextDynamicReferences: typeof FeatureFlagsValues["enableRichTextDynamicReferences"][number];
     enableAnalyticalDesignerCatalogSideload: typeof FeatureFlagsValues["enableAnalyticalDesignerCatalogSideload"][number];
+    enableDashboardShareLink: typeof FeatureFlagsValues["enableDashboardShareLink"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -334,6 +336,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableImmediateAttributeFilterDisplayAsLabelMigration: false,
     enableRichTextDynamicReferences: false,
     enableAnalyticalDesignerCatalogSideload: false,
+    enableDashboardShareLink: false,
 };
 
 export const FeatureFlagsValues = {
@@ -437,4 +440,5 @@ export const FeatureFlagsValues = {
     enableImmediateAttributeFilterDisplayAsLabelMigration: [true, false] as const,
     enableRichTextDynamicReferences: [true, false] as const,
     enableAnalyticalDesignerCatalogSideload: [true, false] as const,
+    enableDashboardShareLink: [true, false] as const,
 };

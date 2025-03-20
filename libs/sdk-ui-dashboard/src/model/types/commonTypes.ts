@@ -11,6 +11,7 @@ import {
     Identifier,
     IDashboardLayout,
     IInsight,
+    FilterContextItem,
 } from "@gooddata/sdk-model";
 import { ILocale } from "@gooddata/sdk-ui";
 import keys from "lodash/keys.js";
@@ -126,6 +127,24 @@ export interface DashboardConfig {
      * available on the date filter component.
      */
     dateFilterConfig?: IDateFilterConfig;
+
+    /**
+     * Override filters in the default filter context.
+     *
+     * @remarks
+     * Overrides dashboard's default filters by matching display forms.
+     * These overrides persist in edit mode and after filter resets.
+     *
+     * Compatible matching filters will replace originals.
+     *
+     * Incompatible filters are merged following these rules:
+     * - Non-matching filters won't be added
+     * - Multi-to-single selection conversions will use first element only
+     * - Changes to readonly/hidden filters won't be applied
+     *
+     * Incompatible overrides/conversions will lead to a toast message with warning.
+     */
+    overrideDefaultFilters?: FilterContextItem[];
 
     /**
      * Color palette to pass down to charts.
@@ -405,6 +424,7 @@ export type ResolvedDashboardConfig = Omit<
     | "entitlements"
     | "initialContent"
     | "executionTimestamp"
+    | "overrideDefaultFilters"
 > &
     DashboardConfig;
 

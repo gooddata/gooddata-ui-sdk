@@ -187,6 +187,9 @@ export function composedFromUri(uri: string): IHeaderPredicate;
 // @public
 export type ComposedPlaceholderResolutionContext<T> = T extends IComposedPlaceholder<any, any, infer TContext> ? TContext : any;
 
+// @public
+export function compressForUrl<T>(data: T): string;
+
 // @public (undocumented)
 export function convertDrillableItemsToPredicates(drillableItems: ExplicitDrill[]): IHeaderPredicate[];
 
@@ -329,6 +332,9 @@ export type DataViewWindow = {
     offset: number[];
     size: number[];
 };
+
+// @public
+export function decompressFromUrl<T>(compressedData: string): T | undefined;
 
 // @public
 export const DefaultColorPalette: IColorPalette;
