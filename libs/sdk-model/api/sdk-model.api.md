@@ -3397,6 +3397,7 @@ export interface ISettings {
     enableHeadlineExport?: boolean;
     enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;
+    enableHighchartsAccessibility?: boolean;
     enableIgnoreCrossFiltering?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableInPlatformNotifications?: boolean;

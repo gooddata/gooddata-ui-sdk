@@ -13,6 +13,7 @@ import { supportedDualAxesChartTypes } from "../_chartOptions/chartCapabilities.
 import { IChartOptions } from "../../typings/unsafe.js";
 import { ITheme } from "@gooddata/sdk-model";
 import { DEFAULT_CATEGORIES_LIMIT } from "../../constants/limits.js";
+import { IChartConfig } from "../../../interfaces/index.js";
 
 const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 const HIGHCHART_PLOT_LIMITED_RANGE = 1e5;
@@ -36,7 +37,7 @@ function fixNumericalAxisOutOfMinMaxRange(axis: IHighchartsAxisExtend) {
 
 let previousChart: any = null;
 
-function getThemedConfiguration(theme: ITheme): any {
+function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
     // This way it is possible to rewrite css variables in the limited scope.
     const themedBackground = `var(--gd-chart-backgroundColor, var(--gd-palette-complementary-0, ${styleVariables.gdColorBackground}))`;
     const backgroundColor = theme ? themedBackground : styleVariables.gdColorBackground;
@@ -48,7 +49,7 @@ function getThemedConfiguration(theme: ITheme): any {
             enabled: false,
         },
         accessibility: {
-            enabled: true,
+            enabled: config?.enableHighchartsAccessibility ?? false,
         },
         title: {
             // setting title to empty string prevents it from being shown
@@ -187,8 +188,9 @@ export function getCommonConfiguration(
     chartOptions: IChartOptions,
     drillConfig: IDrillConfig,
     theme?: ITheme,
+    config?: IChartConfig,
 ): any {
-    const commonConfiguration = getThemedConfiguration(theme);
+    const commonConfiguration = getThemedConfiguration(theme, config);
 
     const handlers = [registerDrilldownHandler, registerRenderHandler];
 

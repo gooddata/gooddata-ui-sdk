@@ -34,6 +34,8 @@ export enum TigerFeaturesNames {
     //boolean + possible values: enabled, disabled
     EnableFunnelChart = "enableFunnelChart",
     //boolean + possible values: enabled, disabled
+    EnableHighchartsAccessibility = "enableHighchartsAccessibility",
+    //boolean + possible values: enabled, disabled
     EnablePyramidChart = "enablePyramidChart",
     //boolean + possible values: enabled, disabled
     EnableSankeyChart = "enableSankeyChart",
@@ -237,6 +239,7 @@ export type ITigerFeatureFlags = {
     enableRichTextDynamicReferences: typeof FeatureFlagsValues["enableRichTextDynamicReferences"][number];
     enableAnalyticalDesignerCatalogSideload: typeof FeatureFlagsValues["enableAnalyticalDesignerCatalogSideload"][number];
     enableDashboardShareLink: typeof FeatureFlagsValues["enableDashboardShareLink"][number];
+    enableHighchartsAccessibility: typeof FeatureFlagsValues["enableHighchartsAccessibility"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -337,6 +340,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRichTextDynamicReferences: false,
     enableAnalyticalDesignerCatalogSideload: false,
     enableDashboardShareLink: false,
+    enableHighchartsAccessibility: false,
 };
 
 export const FeatureFlagsValues = {
@@ -441,4 +445,5 @@ export const FeatureFlagsValues = {
     enableRichTextDynamicReferences: [true, false] as const,
     enableAnalyticalDesignerCatalogSideload: [true, false] as const,
     enableDashboardShareLink: [true, false] as const,
+    enableHighchartsAccessibility: [true, false] as const,
 };
