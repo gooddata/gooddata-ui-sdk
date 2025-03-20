@@ -1,7 +1,8 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
+import { messages } from "../locales.js";
 
 /**
  * @internal
@@ -42,12 +43,15 @@ function getbuttonIcoStyle(
     return undefined;
 }
 
-function renderPagingButton(
-    type: PagingButtonType,
-    buttonsOrientation: ButtonsOrientationType,
-    handler: () => void,
-    disabled: boolean,
-) {
+interface IPagingButtonProps {
+    type: PagingButtonType;
+    buttonsOrientation: ButtonsOrientationType;
+    handler: () => void;
+    disabled: boolean;
+}
+
+const PagingButton: React.FC<IPagingButtonProps> = ({ type, buttonsOrientation, handler, disabled }) => {
+    const intl = useIntl();
     const classes = cx(
         "gd-button-link",
         "gd-button-icon-only",
@@ -55,12 +59,11 @@ function renderPagingButton(
         "paging-button",
     );
 
-    const onClick = () => {
-        handler();
-    };
+    const buttonLabel =
+        type === "prev" ? intl.formatMessage(messages.previous) : intl.formatMessage(messages.next);
 
-    return <button className={classes} onClick={onClick} disabled={disabled} />;
-}
+    return <button className={classes} onClick={handler} disabled={disabled} aria-label={buttonLabel} />;
+};
 
 /**
  * @internal
@@ -69,8 +72,13 @@ export const Paging = (props: IPagingProps): React.ReactElement => {
     const { page, pagesCount, buttonsOrientation = "upDown", showNextPage, showPrevPage } = props;
 
     return (
-        <div className="paging" aria-label="Paging">
-            {renderPagingButton("prev", buttonsOrientation, showPrevPage, page === 1)}
+        <div className="paging" data-testid={"Paging"}>
+            <PagingButton
+                type="prev"
+                buttonsOrientation={buttonsOrientation}
+                handler={showPrevPage}
+                disabled={page === 1}
+            />
             <FormattedMessage
                 id="visualizations.of"
                 tagName="span"
@@ -79,7 +87,12 @@ export const Paging = (props: IPagingProps): React.ReactElement => {
                     pagesCount,
                 }}
             />
-            {renderPagingButton("next", buttonsOrientation, showNextPage, page === pagesCount)}
+            <PagingButton
+                type="next"
+                buttonsOrientation={buttonsOrientation}
+                handler={showNextPage}
+                disabled={page === pagesCount}
+            />
         </div>
     );
 };

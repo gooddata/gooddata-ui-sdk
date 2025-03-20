@@ -601,6 +601,17 @@
         "comment": "Combination of chart type & y-axis position. eg: 'Legend settings: Column (Left)' where 'Column' is '{0}' and '(Left)' is '({1})'. You can switch order of placeholders '{0}' and '({1})' for right-to-left languages if makes more sense.",
         "limit": 0
     },
+    "visualizations.pagination.previous": {
+        "value": "Previous page",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizations.pagination.next": {
+        "value": "Next page",
+        "comment": "",
+        "limit": 0
+    },
+
     "visualizations.menu.aggregations": {
         "value": "Aggregate",
         "comment": "Heading showed above menu listing possible aggregations (totals). Use imperative.",

@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
@@ -22,7 +22,7 @@ describe("Paging", () => {
 
     it("should render Paging", () => {
         renderComponent();
-        expect(screen.getByLabelText("Paging")).toBeInTheDocument();
+        expect(screen.getByTestId("Paging")).toBeInTheDocument();
         expect(screen.getByText("1")).toBeInTheDocument();
         expect(screen.getByText("of 2")).toBeInTheDocument();
     });
