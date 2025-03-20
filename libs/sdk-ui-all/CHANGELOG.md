@@ -1,6 +1,16 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 06 Mar 2025 08:46:39 GMT and should not be manually modified.
+This log was last generated on Thu, 20 Mar 2025 09:15:55 GMT and should not be manually modified.
+
+## 10.23.0
+
+Thu, 20 Mar 2025 09:15:55 GMT
+
+### Updates
+
+-   Update ag-grid-community and ag-grid-react library to latest version
+-   Add an option to specify chart tooltip class name
+-   Support of new filter mode Apply all at once in Dashboard
 
 ## 10.22.0
 
@@ -198,6 +208,8 @@ Thu, 18 Apr 2024 08:07:32 GMT
 ## 9.9.2
 
 Wed, 19 Mar 2025 11:50:06 GMT
+
+### Updates
 
 -   Update ag-grid-community and ag-grid-react library to latest version
 
