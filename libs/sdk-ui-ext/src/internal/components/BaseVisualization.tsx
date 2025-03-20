@@ -183,6 +183,11 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             nextProps.referencePoint,
         );
 
+        const labelsChanged = !isEqual(
+            this.props.insight?.insight.attributeFilterConfigs,
+            nextProps.insight?.insight.attributeFilterConfigs,
+        );
+
         const propertiesControlsChanged = BaseVisualization.propertiesControlsHasChanged(
             this.props.referencePoint,
             nextProps.referencePoint,
@@ -192,8 +197,12 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             this.visElementId = uuidv4();
             this.setupVisualization(nextProps);
         }
-
-        if (referencePointChanged || relevantPropertiesChanged || visualizationClassChanged) {
+        if (
+            referencePointChanged ||
+            relevantPropertiesChanged ||
+            visualizationClassChanged ||
+            labelsChanged
+        ) {
             this.triggerExtendedReferencePointChanged(
                 nextProps,
                 // only pass current props if the visualization class is the same (see getExtendedReferencePoint JSDoc)
