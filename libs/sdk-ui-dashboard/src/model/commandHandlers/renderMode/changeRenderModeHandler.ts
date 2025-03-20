@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select, SagaReturnType } from "redux-saga/effects";
 import { batchActions } from "redux-batched-actions";
@@ -38,6 +38,7 @@ export function* changeRenderModeHandler(
                 data.batch,
                 uiActions.resetInvalidDrillWidgetRefs(),
                 uiActions.resetAllInvalidCustomUrlDrillParameterWidgetsWarnings(),
+                uiActions.ignoreExecutionTimestamp(),
                 renderModeActions.setRenderMode(renderMode),
             ]),
         );
@@ -47,6 +48,7 @@ export function* changeRenderModeHandler(
             batchActions([
                 uiActions.resetInvalidDrillWidgetRefs(),
                 uiActions.resetAllInvalidCustomUrlDrillParameterWidgetsWarnings(),
+                uiActions.ignoreExecutionTimestamp(),
                 renderModeActions.setRenderMode(renderMode),
             ]),
         );
