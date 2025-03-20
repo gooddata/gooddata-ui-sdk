@@ -1155,10 +1155,6 @@
       "allowedCategories": [ "tools" ]
     },
     {
-      "name": "ts-node",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
       "name": "tsd",
       "allowedCategories": [ "production" ]
     },

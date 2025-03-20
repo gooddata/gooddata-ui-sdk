@@ -74,6 +74,6 @@
         "mkdirp": "^1.0.4",
         "prettier": "~2.5.0",
         "typescript": "5.3.3",
-        "vitest": "1.0.4"
+        "vitest": "3.0.8"
     }
 }

@@ -7,7 +7,7 @@ set -ex
 export BOILER_APP_NAME=new-boiler-app-$SDK_LANG
 export BOILER_APP_VERSION=app-toolkit@$SDK_VERSION
 export BOILER_APP_HOST=https://127.0.0.1:8080
-CYPRESS_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/tools/gdc-frontend-cypress-factory:202501151356.a6074a3'
+CYPRESS_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/cypress/included:13.17.0'
 
 DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
 ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../../ && pwd -P))

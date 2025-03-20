@@ -24,16 +24,17 @@ jobs:
         needs: gate-approval
         outputs:
             version: ${{ steps.get-version.outputs.version }}
-        runs-on: [ubuntu-latest]
+        runs-on:
+            group: infra1-runners-arc
+            labels: runners-small
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
               with:
                   ref: "release"
             - name: Setup node
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 18.17.0
+              uses: ./.github/actions/node/set-up-node
+              id: node-init
             - name: Get version from branch release
               uses: gooddata/gooddata-ui-sdk/.github/actions/get-version-action@master
               id: get-version

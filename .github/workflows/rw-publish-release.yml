@@ -31,7 +31,9 @@ concurrency:
 
 jobs:
   check-version:
-    runs-on: [ubuntu-latest]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
     outputs:
       version: ${{ steps.get-version.outputs.version }}
     steps:
@@ -40,9 +42,8 @@ jobs:
         with:
           ref: ${{ inputs.source-branch }}
       - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.17.0
+        uses: ./.github/actions/node/set-up-node
+        id: node-init
       - name: Get version from branch ${{ inputs.source-branch }}
         id: get-version
         uses: gooddata/gooddata-ui-sdk/.github/actions/get-version-action@master
@@ -71,12 +72,13 @@ jobs:
       is_latest: ${{ steps.check-release-is-latest.outputs.is-latest }}
       release_tag: ${{ steps.calculate-release-tag.outputs.release_tag }}
     needs: [bump-version]
-    runs-on: ubuntu-latest
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
     steps:
       - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.17.0
+        uses: ./.github/actions/node/set-up-node
+        id: node-init
       - name: Checkout
         uses: actions/checkout@v4
       - name: Check Release Version is latest
