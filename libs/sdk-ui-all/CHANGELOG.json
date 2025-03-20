@@ -2,6 +2,24 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.23.0",
+            "tag": "@gooddata/sdk-ui-all_v10.23.0",
+            "date": "Thu, 20 Mar 2025 09:15:55 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Update ag-grid-community and ag-grid-react library to latest version"
+                    },
+                    {
+                        "comment": "Add an option to specify chart tooltip class name"
+                    },
+                    {
+                        "comment": "Support of new filter mode Apply all at once in Dashboard"
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.22.0",
             "tag": "@gooddata/sdk-ui-all_v10.22.0",
             "date": "Thu, 06 Mar 2025 08:46:39 GMT",
