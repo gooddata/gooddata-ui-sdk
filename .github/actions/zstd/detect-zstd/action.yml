@@ -1,12 +1,5 @@
 name: "Detect zstd"
 description: "Checks if zstd is installed and saves its directory to env"
-outputs:
-  exists:
-    description: "Indicates whether zstd is installed (true/false)"
-    value: ${{ steps.check-zstd.outputs.exists }}
-  zstd_dir:
-    description: "The directory where zstd is installed"
-    value: ${{ steps.check-zstd.outputs.zstd_dir }}
 runs:
   using: "composite"
   steps:
@@ -19,7 +12,5 @@ runs:
           echo "exists=false" >> $GITHUB_OUTPUT
         else
           echo "Found zstd at: $ZSTD_PATH"
-          echo "exists=true" >> $GITHUB_OUTPUT
-          echo "zstd_dir=$ZSTD_PATH" >> $GITHUB_OUTPUT
           echo "ZSTD_DIR=$ZSTD_PATH" >> $GITHUB_ENV
         fi
