@@ -8340,9 +8340,6 @@ export const selectEnableCompanyLogoInEmbeddedUI: DashboardSelector<boolean>;
 // @alpha (undocumented)
 export const selectEnableComparisonInAlerting: DashboardSelector<boolean>;
 
-// @internal (undocumented)
-export const selectEnableCriticalContentPerformanceOptimizations: DashboardSelector<boolean>;
-
 // @internal
 export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean>;
 

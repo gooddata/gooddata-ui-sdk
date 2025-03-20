@@ -105,7 +105,6 @@ export {
     selectEnableDrilledTooltip,
     selectFocusObject,
     selectEnableDashboardDescriptionDynamicHeight,
-    selectEnableCriticalContentPerformanceOptimizations,
     selectEnableSlideshowExports,
     selectEnableRichTextDynamicReferences,
     selectEnableDashboardFiltersApplyModes,

@@ -126,7 +126,6 @@ export enum TigerFeaturesNames {
     EnableVisualizationFineTuning = "enableVisualizationFineTuning",
     EnableDashboardDescriptionDynamicHeight = "enableDashboardDescriptionDynamicHeight",
     EnableAmplitudeTracker = "enableAmplitudeTracker",
-    EnableCriticalContentPerformanceOptimizations = "enableCriticalContentPerformanceOptimizations",
     EnableSlideshowExports = "enableSlideshowExports",
     EnableRawExports = "enableRawExports",
     EnableDashboardFiltersApplyModes = "enableDashboardFiltersApplyModes",
@@ -228,7 +227,6 @@ export type ITigerFeatureFlags = {
     enableDrilledTooltip: typeof FeatureFlagsValues["enableDrilledTooltip"][number];
     enableDashboardDescriptionDynamicHeight: typeof FeatureFlagsValues["enableDashboardDescriptionDynamicHeight"][number];
     enableAmplitudeTracker: typeof FeatureFlagsValues["enableAmplitudeTracker"][number];
-    enableCriticalContentPerformanceOptimizations: typeof FeatureFlagsValues["enableCriticalContentPerformanceOptimizations"][number];
     enableSlideshowExports: typeof FeatureFlagsValues["enableSlideshowExports"][number];
     enableRawExports: typeof FeatureFlagsValues["enableRawExports"][number];
     enableDashboardFiltersApplyModes: typeof FeatureFlagsValues["enableDashboardFiltersApplyModes"][number];
@@ -328,7 +326,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDrilledTooltip: true,
     enableDashboardDescriptionDynamicHeight: false,
     enableAmplitudeTracker: false,
-    enableCriticalContentPerformanceOptimizations: false,
     enableSlideshowExports: false,
     enableRawExports: false,
     enableDashboardFiltersApplyModes: false,
@@ -432,7 +429,6 @@ export const FeatureFlagsValues = {
     enableDrilledTooltip: [true, false] as const,
     enableDashboardDescriptionDynamicHeight: [true, false] as const,
     enableAmplitudeTracker: [true, false] as const,
-    enableCriticalContentPerformanceOptimizations: [true, false] as const,
     enableSlideshowExports: [true, false] as const,
     enableRawExports: [true, false] as const,
     enableDashboardFiltersApplyModes: [true, false] as const,

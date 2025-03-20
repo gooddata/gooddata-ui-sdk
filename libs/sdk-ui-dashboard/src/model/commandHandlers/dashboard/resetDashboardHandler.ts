@@ -27,10 +27,7 @@ import {
 } from "@gooddata/sdk-model";
 import { resolveInsights } from "../../utils/insightResolver.js";
 import { insightReferences } from "./common/insightReferences.js";
-import {
-    selectCatalogDateDatasets,
-    selectAllCatalogDisplayFormsMap,
-} from "../../store/catalog/catalogSelectors.js";
+import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";
 import { applyDefaultFilterView } from "./common/filterViews.js";
 import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
 import {
@@ -148,9 +145,6 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
         const effectiveDateFilterConfig: ReturnType<typeof selectEffectiveDateFilterConfig> = yield select(
             selectEffectiveDateFilterConfig,
         );
-        const dateDataSets: ReturnType<typeof selectCatalogDateDatasets> = yield select(
-            selectCatalogDateDatasets,
-        );
 
         const displayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
             selectAllCatalogDisplayFormsMap,
@@ -168,7 +162,6 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             migratedAttributeFilters,
             effectiveAttributeFilterConfigs,
             effectiveDateFilterConfig,
-            dateDataSets,
             displayForms,
         );
     } else {
@@ -181,10 +174,6 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             selectDateFilterConfig,
         );
 
-        const dateDataSets: ReturnType<typeof selectCatalogDateDatasets> = yield select(
-            selectCatalogDateDatasets,
-        );
-
         const displayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
             selectAllCatalogDisplayFormsMap,
         );
@@ -194,7 +183,6 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             ctx,
             settings,
             dateFilterConfig,
-            dateDataSets,
             displayForms,
         );
         batch = initActions;
