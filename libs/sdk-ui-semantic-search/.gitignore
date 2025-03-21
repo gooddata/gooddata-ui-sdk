@@ -1,2 +1,2 @@
 styles/css
-src/localization/bundles
+src/localization/bundles/*.ts
