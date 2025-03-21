@@ -15,7 +15,7 @@ import { newMessageAction, visualizationErrorAction } from "../../../store/index
 import { useConfig } from "../../ConfigContext.js";
 import { VisualizationSaveDialog } from "./VisualizationSaveDialog.js";
 import { FormattedMessage } from "react-intl";
-import { GoodDataSdkError, OnError, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { GoodDataSdkError, OnError, OnLoadingChanged, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 const VIS_HEIGHT = 250;
 
@@ -41,6 +41,8 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
     const { metrics, dimensions, filters } = useExecution(visualization);
     const config = useConfig();
     const [saveDialogOpen, setSaveDialogOpen] = React.useState(false);
+    const [hasVisError, setHasVisError] = React.useState(false);
+    const [visLoading, setVisLoading] = React.useState(true);
     const workspaceId = useWorkspaceStrict();
     const href = `/analyze/#/${workspaceId}/${visualization.savedVisualizationId}/edit`;
 
@@ -61,12 +63,25 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
     };
 
     const handleSdkError = (error: GoodDataSdkError) => {
-        dispatch(
-            visualizationErrorAction({
-                errorType: error.seType,
-                errorMessage: error.getMessage(),
-            }),
-        );
+        // Error callback may be triggered from render method in SDK,
+        // have to move the state update to the next tick to keep render pure
+        setTimeout(() => {
+            setHasVisError(true);
+            dispatch(
+                visualizationErrorAction({
+                    errorType: error.seType,
+                    errorMessage: error.getMessage(),
+                }),
+            );
+        });
+    };
+
+    const handleLoadingChanged: OnLoadingChanged = ({ isLoading }) => {
+        // Loading callback is triggered from render method, have to move
+        // the state update to the next tick to keep render pure
+        setTimeout(() => {
+            setVisLoading(isLoading);
+        });
     };
 
     return (
@@ -84,22 +99,53 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
                             {(() => {
                                 switch (visualization.visualizationType) {
                                     case "BAR":
-                                        return renderBarChart(metrics, dimensions, filters, handleSdkError);
+                                        return renderBarChart(
+                                            metrics,
+                                            dimensions,
+                                            filters,
+                                            handleSdkError,
+                                            handleLoadingChanged,
+                                        );
                                     case "COLUMN":
                                         return renderColumnChart(
                                             metrics,
                                             dimensions,
                                             filters,
                                             handleSdkError,
+                                            handleLoadingChanged,
                                         );
                                     case "LINE":
-                                        return renderLineChart(metrics, dimensions, filters, handleSdkError);
+                                        return renderLineChart(
+                                            metrics,
+                                            dimensions,
+                                            filters,
+                                            handleSdkError,
+                                            handleLoadingChanged,
+                                        );
                                     case "PIE":
-                                        return renderPieChart(metrics, dimensions, filters, handleSdkError);
+                                        return renderPieChart(
+                                            metrics,
+                                            dimensions,
+                                            filters,
+                                            handleSdkError,
+                                            handleLoadingChanged,
+                                        );
                                     case "TABLE":
-                                        return renderTable(metrics, dimensions, filters, handleSdkError);
+                                        return renderTable(
+                                            metrics,
+                                            dimensions,
+                                            filters,
+                                            handleSdkError,
+                                            handleLoadingChanged,
+                                        );
                                     case "HEADLINE":
-                                        return renderHeadline(metrics, dimensions, filters, handleSdkError);
+                                        return renderHeadline(
+                                            metrics,
+                                            dimensions,
+                                            filters,
+                                            handleSdkError,
+                                            handleLoadingChanged,
+                                        );
                                     default:
                                         return assertNever(visualization.visualizationType);
                                 }
@@ -111,7 +157,7 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
                             {visualization.title}
                         </MarkdownComponent>
                     </div>
-                    {config.allowCreateVisualization
+                    {config.allowCreateVisualization && !hasVisError && !visLoading
                         ? (() => {
                               const trigger = (
                                   <BubbleHoverTrigger
@@ -203,6 +249,7 @@ const renderBarChart = (
     dimensions: IAttribute[],
     filters: IFilter[],
     onError: OnError,
+    onLoadingChanged: OnLoadingChanged,
 ) => (
     <BarChart
         height={VIS_HEIGHT}
@@ -217,6 +264,7 @@ const renderBarChart = (
         }}
         filters={filters}
         onError={onError}
+        onLoadingChanged={onLoadingChanged}
     />
 );
 
@@ -225,6 +273,7 @@ const renderColumnChart = (
     dimensions: IAttribute[],
     filters: IFilter[],
     onError: OnError,
+    onLoadingChanged: OnLoadingChanged,
 ) => (
     <ColumnChart
         height={VIS_HEIGHT}
@@ -239,6 +288,7 @@ const renderColumnChart = (
         }}
         filters={filters}
         onError={onError}
+        onLoadingChanged={onLoadingChanged}
     />
 );
 
@@ -247,6 +297,7 @@ const renderLineChart = (
     dimensions: IAttribute[],
     filters: IFilter[],
     onError: OnError,
+    onLoadingChanged: OnLoadingChanged,
 ) => (
     <LineChart
         height={VIS_HEIGHT}
@@ -259,6 +310,7 @@ const renderLineChart = (
             ...legendTooltipOptions,
         }}
         onError={onError}
+        onLoadingChanged={onLoadingChanged}
     />
 );
 
@@ -267,6 +319,7 @@ const renderPieChart = (
     dimensions: IAttribute[],
     filters: IFilter[],
     onError: OnError,
+    onLoadingChanged: OnLoadingChanged,
 ) => (
     <PieChart
         height={VIS_HEIGHT}
@@ -277,11 +330,24 @@ const renderPieChart = (
             ...visualizationTooltipOptions,
         }}
         onError={onError}
+        onLoadingChanged={onLoadingChanged}
     />
 );
 
-const renderTable = (metrics: IMeasure[], dimensions: IAttribute[], filters: IFilter[], onError: OnError) => (
-    <PivotTable measures={metrics} rows={dimensions} filters={filters} onError={onError} />
+const renderTable = (
+    metrics: IMeasure[],
+    dimensions: IAttribute[],
+    filters: IFilter[],
+    onError: OnError,
+    onLoadingChanged: OnLoadingChanged,
+) => (
+    <PivotTable
+        measures={metrics}
+        rows={dimensions}
+        filters={filters}
+        onError={onError}
+        onLoadingChanged={onLoadingChanged}
+    />
 );
 
 const renderHeadline = (
@@ -289,6 +355,7 @@ const renderHeadline = (
     _dimensions: IAttribute[],
     filters: IFilter[],
     onError: OnError,
+    onLoadingChanged: OnLoadingChanged,
 ) => (
     <Headline
         primaryMeasure={metrics[0]}
@@ -298,5 +365,6 @@ const renderHeadline = (
             ...visualizationTooltipOptions,
         }}
         onError={onError}
+        onLoadingChanged={onLoadingChanged}
     />
 );
