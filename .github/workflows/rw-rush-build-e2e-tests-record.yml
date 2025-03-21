@@ -76,8 +76,6 @@ jobs:
       - name: Rush build
         run: |
           node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests-e2e
-      - name: Rush generate dynamic files related to build
-        run: node common/scripts/install-run-rush.js build-generate-version
       - name: Run e2e tests
         run: |
           export TEST_BACKEND=https://staging-automation.dev-latest.stg11.panther.intgdc.com

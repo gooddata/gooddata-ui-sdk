@@ -17,7 +17,7 @@ _generate_translations_bundles() {
 build() {
     _generate_translations_bundles "src/base/localization/bundles"
 
-    if [[ $1 != "--genVersionOnly" ]]; then
+    if [[ $1 != "--genFilesOnly" ]]; then
         tsc -p tsconfig.json
         npm run api-extractor
     fi

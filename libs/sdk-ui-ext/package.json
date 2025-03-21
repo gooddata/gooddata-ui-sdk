@@ -38,7 +38,7 @@
         "clean": "rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh",
-        "build-generate-version": "bash scripts/build.sh --genVersionOnly",
+        "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",
         "prepack": "cp -f ../../NOTICE ./NOTICE",
         "test": "vitest watch",
         "test-once": "vitest run",

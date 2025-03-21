@@ -46,7 +46,7 @@ _common-build() {
 build() {
     _common-build
 
-    if [[ $1 != "--genVersionOnly" ]]; then
+    if [[ $1 != "--genFilesOnly" ]]; then
         styles-build
         tsc -p tsconfig.json
         npm run api-extractor

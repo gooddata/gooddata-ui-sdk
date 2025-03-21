@@ -37,7 +37,7 @@ build() {
 
     _generate_translations_bundles "src/localization/bundles"
 
-    if [[ $1 != "--genVersionOnly" ]]; then
+    if [[ $1 != "--genFilesOnly" ]]; then
         _common-build
 
         tsc -p tsconfig.json

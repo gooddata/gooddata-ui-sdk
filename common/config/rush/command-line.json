@@ -132,11 +132,12 @@
     },
     {
       "commandKind": "bulk",
-      "name": "build-generate-version",
-      "summary": "This command will generate dynamic __version.ts files after build is restored from cache, because this files are generated only during build and are not stored in cache.",
+      "name": "build-dynamic-files",
+      "summary": "This command is called in postRushBuild hooks. This command will generate dynamic __version.ts and transformation localizations JSON files to TS files after build is restored from cache, because this files are generated only during build and are not stored in cache.",
       "enableParallelism": true,
       "allowWarningsInSuccessfulBuild": true,
-      "ignoreMissingScript": true
+      "ignoreMissingScript": true,
+      "safeForSimultaneousRushProcesses": true
     },
     {
       "commandKind": "bulk",
