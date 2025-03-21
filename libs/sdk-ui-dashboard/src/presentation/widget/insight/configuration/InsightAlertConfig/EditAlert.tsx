@@ -85,6 +85,7 @@ interface IEditAlertProps {
     maxAutomationsRecipients: number;
     overlayPositionType?: OverlayPositionType;
     separators?: ISeparators;
+    isExecutionTimestampMode?: boolean;
 }
 
 export const EditAlert: React.FC<IEditAlertProps> = ({
@@ -109,6 +110,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     canManageAttributes,
     canManageComparison,
     separators,
+    isExecutionTimestampMode,
 }) => {
     const {
         defaultUser,
@@ -368,7 +370,9 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             <Button
                                 intent="action"
                                 size="small"
-                                disabled={!canSubmit || disableCreateButtonDueToLimits}
+                                disabled={
+                                    !canSubmit || disableCreateButtonDueToLimits || isExecutionTimestampMode
+                                }
                                 onClick={isNewAlert ? createAlert : updateAlert}
                                 className="gd-button-left-margin"
                             >
@@ -379,6 +383,11 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             {disableCreateButtonDueToLimits ? (
                                 <Bubble alignPoints={TOOLTIP_ALIGN_POINTS}>
                                     <FormattedMessage id="insightAlert.maxAlertsReached" />
+                                </Bubble>
+                            ) : null}
+                            {isExecutionTimestampMode ? (
+                                <Bubble alignPoints={TOOLTIP_ALIGN_POINTS}>
+                                    <FormattedMessage id="insightAlert.executionTimestampMode" />
                                 </Bubble>
                             ) : null}
                         </BubbleHoverTrigger>

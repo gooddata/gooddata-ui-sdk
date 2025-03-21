@@ -29,6 +29,7 @@ import {
     selectEntitlementMinimumRecurrenceMinutes,
     selectIsCrossFiltering,
     selectIsWhiteLabeled,
+    selectExecutionTimestamp,
 } from "../../../model/index.js";
 import { IScheduledEmailDialogProps } from "../types.js";
 import { useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
@@ -90,6 +91,7 @@ export function ScheduledMailDialogRenderer({
         maxAutomationsRecipients,
         allowHourlyRecurrence,
         isCrossFiltering,
+        isExecutionTimestampMode,
     } = useDefaultScheduledEmailDialogData();
 
     const {
@@ -184,7 +186,16 @@ export function ScheduledMailDialogRenderer({
                                 ) : null}
                             </div>
                         )}
-                        isSubmitDisabled={isSubmitDisabled || isSavingScheduledEmail}
+                        isSubmitDisabled={
+                            isSubmitDisabled || isSavingScheduledEmail || isExecutionTimestampMode
+                        }
+                        submitButtonTooltipText={
+                            isExecutionTimestampMode
+                                ? intl.formatMessage({
+                                      id: "dialogs.schedule.email.save.executionTimestampMode",
+                                  })
+                                : undefined
+                        }
                         submitOnEnterKey={false}
                         onCancel={onCancel}
                         onSubmit={handleSaveScheduledEmail}
@@ -364,6 +375,7 @@ function useDefaultScheduledEmailDialogData() {
         parseInt(minimumRecurrenceMinutesEntitlement?.value ?? DEFAULT_MIN_RECURRENCE_MINUTES, 10) === 60;
 
     const isCrossFiltering = useDashboardSelector(selectIsCrossFiltering);
+    const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
 
     return {
         locale,
@@ -373,5 +385,6 @@ function useDefaultScheduledEmailDialogData() {
         maxAutomationsRecipients,
         allowHourlyRecurrence,
         isCrossFiltering,
+        isExecutionTimestampMode,
     };
 }

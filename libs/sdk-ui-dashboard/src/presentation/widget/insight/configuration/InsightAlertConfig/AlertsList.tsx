@@ -19,6 +19,7 @@ interface IAlertsListProps {
     onGoBack: () => void;
     maxAutomationsReached: boolean;
     canCreateAutomation: boolean;
+    isExecutionTimestampMode?: boolean;
 }
 
 export const AlertsList: React.FC<IAlertsListProps> = ({
@@ -33,6 +34,7 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
     onGoBack,
     maxAutomationsReached,
     canCreateAutomation,
+    isExecutionTimestampMode,
 }) => {
     const intl = useIntl();
 
@@ -77,10 +79,12 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
                                 onClick={onCreateAlert}
                                 title={<FormattedMessage id="insightAlert.config.addAlert" />}
                                 className="gd-alerts-list__add-button"
-                                isDisabled={maxAutomationsReached || isLoading}
+                                isDisabled={maxAutomationsReached || isLoading || isExecutionTimestampMode}
                                 tooltip={
                                     maxAutomationsReached ? (
                                         <FormattedMessage id="insightAlert.maxAlertsReached" />
+                                    ) : isExecutionTimestampMode ? (
+                                        <FormattedMessage id="insightAlert.executionTimestampMode" />
                                     ) : undefined
                                 }
                             />

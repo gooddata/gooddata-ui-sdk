@@ -35,6 +35,7 @@ import {
     selectSeparators,
     selectEnableComparisonInAlerting,
     useWorkspaceUsers,
+    selectExecutionTimestamp,
 } from "../../../../../../model/index.js";
 import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
 import { DEFAULT_MAX_RECIPIENTS } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
@@ -69,6 +70,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const dashboard = useDashboardSelector(selectDashboardId);
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
     const execResult = useDashboardSelector(selectExecutionResultByRef(widget?.ref));
+    const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
 
     const separators = useDashboardSelector(selectSeparators);
     const allAutomationsCount = useDashboardSelector(selectAllAutomationsCount);
@@ -359,5 +361,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         measureFormatMap,
         catalogAttributes: catalogAttributes ?? [],
         catalogDateDatasets: catalogDateDatasets ?? [],
+        isExecutionTimestampMode,
     };
 };

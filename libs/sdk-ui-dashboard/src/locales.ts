@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { MessageDescriptor, defineMessages } from "react-intl";
 
 export const messages: Record<string, MessageDescriptor> = defineMessages({
@@ -22,6 +22,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     scheduleManagementCreate: { id: "dialogs.schedule.management.create" },
     scheduleManagementCreateTooMany: { id: "dialogs.schedule.management.create.tooManyMessage" },
     scheduleManagementListTitle: { id: "dialogs.schedule.management.list.title" },
+    scheduleManagementExecutionTimestampMode: { id: "dialogs.schedule.email.save.executionTimestampMode" },
 
     alertingManagementLoadError: { id: "dialogs.alerting.management.load.error" },
     alertingManagementDeleteError: { id: "dialogs.alerting.management.delete.error" },
