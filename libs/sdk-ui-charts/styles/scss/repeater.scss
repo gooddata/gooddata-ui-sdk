@@ -252,8 +252,6 @@ $subtotal-odd-background-color: var(
         }
 
         .ag-cell {
-            outline: none;
-
             &,
             &.ag-cell-focus {
                 border-top: $cell-border;

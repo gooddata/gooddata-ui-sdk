@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "../mixins.scss";
 @use "_variables" as button-variables;
 @use "../variables";
@@ -14,7 +14,6 @@
     align-items: center;
     padding: 5px 14px;
     border: 1px solid transparent;
-    outline: 0;
     font: 400 14px/20px variables.$gd-font-primary;
     white-space: nowrap;
     vertical-align: middle;

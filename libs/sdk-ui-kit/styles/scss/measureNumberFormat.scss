@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 @use "variables.scss";
 @use "MeasureNumberFormat/_variables" as measure-number-format-variables;
 
@@ -85,7 +85,6 @@
 
         .gd-measure-format-button {
             display: flex;
-            outline: none;
             color: variables.$gd-color-state-blank;
             cursor: pointer;
             user-select: none;
