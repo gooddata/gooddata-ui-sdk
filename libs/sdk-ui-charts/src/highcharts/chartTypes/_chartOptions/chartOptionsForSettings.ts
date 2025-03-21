@@ -28,5 +28,6 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
         ...(settings.separators ? { separators: settings.separators as ISeparators } : {}),
         ...(settings.enableVisualizationFineTuning ? { enableVisualizationFineTuning: true } : {}),
         ...(settings.enableExecutionCancelling ? { enableExecutionCancelling: true } : {}),
+        ...(settings.enableHighchartsAccessibility ? { enableHighchartsAccessibility: true } : {}),
     };
 }

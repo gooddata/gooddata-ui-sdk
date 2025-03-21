@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { ContentRect } from "react-measure";
 import { render, screen } from "@testing-library/react";
@@ -44,8 +44,8 @@ function createComponent(customProps: Partial<IPushpinCategoryLegendProps> = {})
 describe("PushpinCategoryLegend", () => {
     it("should render StaticLegend component", () => {
         createComponent();
-        expect(screen.getByTitle("General Goods")).not.toHaveAttribute("style");
-        expect(screen.getByTitle("Toy Store")).toHaveStyle("color: #CCCCCC");
+        expect(screen.getByText("General Goods").style.color).toBeFalsy();
+        expect(screen.getByText("Toy Store").style.color).toBe("#CCCCCC");
     });
 
     it("should render FluidLegend component", () => {
@@ -53,8 +53,8 @@ describe("PushpinCategoryLegend", () => {
             responsive: true,
             isFluidLegend: true,
         });
-        expect(screen.getByTitle("General Goods")).not.toHaveAttribute("style");
-        expect(screen.getByTitle("Toy Store")).toHaveStyle("color: #CCCCCC");
+        expect(screen.getByText("General Goods").style.color).toBeFalsy();
+        expect(screen.getByText("Toy Store").style.color).toBe("#CCCCCC");
     });
 
     it("should render PopUp legend component if renderPopUp is true", () => {

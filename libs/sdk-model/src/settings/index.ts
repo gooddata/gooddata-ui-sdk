@@ -84,6 +84,11 @@ export interface ISettings {
     //
 
     /**
+     * Enables accessibility features in Highcharts visualizations.
+     */
+    enableHighchartsAccessibility?: boolean;
+
+    /**
      * Indicates whether the Headline's improvements is available.
      */
     enableNewHeadline?: boolean;

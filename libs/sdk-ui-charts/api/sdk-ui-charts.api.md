@@ -322,6 +322,8 @@ export interface IChartConfig {
     enableCompactSize?: boolean;
     // @internal
     enableExecutionCancelling?: boolean;
+    // @internal
+    enableHighchartsAccessibility?: boolean;
     enableJoinedAttributeAxisName?: boolean;
     enableReversedStacking?: boolean;
     // (undocumented)

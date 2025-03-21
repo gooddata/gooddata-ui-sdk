@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import merge from "lodash/merge.js";
 import { invariant } from "ts-invariant";
 import { VisualizationTypes, IDrillConfig, VisType } from "@gooddata/sdk-ui";
@@ -76,9 +76,10 @@ export function getHighchartsOptions(
         getConfigurationByType,
         `visualisation type ${chartOptions.type} is invalid (valid types: ${stringifyChartTypes()}).`,
     );
+
     return merge(
         {},
-        getCommonConfiguration(chartOptions, drillConfig, theme),
+        getCommonConfiguration(chartOptions, drillConfig, theme, config),
         getConfigurationByType.call(null, config, definition, theme),
         getCustomizedConfiguration(chartOptions, config, drillConfig, intl, theme),
     );

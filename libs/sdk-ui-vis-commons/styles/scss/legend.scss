@@ -51,6 +51,17 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
         text-align: left;
     }
 
+    .series-item {
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+        &:focus-visible {
+            outline: auto;
+        }
+    }
+
     .series-item,
     .series-axis-indicator {
         display: flex;
@@ -95,6 +106,10 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
         button.paging-button {
             padding: 0;
             border-radius: 50%;
+
+            &:focus-visible {
+                outline: auto;
+            }
 
             &::before {
                 font-size: 11px;

@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import LegendItem from "../LegendItem.js";
@@ -43,7 +43,7 @@ describe("LegendItem", () => {
             };
             createComponent(props);
 
-            expect(screen.getByLabelText("Legend item").firstChild).toHaveStyle({
+            expect(screen.getByTestId("legend-item").firstChild).toHaveStyle({
                 backgroundColor: "red",
                 borderRadius: expected,
             });

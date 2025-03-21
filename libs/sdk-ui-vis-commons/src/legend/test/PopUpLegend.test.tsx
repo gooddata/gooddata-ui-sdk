@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
@@ -49,6 +49,6 @@ describe("PopUpLegend", () => {
         ];
 
         renderComponent({ series });
-        expect(screen.getAllByLabelText("Legend item")).toHaveLength(3);
+        expect(screen.getAllByTestId("legend-item")).toHaveLength(3);
     });
 });

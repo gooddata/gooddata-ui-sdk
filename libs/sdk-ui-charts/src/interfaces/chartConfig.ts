@@ -374,6 +374,12 @@ export interface IChartConfig {
      * @internal
      */
     enableExecutionCancelling?: boolean;
+
+    /**
+     * Whether to enable accessibility features in Highcharts visualizations.
+     * @internal
+     */
+    enableHighchartsAccessibility?: boolean;
 }
 
 /**
