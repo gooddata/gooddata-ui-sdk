@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 @use "variables";
 @use "mixins" as mx;
 @use "Form/_mixins";
@@ -69,7 +69,6 @@
     border: none;
     background-color: transparent;
     resize: none;
-    outline: 0;
     line-height: 18px;
     font-size: 12px;
     letter-spacing: 0;

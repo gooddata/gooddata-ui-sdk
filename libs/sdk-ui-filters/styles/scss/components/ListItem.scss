@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:list";
 @use "sass:map";
 @use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
@@ -12,7 +12,6 @@
         justify-content: flex-start;
         width: 100%;
         border: none;
-        outline: 0;
         line-height: list.nth(map.get(variables.$gd-typo, line-heights), 1);
         background: transparent;
         font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 5);

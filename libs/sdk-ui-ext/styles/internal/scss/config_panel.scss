@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "codemirror/lib/codemirror.css";
 @use "codemirror/addon/lint/lint.css";
 @use "sass:color";
@@ -74,7 +74,6 @@ $color-picker-spacing: 5px;
     height: $color-picker-item-size;
     margin: $color-picker-spacing;
     border: 1px solid transparent;
-    outline: 0;
     cursor: pointer;
     transition: all 0.2s;
 

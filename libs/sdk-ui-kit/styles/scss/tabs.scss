@@ -29,10 +29,6 @@
     font-size: 14px;
     text-align: center;
 
-    &:focus-visible {
-        outline: auto;
-    }
-
     &:hover {
         color: var(--gd-palette-complementary-8-from-theme, variables.$is-focused-color);
         border-bottom: 3px solid variables.$gd-border-color;

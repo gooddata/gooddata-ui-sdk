@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 @use "sass:color";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
@@ -29,7 +29,6 @@
         resize: none;
         box-sizing: border-box;
         width: 100%;
-        outline: 0;
         overflow: hidden;
         padding-right: 30px; // Make space for the send button
 
@@ -46,7 +45,6 @@
                 inset 0 1px 1px 0 color.adjust(kit-variables.$gd-input-text-box-shadow-color, $alpha: -0.8)
             );
 
-            outline: 0;
             border-color: kit-variables.$gd-palette-primary-base;
         }
 
