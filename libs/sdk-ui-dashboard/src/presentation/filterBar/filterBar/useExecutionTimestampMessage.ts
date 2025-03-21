@@ -4,9 +4,9 @@ import { ILocale } from "@gooddata/sdk-ui";
 import {
     selectLocale,
     selectExecutionTimestamp,
-    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
+    changeIgnoreExecutionTimestamp,
 } from "../../../model/index.js";
 import { useCallback } from "react";
 
@@ -40,7 +40,7 @@ export const useExecutionTimestampMessage = () => {
     const dispatch = useDashboardDispatch();
 
     const onShowCurrentTimestampDashboard = useCallback(() => {
-        dispatch(uiActions.ignoreExecutionTimestamp());
+        dispatch(changeIgnoreExecutionTimestamp(true));
     }, [dispatch]);
 
     return {

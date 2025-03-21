@@ -16,6 +16,7 @@ import {
     DashboardExportToPdfPresentationResolved,
     DashboardExportToPptPresentationRequested,
     DashboardExportToPptPresentationResolved,
+    DashboardIgnoreExecutionTimestampChanged,
 } from "./dashboard.js";
 import {
     DashboardCommandFailed,
@@ -164,6 +165,8 @@ export type {
     DashboardExportToExcelResolvedPayload,
     DashboardExportToPdfPresentationResolvedPayload,
     DashboardExportToPptPresentationResolvedPayload,
+    DashboardIgnoreExecutionTimestampChanged,
+    DashboardIgnoreExecutionTimestampChangedPayload,
 } from "./dashboard.js";
 export {
     isDashboardSaved,
@@ -183,6 +186,7 @@ export {
     isDashboardExportToPdfPresentationResolved,
     isDashboardExportToPptPresentationResolved,
     isDashboardExportToPptPresentationRequested,
+    isDashboardIgnoreExecutionTimestampChanged,
 } from "./dashboard.js";
 
 export type {
@@ -642,6 +646,7 @@ export type DashboardEvents =
     | DashboardDrillToLegacyDashboardRequested
     | DashboardDrillRequested
     | DashboardDrillableItemsChanged
+    | DashboardIgnoreExecutionTimestampChanged
     // internal
     | CreateInsightRequested
     | CreateAttributeHierarchyRequested

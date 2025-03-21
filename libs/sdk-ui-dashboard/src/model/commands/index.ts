@@ -18,6 +18,7 @@ import {
     SetDashboardAttributeFilterConfigDisplayAsLabel,
     ExportDashboardToPdfPresentation,
     ExportDashboardToPptPresentation,
+    ChangeIgnoreExecutionTimestamp,
 } from "./dashboard.js";
 import { TriggerEvent } from "./events.js";
 import { UpsertExecutionResult } from "./executionResults.js";
@@ -149,6 +150,8 @@ export type {
     SetAttributeFilterLimitingItemsPayload,
     SetDashboardAttributeFilterConfigDisplayAsLabel,
     SetDashboardAttributeFilterConfigDisplayAsLabelPayload,
+    ChangeIgnoreExecutionTimestamp,
+    ChangeIgnoreExecutionTimestampPayload,
 } from "./dashboard.js";
 export {
     InitialLoadCorrelationId,
@@ -170,6 +173,7 @@ export {
     setDateFilterConfigTitle,
     setAttributeFilterLimitingItems,
     setDashboardAttributeFilterConfigDisplayAsLabel,
+    changeIgnoreExecutionTimestamp,
 } from "./dashboard.js";
 
 export type { TriggerEvent, TriggerEventPayload } from "./events.js";
@@ -630,6 +634,7 @@ export type DashboardCommands =
     | ToggleLayoutSectionHeaders
     | ApplyFilterContextWorkingSelection
     | ResetFilterContextWorkingSelection
+    | ChangeIgnoreExecutionTimestamp
     //internal
     | SetScreenSize
     | LoadAllWorkspaceUsers

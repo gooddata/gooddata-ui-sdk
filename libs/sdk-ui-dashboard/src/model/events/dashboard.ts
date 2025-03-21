@@ -861,3 +861,51 @@ export function dashboardSharingChanged(
  * @public
  */
 export const isDashboardSharingChanged = eventGuard<DashboardSharingChanged>("GDC.DASH/EVT.SHARING.CHANGED");
+
+/**
+ * Payload of the {@link DashboardIgnoreExecutionTimestampChanged} event.
+ * @alpha
+ */
+export interface DashboardIgnoreExecutionTimestampChangedPayload {
+    /**
+     * New ignore execution timestamp value.
+     */
+    ignoreExecutionTimestamp: boolean;
+}
+
+/**
+ * This event is emitted at the end of successful 'change ignore execution timestamp' command processing.
+ *
+ * When executionTimestamp is provided to the dashboard, each execution is using this timestamp. This event instructs the
+ * application to react on the ignore flag for execution timestamp in all following executions.
+ *
+ * @alpha
+ */
+export interface DashboardIgnoreExecutionTimestampChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.IGNORE_EXECUTION_TIMESTAMP_CHANGED";
+    readonly payload: DashboardIgnoreExecutionTimestampChangedPayload;
+}
+
+export function dashboardIgnoreExecutionTimestampChanged(
+    ctx: DashboardContext,
+    ignoreExecutionTimestamp: boolean,
+    correlationId?: string,
+): DashboardIgnoreExecutionTimestampChanged {
+    return {
+        type: "GDC.DASH/EVT.IGNORE_EXECUTION_TIMESTAMP_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            ignoreExecutionTimestamp,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardIgnoreExecutionTimestampChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardIgnoreExecutionTimestampChanged =
+    eventGuard<DashboardIgnoreExecutionTimestampChanged>("GDC.DASH/EVT.IGNORE_EXECUTION_TIMESTAMP_CHANGED");
