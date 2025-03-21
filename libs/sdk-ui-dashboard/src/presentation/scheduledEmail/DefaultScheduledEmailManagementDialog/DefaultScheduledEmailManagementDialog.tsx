@@ -17,6 +17,7 @@ import {
     DEFAULT_MAX_AUTOMATIONS,
     selectCanCreateAutomation,
     selectIsWhiteLabeled,
+    selectExecutionTimestamp,
 } from "../../../model/index.js";
 import { messages } from "../../../locales.js";
 import { isMobileView } from "../utils/responsive.js";
@@ -45,6 +46,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
     const intl = useIntl();
+    const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
 
     const handleScheduleDelete = useCallback((scheduledEmail: IAutomationMetadataObject) => {
         setScheduledEmailToDelete(scheduledEmail);
@@ -88,11 +90,17 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                         {canCreateAutomation ? (
                             <AddButton
                                 onClick={onAdd}
-                                isDisabled={isLoadingScheduleData || maxAutomationsReached}
+                                isDisabled={
+                                    isLoadingScheduleData || maxAutomationsReached || isExecutionTimestampMode
+                                }
                                 title={<FormattedMessage id={messages.scheduleManagementCreate.id!} />}
                                 tooltip={
                                     maxAutomationsReached ? (
                                         <FormattedMessage id={messages.scheduleManagementCreateTooMany.id!} />
+                                    ) : isExecutionTimestampMode ? (
+                                        <FormattedMessage
+                                            id={messages.scheduleManagementExecutionTimestampMode.id!}
+                                        />
                                     ) : undefined
                                 }
                             />

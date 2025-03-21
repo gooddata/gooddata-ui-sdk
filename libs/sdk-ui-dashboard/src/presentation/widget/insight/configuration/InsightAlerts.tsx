@@ -44,6 +44,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         catalogAttributes,
         catalogDateDatasets,
         measureFormatMap,
+        isExecutionTimestampMode,
         //
         creatingAlert,
         initiateAlertCreation,
@@ -75,6 +76,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 onGoBack={onGoBack}
                 maxAutomationsReached={maxAutomationsReached}
                 canCreateAutomation={canCreateAutomation}
+                isExecutionTimestampMode={isExecutionTimestampMode}
             />
         );
     } else if (viewMode === "edit" && editingAlert) {
@@ -97,6 +99,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 catalogAttributes={catalogAttributes}
                 catalogDateDatasets={catalogDateDatasets}
                 maxAutomationsRecipients={maxAutomationsRecipients}
+                isExecutionTimestampMode={isExecutionTimestampMode}
             />
         );
     } else if (viewMode === "create" && creatingAlert) {

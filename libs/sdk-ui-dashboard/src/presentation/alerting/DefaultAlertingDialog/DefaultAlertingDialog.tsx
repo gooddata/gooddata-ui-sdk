@@ -52,6 +52,7 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
         cancelAlertEditing,
         updateExistingAlert,
         maxAutomationsRecipients,
+        isExecutionTimestampMode,
     } = useInsightWidgetAlerting({ closeInsightWidgetMenu: onCancel, widget: editWidget });
 
     if (!anchorEl?.id || !editAlert) {
@@ -100,6 +101,7 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
                         catalogAttributes={catalogAttributes}
                         catalogDateDatasets={catalogDateDatasets}
                         maxAutomationsRecipients={maxAutomationsRecipients}
+                        isExecutionTimestampMode={isExecutionTimestampMode}
                     />
                 </OverlayControllerProvider>
             </ScrollablePanel>
