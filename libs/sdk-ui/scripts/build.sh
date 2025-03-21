@@ -14,31 +14,10 @@ _generate_translations_bundles() {
     node "$ROOT_DIR/common/scripts/convertBundleToTypeScript.mjs" "$bundles_dir"
 }
 
-_build_styles() {
-    sass --load-path=node_modules --load-path=node_modules/codemirror/lib styles/internal/scss:styles/internal/css
-    sass --load-path=node_modules styles/scss:styles/css
-}
-
-_assets() {
-    mkdir -p esm/internal
-    # first copy everything in the assets (in case there are non-SVG files)
-    cp -rf src/internal/assets esm/internal/
-    # then use svgo to optimize all the SVGs there
-    svgo -rqf src/internal/assets esm/internal/assets
-}
-
-_common-build() {
-    _assets
-
-    _build_styles
-}
-
 build() {
-    _generate_translations_bundles "src/internal/translations/"
+    _generate_translations_bundles "src/base/localization/bundles"
 
     if [[ $1 != "--genFilesOnly" ]]; then
-        _common-build
-
         tsc -p tsconfig.json
         npm run api-extractor
     fi

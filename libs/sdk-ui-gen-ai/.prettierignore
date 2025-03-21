@@ -1,0 +1,2 @@
+#we ignore these files because they are generated after build
+src/localization/bundles/*.ts

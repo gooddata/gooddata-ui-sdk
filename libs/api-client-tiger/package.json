@@ -23,7 +23,7 @@
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "build": "bash scripts/build.sh",
-        "build-generate-version": "bash scripts/build.sh --genVersionOnly",
+        "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",
         "openapi-generate": "./scripts/generate.js",
         "generate-client": "rm -rf src/generated/* && npm run openapi-generate && fix-esm-import-path ./src && npm run prettier-write",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",

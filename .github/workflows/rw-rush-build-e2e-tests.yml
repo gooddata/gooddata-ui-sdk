@@ -116,8 +116,6 @@ jobs:
       - name: Rush build
         run: |
           node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests-e2e
-      - name: Rush generate dynamic files related to build
-        run: node common/scripts/install-run-rush.js build-generate-version
       - name: Run e2e tests
         run: |
           export EXECUTOR_NUMBER=$GH_RUN_ID

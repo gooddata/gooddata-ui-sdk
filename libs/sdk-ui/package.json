@@ -32,7 +32,8 @@
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
-        "build": "tsc -p tsconfig.json && npm run api-extractor",
+        "build": "bash scripts/build.sh",
+        "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",
         "test": "vitest watch",
         "test-once": "vitest run",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",

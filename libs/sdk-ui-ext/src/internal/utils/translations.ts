@@ -1,27 +1,27 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IntlShape } from "react-intl";
 import merge from "lodash/merge.js";
 import { translationUtils } from "@gooddata/util";
 import { messagesMap as sdkUiTranslations } from "@gooddata/sdk-ui";
 
-import enUS from "../translations/en-US.json";
-import deDE from "../translations/de-DE.json";
-import esES from "../translations/es-ES.json";
-import frFR from "../translations/fr-FR.json";
-import jaJP from "../translations/ja-JP.json";
-import nlNL from "../translations/nl-NL.json";
-import ptBR from "../translations/pt-BR.json";
-import ptPT from "../translations/pt-PT.json";
-import zhHans from "../translations/zh-Hans.json";
-import ruRU from "../translations/ru-RU.json";
-import itIT from "../translations/it-IT.json";
-import es419 from "../translations/es-419.json";
-import frCA from "../translations/fr-CA.json";
-import enGB from "../translations/en-GB.json";
-import enAU from "../translations/en-AU.json";
-import fiFI from "../translations/fi-FI.json";
-import zhHant from "../translations/zh-Hant.json";
-import zhHK from "../translations/zh-HK.json";
+import { en_US } from "../translations/en-US.js";
+import { de_DE } from "../translations/de-DE.js";
+import { es_ES } from "../translations/es-ES.js";
+import { fr_FR } from "../translations/fr-FR.js";
+import { ja_JP } from "../translations/ja-JP.js";
+import { nl_NL } from "../translations/nl-NL.js";
+import { pt_BR } from "../translations/pt-BR.js";
+import { pt_PT } from "../translations/pt-PT.js";
+import { zh_Hans } from "../translations/zh-Hans.js";
+import { ru_RU } from "../translations/ru-RU.js";
+import { it_IT } from "../translations/it-IT.js";
+import { es_419 } from "../translations/es-419.js";
+import { fr_CA } from "../translations/fr-CA.js";
+import { en_GB } from "../translations/en-GB.js";
+import { en_AU } from "../translations/en-AU.js";
+import { fi_FI } from "../translations/fi-FI.js";
+import { zh_Hant } from "../translations/zh-Hant.js";
+import { zh_HK } from "../translations/zh-HK.js";
 
 import { IDropdownItem } from "../interfaces/Dropdown.js";
 
@@ -42,24 +42,24 @@ export function getTranslatedDropdownItems(dropdownItems: IDropdownItem[], intl:
 }
 
 const sdkUiExtTranslations: { [locale: string]: Record<string, string> } = {
-    "en-US": translationUtils.removeMetadata(enUS),
-    "de-DE": deDE,
-    "es-ES": esES,
-    "fr-FR": frFR,
-    "ja-JP": jaJP,
-    "nl-NL": nlNL,
-    "pt-BR": ptBR,
-    "pt-PT": ptPT,
-    "zh-Hans": zhHans,
-    "ru-RU": ruRU,
-    "it-IT": itIT,
-    "es-419": es419,
-    "fr-CA": frCA,
-    "en-GB": enGB,
-    "en-AU": enAU,
-    "fi-FI": fiFI,
-    "zh-Hant": zhHant,
-    "zh-HK": zhHK,
+    "en-US": translationUtils.removeMetadata(en_US),
+    "de-DE": de_DE,
+    "es-ES": es_ES,
+    "fr-FR": fr_FR,
+    "ja-JP": ja_JP,
+    "nl-NL": nl_NL,
+    "pt-BR": pt_BR,
+    "pt-PT": pt_PT,
+    "zh-Hans": zh_Hans,
+    "ru-RU": ru_RU,
+    "it-IT": it_IT,
+    "es-419": es_419,
+    "fr-CA": fr_CA,
+    "en-GB": en_GB,
+    "en-AU": en_AU,
+    "fi-FI": fi_FI,
+    "zh-Hant": zh_Hant,
+    "zh-HK": zh_HK,
 };
 
 /**
