@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 @use "sass:color";
 @use "sass:meta";
@@ -42,6 +42,7 @@
 
     &__overlay-no-results {
         height: 100px;
+        padding: 0 10px;
     }
 
     &__results-item {
