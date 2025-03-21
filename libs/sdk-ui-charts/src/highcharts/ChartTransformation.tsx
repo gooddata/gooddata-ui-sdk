@@ -115,25 +115,25 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         theme,
     );
 
-    let isFilteringRecommended = false;
-    if (validationResult.dataTooLarge) {
-        // always force onDataTooLarge error handling
-        invariant(onDataTooLarge, "Visualization's onDataTooLarge callback is missing.");
-        onDataTooLarge(chartOptions, getDataTooLargeErrorMessage(config.limits, chartOptions));
-    } else if (validationResult.hasNegativeValue) {
-        // ignore hasNegativeValue if validation already fails on dataTooLarge
-        // force onNegativeValues error handling only for pie chart.
-        // hasNegativeValue can be true only for pie chart.
-        invariant(
-            onNegativeValues,
-            '"onNegativeValues" callback required for pie chart transformation is missing.',
-        );
-        onNegativeValues(chartOptions);
-    } else {
-        isFilteringRecommended = getIsFilteringRecommended(chartOptions);
-    }
-
     useEffect(() => {
+        let isFilteringRecommended = false;
+        if (validationResult.dataTooLarge) {
+            // always force onDataTooLarge error handling
+            invariant(onDataTooLarge, "Visualization's onDataTooLarge callback is missing.");
+            onDataTooLarge(chartOptions, getDataTooLargeErrorMessage(config.limits, chartOptions));
+        } else if (validationResult.hasNegativeValue) {
+            // ignore hasNegativeValue if validation already fails on dataTooLarge
+            // force onNegativeValues error handling only for pie chart.
+            // hasNegativeValue can be true only for pie chart.
+            invariant(
+                onNegativeValues,
+                '"onNegativeValues" callback required for pie chart transformation is missing.',
+            );
+            onNegativeValues(chartOptions);
+        } else {
+            isFilteringRecommended = getIsFilteringRecommended(chartOptions);
+        }
+
         pushData({
             propertiesMeta: {
                 legend_enabled: legendOptions.toggleEnabled,
