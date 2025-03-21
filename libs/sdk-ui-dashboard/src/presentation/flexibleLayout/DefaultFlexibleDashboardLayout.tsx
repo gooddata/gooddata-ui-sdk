@@ -178,6 +178,7 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
             <DashboardLayout
                 className={cx(dashboardItemClasses, {
                     "export-mode": isExport,
+                    "export-slides-mode": renderMode === "export",
                 })}
                 layout={transformedLayout}
                 parentLayoutItemSize={itemSize}
