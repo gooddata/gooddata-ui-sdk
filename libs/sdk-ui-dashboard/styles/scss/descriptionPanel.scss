@@ -1,0 +1,6 @@
+// (C) 2025 GoodData Corporation
+@use "zIndexes";
+
+.gd-description-panel-bubble-overlay.truncated {
+    z-index: zIndexes.$truncated-dashboard-tooltip !important; /* stylelint-disable-line declaration-no-important */
+}

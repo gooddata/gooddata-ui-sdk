@@ -78,6 +78,7 @@ export const DescriptionClickTrigger: React.FC<IDescriptionClickTriggerProps> = 
             {isOpen ? (
                 <Bubble
                     className="bubble-light gd-description-panel-bubble"
+                    overlayClassName="gd-description-panel-bubble-overlay"
                     alignPoints={DESCRIPTION_PANEL_ALIGN_POINTS}
                     arrowOffsets={DESCRIPTION_PANEL_ARROW_OFFSETS}
                     arrowStyle={{ display: "none" }}
