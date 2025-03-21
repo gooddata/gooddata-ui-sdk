@@ -41,6 +41,7 @@ import { renderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDa
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils.js";
 import { EmptyDashboardLayout } from "./EmptyDashboardLayout.js";
 import { SectionHotspot } from "./dragAndDrop/draggableWidget/SectionHotspot.js";
+import cx from "classnames";
 
 /**
  * Get dashboard layout for exports.
@@ -160,7 +161,10 @@ const LegacyDefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element
         <>
             <DefaultDashboardExportVariables renderMode={renderMode} />
             <DashboardLayout
-                className={isExport ? "export-mode" : ""}
+                className={cx({
+                    "export-mode": isExport,
+                    "export-slides-mode": renderMode === "export",
+                })}
                 layout={transformedLayout}
                 itemKeyGetter={itemKeyGetter}
                 widgetRenderer={widgetRenderer}

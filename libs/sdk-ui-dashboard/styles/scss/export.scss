@@ -76,3 +76,11 @@
     display: none;
     width: 100%;
 }
+
+.export-slides-mode {
+    .dash-item.type-visualization {
+        &.viz-type-headline .headline {
+            max-height: calc(100% - 10px);
+        }
+    }
+}
