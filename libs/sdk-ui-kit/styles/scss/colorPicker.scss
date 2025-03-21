@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "variables";
 
 .color-picker-wrapper {
@@ -21,7 +21,6 @@
 .color-picker-cell {
     flex: 1;
     padding: 1px;
-    outline: none;
     cursor: pointer;
 
     &::before {

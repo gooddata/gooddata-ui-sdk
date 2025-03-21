@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 @use "sass:color";
 @use "variables";
 @use "mixins";
@@ -31,10 +31,11 @@
         }
     }
 
+    // TODO LX-769, requirement 3, share dialog, choose user
     .gd-share-dialog__control--is-focused,
     .gd-share-dialog__control--is-focused:hover {
         border-color: variables.$gd-palette-primary-base;
-        outline: 0;
+        outline: revert;
         box-shadow: inset 0 1px 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.8);
     }
 
@@ -81,7 +82,6 @@
         border-color: variables.$gd-palette-primary-base;
         border-top: 1px solid variables.$gd-border-color;
         margin-top: -2px;
-        outline: 0;
         box-shadow: 0 0 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.2) inset;
         color: variables.$gd-color-text;
         background-color: variables.$gd-color-white;

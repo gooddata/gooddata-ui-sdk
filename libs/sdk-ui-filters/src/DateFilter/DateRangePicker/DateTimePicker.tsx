@@ -136,7 +136,10 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
                             "s-date-range-picker-date",
                             "gd-date-range-picker-input",
                             "gd-date-range-picker-input-native",
-                            error && "gd-date-range-picker-input-error",
+                            {
+                                "gd-date-range-picker-input-error": error,
+                                "has-warning": error,
+                            },
                         )}
                         placeholder={placeholderDate}
                         onChange={(event) =>
@@ -146,10 +149,10 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
                     />
                 ) : (
                     <div
-                        className={cx(
-                            "gd-date-range-picker-input",
-                            error && "gd-date-range-picker-input-error",
-                        )}
+                        className={cx("gd-date-range-picker-input", {
+                            "gd-date-range-picker-input-error": error,
+                            "has-warning": error,
+                        })}
                     >
                         <span>
                             <span className="gd-icon-calendar" />
@@ -173,7 +176,10 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
                             "gd-date-range-picker-input",
                             "gd-date-range-picker-input-time",
                             "s-date-range-picker-input-time",
-                            error && "gd-date-range-picker-input-error",
+                            {
+                                "gd-date-range-picker-input-error": error,
+                                "has-warning": error,
+                            },
                         )}
                     >
                         <span className="gd-icon-clock" />

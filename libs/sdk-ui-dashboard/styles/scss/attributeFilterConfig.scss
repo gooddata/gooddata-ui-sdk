@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
@@ -188,17 +188,10 @@
 
 .attribute-filter__limit__add-button {
     padding: 0 0 0 5px;
-    outline: none;
-    box-shadow: none;
-    border: 0;
 
     &:active,
     &:focus,
     &:hover {
-        outline: none;
-        border: 0;
-        box-shadow: none;
-
         .gd-button-text {
             text-decoration: none;
             color: kit-variables.$gd-palette-primary-base-darken06;

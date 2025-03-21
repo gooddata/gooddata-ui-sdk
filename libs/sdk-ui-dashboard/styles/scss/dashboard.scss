@@ -185,10 +185,6 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     }
 
     &:focus-visible {
-        outline: auto 5px Highlight; /* For Firefox */
-        // stylelint-disable-next-line declaration-block-no-duplicate-properties
-        outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
-
         .dash-item-action-options {
             display: block;
         }
@@ -487,10 +483,6 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     height: variables.$item-action-width;
 
     &:focus-visible {
-        outline: auto 5px Highlight; /* For Firefox */
-        // stylelint-disable-next-line declaration-block-no-duplicate-properties
-        outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
-
         .dash-item-action-options {
             display: block;
         }
@@ -510,10 +502,6 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     }
 
     &:focus-visible {
-        outline: auto 5px Highlight; /* For Firefox */
-        // stylelint-disable-next-line declaration-block-no-duplicate-properties
-        outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
-
         .dash-item-action-description-trigger {
             display: flex;
         }

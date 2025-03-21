@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/src/@ui/defaultTheme.scss";
 @use "mapbox-gl/dist/mapbox-gl.css";
 @use "sass:meta";
@@ -209,10 +209,6 @@
     // If the outer container have scroll bar, the chart can be showed by scrolling.
     // stylelint-disable-next-line declaration-no-important
     overflow: visible !important;
-}
-
-.mapboxgl-canvas {
-    outline: none;
 }
 
 // always show Mapbox wordmark

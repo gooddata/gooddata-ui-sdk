@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { Input, InputWithNumberFormat } from "@gooddata/sdk-ui-kit";
 import { storiesOf } from "../../../_infra/storyRepository.js";
@@ -37,7 +37,7 @@ class FormExamples extends React.PureComponent {
 
                 <Input value="Hello!" clearOnEsc />
 
-                <h4>Searchfield with placeholder and autofocus</h4>
+                <h4>Search field with placeholder and autofocus</h4>
 
                 <Input
                     onChange={(val) => console.log(val)} // eslint-disable-line no-console
@@ -63,6 +63,14 @@ class FormExamples extends React.PureComponent {
 
                 <Input disabled />
 
+                <h4>Input with error</h4>
+
+                <Input hasError />
+
+                <h4>Input with warning</h4>
+
+                <Input hasWarning />
+
                 <h4>Text field with label</h4>
                 <Input label="Input with label on top" labelPositionTop />
 
@@ -83,6 +91,22 @@ class FormExamples extends React.PureComponent {
                     value={this.state.inputWithNumberFormat}
                     onChange={(value) => this.setState({ inputWithNumberFormat: value })}
                 />
+
+                <h4>Large text field</h4>
+
+                <label className="gd-input">
+                    <textarea className="gd-input-field" rows={3} />
+                </label>
+
+                <h4>Large text with error</h4>
+                <label className="gd-input has-error">
+                    <textarea className="gd-input-field" rows={3} />
+                </label>
+
+                <h4>Large text with warning</h4>
+                <label className="gd-input has-warning">
+                    <textarea className="gd-input-field" rows={3} />
+                </label>
 
                 <h4>Radios and checkboxes</h4>
 

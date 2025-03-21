@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "react-day-picker/dist/style.css";
 @use "sass:color";
 @use "mixins";
@@ -86,7 +86,6 @@
     --rdp-accent-color-dart: none;
     --rdp-background-color-dark: none;
     --rdp-accent-color-dark: none;
-    --rdp-outline: none;
 
     position: absolute;
     padding: 18px 15px 15px;

@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 @use "sass:color";
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
@@ -153,7 +153,6 @@
             position: relative;
             padding: 5px 14px;
             border: 1px solid transparent;
-            outline: 0;
             font: 700 14px/20px gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
             height: 40px;
             white-space: nowrap;

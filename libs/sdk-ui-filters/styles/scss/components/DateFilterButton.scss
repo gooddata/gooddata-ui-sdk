@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 @use "sass:list";
 @use "sass:map";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables";
@@ -280,12 +280,6 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
         &.is-unrelated {
             color: variables.$gd-color-negative;
         }
-    }
-
-    &:focus-visible {
-        outline: auto 5px Highlight; /* For Firefox */
-        // stylelint-disable-next-line declaration-block-no-duplicate-properties
-        outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
     }
 }
 

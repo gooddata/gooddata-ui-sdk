@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:color";
 @use "react-day-picker/dist/style.css";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
@@ -121,7 +121,7 @@ $gd-day-picker-width: 267px;
             &,
             &:hover,
             &:focus {
-                border-color: kit-variables.$gd-palette-warning-base;
+                border-color: kit-variables.$gd-input-text-border-warning;
             }
         }
     }
@@ -144,7 +144,6 @@ $gd-day-picker-width: 267px;
         --rdp-accent-color-dart: none;
         --rdp-background-color-dark: none;
         --rdp-accent-color-dark: none;
-        --rdp-outline: none;
         // stylelint-disable max-nesting-depth
         position: absolute;
         z-index: 10;

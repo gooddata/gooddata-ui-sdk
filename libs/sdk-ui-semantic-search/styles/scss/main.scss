@@ -50,7 +50,7 @@
                 text-decoration: none;
             }
             &:focus-visible {
-                outline: auto;
+                outline: revert;
             }
         }
 
