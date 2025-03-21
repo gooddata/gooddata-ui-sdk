@@ -1,6 +1,19 @@
 #!/usr/bin/env bash
 set -e
 
+# Define paths relative to the script location
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECT_DIR="$SCRIPT_DIR/.."
+ROOT_DIR="$PROJECT_DIR/../.."
+
+_generate_translations_bundles() {
+    local bundles_dir="$PROJECT_DIR/$1"
+    echo "Converting bundles in: $bundles_dir"
+
+    # Call the common script to convert all JSON bundles to TypeScript
+    node "$ROOT_DIR/common/scripts/convertBundleToTypeScript.mjs" "$bundles_dir"
+}
+
 _build_styles() {
     sass --load-path=node_modules --load-path=node_modules/codemirror/lib styles/internal/scss:styles/internal/css
     sass --load-path=node_modules styles/scss:styles/css
@@ -21,10 +34,14 @@ _common-build() {
 }
 
 build() {
-    _common-build
+    _generate_translations_bundles "src/internal/translations/"
 
-    tsc -p tsconfig.json
-    npm run api-extractor
+    if [[ $1 != "--genVersionOnly" ]]; then
+        _common-build
+
+        tsc -p tsconfig.json
+        npm run api-extractor
+    fi
 }
 
-build
+build $1
