@@ -806,3 +806,48 @@ export function setDateFilterConfigTitle(
         },
     };
 }
+
+/**
+ * Payload of the {@link ChangeIgnoreExecutionTimestamp} command.
+ * @alpha
+ */
+export interface ChangeIgnoreExecutionTimestampPayload {
+    /**
+     * New ignore execution timestamp value.
+     */
+    ignoreExecutionTimestamp: boolean;
+}
+
+/**
+ * Command for changing the ignore logic of execution timestamp.
+ *
+ * When executionTimestamp is provided to the dashboard, each execution is using this timestamp. This command instructs the
+ * application to change the ignore flag for the execution timestamp in all following executions.
+ *
+ * @alpha
+ */
+export interface ChangeIgnoreExecutionTimestamp extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.CHANGE_IGNORE_EXECUTION_TIMESTAMP";
+    readonly payload: ChangeIgnoreExecutionTimestampPayload;
+}
+
+/**
+ * Creates the {@link ChangeIgnoreExecutionTimestamp} command.
+ *
+ * @remarks
+ * Dispatching the commands will result into setting state to ignore execution timestamp.
+ *
+ * @alpha
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @returns change ignore execution timestamp command
+ */
+export function changeIgnoreExecutionTimestamp(
+    ignoreExecutionTimestamp: boolean,
+    correlationId?: string,
+): ChangeIgnoreExecutionTimestamp {
+    return {
+        type: "GDC.DASH/CMD.CHANGE_IGNORE_EXECUTION_TIMESTAMP",
+        correlationId,
+        payload: { ignoreExecutionTimestamp },
+    };
+}

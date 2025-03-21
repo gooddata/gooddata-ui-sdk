@@ -349,8 +349,8 @@ const hideAllWidgetsOverlay: UiReducer = (state) => {
     }, {} as Record<string, IDashboardWidgetOverlay>);
 };
 
-const ignoreExecutionTimestamp: UiReducer = (state) => {
-    state.ignoreExecutionTimestamp = true;
+const changeIgnoreExecutionTimestamp: UiReducer<PayloadAction<boolean>> = (state, action) => {
+    state.ignoreExecutionTimestamp = action.payload;
 };
 
 const setIncompatibleDefaultFiltersOverrideMessage: UiReducer = (state) => {
@@ -416,7 +416,7 @@ export const uiReducers = {
     toggleFilterViewsDialog,
     openWidgetDeleteDialog,
     closeWidgetDeleteDialog,
-    ignoreExecutionTimestamp,
+    changeIgnoreExecutionTimestamp,
     setIncompatibleDefaultFiltersOverrideMessage,
     resetIncompatibleDefaultFiltersOverrideMessage,
 };

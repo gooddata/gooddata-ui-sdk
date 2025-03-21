@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { DashboardContext } from "../../types/commonTypes.js";
 import { SagaIterator } from "redux-saga";
@@ -10,7 +10,7 @@ import {
     DashboardInsightWidgetIgnoreCrossFilteringChanged,
     insightWidgetIgnoreCrossFilteringChanged,
 } from "../../events/insight.js";
-import { ChangeInsightWidgetIgnoreCrossFiltering } from "src/model/commands/insight.js";
+import { ChangeInsightWidgetIgnoreCrossFiltering } from "../../commands/insight.js";
 
 export function* changeInsightWidgetIgnoreCrossFilteringHandler(
     ctx: DashboardContext,
