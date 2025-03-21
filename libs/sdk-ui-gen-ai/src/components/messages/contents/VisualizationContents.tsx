@@ -63,25 +63,17 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
     };
 
     const handleSdkError = (error: GoodDataSdkError) => {
-        // Error callback may be triggered from render method in SDK,
-        // have to move the state update to the next tick to keep render pure
-        setTimeout(() => {
-            setHasVisError(true);
-            dispatch(
-                visualizationErrorAction({
-                    errorType: error.seType,
-                    errorMessage: error.getMessage(),
-                }),
-            );
-        });
+        setHasVisError(true);
+        dispatch(
+            visualizationErrorAction({
+                errorType: error.seType,
+                errorMessage: error.getMessage(),
+            }),
+        );
     };
 
     const handleLoadingChanged: OnLoadingChanged = ({ isLoading }) => {
-        // Loading callback is triggered from render method, have to move
-        // the state update to the next tick to keep render pure
-        setTimeout(() => {
-            setVisLoading(isLoading);
-        });
+        setVisLoading(isLoading);
     };
 
     return (
