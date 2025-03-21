@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:color";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables" as bubble-variables;
@@ -24,6 +24,10 @@ $dialog-background: kit-variables.$is-focused-background;
         // stylelint-disable-next-line declaration-no-important
         left: 15px !important;
     }
+}
+
+.kpi-alert-dialog-overlay.truncated {
+    z-index: zIndexes.$truncated-dashboard-tooltip;
 }
 
 .kpi-alert-dialog {
