@@ -1,5 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
-import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from "lz-string";
+// The requested module is a CommonJS module, which may not support all module.exports as named exports.
+import pkg from "lz-string";
+const { compressToEncodedURIComponent, decompressFromEncodedURIComponent } = pkg;
 
 /**
  * Compresses data to a URL-safe string

@@ -4877,7 +4877,7 @@ export const StylingSettingWidget: <T extends StylingPickerItemContent>(props: I
 // @internal (undocumented)
 export const SubMenu: React_2.FC<ISubMenuProps>;
 
-// @internal (undocumented)
+// @public (undocumented)
 export const SyntaxHighlightingInput: React_2.FC<ISyntaxHighlightingInputProps>;
 
 // @internal (undocumented)

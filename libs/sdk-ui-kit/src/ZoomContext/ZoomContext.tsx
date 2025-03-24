@@ -36,8 +36,8 @@ export interface IZoomContextState {
 // Default context values
 const defaultZoomState: IZoomContextState = {
     zoomLevel: 1,
-    viewportWidth: window.innerWidth,
-    viewportHeight: window.innerHeight,
+    viewportWidth: typeof window !== "undefined" ? window.innerWidth : 0,
+    viewportHeight: typeof window !== "undefined" ? window.innerHeight : 0,
     hasVisualViewport: typeof window !== "undefined" && "visualViewport" in window,
 };
 
@@ -74,12 +74,12 @@ export const ZoomProvider: React.FC<ZoomProviderProps> = ({ children }) => {
 
             if (window.visualViewport) {
                 // If visual viewport API is supported, use it (more accurate for zoomed content)
-                viewportWidth = window.visualViewport.width;
-                viewportHeight = window.visualViewport.height;
+                viewportWidth = typeof window !== "undefined" ? window.visualViewport.width : 0;
+                viewportHeight = typeof window !== "undefined" ? window.visualViewport.height : 0;
             } else {
                 // Fallback to standard viewport
-                viewportWidth = window.innerWidth;
-                viewportHeight = window.innerHeight;
+                viewportWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+                viewportHeight = typeof window !== "undefined" ? window.innerHeight : 0;
             }
 
             setZoomState({

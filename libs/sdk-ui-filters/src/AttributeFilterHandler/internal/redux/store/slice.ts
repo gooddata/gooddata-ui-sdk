@@ -1,5 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit";
+// (C) 2021-2025 GoodData Corporation
+import { createSlice, Reducer } from "@reduxjs/toolkit";
 import { rootReducers } from "./rootReducers.js";
 import { AttributeFilterState, initialState } from "./state.js";
 
@@ -13,7 +13,7 @@ const attributeFilterSlice = createSlice({
 /**
  * @internal
  */
-export const sliceReducer = attributeFilterSlice.reducer;
+export const sliceReducer: Reducer<AttributeFilterState> = attributeFilterSlice.reducer;
 
 /**
  * @internal

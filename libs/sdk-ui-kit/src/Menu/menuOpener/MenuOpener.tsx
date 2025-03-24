@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 
 import { OpenAction, IMenuPositionConfig, OnOpenedChange } from "../MenuSharedTypes.js";
@@ -28,7 +28,7 @@ export class MenuOpener extends React.Component<IMenuOpenerProps> {
         spacing: 0,
         offset: 0,
 
-        portalTarget: document.querySelector("body"),
+        portalTarget: typeof document !== "undefined" ? document.querySelector("body") : null,
     };
 
     public render() {

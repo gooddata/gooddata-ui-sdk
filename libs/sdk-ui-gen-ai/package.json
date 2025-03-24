@@ -65,7 +65,7 @@
         "@gooddata/sdk-ui": "workspace:*",
         "@gooddata/sdk-ui-charts": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
-        "@reduxjs/toolkit": "^1.9.3",
+        "@reduxjs/toolkit": "2.6.1",
         "immer": "^9.0.3",
         "react-intl": "^6.4.1",
         "tslib": "^2.5.0",

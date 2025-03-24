@@ -284,6 +284,7 @@ import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
 import { OnLoadingChanged } from '@gooddata/sdk-ui';
 import { Patch } from 'immer';
 import { PayloadAction } from '@reduxjs/toolkit';
+import * as pkgToolkit from '@reduxjs/toolkit';
 import { PlatformEdition } from '@gooddata/sdk-model';
 import { QueryCacheEntryResult as QueryCacheEntryResult_2 } from '../store/_infra/queryService.js';
 import { default as React_2 } from 'react';
@@ -675,27 +676,27 @@ export const CancelEditDialog: React_2.FC<ICancelEditDialogProps>;
 export function cancelEditRenderMode(correlationId?: string): ChangeRenderMode;
 
 // @internal (undocumented)
-export const catalogActions: CaseReducerActions<    {
-setCatalogItems: (state: WritableDraft<CatalogState_2>, action: {
-payload: SetCatalogItemsPayload;
-type: string;
-}) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
-setCatalogMeasuresAndFacts: (state: WritableDraft<CatalogState_2>, action: {
-payload: SetCatalogMeasuresAndFactsPayload;
-type: string;
-}) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
-addAttributeHierarchy: (state: WritableDraft<CatalogState_2>, action: {
-payload: ICatalogAttributeHierarchy;
-type: string;
-}) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
-updateAttributeHierarchy: (state: WritableDraft<CatalogState_2>, action: {
-payload: ICatalogAttributeHierarchy;
-type: string;
-}) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
-deleteAttributeHierarchy: (state: WritableDraft<CatalogState_2>, action: {
-payload: ICatalogAttributeHierarchy;
-type: string;
-}) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
+export const catalogActions: pkgToolkit.CaseReducerActions<{
+    setCatalogItems: (state: WritableDraft<CatalogState_2>, action: {
+        payload: SetCatalogItemsPayload;
+        type: string;
+    }) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
+    setCatalogMeasuresAndFacts: (state: WritableDraft<CatalogState_2>, action: {
+        payload: SetCatalogMeasuresAndFactsPayload;
+        type: string;
+    }) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
+    addAttributeHierarchy: (state: WritableDraft<CatalogState_2>, action: {
+        payload: ICatalogAttributeHierarchy;
+        type: string;
+    }) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
+    updateAttributeHierarchy: (state: WritableDraft<CatalogState_2>, action: {
+        payload: ICatalogAttributeHierarchy;
+        type: string;
+    }) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
+    deleteAttributeHierarchy: (state: WritableDraft<CatalogState_2>, action: {
+        payload: ICatalogAttributeHierarchy;
+        type: string;
+    }) => void | CatalogState_2 | WritableDraft<CatalogState_2>;
 }, "catalog">;
 
 // @public (undocumented)
@@ -3600,16 +3601,16 @@ export enum DRILL_TO_URL_PLACEHOLDER {
 }
 
 // @internal (undocumented)
-export const drillActions: CaseReducerActions<    {
-setDrillableItems: (state: WritableDraft<DrillState_2>, action: {
-payload: ExplicitDrill[];
-type: string;
-}) => void | DrillState_2 | WritableDraft<DrillState_2>;
-crossFilterByWidget: (state: WritableDraft<DrillState_2>, action: {
-payload: ICrossFilteringItem_2;
-type: string;
-}) => void | DrillState_2 | WritableDraft<DrillState_2>;
-resetCrossFiltering: (state: WritableDraft<DrillState_2>, action: Action<any>) => void | DrillState_2 | WritableDraft<DrillState_2>;
+export const drillActions: pkgToolkit.CaseReducerActions<{
+    setDrillableItems: (state: WritableDraft<DrillState_2>, action: {
+        payload: ExplicitDrill[];
+        type: string;
+    }) => void | DrillState_2 | WritableDraft<DrillState_2>;
+    crossFilterByWidget: (state: WritableDraft<DrillState_2>, action: {
+        payload: ICrossFilteringItem_2;
+        type: string;
+    }) => void | DrillState_2 | WritableDraft<DrillState_2>;
+    resetCrossFiltering: (state: WritableDraft<DrillState_2>, action: pkgToolkit.Action<any>) => void | DrillState_2 | WritableDraft<DrillState_2>;
 }, "drill">;
 
 // @alpha (undocumented)
@@ -7498,14 +7499,14 @@ export interface RenameDashboardPayload {
 export type RenderMode = "view" | "edit" | "export";
 
 // @internal
-export const renderModeActions: CaseReducerActions<    {
-setRenderMode: (state: WritableDraft<RenderModeState_2>, action: {
-payload: RenderMode_2;
-type: string;
-}) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
-setEditRenderMode: (state: WritableDraft<RenderModeState_2>, action: AnyAction) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
-setExportRenderMode: (state: WritableDraft<RenderModeState_2>, action: AnyAction) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
-setViewRenderMode: (state: WritableDraft<RenderModeState_2>, action: AnyAction) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
+export const renderModeActions: pkgToolkit.CaseReducerActions<{
+    setRenderMode: (state: WritableDraft<RenderModeState_2>, action: {
+        payload: RenderMode_2;
+        type: string;
+    }) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
+    setEditRenderMode: (state: WritableDraft<RenderModeState_2>, action: pkgToolkit.AnyAction) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
+    setExportRenderMode: (state: WritableDraft<RenderModeState_2>, action: pkgToolkit.AnyAction) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
+    setViewRenderMode: (state: WritableDraft<RenderModeState_2>, action: pkgToolkit.AnyAction) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
 }, "renderModeSlice">;
 
 // @internal
@@ -9405,163 +9406,163 @@ export interface TriggerEventPayload {
 }
 
 // @internal
-export const uiActions: CaseReducerActions<    {
-openScheduleEmailDialog: (state: WritableDraft<UiState_2>, action: {
-payload: IScheduleEmailContext_2;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-closeScheduleEmailDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-setScheduleEmailDialogDefaultAttachment: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-resetScheduleEmailDialogDefaultAttachment: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openScheduleEmailManagementDialog: (state: WritableDraft<UiState_2>, action: {
-payload: IScheduleEmailContext_2;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-closeScheduleEmailManagementDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openAlertingManagementDialog: (state: WritableDraft<UiState_2>, action: {
-payload: void;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-closeAlertingManagementDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openAlertingDialog: (state: WritableDraft<UiState_2>, action: {
-payload: void;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-closeAlertingDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openSaveAsDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-closeSaveAsDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-setFilterBarExpanded: (state: WritableDraft<UiState_2>, action: {
-payload: boolean;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-closeKpiAlertDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openKpiAlertDialog: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-highlightKpiAlert: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-openShareDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-closeShareDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-closeDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openKpiDeleteDialog: (state: WritableDraft<UiState_2>, action: {
-payload: ILayoutItemPath_2;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-closeKpiDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-setMenuButtonItemsVisibility: (state: WritableDraft<UiState_2>, action: {
-payload: IMenuButtonItemsVisibility_2;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-selectWidget: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-clearWidgetSelection: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-setConfigurationPanelOpened: (state: WritableDraft<UiState_2>, action: {
-payload: boolean;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-setWidgetDateDatasetAutoSelect: (state: WritableDraft<UiState_2>, action: {
-payload: boolean;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-requestInsightListUpdate: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-setWidgetLoadingAdditionalDataStarted: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-setWidgetLoadingAdditionalDataStopped: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-setFilterAttributeSelectionOpen: (state: WritableDraft<UiState_2>, action: {
-payload: boolean;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-selectFilterIndex: (state: WritableDraft<UiState_2>, action: {
-payload: number;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-clearFilterIndexSelection: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-setActiveSection: (state: WritableDraft<UiState_2>, action: {
-payload: ILayoutSectionPath_2;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-clearActiveSection: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openCancelEditModeDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-closeCancelEditModeDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-resetInvalidDrillWidgetRefs: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-resetAllInvalidCustomUrlDrillParameterWidgets: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-resetAllInvalidCustomUrlDrillParameterWidgetsWarnings: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-addInvalidDrillWidgetRefs: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef[];
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-setInvalidCustomUrlDrillParameterWidgets: (state: WritableDraft<UiState_2>, action: {
-payload: {
-widget: IInsightWidget;
-invalidDrills: IDrillToCustomUrl[];
-}[];
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-removeInvalidDrillWidgetRefs: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef[];
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-resetInvalidCustomUrlDrillParameterWidget: (state: WritableDraft<UiState_2>, action: {
-payload: IInsightWidget[];
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-setDraggingWidgetSource: (state: WritableDraft<UiState_2>, action: {
-payload: DraggableLayoutItem_2;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-clearDraggingWidgetSource: (state: WritableDraft<UiState_2>, action: {
-payload: void;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-setDraggingWidgetTarget: (state: WritableDraft<UiState_2>, action: {
-payload: ILayoutItemPath_2;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-clearDraggingWidgetTarget: (state: WritableDraft<UiState_2>, action: {
-payload: void;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-toggleWidgetsOverlay: (state: WritableDraft<UiState_2>, action: {
-payload: {
-refs: (ObjRef | undefined)[];
-visible: boolean;
-};
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-setWidgetsOverlay: (state: WritableDraft<UiState_2>, action: {
-payload: Record<string, IDashboardWidgetOverlay_2>;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-hideAllWidgetsOverlay: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-toggleFilterViewsDialog: (state: WritableDraft<UiState_2>, action: {
-payload: {
-open?: boolean | undefined;
-mode?: FilterViewDialogMode_2 | undefined;
-} | undefined;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-openWidgetDeleteDialog: (state: WritableDraft<UiState_2>, action: {
-payload: ObjRef;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
-closeWidgetDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-ignoreExecutionTimestamp: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-setIncompatibleDefaultFiltersOverrideMessage: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-resetIncompatibleDefaultFiltersOverrideMessage: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+export const uiActions: pkgToolkit.CaseReducerActions<{
+    openScheduleEmailDialog: (state: WritableDraft<UiState_2>, action: {
+        payload: IScheduleEmailContext_2;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    closeScheduleEmailDialog: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    setScheduleEmailDialogDefaultAttachment: (state: WritableDraft<UiState_2>, action: {
+        payload: ObjRef;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    resetScheduleEmailDialogDefaultAttachment: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    openScheduleEmailManagementDialog: (state: WritableDraft<UiState_2>, action: {
+        payload: IScheduleEmailContext_2;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    closeScheduleEmailManagementDialog: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    openAlertingManagementDialog: (state: WritableDraft<UiState_2>, action: {
+        payload: void;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    closeAlertingManagementDialog: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    openAlertingDialog: (state: WritableDraft<UiState_2>, action: {
+        payload: void;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    closeAlertingDialog: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    openSaveAsDialog: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    closeSaveAsDialog: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    setFilterBarExpanded: (state: WritableDraft<UiState_2>, action: {
+        payload: boolean;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    closeKpiAlertDialog: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    openKpiAlertDialog: (state: WritableDraft<UiState_2>, action: {
+        payload: ObjRef;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    highlightKpiAlert: (state: WritableDraft<UiState_2>, action: {
+        payload: ObjRef;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    openShareDialog: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    closeShareDialog: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    openDeleteDialog: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    closeDeleteDialog: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    openKpiDeleteDialog: (state: WritableDraft<UiState_2>, action: {
+        payload: ILayoutItemPath_2;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    closeKpiDeleteDialog: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    setMenuButtonItemsVisibility: (state: WritableDraft<UiState_2>, action: {
+        payload: IMenuButtonItemsVisibility_2;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    selectWidget: (state: WritableDraft<UiState_2>, action: {
+        payload: ObjRef;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    clearWidgetSelection: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    setConfigurationPanelOpened: (state: WritableDraft<UiState_2>, action: {
+        payload: boolean;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    setWidgetDateDatasetAutoSelect: (state: WritableDraft<UiState_2>, action: {
+        payload: boolean;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    requestInsightListUpdate: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    setWidgetLoadingAdditionalDataStarted: (state: WritableDraft<UiState_2>, action: {
+        payload: ObjRef;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    setWidgetLoadingAdditionalDataStopped: (state: WritableDraft<UiState_2>, action: {
+        payload: ObjRef;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    setFilterAttributeSelectionOpen: (state: WritableDraft<UiState_2>, action: {
+        payload: boolean;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    selectFilterIndex: (state: WritableDraft<UiState_2>, action: {
+        payload: number;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    clearFilterIndexSelection: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    setActiveSection: (state: WritableDraft<UiState_2>, action: {
+        payload: ILayoutSectionPath_2;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    clearActiveSection: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    openCancelEditModeDialog: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    closeCancelEditModeDialog: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    resetInvalidDrillWidgetRefs: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    resetAllInvalidCustomUrlDrillParameterWidgets: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    resetAllInvalidCustomUrlDrillParameterWidgetsWarnings: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    addInvalidDrillWidgetRefs: (state: WritableDraft<UiState_2>, action: {
+        payload: ObjRef[];
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    setInvalidCustomUrlDrillParameterWidgets: (state: WritableDraft<UiState_2>, action: {
+        payload: {
+            widget: IInsightWidget;
+            invalidDrills: IDrillToCustomUrl[];
+        }[];
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    removeInvalidDrillWidgetRefs: (state: WritableDraft<UiState_2>, action: {
+        payload: ObjRef[];
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    resetInvalidCustomUrlDrillParameterWidget: (state: WritableDraft<UiState_2>, action: {
+        payload: IInsightWidget[];
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    setDraggingWidgetSource: (state: WritableDraft<UiState_2>, action: {
+        payload: DraggableLayoutItem_2;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    clearDraggingWidgetSource: (state: WritableDraft<UiState_2>, action: {
+        payload: void;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    setDraggingWidgetTarget: (state: WritableDraft<UiState_2>, action: {
+        payload: ILayoutItemPath_2;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    clearDraggingWidgetTarget: (state: WritableDraft<UiState_2>, action: {
+        payload: void;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    toggleWidgetsOverlay: (state: WritableDraft<UiState_2>, action: {
+        payload: {
+            refs: (ObjRef | undefined)[];
+            visible: boolean;
+        };
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    setWidgetsOverlay: (state: WritableDraft<UiState_2>, action: {
+        payload: Record<string, IDashboardWidgetOverlay_2>;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    hideAllWidgetsOverlay: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    toggleFilterViewsDialog: (state: WritableDraft<UiState_2>, action: {
+        payload: {
+            open?: boolean | undefined;
+            mode?: FilterViewDialogMode_2 | undefined;
+        } | undefined;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    openWidgetDeleteDialog: (state: WritableDraft<UiState_2>, action: {
+        payload: ObjRef;
+        type: string;
+    }) => void | UiState_2 | WritableDraft<UiState_2>;
+    closeWidgetDeleteDialog: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    ignoreExecutionTimestamp: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    setIncompatibleDefaultFiltersOverrideMessage: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+    resetIncompatibleDefaultFiltersOverrideMessage: (state: WritableDraft<UiState_2>, action: pkgToolkit.AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 }, "uiSlice">;
 
 // @beta (undocumented)

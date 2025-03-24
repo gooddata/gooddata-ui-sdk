@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 declare global {
     interface Window {
@@ -7,9 +7,12 @@ declare global {
 }
 
 // borrowed from Ember
-window._gd_uuid = 0;
+typeof window !== "undefined" && (window._gd_uuid = 0);
 
 function getGuid() {
+    if (typeof window === "undefined") {
+        return 0;
+    }
     window._gd_uuid += 1;
     return window._gd_uuid;
 }
