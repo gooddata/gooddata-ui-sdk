@@ -32,7 +32,7 @@ try {
     jsonFiles.forEach(file => {
         try {
             const filePath = path.join(bundleDir, file);
-            const outputPath = filePath.replace('.json', '.ts');
+            const outputPath = filePath.replace('.json', '.localization-bundle.ts');
             const bundleName = file.replace('.json', '').replace(/-/g, '_');
 
             // Read the JSON file

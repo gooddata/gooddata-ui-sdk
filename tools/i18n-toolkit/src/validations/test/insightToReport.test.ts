@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { getInsightToReportCheck } from "../insightToReport.js";
 import { LocalesStructure } from "../../schema/localization.js";

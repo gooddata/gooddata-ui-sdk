@@ -1,24 +1,24 @@
 // (C) 2007-2025 GoodData Corporation
 import { translationUtils } from "@gooddata/util";
 
-import { en_US } from "./bundles/en-US.js";
-import { de_DE } from "./bundles/de-DE.js";
-import { es_ES } from "./bundles/es-ES.js";
-import { fr_FR } from "./bundles/fr-FR.js";
-import { ja_JP } from "./bundles/ja-JP.js";
-import { nl_NL } from "./bundles/nl-NL.js";
-import { pt_BR } from "./bundles/pt-BR.js";
-import { pt_PT } from "./bundles/pt-PT.js";
-import { zh_Hans } from "./bundles/zh-Hans.js";
-import { ru_RU } from "./bundles/ru-RU.js";
-import { it_IT } from "./bundles/it-IT.js";
-import { es_419 } from "./bundles/es-419.js";
-import { fr_CA } from "./bundles/fr-CA.js";
-import { en_GB } from "./bundles/en-GB.js";
-import { en_AU } from "./bundles/en-AU.js";
-import { fi_FI } from "./bundles/fi-FI.js";
-import { zh_Hant } from "./bundles/zh-Hant.js";
-import { zh_HK } from "./bundles/zh-HK.js";
+import { en_US } from "./bundles/en-US.localization-bundle.js";
+import { de_DE } from "./bundles/de-DE.localization-bundle.js";
+import { es_ES } from "./bundles/es-ES.localization-bundle.js";
+import { fr_FR } from "./bundles/fr-FR.localization-bundle.js";
+import { ja_JP } from "./bundles/ja-JP.localization-bundle.js";
+import { nl_NL } from "./bundles/nl-NL.localization-bundle.js";
+import { pt_BR } from "./bundles/pt-BR.localization-bundle.js";
+import { pt_PT } from "./bundles/pt-PT.localization-bundle.js";
+import { zh_Hans } from "./bundles/zh-Hans.localization-bundle.js";
+import { ru_RU } from "./bundles/ru-RU.localization-bundle.js";
+import { it_IT } from "./bundles/it-IT.localization-bundle.js";
+import { es_419 } from "./bundles/es-419.localization-bundle.js";
+import { fr_CA } from "./bundles/fr-CA.localization-bundle.js";
+import { en_GB } from "./bundles/en-GB.localization-bundle.js";
+import { en_AU } from "./bundles/en-AU.localization-bundle.js";
+import { fi_FI } from "./bundles/fi-FI.localization-bundle.js";
+import { zh_Hant } from "./bundles/zh-Hant.localization-bundle.js";
+import { zh_HK } from "./bundles/zh-HK.localization-bundle.js";
 
 /**
  * @internal

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import groupBy from "lodash/groupBy.js";
 import difference from "lodash/difference.js";
 import intersection from "lodash/intersection.js";
