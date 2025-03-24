@@ -2,10 +2,11 @@
 
 import { areObjRefsEqual, IdentifierRef } from "@gooddata/sdk-model";
 import { IntlShape } from "react-intl";
-import { Root } from "mdast";
 import { Parent } from "unist";
+import { Root } from "mdast";
+import cx from "classnames";
 
-import { EvaluatedMetric } from "../hooks/useEvaluatedMetrics.js";
+import { EvaluatedMetric } from "../hooks/useEvaluatedMetricsAndAttributes.js";
 import { createReference } from "../helpers/references.js";
 
 import { HtmlNode, REFERENCE_REGEX_MATCH, REFERENCE_REGEX_SPLIT, TextNode } from "./types.js";
@@ -16,11 +17,13 @@ export function rehypeReferences(intl: IntlShape, metrics?: EvaluatedMetric[]) {
             iterateTree(tree as HtmlNode, {
                 onTextNodeReference: (text, ref) => {
                     const metric = metrics?.find((m) => areObjRefsEqual(m.ref, ref));
-                    return [createMetricValue(intl, text, metric)];
+                    const { metricDef } = createMetricValue(intl, text, metric);
+                    return [metricDef];
                 },
                 onTextRawReference: (ref) => {
                     const metric = metrics?.find((m) => areObjRefsEqual(m.ref, ref));
-                    return metric.data.formattedValue();
+                    const { value, formattedValue } = createMetricValue(intl, null, metric);
+                    return value !== null ? formattedValue : "";
                 },
             });
             return tree;
@@ -122,39 +125,40 @@ function iterateReferenceMatch<T>(value: string, onMatch: (ref: IdentifierRef, i
     return items;
 }
 
-function createMetricValue(intl: IntlShape, text: TextNode, metric: EvaluatedMetric) {
-    if (!metric) {
-        return {
-            type: "element",
-            tagName: "span",
-            properties: {
-                className: ["gd-rich-text-metric-error"],
-            },
-            position: text.position,
-            children: [{ type: "text", value: `(${intl.formatMessage({ id: "richText.no_fetch" })})` }],
-        };
-    }
+function createMetricValue(intl: IntlShape, text: TextNode | null, metric: EvaluatedMetric) {
+    const value = metric ? metric.data.rawValue : null;
 
-    const value = metric.data.rawValue;
+    const isEmpty = value === null || value === undefined || metric?.count === 0;
+    const isMultiple = metric?.count && metric.count > 1;
 
-    if (value === null || value === undefined) {
-        return {
-            type: "element",
-            tagName: "span",
-            properties: {
-                className: ["gd-rich-text-metric-empty"],
-            },
-            position: text.position,
-            children: [{ type: "text", value: `(${intl.formatMessage({ id: "richText.no_data" })})` }],
-        };
-    }
-    return {
+    const formattedValue = !metric
+        ? `(${intl.formatMessage({ id: "richText.no_fetch" })})`
+        : isEmpty
+        ? `(${intl.formatMessage({ id: "richText.no_data" })})`
+        : isMultiple
+        ? `(${intl.formatMessage({ id: "richText.multiple_data" })})`
+        : typeof value === "string"
+        ? value
+        : metric.data.formattedValue();
+
+    const metricDef = {
         type: "element",
         tagName: "span",
         properties: {
-            className: ["gd-rich-text-metric-value"],
+            className: cx({
+                "gd-rich-text-metric-error": !metric,
+                "gd-rich-text-metric-empty": metric && isEmpty,
+                "gd-rich-text-metric-multiple": metric && isMultiple,
+                "gd-rich-text-metric-value": metric && !isEmpty && !isMultiple,
+            }),
         },
-        position: text.position,
-        children: [{ type: "text", value: metric.data.formattedValue() }],
+        position: text?.position ?? undefined,
+        children: [{ type: "text", value: formattedValue }],
+    };
+
+    return {
+        metricDef,
+        formattedValue,
+        value: isEmpty || isMultiple ? null : value,
     };
 }

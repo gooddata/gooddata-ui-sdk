@@ -4,7 +4,7 @@ import { IFilter } from "@gooddata/sdk-model";
 
 import { collectReferences } from "../helpers/references.js";
 
-import { useEvaluatedMetrics } from "./useEvaluatedMetrics.js";
+import { useEvaluatedMetricsAndAttributes } from "./useEvaluatedMetricsAndAttributes.js";
 
 export function useEvaluatedReferences(value: string, filters: IFilter[], enabled: boolean) {
     const isEmptyValue = useMemo(() => !value?.replace(/\s/g, ""), [value]);
@@ -14,7 +14,7 @@ export function useEvaluatedReferences(value: string, filters: IFilter[], enable
         loading,
         result: metrics,
         error: metricsError,
-    } = useEvaluatedMetrics(references, filters, enabled);
+    } = useEvaluatedMetricsAndAttributes(references, filters, enabled);
 
     return {
         isEmptyValue,

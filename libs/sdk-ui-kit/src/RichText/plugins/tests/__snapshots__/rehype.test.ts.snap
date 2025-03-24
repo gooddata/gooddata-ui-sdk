@@ -52,9 +52,7 @@ exports[`testing rehype plugin to extract references > replace references ids fo
               ],
               "position": undefined,
               "properties": {
-                "className": [
-                  "gd-rich-text-metric-value",
-                ],
+                "className": "gd-rich-text-metric-value",
               },
               "tagName": "span",
               "type": "element",
@@ -99,9 +97,7 @@ exports[`testing rehype plugin to extract references > replace references ids fo
           ],
           "position": undefined,
           "properties": {
-            "className": [
-              "gd-rich-text-metric-value",
-            ],
+            "className": "gd-rich-text-metric-value",
           },
           "tagName": "span",
           "type": "element",
@@ -119,9 +115,7 @@ exports[`testing rehype plugin to extract references > replace references ids fo
           ],
           "position": undefined,
           "properties": {
-            "className": [
-              "gd-rich-text-metric-value",
-            ],
+            "className": "gd-rich-text-metric-value",
           },
           "tagName": "span",
           "type": "element",

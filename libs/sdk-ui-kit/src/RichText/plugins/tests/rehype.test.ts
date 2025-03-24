@@ -3,7 +3,7 @@
 import { describe, expect, it } from "vitest";
 import { createIntlMock, DataPoint } from "@gooddata/sdk-ui";
 import { rehypeReferences } from "../rehype-references";
-import { EvaluatedMetric } from "../../hooks/useEvaluatedMetrics";
+import { EvaluatedMetric } from "../../hooks/useEvaluatedMetricsAndAttributes";
 import { Root } from "mdast";
 
 describe("testing rehype plugin to extract references", () => {
@@ -160,5 +160,6 @@ function em(id: string, title: string, value: number): EvaluatedMetric {
             coordinates: [],
             rawValue: value,
         } as DataPoint,
+        count: 1,
     };
 }
