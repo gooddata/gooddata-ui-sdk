@@ -19,6 +19,10 @@ import { GoodDataSdkError, OnError, OnLoadingChanged, useWorkspaceStrict } from 
 
 const VIS_HEIGHT = 250;
 
+const getVisualizationHref = (wsId: string, visId: string) => {
+    return `/analyze/#/${wsId}/${visId}/edit`;
+};
+
 export type VisualizationContentsProps = {
     content: VisualizationContents;
     messageId: string;
@@ -44,7 +48,6 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
     const [hasVisError, setHasVisError] = React.useState(false);
     const [visLoading, setVisLoading] = React.useState(true);
     const workspaceId = useWorkspaceStrict();
-    const href = `/analyze/#/${workspaceId}/${visualization.savedVisualizationId}/edit`;
 
     const handleButtonClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLDivElement>) => {
         if (visualization?.savedVisualizationId) {
@@ -54,7 +57,7 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
                 workspaceId,
                 newTab: e.metaKey,
                 preventDefault: e.preventDefault.bind(e),
-                itemUrl: href,
+                itemUrl: getVisualizationHref(workspaceId, visualization.savedVisualizationId),
             });
             e.stopPropagation();
         } else {
@@ -173,7 +176,10 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
 
                               return visualization.savedVisualizationId && config.allowNativeLinks ? (
                                   <a
-                                      href={href}
+                                      href={getVisualizationHref(
+                                          workspaceId,
+                                          visualization.savedVisualizationId,
+                                      )}
                                       onClick={handleButtonClick}
                                       className="gd-gen-ai-chat__visualization__save"
                                   >
