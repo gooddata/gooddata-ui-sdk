@@ -3426,7 +3426,7 @@ export function DefaultDashboardVisualizationSwitcherComponentSetFactory(visuali
 export const DefaultDashboardWidget: React_2.NamedExoticComponent<IDashboardWidgetProps>;
 
 // @internal (undocumented)
-export function DefaultEditButton({ isVisible, isEnabled, onEditClick }: IEditButtonProps): React_2.JSX.Element | null;
+export function DefaultEditButton({ isVisible, isEnabled, onEditClick, tooltipText }: IEditButtonProps): React_2.JSX.Element | null;
 
 // @alpha (undocumented)
 export function DefaultFilterBar(props: IFilterBarProps): JSX.Element;
@@ -5078,6 +5078,8 @@ export interface IEditButtonProps {
     isVisible: boolean;
     // (undocumented)
     onEditClick: () => void;
+    // (undocumented)
+    tooltipText: string;
 }
 
 // @beta (undocumented)

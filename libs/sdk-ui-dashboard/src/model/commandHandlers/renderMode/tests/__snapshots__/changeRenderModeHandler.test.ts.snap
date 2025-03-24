@@ -33,15 +33,6 @@ exports[`changeRenderModeHandler > without initial config > should process rende
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.RENDER_MODE.CHANGED",
   },
-  {
-    "commandType": "GDC.DASH/CMD.CHANGE_IGNORE_EXECUTION_TIMESTAMP",
-    "correlationId": undefined,
-    "type": "GDC.DASH/EVT.COMMAND.STARTED",
-  },
-  {
-    "correlationId": undefined,
-    "type": "GDC.DASH/EVT.IGNORE_EXECUTION_TIMESTAMP_CHANGED",
-  },
 ]
 `;
 
@@ -59,15 +50,6 @@ exports[`changeRenderModeHandler > without initial config > should process switc
   {
     "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.RENDER_MODE.CHANGED",
-  },
-  {
-    "commandType": "GDC.DASH/CMD.CHANGE_IGNORE_EXECUTION_TIMESTAMP",
-    "correlationId": undefined,
-    "type": "GDC.DASH/EVT.COMMAND.STARTED",
-  },
-  {
-    "correlationId": undefined,
-    "type": "GDC.DASH/EVT.IGNORE_EXECUTION_TIMESTAMP_CHANGED",
   },
 ]
 `;

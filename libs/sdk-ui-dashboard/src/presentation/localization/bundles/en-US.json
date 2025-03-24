@@ -1265,6 +1265,11 @@
         "comment": "",
         "limit": 0
     },
+    "controlButtons.edit.executionTimestampMode.tooltip": {
+        "value": "To edit the dashboard, reset the date to today.",
+        "comment": "",
+        "limit": 0
+    },
     "controlButtons.saveAndPublish.value": {
         "value": "Save & Publish",
         "comment": "",

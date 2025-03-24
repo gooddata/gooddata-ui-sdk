@@ -3,11 +3,7 @@ import { SagaIterator } from "redux-saga";
 import { call, put, select, SagaReturnType } from "redux-saga/effects";
 import { batchActions } from "redux-batched-actions";
 import { DashboardContext } from "../../types/commonTypes.js";
-import {
-    changeIgnoreExecutionTimestamp,
-    ChangeRenderMode,
-    resetDashboard as resetDashboardCommand,
-} from "../../commands/index.js";
+import { ChangeRenderMode, resetDashboard as resetDashboardCommand } from "../../commands/index.js";
 import { DashboardRenderModeChanged } from "../../events/index.js";
 import { renderModeChanged } from "../../events/renderMode.js";
 import { renderModeActions } from "../../store/renderMode/index.js";
@@ -18,7 +14,6 @@ import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomU
 import { isInsightWidget } from "@gooddata/sdk-model";
 import { loadInaccessibleDashboards } from "../dashboard/initializeDashboardHandler/loadInaccessibleDashboards.js";
 import { uiActions } from "../../store/ui/index.js";
-import { selectIgnoreExecutionTimestamp } from "../../store/ui/uiSelectors.js";
 
 export function* changeRenderModeHandler(
     ctx: DashboardContext,
@@ -64,14 +59,6 @@ export function* changeRenderModeHandler(
         yield call(loadInaccessibleDashboards, ctx, widgets);
         yield call(validateDrills, ctx, cmd, widgets);
         yield call(validateDrillToCustomUrlParams, widgets.filter(isInsightWidget));
-
-        // Set ignore execution timestamp to true if it is not already set
-        const ignoreExecutionTimestamp: ReturnType<typeof selectIgnoreExecutionTimestamp> = yield select(
-            selectIgnoreExecutionTimestamp,
-        );
-        if (!ignoreExecutionTimestamp) {
-            yield put(changeIgnoreExecutionTimestamp(true));
-        }
     }
 
     return renderModeChanged(ctx, renderMode, correlationId);
