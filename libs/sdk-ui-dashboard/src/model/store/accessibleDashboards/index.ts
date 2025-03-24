@@ -1,12 +1,12 @@
 // (C) 2021-2025 GoodData Corporation
 import { IListedDashboard } from "@gooddata/sdk-model";
-import { createSlice, PayloadAction, EntityState } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, EntityState, Reducer, EntityId } from "@reduxjs/toolkit";
 import { accessibleDashboardsEntityAdapter } from "./accessibleDashboardsEntityAdapter.js";
 
 /**
  * @alpha
  */
-export interface AccessibleDashboardsState extends EntityState<IListedDashboard> {
+export interface AccessibleDashboardsState extends EntityState<IListedDashboard, EntityId> {
     isLoaded: boolean;
 }
 
@@ -33,5 +33,8 @@ const accessibleDashboardsSlice = createSlice({
     },
 });
 
-export const accessibleDashboardsSliceReducer = accessibleDashboardsSlice.reducer;
-export const accessibleDashboardsActions = accessibleDashboardsSlice.actions;
+export const accessibleDashboardsSliceReducer: Reducer<AccessibleDashboardsState> =
+    accessibleDashboardsSlice.reducer;
+
+// Spread "fixes" TS2742 error
+export const accessibleDashboardsActions = { ...accessibleDashboardsSlice.actions };

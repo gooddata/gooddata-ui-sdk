@@ -1,5 +1,5 @@
-// (C) 2024 GoodData Corporation
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+// (C) 2024-2025 GoodData Corporation
+import { createSlice, PayloadAction, Reducer } from "@reduxjs/toolkit";
 
 type ChatWindowSliceState = {
     /**
@@ -35,5 +35,5 @@ const chatWindowSlice = createSlice({
     },
 });
 
-export const chatWindowSliceReducer = chatWindowSlice.reducer;
+export const chatWindowSliceReducer: Reducer<ChatWindowSliceState> = chatWindowSlice.reducer;
 export const { setOpenAction, setFullscreenAction } = chatWindowSlice.actions;

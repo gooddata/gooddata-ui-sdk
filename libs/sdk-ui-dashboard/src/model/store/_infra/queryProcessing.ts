@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { IDashboardQueryService } from "./queryService.js";
 import { Saga, SagaIterator } from "redux-saga";
@@ -6,7 +6,7 @@ import { actionChannel, call, spawn, take } from "redux-saga/effects";
 import { IDashboardQuery } from "../../queries/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import keyBy from "lodash/keyBy.js";
-import { Action, CombinedState, combineReducers, Reducer } from "@reduxjs/toolkit";
+import { Action, combineReducers, Reducer } from "@reduxjs/toolkit";
 import fromPairs from "lodash/fromPairs.js";
 import noop from "lodash/noop.js";
 import compact from "lodash/compact.js";
@@ -29,7 +29,7 @@ export interface QueryProcessingModule {
      * the cache as a separate slice of the internal `_queryCache` part of the state. This reducer is a combined
      * reducer including all the appropriate slice reducers.
      */
-    queryCacheReducer: Reducer<CombinedState<any>>;
+    queryCacheReducer: Reducer<any>;
 
     /**
      * A single saga is in place to handle query processing requests. Query requests will be processed concurrently.
@@ -168,7 +168,7 @@ function* processQuery(
 }
 
 function ensureQueryWrappedInEnvelope(action: Action): QueryEnvelope<any, any> {
-    return isQueryEnvelope(action) ? action : queryEnvelope(action);
+    return isQueryEnvelope(action) ? action : queryEnvelope(action as IDashboardQuery);
 }
 
 /**

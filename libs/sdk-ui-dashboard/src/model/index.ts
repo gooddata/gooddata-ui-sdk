@@ -116,6 +116,10 @@ export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDa
 export { selectInsightAttributesMeta } from "./queryServices/queryInsightAttributesMeta.js";
 export { selectDateDatasetsForMeasure } from "./queryServices/queryMeasureDateDatasets.js";
 
+export type { selectInsightAttributesMetaType } from "./queryServices/queryInsightAttributesMeta.js";
+export type { selectDateDatasetsForInsightType } from "./queryServices/queryInsightDateDatasets.js";
+export type { selectDateDatasetsForMeasureType } from "./queryServices/queryMeasureDateDatasets.js";
+
 export type {
     DashboardEventHandler,
     DashboardEventHandlerFn,

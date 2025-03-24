@@ -250,7 +250,7 @@ export interface ReduxedDashboardStore {
  *
  * Note that for the time-related properties to make sense, this middleware should be registered as the first of all the middlewares if possible.
  */
-const actionMetaFillingMiddleware: Middleware = () => (next) => (action) => {
+const actionMetaFillingMiddleware: Middleware = () => (next) => (action: any) => {
     const nowTimestamp = +new Date();
     action.meta = {
         ...action.meta,
@@ -298,7 +298,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         },
     });
 
-    const rootReducer = combineReducers<DashboardState>({
+    const rootReducer = combineReducers({
         loading: loadingSliceReducer,
         saving: savingSliceReducer,
         executed: executedSliceReducer,
@@ -365,7 +365,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
                 .prepend(actionMetaFillingMiddleware)
                 .concat(
                     ...(config.additionalMiddleware ? [config.additionalMiddleware] : []),
-                    sagaMiddleware,
+                    sagaMiddleware as Middleware,
                 );
         },
         devTools: {

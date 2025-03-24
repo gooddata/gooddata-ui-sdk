@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { configureStore } from "@reduxjs/toolkit";
 import defaultReduxSaga from "redux-saga";
 import { defaultImport } from "default-import";
@@ -13,7 +13,7 @@ import { EventDispatcher } from "./events.js";
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const createSagaMiddleware = defaultImport(defaultReduxSaga);
 
-export const getStore = (
+export const getStore: any = (
     backend: IAnalyticalBackend,
     workspace: string,
     eventDispatcher: EventDispatcher,
@@ -30,7 +30,7 @@ export const getStore = (
             [messagesSliceName]: messagesSliceReducer,
             [chatWindowSliceName]: chatWindowSliceReducer,
         },
-        middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(sagaMiddleware),
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(sagaMiddleware as any),
         devTools: {
             name: "GenAI",
         },

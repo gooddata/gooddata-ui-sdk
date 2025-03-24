@@ -12,6 +12,7 @@ import { initializeDashboardWithPersistedDashboard, InitialLoadCorrelationId } f
 import { createDashboardStore, ReduxedDashboardStore } from "../store/dashboardStore.js";
 import { dashboardDeinitialized } from "../events/dashboard.js";
 import { getWidgetsOfType } from "../store/layout/layoutUtils.js";
+import { Action } from "@reduxjs/toolkit";
 
 type InitProps = {
     backend: IAnalyticalBackend;
@@ -36,7 +37,7 @@ function dispatchDeinitialized(dashboardStore: ReduxedDashboardStore | null, ini
                 dataProductId: initProps.dataProductId,
             },
             dashboardRef,
-        ),
+        ) as Action,
     );
 }
 
@@ -153,7 +154,7 @@ export const useInitializeDashboardStore = (
                     props.permissions,
                     persistedDashboard,
                     InitialLoadCorrelationId,
-                ),
+                ) as Action,
             );
             setDashboardStore(newDashboardStore);
         }

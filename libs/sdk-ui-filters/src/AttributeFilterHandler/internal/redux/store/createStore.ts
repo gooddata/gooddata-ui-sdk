@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { Action, AnyAction, configureStore, Middleware } from "@reduxjs/toolkit";
 import defaultReduxSaga from "redux-saga";
 import { actions, sliceReducer } from "./slice.js";
@@ -42,7 +42,7 @@ const eventListeningMiddleware =
     (next) =>
     (action) => {
         // First dispatch the action, so we have already updated store in the event listeners.
-        const result = next(action);
+        const result = next(action) as Action;
         eventListener(result, (selector) => selector(store.getState()));
         return result;
     };
@@ -122,7 +122,7 @@ export function createAttributeFilterHandlerStore(
             store.dispatch(action);
         },
         select: (selector) => {
-            return selector(store.getState());
+            return selector(store.getState() as AttributeFilterState);
         },
     };
 }

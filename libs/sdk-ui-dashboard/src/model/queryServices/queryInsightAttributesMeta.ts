@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { DashboardContext } from "../types/commonTypes.js";
 import { SagaIterator } from "redux-saga";
 import {
@@ -15,7 +15,7 @@ import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
 } from "@gooddata/sdk-model";
-import { createCachedQueryService } from "../store/_infra/queryService.js";
+import { createCachedQueryService, QueryCacheEntryResult } from "../store/_infra/queryService.js";
 import { InsightAttributesMeta, QueryInsightAttributesMeta } from "../queries/index.js";
 import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
 import { call, select } from "redux-saga/effects";
@@ -27,6 +27,7 @@ import {
 import { invariant } from "ts-invariant";
 import { ObjRefMap } from "../../_staging/metadata/objRefMap.js";
 import uniqBy from "lodash/uniqBy.js";
+import { DashboardState } from "../store/index.js";
 
 export const QueryInsightAttributesMetaService = createCachedQueryService(
     "GDC.DASH/QUERY.INSIGHT.ATTRIBUTE.META",
@@ -42,6 +43,14 @@ export const QueryInsightAttributesMetaService = createCachedQueryService(
 );
 
 /**
+ * Type of the selector that will return attribute metadata for an insight.
+ * @internal
+ */
+export type selectInsightAttributesMetaType = (
+    query: QueryInsightAttributesMeta,
+) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<InsightAttributesMeta> | undefined;
+
+/**
  * Selector that will return attribute metadata for an insight. The input to the selector is the dashboard query that is used
  * to obtain and cache the data.
  *
@@ -52,7 +61,8 @@ export const QueryInsightAttributesMetaService = createCachedQueryService(
  * @remarks see {@link QueryInsightAttributesMeta}
  * @internal
  */
-export const selectInsightAttributesMeta = QueryInsightAttributesMetaService.cache.selectQueryResult;
+export const selectInsightAttributesMeta: selectInsightAttributesMetaType =
+    QueryInsightAttributesMetaService.cache.selectQueryResult;
 
 //
 // Query implementation
