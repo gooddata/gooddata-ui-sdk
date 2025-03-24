@@ -975,10 +975,6 @@
       "allowedCategories": [ "examples", "tools" ]
     },
     {
-      "name": "prop-types",
-      "allowedCategories": [ "examples" ]
-    },
-    {
       "name": "qs",
       "allowedCategories": [ "production" ]
     },

@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSlice, Reducer } from "@reduxjs/toolkit";
 import { drillReducers } from "./drillReducers.js";
-import { drillInitialState } from "./drillState.js";
+import { drillInitialState, DrillState } from "./drillState.js";
 
 const drillSlice = createSlice({
     name: "drill",
@@ -9,9 +9,9 @@ const drillSlice = createSlice({
     reducers: drillReducers,
 });
 
-export const drillSliceReducer = drillSlice.reducer;
+export const drillSliceReducer: Reducer<DrillState> = drillSlice.reducer;
 
 /**
  * @internal
  */
-export const drillActions = drillSlice.actions;
+export const drillActions = { ...drillSlice.actions };

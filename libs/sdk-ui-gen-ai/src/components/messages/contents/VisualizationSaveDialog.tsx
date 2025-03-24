@@ -76,7 +76,7 @@ const mapDispatchToProps = {
     saveVisualizationAction,
 };
 
-export const VisualizationSaveDialog = connect(
+export const VisualizationSaveDialog: any = connect(
     null,
     mapDispatchToProps,
 )(injectIntl(VisualizationSaveDialogCore));

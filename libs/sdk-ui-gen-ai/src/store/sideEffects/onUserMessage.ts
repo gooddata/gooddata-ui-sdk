@@ -9,7 +9,7 @@ import {
     evaluateMessageCompleteAction,
 } from "../messages/messagesSlice.js";
 import { extractError } from "./utils.js";
-import { PayloadAction } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { PayloadAction } from "@reduxjs/toolkit";
 import {
     AssistantMessage,
     isTextContents,

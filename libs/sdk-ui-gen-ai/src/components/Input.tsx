@@ -15,13 +15,17 @@ import { collectReferences, useCompletion } from "./completion/index.js";
 import { useHighlight } from "./highlight/index.js";
 import { SendIcon } from "./SendIcon.js";
 
-type InputStateProps = {
-    isBusy: boolean;
-    isEvaluating: boolean;
+export type InputOwnProps = {
     autofocus?: boolean;
     catalogItems?: CatalogItem[];
     canManage?: boolean;
     canAnalyze?: boolean;
+    targetRef?: React.LegacyRef<HTMLDivElement>;
+};
+
+type InputStateProps = {
+    isBusy: boolean;
+    isEvaluating: boolean;
 };
 
 type InputDispatchProps = {
@@ -48,11 +52,7 @@ const isMac =
     (navigator.platform.toUpperCase().indexOf("MAC") >= 0 || navigator.userAgent.includes("Macintosh"));
 
 const InputComponent: React.FC<
-    InputStateProps &
-        InputDispatchProps &
-        WrappedComponentProps & {
-            targetRef?: React.LegacyRef<HTMLDivElement>;
-        }
+    InputOwnProps & InputStateProps & InputDispatchProps & WrappedComponentProps
 > = ({
     isBusy,
     isEvaluating,
@@ -197,4 +197,7 @@ const mapDispatchToProps = {
     newMessage: newMessageAction,
 };
 
-export const Input = connect(mapStateToProps, mapDispatchToProps)(injectIntl(InputComponent));
+export const Input: React.FC<InputOwnProps> = connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(injectIntl(InputComponent));

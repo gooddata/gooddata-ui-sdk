@@ -23,12 +23,15 @@ import { useThreadLoading } from "./hooks/useThreadLoading.js";
 import { useEndpointCheck } from "./hooks/useEndpointCheck.js";
 import { GlobalError } from "./GlobalError.js";
 
-type GenAIChatWrapperProps = {
+export type GenAIChatOwnProps = {
+    autofocus?: boolean;
+    initializing?: boolean;
+};
+
+type GenAIChatWrapperProps = GenAIChatOwnProps & {
     loadThread: typeof loadThreadAction;
     cancelLoading: typeof cancelAsyncAction;
     clearThread: typeof clearThreadAction;
-    autofocus?: boolean;
-    initializing?: boolean;
     isClearing?: boolean;
 };
 
@@ -155,4 +158,7 @@ const mapDispatchToProps = {
     clearThread: clearThreadAction,
 };
 
-export const GenAIChatWrapper = connect(mapStateToProps, mapDispatchToProps)(GenAIChatWrapperComponent);
+export const GenAIChatWrapper: React.FC<GenAIChatOwnProps> = connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(GenAIChatWrapperComponent);

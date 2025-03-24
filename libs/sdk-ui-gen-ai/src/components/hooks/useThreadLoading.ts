@@ -14,7 +14,7 @@ export function useThreadLoading({ cancelLoading, loadThread, initializing }: Th
 
     useEffect(() => {
         if (initializing || loaded) {
-            return;
+            return () => {};
         }
 
         loadThread();

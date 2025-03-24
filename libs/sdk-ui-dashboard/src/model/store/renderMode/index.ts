@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
-import { renderModeInitialState } from "./renderModeState.js";
+import { createSlice, Reducer } from "@reduxjs/toolkit";
+import { renderModeInitialState, RenderModeState } from "./renderModeState.js";
 import { renderModeReducers } from "./renderModeReducers.js";
 
 const renderModeSlice = createSlice({
@@ -9,11 +9,12 @@ const renderModeSlice = createSlice({
     reducers: renderModeReducers,
 });
 
-export const renderModeSliceReducer = renderModeSlice.reducer;
+export const renderModeSliceReducer: Reducer<RenderModeState> = renderModeSlice.reducer;
 
+// Spread "fixes" TS2742 error
 /**
  * Actions to control renderMode state of the dashboard.
  *
  * @internal
  */
-export const renderModeActions = renderModeSlice.actions;
+export const renderModeActions = { ...renderModeSlice.actions };

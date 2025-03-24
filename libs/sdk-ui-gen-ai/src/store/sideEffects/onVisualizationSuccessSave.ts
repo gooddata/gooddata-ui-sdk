@@ -2,7 +2,7 @@
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { GenAIChatInteractionUserVisualisation } from "@gooddata/sdk-model";
-import { PayloadAction } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { PayloadAction } from "@reduxjs/toolkit";
 import { call, getContext, select } from "redux-saga/effects";
 
 import { messagesSelector } from "../messages/messagesSelectors.js";

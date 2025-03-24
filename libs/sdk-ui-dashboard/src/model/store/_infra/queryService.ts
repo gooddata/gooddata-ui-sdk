@@ -1,8 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
 import { DashboardContext } from "../../types/commonTypes.js";
 import { SagaIterator } from "redux-saga";
-import { createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import {
+    createEntityAdapter,
+    createSelector,
+    createSlice,
     EntityId,
     EntityState,
     IdSelector,
@@ -62,7 +64,7 @@ export type QueryCacheEntry<TQuery extends IDashboardQuery, TResult> = QueryCach
  * @internal
  */
 export type QueryCacheReducer<TQuery extends IDashboardQuery, TResult, TPayload> = CaseReducer<
-    EntityState<QueryCacheEntry<TQuery, TResult>>,
+    EntityState<QueryCacheEntry<TQuery, TResult>, EntityId>,
     PayloadAction<TPayload>
 >;
 
@@ -112,7 +114,7 @@ export type QueryCache<TQuery extends IDashboardQuery, TResult> = {
     /**
      * Cache's slice reducer. This needs to be integrated into the dashboard store.
      */
-    reducer: Reducer<EntityState<QueryCacheEntry<TQuery, TResult>>>;
+    reducer: Reducer<EntityState<QueryCacheEntry<TQuery, TResult>, EntityId>>;
 
     /**
      * Cache's action creators.
@@ -168,7 +170,7 @@ export function createSliceNameForQueryCache(queryName: string): string {
 
 function createQueryCacheSlice<TQuery extends IDashboardQuery, TResult>(
     queryName: string,
-    selectId: IdSelector<TQuery>,
+    selectId: IdSelector<TQuery, EntityId>,
 ): QueryCache<TQuery, TResult> {
     const sliceName = createSliceNameForQueryCache(queryName);
     const cacheEntryId = (entry: QueryCacheEntry<TQuery, TResult>) => selectId(entry.query);

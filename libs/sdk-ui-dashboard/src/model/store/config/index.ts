@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSlice, Reducer } from "@reduxjs/toolkit";
 import { configReducers } from "./configReducers.js";
-import { configInitialState } from "./configState.js";
+import { configInitialState, ConfigState } from "./configState.js";
 
 const configSlice = createSlice({
     name: "config",
@@ -9,5 +9,7 @@ const configSlice = createSlice({
     reducers: configReducers,
 });
 
-export const configSliceReducer = configSlice.reducer;
-export const configActions = configSlice.actions;
+export const configSliceReducer: Reducer<ConfigState> = configSlice.reducer;
+
+// Spread "fixes" TS2742 error
+export const configActions = { ...configSlice.actions };

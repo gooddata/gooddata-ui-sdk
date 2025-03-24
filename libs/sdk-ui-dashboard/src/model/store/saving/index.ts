@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
-import { savingInitialState } from "./savingState.js";
+import { createSlice, Reducer } from "@reduxjs/toolkit";
+import { savingInitialState, SavingState } from "./savingState.js";
 import { savingReducers } from "./savingReducers.js";
 
 const savingSlice = createSlice({
@@ -9,5 +9,7 @@ const savingSlice = createSlice({
     reducers: savingReducers,
 });
 
-export const savingSliceReducer = savingSlice.reducer;
-export const savingActions = savingSlice.actions;
+export const savingSliceReducer: Reducer<SavingState> = savingSlice.reducer;
+
+// Spread "fixes" TS2742 error
+export const savingActions = { ...savingSlice.actions };

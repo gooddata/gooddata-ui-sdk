@@ -60,7 +60,7 @@
         "@gooddata/sdk-ui": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/util": "workspace:*",
-        "@reduxjs/toolkit": "^1.9.3",
+        "@reduxjs/toolkit": "2.6.1",
         "classnames": "^2.3.1",
         "date-fns": "^2.22.1",
         "default-import": "1.1.5",

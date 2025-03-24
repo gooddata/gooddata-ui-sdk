@@ -586,7 +586,7 @@ const mapStateToProps = (state: RootState): Pick<VisualizationContentsProps, "co
     colorPalette: colorPaletteSelector(state),
 });
 
-export const VisualizationContentsComponent = connect(
+export const VisualizationContentsComponent: any = connect(
     mapStateToProps,
     mapDispatchToProps,
 )(VisualizationContentsComponentCore);

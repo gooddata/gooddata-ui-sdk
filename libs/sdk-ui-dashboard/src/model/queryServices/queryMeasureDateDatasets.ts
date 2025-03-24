@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import {
     newBucket,
@@ -8,7 +8,7 @@ import {
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
-import { createCachedQueryService } from "../store/_infra/queryService.js";
+import { createCachedQueryService, QueryCacheEntryResult } from "../store/_infra/queryService.js";
 import { DashboardContext } from "../types/commonTypes.js";
 import { MeasureDateDatasets, QueryMeasureDateDatasets } from "../queries/kpis.js";
 import { call, SagaReturnType, select } from "redux-saga/effects";
@@ -20,12 +20,21 @@ import {
 } from "../../_staging/catalog/dateDatasetOrdering.js";
 import { selectAllCatalogMeasuresMap } from "../store/catalog/catalogSelectors.js";
 import { invalidQueryArguments } from "../events/general.js";
+import { DashboardState } from "../store/index.js";
 
 export const QueryDateDatasetsForMeasureService = createCachedQueryService(
     "GDC.DASH/QUERY.MEASURE.DATE.DATASETS",
     queryService,
     (query: QueryMeasureDateDatasets) => serializeObjRef(query.payload.measureRef),
 );
+
+/**
+ * Type of the selector that will return date datasets for a measure.
+ * @internal
+ */
+export type selectDateDatasetsForMeasureType = (
+    query: QueryMeasureDateDatasets,
+) => (state: DashboardState, ...params: any[]) => QueryCacheEntryResult<MeasureDateDatasets> | undefined;
 
 /**
  * Selector that will return date datasets for a measure. The input to the selector is the dashboard query that is used
@@ -38,7 +47,8 @@ export const QueryDateDatasetsForMeasureService = createCachedQueryService(
  * @remarks see {@link QueryMeasureDateDatasets}
  * @internal
  */
-export const selectDateDatasetsForMeasure = QueryDateDatasetsForMeasureService.cache.selectQueryResult;
+export const selectDateDatasetsForMeasure: selectDateDatasetsForMeasureType =
+    QueryDateDatasetsForMeasureService.cache.selectQueryResult;
 
 //
 // Query implementation

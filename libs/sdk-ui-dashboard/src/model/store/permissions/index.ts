@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSlice, Reducer } from "@reduxjs/toolkit";
 import { permissionsReducers } from "./permissionsReducers.js";
-import { permissionsInitialState } from "./permissionsState.js";
+import { permissionsInitialState, PermissionsState } from "./permissionsState.js";
 
 const permissionsSlice = createSlice({
     name: "permissions",
@@ -9,5 +9,7 @@ const permissionsSlice = createSlice({
     reducers: permissionsReducers,
 });
 
-export const permissionsSliceReducer = permissionsSlice.reducer;
-export const permissionsActions = permissionsSlice.actions;
+export const permissionsSliceReducer: Reducer<PermissionsState> = permissionsSlice.reducer;
+
+// Spread "fixes" TS2742 error
+export const permissionsActions = { ...permissionsSlice.actions };

@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSlice, Reducer } from "@reduxjs/toolkit";
 import { metaReducers } from "./metaReducers.js";
-import { metaInitialState } from "./metaState.js";
+import { metaInitialState, DashboardMetaState } from "./metaState.js";
 
 const metaSlice = createSlice({
     name: "meta",
@@ -9,11 +9,10 @@ const metaSlice = createSlice({
     reducers: metaReducers,
 });
 
-export const metaSliceReducer = metaSlice.reducer;
+export const metaSliceReducer: Reducer<DashboardMetaState> = metaSlice.reducer;
+// Spread "fixes" TS2742 error
 
 /**
- * Actions to control meta state of the dashboard.
- *
  * @internal
  */
-export const metaActions = metaSlice.actions;
+export const metaActions = { ...metaSlice.actions };

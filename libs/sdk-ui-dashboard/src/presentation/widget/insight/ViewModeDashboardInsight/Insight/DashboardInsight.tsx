@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { CSSProperties, useRef, useCallback, useEffect, useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSelector } from "@reduxjs/toolkit";
 import stringify from "json-stable-stringify";
 import cx from "classnames";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";

@@ -1,6 +1,6 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
-import { AnyAction, Dispatch } from "@reduxjs/toolkit";
+import { Action, Dispatch } from "@reduxjs/toolkit";
 import { createDispatchHook, createSelectorHook, Provider, TypedUseSelectorHook } from "react-redux";
 import { DashboardState } from "../store/index.js";
 import { DashboardEventsProvider } from "./DashboardEventsContext.js";
@@ -15,7 +15,7 @@ export const ReactDashboardContext: any = React.createContext(null);
 /**
  * @alpha
  */
-export const useDashboardDispatch: () => Dispatch<AnyAction> = createDispatchHook(ReactDashboardContext);
+export const useDashboardDispatch: () => Dispatch<Action> = createDispatchHook(ReactDashboardContext);
 
 /**
  * Hook for retrieving data from the dashboard state.
