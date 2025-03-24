@@ -106,7 +106,7 @@ const mapDispatchToProps = {
     setUserFeedback,
 };
 
-export const AssistantMessageComponent = connect(
+export const AssistantMessageComponent: any = connect(
     null,
     mapDispatchToProps,
 )(injectIntl(AssistantMessageComponentCore));

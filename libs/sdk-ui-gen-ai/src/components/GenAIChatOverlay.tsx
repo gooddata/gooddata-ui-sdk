@@ -103,7 +103,7 @@ const mapDispatchToProps: GenAIChatOverlayDispatchProps = {
     setFullscreen: setFullscreenAction,
 };
 
-export const GenAIChatOverlay = connect(
+export const GenAIChatOverlay: React.FC<GenAIChatOverlayOwnProps> = connect(
     mapStateToProps,
     mapDispatchToProps,
 )(injectIntl(GenAIChatOverlayComponent));

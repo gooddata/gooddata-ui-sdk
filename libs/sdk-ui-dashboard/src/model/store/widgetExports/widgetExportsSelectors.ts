@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSelector } from "@reduxjs/toolkit";
 import { DashboardSelector } from "../types.js";
 import {
     selectCanExecuteRaw,

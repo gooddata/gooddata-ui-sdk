@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
-import { loadingInitialState } from "./loadingState.js";
+import { createSlice, Reducer } from "@reduxjs/toolkit";
+import { loadingInitialState, LoadingState } from "./loadingState.js";
 import { loadingReducers } from "./loadingReducers.js";
 
 const loadingSlice = createSlice({
@@ -9,5 +9,7 @@ const loadingSlice = createSlice({
     reducers: loadingReducers,
 });
 
-export const loadingSliceReducer = loadingSlice.reducer;
-export const loadingActions = loadingSlice.actions;
+export const loadingSliceReducer: Reducer<LoadingState> = loadingSlice.reducer;
+
+// Spread "fixes" TS2742 error
+export const loadingActions = { ...loadingSlice.actions };

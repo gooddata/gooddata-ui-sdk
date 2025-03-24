@@ -10,7 +10,7 @@ import {
     ObjRef,
     uriRef,
 } from "@gooddata/sdk-model";
-import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSelector } from "@reduxjs/toolkit";
 import { selectCatalogAttributes, useDashboardSelector } from "../../../model/index.js";
 import { AttributeFilterDraggingComponent } from "../../componentDefinition/index.js";
 

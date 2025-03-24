@@ -1,8 +1,11 @@
 // (C) 2023-2025 GoodData Corporation
 
-import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSlice, Reducer } from "@reduxjs/toolkit";
 import { inaccessibleDashboardsEntityAdapter } from "./inaccessibleDashboardsEntityAdapter.js";
 
+export type InaccessibleDashboardsState = ReturnType<
+    typeof inaccessibleDashboardsEntityAdapter.getInitialState
+>;
 const inaccessibleDashboardsSlice = createSlice({
     name: "inaccessibleDashboards",
     initialState: inaccessibleDashboardsEntityAdapter.getInitialState(),
@@ -11,5 +14,8 @@ const inaccessibleDashboardsSlice = createSlice({
     },
 });
 
-export const inaccessibleDashboardsSliceReducer = inaccessibleDashboardsSlice.reducer;
-export const inaccessibleDashboardsActions = inaccessibleDashboardsSlice.actions;
+export const inaccessibleDashboardsSliceReducer: Reducer<InaccessibleDashboardsState> =
+    inaccessibleDashboardsSlice.reducer;
+
+// Spread "fixes" TS2742 error
+export const inaccessibleDashboardsActions = { ...inaccessibleDashboardsSlice.actions };

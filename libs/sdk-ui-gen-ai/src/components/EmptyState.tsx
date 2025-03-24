@@ -74,4 +74,4 @@ const mapDispatchToProps: EmptyStateDispatchProps = {
     setMessagesAction,
 };
 
-export const EmptyState = connect(null, mapDispatchToProps)(injectIntl(EmptyStateComponent));
+export const EmptyState: React.FC = connect(null, mapDispatchToProps)(injectIntl(EmptyStateComponent));

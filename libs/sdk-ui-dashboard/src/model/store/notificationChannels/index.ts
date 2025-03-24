@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSlice, Reducer } from "@reduxjs/toolkit";
 import { notificationChannelsReducers } from "./notificationChannelsReducers.js";
-import { notificationChannelsInitialState } from "./notificationChannelsState.js";
+import { notificationChannelsInitialState, NotificationChannelsState } from "./notificationChannelsState.js";
 
 const notificationChannelsSlice = createSlice({
     name: "notificationChannels",
@@ -9,5 +9,8 @@ const notificationChannelsSlice = createSlice({
     reducers: notificationChannelsReducers,
 });
 
-export const notificationChannelsSliceReducer = notificationChannelsSlice.reducer;
-export const notificationChannelsActions = notificationChannelsSlice.actions;
+export const notificationChannelsSliceReducer: Reducer<NotificationChannelsState> =
+    notificationChannelsSlice.reducer;
+
+// Spread "fixes" TS2742 error
+export const notificationChannelsActions = { ...notificationChannelsSlice.actions };

@@ -8,7 +8,7 @@ import {
     WeekStart,
     type DashboardFiltersApplyMode,
 } from "@gooddata/sdk-model";
-import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSelector } from "@reduxjs/toolkit";
 import { DashboardSelector, DashboardState } from "../types.js";
 import { invariant } from "ts-invariant";
 import {

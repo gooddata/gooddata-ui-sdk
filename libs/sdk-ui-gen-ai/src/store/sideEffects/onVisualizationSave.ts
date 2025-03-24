@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import { PayloadAction } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { PayloadAction } from "@reduxjs/toolkit";
 import { messagesSelector } from "../messages/messagesSelectors.js";
 import { call, getContext, put, select } from "redux-saga/effects";
 import { isVisualizationContents, Message } from "../../model.js";

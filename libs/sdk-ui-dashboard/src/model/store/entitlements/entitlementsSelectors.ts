@@ -1,5 +1,5 @@
 // (C) 2023-2025 GoodData Corporation
-import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSelector } from "@reduxjs/toolkit";
 import { IEntitlementDescriptor } from "@gooddata/sdk-model";
 import { DashboardSelector, DashboardState } from "../types.js";
 import { invariant } from "ts-invariant";

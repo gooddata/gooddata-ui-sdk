@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSelector } from "@reduxjs/toolkit";
 import { DashboardSelector, DashboardState } from "../types.js";
 import { invariant } from "ts-invariant";
 import { IUser, ObjRef } from "@gooddata/sdk-model";

@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { createSlice, Reducer } from "@reduxjs/toolkit";
 import { usersReducers } from "./usersReducers.js";
-import { usersInitialState } from "./usersState.js";
+import { usersInitialState, UsersState } from "./usersState.js";
 
 const usersSlice = createSlice({
     name: "users",
@@ -9,5 +9,7 @@ const usersSlice = createSlice({
     reducers: usersReducers,
 });
 
-export const usersSliceReducer = usersSlice.reducer;
-export const usersActions = usersSlice.actions;
+export const usersSliceReducer: Reducer<UsersState> = usersSlice.reducer;
+
+// Spread "fixes" TS2742 error
+export const usersActions = { ...usersSlice.actions };
