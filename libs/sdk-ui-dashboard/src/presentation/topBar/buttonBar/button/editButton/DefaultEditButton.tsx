@@ -11,6 +11,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
     selectCanEnterEditMode,
+    selectExecutionTimestamp,
 } from "../../../../../model/index.js";
 
 import { IEditButtonProps } from "./types.js";
@@ -22,28 +23,34 @@ const ALIGN_POINTS_TOOLTIP = [{ align: "bc tr" }];
  */
 export function useEditButtonProps(): IEditButtonProps {
     const minWidthForEditing = useMediaQuery(">=xl");
+    const intl = useIntl();
 
     const canEnterEdit = useDashboardSelector(selectCanEnterEditMode);
     const isDashboardLoading = useDashboardSelector(selectIsDashboardLoading);
     const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
     const isEditing = useDashboardSelector(selectIsInEditMode);
+    const isExecutionTimestampMode = useDashboardSelector(selectExecutionTimestamp);
 
     const dispatch = useDashboardDispatch();
     const onEditClick = useCallback(() => dispatch(switchToEditRenderMode()), [dispatch]);
 
+    const tooltipText = isExecutionTimestampMode
+        ? intl.formatMessage({ id: "controlButtons.edit.executionTimestampMode.tooltip" })
+        : intl.formatMessage({ id: "controlButtons.edit.tooltip" });
+
     return {
         isVisible: minWidthForEditing && !isEditing && canEnterEdit,
-        isEnabled: !isDashboardLoading && isCatalogLoaded,
+        isEnabled: !isDashboardLoading && isCatalogLoaded && !isExecutionTimestampMode,
         onEditClick,
+        tooltipText,
     };
 }
 
 /**
  * @internal
  */
-export function DefaultEditButton({ isVisible, isEnabled, onEditClick }: IEditButtonProps) {
+export function DefaultEditButton({ isVisible, isEnabled, onEditClick, tooltipText }: IEditButtonProps) {
     const intl = useIntl();
-    const tooltipText = intl.formatMessage({ id: "controlButtons.edit.tooltip" });
 
     if (!isVisible) {
         return null;
