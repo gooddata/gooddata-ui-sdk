@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { extract } from "@formatjs/cli-lib";
 import fastGlob from "fast-glob";
 import * as path from "path";
