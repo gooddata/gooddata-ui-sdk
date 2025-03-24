@@ -3404,6 +3404,11 @@
         "comment": "No data retrieved from the server",
         "limit": 0
     },
+    "richText.multiple_data": {
+        "value": "Multiple items",
+        "comment": "Error when multiple items are retrieved from server for attribute",
+        "limit": 0
+    },
     "richText.no_fetch": {
         "value": "Data could not be retrieved",
         "comment": "Data could not be retrieved from the server",

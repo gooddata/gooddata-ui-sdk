@@ -35,7 +35,8 @@
     .gd-rich-text-metric-empty {
         color: variables.$gd-color-text;
     }
-    .gd-rich-text-metric-error {
+    .gd-rich-text-metric-error,
+    .gd-rich-text-metric-multiple {
         color: variables.$gd-palette-error-base;
     }
 }
