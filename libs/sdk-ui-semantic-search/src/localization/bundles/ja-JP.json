@@ -9,5 +9,6 @@
     "semantic-search.previous-search": "過去の検索",
     "semantic-search.date.at": "の時刻",
     "gs.date.today": "今日",
-    "gs.date.yesterday": "昨日"
+    "gs.date.yesterday": "昨日",
+    "semantic-search.label": "ダッシュボードまたはビジュアライゼーションを検索"
 }

@@ -2,7 +2,7 @@
     "gd.gen-ai.invalid-question": "Invalid question. Try again.",
     "gd.gen-ai.global-error": "A bloke didn't see this stuff-up coming.",
     "gd.gen-ai.global-error.button-details": "Display error specifics",
-    "gd.gen-ai.global-error.button-clear": "Clear chat and give it another go",
+    "gd.gen-ai.global-error.button-clear": "Clear conversation and try again",
     "gd.gen-ai.input-placeholder": "Enquire here…",
     "gd.gen-ai.disclaimer": "AI mates can stuff up. Double-check before you bank on their responses.",
     "gd.gen-ai.header.reset-tooltip": "Reset",

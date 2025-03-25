@@ -132,7 +132,6 @@
     "delete": "刪除",
     "close": "關閉",
     "cancel": "取消",
-    "apply": "應用",
     "gs.date.today": "今日",
     "gs.date.tomorrow": "聽日",
     "gs.date.yesterday": "琴日",
@@ -677,5 +676,7 @@
     "options.menu.export.presentation.PDF": "幻燈片（PDF）",
     "options.menu.export.in.progress": "導出正在進行中。 請等待導出完成後，再進行下一次導出。",
     "dialogs.schedule.accessibility.label.email.title": "計劃名稱",
-    "widget.options.menu.export": "出口"
+    "widget.options.menu.export": "出口",
+    "options.menu.export.presentation.unsupported.oldWidget": "無法匯出。 請重新儲存儀錶板或聯繫您的管理員。",
+    "apply": "應用"
 }

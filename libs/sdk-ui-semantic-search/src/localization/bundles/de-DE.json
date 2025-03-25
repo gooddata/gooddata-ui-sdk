@@ -9,5 +9,6 @@
     "semantic-search.previous-search": "Vorherige Suche",
     "semantic-search.date.at": "um",
     "gs.date.today": "Heute",
-    "gs.date.yesterday": "Gestern"
+    "gs.date.yesterday": "Gestern",
+    "semantic-search.label": "Dashboards oder Visualisierung durchsuchen"
 }

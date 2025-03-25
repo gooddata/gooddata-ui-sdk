@@ -132,7 +132,6 @@
     "delete": "Excluir",
     "close": "Fechar",
     "cancel": "Cancelar",
-    "apply": "Aplicar",
     "gs.date.today": "Hoje",
     "gs.date.tomorrow": "Amanhã",
     "gs.date.yesterday": "Ontem",
@@ -677,5 +676,7 @@
     "options.menu.export.presentation.PDF": "Apresentação de Slides (PDF)",
     "options.menu.export.in.progress": "A exportação está em andamento. Aguarde até que seja concluído antes de exportar novamente.",
     "dialogs.schedule.accessibility.label.email.title": "Nome da programação",
-    "widget.options.menu.export": "Exportar"
+    "widget.options.menu.export": "Exportar",
+    "options.menu.export.presentation.unsupported.oldWidget": "Não foi possível exportar. Salve novamente o painel ou entre em contato com o administrador.",
+    "apply": "Aplicar"
 }

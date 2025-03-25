@@ -1,6 +1,6 @@
 {
     "gd.gen-ai.invalid-question": "Invalid question. Give it another go.",
-    "gd.gen-ai.global-error": "A bloke didn't see this stuff-up coming.",
+    "gd.gen-ai.global-error": "An unforeseen error has occurred.",
     "gd.gen-ai.global-error.button-details": "Display error specifics",
     "gd.gen-ai.global-error.button-clear": "Clear chat and give it another go",
     "gd.gen-ai.input-placeholder": "Enquire here…",

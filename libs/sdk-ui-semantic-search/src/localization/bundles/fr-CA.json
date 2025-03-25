@@ -9,5 +9,6 @@
     "semantic-search.previous-search": "Recherche précédente",
     "semantic-search.date.at": "à",
     "gs.date.today": "Aujourd'hui",
-    "gs.date.yesterday": "Hier"
+    "gs.date.yesterday": "Hier",
+    "semantic-search.label": "Rechercher des tableaux de bord ou des visualisations"
 }

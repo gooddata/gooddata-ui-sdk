@@ -9,5 +9,6 @@
     "semantic-search.previous-search": "上一搜索",
     "semantic-search.date.at": "在",
     "gs.date.today": "今天",
-    "gs.date.yesterday": "昨天"
+    "gs.date.yesterday": "昨天",
+    "semantic-search.label": "搜索仪表板或可视化"
 }

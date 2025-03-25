@@ -132,7 +132,6 @@
     "delete": "Eliminar",
     "close": "Cerrar",
     "cancel": "Cancelar",
-    "apply": "Aplicar",
     "gs.date.today": "Hoy",
     "gs.date.tomorrow": "Mañana",
     "gs.date.yesterday": "Ayer",
@@ -677,5 +676,7 @@
     "options.menu.export.presentation.PDF": "Diapositivas (PDF)",
     "options.menu.export.in.progress": "La exportación está en curso. Espere a que finalice antes de volver a exportar.",
     "dialogs.schedule.accessibility.label.email.title": "Nombre de la programación",
-    "widget.options.menu.export": "Exportar"
+    "widget.options.menu.export": "Exportar",
+    "options.menu.export.presentation.unsupported.oldWidget": "No se puede exportar. Vuelva a guardar el panel de control o comuníquese con su administrador.",
+    "apply": "Aplicar"
 }

@@ -9,5 +9,6 @@
     "semantic-search.previous-search": "Vorige zoekopdracht",
     "semantic-search.date.at": "bij",
     "gs.date.today": "Vandaag",
-    "gs.date.yesterday": "Gisteren"
+    "gs.date.yesterday": "Gisteren",
+    "semantic-search.label": "Zoek dashboards of visualisatie"
 }

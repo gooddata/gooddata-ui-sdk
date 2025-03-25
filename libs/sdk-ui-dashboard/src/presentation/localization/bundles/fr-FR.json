@@ -132,7 +132,6 @@
     "delete": "Supprimer",
     "close": "Fermer",
     "cancel": "Annuler",
-    "apply": "Appliquer",
     "gs.date.today": "Aujourd'hui",
     "gs.date.tomorrow": "Demain",
     "gs.date.yesterday": "Hier",
@@ -677,5 +676,7 @@
     "options.menu.export.presentation.PDF": "Diaporama (PDF)",
     "options.menu.export.in.progress": "L'exportation est en cours. Attendez qu'elle soit terminée avant de procéder à une nouvelle exportation.",
     "dialogs.schedule.accessibility.label.email.title": "Nom de l'horaire",
-    "widget.options.menu.export": "Exporter"
+    "widget.options.menu.export": "Exporter",
+    "options.menu.export.presentation.unsupported.oldWidget": "Impossible d'exporter. Veuillez réenregistrer le tableau de bord ou contacter votre administrateur.",
+    "apply": "Appliquer"
 }

@@ -132,7 +132,6 @@
     "delete": "削除",
     "close": "閉じる",
     "cancel": "キャンセル",
-    "apply": "適用",
     "gs.date.today": "今日",
     "gs.date.tomorrow": "明日",
     "gs.date.yesterday": "昨日",
@@ -677,5 +676,7 @@
     "options.menu.export.presentation.PDF": "スライド資料 (PDF)",
     "options.menu.export.in.progress": "エクスポート中です。終了するまで待ってから再度エクスポートしてください。",
     "dialogs.schedule.accessibility.label.email.title": "スケジュール名",
-    "widget.options.menu.export": "エクスポート"
+    "widget.options.menu.export": "エクスポート",
+    "options.menu.export.presentation.unsupported.oldWidget": "エクスポートできません。ダッシュボードを再保存するか、管理者に連絡してください。",
+    "apply": "適用"
 }

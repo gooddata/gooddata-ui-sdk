@@ -132,7 +132,6 @@
     "delete": "Elimina",
     "close": "Chiudere",
     "cancel": "Annulla",
-    "apply": "Applica",
     "gs.date.today": "Oggi",
     "gs.date.tomorrow": "Domani",
     "gs.date.yesterday": "Ieri",
@@ -677,5 +676,7 @@
     "options.menu.export.presentation.PDF": "Presentazione di diapositive (PDF)",
     "options.menu.export.in.progress": "L'esportazione è in corso. Attendere che sia terminata prima di esportare nuovamente.",
     "dialogs.schedule.accessibility.label.email.title": "Nome del programma",
-    "widget.options.menu.export": "Esporta"
+    "widget.options.menu.export": "Esporta",
+    "options.menu.export.presentation.unsupported.oldWidget": "Impossibile esportare. Salvare nuovamente la dashboard o contattare l'amministratore.",
+    "apply": "Applica"
 }
