@@ -62,6 +62,7 @@ import { IExistingDashboard } from '@gooddata/sdk-model';
 import { IExportDefinitionMetadataObject } from '@gooddata/sdk-model';
 import { IExportDefinitionMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
+import { IFilterContext } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
 import { IGenAIChatInteraction } from '@gooddata/sdk-model';
 import { IGenAIChatRouting } from '@gooddata/sdk-model';
@@ -1413,6 +1414,7 @@ export interface IWorkspaceDashboardsService {
     getDashboardsQuery(): IDashboardsQuery;
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
+    getFilterContextByExportId(exportId: string, type: "visual" | "slides" | undefined): Promise<IFilterContext | null>;
     getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]>;
     getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[], attributeFilterConfigs: IDashboardAttributeFilterConfig[]): Promise<IFilter[]>;
     getResolvedFiltersForWidgetWithMultipleDateFilters(widget: IWidget, commonDateFilters: IDateFilter[], otherFilters: IFilter[], attributeFilterConfigs: IDashboardAttributeFilterConfig[]): Promise<IFilter[]>;

@@ -35,6 +35,7 @@ import {
     IDashboardFilterView,
     IDashboardAttributeFilterConfig,
     IExecutionDefinition,
+    IFilterContext,
 } from "@gooddata/sdk-model";
 
 /**
@@ -67,6 +68,13 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     ): Promise<IDashboardWithReferences> {
         return this.decorated.getDashboardWithReferences(ref, filterContextRef, options, types);
     }
+
+    public getFilterContextByExportId = async (
+        exportId: string,
+        type: "visual" | "slides" | undefined,
+    ): Promise<IFilterContext | null> => {
+        return this.decorated.getFilterContextByExportId(exportId, type);
+    };
 
     getDashboardReferencedObjects(
         dashboard: IDashboard,

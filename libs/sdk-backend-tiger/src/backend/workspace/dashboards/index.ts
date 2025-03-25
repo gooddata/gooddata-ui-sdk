@@ -210,7 +210,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
     };
 
-    private getFilterContextFromExportId = async (
+    public getFilterContextByExportId = async (
         exportId: string,
         type: "visual" | "slides" | undefined,
     ): Promise<IFilterContext | null> => {
@@ -1181,7 +1181,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             : undefined;
 
         const filterContextByExportId = exportId
-            ? await this.getFilterContextFromExportId(exportId, type)
+            ? await this.getFilterContextByExportId(exportId, type)
             : undefined;
 
         return (

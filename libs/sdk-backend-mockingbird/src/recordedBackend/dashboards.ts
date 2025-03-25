@@ -47,6 +47,7 @@ import {
     IDateFilter,
     IDashboardFilterView,
     IExecutionDefinition,
+    IFilterContext,
 } from "@gooddata/sdk-model";
 import cloneDeep from "lodash/cloneDeep.js";
 import isEqual from "lodash/isEqual.js";
@@ -192,6 +193,13 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
                 plugins: [],
             },
         });
+    };
+
+    public getFilterContextByExportId = async (
+        _exportId: string,
+        _type: "visual" | "slides" | undefined,
+    ): Promise<IFilterContext | null> => {
+        return null;
     };
 
     public getDashboardReferencedObjects = (

@@ -10,6 +10,7 @@ import { singleWidgetTransformer } from "./singleWidgetTransformer.js";
  * Transforms layout to export format
  *
  * @param layout - layout to transform
+ * @param focusObject - focus object
  */
 export function layoutTransformer<TWidget>(
     layout: IDashboardLayout<TWidget>,

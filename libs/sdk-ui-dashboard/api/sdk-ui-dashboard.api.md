@@ -2637,7 +2637,7 @@ export type DashboardLayoutDraggableListItem = BaseDraggableLayoutItem & {
 export type DashboardLayoutDraggingComponent = ComponentType<IDashboardLayoutDraggingComponentProps>;
 
 // @public (undocumented)
-export type DashboardLayoutExportTransformFn = <TWidget>(layout: IDashboardLayout<TWidget>) => IDashboardLayout<TWidget> | undefined;
+export type DashboardLayoutExportTransformFn = <TWidget>(layout: IDashboardLayout<TWidget>, focusObject?: DashboardFocusObject) => IDashboardLayout<TWidget> | undefined;
 
 // @beta
 export interface DashboardLayoutSectionAdded extends IDashboardEvent {
