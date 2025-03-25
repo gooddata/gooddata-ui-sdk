@@ -15,7 +15,13 @@ import { newMessageAction, visualizationErrorAction } from "../../../store/index
 import { useConfig } from "../../ConfigContext.js";
 import { VisualizationSaveDialog } from "./VisualizationSaveDialog.js";
 import { FormattedMessage } from "react-intl";
-import { GoodDataSdkError, OnError, OnLoadingChanged, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import {
+    GoodDataSdkError,
+    isNoDataSdkError,
+    OnError,
+    OnLoadingChanged,
+    useWorkspaceStrict,
+} from "@gooddata/sdk-ui";
 
 const VIS_HEIGHT = 250;
 
@@ -66,7 +72,10 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
     };
 
     const handleSdkError = (error: GoodDataSdkError) => {
-        setHasVisError(true);
+        // Ignore NO_DATA error, we still want an option to save the visualization
+        if (!isNoDataSdkError(error)) {
+            setHasVisError(true);
+        }
         dispatch(
             visualizationErrorAction({
                 errorType: error.seType,
