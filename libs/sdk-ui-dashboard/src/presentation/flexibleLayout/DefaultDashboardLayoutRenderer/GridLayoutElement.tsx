@@ -73,8 +73,6 @@ export const GridLayoutElement = forwardRef<HTMLDivElement, IGridLayoutElementPr
             `gd-grid-layout__item--span-${validWidth}`, // CSS Grid columns size class name
             className,
         );
-
-        const sanitizedExportData = type === "section" ? { ...exportData } : {};
         const sanitizedStyle = {
             ...style,
             ...exportStyles,
@@ -86,12 +84,18 @@ export const GridLayoutElement = forwardRef<HTMLDivElement, IGridLayoutElementPr
                 style={sanitizedStyle}
                 onMouseLeave={onMouseLeave}
                 ref={ref}
-                {...sanitizedExportData}
+                {...exportData}
             >
                 {children}
             </section>
         ) : (
-            <div className={classNames} style={sanitizedStyle} onMouseLeave={onMouseLeave} ref={ref}>
+            <div
+                className={classNames}
+                style={sanitizedStyle}
+                onMouseLeave={onMouseLeave}
+                ref={ref}
+                {...exportData}
+            >
                 {children}
             </div>
         );
