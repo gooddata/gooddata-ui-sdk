@@ -102,6 +102,11 @@ export function cellClassFactory(
         const isRowAndColumnTotal = isRowTotal && isColumnTotal;
         const isRowSubtotalColumnTotal = isRowSubtotal && isColumnTotal;
 
+        const rowSubtotalValue =
+            isRowSubtotal && !hiddenCell && !isEmpty(cellClassParams.value)
+                ? cellClassParams.value?.toLowerCase?.()
+                : null;
+
         return cx(
             classList,
             measureIndex !== undefined ? `gd-column-measure-${measureIndex}` : null,
@@ -110,6 +115,7 @@ export function cellClassFactory(
             isRowTotal ? "gd-row-total" : null,
             isColumnTotal ? "gd-column-total" : null,
             isColumnSubtotal ? "gd-column-subtotal" : null,
+            rowSubtotalValue ? `gd-table-row-subtotal-${rowSubtotalValue}` : null,
             subtotalStyle ? `gd-table-row-subtotal gd-table-row-subtotal-${subtotalStyle}` : null,
             hiddenCell ? "gd-cell-hide s-gd-cell-hide" : null,
             rowSeparator ? "gd-table-row-separator s-gd-table-row-separator" : null,
