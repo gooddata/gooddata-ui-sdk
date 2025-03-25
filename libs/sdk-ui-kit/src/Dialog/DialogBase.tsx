@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { PureComponent } from "react";
 import cx from "classnames";
 import { Button } from "../Button/index.js";
@@ -63,6 +63,7 @@ export class DialogBase<P extends IDialogBaseProps> extends PureComponent<P> {
                     className="gd-button-link gd-button-icon-only gd-icon-cross s-dialog-close-button"
                     value=""
                     onClick={this.props.onClose || this.props.onCancel}
+                    accessibilityConfig={this.props.accessibilityConfig?.closeButton}
                 />
             </div>
         );

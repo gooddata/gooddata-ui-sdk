@@ -1,9 +1,9 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import React from "react";
 import { ArrowOffsets } from "../Bubble/index.js";
 import { IAlignPoint } from "../typings/positioning.js";
-
+import { IButtonAccessibilityConfig } from "../Button/typings.js";
 /**
  * @internal
  */
@@ -11,6 +11,9 @@ export interface IDialogBaseProps {
     children?: React.ReactNode;
     className?: string;
     displayCloseButton?: boolean;
+    accessibilityConfig?: {
+        closeButton?: IButtonAccessibilityConfig;
+    };
     submitOnEnterKey?: boolean;
     onCancel?: (data?: any) => void;
     onClose?: (data?: any) => void;
@@ -44,6 +47,11 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     footerLeftRenderer?: () => JSX.Element;
     dialogHeaderClassName?: string;
     titleRightIconRenderer?: () => JSX.Element;
+    /**
+     * If true, the dialog will autofocus on the first focusable element when it is opened.
+     * Default is true.
+     */
+    autofocusOnOpen?: boolean;
 }
 
 /**

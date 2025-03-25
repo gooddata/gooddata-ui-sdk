@@ -68,10 +68,12 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
               popupId: dropdownId,
               ariaLabel,
               ariaLabelledBy,
+              role: "combobox",
           }
         : {
               ariaLabel,
               ariaLabelledBy,
+              role: "combobox",
           };
 
     return (

@@ -15,7 +15,6 @@ export class Button extends React.Component<IButtonProps> {
         onClick: noop,
         tabIndex: 0,
         tagName: "button",
-        title: "",
         type: "button",
         iconLeft: null as string,
         iconRight: null as string,
@@ -36,7 +35,7 @@ export class Button extends React.Component<IButtonProps> {
             accessibilityConfig,
             buttonRef,
         } = this.props;
-        const { isExpanded, popupId, ariaLabel, ariaLabelledBy } = accessibilityConfig ?? {};
+        const { isExpanded, popupId, ariaLabel, ariaLabelledBy, role = "button" } = accessibilityConfig ?? {};
         const TagName = tagName as any;
         const effectiveValue = this.getEffectiveValue();
 
@@ -55,7 +54,7 @@ export class Button extends React.Component<IButtonProps> {
                         buttonRef.current = ref;
                     }
                 }}
-                title={title || ariaLabel}
+                title={title}
                 className={this.getClassnames()}
                 type={type}
                 onClick={this._onClick}
@@ -64,7 +63,7 @@ export class Button extends React.Component<IButtonProps> {
                 aria-label={ariaLabel}
                 aria-labelledby={ariaLabelledBy}
                 {...ariaDropdownProps}
-                role="button"
+                role={role}
             >
                 {this.renderIcon(iconLeft)}
                 {effectiveValue ? <span className="gd-button-text">{effectiveValue}</span> : null}
@@ -108,6 +107,8 @@ export class Button extends React.Component<IButtonProps> {
             return null;
         }
 
-        return <span className={cx("gd-button-icon", icon)} data-testid="gd-button-icon" />;
+        return (
+            <span className={cx("gd-button-icon", icon)} data-testid="gd-button-icon" aria-hidden="true" />
+        );
     }
 }

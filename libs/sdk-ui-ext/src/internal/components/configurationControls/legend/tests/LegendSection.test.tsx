@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import LegendSection, { ILegendSection } from "../LegendSection.js";
@@ -42,7 +42,7 @@ describe("LegendSection render", () => {
 
         expect(screen.getByText("Position")).toBeInTheDocument();
         expect(screen.getByRole("checkbox")).toBeDisabled();
-        expect(screen.getByRole("button")).toHaveClass("disabled");
+        expect(screen.getByRole("combobox")).toHaveClass("disabled");
     });
 
     it(
@@ -60,7 +60,7 @@ describe("LegendSection render", () => {
 
             expect(screen.getByText("Position")).toBeInTheDocument();
             expect(screen.getByRole("checkbox")).toBeEnabled();
-            expect(screen.getByRole("button")).toHaveClass("disabled");
+            expect(screen.getByRole("combobox")).toHaveClass("disabled");
         },
     );
 
@@ -79,7 +79,7 @@ describe("LegendSection render", () => {
 
             expect(screen.getByText("Position")).toBeInTheDocument();
             expect(screen.getByRole("checkbox")).toBeEnabled();
-            expect(screen.getByRole("button")).not.toHaveClass("disabled");
+            expect(screen.getByRole("combobox")).not.toHaveClass("disabled");
         },
     );
 
@@ -98,6 +98,6 @@ describe("LegendSection render", () => {
 
         expect(screen.getByText("Position")).toBeInTheDocument();
         expect(screen.getByRole("checkbox")).toBeDisabled();
-        expect(screen.getByRole("button")).toHaveClass("disabled");
+        expect(screen.getByRole("combobox")).toHaveClass("disabled");
     });
 });

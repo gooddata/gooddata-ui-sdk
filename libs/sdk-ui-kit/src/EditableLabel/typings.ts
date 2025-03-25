@@ -21,6 +21,7 @@ export interface IEditableLabelProps {
     autofocus?: boolean;
     isEditableLabelWidthBasedOnText?: boolean;
     ariaLabel?: string;
+    autocomplete?: string;
 }
 
 /**

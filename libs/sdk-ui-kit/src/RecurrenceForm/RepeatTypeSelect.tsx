@@ -102,7 +102,7 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
         <Dropdown
             alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
             className="gd-recurrence-form-type s-recurrence-form-type"
-            renderButton={({ toggleDropdown, isOpen }) => (
+            renderButton={({ toggleDropdown, isOpen, dropdownId }) => (
                 <DropdownButton
                     id={id}
                     value={repeatTypeItem.title}
@@ -110,6 +110,8 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
                         !isOpen && onRepeatDropdownOpen?.();
                         toggleDropdown();
                     }}
+                    dropdownId={dropdownId}
+                    isOpen={isOpen}
                 />
             )}
             renderBody={({ closeDropdown, isMobile }) => (

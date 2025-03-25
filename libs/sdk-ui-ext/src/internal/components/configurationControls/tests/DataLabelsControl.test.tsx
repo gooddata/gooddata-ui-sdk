@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import noop from "lodash/noop.js";
@@ -50,7 +50,7 @@ describe("DataLabelsControl", () => {
             createComponent({
                 isDisabled: true,
             });
-            expect(screen.getByRole("button")).toHaveClass("disabled");
+            expect(screen.getByRole("combobox")).toHaveClass("disabled");
         });
 
         it("should have `auto` by default", () => {
@@ -91,7 +91,7 @@ describe("DataLabelsControl", () => {
                         },
                     },
                 });
-                const buttons = getAllByRole("button");
+                const buttons = getAllByRole("combobox");
                 expect(buttons[0]).toHaveTextContent(visibleValueToText(visible));
                 expect(buttons[1]).toHaveTextContent(visibleValueToText(totalsVisible));
             },
@@ -103,7 +103,7 @@ describe("DataLabelsControl", () => {
                 enableSeparateTotalLabels: true,
             });
 
-            const buttons = screen.getAllByRole("button");
+            const buttons = screen.getAllByRole("combobox");
             expect(buttons[0]).not.toHaveClass("disabled");
             expect(buttons[1]).toHaveClass("disabled");
         });

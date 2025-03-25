@@ -69,12 +69,14 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
                 <Dropdown
                     alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
                     className="gd-notifications-channels-dialog-destination s-gd-notifications-channels-dialog-destination"
-                    renderButton={({ toggleDropdown }) => (
+                    renderButton={({ toggleDropdown, dropdownId, isOpen }) => (
                         <DropdownButton
                             id={accessibilityValue}
                             value={selectedItem?.title}
                             onClick={toggleDropdown}
                             className="gd-notifications-channels-dialog-destination-button"
+                            dropdownId={dropdownId}
+                            isOpen={isOpen}
                         />
                     )}
                     renderBody={({ closeDropdown, isMobile }) => (

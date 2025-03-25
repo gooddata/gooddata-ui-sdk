@@ -608,6 +608,16 @@
         "comment": "Translate as imperative. Create the schedule by submitting form.",
         "limit": 0
     },
+    "dialogs.schedule.email.closeLabel": {
+        "value": "Close dialog",
+        "comment": "Label of a close button",
+        "limit": 0
+    },
+    "dialogs.schedule.email.backLabel": {
+        "value": "Back to previous step",
+        "comment": "Label of a back button",
+        "limit": 0
+    },
     "dialogs.schedule.email.footer.title": {
         "value": "How to schedule export?",
         "comment": "Title of a link to documentation",
@@ -676,6 +686,11 @@
     "dialogs.schedule.management.noSchedules": {
         "value": "There are no scheduled exports.{br}Create new.",
         "comment": "",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.attachment": {
+        "value": "Attach as a {format} file",
+        "comment": "Label of a checkbox field for different format types, eg. PDF, CSV, XLSX. Do not translate format placeholder.",
         "limit": 0
     },
     "dialogs.schedule.management.attachments.xlsx.settings": {

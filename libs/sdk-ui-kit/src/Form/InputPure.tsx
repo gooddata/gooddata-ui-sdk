@@ -42,6 +42,7 @@ export interface InputPureProps extends IDomNativeProps {
     required?: boolean;
     accessibilityType?: string;
     ariaLabel?: string;
+    autocomplete?: string;
 }
 /**
  * @internal
@@ -172,7 +173,11 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
             // react events use delegation and don't bubble, click on clear needs to be kept local
             // to avoid handling by overlay close handler and others
             <NativeListener onClick={this.onClear}>
-                <span className="gd-input-icon-clear gd-icon-clear s-input-clear" aria-label="Input clear" />
+                <span
+                    role="button"
+                    className="gd-input-icon-clear gd-icon-clear s-input-clear"
+                    aria-label="Input clear"
+                />
             </NativeListener>
         ) : (
             false
@@ -197,6 +202,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
             type,
             required,
             ariaLabel,
+            autocomplete,
         } = this.props;
         return (
             <div className="gd-input-wrapper">
@@ -219,7 +225,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
                     readOnly={readonly}
                     value={value}
                     aria-label={ariaLabel ?? undefined}
-                    autoComplete={isSearch ? "off" : undefined}
+                    autoComplete={isSearch ? "off" : autocomplete}
                 />
                 {this.renderSearch(isSearch)}
                 {this.renderClearIcon(clearOnEsc)}

@@ -81,7 +81,7 @@ describe("DatePicker", () => {
 
         await openCalendar();
 
-        expect(screen.getByRole("datepicker")).toHaveClass("gd-datepicker-focused");
+        expect(screen.getByTestId("datepicker")).toHaveClass("gd-datepicker-focused");
         expect(document.querySelector(".gd-datepicker-OverlayWrapper-bl-xx")).toBeInTheDocument();
         expect(document.querySelector(".gd-datepicker-OverlayWrapper-xx-tl")).toBeInTheDocument();
     });
@@ -89,10 +89,10 @@ describe("DatePicker", () => {
     it("should set css classes according to focused state", async () => {
         createComponent();
 
-        expect(screen.getByRole("datepicker")).not.toHaveClass("gd-datepicker-focused");
+        expect(screen.getByTestId("datepicker")).not.toHaveClass("gd-datepicker-focused");
 
         await openCalendar();
-        expect(screen.getByRole("datepicker")).toHaveClass("gd-datepicker-focused");
+        expect(screen.getByTestId("datepicker")).toHaveClass("gd-datepicker-focused");
 
         await closeCalendar();
         testClosedCalendar();
@@ -105,7 +105,7 @@ describe("DatePicker", () => {
 
         await openCalendar();
 
-        expect(screen.getByRole("datepicker")).toHaveClass("gd-datepicker-focused");
+        expect(screen.getByTestId("datepicker")).toHaveClass("gd-datepicker-focused");
         expect(screen.getByLabelText("星期日")).toBeInTheDocument();
     });
 
@@ -123,7 +123,7 @@ describe("DatePicker", () => {
 
         it("should initially has set focused state as false", () => {
             createComponent();
-            expect(screen.getByRole("datepicker")).not.toHaveClass("gd-datepicker-focused");
+            expect(screen.getByTestId("datepicker")).not.toHaveClass("gd-datepicker-focused");
         });
 
         describe("props", () => {
@@ -151,7 +151,7 @@ describe("DatePicker", () => {
                     className,
                 });
 
-                expect(screen.getByRole("datepicker")).toHaveClass(className);
+                expect(screen.getByTestId("datepicker")).toHaveClass(className);
             });
 
             it("should use provided placeholder", () => {
@@ -169,7 +169,7 @@ describe("DatePicker", () => {
                     size: smallClass,
                 });
 
-                expect(screen.getByRole("datepicker")).toHaveClass(smallClass);
+                expect(screen.getByTestId("datepicker")).toHaveClass(smallClass);
                 expect(screen.getByRole("combobox")).toHaveClass(smallClass);
             });
 

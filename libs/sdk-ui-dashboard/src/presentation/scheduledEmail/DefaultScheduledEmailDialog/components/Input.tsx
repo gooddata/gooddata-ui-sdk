@@ -9,13 +9,14 @@ interface IInputOwnProps {
     maxlength?: number;
     placeholder: string;
     value?: string;
+    autocomplete?: string;
     onChange: (value: string) => void;
 }
 
 export type IInputProps = IInputOwnProps;
 
 export const Input: React.FC<IInputProps> = (props) => {
-    const { id, className = "", label, maxlength, placeholder, value, onChange } = props;
+    const { id, className = "", label, maxlength, placeholder, value, onChange, autocomplete } = props;
     const classNames = `gd-input-component ${className}`;
 
     return (
@@ -34,6 +35,7 @@ export const Input: React.FC<IInputProps> = (props) => {
                     // TODO improve typings of Input in ui-kit to have properly typed the onChange related to the input type
                     onChange as any
                 }
+                autocomplete={autocomplete}
             />
         </div>
     );

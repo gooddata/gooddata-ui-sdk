@@ -52,6 +52,86 @@ const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
+interface ScheduledEmailDialogFooterProps {
+    isWhiteLabeled: boolean;
+    helpTextId: string;
+    scheduledExportToEdit?: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null;
+    isSavingScheduledEmail: boolean;
+    onDeleteClick: () => void;
+}
+
+interface ScheduledEmailDialogHeaderProps {
+    title: string;
+    onTitleChange: (value: string) => void;
+    onCancel?: () => void;
+    placeholder: string;
+}
+
+const ScheduledEmailDialogHeader: React.FC<ScheduledEmailDialogHeaderProps> = ({
+    title,
+    onTitleChange,
+    onCancel,
+    placeholder,
+}) => {
+    const intl = useIntl();
+
+    return (
+        <div className="gd-notifications-channels-dialog-header">
+            <Button
+                className="gd-button-primary gd-button-icon-only gd-icon-navigateleft s-schedule-email-dialog-button"
+                onClick={onCancel}
+                accessibilityConfig={{
+                    ariaLabel: intl.formatMessage({ id: "dialogs.schedule.email.backLabel" }),
+                }}
+            />
+            <EditableLabel
+                value={title}
+                onSubmit={noop}
+                onChange={onTitleChange}
+                maxRows={1}
+                maxLength={40}
+                className="gd-notifications-channels-dialog-title s-gd-notifications-channels-dialog-title"
+                autofocus={!title}
+                placeholder={placeholder}
+                ariaLabel={intl.formatMessage({
+                    id: "dialogs.schedule.accessibility.label.email.title",
+                })}
+                autocomplete="off"
+            />
+        </div>
+    );
+};
+
+const ScheduledEmailDialogFooter: React.FC<ScheduledEmailDialogFooterProps> = ({
+    isWhiteLabeled,
+    helpTextId,
+    scheduledExportToEdit,
+    isSavingScheduledEmail,
+    onDeleteClick,
+}) => {
+    const intl = useIntl();
+
+    return (
+        <div className="gd-notifications-channels-dialog-footer-link">
+            {!isWhiteLabeled ? (
+                <Hyperlink
+                    text={intl.formatMessage({ id: helpTextId })}
+                    href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-ScheduleExport"
+                    iconClass="gd-icon-circle-question"
+                />
+            ) : null}
+            {scheduledExportToEdit ? (
+                <Button
+                    className="gd-button-link-dimmed"
+                    value={intl.formatMessage({ id: "delete" })}
+                    onClick={onDeleteClick}
+                    disabled={isSavingScheduledEmail}
+                />
+            ) : null}
+        </div>
+    );
+};
+
 export function ScheduledMailDialogRenderer({
     scheduledExportToEdit,
     users,
@@ -166,25 +246,20 @@ export function ScheduledMailDialogRenderer({
                                 ? intl.formatMessage({ id: `dialogs.schedule.email.save` })
                                 : intl.formatMessage({ id: `dialogs.schedule.email.create` })
                         }
+                        accessibilityConfig={{
+                            closeButton: {
+                                ariaLabel: intl.formatMessage({ id: "dialogs.schedule.email.closeLabel" }),
+                            },
+                        }}
                         showProgressIndicator={isSavingScheduledEmail}
                         footerLeftRenderer={() => (
-                            <div className="gd-notifications-channels-dialog-footer-link">
-                                {!isWhiteLabeled ? (
-                                    <Hyperlink
-                                        text={intl.formatMessage({ id: helpTextId })}
-                                        href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-ScheduleExport"
-                                        iconClass="gd-icon-circle-question"
-                                    />
-                                ) : null}
-                                {scheduledExportToEdit ? (
-                                    <Button
-                                        className="gd-button-link-dimmed"
-                                        value={intl.formatMessage({ id: "delete" })}
-                                        onClick={() => setScheduledEmailToDelete(editedAutomation)}
-                                        disabled={isSavingScheduledEmail}
-                                    />
-                                ) : null}
-                            </div>
+                            <ScheduledEmailDialogFooter
+                                isWhiteLabeled={isWhiteLabeled}
+                                helpTextId={helpTextId}
+                                scheduledExportToEdit={scheduledExportToEdit}
+                                isSavingScheduledEmail={isSavingScheduledEmail}
+                                onDeleteClick={() => setScheduledEmailToDelete(editedAutomation)}
+                            />
                         )}
                         isSubmitDisabled={
                             isSubmitDisabled || isSavingScheduledEmail || isExecutionTimestampMode
@@ -201,27 +276,14 @@ export function ScheduledMailDialogRenderer({
                         onSubmit={handleSaveScheduledEmail}
                         headline={undefined}
                         headerLeftButtonRenderer={() => (
-                            <div className="gd-notifications-channels-dialog-header">
-                                <Button
-                                    className="gd-button-primary gd-button-icon-only gd-icon-navigateleft s-schedule-email-dialog-button"
-                                    onClick={onCancel}
-                                />
-                                <EditableLabel
-                                    value={editedAutomation.title ?? ""}
-                                    onSubmit={noop}
-                                    onChange={onTitleChange}
-                                    maxRows={1}
-                                    maxLength={40}
-                                    className="gd-notifications-channels-dialog-title s-gd-notifications-channels-dialog-title"
-                                    autofocus={!editedAutomation.title}
-                                    placeholder={intl.formatMessage({
-                                        id: "dialogs.schedule.email.title.placeholder",
-                                    })}
-                                    ariaLabel={intl.formatMessage({
-                                        id: "dialogs.schedule.accessibility.label.email.title",
-                                    })}
-                                />
-                            </div>
+                            <ScheduledEmailDialogHeader
+                                title={editedAutomation.title ?? ""}
+                                onTitleChange={onTitleChange}
+                                onCancel={onCancel}
+                                placeholder={intl.formatMessage({
+                                    id: "dialogs.schedule.email.title.placeholder",
+                                })}
+                            />
                         )}
                     >
                         <div className="gd-notifications-channel-dialog-content-wrapper">
@@ -263,6 +325,7 @@ export function ScheduledMailDialogRenderer({
                                 className="gd-notifications-channels-dialog-subject s-gd-notifications-channels-dialog-subject"
                                 label={intl.formatMessage({ id: "dialogs.schedule.email.subject.label" })}
                                 maxlength={MAX_SUBJECT_LENGTH}
+                                autocomplete="off"
                                 placeholder={
                                     dashboardTitle.length > DASHBOARD_TITLE_MAX_LENGTH
                                         ? dashboardTitle.substring(0, DASHBOARD_TITLE_MAX_LENGTH)
@@ -276,6 +339,7 @@ export function ScheduledMailDialogRenderer({
                                 className="gd-notifications-channels-dialog-message s-gd-notifications-channels-dialog-message"
                                 label={intl.formatMessage({ id: "dialogs.schedule.email.message.label" })}
                                 maxlength={MAX_MESSAGE_LENGTH}
+                                autocomplete="off"
                                 placeholder={intl.formatMessage({
                                     id: "dialogs.schedule.email.message.placeholder",
                                 })}
