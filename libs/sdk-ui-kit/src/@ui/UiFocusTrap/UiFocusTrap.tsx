@@ -95,7 +95,7 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
         const handleKeyDown = (event: KeyboardEvent) => {
             // get fresh focusable elements set as they could change in meantime
             const { firstElement, lastElement, focusableElements } = getFocusableElements(trapRef.current);
-            if (event.key === "Tab") {
+            if (event.key === "Tab" && trapRef.current?.contains(event.target as Node)) {
                 const nextElement = getNextElement(
                     focusableElements,
                     firstElement,
@@ -105,6 +105,7 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
 
                 if (nextElement) {
                     event.preventDefault();
+                    event.stopPropagation();
                     focusAndEnsureReachableElement(nextElement, focusableElements, event.shiftKey);
                 }
             } else if (event.key === "Escape") {
