@@ -2,6 +2,7 @@
 
 import { insightVisualizationType } from "@gooddata/sdk-model";
 import { useMemo } from "react";
+import { RenderMode } from "../../types.js";
 import {
     ExtendedDashboardWidget,
     selectInsightByWidgetRef,
@@ -15,7 +16,26 @@ import {
     WidgetExportData,
     WidgetExportDataAttributes,
     MetaExportDataAttributes,
+    CommonExportDataAttributes,
 } from "./types.js";
+
+/**
+ * @alpha
+ */
+export const useDashboardExportData = (
+    renderMode: RenderMode | undefined,
+    status: "loaded" | "empty",
+    type: "nested" | "root",
+): CommonExportDataAttributes | undefined => {
+    if (renderMode !== "export" || type === "nested") {
+        return undefined;
+    }
+
+    return {
+        "data-export-type": "dashboard",
+        "data-export-status": status,
+    };
+};
 
 /**
  * @alpha

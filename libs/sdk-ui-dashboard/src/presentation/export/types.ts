@@ -9,6 +9,7 @@ import { DashboardRelatedFilter } from "./hooks/useDashboardRelatedFilters.js";
  */
 export type ExportElementType =
     | "meta"
+    | "dashboard"
     | "section"
     | "section-info"
     | "section-title"
@@ -45,6 +46,7 @@ export type ExportMetaType =
 export type CommonExportDataAttributes = {
     "data-export-type": ExportElementType;
     "data-export-depth"?: string;
+    "data-export-status"?: "empty" | "loaded";
 };
 
 /**

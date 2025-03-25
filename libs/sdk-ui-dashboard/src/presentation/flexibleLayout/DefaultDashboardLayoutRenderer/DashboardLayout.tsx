@@ -28,6 +28,7 @@ import {
     getResizedItemPositions,
     unifyDashboardLayoutItemHeights,
 } from "./utils/sizing.js";
+import { useDashboardExportData } from "../../export/index.js";
 
 const removeHeights = <TWidget,>(layout: IDashboardLayout<TWidget>, enableCustomHeight: boolean) => {
     if (enableCustomHeight) {
@@ -147,6 +148,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
                 !isNestedLayout));
 
     const slideStyles = useSlideSizeStyle(renderMode, type);
+    const exportData = useDashboardExportData(renderMode, "loaded", type);
 
     return (
         <GridLayoutElement
@@ -161,6 +163,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
             onMouseLeave={onMouseLeave}
             ref={layoutRef}
             exportStyles={slideStyles}
+            exportData={exportData}
         >
             {layoutFacade.sections().map((section) => {
                 return (

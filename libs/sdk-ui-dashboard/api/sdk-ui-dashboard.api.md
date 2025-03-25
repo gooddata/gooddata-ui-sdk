@@ -1142,6 +1142,7 @@ export function commandStartedEventHandler<TCommand extends IDashboardCommand>(t
 export type CommonExportDataAttributes = {
     "data-export-type": ExportElementType;
     "data-export-depth"?: string;
+    "data-export-status"?: "empty" | "loaded";
 };
 
 // @public (undocumented)
@@ -3874,7 +3875,7 @@ export interface ExportDashboardToPptPresentation extends IDashboardCommand {
 export function exportDashboardToPptPresentation(correlationId?: string): ExportDashboardToPptPresentation;
 
 // @alpha
-export type ExportElementType = "meta" | "section" | "section-info" | "section-title" | "section-description" | "widget" | "widget-content" | "widget-title" | "widget-description";
+export type ExportElementType = "meta" | "dashboard" | "section" | "section-info" | "section-title" | "section-description" | "widget" | "widget-content" | "widget-title" | "widget-description";
 
 // @beta (undocumented)
 export interface ExportInsightWidget extends IDashboardCommand {
@@ -10257,6 +10258,9 @@ export const useDashboardEventDispatch: () => (eventBody: DashboardEventBody<Das
 
 // @alpha (undocumented)
 export const useDashboardEventsContext: () => IDashboardEventsContext;
+
+// @alpha (undocumented)
+export const useDashboardExportData: (renderMode: RenderMode | undefined, status: "loaded" | "empty", type: "nested" | "root") => CommonExportDataAttributes | undefined;
 
 // @internal (undocumented)
 export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryResult, TQueryCreatorArgs extends any[]>({ queryCreator, onSuccess, onError, onRejected, onBeforeRun, }: {

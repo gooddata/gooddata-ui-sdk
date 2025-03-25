@@ -28,6 +28,7 @@ import {
     getResizedItemPositions,
     unifyDashboardLayoutItemHeights,
 } from "./utils/sizing.js";
+import { useDashboardExportData } from "../../export/index.js";
 
 setConfiguration(DASHBOARD_LAYOUT_GRID_CONFIGURATION);
 
@@ -127,6 +128,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
     );
 
     const slideStyles = useSlideSizeStyle(renderMode, "root");
+    const exportData = useDashboardExportData(renderMode, "empty", "root");
 
     return (
         <div
@@ -134,6 +136,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
             onMouseLeave={onMouseLeave}
             ref={layoutRef}
             style={slideStyles}
+            {...exportData}
         >
             <ScreenClassProvider useOwnWidth={false}>
                 <ScreenClassRender
