@@ -9,5 +9,6 @@
     "semantic-search.previous-search": "Pesquisa anterior",
     "semantic-search.date.at": "em",
     "gs.date.today": "Hoje",
-    "gs.date.yesterday": "Ontem"
+    "gs.date.yesterday": "Ontem",
+    "semantic-search.label": "Pesquisar painéis de controlo ou de visualização"
 }

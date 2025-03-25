@@ -132,7 +132,6 @@
     "delete": "消除",
     "close": "關閉",
     "cancel": "取消",
-    "apply": "申請",
     "gs.date.today": "今天",
     "gs.date.tomorrow": "明天",
     "gs.date.yesterday": "昨天",
@@ -677,5 +676,7 @@
     "options.menu.export.presentation.PDF": "幻燈片集 (PDF)",
     "options.menu.export.in.progress": "匯出正在進行中。等待其完成後再匯出。",
     "dialogs.schedule.accessibility.label.email.title": "計劃名稱",
-    "widget.options.menu.export": "出口"
+    "widget.options.menu.export": "出口",
+    "options.menu.export.presentation.unsupported.oldWidget": "無法導出。請重新儲存儀表板或聯絡您的管理員。",
+    "apply": "申請"
 }

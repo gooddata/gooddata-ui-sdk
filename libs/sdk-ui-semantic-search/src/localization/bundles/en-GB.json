@@ -5,9 +5,10 @@
     "semantic-search.placeholder": "Search dashboards or visualisation…",
     "semantic-search.id": "ID",
     "semantic-search.tags": "Tags",
-    "semantic-search.match": "{score}% game",
+    "semantic-search.match": "{score}% match",
     "semantic-search.previous-search": "Previous search",
     "semantic-search.date.at": "at",
     "gs.date.today": "Today",
-    "gs.date.yesterday": "Yesterday"
+    "gs.date.yesterday": "Yesterday",
+    "semantic-search.label": "Search dashboards or visualisation"
 }

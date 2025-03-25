@@ -132,7 +132,6 @@
     "delete": "Poista",
     "close": "Sulje",
     "cancel": "Peruuta",
-    "apply": "Käytä",
     "gs.date.today": "Tänään",
     "gs.date.tomorrow": "Huomenna",
     "gs.date.yesterday": "Eilen",
@@ -677,5 +676,7 @@
     "options.menu.export.presentation.PDF": "Liukukansi (pdf)",
     "options.menu.export.in.progress": "Vienti on käynnissä. Odota, kunnes se on valmis, ennen kuin viet sen uudelleen.",
     "dialogs.schedule.accessibility.label.email.title": "Aikataulun nimi",
-    "widget.options.menu.export": "Vie"
+    "widget.options.menu.export": "Vie",
+    "options.menu.export.presentation.unsupported.oldWidget": "Ei voida viedä. Tallenna ohjauspaneeli uudelleen tai ota yhteyttä järjestelmänvalvojaan.",
+    "apply": "Käytä"
 }

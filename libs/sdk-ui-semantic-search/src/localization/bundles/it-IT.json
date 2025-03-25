@@ -9,5 +9,6 @@
     "semantic-search.previous-search": "Ricerca precedente",
     "semantic-search.date.at": "alle",
     "gs.date.today": "Oggi",
-    "gs.date.yesterday": "Ieri"
+    "gs.date.yesterday": "Ieri",
+    "semantic-search.label": "Ricerca di cruscotti o visualizzazioni"
 }

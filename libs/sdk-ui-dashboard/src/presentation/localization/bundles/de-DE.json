@@ -132,7 +132,6 @@
     "delete": "Löschen",
     "close": "Schließen",
     "cancel": "Abbrechen",
-    "apply": "Übernehmen",
     "gs.date.today": "Heute",
     "gs.date.tomorrow": "Morgen",
     "gs.date.yesterday": "Gestern",
@@ -677,5 +676,7 @@
     "options.menu.export.presentation.PDF": "Foliendeck (PDF)",
     "options.menu.export.in.progress": "Der Export ist im Gange. Warten Sie, bis er fertig ist, bevor Sie es erneut exportieren.",
     "dialogs.schedule.accessibility.label.email.title": "Name des plans",
-    "widget.options.menu.export": "Exportieren"
+    "widget.options.menu.export": "Exportieren",
+    "options.menu.export.presentation.unsupported.oldWidget": "Export nicht möglich. Bitte speichern Sie das Dashboard erneut oder wenden Sie sich an Ihren Administrator.",
+    "apply": "Übernehmen"
 }
