@@ -14,11 +14,23 @@ export function downloadFile(fileName: string, data: any) {
     document.body.removeChild(link);
 }
 
-export const parseNameFromContentDisposition = (response: AxiosResponse) => {
+export const parseNameFromContentDisposition = (response: Pick<AxiosResponse, "headers">) => {
     const contentDispositionHeader = response.headers["content-disposition"];
     // eslint-disable-next-line regexp/no-unused-capturing-group
     const matches = /filename\*?=(?:UTF-8''([^;]+)|"([^"]+)")/.exec(contentDispositionHeader);
     const urlEncodedFileName = matches ? matches[2] : undefined;
+    if (!urlEncodedFileName) {
+        return undefined;
+    }
 
-    return urlEncodedFileName ? decodeURIComponent(mimeWordDecode(urlEncodedFileName)) : undefined;
+    const decoded = mimeWordDecode(urlEncodedFileName);
+    if (!decoded) {
+        return undefined;
+    }
+
+    try {
+        return decodeURIComponent(decoded);
+    } catch (e) {
+        return decoded;
+    }
 };
