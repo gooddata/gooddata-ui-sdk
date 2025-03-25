@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IVisualizationClass,
@@ -9,6 +9,9 @@ import {
     IFilter,
     CatalogItem,
     IMetadataObject,
+    ICatalogMeasure,
+    ICatalogAttribute,
+    ICatalogFact,
 } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging.js";
 
@@ -46,6 +49,17 @@ export interface IWorkspaceInsightsService {
      * @returns promise of visualization classes
      */
     getVisualizationClasses(options?: IGetVisualizationClassesOptions): Promise<IVisualizationClass[]>;
+
+    /**
+     * Request insight for the given reference together with related catalog items
+     *
+     * @param ref - insight reference
+     * @returns promise of catalog item of type metric or fact
+     */
+    getInsightWithCatalogItems(ref: ObjRef): Promise<{
+        insight: IInsight;
+        catalogItems: Array<ICatalogFact | ICatalogMeasure | ICatalogAttribute>;
+    }>;
 
     /**
      * Request insight for the given reference
