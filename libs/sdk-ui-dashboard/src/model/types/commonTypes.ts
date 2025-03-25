@@ -544,6 +544,7 @@ export type DashboardTransformFn = (
  */
 export type DashboardLayoutExportTransformFn = <TWidget>(
     layout: IDashboardLayout<TWidget>,
+    focusObject?: DashboardFocusObject,
 ) => IDashboardLayout<TWidget> | undefined;
 
 /**

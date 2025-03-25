@@ -33,7 +33,7 @@ export const ExportModeDashboardRichText: React.FC<IDashboardRichTextProps> = (p
     );
 
     return (
-        <div {...exportDataText}>
+        <div {...exportDataText} className="gd-rich-text-widget-export-container">
             <ViewModeDashboardRichText
                 {...props}
                 richTextExportData={exportRichText}

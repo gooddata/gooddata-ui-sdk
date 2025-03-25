@@ -68,6 +68,7 @@ import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
+import { IFilterContext } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
 import { IForecastConfig } from '@gooddata/sdk-backend-spi';
 import { IForecastResult } from '@gooddata/sdk-backend-spi';
@@ -591,6 +592,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
     // (undocumented)
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
+    // (undocumented)
+    getFilterContextByExportId: (exportId: string, type: "visual" | "slides" | undefined) => Promise<IFilterContext | null>;
     // (undocumented)
     getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]>;
     // (undocumented)

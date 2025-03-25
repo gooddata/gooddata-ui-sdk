@@ -10,7 +10,7 @@ import { IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { FluidLayoutCustomizer } from "./fluidLayoutCustomizer.js";
 import { ExportLayoutCustomizer } from "./exportLayoutCustomizer.js";
 import { IDashboardLayout } from "@gooddata/sdk-model";
-import { DashboardLayoutExportTransformFn } from "../../model/types/commonTypes.js";
+import { DashboardFocusObject, DashboardLayoutExportTransformFn } from "../../model/types/commonTypes.js";
 import { DashboardTransformFn, ExtendedDashboardWidget } from "../../model/index.js";
 import { CustomizerMutationsContext } from "./types.js";
 import {
@@ -264,7 +264,10 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
         const snapshot = [...this.exportLayoutTransformations];
         const { logger, mutationContext } = this;
 
-        function handler<TWidget>(layout: IDashboardLayout<TWidget>): IDashboardLayout<TWidget> | undefined {
+        function handler<TWidget>(
+            layout: IDashboardLayout<TWidget>,
+            focusedObject?: DashboardFocusObject,
+        ): IDashboardLayout<TWidget> | undefined {
             /*
              * Once the dashboard component supports multiple layout types, then the code here must only
              * perform the transformations applicable for the dashboard's layout type..
@@ -274,6 +277,14 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
              * non-empty, non-corrupted dashboards
              */
             if (!layout || layout.type !== "IDashboardLayout") {
+                return undefined;
+            }
+
+            /*
+             * Do not apply any transformations if there is a focused object. This is because the export
+             * layout transformer in plugin is not able to handle focused objects.
+             */
+            if (focusedObject) {
                 return undefined;
             }
 

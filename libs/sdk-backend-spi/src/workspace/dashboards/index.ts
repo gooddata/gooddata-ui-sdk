@@ -25,6 +25,7 @@ import {
     IDashboardFilterViewSaveRequest,
     IDashboardAttributeFilterConfig,
     IExecutionDefinition,
+    IFilterContext,
 } from "@gooddata/sdk-model";
 import { IExportResult } from "../execution/export.js";
 import { IPagedResource } from "../../common/paging.js";
@@ -283,6 +284,17 @@ export interface IWorkspaceDashboardsService {
         dashboard: IDashboard,
         types?: SupportedDashboardReferenceTypes[],
     ): Promise<IDashboardReferences>;
+
+    /**
+     * Get filter context by provided export id and type
+     *
+     * @param exportId - export id
+     * @param type - export type
+     */
+    getFilterContextByExportId(
+        exportId: string,
+        type: "visual" | "slides" | undefined,
+    ): Promise<IFilterContext | null>;
 
     /**
      * Create and save dashboard for the provided dashboard definition
