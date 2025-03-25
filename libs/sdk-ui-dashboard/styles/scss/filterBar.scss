@@ -34,11 +34,13 @@ $attribute-filter-drag-handle-left: 10px;
     left: 50%;
     display: block;
     transform: translateX(-50%);
-    // without any z-index, the message is hidden on mobile view
     z-index: zIndexes.$dashboard-message;
 
+    .gd-message {
+        background-color: var(--gd-palette-primary-dimmed, #e8f7fc);
+    }
+
     a {
-        font-weight: bold;
         cursor: pointer;
     }
 
