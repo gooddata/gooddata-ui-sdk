@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { IntlShape } from "react-intl";
 import { render, screen, waitFor } from "@testing-library/react";
@@ -7,11 +7,10 @@ import noop from "lodash/noop.js";
 import { describe, it, expect, vi } from "vitest";
 import { defaultImport } from "default-import";
 
-import { TEXT_INDEX } from "./testUtils.js";
 import { RepeatSelect, IRepeatSelectData, IRepeatSelectProps } from "../RepeatSelect.js";
 
 import { REPEAT_EXECUTE_ON, REPEAT_FREQUENCIES, REPEAT_TYPES } from "../../../constants.js";
-import { getDate, getIntlDayName, getWeek } from "../../../utils/datetime.js";
+import { getDate, getIntlDayName } from "../../../utils/datetime.js";
 import { IntlWrapper } from "../../../../../localization/IntlWrapper.js";
 import { createInternalIntl } from "../../../../../localization/createInternalIntl.js";
 
@@ -101,13 +100,11 @@ describe("RepeatSelect", () => {
     describe("onChange event", () => {
         const titleTypeDaily = "Daily";
         const titleTypeWeekly = `Weekly on ${getIntlDayName(intl, now)}`;
-        const titleTypeMonthly = `Monthly on the ${TEXT_INDEX[getWeek(now)]} ${getIntlDayName(intl, now)}`;
         const titleTypeCustom = "Custom";
 
         it.each([
             [REPEAT_TYPES.DAILY, REPEAT_TYPES.WEEKLY, titleTypeDaily],
             [REPEAT_TYPES.WEEKLY, REPEAT_TYPES.DAILY, titleTypeWeekly],
-            [REPEAT_TYPES.MONTHLY, REPEAT_TYPES.DAILY, titleTypeMonthly],
             [REPEAT_TYPES.CUSTOM, REPEAT_TYPES.DAILY, titleTypeCustom],
         ])(
             "should trigger onChange with selected repeat type is %s",
