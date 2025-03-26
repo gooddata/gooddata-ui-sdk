@@ -9457,6 +9457,9 @@ function isAnalyticalDashboard_2(dashboard: unknown): dashboard is IAnalyticalDa
 export function isAttributeHeader(header: ResultDimensionHeader): header is AttributeHeader;
 
 // @public (undocumented)
+export function isAttributeItem(attribute: unknown): attribute is JsonApiAttributeOutWithLinks;
+
+// @public (undocumented)
 function isDashboardPlugin(plugin: unknown): plugin is IDashboardPlugin;
 
 // @public (undocumented)
@@ -9467,6 +9470,9 @@ export function isDashboardPluginsItem(dashboardPlugin: unknown): dashboardPlugi
 
 // @public (undocumented)
 export function isDataSetItem(dataSet: unknown): dataSet is JsonApiDatasetOutWithLinks;
+
+// @public (undocumented)
+export function isFactItem(fact: unknown): fact is JsonApiFactOutWithLinks;
 
 // @public (undocumented)
 function isFilterContext(filterContext: unknown): filterContext is IFilterContext;
@@ -9482,6 +9488,9 @@ export function isLabelItem(label: unknown): label is JsonApiLabelOutWithLinks;
 
 // @internal (undocumented)
 export function isLiveFeatures(features: ILiveFeatures | IStaticFeatures | undefined): features is ILiveFeatures;
+
+// @public (undocumented)
+export function isMetricItem(metric: unknown): metric is JsonApiMetricOutWithLinks;
 
 // @public (undocumented)
 export function isResultAttributeHeader(header: ExecutionResultHeader): header is AttributeExecutionResultHeader;

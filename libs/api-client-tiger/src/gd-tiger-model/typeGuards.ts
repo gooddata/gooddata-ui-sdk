@@ -21,6 +21,12 @@ import {
     JsonApiDatasetOutWithLinks,
     JsonApiLabelOutWithLinksTypeEnum,
     JsonApiLabelOutWithLinks,
+    JsonApiAttributeOutWithLinksTypeEnum,
+    JsonApiAttributeOutWithLinks,
+    JsonApiFactOutWithLinksTypeEnum,
+    JsonApiFactOutWithLinks,
+    JsonApiMetricOutWithLinksTypeEnum,
+    JsonApiMetricOutWithLinks,
 } from "../generated/metadata-json-api/index.js";
 
 /**
@@ -113,4 +119,27 @@ export function isDataSetItem(dataSet: unknown): dataSet is JsonApiDatasetOutWit
  */
 export function isLabelItem(label: unknown): label is JsonApiLabelOutWithLinks {
     return (label as JsonApiLabelOutWithLinks).type === JsonApiLabelOutWithLinksTypeEnum.LABEL;
+}
+
+/**
+ * @public
+ */
+export function isAttributeItem(attribute: unknown): attribute is JsonApiAttributeOutWithLinks {
+    return (
+        (attribute as JsonApiAttributeOutWithLinks).type === JsonApiAttributeOutWithLinksTypeEnum.ATTRIBUTE
+    );
+}
+
+/**
+ * @public
+ */
+export function isFactItem(fact: unknown): fact is JsonApiFactOutWithLinks {
+    return (fact as JsonApiFactOutWithLinks).type === JsonApiFactOutWithLinksTypeEnum.FACT;
+}
+
+/**
+ * @public
+ */
+export function isMetricItem(metric: unknown): metric is JsonApiMetricOutWithLinks {
+    return (metric as JsonApiMetricOutWithLinks).type === JsonApiMetricOutWithLinksTypeEnum.METRIC;
 }

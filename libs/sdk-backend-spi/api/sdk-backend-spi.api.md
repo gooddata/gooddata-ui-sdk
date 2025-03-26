@@ -1496,6 +1496,10 @@ export interface IWorkspaceInsightsService {
     getInsights(options?: IInsightsQueryOptions): Promise<IInsightsQueryResult>;
     getInsightsQuery(): IInsightsQuery;
     getInsightWithAddedFilters<T extends IInsightDefinition>(insight: T, filters: IFilter[]): Promise<T>;
+    getInsightWithCatalogItems(ref: ObjRef): Promise<{
+        insight: IInsight;
+        catalogItems: Array<ICatalogFact | ICatalogMeasure | ICatalogAttribute>;
+    }>;
     getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
     getVisualizationClasses(options?: IGetVisualizationClassesOptions): Promise<IVisualizationClass[]>;
     updateInsight(insight: IInsight): Promise<IInsight>;

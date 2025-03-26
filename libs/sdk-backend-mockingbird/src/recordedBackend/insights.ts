@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IInsightsQueryOptions,
@@ -34,6 +34,9 @@ import {
     uriRef,
     idRef,
     insightTags,
+    ICatalogFact,
+    ICatalogMeasure,
+    ICatalogAttribute,
 } from "@gooddata/sdk-model";
 import values from "lodash/values.js";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
@@ -166,6 +169,18 @@ export class RecordedInsights implements IWorkspaceInsightsService {
 
         return insightSetFilters(insight, mergedFilters);
     };
+
+    async getInsightWithCatalogItems(ref: ObjRef): Promise<{
+        insight: IInsight;
+        catalogItems: Array<ICatalogFact | ICatalogMeasure | ICatalogAttribute>;
+    }> {
+        const insight = await this.getInsight(ref);
+
+        return {
+            insight,
+            catalogItems: [],
+        };
+    }
 
     private createInsightWithRef(obj: IInsight): IInsight {
         return {

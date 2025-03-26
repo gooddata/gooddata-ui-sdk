@@ -39,4 +39,7 @@ export {
     isDashboardPluginsItem,
     isDataSetItem,
     isLabelItem,
+    isAttributeItem,
+    isMetricItem,
+    isFactItem,
 } from "./typeGuards.js";

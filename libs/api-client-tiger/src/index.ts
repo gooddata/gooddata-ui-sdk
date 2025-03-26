@@ -32,6 +32,9 @@ export {
     isDashboardPluginsItem,
     isDataSetItem,
     isLabelItem,
+    isAttributeItem,
+    isMetricItem,
+    isFactItem,
 } from "./gd-tiger-model/index.js";
 
 export { newAxios, setAxiosAuthorizationToken, setGlobalAuthorizationToken };

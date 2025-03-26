@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IInsightsQueryOptions,
     IInsightsQueryResult,
@@ -14,6 +14,9 @@ import {
     IInsight,
     IInsightDefinition,
     IVisualizationClass,
+    ICatalogMeasure,
+    ICatalogFact,
+    ICatalogAttribute,
     ObjRef,
     objRefToString,
     insightTitle,
@@ -30,8 +33,16 @@ import {
     VisualizationObjectModelV1,
     VisualizationObjectModelV2,
     JsonApiVisualizationObjectInTypeEnum,
+    JsonApiAttributeOutWithLinks,
     EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
+    EntitiesApiGetEntityVisualizationObjectsRequest,
     MetadataUtilities,
+    JsonApiMetricOutIncludes,
+    isLabelItem,
+    isAttributeItem,
+    isDataSetItem,
+    isMetricItem,
+    isFactItem,
 } from "@gooddata/api-client-tiger";
 import {
     insightFromInsightDefinition,
@@ -49,6 +60,11 @@ import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { isInheritedObject } from "../../../convertors/fromBackend/ObjectInheritance.js";
 import { convertUserIdentifier } from "../../../convertors/fromBackend/UsersConverter.js";
 import { InsightsQuery } from "./insightsQuery.js";
+import {
+    convertMeasure,
+    convertFact,
+    convertAttribute,
+} from "../../../convertors/fromBackend/CatalogConverter.js";
 
 export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -126,17 +142,94 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         return { workspaceId: this.workspace, ...sortConfiguration, ...includeUser, ...filterObj };
     };
 
-    public getInsight = async (ref: ObjRef, options: IGetInsightOptions = {}): Promise<IInsight> => {
+    private fetchAttributes = async (attrs: string[], labels: string[]): Promise<ICatalogAttribute[]> => {
+        if (!attrs.length && !labels.length) {
+            return Promise.resolve([]);
+        }
+
+        const filter = [
+            ...labels.map((label) => `labels.id==${label}`),
+            ...attrs.map((attr) => `id==${attr}`),
+        ].join(",");
+        const response = await this.authCall((client) => {
+            return client.entities
+                .getAllEntitiesAttributes(
+                    {
+                        workspaceId: this.workspace,
+                        filter,
+                        include: ["labels", "defaultView", "dataset"],
+                    },
+                    {
+                        headers: jsonApiHeaders,
+                    },
+                )
+                .then((res) => res.data);
+        });
+
+        const attributes: ICatalogAttribute[] = response.data.map((item: JsonApiAttributeOutWithLinks) => {
+            const includedItems = response.included || [];
+            const labels = (item.relationships?.labels?.data ?? []).map((label) => label.id);
+            const dataset = item.relationships?.dataset?.data?.id;
+
+            const relatedLabels = includedItems
+                .filter((item) => labels.includes(item.id))
+                .filter(isLabelItem);
+            const relatedDataset = includedItems.filter((item) => item.id === dataset).filter(isDataSetItem);
+            const primaryRelatedLabel = relatedLabels.find((label) => label.attributes?.primary);
+            const geoLabels = relatedLabels.filter((label) => label.attributes?.valueType?.match(/GEO/));
+            const defaultLabel = primaryRelatedLabel ?? relatedLabels[0];
+            return convertAttribute(item, defaultLabel, geoLabels, relatedLabels, relatedDataset[0]);
+        });
+
+        return attributes;
+    };
+
+    /**
+     * Fetch insight and related catalog items
+     * @internal
+     */
+    public getInsightWithCatalogItems = async (
+        ref: ObjRef,
+    ): Promise<{
+        insight: IInsight;
+        catalogItems: Array<ICatalogFact | ICatalogMeasure | ICatalogAttribute>;
+    }> => {
+        const { insight, included } = await this.getInsightWithReferences(ref, [
+            "metrics" as const,
+            "attributes" as const,
+            "facts" as const,
+            "labels" as const,
+        ]);
+
+        // get attributes by labels.id and individual id's, include labels to fully reconstruct catalogue
+        const labels = included?.filter(isLabelItem).map((item) => item.id) ?? [];
+        const attrs = included?.filter(isAttributeItem).map((item) => item.id) ?? [];
+        const attributes = await this.fetchAttributes(attrs, labels);
+
+        const metrics = (included ?? []).filter(isMetricItem).map((item) => convertMeasure(item));
+        const facts = (included ?? []).filter(isFactItem).map(convertFact);
+
+        return {
+            insight,
+            catalogItems: [...metrics, ...facts, ...attributes],
+        };
+    };
+
+    private getInsightWithReferences = async (
+        ref: ObjRef,
+        references: EntitiesApiGetEntityVisualizationObjectsRequest["include"] = [],
+    ): Promise<{
+        insight: IInsight;
+        included: JsonApiMetricOutIncludes[] | undefined;
+    }> => {
         const id = await objRefToIdentifier(ref, this.authCall);
-        const includeUser = options?.loadUserData
-            ? { include: ["createdBy" as const, "modifiedBy" as const] }
-            : {};
+        const includeObj = references.length ? { include: references } : {};
         const response = await this.authCall((client) =>
             client.entities.getEntityVisualizationObjects(
                 {
                     objectId: id,
                     workspaceId: this.workspace,
-                    ...includeUser,
+                    ...includeObj,
                 },
                 {
                     headers: jsonApiHeaders,
@@ -146,6 +239,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         const { data: visualizationObject, links, included } = response.data;
         const { relationships = {} } = visualizationObject;
         const { createdBy, modifiedBy } = relationships;
+
         const insight = insightFromInsightDefinition(
             convertVisualizationObject(
                 visualizationObject.attributes!.content! as
@@ -169,6 +263,16 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             throw new UnexpectedError(`Insight for ${objRefToString(ref)} not found!`);
         }
 
+        return {
+            insight,
+            included,
+        };
+    };
+
+    public getInsight = async (ref: ObjRef, options: IGetInsightOptions = {}): Promise<IInsight> => {
+        const references = options?.loadUserData ? ["createdBy" as const, "modifiedBy" as const] : [];
+
+        const { insight } = await this.getInsightWithReferences(ref, references);
         return insight;
     };
 
