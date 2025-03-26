@@ -78,8 +78,7 @@
             height: 100%;
         }
 
-        &:hover,
-        &:focus {
+        &:hover {
             background: var(--gd-palette-complementary-2, #ebeff4);
             span {
                 color: var(--gd-palette-complementary-9-from-theme);
