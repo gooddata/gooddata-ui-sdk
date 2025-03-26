@@ -702,6 +702,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableHighchartsAccessibility,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableExecutionTimestamp,
+            "enableExecutionTimestamp",
+            "BOOLEAN",
+            FeatureFlagsValues.enableExecutionTimestamp,
+        ),
     };
 }
 
