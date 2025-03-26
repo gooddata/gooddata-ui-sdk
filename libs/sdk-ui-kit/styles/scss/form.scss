@@ -446,6 +446,17 @@ textarea {
     }
 }
 
+.input-radio-label,
+.input-checkbox-label,
+.input-checkbox-toggle {
+    input[type="checkbox"]:focus-visible + ::before,
+    input[type="radio"]:focus-visible + ::before {
+        outline: medium solid variables.$gd-input-text-border-outline;
+        outline-offset: 2px;
+        transition: none;
+    }
+}
+
 .input-radio-label {
     .input-label-text {
         &::before {

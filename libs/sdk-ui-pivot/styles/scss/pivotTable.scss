@@ -165,9 +165,7 @@ $subtotal-odd-background-color: var(
 
             // add keyboard focus effect to pivot header cells to override internal ag-grid "outline: 0" style
             &:focus-visible {
-                outline: auto 5px Highlight; /* For Firefox */
-                // stylelint-disable-next-line declaration-block-no-duplicate-properties
-                outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
+                outline: revert;
             }
         }
 
