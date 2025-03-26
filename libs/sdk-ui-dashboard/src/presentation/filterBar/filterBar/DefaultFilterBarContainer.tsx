@@ -121,7 +121,11 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                         <FormattedMessage
                             id="filterBar.unappliedFiltersNotification"
                             values={{
-                                link: (chunks) => <a onClick={applyAllDashboardFilters}>{chunks}</a>,
+                                link: (chunks) => (
+                                    <strong>
+                                        <a onClick={applyAllDashboardFilters}>{chunks}</a>
+                                    </strong>
+                                ),
                             }}
                         />
                     </Message>
