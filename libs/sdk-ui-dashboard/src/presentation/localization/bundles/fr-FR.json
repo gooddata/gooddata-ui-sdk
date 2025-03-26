@@ -104,7 +104,7 @@
     "dialogs.schedule.email.repeats.types.weekly": "Hebdomadairement le {day}",
     "dialogs.schedule.email.subject.label": "Objet:",
     "dialogs.schedule.email.time.label": "Première occurrence :",
-    "dialogs.schedule.email.to.label": "À:",
+    "dialogs.schedule.email.to.label": "À :",
     "dialogs.schedule.email.message.placeholder": "Bonjour,\n\nvotre e-mail programmé est prêt. Vous pouvez télécharger le tableau de bord dans les pièces jointes.",
     "dialogs.schedule.email.submit": "Planifier",
     "dialogs.schedule.email.save": "Enregistrer",

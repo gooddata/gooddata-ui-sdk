@@ -283,7 +283,7 @@
     "attributesDropdown.itemsFiltered.tooltip": "Waarden worden gefilterd op: <strong>{filters}</strong>",
     "attributesDropdown.itemsFiltered": "Items zijn gefilterd",
     "attributeFilterDropdown.emptyValue": "lege waarde",
-    "attributesDropdown.noData": "",
+    "attributesDropdown.noData": "Dit attribuut heeft geen waarden.",
     "attributesDropdown.noResultsMatch": "Geen resultaten.",
     "attributesDropdown.allItemsFiltered": "Alle waarden zijn gefilterd.",
     "attributesDropdown.configuration": "Configuratie",

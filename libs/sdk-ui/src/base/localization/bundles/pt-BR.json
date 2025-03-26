@@ -31,7 +31,7 @@
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "A agregação do Acumulado (Total) não está disponível ao filtrar o insight pelo filtro de classificação. Para usar Acumulado (Total), remova o filtro de classificação da barra de filtros.",
     "visualizations.totals.dropdown.title.med": "Mediana",
     "visualizations.headline.tertiary.title": "Versus",
-    "visualizations.headline.comparison.title.change": "Alteração",
+    "visualizations.headline.comparison.title.change": "Alterar",
     "visualizations.headline.comparison.title.change.positive": "Aumentar",
     "visualizations.headline.comparison.title.change.negative": "Diminuir",
     "visualizations.headline.comparison.title.change.equals": "Nenhuma alteração",

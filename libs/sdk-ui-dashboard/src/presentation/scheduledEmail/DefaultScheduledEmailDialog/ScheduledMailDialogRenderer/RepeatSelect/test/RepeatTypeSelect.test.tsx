@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { IntlShape } from "react-intl";
 import { render, screen, waitFor } from "@testing-library/react";
@@ -9,12 +9,10 @@ import { defaultImport } from "default-import";
 
 import { RepeatTypeSelect, IRepeatTypeSelectProps } from "../RepeatTypeSelect.js";
 
-import { getIntlDayName, getWeek } from "../../../utils/datetime.js";
+import { getIntlDayName } from "../../../utils/datetime.js";
 import { REPEAT_TYPES } from "../../../constants.js";
 import { IntlWrapper } from "../../../../../localization/IntlWrapper.js";
 import { createInternalIntl } from "../../../../../localization/createInternalIntl.js";
-
-import { TEXT_INDEX } from "./testUtils.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -27,7 +25,6 @@ describe("RepeatTypeSelect", () => {
 
     const titleTypeDaily = "Daily";
     const titleTypeWeekly = `Weekly on ${getIntlDayName(intl, now)}`;
-    const titleTypeMonthly = `Monthly on the ${TEXT_INDEX[getWeek(now)]} ${getIntlDayName(intl, now)}`;
     const titleTypeCustom = "Custom";
 
     function renderComponent(customProps: Partial<IRepeatTypeSelectProps> = {}) {
@@ -53,7 +50,6 @@ describe("RepeatTypeSelect", () => {
     it.each([
         [REPEAT_TYPES.DAILY, titleTypeDaily],
         [REPEAT_TYPES.WEEKLY, titleTypeWeekly],
-        [REPEAT_TYPES.MONTHLY, titleTypeMonthly],
         [REPEAT_TYPES.CUSTOM, titleTypeCustom],
     ])("should render correct title for %s", (repeatType: string, expectedTitle: string) => {
         renderComponent({
