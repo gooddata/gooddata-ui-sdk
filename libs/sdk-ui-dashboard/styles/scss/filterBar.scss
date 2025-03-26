@@ -35,6 +35,8 @@ $attribute-filter-drag-handle-left: 10px;
     display: block;
     transform: translateX(-50%);
     z-index: zIndexes.$dashboard-message;
+    text-align: center;
+    width: 90%;
 
     .gd-message {
         background-color: var(--gd-palette-primary-dimmed, #e8f7fc);
