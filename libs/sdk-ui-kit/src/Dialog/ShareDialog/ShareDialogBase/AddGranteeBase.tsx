@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
@@ -51,6 +51,7 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
             onSubmit={onSubmit}
             onClose={onCancel}
             headerLeftButtonRenderer={backButtonRenderer}
+            autofocusOnOpen={false}
         >
             <AddGranteeContent
                 currentUserPermissions={currentUserPermissions}
