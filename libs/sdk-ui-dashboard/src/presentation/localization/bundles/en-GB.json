@@ -629,7 +629,7 @@
     "visualizationSwitcher.list.menu.remove": "Remove",
     "dialogs.schedule.email.user.missing.email": "This bloke's missing an email address.",
     "insightAlert.config.for": "For",
-    "insightAlert.config.warning.destination": "The selected destination only supports sending the alert to yourself, mate.",
+    "insightAlert.config.warning.destination": "The selected destination only supports sending the alert to yourself.",
     "insightAlert.config.selectAttribute": "All",
     "addPanel.dashboardLayout": "Container",
     "addPanel.dashboardLayout.tooltip": "Group and display multiple widgets together for a more flexible layout.",
