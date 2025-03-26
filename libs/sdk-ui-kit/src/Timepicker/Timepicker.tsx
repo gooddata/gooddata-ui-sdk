@@ -155,7 +155,7 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
                             align: "tl bl",
                         },
                     ]}
-                    renderButton={({ openDropdown, isOpen }) => (
+                    renderButton={({ openDropdown, isOpen, dropdownId }) => (
                         <DropdownButton
                             accessibilityConfig={{
                                 ariaLabelledBy,
@@ -163,6 +163,7 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
                             }}
                             value={formatTime(time.h, time.m, this.props.timeFormat)}
                             isOpen={isOpen}
+                            dropdownId={dropdownId}
                             onClick={openDropdown}
                             iconLeft="gd-icon-timer"
                         />

@@ -342,9 +342,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                             <FormattedMessage id="dialogs.schedule.email.user.guest" />
                         </div>
                     ) : null}
-                    <div aria-label="remove-icon" className="gd-recipient-remove-icon s-gd-recipient-remove">
-                        {removeIcon}
-                    </div>
+                    <div className="gd-recipient-remove-icon s-gd-recipient-remove">{removeIcon}</div>
                 </div>
             );
         };

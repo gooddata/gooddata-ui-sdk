@@ -98,15 +98,33 @@ $min-content-height: 110px;
         align-items: flex-start;
     }
 
-    > .gd-label {
+    // Remove fieldset border and padding
+    &.gd-input-component {
+        border: none;
+        padding: 0;
+        margin: 0 0 20px 0;
+    }
+
+    legend.gd-label {
+        float: left;
+        padding: 0;
+        margin-bottom: 0;
         height: 30px;
         line-height: 30px;
+
+        @media #{kit-variables.$small-only} {
+            float: none;
+            display: block;
+            width: auto;
+            margin-bottom: 7px;
+            margin-top: -3px;
+        }
     }
 
     .gd-attachment-list {
         display: flex;
         flex-direction: row;
-        align-items: baseline;
+        align-items: end;
         flex: 1;
         overflow: hidden;
         margin: -2px 0;
@@ -165,6 +183,7 @@ $min-content-height: 110px;
             height: 24px;
             color: kit-variables.$gd-color-text;
             background: variables.$button-grey-background;
+            border: none;
             border-radius: 0 3px 3px 0;
             padding-left: 7px;
             padding-right: 7px;

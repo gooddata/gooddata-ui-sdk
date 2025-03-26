@@ -12,6 +12,7 @@ interface ITextareaOwnProps {
     value: string;
     rows: number;
     onChange: (value: string) => void;
+    autocomplete?: string;
 }
 
 interface ITextareaState {
@@ -32,7 +33,7 @@ export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState
     }
 
     public render() {
-        const { id, className, label, maxlength, placeholder, value, rows } = this.props;
+        const { id, className, label, maxlength, placeholder, value, rows, autocomplete } = this.props;
         const classNames = cx(`gd-input-component gd-textarea-component ${className}`);
 
         return (
@@ -49,6 +50,7 @@ export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState
                         value={value}
                         rows={rows}
                         onChange={this.onChange}
+                        autoComplete={autocomplete}
                     />
                 </label>
             </div>

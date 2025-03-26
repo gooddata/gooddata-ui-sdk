@@ -35,6 +35,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
         autofocus = false,
         isEditableLabelWidthBasedOnText = false,
         ariaLabel,
+        autocomplete,
     } = props;
 
     const rootRef = useRef<HTMLDivElement>(null);
@@ -228,6 +229,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
                 placeholder={placeholder}
                 ref={textareaRef}
                 aria-label={ariaLabel}
+                autoComplete={autocomplete}
             />
         );
     };
@@ -249,7 +251,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
         };
 
         return (
-            <div role="textarea-wrapper" className={`${alignId} gd-editable-label-textarea-wrapper`}>
+            <div data-testid="textarea-wrapper" className={`${alignId} gd-editable-label-textarea-wrapper`}>
                 <Overlay
                     alignTo={`.${alignId}`}
                     alignPoints={[
@@ -277,7 +279,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
     const displayValue = children || value || placeholder;
 
     return (
-        <div role="editable-label" ref={ref} className={editableLabelClasses} onClick={edit}>
+        <div data-testid="editable-label" ref={ref} className={editableLabelClasses} onClick={edit}>
             <div className="gd-editable-label-inner" ref={rootRef}>
                 {isEditing ? renderEditableLabelEdit() : displayValue}
             </div>

@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import noop from "lodash/noop.js";
@@ -8,6 +8,7 @@ import { DialogBase } from "./DialogBase.js";
 import { IConfirmDialogBaseProps } from "./typings.js";
 import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 import { Typography } from "../Typography/index.js";
+import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
 
 /**
  * @internal
@@ -42,6 +43,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
             footerLeftRenderer,
             titleRightIconRenderer,
             dialogHeaderClassName,
+            autofocusOnOpen = true,
         } = this.props;
         const dialogClasses = cx(
             {
@@ -59,58 +61,66 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
         const headerClassNames = cx("gd-dialog-header", dialogHeaderClassName);
 
         return (
-            <div tabIndex={0} onKeyDown={this.onKeyDown}>
-                <div className={dialogClasses}>
-                    {displayCloseButton ? this.renderCloseButton() : null}
+            <UiFocusTrap autofocusOnOpen={autofocusOnOpen}>
+                <div onKeyDown={this.onKeyDown}>
+                    <div className={dialogClasses}>
+                        {displayCloseButton ? this.renderCloseButton() : null}
 
-                    <div className="gd-dialog-header-wrapper">
-                        {headerLeftButtonRenderer?.()}
-                        <div className={headerClassNames}>
-                            <Typography tagName="h3" className="gd-dialog-header-title">
-                                {headline}
-                            </Typography>
-                            {titleRightIconRenderer?.()}
+                        <div className="gd-dialog-header-wrapper">
+                            {headerLeftButtonRenderer?.()}
+                            <div className={headerClassNames}>
+                                {headline ? (
+                                    <Typography tagName="h3" className="gd-dialog-header-title">
+                                        {headline}
+                                    </Typography>
+                                ) : null}
+                                {titleRightIconRenderer?.()}
+                            </div>
+                        </div>
+                        {!!warning && <div className="gd-dialog-warning">{warning}</div>}
+
+                        <div className="gd-dialog-content">{children}</div>
+
+                        <div className="gd-dialog-footer">
+                            {footerLeftRenderer?.()}
+                            {showProgressIndicator ? (
+                                <LoadingSpinner className="gd-dialog-spinner small" />
+                            ) : null}
+
+                            <Button
+                                onClick={onCancel}
+                                className="gd-button-secondary s-dialog-cancel-button"
+                                value={cancelButtonText}
+                                disabled={isCancelDisabled}
+                            />
+
+                            {submitButtonText ? (
+                                <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
+                                    <Button
+                                        onClick={onSubmit}
+                                        className={submitButtonClasses}
+                                        value={submitButtonText}
+                                        disabled={isSubmitDisabled}
+                                    />
+                                    {submitButtonTooltipText ? (
+                                        <Bubble
+                                            className="bubble-primary"
+                                            alignPoints={
+                                                submitButtonTooltipAlignPoints || [{ align: "bc tc" }]
+                                            }
+                                            arrowOffsets={
+                                                submitButtonTooltipArrowOffsets || { "bc tc": [0, 15] }
+                                            }
+                                        >
+                                            {submitButtonTooltipText}
+                                        </Bubble>
+                                    ) : null}
+                                </BubbleHoverTrigger>
+                            ) : null}
                         </div>
                     </div>
-                    {!!warning && <div className="gd-dialog-warning">{warning}</div>}
-
-                    <div className="gd-dialog-content">{children}</div>
-
-                    <div className="gd-dialog-footer">
-                        {footerLeftRenderer?.()}
-                        {showProgressIndicator ? (
-                            <LoadingSpinner className="gd-dialog-spinner small" />
-                        ) : null}
-
-                        <Button
-                            onClick={onCancel}
-                            className="gd-button-secondary s-dialog-cancel-button"
-                            value={cancelButtonText}
-                            disabled={isCancelDisabled}
-                        />
-
-                        {submitButtonText ? (
-                            <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
-                                <Button
-                                    onClick={onSubmit}
-                                    className={submitButtonClasses}
-                                    value={submitButtonText}
-                                    disabled={isSubmitDisabled}
-                                />
-                                {submitButtonTooltipText ? (
-                                    <Bubble
-                                        className="bubble-primary"
-                                        alignPoints={submitButtonTooltipAlignPoints || [{ align: "bc tc" }]}
-                                        arrowOffsets={submitButtonTooltipArrowOffsets || { "bc tc": [0, 15] }}
-                                    >
-                                        {submitButtonTooltipText}
-                                    </Bubble>
-                                ) : null}
-                            </BubbleHoverTrigger>
-                        ) : null}
-                    </div>
                 </div>
-            </div>
+            </UiFocusTrap>
         );
     }
 }

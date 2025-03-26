@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
@@ -32,7 +32,7 @@ describe("PushpinViewportControl", () => {
             createComponent({
                 disabled: true,
             });
-            expect(screen.getByRole("button")).toHaveClass("disabled");
+            expect(screen.getByRole("combobox")).toHaveClass("disabled");
         });
 
         it("should have `Include all data` by default", () => {

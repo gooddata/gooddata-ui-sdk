@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 @use "variables";
 
@@ -22,9 +22,13 @@ $input-width: 128px;
         flex-direction: row;
         align-items: center;
 
-        > :not(:first-of-type),
+        > :not(:first-of-type):not(.gd-label),
         > :not(:last-of-type) {
             margin-right: 10px;
+        }
+
+        .gd-label {
+            margin-right: 0;
         }
 
         input,

@@ -49,16 +49,13 @@ export const WidgetAttachments = (props: IWidgetAttachmentsProps) => {
         }
     };
 
-    const accessibilityValue = "form.attachments";
-
     return (
-        <div className="gd-input-component gd-notifications-channels-attachments s-notifications-channels-attachments">
-            <label htmlFor={accessibilityValue} className="gd-label">
+        <fieldset className="gd-input-component gd-notifications-channels-attachments s-notifications-channels-attachments">
+            <legend className="gd-label">
                 <FormattedMessage id="dialogs.schedule.email.attachments.label" />
-            </label>
+            </legend>
             <div className="gd-attachment-list">
                 <AttachmentWidgets
-                    id={accessibilityValue}
                     csvSelected={csvSelected}
                     xlsxSelected={xlsxSelected}
                     settings={settings}
@@ -82,6 +79,6 @@ export const WidgetAttachments = (props: IWidgetAttachmentsProps) => {
                     </Message>
                 ) : null}
             </div>
-        </div>
+        </fieldset>
     );
 };

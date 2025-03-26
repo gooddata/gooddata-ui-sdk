@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 import { describe, it, expect, vi } from "vitest";
 import { defaultImport } from "default-import";
@@ -166,7 +166,7 @@ describe("Test OrientationDropdownControl", () => {
         it("should render the component with default props", () => {
             createComponent();
 
-            expect(screen.getByRole("button")).toHaveClass("dropdown-button");
+            expect(screen.getByRole("combobox")).toHaveClass("dropdown-button");
             expect(screen.getByText("Orientation")).toBeInTheDocument();
         });
 
@@ -176,7 +176,7 @@ describe("Test OrientationDropdownControl", () => {
                 disabled: true,
             });
 
-            expect(screen.getByRole("button")).toHaveClass("disabled");
+            expect(screen.getByRole("combobox")).toHaveClass("disabled");
         });
 
         it("should trigger update the data when the value is changed", async () => {
@@ -185,7 +185,7 @@ describe("Test OrientationDropdownControl", () => {
                 ...defaultProps,
                 pushData,
             });
-            await act(() => userEvent.click(screen.getByRole("button")));
+            await act(() => userEvent.click(screen.getByRole("combobox")));
 
             expect(screen.getByText("Vertical")).toBeInTheDocument();
 

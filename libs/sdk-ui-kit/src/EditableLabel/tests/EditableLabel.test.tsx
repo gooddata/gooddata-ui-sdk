@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { EditableLabel } from "../EditableLabel.js";
@@ -17,7 +17,7 @@ function renderEditableLabel(options: IEditableLabelProps) {
 }
 
 const clickToEnableEditing = async () => {
-    await userEvent.click(screen.getByRole("editable-label"));
+    await userEvent.click(screen.getByTestId("editable-label"));
 };
 
 describe("EditableLabel", () => {
@@ -29,9 +29,9 @@ describe("EditableLabel", () => {
                 onSubmit: vi.fn(),
             });
 
-            expect(screen.queryByRole("textarea-wrapper")).not.toBeInTheDocument();
+            expect(screen.queryByTestId("textarea-wrapper")).not.toBeInTheDocument();
             await clickToEnableEditing();
-            expect(await screen.findByRole("textarea-wrapper")).toBeInTheDocument();
+            expect(await screen.findByTestId("textarea-wrapper")).toBeInTheDocument();
         });
 
         it("should have editing class", async () => {
@@ -42,7 +42,7 @@ describe("EditableLabel", () => {
 
             await clickToEnableEditing();
             await waitFor(() => {
-                expect(screen.getByRole("editable-label")).toHaveClass("is-editing");
+                expect(screen.getByTestId("editable-label")).toHaveClass("is-editing");
             });
             unmount();
         });
@@ -112,7 +112,7 @@ describe("EditableLabel", () => {
             fireEvent.blur(screen.getByRole("textbox"));
 
             expect(onSubmit).not.toHaveBeenCalled();
-            expect(screen.queryByRole("editable-label")).not.toHaveClass("is-editing");
+            expect(screen.queryByTestId("editable-label")).not.toHaveClass("is-editing");
         });
 
         it("should call onSubmit when user press the enter key", async () => {
@@ -130,7 +130,7 @@ describe("EditableLabel", () => {
                 // screen.debug();
                 expect(onSubmit).toHaveBeenCalledTimes(1); // clear and paste
                 expect(onSubmit).toHaveBeenCalledWith(value);
-                expect(screen.queryByRole("editable-label")).not.toHaveClass("is-editing");
+                expect(screen.queryByTestId("editable-label")).not.toHaveClass("is-editing");
             });
         });
 
@@ -147,7 +147,7 @@ describe("EditableLabel", () => {
             await waitFor(() => {
                 expect(onCancel).toHaveBeenCalledTimes(1);
                 expect(onCancel).toHaveBeenCalledWith("aaa");
-                expect(screen.queryByRole("editable-label")).not.toHaveClass("is-editing");
+                expect(screen.queryByTestId("editable-label")).not.toHaveClass("is-editing");
             });
         });
 
@@ -165,7 +165,7 @@ describe("EditableLabel", () => {
 
             expect(onSubmit).toHaveBeenCalledTimes(1);
             expect(onSubmit).toHaveBeenCalledWith("");
-            expect(screen.queryByRole("editable-label")).not.toHaveClass("is-editing");
+            expect(screen.queryByTestId("editable-label")).not.toHaveClass("is-editing");
         });
 
         it("should call onChange when user change value", async () => {

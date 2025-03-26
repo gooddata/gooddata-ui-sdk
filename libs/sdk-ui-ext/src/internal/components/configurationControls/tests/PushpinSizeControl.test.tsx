@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
@@ -34,7 +34,7 @@ describe("PushpinSizeControl", () => {
                 disabled: true,
             });
 
-            const buttons = getAllByRole("button");
+            const buttons = getAllByRole("combobox");
             buttons.forEach((item) => {
                 expect(item).toHaveClass("disabled");
             });

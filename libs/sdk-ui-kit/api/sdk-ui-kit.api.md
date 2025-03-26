@@ -222,7 +222,6 @@ export class Button extends React_2.Component<IButtonProps> {
         onClick: (...args: any[]) => void;
         tabIndex: number;
         tagName: string;
-        title: string;
         type: string;
         iconLeft: string;
         iconRight: string;
@@ -731,6 +730,8 @@ export interface IAccessibilityConfigBase {
     ariaLabel?: React.AriaAttributes["aria-label"];
     // (undocumented)
     ariaLabelledBy?: React.AriaAttributes["aria-labelledby"];
+    // (undocumented)
+    role?: React.HTMLAttributes<HTMLElement>["role"];
 }
 
 // @internal (undocumented)
@@ -1218,6 +1219,7 @@ export const Icon: Record<string, React_2.FC<IIconProps>>;
 
 // @internal (undocumented)
 export interface IConfirmDialogBaseProps extends IDialogBaseProps {
+    autofocusOnOpen?: boolean;
     // (undocumented)
     cancelButtonText?: string;
     // (undocumented)
@@ -1312,9 +1314,9 @@ export interface IDateDatasetsListItemProps {
 // @internal (undocumented)
 export interface IDatePickerOwnProps {
     // (undocumented)
-    alignPoints?: IAlignPoint[];
+    accessibilityConfig?: IAccessibilityConfigBase;
     // (undocumented)
-    ariaLabelledBy?: string;
+    alignPoints?: IAlignPoint[];
     // (undocumented)
     className?: string;
     // (undocumented)
@@ -1379,6 +1381,10 @@ export interface IDescriptionTriggerProps {
 
 // @internal (undocumented)
 export interface IDialogBaseProps {
+    // (undocumented)
+    accessibilityConfig?: {
+        closeButton?: IButtonAccessibilityConfig;
+    };
     // (undocumented)
     children?: React_2.ReactNode;
     // (undocumented)
@@ -1692,6 +1698,8 @@ export interface IDropdownTagsProps {
 export interface IEditableLabelProps {
     // (undocumented)
     ariaLabel?: string;
+    // (undocumented)
+    autocomplete?: string;
     // (undocumented)
     autofocus?: boolean;
     // (undocumented)
@@ -3190,6 +3198,8 @@ export interface InputPureProps extends IDomNativeProps {
     accessibilityType?: string;
     // (undocumented)
     ariaLabel?: string;
+    // (undocumented)
+    autocomplete?: string;
     // (undocumented)
     className: string;
     // (undocumented)

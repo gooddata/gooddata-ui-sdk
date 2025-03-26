@@ -19,31 +19,34 @@ const DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
 ];
 
 const AttachmentItem: React.FC<{
-    id: string;
+    id?: string;
     format: AttachmentType;
     checked: boolean;
     disabled?: boolean;
     onChange: () => void;
     className?: string;
-}> = ({ id, format, checked, onChange, className, disabled }) => (
-    <label className="gd-notifications-channels-attachment-checkbox input-checkbox-label">
-        <input
-            id={id}
-            type="checkbox"
-            className="input-checkbox"
-            disabled={disabled}
-            checked={checked}
-            onChange={onChange}
-        />
-        <span className="input-label-text" />
-        <div
-            aria-label="attachment"
-            className={cx("gd-attachment-item", `s-attachment-item-${format.toLowerCase()}`, className)}
-        >
-            <span className="gd-attachment-item-format">{format}</span>
-        </div>
-    </label>
-);
+}> = ({ format, checked, onChange, className, disabled }) => {
+    const intl = useIntl();
+    return (
+        <label className="gd-notifications-channels-attachment-checkbox input-checkbox-label">
+            <input
+                type="checkbox"
+                className="input-checkbox"
+                disabled={disabled}
+                checked={checked}
+                onChange={onChange}
+                aria-label={intl.formatMessage(
+                    { id: "dialogs.schedule.management.attachments.attachment" },
+                    { format: format },
+                )}
+            />
+            <span className="input-label-text" />
+            <div className={cx("gd-attachment-item", `s-attachment-item-${format.toLowerCase()}`, className)}>
+                <span className="gd-attachment-item-format">{format}</span>
+            </div>
+        </label>
+    );
+};
 
 export const AttachmentDashboard: React.FC<{
     id: string;
@@ -65,27 +68,20 @@ export const AttachmentDashboard: React.FC<{
 };
 
 export const AttachmentWidgets: React.FC<{
-    id: string;
     csvSelected: boolean;
     xlsxSelected: boolean;
     settings: IExportDefinitionVisualizationObjectSettings;
     onSelectionChange: (format: WidgetAttachmentType) => void;
     onSettingsChange: (obj: IExportDefinitionVisualizationObjectSettings) => void;
 }> = (props) => {
-    const { id, csvSelected, xlsxSelected, settings, onSelectionChange, onSettingsChange } = props;
+    const { csvSelected, xlsxSelected, settings, onSelectionChange, onSettingsChange } = props;
     const intl = useIntl();
     const [mergeHeaders, setMergeHeaders] = useState(settings.mergeHeaders);
 
     return (
         <>
+            <AttachmentItem format="CSV" checked={csvSelected} onChange={() => onSelectionChange("CSV")} />
             <AttachmentItem
-                id={id}
-                format="CSV"
-                checked={csvSelected}
-                onChange={() => onSelectionChange("CSV")}
-            />
-            <AttachmentItem
-                id={id}
                 format="XLSX"
                 checked={xlsxSelected}
                 onChange={() => onSelectionChange("XLSX")}
@@ -93,10 +89,14 @@ export const AttachmentWidgets: React.FC<{
             />
             <Dropdown
                 alignPoints={DROPDOWN_ALIGN_POINTS}
+                autofocusOnOpen={true}
                 renderButton={({ toggleDropdown }) => (
-                    <span
+                    <button
                         className="gd-attachment-item-configuration gd-icon-settings"
                         onClick={toggleDropdown}
+                        aria-label={intl.formatMessage({
+                            id: "dialogs.schedule.management.attachments.xlsx.settings",
+                        })}
                     />
                 )}
                 renderBody={({ closeDropdown }) => (
@@ -108,6 +108,9 @@ export const AttachmentWidgets: React.FC<{
                                     className="gd-button-link gd-button-icon-only gd-icon-cross s-dialog-close-button"
                                     value=""
                                     onClick={closeDropdown}
+                                    accessibilityConfig={{
+                                        ariaLabel: intl.formatMessage({ id: "close" }),
+                                    }}
                                 />
                             </div>
                         </div>

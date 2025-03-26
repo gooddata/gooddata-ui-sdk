@@ -33,6 +33,7 @@ import enGB from "date-fns/locale/en-GB/index.js";
 import frCA from "date-fns/locale/fr-CA/index.js";
 import fi from "date-fns/locale/fi/index.js";
 import enAU from "date-fns/locale/en-AU/index.js";
+import { IAccessibilityConfigBase } from "../typings/accessibility.js";
 
 const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-day_outside";
 
@@ -40,7 +41,7 @@ const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-day_outside";
  * @internal
  */
 export interface IDatePickerOwnProps {
-    ariaLabelledBy?: string;
+    accessibilityConfig?: IAccessibilityConfigBase;
     date?: Date; // date value used to initialize date picker
     className?: string; // optional css applied to outer div
     placeholder?: string;
@@ -135,6 +136,8 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
     private datePickerContainerRef = React.createRef<HTMLDivElement>();
     private inputRef = React.createRef<HTMLInputElement>();
 
+    private datePickerId = uuid();
+
     public static defaultProps = {
         className: "",
         date: new Date(),
@@ -218,7 +221,12 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
     }
 
     private getInputClasses() {
-        return classNames("input-text", "small-12", this.props.size, `gd-datepicker-input-${uuid()}`);
+        return classNames(
+            "input-text",
+            "small-12",
+            this.props.size,
+            `gd-datepicker-input-${this.datePickerId}`,
+        );
     }
 
     private getComponentClasses() {
@@ -364,7 +372,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
 
     public render(): React.ReactNode {
         const { inputValue, selectedDate, monthDate, isOpen } = this.state;
-        const { ariaLabelledBy, placeholder, intl, tabIndex } = this.props;
+        const { accessibilityConfig, placeholder, intl, tabIndex } = this.props;
 
         const classNamesProps: ClassNames = {
             root: this.getOverlayWrapperClasses(),
@@ -372,17 +380,22 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
 
         return (
             <div
-                role="datepicker"
+                data-testid="datepicker"
                 className={this.getComponentClasses()}
                 ref={this.setComponentRef}
                 onClick={this.handleWrapperClick}
             >
                 <input
                     role="combobox"
+                    autoComplete="off"
                     aria-haspopup="dialog"
                     aria-expanded={isOpen ? "true" : "false"}
-                    aria-controls="datepicker-popup"
-                    aria-labelledby={ariaLabelledBy}
+                    aria-controls={isOpen ? `datepicker-popup-${this.datePickerId}` : undefined}
+                    aria-labelledby={accessibilityConfig?.ariaLabelledBy}
+                    aria-label={
+                        accessibilityConfig?.ariaLabel ||
+                        intl.formatMessage({ id: "datePicker.accessibility.label" })
+                    }
                     onKeyDown={this.onKeyDown}
                     tabIndex={tabIndex}
                     onClick={() => this.setState({ isOpen: true })}
@@ -396,9 +409,8 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
 
                 {isOpen ? (
                     <div
-                        id="datepicker-popup"
+                        id={`datepicker-popup-${this.datePickerId}`}
                         role="dialog"
-                        aria-label={intl.formatMessage({ id: "datePicker.accessibility.label" })}
                         ref={this.datePickerContainerRef}
                     >
                         <DayPicker

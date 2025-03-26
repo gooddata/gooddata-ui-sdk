@@ -34,17 +34,17 @@ describe("DropdownControl", () => {
     it("should render dropdown control", () => {
         createComponent();
 
-        expect(screen.getByRole("button")).toHaveClass("dropdown-button");
+        expect(screen.getByRole("combobox")).toHaveClass("dropdown-button");
     });
 
     it("should be enabled by default", () => {
         createComponent();
-        expect(screen.getByRole("button")).not.toHaveClass("disabled");
+        expect(screen.getByRole("combobox")).not.toHaveClass("disabled");
     });
 
     it("should render disabled button", () => {
         createComponent({ disabled: true });
-        expect(screen.getByRole("button")).toHaveClass("disabled");
+        expect(screen.getByRole("combobox")).toHaveClass("disabled");
     });
 
     describe("rendered list items", () => {
@@ -84,7 +84,7 @@ describe("DropdownControl", () => {
         ])("should render %s", async (_testType, items: IDropdownItem[], role: string) => {
             createComponent({ items });
 
-            await userEvent.click(screen.getByRole("button"));
+            await userEvent.click(screen.getByRole("combobox"));
             await waitFor(() => {
                 expect(screen.getByRole(role, { hidden: true })).toBeInTheDocument();
             });
