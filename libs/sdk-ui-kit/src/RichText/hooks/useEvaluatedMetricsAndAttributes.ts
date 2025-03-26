@@ -37,17 +37,16 @@ export function useEvaluatedMetricsAndAttributes(
     const metrics = getMeasures(references);
     const { metrics: labels, countMap } = getLabels(references);
 
+    const items = [...metrics, ...labels];
+
     const {
         status: executionStatus,
         result: executionResult,
         error: executionError,
     } = useExecutionDataView({
         execution:
-            enabled && metrics.length > 0
-                ? backend
-                      .workspace(workspace)
-                      .execution()
-                      .forItems([...metrics, ...labels], filters)
+            enabled && items.length > 0
+                ? backend.workspace(workspace).execution().forItems(items, filters)
                 : null,
     });
 
