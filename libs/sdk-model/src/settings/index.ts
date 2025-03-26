@@ -641,6 +641,11 @@ export interface ISettings {
      */
     enableDashboardShareLink?: boolean;
 
+    /**
+     * Enable using execution timestamp.
+     */
+    enableExecutionTimestamp?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

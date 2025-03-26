@@ -139,6 +139,7 @@ export enum TigerFeaturesNames {
     EnableRichTextDynamicReferences = "enableRichTextDynamicReferences",
     EnableAnalyticalDesignerCatalogSideload = "enableAnalyticalDesignerCatalogSideload",
     EnableDashboardShareLink = "enableDashboardShareLink",
+    EnableExecutionTimestamp = "enableExecutionTimestamp",
 }
 
 export type ITigerFeatureFlags = {
@@ -240,6 +241,7 @@ export type ITigerFeatureFlags = {
     enableAnalyticalDesignerCatalogSideload: typeof FeatureFlagsValues["enableAnalyticalDesignerCatalogSideload"][number];
     enableDashboardShareLink: typeof FeatureFlagsValues["enableDashboardShareLink"][number];
     enableHighchartsAccessibility: typeof FeatureFlagsValues["enableHighchartsAccessibility"][number];
+    enableExecutionTimestamp: typeof FeatureFlagsValues["enableExecutionTimestamp"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -341,6 +343,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAnalyticalDesignerCatalogSideload: false,
     enableDashboardShareLink: false,
     enableHighchartsAccessibility: false,
+    enableExecutionTimestamp: false,
 };
 
 export const FeatureFlagsValues = {
@@ -446,4 +449,5 @@ export const FeatureFlagsValues = {
     enableAnalyticalDesignerCatalogSideload: [true, false] as const,
     enableDashboardShareLink: [true, false] as const,
     enableHighchartsAccessibility: [true, false] as const,
+    enableExecutionTimestamp: [true, false] as const,
 };

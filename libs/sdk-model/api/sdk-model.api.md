@@ -3391,6 +3391,7 @@ export interface ISettings {
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
     enableExecutionCancelling?: boolean;
+    enableExecutionTimestamp?: boolean;
     enableExternalRecipients?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
