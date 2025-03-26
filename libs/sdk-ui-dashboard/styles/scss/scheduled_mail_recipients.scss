@@ -57,10 +57,11 @@ $input-height: 28px;
     }
 
     // custom className from react-select rendered
+    // TODO LX-769, requirement 3, Schedule an export
     .gd-recipients__control--is-focused,
     .gd-recipients__control--is-focused:hover {
         border-color: kit-variables.$gd-palette-primary-base;
-        outline: 0;
+        outline: revert;
         box-shadow: inset 0 1px 1px 0 rgba(31, 53, 74, 0.2);
     }
 
@@ -211,7 +212,6 @@ $input-height: 28px;
         border-top: 0;
         border-top-color: button-variables.$button-normal-border-color;
         margin-top: -2px;
-        outline: 0;
         box-shadow: inset 0 1px 1px 0 rgba(31, 53, 74, 0.2);
         color: kit-variables.$gd-color-text;
         background-color: kit-variables.$gd-color-white;

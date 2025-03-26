@@ -52,7 +52,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     }
 
     &:not(.active) {
-        @include mixins.active-states {
+        &:hover {
             opacity: 0.6;
         }
     }
@@ -348,9 +348,10 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
 }
 a.gd-list-help-menu-item.gd-list-item {
     &:focus-visible {
+        // TODO LX-769
         // disable outline and use box-shadow instead.
         // outline highlights both element and ::after content added as divider
-        // needs to be rewriten in https: //gooddata.atlassian.net/browse/LX-769
+        // needs to be rewritten in https://gooddata.atlassian.net/browse/LX-769
         outline: none;
         box-shadow: 0 0 0 2px black;
         text-decoration: none;
@@ -942,8 +943,7 @@ a.gd-list-help-menu-item.gd-list-item {
     }
 
     &:focus-visible {
-        border: none;
-        outline: auto;
+        outline: revert;
     }
 }
 
@@ -959,7 +959,7 @@ a.gd-list-help-menu-item.gd-list-item {
         }
         a.gd-list-item {
             &:focus-visible {
-                outline: auto;
+                outline: revert;
                 text-decoration: none;
             }
             &:focus {
@@ -1278,10 +1278,6 @@ button.gd-button-primary.gd-upsell-button {
     text-align: start;
     transform-origin: 0 0;
     -moz-appearance: none;
-
-    &:focus {
-        outline: 0;
-    }
 }
 
 .gd-header-button {

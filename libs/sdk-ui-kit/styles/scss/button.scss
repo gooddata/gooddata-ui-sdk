@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:color";
 @use "Button/_mixins" as button-mixins;
 @use "Button/variables" as button-variables;
@@ -357,12 +357,6 @@
     &.gd-button-link,
     &.gd-button-link-dimmed {
         line-height: 0.8;
-
-        &:focus {
-            outline: none;
-            box-shadow: none;
-            border-color: transparent;
-        }
     }
 }
 

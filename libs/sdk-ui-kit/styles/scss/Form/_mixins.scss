@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "../variables.scss";
 @use "../mixins";
 
@@ -32,8 +32,6 @@
     font-size: 14px;
     font-family: variables.$gd-font-primary;
     font-weight: 200;
-
-    @include mixins.transition(all, 0.25s, ease-in-out);
 }
 
 @mixin gd-input-small-base {

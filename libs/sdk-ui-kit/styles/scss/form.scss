@@ -1,7 +1,6 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:color";
 @use "Form/_mixins" as form-mixins;
-@use "Form/_variables" as form-variables;
 @use "variables";
 @use "mixins";
 
@@ -11,7 +10,6 @@
 .gd-input {
     position: relative;
     display: block;
-    outline: 0;
 }
 
 .gd-input-wrapper,
@@ -51,12 +49,14 @@
     }
 
     &:focus {
-        outline: 0;
-        border-color: variables.$gd-palette-primary-base;
-
         @include mixins.box-shadow(
             inset 0 1px 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.8)
         );
+    }
+
+    &:focus-visible {
+        box-shadow: none;
+        outline-color: variables.$gd-input-text-border-outline;
     }
 
     &:disabled,
@@ -81,7 +81,6 @@ textarea {
     &.gd-input,
     &.input-text {
         height: auto;
-        outline: 0;
     }
 }
 
@@ -157,11 +156,15 @@ textarea {
    ========================================================================== */
 
 .has-error {
-    .gd-input-field {
+    .gd-input-field,
+    .input-text {
         color: variables.$gd-color-text;
-        border-color: form-variables.$gd-form-error-borderColor;
+        border-color: variables.$gd-input-text-border-error;
+        box-shadow: none;
 
-        @include mixins.box-shadow(inset 0 0 2px 0 form-variables.$gd-form-error-shadowColor);
+        &:focus-visible {
+            outline-color: variables.$gd-input-text-border-error-outline;
+        }
     }
 
     .gd-input-icon {
@@ -170,10 +173,14 @@ textarea {
 }
 
 .has-warning {
-    .gd-input-field {
-        border-color: variables.$gd-palette-warning-base;
+    .gd-input-field,
+    .input-text {
+        border-color: variables.$gd-input-text-border-warning;
+        box-shadow: none;
 
-        @include mixins.box-shadow(inset 0 0 2px 0 form-variables.$gd-form-warning-shadowColor);
+        &:focus-visible {
+            outline-color: variables.$gd-input-text-border-warning-outline;
+        }
     }
 }
 
@@ -281,7 +288,7 @@ textarea {
 
     &.has-error .gd-input-field {
         @include form-mixins.gd-input-and-prefix {
-            border-color: form-variables.$gd-form-error-borderColor;
+            border-color: variables.$gd-input-text-border-error;
         }
     }
 }
@@ -408,7 +415,6 @@ textarea {
 
     input {
         position: absolute;
-        outline: 0;
         opacity: 0;
 
         &:checked ~ .input-label-text {
@@ -498,7 +504,6 @@ textarea {
 .input-checkbox-toggle {
     input {
         position: absolute;
-        outline: 0;
         opacity: 0;
 
         &:disabled,

@@ -159,7 +159,7 @@ $menu-item-icon-width: 30px;
         }
     }
     &:focus-visible {
-        outline: auto;
+        outline: revert;
     }
 
     &.gd-menu-item-remove:hover {
@@ -430,7 +430,7 @@ $menu-item-icon-width: 30px;
     }
 
     .public_fixedDataTable_main:focus-visible {
-        outline: auto;
+        outline: revert;
     }
 
     .public_Scrollbar_main {

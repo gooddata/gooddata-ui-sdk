@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 // Make sure the charset is set appropriately
 @charset 'utf-8';
 
@@ -221,14 +221,6 @@
 @mixin default-styles() {
     font-family: variables.$gd-font-primary;
     line-height: 1.5;
-
-    button,
-    input,
-    optgroup,
-    select,
-    textarea {
-        outline: 0;
-    }
 
     *,
     *::before,
