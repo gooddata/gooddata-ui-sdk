@@ -128,10 +128,10 @@ function iterateReferenceMatch<T>(value: string, onMatch: (ref: IdentifierRef, i
 function createMetricValue(intl: IntlShape, text: TextNode | null, metric: EvaluatedMetric) {
     const value = metric ? metric.data.rawValue : null;
 
-    const isEmpty = value === null || value === undefined || metric?.count === 0;
     const isMultiple = metric?.count && metric.count > 1;
 
-    const formattedValue = !metric
+    let isEmpty = value === null || value === undefined || metric?.count === 0;
+    let formattedValue = !metric
         ? `(${intl.formatMessage({ id: "richText.no_fetch" })})`
         : isEmpty
         ? `(${intl.formatMessage({ id: "richText.no_data" })})`
@@ -140,6 +140,12 @@ function createMetricValue(intl: IntlShape, text: TextNode | null, metric: Evalu
         : typeof value === "string"
         ? value
         : metric.data.formattedValue();
+
+    // NOTE: If the results value is empty, we should display the empty value message
+    if (formattedValue == "") {
+        formattedValue = `(${intl.formatMessage({ id: "empty_value" })})`;
+        isEmpty = true;
+    }
 
     const metricDef = {
         type: "element",
