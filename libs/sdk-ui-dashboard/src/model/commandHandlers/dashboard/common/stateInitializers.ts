@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { call } from "redux-saga/effects";
+import { call, SagaReturnType } from "redux-saga/effects";
 import update from "lodash/fp/update.js";
 import isEmpty from "lodash/isEmpty.js";
 import { PayloadAction } from "@reduxjs/toolkit";
@@ -148,41 +148,54 @@ function* actionsToInitializeOrFillNewDashboard(
     originalFilterContextDefinition?: IFilterContextDefinition;
     initialContent?: boolean;
 }> {
-    //No initial content
-    if (!ctx.config?.initialContent) {
-        return {
-            initialContent: false,
-            dashboardLayout: EmptyDashboardLayout,
-            filterContextDefinition: createDefaultFilterContext(dateFilterConfig),
-            attributeFilterDisplayForms: [],
-            insights: [],
-        };
-    }
+    const { dashboard, insights }: SagaReturnType<typeof dashboardInitialize> = yield call(
+        dashboardInitialize,
+        ctx,
+        ctx.config?.initialContent,
+    );
 
-    const { dashboard, insights } = yield call(dashboardInitialize, ctx, ctx.config.initialContent);
+    const overrideDefaultFilters = ctx.config?.overrideDefaultFilters;
+    const overrideFilterContext = overrideDefaultFilters
+        ? {
+              filters: overrideDefaultFilters,
+          }
+        : undefined;
 
     const sanitizedFilterContext = yield call(
         sanitizeFilterContext,
         ctx,
-        dashboard.filterContext,
-        dashboard.dataSets,
+        (overrideFilterContext ??
+            dashboard?.filterContext ??
+            createDefaultFilterContext(dateFilterConfig, true)) as IDashboard["filterContext"],
+        dashboard?.dataSets,
         displayForms,
     );
 
-    const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> = {
-        ...dashboard,
-        layout: (dashboard.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
-        filterContext: sanitizedFilterContext,
-    };
+    const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> | null = dashboard
+        ? {
+              ...dashboard,
+              layout: (dashboard.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
+              filterContext: sanitizedFilterContext,
+          }
+        : null;
 
     const privateCtx: PrivateDashboardContext = yield call(getPrivateContext);
-    const customizedDashboard =
-        privateCtx?.existingDashboardTransformFn?.(sanitizedDashboard) ?? sanitizedDashboard;
-    const modifiedWidgets = privateCtx?.widgetsOverlayFn?.(customizedDashboard) ?? {};
+    const customizedDashboard = sanitizedDashboard
+        ? privateCtx?.existingDashboardTransformFn?.(sanitizedDashboard) ?? sanitizedDashboard
+        : sanitizedDashboard;
+    const modifiedWidgets = customizedDashboard
+        ? privateCtx?.widgetsOverlayFn?.(customizedDashboard) ?? {}
+        : {};
 
-    const filterContextDefinition = dashboardFilterContextDefinition(customizedDashboard, dateFilterConfig);
-    const effectiveAttributeFilterConfigs = dashboard.attributeFilterConfigs;
-    const filterContextIdentity = dashboardFilterContextIdentity(customizedDashboard);
+    const filterContextDefinition = dashboardFilterContextDefinition(
+        customizedDashboard,
+        dateFilterConfig,
+        ctx.config?.overrideDefaultFilters,
+    );
+    const effectiveAttributeFilterConfigs = dashboard?.attributeFilterConfigs;
+    const filterContextIdentity = customizedDashboard
+        ? dashboardFilterContextIdentity(customizedDashboard)
+        : undefined;
     const displayAsLabels = getDisplayAsLabels(effectiveAttributeFilterConfigs);
     // load DFs for both filter refs and displayAsLabels
     const attributeFilterDisplayForms = yield call(
@@ -201,7 +214,7 @@ function* actionsToInitializeOrFillNewDashboard(
      * Also note, nested layouts are not yet supported
      */
     const dashboardLayout = dashboardLayoutSanitize(
-        customizedDashboard.layout ?? EmptyDashboardLayout,
+        customizedDashboard?.layout ?? EmptyDashboardLayout,
         insights,
         settings,
     );
@@ -215,7 +228,7 @@ function* actionsToInitializeOrFillNewDashboard(
         attributeFilterDisplayForms,
         filterContextDefinition,
         originalFilterContextDefinition: filterContextDefinition,
-        initialContent: true,
+        initialContent: !!ctx.config?.initialContent,
     };
 }
 

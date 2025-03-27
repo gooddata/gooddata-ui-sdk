@@ -8,6 +8,7 @@ import {
     isDashboardItemVisualizationContent,
 } from "../../../types/commonTypes.js";
 import { loadInsight } from "../../widgets/common/loadInsight.js";
+import { ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
 
 const size = { xl: { gridHeight: 22, gridWidth: 12 } };
 
@@ -18,11 +19,18 @@ export const EmptyDashboardLayout: IDashboardLayout<IWidget> = {
 
 export async function dashboardInitialize(
     ctx: DashboardContext,
-    items: DashboardItem[],
+    items?: DashboardItem[],
 ): Promise<{
-    dashboard: IDashboard;
+    dashboard: IDashboard<ExtendedDashboardWidget> | undefined;
     insights: IInsight[];
 }> {
+    if (!items) {
+        return {
+            dashboard: undefined,
+            insights: [],
+        };
+    }
+
     const layoutItems: IDashboardLayoutItem[] = [];
     const insights: IInsight[] = [];
 
@@ -40,7 +48,7 @@ export async function dashboardInitialize(
         }
     }
 
-    const dashboard = buildInitialDashboard(layoutItems);
+    const dashboard = buildInitialDashboard(layoutItems) as IDashboard<ExtendedDashboardWidget>;
 
     return {
         dashboard,

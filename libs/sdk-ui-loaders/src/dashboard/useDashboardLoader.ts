@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { useEffect, useMemo, useState } from "react";
 import stringify from "json-stable-stringify";
 import { IDashboardBasePropsForLoader, IDashboardLoadOptions, IEmbeddedPlugin } from "./types.js";
@@ -123,6 +123,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
         );
 
         return loader;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         backend,
         workspace,
