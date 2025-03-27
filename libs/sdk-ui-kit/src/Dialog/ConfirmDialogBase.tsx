@@ -43,7 +43,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
             footerLeftRenderer,
             titleRightIconRenderer,
             dialogHeaderClassName,
-            autofocusOnOpen = true,
+            autofocusOnOpen = false,
         } = this.props;
         const dialogClasses = cx(
             {
