@@ -240,6 +240,7 @@ export function ScheduledMailDialogRenderer({
                     <ConfirmDialogBase
                         className="gd-notifications-channels-dialog s-gd-notifications-channels-dialog"
                         isPositive={true}
+                        autofocusOnOpen={true}
                         cancelButtonText={intl.formatMessage({ id: "cancel" })}
                         submitButtonText={
                             scheduledExportToEdit
