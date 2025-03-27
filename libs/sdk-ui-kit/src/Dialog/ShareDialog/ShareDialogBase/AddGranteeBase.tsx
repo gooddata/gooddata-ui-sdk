@@ -51,7 +51,6 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
             onSubmit={onSubmit}
             onClose={onCancel}
             headerLeftButtonRenderer={backButtonRenderer}
-            autofocusOnOpen={false}
         >
             <AddGranteeContent
                 currentUserPermissions={currentUserPermissions}
