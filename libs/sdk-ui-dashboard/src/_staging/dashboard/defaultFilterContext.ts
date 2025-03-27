@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     IDateFilterConfig,
     isAllTimeDateFilterOption,
@@ -6,6 +6,7 @@ import {
     isRelativeDateFilterPreset,
     IDashboardDateFilter,
     IFilterContextDefinition,
+    FilterContextItem,
 } from "@gooddata/sdk-model";
 import { convertDateFilterConfigToDateFilterOptions } from "../dateFilterConfig/dateFilterConfigConverters.js";
 import { flattenDateFilterOptions } from "../dateFilterConfig/dateFilterOptionMapping.js";
@@ -73,13 +74,14 @@ export function createDefaultFilterContext(
      * is always respected (for both new and existing dashboards without filterContext).
      * Done like this for now because it is the way gdc-dashboards behave.
      */
-    respectSelectedOption: boolean = true,
+    respectSelectedOption: boolean,
+    filters?: FilterContextItem[],
 ): IFilterContextDefinition {
     const defaultDateFilter = getDefaultDateFilter(dateFilterConfig, respectSelectedOption);
 
     return {
         title: "filterContext",
         description: "",
-        filters: defaultDateFilter ? [defaultDateFilter] : [],
+        filters: filters ? filters : defaultDateFilter ? [defaultDateFilter] : [],
     };
 }

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     IDateFilterConfig,
     IDashboardObjectIdentity,
@@ -6,6 +6,7 @@ import {
     isDashboardAttributeFilter,
     isTempFilterContext,
     IDashboard,
+    FilterContextItem,
 } from "@gooddata/sdk-model";
 import { createDefaultFilterContext } from "./defaultFilterContext.js";
 
@@ -27,15 +28,21 @@ import { createDefaultFilterContext } from "./defaultFilterContext.js";
  *
  * @param dashboard - dashboard to get filter context from
  * @param dateFilterConfig - date filter config to use in case default filter context has to be created
+ * @param filters - predefined filters
  */
 export function dashboardFilterContextDefinition<TWidget>(
-    dashboard: IDashboard<TWidget>,
+    dashboard: IDashboard<TWidget> | null | undefined,
     dateFilterConfig: IDateFilterConfig,
+    filters?: FilterContextItem[],
 ): IFilterContextDefinition {
+    if (!dashboard) {
+        return createDefaultFilterContext(dateFilterConfig, true, filters);
+    }
+
     const { filterContext } = dashboard;
 
     if (!filterContext) {
-        return createDefaultFilterContext(dateFilterConfig, !dashboard.ref);
+        return createDefaultFilterContext(dateFilterConfig, !dashboard.ref, filters);
     }
 
     if (isTempFilterContext(filterContext)) {
