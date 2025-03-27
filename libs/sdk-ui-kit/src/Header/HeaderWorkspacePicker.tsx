@@ -87,7 +87,7 @@ export const CoreHeaderWorkspacePicker: React.FC<IHeaderWorkspacePickerProps> = 
             closeOnParentScroll={true}
             closeOnMouseDrag={true}
             closeOnEscape={true}
-            autofocusOnOpen={true}
+            autofocusOnOpen={!showSearch}
             onOpenStateChanged={(isOpen) => {
                 if (isOpen && onOpen) {
                     onOpen();
