@@ -12,7 +12,8 @@ $input-width: 128px;
     .gd-input-component {
         margin-bottom: 20px;
 
-        label {
+        label,
+        .gd-label {
             min-width: 100px;
         }
     }
