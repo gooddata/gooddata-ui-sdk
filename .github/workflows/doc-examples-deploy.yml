@@ -1,14 +1,85 @@
-# (C) 2024 GoodData Corporation
+# (C) 2025 GoodData Corporation
 
-# Deploy of ui sdk examples from rel/9.9 branch
 name: Doc ~ Examples deploy
 on:
   workflow_dispatch:
 
 jobs:
-  release-ui-sdk-examples-deploy:
-    secrets: inherit
-    permissions:
-      contents: write
-      id-token: write
-    uses: ./.github/workflows/rw-doc-examples-deploy.yml
+  warm-up-cache:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-cxa-xlarge
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Warmup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/warm-up-rush
+  build:
+    needs: [warm-up-cache]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-rxa-xlarge
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Debug
+        run: git log -1
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+      - name: Rush build
+        run: node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests
+
+  e2e-backstop:
+    needs: [warm-up-cache,build]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-mxa-2xlarge # bigger runner as backstop sometimes cannot launch the browser
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+      - name: Rush build
+        run: |
+          node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests
+      - name: Run backstop tests
+        run: |
+          export EXECUTOR_NUMBER=$GH_RUN_ID
+          ./common/scripts/ci/run_backstop_tests.sh
+        env:
+          GH_RUN_ID: ${{ github.run_id }}
+      - name: Cleanup backstop artifacts
+        if: ${{ !cancelled() && failure() }}
+        run: |
+          node libs/sdk-ui-tests/backstop/backstop-write-all-artifacts.cjs
+      - name: Archive the cypress test artifacts
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() && failure() }}
+        with:
+          name: backstop-test-artifacts-failed
+          path: |
+            libs/sdk-ui-tests/backstop/output/**/*
