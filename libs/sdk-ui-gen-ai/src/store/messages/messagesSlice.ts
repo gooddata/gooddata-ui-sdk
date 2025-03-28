@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, Reducer } from "@reduxjs/toolkit";
 import { GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
 import {
     AssistantMessage,
@@ -300,7 +300,7 @@ const messagesSlice = createSlice({
     },
 });
 
-export const messagesSliceReducer = messagesSlice.reducer;
+export const messagesSliceReducer: Reducer<MessagesSliceState> = messagesSlice.reducer;
 export const {
     loadThreadAction,
     loadThreadErrorAction,

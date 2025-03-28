@@ -10,7 +10,13 @@
             "ae-incompatible-release-tags": {
                 "logLevel": "none",
                 "addToApiReportFile": false
+            },
+            "ae-wrong-input-file-type": {
+                "logLevel": "none"
             }
         }
+    },
+    "compiler": {
+        "skipLibCheck": true
     }
 }
