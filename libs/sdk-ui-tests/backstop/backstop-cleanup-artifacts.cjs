@@ -22,6 +22,9 @@ const outputPath = path.join(currentDir, "output");
 const htmlReportPath = path.join(outputPath, "html-report");
 const outputConfig = path.join(htmlReportPath, "config.js");
 
+// store artifacts also when tests pass (this takes a lot of space)
+const keepPassingScreenshots = process.env.KEEP_ALL_ARTIFACTS === "true" ? true : false;
+
 if (!fs.existsSync(outputConfig)) {
     console.log("No backstop output, skipping cleanup of test artifacts");
     process.exit(1);
@@ -43,10 +46,14 @@ data.tests.forEach((test) => {
         const testFile = test.pair?.test;
         const testFilePath = path.join(htmlReportPath, testFile);
 
-        if (fs.existsSync(testFilePath)) {
-            fs.unlinkSync(testFilePath);
+        if (!keepPassingScreenshots) {
+            if (fs.existsSync(testFilePath)) {
+                fs.unlinkSync(testFilePath);
+            }
         }
-    } else if (test.status === "fail") {
+    }
+
+    if (test.status === "fail" || keepPassingScreenshots) {
         const referenceFile = test.pair?.reference;
         const referencePath = path.join(htmlReportPath, referenceFile);
         const baseReferenceFilename = path.basename(referencePath);
@@ -55,7 +62,9 @@ data.tests.forEach((test) => {
         if (fs.existsSync(referencePath)) {
             fs.copyFileSync(referencePath, destReference);
         }
-    } else {
+    }
+
+    if (test.status !== "pass" && test.status !== "fail") {
         console.log(`Processing "${test.pair?.label}", unrecognized test status: "${test.status}"`);
     }
 });

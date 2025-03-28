@@ -19,7 +19,7 @@ extended-test --backstop | --integrated | --isolated | --record [--filter <file1
 
 #### Explanation
 
--   `--backstop` The command to run screen tests.
+-   `--backstop` The command to run screen tests (optionally with keeping passing screenshots).
 -   `--integrated` The command to run integrated tests against the live backend.
 -   `--isolated` The command to run isolated tests against recordings.
 -   `--record` The command to create new recordings for isolated tests.
@@ -29,6 +29,7 @@ extended-test --backstop | --integrated | --isolated | --record [--filter <file1
 
 ```
 extended-test --backstop
+extended-test --backstop --keep-passing-screenshots
 extended-test --integrated
 extended-test --integrated --filter test1.spec.ts,test2.spec.ts
 extended-test --isolated

@@ -6,6 +6,11 @@ on:
           required: false
           description: "source ref of the current code"
           type: string
+      keep-passing-screenshots:
+          required: false
+          description: "whether to keep all backstop output as artifacts, even for passing tests (large)"
+          type: boolean
+          default: false
 
 jobs:
   warm-up-cache:
@@ -82,9 +87,11 @@ jobs:
         if: ${{ !cancelled() && failure() }}
         run: |
           node libs/sdk-ui-tests/backstop/backstop-cleanup-artifacts.cjs
+        env:
+          KEEP_ALL_ARTIFACTS: ${{ inputs.keep-passing-screenshots }}
       - name: Archive the cypress test artifacts
         uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() && failure() }}
+        if: ${{ !cancelled() && (failure() || inputs.keep-passing-screenshots) }}
         with:
           name: backstop-test-artifacts-failed
           path: |
