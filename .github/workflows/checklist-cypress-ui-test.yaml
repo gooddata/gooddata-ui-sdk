@@ -82,7 +82,7 @@ jobs:
     needs: [ warm-up-cache ]
     runs-on:
       group: infra1-runners-arc
-      labels: runners-rxa-xlarge
+      labels: runners-cxa-xlarge
     steps:
       - uses: actions/checkout@v4
         with:
@@ -104,14 +104,14 @@ jobs:
     needs: [ warm-up-cache, build ]
     runs-on:
       group: infra1-runners-arc
-      labels: runners-rxa-xlarge
+      labels: runners-cxa-xlarge
     permissions:
       contents: read
       id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 100
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
         with:

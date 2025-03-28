@@ -88,7 +88,7 @@ jobs:
     needs: [ warm-up-cache ]
     runs-on:
       group: infra1-runners-arc
-      labels: runners-rxa-xlarge
+      labels: runners-cxa-xlarge
     permissions:
       contents: read
       pages: write
