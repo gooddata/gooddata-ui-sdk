@@ -84,14 +84,14 @@ jobs:
         env:
           GH_RUN_ID: ${{ github.run_id }}
       - name: Cleanup backstop artifacts
-        if: ${{ !cancelled() && failure() }}
+        if: ${{ !cancelled() && (failure() || inputs.keep-passing-screenshots == 'true') }}
         run: |
           node libs/sdk-ui-tests/backstop/backstop-cleanup-artifacts.cjs
         env:
           KEEP_ALL_ARTIFACTS: ${{ inputs.keep-passing-screenshots }}
       - name: Archive the cypress test artifacts
         uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() && (failure() || inputs.keep-passing-screenshots) }}
+        if: ${{ !cancelled() && (failure() || inputs.keep-passing-screenshots == 'true') }}
         with:
           name: backstop-test-artifacts-failed
           path: |
