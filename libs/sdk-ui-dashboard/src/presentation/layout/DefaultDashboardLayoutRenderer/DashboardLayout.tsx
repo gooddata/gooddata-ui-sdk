@@ -128,7 +128,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
     );
 
     const slideStyles = useSlideSizeStyle(renderMode, "root");
-    const exportData = useDashboardExportData(renderMode, "empty", "root");
+    const exportData = useDashboardExportData(renderMode, "loaded", "root");
 
     return (
         <div
