@@ -83,6 +83,13 @@ jobs:
           ./common/scripts/ci/run_backstop_tests.sh
         env:
           GH_RUN_ID: ${{ github.run_id }}
+      - name: debug
+        run: |
+            echo "debug vars"
+            echo ${{ inputs.keep-passing-screenshots }}
+            echo $KEEP_ALL_ARTIFACTS
+        env:
+          KEEP_ALL_ARTIFACTS: ${{ inputs.keep-passing-screenshots }}
       - name: Cleanup backstop artifacts
         if: ${{ !cancelled() && (failure() || inputs.keep-passing-screenshots == 'true') }}
         run: |
