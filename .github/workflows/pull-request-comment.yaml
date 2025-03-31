@@ -145,7 +145,7 @@ jobs:
     uses: ./.github/workflows/rw-rush-build-e2e-tests-backstop.yml
     with:
       source-ref: ${{ needs.get-pr-info.outputs.sha }}
-      keep-passing-screenshots: ${{ contains(github.event.comment.body, '--keep-passing-screenshots') && true : false }}
+      keep-passing-screenshots: ${{ contains(github.event.comment.body, '--keep-passing-screenshots') }}
     secrets: inherit
 
   comment-pr:
