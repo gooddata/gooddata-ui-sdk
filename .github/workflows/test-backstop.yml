@@ -3,6 +3,12 @@
 name: Test ~ Backstop screen tests
 on:
   workflow_dispatch:
+    inputs:
+      keep-passing-screenshots:
+        description: Keep screenshots for passing tests
+        type: boolean
+        required: false
+        default: false
   schedule:
     - cron: '0 6 * * 1-5'
 
@@ -13,6 +19,8 @@ jobs:
       contents: read
       pull-requests: read
     uses: ./.github/workflows/rw-rush-build-e2e-tests-backstop.yml
+    with:
+      keep-passing-screenshots: ${{ inputs.keep-passing-screenshots }}
     secrets: inherit
 
   slack-notification:
