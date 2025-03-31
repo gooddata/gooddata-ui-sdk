@@ -1,7 +1,8 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { useCallback, useRef } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
+import { isSpaceKey } from "../../utils/events.js";
 
 /**
  * @internal
@@ -23,12 +24,29 @@ export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxP
     const { isVisible, checked, onToggle, isFiltered, totalItemsCount, isPartialSelection } = props;
 
     const intl = useIntl();
+    const itemRef = useRef<HTMLDivElement>(null);
+
     const handleToggle = useCallback(
         (_e: React.ChangeEvent<HTMLInputElement>) => {
             onToggle();
         },
         [onToggle],
     );
+
+    const onFocus = (event: React.FocusEvent<HTMLDivElement>) => {
+        // Prevent focus from moving from item inside to the checkbox
+        if (event.target.tagName === "INPUT") {
+            event.preventDefault();
+            itemRef.current?.focus(); // Keep focus on the item
+        }
+    };
+
+    const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (isSpaceKey(event)) {
+            event.preventDefault(); // Prevent scrolling on Space
+            onToggle();
+        }
+    };
 
     const checkboxClasses = cx("input-checkbox", "gd-checkbox-selection", {
         "checkbox-indefinite": isPartialSelection,
@@ -41,7 +59,14 @@ export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxP
     }
 
     return (
-        <div className="gd-invertable-select-all-checkbox">
+        <div
+            className="gd-invertable-select-all-checkbox"
+            ref={itemRef}
+            tabIndex={0}
+            onFocus={onFocus}
+            onKeyDown={onKeyDown}
+            role="option"
+        >
             <label className={labelClasses}>
                 <input
                     readOnly={true}

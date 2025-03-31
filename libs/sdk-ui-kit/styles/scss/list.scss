@@ -160,6 +160,7 @@ $menu-item-icon-width: 30px;
     }
     &:focus-visible {
         outline: revert;
+        outline-offset: -2px; // pull outline inside to not have it clipped by item's overflow: hidden
     }
 
     &.gd-menu-item-remove:hover {

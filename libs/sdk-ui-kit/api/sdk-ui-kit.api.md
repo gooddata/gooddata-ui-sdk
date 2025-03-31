@@ -4061,6 +4061,9 @@ export interface ISpinnerProps {
     className?: string;
 }
 
+// @internal
+export const isSpaceKey: (event: KeyboardEvent_2) => boolean;
+
 // @internal (undocumented)
 export interface IStylingEditorDialogFooterProps extends IDialogBaseProps {
     // (undocumented)
