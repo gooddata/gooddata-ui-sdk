@@ -17,9 +17,73 @@
         }
     ],
     "paths": {
+        "/api/v1/actions/workspaces/{workspaceId}/automations/{automationId}/trigger": {
+            "post": {
+                "tags": ["Automations", "actions"],
+                "summary": "Trigger existing automation.",
+                "description": "Trigger the existing automation to execute immediately.",
+                "operationId": "triggerExistingAutomation",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "automationId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "The automation is successfully triggered."
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/automations/trigger": {
+            "post": {
+                "tags": ["Automations", "actions"],
+                "summary": "Trigger automation.",
+                "description": "Trigger the automation in the request.",
+                "operationId": "triggerAutomation",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TriggerAutomationRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "The automation is successfully triggered."
+                    }
+                }
+            }
+        },
         "/api/v1/actions/notifications/{notificationId}/markAsRead": {
             "post": {
-                "tags": ["actions"],
+                "tags": ["Notification Channels", "actions"],
                 "summary": "Mark notification as read.",
                 "description": "Mark in-platform notification by its ID as read.",
                 "operationId": "markAsReadNotification",
@@ -43,7 +107,7 @@
         },
         "/api/v1/actions/notifications/markAsRead": {
             "post": {
-                "tags": ["actions"],
+                "tags": ["Notification Channels", "actions"],
                 "summary": "Mark all notifications as read.",
                 "description": "Mark all user in-platform notifications as read.",
                 "operationId": "markAsReadNotificationAll",
@@ -250,6 +314,417 @@
     },
     "components": {
         "schemas": {
+            "AdHocAutomation": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "description": {
+                        "maxLength": 255,
+                        "type": "string"
+                    },
+                    "tags": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "A list of tags.",
+                        "example": ["Revenue", "Sales"],
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "details": {
+                        "maxLength": 10000,
+                        "type": "object",
+                        "additionalProperties": {
+                            "maxLength": 10000,
+                            "type": "string",
+                            "description": "Additional details to be included in the automated message."
+                        },
+                        "description": "Additional details to be included in the automated message."
+                    },
+                    "metadata": {
+                        "$ref": "#/components/schemas/AutomationMetadata"
+                    },
+                    "tabularExports": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AutomationTabularExport"
+                        }
+                    },
+                    "visualExports": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AutomationVisualExport"
+                        }
+                    },
+                    "externalRecipients": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "External recipients of the automation action results.",
+                        "items": {
+                            "$ref": "#/components/schemas/AutomationExternalRecipient"
+                        }
+                    },
+                    "notificationChannel": {
+                        "$ref": "#/components/schemas/DeclarativeNotificationChannelIdentifier"
+                    },
+                    "recipients": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeUserIdentifier"
+                        }
+                    },
+                    "analyticalDashboard": {
+                        "$ref": "#/components/schemas/DeclarativeAnalyticalDashboardIdentifier"
+                    }
+                }
+            },
+            "AutomationExternalRecipient": {
+                "required": ["email"],
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "E-mail address to send notifications from.",
+                        "format": "email"
+                    }
+                }
+            },
+            "AutomationMetadata": {
+                "maxLength": 15000,
+                "type": "object",
+                "properties": {
+                    "widget": {
+                        "type": "string"
+                    },
+                    "visibleFilters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/VisibleFilter"
+                        }
+                    }
+                },
+                "description": "Additional information for the automation.",
+                "nullable": true
+            },
+            "AutomationTabularExport": {
+                "required": ["requestPayload"],
+                "type": "object",
+                "properties": {
+                    "requestPayload": {
+                        "$ref": "#/components/schemas/TabularExportRequest"
+                    }
+                }
+            },
+            "AutomationVisualExport": {
+                "required": ["requestPayload"],
+                "type": "object",
+                "properties": {
+                    "requestPayload": {
+                        "$ref": "#/components/schemas/VisualExportRequest"
+                    }
+                }
+            },
+            "CustomLabel": {
+                "required": ["title"],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Override value."
+                    }
+                },
+                "description": "Custom label object override."
+            },
+            "CustomMetric": {
+                "required": ["format", "title"],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Metric title override."
+                    },
+                    "format": {
+                        "type": "string",
+                        "description": "Format override."
+                    }
+                },
+                "description": "Custom metric object override."
+            },
+            "CustomOverride": {
+                "type": "object",
+                "properties": {
+                    "labels": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/CustomLabel"
+                        },
+                        "description": "Map of CustomLabels with keys used as placeholders in document."
+                    },
+                    "metrics": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/CustomMetric"
+                        },
+                        "description": "Map of CustomMetrics with keys used as placeholders in document."
+                    }
+                },
+                "description": "Custom cell value overrides (IDs will be replaced with specified values)."
+            },
+            "DeclarativeAnalyticalDashboardIdentifier": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "Identifier of the analytical dashboard.",
+                        "example": "dashboard123"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "A type.",
+                        "example": "analyticalDashboard",
+                        "enum": ["analyticalDashboard"]
+                    }
+                },
+                "description": "An analytical dashboard identifier."
+            },
+            "DeclarativeNotificationChannelIdentifier": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "Notification channel identifier.",
+                        "example": "webhook123"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "A type.",
+                        "example": "notificationChannel",
+                        "enum": ["notificationChannel"]
+                    }
+                },
+                "description": "A notification channel identifier."
+            },
+            "DeclarativeUserIdentifier": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "User identifier.",
+                        "example": "employee123"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "A type.",
+                        "example": "user",
+                        "enum": ["user"]
+                    }
+                },
+                "description": "A user identifier."
+            },
+            "JsonNode": {
+                "maxLength": 15000,
+                "type": "object",
+                "description": "Metadata definition in free-form JSON format.",
+                "nullable": true,
+                "example": {}
+            },
+            "PdfTableStyle": {
+                "required": ["selector"],
+                "type": "object",
+                "properties": {
+                    "selector": {
+                        "type": "string",
+                        "description": "CSS selector where to apply given properties."
+                    },
+                    "properties": {
+                        "type": "array",
+                        "description": "List of CSS properties.",
+                        "items": {
+                            "$ref": "#/components/schemas/PdfTableStyleProperty"
+                        }
+                    }
+                },
+                "description": "Custom CSS styles for the table. (PDF, HTML)",
+                "example": [
+                    {
+                        "selector": "th",
+                        "properties": [
+                            {
+                                "key": "font-size",
+                                "value": "30px"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "PdfTableStyleProperty": {
+                "required": ["key", "value"],
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "CSS property key."
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "CSS property value."
+                    }
+                },
+                "description": "CSS property."
+            },
+            "Settings": {
+                "type": "object",
+                "properties": {
+                    "mergeHeaders": {
+                        "type": "boolean",
+                        "description": "Merge equal headers in neighbouring cells. (XLSX)",
+                        "example": true
+                    },
+                    "showFilters": {
+                        "type": "boolean",
+                        "description": "Print applied filters on top of the document. (PDF/HTML when visualizationObject is given)",
+                        "example": false
+                    },
+                    "pdfPageSize": {
+                        "type": "string",
+                        "description": "Page size and orientation. (PDF)",
+                        "example": "a4 landscape"
+                    },
+                    "pdfTableStyle": {
+                        "type": "array",
+                        "description": "Custom CSS styles for the table. (PDF, HTML)",
+                        "example": [
+                            {
+                                "selector": "th",
+                                "properties": [
+                                    {
+                                        "key": "font-size",
+                                        "value": "30px"
+                                    }
+                                ]
+                            }
+                        ],
+                        "items": {
+                            "$ref": "#/components/schemas/PdfTableStyle"
+                        }
+                    },
+                    "pdfTopLeftContent": {
+                        "type": "string",
+                        "description": "Top left header content. (PDF)",
+                        "example": "Good"
+                    },
+                    "pdfTopRightContent": {
+                        "type": "string",
+                        "description": "Top right header content. (PDF)",
+                        "example": "Morning"
+                    }
+                },
+                "description": "Additional settings."
+            },
+            "TabularExportRequest": {
+                "required": ["fileName", "format"],
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "type": "string",
+                        "description": "Expected file format.",
+                        "example": "CSV",
+                        "enum": ["CSV", "XLSX", "HTML", "PDF"]
+                    },
+                    "executionResult": {
+                        "type": "string",
+                        "description": "Execution result identifier.",
+                        "example": "ff483727196c9dc862c7fd3a5a84df55c96d61a4"
+                    },
+                    "fileName": {
+                        "type": "string",
+                        "description": "Filename of downloaded file without extension.",
+                        "example": "result"
+                    },
+                    "settings": {
+                        "$ref": "#/components/schemas/Settings"
+                    },
+                    "customOverride": {
+                        "$ref": "#/components/schemas/CustomOverride"
+                    },
+                    "visualizationObject": {
+                        "type": "string",
+                        "description": "Visualization object identifier. Alternative to executionResult property.",
+                        "example": "f7c359bc-c230-4487-b15b-ad9685bcb537"
+                    },
+                    "visualizationObjectCustomFilters": {
+                        "type": "array",
+                        "description": "Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given.",
+                        "example": "[{\"negativeAttributeFilter\":{\"displayForm\":{\"identifier\":{\"id\":\"products.category\",\"type\":\"label\"}},\"notIn\":{\"values\":[\"Books\"]}}}]",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "relatedDashboardId": {
+                        "type": "string",
+                        "description": "Analytical dashboard identifier. Optional identifier, which informs the system that the export is related to a specific dashboard.",
+                        "example": "761cd28b-3f57-4ac9-bbdc-1c552cc0d1d0"
+                    },
+                    "metadata": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    }
+                },
+                "description": "Export request object describing the export properties and overrides for tabular exports."
+            },
+            "TriggerAutomationRequest": {
+                "required": ["automation"],
+                "type": "object",
+                "properties": {
+                    "automation": {
+                        "$ref": "#/components/schemas/AdHocAutomation"
+                    }
+                }
+            },
+            "VisibleFilter": {
+                "type": "object",
+                "properties": {
+                    "localIdentifier": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    }
+                }
+            },
+            "VisualExportRequest": {
+                "required": ["dashboardId", "fileName"],
+                "type": "object",
+                "properties": {
+                    "fileName": {
+                        "type": "string",
+                        "description": "File name to be used for retrieving the pdf document.",
+                        "example": "filename"
+                    },
+                    "dashboardId": {
+                        "type": "string",
+                        "description": "Dashboard identifier",
+                        "example": "761cd28b-3f57-4ac9-bbdc-1c552cc0d1d0"
+                    },
+                    "metadata": {
+                        "type": "object",
+                        "description": "Metadata definition in free-form JSON format.",
+                        "example": "{}"
+                    }
+                },
+                "description": "Export request object describing the export properties and metadata for dashboard PDF exports."
+            },
             "TestResponse": {
                 "required": ["successful"],
                 "type": "object",

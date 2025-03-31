@@ -580,6 +580,12 @@ export interface ExecutionSettings {
      * @memberof ExecutionSettings
      */
     dataSamplingPercentage?: number;
+    /**
+     * Specifies the timestamp of the execution from which relative filters are resolved. If not set, the current time is used.
+     * @type {string}
+     * @memberof ExecutionSettings
+     */
+    timestamp?: string;
 }
 /**
  *
@@ -679,6 +685,61 @@ export interface InlineMeasureDefinitionInline {
      * @memberof InlineMeasureDefinitionInline
      */
     maql: string;
+}
+/**
+ *
+ * @export
+ * @interface InlineResponse202
+ */
+export interface InlineResponse202 {
+    /**
+     *
+     * @type {number}
+     * @memberof InlineResponse202
+     */
+    short?: number;
+    /**
+     *
+     * @type {string}
+     * @memberof InlineResponse202
+     */
+    char?: string;
+    /**
+     *
+     * @type {number}
+     * @memberof InlineResponse202
+     */
+    int?: number;
+    /**
+     *
+     * @type {number}
+     * @memberof InlineResponse202
+     */
+    long?: number;
+    /**
+     *
+     * @type {number}
+     * @memberof InlineResponse202
+     */
+    float?: number;
+    /**
+     *
+     * @type {number}
+     * @memberof InlineResponse202
+     */
+    double?: number;
+    /**
+     *
+     * @type {boolean}
+     * @memberof InlineResponse202
+     */
+    direct?: boolean;
+    /**
+     *
+     * @type {boolean}
+     * @memberof InlineResponse202
+     */
+    readOnly?: boolean;
 }
 /**
  * @type MeasureDefinition
@@ -1388,7 +1449,7 @@ export interface SlidesExportRequest {
      * @type {string}
      * @memberof SlidesExportRequest
      */
-    dashboardId: string;
+    dashboardId?: string;
     /**
      * List of widget identifiers to be exported. Note that only one widget is currently supported.
      * @type {Array<string>}
@@ -1396,11 +1457,23 @@ export interface SlidesExportRequest {
      */
     widgetIds?: Array<string>;
     /**
+     * List of visualization ids to be exported. Note that only one visualization is currently supported.
+     * @type {Array<string>}
+     * @memberof SlidesExportRequest
+     */
+    visualizationIds?: Array<string>;
+    /**
      * Metadata definition in free-form JSON format.
      * @type {object}
      * @memberof SlidesExportRequest
      */
     metadata?: object | null;
+    /**
+     * Export template identifier.
+     * @type {string}
+     * @memberof SlidesExportRequest
+     */
+    templateId?: string | null;
 }
 
 export const SlidesExportRequestFormatEnum = {
@@ -3344,10 +3417,10 @@ export class RawExportApi extends BaseAPI implements RawExportApiInterface {
 }
 
 /**
- * SlideshowExportApi - axios parameter creator
+ * SlidesExportApi - axios parameter creator
  * @export
  */
-export const SlideshowExportApiAxiosParamCreator = function (configuration?: Configuration) {
+export const SlidesExportApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * Note: This API is an experimental and is going to change. Please, use it accordingly. A slides export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
@@ -3491,11 +3564,11 @@ export const SlideshowExportApiAxiosParamCreator = function (configuration?: Con
 };
 
 /**
- * SlideshowExportApi - functional programming interface
+ * SlidesExportApi - functional programming interface
  * @export
  */
-export const SlideshowExportApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = SlideshowExportApiAxiosParamCreator(configuration);
+export const SlidesExportApiFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = SlidesExportApiAxiosParamCreator(configuration);
     return {
         /**
          * Note: This API is an experimental and is going to change. Please, use it accordingly. A slides export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
@@ -3561,25 +3634,25 @@ export const SlideshowExportApiFp = function (configuration?: Configuration) {
 };
 
 /**
- * SlideshowExportApi - factory interface
+ * SlidesExportApi - factory interface
  * @export
  */
-export const SlideshowExportApiFactory = function (
+export const SlidesExportApiFactory = function (
     configuration?: Configuration,
     basePath?: string,
     axios?: AxiosInstance,
 ) {
-    const localVarFp = SlideshowExportApiFp(configuration);
+    const localVarFp = SlidesExportApiFp(configuration);
     return {
         /**
          * Note: This API is an experimental and is going to change. Please, use it accordingly. A slides export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary (EXPERIMENTAL) Create slides export request
-         * @param {SlideshowExportApiCreateSlidesExportRequest} requestParameters Request parameters.
+         * @param {SlidesExportApiCreateSlidesExportRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createSlidesExport(
-            requestParameters: SlideshowExportApiCreateSlidesExportRequest,
+            requestParameters: SlidesExportApiCreateSlidesExportRequest,
             options?: AxiosRequestConfig,
         ): AxiosPromise<ExportResponse> {
             return localVarFp
@@ -3593,12 +3666,12 @@ export const SlideshowExportApiFactory = function (
         /**
          * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
          * @summary (EXPERIMENTAL) Retrieve exported files
-         * @param {SlideshowExportApiGetSlidesExportRequest} requestParameters Request parameters.
+         * @param {SlidesExportApiGetSlidesExportRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getSlidesExport(
-            requestParameters: SlideshowExportApiGetSlidesExportRequest,
+            requestParameters: SlidesExportApiGetSlidesExportRequest,
             options?: AxiosRequestConfig,
         ): AxiosPromise<void> {
             return localVarFp
@@ -3608,12 +3681,12 @@ export const SlideshowExportApiFactory = function (
         /**
          * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.
          * @summary (EXPERIMENTAL) Retrieve metadata context
-         * @param {SlideshowExportApiGetSlidesExportMetadataRequest} requestParameters Request parameters.
+         * @param {SlidesExportApiGetSlidesExportMetadataRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getSlidesExportMetadata(
-            requestParameters: SlideshowExportApiGetSlidesExportMetadataRequest,
+            requestParameters: SlidesExportApiGetSlidesExportMetadataRequest,
             options?: AxiosRequestConfig,
         ): AxiosPromise<void> {
             return localVarFp
@@ -3624,134 +3697,134 @@ export const SlideshowExportApiFactory = function (
 };
 
 /**
- * SlideshowExportApi - interface
+ * SlidesExportApi - interface
  * @export
- * @interface SlideshowExportApi
+ * @interface SlidesExportApi
  */
-export interface SlideshowExportApiInterface {
+export interface SlidesExportApiInterface {
     /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly. A slides export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
      * @summary (EXPERIMENTAL) Create slides export request
-     * @param {SlideshowExportApiCreateSlidesExportRequest} requestParameters Request parameters.
+     * @param {SlidesExportApiCreateSlidesExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SlideshowExportApiInterface
+     * @memberof SlidesExportApiInterface
      */
     createSlidesExport(
-        requestParameters: SlideshowExportApiCreateSlidesExportRequest,
+        requestParameters: SlidesExportApiCreateSlidesExportRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ExportResponse>;
 
     /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
      * @summary (EXPERIMENTAL) Retrieve exported files
-     * @param {SlideshowExportApiGetSlidesExportRequest} requestParameters Request parameters.
+     * @param {SlidesExportApiGetSlidesExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SlideshowExportApiInterface
+     * @memberof SlidesExportApiInterface
      */
     getSlidesExport(
-        requestParameters: SlideshowExportApiGetSlidesExportRequest,
+        requestParameters: SlidesExportApiGetSlidesExportRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.
      * @summary (EXPERIMENTAL) Retrieve metadata context
-     * @param {SlideshowExportApiGetSlidesExportMetadataRequest} requestParameters Request parameters.
+     * @param {SlidesExportApiGetSlidesExportMetadataRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SlideshowExportApiInterface
+     * @memberof SlidesExportApiInterface
      */
     getSlidesExportMetadata(
-        requestParameters: SlideshowExportApiGetSlidesExportMetadataRequest,
+        requestParameters: SlidesExportApiGetSlidesExportMetadataRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 }
 
 /**
- * Request parameters for createSlidesExport operation in SlideshowExportApi.
+ * Request parameters for createSlidesExport operation in SlidesExportApi.
  * @export
- * @interface SlideshowExportApiCreateSlidesExportRequest
+ * @interface SlidesExportApiCreateSlidesExportRequest
  */
-export interface SlideshowExportApiCreateSlidesExportRequest {
+export interface SlidesExportApiCreateSlidesExportRequest {
     /**
      *
      * @type {string}
-     * @memberof SlideshowExportApiCreateSlidesExport
+     * @memberof SlidesExportApiCreateSlidesExport
      */
     readonly workspaceId: string;
 
     /**
      *
      * @type {SlidesExportRequest}
-     * @memberof SlideshowExportApiCreateSlidesExport
+     * @memberof SlidesExportApiCreateSlidesExport
      */
     readonly slidesExportRequest: SlidesExportRequest;
 }
 
 /**
- * Request parameters for getSlidesExport operation in SlideshowExportApi.
+ * Request parameters for getSlidesExport operation in SlidesExportApi.
  * @export
- * @interface SlideshowExportApiGetSlidesExportRequest
+ * @interface SlidesExportApiGetSlidesExportRequest
  */
-export interface SlideshowExportApiGetSlidesExportRequest {
+export interface SlidesExportApiGetSlidesExportRequest {
     /**
      *
      * @type {string}
-     * @memberof SlideshowExportApiGetSlidesExport
+     * @memberof SlidesExportApiGetSlidesExport
      */
     readonly workspaceId: string;
 
     /**
      *
      * @type {string}
-     * @memberof SlideshowExportApiGetSlidesExport
+     * @memberof SlidesExportApiGetSlidesExport
      */
     readonly exportId: string;
 }
 
 /**
- * Request parameters for getSlidesExportMetadata operation in SlideshowExportApi.
+ * Request parameters for getSlidesExportMetadata operation in SlidesExportApi.
  * @export
- * @interface SlideshowExportApiGetSlidesExportMetadataRequest
+ * @interface SlidesExportApiGetSlidesExportMetadataRequest
  */
-export interface SlideshowExportApiGetSlidesExportMetadataRequest {
+export interface SlidesExportApiGetSlidesExportMetadataRequest {
     /**
      *
      * @type {string}
-     * @memberof SlideshowExportApiGetSlidesExportMetadata
+     * @memberof SlidesExportApiGetSlidesExportMetadata
      */
     readonly workspaceId: string;
 
     /**
      *
      * @type {string}
-     * @memberof SlideshowExportApiGetSlidesExportMetadata
+     * @memberof SlidesExportApiGetSlidesExportMetadata
      */
     readonly exportId: string;
 }
 
 /**
- * SlideshowExportApi - object-oriented interface
+ * SlidesExportApi - object-oriented interface
  * @export
- * @class SlideshowExportApi
+ * @class SlidesExportApi
  * @extends {BaseAPI}
  */
-export class SlideshowExportApi extends BaseAPI implements SlideshowExportApiInterface {
+export class SlidesExportApi extends BaseAPI implements SlidesExportApiInterface {
     /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly. A slides export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
      * @summary (EXPERIMENTAL) Create slides export request
-     * @param {SlideshowExportApiCreateSlidesExportRequest} requestParameters Request parameters.
+     * @param {SlidesExportApiCreateSlidesExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SlideshowExportApi
+     * @memberof SlidesExportApi
      */
     public createSlidesExport(
-        requestParameters: SlideshowExportApiCreateSlidesExportRequest,
+        requestParameters: SlidesExportApiCreateSlidesExportRequest,
         options?: AxiosRequestConfig,
     ) {
-        return SlideshowExportApiFp(this.configuration)
+        return SlidesExportApiFp(this.configuration)
             .createSlidesExport(requestParameters.workspaceId, requestParameters.slidesExportRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
@@ -3759,16 +3832,16 @@ export class SlideshowExportApi extends BaseAPI implements SlideshowExportApiInt
     /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
      * @summary (EXPERIMENTAL) Retrieve exported files
-     * @param {SlideshowExportApiGetSlidesExportRequest} requestParameters Request parameters.
+     * @param {SlidesExportApiGetSlidesExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SlideshowExportApi
+     * @memberof SlidesExportApi
      */
     public getSlidesExport(
-        requestParameters: SlideshowExportApiGetSlidesExportRequest,
+        requestParameters: SlidesExportApiGetSlidesExportRequest,
         options?: AxiosRequestConfig,
     ) {
-        return SlideshowExportApiFp(this.configuration)
+        return SlidesExportApiFp(this.configuration)
             .getSlidesExport(requestParameters.workspaceId, requestParameters.exportId, options)
             .then((request) => request(this.axios, this.basePath));
     }
@@ -3776,16 +3849,16 @@ export class SlideshowExportApi extends BaseAPI implements SlideshowExportApiInt
     /**
      * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.
      * @summary (EXPERIMENTAL) Retrieve metadata context
-     * @param {SlideshowExportApiGetSlidesExportMetadataRequest} requestParameters Request parameters.
+     * @param {SlidesExportApiGetSlidesExportMetadataRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SlideshowExportApi
+     * @memberof SlidesExportApi
      */
     public getSlidesExportMetadata(
-        requestParameters: SlideshowExportApiGetSlidesExportMetadataRequest,
+        requestParameters: SlidesExportApiGetSlidesExportMetadataRequest,
         options?: AxiosRequestConfig,
     ) {
-        return SlideshowExportApiFp(this.configuration)
+        return SlidesExportApiFp(this.configuration)
             .getSlidesExportMetadata(requestParameters.workspaceId, requestParameters.exportId, options)
             .then((request) => request(this.axios, this.basePath));
     }

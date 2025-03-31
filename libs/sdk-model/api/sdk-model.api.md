@@ -3457,6 +3457,7 @@ export interface ISettings {
     enableSeparateTotalLabels?: boolean;
     // (undocumented)
     enableSingleStoreDataSource?: boolean;
+    enableSlidesExport?: boolean;
     enableSlideshowExports?: boolean;
     enableSmtp?: boolean;
     // (undocumented)

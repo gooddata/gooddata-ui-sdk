@@ -471,6 +471,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         filters?: FilterContextItem[],
         options?: {
             widgetIds?: ObjRef[];
+            visualizationIds?: ObjRef[];
+            templateId?: string;
             filename?: string;
             title?: string;
             hideWidgetTitles?: boolean;
@@ -499,6 +501,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 dashboardId,
                 fileName: options?.filename ?? title,
                 widgetIds: options?.widgetIds?.map((widgetId) => objRefToString(widgetId)),
+                visualizationIds: options?.visualizationIds?.map((visualizationId) =>
+                    objRefToString(visualizationId),
+                ),
+                templateId: options?.templateId,
                 metadata: convertToBackendExportMetadata({
                     filters: withoutAllTime,
                     title: options?.title,

@@ -1139,13 +1139,13 @@ export interface ClusteringResult {
      * @type {Array<number>}
      * @memberof ClusteringResult
      */
-    ycoord: Array<number>;
+    xcoord: Array<number>;
     /**
      *
      * @type {Array<number>}
      * @memberof ClusteringResult
      */
-    xcoord: Array<number>;
+    ycoord: Array<number>;
 }
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
@@ -1304,6 +1304,12 @@ export interface CreatedVisualizations {
      * @memberof CreatedVisualizations
      */
     reasoning: string;
+    /**
+     * List of suggestions for next steps. Filled when no visualization was created, suggests alternatives.
+     * @type {Array<Suggestion>}
+     * @memberof CreatedVisualizations
+     */
+    suggestions: Array<Suggestion>;
 }
 /**
  * Mapping from dimension items (either \'localIdentifier\' from \'AttributeItem\', or \"measureGroup\") to their respective values. This effectively specifies the path (location) of the data column used for sorting. Therefore values for all dimension items must be specified.
@@ -1942,6 +1948,12 @@ export interface ExecutionSettings {
      * @memberof ExecutionSettings
      */
     dataSamplingPercentage?: number;
+    /**
+     * Specifies the timestamp of the execution from which relative filters are resolved. If not set, the current time is used.
+     * @type {string}
+     * @memberof ExecutionSettings
+     */
+    timestamp?: string;
 }
 /**
  * Specifies what is used for filtering.
@@ -2328,18 +2340,6 @@ export interface MeasureGroupHeaders {
      * @memberof MeasureGroupHeaders
      */
     measureGroupHeaders?: Array<MeasureHeader>;
-    /**
-     *
-     * @type {MeasureHeader}
-     * @memberof MeasureGroupHeaders
-     */
-    first?: MeasureHeader;
-    /**
-     *
-     * @type {MeasureHeader}
-     * @memberof MeasureGroupHeaders
-     */
-    last?: MeasureHeader;
 }
 /**
  *
@@ -3474,7 +3474,7 @@ export type SortKeyValueValueDirectionEnum =
     typeof SortKeyValueValueDirectionEnum[keyof typeof SortKeyValueValueDirectionEnum];
 
 /**
- * Suggestions for next steps
+ * List of suggestions for next steps. Filled when no visualization was created, suggests alternatives.
  * @export
  * @interface Suggestion
  */
