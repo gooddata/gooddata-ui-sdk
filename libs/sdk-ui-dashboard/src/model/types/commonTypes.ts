@@ -147,6 +147,11 @@ export interface DashboardConfig {
     overrideDefaultFilters?: FilterContextItem[];
 
     /**
+     * Override dashboard title.
+     */
+    overrideTitle?: string;
+
+    /**
      * Color palette to pass down to charts.
      */
     colorPalette?: IColorPalette;
@@ -258,6 +263,12 @@ export interface DashboardConfig {
      * Hide "Share" button in TopBar
      */
     hideShareButton?: boolean;
+
+    /**
+     * @internal
+     * Hide "Widget titles" in the dashboard
+     */
+    hideWidgetTitles?: boolean;
 
     /**
      * @internal
@@ -425,6 +436,8 @@ export type ResolvedDashboardConfig = Omit<
     | "initialContent"
     | "executionTimestamp"
     | "overrideDefaultFilters"
+    | "overrideTitle"
+    | "hideWidgetTitles"
 > &
     DashboardConfig;
 

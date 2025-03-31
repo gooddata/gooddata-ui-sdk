@@ -593,7 +593,11 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
     // (undocumented)
-    getFilterContextByExportId: (exportId: string, type: "visual" | "slides" | undefined) => Promise<IFilterContext | null>;
+    getFilterContextByExportId: (exportId: string, type: "visual" | "slides" | undefined) => Promise<{
+        filterContext?: IFilterContext;
+        title?: string;
+        hideWidgetTitles?: boolean;
+    } | null>;
     // (undocumented)
     getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]>;
     // (undocumented)

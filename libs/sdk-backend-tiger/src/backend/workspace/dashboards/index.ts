@@ -33,6 +33,7 @@ import {
     IGetDashboardPluginOptions,
     IDashboardsQuery,
     IRawExportCustomOverrides,
+    walkLayout,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -60,6 +61,8 @@ import {
     IDashboardFilterViewSaveRequest,
     IDashboardAttributeFilterConfig,
     IExecutionDefinition,
+    isInsightWidget,
+    IDashboardWidget,
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
@@ -148,13 +151,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         });
 
-        const filterContext = await this.prepareFilterContext(
+        const { filterContext, title, hideWidgetTitles } = await this.prepareMetadata(
             options?.exportId,
             options?.exportType,
             filterContextRef,
             result?.data?.included,
         );
-        return convertDashboard(result.data, filterContext);
+
+        const dashboard = convertDashboard(result.data, filterContext);
+        return updateDashboard(dashboard, title, hideWidgetTitles);
     };
 
     public getDashboardWithReferences = async (
@@ -174,15 +179,18 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const dataSets = included.filter(isDataSetItem).map(convertDataSetItem);
 
-        const filterContext = await this.prepareFilterContext(
+        const { filterContext, title, hideWidgetTitles } = await this.prepareMetadata(
             options?.exportId,
             options?.exportType,
             filterContextRef,
             included,
         );
 
+        let updatedDashboard = convertDashboard(dashboard, filterContext);
+        updatedDashboard = updateDashboard(updatedDashboard, title, hideWidgetTitles);
+
         return {
-            dashboard: convertDashboard(dashboard, filterContext),
+            dashboard: updatedDashboard,
             references: {
                 insights,
                 plugins,
@@ -213,7 +221,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     public getFilterContextByExportId = async (
         exportId: string,
         type: "visual" | "slides" | undefined,
-    ): Promise<IFilterContext | null> => {
+    ): Promise<{ filterContext?: IFilterContext; title?: string; hideWidgetTitles?: boolean } | null> => {
         const metadata = await this.authCall((client) => {
             if (type === "slides") {
                 return client.export.getSlidesExportMetadata({
@@ -237,18 +245,23 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const convertedExportMetadata = convertFromBackendExportMetadata(metadata);
 
-        // Fallback to default filters if no filters are present in the export metadata
-        if (!convertedExportMetadata) {
-            return null;
-        }
-
         return {
-            filters: convertedExportMetadata.filters,
-            title: `temp-filter-context-${exportId}`,
-            description: "temp-filter-context-description",
-            ref: { identifier: `identifier-${exportId}` },
-            uri: `uri-${exportId}`,
-            identifier: `identifier-${exportId}`,
+            ...(convertedExportMetadata?.filters
+                ? {
+                      filterContext: {
+                          filters: convertedExportMetadata.filters,
+                          title: `temp-filter-context-${exportId}`,
+                          description: "temp-filter-context-description",
+                          ref: { identifier: `identifier-${exportId}` },
+                          uri: `uri-${exportId}`,
+                          identifier: `identifier-${exportId}`,
+                      },
+                  }
+                : {}),
+            ...(convertedExportMetadata?.title ? { title: convertedExportMetadata.title } : {}),
+            ...(convertedExportMetadata?.hideWidgetTitles
+                ? { hideWidgetTitles: convertedExportMetadata.hideWidgetTitles }
+                : {}),
         };
     };
 
@@ -459,6 +472,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         options?: {
             widgetIds?: ObjRef[];
             filename?: string;
+            title?: string;
+            hideWidgetTitles?: boolean;
         },
     ): Promise<IExportResult> => {
         const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
@@ -484,7 +499,11 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 dashboardId,
                 fileName: options?.filename ?? title,
                 widgetIds: options?.widgetIds?.map((widgetId) => objRefToString(widgetId)),
-                metadata: convertToBackendExportMetadata({ filters: withoutAllTime }),
+                metadata: convertToBackendExportMetadata({
+                    filters: withoutAllTime,
+                    title: options?.title,
+                    hideWidgetTitles: options?.hideWidgetTitles,
+                }),
             };
             const slideshowExport = await client.export.createSlidesExport({
                 workspaceId: this.workspace,
@@ -1169,25 +1188,61 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         return convertFilterContextFromBackend(result.data);
     };
 
-    // prepare filter context with priority for given filtercontext options
-    private prepareFilterContext = async (
+    // prepare metadata and filter context with priority for given filter context options
+    private prepareMetadata = async (
         exportId: string | undefined,
         type: "visual" | "slides" | undefined,
         filterContextRef: ObjRef | undefined,
         includedFilterContext: JsonApiAnalyticalDashboardOutDocument["included"] = [],
-    ): Promise<IFilterContext | undefined> => {
+    ): Promise<{ filterContext?: IFilterContext; title?: string; hideWidgetTitles?: boolean }> => {
         const filterContextByRef = filterContextRef
             ? await this.getFilterContext(filterContextRef)
             : undefined;
 
-        const filterContextByExportId = exportId
+        const filterContextByExport = exportId
             ? await this.getFilterContextByExportId(exportId, type)
             : undefined;
 
-        return (
-            filterContextByExportId ||
-            filterContextByRef ||
-            getFilterContextFromIncluded(includedFilterContext)
-        );
+        return {
+            filterContext:
+                filterContextByExport?.filterContext ||
+                filterContextByRef ||
+                getFilterContextFromIncluded(includedFilterContext),
+            title: filterContextByExport?.title,
+            hideWidgetTitles: filterContextByExport?.hideWidgetTitles,
+        };
     };
+}
+
+type Writeable<T extends { [x: string]: any }, K extends string> = {
+    [P in K]: T[P];
+};
+
+function updateDashboard(ds: IDashboard, title?: string, hideWidgetTitles?: boolean) {
+    let dashboard = ds;
+
+    // Rewrite dashboard title if it was set in the metadata
+    if (title) {
+        dashboard = {
+            ...dashboard,
+            title,
+        };
+    }
+
+    // Hide widget titles if it was set in the metadata
+    if (dashboard.layout && hideWidgetTitles) {
+        walkLayout(dashboard.layout, {
+            widgetCallback: (widget) => {
+                if (isInsightWidget(widget)) {
+                    const wd = widget as Writeable<IDashboardWidget, "configuration">;
+                    wd.configuration = {
+                        ...widget.configuration,
+                        hideTitle: true,
+                    };
+                }
+            },
+        });
+    }
+
+    return dashboard;
 }

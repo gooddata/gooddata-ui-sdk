@@ -1414,7 +1414,11 @@ export interface IWorkspaceDashboardsService {
     getDashboardsQuery(): IDashboardsQuery;
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
-    getFilterContextByExportId(exportId: string, type: "visual" | "slides" | undefined): Promise<IFilterContext | null>;
+    getFilterContextByExportId(exportId: string, type: "visual" | "slides" | undefined): Promise<{
+        filterContext?: IFilterContext;
+        title?: string;
+        hideWidgetTitles?: boolean;
+    } | null>;
     getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]>;
     getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[], attributeFilterConfigs: IDashboardAttributeFilterConfig[]): Promise<IFilter[]>;
     getResolvedFiltersForWidgetWithMultipleDateFilters(widget: IWidget, commonDateFilters: IDateFilter[], otherFilters: IFilter[], attributeFilterConfigs: IDashboardAttributeFilterConfig[]): Promise<IFilter[]>;

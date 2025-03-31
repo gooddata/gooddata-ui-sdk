@@ -72,7 +72,7 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     public getFilterContextByExportId = async (
         exportId: string,
         type: "visual" | "slides" | undefined,
-    ): Promise<IFilterContext | null> => {
+    ): Promise<{ filterContext?: IFilterContext; title?: string; hideWidgetTitles?: boolean } | null> => {
         return this.decorated.getFilterContextByExportId(exportId, type);
     };
 
