@@ -3,6 +3,7 @@ import React, { useCallback, useMemo } from "react";
 import { defineMessages, useIntl } from "react-intl";
 import {
     selectFilterValidationIncompatibleDefaultFiltersOverride,
+    selectIsInExportMode,
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
@@ -27,9 +28,10 @@ export function useFilterContextValidationMessages() {
     const incompatibleDefaultFiltersOverride = useDashboardSelector(
         selectFilterValidationIncompatibleDefaultFiltersOverride,
     );
+    const isExportMode = useDashboardSelector(selectIsInExportMode);
 
     const messages = useMemo((): IMessage[] => {
-        if (!incompatibleDefaultFiltersOverride) {
+        if (!incompatibleDefaultFiltersOverride || isExportMode) {
             return [];
         }
 
@@ -40,7 +42,7 @@ export function useFilterContextValidationMessages() {
                 node: intl.formatMessage(localizationMessages.invalidDrillTitle, commonReplacements),
             },
         ];
-    }, [incompatibleDefaultFiltersOverride, intl]);
+    }, [incompatibleDefaultFiltersOverride, isExportMode, intl]);
 
     const removeMessage = useCallback(
         (id: string) => {
