@@ -3500,7 +3500,7 @@
         "limit": 0
     },
     "recurrence.cron.tooltip": {
-        "value": "Use the unix-cron string format. <a>Learn more</a>",
+        "value": "Use the <a>unix-cron</a> string format.",
         "comment": "Do not translate html tags <a>, </a>. Do not translate 'unix-cron' as it is a name of specific tech.",
         "limit": 0
     },
