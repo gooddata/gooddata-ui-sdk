@@ -553,6 +553,11 @@
         "comment": "Message for recipients input when a user is external and allowed.",
         "limit": 0
     },
+    "dialogs.schedule.email.user.remove": {
+        "value": "Remove {name}",
+        "comment": "Label of a button for removing a user from the recipients list",
+        "limit": 0
+    },
     "dialogs.schedule.email.user.warning.external": {
         "value": "This email address does not belong to this workspace. The recipient may receive sensitive data.",
         "comment": "Message for recipients input when a user is external",

@@ -6,7 +6,7 @@ import {
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import ReactSelect, {
     ActionMeta,
     SelectComponentsConfig,
@@ -15,6 +15,8 @@ import ReactSelect, {
     MultiValueGenericProps,
     components as ReactSelectComponents,
     GroupBase,
+    MultiValueRemoveProps,
+    MenuListProps,
 } from "react-select";
 import debounce from "lodash/debounce.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -42,7 +44,8 @@ const PADDING = 16;
 const LOADING_MENU_HEIGHT = 50;
 const CREATE_OPTION = "create-option";
 const SELECT_OPTION = "select-option";
-const { Menu, Input } = ReactSelectComponents;
+const MENU_LIST_ID = "gd-recipients-menu-list-id";
+const { Menu, Input, MultiValueRemove, MenuList } = ReactSelectComponents;
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
 const TOOLTIP_ALIGN_POINTS: IAlignPoint[] = [
@@ -177,8 +180,10 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             Input: this.renderInputContainer,
             MultiValueContainer: this.renderMultiValueContainer,
             Menu: this.renderMenuOptions,
+            MenuList: this.renderMenuList,
             Placeholder: this.renderEmptyContainer,
             NoOptionsMessage: this.renderNoOptionsContainer,
+            MultiValueRemove: this.renderMultiValueRemove,
         };
 
         const maxRecipientsError = maxRecipients && value.length > maxRecipients;
@@ -266,6 +271,23 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         return this.renderEmptyContainer();
     };
 
+    private renderMultiValueRemove = (
+        props: MultiValueRemoveProps<IAutomationRecipient>,
+    ): React.ReactElement | null => {
+        const intl = useIntl();
+        const modifiedProps = {
+            ...props,
+            innerProps: {
+                ...props.innerProps,
+                "aria-label": intl.formatMessage(
+                    { id: "dialogs.schedule.email.user.remove" },
+                    { name: props.data.name ?? props.data.id },
+                ),
+            },
+        };
+        return <MultiValueRemove {...modifiedProps} />;
+    };
+
     private renderMenuOptions = (menuProps: MenuProps<any, boolean>): React.ReactElement | null => {
         const { isLoading } = this.props;
         const {
@@ -285,6 +307,15 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         }
 
         return this.renderMenuOptionsContainer(menuProps);
+    };
+
+    private renderMenuList = (menuListProps: MenuListProps<any, boolean>): React.ReactElement => {
+        const modifiedInnerProps = {
+            ...menuListProps.innerProps,
+            id: MENU_LIST_ID,
+        };
+
+        return <MenuList {...menuListProps} innerProps={modifiedInnerProps} />;
     };
 
     private renderMenuOptionsContainer = (menuProps: MenuProps<any, boolean>): React.ReactElement => {
@@ -513,6 +544,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         const props: InputProps<IAutomationRecipient> = {
             ...inputProps,
             id: "form.destination",
+            "aria-controls": MENU_LIST_ID,
         };
 
         return (
