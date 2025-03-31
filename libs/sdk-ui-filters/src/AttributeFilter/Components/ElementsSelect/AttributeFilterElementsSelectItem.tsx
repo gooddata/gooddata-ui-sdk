@@ -1,11 +1,11 @@
-// (C) 2007-2024 GoodData Corporation
-import React, { useCallback } from "react";
+// (C) 2007-2025 GoodData Corporation
+import React, { useCallback, useRef } from "react";
 import cx from "classnames";
 import camelCase from "lodash/camelCase.js";
 import { FormattedMessage, useIntl } from "react-intl";
 import { getElementPrimaryTitle, getElementTitle } from "../../utils.js";
 import { IAttributeFilterElementsSelectItemProps } from "./types.js";
-import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, IAlignPoint, isSpaceKey } from "@gooddata/sdk-ui-kit";
 import { AttributeFilterElementsSelectItemTooltip } from "./AttributeFilterElementsSelectItemTooltip.js";
 
 const ALIGN_POINTS: IAlignPoint[] = [{ align: "bl tc", offset: { x: 7, y: 0 } }];
@@ -23,6 +23,7 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
 ) => {
     const { item, isSelected, onSelect, onSelectOnly, onDeselect, primaryLabelTitle } = props;
     const intl = useIntl();
+    const itemRef = useRef<HTMLDivElement>(null);
 
     const onItemClick = useCallback(() => {
         if (isSelected) {
@@ -39,6 +40,21 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
         },
         [onSelectOnly],
     );
+
+    const onFocus = (event: React.FocusEvent<HTMLDivElement>) => {
+        // Prevent focus from moving from item inside to the checkbox
+        if (event.target.tagName === "INPUT") {
+            event.preventDefault();
+            itemRef.current?.focus(); // Keep focus on the item
+        }
+    };
+
+    const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (isSpaceKey(event)) {
+            event.preventDefault(); // Prevent scrolling on Space
+            onItemClick();
+        }
+    };
 
     const classes = cx(
         "gd-attribute-filter-elements-select-item__next",
@@ -64,7 +80,16 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
     const itemPrimaryTitle = getElementPrimaryTitle(item);
 
     return (
-        <div className={classes} onClick={onItemClick}>
+        <div
+            ref={itemRef}
+            tabIndex={0}
+            className={classes}
+            onClick={onItemClick}
+            onFocus={onFocus}
+            onKeyDown={onKeyDown}
+            role="option"
+            aria-selected={isSelected}
+        >
             <label className={labelClasses}>
                 <input type="checkbox" className="input-checkbox" readOnly checked={isSelected} />
                 <span className="input-label-text">{itemTitle}</span>

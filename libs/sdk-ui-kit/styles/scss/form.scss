@@ -451,7 +451,7 @@ textarea {
 .input-checkbox-toggle {
     input[type="checkbox"]:focus-visible + ::before,
     input[type="radio"]:focus-visible + ::before {
-        outline: medium solid variables.$gd-input-text-border-outline;
+        outline: 2px solid variables.$gd-input-text-border-outline;
         outline-offset: 2px;
         transition: none;
     }

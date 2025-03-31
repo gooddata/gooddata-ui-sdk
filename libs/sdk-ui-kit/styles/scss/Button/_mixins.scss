@@ -136,6 +136,10 @@
         }
     }
 
+    &:focus-visible {
+        transition: none;
+    }
+
     &[class*="gd-icon-"] {
         padding-left: 37px;
 
