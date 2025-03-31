@@ -423,6 +423,7 @@ function useInitOrReload(
                   props,
                   supportsKeepingDependentFiltersSelection,
                   enableDuplicatedLabelValuesInAttributeFilter,
+                  enableDashboardFiltersApplyModes,
               );
         refreshByType(handler, change, supportsKeepingDependentFiltersSelection);
 
@@ -536,6 +537,7 @@ function updateNonResettingFilter(
     }: UpdateFilterProps,
     supportsKeepingDependentFiltersSelection: boolean,
     enableDuplicatedLabelValuesInAttributeFilter: boolean,
+    enableDashboardFiltersApplyModes: boolean,
 ): UpdateFilterType {
     if (
         limitingAttributesChanged ||
@@ -571,6 +573,9 @@ function updateNonResettingFilter(
                 const displayFormRef = filterObjRef(filter);
                 handler.setDisplayForm(displayFormRef);
                 handler.setDisplayAsLabel(displayAsLabel);
+            }
+            if (enableDashboardFiltersApplyModes) {
+                handler.setSearch("");
             }
             handler.changeSelection({ keys, isInverted, ...irrelevantKeysObj });
             handler.commitSelection();
@@ -847,7 +852,10 @@ function useCallbacks(
 
         if (handler.getSearch().length > 0) {
             handler.setSearch("");
-            handler.loadInitialElementsPage(RESET_CORRELATION);
+            if (handler.getInitStatus() === "loading" || !enableDashboardFiltersApplyModes) {
+                // if status is loading, updateNonResettingFilter takes care of clearing search and reloading elements.
+                handler.loadInitialElementsPage(RESET_CORRELATION);
+            }
         }
 
         /**
