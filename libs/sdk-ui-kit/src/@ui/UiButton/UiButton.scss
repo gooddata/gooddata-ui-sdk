@@ -1,6 +1,7 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-.gd-ui-kit-button {
+.gd-ui-kit-button,
+%ui-button {
     $root: &;
 
     font-family: var(--gd-font-family);
@@ -32,11 +33,13 @@
         }
     }
 
-    &__text {
+    &__text,
+    %ui-button__text {
         transition: var(--gd-transition-all);
     }
 
-    &__icon {
+    &__icon,
+    %ui-button__icon {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -189,7 +192,8 @@
             }
         }
 
-        &-tertiary {
+        &-tertiary,
+        %ui-button--variant-tertiary {
             --gd-icon-fill-color: var(--gd-palette-complementary-5);
 
             color: var(--gd-palette-complementary-7);

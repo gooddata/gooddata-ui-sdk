@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { CodeSnippet } from "./CodeSnippet.js";
 /**
@@ -34,7 +34,7 @@ export interface IPropCombination<TProps extends object, TProp extends keyof TPr
  * @internal
  */
 export interface IComponentTableProps<TProps extends object, TProp extends keyof TProps> {
-    columnsBy: IPropCombination<TProps, TProp>;
+    columnsBy?: IPropCombination<TProps, TProp> | undefined;
     rowsBy: IPropCombination<TProps, TProp>[];
     baseProps?: Partial<TProps>;
     Component: React.ComponentType<TProps>;
@@ -46,7 +46,7 @@ export interface IComponentTableProps<TProps extends object, TProp extends keyof
 }
 
 interface IComponentTableRowProps<TProps extends object, TProp extends keyof TProps> {
-    columnsBy: IPropCombination<TProps, TProp>;
+    columnsBy?: IPropCombination<TProps, TProp> | undefined;
     row: IPropCombination<TProps, TProp>;
     baseProps?: Partial<TProps>;
     Component: React.ComponentType<TProps>;
@@ -152,13 +152,13 @@ export function ComponentTableRow<TProps extends object, TProp extends keyof TPr
                             padding: PADDING,
                         }}
                     >
-                        {columnsBy.values.map((columnValue) => {
+                        {(columnsBy?.values ?? [undefined]).map((columnValue) => {
                             const props = {
                                 ...baseProps,
-                                ...(columnsBy.baseProps ?? {}),
+                                ...(columnsBy?.baseProps ?? {}),
                                 ...(row.baseProps ?? {}),
                                 [row.prop]: rowValue,
-                                [columnsBy.prop]: columnValue,
+                                ...(columnsBy ? { [columnsBy.prop]: columnValue } : {}),
                             } as TProps;
 
                             return (
