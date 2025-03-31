@@ -606,6 +606,11 @@ export interface ISettings {
     enableSlideshowExports?: boolean;
 
     /**
+     * Enable slideshow exports settings from server
+     */
+    enableSlidesExport?: boolean;
+
+    /**
      * Enable rich text dynamic references.
      */
     enableRichTextDynamicReferences?: boolean;

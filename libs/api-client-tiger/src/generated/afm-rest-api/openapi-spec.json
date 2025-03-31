@@ -440,8 +440,10 @@
                         "name": "timestamp",
                         "in": "header",
                         "required": false,
+                        "deprecated": true,
                         "schema": {
                             "type": "string",
+                            "description": "Timestamp for the execution. Deprecated, use `settings.timestamp` in the request body.",
                             "format": "timestamp"
                         },
                         "example": "2020-06-03T10:15:30+01:00"
@@ -2327,6 +2329,11 @@
                         "type": "number",
                         "description": "Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.",
                         "format": "float"
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "description": "Specifies the timestamp of the execution from which relative filters are resolved. If not set, the current time is used.",
+                        "format": "date-time"
                     }
                 },
                 "description": "Various settings affecting the process of AFM execution or its result"
@@ -2750,12 +2757,6 @@
                         "items": {
                             "$ref": "#/components/schemas/MeasureHeader"
                         }
-                    },
-                    "first": {
-                        "$ref": "#/components/schemas/MeasureHeader"
-                    },
-                    "last": {
-                        "$ref": "#/components/schemas/MeasureHeader"
                     }
                 },
                 "description": "Measure group headers"
@@ -3351,7 +3352,7 @@
                 "description": "List of created visualization objects"
             },
             "CreatedVisualizations": {
-                "required": ["objects", "reasoning"],
+                "required": ["objects", "reasoning", "suggestions"],
                 "type": "object",
                 "properties": {
                     "objects": {
@@ -3364,6 +3365,13 @@
                     "reasoning": {
                         "type": "string",
                         "description": "Reasoning from LLM. Description of how and why the answer was generated."
+                    },
+                    "suggestions": {
+                        "type": "array",
+                        "description": "List of suggestions for next steps. Filled when no visualization was created, suggests alternatives.",
+                        "items": {
+                            "$ref": "#/components/schemas/Suggestion"
+                        }
                     }
                 },
                 "description": "Visualization definitions created by AI."
@@ -3543,7 +3551,7 @@
                         "description": "Suggestion button label"
                     }
                 },
-                "description": "Suggestions for next steps"
+                "description": "List of suggestions for next steps. Filled when no visualization was created, suggests alternatives."
             },
             "ChatResult": {
                 "type": "object",
@@ -3649,13 +3657,13 @@
                             "nullable": true
                         }
                     },
-                    "ycoord": {
+                    "xcoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
                         }
                     },
-                    "xcoord": {
+                    "ycoord": {
                         "type": "array",
                         "items": {
                             "type": "number"

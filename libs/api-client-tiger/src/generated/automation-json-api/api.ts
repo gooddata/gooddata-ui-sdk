@@ -27,6 +27,79 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  *
  * @export
+ * @interface AdHocAutomation
+ */
+export interface AdHocAutomation {
+    /**
+     *
+     * @type {string}
+     * @memberof AdHocAutomation
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AdHocAutomation
+     */
+    description?: string;
+    /**
+     * A list of tags.
+     * @type {Array<string>}
+     * @memberof AdHocAutomation
+     */
+    tags?: Array<string>;
+    /**
+     * Additional details to be included in the automated message.
+     * @type {{ [key: string]: string; }}
+     * @memberof AdHocAutomation
+     */
+    details?: { [key: string]: string };
+    /**
+     *
+     * @type {AutomationMetadata}
+     * @memberof AdHocAutomation
+     */
+    metadata?: AutomationMetadata | null;
+    /**
+     *
+     * @type {Array<AutomationTabularExport>}
+     * @memberof AdHocAutomation
+     */
+    tabularExports?: Array<AutomationTabularExport>;
+    /**
+     *
+     * @type {Array<AutomationVisualExport>}
+     * @memberof AdHocAutomation
+     */
+    visualExports?: Array<AutomationVisualExport>;
+    /**
+     * External recipients of the automation action results.
+     * @type {Array<AutomationExternalRecipient>}
+     * @memberof AdHocAutomation
+     */
+    externalRecipients?: Array<AutomationExternalRecipient>;
+    /**
+     *
+     * @type {DeclarativeNotificationChannelIdentifier}
+     * @memberof AdHocAutomation
+     */
+    notificationChannel?: DeclarativeNotificationChannelIdentifier;
+    /**
+     *
+     * @type {Array<DeclarativeUserIdentifier>}
+     * @memberof AdHocAutomation
+     */
+    recipients?: Array<DeclarativeUserIdentifier>;
+    /**
+     *
+     * @type {DeclarativeAnalyticalDashboardIdentifier}
+     * @memberof AdHocAutomation
+     */
+    analyticalDashboard?: DeclarativeAnalyticalDashboardIdentifier;
+}
+/**
+ *
+ * @export
  * @interface AlertDescription
  */
 export interface AlertDescription {
@@ -166,6 +239,38 @@ export interface AlertEvaluationRow {
 /**
  *
  * @export
+ * @interface AutomationExternalRecipient
+ */
+export interface AutomationExternalRecipient {
+    /**
+     * E-mail address to send notifications from.
+     * @type {string}
+     * @memberof AutomationExternalRecipient
+     */
+    email: string;
+}
+/**
+ * Additional information for the automation.
+ * @export
+ * @interface AutomationMetadata
+ */
+export interface AutomationMetadata {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationMetadata
+     */
+    widget?: string;
+    /**
+     *
+     * @type {Array<VisibleFilter>}
+     * @memberof AutomationMetadata
+     */
+    visibleFilters?: Array<VisibleFilter>;
+}
+/**
+ *
+ * @export
  * @interface AutomationNotification
  */
 export interface AutomationNotification extends NotificationContent {
@@ -189,6 +294,164 @@ export interface AutomationNotificationAllOf {
      */
     content?: WebhookMessage;
 }
+/**
+ *
+ * @export
+ * @interface AutomationTabularExport
+ */
+export interface AutomationTabularExport {
+    /**
+     *
+     * @type {TabularExportRequest}
+     * @memberof AutomationTabularExport
+     */
+    requestPayload: TabularExportRequest;
+}
+/**
+ *
+ * @export
+ * @interface AutomationVisualExport
+ */
+export interface AutomationVisualExport {
+    /**
+     *
+     * @type {VisualExportRequest}
+     * @memberof AutomationVisualExport
+     */
+    requestPayload: VisualExportRequest;
+}
+/**
+ * Custom label object override.
+ * @export
+ * @interface CustomLabel
+ */
+export interface CustomLabel {
+    /**
+     * Override value.
+     * @type {string}
+     * @memberof CustomLabel
+     */
+    title: string;
+}
+/**
+ * Custom metric object override.
+ * @export
+ * @interface CustomMetric
+ */
+export interface CustomMetric {
+    /**
+     * Metric title override.
+     * @type {string}
+     * @memberof CustomMetric
+     */
+    title: string;
+    /**
+     * Format override.
+     * @type {string}
+     * @memberof CustomMetric
+     */
+    format: string;
+}
+/**
+ * Custom cell value overrides (IDs will be replaced with specified values).
+ * @export
+ * @interface CustomOverride
+ */
+export interface CustomOverride {
+    /**
+     * Map of CustomLabels with keys used as placeholders in document.
+     * @type {{ [key: string]: CustomLabel; }}
+     * @memberof CustomOverride
+     */
+    labels?: { [key: string]: CustomLabel };
+    /**
+     * Map of CustomMetrics with keys used as placeholders in document.
+     * @type {{ [key: string]: CustomMetric; }}
+     * @memberof CustomOverride
+     */
+    metrics?: { [key: string]: CustomMetric };
+}
+/**
+ * An analytical dashboard identifier.
+ * @export
+ * @interface DeclarativeAnalyticalDashboardIdentifier
+ */
+export interface DeclarativeAnalyticalDashboardIdentifier {
+    /**
+     * Identifier of the analytical dashboard.
+     * @type {string}
+     * @memberof DeclarativeAnalyticalDashboardIdentifier
+     */
+    id: string;
+    /**
+     * A type.
+     * @type {string}
+     * @memberof DeclarativeAnalyticalDashboardIdentifier
+     */
+    type: DeclarativeAnalyticalDashboardIdentifierTypeEnum;
+}
+
+export const DeclarativeAnalyticalDashboardIdentifierTypeEnum = {
+    ANALYTICAL_DASHBOARD: "analyticalDashboard",
+} as const;
+
+export type DeclarativeAnalyticalDashboardIdentifierTypeEnum =
+    typeof DeclarativeAnalyticalDashboardIdentifierTypeEnum[keyof typeof DeclarativeAnalyticalDashboardIdentifierTypeEnum];
+
+/**
+ * A notification channel identifier.
+ * @export
+ * @interface DeclarativeNotificationChannelIdentifier
+ */
+export interface DeclarativeNotificationChannelIdentifier {
+    /**
+     * Notification channel identifier.
+     * @type {string}
+     * @memberof DeclarativeNotificationChannelIdentifier
+     */
+    id: string;
+    /**
+     * A type.
+     * @type {string}
+     * @memberof DeclarativeNotificationChannelIdentifier
+     */
+    type: DeclarativeNotificationChannelIdentifierTypeEnum;
+}
+
+export const DeclarativeNotificationChannelIdentifierTypeEnum = {
+    NOTIFICATION_CHANNEL: "notificationChannel",
+} as const;
+
+export type DeclarativeNotificationChannelIdentifierTypeEnum =
+    typeof DeclarativeNotificationChannelIdentifierTypeEnum[keyof typeof DeclarativeNotificationChannelIdentifierTypeEnum];
+
+/**
+ * A user identifier.
+ * @export
+ * @interface DeclarativeUserIdentifier
+ */
+export interface DeclarativeUserIdentifier {
+    /**
+     * User identifier.
+     * @type {string}
+     * @memberof DeclarativeUserIdentifier
+     */
+    id: string;
+    /**
+     * A type.
+     * @type {string}
+     * @memberof DeclarativeUserIdentifier
+     */
+    type: DeclarativeUserIdentifierTypeEnum;
+}
+
+export const DeclarativeUserIdentifierTypeEnum = {
+    USER: "user",
+} as const;
+
+export type DeclarativeUserIdentifierTypeEnum =
+    typeof DeclarativeUserIdentifierTypeEnum[keyof typeof DeclarativeUserIdentifierTypeEnum];
+
 /**
  * Default SMTP destination for notifications.
  * @export
@@ -427,6 +690,87 @@ export interface NotificationsMetaTotal {
     all: number;
 }
 /**
+ * Custom CSS styles for the table. (PDF, HTML)
+ * @export
+ * @interface PdfTableStyle
+ */
+export interface PdfTableStyle {
+    /**
+     * CSS selector where to apply given properties.
+     * @type {string}
+     * @memberof PdfTableStyle
+     */
+    selector: string;
+    /**
+     * List of CSS properties.
+     * @type {Array<PdfTableStyleProperty>}
+     * @memberof PdfTableStyle
+     */
+    properties?: Array<PdfTableStyleProperty>;
+}
+/**
+ * CSS property.
+ * @export
+ * @interface PdfTableStyleProperty
+ */
+export interface PdfTableStyleProperty {
+    /**
+     * CSS property key.
+     * @type {string}
+     * @memberof PdfTableStyleProperty
+     */
+    key: string;
+    /**
+     * CSS property value.
+     * @type {string}
+     * @memberof PdfTableStyleProperty
+     */
+    value: string;
+}
+/**
+ * Additional settings.
+ * @export
+ * @interface Settings
+ */
+export interface Settings {
+    /**
+     * Merge equal headers in neighbouring cells. (XLSX)
+     * @type {boolean}
+     * @memberof Settings
+     */
+    mergeHeaders?: boolean;
+    /**
+     * Print applied filters on top of the document. (PDF/HTML when visualizationObject is given)
+     * @type {boolean}
+     * @memberof Settings
+     */
+    showFilters?: boolean;
+    /**
+     * Page size and orientation. (PDF)
+     * @type {string}
+     * @memberof Settings
+     */
+    pdfPageSize?: string;
+    /**
+     * Custom CSS styles for the table. (PDF, HTML)
+     * @type {Array<PdfTableStyle>}
+     * @memberof Settings
+     */
+    pdfTableStyle?: Array<PdfTableStyle>;
+    /**
+     * Top left header content. (PDF)
+     * @type {string}
+     * @memberof Settings
+     */
+    pdfTopLeftContent?: string;
+    /**
+     * Top right header content. (PDF)
+     * @type {string}
+     * @memberof Settings
+     */
+    pdfTopRightContent?: string;
+}
+/**
  * Custom SMTP destination for notifications. The properties host, port, username, and password are required on create and update
  * @export
  * @interface Smtp
@@ -491,6 +835,78 @@ export const SmtpTypeEnum = {
 export type SmtpTypeEnum = typeof SmtpTypeEnum[keyof typeof SmtpTypeEnum];
 
 /**
+ * Export request object describing the export properties and overrides for tabular exports.
+ * @export
+ * @interface TabularExportRequest
+ */
+export interface TabularExportRequest {
+    /**
+     * Expected file format.
+     * @type {string}
+     * @memberof TabularExportRequest
+     */
+    format: TabularExportRequestFormatEnum;
+    /**
+     * Execution result identifier.
+     * @type {string}
+     * @memberof TabularExportRequest
+     */
+    executionResult?: string;
+    /**
+     * Filename of downloaded file without extension.
+     * @type {string}
+     * @memberof TabularExportRequest
+     */
+    fileName: string;
+    /**
+     *
+     * @type {Settings}
+     * @memberof TabularExportRequest
+     */
+    settings?: Settings;
+    /**
+     *
+     * @type {CustomOverride}
+     * @memberof TabularExportRequest
+     */
+    customOverride?: CustomOverride;
+    /**
+     * Visualization object identifier. Alternative to executionResult property.
+     * @type {string}
+     * @memberof TabularExportRequest
+     */
+    visualizationObject?: string;
+    /**
+     * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given.
+     * @type {Array<object>}
+     * @memberof TabularExportRequest
+     */
+    visualizationObjectCustomFilters?: Array<object>;
+    /**
+     * Analytical dashboard identifier. Optional identifier, which informs the system that the export is related to a specific dashboard.
+     * @type {string}
+     * @memberof TabularExportRequest
+     */
+    relatedDashboardId?: string;
+    /**
+     * Metadata definition in free-form JSON format.
+     * @type {object}
+     * @memberof TabularExportRequest
+     */
+    metadata?: object | null;
+}
+
+export const TabularExportRequestFormatEnum = {
+    CSV: "CSV",
+    XLSX: "XLSX",
+    HTML: "HTML",
+    PDF: "PDF",
+} as const;
+
+export type TabularExportRequestFormatEnum =
+    typeof TabularExportRequestFormatEnum[keyof typeof TabularExportRequestFormatEnum];
+
+/**
  * Request body with notification channel destination to test.
  * @export
  * @interface TestDestinationRequest
@@ -547,6 +963,63 @@ export interface TestResponse {
      * @memberof TestResponse
      */
     error?: string;
+}
+/**
+ *
+ * @export
+ * @interface TriggerAutomationRequest
+ */
+export interface TriggerAutomationRequest {
+    /**
+     *
+     * @type {AdHocAutomation}
+     * @memberof TriggerAutomationRequest
+     */
+    automation: AdHocAutomation;
+}
+/**
+ *
+ * @export
+ * @interface VisibleFilter
+ */
+export interface VisibleFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof VisibleFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof VisibleFilter
+     */
+    title?: string;
+}
+/**
+ * Export request object describing the export properties and metadata for dashboard PDF exports.
+ * @export
+ * @interface VisualExportRequest
+ */
+export interface VisualExportRequest {
+    /**
+     * File name to be used for retrieving the pdf document.
+     * @type {string}
+     * @memberof VisualExportRequest
+     */
+    fileName: string;
+    /**
+     * Dashboard identifier
+     * @type {string}
+     * @memberof VisualExportRequest
+     */
+    dashboardId: string;
+    /**
+     * Metadata definition in free-form JSON format.
+     * @type {object}
+     * @memberof VisualExportRequest
+     */
+    metadata?: object;
 }
 /**
  * Webhook destination for notifications. The property url is required on create and update.
@@ -966,6 +1439,101 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Trigger the automation in the request.
+         * @summary Trigger automation.
+         * @param {string} workspaceId
+         * @param {TriggerAutomationRequest} triggerAutomationRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        triggerAutomation: async (
+            workspaceId: string,
+            triggerAutomationRequest: TriggerAutomationRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("triggerAutomation", "workspaceId", workspaceId);
+            // verify required parameter 'triggerAutomationRequest' is not null or undefined
+            assertParamExists("triggerAutomation", "triggerAutomationRequest", triggerAutomationRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/automations/trigger`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof triggerAutomationRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(triggerAutomationRequest !== undefined ? triggerAutomationRequest : {})
+                : triggerAutomationRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Trigger the existing automation to execute immediately.
+         * @summary Trigger existing automation.
+         * @param {string} workspaceId
+         * @param {string} automationId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        triggerExistingAutomation: async (
+            workspaceId: string,
+            automationId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("triggerExistingAutomation", "workspaceId", workspaceId);
+            // verify required parameter 'automationId' is not null or undefined
+            assertParamExists("triggerExistingAutomation", "automationId", automationId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/automations/{automationId}/trigger`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"automationId"}}`, encodeURIComponent(String(automationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     };
 };
 
@@ -1076,6 +1644,46 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * Trigger the automation in the request.
+         * @summary Trigger automation.
+         * @param {string} workspaceId
+         * @param {TriggerAutomationRequest} triggerAutomationRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async triggerAutomation(
+            workspaceId: string,
+            triggerAutomationRequest: TriggerAutomationRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.triggerAutomation(
+                workspaceId,
+                triggerAutomationRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Trigger the existing automation to execute immediately.
+         * @summary Trigger existing automation.
+         * @param {string} workspaceId
+         * @param {string} automationId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async triggerExistingAutomation(
+            workspaceId: string,
+            automationId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.triggerExistingAutomation(
+                workspaceId,
+                automationId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     };
 };
 
@@ -1176,6 +1784,44 @@ export const ActionsApiFactory = function (
                 .testNotificationChannel(requestParameters.testDestinationRequest, options)
                 .then((request) => request(axios, basePath));
         },
+        /**
+         * Trigger the automation in the request.
+         * @summary Trigger automation.
+         * @param {ActionsApiTriggerAutomationRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        triggerAutomation(
+            requestParameters: ActionsApiTriggerAutomationRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .triggerAutomation(
+                    requestParameters.workspaceId,
+                    requestParameters.triggerAutomationRequest,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Trigger the existing automation to execute immediately.
+         * @summary Trigger existing automation.
+         * @param {ActionsApiTriggerExistingAutomationRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        triggerExistingAutomation(
+            requestParameters: ActionsApiTriggerExistingAutomationRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .triggerExistingAutomation(
+                    requestParameters.workspaceId,
+                    requestParameters.automationId,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -1249,6 +1895,32 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiTestNotificationChannelRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<TestResponse>;
+
+    /**
+     * Trigger the automation in the request.
+     * @summary Trigger automation.
+     * @param {ActionsApiTriggerAutomationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    triggerAutomation(
+        requestParameters: ActionsApiTriggerAutomationRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     * Trigger the existing automation to execute immediately.
+     * @summary Trigger existing automation.
+     * @param {ActionsApiTriggerExistingAutomationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    triggerExistingAutomation(
+        requestParameters: ActionsApiTriggerExistingAutomationRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
 }
 
 /**
@@ -1357,6 +2029,48 @@ export interface ActionsApiTestNotificationChannelRequest {
 }
 
 /**
+ * Request parameters for triggerAutomation operation in ActionsApi.
+ * @export
+ * @interface ActionsApiTriggerAutomationRequest
+ */
+export interface ActionsApiTriggerAutomationRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiTriggerAutomation
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {TriggerAutomationRequest}
+     * @memberof ActionsApiTriggerAutomation
+     */
+    readonly triggerAutomationRequest: TriggerAutomationRequest;
+}
+
+/**
+ * Request parameters for triggerExistingAutomation operation in ActionsApi.
+ * @export
+ * @interface ActionsApiTriggerExistingAutomationRequest
+ */
+export interface ActionsApiTriggerExistingAutomationRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiTriggerExistingAutomation
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiTriggerExistingAutomation
+     */
+    readonly automationId: string;
+}
+
+/**
  * ActionsApi - object-oriented interface
  * @export
  * @class ActionsApi
@@ -1458,6 +2172,371 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
             .testNotificationChannel(requestParameters.testDestinationRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
+
+    /**
+     * Trigger the automation in the request.
+     * @summary Trigger automation.
+     * @param {ActionsApiTriggerAutomationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public triggerAutomation(
+        requestParameters: ActionsApiTriggerAutomationRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .triggerAutomation(
+                requestParameters.workspaceId,
+                requestParameters.triggerAutomationRequest,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Trigger the existing automation to execute immediately.
+     * @summary Trigger existing automation.
+     * @param {ActionsApiTriggerExistingAutomationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public triggerExistingAutomation(
+        requestParameters: ActionsApiTriggerExistingAutomationRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .triggerExistingAutomation(requestParameters.workspaceId, requestParameters.automationId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
+ * AutomationsApi - axios parameter creator
+ * @export
+ */
+export const AutomationsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Trigger the automation in the request.
+         * @summary Trigger automation.
+         * @param {string} workspaceId
+         * @param {TriggerAutomationRequest} triggerAutomationRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        triggerAutomation: async (
+            workspaceId: string,
+            triggerAutomationRequest: TriggerAutomationRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("triggerAutomation", "workspaceId", workspaceId);
+            // verify required parameter 'triggerAutomationRequest' is not null or undefined
+            assertParamExists("triggerAutomation", "triggerAutomationRequest", triggerAutomationRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/automations/trigger`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof triggerAutomationRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(triggerAutomationRequest !== undefined ? triggerAutomationRequest : {})
+                : triggerAutomationRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Trigger the existing automation to execute immediately.
+         * @summary Trigger existing automation.
+         * @param {string} workspaceId
+         * @param {string} automationId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        triggerExistingAutomation: async (
+            workspaceId: string,
+            automationId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("triggerExistingAutomation", "workspaceId", workspaceId);
+            // verify required parameter 'automationId' is not null or undefined
+            assertParamExists("triggerExistingAutomation", "automationId", automationId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/automations/{automationId}/trigger`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"automationId"}}`, encodeURIComponent(String(automationId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    };
+};
+
+/**
+ * AutomationsApi - functional programming interface
+ * @export
+ */
+export const AutomationsApiFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = AutomationsApiAxiosParamCreator(configuration);
+    return {
+        /**
+         * Trigger the automation in the request.
+         * @summary Trigger automation.
+         * @param {string} workspaceId
+         * @param {TriggerAutomationRequest} triggerAutomationRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async triggerAutomation(
+            workspaceId: string,
+            triggerAutomationRequest: TriggerAutomationRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.triggerAutomation(
+                workspaceId,
+                triggerAutomationRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Trigger the existing automation to execute immediately.
+         * @summary Trigger existing automation.
+         * @param {string} workspaceId
+         * @param {string} automationId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async triggerExistingAutomation(
+            workspaceId: string,
+            automationId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.triggerExistingAutomation(
+                workspaceId,
+                automationId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    };
+};
+
+/**
+ * AutomationsApi - factory interface
+ * @export
+ */
+export const AutomationsApiFactory = function (
+    configuration?: Configuration,
+    basePath?: string,
+    axios?: AxiosInstance,
+) {
+    const localVarFp = AutomationsApiFp(configuration);
+    return {
+        /**
+         * Trigger the automation in the request.
+         * @summary Trigger automation.
+         * @param {AutomationsApiTriggerAutomationRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        triggerAutomation(
+            requestParameters: AutomationsApiTriggerAutomationRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .triggerAutomation(
+                    requestParameters.workspaceId,
+                    requestParameters.triggerAutomationRequest,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Trigger the existing automation to execute immediately.
+         * @summary Trigger existing automation.
+         * @param {AutomationsApiTriggerExistingAutomationRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        triggerExistingAutomation(
+            requestParameters: AutomationsApiTriggerExistingAutomationRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .triggerExistingAutomation(
+                    requestParameters.workspaceId,
+                    requestParameters.automationId,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AutomationsApi - interface
+ * @export
+ * @interface AutomationsApi
+ */
+export interface AutomationsApiInterface {
+    /**
+     * Trigger the automation in the request.
+     * @summary Trigger automation.
+     * @param {AutomationsApiTriggerAutomationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutomationsApiInterface
+     */
+    triggerAutomation(
+        requestParameters: AutomationsApiTriggerAutomationRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     * Trigger the existing automation to execute immediately.
+     * @summary Trigger existing automation.
+     * @param {AutomationsApiTriggerExistingAutomationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutomationsApiInterface
+     */
+    triggerExistingAutomation(
+        requestParameters: AutomationsApiTriggerExistingAutomationRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+}
+
+/**
+ * Request parameters for triggerAutomation operation in AutomationsApi.
+ * @export
+ * @interface AutomationsApiTriggerAutomationRequest
+ */
+export interface AutomationsApiTriggerAutomationRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationsApiTriggerAutomation
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {TriggerAutomationRequest}
+     * @memberof AutomationsApiTriggerAutomation
+     */
+    readonly triggerAutomationRequest: TriggerAutomationRequest;
+}
+
+/**
+ * Request parameters for triggerExistingAutomation operation in AutomationsApi.
+ * @export
+ * @interface AutomationsApiTriggerExistingAutomationRequest
+ */
+export interface AutomationsApiTriggerExistingAutomationRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationsApiTriggerExistingAutomation
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationsApiTriggerExistingAutomation
+     */
+    readonly automationId: string;
+}
+
+/**
+ * AutomationsApi - object-oriented interface
+ * @export
+ * @class AutomationsApi
+ * @extends {BaseAPI}
+ */
+export class AutomationsApi extends BaseAPI implements AutomationsApiInterface {
+    /**
+     * Trigger the automation in the request.
+     * @summary Trigger automation.
+     * @param {AutomationsApiTriggerAutomationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutomationsApi
+     */
+    public triggerAutomation(
+        requestParameters: AutomationsApiTriggerAutomationRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return AutomationsApiFp(this.configuration)
+            .triggerAutomation(
+                requestParameters.workspaceId,
+                requestParameters.triggerAutomationRequest,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Trigger the existing automation to execute immediately.
+     * @summary Trigger existing automation.
+     * @param {AutomationsApiTriggerExistingAutomationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AutomationsApi
+     */
+    public triggerExistingAutomation(
+        requestParameters: AutomationsApiTriggerExistingAutomationRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return AutomationsApiFp(this.configuration)
+            .triggerExistingAutomation(requestParameters.workspaceId, requestParameters.automationId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
 }
 
 /**
@@ -1514,6 +2593,85 @@ export const NotificationChannelsApiAxiosParamCreator = function (configuration?
 
             if (metaInclude) {
                 localVarQueryParameter["metaInclude"] = Array.from(metaInclude);
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Mark in-platform notification by its ID as read.
+         * @summary Mark notification as read.
+         * @param {string} notificationId Notification ID to mark as read.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        markAsReadNotification: async (
+            notificationId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'notificationId' is not null or undefined
+            assertParamExists("markAsReadNotification", "notificationId", notificationId);
+            const localVarPath = `/api/v1/actions/notifications/{notificationId}/markAsRead`.replace(
+                `{${"notificationId"}}`,
+                encodeURIComponent(String(notificationId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Mark all user in-platform notifications as read.
+         * @summary Mark all notifications as read.
+         * @param {string} [workspaceId] Workspace ID where to mark notifications as read.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        markAsReadNotificationAll: async (
+            workspaceId?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/actions/notifications/markAsRead`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (workspaceId !== undefined) {
+                localVarQueryParameter["workspaceId"] = workspaceId;
             }
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -1668,6 +2826,40 @@ export const NotificationChannelsApiFp = function (configuration?: Configuration
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Mark in-platform notification by its ID as read.
+         * @summary Mark notification as read.
+         * @param {string} notificationId Notification ID to mark as read.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async markAsReadNotification(
+            notificationId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.markAsReadNotification(
+                notificationId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Mark all user in-platform notifications as read.
+         * @summary Mark all notifications as read.
+         * @param {string} [workspaceId] Workspace ID where to mark notifications as read.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async markAsReadNotificationAll(
+            workspaceId?: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.markAsReadNotificationAll(
+                workspaceId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Tests the existing notification channel by sending a test notification.
          * @summary Test existing notification channel.
          * @param {string} notificationChannelId
@@ -1741,6 +2933,36 @@ export const NotificationChannelsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Mark in-platform notification by its ID as read.
+         * @summary Mark notification as read.
+         * @param {NotificationChannelsApiMarkAsReadNotificationRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        markAsReadNotification(
+            requestParameters: NotificationChannelsApiMarkAsReadNotificationRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .markAsReadNotification(requestParameters.notificationId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Mark all user in-platform notifications as read.
+         * @summary Mark all notifications as read.
+         * @param {NotificationChannelsApiMarkAsReadNotificationAllRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        markAsReadNotificationAll(
+            requestParameters: NotificationChannelsApiMarkAsReadNotificationAllRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .markAsReadNotificationAll(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Tests the existing notification channel by sending a test notification.
          * @summary Test existing notification channel.
          * @param {NotificationChannelsApiTestExistingNotificationChannelRequest} requestParameters Request parameters.
@@ -1795,6 +3017,32 @@ export interface NotificationChannelsApiInterface {
         requestParameters: NotificationChannelsApiGetNotificationsRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<Notifications>;
+
+    /**
+     * Mark in-platform notification by its ID as read.
+     * @summary Mark notification as read.
+     * @param {NotificationChannelsApiMarkAsReadNotificationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NotificationChannelsApiInterface
+     */
+    markAsReadNotification(
+        requestParameters: NotificationChannelsApiMarkAsReadNotificationRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     * Mark all user in-platform notifications as read.
+     * @summary Mark all notifications as read.
+     * @param {NotificationChannelsApiMarkAsReadNotificationAllRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NotificationChannelsApiInterface
+     */
+    markAsReadNotificationAll(
+        requestParameters: NotificationChannelsApiMarkAsReadNotificationAllRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
 
     /**
      * Tests the existing notification channel by sending a test notification.
@@ -1866,6 +3114,34 @@ export interface NotificationChannelsApiGetNotificationsRequest {
 }
 
 /**
+ * Request parameters for markAsReadNotification operation in NotificationChannelsApi.
+ * @export
+ * @interface NotificationChannelsApiMarkAsReadNotificationRequest
+ */
+export interface NotificationChannelsApiMarkAsReadNotificationRequest {
+    /**
+     * Notification ID to mark as read.
+     * @type {string}
+     * @memberof NotificationChannelsApiMarkAsReadNotification
+     */
+    readonly notificationId: string;
+}
+
+/**
+ * Request parameters for markAsReadNotificationAll operation in NotificationChannelsApi.
+ * @export
+ * @interface NotificationChannelsApiMarkAsReadNotificationAllRequest
+ */
+export interface NotificationChannelsApiMarkAsReadNotificationAllRequest {
+    /**
+     * Workspace ID where to mark notifications as read.
+     * @type {string}
+     * @memberof NotificationChannelsApiMarkAsReadNotificationAll
+     */
+    readonly workspaceId?: string;
+}
+
+/**
  * Request parameters for testExistingNotificationChannel operation in NotificationChannelsApi.
  * @export
  * @interface NotificationChannelsApiTestExistingNotificationChannelRequest
@@ -1928,6 +3204,40 @@ export class NotificationChannelsApi extends BaseAPI implements NotificationChan
                 requestParameters.metaInclude,
                 options,
             )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Mark in-platform notification by its ID as read.
+     * @summary Mark notification as read.
+     * @param {NotificationChannelsApiMarkAsReadNotificationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NotificationChannelsApi
+     */
+    public markAsReadNotification(
+        requestParameters: NotificationChannelsApiMarkAsReadNotificationRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return NotificationChannelsApiFp(this.configuration)
+            .markAsReadNotification(requestParameters.notificationId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Mark all user in-platform notifications as read.
+     * @summary Mark all notifications as read.
+     * @param {NotificationChannelsApiMarkAsReadNotificationAllRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NotificationChannelsApi
+     */
+    public markAsReadNotificationAll(
+        requestParameters: NotificationChannelsApiMarkAsReadNotificationAllRequest = {},
+        options?: AxiosRequestConfig,
+    ) {
+        return NotificationChannelsApiFp(this.configuration)
+            .markAsReadNotificationAll(requestParameters.workspaceId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 

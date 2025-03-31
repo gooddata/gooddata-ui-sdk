@@ -917,7 +917,7 @@ export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<bo
 export const selectEnableSlideshowExports: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableSlideshowExports ?? false;
+        return state.settings?.enableSlidesExport ?? state.settings?.enableSlideshowExports ?? false;
     },
 );
 
