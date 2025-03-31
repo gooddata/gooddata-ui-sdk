@@ -4,8 +4,10 @@ import { put, delay, take, join, race, call, all, spawn, cancel, actionChannel }
 import { v4 as uuidv4 } from "uuid";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { newDashboardEventPredicate } from "../../events/index.js";
-import { renderRequested, renderResolved } from "../../events/render.js";
+import { renderRequested, renderResolvedWithDetails } from "../../events/render.js";
 import { executedActions } from "../../store/executed/index.js";
+import omit from "lodash/omit.js";
+import { RenderingWorkerConfiguration } from "./types.js";
 
 function* wait(ms: number): SagaIterator<true> {
     yield delay(ms);
@@ -23,59 +25,6 @@ const isAsyncRenderRequestedEvent = (id?: string) =>
         "GDC.DASH/EVT.RENDER.ASYNC.REQUESTED",
         id ? (e) => e.payload.id === id : () => true,
     );
-
-/**
- * @internal
- */
-export interface RenderingWorkerConfiguration {
-    /**
-     * Maximum time limit for rendering the dashboard.
-     * Somehow in sync with limits of exporter
-     * https://github.com/gooddata/gdc-exporters-microservices/blob/master/microservices/visual-exporter-service/src/main/kotlin/com/gooddata/exporters/visual/config/TabSessionConfig.kt
-     *
-     * Default: 20*60000 (20min).
-     * @privateRemarks
-     * If changing this value update it also in documentation of {@link requestAsyncRender} command creator and {@link useDashboardAsyncRender} hook.
-     */
-    maxTimeout: number;
-
-    /**
-     * Maximum time limit for the first asynchronous rendering request.
-     * If no asynchronous rendering request is fired in this time limit, the dashboard will announce that it is rendered.
-     *
-     * Default: 5000 (5s).
-     */
-    asyncRenderRequestedTimeout: number;
-
-    /**
-     * Maximum time limit to re-request asynchronous rendering of the component once it's resolved.
-     *
-     * Default: 2000 (2s).
-     */
-    asyncRenderResolvedTimeout: number;
-
-    /**
-     * Generator of correlation ids
-     *
-     * Default: uuid4
-     */
-    correlationIdGenerator: () => string;
-
-    /**
-     * Wait for given number of async requests.
-     * If provided, we'll not wait full asyncRenderRequestedTimeout and
-     * terminate the waiting if we reach the given number
-     *
-     */
-    asyncRenderExpectedCount?: number;
-
-    /**
-     * Indicates whether rendering worker is triggered inside export mode
-     *
-     * Default: false
-     */
-    isExport?: boolean;
-}
 
 const baseConfig: RenderingWorkerConfiguration = {
     asyncRenderRequestedTimeout: 5000,
@@ -111,7 +60,7 @@ export function newRenderingWorker(renderingWorkerConfig: Partial<RenderingWorke
             yield put(executedActions.setDashboardExecutionDone());
 
             // Notify that the dashboard is fully rendered.
-            yield put(renderResolved(ctx, correlationId));
+            yield put(renderResolvedWithDetails(ctx, omit(config, "correlationIdGenerator"), correlationId));
         } catch (err) {
             console.error("Rendering worker failed", err);
         }

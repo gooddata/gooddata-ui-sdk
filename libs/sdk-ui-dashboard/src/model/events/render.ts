@@ -1,4 +1,5 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+import { RenderingWorkerConfiguration } from "../commandHandlers/render/types.js";
 import { DashboardContext } from "../types/commonTypes.js";
 import { IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
@@ -154,6 +155,9 @@ export const isDashboardAsyncRenderResolved = eventGuard<DashboardAsyncRenderRes
  */
 export interface DashboardRenderResolved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.RENDER.RESOLVED";
+    readonly payload?: {
+        config: Omit<RenderingWorkerConfiguration, "correlationIdGenerator">;
+    };
 }
 
 /**
@@ -165,6 +169,27 @@ export interface DashboardRenderResolved extends IDashboardEvent {
 export function renderResolved(ctx: DashboardContext, correlationId?: string): DashboardRenderResolved {
     return {
         type: "GDC.DASH/EVT.RENDER.RESOLVED",
+        correlationId,
+        ctx,
+    };
+}
+
+/**
+ * This event is emitted as soon as the dashboard component is fully rendered,
+ * and asynchronous rendering of each component is complete.
+ *
+ * @public
+ */
+export function renderResolvedWithDetails(
+    ctx: DashboardContext,
+    config: Omit<RenderingWorkerConfiguration, "correlationIdGenerator">,
+    correlationId?: string,
+): DashboardRenderResolved {
+    return {
+        type: "GDC.DASH/EVT.RENDER.RESOLVED",
+        payload: {
+            config,
+        },
         correlationId,
         ctx,
     };

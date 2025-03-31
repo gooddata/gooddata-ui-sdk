@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { PayloadAction } from "@reduxjs/toolkit";
 import { Identifier, idRef, ObjRef, uriRef } from "@gooddata/sdk-model";
@@ -14,10 +14,8 @@ import { DashboardCommandType, InitializeDashboard, initializeDashboard } from "
 import { IDashboardQueryService } from "../store/_infra/queryService.js";
 import { IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 import { HeadlessDashboard, HeadlessDashboardConfig } from "../headlessDashboard/index.js";
-import {
-    newRenderingWorker,
-    RenderingWorkerConfiguration,
-} from "../commandHandlers/render/renderingWorker.js";
+import { newRenderingWorker } from "../commandHandlers/render/renderingWorker.js";
+import { RenderingWorkerConfiguration } from "../commandHandlers/render/types.js";
 import {
     DashboardEvents,
     DashboardEventType,
@@ -47,7 +45,7 @@ export class DashboardTester extends HeadlessDashboard {
     protected constructor(ctx: DashboardContext, config?: DashboardTesterConfig) {
         const headlessDahboardConfig: HeadlessDashboardConfig = {
             queryServices: config?.queryServices,
-            backgroundWorkers: [newRenderingWorker(config?.renderingWorkerConfig)],
+            backgroundWorkers: [newRenderingWorker(config?.renderingWorkerConfig || {})],
             customizationFns: config?.customizationFns,
         };
 

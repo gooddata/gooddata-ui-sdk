@@ -2980,6 +2980,10 @@ export interface DashboardRenderRequested extends IDashboardEvent {
 // @public (undocumented)
 export interface DashboardRenderResolved extends IDashboardEvent {
     // (undocumented)
+    readonly payload?: {
+        config: Omit<RenderingWorkerConfiguration, "correlationIdGenerator">;
+    };
+    // (undocumented)
     readonly type: "GDC.DASH/EVT.RENDER.RESOLVED";
 }
 
@@ -7528,6 +7532,16 @@ export function renameDashboard(newTitle: string, correlationId?: string): Renam
 // @beta
 export interface RenameDashboardPayload {
     readonly newTitle: string;
+}
+
+// @beta (undocumented)
+export interface RenderingWorkerConfiguration {
+    asyncRenderExpectedCount?: number;
+    asyncRenderRequestedTimeout: number;
+    asyncRenderResolvedTimeout: number;
+    correlationIdGenerator: () => string;
+    isExport?: boolean;
+    maxTimeout: number;
 }
 
 // @beta (undocumented)
