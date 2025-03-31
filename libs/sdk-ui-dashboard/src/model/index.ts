@@ -116,6 +116,7 @@ export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDa
 export { selectInsightAttributesMeta } from "./queryServices/queryInsightAttributesMeta.js";
 export { selectDateDatasetsForMeasure } from "./queryServices/queryMeasureDateDatasets.js";
 
+export type { RenderingWorkerConfiguration } from "./commandHandlers/render/types.js";
 export type {
     DashboardEventHandler,
     DashboardEventHandlerFn,
