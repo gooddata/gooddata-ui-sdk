@@ -24,6 +24,8 @@ import {
     IFilterContextDefinition,
     IDashboardAttributeFilterConfig,
     IDashboardAttributeFilter,
+    isInsightWidget,
+    IDashboardWidget,
 } from "@gooddata/sdk-model";
 
 import { filterContextActions } from "../../../store/filterContext/index.js";
@@ -56,6 +58,7 @@ import { drillActions } from "../../../store/drill/index.js";
 import { dashboardInitialize, EmptyDashboardLayout } from "./dashboardInitialize.js";
 import { mergedMigratedAttributeFilters } from "./migratedAttributeFilters.js";
 import compact from "lodash/compact.js";
+import { walkLayout } from "@gooddata/sdk-backend-spi";
 
 /**
  * Returns a list of actions which when processed will initialize the essential parts of the dashboard
@@ -148,17 +151,22 @@ function* actionsToInitializeOrFillNewDashboard(
     originalFilterContextDefinition?: IFilterContextDefinition;
     initialContent?: boolean;
 }> {
-    const { dashboard, insights }: SagaReturnType<typeof dashboardInitialize> = yield call(
-        dashboardInitialize,
-        ctx,
-        ctx.config?.initialContent,
-    );
+    const { dashboard: dashboardInitialized, insights }: SagaReturnType<typeof dashboardInitialize> =
+        yield call(dashboardInitialize, ctx, ctx.config?.initialContent);
 
     const overrideDefaultFilters = ctx.config?.overrideDefaultFilters;
     const overrideFilterContext = overrideDefaultFilters
         ? {
               filters: overrideDefaultFilters,
           }
+        : undefined;
+
+    const dashboard = dashboardInitialized
+        ? (updateDashboard(
+              dashboardInitialized as IDashboard,
+              ctx.config?.overrideTitle,
+              ctx.config?.hideWidgetTitles,
+          ) as IDashboard<ExtendedDashboardWidget>)
         : undefined;
 
     const sanitizedFilterContext = yield call(
@@ -393,11 +401,15 @@ export function* actionsToInitializeExistingDashboard(
         displayForms,
     );
 
-    const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> = {
-        ...dashboard,
-        layout: (dashboard.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
-        filterContext: sanitizedFilterContext,
-    };
+    const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> = updateDashboard(
+        {
+            ...dashboard,
+            layout: (dashboard.layout as IDashboardLayout<IWidget>) ?? EmptyDashboardLayout,
+            filterContext: sanitizedFilterContext,
+        },
+        ctx.config?.overrideTitle,
+        ctx.config?.hideWidgetTitles,
+    );
 
     const privateCtx: PrivateDashboardContext = yield call(getPrivateContext);
     const customizedDashboard =
@@ -489,4 +501,41 @@ export function* actionsToInitializeExistingDashboard(
         validationResults.length > 0 ? uiActions.setIncompatibleDefaultFiltersOverrideMessage() : null,
         drillActions.resetCrossFiltering(),
     ]);
+}
+
+type Writeable<T extends { [x: string]: any }, K extends string> = {
+    [P in K]: T[P];
+};
+
+function updateDashboard<Widget extends IDashboardWidget>(
+    ds: IDashboard<Widget>,
+    title?: string,
+    hideWidgetTitles?: boolean,
+) {
+    let dashboard = ds;
+
+    // Rewrite dashboard title if it was set in the metadata
+    if (title) {
+        dashboard = {
+            ...dashboard,
+            title,
+        };
+    }
+
+    // Hide widget titles if it was set in the metadata
+    if (dashboard.layout && hideWidgetTitles) {
+        walkLayout<Widget>(dashboard.layout, {
+            widgetCallback: (widget) => {
+                if (isInsightWidget(widget)) {
+                    const wd = widget as Writeable<IDashboardWidget, "configuration">;
+                    wd.configuration = {
+                        ...widget.configuration,
+                        hideTitle: true,
+                    };
+                }
+            },
+        });
+    }
+
+    return dashboard;
 }

@@ -1656,6 +1656,8 @@ export interface DashboardConfig {
     hideSaveAsNewButton?: boolean;
     // @internal
     hideShareButton?: boolean;
+    // @internal
+    hideWidgetTitles?: boolean;
     initialContent?: DashboardItem[];
     initialRenderMode?: RenderMode;
     isEmbedded?: boolean;
@@ -1669,6 +1671,7 @@ export interface DashboardConfig {
     menuButtonItemsVisibility?: IMenuButtonItemsVisibility;
     objectAvailability?: ObjectAvailabilityConfig;
     overrideDefaultFilters?: FilterContextItem[];
+    overrideTitle?: string;
     // @alpha
     references?: IDashboardReferences;
     separators?: ISeparators;
@@ -7706,7 +7709,7 @@ export interface ResolveAsyncRenderPayload {
 }
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];

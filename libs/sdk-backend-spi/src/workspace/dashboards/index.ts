@@ -294,7 +294,7 @@ export interface IWorkspaceDashboardsService {
     getFilterContextByExportId(
         exportId: string,
         type: "visual" | "slides" | undefined,
-    ): Promise<IFilterContext | null>;
+    ): Promise<{ filterContext?: IFilterContext; title?: string; hideWidgetTitles?: boolean } | null>;
 
     /**
      * Create and save dashboard for the provided dashboard definition

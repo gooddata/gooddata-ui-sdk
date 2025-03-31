@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     ITigerClient,
     DeclarativeSettingTypeEnum,
@@ -47,6 +47,8 @@ export type TigerObjectType = TigerAfmType | TigerMetadataType;
  */
 export interface IExportMetadata {
     filters: FilterContextItem[];
+    title?: string;
+    hideWidgetTitles?: boolean;
 }
 
 export type TigerSettingsType = DeclarativeSettingTypeEnum;
