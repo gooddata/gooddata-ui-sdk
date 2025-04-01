@@ -49,21 +49,14 @@ const AttachmentItem: React.FC<{
 };
 
 export const AttachmentDashboard: React.FC<{
-    id: string;
     pdfSelected: boolean;
     disabled?: boolean;
     onSelectionChange: () => void;
 }> = (props) => {
-    const { pdfSelected, disabled, id, onSelectionChange } = props;
+    const { pdfSelected, disabled, onSelectionChange } = props;
 
     return (
-        <AttachmentItem
-            id={id}
-            format="PDF"
-            disabled={disabled}
-            checked={pdfSelected}
-            onChange={onSelectionChange}
-        />
+        <AttachmentItem format="PDF" disabled={disabled} checked={pdfSelected} onChange={onSelectionChange} />
     );
 };
 
@@ -91,12 +84,14 @@ export const AttachmentWidgets: React.FC<{
                 alignPoints={DROPDOWN_ALIGN_POINTS}
                 autofocusOnOpen={true}
                 renderButton={({ toggleDropdown }) => (
-                    <button
+                    <Button
                         className="gd-attachment-item-configuration gd-icon-settings"
                         onClick={toggleDropdown}
-                        aria-label={intl.formatMessage({
-                            id: "dialogs.schedule.management.attachments.xlsx.settings",
-                        })}
+                        accessibilityConfig={{
+                            ariaLabel: intl.formatMessage({
+                                id: "dialogs.schedule.management.attachments.xlsx.settings",
+                            }),
+                        }}
                     />
                 )}
                 renderBody={({ closeDropdown }) => (

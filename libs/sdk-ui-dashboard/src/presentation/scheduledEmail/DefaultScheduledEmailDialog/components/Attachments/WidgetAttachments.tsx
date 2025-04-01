@@ -9,6 +9,7 @@ import {
 import { Message } from "@gooddata/sdk-ui-kit";
 import { AttachmentWidgets } from "./AttachmentItems.js";
 import { WidgetAttachmentType } from "../../types.js";
+import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
 
 export interface IWidgetAttachmentsProps {
     widgetFilters?: IFilter[];
@@ -50,10 +51,7 @@ export const WidgetAttachments = (props: IWidgetAttachmentsProps) => {
     };
 
     return (
-        <fieldset className="gd-input-component gd-notifications-channels-attachments s-notifications-channels-attachments">
-            <legend className="gd-label">
-                <FormattedMessage id="dialogs.schedule.email.attachments.label" />
-            </legend>
+        <AttachmentsWrapper>
             <div className="gd-attachment-list">
                 <AttachmentWidgets
                     csvSelected={csvSelected}
@@ -79,6 +77,6 @@ export const WidgetAttachments = (props: IWidgetAttachmentsProps) => {
                     </Message>
                 ) : null}
             </div>
-        </fieldset>
+        </AttachmentsWrapper>
     );
 };

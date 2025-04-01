@@ -7,6 +7,7 @@ import { AttachmentFilters, AttachmentFilterType } from "./AttachmentFilters.js"
 import { getAutomationDashboardFilters } from "../../../../../_staging/automation/index.js";
 import { AttachmentDashboard } from "./AttachmentItems.js";
 import { IAttachmentFilterInfo } from "../../hooks/useFiltersForDashboardScheduledExportInfo.js";
+import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
 
 export interface IDashboardAttachmentsProps {
     scheduledExportToEdit?: IAutomationMetadataObject;
@@ -71,16 +72,10 @@ export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
         );
     };
 
-    const accessibilityValue = "form.attachments";
-
     return (
-        <div className="gd-input-component gd-notifications-channels-attachments s-notifications-channels-attachments">
-            <label htmlFor={accessibilityValue} className="gd-label">
-                <FormattedMessage id="dialogs.schedule.email.attachments.label" />
-            </label>
+        <AttachmentsWrapper>
             <div className="gd-attachment-list">
                 <AttachmentDashboard
-                    id={accessibilityValue}
                     disabled
                     pdfSelected={dashboardSelected}
                     onSelectionChange={handleDashboardAttachmentSelectionChange}
@@ -103,6 +98,6 @@ export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
                     </Message>
                 ) : null}
             </div>
-        </div>
+        </AttachmentsWrapper>
     );
 };
