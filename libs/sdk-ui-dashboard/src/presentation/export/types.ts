@@ -34,7 +34,9 @@ export type ExportMetaType =
     | "dashboard-filter"
     | "dashboard-filter-name"
     | "dashboard-filter-value"
+    | "workspace"
     | "logo"
+    | "user"
     | "cover-image"
     | "theme-palette";
 
@@ -74,6 +76,8 @@ export type MetaExportData = {
     id?: MetaExportDataAttributes;
     title?: MetaExportDataAttributes;
     description?: MetaExportDataAttributes;
+    user?: MetaExportDataAttributes;
+    workspace?: MetaExportDataAttributes;
     tags?: {
         root: MetaExportDataAttributes;
         tag: MetaExportDataAttributes;

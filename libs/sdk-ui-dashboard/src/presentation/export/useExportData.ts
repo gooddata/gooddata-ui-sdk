@@ -161,6 +161,12 @@ export const useMetaExportData = (): MetaExportData | undefined => {
         description: {
             "data-export-meta-type": "dashboard-description",
         },
+        user: {
+            "data-export-meta-type": "user",
+        },
+        workspace: {
+            "data-export-meta-type": "workspace",
+        },
         tags: {
             root: {
                 "data-export-meta-type": "dashboard-tags",

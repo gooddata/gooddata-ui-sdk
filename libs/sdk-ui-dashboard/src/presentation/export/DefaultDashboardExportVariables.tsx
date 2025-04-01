@@ -3,7 +3,13 @@ import React, { useCallback, useMemo, useState } from "react";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { IThemeComplementaryPalette } from "@gooddata/sdk-model";
 
-import { selectDashboardId, useDashboardSelector, selectDashboardDescriptor } from "../../model/index.js";
+import {
+    selectDashboardId,
+    useDashboardSelector,
+    selectDashboardDescriptor,
+    selectCurrentUser,
+    selectConfig,
+} from "../../model/index.js";
 import { RenderMode } from "../../types.js";
 
 import { useMetaExportData, useMetaExportImageData, useMetaPaletteData } from "./useExportData.js";
@@ -23,6 +29,8 @@ export interface DefaultDashboardExportVariablesProps {
 export function DefaultDashboardExportVariables({ renderMode }: DefaultDashboardExportVariablesProps) {
     const run = renderMode === "export";
     const exportData = useMetaExportData();
+    const user = useDashboardSelector(selectCurrentUser);
+    const conf = useDashboardSelector(selectConfig);
     const dashboardId = useDashboardSelector(selectDashboardId);
     const dashboardDescriptor = useDashboardSelector(selectDashboardDescriptor);
     const { dateFilters, attributeFilters, isError, isLoading } = useDashboardRelatedFilters(run);
@@ -71,6 +79,10 @@ export function DefaultDashboardExportVariables({ renderMode }: DefaultDashboard
                         </div>
                     ))}
                 </div>
+            ) : null}
+            {user ? <div {...exportData?.user}>{user.fullName}</div> : null}
+            {conf.workspaceDescriptor ? (
+                <div {...exportData?.workspace}>{conf.workspaceDescriptor.title}</div>
             ) : null}
             <MetaImage image={theme?.images?.logo} type="logo" />
             <MetaImage image={theme?.images?.coverImage} type="cover-image" />

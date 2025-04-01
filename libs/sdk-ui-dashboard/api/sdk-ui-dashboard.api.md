@@ -1680,6 +1680,10 @@ export interface DashboardConfig {
     slideConfig?: DashboardExportSlideConfig;
     // @internal
     widgetsOverlay?: Record<string, IDashboardWidgetOverlay>;
+    // @alpha
+    workspaceDescriptor?: {
+        title: string;
+    };
 }
 
 // @alpha (undocumented)
@@ -3905,7 +3909,7 @@ export interface ExportInsightWidgetPayload {
 export type ExportLayoutCustomizationFn = <TWidget>(layout: IDashboardLayout, customizer: IExportLayoutCustomizer<TWidget>) => void;
 
 // @alpha
-export type ExportMetaType = "dashboard-id" | "dashboard-title" | "dashboard-description" | "dashboard-tags" | "dashboard-tag" | "dashboard-filters" | "dashboard-filter" | "dashboard-filter-name" | "dashboard-filter-value" | "logo" | "cover-image" | "theme-palette";
+export type ExportMetaType = "dashboard-id" | "dashboard-title" | "dashboard-description" | "dashboard-tags" | "dashboard-tag" | "dashboard-filters" | "dashboard-filter" | "dashboard-filter-name" | "dashboard-filter-value" | "workspace" | "logo" | "user" | "cover-image" | "theme-palette";
 
 // @alpha (undocumented)
 export interface ExportRawInsightWidget extends IDashboardCommand {
@@ -6642,6 +6646,8 @@ export type MetaExportData = {
     id?: MetaExportDataAttributes;
     title?: MetaExportDataAttributes;
     description?: MetaExportDataAttributes;
+    user?: MetaExportDataAttributes;
+    workspace?: MetaExportDataAttributes;
     tags?: {
         root: MetaExportDataAttributes;
         tag: MetaExportDataAttributes;
@@ -7723,7 +7729,7 @@ export interface ResolveAsyncRenderPayload {
 }
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
