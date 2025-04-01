@@ -1,6 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { call, SagaReturnType } from "redux-saga/effects";
+import { call, SagaReturnType, select } from "redux-saga/effects";
 import update from "lodash/fp/update.js";
 import isEmpty from "lodash/isEmpty.js";
 import { PayloadAction } from "@reduxjs/toolkit";
@@ -53,6 +53,7 @@ import { loadAvailableDisplayFormRefs } from "./loadAvailableDisplayFormRefs.js"
 import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
 import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
 import { dateFilterConfigsActions } from "../../../store/dateFilterConfigs/index.js";
+import { selectIsNewDashboard } from "../../../store/meta/metaSelectors.js";
 import { drillActions } from "../../../store/drill/index.js";
 
 import { dashboardInitialize, EmptyDashboardLayout } from "./dashboardInitialize.js";
@@ -154,6 +155,19 @@ function* actionsToInitializeOrFillNewDashboard(
     const { dashboard: dashboardInitialized, insights }: SagaReturnType<typeof dashboardInitialize> =
         yield call(dashboardInitialize, ctx, ctx.config?.initialContent);
 
+    const isRenderExportMode = ctx.config?.initialRenderMode === "export";
+    const isNewDashboard = yield select(selectIsNewDashboard);
+    const updatedDateFilterConfig = {
+        ...dateFilterConfig,
+        //NOTE: When we are in export mode and the dashboard is new, we need to set the date filter config to ALL_TIME
+        // so this date filter will not affect visualisations
+        ...(isRenderExportMode && isNewDashboard
+            ? {
+                  selectedOption: "ALL_TIME",
+              }
+            : {}),
+    };
+
     const overrideDefaultFilters = ctx.config?.overrideDefaultFilters;
     const overrideFilterContext = overrideDefaultFilters
         ? {
@@ -174,7 +188,7 @@ function* actionsToInitializeOrFillNewDashboard(
         ctx,
         (overrideFilterContext ??
             dashboard?.filterContext ??
-            createDefaultFilterContext(dateFilterConfig, true)) as IDashboard["filterContext"],
+            createDefaultFilterContext(updatedDateFilterConfig, true)) as IDashboard["filterContext"],
         dashboard?.dataSets,
         displayForms,
     );
@@ -195,9 +209,10 @@ function* actionsToInitializeOrFillNewDashboard(
         ? privateCtx?.widgetsOverlayFn?.(customizedDashboard) ?? {}
         : {};
 
+    //debugger;
     const filterContextDefinition = dashboardFilterContextDefinition(
         customizedDashboard,
-        dateFilterConfig,
+        updatedDateFilterConfig,
         ctx.config?.overrideDefaultFilters,
     );
     const effectiveAttributeFilterConfigs = dashboard?.attributeFilterConfigs;
