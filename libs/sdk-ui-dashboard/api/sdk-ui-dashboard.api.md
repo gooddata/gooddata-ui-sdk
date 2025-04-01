@@ -3909,7 +3909,7 @@ export interface ExportInsightWidgetPayload {
 export type ExportLayoutCustomizationFn = <TWidget>(layout: IDashboardLayout, customizer: IExportLayoutCustomizer<TWidget>) => void;
 
 // @alpha
-export type ExportMetaType = "dashboard-id" | "dashboard-title" | "dashboard-description" | "dashboard-tags" | "dashboard-tag" | "dashboard-filters" | "dashboard-filter" | "dashboard-filter-name" | "dashboard-filter-value" | "workspace" | "logo" | "user" | "cover-image" | "theme-palette";
+export type ExportMetaType = "dashboard-id" | "dashboard-title" | "dashboard-description" | "dashboard-tags" | "dashboard-tag" | "dashboard-filters" | "dashboard-filter" | "dashboard-filter-name" | "dashboard-filter-value" | "workspace-title" | "user-full-name" | "logo" | "cover-image" | "theme-palette";
 
 // @alpha (undocumented)
 export interface ExportRawInsightWidget extends IDashboardCommand {

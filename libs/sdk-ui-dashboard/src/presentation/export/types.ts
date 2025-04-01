@@ -34,9 +34,9 @@ export type ExportMetaType =
     | "dashboard-filter"
     | "dashboard-filter-name"
     | "dashboard-filter-value"
-    | "workspace"
+    | "workspace-title"
+    | "user-full-name"
     | "logo"
-    | "user"
     | "cover-image"
     | "theme-palette";
 
