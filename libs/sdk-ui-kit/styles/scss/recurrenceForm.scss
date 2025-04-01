@@ -57,13 +57,13 @@ $input-width: 128px;
     .gd-recurrence-form-repeat-inner {
         display: flex;
         gap: 10px;
-        align-items: center;
+        align-items: flex-start;
     }
 
     .gd-recurrence-form-repeat {
         display: flex;
         flex-direction: row;
-        align-items: center;
+        align-items: flex-start;
 
         > :not(:first-of-type),
         > :not(:last-of-type) {
@@ -87,12 +87,20 @@ $input-width: 128px;
                 height: $input-height;
             }
 
+            .gd-recurrence-form-cron-help,
             .gd-recurrence-form-cron-error-message {
-                color: variables.$gd-color-negative;
                 font-size: 12px;
                 font-style: normal;
                 font-weight: 400;
                 line-height: 13px;
+            }
+            .gd-recurrence-form-cron-help,
+            .gd-recurrence-form-cron-help a {
+                color: variables.$gd-color-state-blank;
+            }
+
+            .gd-recurrence-form-cron-error-message {
+                color: variables.$gd-color-negative;
             }
         }
 

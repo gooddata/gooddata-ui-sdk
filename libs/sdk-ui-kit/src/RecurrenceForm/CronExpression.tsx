@@ -2,15 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { defineMessage, FormattedMessage } from "react-intl";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import cx from "classnames";
 import { isCronExpressionValid } from "./utils.js";
-import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
-import { Bubble } from "../Bubble/Bubble.js";
-import { Icon } from "../Icon/Icon.js";
-import { GD_COLOR_STATE_BLANK, GD_COLOR_STATE_HOVER } from "../utils/constants.js";
-
-const TOOLTIP_ALIGN_POINTS = [{ align: "cr cl" }];
 
 const errorMessage = defineMessage({ id: "recurrence.error.too_often" });
 
@@ -25,9 +18,7 @@ interface ICronExpressionProps {
 
 export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
     const { id, expression, onChange, allowHourlyRecurrence, showTimezone, timezone } = props;
-    const theme = useTheme();
     const [validationError, setValidationError] = useState<string | null>(null);
-    const [hover, setHover] = useState(false);
 
     const validateExpression = (expression: string) => {
         const isValid = isCronExpressionValid(expression, allowHourlyRecurrence);
@@ -64,24 +55,8 @@ export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
                     <span className="gd-recurrence-form-cron-error-message">
                         <FormattedMessage id={validationError} />
                     </span>
-                ) : null}
-            </div>
-            <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-                <BubbleHoverTrigger
-                    tagName="div"
-                    className="gd-recurrence-form-cron-icon"
-                    eventsOnBubble={true}
-                >
-                    <Icon.QuestionMark
-                        color={
-                            hover
-                                ? theme?.palette?.complementary?.c6 ?? GD_COLOR_STATE_BLANK
-                                : theme?.palette?.complementary?.c7 ?? GD_COLOR_STATE_HOVER
-                        }
-                        width={14}
-                        height={14}
-                    />
-                    <Bubble className="bubble-primary" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                ) : (
+                    <span className="gd-recurrence-form-cron-help">
                         <FormattedMessage
                             id="recurrence.cron.tooltip"
                             values={{
@@ -96,8 +71,8 @@ export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
                                 ),
                             }}
                         />
-                    </Bubble>
-                </BubbleHoverTrigger>
+                    </span>
+                )}
             </div>
             {Boolean(showTimezone && timezone) && (
                 <div className="gd-recurrence-form-repeat-type-description s-recurrence-form-repeat-type-description">
