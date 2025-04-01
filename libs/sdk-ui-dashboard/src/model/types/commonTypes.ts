@@ -362,6 +362,15 @@ export interface DashboardConfig {
      * Timestamp for the dashboard execution as ISO string
      */
     executionTimestamp?: string;
+
+    /**
+     * @alpha
+     *
+     * Workspace descriptor
+     */
+    workspaceDescriptor?: {
+        title: string;
+    };
 }
 
 /**
@@ -438,6 +447,7 @@ export type ResolvedDashboardConfig = Omit<
     | "overrideDefaultFilters"
     | "overrideTitle"
     | "hideWidgetTitles"
+    | "workspaceDescriptor"
 > &
     DashboardConfig;
 
