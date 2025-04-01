@@ -80,7 +80,7 @@ export function DefaultDashboardExportVariables({ renderMode }: DefaultDashboard
                     ))}
                 </div>
             ) : null}
-            {user ? <div {...exportData?.user}>{user.fullName}</div> : null}
+            {user?.fullName ? <div {...exportData?.user}>{user.fullName}</div> : null}
             {conf.workspaceDescriptor ? (
                 <div {...exportData?.workspace}>{conf.workspaceDescriptor.title}</div>
             ) : null}
