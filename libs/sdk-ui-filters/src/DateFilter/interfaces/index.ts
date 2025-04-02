@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     DateString,
     DateFilterGranularity,
@@ -91,6 +91,45 @@ export const isRelativeDateFilterOption = (obj: unknown): obj is RelativeDateFil
 export type DateFilterOption = IAllTimeDateFilterOption | AbsoluteDateFilterOption | RelativeDateFilterOption;
 
 /**
+ * @internal
+ */
+export type DateParseError = "invalid" | "empty";
+
+/**
+ * @internal
+ */
+export type DateRangePosition = "from" | "to";
+
+/**
+ * Details of how the absolute date filter form option was changed.
+ * Used for error validations.
+ *
+ * @internal
+ */
+export interface IAbsoluteDateFilterOptionChangedDetails {
+    rangePosition: DateRangePosition;
+    parseError?: DateParseError;
+}
+
+/**
+ * Tests if provided object is {@link IAbsoluteDateFilterOptionChangedDetails}
+ * @param obj - tested object
+ * @returns true if provided object is of {@link IAbsoluteDateFilterOptionChangedDetails}, false if not
+ */
+export const isAbsoluteDateFilterOptionChangedDetails = (
+    obj: unknown,
+): obj is IAbsoluteDateFilterOptionChangedDetails =>
+    !isEmpty(obj) && !isEmpty((obj as IAbsoluteDateFilterOptionChangedDetails).rangePosition);
+
+/**
+ * Details of how the date filter option was changed. Used for error validations and warnings.
+ * Only information about absolute date filter option changes are supported now.
+ *
+ * @internal
+ */
+export type IDateFilterOptionChangedDetails = IAbsoluteDateFilterOptionChangedDetails;
+
+/**
  * Relative date filter options grouped by their granularity
  * @public
  */
@@ -126,6 +165,16 @@ export interface IDateFilterOptionsByType {
 }
 
 /**
+ * Absolute form date time picker errors.
+ *
+ * @public
+ */
+export interface IDateTimePickerErrors {
+    dateError?: string;
+    timeError?: string;
+}
+
+/**
  * Absolute form date filter errors.
  *
  * @public
@@ -133,6 +182,16 @@ export interface IDateFilterOptionsByType {
 export interface IDateFilterAbsoluteFormErrors {
     from?: string;
     to?: string;
+}
+
+/**
+ * Absolute form date filter errors.
+ *
+ * @public
+ */
+export interface IDateFilterAbsoluteDateTimeFormErrors {
+    from?: IDateTimePickerErrors;
+    to?: IDateTimePickerErrors;
 }
 
 /**
@@ -153,7 +212,7 @@ export interface IExtendedDateFilterErrors {
     /**
      * Global absolute date filter errors
      */
-    absoluteForm?: IDateFilterAbsoluteFormErrors;
+    absoluteForm?: IDateFilterAbsoluteDateTimeFormErrors;
     /**
      * Global relative date filter errors
      */

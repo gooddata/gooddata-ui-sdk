@@ -17,6 +17,7 @@ import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { GranularityIntlKey as GranularityIntlKey_2 } from './constants/i18n.js';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
+import { IAbsoluteDateFilterOptionChangedDetails as IAbsoluteDateFilterOptionChangedDetails_2 } from './interfaces/index.js';
 import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
 import { IAlignPoint } from '@gooddata/sdk-ui-kit';
 import { IAllTimeDateFilterOption } from '@gooddata/sdk-model';
@@ -226,7 +227,7 @@ export class DateFilter extends React_2.PureComponent<IDateFilterProps, IDateFil
 
 // @beta (undocumented)
 export const DateFilterHelpers: {
-    validateFilterOption: (filterOption: DateFilterOption_2) => IExtendedDateFilterErrors_2;
+    validateFilterOption: (filterOption: DateFilterOption_2, changeDetails?: IAbsoluteDateFilterOptionChangedDetails_2) => IExtendedDateFilterErrors_2;
     getDateFilterTitle: (filter: DateFilterOption_2, locale: ILocale, dateFormat?: string) => string;
     getDateFilterTitleUsingTranslator: (filter: DateFilterOption_2, translator: IDateAndMessageTranslator_2, dateFormat?: string) => string;
     getDateFilterRepresentation: (filter: DateFilterOption_2, locale: ILocale, dateFormat?: string) => string;
@@ -256,6 +257,12 @@ export type DateFilterRelativeOptionGroup = {
     [key in DateFilterGranularity]?: Array<IRelativeDateFilterPresetOfGranularity<key>>;
 };
 
+// @internal (undocumented)
+export type DateParseError = "invalid" | "empty";
+
+// @internal (undocumented)
+export type DateRangePosition = "from" | "to";
+
 // @public
 export const defaultDateFilterOptions: IDateFilterOptionsByType;
 
@@ -273,6 +280,14 @@ export const getLocalizedIcuDateFormatPattern: (locale: string) => string;
 
 // @beta (undocumented)
 export type GranularityIntlKey = "day" | "minute" | "hour" | "week" | "month" | "quarter" | "year";
+
+// @internal
+export interface IAbsoluteDateFilterOptionChangedDetails {
+    // (undocumented)
+    parseError?: DateParseError;
+    // (undocumented)
+    rangePosition: DateRangePosition;
+}
 
 // @internal (undocumented)
 export interface IAttributeDatasetInfoProps {
@@ -699,6 +714,14 @@ export interface IDateAndMessageTranslator extends IDateTranslator, IMessageTran
 }
 
 // @public
+export interface IDateFilterAbsoluteDateTimeFormErrors {
+    // (undocumented)
+    from?: IDateTimePickerErrors;
+    // (undocumented)
+    to?: IDateTimePickerErrors;
+}
+
+// @public
 export interface IDateFilterAbsoluteFormErrors {
     // (undocumented)
     from?: string;
@@ -743,6 +766,9 @@ export interface IDateFilterCallbackProps {
     // (undocumented)
     onSelect?: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
 }
+
+// @internal
+export type IDateFilterOptionChangedDetails = IAbsoluteDateFilterOptionChangedDetails;
 
 // @public
 export interface IDateFilterOptionsByType {
@@ -808,6 +834,8 @@ export interface IDateFilterRelativeFormErrors {
 // @public
 export interface IDateFilterState extends IDateFilterStatePropsIntersection {
     // (undocumented)
+    errors: IExtendedDateFilterErrors;
+    // (undocumented)
     initExcludeCurrentPeriod: boolean;
     // (undocumented)
     initSelectedFilterOption: DateFilterOption;
@@ -827,6 +855,14 @@ export interface IDateFilterStatePropsIntersection {
     selectedFilterOption: DateFilterOption;
 }
 
+// @public
+export interface IDateTimePickerErrors {
+    // (undocumented)
+    dateError?: string;
+    // (undocumented)
+    timeError?: string;
+}
+
 // @beta (undocumented)
 export interface IDateTranslator {
     // (undocumented)
@@ -835,7 +871,7 @@ export interface IDateTranslator {
 
 // @public
 export interface IExtendedDateFilterErrors {
-    absoluteForm?: IDateFilterAbsoluteFormErrors;
+    absoluteForm?: IDateFilterAbsoluteDateTimeFormErrors;
     relativeForm?: IDateFilterRelativeFormErrors;
 }
 

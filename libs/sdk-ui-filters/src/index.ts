@@ -30,6 +30,12 @@ export type {
     IDateTranslator,
     IMessageTranslator,
     IFilterConfigurationProps,
+    IDateTimePickerErrors,
+    IDateFilterAbsoluteDateTimeFormErrors,
+    IDateFilterOptionChangedDetails,
+    IAbsoluteDateFilterOptionChangedDetails,
+    DateRangePosition,
+    DateParseError,
 } from "./DateFilter/index.js";
 export {
     DateFilter,

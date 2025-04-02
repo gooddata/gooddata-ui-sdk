@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { MessageDescriptor, defineMessages } from "react-intl";
 
 //NOTE: Follow up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
@@ -61,8 +61,14 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     NOT_EQUAL_TO: { id: "mvf.operator.notEqualTo" },
     BETWEEN: { id: "mvf.operator.between" },
     NOT_BETWEEN: { id: "mvf.operator.notBetween" },
-    incorrectFormat: { id: "filters.staticPeriod.incorrectFormat" },
-    endDateBeforeStartDate: { id: "filters.staticPeriod.endDateBeforeStartDate" },
+    errorEmptyStartDate: { id: "filters.staticPeriod.errors.emptyStartDate" },
+    errorInvalidStartDate: { id: "filters.staticPeriod.errors.invalidStartDate" },
+    errorStartDateAfterEndDate: { id: "filters.staticPeriod.errors.startDateAfterEndDate" },
+    errorStartTimeAfterEndTime: { id: "filters.staticPeriod.errors.startTimeAfterEndTime" },
+    errorEmptyEndDate: { id: "filters.staticPeriod.errors.emptyEndDate" },
+    errorInvalidEndDate: { id: "filters.staticPeriod.errors.invalidEndDate" },
+    errorEndDateBeforeStartDate: { id: "filters.staticPeriod.errors.endDateBeforeStartDate" },
+    errorEndTimeBeforeStartTime: { id: "filters.staticPeriod.errors.endTimeBeforeStartTime" },
     thisMinute: { id: "filters.thisMinute.title" },
     lastMinute: { id: "filters.lastMinute.title" },
     nextMinute: { id: "filters.nextMinute.title" },
