@@ -6,7 +6,7 @@ services:
         volumes:
             - ../../:/gooddata-ui-sdk-e2e:rw
         working_dir: /gooddata-ui-sdk-e2e/libs/sdk-ui-tests-e2e
-        user: "root"
+        user: "$USER_UID:$USER_GID"
         depends_on:
             - gooddata-ui-sdk-scenarios
             - backend-mock
