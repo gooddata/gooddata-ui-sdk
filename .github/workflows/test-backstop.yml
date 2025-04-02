@@ -20,7 +20,7 @@ jobs:
       pull-requests: read
     uses: ./.github/workflows/rw-rush-build-e2e-tests-backstop.yml
     with:
-      keep-passing-screenshots: ${{ inputs.keep-passing-screenshots }}
+      keep-passing-screenshots: ${{ github.event_name == 'workflow_dispatch' && inputs.keep-passing-screenshots || false }}
     secrets: inherit
 
   slack-notification:
