@@ -7,7 +7,7 @@ ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../.. && pwd -P))
 ROOT_DIR="$ROOT_DIR/.."
 
 # TODO: temporary fix - previous image was obtaining Node js version 18.19.0 which has some breaking changes on esm modules - https://github.com/nodejs/node/issues/51098
-IMAGE="020413372491.dkr.ecr.us-east-1.amazonaws.com/3rdparty/library/node:18.17.0-bullseye"
+IMAGE="020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/library/node:22.13.0-bullseye"
 
 echo "Running apidocs build using ${IMAGE} in root directory ${ROOT_DIR}"
 

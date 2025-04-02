@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 /**
  * Mocking FeatureHub request to remove dependency on it
@@ -6,7 +6,7 @@
  * - more info in ticket RAIL-4279
  * Once rewritten, check if this stub still works
  */
-beforeEach(() => {
+export const beforeFH = () => {
     cy.intercept("GET", "/features*", {
         statusCode: 200,
         body: [
@@ -26,4 +26,4 @@ beforeEach(() => {
             },
         ],
     });
-});
+};

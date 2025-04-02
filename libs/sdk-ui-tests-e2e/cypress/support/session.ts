@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { getUserName } from "./constants";
 import { Api, getTigerAuthToken } from "../tools/api";
 
@@ -11,6 +11,7 @@ export const establishSession = () => {
     }
 
     if (userName) {
+        cy.log("Establishing session for user", userName);
         cy.session(getUserName(), cy.login);
     }
 };

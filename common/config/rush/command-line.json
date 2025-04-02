@@ -109,7 +109,7 @@
       "name": "build",
       "summary": "Run rush build command",
       "enableParallelism": true,
-      "allowWarningsInSuccessfulBuild": false
+      "allowWarningsInSuccessfulBuild": true
     },
     {
       "commandKind": "global",

@@ -42,7 +42,7 @@ jobs:
         - name: Setup node
           uses: actions/setup-node@v4
           with:
-            node-version: 18.17.0
+            node-version: 22.13.0
         - name: Checkout code
           uses: actions/checkout@v4
           with:
@@ -62,7 +62,7 @@ jobs:
             - name: Setup node
               uses: actions/setup-node@v4
               with:
-                node-version: 18.17.0
+                node-version: 22.13.0
             - name: Checkout code
               uses: actions/checkout@v4
               with:

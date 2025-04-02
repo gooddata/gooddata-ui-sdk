@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     getBackend,
     getBackendHost,
@@ -17,7 +17,7 @@ const currentTestFileMappings = `${getWorkingDir()}/recordings/mappings/${getBac
 
 const wiremockHost = getMockServer();
 
-before(() => {
+export const beforeMocks = () => {
     if (wiremockHost) {
         wiremockReset(wiremockHost);
 
@@ -28,9 +28,9 @@ before(() => {
         }
         wiremockMockLogRequests(wiremockHost);
     }
-});
+};
 
-after(() => {
+export const afterMocks = () => {
     if (wiremockHost) {
         if (isRecording()) {
             // wiremockStopRecording + wiremockExportMappings
@@ -77,7 +77,7 @@ after(() => {
         }
         wiremockReset(wiremockHost);
     }
-});
+};
 
 function wiremockReset(wiremockHost: string) {
     cy.request("POST", `${wiremockHost}/__admin/reset`).then((res) => {
