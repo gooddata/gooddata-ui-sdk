@@ -1,6 +1,6 @@
 # (C) 2021 GoodData Corporation
 
-FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/tools/gdc-frontend-node-18:node-18.17.0-yarn-1.22.19 as build-stage
+FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/library/node:22.13.0-bullseye as build-stage
 
 COPY . .
 
