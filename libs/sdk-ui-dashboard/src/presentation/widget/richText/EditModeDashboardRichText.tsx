@@ -22,6 +22,7 @@ import {
     eagerRemoveSectionItemByWidgetRef,
     selectEnableRichTextDynamicReferences,
     selectIsWhiteLabeled,
+    selectSeparators,
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
@@ -50,6 +51,7 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
 
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const filters = useRichTextFilters(widget);
+    const separators = useDashboardSelector(selectSeparators);
 
     const dispatch = useDashboardDispatch();
 
@@ -107,6 +109,7 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
             <RichText
                 referencesEnabled={isRichTextReferencesEnabled}
                 filters={filters}
+                separators={separators}
                 className="gd-rich-text-widget"
                 value={richText}
                 onChange={setRichText}

@@ -154,9 +154,6 @@ function em(id: string, title: string, value: number): EvaluatedMetric {
             },
         },
         data: {
-            formattedValue(): string | null {
-                return "$" + value.toString();
-            },
             coordinates: [],
             rawValue: value,
         } as DataPoint,

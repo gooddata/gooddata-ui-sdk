@@ -25,6 +25,7 @@ export type EvaluatedMetric = {
     ref: ObjRef;
     data: DataPoint;
     count: number;
+    format?: string;
 };
 
 export function useEvaluatedMetricsAndAttributes(
@@ -71,8 +72,9 @@ export function useEvaluatedMetricsAndAttributes(
 
                 const relatedHeaders = headerItems[0][0];
                 relatedHeaders.forEach((header, i) => {
-                    const def = definition.measures[i];
                     const data = dataSeries[i].dataPoints()[0];
+                    const def = data.seriesDesc.measureDefinition;
+                    const descriptor = data.seriesDesc.measureDescriptor;
 
                     // Skip count measures, we want merge it with value measures
                     if (skippedLocalIds.includes(def.measure.localIdentifier)) {
@@ -89,6 +91,7 @@ export function useEvaluatedMetricsAndAttributes(
                             data,
                             header,
                             count: 1,
+                            format: descriptor.measureHeaderItem.format,
                             ref: def.measure.definition.measureDefinition.item,
                         });
                     }
@@ -108,6 +111,7 @@ export function useEvaluatedMetricsAndAttributes(
                             def,
                             data,
                             header,
+                            format: descriptor.measureHeaderItem.format,
                             count: parseInt((countData?.rawValue ?? "0").toString()),
                             ref: def.measure.definition.measureDefinition.item,
                         });

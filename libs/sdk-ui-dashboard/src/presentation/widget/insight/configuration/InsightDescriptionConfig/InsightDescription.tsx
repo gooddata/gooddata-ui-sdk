@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { TextAreaWithSubmit, IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
-import { IFilter } from "@gooddata/sdk-model";
+import { IFilter, ISeparators } from "@gooddata/sdk-model";
 import {
     selectEnableRichTextDescriptions,
     selectEnableRichTextDynamicReferences,
@@ -21,10 +21,18 @@ interface IInsightDescriptionProps {
     setDescription: (newDescription: string) => void;
     LoadingComponent?: React.ComponentType;
     insightFilters?: IFilter[];
+    separators?: ISeparators;
 }
 
 export function InsightDescription(props: IInsightDescriptionProps) {
-    const { description, setDescription, readOnly = false, LoadingComponent, insightFilters } = props;
+    const {
+        description,
+        setDescription,
+        readOnly = false,
+        LoadingComponent,
+        insightFilters,
+        separators,
+    } = props;
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
 
     const intl = useIntl();
@@ -85,6 +93,7 @@ export function InsightDescription(props: IInsightDescriptionProps) {
                         referencesEnabled={isRichTextReferencesEnabled}
                         LoadingComponent={LoadingComponent}
                         filters={insightFilters}
+                        separators={separators}
                     />
                 </div>
             ) : (

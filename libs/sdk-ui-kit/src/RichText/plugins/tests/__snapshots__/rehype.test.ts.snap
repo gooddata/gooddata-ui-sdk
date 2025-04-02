@@ -11,9 +11,9 @@ exports[`testing rehype plugin to extract references > replace references ids fo
         },
         {
           "properties": {
-            "alt": "This is $100 alt",
-            "src": "https://www.$100.com",
-            "title": "Link to $100",
+            "alt": "This is 100.00 alt",
+            "src": "https://www.100.00.com",
+            "title": "Link to 100.00",
           },
           "tagName": "img",
           "type": "element",
@@ -47,20 +47,21 @@ exports[`testing rehype plugin to extract references > replace references ids fo
               "children": [
                 {
                   "type": "text",
-                  "value": "$100",
+                  "value": "100.00",
                 },
               ],
               "position": undefined,
               "properties": {
                 "className": "gd-rich-text-metric-value",
+                "style": {},
               },
               "tagName": "span",
               "type": "element",
             },
           ],
           "properties": {
-            "href": "https://www.$100.com",
-            "title": "Link to $100",
+            "href": "https://www.100.00.com",
+            "title": "Link to 100.00",
           },
           "tagName": "a",
           "type": "element",
@@ -92,12 +93,13 @@ exports[`testing rehype plugin to extract references > replace references ids fo
           "children": [
             {
               "type": "text",
-              "value": "$100",
+              "value": "100.00",
             },
           ],
           "position": undefined,
           "properties": {
             "className": "gd-rich-text-metric-value",
+            "style": {},
           },
           "tagName": "span",
           "type": "element",
@@ -110,12 +112,13 @@ exports[`testing rehype plugin to extract references > replace references ids fo
           "children": [
             {
               "type": "text",
-              "value": "$200",
+              "value": "200.00",
             },
           ],
           "position": undefined,
           "properties": {
             "className": "gd-rich-text-metric-value",
+            "style": {},
           },
           "tagName": "span",
           "type": "element",

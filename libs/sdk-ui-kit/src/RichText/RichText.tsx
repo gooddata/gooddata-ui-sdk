@@ -4,7 +4,7 @@ import React, { useRef, useEffect, useCallback } from "react";
 import Markdown from "react-markdown";
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import { IFilter } from "@gooddata/sdk-model";
+import { IFilter, ISeparators } from "@gooddata/sdk-model";
 import { IntlWrapper, LoadingComponent, OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 
 import { remarkReferences } from "./plugins/remark-references.js";
@@ -59,6 +59,11 @@ export interface IRichTextProps {
     filters?: IFilter[];
 
     /**
+     * Separators to be used for rendering references.
+     */
+    separators?: ISeparators;
+
+    /**
      * @alpha
      */
     onLoadingChanged?: OnLoadingChanged;
@@ -83,6 +88,7 @@ const RichTextCore: React.FC<IRichTextProps> = ({
     autoResize,
     rawContent,
     filters,
+    separators,
     onLoadingChanged,
     onError,
     LoadingComponent,
@@ -110,6 +116,7 @@ const RichTextCore: React.FC<IRichTextProps> = ({
                 <RichTextView
                     value={value}
                     filters={filters}
+                    separators={separators}
                     referencesEnabled={referencesEnabled}
                     LoadingComponent={LoadingComponent}
                     onLoadingChanged={onLoadingChanged}
@@ -192,6 +199,7 @@ interface IRichTextViewProps {
     emptyElement?: JSX.Element;
     referencesEnabled?: boolean;
     filters?: IFilter[];
+    separators?: ISeparators;
     onLoadingChanged?: OnLoadingChanged;
     onError?: OnError;
     //Components
@@ -211,6 +219,7 @@ const RichTextView: React.FC<IRichTextViewProps> = ({
     referencesEnabled,
     emptyElement,
     filters,
+    separators,
     onError,
     onLoadingChanged,
     LoadingComponent = DefaultLoadingComponent,
@@ -246,7 +255,7 @@ const RichTextView: React.FC<IRichTextViewProps> = ({
         <Markdown
             components={{ img: ImageComponent, a: AnchorComponent }}
             remarkPlugins={referencesEnabled ? [remarkReferences()] : []}
-            rehypePlugins={referencesEnabled ? [rehypeReferences(intl, metrics)] : []}
+            rehypePlugins={referencesEnabled ? [rehypeReferences(intl, metrics, separators)] : []}
         >
             {value}
         </Markdown>

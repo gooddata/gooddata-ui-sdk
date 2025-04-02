@@ -17,6 +17,7 @@ import {
     changeNestedLayoutSectionHeader,
     selectEnableRichTextDescriptions,
     selectEnableRichTextDynamicReferences,
+    selectSeparators,
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
@@ -45,6 +46,7 @@ export function SectionHeaderEditable({
 
     const { LoadingComponent } = useDashboardComponentsContext();
     const filters = useRichTextFilters();
+    const separators = useDashboardSelector(selectSeparators);
 
     const description = useRichText ? rawDescription : getDescription(rawDescription);
     const title = getTitle(rawTitle);
@@ -162,6 +164,7 @@ export function SectionHeaderEditable({
                             autoResize={true}
                             referencesEnabled={isRichTextReferencesEnabled}
                             filters={filters}
+                            separators={separators}
                             LoadingComponent={LoadingComponent}
                         />
                     </div>

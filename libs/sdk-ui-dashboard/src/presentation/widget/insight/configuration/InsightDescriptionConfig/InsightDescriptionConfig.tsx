@@ -10,7 +10,12 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { IInsightWidget, IInsightWidgetDescriptionConfiguration } from "@gooddata/sdk-model";
 import { InsightDescription } from "./InsightDescription.js";
-import { useDashboardSelector, selectInsightByRef, useWidgetFilters } from "../../../../../model/index.js";
+import {
+    useDashboardSelector,
+    selectInsightByRef,
+    useWidgetFilters,
+    selectSeparators,
+} from "../../../../../model/index.js";
 import { IncludeMetrics } from "./IncludeMetrics.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
 
@@ -91,6 +96,7 @@ export function InsightDescriptionConfig(props: IInsightDescriptionConfigProps) 
 
     const { LoadingComponent } = useDashboardComponentsContext();
     const insight = useDashboardSelector(selectInsightByRef(widget.insight));
+    const separators = useDashboardSelector(selectSeparators);
     const { result } = useWidgetFilters(widget, insight);
 
     const [widgetDescriptionState, setWidgetDescriptionState] = useState(
@@ -214,6 +220,7 @@ export function InsightDescriptionConfig(props: IInsightDescriptionConfigProps) 
                             readOnly={widgetDescriptionState.config === "insight"}
                             LoadingComponent={LoadingComponent}
                             insightFilters={result}
+                            separators={separators}
                         />
                     ) : null}
                     {

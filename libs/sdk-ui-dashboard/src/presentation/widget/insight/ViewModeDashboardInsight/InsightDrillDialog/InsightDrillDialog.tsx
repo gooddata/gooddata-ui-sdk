@@ -29,6 +29,7 @@ import { IntlWrapper } from "../../../../localization/index.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
 import {
     selectEnableRichTextDynamicReferences,
+    selectSeparators,
     useDashboardSelector,
     useWidgetExecutionsHandler,
 } from "../../../../../model/index.js";
@@ -280,6 +281,7 @@ function InsightDrillDialogDescriptionContent({
     LoadingComponent,
 }: InsightDrillDialogDescriptionContentProps) {
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
+    const separators = useDashboardSelector(selectSeparators);
 
     return (
         <div
@@ -294,6 +296,7 @@ function InsightDrillDialogDescriptionContent({
                     renderMode="view"
                     referencesEnabled={isRichTextReferencesEnabled}
                     filters={widgetFilters}
+                    separators={separators}
                     LoadingComponent={LoadingComponent}
                 />
             </div>

@@ -6,7 +6,7 @@ import { EllipsisText } from "./EllipsisText.js";
 import { ArrowOffsets, Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 import { useMediaQuery } from "../responsive/index.js";
 import { RichText } from "../RichText/index.js";
-import { IFilter } from "@gooddata/sdk-model";
+import { IFilter, ISeparators } from "@gooddata/sdk-model";
 import cx from "classnames";
 import { ZOOM_THRESHOLD, useIsZoomed } from "../ZoomContext/ZoomContext.js";
 
@@ -73,6 +73,7 @@ export interface IDescriptionPanelProps {
     useReferences?: boolean;
     LoadingComponent?: React.ComponentType;
     filters?: IFilter[];
+    separators?: ISeparators;
 }
 
 /**
@@ -139,6 +140,7 @@ const DescriptionPanelContentCore: React.FC<IDescriptionPanelProps> = (props) =>
         useReferences = false,
         LoadingComponent,
         filters,
+        separators,
     } = props;
 
     const isZoomed = useIsZoomed(ZOOM_THRESHOLD); // ignore slight zoom in
@@ -158,6 +160,7 @@ const DescriptionPanelContentCore: React.FC<IDescriptionPanelProps> = (props) =>
                             renderMode="view"
                             referencesEnabled={useReferences}
                             filters={filters}
+                            separators={separators}
                             LoadingComponent={LoadingComponent}
                         />
                     ) : (

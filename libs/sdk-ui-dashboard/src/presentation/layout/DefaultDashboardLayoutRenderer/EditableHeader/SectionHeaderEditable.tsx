@@ -12,6 +12,7 @@ import {
     useDashboardSelector,
     selectEnableDashboardDescriptionDynamicHeight,
     selectEnableRichTextDynamicReferences,
+    selectSeparators,
 } from "../../../../model/index.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 import { useRichTextFilters } from "../../../../_staging/sharedHooks/useRichTextFilters.js";
@@ -49,6 +50,7 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
 
     const { LoadingComponent } = useDashboardComponentsContext();
     const filters = useRichTextFilters();
+    const separators = useDashboardSelector(selectSeparators);
 
     const description = useRichText ? props.description : getDescription(props.description);
     const title = getTitle(props.title);
@@ -164,6 +166,7 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
                             autoResize={isDescriptionDynamicHeightEnabled}
                             referencesEnabled={isRichTextReferencesEnabled}
                             filters={filters}
+                            separators={separators}
                             LoadingComponent={LoadingComponent}
                         />
                     </div>

@@ -3,7 +3,11 @@
 import React from "react";
 import { DescriptionPanelContent } from "@gooddata/sdk-ui-kit";
 
-import { selectEnableRichTextDynamicReferences, useDashboardSelector } from "../../../model/index.js";
+import {
+    selectEnableRichTextDynamicReferences,
+    selectSeparators,
+    useDashboardSelector,
+} from "../../../model/index.js";
 import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
@@ -22,6 +26,7 @@ export const ExportModeInsightWidgetDescription: React.FC<IInsightWidgetDescript
     const { isVisible, description, useRichText } = useInsightWidgetDescription(props);
     const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const filters = useRichTextFilters(widget);
+    const separators = useDashboardSelector(selectSeparators);
     const { LoadingComponent } = useDashboardComponentsContext();
 
     if (!isVisible) {
@@ -35,6 +40,7 @@ export const ExportModeInsightWidgetDescription: React.FC<IInsightWidgetDescript
                 useRichText={useRichText}
                 useReferences={useReferences}
                 filters={filters}
+                separators={separators}
                 LoadingComponent={LoadingComponent}
             />
         </div>

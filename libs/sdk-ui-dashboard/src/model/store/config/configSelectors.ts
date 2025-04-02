@@ -927,7 +927,7 @@ export const selectEnableSlideshowExports: DashboardSelector<boolean> = createSe
 export const selectEnableRichTextDynamicReferences: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableRichTextDynamicReferences ?? false;
+        return state.settings?.enableRichTextDynamicReferences ?? true;
     },
 );
 
