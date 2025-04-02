@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
@@ -50,14 +50,20 @@ describe("DateRangePicker", () => {
             const onRangeChange = vi.fn();
             renderComponent({ onRangeChange });
             writeToInput("05/01/2019", getInput("05/05/2019"));
-            expect(onRangeChange).toHaveBeenCalledWith({ ...getDefaultRange(), from: new Date(2019, 4, 1) });
+            expect(onRangeChange).toHaveBeenCalledWith(
+                { ...getDefaultRange(), from: new Date(2019, 4, 1) },
+                { rangePosition: "from" },
+            );
         });
 
         it("should call the appropriate callback when to input changes", () => {
             const onRangeChange = vi.fn();
             renderComponent({ onRangeChange });
             writeToInput("06/01/2019", getInput("05/15/2019"));
-            expect(onRangeChange).toHaveBeenCalledWith({ ...getDefaultRange(), to: new Date(2019, 5, 1) });
+            expect(onRangeChange).toHaveBeenCalledWith(
+                { ...getDefaultRange(), to: new Date(2019, 5, 1) },
+                { rangePosition: "to" },
+            );
         });
 
         it("should call the appropriate callback when from picker is clicked", () => {
@@ -105,10 +111,13 @@ describe("DateRangePicker", () => {
             const input = screen.getAllByDisplayValue("00:00")[0];
             writeToInput("11:00", input);
 
-            expect(onRangeChange).toHaveBeenCalledWith({
-                ...getDefaultRange(),
-                from: new Date(2019, 4, 5, 11, 0),
-            });
+            expect(onRangeChange).toHaveBeenCalledWith(
+                {
+                    ...getDefaultRange(),
+                    from: new Date(2019, 4, 5, 11, 0),
+                },
+                { rangePosition: "from" },
+            );
         });
 
         const toScenarios: Array<[string, string, Date]> = [
@@ -125,7 +134,10 @@ describe("DateRangePicker", () => {
                 const input = screen.getAllByDisplayValue("00:00")[1];
                 writeToInput(value, input);
 
-                expect(onRangeChange).toHaveBeenCalledWith({ ...getDefaultRange(), to: expectedResult });
+                expect(onRangeChange).toHaveBeenCalledWith(
+                    { ...getDefaultRange(), to: expectedResult },
+                    { rangePosition: "to" },
+                );
             },
         );
     });

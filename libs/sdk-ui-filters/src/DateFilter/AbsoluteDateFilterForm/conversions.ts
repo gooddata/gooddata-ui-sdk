@@ -1,12 +1,12 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
-import { IDateRange } from "../DateRangePicker/DateRangePicker.js";
 import {
     convertDateToPlatformDateString,
     convertPlatformDateStringToDate,
 } from "../utils/DateConversions.js";
 import { IUiAbsoluteDateFilterForm } from "../interfaces/index.js";
 import { platformDateFormat, platformDateTimeFormat } from "../constants/Platform.js";
+import { IDateRange } from "../DateRangePicker/types.js";
 
 export const dateRangeToDateFilterValue = (
     range: IDateRange,
