@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 export class RichText {
     constructor(private parentSelector: string) {}
@@ -32,15 +32,15 @@ export class RichText {
     }
 
     getRemoveButtonElement() {
-        return this.getParentElement().find(".s-rich-text-remove-button");
+        return cy.get(".s-delete-insight-item");
     }
 
     getConfirmButtonElement() {
-        return this.getParentElement().find(".s-rich-text-confirm-button");
+        return cy.get(".s-screen-size-container").first();
     }
 
     getConfirmRemoveDialogElement() {
-        return cy.get(".s-rich-text-remove-confirm-dialog");
+        return cy.get(".s-delete_widget_dialog");
     }
 
     clickContent() {
@@ -68,7 +68,6 @@ export class RichText {
         this.getContentElement().scrollIntoView();
         this.clickContent();
         this.getRemoveButtonElement().click();
-        this.getConfirmRemoveDialogElement().find(".s-delete").click();
         this.notExist();
         return this;
     }

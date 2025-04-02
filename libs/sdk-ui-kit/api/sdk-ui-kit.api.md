@@ -25,6 +25,7 @@ import { IMeasureSortTarget } from '@gooddata/sdk-model';
 import { IMetadataObjectBase } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { ISeparators } from '@gooddata/sdk-ui';
+import { ISeparators as ISeparators_2 } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
@@ -1366,6 +1367,8 @@ export interface IDescriptionPanelProps {
     // (undocumented)
     onBubbleOpen?: () => void;
     // (undocumented)
+    separators?: ISeparators_2;
+    // (undocumented)
     title?: string;
     // (undocumented)
     useReferences?: boolean;
@@ -2259,6 +2262,8 @@ export interface IInsightListItemProps {
     onDelete?: () => void;
     // (undocumented)
     onDescriptionPanelOpen?: () => void;
+    // (undocumented)
+    separators?: ISeparators_2;
     // (undocumented)
     showDescriptionPanel?: boolean;
     // (undocumented)
@@ -3650,6 +3655,7 @@ export interface IRichTextProps {
     referencesEnabled?: boolean;
     // (undocumented)
     renderMode?: "view" | "edit";
+    separators?: ISeparators_2;
     // (undocumented)
     value: string;
 }

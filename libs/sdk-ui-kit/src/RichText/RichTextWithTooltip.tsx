@@ -45,6 +45,7 @@ const RichTextWithTooltipCore: React.FC<IRichTextWithTooltipProps> = ({
     autoResize,
     referencesEnabled,
     filters,
+    separators,
     onLoadingChanged,
     onError,
     LoadingComponent,
@@ -66,6 +67,7 @@ const RichTextWithTooltipCore: React.FC<IRichTextWithTooltipProps> = ({
                 autoResize={autoResize}
                 referencesEnabled={referencesEnabled}
                 filters={filters}
+                separators={separators}
                 LoadingComponent={LoadingComponent}
                 onLoadingChanged={onLoadingChanged}
                 onError={onError}
@@ -87,6 +89,7 @@ const RichTextWithTooltipCore: React.FC<IRichTextWithTooltipProps> = ({
         onLoadingChanged,
         onError,
         rawContent,
+        separators,
     ]);
 
     if (!showTooltip) {

@@ -10,7 +10,7 @@ import { Button } from "../Button/index.js";
 import { ShortenedText } from "../ShortenedText/index.js";
 import { DescriptionPanel, DESCRIPTION_PANEL_ARROW_OFFSETS } from "../DescriptionPanel/index.js";
 import { getDateTimeConfig } from "../utils/dateTimeConfig.js";
-import { IFilter } from "@gooddata/sdk-model";
+import { IFilter, ISeparators } from "@gooddata/sdk-model";
 
 const VISUALIZATION_TYPE_UNKNOWN = "unknown";
 const WIDGET_TYPE_KPI = "kpi";
@@ -49,6 +49,7 @@ export interface IInsightListItemProps {
     type?: string;
     width?: number;
     filters?: IFilter[];
+    separators?: ISeparators;
 
     onClick?: () => void;
     onDelete?: () => void;
@@ -90,6 +91,7 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
             isSelected,
             isLoading,
             filters,
+            separators,
             LoadingComponent,
             onClick,
             onDescriptionPanelOpen,
@@ -120,6 +122,7 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
                             useReferences={useReferences}
                             useRichText={useRichText}
                             filters={filters}
+                            separators={separators}
                             LoadingComponent={LoadingComponent}
                         />
                     </div>

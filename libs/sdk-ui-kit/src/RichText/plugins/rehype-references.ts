@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { areObjRefsEqual, IdentifierRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, DataValue, IdentifierRef, ISeparators } from "@gooddata/sdk-model";
 import { IntlShape } from "react-intl";
 import { Parent } from "unist";
 import { Root } from "mdast";
@@ -10,14 +10,15 @@ import { EvaluatedMetric } from "../hooks/useEvaluatedMetricsAndAttributes.js";
 import { createReference } from "../helpers/references.js";
 
 import { HtmlNode, REFERENCE_REGEX_MATCH, REFERENCE_REGEX_SPLIT, TextNode } from "./types.js";
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
 
-export function rehypeReferences(intl: IntlShape, metrics?: EvaluatedMetric[]) {
+export function rehypeReferences(intl: IntlShape, metrics?: EvaluatedMetric[], separators?: ISeparators) {
     return function () {
         return function (tree: Root) {
             iterateTree(tree as HtmlNode, {
                 onTextNodeReference: (text, ref) => {
                     const metric = metrics?.find((m) => areObjRefsEqual(m.ref, ref));
-                    const { metricDef } = createMetricValue(intl, text, metric);
+                    const { metricDef } = createMetricValue(intl, text, metric, separators);
                     return [metricDef];
                 },
                 onTextRawReference: (ref) => {
@@ -125,27 +126,13 @@ function iterateReferenceMatch<T>(value: string, onMatch: (ref: IdentifierRef, i
     return items;
 }
 
-function createMetricValue(intl: IntlShape, text: TextNode | null, metric: EvaluatedMetric) {
-    const value = metric ? metric.data.rawValue : null;
-
-    const isMultiple = metric?.count && metric.count > 1;
-
-    let isEmpty = value === null || value === undefined || metric?.count === 0;
-    let formattedValue = !metric
-        ? `(${intl.formatMessage({ id: "richText.no_fetch" })})`
-        : isEmpty
-        ? `(${intl.formatMessage({ id: "richText.no_data" })})`
-        : isMultiple
-        ? `(${intl.formatMessage({ id: "richText.multiple_data" })})`
-        : typeof value === "string"
-        ? value
-        : metric.data.formattedValue();
-
-    // NOTE: If the results value is empty, we should display the empty value message
-    if (formattedValue == "") {
-        formattedValue = `(${intl.formatMessage({ id: "empty_value" })})`;
-        isEmpty = true;
-    }
+function createMetricValue(
+    intl: IntlShape,
+    text: TextNode | null,
+    metric: EvaluatedMetric,
+    separators?: ISeparators,
+) {
+    const { formattedValue, value, isEmpty, isMultiple, styles } = getValue(metric, intl, separators);
 
     const metricDef = {
         type: "element",
@@ -157,6 +144,7 @@ function createMetricValue(intl: IntlShape, text: TextNode | null, metric: Evalu
                 "gd-rich-text-metric-multiple": metric && isMultiple,
                 "gd-rich-text-metric-value": metric && !isEmpty && !isMultiple,
             }),
+            style: styles,
         },
         position: text?.position ?? undefined,
         children: [{ type: "text", value: formattedValue }],
@@ -166,5 +154,88 @@ function createMetricValue(intl: IntlShape, text: TextNode | null, metric: Evalu
         metricDef,
         formattedValue,
         value: isEmpty || isMultiple ? null : value,
+    };
+}
+
+function getValue(metric: EvaluatedMetric, intl: IntlShape, separators?: ISeparators) {
+    const value = metric ? metric.data.rawValue : null;
+    const isMultiple = metric?.count && metric.count > 1;
+    const isEmpty = value === null || value === undefined || metric?.count === 0;
+
+    let styles: Partial<CSSStyleDeclaration> = {};
+
+    if (!metric) {
+        return {
+            formattedValue: `(${intl.formatMessage({ id: "richText.no_fetch" })})`,
+            value,
+            styles,
+            isMultiple,
+            isEmpty,
+        };
+    }
+    if (isEmpty) {
+        return {
+            formattedValue: `(${intl.formatMessage({ id: "richText.no_data" })})`,
+            value,
+            styles,
+            isMultiple,
+            isEmpty,
+        };
+    }
+    if (isMultiple) {
+        return {
+            formattedValue: `(${intl.formatMessage({ id: "richText.multiple_data" })})`,
+            value,
+            styles,
+            isMultiple,
+            isEmpty,
+        };
+    }
+
+    let formattedValue = "";
+
+    if (typeof value === "string") {
+        formattedValue = value;
+    } else {
+        const { formattedValue: formatted, colors } = createNumberJsFormatter(
+            value,
+            metric.format,
+            separators,
+        );
+        formattedValue = formatted;
+        styles = {
+            ...(colors?.color ? { color: colors.color } : {}),
+            ...(colors?.backgroundColor ? { backgroundColor: colors.backgroundColor } : {}),
+        };
+    }
+
+    // NOTE: If the results value is empty, we should display the empty value message
+    if (formattedValue == "") {
+        return {
+            formattedValue: `(${intl.formatMessage({ id: "empty_value" })})`,
+            isEmpty: true,
+            isMultiple,
+            styles,
+            value,
+        };
+    }
+
+    // Default case
+    return {
+        formattedValue,
+        isEmpty,
+        isMultiple,
+        styles,
+        value,
+    };
+}
+
+function createNumberJsFormatter(value: DataValue, format: string, separators?: ISeparators) {
+    const valueToFormat = ClientFormatterFacade.convertValue(value);
+    const { formattedValue, colors } = ClientFormatterFacade.formatValue(valueToFormat, format, separators);
+
+    return {
+        formattedValue,
+        colors,
     };
 }

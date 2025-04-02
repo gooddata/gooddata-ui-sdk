@@ -339,7 +339,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableExecutionCancelling: false,
     enableDashboardAfterRenderDetection: false,
     enableImmediateAttributeFilterDisplayAsLabelMigration: false,
-    enableRichTextDynamicReferences: false,
+    enableRichTextDynamicReferences: true,
     enableAnalyticalDesignerCatalogSideload: false,
     enableDashboardShareLink: false,
     enableHighchartsAccessibility: false,

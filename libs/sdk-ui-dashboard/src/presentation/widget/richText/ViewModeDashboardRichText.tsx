@@ -2,7 +2,11 @@
 import React from "react";
 import { RichText } from "@gooddata/sdk-ui-kit";
 
-import { selectEnableRichTextDynamicReferences, useDashboardSelector } from "../../../model/index.js";
+import {
+    selectEnableRichTextDynamicReferences,
+    selectSeparators,
+    useDashboardSelector,
+} from "../../../model/index.js";
 import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
@@ -19,6 +23,7 @@ export const ViewModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
 }) => {
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const filters = useRichTextFilters(widget);
+    const separators = useDashboardSelector(selectSeparators);
     const { LoadingComponent } = useDashboardComponentsContext();
 
     return (
@@ -27,6 +32,7 @@ export const ViewModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
             className="gd-rich-text-widget"
             value={widget?.content}
             filters={filters}
+            separators={separators}
             renderMode="view"
             rawContent={{
                 show: !!richTextExportData,
