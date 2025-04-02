@@ -19,6 +19,7 @@ import { IExtendedDateFilterErrors } from "../interfaces/index.js";
 import { DateTimePickerWithInt } from "./DateTimePicker.js";
 
 import { DAY_END_TIME } from "../constants/Platform.js";
+import { getLocalizedDateFormat } from "../utils/FormattingUtils.js";
 
 import enUS from "date-fns/locale/en-US/index.js";
 import de from "date-fns/locale/de/index.js";
@@ -58,6 +59,8 @@ const convertedLocales: Record<string, Locale> = {
 };
 
 const ALIGN_POINTS = [{ align: "bl tl", offset: { x: 0, y: 1 } }];
+const DATE_INPUT_HINT_ID = "date-range-picker-date-input-hint";
+const TIME_INPUT_HINT_ID = "date-range-picker-time-input-hint";
 
 function convertLocale(locale: string): Locale {
     return convertedLocales[locale];
@@ -194,10 +197,14 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
             <DateTimePickerWithInt
                 onKeyDown={this.onKeyDown}
                 ref={this.dateRangePickerInputFrom}
+                dateInputLabel={intl.formatMessage({ id: "filters.staticPeriod.dateFrom" })}
+                timeInputLabel={intl.formatMessage({ id: "filters.staticPeriod.timeFrom" })}
                 placeholderDate={intl.formatMessage({ id: "filters.from" })}
                 accessibilityConfig={{
                     dateAriaLabel: intl.formatMessage({ id: "filters.date.accessibility.label.from" }),
                     timeAriaLabel: intl.formatMessage({ id: "filters.time.accessibility.label.from" }),
+                    dateInputHintId: DATE_INPUT_HINT_ID,
+                    timeInputHintId: TIME_INPUT_HINT_ID,
                 }}
                 onChange={this.handleFromChange}
                 value={this.state.inputFromValue}
@@ -206,7 +213,17 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                 handleDayClick={this.handleFromDayClick}
                 isTimeEnabled={isTimeEnabled}
                 className={cx("s-date-range-picker-from", "gd-date-range-picker-from")}
-                error={typeof errorFrom !== "undefined"}
+                errors={
+                    errorFrom
+                        ? {
+                              // TODO split errors to date, time, error, warning
+                              dateError: intl.formatMessage(
+                                  { id: errorFrom },
+                                  { format: dateFormat || getLocalizedDateFormat(intl.locale) },
+                              ),
+                          }
+                        : undefined
+                }
             />
         );
 
@@ -214,10 +231,14 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
             <DateTimePickerWithInt
                 onKeyDown={this.onKeyDown}
                 ref={this.dateRangePickerInputTo}
+                dateInputLabel={intl.formatMessage({ id: "filters.staticPeriod.dateTo" })}
+                timeInputLabel={intl.formatMessage({ id: "filters.staticPeriod.timeTo" })}
                 placeholderDate={intl.formatMessage({ id: "filters.to" })}
                 accessibilityConfig={{
                     dateAriaLabel: intl.formatMessage({ id: "filters.date.accessibility.label.to" }),
                     timeAriaLabel: intl.formatMessage({ id: "filters.time.accessibility.label.to" }),
+                    dateInputHintId: DATE_INPUT_HINT_ID,
+                    timeInputHintId: TIME_INPUT_HINT_ID,
                 }}
                 onChange={this.handleToChange}
                 value={this.state.inputToValue}
@@ -227,7 +248,17 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                 isTimeEnabled={isTimeEnabled}
                 className={cx("s-date-range-picker-to", "gd-date-range-picker-to")}
                 defaultTime={DAY_END_TIME}
-                error={typeof errorTo !== "undefined"}
+                errors={
+                    errorTo
+                        ? {
+                              // TODO split errors to date, time, error, warning
+                              dateError: intl.formatMessage(
+                                  { id: errorTo },
+                                  { format: dateFormat || getLocalizedDateFormat(intl.locale) },
+                              ),
+                          }
+                        : undefined
+                }
             />
         );
 
@@ -239,24 +270,21 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
             <>
                 {isTimeEnabled ? (
                     <div className="gd-date-range-picker datetime s-date-range-picker">
-                        <label>{intl.formatMessage({ id: "filters.from" })}</label>
                         {FromField}
                         {isFromInputDatePickerOpen ? DatePickerComponent : null}
-                        <label>{intl.formatMessage({ id: "filters.to" })}</label>
                         {ToField}
                         {isToInputDatePickerOpen ? DatePickerComponent : null}
                     </div>
                 ) : (
                     <>
-                        <div className="gd-date-range-picker gd-flex-row s-date-range-picker">
+                        <div className="gd-date-range-picker gd-date-range-row s-date-range-picker">
                             {FromField}
-                            <span className="gd-date-range-picker-dash">&ndash;</span>
                             {ToField}
                         </div>
                         {this.state.isOpen ? DatePickerComponent : null}
                     </>
                 )}
-                {errorFrom || errorTo ? (
+                {isMobile && (errorFrom || errorTo) ? (
                     <DateRangePickerError
                         dateFormat={dateFormat}
                         errorId={
@@ -265,6 +293,19 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                         }
                     />
                 ) : null}
+                <div className="gd-date-range__hint">
+                    <div id={DATE_INPUT_HINT_ID}>
+                        {intl.formatMessage(
+                            { id: "filters.staticPeriod.dateFormatHint" },
+                            { format: dateFormat || getLocalizedDateFormat(intl.locale) },
+                        )}
+                    </div>
+                    {isTimeEnabled ? (
+                        <div id={TIME_INPUT_HINT_ID}>
+                            {intl.formatMessage({ id: "filters.staticPeriod.timeFormatHint" })}
+                        </div>
+                    ) : null}
+                </div>
             </>
         );
     }
