@@ -17,9 +17,6 @@ const topBar = new TopBar();
 describe("Dependent filter", () => {
     beforeEach(() => {
         Navigation.visit("dashboard/dashboard-dependent-filters");
-<<<<<<< HEAD
-        new Dashboard().waitForDashboardLoaded();
-=======
     });
 
     it("should test parent - child interaction in view mode", { tags: "checklist_integrated_tiger" }, () => {
@@ -243,9 +240,8 @@ describe("Dependent filter", () => {
         regionFilter.isLoaded().open().hasSubtitle("East Coast").hasFilterListSize(4);
         stateFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(48);
         cityFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(300);
->>>>>>> 696be18769 (fix: failed tests because of new dashboard building)
     });
-    
+
     it(
         "should test parent - child interaction in view mode",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
