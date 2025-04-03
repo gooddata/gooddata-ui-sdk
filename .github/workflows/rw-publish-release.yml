@@ -76,11 +76,11 @@ jobs:
       group: infra1-runners-arc
       labels: runners-small
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Setup node
         uses: ./.github/actions/node/set-up-node
         id: node-init
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Check Release Version is latest
         id: check-release-is-latest
         uses: gooddata/gooddata-ui-sdk/.github/actions/git-check-release@master
