@@ -42,7 +42,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: 18.17.0
+          node-version: 22.13.0
       - name: Get version from branch ${{ inputs.source-branch }}
         id: get-version
         uses: gooddata/gooddata-ui-sdk/.github/actions/get-version-action@master
@@ -76,7 +76,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: 18.17.0
+          node-version: 22.13.0
       - name: Checkout
         uses: actions/checkout@v4
       - name: Check Release Version is latest
