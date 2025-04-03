@@ -1,17 +1,6 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 03 Apr 2025 10:57:04 GMT and should not be manually modified.
-
-## 10.24.0
-
-Thu, 03 Apr 2025 10:57:04 GMT
-
-### Updates
-
--   Update minimal node to 22.13.0
--   Fix: Do not reset date filter on cancel click in apply all filters at once mode
--   Bugfix of attribute filter. When together apply all filters and close values dropdown with filled search the app crashes.
--   Dashboard execution and rendering is not blocked by loading of catalog
+This log was last generated on Thu, 20 Mar 2025 09:15:55 GMT and should not be manually modified.
 
 ## 10.23.0
 
