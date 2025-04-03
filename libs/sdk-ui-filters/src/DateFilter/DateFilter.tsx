@@ -293,7 +293,14 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
     };
 
     private onChangesDiscarded = () => {
-        this.setState(() => DateFilter.getStateFromProps(this.props), this.handleSelectChange);
+        if (!this.props.withoutApply || !this.props.enableDashboardFiltersApplyModes) {
+            this.setState(() => DateFilter.getStateFromProps(this.props), this.handleSelectChange);
+        } else if (
+            this.props.enableDashboardFiltersApplyModes &&
+            !isEmpty(validateFilterOption(this.state.selectedFilterOption))
+        ) {
+            this.setState(() => DateFilter.getStateFromWorkingProps(this.props));
+        }
     };
 
     private onCancelClicked = () => {
@@ -306,14 +313,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             this.props.onOpen();
         } else {
             this.props.onClose();
-            if (!this.props.withoutApply || !this.props.enableDashboardFiltersApplyModes) {
-                this.onChangesDiscarded();
-            } else if (
-                this.props.enableDashboardFiltersApplyModes &&
-                !isEmpty(validateFilterOption(this.state.selectedFilterOption))
-            ) {
-                this.setState(() => DateFilter.getStateFromWorkingProps(this.props));
-            }
+            this.onChangesDiscarded();
         }
     };
 
