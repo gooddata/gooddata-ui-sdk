@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
 
@@ -7,7 +7,13 @@ import { IIconProps } from "../typings.js";
 /**
  * @internal
  */
-export const GenAI: React.FC<IIconProps> = ({ color = "#14B2E2", className, width = 11, height = 13 }) => {
+export const GenAI: React.FC<IIconProps> = ({
+    color = "#14B2E2",
+    className,
+    ariaHidden,
+    width = 11,
+    height = 13,
+}) => {
     return (
         <svg
             className={className}
@@ -16,6 +22,7 @@ export const GenAI: React.FC<IIconProps> = ({ color = "#14B2E2", className, widt
             viewBox="0 0 32 32"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden={ariaHidden}
         >
             <path
                 d="M16.2317 7.76912C16.2737 7.51389 16.6407 7.5139 16.6827 7.76913L17.1108 10.368C17.493 12.6883 19.3116 14.507 21.632 14.8892L24.2308 15.3172C24.4861 15.3593 24.4861 15.7263 24.2308 15.7683L21.632 16.1964C19.3116 16.5786 17.493 18.3972 17.1108 20.7176L16.6827 23.3164C16.6407 23.5716 16.2737 23.5716 16.2317 23.3164L15.8036 20.7176C15.4214 18.3972 13.6027 16.5786 11.2824 16.1964L8.68355 15.7683C8.42832 15.7263 8.42832 15.3593 8.68355 15.3172L11.2824 14.8892C13.6027 14.507 15.4214 12.6883 15.8036 10.368L16.2317 7.76912Z"

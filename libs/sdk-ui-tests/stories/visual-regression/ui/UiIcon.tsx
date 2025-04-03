@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { UiIcon, UiIconProps, ComponentTable, propCombinationsFor } from "@gooddata/sdk-ui-kit";
 import React from "react";
 
@@ -28,6 +28,8 @@ const iconColors = iconCombinations(
     ],
     { type: "check" },
 );
+const iconHidden = iconCombinations("ariaHidden", [true, false]);
+const iconSingleRow = iconCombinations("type", ["alert"]);
 
 const UiIconTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
     <div className="screenshot-target">
@@ -35,7 +37,17 @@ const UiIconTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
             columnsBy={iconSizes}
             rowsBy={[iconTypes, iconColors]}
             Component={UiIcon}
-            codeSnippet={showCode ? "UiButton" : undefined}
+            codeSnippet={showCode ? "UiIcon" : undefined}
+            align="center"
+            cellWidth={200}
+        />
+
+        <h1 className={"gd-typography gd-typography--h1"}>Accessibility</h1>
+        <ComponentTable
+            rowsBy={[iconSingleRow]}
+            columnsBy={iconHidden}
+            Component={UiIcon}
+            codeSnippet={showCode ? "UiIcon" : undefined}
             align="center"
             cellWidth={200}
         />

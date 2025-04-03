@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
 import { b } from "./iconBem.js";
 import { iconsConfig } from "./icons.js";
@@ -13,12 +13,13 @@ export interface UiIconProps {
     color?: ThemeColor;
     label?: string;
     size?: number;
+    ariaHidden?: boolean;
 }
 
 /**
  * @internal
  */
-export const UiIcon = ({ type, label, color, size = 20 }: UiIconProps) => {
+export const UiIcon = ({ type, label, color, ariaHidden, size = 20 }: UiIconProps) => {
     return (
         <svg
             className={b({ color })}
@@ -26,6 +27,7 @@ export const UiIcon = ({ type, label, color, size = 20 }: UiIconProps) => {
             width={size}
             height={size}
             preserveAspectRatio="xMidYMid meet"
+            aria-hidden={ariaHidden}
         >
             {label ? <title>{label}</title> : null}
             {iconsConfig[type].content}

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 
 import { IIconProps } from "../typings.js";
@@ -6,7 +6,7 @@ import { IIconProps } from "../typings.js";
 /**
  * @internal
  */
-export const EmbedCodeIcon: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export const EmbedCodeIcon: React.FC<IIconProps> = ({ color, className, ariaHidden, width, height }) => {
     return (
         <svg
             className={className}
@@ -15,6 +15,7 @@ export const EmbedCodeIcon: React.FC<IIconProps> = ({ color, className, width, h
             viewBox="0 0 19 14"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden={ariaHidden}
         >
             <path
                 fill={color ?? "#94A1AD"}

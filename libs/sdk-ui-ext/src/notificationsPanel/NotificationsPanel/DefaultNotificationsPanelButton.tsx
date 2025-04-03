@@ -67,7 +67,7 @@ export function DefaultNotificationsPanelButton({
         >
             <span className={e("icon")}>
                 {hasUnreadNotifications ? <span className={e("unread-status")} /> : null}
-                <UiIcon type="alert" size={14} />
+                <UiIcon type="alert" size={14} ariaHidden />
             </span>
         </button>
     );
