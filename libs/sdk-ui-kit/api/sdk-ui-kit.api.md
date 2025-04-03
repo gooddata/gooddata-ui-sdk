@@ -1206,7 +1206,7 @@ export interface IComponentTableProps<TProps extends object, TProp extends keyof
     // (undocumented)
     codeSnippet?: string;
     // (undocumented)
-    columnsBy: IPropCombination<TProps, TProp>;
+    columnsBy?: IPropCombination<TProps, TProp> | undefined;
     // (undocumented)
     Component: React_2.ComponentType<TProps>;
     // (undocumented)
@@ -1254,7 +1254,7 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
 }
 
 // @internal (undocumented)
-export type IconType = "check" | "plus" | "sync" | "alert" | "close" | "question" | "crossCircle";
+export type IconType = "check" | "plus" | "sync" | "alert" | "close" | "question" | "crossCircle" | "chevronUp" | "chevronDown" | "date" | "lock" | "cross";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
@@ -5048,6 +5048,29 @@ export interface UiButtonProps {
     tooltip?: React_2.ReactNode;
     // (undocumented)
     variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger;
+}
+
+// @internal (undocumented)
+export const UiChip: ({ label, tag, isDeletable, isActive, isLocked, iconBefore, onClick, onDelete, }: UiChipProps) => React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiChipProps {
+    // (undocumented)
+    iconBefore?: IconType;
+    // (undocumented)
+    isActive?: boolean;
+    // (undocumented)
+    isDeletable?: boolean;
+    // (undocumented)
+    isLocked?: boolean;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
+    onDelete?: () => void;
+    // (undocumented)
+    tag?: string;
 }
 
 // @internal (undocumented)

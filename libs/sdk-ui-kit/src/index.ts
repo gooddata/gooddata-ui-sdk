@@ -87,6 +87,8 @@ export { useElementSize } from "./@ui/hooks/useElementSize.js";
 export type { IconType } from "./@ui/@types/icon.js";
 export { UiButton } from "./@ui/UiButton/UiButton.js";
 export type { UiButtonProps } from "./@ui/UiButton/UiButton.js";
+export { UiChip } from "./@ui/UiChip/UiChip.js";
+export type { UiChipProps } from "./@ui/UiChip/UiChip.js";
 export { UiIcon } from "./@ui/UiIcon/UiIcon.js";
 export type { UiIconProps } from "./@ui/UiIcon/UiIcon.js";
 export { UiSkeleton } from "./@ui/UiSkeleton/UiSkeleton.js";

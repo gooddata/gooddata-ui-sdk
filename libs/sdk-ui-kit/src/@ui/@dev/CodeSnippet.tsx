@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 
 /**
@@ -37,6 +37,9 @@ export function CodeSnippet({
                     whiteSpace: "pre",
                     fontSize: 10,
                     width: "100%",
+                    display: "block",
+                    lineHeight: "18px",
+                    overflow: "hidden",
                 }}
             >
                 {`<${componentName}
