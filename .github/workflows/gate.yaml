@@ -64,7 +64,7 @@ jobs:
               "GH_PIPELINE": "gate"
             }
           comment-pr: 'true'
-  gooddata-ui-sdk-cypress-tiger-isolated-zuul-pipeline:
+  gooddata-ui-sdk-cypress-bear-isolated-zuul-pipeline:
     runs-on:
       group: infra1-runners-arc
       labels: runners-small
@@ -101,43 +101,6 @@ jobs:
             }
           comment-pr: 'true'
         if: steps.branch-matches.outputs.branch_matches == 'true'
-  gooddata-ui-sdk-compatibility-pipeline:
-    runs-on:
-      group: infra1-runners-arc
-      labels: runners-small
-    needs:
-      - prepare-env
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - name: Check if branch matches
-        id: branch-matches
-        run: |-
-          branch=${{ needs.prepare-env.outputs.branch }}
-          branch_matches=$([[ $branch =~ ^(master|release) ]] && echo true || echo false)
-          echo "branch_matches=$branch_matches" >> "$GITHUB_OUTPUT"
-      - name: Call Jenkins trigger
-        id: call-jenkins
-        uses: gooddata/github-actions-public/jenkins/trigger@master
-        with:
-          server: ${{ vars.JENKINS_ADDRESS }}
-          folder: gooddata-ui-sdk
-          job-name: gooddata-ui-sdk-compatibility-pipeline
-          vault-url: ${{ vars.VAULT_ADDRESS }}
-          params: |-
-            {
-              "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",
-              "GH_REF": "${{ needs.prepare-env.outputs.ref }}",
-              "GH_COMMIT": "${{ needs.prepare-env.outputs.commit }}",
-              "GH_URL": "git@github.com:",
-              "GH_CHANGE": "${{ needs.prepare-env.outputs.pr_number }}",
-              "GH_PROJECT": "${{ needs.prepare-env.outputs.project }}",
-              "BUILD_BY_GITHUB": "true",
-              "GH_PIPELINE": "gate"
-            }
-          comment-pr: 'true'
-        if: steps.branch-matches.outputs.branch_matches == 'true'
   ready-to-merge:
     runs-on:
       group: infra1-runners-arc
@@ -146,8 +109,7 @@ jobs:
     needs:
       - prepare-env
       - gooddata-ui-sdk-unit-tests
-      - gooddata-ui-sdk-cypress-tiger-isolated-zuul-pipeline
-      - gooddata-ui-sdk-compatibility-pipeline
+      - gooddata-ui-sdk-cypress-bear-isolated-zuul-pipeline
     steps:
       - name: Check if needed jobs succeeded
         uses: re-actors/alls-green@release/v1
