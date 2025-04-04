@@ -977,3 +977,15 @@ export const selectEnableDashboardShareLink: DashboardSelector<boolean> = create
         return Boolean(state.settings?.enableDashboardShareLink) ?? false;
     },
 );
+
+/**
+ * Selector for the automation filter context feature flag
+ *
+ * @internal
+ */
+export const selectEnableAutomationFilterContext: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return Boolean(state.settings?.enableAutomationFilterContext) ?? false;
+    },
+);

@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useMemo, useRef, useState } from "react";
+import React, { ComponentType, useMemo, useRef, useState } from "react";
 import flow from "lodash/flow.js";
 import noop from "lodash/noop.js";
 import DefaultMediaQuery from "react-responsive";
@@ -18,6 +18,7 @@ import { filterVisibleDateFilterOptions, sanitizePresetIntervals } from "./utils
 import { IFilterButtonCustomIcon } from "../shared/index.js";
 import { IFilterConfigurationProps } from "./DateFilterBody/types.js";
 import isEmpty from "lodash/isEmpty.js";
+import { IDateFilterButtonProps } from "./DateFilterButton/DateFilterButton.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -64,6 +65,7 @@ export interface IDateFilterCoreProps {
     FilterConfigurationComponent?: React.ComponentType<IFilterConfigurationProps>;
 
     withoutApply?: boolean;
+    ButtonComponent?: ComponentType<IDateFilterButtonProps>;
 }
 
 export const verifyDateFormat = (dateFormat: string): string => {
@@ -103,6 +105,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     onCancelClick,
     showDropDownHeaderMessage,
     withoutApply,
+    ButtonComponent,
     ...dropdownBodyProps
 }) => {
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
@@ -163,6 +166,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                             customFilterName={customFilterName}
                             customIcon={customIcon}
                             onClick={toggleDropdown}
+                            ButtonComponent={ButtonComponent}
                         />
                     );
                     return (

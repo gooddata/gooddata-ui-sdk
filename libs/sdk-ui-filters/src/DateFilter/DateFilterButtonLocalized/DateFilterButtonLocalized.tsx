@@ -1,8 +1,11 @@
-// (C) 2007-2024 GoodData Corporation
-import React from "react";
-import { FormattedMessage } from "react-intl";
-import { DateFilterButton } from "../DateFilterButton/DateFilterButton.js";
-import { DateFilterTextLocalized } from "../DateFilterTextLocalized/DateFilterTextLocalized.js";
+// (C) 2007-2025 GoodData Corporation
+import React, { ComponentType } from "react";
+import { useIntl } from "react-intl";
+import { DateFilterButton, IDateFilterButtonProps } from "../DateFilterButton/DateFilterButton.js";
+import {
+    DateFilterTextLocalized,
+    useDateFilterText,
+} from "../DateFilterTextLocalized/DateFilterTextLocalized.js";
 import { DateFilterOption } from "../interfaces/index.js";
 import { IFilterButtonCustomIcon } from "../../shared/index.js";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
@@ -22,6 +25,7 @@ export interface IDateFilterButtonLocalizedProps {
     disabled?: boolean;
     customIcon?: IFilterButtonCustomIcon;
     onClick?: () => void;
+    ButtonComponent?: ComponentType<IDateFilterButtonProps>;
 }
 
 export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps> = ({
@@ -33,14 +37,22 @@ export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps
     disabled,
     customIcon,
     onClick,
+    ButtonComponent,
 }) => {
+    const intl = useIntl();
+    const defaultTitle = intl.formatMessage({ id: "dateFilterDropdown.title" });
+    const textTitle = customFilterName ?? defaultTitle;
     const title = customFilterName ? (
         <ShortenedText tooltipAlignPoints={ALIGN_POINT}>{customFilterName}</ShortenedText>
     ) : (
-        <FormattedMessage id="dateFilterDropdown.title" />
+        <>{textTitle}</>
     );
+    const textSubtitle = useDateFilterText({ filter: dateFilterOption, dateFormat });
+
+    const Component = ButtonComponent ?? DateFilterButton;
+
     return (
-        <DateFilterButton
+        <Component
             title={title}
             isOpen={isOpen}
             isMobile={isMobile}
@@ -48,10 +60,12 @@ export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps
             customIcon={customIcon}
             customFilterName={customFilterName}
             onClick={onClick}
+            textTitle={textTitle}
+            textSubtitle={textSubtitle}
         >
             <span className="s-button-text">
                 <DateFilterTextLocalized filter={dateFilterOption} dateFormat={dateFormat} />
             </span>
-        </DateFilterButton>
+        </Component>
     );
 };

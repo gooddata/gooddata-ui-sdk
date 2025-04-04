@@ -204,3 +204,5 @@ export {
 } from "./AttributeFilter/index.js";
 
 export type { IFilterButtonCustomIcon, VisibilityMode } from "./shared/index.js";
+
+export type { IDateFilterButtonProps } from "./DateFilter/DateFilterButton/DateFilterButton.js";

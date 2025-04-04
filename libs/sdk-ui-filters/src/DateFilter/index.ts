@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { granularityIntlCodes } from "./constants/i18n.js";
 import { defaultDateFilterOptions } from "./constants/config.js";
 import { validateFilterOption } from "./validation/OptionValidation.js";
@@ -76,3 +76,4 @@ export type { IFilterConfigurationProps } from "./DateFilterBody/types.js";
 export { defaultDateFilterOptions } from "./constants/config.js";
 export type { GranularityIntlKey } from "./constants/i18n.js";
 export { getLocalizedIcuDateFormatPattern } from "./utils/FormattingUtils.js";
+export type { IDateFilterButtonProps } from "./DateFilterButton/DateFilterButton.js";
