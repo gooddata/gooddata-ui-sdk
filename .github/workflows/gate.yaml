@@ -78,7 +78,7 @@ jobs:
         id: branch-matches
         run: |-
           branch=${{ needs.prepare-env.outputs.branch }}
-          branch_matches=$([[ $branch =~ ^(master|release) ]] && echo true || echo false)
+          branch_matches=$([[ $branch =~ ^(rel/9.9) ]] && echo true || echo false)
           echo "branch_matches=$branch_matches" >> "$GITHUB_OUTPUT"
       - name: Call Jenkins trigger
         id: call-jenkins
@@ -86,7 +86,7 @@ jobs:
         with:
           server: ${{ vars.JENKINS_ADDRESS }}
           folder: gooddata-ui-sdk
-          job-name: gooddata-ui-sdk-cypress-tiger-isolated-zuul-pipeline
+          job-name: gooddata-ui-sdk-cypress-bear-isolated-zuul-pipeline
           vault-url: ${{ vars.VAULT_ADDRESS }}
           params: |-
             {
@@ -111,19 +111,6 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - name: Check if any matching file changed
-        id: changed-files
-        run: |
-          any_changed=false
-          patterns=('^libs/sdk-backend-tiger/.*$' '^libs/api-client-tiger/.*$' '^libs/sdk-backend-base/.*$')
-          for file in ${{ needs.prepare-env.outputs.changed_files }}; do
-              for pattern in "${patterns[@]}"; do
-                  if [[ $file =~ $pattern ]]; then
-                      any_changed=true
-                  fi
-              done
-          done
-          echo "any_changed=$any_changed" >> "$GITHUB_OUTPUT"
       - name: Check if branch matches
         id: branch-matches
         run: |-
@@ -150,7 +137,7 @@ jobs:
               "GH_PIPELINE": "gate"
             }
           comment-pr: 'true'
-        if: steps.changed-files.outputs.any_changed == 'true' && steps.branch-matches.outputs.branch_matches == 'true'
+        if: steps.branch-matches.outputs.branch_matches == 'true'
   ready-to-merge:
     runs-on:
       group: infra1-runners-arc
