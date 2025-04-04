@@ -8,6 +8,7 @@ import {
     useWorkspace,
 } from "@gooddata/sdk-ui";
 import {
+    IExecutionConfig,
     IFilter,
     IMeasure,
     IResultHeader,
@@ -31,7 +32,7 @@ export type EvaluatedMetric = {
 export function useEvaluatedMetricsAndAttributes(
     references: ReferenceMap,
     filters: IFilter[],
-    enabled: boolean,
+    config: IExecutionConfig & { enabled: boolean },
 ) {
     const workspace = useWorkspace();
     const backend = useBackend();
@@ -39,17 +40,25 @@ export function useEvaluatedMetricsAndAttributes(
     const { metrics: labels, countMap } = getLabels(references);
 
     const items = [...metrics, ...labels];
+    const { enabled, ...execConfig } = config;
 
     const {
         status: executionStatus,
         result: executionResult,
         error: executionError,
-    } = useExecutionDataView({
-        execution:
-            enabled && items.length > 0
-                ? backend.workspace(workspace).execution().forItems(items, filters)
-                : null,
-    });
+    } = useExecutionDataView(
+        {
+            execution:
+                enabled && items.length > 0
+                    ? backend
+                          .workspace(workspace)
+                          .execution()
+                          .forItems(items, filters)
+                          .withExecConfig(execConfig)
+                    : null,
+        },
+        [execConfig.timestamp, execConfig.dataSamplingPercentage],
+    );
 
     const {
         status: loadStatus,

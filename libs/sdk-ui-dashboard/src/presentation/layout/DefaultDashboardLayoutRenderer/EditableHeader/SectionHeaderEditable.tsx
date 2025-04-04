@@ -13,6 +13,7 @@ import {
     selectEnableDashboardDescriptionDynamicHeight,
     selectEnableRichTextDynamicReferences,
     selectSeparators,
+    selectExecutionTimestamp,
 } from "../../../../model/index.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 import { useRichTextFilters } from "../../../../_staging/sharedHooks/useRichTextFilters.js";
@@ -51,6 +52,8 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
     const { LoadingComponent } = useDashboardComponentsContext();
     const filters = useRichTextFilters();
     const separators = useDashboardSelector(selectSeparators);
+
+    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
 
     const description = useRichText ? props.description : getDescription(props.description);
     const title = getTitle(props.title);
@@ -168,6 +171,9 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
                             filters={filters}
                             separators={separators}
                             LoadingComponent={LoadingComponent}
+                            execConfig={{
+                                timestamp: executionTimestamp,
+                            }}
                         />
                     </div>
                 ) : (

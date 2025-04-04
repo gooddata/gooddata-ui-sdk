@@ -1,12 +1,16 @@
 // (C) 2025 GoodData Corporation
 import { useMemo } from "react";
-import { IFilter } from "@gooddata/sdk-model";
+import { IExecutionConfig, IFilter } from "@gooddata/sdk-model";
 
 import { collectReferences } from "../helpers/references.js";
 
 import { useEvaluatedMetricsAndAttributes } from "./useEvaluatedMetricsAndAttributes.js";
 
-export function useEvaluatedReferences(value: string, filters: IFilter[], enabled: boolean) {
+export function useEvaluatedReferences(
+    value: string,
+    filters: IFilter[],
+    config: IExecutionConfig & { enabled: boolean },
+) {
     const isEmptyValue = useMemo(() => !value?.replace(/\s/g, ""), [value]);
     const references = useMemo(() => collectReferences(value), [value]);
 
@@ -14,7 +18,7 @@ export function useEvaluatedReferences(value: string, filters: IFilter[], enable
         loading,
         result: metrics,
         error: metricsError,
-    } = useEvaluatedMetricsAndAttributes(references, filters, enabled);
+    } = useEvaluatedMetricsAndAttributes(references, filters, config);
 
     return {
         isEmptyValue,

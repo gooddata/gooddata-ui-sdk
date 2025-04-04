@@ -4,7 +4,7 @@ import React, { useRef, useEffect, useCallback } from "react";
 import Markdown from "react-markdown";
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import { IFilter, ISeparators } from "@gooddata/sdk-model";
+import { IExecutionConfig, IFilter, ISeparators } from "@gooddata/sdk-model";
 import { IntlWrapper, LoadingComponent, OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 
 import { remarkReferences } from "./plugins/remark-references.js";
@@ -34,6 +34,7 @@ export interface IRichTextProps {
     onChange?: (text: string) => void;
     renderMode?: "view" | "edit";
     editPlaceholder?: string;
+    execConfig?: IExecutionConfig;
     editRows?: number;
     emptyElement?: JSX.Element;
     className?: string;
@@ -78,6 +79,7 @@ export interface IRichTextProps {
 
 const RichTextCore: React.FC<IRichTextProps> = ({
     value,
+    execConfig,
     onChange,
     referencesEnabled,
     renderMode = "view",
@@ -122,6 +124,7 @@ const RichTextCore: React.FC<IRichTextProps> = ({
                     onLoadingChanged={onLoadingChanged}
                     onError={onError}
                     emptyElement={emptyElement}
+                    execConfig={execConfig}
                 />
             )}
             {rawContent?.show ? <input type="hidden" value={value} {...rawContent.dataAttributes} /> : null}
@@ -200,6 +203,7 @@ interface IRichTextViewProps {
     referencesEnabled?: boolean;
     filters?: IFilter[];
     separators?: ISeparators;
+    execConfig?: IExecutionConfig;
     onLoadingChanged?: OnLoadingChanged;
     onError?: OnError;
     //Components
@@ -220,16 +224,16 @@ const RichTextView: React.FC<IRichTextViewProps> = ({
     emptyElement,
     filters,
     separators,
+    execConfig,
     onError,
     onLoadingChanged,
     LoadingComponent = DefaultLoadingComponent,
 }) => {
     const intl = useIntl();
-    const { loading, metrics, isEmptyValue, error } = useEvaluatedReferences(
-        value,
-        filters,
-        referencesEnabled,
-    );
+    const { loading, metrics, isEmptyValue, error } = useEvaluatedReferences(value, filters, {
+        enabled: referencesEnabled,
+        ...execConfig,
+    });
 
     useEffect(() => {
         onLoadingChanged?.({

@@ -29,6 +29,7 @@ import { IntlWrapper } from "../../../../localization/index.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
 import {
     selectEnableRichTextDynamicReferences,
+    selectExecutionTimestamp,
     selectSeparators,
     useDashboardSelector,
     useWidgetExecutionsHandler,
@@ -282,6 +283,7 @@ function InsightDrillDialogDescriptionContent({
 }: InsightDrillDialogDescriptionContentProps) {
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const separators = useDashboardSelector(selectSeparators);
+    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
 
     return (
         <div
@@ -293,6 +295,9 @@ function InsightDrillDialogDescriptionContent({
             <div className="drill-dialog-insight-container-description-content">
                 <RichText
                     value={description}
+                    execConfig={{
+                        timestamp: executionTimestamp,
+                    }}
                     renderMode="view"
                     referencesEnabled={isRichTextReferencesEnabled}
                     filters={widgetFilters}

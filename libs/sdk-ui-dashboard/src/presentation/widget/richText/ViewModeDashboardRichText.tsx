@@ -4,6 +4,7 @@ import { RichText } from "@gooddata/sdk-ui-kit";
 
 import {
     selectEnableRichTextDynamicReferences,
+    selectExecutionTimestamp,
     selectSeparators,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -26,6 +27,8 @@ export const ViewModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
     const separators = useDashboardSelector(selectSeparators);
     const { LoadingComponent } = useDashboardComponentsContext();
 
+    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
+
     return (
         <RichText
             referencesEnabled={isRichTextReferencesEnabled}
@@ -37,6 +40,9 @@ export const ViewModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
             rawContent={{
                 show: !!richTextExportData,
                 dataAttributes: richTextExportData?.markdown,
+            }}
+            execConfig={{
+                timestamp: executionTimestamp,
             }}
             onLoadingChanged={onLoadingChanged}
             onError={onError}

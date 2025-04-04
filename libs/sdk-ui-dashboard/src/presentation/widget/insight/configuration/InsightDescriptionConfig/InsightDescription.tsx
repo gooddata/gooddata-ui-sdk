@@ -7,6 +7,7 @@ import { IFilter, ISeparators } from "@gooddata/sdk-model";
 import {
     selectEnableRichTextDescriptions,
     selectEnableRichTextDynamicReferences,
+    selectExecutionTimestamp,
     useDashboardSelector,
 } from "../../../../../model/index.js";
 
@@ -42,6 +43,8 @@ export function InsightDescription(props: IInsightDescriptionProps) {
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
     const [isRichTextEditing, setIsRichTextEditing] = useState(false);
     const [richTextValue, setRichTextValue] = useState(description);
+
+    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
 
     useEffect(() => {
         setRichTextValue(description);
@@ -94,6 +97,9 @@ export function InsightDescription(props: IInsightDescriptionProps) {
                         LoadingComponent={LoadingComponent}
                         filters={insightFilters}
                         separators={separators}
+                        execConfig={{
+                            timestamp: executionTimestamp,
+                        }}
                     />
                 </div>
             ) : (
