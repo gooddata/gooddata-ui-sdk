@@ -3534,6 +3534,21 @@
         "comment": "Do not translate html tags <a>, </a>. Do not translate 'unix-cron' as it is a name of specific tech.",
         "limit": 0
     },
+    "recurrence.datetime.format.help": {
+        "value": "Format: {dateFormat}",
+        "comment": "Do not translate placeholde {dateFormat}",
+        "limit": 0
+    },
+    "recurrence.datetime.empty.error": {
+        "value": "Error: Required field — enter a valid date to continue.",
+        "comment": "Do not translate placeholde {dateFormat}",
+        "limit": 0
+    },
+    "recurrence.datetime.wrong.format.error": {
+        "value": "Error: Invalid date — format must be {dateFormat}",
+        "comment": "Do not translate placeholde {dateFormat}",
+        "limit": 0
+    },
     "message.accessibility.dismiss.notification": {
         "value": "Dismiss notification",
         "comment": "",

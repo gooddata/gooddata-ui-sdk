@@ -1,13 +1,11 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useState } from "react";
-import noop from "lodash/noop.js";
+import React, { useRef, useState } from "react";
 import { defineMessage, useIntl } from "react-intl";
 import {
     ConfirmDialogBase,
     Overlay,
     ContentDivider,
     Button,
-    EditableLabel,
     Hyperlink,
     RecurrenceForm,
     Message,
@@ -15,8 +13,6 @@ import {
     OverlayController,
     useId,
 } from "@gooddata/sdk-ui-kit";
-import { Textarea } from "./components/Textarea.js";
-import { Input } from "./components/Input.js";
 import { RecipientsSelect } from "./components/RecipientsSelect/RecipientsSelect.js";
 import { IntlWrapper } from "../../localization/index.js";
 import { DestinationSelect } from "./components/DestinationSelect/DestinationSelect.js";
@@ -36,7 +32,7 @@ import { IScheduledEmailDialogProps } from "../types.js";
 import { useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
 import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
-import { DASHBOARD_DIALOG_OVERS_Z_INDEX, DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
 import { DashboardAttachments } from "./components/Attachments/DashboardAttachments.js";
 import { WidgetAttachments } from "./components/Attachments/WidgetAttachments.js";
@@ -47,8 +43,10 @@ import { isMobileView } from "../utils/responsive.js";
 import { getDefaultCronExpression } from "../utils/cron.js";
 import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
 
-const MAX_MESSAGE_LENGTH = 200;
-const MAX_SUBJECT_LENGTH = 200;
+import { MessageForm } from "./components/MessageForm/MessageForm.js";
+import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
+import { ScheduledEmailDialogHeader } from "./components/Header/ScheduleEmailDialogHeader.js";
+
 const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
@@ -60,48 +58,6 @@ interface ScheduledEmailDialogFooterProps {
     isSavingScheduledEmail: boolean;
     onDeleteClick: () => void;
 }
-
-interface ScheduledEmailDialogHeaderProps {
-    title: string;
-    onTitleChange: (value: string) => void;
-    onCancel?: () => void;
-    placeholder: string;
-}
-
-const ScheduledEmailDialogHeader: React.FC<ScheduledEmailDialogHeaderProps> = ({
-    title,
-    onTitleChange,
-    onCancel,
-    placeholder,
-}) => {
-    const intl = useIntl();
-
-    return (
-        <div className="gd-notifications-channels-dialog-header">
-            <Button
-                className="gd-button-primary gd-button-icon-only gd-icon-navigateleft s-schedule-email-dialog-button"
-                onClick={onCancel}
-                accessibilityConfig={{
-                    ariaLabel: intl.formatMessage({ id: "dialogs.schedule.email.backLabel" }),
-                }}
-            />
-            <EditableLabel
-                value={title}
-                onSubmit={noop}
-                onChange={onTitleChange}
-                maxRows={1}
-                maxLength={40}
-                className="gd-notifications-channels-dialog-title s-gd-notifications-channels-dialog-title"
-                autofocus={!title}
-                placeholder={placeholder}
-                ariaLabel={intl.formatMessage({
-                    id: "dialogs.schedule.accessibility.label.email.title",
-                })}
-                autocomplete="off"
-            />
-        </div>
-    );
-};
 
 const ScheduledEmailDialogFooter: React.FC<ScheduledEmailDialogFooterProps> = ({
     isWhiteLabeled,
@@ -152,6 +108,8 @@ export function ScheduledMailDialogRenderer({
     onSuccess,
 }: IScheduledEmailDialogProps) {
     const intl = useIntl();
+
+    const dialogTitleRef = useRef<HTMLInputElement | null>(null);
 
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<
         IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null
@@ -224,7 +182,6 @@ export function ScheduledMailDialogRenderer({
     const dashboardScheduledExportFiltersInfo = useFiltersForDashboardScheduledExportInfo({
         effectiveFilters: dashboardFilters,
     });
-
     const helpTextId = isMobileView()
         ? defineMessage({ id: "dialogs.schedule.email.footer.title.short" }).id
         : defineMessage({ id: "dialogs.schedule.email.footer.title" }).id;
@@ -243,7 +200,6 @@ export function ScheduledMailDialogRenderer({
                     <ConfirmDialogBase
                         className="gd-notifications-channels-dialog s-gd-notifications-channels-dialog"
                         isPositive={true}
-                        autofocusOnOpen={true}
                         cancelButtonText={intl.formatMessage({ id: "cancel" })}
                         submitButtonText={
                             scheduledExportToEdit
@@ -276,6 +232,7 @@ export function ScheduledMailDialogRenderer({
                                   })
                                 : undefined
                         }
+                        initialFocus={dialogTitleRef}
                         submitOnEnterKey={false}
                         onCancel={onCancel}
                         onSubmit={handleSaveScheduledEmail}
@@ -283,11 +240,12 @@ export function ScheduledMailDialogRenderer({
                         headerLeftButtonRenderer={() => (
                             <ScheduledEmailDialogHeader
                                 title={editedAutomation.title ?? ""}
-                                onTitleChange={onTitleChange}
+                                onChange={onTitleChange}
                                 onCancel={onCancel}
                                 placeholder={intl.formatMessage({
                                     id: "dialogs.schedule.email.title.placeholder",
                                 })}
+                                ref={dialogTitleRef}
                             />
                         )}
                     >
@@ -328,30 +286,12 @@ export function ScheduledMailDialogRenderer({
                                 notificationChannels={notificationChannels}
                                 notificationChannelId={editedAutomation.notificationChannel}
                             />
-                            <Input
-                                id="schedule.subject"
-                                className="gd-notifications-channels-dialog-subject s-gd-notifications-channels-dialog-subject"
-                                label={intl.formatMessage({ id: "dialogs.schedule.email.subject.label" })}
-                                maxlength={MAX_SUBJECT_LENGTH}
-                                autocomplete="off"
-                                placeholder={
-                                    dashboardTitle.length > DASHBOARD_TITLE_MAX_LENGTH
-                                        ? dashboardTitle.substring(0, DASHBOARD_TITLE_MAX_LENGTH)
-                                        : dashboardTitle
-                                }
-                                value={editedAutomation.details?.subject ?? ""}
+                            <SubjectForm
+                                dashboardTitle={dashboardTitle}
+                                editedAutomation={editedAutomation}
                                 onChange={onSubjectChange}
                             />
-                            <Textarea
-                                id="schedule.message"
-                                className="gd-notifications-channels-dialog-message s-gd-notifications-channels-dialog-message"
-                                label={intl.formatMessage({ id: "dialogs.schedule.email.message.label" })}
-                                maxlength={MAX_MESSAGE_LENGTH}
-                                autocomplete="off"
-                                placeholder={intl.formatMessage({
-                                    id: "dialogs.schedule.email.message.placeholder",
-                                })}
-                                rows={3}
+                            <MessageForm
                                 onChange={onMessageChange}
                                 value={editedAutomation.details?.message ?? ""}
                             />
