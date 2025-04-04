@@ -651,6 +651,11 @@ export interface ISettings {
      */
     enableExecutionTimestamp?: boolean;
 
+    /**
+     * Enable automation filter context.
+     */
+    enableAutomationFilterContext?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

@@ -3355,6 +3355,7 @@ export interface ISettings {
     enableAnalyticalDashboards?: boolean;
     enableApproxCount?: boolean;
     enableAttributeFilterValuesValidation?: boolean;
+    enableAutomationFilterContext?: boolean;
     enableAxisLabelFormat?: boolean;
     enableAxisNameConfiguration?: boolean;
     enableAxisNameViewByTwoAttributes?: boolean;
