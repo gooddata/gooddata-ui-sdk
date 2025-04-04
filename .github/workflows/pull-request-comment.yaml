@@ -5,7 +5,7 @@ on:
       - created
 jobs:
   ##########################################################################
-  # Handling commands for extended-test mainly from PR to master
+  # Get PR info is for both extended-test and extended-test-legacy
   ##########################################################################
   get-pr-info:
     if: github.event.issue.pull_request != null && startsWith(github.event.comment.body, 'extended-test')
@@ -28,6 +28,9 @@ jobs:
         env:
           COMMENT: ${{ github.event.comment.body }}
 
+  ##########################################################################
+  # Comment on PR when command is started for both extended-test and extended-test-legacy
+  ##########################################################################
   command-started:
     needs: [get-pr-info]
     if: ${{ startsWith(github.event.comment.body, 'extended-test') }}
@@ -54,6 +57,9 @@ jobs:
         env:
           COMMENT: ${{ github.event.comment.body }}
 
+  ##########################################################################
+  # Handling commands for extended-test mainly from PR to master
+  ##########################################################################
   extract-filter:
     needs: [get-pr-info]
     outputs:
@@ -204,7 +210,7 @@ jobs:
   ##########################################################################
 
   prepare-env:
-    if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, 'extended test') }}
+    if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, 'extended-test-legacy') }}
     runs-on:
       group: infra1-runners-arc
       labels: runners-small
@@ -215,7 +221,6 @@ jobs:
       commit: ${{ steps.commit.outputs.commit }}
       pr_number: ${{ github.event.issue.number }}
       project: ${{ github.repository }}
-      changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
     steps:
       - name: Branch name
         id: branch
@@ -231,15 +236,8 @@ jobs:
             jq --raw-output .head.sha)
           echo "commit=$pr_head_sha" >> "$GITHUB_OUTPUT"
 
-      - uses: actions/checkout@v4
-        with:
-          ref: refs/pull/${{ github.event.issue.number }}/merge
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v40
-
   gooddata-ui-sdk-pull-request-dispatcher-pipeline:
-    if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, 'extended test') }}
+    if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, 'extended-test-legacy') }}
     runs-on:
       group: infra1-runners-arc
       labels: runners-small
@@ -249,6 +247,33 @@ jobs:
       contents: read
       id-token: write
     steps:
+      - name: Map Test Commands
+        id: map-commands
+        run: |
+          # Map legacy test command format to new format
+          INPUT_COMMAND="${{ github.event.comment.body }}"
+
+          case "$INPUT_COMMAND" in
+            "extended-test-legacy --backstop")
+              NEW_COMMAND="extended test - backstop"
+            ;;
+            "extended-test-legacy --integrated")
+              NEW_COMMAND="extended test - cypress - integrated"
+            ;;
+            "extended-test-legacy --isolated")
+              NEW_COMMAND="extended test - cypress - isolated"
+            ;;
+            "extended-test-legacy --record")
+              NEW_COMMAND="extended test - cypress - record"
+            ;;
+            *)
+              echo "Unknown command: $INPUT_COMMAND"
+              exit 1
+            ;;
+          esac
+
+          echo "NEW_COMMAND=$NEW_COMMAND" >> $GITHUB_OUTPUT
+
       - name: Call Jenkins trigger
         id: call-jenkins
         uses: gooddata/github-actions-public/jenkins/trigger@master
@@ -267,6 +292,6 @@ jobs:
               "GH_PROJECT": "${{ needs.prepare-env.outputs.project }}",
               "BUILD_BY_GITHUB": "true",
               "GH_PIPELINE": "Pull request ~ comment",
-              "GH_COMMENT": "${{ github.event.comment.body }}"
+              "GH_COMMENT": "${{ steps.map-commands.outputs.NEW_COMMAND }}"
             }
           comment-pr: 'true'
