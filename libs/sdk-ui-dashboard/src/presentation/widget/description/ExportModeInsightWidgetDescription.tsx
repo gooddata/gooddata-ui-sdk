@@ -25,7 +25,7 @@ export const ExportModeInsightWidgetDescription: React.FC<IInsightWidgetDescript
     const { exportData, widget } = props;
     const { isVisible, description, useRichText } = useInsightWidgetDescription(props);
     const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
-    const filters = useRichTextFilters(widget);
+    const { filters } = useRichTextFilters(widget);
     const separators = useDashboardSelector(selectSeparators);
     const { LoadingComponent } = useDashboardComponentsContext();
 

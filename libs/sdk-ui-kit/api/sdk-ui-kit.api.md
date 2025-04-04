@@ -3644,6 +3644,7 @@ export interface IRichTextProps {
     // (undocumented)
     execConfig?: IExecutionConfig;
     filters?: IFilter[];
+    isFiltersLoading?: boolean;
     // (undocumented)
     LoadingComponent?: React_2.ComponentType;
     // (undocumented)

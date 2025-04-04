@@ -50,7 +50,7 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
     );
 
     const { LoadingComponent } = useDashboardComponentsContext();
-    const filters = useRichTextFilters();
+    const { filters, loading } = useRichTextFilters(false);
     const separators = useDashboardSelector(selectSeparators);
 
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
@@ -169,6 +169,7 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
                             autoResize={isDescriptionDynamicHeightEnabled}
                             referencesEnabled={isRichTextReferencesEnabled}
                             filters={filters}
+                            isFiltersLoading={loading}
                             separators={separators}
                             LoadingComponent={LoadingComponent}
                             execConfig={{

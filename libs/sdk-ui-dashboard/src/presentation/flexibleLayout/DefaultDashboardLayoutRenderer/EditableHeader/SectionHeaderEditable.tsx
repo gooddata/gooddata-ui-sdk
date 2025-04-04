@@ -46,7 +46,7 @@ export function SectionHeaderEditable({
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
 
     const { LoadingComponent } = useDashboardComponentsContext();
-    const filters = useRichTextFilters();
+    const { filters, loading } = useRichTextFilters(false);
     const separators = useDashboardSelector(selectSeparators);
 
     const description = useRichText ? rawDescription : getDescription(rawDescription);
@@ -167,6 +167,7 @@ export function SectionHeaderEditable({
                             autoResize={true}
                             referencesEnabled={isRichTextReferencesEnabled}
                             filters={filters}
+                            isFiltersLoading={loading}
                             separators={separators}
                             LoadingComponent={LoadingComponent}
                             execConfig={{

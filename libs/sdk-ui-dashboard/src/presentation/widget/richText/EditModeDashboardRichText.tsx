@@ -53,7 +53,7 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
     const { menuItems } = useEditableRichTextMenu({ closeMenu: closeConfigPanel, widget });
 
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
-    const filters = useRichTextFilters(widget);
+    const { filters } = useRichTextFilters(widget);
     const separators = useDashboardSelector(selectSeparators);
 
     const dispatch = useDashboardDispatch();

@@ -60,6 +60,11 @@ export interface IRichTextProps {
     filters?: IFilter[];
 
     /**
+     * If true, the filters are loading.
+     */
+    isFiltersLoading?: boolean;
+
+    /**
      * Separators to be used for rendering references.
      */
     separators?: ISeparators;
@@ -90,6 +95,7 @@ const RichTextCore: React.FC<IRichTextProps> = ({
     autoResize,
     rawContent,
     filters,
+    isFiltersLoading,
     separators,
     onLoadingChanged,
     onError,
@@ -118,6 +124,7 @@ const RichTextCore: React.FC<IRichTextProps> = ({
                 <RichTextView
                     value={value}
                     filters={filters}
+                    isFiltersLoading={isFiltersLoading}
                     separators={separators}
                     referencesEnabled={referencesEnabled}
                     LoadingComponent={LoadingComponent}
@@ -202,6 +209,7 @@ interface IRichTextViewProps {
     emptyElement?: JSX.Element;
     referencesEnabled?: boolean;
     filters?: IFilter[];
+    isFiltersLoading?: boolean;
     separators?: ISeparators;
     execConfig?: IExecutionConfig;
     onLoadingChanged?: OnLoadingChanged;
@@ -223,6 +231,7 @@ const RichTextView: React.FC<IRichTextViewProps> = ({
     referencesEnabled,
     emptyElement,
     filters,
+    isFiltersLoading,
     separators,
     execConfig,
     onError,
@@ -232,6 +241,7 @@ const RichTextView: React.FC<IRichTextViewProps> = ({
     const intl = useIntl();
     const { loading, metrics, isEmptyValue, error } = useEvaluatedReferences(value, filters, {
         enabled: referencesEnabled,
+        isFiltersLoading,
         ...execConfig,
     });
 

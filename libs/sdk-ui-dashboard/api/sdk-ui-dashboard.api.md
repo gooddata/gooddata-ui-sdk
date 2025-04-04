@@ -7179,7 +7179,7 @@ export interface QueryConnectingAttributes extends IDashboardQuery {
 export function queryConnectingAttributes(refs: [ObjRef, ObjRef][], correlationId?: string): QueryConnectingAttributes;
 
 // @alpha
-export function queryDateDatasetsForInsight(insightOrRef: ObjRef | IInsight, correlationId?: string): QueryInsightDateDatasets;
+export function queryDateDatasetsForInsight(insightOrRef?: ObjRef | IInsight, correlationId?: string): QueryInsightDateDatasets;
 
 // @alpha
 export function queryDateDatasetsForMeasure(measureRef: ObjRef, correlationId?: string): QueryMeasureDateDatasets;

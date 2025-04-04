@@ -9,7 +9,7 @@ import { useEvaluatedMetricsAndAttributes } from "./useEvaluatedMetricsAndAttrib
 export function useEvaluatedReferences(
     value: string,
     filters: IFilter[],
-    config: IExecutionConfig & { enabled: boolean },
+    config: IExecutionConfig & { enabled: boolean; isFiltersLoading?: boolean },
 ) {
     const isEmptyValue = useMemo(() => !value?.replace(/\s/g, ""), [value]);
     const references = useMemo(() => collectReferences(value), [value]);

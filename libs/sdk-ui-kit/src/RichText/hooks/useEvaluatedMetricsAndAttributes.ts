@@ -32,7 +32,7 @@ export type EvaluatedMetric = {
 export function useEvaluatedMetricsAndAttributes(
     references: ReferenceMap,
     filters: IFilter[],
-    config: IExecutionConfig & { enabled: boolean },
+    config: IExecutionConfig & { enabled: boolean; isFiltersLoading?: boolean },
 ) {
     const workspace = useWorkspace();
     const backend = useBackend();
@@ -40,7 +40,7 @@ export function useEvaluatedMetricsAndAttributes(
     const { metrics: labels, countMap } = getLabels(references);
 
     const items = [...metrics, ...labels];
-    const { enabled, ...execConfig } = config;
+    const { enabled, isFiltersLoading, ...execConfig } = config;
 
     const {
         status: executionStatus,
@@ -49,7 +49,7 @@ export function useEvaluatedMetricsAndAttributes(
     } = useExecutionDataView(
         {
             execution:
-                enabled && items.length > 0
+                enabled && items.length > 0 && !isFiltersLoading
                     ? backend
                           .workspace(workspace)
                           .execution()
@@ -57,7 +57,7 @@ export function useEvaluatedMetricsAndAttributes(
                           .withExecConfig(execConfig)
                     : null,
         },
-        [execConfig.timestamp, execConfig.dataSamplingPercentage],
+        [execConfig.timestamp, execConfig.dataSamplingPercentage, isFiltersLoading],
     );
 
     const {
@@ -133,7 +133,11 @@ export function useEvaluatedMetricsAndAttributes(
     );
 
     return {
-        loading: executionStatus === "loading" || loadStatus === "loading" || loadStatus === "pending",
+        loading:
+            isFiltersLoading ||
+            executionStatus === "loading" ||
+            loadStatus === "loading" ||
+            loadStatus === "pending",
         error: executionError || loadError,
         result: loadResult,
     };
