@@ -76,6 +76,9 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     } = props;
     const intl = useIntl();
     const [isCronValid, setIsCronValid] = useState(true);
+    const [isTitleValid, setIsTitleValid] = useState(true);
+    const [isSubjectValid, setIsSubjectValid] = useState(true);
+    const [isOnMessageValid, setIsOnMessageValid] = useState(true);
     const [warningMessage, setWarningMessage] = useState<string | undefined>(undefined);
     const isWidget = !!widget && !!insight;
 
@@ -121,7 +124,10 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
 
     const [originalAutomation] = useState(editedAutomation);
 
-    const onTitleChange = (value: string) => setEditedAutomation((s) => ({ ...s, title: value }));
+    const onTitleChange = (value: string, isValid: boolean) => {
+        setIsTitleValid(isValid);
+        setEditedAutomation((s) => ({ ...s, title: value }));
+    };
 
     const onRecurrenceChange = (cronExpression: string, startDate: Date | null, isValid: boolean) => {
         setIsCronValid(isValid);
@@ -177,7 +183,8 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         }));
     };
 
-    const onSubjectChange = (value: string | number): void => {
+    const onSubjectChange = (value: string | number, isValid: boolean): void => {
+        setIsSubjectValid(isValid);
         setEditedAutomation((s) => ({
             ...s,
             details: {
@@ -187,7 +194,8 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         }));
     };
 
-    const onMessageChange = (value: string): void => {
+    const onMessageChange = (value: string, isValid: boolean): void => {
+        setIsOnMessageValid(isValid);
         setEditedAutomation((s) => ({
             ...s,
             details: {
@@ -380,7 +388,10 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         hasValidExternalRecipients &&
         hasValidCreatorRecipient &&
         hasNoUnknownRecipients &&
-        hasFilledEmails;
+        hasFilledEmails &&
+        isOnMessageValid &&
+        isTitleValid &&
+        isSubjectValid;
 
     const isSubmitDisabled =
         !isValid || (scheduledExportToEdit && areAutomationsEqual(originalAutomation, editedAutomation));
