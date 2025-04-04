@@ -28,7 +28,7 @@ export const DashboardLayoutSectionHeaderDescription: React.FC<
     const { description, exportData, LoadingComponent } = props;
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
-    const filters = useRichTextFilters();
+    const { loading, filters } = useRichTextFilters(false);
     const separators = useDashboardSelector(selectSeparators);
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
 
@@ -49,6 +49,7 @@ export const DashboardLayoutSectionHeaderDescription: React.FC<
                     }}
                     referencesEnabled={isRichTextReferencesEnabled}
                     filters={filters}
+                    isFiltersLoading={loading}
                     separators={separators}
                     LoadingComponent={LoadingComponent}
                 />

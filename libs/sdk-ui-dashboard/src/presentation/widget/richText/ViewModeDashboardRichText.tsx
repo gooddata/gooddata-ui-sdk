@@ -23,7 +23,7 @@ export const ViewModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
     onError,
 }) => {
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
-    const filters = useRichTextFilters(widget);
+    const { filters } = useRichTextFilters(widget);
     const separators = useDashboardSelector(selectSeparators);
     const { LoadingComponent } = useDashboardComponentsContext();
 

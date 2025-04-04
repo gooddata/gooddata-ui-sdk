@@ -8,6 +8,7 @@ import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
 } from "@gooddata/sdk-model";
+import { newInsight } from "../../_staging/insight/insightBuilder.js";
 
 /**
  * Given a reference to an insight, this query will obtain list of all date datasets that may be used
@@ -33,7 +34,7 @@ export interface QueryInsightDateDatasets extends IDashboardQuery {
  * @alpha
  */
 export function queryDateDatasetsForInsight(
-    insightOrRef: ObjRef | IInsight,
+    insightOrRef: ObjRef | IInsight = newInsight("local:table"),
     correlationId?: string,
 ): QueryInsightDateDatasets {
     return {

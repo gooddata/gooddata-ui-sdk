@@ -24,7 +24,7 @@ export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescription
     const userInteraction = useDashboardUserInteraction();
 
     const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
-    const filters = useRichTextFilters(widget);
+    const { filters } = useRichTextFilters(widget);
     const { LoadingComponent } = useDashboardComponentsContext();
 
     const eventPayload: DescriptionTooltipOpenedData = {

@@ -45,7 +45,6 @@ import {
     queryDateDatasetsForMeasure,
 } from "../../../queries/index.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { newInsight } from "../../../../_staging/insight/insightBuilder.js";
 
 function toAttributeDisplayFormRefs(references: IDashboardFilterReference[]) {
     return references.filter(isDashboardAttributeFilterReference).map((reference) => reference.displayForm);
@@ -215,10 +214,7 @@ function* enableDateFilter(
             );
             dateDatasetToUse = queryResult.dateDatasetsOrdered[0];
         } else if (isRichTextWidget(widget)) {
-            const queryResult: InsightDateDatasets = yield call(
-                query,
-                queryDateDatasetsForInsight(newInsight("local:table")),
-            );
+            const queryResult: InsightDateDatasets = yield call(query, queryDateDatasetsForInsight());
             dateDatasetToUse = insightSelectDateDataset(queryResult);
         } else {
             invariant(false, "Cannot use default date dataset for custom widgets");
