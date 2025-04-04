@@ -1082,6 +1082,36 @@
         "comment": "Displayed as placeholder in static period inputs where user enters date",
         "limit": 0
     },
+    "filters.staticPeriod.dateFrom": {
+        "value": "Start date",
+        "comment": "Displayed as label of input where user enters a date that marks the start of date range.",
+        "limit": 0
+    },
+    "filters.staticPeriod.timeFrom": {
+        "value": "Start time",
+        "comment": "Displayed as label of input where user enters a time that marks the start of date range.",
+        "limit": 0
+    },
+    "filters.staticPeriod.dateTo": {
+        "value": "End date",
+        "comment": "Displayed as label of input where user enters a date that marks the end of date range.",
+        "limit": 0
+    },
+    "filters.staticPeriod.timeTo": {
+        "value": "End time",
+        "comment": "Displayed as label of input where user enters a time that marks the end of date range.",
+        "limit": 0
+    },
+    "filters.staticPeriod.dateFormatHint": {
+        "value": "Date format: {format}.",
+        "comment": "Displayed as a hint below input in which user enters a date. Do not translate {format} placeholder. It will be replaced in runtime with date format pattern.",
+        "limit": 0
+    },
+    "filters.staticPeriod.timeFormatHint": {
+        "value": "Time format: HH:MM, max. value 23:59.",
+        "comment": "Displayed as a hint below input in which user enters a time.",
+        "limit": 0
+    },
     "filters.date.accessibility.label.from": {
         "value": "Select date from",
         "comment": "",

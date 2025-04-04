@@ -6,12 +6,34 @@ import moment from "moment";
 import isValid from "date-fns/isValid/index.js";
 import parse from "date-fns/parse/index.js";
 import format from "date-fns/format/index.js";
+import { useId } from "@gooddata/sdk-ui-kit";
 
 import { DateRangePickerInputFieldBody } from "./DateRangePickerInputFieldBody.js";
 
 import { convertPlatformDateStringToDate } from "../utils/DateConversions.js";
 import { TIME_FORMAT } from "../constants/Platform.js";
 import { getPlatformStringFromDate, getTimeStringFromDate } from "./utils.js";
+
+const InputDescription: React.FC<{ descriptionId: string; warning?: string; error?: string }> = ({
+    descriptionId,
+    warning,
+    error,
+}) => {
+    if (!error && !warning) {
+        return null;
+    }
+    return (
+        <div
+            id={descriptionId}
+            className={cx("gd-date-range-picker-input__description", {
+                "gd-date-range-picker-input__description--warning": !!warning,
+                "gd-date-range-picker-input__description--error": !!error,
+            })}
+        >
+            {error ? error : warning}
+        </div>
+    );
+};
 
 function formatDate(date: Date, dateFormat: string): string {
     return format(date, dateFormat);
@@ -45,6 +67,15 @@ function parseDate(str: string, dateFormat: string): Date | undefined {
 interface IDateTimePickerAccessibilityConfig {
     dateAriaLabel?: React.AriaAttributes["aria-label"];
     timeAriaLabel?: React.AriaAttributes["aria-label"];
+    dateInputHintId?: string;
+    timeInputHintId?: string;
+}
+
+interface IDateTimePickerErrors {
+    dateError?: string;
+    timeError?: string;
+    dateWarning?: string;
+    timeWarning?: string;
 }
 
 interface IDateTimePickerOwnProps {
@@ -58,8 +89,10 @@ interface IDateTimePickerOwnProps {
     className: string;
     onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     defaultTime?: string;
-    error?: boolean;
+    errors?: IDateTimePickerErrors;
     accessibilityConfig?: IDateTimePickerAccessibilityConfig;
+    dateInputLabel?: string;
+    timeInputLabel?: string;
 }
 
 type DateTimePickerComponentProps = IDateTimePickerOwnProps & WrappedComponentProps;
@@ -67,6 +100,8 @@ type DateTimePickerComponentProps = IDateTimePickerOwnProps & WrappedComponentPr
 const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePickerComponentProps>(
     (props: DateTimePickerComponentProps, ref) => {
         const {
+            dateInputLabel,
+            timeInputLabel,
             placeholderDate,
             value,
             onChange,
@@ -77,10 +112,15 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
             onKeyDown,
             className,
             accessibilityConfig,
-            error = false,
+            errors,
         } = props;
 
-        const { dateAriaLabel, timeAriaLabel } = accessibilityConfig ?? {};
+        const { dateAriaLabel, timeAriaLabel, dateInputHintId, timeInputHintId } = accessibilityConfig ?? {};
+
+        const dateInputLabelId = useId();
+        const dateInputErrorId = useId();
+        const timeInputLabelId = useId();
+        const timeInputErrorId = useId();
 
         // keeping local copy to enable time update onBlur
         const [pickerTime, setPickerTime] = useState<string>(getTimeStringFromDate(value));
@@ -127,8 +167,13 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
             onChange(date);
         };
 
+        const { dateError, dateWarning, timeError, timeWarning } = errors ?? {};
+
+        // mobile view still renders errors below inputs, unlike accessible version that has errors split
+        // below the input that triggered the error
+        const hasSomeError = !!dateError || !!dateWarning || !!timeError || !!timeWarning;
         return (
-            <div className={cx(className, isTimeEnabled && "gd-flex-row")}>
+            <div className={cx(className, isTimeEnabled && "gd-date-range-row")}>
                 {isMobile ? (
                     <DateRangePickerInputFieldBody
                         type="date"
@@ -137,8 +182,8 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
                             "gd-date-range-picker-input",
                             "gd-date-range-picker-input-native",
                             {
-                                "gd-date-range-picker-input-error": error,
-                                "has-warning": error,
+                                "gd-date-range-picker-input-error": hasSomeError,
+                                "has-warning": hasSomeError,
                             },
                         )}
                         placeholder={placeholderDate}
@@ -148,13 +193,16 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
                         value={getPlatformStringFromDate(value)}
                     />
                 ) : (
-                    <div
-                        className={cx("gd-date-range-picker-input", {
-                            "gd-date-range-picker-input-error": error,
-                            "has-warning": error,
-                        })}
-                    >
-                        <span>
+                    <div className="gd-date-range-column">
+                        {dateInputLabel ? <label id={dateInputLabelId}>{dateInputLabel}</label> : null}
+                        <div
+                            className={cx("gd-date-range-picker-input", {
+                                "gd-date-range-picker-input-error": !!dateError,
+                                "gd-date-range-picker-input-warning": !!dateWarning,
+                                "has-error": !!dateError,
+                                "has-warning": !!dateWarning,
+                            })}
+                        >
                             <span className="gd-icon-calendar" />
                             <input
                                 onKeyDown={onKeyDown}
@@ -166,31 +214,54 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
                                 onFocus={handleDayClick}
                                 value={inputValue}
                                 className="input-text s-date-range-picker-input-field"
+                                aria-labelledby={dateInputLabel ? dateInputLabelId : undefined}
+                                aria-describedby={
+                                    !!dateWarning || !!dateError ? dateInputErrorId : dateInputHintId
+                                }
                             />
-                        </span>
+                        </div>
+                        <InputDescription
+                            descriptionId={dateInputErrorId}
+                            warning={dateWarning}
+                            error={dateError}
+                        />
                     </div>
                 )}
                 {isTimeEnabled ? (
-                    <span
-                        className={cx(
-                            "gd-date-range-picker-input",
-                            "gd-date-range-picker-input-time",
-                            "s-date-range-picker-input-time",
-                            {
-                                "gd-date-range-picker-input-error": error,
-                                "has-warning": error,
-                            },
-                        )}
-                    >
-                        <span className="gd-icon-clock" />
-                        <input
-                            type="time"
-                            className="input-text"
-                            aria-label={timeAriaLabel}
-                            onChange={(event) => onTimeChange(event.target.value)}
-                            value={pickerTime}
+                    <div className="gd-date-range-column">
+                        {timeInputLabel ? <label id={timeInputLabelId}>{timeInputLabel}</label> : null}
+                        <span
+                            className={cx(
+                                "gd-date-range-picker-input",
+                                "gd-date-range-picker-input-time",
+                                "s-date-range-picker-input-time",
+                                {
+                                    "gd-date-range-picker-input-error": !!timeError,
+                                    "gd-date-range-picker-input-warning": !!timeWarning,
+                                    "has-error": !!timeError,
+                                    "has-warning": !!timeWarning,
+                                },
+                            )}
+                        >
+                            <span className="gd-icon-clock" />
+                            <input
+                                type="time"
+                                className="input-text"
+                                aria-label={timeAriaLabel}
+                                onChange={(event) => onTimeChange(event.target.value)}
+                                value={pickerTime}
+                                aria-labelledby={timeInputLabel ? timeInputLabelId : undefined}
+                                aria-describedby={
+                                    !!timeWarning || !!timeError ? timeInputErrorId : timeInputHintId
+                                }
+                            />
+                        </span>
+                        <InputDescription
+                            descriptionId={timeInputErrorId}
+                            warning={timeWarning}
+                            error={timeError}
                         />
-                    </span>
+                    </div>
                 ) : null}
             </div>
         );
