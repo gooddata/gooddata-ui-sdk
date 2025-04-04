@@ -46,6 +46,8 @@ export interface IDatePickerOwnProps {
     className?: string; // optional css applied to outer div
     placeholder?: string;
     onChange?: (selectedData: Date) => void; // called when selected date changes
+    onBlur?: (selectedDate: string) => void;
+    onValidateInput?: (value: string) => void;
     resetOnInvalidValue?: boolean; // reset on invalid input
     size?: string; // optional css class, applied to outer div and input
     tabIndex?: number;
@@ -95,7 +97,7 @@ function convertLocale(locale: string): Locale {
     return convertedLocales[locale];
 }
 
-function parseDate(str: string, dateFormat: string): Date | undefined {
+export function parseDate(str: string, dateFormat: string): Date | undefined {
     try {
         const parsedDate: Date = parse(str, dateFormat, new Date());
         // parse only dates with 4-digit years. this mimics moment.js behavior - it parses only dates above 1900
@@ -143,6 +145,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         date: new Date(),
         placeholder: "",
         onChange: noop,
+        onBlur: noop,
         resetOnInvalidValue: false,
         size: "",
         tabIndex: 0,
@@ -167,6 +170,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         this.handleDayChanged = this.handleDayChanged.bind(this);
         this.handleMonthChanged = this.handleMonthChanged.bind(this);
         this.handleInputChanged = this.handleInputChanged.bind(this);
+        this.handleInputBlur = this.handleInputBlur.bind(this);
         this.alignDatePicker = this.alignDatePicker.bind(this);
         this.setComponentRef = this.setComponentRef.bind(this);
         this.handleWrapperClick = this.handleWrapperClick.bind(this);
@@ -256,10 +260,16 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         return this.normalizeDate(date);
     }
 
+    private handleInputBlur(e: React.FocusEvent<HTMLInputElement>) {
+        this.props.onBlur(e.target.value);
+    }
+
     private handleInputChanged(e: React.ChangeEvent<HTMLInputElement>) {
         const { value } = e.target;
 
         const parsedDate = parseDate(value, this.props.dateFormat);
+
+        this.props.onValidateInput?.(value);
 
         this.setState({ inputValue: value });
 
@@ -306,6 +316,8 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         }
 
         this.inputRef.current.focus();
+
+        this.props.onValidateInput?.(formatDate(newlySelectedDate, this.props.dateFormat));
 
         this.setState(
             {
@@ -396,6 +408,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
                         accessibilityConfig?.ariaLabel ||
                         intl.formatMessage({ id: "datePicker.accessibility.label" })
                     }
+                    aria-describedby={accessibilityConfig?.ariaDescribedBy}
                     onKeyDown={this.onKeyDown}
                     tabIndex={tabIndex}
                     onClick={() => this.setState({ isOpen: true })}
@@ -405,6 +418,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
                     className={this.getInputClasses()}
                     placeholder={placeholder}
                     onChange={this.handleInputChanged}
+                    onBlur={this.handleInputBlur}
                 />
 
                 {isOpen ? (
