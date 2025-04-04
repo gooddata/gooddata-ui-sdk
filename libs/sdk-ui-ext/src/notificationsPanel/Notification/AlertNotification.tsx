@@ -80,7 +80,7 @@ export function AlertNotification({
         >
             <div className={e("icon")}>
                 {!notification.isRead && <div className={e("unread-status")} />}
-                <UiIcon type="alert" size={14} color="complementary-6" />
+                <UiIcon type="alert" size={14} color="complementary-6" ariaHidden />
             </div>
             <div className={e("details")}>
                 <div className={e("title", { isRead: notification.isRead })} title={notificationTitle}>

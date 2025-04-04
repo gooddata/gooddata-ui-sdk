@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import React from "react";
 import cx from "classnames";
@@ -15,7 +15,7 @@ export const HeaderChatButton: React.FC<HeaderChatButtonProps> = ({ onClick }) =
     // The text is not l18n-ed because it is not final
     return (
         <Button title="Open AI Assistant" className={classNames} onClick={onClick}>
-            <Icon.GenAI width={32} height={32} />
+            <Icon.GenAI width={32} height={32} ariaHidden />
         </Button>
     );
 };

@@ -259,6 +259,8 @@ Recommended workflow is to develop the component in the `/examples/playground.`
 
 Once you complete it, you should also prepare screenshot tests in `sdk-ui-tests`.
 
+Please include accessibility props (such as `ariaHidden`) in the stories as well, even when they do not change the visuals.
+
 See [UiButton](../sdk-ui-tests/stories/visual-regression/ui/UiButton.tsx) test for inspiration - used approach can help you with both development and testing.
 
 ## Accessibility

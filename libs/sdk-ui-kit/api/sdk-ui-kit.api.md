@@ -5094,10 +5094,12 @@ export interface UiFocusTrapProps {
 }
 
 // @internal (undocumented)
-export const UiIcon: ({ type, label, color, size }: UiIconProps) => React_2.JSX.Element;
+export const UiIcon: ({ type, label, color, ariaHidden, size }: UiIconProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiIconProps {
+    // (undocumented)
+    ariaHidden?: boolean;
     // (undocumented)
     color?: ThemeColor;
     // (undocumented)
