@@ -21,6 +21,7 @@ import {
     changeRichTextWidgetContent,
     eagerRemoveSectionItemByWidgetRef,
     selectEnableRichTextDynamicReferences,
+    selectExecutionTimestamp,
     selectIsWhiteLabeled,
     selectSeparators,
     uiActions,
@@ -46,6 +47,8 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
     const previousIsSelected = usePrevious(isSelected);
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const intl = useIntl();
+
+    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
 
     const { menuItems } = useEditableRichTextMenu({ closeMenu: closeConfigPanel, widget });
 
@@ -116,6 +119,9 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({
                 renderMode={isRichTextEditing ? "edit" : "view"}
                 emptyElement={EmptyElement}
                 LoadingComponent={LoadingComponent}
+                execConfig={{
+                    timestamp: executionTimestamp,
+                }}
             />
             {isRichTextEditing && (showLink || !isRichTextReferencesEnabled) ? (
                 <div className="gd-rich-text-widget-footer">

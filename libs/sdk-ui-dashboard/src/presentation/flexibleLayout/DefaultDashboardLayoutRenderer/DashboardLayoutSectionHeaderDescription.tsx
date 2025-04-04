@@ -7,6 +7,7 @@ import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFil
 import {
     selectEnableRichTextDescriptions,
     selectEnableRichTextDynamicReferences,
+    selectExecutionTimestamp,
     selectSeparators,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -29,6 +30,7 @@ export const DashboardLayoutSectionHeaderDescription: React.FC<
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const filters = useRichTextFilters();
     const separators = useDashboardSelector(selectSeparators);
+    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
 
     const className = cx("gd-paragraph", "description", "s-fluid-layout-row-description");
     return (
@@ -41,6 +43,9 @@ export const DashboardLayoutSectionHeaderDescription: React.FC<
                     rawContent={{
                         show: !!exportData?.richText,
                         dataAttributes: exportData?.richText?.markdown,
+                    }}
+                    execConfig={{
+                        timestamp: executionTimestamp,
                     }}
                     referencesEnabled={isRichTextReferencesEnabled}
                     filters={filters}

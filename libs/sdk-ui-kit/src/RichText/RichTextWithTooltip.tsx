@@ -50,6 +50,7 @@ const RichTextWithTooltipCore: React.FC<IRichTextWithTooltipProps> = ({
     onError,
     LoadingComponent,
     rawContent,
+    execConfig,
 }) => {
     const intl = useIntl();
     const description = tooltipDescription ?? intl.formatMessage({ id: "richText.tooltip" });
@@ -72,6 +73,10 @@ const RichTextWithTooltipCore: React.FC<IRichTextWithTooltipProps> = ({
                 onLoadingChanged={onLoadingChanged}
                 onError={onError}
                 rawContent={rawContent}
+                execConfig={{
+                    timestamp: execConfig.timestamp,
+                    dataSamplingPercentage: execConfig.dataSamplingPercentage,
+                }}
             />
         );
     }, [
@@ -90,6 +95,8 @@ const RichTextWithTooltipCore: React.FC<IRichTextWithTooltipProps> = ({
         onError,
         rawContent,
         separators,
+        execConfig.timestamp,
+        execConfig.dataSamplingPercentage,
     ]);
 
     if (!showTooltip) {

@@ -17,6 +17,7 @@ import {
     changeNestedLayoutSectionHeader,
     selectEnableRichTextDescriptions,
     selectEnableRichTextDynamicReferences,
+    selectExecutionTimestamp,
     selectSeparators,
     uiActions,
     useDashboardDispatch,
@@ -117,6 +118,8 @@ export function SectionHeaderEditable({
     const serializedSectionIndex = serializeLayoutSectionPath(section.index());
     const isNestedLayout = section.layout().path() !== undefined;
 
+    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
+
     return (
         <div className={cx("gd-row-header-edit", { "gd-row-header-edit--nested": isNestedLayout })}>
             <div className="gd-editable-label-container gd-row-header-title-wrapper">
@@ -166,6 +169,9 @@ export function SectionHeaderEditable({
                             filters={filters}
                             separators={separators}
                             LoadingComponent={LoadingComponent}
+                            execConfig={{
+                                timestamp: executionTimestamp,
+                            }}
                         />
                     </div>
                 ) : (

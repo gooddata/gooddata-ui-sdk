@@ -19,6 +19,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IColorPaletteDefinition } from '@gooddata/sdk-model';
+import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-ui';
 import { IMeasureSortTarget } from '@gooddata/sdk-model';
@@ -1358,6 +1359,8 @@ export interface IDescriptionPanelProps {
     className?: string;
     // (undocumented)
     description?: string;
+    // (undocumented)
+    execConfig?: IExecutionConfig;
     // (undocumented)
     filters?: IFilter[];
     // (undocumented)
@@ -3638,6 +3641,8 @@ export interface IRichTextProps {
     editRows?: number;
     // (undocumented)
     emptyElement?: JSX.Element;
+    // (undocumented)
+    execConfig?: IExecutionConfig;
     filters?: IFilter[];
     // (undocumented)
     LoadingComponent?: React_2.ComponentType;
