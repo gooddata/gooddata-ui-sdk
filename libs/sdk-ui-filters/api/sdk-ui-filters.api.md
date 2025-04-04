@@ -7,6 +7,7 @@
 /// <reference types="react" />
 
 import { AttributeFiltersOrPlaceholders } from '@gooddata/sdk-ui';
+import { ComponentType } from 'react';
 import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { DateFilterOption as DateFilterOption_2 } from './interfaces/index.js';
@@ -702,6 +703,30 @@ export interface IDateFilterAbsoluteFormErrors {
     to?: string;
 }
 
+// @alpha (undocumented)
+export interface IDateFilterButtonProps {
+    // (undocumented)
+    children?: React_2.ReactNode;
+    // (undocumented)
+    customFilterName?: string;
+    // (undocumented)
+    customIcon?: IFilterButtonCustomIcon;
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    isMobile: boolean;
+    // (undocumented)
+    isOpen?: boolean;
+    // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
+    textSubtitle?: string;
+    // (undocumented)
+    textTitle?: string;
+    // (undocumented)
+    title: React_2.ReactNode;
+}
+
 // @public
 export interface IDateFilterCallbackProps {
     // (undocumented)
@@ -729,6 +754,8 @@ export interface IDateFilterOptionsByType {
 export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     // (undocumented)
     availableGranularities: DateFilterGranularity[];
+    // @alpha
+    ButtonComponent?: ComponentType<IDateFilterButtonProps>;
     // (undocumented)
     customFilterName?: string;
     // @alpha

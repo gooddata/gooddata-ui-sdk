@@ -5,6 +5,9 @@ import { stringUtils } from "@gooddata/util";
 import { isActionKey } from "@gooddata/sdk-ui-kit";
 import { FilterButtonCustomIcon, IFilterButtonCustomIcon } from "../../shared/index.js";
 
+/**
+ * @alpha
+ */
 export interface IDateFilterButtonProps {
     title: React.ReactNode;
     isOpen?: boolean;
@@ -14,6 +17,8 @@ export interface IDateFilterButtonProps {
     children?: React.ReactNode;
     customFilterName?: string;
     onClick?: () => void;
+    textTitle?: string;
+    textSubtitle?: string;
 }
 
 export const DateFilterButton: React.FC<IDateFilterButtonProps> = ({

@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { ComponentType } from "react";
 import isEqual from "lodash/isEqual.js";
 import isNil from "lodash/isNil.js";
 import noop from "lodash/noop.js";
@@ -18,6 +18,7 @@ import { normalizeSelectedFilterOption } from "./utils/FilterOptionNormalization
 import { IFilterButtonCustomIcon, VisibilityMode } from "../shared/index.js";
 import { IFilterConfigurationProps } from "./DateFilterBody/types.js";
 import isEmpty from "lodash/isEmpty.js";
+import { IDateFilterButtonProps } from "./DateFilterButton/DateFilterButton.js";
 
 /**
  * Props of the {@link DateFilter} component that are reflected in the state.
@@ -91,6 +92,13 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
      * If new apply all filters at once mode is enabled
      */
     enableDashboardFiltersApplyModes?: boolean;
+
+    /**
+     * Specify custom button component
+     *
+     * @alpha
+     */
+    ButtonComponent?: ComponentType<IDateFilterButtonProps>;
 }
 
 /**
@@ -254,6 +262,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             FilterConfigurationComponent,
             withoutApply,
             enableDashboardFiltersApplyModes,
+            ButtonComponent,
         } = this.props;
         const { excludeCurrentPeriod, selectedFilterOption, isExcludeCurrentPeriodEnabled } = this.state;
         return dateFilterMode === "hidden" ? null : (
@@ -283,6 +292,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
                 customIcon={customIcon}
                 FilterConfigurationComponent={FilterConfigurationComponent}
                 withoutApply={enableDashboardFiltersApplyModes ? withoutApply : undefined}
+                ButtonComponent={ButtonComponent}
             />
         );
     }
