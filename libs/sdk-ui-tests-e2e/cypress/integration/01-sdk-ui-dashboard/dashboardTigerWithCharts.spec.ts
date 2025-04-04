@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { Dashboard } from "../../tools/dashboards";
@@ -20,11 +20,11 @@ describe("Dashboard with charts", { tags: ["pre-merge_isolated_tiger"] }, () => 
 
             // the internals are already covered in storybook,
             // let's just check charts were rendered
-            new Widget(0).getChart().isHighchartsChart();
-            new Widget(1).getChart().isHighchartsChart();
-            new Widget(2).getChart().isHighchartsChart();
-            new Widget(3).getChart().isHighchartsChart();
-            new Widget(4).getChart().isHighchartsChart();
+            new Widget(0, 0).getChart().isHighchartsChart();
+            new Widget(1, 0).getChart().isHighchartsChart();
+            new Widget(2, 0).getChart().isHighchartsChart();
+            new Widget(3, 0).getChart().isHighchartsChart();
+            new Widget(0, 1).getChart().isHighchartsChart();
         });
     });
 });

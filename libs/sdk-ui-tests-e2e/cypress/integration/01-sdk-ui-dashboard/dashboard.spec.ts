@@ -133,7 +133,7 @@ describe("Dashboard actions", () => {
         "should able to scroll vertical/ horizontal on widget",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
-            const table = new Table(".s-dash-item-0");
+            const table = new Table(".s-dash-item-0_0");
 
             Navigation.visit("dashboard/dashboard-many-rows-columns");
             editMode.edit();
