@@ -1,25 +1,24 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { useState, useRef, useEffect, useCallback, forwardRef } from "react";
 import cx from "classnames";
 import {
     DayPicker,
     DayPickerRangeProps,
     DateRange,
     SelectRangeEventHandler,
-    ClassNames,
     DayPickerProps,
 } from "react-day-picker";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { injectIntl, WrappedComponentProps, IntlShape } from "react-intl";
 import { WeekStart } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
+
+import { DAY_END_TIME } from "../constants/Platform.js";
+import { getLocalizedDateFormat } from "../utils/FormattingUtils.js";
 
 import { mergeDayPickerProps } from "./utils.js";
 import { DateRangePickerError } from "./DateRangePickerError.js";
 import { IExtendedDateFilterErrors } from "../interfaces/index.js";
 import { DateTimePickerWithInt } from "./DateTimePicker.js";
-
-import { DAY_END_TIME } from "../constants/Platform.js";
-import { getLocalizedDateFormat } from "../utils/FormattingUtils.js";
 
 import enUS from "date-fns/locale/en-US/index.js";
 import de from "date-fns/locale/de/index.js";
@@ -62,21 +61,11 @@ const ALIGN_POINTS = [{ align: "bl tl", offset: { x: 0, y: 1 } }];
 const DATE_INPUT_HINT_ID = "date-range-picker-date-input-hint";
 const TIME_INPUT_HINT_ID = "date-range-picker-time-input-hint";
 
-function convertLocale(locale: string): Locale {
-    return convertedLocales[locale];
-}
+const convertLocale = (locale: string): Locale => convertedLocales[locale];
+
 export interface IDateRange {
     from: Date;
     to: Date;
-}
-
-interface IDateRangePickerState {
-    isOpen: boolean;
-    inputFromValue: Date;
-    inputToValue: Date;
-    selectedRange: DateRange;
-    monthDate: Date;
-    selectedInput: string;
 }
 
 export interface IDateRangePickerProps {
@@ -104,78 +93,77 @@ function convertWeekStart(weekStart: WeekStart): DayPickerProps["weekStartsOn"] 
     }
 }
 
-class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDateRangePickerState> {
-    private dateRangePickerInputFrom = React.createRef<HTMLInputElement>();
-    private dateRangePickerInputTo = React.createRef<HTMLInputElement>();
-    private dateRangePickerContainer = React.createRef<HTMLDivElement>();
+const isClickOutsideOfCalendar = (
+    event: MouseEvent,
+    container: HTMLElement,
+    inputFrom: HTMLElement,
+    inputTo: HTMLElement,
+): boolean => {
+    return (
+        container &&
+        !container.contains(event.target as Node) &&
+        inputFrom &&
+        !inputFrom.contains(event.target as Node) &&
+        inputTo &&
+        !inputTo.contains(event.target as Node)
+    );
+};
 
-    constructor(props: DateRangePickerProps) {
-        super(props);
-
-        this.state = {
-            isOpen: false,
-            inputFromValue: this.props.range.from,
-            inputToValue: this.props.range.to,
-            selectedRange: { from: this.props.range.from, to: this.props.range.to },
-            monthDate: null,
-            selectedInput: null,
-        };
-
-        this.handleMonthChanged = this.handleMonthChanged.bind(this);
-        this.handleClickOutside = this.handleClickOutside.bind(this);
-        this.handleMonthChanged = this.handleMonthChanged.bind(this);
-        this.handleRangeSelect = this.handleRangeSelect.bind(this);
-        this.handleFromDayClick = this.handleFromDayClick.bind(this);
-        this.handleToDayClick = this.handleToDayClick.bind(this);
-        this.handleFromChange = this.handleFromChange.bind(this);
-        this.handleToChange = this.handleToChange.bind(this);
-        this.onKeyDown = this.onKeyDown.bind(this);
+const DayPickerComponent = forwardRef<
+    HTMLDivElement,
+    {
+        mode: "from" | "to";
+        originalDateRange: IDateRange;
+        selectedDateRange: IDateRange;
+        alignTo: string;
+        calendarClassNames: string;
+        onDateRangeSelect: SelectRangeEventHandler;
+        dayPickerProps?: DayPickerRangeProps;
+        weekStart?: WeekStart;
+        renderAsOverlay?: boolean;
+        intl: IntlShape;
     }
-
-    public componentDidMount(): void {
-        document.addEventListener("mousedown", this.handleClickOutside);
-    }
-
-    public componentWillUnmount(): void {
-        document.removeEventListener("mousedown", this.handleClickOutside);
-    }
-
-    public render() {
-        const {
-            dateFormat,
-            range: { from, to },
+>(
+    (
+        {
+            mode,
+            originalDateRange,
+            selectedDateRange,
+            onDateRangeSelect,
             dayPickerProps,
+            alignTo,
+            weekStart,
+            renderAsOverlay,
+            calendarClassNames,
             intl,
-            isMobile,
-            errors: { from: errorFrom, to: errorTo } = { from: undefined, to: undefined },
-            isTimeEnabled,
-            weekStart = "Sunday",
-            shouldOverlayDatePicker = false,
-        } = this.props;
+        },
+        ref,
+    ) => {
+        const [currentMonthDate, setCurrentMonthDate] = useState<Date | null>(
+            mode === "from" ? selectedDateRange.from : selectedDateRange.to,
+        );
 
         const defaultDayPickerProps: DayPickerRangeProps = {
             mode: "range",
             showOutsideDays: true,
-            modifiers: { start: from, end: to },
-            selected: { from, to },
+            modifiers: { start: originalDateRange.from, end: originalDateRange.to },
+            selected: { from: originalDateRange.from, to: originalDateRange.to },
             locale: convertLocale(intl.locale),
         };
 
         const dayPickerPropsWithDefaults = mergeDayPickerProps(defaultDayPickerProps, dayPickerProps);
 
-        const classNameProps: ClassNames = {
-            root: `gd-date-range-picker-picker s-date-range-calendar-${this.state.selectedInput}`,
-        };
-
         const DatePicker = (
-            <div className="gd-date-range-picker-wrapper" ref={this.dateRangePickerContainer}>
+            <div className="gd-date-range-picker-wrapper" ref={ref}>
                 <DayPicker
                     {...dayPickerPropsWithDefaults}
-                    onSelect={this.handleRangeSelect}
-                    selected={this.state.selectedRange}
-                    month={this.state.monthDate}
-                    classNames={classNameProps}
-                    onMonthChange={this.handleMonthChanged}
+                    month={currentMonthDate}
+                    onSelect={onDateRangeSelect}
+                    selected={selectedDateRange}
+                    classNames={{
+                        root: calendarClassNames,
+                    }}
+                    onMonthChange={setCurrentMonthDate}
                     weekStartsOn={convertWeekStart(weekStart)}
                 />
             </div>
@@ -183,7 +171,7 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
 
         const OverlayDatePicker = (
             <Overlay
-                alignTo={`.gd-date-range-picker-${isTimeEnabled ? this.state.selectedInput : "from"}`}
+                alignTo={alignTo}
                 alignPoints={ALIGN_POINTS}
                 closeOnOutsideClick={true}
                 closeOnMouseDrag={true}
@@ -192,11 +180,56 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                 {DatePicker}
             </Overlay>
         );
+        if (renderAsOverlay) {
+            return OverlayDatePicker;
+        }
+        return DatePicker;
+    },
+);
 
-        const FromField = (
+DayPickerComponent.displayName = "DayPickerComponent";
+
+const DateRangeHint: React.FC<{
+    dateFormat: string;
+    isTimeEnabled: boolean;
+    intl: IntlShape;
+}> = ({ dateFormat, isTimeEnabled, intl }) => (
+    <div className="gd-date-range__hint">
+        <div id={DATE_INPUT_HINT_ID}>
+            {intl.formatMessage(
+                { id: "filters.staticPeriod.dateFormatHint" },
+                { format: dateFormat || getLocalizedDateFormat(intl.locale) },
+            )}
+        </div>
+        {isTimeEnabled ? (
+            <div id={TIME_INPUT_HINT_ID}>
+                {intl.formatMessage({ id: "filters.staticPeriod.timeFormatHint" })}
+            </div>
+        ) : null}
+    </div>
+);
+
+interface IInputFieldProps {
+    value: Date;
+    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onChange: (date: Date) => void;
+    onInputClick: () => void;
+    errors?: IExtendedDateFilterErrors["absoluteForm"];
+    dateFormat: string;
+    isMobile: boolean;
+    isTimeEnabled: boolean;
+    intl: IntlShape;
+}
+
+const FromInputField = forwardRef<HTMLInputElement, IInputFieldProps>(
+    (
+        { value, onKeyDown, onChange, onInputClick, errors, dateFormat, isMobile, isTimeEnabled, intl },
+        ref,
+    ) => {
+        return (
             <DateTimePickerWithInt
-                onKeyDown={this.onKeyDown}
-                ref={this.dateRangePickerInputFrom}
+                onKeyDown={onKeyDown}
+                ref={ref}
                 dateInputLabel={intl.formatMessage({ id: "filters.staticPeriod.dateFrom" })}
                 timeInputLabel={intl.formatMessage({ id: "filters.staticPeriod.timeFrom" })}
                 placeholderDate={intl.formatMessage({ id: "filters.from" })}
@@ -206,19 +239,18 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                     dateInputHintId: DATE_INPUT_HINT_ID,
                     timeInputHintId: TIME_INPUT_HINT_ID,
                 }}
-                onChange={this.handleFromChange}
-                value={this.state.inputFromValue}
+                onChange={onChange}
+                value={value}
                 dateFormat={dateFormat}
                 isMobile={isMobile}
-                handleDayClick={this.handleFromDayClick}
+                handleDayClick={onInputClick}
                 isTimeEnabled={isTimeEnabled}
                 className={cx("s-date-range-picker-from", "gd-date-range-picker-from")}
                 errors={
-                    errorFrom
+                    errors?.from
                         ? {
-                              // TODO split errors to date, time, error, warning
                               dateError: intl.formatMessage(
-                                  { id: errorFrom },
+                                  { id: errors.from },
                                   { format: dateFormat || getLocalizedDateFormat(intl.locale) },
                               ),
                           }
@@ -226,11 +258,19 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                 }
             />
         );
+    },
+);
+FromInputField.displayName = "FromInputField";
 
-        const ToField = (
+const ToInputField = forwardRef<HTMLInputElement, IInputFieldProps>(
+    (
+        { value, onKeyDown, onChange, onInputClick, errors, dateFormat, isMobile, isTimeEnabled, intl },
+        ref,
+    ) => {
+        return (
             <DateTimePickerWithInt
-                onKeyDown={this.onKeyDown}
-                ref={this.dateRangePickerInputTo}
+                onKeyDown={onKeyDown}
+                ref={ref}
                 dateInputLabel={intl.formatMessage({ id: "filters.staticPeriod.dateTo" })}
                 timeInputLabel={intl.formatMessage({ id: "filters.staticPeriod.timeTo" })}
                 placeholderDate={intl.formatMessage({ id: "filters.to" })}
@@ -240,20 +280,19 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                     dateInputHintId: DATE_INPUT_HINT_ID,
                     timeInputHintId: TIME_INPUT_HINT_ID,
                 }}
-                onChange={this.handleToChange}
-                value={this.state.inputToValue}
+                onChange={onChange}
+                value={value}
                 dateFormat={dateFormat}
                 isMobile={isMobile}
-                handleDayClick={this.handleToDayClick}
+                handleDayClick={onInputClick}
                 isTimeEnabled={isTimeEnabled}
                 className={cx("s-date-range-picker-to", "gd-date-range-picker-to")}
                 defaultTime={DAY_END_TIME}
                 errors={
-                    errorTo
+                    errors?.to
                         ? {
-                              // TODO split errors to date, time, error, warning
                               dateError: intl.formatMessage(
-                                  { id: errorTo },
+                                  { id: errors.to },
                                   { format: dateFormat || getLocalizedDateFormat(intl.locale) },
                               ),
                           }
@@ -261,166 +300,188 @@ class DateRangePickerComponent extends React.Component<DateRangePickerProps, IDa
                 }
             />
         );
+    },
+);
+ToInputField.displayName = "ToInputField";
 
-        const DatePickerComponent = shouldOverlayDatePicker ? OverlayDatePicker : DatePicker;
+const DateRangePickerComponent: React.FC<DateRangePickerProps> = ({
+    range,
+    onRangeChange,
+    errors,
+    dateFormat,
+    dayPickerProps,
+    intl,
+    isMobile,
+    isTimeEnabled,
+    weekStart = "Sunday",
+    shouldOverlayDatePicker = false,
+}) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [inputFromValue, setInputFromValue] = useState(range.from);
+    const [inputToValue, setInputToValue] = useState(range.to);
+    const [selectedRange, setSelectedRange] = useState({ from: range.from, to: range.to });
+    const [selectedInput, setSelectedInput] = useState<"from" | "to" | null>(null);
 
-        const isFromInputDatePickerOpen = this.state.selectedInput === "from" && this.state.isOpen;
-        const isToInputDatePickerOpen = this.state.selectedInput === "to" && this.state.isOpen;
-        return (
-            <>
-                {isTimeEnabled ? (
-                    <div className="gd-date-range-picker datetime s-date-range-picker">
-                        {FromField}
-                        {isFromInputDatePickerOpen ? DatePickerComponent : null}
-                        {ToField}
-                        {isToInputDatePickerOpen ? DatePickerComponent : null}
-                    </div>
-                ) : (
-                    <>
-                        <div className="gd-date-range-picker gd-date-range-row s-date-range-picker">
-                            {FromField}
-                            {ToField}
-                        </div>
-                        {this.state.isOpen ? DatePickerComponent : null}
-                    </>
-                )}
-                {isMobile && (errorFrom || errorTo) ? (
-                    <DateRangePickerError
-                        dateFormat={dateFormat}
-                        errorId={
-                            // This means that when both inputs are invalid, error is shown only for "from"
-                            errorFrom || errorTo
-                        }
-                    />
-                ) : null}
-                <div className="gd-date-range__hint">
-                    <div id={DATE_INPUT_HINT_ID}>
-                        {intl.formatMessage(
-                            { id: "filters.staticPeriod.dateFormatHint" },
-                            { format: dateFormat || getLocalizedDateFormat(intl.locale) },
-                        )}
-                    </div>
-                    {isTimeEnabled ? (
-                        <div id={TIME_INPUT_HINT_ID}>
-                            {intl.formatMessage({ id: "filters.staticPeriod.timeFormatHint" })}
-                        </div>
-                    ) : null}
-                </div>
-            </>
-        );
-    }
+    const dateRangePickerInputFrom = useRef<HTMLInputElement>(null);
+    const dateRangePickerInputTo = useRef<HTMLInputElement>(null);
+    const dateRangePickerContainer = useRef<HTMLDivElement>(null);
 
-    private onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-        if (e.key === "Escape" || e.key === "Tab") {
-            this.setState({ isOpen: false });
-        }
-    }
-
-    private handleMonthChanged(month: Date) {
-        this.setState({ monthDate: month });
-    }
-
-    // get new date object composed from the date of the first argument
-    // and the time of the date provided as the second argument
-    private setTimeForDate(date: Date, time: Date): Date {
-        const result = new Date(date);
-        result.setHours(time.getHours());
-        result.setMinutes(time.getMinutes());
-        return result;
-    }
-
-    private handleRangeSelect: SelectRangeEventHandler = (
+    const handleRangeSelect: SelectRangeEventHandler = (
         _range: DateRange | undefined,
         selectedDate: Date,
     ) => {
         let calculatedFrom: Date;
         let calculatedTo: Date;
 
-        // it is better to use selectedDate property as _range is not working correctly in corner cases
-        if (this.state.selectedInput == "from") {
-            calculatedFrom = this.setTimeForDate(selectedDate, this.state.inputFromValue);
-            calculatedTo = this.state.inputToValue;
+        if (selectedInput === "from") {
+            calculatedFrom = setTimeForDate(selectedDate, inputFromValue);
+            calculatedTo = inputToValue;
         } else {
-            calculatedFrom = this.state.inputFromValue;
-            calculatedTo = this.setTimeForDate(selectedDate, this.state.inputToValue);
+            calculatedFrom = inputFromValue;
+            calculatedTo = setTimeForDate(selectedDate, inputToValue);
         }
 
-        this.setState(
-            {
-                inputFromValue: calculatedFrom,
-                inputToValue: calculatedTo,
-                selectedRange: { from: calculatedFrom, to: calculatedTo },
-                isOpen: false,
-            },
-            () => {
-                this.updateRange(calculatedFrom, calculatedTo);
-            },
-        );
+        setInputFromValue(calculatedFrom);
+        setInputToValue(calculatedTo);
+        setSelectedRange({ from: calculatedFrom, to: calculatedTo });
+        setIsOpen(false);
+
+        onRangeChange({ from: calculatedFrom, to: calculatedTo });
     };
 
-    private handleClickOutside(event: MouseEvent) {
+    const handleFromChange = (date: Date) => {
+        if (date) {
+            setInputFromValue(date);
+        }
+        setSelectedRange((prevRange) => ({ from: date, to: prevRange.to }));
+        onRangeChange({ from: date, to: selectedRange.to });
+    };
+
+    const handleToChange = (date: Date) => {
+        if (date) {
+            setInputToValue(date);
+        }
+        setSelectedRange((prevRange) => ({ from: prevRange.from, to: date }));
+        onRangeChange({ from: selectedRange.from, to: date });
+    };
+
+    const handleFromDayClick = () => {
+        setSelectedInput("from");
+        setIsOpen(true);
+    };
+
+    const handleToDayClick = () => {
+        setSelectedInput("to");
+        setIsOpen(true);
+    };
+
+    const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Escape" || e.key === "Tab") {
+            setIsOpen(false);
+        }
+    };
+
+    const handleClickOutside = useCallback((event: MouseEvent) => {
         if (
-            this.dateRangePickerContainer.current &&
-            !this.dateRangePickerContainer.current.contains(event.target as Node) &&
-            this.dateRangePickerInputFrom &&
-            !this.dateRangePickerInputFrom.current.contains(event.target as Node) &&
-            this.dateRangePickerInputTo &&
-            !this.dateRangePickerInputTo.current.contains(event.target as Node)
+            isClickOutsideOfCalendar(
+                event,
+                dateRangePickerContainer.current,
+                dateRangePickerInputFrom.current,
+                dateRangePickerInputTo.current,
+            )
         ) {
-            this.setState({ isOpen: false });
+            setIsOpen(false);
         }
-    }
+    }, []);
 
-    private updateRange = (from: Date, to: Date) => {
-        this.props.onRangeChange({ from, to });
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [handleClickOutside]);
+
+    const setTimeForDate = (date: Date, time: Date): Date => {
+        const result = new Date(date);
+        result.setHours(time.getHours());
+        result.setMinutes(time.getMinutes());
+        return result;
     };
 
-    private handleFromDayClick = () => {
-        this.setState({
-            selectedInput: "from",
-            isOpen: true,
-            monthDate: this.props.range.from,
-        });
-    };
+    const FromField = (
+        <FromInputField
+            ref={dateRangePickerInputFrom}
+            value={inputFromValue}
+            onKeyDown={onKeyDown}
+            onChange={handleFromChange}
+            onInputClick={handleFromDayClick}
+            errors={errors}
+            dateFormat={dateFormat}
+            isMobile={isMobile}
+            isTimeEnabled={isTimeEnabled}
+            intl={intl}
+        />
+    );
 
-    private handleToDayClick = () => {
-        this.setState({
-            selectedInput: "to",
-            isOpen: true,
-            monthDate: this.props.range.to,
-        });
-    };
+    const ToField = (
+        <ToInputField
+            ref={dateRangePickerInputTo}
+            value={inputToValue}
+            onKeyDown={onKeyDown}
+            onChange={handleToChange}
+            onInputClick={handleToDayClick}
+            errors={errors}
+            dateFormat={dateFormat}
+            isMobile={isMobile}
+            isTimeEnabled={isTimeEnabled}
+            intl={intl}
+        />
+    );
 
-    private handleFromChange = (date: Date) => {
-        if (date) {
-            this.setState({ inputFromValue: date });
-        }
+    const isFromInputDatePickerOpen = selectedInput === "from" && isOpen;
+    const isToInputDatePickerOpen = selectedInput === "to" && isOpen;
 
-        this.setState(
-            {
-                selectedRange: { from: date, to: this.state.selectedRange.to },
-                monthDate: date,
-            },
-            () => {
-                this.updateRange(date, this.state.selectedRange.to);
-            },
-        );
-    };
+    const DatePicker = (
+        <DayPickerComponent
+            ref={dateRangePickerContainer}
+            mode={selectedInput}
+            originalDateRange={selectedRange}
+            selectedDateRange={selectedRange}
+            onDateRangeSelect={handleRangeSelect}
+            alignTo={`.gd-date-range-picker-${isTimeEnabled ? selectedInput : "from"}`}
+            calendarClassNames={`gd-date-range-picker-picker s-date-range-calendar-${selectedInput}`}
+            dayPickerProps={dayPickerProps}
+            weekStart={weekStart}
+            renderAsOverlay={shouldOverlayDatePicker}
+            intl={intl}
+        />
+    );
 
-    private handleToChange = (date: Date) => {
-        if (date) {
-            this.setState({ inputToValue: date });
-        }
+    return (
+        <>
+            {isTimeEnabled ? (
+                <div className="gd-date-range-picker datetime s-date-range-picker">
+                    {FromField}
+                    {isFromInputDatePickerOpen ? DatePicker : null}
+                    {ToField}
+                    {isToInputDatePickerOpen ? DatePicker : null}
+                </div>
+            ) : (
+                <>
+                    <div className="gd-date-range-picker gd-date-range-row s-date-range-picker">
+                        {FromField}
+                        {ToField}
+                    </div>
+                    {isOpen ? DatePicker : null}
+                </>
+            )}
+            {isMobile ? (
+                errors?.from || errors?.to ? (
+                    <DateRangePickerError dateFormat={dateFormat} errorId={errors?.from || errors?.to} />
+                ) : null
+            ) : (
+                <DateRangeHint dateFormat={dateFormat} isTimeEnabled={isTimeEnabled} intl={intl} />
+            )}
+        </>
+    );
+};
 
-        this.setState(
-            {
-                selectedRange: { from: this.state.selectedRange.from, to: date },
-                monthDate: date,
-            },
-            () => {
-                this.updateRange(this.state.selectedRange.from, date);
-            },
-        );
-    };
-}
 export const DateRangePicker = injectIntl(DateRangePickerComponent);
