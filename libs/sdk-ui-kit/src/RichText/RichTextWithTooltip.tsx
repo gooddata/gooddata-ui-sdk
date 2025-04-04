@@ -74,8 +74,8 @@ const RichTextWithTooltipCore: React.FC<IRichTextWithTooltipProps> = ({
                 onError={onError}
                 rawContent={rawContent}
                 execConfig={{
-                    timestamp: execConfig.timestamp,
-                    dataSamplingPercentage: execConfig.dataSamplingPercentage,
+                    timestamp: execConfig?.timestamp,
+                    dataSamplingPercentage: execConfig?.dataSamplingPercentage,
                 }}
             />
         );
@@ -95,8 +95,8 @@ const RichTextWithTooltipCore: React.FC<IRichTextWithTooltipProps> = ({
         onError,
         rawContent,
         separators,
-        execConfig.timestamp,
-        execConfig.dataSamplingPercentage,
+        execConfig?.timestamp,
+        execConfig?.dataSamplingPercentage,
     ]);
 
     if (!showTooltip) {
