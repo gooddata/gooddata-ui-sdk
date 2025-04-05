@@ -1,6 +1,10 @@
 // (C) 2019-2025 GoodData Corporation
 import * as React from "react";
 import cx from "classnames";
+import { FormattedMessage } from "react-intl";
+
+const TEXTAREA_ERROR_ID = "textarea-error-id";
+
 interface ITextareaOwnProps {
     className: string;
     hasError: boolean;
@@ -12,6 +16,9 @@ interface ITextareaOwnProps {
     value: string;
     rows: number;
     onChange: (value: string) => void;
+    onFocus?: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
+    onBlur?: (value: string) => void;
+    validationError: string | null;
     autocomplete?: string;
 }
 
@@ -33,7 +40,18 @@ export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState
     }
 
     public render() {
-        const { id, className, label, maxlength, placeholder, value, rows, autocomplete } = this.props;
+        const {
+            id,
+            className,
+            label,
+            maxlength,
+            placeholder,
+            value,
+            rows,
+            autocomplete,
+            validationError,
+            onFocus,
+        } = this.props;
         const classNames = cx(`gd-input-component gd-textarea-component ${className}`);
 
         return (
@@ -41,18 +59,31 @@ export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState
                 <label htmlFor={id} className="gd-label">
                     {label}
                 </label>
-                <label className="gd-input">
-                    <textarea
-                        id={id}
-                        className={this.getTextareaClassNames()}
-                        maxLength={maxlength}
-                        placeholder={placeholder}
-                        value={value}
-                        rows={rows}
-                        onChange={this.onChange}
-                        autoComplete={autocomplete}
-                    />
-                </label>
+                <div className="gd-notifications-channels-dialog-message-content">
+                    <label className="gd-input">
+                        <textarea
+                            id={id}
+                            className={this.getTextareaClassNames()}
+                            maxLength={maxlength}
+                            placeholder={placeholder}
+                            value={value}
+                            rows={rows}
+                            onChange={this.onChange}
+                            autoComplete={autocomplete}
+                            onFocus={onFocus}
+                            onBlur={this.onBlur}
+                            aria-describedby={validationError ? TEXTAREA_ERROR_ID : undefined}
+                        />
+                    </label>
+                    {validationError ? (
+                        <span
+                            id={TEXTAREA_ERROR_ID}
+                            className="gd-notifications-channels-dialog-message-error"
+                        >
+                            <FormattedMessage id={validationError} />
+                        </span>
+                    ) : null}
+                </div>
             </div>
         );
     }
@@ -67,5 +98,8 @@ export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState
 
     private onChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
         this.props.onChange(e.target.value);
+    };
+    private onBlur = (e: React.FocusEvent<HTMLTextAreaElement>): void => {
+        this.props.onBlur?.(e.target.value);
     };
 }

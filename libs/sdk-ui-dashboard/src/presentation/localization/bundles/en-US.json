@@ -288,6 +288,16 @@
         "comment": "",
         "limit": 0
     },
+    "dialogs.schedule.error.too_long": {
+        "value": "Error: Text too long — reduce to 255 characters or fewer.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.schedule.destination.message.length": {
+        "value": "Error: Text too long — reduce to 10,000 characters or fewer.",
+        "comment": "",
+        "limit": 0
+    },
     "dialogs.save.as.new.title": {
         "value": "Save dashboard as new",
         "comment": "",
