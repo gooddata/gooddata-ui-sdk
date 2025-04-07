@@ -33,6 +33,11 @@ export interface UiSkeletonProps {
      * Whether to render the skeleton in a row or column.
      */
     direction?: "row" | "column";
+
+    /**
+     * Border radius of the item.
+     */
+    itemBorderRadius?: number;
 }
 
 /**
@@ -44,6 +49,7 @@ export function UiSkeleton({
     itemWidth,
     itemsGap = 10,
     direction = "column",
+    itemBorderRadius,
 }: UiSkeletonProps) {
     const items = Array.from({ length: itemsCount }, (_, idx) => (
         <div
@@ -60,7 +66,7 @@ export function UiSkeleton({
                         : itemWidth[idx],
             }}
         >
-            <ReactLoadingSkeleton />
+            <ReactLoadingSkeleton borderRadius={itemBorderRadius} />
         </div>
     ));
 

@@ -154,6 +154,8 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
 
     &__tag {
         @extend %ui-button__text;
+
+        margin-left: 2px;
     }
 
     &__icon-before {

@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 import { IconType } from "../@types/icon.js";
@@ -34,8 +34,17 @@ export const UiChip = ({
     onClick,
     onDelete,
 }: UiChipProps) => {
+    const elemRef = useRef<HTMLDivElement>(null);
+    const [widthObj, setWidthObj] = useState({});
+
+    useEffect(() => {
+        if (elemRef.current) {
+            setWidthObj({ width: elemRef.current.offsetWidth });
+        }
+    }, []);
+
     return (
-        <div className={b()}>
+        <div className={b()} ref={elemRef} style={{ ...widthObj }}>
             <button
                 aria-label={isActive ? "Close" : "Open"}
                 aria-expanded={isActive}
