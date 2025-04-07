@@ -37,3 +37,12 @@ extended-test --isolated --filter test1.spec.ts,test2.spec.ts
 extended-test --record
 extended-test --record --filter test1.spec.ts,test2.spec.ts
 ```
+
+#### Commands for Bear platform working on branch rel/9.9
+
+```
+extended-test-legacy --backstop
+extended-test-legacy --integrated
+extended-test-legacy --isolated
+extended-test-legacy --record
+```
