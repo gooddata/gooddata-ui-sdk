@@ -99,12 +99,14 @@ export function dashboardDateFilterToDateFilterByWidget(
             filter.dateFilter.granularity,
             numberOrStringToNumber(filter.dateFilter.from!),
             numberOrStringToNumber(filter.dateFilter.to!),
+            filter.dateFilter.localIdentifier,
         );
     } else {
         return newAbsoluteDateFilter(
             widget ? filter.dateFilter.dataSet || widget.dateDataSet! : filter.dateFilter.dataSet!,
             filter.dateFilter.from!.toString(),
             filter.dateFilter.to!.toString(),
+            filter.dateFilter.localIdentifier,
         );
     }
 }
@@ -126,12 +128,14 @@ export function dashboardDateFilterToDateFilterByDateDataSet(
             filter.dateFilter.granularity,
             numberOrStringToNumber(filter.dateFilter.from!),
             numberOrStringToNumber(filter.dateFilter.to!),
+            filter.dateFilter.localIdentifier,
         );
     } else {
         return newAbsoluteDateFilter(
             dateDataSet,
             filter.dateFilter.from!.toString(),
             filter.dateFilter.to!.toString(),
+            filter.dateFilter.localIdentifier,
         );
     }
 }

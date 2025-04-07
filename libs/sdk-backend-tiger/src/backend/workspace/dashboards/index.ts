@@ -97,6 +97,7 @@ import { invariant } from "ts-invariant";
 import { convertApiError } from "../../../utils/errorHandling.js";
 import { convertDataSetItem } from "../../../convertors/fromBackend/DataSetConverter.js";
 import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec.js";
+import { addFilterLocalIdentifier } from "../../../utils/filterLocalidentifier.js";
 
 const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;
@@ -920,6 +921,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             const { name, dashboard, isDefault, filterContext } = filterView;
 
             const dashboardId = await objRefToIdentifier(dashboard, this.authCall);
+            const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
+            const useDateFilterLocalIdentifiers = userSettings.enableDateFilterIdentifiersRollout ?? false;
 
             return this.authCall(async (client) => {
                 if (isDefault) {
@@ -938,7 +941,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                                 attributes: {
                                     isDefault,
                                     title: name,
-                                    content: convertFilterContextToBackend(filterContext),
+                                    content: convertFilterContextToBackend(
+                                        filterContext,
+                                        useDateFilterLocalIdentifiers,
+                                    ),
                                 },
                                 relationships: {
                                     user: {
@@ -1066,7 +1072,13 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     private createFilterContext = async (
         filterContext: IFilterContextDefinition,
     ): Promise<IFilterContext> => {
-        const tigerFilterContext = convertFilterContextToBackend(filterContext);
+        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
+        const useDateFilterLocalIdentifiers = userSettings.enableDateFilterIdentifiersRollout ?? false;
+
+        const tigerFilterContext = convertFilterContextToBackend(
+            filterContext,
+            useDateFilterLocalIdentifiers,
+        );
 
         const result = await this.authCall((client) => {
             return client.entities.createEntityFilterContexts(
@@ -1130,16 +1142,28 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         originalFilterContext: IFilterContext | ITempFilterContext | undefined,
         updatedFilterContext: IFilterContext | ITempFilterContext | IFilterContextDefinition | undefined,
     ): Promise<IFilterContext | undefined> => {
+        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
+        const useDateFilterLocalIdentifiers = userSettings.enableDateFilterIdentifiersRollout ?? false;
+
+        const sanitizedFilterContext = useDateFilterLocalIdentifiers
+            ? {
+                  ...updatedFilterContext,
+                  filters: updatedFilterContext?.filters.map((filter, index) =>
+                      addFilterLocalIdentifier(filter, index),
+                  ),
+              }
+            : updatedFilterContext;
+
         if (isTempFilterContext(originalFilterContext)) {
             throw new UnexpectedError("Cannot update temp filter context!");
-        } else if (isFilterContextDefinition(updatedFilterContext)) {
+        } else if (isFilterContextDefinition(sanitizedFilterContext)) {
             // Create a new filter context
-            return this.createFilterContext(updatedFilterContext);
-        } else if (isFilterContext(updatedFilterContext)) {
+            return this.createFilterContext(sanitizedFilterContext);
+        } else if (isFilterContext(sanitizedFilterContext)) {
             // Update the current filter context
-            const shouldUpdateFilterContext = !isEqual(originalFilterContext, updatedFilterContext);
+            const shouldUpdateFilterContext = !isEqual(originalFilterContext, sanitizedFilterContext);
             if (shouldUpdateFilterContext) {
-                return this.updateFilterContext(updatedFilterContext);
+                return this.updateFilterContext(sanitizedFilterContext);
             }
         }
 
@@ -1148,7 +1172,13 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     private updateFilterContext = async (filterContext: IFilterContext): Promise<IFilterContext> => {
-        const tigerFilterContext = convertFilterContextToBackend(filterContext);
+        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
+        const useDateFilterLocalIdentifiers = userSettings.enableDateFilterIdentifiersRollout ?? false;
+
+        const tigerFilterContext = convertFilterContextToBackend(
+            filterContext,
+            useDateFilterLocalIdentifiers,
+        );
         const objectId = await objRefToIdentifier(filterContext.ref, this.authCall);
 
         const result = await this.authCall((client) => {

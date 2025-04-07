@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 import { Account, Department, Won } from "../../../../__mocks__/model.js";
 import {
@@ -49,13 +49,13 @@ describe("filter factory", () => {
 
     describe("newAbsoluteDateFilter", () => {
         it("should generate correct filter", () => {
-            expect(newAbsoluteDateFilter("foo", "2018-01-01", "2018-12-31")).toMatchSnapshot();
+            expect(newAbsoluteDateFilter("foo", "2018-01-01", "2018-12-31", "testLocalId")).toMatchSnapshot();
         });
     });
 
     describe("newRelativeDateFilter", () => {
         it("should generate correct filter", () => {
-            expect(newRelativeDateFilter("foo", "GDC.time.month", 1, 3)).toMatchSnapshot();
+            expect(newRelativeDateFilter("foo", "GDC.time.month", 1, 3, "testLocalId")).toMatchSnapshot();
         });
     });
 

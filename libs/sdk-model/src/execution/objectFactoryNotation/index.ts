@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import compact from "lodash/compact.js";
 import flow from "lodash/flow.js";
 import isNil from "lodash/isNil.js";
@@ -199,17 +199,17 @@ const convertMeasureSortItem: Converter<IMeasureSortItem> = ({ measureSortItem }
 };
 
 const convertAbsoluteDateFilter: Converter<IAbsoluteDateFilter> = ({
-    absoluteDateFilter: { dataSet, from, to },
+    absoluteDateFilter: { dataSet, from, to, localIdentifier },
 }) => {
-    const restArgs = compact([from, to]).map(stringify);
+    const restArgs = compact([from, to, localIdentifier]).map(stringify);
     return `newAbsoluteDateFilter(${[stringifyObjRef(dataSet), ...restArgs].join(ARRAY_JOINER)})`;
 };
 
 const convertRelativeDateFilter: Converter<IRelativeDateFilter> = ({
-    relativeDateFilter: { dataSet, granularity, from, to },
+    relativeDateFilter: { dataSet, granularity, from, to, localIdentifier },
 }) => {
     // cannot use lodash compact, that would remove 0 values which we want to keep here
-    const restArgs = [granularity, from, to].filter((item) => !isNil(item)).map(stringify);
+    const restArgs = [granularity, from, to, localIdentifier].filter((item) => !isNil(item)).map(stringify);
     return `newRelativeDateFilter(${[stringifyObjRef(dataSet), ...restArgs].join(ARRAY_JOINER)})`;
 };
 

@@ -141,6 +141,7 @@ export enum TigerFeaturesNames {
     EnableDashboardShareLink = "enableDashboardShareLink",
     EnableExecutionTimestamp = "enableExecutionTimestamp",
     EnableAutomationFilterContext = "enableAutomationFilterContext",
+    EnableDateFilterIdentifiersRollout = "enableDateFilterIdentifiersRollout",
 }
 
 export type ITigerFeatureFlags = {
@@ -244,6 +245,7 @@ export type ITigerFeatureFlags = {
     enableHighchartsAccessibility: typeof FeatureFlagsValues["enableHighchartsAccessibility"][number];
     enableExecutionTimestamp: typeof FeatureFlagsValues["enableExecutionTimestamp"][number];
     enableAutomationFilterContext: typeof FeatureFlagsValues["enableAutomationFilterContext"][number];
+    enableDateFilterIdentifiersRollout: typeof FeatureFlagsValues["enableDateFilterIdentifiersRollout"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -347,6 +349,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableHighchartsAccessibility: false,
     enableExecutionTimestamp: false,
     enableAutomationFilterContext: false,
+    enableDateFilterIdentifiersRollout: false,
 };
 
 export const FeatureFlagsValues = {
@@ -454,4 +457,5 @@ export const FeatureFlagsValues = {
     enableHighchartsAccessibility: [true, false] as const,
     enableExecutionTimestamp: [true, false] as const,
     enableAutomationFilterContext: [true, false] as const,
+    enableDateFilterIdentifiersRollout: [true, false] as const,
 };

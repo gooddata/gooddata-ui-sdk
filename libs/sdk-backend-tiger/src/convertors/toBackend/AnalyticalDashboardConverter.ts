@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { AnalyticalDashboardModelV2 } from "@gooddata/api-client-tiger";
 import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
@@ -22,6 +22,7 @@ import { cloneWithSanitizedIds } from "./IdSanitization.js";
 import update from "lodash/fp/update.js";
 import { convertLayout } from "../shared/layoutConverter.js";
 import { generateWidgetLocalIdentifier } from "../../utils/widgetLocalIdentifier.js";
+import { addFilterLocalIdentifier } from "../../utils/filterLocalidentifier.js";
 
 function removeIdentifiers(widget: IDashboardWidget, useWidgetLocalIdentifiers?: boolean): IDashboardWidget {
     /**
@@ -109,9 +110,14 @@ export function convertAnalyticalDashboard(
 
 export function convertFilterContextToBackend(
     filterContext: IFilterContextDefinition,
+    useDateFilterLocalIdentifiers?: boolean,
 ): AnalyticalDashboardModelV2.IFilterContext {
+    const updatedFilters = useDateFilterLocalIdentifiers
+        ? filterContext.filters.map((filter, index) => addFilterLocalIdentifier(filter, index))
+        : filterContext.filters;
+
     return {
-        filters: cloneWithSanitizedIds(filterContext.filters),
+        filters: cloneWithSanitizedIds(updatedFilters),
         version: "2",
     };
 }

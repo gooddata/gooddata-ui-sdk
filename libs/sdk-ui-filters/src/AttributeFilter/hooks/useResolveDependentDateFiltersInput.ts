@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { useMemo } from "react";
 import {
     IAbsoluteDateFilter,
@@ -23,7 +23,7 @@ export const useResolveDependentDateFiltersInput = (
 
         return dependentDateFilters
             .map((dependentDateFilter) => {
-                const { dataSet, granularity, from, to } = dependentDateFilter.dateFilter;
+                const { dataSet, granularity, from, to, localIdentifier } = dependentDateFilter.dateFilter;
 
                 if (isRelativeDashboardDateFilter(dependentDateFilter)) {
                     // Ignore only date filters set as "All time"
@@ -34,9 +34,9 @@ export const useResolveDependentDateFiltersInput = (
                     const parsedFrom = Number.parseInt(from.toString(), 10) ?? 0;
                     const parsedTo = Number.parseInt(to.toString(), 10) ?? 0;
 
-                    return newRelativeDateFilter(dataSet, granularity, parsedFrom, parsedTo);
+                    return newRelativeDateFilter(dataSet, granularity, parsedFrom, parsedTo, localIdentifier);
                 } else {
-                    return newAbsoluteDateFilter(dataSet, from.toString(), to.toString());
+                    return newAbsoluteDateFilter(dataSet, from.toString(), to.toString(), localIdentifier);
                 }
             })
             .filter(Boolean);

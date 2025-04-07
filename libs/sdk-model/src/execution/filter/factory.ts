@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
 import isNil from "lodash/isNil.js";
 import {
@@ -118,12 +118,15 @@ export function newNegativeAttributeFilter(
  * @param dateDataSet - ref or identifier of the date data set to filter on
  * @param from - start of the interval in ISO-8601 calendar date format
  * @param to - end of the interval in ISO-8601 calendar date format
+ * @param localIdentifier - filter local identifier
+ *
  * @public
  */
 export function newAbsoluteDateFilter(
     dateDataSet: ObjRef | Identifier,
     from: string,
     to: string,
+    localIdentifier?: string,
 ): IAbsoluteDateFilter {
     const dataSet = isObjRef(dateDataSet) ? dateDataSet : idRef(dateDataSet);
     return {
@@ -131,6 +134,7 @@ export function newAbsoluteDateFilter(
             dataSet,
             from,
             to,
+            ...(localIdentifier ? { localIdentifier } : {}),
         },
     };
 }
@@ -142,6 +146,7 @@ export function newAbsoluteDateFilter(
  * @param granularity - granularity of the filters (month, year, etc.)
  * @param from - start of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
  * @param to - end of the interval – negative numbers mean the past, zero means today, positive numbers mean the future
+ * @param localIdentifier - filter local identifier
  *
  * See also {@link DateAttributeGranularity} and {@link DateGranularity}
  * @public
@@ -151,6 +156,7 @@ export function newRelativeDateFilter(
     granularity: DateAttributeGranularity,
     from: number,
     to: number,
+    localIdentifier?: string,
 ): IRelativeDateFilter {
     const dataSet = isObjRef(dateDataSet) ? dateDataSet : idRef(dateDataSet);
     return {
@@ -159,6 +165,7 @@ export function newRelativeDateFilter(
             granularity,
             from,
             to,
+            ...(localIdentifier ? { localIdentifier } : {}),
         },
     };
 }
