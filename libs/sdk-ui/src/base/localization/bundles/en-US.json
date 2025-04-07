@@ -1102,13 +1102,38 @@
         "comment": "",
         "limit": 0
     },
-    "filters.relative.accessibility.label.period.from": {
-        "value": "Select period from",
+    "filters.relative.placeholder": {
+        "value": "Choose …",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "filters.relative.from.label": {
+        "value": "Period start",
         "comment": "",
         "limit": 0
     },
-    "filters.relative.accessibility.label.period.to": {
-        "value": "Select period to",
+    "filters.relative.from.invalid.value": {
+        "value": "Error: Invalid period start. Select it from the list.",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.relative.from.empty.value": {
+        "value": "Error: Start period cannot be empty. Select it from the list.",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.relative.to.label": {
+        "value": "Period end",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.relative.to.invalid.value": {
+        "value": "Error: Invalid period end. Select it from the list.",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.relative.to.empty.value": {
+        "value": "Error: End period cannot be empty. Select it from the list.",
         "comment": "",
         "limit": 0
     },

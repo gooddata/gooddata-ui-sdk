@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import noop from "lodash/noop.js";
@@ -80,8 +80,7 @@ describe("RelativeDateFilterForm", () => {
 
     it('should render "from" and "to" inputs', () => {
         createForm();
-        expect(screen.getByPlaceholderText("from")).toBeInTheDocument();
-        expect(screen.getByPlaceholderText("to")).toBeInTheDocument();
+        expect(screen.getAllByPlaceholderText("Choose …").length).toBe(2);
     });
 
     it("should fire onSelectedFilterOptionChange when granularity or inputs change", () => {
@@ -97,7 +96,7 @@ describe("RelativeDateFilterForm", () => {
             visible: true,
         });
 
-        fireEvent.change(screen.getByPlaceholderText("to"), { target: { value: "2" } });
+        fireEvent.change(screen.getAllByPlaceholderText("Choose …")[1], { target: { value: "2" } });
         fireEvent.click(screen.getByText("2 days ahead"));
 
         expect(onSelectedFilterOptionChange).toHaveBeenLastCalledWith({
@@ -109,7 +108,7 @@ describe("RelativeDateFilterForm", () => {
             visible: true,
         });
 
-        fireEvent.change(screen.getByPlaceholderText("from"), { target: { value: "-3" } });
+        fireEvent.change(screen.getAllByPlaceholderText("Choose …")[0], { target: { value: "-3" } });
         fireEvent.click(screen.getByText("3 days ago"));
 
         expect(onSelectedFilterOptionChange).toHaveBeenLastCalledWith({
