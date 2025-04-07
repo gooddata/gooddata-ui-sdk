@@ -804,6 +804,8 @@ export interface IDateTranslator {
 
 // @public
 export interface IExtendedDateFilterErrors {
+    // (undocumented)
+    absoluteDateTimeForm?: IDateFilterAbsoluteDateTimeFormErrors;
     absoluteForm?: IDateFilterAbsoluteFormErrors;
     relativeForm?: IDateFilterRelativeFormErrors;
 }
