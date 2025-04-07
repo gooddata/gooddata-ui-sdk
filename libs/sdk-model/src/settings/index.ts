@@ -656,6 +656,11 @@ export interface ISettings {
      */
     enableAutomationFilterContext?: boolean;
 
+    /**
+     * Enables storing date filter identifiers.
+     */
+    enableDateFilterIdentifiersRollout?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

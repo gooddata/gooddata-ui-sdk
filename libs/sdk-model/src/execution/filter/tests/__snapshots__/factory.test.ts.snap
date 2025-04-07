@@ -7,6 +7,7 @@ exports[`filter factory > newAbsoluteDateFilter > should generate correct filter
       "identifier": "foo",
     },
     "from": "2018-01-01",
+    "localIdentifier": "testLocalId",
     "to": "2018-12-31",
   },
 }
@@ -436,6 +437,7 @@ exports[`filter factory > newRelativeDateFilter > should generate correct filter
     },
     "from": 1,
     "granularity": "GDC.time.month",
+    "localIdentifier": "testLocalId",
     "to": 3,
   },
 }

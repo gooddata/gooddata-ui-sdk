@@ -3382,6 +3382,7 @@ export interface ISettings {
     enableDataSampling?: boolean;
     // (undocumented)
     enableDataSection?: boolean;
+    enableDateFilterIdentifiersRollout?: boolean;
     enableDefaultSmtp?: boolean;
     enableDescriptions?: boolean;
     enableDestinationTesting?: boolean;
@@ -4589,7 +4590,7 @@ export function modifySimpleMeasure(measure: IMeasure<IMeasureDefinition>, modif
 export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString, dataSet?: ObjRef): IDashboardDateFilter;
 
 // @public
-export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string): IAbsoluteDateFilter;
+export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string, localIdentifier?: string): IAbsoluteDateFilter;
 
 // @alpha
 export function newAllTimeDashboardDateFilter(dataSet?: ObjRef): IDashboardDateFilter;
@@ -4670,7 +4671,7 @@ export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string
 export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity, from: number, to: number, dataSet?: ObjRef): IDashboardDateFilter;
 
 // @public
-export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: DateAttributeGranularity, from: number, to: number): IRelativeDateFilter;
+export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: DateAttributeGranularity, from: number, to: number, localIdentifier?: string): IRelativeDateFilter;
 
 // @public
 export function newTotal(type: TotalType, measureOrId: IMeasure | Identifier, attributeOrId: IAttribute | Identifier, alias?: string): ITotal;
