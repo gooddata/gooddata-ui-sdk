@@ -85,6 +85,7 @@ export function dateFilterOptionToDashboardDateFilter(
     dateFilterOption: DateFilterOption,
     excludeCurrentPeriod: boolean,
     dataSet?: ObjRef,
+    localIdentifier?: string,
 ): IDashboardDateFilter | undefined {
     const tempDateDatasetId = dataSet ?? idRef("TEMP");
     const afmFilter = DateFilterHelpers.mapOptionToAfm(
@@ -100,6 +101,7 @@ export function dateFilterOptionToDashboardDateFilter(
                 type: "relative",
                 granularity: "GDC.time.date",
                 dataSet,
+                localIdentifier,
             },
         };
     }
@@ -113,6 +115,7 @@ export function dateFilterOptionToDashboardDateFilter(
                 from,
                 to,
                 dataSet,
+                localIdentifier,
             },
         };
     } else {
@@ -124,6 +127,7 @@ export function dateFilterOptionToDashboardDateFilter(
                 from,
                 to,
                 dataSet,
+                localIdentifier,
             },
         };
     }

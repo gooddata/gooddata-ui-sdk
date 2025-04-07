@@ -1,10 +1,9 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { useIntl } from "react-intl";
 import {
     ConfirmDialogBase,
     Overlay,
-    ContentDivider,
     OverlayControllerProvider,
     OverlayController,
     UiSkeleton,
@@ -53,7 +52,7 @@ export function DefaultLoadingScheduledEmailDialog({
                         )}
                     >
                         <div className="gd-notifications-channel-dialog-content-wrapper">
-                            <ContentDivider className="gd-divider-with-margin gd-divider-full-row" />
+                            <div className="gd-divider-with-margin" />
                             <UiSkeleton itemHeight={50} itemsCount={3} />
                         </div>
                     </ConfirmDialogBase>
