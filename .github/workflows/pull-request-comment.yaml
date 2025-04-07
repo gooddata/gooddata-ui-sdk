@@ -161,7 +161,7 @@ jobs:
     permissions:
       pull-requests: write
     needs: [e2e-run-isolated,e2e-record,e2e-integrated,e2e-backstop]
-    if: ${{ !cancelled() && startsWith(github.event.comment.body, 'extended-test') }}
+    if: ${{ !cancelled() && startsWith(github.event.comment.body, 'extended-test') && !startsWith(github.event.comment.body, 'extended-test-legacy') }}
     runs-on:
       group: infra1-runners-arc
       labels: runners-small
