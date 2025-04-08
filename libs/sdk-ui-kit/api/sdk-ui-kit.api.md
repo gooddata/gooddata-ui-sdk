@@ -5147,11 +5147,12 @@ export interface UiPagedVirtualListSkeletonItemProps {
 }
 
 // @internal (undocumented)
-export function UiSkeleton({ itemsCount, itemHeight, itemWidth, itemsGap, direction, }: UiSkeletonProps): React_2.JSX.Element;
+export function UiSkeleton({ itemsCount, itemHeight, itemWidth, itemsGap, direction, itemBorderRadius, }: UiSkeletonProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiSkeletonProps {
     direction?: "row" | "column";
+    itemBorderRadius?: number;
     itemHeight?: (number | string) | (number | string)[];
     itemsCount?: number;
     itemsGap?: number;

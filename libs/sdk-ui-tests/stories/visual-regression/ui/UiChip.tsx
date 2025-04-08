@@ -23,10 +23,23 @@ const isDeletableActive = propCombination("isDeletable", [true], { isActive: tru
 
 const isLocked = propCombination("isLocked", [true]);
 
+const shortLabel = propCombination("label", ["State name: All"]);
+const shortLabelDeletable = propCombination("label", ["State name: All"], { isDeletable: true });
+
 const UiChipTest: React.FC<{ showCode?: boolean }> = ({ showCode }) => (
     <div className="screenshot-target">
         <ComponentTable
-            rowsBy={[basic, isActive, iconBefore, iconBeforeActive, isDeletable, isDeletableActive, isLocked]}
+            rowsBy={[
+                basic,
+                isActive,
+                iconBefore,
+                iconBeforeActive,
+                isDeletable,
+                isDeletableActive,
+                isLocked,
+                shortLabel,
+                shortLabelDeletable,
+            ]}
             Component={UiChip}
             codeSnippet={showCode ? "UiChip" : undefined}
             align="center"
