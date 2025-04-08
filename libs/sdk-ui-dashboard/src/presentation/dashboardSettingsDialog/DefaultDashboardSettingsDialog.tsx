@@ -19,6 +19,7 @@ import {
     selectSettings,
     selectWeekStart,
     useDashboardSelector,
+    selectIsWhiteLabeled,
 } from "../../model/index.js";
 
 import { IDashboardSettingsDialogProps } from "./types.js";
@@ -44,6 +45,7 @@ export const DefaultDashboardSettingsDialog = (props: IDashboardSettingsDialogPr
     );
     const isFilterViewsFeatureEnabled = useDashboardSelector(selectEnableFilterViews);
     const settings = useDashboardSelector(selectSettings);
+    const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
 
     const onApplyHandler = useCallback(() => {
         onApply(currentData);
@@ -162,6 +164,7 @@ export const DefaultDashboardSettingsDialog = (props: IDashboardSettingsDialogPr
                         weekStart={weekStart}
                         locale={locale}
                         showInheritValue={true}
+                        isWhiteLabeled={isWhiteLabeled}
                     />
                     <div className="gd-dashboard-settings-evaluation-note">
                         {currentData.evaluationFrequency === undefined ? (

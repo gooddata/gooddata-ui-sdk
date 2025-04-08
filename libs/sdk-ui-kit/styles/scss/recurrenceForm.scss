@@ -17,6 +17,9 @@ $input-width: 128px;
             min-width: 100px;
         }
     }
+    .gd-recurrence-form-repeat-cron {
+        margin-bottom: 0;
+    }
 
     .gd-recurrence-form-datetime {
         display: flex;
@@ -88,6 +91,35 @@ $input-width: 128px;
 
     .gd-recurrence-form-datetime-help {
         color: variables.$gd-color-state-blank;
+    }
+    .gd-recurrence-form-hint-wrapper {
+        margin-bottom: 20px;
+
+        .gd-recurrence-form-cron-help,
+        .gd-recurrence-form-cron-error-message {
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 13px;
+        }
+
+        .gd-recurrence-form-cron-help,
+        .gd-recurrence-form-cron-help a {
+            color: variables.$gd-color-state-blank;
+        }
+
+        .gd-recurrence-form-cron-help a {
+            text-decoration: underline;
+        }
+
+        .gd-recurrence-form-cron-error-message {
+            color: variables.$gd-color-negative;
+        }
+
+        .gd-recurrence-form-cron-error-message a {
+            text-decoration: underline;
+            color: variables.$gd-color-negative;
+        }
     }
 
     .gd-recurrence-form-repeat {
@@ -166,6 +198,16 @@ $input-width: 128px;
         .gd-recurrence-form-datetime-timezone {
             margin-top: 10px;
             color: variables.$gd-color-link;
+        }
+    }
+}
+
+@media #{variables.$medium-up} {
+    .gd-notifications-channel-dialog-content-wrapper {
+        .gd-recurrence-form {
+            .gd-recurrence-form-hint-wrapper {
+                margin-left: 105px;
+            }
         }
     }
 }

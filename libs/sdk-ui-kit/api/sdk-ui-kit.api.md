@@ -3522,6 +3522,8 @@ export interface IRecurrenceFormProps {
     // (undocumented)
     dateFormat?: string;
     // (undocumented)
+    isWhiteLabeled?: boolean;
+    // (undocumented)
     locale?: string;
     // (undocumented)
     onChange: (cronExpression: string, startDate: Date | null, isValid: boolean) => void;
@@ -3559,6 +3561,8 @@ export interface IRecurrenceProps {
     cronValue: string;
     // (undocumented)
     inheritRecurrenceType?: RecurrenceType;
+    // (undocumented)
+    isWhiteLabeled?: boolean;
     // (undocumented)
     label: string;
     // (undocumented)

@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import { RecurrenceForm } from "@gooddata/sdk-ui-kit";
@@ -9,6 +9,7 @@ import { UiKit } from "../../../_infra/storyGroups.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
+import "./styles.scss";
 
 const headerStyle = { marginBottom: "6px" };
 const startDate = new Date("2021-02-11T02:03:14Z");

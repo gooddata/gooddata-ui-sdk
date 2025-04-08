@@ -1,12 +1,16 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
+import cx from "classnames";
 import { RepeatTypeSelect } from "./RepeatTypeSelect.js";
 import { CronExpression } from "./CronExpression.js";
 import { RECURRENCE_TYPES } from "./constants.js";
 import { RecurrenceType } from "./types.js";
 import { RepeatTypeDescription } from "./RepeatTypeDescription.js";
 import { WeekStart } from "@gooddata/sdk-model";
+import { CronExpressionSuggestion } from "./CronExpressionSuggestion.js";
+import { useCronValidation } from "./useCronValidation.js";
+import { useId } from "../utils/useId.js";
 
 /**
  * @internal
@@ -26,6 +30,7 @@ export interface IRecurrenceProps {
     onCronValueChange: (cronValue: string, isValid: boolean) => void;
     allowHourlyRecurrence?: boolean;
     showTimezoneInOccurrence?: boolean;
+    isWhiteLabeled?: boolean;
     onRecurrenceDropdownOpen?: () => void;
 }
 
@@ -50,9 +55,22 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
         showTimezoneInOccurrence,
         showRepeatTypeDescription,
         showInheritValue,
+        isWhiteLabeled,
         weekStart = "Sunday",
         onRecurrenceDropdownOpen,
     } = props;
+
+    const { cronError, handleChange, handleOnBlur } = useCronValidation({
+        allowHourlyRecurrence,
+        onCronValueChange,
+    });
+
+    const labelId = `${useId()}-label`;
+    const errorId = `${useId()}-error`;
+
+    const recurrenceFormClasses = cx("gd-recurrence-form-repeat", "gd-input-component", {
+        "gd-recurrence-form-repeat-cron": recurrenceType === RECURRENCE_TYPES.CRON,
+    });
 
     const isInherit = recurrenceType === RECURRENCE_TYPES.INHERIT;
     const isCron =
@@ -62,45 +80,58 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
         recurrenceType !== RECURRENCE_TYPES.CRON ||
         (isInherit && inheritRecurrenceType !== RECURRENCE_TYPES.CRON);
 
-    const accessibilityValue = "schedule.recurrence";
     return (
-        <div className="gd-recurrence-form-repeat gd-input-component">
-            {label ? (
-                <label htmlFor={accessibilityValue} className="gd-label">
-                    {label}
-                </label>
-            ) : null}
-            <div className="gd-recurrence-form-repeat-inner">
-                <RepeatTypeSelect
-                    id={accessibilityValue}
-                    repeatType={recurrenceType}
-                    startDate={startDate}
-                    onChange={onRepeatTypeChange}
-                    allowHourlyRecurrence={allowHourlyRecurrence}
-                    showInheritValue={showInheritValue}
-                    onRepeatDropdownOpen={onRecurrenceDropdownOpen}
-                />
-                {isSpecified && showRepeatTypeDescription ? (
-                    <RepeatTypeDescription
-                        repeatType={isInherit ? inheritRecurrenceType : recurrenceType}
+        <>
+            <div className={recurrenceFormClasses}>
+                {label ? (
+                    <label id={labelId} className="gd-label">
+                        {label}
+                    </label>
+                ) : null}
+                <div className="gd-recurrence-form-repeat-inner">
+                    <RepeatTypeSelect
+                        repeatType={recurrenceType}
                         startDate={startDate}
-                        weekStart={weekStart}
-                        timezone={timezone}
-                        showTimezone={Boolean(showTimezoneInOccurrence && !isInherit)}
-                    />
-                ) : null}
-                {isCron ? (
-                    <CronExpression
-                        id={accessibilityValue}
-                        expression={isInherit ? cronPlaceholder : cronValue}
-                        onChange={onCronValueChange}
+                        onChange={onRepeatTypeChange}
                         allowHourlyRecurrence={allowHourlyRecurrence}
-                        timezone={timezone}
-                        showTimezone={showTimezoneInOccurrence}
-                        disabled={isInherit}
+                        showInheritValue={showInheritValue}
+                        onRepeatDropdownOpen={onRecurrenceDropdownOpen}
                     />
-                ) : null}
+                    {isSpecified && showRepeatTypeDescription ? (
+                        <RepeatTypeDescription
+                            repeatType={isInherit ? inheritRecurrenceType : recurrenceType}
+                            startDate={startDate}
+                            weekStart={weekStart}
+                            timezone={timezone}
+                            showTimezone={Boolean(showTimezoneInOccurrence && !isInherit)}
+                        />
+                    ) : null}
+                    {isCron ? (
+                        <CronExpression
+                            expression={isInherit ? cronPlaceholder : cronValue}
+                            onChange={handleChange}
+                            allowHourlyRecurrence={allowHourlyRecurrence}
+                            timezone={timezone}
+                            showTimezone={showTimezoneInOccurrence}
+                            validationError={cronError}
+                            onBlur={handleOnBlur}
+                            accessibilityConfig={{
+                                ariaDescribedBy: cronError ? errorId : undefined,
+                                ariaLabelledBy: labelId,
+                            }}
+                            disabled={isInherit}
+                        />
+                    ) : null}
+                </div>
             </div>
-        </div>
+            {!isInherit ? (
+                <CronExpressionSuggestion
+                    errorId={errorId}
+                    validationError={cronError}
+                    recurrenceType={recurrenceType}
+                    isWhiteLabeled={isWhiteLabeled}
+                />
+            ) : null}
+        </>
     );
 };
