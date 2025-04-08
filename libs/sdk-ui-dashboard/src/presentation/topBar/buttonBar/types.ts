@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { ComponentType } from "react";
 import {
     ICancelButtonProps,
@@ -6,6 +6,7 @@ import {
     ISaveButtonProps,
     ISaveAsNewButtonProps,
     IShareButtonProps,
+    ISettingButtonProps,
 } from "./button/types.js";
 
 /**
@@ -20,6 +21,7 @@ export interface IButtonBarProps {
     cancelButtonProps: ICancelButtonProps;
     editButtonProps: IEditButtonProps;
     saveButtonProps: ISaveButtonProps;
+    settingButtonProps: ISettingButtonProps;
     saveAsNewButtonProps: ISaveAsNewButtonProps;
     children?: React.ReactNode;
 }

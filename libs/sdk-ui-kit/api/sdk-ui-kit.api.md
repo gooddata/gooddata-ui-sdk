@@ -2888,6 +2888,7 @@ export interface IMeasureNumberFormatOwnProps {
 // @internal
 export interface IMediaQueries {
     "!mobileDevice": string;
+    "<=md": string;
     "<desktop": string;
     "<sm": string;
     ">=lg": string;
@@ -3517,7 +3518,7 @@ export interface IRecurrenceFormProps {
     // (undocumented)
     className?: string;
     // (undocumented)
-    cronExpression: string;
+    cronExpression?: string;
     // (undocumented)
     dateFormat?: string;
     // (undocumented)
@@ -3526,6 +3527,8 @@ export interface IRecurrenceFormProps {
     onChange: (cronExpression: string, startDate: Date | null, isValid: boolean) => void;
     // (undocumented)
     onRecurrenceDropdownOpen?: () => void;
+    // (undocumented)
+    placeholder?: string;
     // (undocumented)
     repeatLabel?: string;
     // (undocumented)
@@ -3548,6 +3551,8 @@ export interface IRecurrenceFormProps {
 export interface IRecurrenceProps {
     // (undocumented)
     allowHourlyRecurrence?: boolean;
+    // (undocumented)
+    cronPlaceholder?: string;
     // (undocumented)
     cronValue: string;
     // (undocumented)

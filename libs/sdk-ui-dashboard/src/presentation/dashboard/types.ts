@@ -23,6 +23,7 @@ import {
     CustomButtonBarComponent,
     CustomMenuButtonComponent,
     CustomSaveButtonComponent,
+    CustomSettingButtonComponent,
     CustomTitleComponent,
     CustomTopBarComponent,
     IMenuButtonConfiguration,
@@ -52,6 +53,7 @@ import { CustomSidebarComponent } from "./DashboardSidebar/types.js";
 import { InsightComponentSetProvider } from "../componentDefinition/types.js";
 import { CustomToolbarComponent } from "../toolbar/index.js";
 import { CustomAlertingDialogComponent, CustomAlertingManagementDialogComponent } from "../alerting/types.js";
+import { CustomDashboardSettingsDialogComponent } from "../dashboardSettingsDialog/index.js";
 
 /**
  * These props allow you to specify custom components or custom component providers that the Dashboard
@@ -442,6 +444,26 @@ export interface IDashboardCustomComponentProps {
      * @internal
      */
     SaveButtonComponent?: CustomSaveButtonComponent;
+
+    /**
+     * Specify the component rendered as setting button.
+     *
+     * @remarks
+     * If not provided, the default implementation {@link DefaultSettingButton} will be used.
+     *
+     * @internal
+     */
+    SettingButtonComponent?: CustomSettingButtonComponent;
+
+    /**
+     * Specify the component rendered for dashboard settings dialog.
+     *
+     * @remarks
+     * If not provided, the default implementation {@link DefaultDashboardSettingsDialog} will be used.
+     *
+     * @internal
+     */
+    DashboardSettingsDialogComponent?: CustomDashboardSettingsDialogComponent;
 }
 
 /**

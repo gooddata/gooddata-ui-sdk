@@ -31,6 +31,7 @@ import {
     DefaultButtonBar,
     DefaultMenuButton,
     DefaultSaveButton,
+    DefaultSettingButton,
     RenderModeAwareTitle,
     RenderModeAwareTopBar,
 } from "../../topBar/index.js";
@@ -50,6 +51,7 @@ import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeA
 import { DASHBOARD_OVERLAYS_Z_INDEX } from "../../constants/index.js";
 import { DashboardItemPathAndSizeProvider } from "./DashboardItemPathAndSizeContext.js";
 import { RenderModeAwareFilterBar } from "../../filterBar/index.js";
+import { DefaultDashboardSettingsDialog } from "../../dashboardSettingsDialog/index.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_Z_INDEX);
 /**
@@ -176,6 +178,13 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         }
                                         SaveButtonComponent={props.SaveButtonComponent ?? DefaultSaveButton}
                                         DashboardContentComponentProvider={dashboardContentProvider}
+                                        SettingButtonComponent={
+                                            props.SettingButtonComponent ?? DefaultSettingButton
+                                        }
+                                        DashboardSettingsDialogComponent={
+                                            props.DashboardSettingsDialogComponent ??
+                                            DefaultDashboardSettingsDialog
+                                        }
                                     >
                                         <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
                                             <DndProvider backend={HTML5Backend}>

@@ -98,6 +98,7 @@ import { DashboardLayoutSectionItemReplaced as DashboardLayoutSectionItemReplace
 import { DashboardLayoutSectionItemsAdded as DashboardLayoutSectionItemsAdded_2 } from '../events/layout.js';
 import { DashboardLayoutSectionMoved as DashboardLayoutSectionMoved_2 } from '../events/layout.js';
 import { DashboardLayoutSectionRemoved as DashboardLayoutSectionRemoved_2 } from '../events/layout.js';
+import { DashboardMetaState as DashboardMetaState_2 } from './metaState.js';
 import { DashboardQueryCompleted as DashboardQueryCompleted_2 } from '../events/general.js';
 import { DashboardQueryFailed as DashboardQueryFailed_2 } from '../events/general.js';
 import { DashboardQueryRejected as DashboardQueryRejected_2 } from '../events/general.js';
@@ -1324,6 +1325,9 @@ export type CustomDashboardRichTextMenuComponent = ComponentType<IDashboardRichT
 // @internal (undocumented)
 export type CustomDashboardRichTextMenuTitleComponent = ComponentType<IDashboardRichTextMenuTitleProps>;
 
+// @alpha (undocumented)
+export type CustomDashboardSettingsDialogComponent = ComponentType<IDashboardSettingsDialogProps>;
+
 // @public (undocumented)
 export type CustomDashboardVisualizationSwitcherComponent = ComponentType<IDashboardVisualizationSwitcherProps>;
 
@@ -1374,6 +1378,9 @@ export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailD
 
 // @alpha (undocumented)
 export type CustomScheduledEmailManagementDialogComponent = ComponentType<IScheduledEmailManagementDialogProps>;
+
+// @beta (undocumented)
+export type CustomSettingButtonComponent = ComponentType<ISettingButtonProps>;
 
 // @alpha (undocumented)
 export type CustomShareButtonComponent = ComponentType<IShareButtonProps>;
@@ -3063,6 +3070,9 @@ export type DashboardSelector<TResult> = (state: DashboardState) => TResult;
 // @public
 export type DashboardSelectorEvaluator = <TResult>(selector: DashboardSelector<TResult>) => TResult;
 
+// @internal (undocumented)
+export const DashboardSettingsDialog: (props: IDashboardSettingsDialogProps) => JSX.Element;
+
 // @public
 export interface DashboardSharingChanged extends IDashboardEvent {
     // (undocumented)
@@ -3416,6 +3426,9 @@ export const DefaultDashboardRichTextMenu: (props: IDashboardRichTextMenuProps) 
 // @internal (undocumented)
 export const DefaultDashboardRichTextMenuTitle: CustomDashboardRichTextMenuTitleComponent;
 
+// @alpha (undocumented)
+export const DefaultDashboardSettingsDialog: (props: IDashboardSettingsDialogProps) => JSX.Element | null;
+
 // @beta
 export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
 
@@ -3466,6 +3479,9 @@ export const DefaultScheduledEmailDialog: React_2.FC<IScheduledEmailDialogProps>
 
 // @alpha (undocumented)
 export const DefaultScheduledEmailManagementDialog: React_2.FC<IScheduledEmailManagementDialogProps>;
+
+// @internal (undocumented)
+export function DefaultSettingButton({ isVisible, isEnabled, isSaving, buttonTitle, buttonValue, onSettingClick, }: ISettingButtonProps): React_2.JSX.Element | null;
 
 // @alpha (undocumented)
 export const DefaultShareButton: React_2.FC<IShareButtonProps>;
@@ -4308,6 +4324,8 @@ export interface IButtonBarProps {
     // (undocumented)
     saveButtonProps: ISaveButtonProps;
     // (undocumented)
+    settingButtonProps: ISettingButtonProps;
+    // (undocumented)
     shareButtonProps: IShareButtonProps;
 }
 
@@ -4488,6 +4506,8 @@ export interface IDashboardCustomComponentProps {
     DashboardDateFilterComponentProvider?: OptionalDateFilterComponentProvider;
     DashboardLayoutComponentProvider?: OptionalDashboardLayoutComponentProvider;
     // @internal
+    DashboardSettingsDialogComponent?: CustomDashboardSettingsDialogComponent;
+    // @internal
     EmptyLayoutDropZoneBodyComponent?: CustomEmptyLayoutDropZoneBodyComponent;
     // @alpha
     ErrorComponent?: ComponentType<IErrorProps>;
@@ -4523,6 +4543,8 @@ export interface IDashboardCustomComponentProps {
     ScheduledEmailDialogComponent?: CustomScheduledEmailDialogComponent;
     // @alpha
     ScheduledEmailManagementDialogComponent?: CustomScheduledEmailManagementDialogComponent;
+    // @internal
+    SettingButtonComponent?: CustomSettingButtonComponent;
     // @alpha
     ShareDialogComponent?: CustomShareDialogComponent;
     // @alpha
@@ -4876,6 +4898,28 @@ export interface IDashboardRichTextProps {
     widget: IRichTextWidget;
     // @alpha
     workspace?: string;
+}
+
+// @alpha (undocumented)
+export interface IDashboardSettingsApplyPayload {
+    // (undocumented)
+    disableCrossFiltering: boolean;
+    // (undocumented)
+    disableFilterViews: boolean;
+    // (undocumented)
+    disableUserFilterReset: boolean;
+    // (undocumented)
+    disableUserFilterSave: boolean;
+}
+
+// @alpha (undocumented)
+export interface IDashboardSettingsDialogProps {
+    backend: IAnalyticalBackend;
+    isVisible?: boolean;
+    onApply: (payload: IDashboardSettingsApplyPayload) => void;
+    onCancel: () => void;
+    onError?: (error: GoodDataSdkError) => void;
+    workspace: string;
 }
 
 // @internal
@@ -5426,6 +5470,7 @@ export interface IMenuButtonItemsVisibility {
     powerPointExportButton?: boolean;
     saveAsNewButton?: boolean;
     scheduleEmailButton?: boolean;
+    settingsButton?: boolean;
 }
 
 // @alpha (undocumented)
@@ -6219,6 +6264,22 @@ export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition
 // @alpha
 export const isDrillTargetsAdded: (obj: unknown) => obj is DrillTargetsAdded;
 
+// @beta (undocumented)
+export interface ISettingButtonProps {
+    // (undocumented)
+    buttonTitle: MessageDescriptor;
+    // (undocumented)
+    buttonValue: MessageDescriptor;
+    // (undocumented)
+    isEnabled: boolean;
+    // (undocumented)
+    isSaving: boolean;
+    // (undocumented)
+    isVisible: boolean;
+    // (undocumented)
+    onSettingClick: () => void;
+}
+
 // @public
 export function isExtendedDashboardLayoutWidget(obj: unknown): obj is ExtendedDashboardLayoutWidget;
 
@@ -6639,6 +6700,37 @@ export interface MeasureDateDatasets {
 
 // @internal (undocumented)
 export const MenuButton: (props: IMenuButtonProps) => JSX.Element;
+
+// @internal
+export const metaActions: CaseReducerActions<    {
+setMeta: (state: WritableDraft<DashboardMetaState_2>, action: {
+payload: {
+dashboard?: IDashboard<IDashboardWidget> | undefined;
+initialContent?: boolean | undefined;
+};
+type: string;
+}) => void | DashboardMetaState_2 | WritableDraft<DashboardMetaState_2>;
+setDashboardTitle: (state: WritableDraft<DashboardMetaState_2>, action: {
+payload: string;
+type: string;
+}) => void | DashboardMetaState_2 | WritableDraft<DashboardMetaState_2>;
+setDisableCrossFiltering: (state: WritableDraft<DashboardMetaState_2>, action: {
+payload: boolean;
+type: string;
+}) => void | DashboardMetaState_2 | WritableDraft<DashboardMetaState_2>;
+setDisableUserFilterReset: (state: WritableDraft<DashboardMetaState_2>, action: {
+payload: boolean;
+type: string;
+}) => void | DashboardMetaState_2 | WritableDraft<DashboardMetaState_2>;
+setDisableUserFilterSave: (state: WritableDraft<DashboardMetaState_2>, action: {
+payload: boolean;
+type: string;
+}) => void | DashboardMetaState_2 | WritableDraft<DashboardMetaState_2>;
+setDisableFilterViews: (state: WritableDraft<DashboardMetaState_2>, action: {
+payload: boolean;
+type: string;
+}) => void | DashboardMetaState_2 | WritableDraft<DashboardMetaState_2>;
+}, "meta">;
 
 // @alpha
 export type MetaExportData = {
@@ -8196,6 +8288,9 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (ref: ObjRef) => Dash
 // @internal (undocumented)
 export const selectConfiguredDrillsByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWithPredicates[]>;
 
+// @internal (undocumented)
+export const selectCrossFilteringEnabledAndSupported: DashboardSelector<boolean>;
+
 // @beta (undocumented)
 export const selectCrossFilteringFiltersLocalIdentifiers: DashboardSelector<string[]>;
 
@@ -8844,6 +8939,9 @@ export const selectIsScheduleEmailManagementDialogOpen: DashboardSelector<boolea
 // @internal (undocumented)
 export const selectIsSectionInsertedByPlugin: (refs: (ObjRef | undefined)[]) => DashboardSelector<boolean>;
 
+// @alpha (undocumented)
+export const selectIsSettingsDialogOpen: DashboardSelector<boolean>;
+
 // @internal
 export const selectIsShareButtonHidden: DashboardSelector<boolean>;
 
@@ -8969,6 +9067,9 @@ export const selectSeparators: DashboardSelector<ISeparators>;
 
 // @public
 export const selectSettings: DashboardSelector<ISettings>;
+
+// @internal
+export const selectSettingsVisible: DashboardSelector<boolean>;
 
 // @internal
 export const selectShouldHidePixelPerfectExperience: DashboardSelector<string | number | boolean | object>;
@@ -9358,6 +9459,9 @@ export interface SetScreenSizePayload {
 }
 
 // @internal (undocumented)
+export const SettingButton: (props: ISettingButtonProps) => JSX.Element;
+
+// @internal (undocumented)
 export const ShareButton: (props: IShareButtonProps) => JSX.Element;
 
 // @internal (undocumented)
@@ -9468,6 +9572,8 @@ export interface TriggerEventPayload {
 
 // @internal
 export const uiActions: CaseReducerActions<    {
+openSettingsDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+closeSettingsDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 openScheduleEmailDialog: (state: WritableDraft<UiState_2>, action: {
 payload: IScheduleEmailContext_2;
 type: string;
@@ -9711,6 +9817,10 @@ export interface UiState {
     selectedFilterIndex: number | undefined;
     // (undocumented)
     selectedWidgetRef: ObjRef | undefined;
+    // (undocumented)
+    settingsDialog: {
+        open: boolean;
+    };
     // (undocumented)
     shareDialog: {
         open: boolean;
@@ -10587,6 +10697,9 @@ export function useSaveButtonProps(): ISaveButtonProps;
 
 // @alpha (undocumented)
 export const useSectionExportData: (depth: number) => SectionExportData | undefined;
+
+// @internal (undocumented)
+export function useSettingButtonProps(): ISettingButtonProps;
 
 // @internal (undocumented)
 export function useShareButtonProps(): IShareButtonProps;

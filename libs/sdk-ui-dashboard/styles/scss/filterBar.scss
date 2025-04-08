@@ -506,27 +506,6 @@ $attribute-filter-drag-handle-left: 10px;
     height: 100%;
 }
 
-.gd-filters-configuration-button {
-    margin: 18px 11px 0;
-    height: 18px;
-    width: 18px;
-    cursor: pointer;
-}
-
-.gd-filters-configuration__header {
-    height: 35px;
-}
-
-.gd-filter-configuration__help-icon {
-    &::before {
-        color: kit-variables.$gd-color-state-blank;
-    }
-}
-
-.gd-filter-configuration__help-tooltip {
-    width: 220px;
-}
-
 // --- Filter Views configuration panel open button
 
 .gd-filter-views {

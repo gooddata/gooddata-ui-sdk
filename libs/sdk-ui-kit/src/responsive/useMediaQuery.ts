@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { useResponsiveContext } from "./ResponsiveContext.js";
 import { useMediaQuery as useReactResponsiveMediaQuery } from "react-responsive";
 import { invariant } from "ts-invariant";
@@ -18,6 +18,7 @@ const getQueryMatching = (range: IMediaQueryRange) =>
     `${SCREEN} and (min-width:${range.lower}px) and (max-width:${range.upper}px)`;
 
 const getQueryMatchingOrGreater = (range: IMediaQueryRange) => `${SCREEN} and (min-width:${range.lower}px)`;
+const getQueryMatchingOrSmaller = (range: IMediaQueryRange) => `${SCREEN} and (max-width:${range.upper}px)`;
 
 /**
  * Hook, testing whether screen width matches provided media query.
@@ -74,6 +75,7 @@ export const useMediaQuery = (mediaQueryName: keyof IMediaQueries): boolean => {
         ">=sm": getQueryMatchingOrGreater(smallRange),
         sm: getQueryMatching(smallRange),
         ">=md": getQueryMatchingOrGreater(mediumRange),
+        "<=md": getQueryMatchingOrSmaller(mediumRange),
         md: getQueryMatching(mediumRange),
         ">=lg": getQueryMatchingOrGreater(largeRange),
         lg: getQueryMatching(largeRange),

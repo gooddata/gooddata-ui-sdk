@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { createSlice } from "@reduxjs/toolkit";
 import { metaReducers } from "./metaReducers.js";
 import { metaInitialState } from "./metaState.js";
@@ -10,4 +10,10 @@ const metaSlice = createSlice({
 });
 
 export const metaSliceReducer = metaSlice.reducer;
+
+/**
+ * Actions to control meta state of the dashboard.
+ *
+ * @internal
+ */
 export const metaActions = metaSlice.actions;

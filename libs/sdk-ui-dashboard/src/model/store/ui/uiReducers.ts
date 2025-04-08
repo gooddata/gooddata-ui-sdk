@@ -86,6 +86,14 @@ const closeSaveAsDialog: UiReducer = (state) => {
     state.saveAsDialog.open = false;
 };
 
+const openSettingsDialog: UiReducer = (state) => {
+    state.settingsDialog.open = true;
+};
+
+const closeSettingsDialog: UiReducer = (state) => {
+    state.settingsDialog.open = false;
+};
+
 const openShareDialog: UiReducer = (state) => {
     state.shareDialog.open = true;
 };
@@ -362,6 +370,8 @@ const resetIncompatibleDefaultFiltersOverrideMessage: UiReducer = (state) => {
 };
 
 export const uiReducers = {
+    openSettingsDialog,
+    closeSettingsDialog,
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
     setScheduleEmailDialogDefaultAttachment,

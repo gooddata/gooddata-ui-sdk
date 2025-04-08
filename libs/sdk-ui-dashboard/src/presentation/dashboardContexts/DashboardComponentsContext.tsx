@@ -15,6 +15,7 @@ import {
     CustomTitleComponent,
     CustomTopBarComponent,
     CustomSaveButtonComponent,
+    CustomSettingButtonComponent,
 } from "../topBar/types.js";
 import {
     CustomScheduledEmailDialogComponent,
@@ -50,6 +51,7 @@ import {
 } from "../componentDefinition/types.js";
 import { CustomToolbarComponent } from "../toolbar/types.js";
 import { CustomAlertingDialogComponent, CustomAlertingManagementDialogComponent } from "../alerting/types.js";
+import { CustomDashboardSettingsDialogComponent } from "../dashboardSettingsDialog/types.js";
 
 /**
  * @internal
@@ -92,7 +94,9 @@ interface IDashboardComponentsContext {
     DateFilterComponentSet: DateFilterComponentSet;
     EmptyLayoutDropZoneBodyComponent: CustomEmptyLayoutDropZoneBodyComponent;
     SaveButtonComponent: CustomSaveButtonComponent;
+    SettingButtonComponent: CustomSettingButtonComponent;
     DashboardContentComponentProvider: DashboardContentComponentProvider;
+    DashboardSettingsDialogComponent: CustomDashboardSettingsDialogComponent;
 }
 
 const ThrowMissingComponentError = (componentName: string) => () => {
@@ -149,6 +153,8 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     VisualizationSwitcherToolbarComponentProvider: ThrowMissingComponentError(
         "VisualizationSwitcherToolbarComponentProvider",
     ),
+    SettingButtonComponent: ThrowMissingComponentError("SettingButtonComponent"),
+    DashboardSettingsDialogComponent: ThrowMissingComponentError("DashboardSettingsDialogComponent"),
 });
 DashboardComponentsContext.displayName = "DashboardComponentsContext";
 

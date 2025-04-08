@@ -21,6 +21,7 @@ import {
     selectPdfExportVisible,
     selectSaveAsVisible,
     selectSlideShowExportVisible,
+    selectSettingsVisible,
 } from "../../../model/index.js";
 import { IMenuButtonItem } from "../types.js";
 
@@ -54,6 +55,7 @@ const buildMenuItemList = (menuSections: IMenuButtonItem[][]): IMenuButtonItem[]
 export function useDefaultMenuItems(): IMenuButtonItem[] {
     const intl = useIntl();
     const isMobile = useMediaQuery("mobileDevice");
+    const isSmall = useMediaQuery("<=md");
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const isEmptyLayout = !useDashboardSelector(selectLayoutHasAnalyticalWidgets); // we need at least one non-custom widget there
 
@@ -70,6 +72,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const dispatch = useDashboardDispatch();
     const openSaveAsDialog = useCallback(() => dispatch(uiActions.openSaveAsDialog()), [dispatch]);
     const openDeleteDialog = useCallback(() => dispatch(uiActions.openDeleteDialog()), [dispatch]);
+    const openSettingsDialog = useCallback(() => dispatch(uiActions.openSettingsDialog()), [dispatch]);
     const openFilterViewsListDialog = useCallback(
         () =>
             dispatch(
@@ -98,6 +101,10 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
 
         openSaveAsDialog();
     }, [isNewDashboard, openSaveAsDialog]);
+
+    const defaultOnSettings = useCallback(() => {
+        openSettingsDialog();
+    }, [openSettingsDialog]);
 
     const { exportDashboardToPdf, exportDashboardToPdfStatus } = useExportDashboardToPdf();
     const defaultOnExportToPdf = useCallback(() => {
@@ -153,6 +160,9 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isSaveAsVisible = useDashboardSelector(selectSaveAsVisible);
     const isSaveAsDisabled = isEmptyLayout || isNewDashboard || isReadOnly;
 
+    const isSettingsVisible = useDashboardSelector(selectSettingsVisible);
+    const isSettingsDisabled = isReadOnly;
+
     const isInProgress =
         exportDashboardToPdfStatus === "running" ||
         exportDashboardToExcelStatus === "running" ||
@@ -161,9 +171,34 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
 
     return useMemo<IMenuButtonItem[]>(() => {
         if (isNewDashboard) {
-            return [];
+            return buildMenuItemList([
+                // settings section
+                [
+                    {
+                        type: "button",
+                        itemId: "settings_item", // careful, also a s- class selector, do not change
+                        disabled: isSettingsDisabled,
+                        visible: isSmall && isSettingsVisible,
+                        itemName: intl.formatMessage({ id: "options.menu.settings" }),
+                        onClick: defaultOnSettings,
+                        icon: "gd-icon-settings",
+                    },
+                ],
+            ]);
         }
         return buildMenuItemList([
+            // settings section
+            [
+                {
+                    type: "button",
+                    itemId: "settings_item", // careful, also a s- class selector, do not change
+                    disabled: isSettingsDisabled,
+                    visible: isSmall && isSettingsVisible,
+                    itemName: intl.formatMessage({ id: "options.menu.settings" }),
+                    onClick: defaultOnSettings,
+                    icon: "gd-icon-settings",
+                },
+            ],
             // save as new section
             [
                 {
@@ -351,5 +386,9 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         menuButtonItemsVisibility.powerPointExportButton,
         isInProgress,
         canCreateAutomation,
+        isSettingsVisible,
+        isSettingsDisabled,
+        defaultOnSettings,
+        isSmall,
     ]);
 }
