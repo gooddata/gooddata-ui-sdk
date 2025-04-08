@@ -112,15 +112,17 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 100
+          ref: ${{ inputs.GIT_REVERSION }}
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
         with:
           name: git-action
           email: git-action@gooddata.com
-      - name: Checkout the correct commit corresponding to $GIT_REVISION
-        if: ${{ inputs.GIT_REVISION != 'master' }}
-        run: |
-          git checkout ${{ inputs.GIT_REVISION }}
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.githubuser }}/gdc-ui
+          ref: ${{ inputs.branch }}
+          token:  ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
       - name: Setup rush
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
