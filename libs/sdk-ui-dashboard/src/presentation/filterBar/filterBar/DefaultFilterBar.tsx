@@ -44,6 +44,7 @@ import {
     selectCrossFilteringFiltersLocalIdentifiers,
     selectIsWorkingFilterContextChanged,
     selectDashboardFiltersApplyMode,
+    selectCatalogAttributes,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
@@ -239,6 +240,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     );
     const dateFiltersModeMap = useDashboardSelector(selectEffectiveDateFiltersModeMap);
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
+    const attributes = useDashboardSelector(selectCatalogAttributes);
 
     const isExport = useDashboardSelector(selectIsExport);
     const { AttributeFilterComponentSet, DashboardDateFilterComponentProvider } =
@@ -308,6 +310,8 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                             key={filterOrPlaceholder.filterIndex}
                             onClose={closeAttributeSelection}
                             onSelect={selectDraggableFilter}
+                            attributes={attributes}
+                            dateDatasets={allDateDatasets}
                         />
                     );
                 } else if (isFilterBarAttributeFilter(filterOrPlaceholder)) {

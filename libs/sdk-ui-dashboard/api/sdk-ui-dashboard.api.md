@@ -331,7 +331,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
 export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string, selectionMode?: DashboardAttributeFilterSelectionMode, mode?: DashboardAttributeFilterConfigMode, initialSelection?: IAttributeElements, initialIsNegativeSelection?: boolean, localIdentifier?: string, primaryDisplayForm?: ObjRef, title?: string): AddAttributeFilter;
 
 // @internal (undocumented)
-export function AddAttributeFilterButton({ className, isOpen, title }: IAddAttributeFilterButtonProps): React_2.JSX.Element;
+export function AddAttributeFilterButton({ className, isOpen, title, onClick, }: IAddAttributeFilterButtonProps): React_2.JSX.Element;
 
 // @beta
 export interface AddAttributeFilterPayload {
@@ -585,7 +585,7 @@ export interface AttributeHierarchyModified extends IDashboardCommand {
 export function attributeHierarchyModified(correlationId?: string): AttributeHierarchyModified;
 
 // @internal (undocumented)
-export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, }: IDashboardAttributeFilterPlaceholderProps): React_2.JSX.Element;
+export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, }: IDashboardAttributeFilterPlaceholderProps): React_2.JSX.Element;
 
 // @alpha (undocumented)
 export type AutomationInteractionData = {
@@ -4262,6 +4262,8 @@ export interface IAddAttributeFilterButtonProps {
     // (undocumented)
     isOpen: boolean;
     // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
     title?: string;
 }
 
@@ -4435,13 +4437,23 @@ export interface IDashboardAttributeFilterParentItem {
 // @internal (undocumented)
 export interface IDashboardAttributeFilterPlaceholderProps {
     // (undocumented)
+    attributes: ICatalogAttribute[];
+    // (undocumented)
     bodyClassName?: string;
     // (undocumented)
     className?: string;
     // (undocumented)
+    dateDatasets: ICatalogDateDataset[];
+    // (undocumented)
+    DropdownButtonComponent?: ComponentType<IAddAttributeFilterButtonProps>;
+    // (undocumented)
+    DropdownTitleComponent?: ComponentType;
+    // (undocumented)
     onClose: () => void;
     // (undocumented)
     onSelect: (displayForm: ObjRef) => void;
+    // (undocumented)
+    openOnInit?: boolean;
 }
 
 // @public (undocumented)
