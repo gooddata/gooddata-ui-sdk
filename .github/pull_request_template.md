@@ -42,7 +42,6 @@ extended-test --record --filter test1.spec.ts,test2.spec.ts
 
 ```
 extended-test-legacy --backstop
-extended-test-legacy --integrated
 extended-test-legacy --isolated
 extended-test-legacy --record
 ```
