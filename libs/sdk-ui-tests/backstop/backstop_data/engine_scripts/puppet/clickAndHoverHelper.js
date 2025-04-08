@@ -1,3 +1,5 @@
+// (C) 2025 GoodData Corporation
+
 /* eslint-disable no-console,header/header */
 
 const debug = process.env.BACKSTOP_DEBUG;
@@ -22,7 +24,7 @@ async function withVisibleSelector(page, scenario, selector, fun) {
             "| seems to use some fishy React components. Elements may be momentarily flashing in and out of visibility.",
         );
 
-        await page.waitForSelector(selector, { visible: true, timeout: 50 });
+        await page.waitForSelector(selector, { visible: true, timeout: 100 });
         await fun();
     }
 }

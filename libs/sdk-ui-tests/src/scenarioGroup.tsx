@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import React from "react";
 import { invariant } from "ts-invariant";
@@ -308,6 +308,11 @@ export type VisualTestConfiguration = {
      * screenshot.
      */
     groupUnder?: string;
+
+    /**
+     * Specify the amount of time to wait after an interaction before taking a screenshot.
+     */
+    postInteractionWait?: number;
 };
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import {
     RankingFilter,
@@ -18,10 +18,10 @@ const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
 const dropdownScenarios = {
     default: {},
-    operatorDropdownOpened: { clickSelector: ".s-rf-operator-dropdown-button", postInteractionWait: 200 },
-    valueDropdownOpened: { clickSelector: ".s-rf-value-dropdown-button", postInteractionWait: 200 },
-    attributeDropdownOpened: { clickSelector: ".s-rf-attribute-dropdown-button", postInteractionWait: 200 },
-    measureDropdownOpened: { clickSelector: ".s-rf-measure-dropdown-button", postInteractionWait: 200 },
+    operatorDropdownOpened: { clickSelector: ".s-rf-operator-dropdown-button", postInteractionWait: 500 },
+    valueDropdownOpened: { clickSelector: ".s-rf-value-dropdown-button", postInteractionWait: 500 },
+    attributeDropdownOpened: { clickSelector: ".s-rf-attribute-dropdown-button", postInteractionWait: 500 },
+    measureDropdownOpened: { clickSelector: ".s-rf-measure-dropdown-button", postInteractionWait: 500 },
 };
 
 const dropdownWithOneAttributeItemScenarios = {

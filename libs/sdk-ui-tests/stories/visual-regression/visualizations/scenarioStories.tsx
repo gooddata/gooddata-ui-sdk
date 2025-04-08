@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { createElementCountResolver, ScreenshotReadyWrapper } from "../../_infra/ScreenshotReadyWrapper.js";
 import React from "react";
 import groupBy from "lodash/groupBy.js";
@@ -94,6 +94,7 @@ ScenarioGroupsByVis.forEach((groups) => {
 
         // group may specify the size for its screenshots; if not there, use the default
         const wrapperStyle = group.testConfig.visual.screenshotSize || DefaultWrapperStyle;
+        const postInteractionWait = group.testConfig?.visual?.postInteractionWait;
 
         if (group.testConfig.visual.groupUnder) {
             // group may specify, that the scenarios should be grouped under a single story
@@ -104,6 +105,17 @@ ScenarioGroupsByVis.forEach((groups) => {
             // otherwise there will be story-per-scenario
             const scenarios = visualOnly.asScenarioDescAndScenario();
 
+            let config: any = {
+                screenshot: true,
+            };
+
+            if (postInteractionWait) {
+                config = {
+                    ...config,
+                    postInteractionWait: postInteractionWait,
+                };
+            }
+
             scenarios.forEach(([name, scenario]) => {
                 const { propsFactory, workspaceType, component: Component } = scenario;
                 const props = propsFactory(
@@ -111,9 +123,7 @@ ScenarioGroupsByVis.forEach((groups) => {
                     workspaceType,
                 );
 
-                storiesForChart.add(name, buildStory(Component, props, wrapperStyle, scenario.tags), {
-                    screenshot: true,
-                });
+                storiesForChart.add(name, buildStory(Component, props, wrapperStyle, scenario.tags), config);
             });
         }
     }
