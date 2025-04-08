@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -52,7 +52,7 @@ export const PopUpLegend: React.FC<IPopUpLegendProps> = (props) => {
     };
 
     return (
-        <div aria-label="Pop up legend">
+        <div data-testid="pop-up-legend">
             <RowLegend
                 legendLabel={name}
                 maxRowsCount={maxRows}

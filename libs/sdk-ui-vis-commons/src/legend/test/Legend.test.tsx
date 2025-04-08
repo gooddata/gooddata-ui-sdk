@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop.js";
 import { render, screen } from "@testing-library/react";
@@ -59,12 +59,12 @@ describe("Legend", () => {
 
     it("should render heat map legend when type is heatmap", () => {
         createComponent({ heatmapLegend: true });
-        expect(screen.getByLabelText("Color legend")).toBeInTheDocument();
+        expect(screen.getByTestId("color-legend")).toBeInTheDocument();
     });
 
     it("should render pop up legend when is set `autoPositionWithPopup`", () => {
         const responsiveWithPopup = "autoPositionWithPopup";
         createComponent({ responsive: responsiveWithPopup, maximumRows: 1 });
-        expect(screen.getByLabelText("Pop up legend")).toBeInTheDocument();
+        expect(screen.getByTestId("pop-up-legend")).toBeInTheDocument();
     });
 });

@@ -20,25 +20,6 @@ const screenClasses: { [S in ScreenSize]: string } = {
     xl: "layout-xl",
 };
 
-const HiddenDescription = ({ children, id }: { children: React.ReactNode; id: string }) => (
-    <span
-        id={id}
-        style={{
-            border: 0,
-            clip: "rect(0 0 0 0)",
-            height: "1px",
-            margin: "-1px",
-            overflow: "hidden",
-            padding: 0,
-            position: "absolute",
-            width: "1px",
-            whiteSpace: "nowrap",
-        }}
-    >
-        {children}
-    </span>
-);
-
 export const DashboardItem: React.FC<IDashboardItemProps> = React.forwardRef(
     ({ className, screen, description, exportData, ...props }, ref) => {
         const id = useId();
@@ -59,7 +40,11 @@ export const DashboardItem: React.FC<IDashboardItemProps> = React.forwardRef(
                 role="figure"
                 aria-describedby={description ? itemFigureId : undefined}
             >
-                {description ? <HiddenDescription id={itemFigureId}>{description}</HiddenDescription> : null}
+                {description ? (
+                    <span className={"sr-only"} id={itemFigureId}>
+                        {description}
+                    </span>
+                ) : null}
                 {props.children}
             </figure>
         );
