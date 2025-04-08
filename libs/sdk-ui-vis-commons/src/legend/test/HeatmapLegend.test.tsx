@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { HeatmapLegend, IHeatmapLegendProps } from "../HeatmapLegend.js";
@@ -46,7 +46,7 @@ describe("HeatmapLegend", () => {
         ) => {
             renderLegend({ series, numericSymbols, size, position });
 
-            expect(screen.getByLabelText("Color legend")).toBeInTheDocument();
+            expect(screen.getByTestId("color-legend")).toBeInTheDocument();
         },
     );
 });

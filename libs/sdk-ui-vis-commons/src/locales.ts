@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
-import { MessageDescriptor, defineMessages } from "react-intl";
+import { defineMessages } from "react-intl";
 
 //NOTE: Follow up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
-export const messages: Record<string, MessageDescriptor> = defineMessages({
+export const messages = defineMessages({
     top: { id: "visualizations.legend.text.top" },
     bottom: { id: "visualizations.legend.text.bottom" },
     left: { id: "visualizations.legend.text.left" },
