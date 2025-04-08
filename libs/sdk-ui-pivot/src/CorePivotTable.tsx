@@ -333,7 +333,11 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
     public componentDidUpdate(prevProps: ICorePivotTableProps): void {
         // reinit in progress
-        if (!this.state.readyToRender && this.state.isLoading) {
+        if (
+            !this.state.readyToRender &&
+            this.state.isLoading &&
+            !this.props.config?.enableExecutionCancelling
+        ) {
             return;
         }
 
