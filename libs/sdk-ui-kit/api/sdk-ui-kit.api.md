@@ -5090,8 +5090,7 @@ export interface UiFocusTrapProps {
     children: React_2.ReactNode;
     // (undocumented)
     onDeactivate?: () => void;
-    // (undocumented)
-    returnFocusTo?: React_2.RefObject<HTMLElement>;
+    returnFocusTo?: React_2.RefObject<HTMLElement> | string;
 }
 
 // @internal (undocumented)

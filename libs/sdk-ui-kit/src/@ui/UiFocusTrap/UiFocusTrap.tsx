@@ -9,7 +9,12 @@ export interface UiFocusTrapProps {
     children: React.ReactNode;
     autofocusOnOpen?: boolean;
     onDeactivate?: () => void;
-    returnFocusTo?: React.RefObject<HTMLElement>;
+    /**
+     * Specify the element to return focus to when the trap is deactivated/closed.
+     * If a string is provided, the focus will be returned to the element with the given id.
+     * If a ref is provided, the focus will be returned to the element referenced by the ref.
+     */
+    returnFocusTo?: React.RefObject<HTMLElement> | string;
 }
 const focusableElementsSelector = [
     // Interactive form elements
@@ -112,7 +117,12 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
                 if (onDeactivate) {
                     onDeactivate();
                 }
-                if (returnFocusTo?.current) {
+                if (typeof returnFocusTo === "string") {
+                    const element = document.getElementById(returnFocusTo);
+                    if (element) {
+                        element.focus();
+                    }
+                } else if (returnFocusTo?.current) {
                     returnFocusTo.current.focus();
                 } else if (defaultReturnFocusToRef.current) {
                     defaultReturnFocusToRef.current.focus();

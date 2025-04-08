@@ -1,12 +1,62 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import cx from "classnames";
-import { DynamicSelect, IDynamicSelectProps } from "../DynamicSelect/DynamicSelect.js";
-import { getRelativeDateFilterItems } from "../DynamicSelect/utils.js";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+
+import {
+    RelativeRangeDynamicSelect,
+    IRelativeRangeDynamicSelectProps,
+} from "../DynamicSelect/RelativeRangeDynamicSelect.js";
+import {
+    findRelativeDateFilterOptionByLabel,
+    findRelativeDateFilterOptionByValue,
+    getRelativeDateFilterItems,
+} from "../DynamicSelect/utils.js";
+import { injectIntl, IntlShape, WrappedComponentProps } from "react-intl";
 
 import { defaultVisibleItemsRange } from "../Select/VirtualizedSelectMenu.js";
 import { IUiRelativeDateFilterForm, DateFilterOption } from "../interfaces/index.js";
+import { useId } from "@gooddata/sdk-ui-kit";
+import { DynamicSelectItem } from "../DynamicSelect/types.js";
+import { itemToString } from "../Select/utils.js";
+import { DateFilterGranularity } from "@gooddata/sdk-model";
+
+enum RelativeRangePickerErrorType {
+    INVALID_VALUE = "INVALID_VALUE",
+    EMPTY_VALUE = "EMPTY_VALUE",
+}
+
+interface ISelectWrapperProps {
+    errorId: string;
+    label: string;
+    labelId: string;
+    errorMessage: string;
+    children: React.ReactNode;
+    className?: string;
+}
+
+const SelectWrapper = (props: ISelectWrapperProps) => {
+    return (
+        <div
+            className={cx(
+                props.className,
+                "gd-relative-range-picker-select-wrapper s-relative-range-picker-select-wrapper",
+            )}
+        >
+            <label className="gd-label" id={props.labelId}>
+                {props.label}
+            </label>
+            {props.children}
+            {props.errorMessage ? (
+                <div
+                    id={props.errorId}
+                    className="s-gd-relative-range-picker-error gd-relative-range-picker-select-wrapper__error-message"
+                >
+                    {props.errorMessage}
+                </div>
+            ) : null}
+        </div>
+    );
+};
 
 interface IRelativeRangePickerProps {
     selectedFilterOption: IUiRelativeDateFilterForm;
@@ -14,101 +64,260 @@ interface IRelativeRangePickerProps {
     isMobile: boolean;
 }
 
-class RelativeRangePickerComponent extends React.Component<
-    IRelativeRangePickerProps & WrappedComponentProps
-> {
-    private toFieldRef = React.createRef<DynamicSelect>();
+const getItemsFactory = (
+    granularity: DateFilterGranularity,
+    isMobile: boolean,
+    intl: IntlShape,
+): ((value: string) => DynamicSelectItem[]) => {
+    return (value: string): DynamicSelectItem[] => {
+        const items = getRelativeDateFilterItems(value, granularity, intl);
 
-    public render() {
-        const { handleFromChange, handleToChange } = this;
-        const { selectedFilterOption, intl, isMobile } = this.props;
+        // separators are not needed in mobile as all the items have borders
+        return isMobile ? items.filter((item) => item.type !== "separator") : items;
+    };
+};
 
-        const mobileVisibleItemsRange = 5;
+const getInputValueFromValue = (value: number | undefined, items: DynamicSelectItem[]): string => {
+    const selectedItem = value !== undefined ? findRelativeDateFilterOptionByValue(items, value) : null;
 
-        const commonProps: IDynamicSelectProps = {
+    return selectedItem ? itemToString(selectedItem) : value ? value.toString() : "";
+};
+
+interface IRelativeRangePickerSelectProps {
+    label: string;
+    value: number | undefined;
+    inputValue: string;
+    error: string | null;
+    onChange: (value: number | undefined) => void;
+    onInputChange: (value: string) => void;
+    onBlur: () => void;
+    commonProps: IRelativeRangeDynamicSelectProps;
+    intl: IntlShape;
+    isMobile: boolean;
+    className?: string;
+    wrapperClassName?: string;
+}
+
+const RelativeRangePickerSelect = React.memo((props: IRelativeRangePickerSelectProps) => {
+    const {
+        label,
+        value,
+        inputValue,
+        error,
+        onChange,
+        onInputChange,
+        onBlur,
+        commonProps,
+        intl,
+        isMobile,
+        className,
+        wrapperClassName,
+    } = props;
+
+    const labelId = `${useId()}-label`;
+    const errorId = `${useId()}-error`;
+
+    return (
+        <SelectWrapper
+            label={label}
+            labelId={labelId}
+            errorMessage={error}
+            errorId={errorId}
+            className={wrapperClassName}
+        >
+            <RelativeRangeDynamicSelect
+                {...commonProps}
+                value={value}
+                onChange={onChange}
+                inputValue={inputValue}
+                onInputValueChange={onInputChange}
+                onBlur={onBlur}
+                placeholder={intl.formatMessage({ id: "filters.relative.placeholder" })}
+                className={cx(className, "gd-relative-range-picker-picker", {
+                    "gd-relative-range-picker-picker-mobile": isMobile,
+                    "has-error": error !== null,
+                })}
+                accessibilityConfig={{
+                    labelId,
+                    descriptionId: errorId,
+                }}
+            />
+        </SelectWrapper>
+    );
+});
+
+const mobileVisibleItemsRange = 5;
+
+const RelativeRangePickerComponent: React.FC<IRelativeRangePickerProps & WrappedComponentProps> = (props) => {
+    const { selectedFilterOption, intl, isMobile, onSelectedFilterOptionChange } = props;
+
+    const getItems = useMemo(
+        () => getItemsFactory(selectedFilterOption.granularity, isMobile, intl),
+        [selectedFilterOption.granularity, isMobile, intl],
+    );
+
+    const [fromError, setFromError] = useState<string | null>(null);
+    const [toError, setToError] = useState<string | null>(null);
+    const [fromInputValue, setFromInputValue] = useState<string>(
+        getInputValueFromValue(
+            selectedFilterOption.from,
+            selectedFilterOption.from ? getItems(selectedFilterOption.from.toString()) : [],
+        ),
+    );
+    const [toInputValue, setToInputValue] = useState<string>(
+        getInputValueFromValue(
+            selectedFilterOption.to,
+            selectedFilterOption.to ? getItems(selectedFilterOption.to.toString()) : [],
+        ),
+    );
+
+    const commonProps = useMemo(
+        () => ({
             visibleItemsRange: isMobile ? mobileVisibleItemsRange : defaultVisibleItemsRange,
             optionClassName: "s-relative-date-filter-option s-do-not-close-dropdown-on-click",
-            getItems: (value) => {
-                const items = getRelativeDateFilterItems(value, selectedFilterOption.granularity, intl);
+            getItems,
+            inputValue: "",
+            onInputValueChange: () => {},
+        }),
+        [isMobile, getItems],
+    );
 
-                // separators are not needed in mobile as all the items have borders
-                return isMobile ? items.filter((item) => item.type !== "separator") : items;
-            },
-        };
+    const handleFromChange = useCallback(
+        (from: number | undefined): void => {
+            onSelectedFilterOptionChange({ ...selectedFilterOption, from });
+            if (from !== undefined) {
+                setFromInputValue(getInputValueFromValue(from, getItems(from?.toString())));
+                setFromError(null);
+            }
+        },
+        [selectedFilterOption, onSelectedFilterOptionChange, getItems],
+    );
 
-        return (
-            <div className="gd-relative-range-picker s-relative-range-picker">
-                <DynamicSelect
-                    value={selectedFilterOption.from}
-                    onChange={handleFromChange}
-                    placeholder={intl.formatMessage({ id: "filters.from" })}
-                    ariaLabel={intl.formatMessage({ id: "filters.relative.accessibility.label.period.from" })}
-                    className={cx(
-                        "gd-relative-range-picker-picker",
-                        "s-relative-range-picker-from",
-                        isMobile && "gd-relative-range-picker-picker-mobile",
-                    )}
-                    {...commonProps}
-                />
-                <span className="gd-relative-range-picker-dash">&ndash;</span>
-                <DynamicSelect
-                    value={selectedFilterOption.to}
-                    onChange={handleToChange}
-                    placeholder={intl.formatMessage({ id: "filters.to" })}
-                    ariaLabel={intl.formatMessage({ id: "filters.relative.accessibility.label.period.to" })}
-                    className={cx(
-                        "gd-relative-range-picker-picker",
-                        "s-relative-range-picker-to",
-                        isMobile && "gd-relative-range-picker-picker-mobile",
-                    )}
-                    {...commonProps}
-                    ref={this.toFieldRef}
-                />
-            </div>
-        );
-    }
+    const handleToChange = useCallback(
+        (to: number | undefined): void => {
+            onSelectedFilterOptionChange({ ...selectedFilterOption, to });
+            if (to !== undefined) {
+                setToInputValue(getInputValueFromValue(to, getItems(to?.toString())));
+                setToError(null);
+            }
+        },
+        [selectedFilterOption, onSelectedFilterOptionChange, getItems],
+    );
 
-    private isTouchDevice = (): boolean | number => {
-        return "ontouchstart" in window || navigator.maxTouchPoints > 0;
-    };
+    const validator = useCallback(
+        (inputValue: string): RelativeRangePickerErrorType | null => {
+            if (inputValue === "") {
+                return RelativeRangePickerErrorType.EMPTY_VALUE;
+            }
+            const items = getItems(inputValue);
+            const matchingItem = findRelativeDateFilterOptionByLabel(items, inputValue);
+            if (matchingItem) {
+                return null;
+            }
+            return RelativeRangePickerErrorType.INVALID_VALUE;
+        },
+        [getItems],
+    );
 
-    private focusToField = (): void => {
-        const isTouchDevice = this.isTouchDevice();
-        if (this.toFieldRef.current) {
-            /**
-             * Prevents hover style from persisting after switching to another field on
-             * touchscreen devices.
-             */
-            isTouchDevice
-                ? setTimeout(() => {
-                      this.toFieldRef.current?.focus();
-                  }, 0)
-                : this.toFieldRef.current.focus();
+    const handleFromInputChange = useCallback(
+        (value: string): void => {
+            setFromInputValue(value);
+            // During typing, we only validate but don't show errors
+            const validationResult = validator(value);
+            if (validationResult) {
+                // Store the error but don't show it yet
+                setFromError(null);
+                handleFromChange(undefined);
+            } else {
+                setFromError(null);
+            }
+        },
+        [validator, handleFromChange],
+    );
+
+    const handleToInputChange = useCallback(
+        (value: string): void => {
+            setToInputValue(value);
+            // During typing, we only validate but don't show errors
+            const validationResult = validator(value);
+            if (validationResult) {
+                // Store the error but don't show it yet
+                setToError(null);
+                handleToChange(undefined);
+            } else {
+                setToError(null);
+            }
+        },
+        [validator, handleToChange],
+    );
+
+    const handleFromBlur = useCallback((): void => {
+        const validationResult = validator(fromInputValue);
+        if (validationResult) {
+            switch (validationResult) {
+                case RelativeRangePickerErrorType.INVALID_VALUE:
+                    setFromError(intl.formatMessage({ id: "filters.relative.from.invalid.value" }));
+                    break;
+                case RelativeRangePickerErrorType.EMPTY_VALUE:
+                    setFromError(intl.formatMessage({ id: "filters.relative.from.empty.value" }));
+                    break;
+            }
+            handleFromChange(undefined);
+        } else {
+            setFromError(null);
         }
-    };
+    }, [validator, fromInputValue, intl, handleFromChange]);
 
-    private blurToField = (): void => {
-        const isTouchDevice = this.isTouchDevice();
-        if (this.toFieldRef.current) {
-            isTouchDevice
-                ? setTimeout(() => {
-                      this.toFieldRef.current?.blur();
-                  }, 0)
-                : this.toFieldRef.current.blur();
+    const handleToBlur = useCallback((): void => {
+        const validationResult = validator(toInputValue);
+        if (validationResult) {
+            switch (validationResult) {
+                case RelativeRangePickerErrorType.INVALID_VALUE:
+                    setToError(intl.formatMessage({ id: "filters.relative.to.invalid.value" }));
+                    break;
+                case RelativeRangePickerErrorType.EMPTY_VALUE:
+                    setToError(intl.formatMessage({ id: "filters.relative.to.empty.value" }));
+                    break;
+            }
+            handleToChange(undefined);
+        } else {
+            setToError(null);
         }
-    };
+    }, [validator, toInputValue, intl, handleToChange]);
 
-    private handleFromChange = (from: number | undefined): void => {
-        this.props.onSelectedFilterOptionChange({ ...this.props.selectedFilterOption, from });
-        if (from !== undefined) {
-            this.focusToField();
-        }
-    };
-
-    private handleToChange = (to: number | undefined): void => {
-        this.props.onSelectedFilterOptionChange({ ...this.props.selectedFilterOption, to });
-        this.blurToField();
-    };
-}
+    return (
+        <div className="gd-relative-range-picker s-relative-range-picker">
+            <RelativeRangePickerSelect
+                className="s-relative-range-picker-from"
+                wrapperClassName="s-relative-range-picker-from-wrapper"
+                label={intl.formatMessage({ id: "filters.relative.from.label" })}
+                value={selectedFilterOption.from}
+                inputValue={fromInputValue}
+                error={fromError}
+                onChange={handleFromChange}
+                onInputChange={handleFromInputChange}
+                onBlur={handleFromBlur}
+                commonProps={commonProps}
+                intl={intl}
+                isMobile={isMobile}
+            />
+            <span className="gd-relative-range-picker-dash"></span>
+            <RelativeRangePickerSelect
+                className="s-relative-range-picker-to"
+                wrapperClassName="s-relative-range-picker-to-wrapper"
+                label={intl.formatMessage({ id: "filters.relative.to.label" })}
+                value={selectedFilterOption.to}
+                inputValue={toInputValue}
+                error={toError}
+                onChange={handleToChange}
+                onInputChange={handleToInputChange}
+                onBlur={handleToBlur}
+                commonProps={commonProps}
+                intl={intl}
+                isMobile={isMobile}
+            />
+        </div>
+    );
+};
 
 export const RelativeRangePicker = injectIntl(RelativeRangePickerComponent);

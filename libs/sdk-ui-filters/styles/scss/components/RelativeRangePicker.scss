@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
 .gd-relative-range-picker {
@@ -7,6 +7,24 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: baseline;
+
+    .gd-relative-range-picker-select-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        .gd-label {
+            font-size: 13px;
+            line-height: 21px;
+        }
+
+        &__error-message {
+            max-width: 158px;
+            font-size: 12px;
+            line-height: 17px;
+            color: variables.$gd-palette-error-base;
+        }
+    }
 
     &-picker {
         flex: 1 1 auto;
@@ -42,6 +60,5 @@
 
     &-dash {
         margin: 0 5px;
-        color: variables.$gd-color-state-blank;
     }
 }
