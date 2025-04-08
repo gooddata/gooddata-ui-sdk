@@ -1,49 +1,45 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useEffect, useState } from "react";
-import { defineMessage, FormattedMessage } from "react-intl";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 import cx from "classnames";
-import { isCronExpressionValid } from "./utils.js";
-
-const errorMessage = defineMessage({ id: "recurrence.error.too_often" });
+import { IAccessibilityConfigBase } from "src/typings/accessibility.js";
 
 interface ICronExpressionProps {
     id: string;
     expression: string;
-    onChange: (expression: string, isValid: boolean) => void;
+    onChange: (expression: string) => void;
+    onBlur: (expression: string) => void;
     allowHourlyRecurrence?: boolean;
     timezone?: string;
     showTimezone?: boolean;
     disabled?: boolean;
+    validationError?: string;
+    accessibilityConfig?: IAccessibilityConfigBase;
 }
 
 export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
-    const { id, expression, onChange, allowHourlyRecurrence, showTimezone, timezone, disabled } = props;
-    const [validationError, setValidationError] = useState<string | null>(null);
+    const {
+        id,
+        expression,
+        onChange,
+        onBlur,
+        showTimezone,
+        timezone,
+        disabled,
+        validationError,
+        accessibilityConfig,
+    } = props;
 
-    const validateExpression = (expression: string) => {
-        const isValid = isCronExpressionValid(expression, allowHourlyRecurrence);
-
-        if (isValid) {
-            setValidationError(null);
-        } else {
-            setValidationError(errorMessage.id);
-        }
-
-        return isValid;
+    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        onBlur(value);
     };
-
-    useEffect(() => {
-        validateExpression(expression);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        const isValid = disabled || validateExpression(value);
-        onChange(value, isValid);
+        onChange(value);
     };
-
     return (
         <>
             <div
@@ -55,10 +51,13 @@ export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
                     id={id}
                     className="gd-input-field"
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     value={expression}
+                    placeholder="* * * * * *"
                     disabled={disabled}
+                    aria-describedby={accessibilityConfig?.ariaDescribedBy}
                 />
-                {!disabled && (
+                {/* {!disabled && (
                     <>
                         {validationError ? (
                             <span className="gd-recurrence-form-cron-error-message">
@@ -83,7 +82,7 @@ export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
                             </span>
                         )}
                     </>
-                )}
+                )} */}
             </div>
             {Boolean(showTimezone && timezone) && (
                 <div className="gd-recurrence-form-repeat-type-description s-recurrence-form-repeat-type-description">
