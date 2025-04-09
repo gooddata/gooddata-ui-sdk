@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { defineMessages, FormattedMessage } from "react-intl";
 import { Overlay, ItemsWrapper, Item, IAlignPoint, BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 import { idRef } from "@gooddata/sdk-model";
 import {
@@ -10,6 +10,12 @@ import {
     useDashboardSelector,
 } from "../../../../../model/index.js";
 import { isDataError, isDataErrorTooLarge } from "../../../../../_staging/errors/errorPredicates.js";
+
+const exportMessages = defineMessages({
+    xlsx: { id: "widget.drill.dialog.exportToXLSX" },
+    csvFormatted: { id: "widget.drill.dialog.exportToCSV.formatted" },
+    csvRaw: { id: "widget.drill.dialog.exportToCSV.raw" },
+});
 
 const overlayAlignPoints: IAlignPoint[] = [
     {
@@ -133,21 +139,21 @@ const DrillModalRawExportOptions: React.FC<IDrillModalRawExportOptionsProps> = (
                     className="options-menu-export-xlsx s-export-drilled-insight-xlsx"
                     disabled={!exportXLSXEnabled}
                     bubbleTextId={tooltip}
-                    messageId="widget.drill.dialog.exportToXLSX"
+                    messageId={exportMessages.xlsx.id}
                 />
                 <DrillModalExportMenuItem
                     onClick={onExportCSV}
                     className="options-menu-export-csv-formatted s-export-drilled-insight-csv-formatted"
                     disabled={!exportCSVEnabled}
                     bubbleTextId={tooltip}
-                    messageId="widget.drill.dialog.exportToCSV.formatted"
+                    messageId={exportMessages.csvFormatted.id}
                 />
                 <DrillModalExportMenuItem
                     onClick={onExportCSVRaw}
                     className="options-menu-export-csv-formatted s-export-drilled-insight-csv-raw"
                     disabled={!exportCSVRawEnabled}
                     bubbleTextId={tooltip}
-                    messageId="widget.drill.dialog.exportToCSV.raw"
+                    messageId={exportMessages.csvRaw.id}
                 />
             </ItemsWrapper>
         </Overlay>

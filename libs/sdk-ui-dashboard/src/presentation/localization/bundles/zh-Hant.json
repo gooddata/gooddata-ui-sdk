@@ -678,5 +678,11 @@
     "dialogs.schedule.accessibility.label.email.title": "計劃名稱",
     "widget.options.menu.export": "出口",
     "options.menu.export.presentation.unsupported.oldWidget": "無法導出。請重新儲存儀表板或聯絡您的管理員。",
-    "apply": "申請"
+    "apply": "申請",
+    "widget.options.menu.XLSX": "XLSX（格式化）",
+    "widget.options.menu.exportToCSV.formatted": "CSV（格式化）",
+    "widget.options.menu.exportToCSV.raw": "CSV（原始）",
+    "widget.drill.dialog.exportToXLSX": "匯出到 XLSX",
+    "widget.drill.dialog.exportToCSV.formatted": "匯出到 CSV（格式化）",
+    "widget.drill.dialog.exportToCSV.raw": "匯出到 CSV（原始）"
 }

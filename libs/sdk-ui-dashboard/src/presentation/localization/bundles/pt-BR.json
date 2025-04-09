@@ -678,5 +678,11 @@
     "dialogs.schedule.accessibility.label.email.title": "Nome da programação",
     "widget.options.menu.export": "Exportar",
     "options.menu.export.presentation.unsupported.oldWidget": "Não foi possível exportar. Salve novamente o painel ou entre em contato com o administrador.",
-    "apply": "Aplicar"
+    "apply": "Aplicar",
+    "widget.options.menu.XLSX": "XLSX (formatado)",
+    "widget.options.menu.exportToCSV.formatted": "CSV (formatado)",
+    "widget.options.menu.exportToCSV.raw": "CSV (bruto)",
+    "widget.drill.dialog.exportToXLSX": "Exportar para XLSX",
+    "widget.drill.dialog.exportToCSV.formatted": "Exportar para CSV (formatado)",
+    "widget.drill.dialog.exportToCSV.raw": "Exportar para CSV (bruto)"
 }

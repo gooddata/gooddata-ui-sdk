@@ -678,5 +678,11 @@
     "dialogs.schedule.accessibility.label.email.title": "スケジュール名",
     "widget.options.menu.export": "エクスポート",
     "options.menu.export.presentation.unsupported.oldWidget": "エクスポートできません。ダッシュボードを再保存するか、管理者に連絡してください。",
-    "apply": "適用"
+    "apply": "適用",
+    "widget.options.menu.XLSX": "XLSX (書式付き)",
+    "widget.options.menu.exportToCSV.formatted": "CSV (書式付き)",
+    "widget.options.menu.exportToCSV.raw": "CSV（未加工）",
+    "widget.drill.dialog.exportToXLSX": "エクセルにエクスポート",
+    "widget.drill.dialog.exportToCSV.formatted": "CSV（整形済み）にエクスポート",
+    "widget.drill.dialog.exportToCSV.raw": "CSV（未加工）にエクスポート"
 }
