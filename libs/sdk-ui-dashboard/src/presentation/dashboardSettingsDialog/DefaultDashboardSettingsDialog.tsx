@@ -1,0 +1,168 @@
+// (C) 2020-2025 GoodData Corporation
+import React, { useCallback } from "react";
+import { useIntl } from "react-intl";
+import {
+    Bubble,
+    BubbleHoverTrigger,
+    ConfirmDialog,
+    DialogListHeader,
+    IAlignPoint,
+} from "@gooddata/sdk-ui-kit";
+
+import {
+    selectCrossFilteringEnabledAndSupported,
+    selectEnableFilterViews,
+    useDashboardSelector,
+} from "../../model/index.js";
+
+import { IDashboardSettingsDialogProps } from "./types.js";
+import { useDialogData } from "./useDialogData.js";
+
+/**
+ * @alpha
+ */
+export const DefaultDashboardSettingsDialog = (props: IDashboardSettingsDialogProps): JSX.Element | null => {
+    const { isVisible, onApply, onCancel /*, onError*/ } = props;
+
+    const intl = useIntl();
+
+    const { currentData, setCurrentData, isDirty } = useDialogData();
+
+    const isCrossFilteringEnabledAndSupported = useDashboardSelector(selectCrossFilteringEnabledAndSupported);
+    const isFilterViewsFeatureEnabled = useDashboardSelector(selectEnableFilterViews);
+
+    const onApplyHandler = useCallback(() => {
+        onApply(currentData);
+    }, [onApply, currentData]);
+
+    if (!isVisible) {
+        return null;
+    }
+
+    return (
+        <ConfirmDialog
+            onCancel={onCancel}
+            onSubmit={onApplyHandler}
+            isPositive={true}
+            className="s-dialog s-settings_dashboard_dialog gd-dashboard-settings-dialog"
+            headline={intl.formatMessage({ id: "settingsDashboardDialog.headline" })}
+            cancelButtonText={intl.formatMessage({ id: "cancel" })}
+            submitButtonText={intl.formatMessage({ id: "apply" })}
+            isSubmitDisabled={!isDirty()}
+        >
+            <div className="gd-dashboard-settings-dialog-section">
+                <DialogListHeader
+                    title={intl.formatMessage({ id: "filters.configurationPanel.header" })}
+                    className="gd-dashboard-settings-filters"
+                />
+                {isCrossFilteringEnabledAndSupported ? (
+                    <>
+                        <ConfigurationOption
+                            label={intl.formatMessage({
+                                id: "filters.configurationPanel.crossFiltering.toggle",
+                            })}
+                            tooltip={intl.formatMessage({
+                                id: "filters.configurationPanel.crossFiltering.toggle.tooltip",
+                            })}
+                            isChecked={!currentData.disableCrossFiltering}
+                            onChange={(newValue: boolean) => {
+                                setCurrentData({
+                                    ...currentData,
+                                    disableCrossFiltering: newValue,
+                                });
+                            }}
+                        />
+                        <ConfigurationOption
+                            label={intl.formatMessage({
+                                id: "filters.configurationPanel.userFilterReset.toggle",
+                            })}
+                            tooltip={intl.formatMessage({
+                                id: "filters.configurationPanel.userFilterReset.toggle.tooltip",
+                            })}
+                            isChecked={!currentData.disableUserFilterReset}
+                            onChange={(newValue: boolean) => {
+                                setCurrentData({
+                                    ...currentData,
+                                    disableUserFilterReset: newValue,
+                                });
+                            }}
+                        />
+                    </>
+                ) : null}
+                {isFilterViewsFeatureEnabled ? (
+                    <ConfigurationOption
+                        label={intl.formatMessage({ id: "filters.configurationPanel.filterViews.toggle" })}
+                        tooltip={intl.formatMessage(
+                            { id: "filters.configurationPanel.filterViews.toggle.tooltip" },
+                            {
+                                p: (chunks: React.ReactNode) => <p>{chunks}</p>,
+                            },
+                        )}
+                        isChecked={!currentData.disableFilterViews}
+                        onChange={(newValue: boolean) => {
+                            setCurrentData({
+                                ...currentData,
+                                disableFilterViews: newValue,
+                            });
+                        }}
+                    />
+                ) : null}
+                <ConfigurationOption
+                    label={intl.formatMessage({ id: "filters.configurationPanel.userFilterSave.toggle" })}
+                    tooltip={intl.formatMessage({
+                        id: "filters.configurationPanel.userFilterSave.toggle.tooltip",
+                    })}
+                    isChecked={!currentData.disableUserFilterSave}
+                    onChange={(newValue: boolean) => {
+                        setCurrentData({
+                            ...currentData,
+                            disableUserFilterSave: newValue,
+                        });
+                    }}
+                />
+            </div>
+        </ConfirmDialog>
+    );
+};
+
+const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "tc br", offset: { x: 4, y: -2 } }];
+
+interface IConfigurationOptionProps {
+    label: React.ReactNode;
+    tooltip: React.ReactNode;
+    isChecked: boolean;
+    onChange: (newValue: boolean) => void;
+}
+
+const ConfigurationOption: React.FC<IConfigurationOptionProps> = ({
+    label,
+    tooltip,
+    isChecked,
+    onChange,
+}) => (
+    <div className="configuration-category-item">
+        <label className="input-checkbox-toggle">
+            <input
+                type="checkbox"
+                checked={isChecked}
+                onChange={(e) => {
+                    onChange(!e.currentTarget.checked);
+                }}
+            />
+            <span className="input-label-text">
+                {label}
+                <BubbleHoverTrigger
+                    showDelay={0}
+                    hideDelay={0}
+                    eventsOnBubble={true}
+                    className="configuration-category-item-tooltip-icon"
+                >
+                    <span className="gd-icon-circle-question gd-filter-configuration__help-icon" />
+                    <Bubble alignPoints={BUBBLE_ALIGN_POINTS}>
+                        <div className="gd-filter-configuration__help-tooltip">{tooltip}</div>
+                    </Bubble>
+                </BubbleHoverTrigger>
+            </span>
+        </label>
+    </div>
+);

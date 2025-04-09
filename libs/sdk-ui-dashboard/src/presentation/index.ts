@@ -17,6 +17,7 @@ export * from "./topBar/index.js";
 export * from "./toolbar/index.js";
 export * from "./widget/index.js";
 export * from "./shareDialog/index.js";
+export * from "./dashboardSettingsDialog/index.js";
 export * from "./insightList/index.js";
 export * from "./cancelEditDialog/index.js";
 export * from "./export/index.js";

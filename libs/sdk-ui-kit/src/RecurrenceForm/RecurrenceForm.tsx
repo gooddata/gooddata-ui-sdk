@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
@@ -21,7 +21,8 @@ import { DEFAULT_DATE_FORMAT, DEFAULT_LOCALE, DEFAULT_TIME_FORMAT, DEFAULT_WEEK_
  */
 export interface IRecurrenceFormProps {
     startDate?: Date | null;
-    cronExpression: string;
+    cronExpression?: string;
+    placeholder?: string;
     onChange: (cronExpression: string, startDate: Date | null, isValid: boolean) => void;
     locale?: string;
     dateFormat?: string;
@@ -40,7 +41,8 @@ export interface IRecurrenceFormProps {
 const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
     const {
         startDate = null,
-        cronExpression,
+        cronExpression = "",
+        placeholder,
         onChange,
         locale = DEFAULT_LOCALE,
         dateFormat = DEFAULT_DATE_FORMAT,
@@ -113,6 +115,7 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
                 recurrenceType={recurrenceType}
                 startDate={dateValue}
                 cronValue={cronValue}
+                cronPlaceholder={placeholder}
                 onRepeatTypeChange={onRepeatTypeChange}
                 onCronValueChange={onCronValueChange}
                 allowHourlyRecurrence={allowHourlyRecurrence}

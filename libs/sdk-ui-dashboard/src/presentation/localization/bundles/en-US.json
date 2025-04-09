@@ -39,6 +39,11 @@
         "comment": "Empty dashboard cannot be saved.",
         "limit": 0
     },
+    "options.menu.settings": {
+        "value": "Settings",
+        "comment": "Settings of the dashboard",
+        "limit": 0
+    },
     "messages.dashboardSaveFailed": {
         "value": "Dashboard save failed. Remove any unavailable visualizations, then try again, or contact your administrator.",
         "comment": "",
@@ -330,6 +335,11 @@
     },
     "cancelConfirmationDialog.submitButtonText": {
         "value": "Discard changes",
+        "comment": "",
+        "limit": 0
+    },
+    "settingsDashboardDialog.headline": {
+        "value": "Dashboard settings",
         "comment": "",
         "limit": 0
     },
@@ -944,6 +954,11 @@
         "comment": "Global messages. Load of dashboard sharing dialog fails.",
         "limit": 0
     },
+    "messages.settingsDialogError.general": {
+        "value": "Failed to load the dashboard settings. Try again later.",
+        "comment": "Global messages. Load of dashboard settings dialog fails.",
+        "limit": 0
+    },
     "visualization.dataTooLarge.headline": {
         "value": "Too many data points to display",
         "comment": "",
@@ -1287,6 +1302,16 @@
     },
     "controlButtons.edit.executionTimestampMode.tooltip": {
         "value": "To edit the dashboard, reset the date to today.",
+        "comment": "",
+        "limit": 0
+    },
+    "controlButtons.setting.value": {
+        "value": "Settings",
+        "comment": "",
+        "limit": 0
+    },
+    "controlButtons.setting.title": {
+        "value": "All settings related to this dashboard. You can change the dashboard description cross-filtering, saved filters allowed, and alerts evaluation frequency.",
         "comment": "",
         "limit": 0
     },

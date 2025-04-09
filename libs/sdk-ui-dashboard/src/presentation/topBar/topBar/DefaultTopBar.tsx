@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useCallback } from "react";
 
 import {
@@ -22,6 +22,7 @@ import {
     useEditButtonProps,
     useSaveAsNewButtonProps,
     useSaveButtonProps,
+    useSettingButtonProps,
     useShareButtonProps,
 } from "../buttonBar/button/index.js";
 
@@ -42,6 +43,7 @@ export const useTopBarProps = (): ITopBarProps => {
     const cancelButtonProps = useCancelButtonProps();
     const saveButtonProps = useSaveButtonProps();
     const saveAsNewButtonProps = useSaveAsNewButtonProps();
+    const settingButtonProps = useSettingButtonProps();
 
     const onTitleChanged = useCallback(
         (title: string) => {
@@ -62,6 +64,7 @@ export const useTopBarProps = (): ITopBarProps => {
             cancelButtonProps,
             saveButtonProps,
             saveAsNewButtonProps,
+            settingButtonProps,
             DefaultButtonBar: DefaultButtonBar,
         },
         shareStatusProps: {

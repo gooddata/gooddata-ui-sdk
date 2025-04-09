@@ -204,6 +204,10 @@ export interface IMenuButtonItemsVisibility {
      */
     alertingButton?: boolean;
     /**
+     * If set to true, the Share button will be visible. Defaults to true.
+     */
+    settingsButton?: boolean;
+    /**
      * If set to true, the Delete button will be visible. Defaults to true.
      */
     deleteButton?: boolean;

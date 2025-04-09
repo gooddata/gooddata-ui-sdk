@@ -1,8 +1,15 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 
 import { IButtonBarProps } from "./types.js";
-import { CancelButton, EditButton, SaveAsNewButton, SaveButton, ShareButton } from "./button/index.js";
+import {
+    CancelButton,
+    EditButton,
+    SaveAsNewButton,
+    SaveButton,
+    ShareButton,
+    SettingButton,
+} from "./button/index.js";
 
 /**
  * @alpha
@@ -12,6 +19,7 @@ export const DefaultButtonBar: React.FC<IButtonBarProps> = (props): JSX.Element 
         children,
         cancelButtonProps,
         saveButtonProps,
+        settingButtonProps,
         editButtonProps,
         saveAsNewButtonProps,
         shareButtonProps,
@@ -22,6 +30,7 @@ export const DefaultButtonBar: React.FC<IButtonBarProps> = (props): JSX.Element 
     return (
         <div className="dash-control-buttons">
             {childContentPosition === "left" && children}
+            <SettingButton {...settingButtonProps} />
             <CancelButton {...cancelButtonProps} />
             <SaveButton {...saveButtonProps} />
             <EditButton {...editButtonProps} />

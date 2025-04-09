@@ -226,6 +226,8 @@ export {
     selectCanEnterEditMode,
     selectIsPrivateDashboard,
     selectIsCurrentDashboardVisibleInList,
+    selectCrossFilteringEnabledAndSupported,
+    selectSettingsVisible,
 } from "./topBar/topBarSelectors.js";
 
 export type { UndoEnhancedState, UndoEntry } from "./_infra/undoEnhancer.js";
@@ -356,6 +358,7 @@ export {
     selectDisableFilterViews,
     selectDashboardDescriptor,
 } from "./meta/metaSelectors.js";
+export { metaActions } from "./meta/index.js";
 export {
     selectListedDashboards,
     selectListedDashboardsMap,
@@ -429,6 +432,7 @@ export {
     selectWidgetDeleteDialogWidgetRef,
     selectIgnoreExecutionTimestamp,
     selectExecutionTimestamp,
+    selectIsSettingsDialogOpen,
     selectFilterValidationIncompatibleDefaultFiltersOverride,
 } from "./ui/uiSelectors.js";
 export { uiActions } from "./ui/index.js";

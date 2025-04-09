@@ -10,6 +10,7 @@ const errorMessage = defineMessage({ id: "recurrence.error.too_often" });
 interface ICronExpressionProps {
     id: string;
     expression: string;
+    placeholder?: string;
     onChange: (expression: string, isValid: boolean) => void;
     allowHourlyRecurrence?: boolean;
     timezone?: string;
@@ -17,7 +18,7 @@ interface ICronExpressionProps {
 }
 
 export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
-    const { id, expression, onChange, allowHourlyRecurrence, showTimezone, timezone } = props;
+    const { id, expression, placeholder, onChange, allowHourlyRecurrence, showTimezone, timezone } = props;
     const [validationError, setValidationError] = useState<string | null>(null);
 
     const validateExpression = (expression: string) => {
@@ -39,7 +40,7 @@ export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        const isValid = validateExpression(value);
+        const isValid = validateExpression(value || placeholder);
         onChange(value, isValid);
     };
 
@@ -50,7 +51,13 @@ export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
                     "has-error": !!validationError,
                 })}
             >
-                <input id={id} className="gd-input-field" onChange={handleChange} value={expression} />
+                <input
+                    id={id}
+                    className="gd-input-field"
+                    onChange={handleChange}
+                    value={expression}
+                    placeholder={placeholder}
+                />
                 {validationError ? (
                     <span className="gd-recurrence-form-cron-error-message">
                         <FormattedMessage id={validationError} />

@@ -12,6 +12,7 @@ import {
 import {
     selectEnableAnalyticalDashboardPermissions,
     selectEnableFilterViews,
+    selectEnableKDCrossFiltering,
     selectEnableKPIDashboardExportPDF,
     selectEnableKPIDashboardSaveAsNew,
     selectEnableSlideshowExports,
@@ -36,7 +37,10 @@ import {
     selectCanShareDashboardPermission,
     selectCanShareLockedDashboardPermission,
 } from "../dashboardPermissions/dashboardPermissionsSelectors.js";
-import { selectSupportsHierarchicalWorkspacesCapability } from "../backendCapabilities/backendCapabilitiesSelectors.js";
+import {
+    selectSupportsCrossFiltering,
+    selectSupportsHierarchicalWorkspacesCapability,
+} from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectIsDashboardLoading } from "../loading/loadingSelectors.js";
 import { selectIsLayoutEmpty } from "../layout/layoutSelectors.js";
 import { selectListedDashboardsMap } from "../listedDashboards/listedDashboardsSelectors.js";
@@ -131,6 +135,18 @@ export const selectIsCurrentDashboardVisibleInList: DashboardSelector<boolean> =
     selectListedDashboardsMap,
     (currentDashboardRef, dashboardsList) =>
         Boolean(currentDashboardRef && dashboardsList.has(currentDashboardRef)),
+);
+
+/**
+ * @internal
+ */
+export const selectCrossFilteringEnabledAndSupported: DashboardSelector<boolean> = createSelector(
+    selectIsInEditMode,
+    selectEnableKDCrossFiltering,
+    selectSupportsCrossFiltering,
+    (isEdit, enableCrossFiltering, supportsCrossFiltering) => {
+        return isEdit && enableCrossFiltering && supportsCrossFiltering;
+    },
 );
 
 /**
@@ -292,6 +308,18 @@ export const selectSaveAsVisible: DashboardSelector<boolean> = createSelector(
             !isSaveAsNewHidden &&
             (menuButtonItemsVisibility.saveAsNewButton ?? true)
         );
+    },
+);
+
+/**
+ * Selects whether the settings button is visible.
+ *
+ * @internal
+ */
+export const selectSettingsVisible: DashboardSelector<boolean> = createSelector(
+    selectMenuButtonItemsVisibility,
+    (menuButtonItemsVisibility) => {
+        return menuButtonItemsVisibility.settingsButton ?? true;
     },
 );
 

@@ -92,6 +92,14 @@ export const selectIsShareDialogOpen: DashboardSelector<boolean> = createSelecto
 );
 
 /**
+ * @alpha
+ */
+export const selectIsSettingsDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.settingsDialog.open,
+);
+
+/**
  * @internal
  */
 export const selectIsDeleteDialogOpen: DashboardSelector<boolean> = createSelector(

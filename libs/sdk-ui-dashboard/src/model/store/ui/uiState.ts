@@ -48,6 +48,9 @@ export interface UiState {
     saveAsDialog: {
         open: boolean;
     };
+    settingsDialog: {
+        open: boolean;
+    };
     shareDialog: {
         open: boolean;
     };
@@ -119,6 +122,9 @@ export const uiInitialState: UiState = {
         open: false,
     },
     saveAsDialog: {
+        open: false,
+    },
+    settingsDialog: {
         open: false,
     },
     shareDialog: {

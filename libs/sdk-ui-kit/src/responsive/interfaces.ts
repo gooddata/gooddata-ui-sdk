@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 /**
  * Classification of the screen size according to its size with respect to the set breakpoints.
@@ -42,6 +42,11 @@ export interface IMediaQueries {
      * Is screen classified as 'md' or larger?
      */
     ">=md": string;
+
+    /**
+     * Is screen classified as 'md' or smaller?
+     */
+    "<=md": string;
 
     /**
      * Is screen classified as 'md'?
