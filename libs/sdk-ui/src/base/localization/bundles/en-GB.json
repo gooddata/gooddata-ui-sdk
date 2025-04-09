@@ -680,6 +680,11 @@
     "filters.date.accessibility.label.to": "Select date to",
     "filters.time.accessibility.label.from": "Select time from",
     "filters.time.accessibility.label.to": "Select time to",
-    "filters.relative.accessibility.label.period.from": "Select period from",
-    "filters.relative.accessibility.label.period.to": "Select period to"
+    "filters.relative.placeholder": "Type or select",
+    "filters.relative.from.label": "Period start",
+    "filters.relative.from.invalid.value": "Error: Invalid period start - enter a valid period or select it from the list.",
+    "filters.relative.from.empty.value": "Error: Period start is empty - enter a valid period or select it from the list.",
+    "filters.relative.to.label": "Period end",
+    "filters.relative.to.invalid.value": "Error: Invalid period end - enter a valid period or select it from the list.",
+    "filters.relative.to.empty.value": "Error: Period end is empty - enter a valid period or select it from the list."
 }
