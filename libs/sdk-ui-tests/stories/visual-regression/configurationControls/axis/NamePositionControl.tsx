@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "../../../_infra/storyRepository.js";
@@ -87,7 +87,7 @@ storiesOf(`${ConfigurationControls}/Axis/NamePositionControls`)
                     postInteractionWait: 200,
                 },
                 "select-option": {
-                    clickSelectors: [".gd-button-primary", ".s-mitte_oben_unten"],
+                    clickSelectors: [".gd-button-primary", ".s-mitte"],
                     postInteractionWait: 200,
                 },
             },
