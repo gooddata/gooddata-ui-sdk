@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     DateFilter,
     defaultDateFilterOptions,
@@ -67,6 +67,16 @@ storiesOf(`${FilterStories}/DateFilter`)
                 },
                 "relative-form": {
                     clickSelectors: [".s-date-filter-button", ".s-relative-form"],
+                    postInteractionWait: 200,
+                },
+                "relative-form-error": {
+                    clickSelectors: [
+                        ".s-date-filter-button",
+                        ".s-relative-form",
+                        ".s-relative-range-picker-from .s-relative-range-input",
+                        ".s-relative-range-picker-to .s-relative-range-input",
+                        ".s-relative-form",
+                    ],
                     postInteractionWait: 200,
                 },
             },
