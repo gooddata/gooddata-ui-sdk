@@ -246,6 +246,23 @@ export interface IAuthenticationProvider {
      * @param returnTo - url to redirect after successful logout
      */
     deauthenticate(context: IAuthenticationContext, returnTo?: string): Promise<void>;
+
+    /**
+     * Instructs the consumer which uses this provider to not cache authentication in any ways.
+     * Note: It does not affect calls deduplication like debouncing or throttling.
+     *
+     * If true, the consumer will always call authenticate if there is a need to authenticate user (like if some request respons with 401).
+     * If false, the consumer is allowed to cache the authenticated principal and reuse it for subsequent requests. This is the current behavior.
+     *
+     * It is here because some implementations of authentication works with time restricted sessions.
+     * It means the session can expire during user activity and the consumer should call authenticate again and not just reuse the cached principal.
+     *
+     * FIXME: I believe this should be true by default and if authentication provider wants to do some caching, it should implement it on its own.
+     * In this case, this property should be removed from the interface.
+     * But for now I dont have enough time to refactor this, so Im creating this backwards compatible solution.
+     * See JIRA ticket F1-1256 for more details.
+     */
+    disablePrincipalCache: boolean;
 }
 
 /**

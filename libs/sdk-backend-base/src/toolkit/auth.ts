@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IAuthenticatedPrincipal,
     IAuthenticationContext,
@@ -67,8 +67,11 @@ export interface IAuthProviderCallGuard extends IAuthenticationProvider {
 export class AuthProviderCallGuard implements IAuthProviderCallGuard {
     private inflightRequest: Promise<IAuthenticatedPrincipal> | undefined;
     private principal: IAuthenticatedPrincipal | undefined;
+    public disablePrincipalCache: boolean;
 
-    constructor(private readonly realProvider: IAuthenticationProvider) {}
+    constructor(private readonly realProvider: IAuthenticationProvider) {
+        this.disablePrincipalCache = realProvider.disablePrincipalCache;
+    }
 
     public reset = (): void => {
         this.principal = undefined;
@@ -84,7 +87,7 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
     };
 
     public authenticate = (context: IAuthenticationContext): Promise<IAuthenticatedPrincipal> => {
-        if (this.principal) {
+        if (this.principal && !this.disablePrincipalCache) {
             return Promise.resolve(this.principal);
         }
 
@@ -95,7 +98,7 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
         this.inflightRequest = this.realProvider
             .authenticate(context)
             .then((res) => {
-                this.principal = res;
+                this.principal = this.disablePrincipalCache ? undefined : res;
                 this.inflightRequest = undefined;
 
                 return res;
@@ -124,6 +127,8 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
  * @internal
  */
 export class NoopAuthProvider implements IAuthProviderCallGuard {
+    public disablePrincipalCache = false;
+
     public authenticate(_context: IAuthenticationContext): Promise<IAuthenticatedPrincipal> {
         throw new NotSupported("NoopAuthProvider does not support authenticate");
     }
@@ -151,6 +156,8 @@ export const AnonymousUser: IAuthenticatedPrincipal = {
  * @public
  */
 export class AnonymousAuthProvider implements IAuthProviderCallGuard {
+    public disablePrincipalCache = false;
+
     public authenticate(_context: IAuthenticationContext): Promise<IAuthenticatedPrincipal> {
         return Promise.resolve(AnonymousUser);
     }

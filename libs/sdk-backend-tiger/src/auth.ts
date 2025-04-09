@@ -21,6 +21,7 @@ import { validateJwt, computeExpirationReminderTimeout } from "./utils/jwt.js";
  */
 export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
     protected principal: IAuthenticatedPrincipal | undefined;
+    public disablePrincipalCache = false;
 
     public abstract authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
 

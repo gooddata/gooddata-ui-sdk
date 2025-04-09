@@ -415,6 +415,8 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
     // (undocumented)
     deauthenticate(context: IAuthenticationContext, returnTo?: string): Promise<void>;
     // (undocumented)
+    disablePrincipalCache: boolean;
+    // (undocumented)
     getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
     // (undocumented)
     protected obtainCurrentPrincipal(context: IAuthenticationContext): Promise<void>;
