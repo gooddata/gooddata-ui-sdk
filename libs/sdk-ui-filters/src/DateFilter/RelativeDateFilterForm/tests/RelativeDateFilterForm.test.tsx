@@ -80,7 +80,7 @@ describe("RelativeDateFilterForm", () => {
 
     it('should render "from" and "to" inputs', () => {
         createForm();
-        expect(screen.getAllByPlaceholderText("Choose …").length).toBe(2);
+        expect(screen.getAllByPlaceholderText("Type or select").length).toBe(2);
     });
 
     it("should fire onSelectedFilterOptionChange when granularity or inputs change", () => {
@@ -96,7 +96,7 @@ describe("RelativeDateFilterForm", () => {
             visible: true,
         });
 
-        fireEvent.change(screen.getAllByPlaceholderText("Choose …")[1], { target: { value: "2" } });
+        fireEvent.change(screen.getAllByPlaceholderText("Type or select")[1], { target: { value: "2" } });
         fireEvent.click(screen.getByText("2 days ahead"));
 
         expect(onSelectedFilterOptionChange).toHaveBeenLastCalledWith({
@@ -108,7 +108,7 @@ describe("RelativeDateFilterForm", () => {
             visible: true,
         });
 
-        fireEvent.change(screen.getAllByPlaceholderText("Choose …")[0], { target: { value: "-3" } });
+        fireEvent.change(screen.getAllByPlaceholderText("Type or select")[0], { target: { value: "-3" } });
         fireEvent.click(screen.getByText("3 days ago"));
 
         expect(onSelectedFilterOptionChange).toHaveBeenLastCalledWith({
