@@ -170,6 +170,8 @@ export class AnonymousAuthProvider implements IAuthProviderCallGuard {
     // (undocumented)
     deauthenticate(_context: IAuthenticationContext): Promise<void>;
     // (undocumented)
+    disablePrincipalCache: boolean;
+    // (undocumented)
     getCurrentPrincipal(_context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
     // (undocumented)
     reset(): void;
@@ -216,6 +218,8 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
     authenticate: (context: IAuthenticationContext) => Promise<IAuthenticatedPrincipal>;
     // (undocumented)
     deauthenticate(context: IAuthenticationContext, returnTo?: string): Promise<void>;
+    // (undocumented)
+    disablePrincipalCache: boolean;
     // (undocumented)
     getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
     // (undocumented)
@@ -1039,6 +1043,8 @@ export class NoopAuthProvider implements IAuthProviderCallGuard {
     authenticate(_context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
     // (undocumented)
     deauthenticate(_context: IAuthenticationContext): Promise<void>;
+    // (undocumented)
+    disablePrincipalCache: boolean;
     // (undocumented)
     getCurrentPrincipal(_context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
     // (undocumented)

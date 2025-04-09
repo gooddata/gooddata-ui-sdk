@@ -324,6 +324,7 @@ export interface IAuthenticationContext {
 export interface IAuthenticationProvider {
     authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
     deauthenticate(context: IAuthenticationContext, returnTo?: string): Promise<void>;
+    disablePrincipalCache: boolean;
     getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
     initializeClient?(client: any): void;
     onNotAuthenticated?: NotAuthenticatedHandler;
