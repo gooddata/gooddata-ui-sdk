@@ -14,6 +14,7 @@ import { WeekStart } from "@gooddata/sdk-model";
 export interface IRecurrenceProps {
     label: string;
     showRepeatTypeDescription?: boolean;
+    showInheritValue?: boolean;
     recurrenceType: RecurrenceType;
     startDate?: Date | null;
     timezone?: string;
@@ -46,6 +47,7 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
         allowHourlyRecurrence,
         showTimezoneInOccurrence,
         showRepeatTypeDescription,
+        showInheritValue,
         weekStart = "Sunday",
         onRecurrenceDropdownOpen,
     } = props;
@@ -65,6 +67,7 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
                     startDate={startDate}
                     onChange={onRepeatTypeChange}
                     allowHourlyRecurrence={allowHourlyRecurrence}
+                    showInheritValue={showInheritValue}
                     onRepeatDropdownOpen={onRecurrenceDropdownOpen}
                 />
                 {recurrenceType !== RECURRENCE_TYPES.CRON && showRepeatTypeDescription ? (
@@ -73,7 +76,9 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
                         startDate={startDate}
                         weekStart={weekStart}
                         timezone={timezone}
-                        showTimezone={showTimezoneInOccurrence}
+                        showTimezone={Boolean(
+                            showTimezoneInOccurrence && recurrenceType !== RECURRENCE_TYPES.INHERIT,
+                        )}
                     />
                 ) : null}
                 {recurrenceType === RECURRENCE_TYPES.CRON ? (

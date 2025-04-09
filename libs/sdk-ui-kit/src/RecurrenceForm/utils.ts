@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { IntlShape } from "react-intl";
 import capitalize from "lodash/capitalize.js";
@@ -84,6 +84,8 @@ export const constructCronExpression = (
             return `0 0 ${hours} ? * ${dayOfWeekName}${
                 isLastOccurrenceOfWeekdayInMonth(date) ? "L" : "#" + weekNumber
             }`;
+        case RECURRENCE_TYPES.INHERIT:
+            return undefined;
         default:
             return cronExpression;
     }
@@ -102,12 +104,14 @@ const monthlyFirstCronRegex = /^0 0 0 1 \* \*$/; // Every month on the 1 day of 
  * @param date - date to compare with cron expression
  * @param cronExpression - cron expression to transform
  * @param allowHourlyRecurrence - whether hourly recurrence is allowed
+ * @param allowInheritValue - whether inherit value is allowed
  * @param weekStart - Week start day
  */
 export const transformCronExpressionToRecurrenceType = (
     date: Date | null,
-    cronExpression: string,
+    cronExpression: string | undefined,
     allowHourlyRecurrence: boolean,
+    allowInheritValue: boolean,
     weekStart: WeekStart,
 ): RecurrenceType => {
     const hours = date?.getHours();
@@ -115,6 +119,8 @@ export const transformCronExpressionToRecurrenceType = (
     const weekNumber = isLastOccurrenceOfWeekdayInMonth(date) ? "L" : "#" + getWeekNumber(date);
 
     switch (true) {
+        case allowInheritValue && !cronExpression:
+            return RECURRENCE_TYPES.INHERIT;
         case allowHourlyRecurrence && hourlyCronRegex.test(cronExpression):
             return RECURRENCE_TYPES.HOURLY;
         case dailyCronRegex.test(cronExpression): {
@@ -225,12 +231,17 @@ export const transformRecurrenceTypeToDescription = (
                 dayOfWeekName,
                 weekNumber,
             });
+        case RECURRENCE_TYPES.INHERIT:
+            return intl.formatMessage(messages.description_recurrence_inherit);
         default:
             return "";
     }
 };
 
-export const isCronExpressionValid = (expression: string, allowHourlyRecurrence: boolean): boolean => {
+export const isCronExpressionValid = (
+    expression: string | undefined,
+    allowHourlyRecurrence: boolean,
+): boolean => {
     const invalidExpressions = compact([
         /^\* (\S+) (\S+) (\S+) (\S+) (\S+)$/, // every second
         /^(\S+) \* (\S+) (\S+) (\S+) (\S+)$/, // every minute

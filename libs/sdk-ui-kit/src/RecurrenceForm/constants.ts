@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 export const TIME_ANCHOR = 60; // 1 hour granularity for time picker
 export const MAX_VISIBLE_TIME_ITEMS_COUNT = 5;
@@ -24,14 +24,8 @@ export const DEFAULT_DROPDOWN_WIDTH = 199;
  * @internal
  */
 export const RECURRENCE_TYPES = {
+    INHERIT: "inherit",
     HOURLY: "hourly",
-    DAILY: "daily",
-    WEEKLY: "weekly",
-    MONTHLY: "monthly",
-    CRON: "cron",
-};
-
-export const RECURRENCE_TYPES_WITHOUT_HOURS = {
     DAILY: "daily",
     WEEKLY: "weekly",
     MONTHLY: "monthly",

@@ -366,6 +366,13 @@ export interface DashboardConfig {
     /**
      * @alpha
      *
+     * Default evaluation frequency for the dashboard provided from settings.
+     */
+    evaluationFrequency?: string;
+
+    /**
+     * @alpha
+     *
      * Workspace descriptor
      */
     workspaceDescriptor?: {
@@ -448,6 +455,7 @@ export type ResolvedDashboardConfig = Omit<
     | "overrideTitle"
     | "hideWidgetTitles"
     | "workspaceDescriptor"
+    | "evaluationFrequency"
 > &
     DashboardConfig;
 

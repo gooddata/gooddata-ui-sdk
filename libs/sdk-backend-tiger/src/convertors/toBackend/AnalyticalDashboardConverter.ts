@@ -104,6 +104,7 @@ export function convertAnalyticalDashboard(
         disableUserFilterReset: dashboard.disableUserFilterReset,
         disableUserFilterSave: dashboard.disableUserFilterSave,
         disableFilterViews: dashboard.disableFilterViews,
+        evaluationFrequency: dashboard.evaluationFrequency,
         version: "2",
     };
 }

@@ -9363,6 +9363,8 @@ interface IAnalyticalDashboard_2 {
     // (undocumented)
     disableUserFilterSave?: boolean;
     // (undocumented)
+    evaluationFrequency?: string;
+    // (undocumented)
     filterContextRef?: ObjRef;
     // (undocumented)
     layout?: IDashboardLayout;

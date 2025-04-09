@@ -1653,6 +1653,8 @@ export interface DashboardConfig {
     // @alpha
     entitlements?: IEntitlementDescriptor[];
     // @alpha
+    evaluationFrequency?: string;
+    // @alpha
     executionTimestamp?: string;
     // @internal
     exportId?: string;
@@ -1800,7 +1802,7 @@ export interface DashboardDeletedPayload {
 }
 
 // @public (undocumented)
-export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags" | "disableCrossFiltering" | "disableUserFilterReset" | "disableUserFilterSave" | "disableFilterViews"> & IAccessControlAware;
+export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags" | "disableCrossFiltering" | "disableUserFilterReset" | "disableUserFilterSave" | "disableFilterViews" | "evaluationFrequency"> & IAccessControlAware;
 
 // @public (undocumented)
 export type DashboardDispatch = Dispatch<AnyAction>;
@@ -4910,6 +4912,8 @@ export interface IDashboardSettingsApplyPayload {
     disableUserFilterReset: boolean;
     // (undocumented)
     disableUserFilterSave: boolean;
+    // (undocumented)
+    evaluationFrequency: string | undefined;
 }
 
 // @alpha (undocumented)
@@ -6730,6 +6734,10 @@ setDisableFilterViews: (state: WritableDraft<DashboardMetaState_2>, action: {
 payload: boolean;
 type: string;
 }) => void | DashboardMetaState_2 | WritableDraft<DashboardMetaState_2>;
+setEvaluationFrequency: (state: WritableDraft<DashboardMetaState_2>, action: {
+payload: string | undefined;
+type: string;
+}) => void | DashboardMetaState_2 | WritableDraft<DashboardMetaState_2>;
 }, "meta">;
 
 // @alpha
@@ -7821,7 +7829,7 @@ export interface ResolveAsyncRenderPayload {
 }
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
@@ -8638,6 +8646,9 @@ export const selectEntitlementUnlimitedAutomations: DashboardSelector<IEntitleme
 
 // @alpha
 export const selectErrorUsers: DashboardSelector<GoodDataSdkError | undefined>;
+
+// @public
+export const selectEvaluationFrequency: DashboardSelector<string | undefined>;
 
 // @alpha (undocumented)
 export const selectExecutionResult: (state: DashboardState, id: EntityId) => IExecutionResultEnvelope | undefined;

@@ -322,6 +322,11 @@ export interface IDashboard<TWidget = IDashboardWidget>
      * Data sets related to the dashboard, as defined by the includes directive
      */
     readonly dataSets?: IDataSetMetadataObject[];
+
+    /**
+     * Override the default evaluation frequency for the dashboard.
+     */
+    readonly evaluationFrequency?: string;
 }
 
 /**
@@ -384,6 +389,11 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
      * Disables listing and saving of filter views for this dashboard.
      */
     readonly disableFilterViews?: boolean;
+
+    /**
+     * Evaluation frequency of alerts for the dashboard.
+     */
+    readonly evaluationFrequency?: string;
 }
 
 /**

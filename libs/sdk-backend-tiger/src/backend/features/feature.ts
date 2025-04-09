@@ -723,6 +723,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableDateFilterIdentifiersRollout,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableAlertsEvaluationFrequencySetup,
+            "enableAlertsEvaluationFrequencySetup",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAlertsEvaluationFrequencySetup,
+        ),
     };
 }
 

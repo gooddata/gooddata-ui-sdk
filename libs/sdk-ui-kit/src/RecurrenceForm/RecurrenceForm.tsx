@@ -14,7 +14,13 @@ import {
 import { DateTime } from "./DateTime.js";
 import { Recurrence } from "./Recurrence.js";
 import { messages } from "./locales.js";
-import { DEFAULT_DATE_FORMAT, DEFAULT_LOCALE, DEFAULT_TIME_FORMAT, DEFAULT_WEEK_START } from "./constants.js";
+import {
+    DEFAULT_DATE_FORMAT,
+    DEFAULT_LOCALE,
+    DEFAULT_TIME_FORMAT,
+    DEFAULT_WEEK_START,
+    RECURRENCE_TYPES,
+} from "./constants.js";
 
 /**
  * @internal
@@ -35,6 +41,7 @@ export interface IRecurrenceFormProps {
     allowHourlyRecurrence?: boolean;
     showRepeatTypeDescription?: boolean;
     showTimezoneInOccurrence?: boolean;
+    showInheritValue?: boolean;
     onRecurrenceDropdownOpen?: () => void;
 }
 
@@ -55,6 +62,7 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
         allowHourlyRecurrence = true,
         showRepeatTypeDescription,
         showTimezoneInOccurrence,
+        showInheritValue,
         onRecurrenceDropdownOpen,
     } = props;
     const intl = useIntl();
@@ -62,7 +70,13 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
     const [dateValue, setDateValue] = useState<Date | null>(startDate);
     const [cronValue, setCronValue] = useState<string>(cronExpression);
     const [recurrenceType, setRecurrenceType] = useState<RecurrenceType>(
-        transformCronExpressionToRecurrenceType(dateValue, cronExpression, allowHourlyRecurrence, weekStart),
+        transformCronExpressionToRecurrenceType(
+            dateValue,
+            cronExpression,
+            allowHourlyRecurrence,
+            showInheritValue,
+            weekStart,
+        ),
     );
 
     const onDateChange = useCallback(
@@ -82,7 +96,13 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
         (type: RecurrenceType) => {
             setRecurrenceType(type);
             const newExpression = constructCronExpression(dateValue, type, cronValue, weekStart);
-            onChange(newExpression, dateValue, isCronExpressionValid(newExpression, allowHourlyRecurrence));
+            onChange(
+                newExpression,
+                dateValue,
+                type === RECURRENCE_TYPES.INHERIT
+                    ? true
+                    : isCronExpressionValid(newExpression, allowHourlyRecurrence),
+            );
         },
         [cronValue, dateValue, onChange, weekStart, allowHourlyRecurrence],
     );
@@ -121,6 +141,7 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
                 allowHourlyRecurrence={allowHourlyRecurrence}
                 weekStart={weekStart}
                 timezone={timezone}
+                showInheritValue={showInheritValue}
                 showTimezoneInOccurrence={showTimezoneInOccurrence}
                 onRecurrenceDropdownOpen={onRecurrenceDropdownOpen}
             />

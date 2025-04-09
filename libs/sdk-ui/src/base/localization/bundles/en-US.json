@@ -3489,6 +3489,11 @@
         "comment": "Repeats the schedule email using custom cron expression defined by the user. Do not translate word 'Cron' as it is a name of technical specification.",
         "limit": 0
     },
+    "recurrence.types.inherit": {
+        "value": "Inherit",
+        "comment": "Repeats the schedule email using the same recurrence as the setup in parent.",
+        "limit": 0
+    },
     "recurrence.description.hourly": {
         "value": "At start of every hour",
         "comment": "",
@@ -3516,6 +3521,11 @@
     },
     "recurrence.description.monthly": {
         "value": "At {hour} on {dayOfWeekName} every {weekNumber}. week in month",
+        "comment": "Do not translate placeholders {hour}, {dayOfWeekName} and {weekNumber}.",
+        "limit": 0
+    },
+    "recurrence.description.inherit": {
+        "value": "Defined on workspace or organization level",
         "comment": "Do not translate placeholders {hour}, {dayOfWeekName} and {weekNumber}.",
         "limit": 0
     },

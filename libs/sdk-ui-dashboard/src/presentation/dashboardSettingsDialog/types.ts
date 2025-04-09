@@ -11,6 +11,7 @@ export interface IDashboardSettingsApplyPayload {
     disableUserFilterSave: boolean;
     disableUserFilterReset: boolean;
     disableFilterViews: boolean;
+    evaluationFrequency: string | undefined;
 }
 
 /**

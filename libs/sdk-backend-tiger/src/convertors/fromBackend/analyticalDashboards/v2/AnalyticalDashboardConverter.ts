@@ -116,6 +116,7 @@ interface IAnalyticalDashboardContent {
     disableUserFilterReset?: boolean;
     disableUserFilterSave?: boolean;
     disableFilterViews?: boolean;
+    evaluationFrequency?: string;
 }
 
 function convertDashboardPluginLink(
@@ -146,6 +147,7 @@ function getConvertedAnalyticalDashboardContent(
         disableUserFilterReset: analyticalDashboard.disableUserFilterReset,
         disableUserFilterSave: analyticalDashboard.disableUserFilterSave,
         disableFilterViews: analyticalDashboard.disableFilterViews,
+        evaluationFrequency: analyticalDashboard.evaluationFrequency,
     };
 }
 
@@ -169,6 +171,7 @@ export function convertDashboard(
         disableUserFilterReset,
         disableUserFilterSave,
         disableFilterViews,
+        evaluationFrequency,
     } = getConvertedAnalyticalDashboardContent(content as AnalyticalDashboardModelV2.IAnalyticalDashboard);
 
     return {
@@ -197,6 +200,7 @@ export function convertDashboard(
         disableUserFilterReset,
         disableUserFilterSave,
         disableFilterViews,
+        evaluationFrequency,
         dataSets: included?.filter(isDataSetItem).map(convertDataSetItem) ?? [],
     };
 }

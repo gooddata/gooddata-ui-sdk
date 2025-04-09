@@ -36,6 +36,8 @@ import {
     selectEnableComparisonInAlerting,
     useWorkspaceUsers,
     selectExecutionTimestamp,
+    selectSettings,
+    selectDashboardDescriptor,
 } from "../../../../../../model/index.js";
 import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
 import { DEFAULT_MAX_RECIPIENTS } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
@@ -73,6 +75,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
 
     const separators = useDashboardSelector(selectSeparators);
+    const descriptor = useDashboardSelector(selectDashboardDescriptor);
     const allAutomationsCount = useDashboardSelector(selectAllAutomationsCount);
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
@@ -147,6 +150,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     });
 
     const locale = useDashboardSelector(selectLocale);
+    const settings = useDashboardSelector(selectSettings);
 
     const supportedAttributes = useMemo(
         () => getSupportedInsightAttributesByInsight(insight, catalogDateDatasets),
@@ -200,6 +204,13 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                     defaultNotificationChannelId,
                     convertCurrentUserToAutomationRecipient(users ?? [], currentUser),
                     measureFormatMap,
+                    undefined,
+                    descriptor.evaluationFrequency
+                        ? {
+                              cron: descriptor.evaluationFrequency,
+                              timezone: settings.alertDefault?.defaultTimezone,
+                          }
+                        : undefined,
                 ),
             );
         } else if ((widgetFiltersStatus === "error" || usersStatus === "error") && !defaultAlert) {
@@ -207,6 +218,8 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             addError(messages.alertLoadingError);
         }
     }, [
+        settings.alertDefault,
+        descriptor.evaluationFrequency,
         closeInsightWidgetMenu,
         defaultAlert,
         defaultMeasure,
@@ -218,6 +231,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         currentUser,
         users,
         usersStatus,
+        measureFormatMap,
     ]);
 
     useEffect(() => {

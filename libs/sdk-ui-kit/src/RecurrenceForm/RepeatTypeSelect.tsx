@@ -10,7 +10,6 @@ import {
     DEFAULT_DROPDOWN_WIDTH,
     DEFAULT_DROPDOWN_ZINDEX,
     RECURRENCE_TYPES,
-    RECURRENCE_TYPES_WITHOUT_HOURS,
 } from "./constants.js";
 import { getWeekNumber, getIntlDayName, isLastOccurrenceOfWeekdayInMonth } from "./utils.js";
 import { messages } from "./locales.js";
@@ -33,6 +32,8 @@ const getLocalizationKey = (id: RecurrenceType): MessageDescriptor => {
             return messages.recurrence_monthly;
         case RECURRENCE_TYPES.CRON:
             return messages.recurrence_cron;
+        case RECURRENCE_TYPES.INHERIT:
+            return messages.recurrence_inherit;
         default:
             throw new Error("Invariant: Unexpected localization key.");
     }
@@ -42,27 +43,35 @@ const getRepeatItems = (
     intl: IntlShape,
     startDate: Date | null,
     allowHourlyRecurrence?: boolean,
+    showInheritValue?: boolean,
 ): IDropdownItem[] => {
     const isLastOccurrenceOfWeekDay = isLastOccurrenceOfWeekdayInMonth(startDate);
-    const recurrenceTypes = allowHourlyRecurrence ? RECURRENCE_TYPES : RECURRENCE_TYPES_WITHOUT_HOURS;
+    const recurrenceTypes = [
+        ...(showInheritValue ? [RECURRENCE_TYPES.INHERIT] : []),
+        ...(allowHourlyRecurrence ? [RECURRENCE_TYPES.HOURLY] : []),
+        RECURRENCE_TYPES.DAILY,
+        RECURRENCE_TYPES.WEEKLY,
+        RECURRENCE_TYPES.MONTHLY,
+        RECURRENCE_TYPES.CRON,
+    ];
 
-    return Object.values(recurrenceTypes).map((id): IDropdownItem => {
+    return recurrenceTypes.map((id): IDropdownItem => {
         const localizationKey = getLocalizationKey(id);
 
-        if (id === recurrenceTypes.MONTHLY && !startDate) {
+        if (id === RECURRENCE_TYPES.MONTHLY && !startDate) {
             return {
                 id,
                 title: intl.formatMessage(messages.recurrence_monthly_first),
             };
         }
-        if (id === recurrenceTypes.WEEKLY && !startDate) {
+        if (id === RECURRENCE_TYPES.WEEKLY && !startDate) {
             return {
                 id,
                 title: intl.formatMessage(messages.recurrence_weekly_first),
             };
         }
 
-        if (id === recurrenceTypes.MONTHLY && isLastOccurrenceOfWeekDay) {
+        if (id === RECURRENCE_TYPES.MONTHLY && isLastOccurrenceOfWeekDay) {
             return {
                 id,
                 title: intl.formatMessage(messages.recurrence_monthly_last, {
@@ -84,6 +93,7 @@ const getRepeatItems = (
 export interface IRepeatTypeSelectProps {
     id: string;
     repeatType: RecurrenceType;
+    showInheritValue?: boolean;
     startDate?: Date | null;
     onChange: (repeatType: string) => void;
     allowHourlyRecurrence?: boolean;
@@ -91,9 +101,17 @@ export interface IRepeatTypeSelectProps {
 }
 
 export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
-    const { id, onChange, repeatType, startDate = null, allowHourlyRecurrence, onRepeatDropdownOpen } = props;
+    const {
+        id,
+        onChange,
+        repeatType,
+        startDate = null,
+        allowHourlyRecurrence,
+        showInheritValue,
+        onRepeatDropdownOpen,
+    } = props;
     const intl = useIntl();
-    const repeatItems = getRepeatItems(intl, startDate, allowHourlyRecurrence);
+    const repeatItems = getRepeatItems(intl, startDate, allowHourlyRecurrence, showInheritValue);
     const repeatTypeItem = repeatItems.find((item) => item.id === repeatType);
 
     invariant(repeatTypeItem, "Inconsistent state in RepeatTypeSelect");

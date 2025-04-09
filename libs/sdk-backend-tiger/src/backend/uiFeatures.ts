@@ -142,6 +142,7 @@ export enum TigerFeaturesNames {
     EnableExecutionTimestamp = "enableExecutionTimestamp",
     EnableAutomationFilterContext = "enableAutomationFilterContext",
     EnableDateFilterIdentifiersRollout = "enableDateFilterIdentifiersRollout",
+    EnableAlertsEvaluationFrequencySetup = "enableAlertsEvaluationFrequencySetup",
 }
 
 export type ITigerFeatureFlags = {
@@ -246,6 +247,7 @@ export type ITigerFeatureFlags = {
     enableExecutionTimestamp: typeof FeatureFlagsValues["enableExecutionTimestamp"][number];
     enableAutomationFilterContext: typeof FeatureFlagsValues["enableAutomationFilterContext"][number];
     enableDateFilterIdentifiersRollout: typeof FeatureFlagsValues["enableDateFilterIdentifiersRollout"][number];
+    enableAlertsEvaluationFrequencySetup: typeof FeatureFlagsValues["enableAlertsEvaluationFrequencySetup"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -350,6 +352,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableExecutionTimestamp: false,
     enableAutomationFilterContext: false,
     enableDateFilterIdentifiersRollout: false,
+    enableAlertsEvaluationFrequencySetup: false,
 };
 
 export const FeatureFlagsValues = {
@@ -458,4 +461,5 @@ export const FeatureFlagsValues = {
     enableExecutionTimestamp: [true, false] as const,
     enableAutomationFilterContext: [true, false] as const,
     enableDateFilterIdentifiersRollout: [true, false] as const,
+    enableAlertsEvaluationFrequencySetup: [true, false] as const,
 };
