@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { describe, it, expect } from "vitest";
 import { WeekStart } from "@gooddata/sdk-model";
@@ -144,41 +144,51 @@ describe("transformCronExpressionToRecurrenceType with date", () => {
     const D2024_01_25_15 = new Date(2024, 0, 25, 15, 0, 0);
 
     it.each([
-        ["0 0 * ? * *", true, universal, "hourly"],
-        ["0 0 * ? * *", false, universal, "cron"],
-        ["0 0 1 ? * *", true, D2024_01_01_01, "daily"],
-        ["0 0 9 ? * *", true, D2024_01_01_09, "daily"],
-        ["0 0 18 ? * *", true, D2024_01_01_18, "daily"],
-        ["0 0 10 ? * *", true, D2024_01_01_18, "cron"],
-        ["0 0 1 ? * SUN", true, D2024_01_07_01, "weekly"],
-        ["0 0 9 ? * MON", true, D2024_01_08_09, "weekly"],
-        ["0 0 12 ? * TUE", true, D2024_01_09_12, "weekly"],
-        ["0 0 18 ? * FRI", true, D2024_01_12_18, "weekly"],
-        ["0 0 23 ? * SAT", true, D2024_01_13_23, "weekly"],
-        ["0 0 23 ? * FRI", true, D2024_01_13_23, "cron"],
-        ["0 0 10 ? * SAT", true, D2024_01_13_23, "cron"],
-        ["0 0 15 ? * MON#1", true, D2024_01_01_15, "monthly", "every first monday"],
-        ["0 0 15 ? * FRI#1", true, D2024_01_05_15, "monthly", "every first friday"],
-        ["0 0 15 ? * TUE#2", true, D2024_01_09_15, "monthly", "every second tuesday"],
-        ["0 0 15 ? * WED#3", true, D2024_01_17_15, "monthly", "every third wednesday"],
-        ["0 0 15 ? * THUL", true, D2024_01_25_15, "monthly", "every last (fourth) thursday"],
-        ["0 0 15 ? * THU#5", true, D2024_01_25_15, "cron"],
-        ["0 0 8 ? * TUE#2", true, D2024_01_09_15, "cron"],
-        ["* * * * * *", true, universal, "cron"],
-        ["* * * ? * *", true, universal, "cron"],
-        ["1 1 1 1 1 1", true, universal, "cron"],
-        ["1 1 1 ? 1 1", true, universal, "cron"],
-        ["0 0 1 ? * 5", true, universal, "cron"],
-        ["0 0 1 ? JAN SUN", true, universal, "cron"],
-        ["0 0 1 ? * 1-3", true, universal, "cron"],
-        ["0 0 1 ? * 1,2", true, universal, "cron"],
-        ["0 0 1 ? * 1/2", true, universal, "cron"],
-        ["0 0 0 1 * *", true, universal, "cron"],
+        ["0 0 * ? * *", true, false, universal, "hourly"],
+        ["0 0 * ? * *", false, false, universal, "cron"],
+        ["0 0 1 ? * *", true, false, D2024_01_01_01, "daily"],
+        ["0 0 9 ? * *", true, false, D2024_01_01_09, "daily"],
+        ["0 0 18 ? * *", true, false, D2024_01_01_18, "daily"],
+        ["0 0 10 ? * *", true, false, D2024_01_01_18, "cron"],
+        ["0 0 1 ? * SUN", true, false, D2024_01_07_01, "weekly"],
+        ["0 0 9 ? * MON", true, false, D2024_01_08_09, "weekly"],
+        ["0 0 12 ? * TUE", true, false, D2024_01_09_12, "weekly"],
+        ["0 0 18 ? * FRI", true, false, D2024_01_12_18, "weekly"],
+        ["0 0 23 ? * SAT", true, false, D2024_01_13_23, "weekly"],
+        ["0 0 23 ? * FRI", true, false, D2024_01_13_23, "cron"],
+        ["0 0 10 ? * SAT", true, false, D2024_01_13_23, "cron"],
+        ["0 0 15 ? * MON#1", true, false, D2024_01_01_15, "monthly", "every first monday"],
+        ["0 0 15 ? * FRI#1", true, false, D2024_01_05_15, "monthly", "every first friday"],
+        ["0 0 15 ? * TUE#2", true, false, D2024_01_09_15, "monthly", "every second tuesday"],
+        ["0 0 15 ? * WED#3", true, false, D2024_01_17_15, "monthly", "every third wednesday"],
+        ["0 0 15 ? * THUL", true, false, D2024_01_25_15, "monthly", "every last (fourth) thursday"],
+        ["0 0 15 ? * THU#5", true, false, D2024_01_25_15, "cron"],
+        ["0 0 8 ? * TUE#2", true, false, D2024_01_09_15, "cron"],
+        ["* * * * * *", true, false, universal, "cron"],
+        ["* * * ? * *", true, false, universal, "cron"],
+        ["1 1 1 1 1 1", true, false, universal, "cron"],
+        ["1 1 1 ? 1 1", true, false, universal, "cron"],
+        ["0 0 1 ? * 5", true, false, universal, "cron"],
+        ["0 0 1 ? JAN SUN", true, false, universal, "cron"],
+        ["0 0 1 ? * 1-3", true, false, universal, "cron"],
+        ["0 0 1 ? * 1,2", true, false, universal, "cron"],
+        ["0 0 1 ? * 1/2", true, false, universal, "cron"],
+        ["0 0 0 1 * *", true, false, universal, "cron"],
+        ["", true, true, universal, "inherit"],
+        ["", true, true, undefined, "inherit"],
+        [undefined, true, true, undefined, "inherit"],
+        [undefined, true, false, undefined, "cron"],
     ])(
         "should correctly identify %s with hourly %s and date %s as %s",
-        (cronExpression, allowHourly, date, expected) => {
+        (cronExpression, allowHourly, allowInherit, date, expected) => {
             expect(
-                transformCronExpressionToRecurrenceType(date, cronExpression, allowHourly, "Monday"),
+                transformCronExpressionToRecurrenceType(
+                    date,
+                    cronExpression,
+                    allowHourly,
+                    allowInherit,
+                    "Monday",
+                ),
             ).toEqual(expected);
         },
     );
@@ -186,41 +196,55 @@ describe("transformCronExpressionToRecurrenceType with date", () => {
 
 describe("transformCronExpressionToRecurrenceType without date, default Monday", () => {
     it.each([
-        ["0 0 * ? * *", true, "hourly"],
-        ["0 0 * ? * *", false, "cron"],
-        ["0 0 1 ? * *", true, "daily"],
-        ["0 0 9 ? * *", true, "daily"],
-        ["0 0 18 ? * *", true, "daily"],
-        ["0 0 10 ? * *", true, "daily"],
-        ["0 0 1 ? * SUN", true, "weekly"],
-        ["0 0 9 ? * MON", true, "weekly"],
-        ["0 0 12 ? * TUE", true, "weekly"],
-        ["0 0 18 ? * FRI", true, "weekly"],
-        ["0 0 23 ? * SAT", true, "weekly"],
-        ["0 0 23 ? * FRI", true, "weekly"],
-        ["0 0 10 ? * SAT", true, "weekly"],
-        ["0 0 15 ? * MON#1", true, "monthly", "every first monday"],
-        ["0 0 15 ? * FRI#1", true, "monthly", "every first friday"],
-        ["0 0 15 ? * TUE#2", true, "monthly", "every second tuesday"],
-        ["0 0 15 ? * WED#3", true, "monthly", "every third wednesday"],
-        ["0 0 15 ? * THUL", true, "monthly", "every last (fourth) thursday"],
-        ["0 0 15 ? * THU#5", true, "monthly"],
-        ["0 0 8 ? * TUE#2", true, "monthly"],
-        ["0 0 0 1 * *", true, "monthly"],
-        ["* * * * * *", true, "cron"],
-        ["* * * ? * *", true, "cron"],
-        ["1 1 1 1 1 1", true, "cron"],
-        ["1 1 1 ? 1 1", true, "cron"],
-        ["0 0 1 ? * 5", true, "cron"],
-        ["0 0 1 ? JAN SUN", true, "cron"],
-        ["0 0 1 ? * 1-3", true, "cron"],
-        ["0 0 1 ? * 1,2", true, "cron"],
-        ["0 0 1 ? * 1/2", true, "cron"],
-    ])("should correctly identify %s with hourly %s as %s", (cronExpression, allowHourly, expected) => {
-        expect(transformCronExpressionToRecurrenceType(null, cronExpression, allowHourly, "Monday")).toEqual(
-            expected,
-        );
-    });
+        ["0 0 * ? * *", true, false, "hourly"],
+        ["0 0 * ? * *", false, false, "cron"],
+        ["0 0 1 ? * *", true, false, "daily"],
+        ["0 0 9 ? * *", true, false, "daily"],
+        ["0 0 18 ? * *", true, false, "daily"],
+        ["0 0 10 ? * *", true, false, "daily"],
+        ["0 0 1 ? * SUN", true, false, "weekly"],
+        ["0 0 9 ? * MON", true, false, "weekly"],
+        ["0 0 12 ? * TUE", true, false, "weekly"],
+        ["0 0 18 ? * FRI", true, false, "weekly"],
+        ["0 0 23 ? * SAT", true, false, "weekly"],
+        ["0 0 23 ? * FRI", true, false, "weekly"],
+        ["0 0 10 ? * SAT", true, false, "weekly"],
+        ["0 0 15 ? * MON#1", true, false, "monthly", "every first monday"],
+        ["0 0 15 ? * FRI#1", true, false, "monthly", "every first friday"],
+        ["0 0 15 ? * TUE#2", true, false, "monthly", "every second tuesday"],
+        ["0 0 15 ? * WED#3", true, false, "monthly", "every third wednesday"],
+        ["0 0 15 ? * THUL", true, false, "monthly", "every last (fourth) thursday"],
+        ["0 0 15 ? * THU#5", true, false, "monthly"],
+        ["0 0 8 ? * TUE#2", true, false, "monthly"],
+        ["0 0 0 1 * *", true, false, "monthly"],
+        ["* * * * * *", true, false, "cron"],
+        ["* * * ? * *", true, false, "cron"],
+        ["1 1 1 1 1 1", true, false, "cron"],
+        ["1 1 1 ? 1 1", true, false, "cron"],
+        ["0 0 1 ? * 5", true, false, "cron"],
+        ["0 0 1 ? JAN SUN", true, false, "cron"],
+        ["0 0 1 ? * 1-3", true, false, "cron"],
+        ["0 0 1 ? * 1,2", true, false, "cron"],
+        ["0 0 1 ? * 1/2", true, false, "cron"],
+        ["0 0 1 ? * 1/2", true, false, "cron"],
+        ["", true, true, "inherit"],
+        ["", true, true, "inherit"],
+        [undefined, true, true, "inherit"],
+        [undefined, true, false, "cron"],
+    ])(
+        "should correctly identify %s with hourly %s as %s",
+        (cronExpression, allowHourly, allowInherit, expected) => {
+            expect(
+                transformCronExpressionToRecurrenceType(
+                    null,
+                    cronExpression,
+                    allowHourly,
+                    allowInherit,
+                    "Monday",
+                ),
+            ).toEqual(expected);
+        },
+    );
 });
 
 describe("transformRecurrenceTypeToDescription", () => {
@@ -249,6 +273,8 @@ describe("transformRecurrenceTypeToDescription", () => {
         [RECURRENCE_TYPES.MONTHLY, d1, "Sunday", "At 10 PM on Tuesday every 2. week in month"],
         [RECURRENCE_TYPES.CRON, d1, "Monday", ""],
         [RECURRENCE_TYPES.CRON, d1, "Sunday", ""],
+
+        [RECURRENCE_TYPES.INHERIT, d1, "Sunday", "Defined on workspace or organization level"],
     ])("should correctly describe %s", (recurrenceType, date, weekStart: WeekStart, expected) => {
         expect(transformRecurrenceTypeToDescription(intl, recurrenceType, date, weekStart)).toEqual(expected);
     });

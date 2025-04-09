@@ -5,6 +5,7 @@ import {
     IAutomationAlertTrigger,
     IAutomationMetadataObjectDefinition,
     IAutomationRecipient,
+    IAutomationSchedule,
     IFilter,
 } from "@gooddata/sdk-model";
 
@@ -24,6 +25,7 @@ export function createDefaultAlert(
     currentUser: IAutomationRecipient,
     measureFormatMap: IMeasureFormatMap,
     comparisonOperator: IAlertComparisonOperator = "GREATER_THAN",
+    schedule?: IAutomationSchedule,
 ): IAutomationMetadataObjectDefinition {
     const condition: IAutomationAlertCondition = {
         type: "comparison",
@@ -59,6 +61,7 @@ export function createDefaultAlert(
                 undefined,
             ),
         },
+        ...(schedule ? { schedule } : {}),
         recipients: [currentUser],
     };
 }

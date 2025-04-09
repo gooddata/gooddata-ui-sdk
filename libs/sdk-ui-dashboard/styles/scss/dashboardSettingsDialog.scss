@@ -33,4 +33,16 @@
             }
         }
     }
+
+    .gd-recurrence-form-repeat.gd-input-component {
+        flex-wrap: wrap;
+
+        .gd-label {
+            display: block;
+            width: 100%;
+        }
+    }
+    .gd-recurrence-form-repeat-type-description {
+        margin-top: 5px;
+    }
 }

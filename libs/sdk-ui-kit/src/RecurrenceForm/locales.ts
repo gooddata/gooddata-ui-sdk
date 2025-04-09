@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { MessageDescriptor, defineMessages } from "react-intl";
 
@@ -13,6 +13,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     recurrence_weekly: { id: "recurrence.types.weekly" },
     recurrence_weekly_first: { id: "recurrence.types.weekly.first" },
     recurrence_cron: { id: "recurrence.types.cron" },
+    recurrence_inherit: { id: "recurrence.types.inherit" },
 
     description_recurrence_hourly: { id: "recurrence.description.hourly" },
     description_recurrence_daily: { id: "recurrence.description.daily" },
@@ -20,4 +21,5 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     description_recurrence_weekly: { id: "recurrence.description.weekly" },
     description_recurrence_monthly_first: { id: "recurrence.description.monthly_first" },
     description_recurrence_monthly: { id: "recurrence.description.monthly" },
+    description_recurrence_inherit: { id: "recurrence.description.inherit" },
 });

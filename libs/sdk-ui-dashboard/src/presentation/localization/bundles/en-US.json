@@ -343,6 +343,11 @@
         "comment": "",
         "limit": 0
     },
+    "settingsDashboardDialog.section.alert": {
+        "value": "Alerts",
+        "comment": "",
+        "limit": 0
+    },
     "deleteDashboardDialog.headline": {
         "value": "Delete dashboard?",
         "comment": "",

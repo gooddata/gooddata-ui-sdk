@@ -22,6 +22,7 @@ const setMeta: MetaReducer<PayloadAction<SetMetaPayload>> = (state, action) => {
               description: dashboard.description,
               tags: dashboard.tags,
               shareStatus: dashboard.shareStatus,
+              evaluationFrequency: dashboard.evaluationFrequency,
               isUnderStrictControl: dashboard.isUnderStrictControl,
               isLocked: dashboard.isLocked,
               disableCrossFiltering: dashboard.disableCrossFiltering,
@@ -63,6 +64,12 @@ const setDisableFilterViews: MetaReducer<PayloadAction<boolean>> = (state, actio
     state.descriptor.disableFilterViews = action.payload;
 };
 
+const setEvaluationFrequency: MetaReducer<PayloadAction<string | undefined>> = (state, action) => {
+    invariant(state.descriptor);
+
+    state.descriptor.evaluationFrequency = action.payload || undefined;
+};
+
 export const metaReducers = {
     setMeta,
     setDashboardTitle,
@@ -70,4 +77,5 @@ export const metaReducers = {
     setDisableUserFilterReset,
     setDisableUserFilterSave,
     setDisableFilterViews,
+    setEvaluationFrequency,
 };

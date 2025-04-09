@@ -1264,6 +1264,7 @@ export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, 
     readonly disableFilterViews?: boolean;
     readonly disableUserFilterReset?: boolean;
     readonly disableUserFilterSave?: boolean;
+    readonly evaluationFrequency?: string;
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: IDashboardLayout<TWidget>;
     readonly plugins?: IDashboardPluginLink[];
@@ -1380,6 +1381,7 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
     readonly disableFilterViews?: boolean;
     readonly disableUserFilterReset?: boolean;
     readonly disableUserFilterSave?: boolean;
+    readonly evaluationFrequency?: string;
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
     readonly layout?: IDashboardLayout<TWidget>;
     readonly plugins?: IDashboardPluginLink[];
@@ -3348,6 +3350,7 @@ export interface ISettings {
     enableAlertAttributes?: boolean;
     enableAlerting?: boolean;
     enableAlertingRollout?: boolean;
+    enableAlertsEvaluationFrequencySetup?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
     enableAmplitudeTracker?: boolean;
     enableAnalyticalDashboardPermissions?: boolean;

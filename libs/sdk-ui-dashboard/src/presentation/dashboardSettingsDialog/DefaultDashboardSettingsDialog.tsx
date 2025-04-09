@@ -1,5 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 import {
     Bubble,
@@ -7,11 +7,16 @@ import {
     ConfirmDialog,
     DialogListHeader,
     IAlignPoint,
+    RecurrenceForm,
 } from "@gooddata/sdk-ui-kit";
 
 import {
     selectCrossFilteringEnabledAndSupported,
+    selectDateFormat,
     selectEnableFilterViews,
+    selectLocale,
+    selectSettings,
+    selectWeekStart,
     useDashboardSelector,
 } from "../../model/index.js";
 
@@ -26,10 +31,17 @@ export const DefaultDashboardSettingsDialog = (props: IDashboardSettingsDialogPr
 
     const intl = useIntl();
 
+    const [cronValid, setCronValid] = useState(true);
     const { currentData, setCurrentData, isDirty } = useDialogData();
+    const dateFormat = useDashboardSelector(selectDateFormat);
+    const weekStart = useDashboardSelector(selectWeekStart);
+    const locale = useDashboardSelector(selectLocale);
 
     const isCrossFilteringEnabledAndSupported = useDashboardSelector(selectCrossFilteringEnabledAndSupported);
     const isFilterViewsFeatureEnabled = useDashboardSelector(selectEnableFilterViews);
+    const settings = useDashboardSelector(selectSettings);
+
+    const enableAlertsEvaluationFrequencySetup = settings.enableAlertsEvaluationFrequencySetup;
 
     const onApplyHandler = useCallback(() => {
         onApply(currentData);
@@ -48,7 +60,7 @@ export const DefaultDashboardSettingsDialog = (props: IDashboardSettingsDialogPr
             headline={intl.formatMessage({ id: "settingsDashboardDialog.headline" })}
             cancelButtonText={intl.formatMessage({ id: "cancel" })}
             submitButtonText={intl.formatMessage({ id: "apply" })}
-            isSubmitDisabled={!isDirty()}
+            isSubmitDisabled={!isDirty() || !cronValid}
         >
             <div className="gd-dashboard-settings-dialog-section">
                 <DialogListHeader
@@ -121,6 +133,34 @@ export const DefaultDashboardSettingsDialog = (props: IDashboardSettingsDialogPr
                     }}
                 />
             </div>
+            {enableAlertsEvaluationFrequencySetup ? (
+                <div className="gd-dashboard-settings-dialog-section">
+                    <DialogListHeader
+                        title={intl.formatMessage({ id: "settingsDashboardDialog.section.alert" })}
+                        className="gd-dashboard-settings-filters"
+                    />
+                    <RecurrenceForm
+                        allowHourlyRecurrence={true}
+                        cronExpression={currentData.evaluationFrequency ?? ""}
+                        placeholder={settings.alertDefault?.defaultCron}
+                        timezone={settings.alertDefault?.defaultTimezone}
+                        onChange={(e, _, valid) => {
+                            setCronValid(valid);
+                            setCurrentData({
+                                ...currentData,
+                                evaluationFrequency: e || undefined,
+                            });
+                        }}
+                        repeatLabel="Evaluation Frequency"
+                        showRepeatTypeDescription={true}
+                        showTimezoneInOccurrence={true}
+                        dateFormat={dateFormat}
+                        weekStart={weekStart}
+                        locale={locale}
+                        showInheritValue={true}
+                    />
+                </div>
+            ) : null}
         </ConfirmDialog>
     );
 };

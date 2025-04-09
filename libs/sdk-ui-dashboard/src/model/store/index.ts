@@ -357,6 +357,7 @@ export {
     selectDisableDashboardUserFilterSave,
     selectDisableFilterViews,
     selectDashboardDescriptor,
+    selectEvaluationFrequency,
 } from "./meta/metaSelectors.js";
 export { metaActions } from "./meta/index.js";
 export {

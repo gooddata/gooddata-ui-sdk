@@ -661,6 +661,11 @@ export interface ISettings {
      */
     enableDateFilterIdentifiersRollout?: boolean;
 
+    /**
+     * Enable to setup alerts evaluation frequency in dashboard settings.
+     */
+    enableAlertsEvaluationFrequencySetup?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

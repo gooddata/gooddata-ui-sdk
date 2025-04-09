@@ -3532,6 +3532,8 @@ export interface IRecurrenceFormProps {
     // (undocumented)
     repeatLabel?: string;
     // (undocumented)
+    showInheritValue?: boolean;
+    // (undocumented)
     showRepeatTypeDescription?: boolean;
     // (undocumented)
     showTimezoneInOccurrence?: boolean;
@@ -3565,6 +3567,8 @@ export interface IRecurrenceProps {
     onRepeatTypeChange: (repeatType: string) => void;
     // (undocumented)
     recurrenceType: RecurrenceType;
+    // (undocumented)
+    showInheritValue?: boolean;
     // (undocumented)
     showRepeatTypeDescription?: boolean;
     // (undocumented)
@@ -4674,6 +4678,7 @@ export const Recurrence: React_2.FC<IRecurrenceProps>;
 
 // @internal
 export const RECURRENCE_TYPES: {
+    INHERIT: string;
     HOURLY: string;
     DAILY: string;
     WEEKLY: string;
@@ -5021,7 +5026,7 @@ export const ToastMessages: React_2.FC;
 export function transform2Dropdown<T extends IDateDataset>(dateDatasets: T[]): Array<T | IDateDatasetHeader>;
 
 // @internal
-export const transformCronExpressionToRecurrenceType: (date: Date | null, cronExpression: string, allowHourlyRecurrence: boolean, weekStart: WeekStart) => RecurrenceType;
+export const transformCronExpressionToRecurrenceType: (date: Date | null, cronExpression: string | undefined, allowHourlyRecurrence: boolean, allowInheritValue: boolean, weekStart: WeekStart) => RecurrenceType;
 
 // @internal (undocumented)
 export type TUTMContent = "main_menu_help_documentation" | "main_menu_help_university" | "main_menu_help_community" | "main_menu_help_support" | "main_menu_help_ticket" | "main_menu_help_slack";

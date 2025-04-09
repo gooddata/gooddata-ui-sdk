@@ -366,6 +366,18 @@ export const selectDisableFilterViews: DashboardSelector<boolean> = createSelect
     },
 );
 
+/**
+ * Selects evaluation frequency.
+ *
+ * @public
+ */
+export const selectEvaluationFrequency: DashboardSelector<string | undefined> = createSelector(
+    selectDashboardDescriptor,
+    (state) => {
+        return state.evaluationFrequency;
+    },
+);
+
 //
 //
 //
@@ -481,6 +493,17 @@ const selectPersistedDashboardDisableUserFilterSave = createSelector(selectSelf,
  */
 const selectPersistedDashboardDisableFilterViews = createSelector(selectSelf, (state) => {
     return state.persistedDashboard?.disableFilterViews;
+});
+
+/**
+ * Selects persisted "evaluation frequency", the value that was used to initialize the rest
+ * of the dashboard state of the dashboard component during the initial load of the dashboard.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ */
+const selectPersistedDashboardEvaluationFrequency = createSelector(selectSelf, (state) => {
+    return state.persistedDashboard?.evaluationFrequency;
 });
 
 /**
@@ -665,6 +688,19 @@ export const selectIsDisableFilterViewsChanged: DashboardSelector<boolean> = cre
 );
 
 /**
+ * Selects a boolean indication if the dashboard has any changes to the evaluation frequency compared to the persisted version (if any)
+ *
+ * @internal
+ */
+export const selectEvaluationFrequencyChanged: DashboardSelector<boolean> = createSelector(
+    selectPersistedDashboardEvaluationFrequency,
+    selectEvaluationFrequency,
+    (persistedEvaluationFrequency, currentEvaluationFrequency) => {
+        return persistedEvaluationFrequency !== currentEvaluationFrequency;
+    },
+);
+
+/**
  * Selects a boolean indication if he dashboard has any changes to the title compared to the persisted version (if any)
  *
  * @internal
@@ -706,6 +742,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
     selectIsDisableUserFilterResetChanged,
     selectIsDisableUserFilterSaveChanged,
     selectIsDisableFilterViewsChanged,
+    selectEvaluationFrequencyChanged,
     (
         isNew,
         layout,
@@ -717,6 +754,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
         isDisableUserFilterResetChanged,
         isDisableUserFilterSaveChanged,
         isDisableFilterViewsChanged,
+        isEvaluationFrequencyChanged,
     ) => {
         if (isNew) {
             return !isDashboardLayoutEmpty(layout);
@@ -731,6 +769,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
             isDisableUserFilterResetChanged,
             isDisableUserFilterSaveChanged,
             isDisableFilterViewsChanged,
+            isEvaluationFrequencyChanged,
         ].some(Boolean);
     },
 );
