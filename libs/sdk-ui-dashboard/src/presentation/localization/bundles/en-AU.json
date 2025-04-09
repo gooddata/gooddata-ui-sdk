@@ -678,5 +678,11 @@
     "dialogs.schedule.accessibility.label.email.title": "Schedule name",
     "widget.options.menu.export": "Export",
     "options.menu.export.presentation.unsupported.oldWidget": "Unable to export. Please resave the dashboard or contact your administrator.",
-    "apply": "Apply"
+    "apply": "Apply",
+    "widget.options.menu.XLSX": "XLSX (formatted)",
+    "widget.options.menu.exportToCSV.formatted": "CSV (formatted)",
+    "widget.options.menu.exportToCSV.raw": "CSV (raw)",
+    "widget.drill.dialog.exportToXLSX": "Export to XLSX",
+    "widget.drill.dialog.exportToCSV.formatted": "Export to CSV (formatted)",
+    "widget.drill.dialog.exportToCSV.raw": "Export to CSV (raw)"
 }

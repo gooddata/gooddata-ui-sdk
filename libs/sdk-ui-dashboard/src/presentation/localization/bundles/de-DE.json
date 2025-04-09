@@ -678,5 +678,11 @@
     "dialogs.schedule.accessibility.label.email.title": "Name des plans",
     "widget.options.menu.export": "Exportieren",
     "options.menu.export.presentation.unsupported.oldWidget": "Export nicht möglich. Bitte speichern Sie das Dashboard erneut oder wenden Sie sich an Ihren Administrator.",
-    "apply": "Übernehmen"
+    "apply": "Übernehmen",
+    "widget.options.menu.XLSX": "XLSX (formatiert)",
+    "widget.options.menu.exportToCSV.formatted": "CSV (formatiert)",
+    "widget.options.menu.exportToCSV.raw": "CSV (roh)",
+    "widget.drill.dialog.exportToXLSX": "Nach XLSX exportieren",
+    "widget.drill.dialog.exportToCSV.formatted": "Nach CSV exportieren (formatiert)",
+    "widget.drill.dialog.exportToCSV.raw": "Nach CSV exportieren (roh)"
 }

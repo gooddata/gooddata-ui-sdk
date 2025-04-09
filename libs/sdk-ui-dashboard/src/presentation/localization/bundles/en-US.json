@@ -1109,6 +1109,21 @@
         "comment": "",
         "limit": 0
     },
+    "widget.options.menu.XLSX": {
+        "value": "Formatted (XLSX)",
+        "comment": "Export to file with XLSX extension.",
+        "limit": 0
+    },
+    "widget.options.menu.exportToCSV.formatted": {
+        "value": "Formatted (CSV)",
+        "comment": "Export to file with CSV extension.",
+        "limit": 0
+    },
+    "widget.options.menu.exportToCSV.raw": {
+        "value": "Raw (CSV)",
+        "comment": "Export to file with CSV extension.",
+        "limit": 0
+    },
     "widget.error.missing_insight.message": {
         "value": "No visualization available",
         "comment": "",
@@ -1116,6 +1131,21 @@
     },
     "widget.error.missing_insight.description": {
         "value": "This visualization has been removed or is no longer accessible. Please contact your administrator or remove it from the dashboard.",
+        "comment": "",
+        "limit": 0
+    },
+    "widget.drill.dialog.exportToXLSX": {
+        "value": "Export to XLSX",
+        "comment": "",
+        "limit": 0
+    },
+    "widget.drill.dialog.exportToCSV.formatted": {
+        "value": "Export to CSV (formatted)",
+        "comment": "",
+        "limit": 0
+    },
+    "widget.drill.dialog.exportToCSV.raw": {
+        "value": "Export to CSV (raw)",
         "comment": "",
         "limit": 0
     },

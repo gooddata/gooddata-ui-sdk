@@ -10,7 +10,7 @@ import {
     Header,
 } from "@gooddata/sdk-ui-kit";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import {
     IExecutionResultEnvelope,
     selectExecutionResultByRef,
@@ -23,6 +23,12 @@ import { isDataError, isDataErrorTooLarge } from "../../../../_staging/errors/er
 const alignPoints: IAlignPoint[] = [{ align: "tl bl", offset: { x: 20, y: 0 } }];
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
+
+const exportMessages = defineMessages({
+    xlsxFormatted: { id: "widget.options.menu.XLSX" },
+    csvFormatted: { id: "widget.options.menu.exportToCSV.formatted" },
+    csvRaw: { id: "widget.options.menu.exportToCSV.raw" },
+});
 
 const getExportTooltip = (execution?: IExecutionResultEnvelope, enableRawExports?: boolean): string => {
     if (isDataErrorTooLarge(execution?.error)) {
@@ -161,14 +167,14 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
                                         onExportXLSX();
                                     }}
                                     disabled={exportXLSVDisabled}
-                                    messageId="widget.options.menu.XLSX"
+                                    messageId={exportMessages.xlsxFormatted.id}
                                 />
                             ) : (
                                 <MenuItemWithBubble
                                     className="gd-export-options-xlsx"
                                     icon="gd-icon-type-sheet"
                                     disabled={exportXLSVDisabled}
-                                    messageId="widget.options.menu.XLSX"
+                                    messageId={exportMessages.xlsxFormatted.id}
                                     showBubble={true}
                                     alignPoints={alignPoints}
                                     bubbleTextId={tooltip}
@@ -183,14 +189,14 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
                                     className="gd-export-options-csv"
                                     icon="gd-icon-type-csv-formatted"
                                     disabled={exportCsvDisabled}
-                                    messageId="widget.options.menu.exportToCSV.formatted"
+                                    messageId={exportMessages.csvFormatted.id}
                                 />
                             ) : (
                                 <MenuItemWithBubble
                                     className="gd-export-options-csv"
                                     icon="gd-icon-type-csv-formatted"
                                     disabled={exportCsvDisabled}
-                                    messageId="widget.options.menu.exportToCSV.formatted"
+                                    messageId={exportMessages.csvFormatted.id}
                                     showBubble={true}
                                     alignPoints={alignPoints}
                                     bubbleTextId={tooltip}
@@ -205,14 +211,14 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
                                     className="gd-export-options-csv"
                                     icon="gd-icon-type-csv-raw"
                                     disabled={exportCSVRawDisabled}
-                                    messageId="widget.options.menu.exportToCSV.raw"
+                                    messageId={exportMessages.csvRaw.id}
                                 />
                             ) : (
                                 <MenuItemWithBubble
                                     className="gd-export-options-csv-raw"
                                     icon="gd-icon-type-csv-raw"
                                     disabled={exportCSVRawDisabled}
-                                    messageId="widget.options.menu.exportToCSV.raw"
+                                    messageId={exportMessages.csvRaw.id}
                                     showBubble={true}
                                     alignPoints={alignPoints}
                                     bubbleTextId={tooltip}

@@ -678,5 +678,11 @@
     "dialogs.schedule.accessibility.label.email.title": "Aikataulun nimi",
     "widget.options.menu.export": "Vie",
     "options.menu.export.presentation.unsupported.oldWidget": "Ei voida viedä. Tallenna ohjauspaneeli uudelleen tai ota yhteyttä järjestelmänvalvojaan.",
-    "apply": "Käytä"
+    "apply": "Käytä",
+    "widget.options.menu.XLSX": "XLSX (alustettu)",
+    "widget.options.menu.exportToCSV.formatted": "CSV (alustettu)",
+    "widget.options.menu.exportToCSV.raw": "CSV (raaka)",
+    "widget.drill.dialog.exportToXLSX": "Vie XLSX-tiedostona",
+    "widget.drill.dialog.exportToCSV.formatted": "Vie CSV-tiedostoon (muotoiltu)",
+    "widget.drill.dialog.exportToCSV.raw": "Vie CSV-tiedostoon (raaka)"
 }

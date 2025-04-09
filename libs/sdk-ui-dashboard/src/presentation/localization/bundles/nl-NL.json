@@ -678,5 +678,11 @@
     "dialogs.schedule.accessibility.label.email.title": "Naam schema",
     "widget.options.menu.export": "Exporteren",
     "options.menu.export.presentation.unsupported.oldWidget": "Kan niet exporteren. Sla het dashboard opnieuw op of neem contact op met uw beheerder.",
-    "apply": "Toepassen"
+    "apply": "Toepassen",
+    "widget.options.menu.XLSX": "XLSX (met opmaak)",
+    "widget.options.menu.exportToCSV.formatted": "CSV (met opmaak)",
+    "widget.options.menu.exportToCSV.raw": "CSV (onbewerkt)",
+    "widget.drill.dialog.exportToXLSX": "Exporteren naar XLSX",
+    "widget.drill.dialog.exportToCSV.formatted": "Exporteren naar CSV (met opmaak)",
+    "widget.drill.dialog.exportToCSV.raw": "Exporteren naar CSV (onbewerkt)"
 }

@@ -678,5 +678,11 @@
     "dialogs.schedule.accessibility.label.email.title": "Nom de l'horaire",
     "widget.options.menu.export": "Exporter",
     "options.menu.export.presentation.unsupported.oldWidget": "Impossible d’exporter. Veuillez réenregistrer le tableau de bord ou contacter votre administrateur.",
-    "apply": "Appliquer"
+    "apply": "Appliquer",
+    "widget.options.menu.XLSX": "XLSX (formaté)",
+    "widget.options.menu.exportToCSV.formatted": "CSV (formaté)",
+    "widget.options.menu.exportToCSV.raw": "CSV (brut)",
+    "widget.drill.dialog.exportToXLSX": "Exporter vers XLSX",
+    "widget.drill.dialog.exportToCSV.formatted": "Exporter vers CSV (formaté)",
+    "widget.drill.dialog.exportToCSV.raw": "Exporter vers CSV (brut)"
 }
