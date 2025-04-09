@@ -18,6 +18,14 @@
         margin-top: 0;
     }
 
+    .gd-dashboard-settings-evaluation-note {
+        margin-top: -15px;
+        font-size: 12px;
+        line-height: 17px;
+        font-family: kit-variables.$gd-font-primary;
+        color: kit-variables.$gd-color-label;
+    }
+
     .configuration-category-item {
         display: block;
         font-size: 12px;

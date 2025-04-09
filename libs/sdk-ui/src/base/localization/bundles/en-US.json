@@ -3524,11 +3524,6 @@
         "comment": "Do not translate placeholders {hour}, {dayOfWeekName} and {weekNumber}.",
         "limit": 0
     },
-    "recurrence.description.inherit": {
-        "value": "Defined on workspace or organization level",
-        "comment": "Do not translate placeholders {hour}, {dayOfWeekName} and {weekNumber}.",
-        "limit": 0
-    },
     "recurrence.error.too_often": {
         "value": "Frequency too high",
         "comment": "Invalid frequency recurrence.",

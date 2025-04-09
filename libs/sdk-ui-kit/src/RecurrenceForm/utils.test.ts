@@ -274,7 +274,7 @@ describe("transformRecurrenceTypeToDescription", () => {
         [RECURRENCE_TYPES.CRON, d1, "Monday", ""],
         [RECURRENCE_TYPES.CRON, d1, "Sunday", ""],
 
-        [RECURRENCE_TYPES.INHERIT, d1, "Sunday", "Defined on workspace or organization level"],
+        [RECURRENCE_TYPES.INHERIT, d1, "Sunday", ""],
     ])("should correctly describe %s", (recurrenceType, date, weekStart: WeekStart, expected) => {
         expect(transformRecurrenceTypeToDescription(intl, recurrenceType, date, weekStart)).toEqual(expected);
     });

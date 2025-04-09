@@ -348,6 +348,21 @@
         "comment": "",
         "limit": 0
     },
+    "settingsDashboardDialog.section.alert.inherit": {
+        "value": "Uses the evaluation frequency set by the organization.",
+        "comment": "",
+        "limit": 0
+    },
+    "settingsDashboardDialog.section.alert.note": {
+        "value": "<strong>Note:</strong> Applies to new alerts only — use the API to update existing ones.",
+        "comment": "",
+        "limit": 0
+    },
+    "settingsDashboardDialog.section.alert.label": {
+        "value": "Evaluation Frequency",
+        "comment": "",
+        "limit": 0
+    },
     "deleteDashboardDialog.headline": {
         "value": "Delete dashboard?",
         "comment": "",

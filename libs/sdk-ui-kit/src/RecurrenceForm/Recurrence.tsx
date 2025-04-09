@@ -16,6 +16,7 @@ export interface IRecurrenceProps {
     showRepeatTypeDescription?: boolean;
     showInheritValue?: boolean;
     recurrenceType: RecurrenceType;
+    inheritRecurrenceType?: RecurrenceType;
     startDate?: Date | null;
     timezone?: string;
     cronValue: string;
@@ -38,6 +39,7 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
     const {
         label,
         recurrenceType,
+        inheritRecurrenceType,
         startDate,
         cronValue,
         cronPlaceholder,
@@ -51,6 +53,14 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
         weekStart = "Sunday",
         onRecurrenceDropdownOpen,
     } = props;
+
+    const isInherit = recurrenceType === RECURRENCE_TYPES.INHERIT;
+    const isCron =
+        recurrenceType === RECURRENCE_TYPES.CRON ||
+        (isInherit && inheritRecurrenceType === RECURRENCE_TYPES.CRON);
+    const isSpecified =
+        recurrenceType !== RECURRENCE_TYPES.CRON ||
+        (isInherit && inheritRecurrenceType !== RECURRENCE_TYPES.CRON);
 
     const accessibilityValue = "schedule.recurrence";
     return (
@@ -70,26 +80,24 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
                     showInheritValue={showInheritValue}
                     onRepeatDropdownOpen={onRecurrenceDropdownOpen}
                 />
-                {recurrenceType !== RECURRENCE_TYPES.CRON && showRepeatTypeDescription ? (
+                {isSpecified && showRepeatTypeDescription ? (
                     <RepeatTypeDescription
-                        repeatType={recurrenceType}
+                        repeatType={isInherit ? inheritRecurrenceType : recurrenceType}
                         startDate={startDate}
                         weekStart={weekStart}
                         timezone={timezone}
-                        showTimezone={Boolean(
-                            showTimezoneInOccurrence && recurrenceType !== RECURRENCE_TYPES.INHERIT,
-                        )}
+                        showTimezone={Boolean(showTimezoneInOccurrence && !isInherit)}
                     />
                 ) : null}
-                {recurrenceType === RECURRENCE_TYPES.CRON ? (
+                {isCron ? (
                     <CronExpression
                         id={accessibilityValue}
-                        expression={cronValue}
-                        placeholder={cronPlaceholder}
+                        expression={isInherit ? cronPlaceholder : cronValue}
                         onChange={onCronValueChange}
                         allowHourlyRecurrence={allowHourlyRecurrence}
                         timezone={timezone}
                         showTimezone={showTimezoneInOccurrence}
+                        disabled={isInherit}
                     />
                 ) : null}
             </div>

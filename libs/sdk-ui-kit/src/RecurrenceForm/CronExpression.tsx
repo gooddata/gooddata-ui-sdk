@@ -10,15 +10,15 @@ const errorMessage = defineMessage({ id: "recurrence.error.too_often" });
 interface ICronExpressionProps {
     id: string;
     expression: string;
-    placeholder?: string;
     onChange: (expression: string, isValid: boolean) => void;
     allowHourlyRecurrence?: boolean;
     timezone?: string;
     showTimezone?: boolean;
+    disabled?: boolean;
 }
 
 export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
-    const { id, expression, placeholder, onChange, allowHourlyRecurrence, showTimezone, timezone } = props;
+    const { id, expression, onChange, allowHourlyRecurrence, showTimezone, timezone, disabled } = props;
     const [validationError, setValidationError] = useState<string | null>(null);
 
     const validateExpression = (expression: string) => {
@@ -40,7 +40,7 @@ export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        const isValid = validateExpression(value || placeholder);
+        const isValid = disabled || validateExpression(value);
         onChange(value, isValid);
     };
 
@@ -56,29 +56,33 @@ export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
                     className="gd-input-field"
                     onChange={handleChange}
                     value={expression}
-                    placeholder={placeholder}
+                    disabled={disabled}
                 />
-                {validationError ? (
-                    <span className="gd-recurrence-form-cron-error-message">
-                        <FormattedMessage id={validationError} />
-                    </span>
-                ) : (
-                    <span className="gd-recurrence-form-cron-help">
-                        <FormattedMessage
-                            id="recurrence.cron.tooltip"
-                            values={{
-                                a: (chunk: React.ReactNode) => (
-                                    <a
-                                        href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-CronExpressions"
-                                        rel="noopener noreferrer"
-                                        target="_blank"
-                                    >
-                                        {chunk}
-                                    </a>
-                                ),
-                            }}
-                        />
-                    </span>
+                {!disabled && (
+                    <>
+                        {validationError ? (
+                            <span className="gd-recurrence-form-cron-error-message">
+                                <FormattedMessage id={validationError} />
+                            </span>
+                        ) : (
+                            <span className="gd-recurrence-form-cron-help">
+                                <FormattedMessage
+                                    id="recurrence.cron.tooltip"
+                                    values={{
+                                        a: (chunk: React.ReactNode) => (
+                                            <a
+                                                href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-CronExpressions"
+                                                rel="noopener noreferrer"
+                                                target="_blank"
+                                            >
+                                                {chunk}
+                                            </a>
+                                        ),
+                                    }}
+                                />
+                            </span>
+                        )}
+                    </>
                 )}
             </div>
             {Boolean(showTimezone && timezone) && (

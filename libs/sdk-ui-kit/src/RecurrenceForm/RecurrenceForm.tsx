@@ -78,6 +78,15 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
             weekStart,
         ),
     );
+    const [inheritRecurrenceType] = useState<RecurrenceType>(
+        transformCronExpressionToRecurrenceType(
+            dateValue,
+            placeholder,
+            allowHourlyRecurrence,
+            false,
+            weekStart,
+        ),
+    );
 
     const onDateChange = useCallback(
         (date: Date, valid: boolean) => {
@@ -133,6 +142,7 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
                 label={repeatLabel ?? intl.formatMessage({ id: messages.repeats.id })}
                 showRepeatTypeDescription={showRepeatTypeDescription}
                 recurrenceType={recurrenceType}
+                inheritRecurrenceType={inheritRecurrenceType}
                 startDate={dateValue}
                 cronValue={cronValue}
                 cronPlaceholder={placeholder}

@@ -3558,6 +3558,8 @@ export interface IRecurrenceProps {
     // (undocumented)
     cronValue: string;
     // (undocumented)
+    inheritRecurrenceType?: RecurrenceType;
+    // (undocumented)
     label: string;
     // (undocumented)
     onCronValueChange: (cronValue: string, isValid: boolean) => void;

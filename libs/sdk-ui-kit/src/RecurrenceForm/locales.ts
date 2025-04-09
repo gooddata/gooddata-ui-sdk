@@ -21,5 +21,4 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     description_recurrence_weekly: { id: "recurrence.description.weekly" },
     description_recurrence_monthly_first: { id: "recurrence.description.monthly_first" },
     description_recurrence_monthly: { id: "recurrence.description.monthly" },
-    description_recurrence_inherit: { id: "recurrence.description.inherit" },
 });

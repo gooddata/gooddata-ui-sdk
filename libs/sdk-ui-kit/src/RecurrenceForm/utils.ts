@@ -231,8 +231,6 @@ export const transformRecurrenceTypeToDescription = (
                 dayOfWeekName,
                 weekNumber,
             });
-        case RECURRENCE_TYPES.INHERIT:
-            return intl.formatMessage(messages.description_recurrence_inherit);
         default:
             return "";
     }
