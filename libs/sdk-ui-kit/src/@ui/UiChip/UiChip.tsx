@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { CSSProperties, useLayoutEffect, useRef, useState } from "react";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 import { IconType } from "../@types/icon.js";
@@ -35,16 +35,16 @@ export const UiChip = ({
     onDelete,
 }: UiChipProps) => {
     const elemRef = useRef<HTMLDivElement>(null);
-    const [widthObj, setWidthObj] = useState({});
+    const [styleObj, setStyleObj] = useState<CSSProperties>();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (elemRef.current) {
-            setWidthObj({ width: elemRef.current.offsetWidth });
+            setStyleObj({ width: elemRef.current.offsetWidth });
         }
     }, []);
 
     return (
-        <div className={b()} ref={elemRef} style={{ ...widthObj }}>
+        <div className={b()} ref={elemRef} style={{ ...styleObj }}>
             <button
                 aria-label={isActive ? "Close" : "Open"}
                 aria-expanded={isActive}
