@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 /* eslint-disable sonarjs/no-identical-functions */
 
 import { action } from "@storybook/addon-actions";
@@ -115,7 +115,7 @@ storiesOf(`${ConfigurationControls}/Legend/LegendSection`)
                     postInteractionWait: 200,
                 },
                 "select-position": {
-                    clickSelectors: [".gd-button-primary", ".s-unten"],
+                    clickSelectors: [".gd-button-primary", ".s-untensomething"],
                     postInteractionWait: 200,
                 },
             },
