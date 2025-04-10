@@ -251,6 +251,7 @@ export function ScheduledMailDialogRenderer({
                             closeButton: {
                                 ariaLabel: intl.formatMessage({ id: "dialogs.schedule.email.closeLabel" }),
                             },
+                            titleElementId: "TODO",
                         }}
                         showProgressIndicator={isSavingScheduledEmail}
                         footerLeftRenderer={() => (

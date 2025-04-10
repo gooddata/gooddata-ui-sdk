@@ -90,6 +90,7 @@ export const AlertingManagementDialog: React.FC<IAlertingManagementDialogProps> 
                 onCancel={onClose}
                 shouldCloseOnClick={() => false}
                 className="gd-notifications-channels-management-dialog s-alerting-management-dialog"
+                accessibilityConfig={{ titleElementId }}
             >
                 <div className="gd-notifications-channels-management-dialog-title">
                     <Typography tagName="h3" className="gd-dialog-header" id={titleElementId}>

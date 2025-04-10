@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
 
@@ -28,6 +28,7 @@ export const HubspotConversionTouchPointDialog: React.FC<IHubspotConversionTouch
             submitOnEnterKey={true}
             onSubmit={onDialogSubmit}
             className="conversion-touch-point-dialog s-conversion-touch-point-dialog"
+            accessibilityConfig={{ titleElementId: "TODO" }}
         >
             <HubspotProvider>
                 <HubspotConversionTouchPointDialogBase {...props} submitButtonClass={submitButtonClasses} />
