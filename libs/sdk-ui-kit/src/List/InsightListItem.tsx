@@ -10,7 +10,7 @@ import { Button } from "../Button/index.js";
 import { ShortenedText } from "../ShortenedText/index.js";
 import { DescriptionPanel, DESCRIPTION_PANEL_ARROW_OFFSETS } from "../DescriptionPanel/index.js";
 import { getDateTimeConfig } from "../utils/dateTimeConfig.js";
-import { IFilter, ISeparators } from "@gooddata/sdk-model";
+import { IExecutionConfig, IFilter, ISeparators } from "@gooddata/sdk-model";
 
 const VISUALIZATION_TYPE_UNKNOWN = "unknown";
 const WIDGET_TYPE_KPI = "kpi";
@@ -59,6 +59,7 @@ export interface IInsightListItemProps {
     useRichText?: boolean;
     useReferences?: boolean;
     metadataTimeZone?: string;
+    richTextExecConfig?: IExecutionConfig;
 
     LoadingComponent?: React.ComponentType;
 }
@@ -98,6 +99,7 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
             showDescriptionPanel = false,
             useRichText = false,
             useReferences = false,
+            richTextExecConfig,
         } = this.props;
 
         const visualizationListItemClassname = cx(
@@ -124,6 +126,7 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
                             filters={filters}
                             separators={separators}
                             LoadingComponent={LoadingComponent}
+                            execConfig={richTextExecConfig}
                         />
                     </div>
                 ) : null}

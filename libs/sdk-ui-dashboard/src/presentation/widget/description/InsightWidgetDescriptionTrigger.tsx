@@ -8,6 +8,7 @@ import {
     DescriptionTooltipOpenedData,
     useDashboardSelector,
     selectEnableRichTextDynamicReferences,
+    selectExecutionTimestamp,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
@@ -24,6 +25,7 @@ export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescription
     const userInteraction = useDashboardUserInteraction();
 
     const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
+    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
     const { filters } = useRichTextFilters(widget);
     const { LoadingComponent } = useDashboardComponentsContext();
 
@@ -43,6 +45,9 @@ export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescription
                 useReferences={useReferences}
                 filters={filters}
                 LoadingComponent={LoadingComponent}
+                execConfig={{
+                    timestamp: executionTimestamp,
+                }}
             />
         );
     }
