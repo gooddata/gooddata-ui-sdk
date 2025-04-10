@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -10,12 +10,18 @@ export interface IAddAttributeFilterButtonProps {
     className: string;
     isOpen: boolean;
     title?: string;
+    onClick?: () => void;
 }
 
 /**
  * @internal
  */
-export function AddAttributeFilterButton({ className, isOpen, title }: IAddAttributeFilterButtonProps) {
+export function AddAttributeFilterButton({
+    className,
+    isOpen,
+    title,
+    onClick,
+}: IAddAttributeFilterButtonProps) {
     const intl = useIntl();
 
     title = title ?? intl.formatMessage({ id: "addPanel.attributeFilter" });
@@ -24,7 +30,7 @@ export function AddAttributeFilterButton({ className, isOpen, title }: IAddAttri
     });
 
     return (
-        <div className={rootClassNames}>
+        <div className={rootClassNames} onClick={onClick}>
             <div className="button-content">
                 <div className="button-title">{title}</div>
             </div>

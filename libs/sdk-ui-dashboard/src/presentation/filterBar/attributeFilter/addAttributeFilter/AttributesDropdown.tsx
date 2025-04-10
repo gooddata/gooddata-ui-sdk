@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -8,8 +8,6 @@ import debounce from "lodash/debounce.js";
 import { AddAttributeFilterButton } from "./AddAttributeFilterButton.js";
 import {
     useDashboardSelector,
-    selectCatalogAttributes,
-    selectCatalogDateDatasets,
     selectAllInsightWidgets,
     selectInsightsMap,
     selectSupportsMultipleDateFilters,
@@ -74,6 +72,11 @@ export function AttributesDropdown({
     bodyClassName,
     onClose,
     onSelect,
+    attributes,
+    dateDatasets,
+    openOnInit = true,
+    DropdownButtonComponent = AddAttributeFilterButton,
+    DropdownTitleComponent,
 }: IDashboardAttributeFilterPlaceholderProps) {
     const intl = useIntl();
     const [searchQuery, setSearchQuery] = useState("");
@@ -101,8 +104,6 @@ export function AttributesDropdown({
     const enableMultipleDateFilters = useDashboardSelector(selectEnableMultipleDateFilters);
     const supportsMultipleDateFilters = useDashboardSelector(selectSupportsMultipleDateFilters);
 
-    const attributes = useDashboardSelector(selectCatalogAttributes);
-    const dateDatasets: ICatalogDateDataset[] = useDashboardSelector(selectCatalogDateDatasets);
     const insightsMap = useDashboardSelector(selectInsightsMap);
     const insightWidgets = useDashboardSelector(selectAllInsightWidgets);
 
@@ -135,38 +136,55 @@ export function AttributesDropdown({
         "add-attribute-filter-dropdown",
     );
 
-    const filteredAttributes = searchQuery
-        ? attributes.filter((a) => a.attribute.title.toLowerCase().includes(searchQuery.toLowerCase()))
-        : attributes;
+    const filteredAttributes = useMemo(() => {
+        return searchQuery
+            ? attributes.filter((a) => a.attribute.title.toLowerCase().includes(searchQuery.toLowerCase()))
+            : attributes;
+    }, [attributes, searchQuery]);
 
     const offerDateFilters = enableMultipleDateFilters && supportsMultipleDateFilters;
 
-    const filteredDateDatasets = searchQuery
-        ? dateDatasets.filter((ds) => ds.dataSet.title.toLowerCase().includes(searchQuery.toLowerCase()))
-        : dateDatasets;
+    const filteredDateDatasets = useMemo(() => {
+        return searchQuery
+            ? dateDatasets.filter((ds) => ds.dataSet.title.toLowerCase().includes(searchQuery.toLowerCase()))
+            : dateDatasets;
+    }, [dateDatasets, searchQuery]);
+
+    const hasAttributes = useMemo(() => attributes.length > 0, [attributes]);
+    const hasDateFilters = useMemo(() => offerDateFilters, [offerDateFilters]);
 
     const [selectedTabId, setSelectedTabId] = useState(
-        attributes.length === 0 && offerDateFilters ? "dateDatasets" : "attributes",
+        !hasAttributes && hasDateFilters ? "dateDatasets" : "attributes",
     );
+
+    useEffect(() => {
+        setSelectedTabId(!hasAttributes && hasDateFilters ? "dateDatasets" : "attributes");
+    }, [hasAttributes, hasDateFilters]);
+
     const onTabSelect = useCallback((selectedTab: ITab) => {
         setSelectedTabId(selectedTab.id);
     }, []);
 
-    const tabs = [] as ITab[];
-    if (attributes.length) {
-        tabs.push({ id: "attributes", iconOnly: true, icon: "gd-icon-attribute" });
-    }
-
-    if (offerDateFilters && dateDatasets.length) {
-        tabs.push({ id: "dateDatasets", iconOnly: true, icon: "gd-icon-date" });
-    }
+    const tabs = useMemo(() => {
+        const newTabs: ITab[] = [];
+        if (attributes.length) {
+            newTabs.push({ id: "attributes", iconOnly: true, icon: "gd-icon-attribute" });
+        }
+        if (offerDateFilters && dateDatasets.length) {
+            newTabs.push({ id: "dateDatasets", iconOnly: true, icon: "gd-icon-date" });
+        }
+        return newTabs;
+    }, [attributes, dateDatasets, offerDateFilters]);
 
     const buttonTitle = intl.formatMessage({ id: "addPanel.filter" });
 
-    const items: Array<ICatalogAttribute | ICatalogDateDataset> =
-        selectedTabId === "attributes" ? filteredAttributes : filteredDateDatasets;
+    const items: (ICatalogAttribute | ICatalogDateDataset)[] = useMemo(() => {
+        return selectedTabId === "attributes" ? filteredAttributes : filteredDateDatasets;
+    }, [selectedTabId, filteredAttributes, filteredDateDatasets]);
 
-    const showTabs = offerDateFilters && tabs.length > 1;
+    const showTabs = useMemo(() => {
+        return offerDateFilters && tabs.length > 1;
+    }, [offerDateFilters, tabs.length]);
 
     return (
         <Dropdown
@@ -176,56 +194,60 @@ export function AttributesDropdown({
             closeOnMouseDrag
             closeOnOutsideClick
             alignPoints={dropdownAlignPoints}
-            openOnInit={true}
-            renderButton={({ isOpen }) => (
-                <AddAttributeFilterButton
+            openOnInit={openOnInit}
+            renderButton={({ isOpen, openDropdown }) => (
+                <DropdownButtonComponent
                     className="attribute-filter-button mobile-dropdown-button"
                     isOpen={isOpen}
                     title={buttonTitle}
+                    onClick={openDropdown}
                 />
             )}
             renderBody={({ closeDropdown }) => (
-                <div className={cx(bodyClassName, "attributes-list")}>
-                    <DropdownList
-                        width={WIDTH}
-                        showTabs={showTabs}
-                        tabs={tabs}
-                        tabsClassName="date-attribute-dropdown-tabs s-filter-attribute-dropdown-tabs"
-                        selectedTabId={selectedTabId}
-                        onTabSelect={onTabSelect}
-                        items={items}
-                        searchFieldSize="small"
-                        showSearch
-                        onSearch={onSearch}
-                        searchString={searchQuery}
-                        searchPlaceholder={intl.formatMessage({
-                            id: "attributesDropdown.placeholder",
-                        })}
-                        renderItem={({ item }) => {
-                            if (isCatalogAttribute(item)) {
+                <>
+                    {DropdownTitleComponent ? <DropdownTitleComponent /> : null}
+                    <div className={cx(bodyClassName, "attributes-list")}>
+                        <DropdownList
+                            width={WIDTH}
+                            showTabs={showTabs}
+                            tabs={tabs}
+                            tabsClassName="date-attribute-dropdown-tabs s-filter-attribute-dropdown-tabs"
+                            selectedTabId={selectedTabId}
+                            onTabSelect={onTabSelect}
+                            items={items}
+                            searchFieldSize="small"
+                            showSearch
+                            onSearch={onSearch}
+                            searchString={searchQuery}
+                            searchPlaceholder={intl.formatMessage({
+                                id: "attributesDropdown.placeholder",
+                            })}
+                            renderItem={({ item }) => {
+                                if (isCatalogAttribute(item)) {
+                                    return (
+                                        <AttributeListItem
+                                            item={item}
+                                            isLocationIconEnabled={shouldDisplayLocationIcon}
+                                            onClick={() => {
+                                                onSelect(item.defaultDisplayForm.ref);
+                                                closeDropdown();
+                                            }}
+                                        />
+                                    );
+                                }
                                 return (
-                                    <AttributeListItem
+                                    <DateAttributeListItem
                                         item={item}
-                                        isLocationIconEnabled={shouldDisplayLocationIcon}
                                         onClick={() => {
-                                            onSelect(item.defaultDisplayForm.ref);
+                                            onSelect(item.dataSet.ref);
                                             closeDropdown();
                                         }}
                                     />
                                 );
-                            }
-                            return (
-                                <DateAttributeListItem
-                                    item={item}
-                                    onClick={() => {
-                                        onSelect(item.dataSet.ref);
-                                        closeDropdown();
-                                    }}
-                                />
-                            );
-                        }}
-                    />
-                </div>
+                            }}
+                        />
+                    </div>
+                </>
             )}
         />
     );
