@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { ReactNode } from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { DialogBase } from "../DialogBase.js";
@@ -7,7 +7,12 @@ import { IDialogBaseProps } from "../typings.js";
 import { describe, it, expect, vi } from "vitest";
 
 function renderDialog(options: Partial<IDialogBaseProps>, children?: ReactNode) {
-    return render(<DialogBase {...options}>{children ?? "Dialog content"}</DialogBase>);
+    return render(
+        <DialogBase {...options} accessibilityConfig={{ titleElementId: "title" }}>
+            <h2 id={"title"}>Accessible title</h2>
+            {children ?? "Dialog content"}
+        </DialogBase>,
+    );
 }
 
 describe("Dialog", () => {
