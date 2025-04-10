@@ -3540,7 +3540,7 @@ export interface DeleteFilterViewPayload {
 
 // @alpha
 export type DescriptionExportData = {
-    description?: CommonExportDataAttributes;
+    description?: SectionDescriptionExportDataAttributes;
     richText?: RichTextExportData;
 };
 
@@ -8054,6 +8054,11 @@ export interface ScreenSizeChangedPayload {
 }
 
 // @alpha
+export type SectionDescriptionExportDataAttributes = CommonExportDataAttributes & {
+    "data-export-description-status"?: "loading" | "loaded" | "error";
+};
+
+// @alpha
 export type SectionExportData = HeaderExportData & {
     section?: CommonExportDataAttributes;
 };
@@ -10717,6 +10722,9 @@ export function useSaveAsNewButtonProps(): ISaveAsNewButtonProps;
 
 // @internal (undocumented)
 export function useSaveButtonProps(): ISaveButtonProps;
+
+// @alpha (undocumented)
+export const useSectionDescriptionExportData: (exportData: SectionExportData | undefined, loading: boolean, error: boolean) => SectionExportData | undefined;
 
 // @alpha (undocumented)
 export const useSectionExportData: (depth: number) => SectionExportData | undefined;

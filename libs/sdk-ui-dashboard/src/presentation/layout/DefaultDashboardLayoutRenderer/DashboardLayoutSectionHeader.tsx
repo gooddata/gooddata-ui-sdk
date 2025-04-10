@@ -1,9 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
-import { DashboardLayoutSectionHeaderDescription } from "./DashboardLayoutSectionHeaderDescription.js";
+import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
+
 import { HeaderExportData } from "../../export/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+
+import { DashboardLayoutSectionHeaderDescription } from "./DashboardLayoutSectionHeaderDescription.js";
 
 /**
  * @alpha
@@ -28,10 +31,13 @@ export interface IDashboardLayoutSectionHeaderProps {
      * to keep the look of Dashboard component in sync with gdc-dashboards.
      */
     renderHeader?: React.ReactNode;
+    onLoadingChanged?: OnLoadingChanged;
+    onError?: OnError;
 }
 
 export const DashboardLayoutSectionHeader: React.FC<IDashboardLayoutSectionHeaderProps> = (props) => {
-    const { title, description, renderBeforeHeader, renderHeader, exportData } = props;
+    const { title, description, renderBeforeHeader, renderHeader, exportData, onLoadingChanged, onError } =
+        props;
     const { LoadingComponent } = useDashboardComponentsContext();
 
     return (
@@ -54,6 +60,8 @@ export const DashboardLayoutSectionHeader: React.FC<IDashboardLayoutSectionHeade
                                 description={description}
                                 exportData={exportData?.description}
                                 LoadingComponent={LoadingComponent}
+                                onLoadingChanged={onLoadingChanged}
+                                onError={onError}
                             />
                         ) : null}
                     </div>

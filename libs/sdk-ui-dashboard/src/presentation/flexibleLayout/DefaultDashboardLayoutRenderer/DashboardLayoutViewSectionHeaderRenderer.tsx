@@ -1,7 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
-import { Typography } from "@gooddata/sdk-ui-kit";
 import isEmpty from "lodash/isEmpty.js";
+import { Typography } from "@gooddata/sdk-ui-kit";
+import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 
 import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
 import { useLayoutSectionsConfiguration } from "../../widget/common/useLayoutSectionsConfiguration.js";
@@ -13,11 +14,15 @@ import { HeaderExportData } from "../../export/index.js";
 export interface IDashboardLayoutSectionHeaderProps {
     section: IDashboardLayoutSectionFacade<unknown>;
     exportData?: HeaderExportData;
+    onLoadingChanged?: OnLoadingChanged;
+    onError?: OnError;
 }
 
 export const DashboardLayoutViewSectionHeader: React.FC<IDashboardLayoutSectionHeaderProps> = ({
     section,
     exportData,
+    onLoadingChanged,
+    onError,
 }) => {
     const { areSectionHeadersEnabled } = useLayoutSectionsConfiguration(section.layout().raw());
     const { LoadingComponent } = useDashboardComponentsContext();
@@ -49,6 +54,8 @@ export const DashboardLayoutViewSectionHeader: React.FC<IDashboardLayoutSectionH
                             description={description}
                             exportData={exportData?.description}
                             LoadingComponent={LoadingComponent}
+                            onLoadingChanged={onLoadingChanged}
+                            onError={onError}
                         />
                     ) : null}
                 </div>

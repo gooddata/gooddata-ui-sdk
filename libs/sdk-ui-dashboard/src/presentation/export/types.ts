@@ -115,7 +115,7 @@ export type HeaderExportData = {
  * @alpha
  */
 export type DescriptionExportData = {
-    description?: CommonExportDataAttributes;
+    description?: SectionDescriptionExportDataAttributes;
     richText?: RichTextExportData;
 };
 
@@ -128,6 +128,15 @@ export type WidgetExportDataAttributes = CommonExportDataAttributes & {
     "data-export-widget-type"?: string;
     "data-export-visualization-type"?: string;
     "data-export-visualization-status"?: "loading" | "loaded" | "error";
+};
+
+/**
+ * Data attributes with export specification for section description component.
+ *
+ * @alpha
+ */
+export type SectionDescriptionExportDataAttributes = CommonExportDataAttributes & {
+    "data-export-description-status"?: "loading" | "loaded" | "error";
 };
 
 /**
