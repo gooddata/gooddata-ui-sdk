@@ -672,5 +672,19 @@
     "filters.time.accessibility.label.from": "Selecteer tijd uit",
     "filters.time.accessibility.label.to": "Selecteer tijd om",
     "filters.relative.accessibility.label.period.from": "Selecteer periode van",
-    "filters.relative.accessibility.label.period.to": "Selecteer periode om"
+    "filters.relative.accessibility.label.period.to": "Selecteer periode om",
+    "richText.multiple_data": "Meerdere items",
+    "filters.relative.placeholder": "Typ of selecteer",
+    "filters.relative.from.label": "Begin van de periode",
+    "filters.relative.from.invalid.value": "Fout: Ongeldige periodestart - voer een geldige periode in of selecteer deze uit de lijst.",
+    "filters.relative.from.empty.value": "Fout: Begin periode is leeg - voer een geldige periode in of selecteer deze uit de lijst.",
+    "filters.relative.to.label": "Einde periode",
+    "filters.relative.to.invalid.value": "Fout: Ongeldig periode-einde - voer een geldige periode in of selecteer deze uit de lijst.",
+    "filters.relative.to.empty.value": "Fout: Periode-einde is leeg - voer een geldige periode in of selecteer deze in de lijst.",
+    "visualizations.pagination.previous": "Vorige pagina",
+    "visualizations.pagination.next": "Volgende",
+    "gs.header.help.label": "Help-links",
+    "richText.no_data": "Geen gegevens",
+    "richText.no_fetch": "Gegevens konden niet worden opgehaald",
+    "recurrence.types.inherit": "Erven"
 }

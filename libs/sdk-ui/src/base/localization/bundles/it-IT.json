@@ -672,5 +672,19 @@
     "filters.time.accessibility.label.from": "Seleziona ora da",
     "filters.time.accessibility.label.to": "Seleziona ora fino a",
     "filters.relative.accessibility.label.period.from": "Seleziona periodo da",
-    "filters.relative.accessibility.label.period.to": "Seleziona periodo fino a"
+    "filters.relative.accessibility.label.period.to": "Seleziona periodo fino a",
+    "richText.multiple_data": "Articoli multipli",
+    "filters.relative.placeholder": "Digitare o selezionare",
+    "filters.relative.from.label": "Inizio periodo",
+    "filters.relative.from.invalid.value": "Errore: Inizio periodo non valido - inserire un periodo valido o selezionarlo dall'elenco.",
+    "filters.relative.from.empty.value": "Errore: L'inizio del periodo è vuoto - inserire un periodo valido o selezionarlo dall'elenco.",
+    "filters.relative.to.label": "Fine periodo",
+    "filters.relative.to.invalid.value": "Errore: Fine periodo non valida - inserire un periodo valido o selezionarlo dall'elenco.",
+    "filters.relative.to.empty.value": "Errore: Fine periodo vuoto - inserire un periodo valido o selezionarlo dall'elenco.",
+    "visualizations.pagination.previous": "Pagina precedente",
+    "visualizations.pagination.next": "Pagina successiva",
+    "gs.header.help.label": "Link di aiuto",
+    "richText.no_data": "Nessun dato",
+    "richText.no_fetch": "Non è stato possibile recuperare i dati",
+    "recurrence.types.inherit": "Ereditare"
 }

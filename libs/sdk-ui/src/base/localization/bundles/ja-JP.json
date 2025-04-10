@@ -672,5 +672,19 @@
     "filters.time.accessibility.label.from": "時間から選択",
     "filters.time.accessibility.label.to": "時間を選択",
     "filters.relative.accessibility.label.period.from": "期間から選択",
-    "filters.relative.accessibility.label.period.to": "期間を選択"
+    "filters.relative.accessibility.label.period.to": "期間を選択",
+    "richText.multiple_data": "複数項目",
+    "filters.relative.placeholder": "入力または選択",
+    "filters.relative.from.label": "期間開始",
+    "filters.relative.from.invalid.value": "エラー無効な期間開始 - 有効な期間を入力するか、リストから選択します。",
+    "filters.relative.from.empty.value": "エラー有効な期間を入力するか、リストから選択してください。",
+    "filters.relative.to.label": "期間終了",
+    "filters.relative.to.invalid.value": "エラー無効な期間終了 - 有効な期間を入力するか、リストから選択します。",
+    "filters.relative.to.empty.value": "エラーが発生しました：有効な期間を入力するか、リストから選択してください。",
+    "visualizations.pagination.previous": "前のページ",
+    "visualizations.pagination.next": "次のページ",
+    "gs.header.help.label": "ヘルプリンク",
+    "richText.no_data": "データなし",
+    "richText.no_fetch": "データが取得できなかった",
+    "recurrence.types.inherit": "継承"
 }
