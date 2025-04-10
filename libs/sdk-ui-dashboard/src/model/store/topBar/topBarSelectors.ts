@@ -317,9 +317,10 @@ export const selectSaveAsVisible: DashboardSelector<boolean> = createSelector(
  * @internal
  */
 export const selectSettingsVisible: DashboardSelector<boolean> = createSelector(
+    selectIsInEditMode,
     selectMenuButtonItemsVisibility,
-    (menuButtonItemsVisibility) => {
-        return menuButtonItemsVisibility.settingsButton ?? true;
+    (isInEditMode, menuButtonItemsVisibility) => {
+        return isInEditMode && (menuButtonItemsVisibility.settingsButton ?? true);
     },
 );
 

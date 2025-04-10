@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { useCallback, useState } from "react";
-import { useIntl } from "react-intl";
+import { useIntl, FormattedMessage } from "react-intl";
 import {
     Bubble,
     BubbleHoverTrigger,
@@ -151,7 +151,9 @@ export const DefaultDashboardSettingsDialog = (props: IDashboardSettingsDialogPr
                                 evaluationFrequency: e || undefined,
                             });
                         }}
-                        repeatLabel="Evaluation Frequency"
+                        repeatLabel={intl.formatMessage({
+                            id: "settingsDashboardDialog.section.alert.label",
+                        })}
                         showRepeatTypeDescription={true}
                         showTimezoneInOccurrence={true}
                         dateFormat={dateFormat}
@@ -159,6 +161,18 @@ export const DefaultDashboardSettingsDialog = (props: IDashboardSettingsDialogPr
                         locale={locale}
                         showInheritValue={true}
                     />
+                    <div className="gd-dashboard-settings-evaluation-note">
+                        {currentData.evaluationFrequency === undefined ? (
+                            <FormattedMessage id="settingsDashboardDialog.section.alert.inherit" />
+                        ) : (
+                            <FormattedMessage
+                                id="settingsDashboardDialog.section.alert.note"
+                                values={{
+                                    strong: (chunks: React.ReactNode) => <strong>{chunks}</strong>,
+                                }}
+                            />
+                        )}
+                    </div>
                 </div>
             ) : null}
         </ConfirmDialog>
