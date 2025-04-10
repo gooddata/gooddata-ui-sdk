@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React from "react";
 import { useIntl } from "react-intl";
@@ -40,6 +40,7 @@ export const ViewDialog: React.FC<IViewDialogProps> = ({
         <DialogBase
             className="gd-share-dialog gd-share-dialog-add-users gd-user-management-dialog-view s-user-management-view-mode"
             displayCloseButton={true}
+            // @ts-expect-error WTF
             isPositive={true}
             onClose={onClose}
         >
