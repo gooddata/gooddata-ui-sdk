@@ -17,6 +17,7 @@ import {
     WidgetExportDataAttributes,
     MetaExportDataAttributes,
     CommonExportDataAttributes,
+    SectionDescriptionExportDataAttributes,
 } from "./types.js";
 
 /**
@@ -70,6 +71,40 @@ export const useSectionExportData = (depth: number): SectionExportData | undefin
                 markdown: { "data-export-content-type": "markdown" },
             },
         },
+    };
+};
+
+/**
+ * @alpha
+ */
+export const useSectionDescriptionExportData = (
+    exportData: SectionExportData | undefined,
+    loading: boolean,
+    error: boolean,
+): SectionExportData | undefined => {
+    const isExportMode = useDashboardSelector(selectIsInExportMode);
+
+    if (!isExportMode) {
+        return undefined;
+    }
+
+    if (!exportData) {
+        return exportData;
+    }
+
+    return {
+        ...exportData,
+        ...(exportData.description
+            ? {
+                  description: {
+                      ...exportData.description,
+                      description: {
+                          ...exportData.description?.description,
+                          "data-export-description-status": loading ? "loading" : error ? "error" : "loaded",
+                      } as SectionDescriptionExportDataAttributes,
+                  },
+              }
+            : {}),
     };
 };
 

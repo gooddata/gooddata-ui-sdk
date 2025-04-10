@@ -2,6 +2,7 @@
 import * as React from "react";
 import cx from "classnames";
 import { RichText } from "@gooddata/sdk-ui-kit";
+import { OnError, OnLoadingChanged } from "@gooddata/sdk-ui";
 
 import { useRichTextFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import {
@@ -20,12 +21,14 @@ export interface IDashboardLayoutSectionHeaderDescriptionProps {
     description: string;
     exportData?: DescriptionExportData;
     LoadingComponent?: React.ComponentType;
+    onLoadingChanged?: OnLoadingChanged;
+    onError?: OnError;
 }
 
 export const DashboardLayoutSectionHeaderDescription: React.FC<
     IDashboardLayoutSectionHeaderDescriptionProps
 > = (props) => {
-    const { description, exportData, LoadingComponent } = props;
+    const { description, exportData, LoadingComponent, onLoadingChanged, onError } = props;
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
     const isRichTextReferencesEnabled = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const { filters, loading } = useRichTextFilters(false);
@@ -52,6 +55,8 @@ export const DashboardLayoutSectionHeaderDescription: React.FC<
                     isFiltersLoading={loading}
                     separators={separators}
                     LoadingComponent={LoadingComponent}
+                    onLoadingChanged={onLoadingChanged}
+                    onError={onError}
                 />
             ) : (
                 description
