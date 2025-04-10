@@ -672,5 +672,19 @@
     "filters.time.accessibility.label.from": "選擇起始時間",
     "filters.time.accessibility.label.to": "選擇結束時間",
     "filters.relative.accessibility.label.period.from": "選擇起始時段",
-    "filters.relative.accessibility.label.period.to": "選擇結束時段"
+    "filters.relative.accessibility.label.period.to": "選擇結束時段",
+    "richText.multiple_data": "多個項目",
+    "filters.relative.placeholder": "鍵入或選擇",
+    "filters.relative.from.label": "周期開始",
+    "filters.relative.from.invalid.value": "錯誤：期間開始無效-輸入有效期間或由列表中選擇它。",
+    "filters.relative.from.empty.value": "錯誤：期間開始為空-輸入有效期間或由列表中選擇它。",
+    "filters.relative.to.label": "期末",
+    "filters.relative.to.invalid.value": "錯誤：無效嘅期間結束-輸入有效期間或由列表中選擇它。",
+    "filters.relative.to.empty.value": "錯誤：期間結束為空-輸入有效期間或由列表中選擇它。",
+    "visualizations.pagination.previous": "上一頁",
+    "visualizations.pagination.next": "下一頁",
+    "gs.header.help.label": "幫助連結",
+    "richText.no_data": "暫無數據",
+    "richText.no_fetch": "無法檢索數據",
+    "recurrence.types.inherit": "繼承"
 }

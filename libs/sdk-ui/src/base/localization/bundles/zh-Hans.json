@@ -672,5 +672,19 @@
     "filters.time.accessibility.label.from": "选择时间自",
     "filters.time.accessibility.label.to": "选择时间至",
     "filters.relative.accessibility.label.period.from": "选择时间段自",
-    "filters.relative.accessibility.label.period.to": "选择时间段至"
+    "filters.relative.accessibility.label.period.to": "选择时间段至",
+    "richText.multiple_data": "多个项目",
+    "filters.relative.placeholder": "键入或选择",
+    "filters.relative.from.label": "期间开始",
+    "filters.relative.from.invalid.value": "错误：无效的期间开始 - 输入有效的期间或从列表中选择。",
+    "filters.relative.from.empty.value": "错误：期间开始为空 - 请输入有效期间或从列表中选择。",
+    "filters.relative.to.label": "期末",
+    "filters.relative.to.invalid.value": "错误：无效的期限结束 - 输入有效的期限或从列表中选择。",
+    "filters.relative.to.empty.value": "错误：期间结束为空 - 请输入有效期间或从列表中选择。",
+    "visualizations.pagination.previous": "上一页",
+    "visualizations.pagination.next": "下一页",
+    "gs.header.help.label": "帮助链接",
+    "richText.no_data": "没有数据",
+    "richText.no_fetch": "无法检索数据",
+    "recurrence.types.inherit": "继承"
 }

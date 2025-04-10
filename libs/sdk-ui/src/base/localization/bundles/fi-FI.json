@@ -672,5 +672,19 @@
     "filters.time.accessibility.label.from": "Valitse aika alkaen",
     "filters.time.accessibility.label.to": "Valitse aika kohteeseen",
     "filters.relative.accessibility.label.period.from": "Valitse ajanjakso alkaen",
-    "filters.relative.accessibility.label.period.to": "Valitse ajanjakso kohteeseen"
+    "filters.relative.accessibility.label.period.to": "Valitse ajanjakso kohteeseen",
+    "richText.multiple_data": "Useita kohteita",
+    "filters.relative.placeholder": "Kirjoita tai valitse",
+    "filters.relative.from.label": "Kauden alku",
+    "filters.relative.from.invalid.value": "Virhe: Virheellinen jakson alku - syötä kelvollinen jakso tai valitse se luettelosta.",
+    "filters.relative.from.empty.value": "Virhe: Jakson alku on tyhjä - syötä kelvollinen jakso tai valitse se luettelosta.",
+    "filters.relative.to.label": "Jakson loppu",
+    "filters.relative.to.invalid.value": "Virhe: Virheellinen jakson loppu - syötä kelvollinen jakso tai valitse se luettelosta.",
+    "filters.relative.to.empty.value": "Virhe: Kauden loppu on tyhjä - syötä kelvollinen jakso tai valitse se luettelosta.",
+    "visualizations.pagination.previous": "Edellinen sivu",
+    "visualizations.pagination.next": "Seuraava sivu",
+    "gs.header.help.label": "Apulinkit",
+    "richText.no_data": "Ei tietoja",
+    "richText.no_fetch": "Tietoja ei voitu noutaa",
+    "recurrence.types.inherit": "Peri"
 }

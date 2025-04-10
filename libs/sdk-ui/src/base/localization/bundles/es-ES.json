@@ -672,5 +672,19 @@
     "filters.time.accessibility.label.from": "Seleccione la hora desde",
     "filters.time.accessibility.label.to": "Seleccione hora hasta",
     "filters.relative.accessibility.label.period.from": "Seleccione el período desde",
-    "filters.relative.accessibility.label.period.to": "Seleccione el período hasta"
+    "filters.relative.accessibility.label.period.to": "Seleccione el período hasta",
+    "richText.multiple_data": "Varios artículos",
+    "filters.relative.placeholder": "Escriba o seleccione",
+    "filters.relative.from.label": "Inicio del período",
+    "filters.relative.from.invalid.value": "Error: Inicio de periodo no válido - introduzca un periodo válido o selecciónelo de la lista.",
+    "filters.relative.from.empty.value": "Error: El inicio del período está vacío - introduzca un período válido o selecciónelo de la lista.",
+    "filters.relative.to.label": "Fin de periodo",
+    "filters.relative.to.invalid.value": "Error: Fin de periodo no válido - introduzca un periodo válido o selecciónelo de la lista.",
+    "filters.relative.to.empty.value": "Error: El final del período está vacío - introduzca un período válido o selecciónelo de la lista.",
+    "visualizations.pagination.previous": "Página anterior",
+    "visualizations.pagination.next": "Página siguiente",
+    "gs.header.help.label": "Enlaces de ayuda",
+    "richText.no_data": "Sin datos",
+    "richText.no_fetch": "No se han podido recuperar los datos",
+    "recurrence.types.inherit": "Heredar"
 }

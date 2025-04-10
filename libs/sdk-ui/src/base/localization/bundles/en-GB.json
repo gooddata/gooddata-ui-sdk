@@ -686,5 +686,12 @@
     "filters.relative.from.empty.value": "Error: Period start is empty - enter a valid period or select it from the list.",
     "filters.relative.to.label": "Period end",
     "filters.relative.to.invalid.value": "Error: Invalid period end - enter a valid period or select it from the list.",
-    "filters.relative.to.empty.value": "Error: Period end is empty - enter a valid period or select it from the list."
+    "filters.relative.to.empty.value": "Error: Period end is empty - enter a valid period or select it from the list.",
+    "richText.multiple_data": "Multiple items",
+    "visualizations.pagination.previous": "Previous page",
+    "visualizations.pagination.next": "Next page",
+    "gs.header.help.label": "Helpl links",
+    "richText.no_data": "No data",
+    "richText.no_fetch": "Data could not be retrieved",
+    "recurrence.types.inherit": "Inherit"
 }
