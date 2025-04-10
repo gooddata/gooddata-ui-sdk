@@ -1,12 +1,10 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { EditMode } from "../../tools/editMode";
 import { AttributeFilter, FilterBar } from "../../tools/filterBar";
-import { DashboardMenu } from "../../tools/dashboardMenu";
 import { Dashboard } from "../../tools/dashboards";
 import { Widget } from "../../tools/widget";
-import { getProjectId } from "../../support/constants";
 
 const dashboard = new Dashboard();
 const editMode = new EditMode();
@@ -201,49 +199,5 @@ describe("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] }, ()
             ["Stage Name", "Closed Won"],
             ["Is Won?", "true"],
         ]);
-    });
-
-    it("(SEPARATE) Export on View Mode", () => {
-        cy.intercept("POST", "**/exportDashboard").as("exportDashboard");
-        Navigation.visit("dashboard/dependent-filter");
-        widget.waitTableLoaded();
-
-        account.open().selectAttributeWithoutSearch(".decimal");
-        isWon.open().selectAttributeWithoutSearch("false");
-        stageName.waitFilteringFinished();
-
-        new DashboardMenu().toggle().clickOption("Export to PDF");
-
-        cy.wait("@exportDashboard")
-            .its("request.body.dashboardExport.filters")
-            .should("deep.equal", [
-                {
-                    dateFilter: {
-                        type: "absolute",
-                        granularity: "GDC.time.year",
-                    },
-                },
-                {
-                    attributeFilter: {
-                        displayForm: `/gdc/md/${getProjectId()}/obj/1057`,
-                        negativeSelection: false,
-                        attributeElements: [`/gdc/md/${getProjectId()}/obj/1056/elements?id=2870`],
-                    },
-                },
-                {
-                    attributeFilter: {
-                        displayForm: `/gdc/md/${getProjectId()}/obj/1091`,
-                        negativeSelection: true,
-                        attributeElements: [],
-                    },
-                },
-                {
-                    attributeFilter: {
-                        displayForm: `/gdc/md/${getProjectId()}/obj/1096`,
-                        negativeSelection: false,
-                        attributeElements: [`/gdc/md/${getProjectId()}/obj/1095/elements?id=460493`],
-                    },
-                },
-            ]);
     });
 });

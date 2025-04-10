@@ -38,7 +38,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: 18.17.0
+          node-version: 22.13.0
 
       - name: Get version from branch ${{ inputs.source-branch }}
         uses: gooddata/gooddata-ui-sdk/.github/actions/get-version-action@master
