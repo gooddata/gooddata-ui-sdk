@@ -32,6 +32,7 @@ import {
     selectBackendCapabilities,
     selectEnableRichTextDescriptions,
     selectEnableRichTextDynamicReferences,
+    selectExecutionTimestamp,
 } from "../../model/index.js";
 import { IInsightListProps } from "./types.js";
 import { messages } from "../../locales.js";
@@ -89,6 +90,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
     const settings = useDashboardSelector(selectSettings);
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
     const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
+    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
     const { LoadingComponent } = useDashboardComponentsContext();
     const previousSearch = useRef("");
 
@@ -233,6 +235,9 @@ export const InsightList: React.FC<IInsightListProps> = ({
                             metadataTimeZone={settings?.metadataTimeZone}
                             useRichText={useRichText}
                             useReferences={useReferences}
+                            richTextExecConfig={{
+                                timestamp: executionTimestamp,
+                            }}
                             LoadingComponent={LoadingComponent}
                         />
                     );

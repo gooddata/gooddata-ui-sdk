@@ -5,6 +5,7 @@ import { DescriptionPanelContent } from "@gooddata/sdk-ui-kit";
 
 import {
     selectEnableRichTextDynamicReferences,
+    selectExecutionTimestamp,
     selectSeparators,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -27,6 +28,7 @@ export const ExportModeInsightWidgetDescription: React.FC<IInsightWidgetDescript
     const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const { filters } = useRichTextFilters(widget);
     const separators = useDashboardSelector(selectSeparators);
+    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
     const { LoadingComponent } = useDashboardComponentsContext();
 
     if (!isVisible) {
@@ -42,6 +44,9 @@ export const ExportModeInsightWidgetDescription: React.FC<IInsightWidgetDescript
                 filters={filters}
                 separators={separators}
                 LoadingComponent={LoadingComponent}
+                execConfig={{
+                    timestamp: executionTimestamp,
+                }}
             />
         </div>
     );

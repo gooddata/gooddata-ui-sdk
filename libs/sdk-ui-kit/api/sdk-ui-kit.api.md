@@ -2266,6 +2266,8 @@ export interface IInsightListItemProps {
     // (undocumented)
     onDescriptionPanelOpen?: () => void;
     // (undocumented)
+    richTextExecConfig?: IExecutionConfig;
+    // (undocumented)
     separators?: ISeparators_2;
     // (undocumented)
     showDescriptionPanel?: boolean;
