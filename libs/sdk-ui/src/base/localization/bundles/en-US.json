@@ -1113,12 +1113,12 @@
         "limit": 0
     },
     "filters.relative.from.invalid.value": {
-        "value": "Error: Invalid period start - enter a valid period or select it from the list.",
+        "value": "Error: Invalid period start — enter a valid period or select it from the list.",
         "comment": "",
         "limit": 0
     },
     "filters.relative.from.empty.value": {
-        "value": "Error: Period start is empty - enter a valid period or select it from the list.",
+        "value": "Error: Period start is empty — enter a valid period or select it from the list.",
         "comment": "",
         "limit": 0
     },
@@ -1128,12 +1128,12 @@
         "limit": 0
     },
     "filters.relative.to.invalid.value": {
-        "value": "Error: Invalid period end - enter a valid period or select it from the list.",
+        "value": "Error: Invalid period end — enter a valid period or select it from the list.",
         "comment": "",
         "limit": 0
     },
     "filters.relative.to.empty.value": {
-        "value": "Error: Period end is empty - enter a valid period or select it from the list.",
+        "value": "Error: Period end is empty — enter a valid period or select it from the list.",
         "comment": "",
         "limit": 0
     },
