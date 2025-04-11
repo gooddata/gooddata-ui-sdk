@@ -702,5 +702,7 @@
     "settingsDashboardDialog.section.alert.inherit": "Usa a frequência de avaliação definida pela organização.",
     "settingsDashboardDialog.section.alert.note": "<strong>Observação:</strong> aplica-se apenas a novos alertas — use a API para atualizar os existentes.",
     "settingsDashboardDialog.section.alert.label": "Frequência de avaliação",
-    "filterBar.unappliedFiltersNotification": "<link>Aplique filtros</link> para ver os dados atualizados."
+    "filterBar.unappliedFiltersNotification": "<link>Aplique filtros</link> para ver os dados atualizados.",
+    "controlButtons.setting.value": "Configurações",
+    "controlButtons.setting.title": "Todas as configurações relacionadas a este painel. Você pode alterar a filtragem cruzada da descrição do painel, os filtros salvos permitidos e a frequência de avaliação de alertas."
 }

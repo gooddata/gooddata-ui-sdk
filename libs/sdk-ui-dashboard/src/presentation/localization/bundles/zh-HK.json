@@ -702,5 +702,7 @@
     "settingsDashboardDialog.section.alert.inherit": "使用組織設置嘅評估頻率。",
     "settingsDashboardDialog.section.alert.note": "<strong>注意：</strong> 僅適用於新警報-使用API更新現有警報。",
     "settingsDashboardDialog.section.alert.label": "評估頻率",
-    "filterBar.unappliedFiltersNotification": "<link>應用篩選器</link>以查看更新嘅數據。"
+    "filterBar.unappliedFiltersNotification": "<link>應用篩選器</link>以查看更新嘅數據。",
+    "controlButtons.setting.value": "設置",
+    "controlButtons.setting.title": "與此控制面板相關嘅所有設置。 你可以更改控制面板描述交叉篩選、允許保存嘅篩選條件同警報評估頻率。"
 }

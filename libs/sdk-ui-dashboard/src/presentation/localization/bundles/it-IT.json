@@ -702,5 +702,7 @@
     "settingsDashboardDialog.section.alert.inherit": "Utilizza la frequenza di valutazione stabilita dall'organizzazione.",
     "settingsDashboardDialog.section.alert.note": "<strong>Nota:</strong> si applica solo ai nuovi avvisi; per aggiornare quelli esistenti, utilizzare l'API.",
     "settingsDashboardDialog.section.alert.label": "Frequenza di valutazione",
-    "filterBar.unappliedFiltersNotification": "<link>Applicare i filtri</link> per visualizzare i dati aggiornati."
+    "filterBar.unappliedFiltersNotification": "<link>Applicare i filtri</link> per visualizzare i dati aggiornati.",
+    "controlButtons.setting.value": "Impostazioni",
+    "controlButtons.setting.title": "Tutte le impostazioni relative a questo dashboard. È possibile modificare il filtraggio incrociato della descrizione del dashboard, i filtri salvati consentiti e la frequenza di valutazione degli avvisi."
 }

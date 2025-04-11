@@ -702,5 +702,7 @@
     "settingsDashboardDialog.section.alert.inherit": "組織が設定した評価頻度を使用する。",
     "settingsDashboardDialog.section.alert.note": "<strong>注意：</strong>新しいアラートにのみ適用されます - 既存のものを更新するにはAPIを使用してください。",
     "settingsDashboardDialog.section.alert.label": "評価頻度",
-    "filterBar.unappliedFiltersNotification": "<link>フィルタを適用する</link> 更新されたデータを見る。"
+    "filterBar.unappliedFiltersNotification": "<link>フィルタを適用する</link> 更新されたデータを見る。",
+    "controlButtons.setting.value": "設定",
+    "controlButtons.setting.title": "このダッシュボードに関するすべての設定。ダッシュボードの説明のクロスフィルタ、保存されたフィルタの許可、およびアラートの評価頻度を変更できます。"
 }

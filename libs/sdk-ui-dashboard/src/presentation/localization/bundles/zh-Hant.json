@@ -702,5 +702,7 @@
     "settingsDashboardDialog.section.alert.inherit": "使用組織設定的評估頻率。",
     "settingsDashboardDialog.section.alert.note": "<strong>注意：</strong>僅適用於新警報 - 使用 API 更新現有警報。",
     "settingsDashboardDialog.section.alert.label": "評估頻率",
-    "filterBar.unappliedFiltersNotification": "<link>應用過濾器</link> 查看更新的數據。"
+    "filterBar.unappliedFiltersNotification": "<link>應用過濾器</link> 查看更新的數據。",
+    "controlButtons.setting.value": "設定",
+    "controlButtons.setting.title": "與此儀表板相關的所有設定。您可以變更儀表板描述交叉過濾、允許儲存的過濾器以及警報評估頻率。"
 }

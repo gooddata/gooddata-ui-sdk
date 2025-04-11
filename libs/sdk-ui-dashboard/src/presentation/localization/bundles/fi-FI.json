@@ -702,5 +702,7 @@
     "settingsDashboardDialog.section.alert.inherit": "Käyttää organisaation asettamaa arviointitiheyttä.",
     "settingsDashboardDialog.section.alert.note": "<strong>Huomaa:</strong> Koskee vain uusia hälytyksiä — päivitä olemassa olevat API: n avulla.",
     "settingsDashboardDialog.section.alert.label": "Arviointitiheys",
-    "filterBar.unappliedFiltersNotification": "<link>Käytä suodattimia</link> nähdäksesi päivitetyt tiedot."
+    "filterBar.unappliedFiltersNotification": "<link>Käytä suodattimia</link> nähdäksesi päivitetyt tiedot.",
+    "controlButtons.setting.value": "Asetukset",
+    "controlButtons.setting.title": "Kaikki tähän ohjauspaneeliin liittyvät asetukset. Voit muuttaa ohjauspaneelin kuvauksen ristiinsuodatusta, tallennettuja sallittuja suodattimia ja hälytysten arviointitiheyttä."
 }

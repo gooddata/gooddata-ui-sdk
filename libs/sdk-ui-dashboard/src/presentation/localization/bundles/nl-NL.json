@@ -702,5 +702,7 @@
     "settingsDashboardDialog.section.alert.inherit": "Gebruikt de evaluatiefrequentie die door de organisatie is ingesteld.",
     "settingsDashboardDialog.section.alert.note": "<strong>Opmerking:</strong> Geldt alleen voor nieuwe waarschuwingen - gebruik de API om bestaande waarschuwingen bij te werken.",
     "settingsDashboardDialog.section.alert.label": "Evaluatiefrequentie",
-    "filterBar.unappliedFiltersNotification": "<link>Pas filters toe op</link> om bijgewerkte gegevens te zien."
+    "filterBar.unappliedFiltersNotification": "<link>Pas filters toe op</link> om bijgewerkte gegevens te zien.",
+    "controlButtons.setting.value": "Instellingen",
+    "controlButtons.setting.title": "Alle instellingen met betrekking tot dit dashboard. Je kunt de cross-filtering van de dashboardbeschrijving, toegestane opgeslagen filters en de evaluatiefrequentie van waarschuwingen wijzigen."
 }
