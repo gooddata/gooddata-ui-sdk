@@ -1330,7 +1330,11 @@ export interface IDatePickerOwnProps {
     // (undocumented)
     onAlign?: (align: string) => void;
     // (undocumented)
+    onBlur?: (selectedDate: string) => void;
+    // (undocumented)
     onChange?: (selectedData: Date) => void;
+    // (undocumented)
+    onValidateInput?: (value: string) => void;
     // (undocumented)
     placeholder?: string;
     // (undocumented)
@@ -3205,6 +3209,8 @@ export class InputPure extends React_2.PureComponent<InputPureProps> implements 
 
 // @internal (undocumented)
 export interface InputPureProps extends IDomNativeProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
     // (undocumented)
     accessibilityType?: string;
     // (undocumented)
