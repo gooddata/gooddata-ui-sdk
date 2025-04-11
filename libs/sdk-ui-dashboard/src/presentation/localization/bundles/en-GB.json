@@ -702,5 +702,7 @@
     "settingsDashboardDialog.section.alert.inherit": "Uses the evaluation frequency set by the organization.",
     "settingsDashboardDialog.section.alert.note": "<strong>Note:</strong> Applies to new alerts only — use the API to update existing ones.",
     "settingsDashboardDialog.section.alert.label": "Evaluation Frequency",
-    "filterBar.unappliedFiltersNotification": "<link>Apply filters</link> to see updated data."
+    "filterBar.unappliedFiltersNotification": "<link>Apply filters</link> to see updated data.",
+    "controlButtons.setting.value": "Settings",
+    "controlButtons.setting.title": "All settings related to this dashboard. You can change the dashboard description cross-filtering, saved filters allowed, and alerts evaluation frequency."
 }

@@ -702,5 +702,7 @@
     "settingsDashboardDialog.section.alert.inherit": "Utilise la fréquence d'évaluation fixée par l'organisation.",
     "settingsDashboardDialog.section.alert.note": "<strong>Note</strong> : S'applique uniquement aux nouvelles alertes - utilisez l'API pour mettre à jour les alertes existantes.",
     "settingsDashboardDialog.section.alert.label": "Fréquence d'évaluation",
-    "filterBar.unappliedFiltersNotification": "<link>Appliquez les filtres</link> pour voir les données mises à jour."
+    "filterBar.unappliedFiltersNotification": "<link>Appliquez les filtres</link> pour voir les données mises à jour.",
+    "controlButtons.setting.value": "Paramètres",
+    "controlButtons.setting.title": "Tous les paramètres liés à ce tableau de bord. Vous pouvez modifier le filtrage croisé de la description du tableau de bord, les filtres enregistrés autorisés et la fréquence d'évaluation des alertes."
 }

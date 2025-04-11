@@ -702,5 +702,7 @@
     "settingsDashboardDialog.section.alert.inherit": "Verwendet die von der Organisation festgelegte Bewertungshäufigkeit.",
     "settingsDashboardDialog.section.alert.note": "<strong>Hinweis:</strong> Gilt nur für neue Warnungen — verwenden Sie die API, um vorhandene zu aktualisieren.",
     "settingsDashboardDialog.section.alert.label": "Bewertungshäufigkeit",
-    "filterBar.unappliedFiltersNotification": "<link>Wenden Sie Filter</link> an, um aktualisierte Daten anzuzeigen."
+    "filterBar.unappliedFiltersNotification": "<link>Wenden Sie Filter</link> an, um aktualisierte Daten anzuzeigen.",
+    "controlButtons.setting.value": "Einstellungen",
+    "controlButtons.setting.title": "Alle Einstellungen im Zusammenhang mit diesem Dashboard. Sie können die Cross-Filterung der Dashboard-Beschreibung, die zulässigen gespeicherten Filter und die Bewertungshäufigkeit der Warnungen ändern."
 }

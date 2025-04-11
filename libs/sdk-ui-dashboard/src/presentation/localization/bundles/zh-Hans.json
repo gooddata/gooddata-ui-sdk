@@ -702,5 +702,7 @@
     "settingsDashboardDialog.section.alert.inherit": "使用组织设定的评估频率。",
     "settingsDashboardDialog.section.alert.note": "<strong>注意：</strong>仅适用于新警报 - 使用 API 更新现有警报。",
     "settingsDashboardDialog.section.alert.label": "评估频率",
-    "filterBar.unappliedFiltersNotification": "<link>应用过滤器</link> 查看更新的数据。"
+    "filterBar.unappliedFiltersNotification": "<link>应用过滤器</link> 查看更新的数据。",
+    "controlButtons.setting.value": "设置",
+    "controlButtons.setting.title": "与此仪表板相关的所有设置。您可以更改仪表板描述的交叉筛选、允许保存的筛选器以及警报评估频率。"
 }
