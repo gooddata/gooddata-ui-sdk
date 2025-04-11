@@ -230,9 +230,14 @@ const RelativeRangePickerComponent: React.FC<IRelativeRangePickerProps & Wrapped
                 handleFromChange(undefined);
             } else {
                 setFromError(null);
+                const items = getItems(value);
+                const matchingItem = findRelativeDateFilterOptionByLabel(items, value);
+                if (matchingItem) {
+                    handleFromChange(matchingItem.value);
+                }
             }
         },
-        [validator, handleFromChange],
+        [validator, handleFromChange, getItems],
     );
 
     const handleToInputChange = useCallback(
@@ -246,9 +251,14 @@ const RelativeRangePickerComponent: React.FC<IRelativeRangePickerProps & Wrapped
                 handleToChange(undefined);
             } else {
                 setToError(null);
+                const items = getItems(value);
+                const matchingItem = findRelativeDateFilterOptionByLabel(items, value);
+                if (matchingItem) {
+                    handleToChange(matchingItem.value);
+                }
             }
         },
-        [validator, handleToChange],
+        [validator, handleToChange, getItems],
     );
 
     const handleFromBlur = useCallback((): void => {
