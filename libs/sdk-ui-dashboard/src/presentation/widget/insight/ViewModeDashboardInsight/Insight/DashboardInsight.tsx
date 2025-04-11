@@ -2,6 +2,7 @@
 import React, { CSSProperties, useRef, useCallback, useEffect, useMemo, useState } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
+import { Icon } from "@gooddata/sdk-ui-kit";
 import {
     IExecutionConfig,
     insightProperties,
@@ -41,14 +42,16 @@ import {
 } from "../../../../../model/index.js";
 
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
-import { IDashboardInsightProps } from "../../types.js";
-import { useDashboardInsightDrills } from "./useDashboardInsightDrills.js";
-import { CustomError } from "../CustomError/CustomError.js";
+import { useMinimalSizeValidation, useVisualizationExportData } from "../../../../export/index.js";
 import { DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH } from "../../../../constants/index.js";
 import { IntlWrapper } from "../../../../localization/index.js";
+import { CustomError } from "../CustomError/CustomError.js";
+import { IDashboardInsightProps } from "../../types.js";
 import { InsightBody } from "../../InsightBody.js";
+
+import { useDashboardInsightDrills } from "./useDashboardInsightDrills.js";
 import { useHandlePropertiesPushData } from "./useHandlePropertiesPushData.js";
-import { useVisualizationExportData } from "../../../../export/index.js";
+import { FormattedMessage } from "react-intl";
 
 const selectCommonDashboardInsightProps = createSelector(
     [selectLocale, selectSettings, selectColorPalette],
@@ -97,6 +100,8 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
         exportData,
+        minimalWidth,
+        minimalHeight,
     } = props;
 
     const ref = widgetRef(widget);
@@ -293,6 +298,12 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         [executionTimestamp],
     );
 
+    const { setContent, isTooSmall, fontSize } = useMinimalSizeValidation(
+        minimalWidth,
+        minimalHeight,
+        loading,
+    );
+
     const renderComponent = () => {
         if (effectiveError) {
             return (
@@ -345,11 +356,23 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
 
     return (
         <div
+            ref={setContent}
             className={cx("visualization-content", {
                 "in-edit-mode": isInEditMode,
             })}
             {...exportDataVis}
         >
+            {isTooSmall ? (
+                <div className="visualization-small-content">
+                    <Icon.Insight />
+                    <div
+                        className="visualization-small-content-description"
+                        style={{ fontSize: `${fontSize}em` }}
+                    >
+                        <FormattedMessage id="visualization.warning.export.too_small" />
+                    </div>
+                </div>
+            ) : null}
             <div
                 className={cx("gd-visualization-content", { zoomable: isZoomable })}
                 style={insightPositionStyle}

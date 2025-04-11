@@ -39,15 +39,15 @@ export function useSlideSizeStyle(
     }
 
     if (type === "section") {
-        return {
-            height: `${data.slideHeight}px`,
-            ...(parentLayoutPath && parentLayoutPath.length > 0
-                ? {
-                      gridTemplateRows: "max-content",
-                      height: "100%",
-                  }
-                : {}),
-        };
+        return parentLayoutPath && parentLayoutPath.length > 0
+            ? {
+                  gridTemplateRows: "max-content",
+                  height: "100%",
+              }
+            : {
+                  height: `${data.slideHeight}px`,
+                  overflow: "hidden",
+              };
     }
 
     return {
