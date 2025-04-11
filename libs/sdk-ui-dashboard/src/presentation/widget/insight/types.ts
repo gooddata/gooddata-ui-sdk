@@ -181,6 +181,16 @@ export interface IDashboardInsightProps {
      * @internal
      */
     afterRender?: () => void;
+
+    /**
+     * @internal
+     */
+    minimalHeight?: number;
+
+    /**
+     * @internal
+     */
+    minimalWidth?: number;
 }
 
 /**

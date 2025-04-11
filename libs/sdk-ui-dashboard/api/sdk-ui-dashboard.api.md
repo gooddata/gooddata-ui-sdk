@@ -128,6 +128,7 @@ import { DateFilterValidationFailed as DateFilterValidationFailed_2 } from '../e
 import { DateString } from '@gooddata/sdk-model';
 import { DeleteAttributeHierarchyRequested as DeleteAttributeHierarchyRequested_2 } from '../events/attributeHierarchies.js';
 import { Dispatch } from '@reduxjs/toolkit';
+import { Dispatch as Dispatch_2 } from 'react';
 import { DraggableLayoutItem as DraggableLayoutItem_2 } from '../../../index.js';
 import { DrillDefinition } from '@gooddata/sdk-model';
 import { DrillState as DrillState_2 } from './drillState.js';
@@ -299,6 +300,7 @@ import { ScreenSize } from '@gooddata/sdk-model';
 import { Selector } from '@reduxjs/toolkit';
 import { SetCatalogItemsPayload } from './catalogReducers.js';
 import { SetCatalogMeasuresAndFactsPayload } from './catalogReducers.js';
+import { SetStateAction } from 'react';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UiState as UiState_2 } from './uiState.js';
@@ -3867,6 +3869,15 @@ export interface ExecutedState {
 // @internal (undocumented)
 export function existBlacklistHierarchyPredicate(reference: IDrillDownReference, attributeHierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy, attributeIdentifier?: ObjRef): boolean;
 
+// @internal (undocumented)
+export const EXPORT_VIS_MINIMAL_HEIGHT = 100;
+
+// @internal (undocumented)
+export const EXPORT_VIS_MINIMAL_WIDTH = 200;
+
+// @internal (undocumented)
+export const EXPORT_VIS_WARNING_MINIMAL_FONT_SIZE = 0.8;
+
 // @beta (undocumented)
 export interface ExportDashboardToExcel extends IDashboardCommand {
     // (undocumented)
@@ -4765,6 +4776,10 @@ export interface IDashboardInsightProps {
     insight: IInsight;
     // @alpha
     LoadingComponent: ComponentType<ILoadingProps>;
+    // @internal (undocumented)
+    minimalHeight?: number;
+    // @internal (undocumented)
+    minimalWidth?: number;
     // @alpha (undocumented)
     onDrill?: OnWidgetDrill;
     // @alpha (undocumented)
@@ -10649,6 +10664,13 @@ export const useMetaExportImageData: (type: MetaExportDataAttributes["data-expor
 export const useMetaPaletteData: () => {
     exportData: MetaExportDataAttributes | undefined;
     item: (key: string, value: string) => MetaExportDataAttributes | undefined;
+};
+
+// @internal
+export function useMinimalSizeValidation(minimalWidth?: number, minimalHeight?: number, loading?: boolean): {
+    setContent: Dispatch_2<SetStateAction<HTMLDivElement | null>>;
+    isTooSmall: boolean;
+    fontSize: number;
 };
 
 // @public

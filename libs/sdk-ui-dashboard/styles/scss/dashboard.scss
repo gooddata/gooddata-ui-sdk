@@ -699,6 +699,34 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 .visualization-content {
     position: relative;
     flex: 1 1 auto;
+
+    .visualization-small-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 99;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
+        background: kit-variables.$gd-widget-background;
+        color: kit-variables.$gd-color-state-blank;
+
+        svg path {
+            fill: kit-variables.$gd-color-state-blank;
+        }
+
+        .visualization-small-content-description {
+            max-width: 50%;
+        }
+    }
+
+    .visualization-small-content + div {
+        visibility: hidden;
+    }
 }
 
 .insight-view-visualization {

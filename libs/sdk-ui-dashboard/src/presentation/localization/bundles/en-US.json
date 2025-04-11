@@ -1020,6 +1020,11 @@
         "comment": "",
         "limit": 0
     },
+    "visualization.warning.export.too_small": {
+        "value": "Not enough space for visualization",
+        "comment": "",
+        "limit": 0
+    },
     "options.menu.unsupported.error._measure|insight": {
         "value": "The visualization cannot be exported at the moment. Try applying different filters, or using different measures or attributes.",
         "comment": "Error popup. Visualization cannot be exported to the file because of wrong setting of filters, measures or attributes.",
