@@ -335,18 +335,13 @@ export const ComponentLabelsProvider: React_2.FC<IComponentLabelsProviderProps>;
 export function ComponentTable<TProps extends object, TProp extends keyof TProps>({ Component, columnsBy, rowsBy, baseProps, debug, codeSnippet, cellWidth, cellHeight, align, }: IComponentTableProps<TProps, TProp>): React_2.JSX.Element;
 
 // @internal (undocumented)
-export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
+export class ConfirmDialog extends PureComponent<TConfirmDialogBaseProps> {
     // (undocumented)
     render(): JSX.Element;
 }
 
 // @internal (undocumented)
-export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
-    // (undocumented)
-    static defaultProps: IConfirmDialogBaseProps;
-    // (undocumented)
-    render(): JSX.Element;
-}
+export const ConfirmDialogBase: React_2.NamedExoticComponent<TConfirmDialogBaseProps>;
 
 // @internal (undocumented)
 export const ContentDivider: React_2.FC<{
@@ -416,24 +411,10 @@ export const DescriptionPanel: React_2.FC<IDescriptionPanelProps>;
 export const DescriptionPanelContent: React_2.FC<IDescriptionPanelProps>;
 
 // @internal (undocumented)
-export class Dialog extends Component<IDialogBaseProps> {
-    // (undocumented)
-    render(): JSX.Element;
-}
+export const Dialog: React_2.NamedExoticComponent<IDialogProps>;
 
 // @internal (undocumented)
-export class DialogBase<P extends IDialogBaseProps> extends PureComponent<P> {
-    // (undocumented)
-    static defaultProps: Partial<IDialogBaseProps>;
-    // (undocumented)
-    protected getDialogClasses(additionalClassName?: string): string;
-    // (undocumented)
-    protected onKeyDown: (event: React_2.KeyboardEvent<HTMLDivElement>) => void | undefined;
-    // (undocumented)
-    render(): JSX.Element;
-    // (undocumented)
-    protected renderCloseButton(): JSX.Element;
-}
+export const DialogBase: React_2.NamedExoticComponent<IDialogBaseProps>;
 
 // @internal (undocumented)
 export const DialogList: React_2.VFC<IDialogListProps>;
@@ -498,17 +479,10 @@ export class ErrorOverlay extends React_2.PureComponent<IErrorOverlayProps> {
 }
 
 // @internal (undocumented)
-export const ExportDialog: (props: IExportDialogBaseProps) => JSX.Element;
+export const ExportDialog: React_2.NamedExoticComponent<TExportDialogProps>;
 
 // @internal (undocumented)
-export class ExportDialogBase extends DialogBase<IExportDialogBaseProps> {
-    // (undocumented)
-    static defaultProps: IExportDialogBaseProps;
-    // (undocumented)
-    render(): JSX.Element;
-    // (undocumented)
-    state: IExportDialogBaseState;
-}
+export const ExportDialogBase: React_2.NamedExoticComponent<TExportDialogBaseProps>;
 
 // @internal (undocumented)
 export const FilterLabel: React_2.FC<WithIntlProps<IFilterLabelProps & WrappedComponentProps>> & {
@@ -1220,41 +1194,6 @@ export interface IComponentTableProps<TProps extends object, TProp extends keyof
 export const Icon: Record<string, React_2.FC<IIconProps>>;
 
 // @internal (undocumented)
-export interface IConfirmDialogBaseProps extends IDialogBaseProps {
-    autofocusOnOpen?: boolean;
-    // (undocumented)
-    cancelButtonText?: string;
-    // (undocumented)
-    dialogHeaderClassName?: string;
-    // (undocumented)
-    footerLeftRenderer?: () => JSX.Element;
-    // (undocumented)
-    headerLeftButtonRenderer?: () => JSX.Element;
-    // (undocumented)
-    headline?: string;
-    // (undocumented)
-    isCancelDisabled?: boolean;
-    // (undocumented)
-    isPositive?: boolean;
-    // (undocumented)
-    isSubmitDisabled?: boolean;
-    // (undocumented)
-    showProgressIndicator?: boolean;
-    // (undocumented)
-    submitButtonText?: string;
-    // (undocumented)
-    submitButtonTooltipAlignPoints?: IAlignPoint[];
-    // (undocumented)
-    submitButtonTooltipArrowOffsets?: ArrowOffsets;
-    // (undocumented)
-    submitButtonTooltipText?: string;
-    // (undocumented)
-    titleRightIconRenderer?: () => JSX.Element;
-    // (undocumented)
-    warning?: string | React_2.ReactElement;
-}
-
-// @internal (undocumented)
 export type IconType = "check" | "plus" | "sync" | "alert" | "close" | "question" | "crossCircle" | "chevronUp" | "chevronDown" | "date" | "lock" | "cross";
 
 // @internal (undocumented)
@@ -1388,13 +1327,18 @@ export interface IDescriptionTriggerProps {
 // @internal (undocumented)
 export interface IDialogBaseProps {
     // (undocumented)
-    accessibilityConfig?: {
+    accessibilityConfig: {
         closeButton?: IButtonAccessibilityConfig;
+        titleElementId: string;
+        descriptionElementId?: string;
     };
+    autofocusOnOpen?: boolean;
     // (undocumented)
     children?: React_2.ReactNode;
     // (undocumented)
     className?: string;
+    // (undocumented)
+    CloseButton?: React_2.ComponentType<TDialogCloseButtonProps>;
     containerClassName?: string;
     // (undocumented)
     displayCloseButton?: boolean;
@@ -1488,6 +1432,19 @@ export interface IDialogListProps<T extends IDialogListItem = IDialogListItem> {
     onItemClick?: (item: T) => void;
     // (undocumented)
     onItemDelete?: (item: T) => void;
+}
+
+// @internal (undocumented)
+export interface IDialogProps extends IDialogBaseProps {
+    containerClassName?: string;
+    // (undocumented)
+    onClick?: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    // (undocumented)
+    onMouseOver?: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    // (undocumented)
+    onMouseUp?: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    // (undocumented)
+    shouldCloseOnClick?: (e: Event) => boolean;
 }
 
 // @internal (undocumented)
@@ -1793,52 +1750,6 @@ export interface IErrorOverlayProps {
     text?: ReactNode;
     // (undocumented)
     title?: ReactNode;
-}
-
-// @internal (undocumented)
-export interface IExportDialogBaseProps extends IDialogBaseProps {
-    // (undocumented)
-    cancelButtonText?: string;
-    // (undocumented)
-    filterContextText?: string;
-    // (undocumented)
-    filterContextTitle?: string;
-    // (undocumented)
-    filterContextVisible?: boolean;
-    // (undocumented)
-    headline?: string;
-    // (undocumented)
-    includeFilterContext?: boolean;
-    // (undocumented)
-    isPositive?: boolean;
-    // (undocumented)
-    isSubmitDisabled?: boolean;
-    // (undocumented)
-    mergeHeaders?: boolean;
-    // (undocumented)
-    mergeHeadersDisabled?: boolean;
-    // (undocumented)
-    mergeHeadersText?: string;
-    // (undocumented)
-    mergeHeadersTitle?: string;
-    // (undocumented)
-    submitButtonText?: string;
-}
-
-// @internal (undocumented)
-export interface IExportDialogBaseState {
-    // (undocumented)
-    includeFilterContext: boolean;
-    // (undocumented)
-    mergeHeaders: boolean;
-}
-
-// @internal (undocumented)
-export interface IExportDialogData {
-    // (undocumented)
-    includeFilterContext: boolean;
-    // (undocumented)
-    mergeHeaders: boolean;
 }
 
 // @internal (undocumented)
@@ -4090,24 +4001,7 @@ export interface ISpinnerProps {
 export const isSpaceKey: (event: KeyboardEvent_2) => boolean;
 
 // @internal (undocumented)
-export interface IStylingEditorDialogFooterProps extends IDialogBaseProps {
-    // (undocumented)
-    disableSubmit?: boolean;
-    // (undocumented)
-    errorMessage?: string;
-    // (undocumented)
-    link: {
-        text: string;
-        url: string;
-    };
-    // (undocumented)
-    onHelpClick?: () => void;
-    // (undocumented)
-    showProgressIndicator?: boolean;
-}
-
-// @internal (undocumented)
-export interface IStylingEditorDialogProps<T extends StylingPickerItemContent> extends IStylingEditorDialogFooterProps {
+export interface IStylingEditorDialogProps<T extends StylingPickerItemContent> extends TStylingEditorDialogFooterProps, Pick<IDialogBaseProps, "onClose" | "className"> {
     // (undocumented)
     examples?: IStylingPickerItem<T>[];
     // (undocumented)
@@ -4346,6 +4240,8 @@ export interface ITypographyProps {
     children: React_2.ReactNode;
     // (undocumented)
     className?: string;
+    // (undocumented)
+    id?: string;
     // (undocumented)
     onClick?: (e: React_2.MouseEvent) => void;
     // (undocumented)
@@ -4902,7 +4798,7 @@ export type StyleProps = Record<string, string | boolean>;
 export const StylingEditorDialog: <T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>) => React_2.JSX.Element;
 
 // @internal (undocumented)
-export const StylingEditorDialogFooter: (props: IStylingEditorDialogFooterProps) => React_2.JSX.Element;
+export const StylingEditorDialogFooter: (props: TStylingEditorDialogFooterProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export const StylingExample: (props: IStylingExampleProps) => React_2.JSX.Element;
@@ -4932,6 +4828,58 @@ export class Tabs extends Component<ITabsProps, ITabsState> {
     // (undocumented)
     render(): JSX.Element;
 }
+
+// @internal (undocumented)
+export type TConfirmDialogBaseProps = Omit<IDialogBaseProps, "accessibilityConfig"> & {
+    isSubmitDisabled?: boolean;
+    isCancelDisabled?: boolean;
+    isPositive?: boolean;
+    cancelButtonText?: string;
+    submitButtonText?: string;
+    submitButtonTooltipText?: string;
+    submitButtonTooltipAlignPoints?: IAlignPoint[];
+    submitButtonTooltipArrowOffsets?: ArrowOffsets;
+    warning?: string | React_2.ReactElement;
+    showProgressIndicator?: boolean;
+    headerLeftButtonRenderer?: () => JSX.Element;
+    footerLeftRenderer?: () => JSX.Element;
+    dialogHeaderClassName?: string;
+    titleRightIconRenderer?: () => JSX.Element;
+} & ({
+    headline: string;
+    accessibilityConfig?: {
+        closeButton?: IButtonAccessibilityConfig;
+        titleElementId?: string;
+        descriptionElementId?: string;
+    };
+} | {
+    headline?: never;
+    accessibilityConfig: {
+        closeButton?: IButtonAccessibilityConfig;
+        titleElementId: string;
+        descriptionElementId?: string;
+    };
+});
+
+// @internal (undocumented)
+export type TDialogCloseButtonProps = Pick<IDialogBaseProps, "onClose" | "onCancel" | "accessibilityConfig">;
+
+// @internal (undocumented)
+export type TExportDialogBaseProps = Pick<TConfirmDialogBaseProps, "className" | "displayCloseButton" | "isPositive" | "isSubmitDisabled" | "headline" | "cancelButtonText" | "submitButtonText" | "onCancel" | "onSubmit"> & {
+    filterContextText?: string;
+    filterContextTitle?: string;
+    filterContextVisible?: boolean;
+    includeFilterContext?: boolean;
+    mergeHeaders?: boolean;
+    mergeHeadersDisabled?: boolean;
+    mergeHeadersText?: string;
+    mergeHeadersTitle?: string;
+};
+
+// @internal (undocumented)
+export type TExportDialogProps = TExportDialogBaseProps & {
+    containerClassName?: string;
+};
 
 // @internal (undocumented)
 export class TextAreaWithSubmit extends Component<ITextAreaWithSubmitProps, ITextAreaWithSubmitState> {
@@ -5031,6 +4979,18 @@ export function transform2Dropdown<T extends IDateDataset>(dateDatasets: T[]): A
 
 // @internal
 export const transformCronExpressionToRecurrenceType: (date: Date | null, cronExpression: string | undefined, allowHourlyRecurrence: boolean, allowInheritValue: boolean, weekStart: WeekStart) => RecurrenceType;
+
+// @internal (undocumented)
+export type TStylingEditorDialogFooterProps = {
+    link: {
+        text: string;
+        url: string;
+    };
+    disableSubmit?: boolean;
+    showProgressIndicator?: boolean;
+    errorMessage?: string;
+    onHelpClick?: () => void;
+} & Pick<IDialogBaseProps, "onCancel" | "onSubmit">;
 
 // @internal (undocumented)
 export type TUTMContent = "main_menu_help_documentation" | "main_menu_help_university" | "main_menu_help_community" | "main_menu_help_support" | "main_menu_help_ticket" | "main_menu_help_slack";

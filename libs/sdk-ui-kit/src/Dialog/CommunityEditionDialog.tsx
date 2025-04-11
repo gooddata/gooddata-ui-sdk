@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { Dialog } from "./Dialog.js";
 import { Message } from "../Messages/index.js";
@@ -27,9 +27,18 @@ export const CommunityEditionDialog: React.FC<ICommunityEditionDialogProps> = ({
     onClose,
     closeButtonText,
 }) => {
+    const titleId = React.useId();
+
     return (
-        <Dialog onClose={onClose} displayCloseButton className="gd-community-dialog">
-            <h3 className="gd-community-dialog-header">{headerText}</h3>
+        <Dialog
+            onClose={onClose}
+            displayCloseButton
+            className="gd-community-dialog"
+            accessibilityConfig={{ titleElementId: titleId }}
+        >
+            <h3 className="gd-community-dialog-header" id={titleId}>
+                {headerText}
+            </h3>
             <Message type="progress" className="gd-community-dialog-info">
                 {infoText}
             </Message>

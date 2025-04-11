@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 import { Dialog } from "@gooddata/sdk-ui-kit";
 
@@ -9,7 +9,9 @@ import DeleteAttributeHierarchyConfirmation from "./DeleteAttributeHieraryConfir
 import { useAttributeHierarchyDialog } from "./AttributeHierarchyDialogProvider.js";
 
 const AttributeHierarchyDialogCore: React.FC = () => {
-    const { onClose, shouldDisplayDeleteConfirmation } = useAttributeHierarchyDialog();
+    const { onClose, shouldDisplayDeleteConfirmation, title } = useAttributeHierarchyDialog();
+
+    const titleElementId = React.useId();
 
     return shouldDisplayDeleteConfirmation ? (
         <DeleteAttributeHierarchyConfirmation />
@@ -19,7 +21,12 @@ const AttributeHierarchyDialogCore: React.FC = () => {
             className="attribute-hierarchy-dialog s-attribute-hierarchy-dialog"
             displayCloseButton={true}
             onClose={onClose}
+            accessibilityConfig={{ titleElementId }}
         >
+            <h3 className={"sr-only"} id={titleElementId}>
+                {title}
+            </h3>
+
             <AttributeHierarchyDialogHeader />
             <AttributeHierarchyDialogContent />
             <AttributeHierarchyDialogFooter />
