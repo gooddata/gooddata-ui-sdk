@@ -301,7 +301,6 @@ const RelativeRangePickerComponent: React.FC<IRelativeRangePickerProps & Wrapped
                 intl={intl}
                 isMobile={isMobile}
             />
-            <span className="gd-relative-range-picker-dash"></span>
             <RelativeRangePickerSelect
                 className="s-relative-range-picker-to"
                 wrapperClassName="s-relative-range-picker-to-wrapper"
