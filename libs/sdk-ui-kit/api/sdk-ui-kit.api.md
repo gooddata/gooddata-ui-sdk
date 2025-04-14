@@ -1796,7 +1796,7 @@ export interface IErrorOverlayProps {
 }
 
 // @internal (undocumented)
-export interface IExportDialogBaseProps extends Pick<IConfirmDialogBaseProps, "className" | "displayCloseButton" | "isPositive" | "isSubmitDisabled" | "headline" | "cancelButtonText" | "submitButtonText" | "onCancel" | "onSubmit"> {
+export interface IExportDialogBaseProps extends Pick<IConfirmDialogBaseProps, "className" | "displayCloseButton" | "isPositive" | "isSubmitDisabled" | "headline" | "cancelButtonText" | "submitButtonText" | "onCancel"> {
     // (undocumented)
     filterContextText?: string;
     // (undocumented)
@@ -1813,7 +1813,12 @@ export interface IExportDialogBaseProps extends Pick<IConfirmDialogBaseProps, "c
     mergeHeadersText?: string;
     // (undocumented)
     mergeHeadersTitle?: string;
+    // (undocumented)
+    onSubmit?: (data: IExportDialogData) => void;
 }
+
+// @internal (undocumented)
+export type IExportDialogData = Pick<IExportDialogBaseProps, "includeFilterContext" | "mergeHeaders">;
 
 // @internal (undocumented)
 export interface IExportDialogProps extends IExportDialogBaseProps {
