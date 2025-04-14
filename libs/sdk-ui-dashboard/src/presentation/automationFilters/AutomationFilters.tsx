@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import React, { useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import noop from "lodash/noop.js";
 import {
@@ -39,6 +39,7 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
     onUseFiltersChange,
 }) => {
     const theme = useTheme();
+    const intl = useIntl();
     const [isExpanded, setIsExpanded] = useState(false);
 
     const {
@@ -63,14 +64,20 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                     "gd-automation-filters__list--expanded": isExpanded,
                 })}
             >
-                <span className="gd-automation-filters__expansion-button s-automation-filters-show-all-button">
-                    <UiButton
-                        label="Show all"
-                        iconAfter={isExpanded ? "chevronUp" : "chevronDown"}
-                        variant="tertiary"
-                        onClick={() => setIsExpanded(!isExpanded)}
-                    />
-                </span>
+                {selectedFilters.length > 1 ? (
+                    <span className="gd-automation-filters__expansion-button s-automation-filters-show-all-button">
+                        <UiButton
+                            label={
+                                isExpanded
+                                    ? intl.formatMessage({ id: "dialogs.schedule.email.filters.showLess" })
+                                    : intl.formatMessage({ id: "dialogs.schedule.email.filters.showAll" })
+                            }
+                            iconAfter={isExpanded ? "chevronUp" : "chevronDown"}
+                            variant="tertiary"
+                            onClick={() => setIsExpanded(!isExpanded)}
+                        />
+                    </span>
+                ) : undefined}
                 {visibleFilters.map((filter) => (
                     <div
                         key={
@@ -135,7 +142,11 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                                 id="dialogs.schedule.email.filters.useFiltersMessage.tooltip"
                                 values={{
                                     a: (chunk) => (
-                                        <a href="TODO" target="_blank" rel="noreferrer">
+                                        <a
+                                            href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#filters"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
                                             {chunk}
                                         </a>
                                     ),
