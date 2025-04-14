@@ -730,6 +730,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableAlertsEvaluationFrequencySetup,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableRichTooManyDatapointsErrors,
+            "enableRichTooManyDatapointsErrors",
+            "BOOLEAN",
+            FeatureFlagsValues.enableRichTooManyDatapointsErrors,
+        ),
     };
 }
 

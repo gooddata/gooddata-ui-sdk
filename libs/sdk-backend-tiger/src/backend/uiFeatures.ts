@@ -143,6 +143,7 @@ export enum TigerFeaturesNames {
     EnableAutomationFilterContext = "enableAutomationFilterContext",
     EnableDateFilterIdentifiersRollout = "enableDateFilterIdentifiersRollout",
     EnableAlertsEvaluationFrequencySetup = "enableAlertsEvaluationFrequencySetup",
+    EnableRichTooManyDatapointsErrors = "enableRichTooManyDatapointsErrors",
 }
 
 export type ITigerFeatureFlags = {
@@ -248,6 +249,7 @@ export type ITigerFeatureFlags = {
     enableAutomationFilterContext: typeof FeatureFlagsValues["enableAutomationFilterContext"][number];
     enableDateFilterIdentifiersRollout: typeof FeatureFlagsValues["enableDateFilterIdentifiersRollout"][number];
     enableAlertsEvaluationFrequencySetup: typeof FeatureFlagsValues["enableAlertsEvaluationFrequencySetup"][number];
+    enableRichTooManyDatapointsErrors: typeof FeatureFlagsValues["enableRichTooManyDatapointsErrors"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -353,6 +355,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAutomationFilterContext: false,
     enableDateFilterIdentifiersRollout: false,
     enableAlertsEvaluationFrequencySetup: false,
+    enableRichTooManyDatapointsErrors: false,
 };
 
 export const FeatureFlagsValues = {
@@ -462,4 +465,5 @@ export const FeatureFlagsValues = {
     enableAutomationFilterContext: [true, false] as const,
     enableDateFilterIdentifiersRollout: [true, false] as const,
     enableAlertsEvaluationFrequencySetup: [true, false] as const,
+    enableRichTooManyDatapointsErrors: [true, false] as const,
 };
