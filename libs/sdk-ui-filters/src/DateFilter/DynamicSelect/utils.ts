@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import range from "lodash/range.js";
 import { IMessageTranslator } from "../utils/Translations/Translators.js";
 import { granularityIntlCodes } from "../constants/i18n.js";
@@ -188,6 +188,14 @@ export const findRelativeDateFilterOptionByLabel = (
 ): DynamicSelectOption | null => {
     const trimmedInput = getTrimmedInput(input);
     return getSelectableItems(options).find((option) => option.label === trimmedInput);
+};
+
+export const findRelativeDateFilterOptionIndexByLabel = (
+    options: DynamicSelectItem[],
+    input: string,
+): number => {
+    const trimmedInput = getTrimmedInput(input);
+    return getSelectableItems(options).findIndex((option) => option.label === trimmedInput);
 };
 
 export const findRelativeDateFilterOptionByValue = (
