@@ -19,38 +19,16 @@
         cursor: default;
     }
 
-    &:not(&:disabled, &--variant-tertiary, &--variant-popout) {
-        &:active {
-            #{$root}__text {
-                // Move text inside the button on :active state.
-                padding-top: 1px;
-            }
-
-            #{$root}__icon {
-                // Move icon inside the button on :active state.
-                padding-top: 1px;
-            }
-        }
-    }
-
-    &__text,
+    //TODO: move this directly where used or set more globally
     %ui-button__text {
         transition: var(--gd-transition-all);
     }
 
-    &__icon,
     %ui-button__icon {
         display: flex;
         align-items: center;
         justify-content: center;
         transition: var(--gd-transition-all);
-    }
-
-    &--isLoading {
-        #{$root}__icon {
-            // Spin icon on loading state.
-            animation: rotate 1s infinite steps(30);
-        }
     }
 
     /**
@@ -59,50 +37,43 @@
     &--size {
         &-small {
             height: var(--gd-button-S);
-            padding: var(--gd-spacing-6px) var(--gd-spacing-10px);
+            padding: 0 var(--gd-spacing-10px);
             font-size: 12px;
             line-height: 14px;
+            &:has(svg + span) {
+                padding-left: 7px;
+            }
 
-            &#{$root}--iconPosition {
-                &-left {
-                    padding-left: var(--gd-spacing-7px);
-                }
-
-                &-right {
-                    padding-right: var(--gd-spacing-7px);
-                }
+            &:has(span + svg) {
+                padding-right: 7px;
             }
         }
 
         &-medium {
             height: var(--gd-button-M);
-            padding: var(--gd-spacing-6px) var(--gd-spacing-15px);
+            padding: 0 var(--gd-spacing-15px);
             font-size: 14px;
             line-height: 16px;
-            &#{$root}--iconPosition {
-                &-left {
-                    padding-left: var(--gd-spacing-10px);
-                }
+            &:has(svg + span) {
+                padding-left: 10px;
+            }
 
-                &-right {
-                    padding-right: var(--gd-spacing-10px);
-                }
+            &:has(span + svg) {
+                padding-right: 10px;
             }
         }
 
         &-large {
             height: var(--gd-button-L);
-            padding: var(--gd-spacing-6px) var(--gd-spacing-20px);
+            padding: 0 var(--gd-spacing-20px);
             font-size: 16px;
             line-height: 18px;
-            &#{$root}--iconPosition {
-                &-left {
-                    padding-left: var(--gd-spacing-15px);
-                }
+            &:has(svg + span) {
+                padding-left: 15px;
+            }
 
-                &-right {
-                    padding-right: var(--gd-spacing-15px);
-                }
+            &:has(span + svg) {
+                padding-right: 15px;
             }
         }
     }
@@ -112,8 +83,6 @@
      */
     &--variant {
         &-primary {
-            --gd-icon-fill-color: var(--gd-palette-complementary-0);
-
             color: var(--gd-palette-complementary-0);
             background-color: var(--gd-palette-primary-base);
             border-color: var(--gd-palette-complementary-9-t90);
@@ -146,7 +115,9 @@
         }
 
         &-secondary {
-            --gd-icon-fill-color: var(--gd-palette-complementary-5);
+            svg {
+                color: var(--gd-palette-complementary-5);
+            }
 
             color: var(--gd-palette-complementary-7);
             border-color: var(--gd-palette-complementary-4);
@@ -155,8 +126,9 @@
 
             &:not(&:disabled) {
                 &:focus {
-                    --gd-icon-fill-color: var(--gd-palette-primary-base);
-
+                    svg {
+                        color: var(--gd-palette-primary-base);
+                    }
                     color: var(--gd-palette-complementary-8);
                     background: var(--gd-palette-complementary-1);
                     box-shadow: var(--gd-button-dropShadow, 0 -2px 0 0) var(--gd-palette-complementary-5-t40)
@@ -164,8 +136,9 @@
                 }
 
                 &:hover {
-                    --gd-icon-fill-color: var(--gd-palette-primary-base);
-
+                    svg {
+                        color: var(--gd-palette-primary-base);
+                    }
                     color: var(--gd-palette-complementary-8);
                     border-color: var(--gd-palette-complementary-5);
                     background: var(--gd-palette-complementary-0);
@@ -174,8 +147,9 @@
                 }
 
                 &:active {
-                    --gd-icon-fill-color: var(--gd-palette-primary-base);
-
+                    svg {
+                        color: var(--gd-palette-primary-base);
+                    }
                     color: var(--gd-palette-complementary-8);
                     border-color: var(--gd-palette-complementary-5);
                     background: var(--gd-palette-complementary-3);
@@ -194,7 +168,11 @@
 
         &-tertiary,
         %ui-button--variant-tertiary {
-            --gd-icon-fill-color: var(--gd-palette-complementary-5);
+            svg {
+                color: var(--gd-palette-complementary-5);
+            }
+
+            padding: 0;
 
             color: var(--gd-palette-complementary-7);
             text-decoration: underline;
@@ -202,18 +180,12 @@
             border-color: transparent;
 
             &:not(&:disabled) {
-                &:focus {
-                    --gd-icon-fill-color: var(--gd-palette-primary-base);
-
-                    color: var(--gd-palette-complementary-8);
-                }
-                &:hover {
-                    --gd-icon-fill-color: var(--gd-palette-primary-base);
-
-                    color: var(--gd-palette-complementary-8);
-                }
+                &:hover,
+                &:focus,
                 &:active {
-                    --gd-icon-fill-color: var(--gd-palette-primary-base);
+                    svg {
+                        color: var(--gd-palette-primary-base);
+                    }
 
                     color: var(--gd-palette-complementary-8);
                 }
@@ -223,36 +195,19 @@
                 color: var(--gd-palette-complementary-5);
                 text-decoration: none;
             }
-
-            &#{$root}--size {
-                &-small,
-                &-medium,
-                &-large {
-                    padding: 0;
-                    height: auto;
-                }
-            }
         }
 
         &-popout {
-            --gd-icon-fill-color: var(--gd-palette-primary-base);
+            padding: 0;
 
             color: var(--gd-palette-primary-base);
             background-color: transparent;
             border-color: transparent;
 
             &:not(&:disabled) {
-                &:focus {
-                    text-decoration: underline;
-                }
-
-                &:hover {
-                    color: var(--gd-palette-complementary-8);
-                    text-decoration: underline;
-                }
-
+                &:hover,
+                &:focus,
                 &:active {
-                    color: var(--gd-palette-primary-base);
                     text-decoration: underline;
                 }
             }
@@ -260,20 +215,9 @@
             &:disabled {
                 color: var(--gd-palette-complementary-5);
             }
-
-            &#{$root}--size {
-                &-small,
-                &-medium,
-                &-large {
-                    padding: 0;
-                    height: auto;
-                }
-            }
         }
 
         &-danger {
-            --gd-icon-fill-color: var(--gd-palette-complementary-0);
-
             background: var(--gd-palette-error-base);
             color: var(--gd-palette-complementary-0);
             border-color: var(--gd-palette-complementary-9-t90);
@@ -307,14 +251,5 @@
                 border-color: transparent;
             }
         }
-    }
-}
-
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
     }
 }

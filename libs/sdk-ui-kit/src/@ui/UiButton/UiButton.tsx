@@ -1,16 +1,16 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import { SizeSmall, SizeMedium, SizeLarge } from "../@types/size.js";
+import { IconType } from "../@types/icon.js";
+import { SizeLarge, SizeMedium, SizeSmall } from "../@types/size.js";
 import {
+    VariantDanger,
+    VariantPopOut,
     VariantPrimary,
     VariantSecondary,
     VariantTertiary,
-    VariantPopOut,
-    VariantDanger,
 } from "../@types/variant.js";
 import { bem } from "../@utils/bem.js";
-import { IconType } from "../@types/icon.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 
 /**
@@ -47,28 +47,19 @@ export const UiButton = ({
     onClick,
     dataId,
 }: UiButtonProps) => {
-    const iconPosition = iconBefore ? "left" : iconAfter ? "right" : undefined;
-
+    const iconSize = size === "small" ? 16 : 18;
     return (
         <button
             ref={buttonRef}
-            className={b({ size, variant, isLoading, iconPosition })}
+            className={b({ size, variant, isLoading })}
             disabled={isDisabled}
             tabIndex={0}
             onClick={onClick}
             data-id={dataId}
         >
-            {iconBefore ? (
-                <span className={e("icon")}>
-                    <UiIcon type={iconBefore} label={label} size={14} />
-                </span>
-            ) : null}
+            {iconBefore ? <UiIcon type={iconBefore} size={iconSize} /> : null}
             <span className={e("text")}>{label}</span>
-            {iconAfter ? (
-                <span className={e("icon")}>
-                    <UiIcon type={iconAfter} label={label} size={14} />
-                </span>
-            ) : null}
+            {iconAfter ? <UiIcon type={iconAfter} size={iconSize} /> : null}
         </button>
     );
 };
