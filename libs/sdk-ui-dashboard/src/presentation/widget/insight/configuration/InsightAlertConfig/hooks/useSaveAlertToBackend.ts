@@ -1,6 +1,8 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { useCallback } from "react";
+import omit from "lodash/omit.js";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+
 import { useCreateAlert } from "./useCreateAlert.js";
 import { useUpdateAlert } from "./useUpdateAlert.js";
 
@@ -53,7 +55,7 @@ export function useSaveAlertToBackend({
 
     const handleUpdateAlert = useCallback(
         (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            alertUpdater.save(alert as IAutomationMetadataObject);
+            alertUpdater.save(sanitizeAutomation(alert as IAutomationMetadataObject));
         },
         [alertUpdater],
     );
@@ -65,7 +67,7 @@ export function useSaveAlertToBackend({
 
     const handlePauseAlert = useCallback(
         (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            alertPauser.save(alert as IAutomationMetadataObject);
+            alertPauser.save(sanitizeAutomation(alert as IAutomationMetadataObject));
         },
         [alertPauser],
     );
@@ -77,7 +79,7 @@ export function useSaveAlertToBackend({
 
     const handleResumeAlert = useCallback(
         (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            alertResumer.save(alert as IAutomationMetadataObject);
+            alertResumer.save(sanitizeAutomation(alert as IAutomationMetadataObject));
         },
         [alertResumer],
     );
@@ -89,4 +91,14 @@ export function useSaveAlertToBackend({
         alertResumer.savingStatus === "running";
 
     return { handleCreateAlert, handleUpdateAlert, handlePauseAlert, handleResumeAlert, isSavingAlert };
+}
+
+function sanitizeAutomation(automation: IAutomationMetadataObject): IAutomationMetadataObject {
+    // We want to omit the cronDescription as it is a variable created on backend that cannot
+    // be overriden and BE has hard time handling it with each PUT
+    if (automation.schedule) {
+        automation.schedule = omit(automation.schedule, ["cronDescription"]);
+    }
+
+    return automation;
 }
