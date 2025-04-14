@@ -693,6 +693,16 @@
         "comment": "Schedule warning message",
         "limit": 0
     },
+    "dialogs.schedule.email.filters.showAll": {
+        "value": "Show all",
+        "comment": "Show full list of all filters",
+        "limit": 0
+    },
+    "dialogs.schedule.email.filters.showLess": {
+        "value": "Show less",
+        "comment": "Show shortened list of all filters",
+        "limit": 0
+    },
     "dialogs.schedule.email.filters.title": {
         "value": "Add filters",
         "comment": "Schedule filters dialog title",
