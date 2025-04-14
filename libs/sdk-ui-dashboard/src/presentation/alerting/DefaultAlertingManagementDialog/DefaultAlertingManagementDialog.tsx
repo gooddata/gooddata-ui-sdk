@@ -1,8 +1,8 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import React, { useCallback, useState } from "react";
 import { defineMessage, FormattedMessage, useIntl } from "react-intl";
-import { Button, Dialog, Hyperlink, Typography } from "@gooddata/sdk-ui-kit";
+import { Button, Dialog, Hyperlink, Typography, useId } from "@gooddata/sdk-ui-kit";
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
@@ -81,6 +81,8 @@ export const AlertingManagementDialog: React.FC<IAlertingManagementDialogProps> 
         ? defineMessage({ id: "dialogs.alerting.footer.title.short" }).id
         : defineMessage({ id: "dialogs.alerting.footer.title" }).id;
 
+    const titleElementId = useId();
+
     return (
         <>
             <Dialog
@@ -88,9 +90,10 @@ export const AlertingManagementDialog: React.FC<IAlertingManagementDialogProps> 
                 onCancel={onClose}
                 shouldCloseOnClick={() => false}
                 className="gd-notifications-channels-management-dialog s-alerting-management-dialog"
+                accessibilityConfig={{ titleElementId }}
             >
                 <div className="gd-notifications-channels-management-dialog-title">
-                    <Typography tagName="h3" className="gd-dialog-header">
+                    <Typography tagName="h3" className="gd-dialog-header" id={titleElementId}>
                         <FormattedMessage id="dialogs.alerting.management.title" />
                     </Typography>
                 </div>

@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useHubspotForm } from "@aaronhayes/react-use-hubspot-form";
@@ -106,6 +106,11 @@ export interface IHubspotConversionTouchPointDialogBaseProps {
      * Form submitted callback function
      */
     onFormSubmitted?: () => void;
+
+    /**
+     * Properties enabling proper accessibility
+     */
+    accessibilityConfig?: { titleElementId: string };
 }
 
 /**
@@ -123,6 +128,7 @@ export const HubspotConversionTouchPointDialogBase: React.FC<IHubspotConversionT
         dialogTitle,
         showCancelButton,
         submitButtonClass,
+        accessibilityConfig,
         values = {},
         onClose,
         onFormSubmitted,
@@ -191,11 +197,16 @@ export const HubspotConversionTouchPointDialogBase: React.FC<IHubspotConversionT
 
     return (
         <>
+            {accessibilityConfig ? (
+                <h2 className={"sr-only"} id={accessibilityConfig.titleElementId}>
+                    {dialogTitle}
+                </h2>
+            ) : null}
             {!formCreated ? <LoadingComponent /> : null}
             {formCreated ? (
                 <div className="conversion-touch-point-dialog-wrapper">
                     {isFormReady && dialogTitle ? <Typography tagName="h3">{dialogTitle}</Typography> : null}
-                    {/* After formCreated, the hubspot form will loaded in #get-in-touch-hubspot div. So it should be there.*/}
+                    {/* After formCreated, the hubspot form will be loaded in #get-in-touch-hubspot div. So it should be there.*/}
                     <div id={hubspotFormTargetId} className="hubspot-form"></div>
                     {/* The hubspot form doesn't include Cancel button. Adding the Cancel button to make Dialog consistent with other dialogs */}
                     {isFormReady && showCancelButton ? (

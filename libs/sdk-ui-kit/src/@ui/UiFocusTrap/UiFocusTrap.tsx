@@ -134,11 +134,18 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
         defaultReturnFocusToRef.current = document.activeElement as HTMLElement;
 
         const focusTrapTimeout = setTimeout(() => {
-            if (autofocusOnOpen) {
-                // Move focus to the first element in the trap at start
-                const { firstElement } = getFocusableElements(trapRef.current);
-                firstElement?.focus();
+            if (!autofocusOnOpen) {
+                return;
             }
+
+            if (trapRef.current?.contains(document.activeElement)) {
+                // Do not change focus, if the focused element is already inside the trap
+                return;
+            }
+
+            // Move focus to the first element in the trap at start
+            const { firstElement } = getFocusableElements(trapRef.current);
+            firstElement?.focus();
         }, 100);
 
         return () => {

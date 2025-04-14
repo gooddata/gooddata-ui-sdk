@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
 
@@ -7,6 +7,7 @@ import {
     HubspotConversionTouchPointDialogBase,
     IHubspotConversionTouchPointDialogBaseProps,
 } from "./HubspotConversionTouchPointDialogBase.js";
+import { useId } from "../utils/useId.js";
 
 /**
  * @public
@@ -21,6 +22,8 @@ export const HubspotConversionTouchPointDialog: React.FC<IHubspotConversionTouch
         submitBtn?.click();
     };
 
+    const titleElementId = useId();
+
     return (
         <Dialog
             displayCloseButton={true}
@@ -28,9 +31,14 @@ export const HubspotConversionTouchPointDialog: React.FC<IHubspotConversionTouch
             submitOnEnterKey={true}
             onSubmit={onDialogSubmit}
             className="conversion-touch-point-dialog s-conversion-touch-point-dialog"
+            accessibilityConfig={{ titleElementId }}
         >
             <HubspotProvider>
-                <HubspotConversionTouchPointDialogBase {...props} submitButtonClass={submitButtonClasses} />
+                <HubspotConversionTouchPointDialogBase
+                    {...props}
+                    submitButtonClass={submitButtonClasses}
+                    accessibilityConfig={{ titleElementId }}
+                />
             </HubspotProvider>
         </Dialog>
     );

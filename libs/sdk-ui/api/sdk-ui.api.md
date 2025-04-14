@@ -1784,6 +1784,9 @@ export function usePlaceholders<T extends IPlaceholder<any>[]>(placeholders: [..
 // @internal
 export const usePrevious: <T>(props: T) => T;
 
+// @internal
+export const usePropState: <T>(prop: T) => readonly [T, React_2.Dispatch<React_2.SetStateAction<T>>];
+
 // @public
 export function useResolveValuesWithPlaceholders<T extends any[], C>(values: [...T], resolutionContext?: C): PlaceholdersResolvedValues<T>;
 

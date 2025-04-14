@@ -47,10 +47,11 @@ class DialogExamples extends PureComponent {
                     this.setState({ dialogOpen: false });
                 }}
                 displayCloseButton={true}
+                accessibilityConfig={{ titleElementId: "dialog-title" }}
             >
                 <div style={{ padding: "20px" }}>
                     <div className="gd-dialog-header">
-                        <h3>Custom Dialog</h3>
+                        <h2 id={"dialog-title"}>Custom Dialog</h2>
                     </div>
                     <p>A beautiful custom dialog!</p>
                 </div>
