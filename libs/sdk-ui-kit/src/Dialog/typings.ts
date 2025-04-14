@@ -98,7 +98,6 @@ export interface IExportDialogBaseProps
         | "cancelButtonText"
         | "submitButtonText"
         | "onCancel"
-        | "onSubmit"
     > {
     filterContextText?: string;
     filterContextTitle?: string;
@@ -108,9 +107,15 @@ export interface IExportDialogBaseProps
     mergeHeadersDisabled?: boolean;
     mergeHeadersText?: string;
     mergeHeadersTitle?: string;
+    onSubmit?: (data: IExportDialogData) => void;
 }
 
 /**
  * @internal
  */
 export type IDialogCloseButtonProps = Pick<IDialogBaseProps, "onClose" | "accessibilityConfig">;
+
+/**
+ * @internal
+ */
+export type IExportDialogData = Pick<IExportDialogBaseProps, "includeFilterContext" | "mergeHeaders">;

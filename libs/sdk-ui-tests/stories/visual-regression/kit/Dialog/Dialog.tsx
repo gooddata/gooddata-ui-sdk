@@ -51,7 +51,7 @@ class DialogExamples extends PureComponent {
             >
                 <div style={{ padding: "20px" }}>
                     <div className="gd-dialog-header">
-                        <h2 id={"dialog-title"}>Custom Dialog</h2>
+                        <h3 id={"dialog-title"}>Custom Dialog</h3>
                     </div>
                     <p>A beautiful custom dialog!</p>
                 </div>

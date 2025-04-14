@@ -37,9 +37,9 @@ export const CommunityEditionDialog: React.FC<ICommunityEditionDialogProps> = ({
             className="gd-community-dialog"
             accessibilityConfig={{ titleElementId: titleId }}
         >
-            <h2 className="gd-community-dialog-header" id={titleId}>
+            <h3 className="gd-community-dialog-header" id={titleId}>
                 {headerText}
-            </h2>
+            </h3>
             <Message type="progress" className="gd-community-dialog-info">
                 {infoText}
             </Message>
