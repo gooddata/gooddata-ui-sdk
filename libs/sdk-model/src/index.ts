@@ -853,6 +853,7 @@ export type {
     IThemeComplementaryPalette,
     IThemeWidgetTitle,
     IThemeTypography,
+    IThemeFontsDef,
     IThemePalette,
     IThemeKpi,
     IThemeKpiValue,
