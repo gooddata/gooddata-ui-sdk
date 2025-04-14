@@ -996,6 +996,7 @@ export interface IAutomationMetadataObjectBase {
     metadata?: {
         widget?: string;
         filters?: string[];
+        visibleFilters?: IAutomationVisibleFilter[];
     };
     notificationChannel?: string;
     recipients?: IAutomationRecipient[];
@@ -1052,6 +1053,14 @@ export interface IAutomationUserRecipient extends IAutomationRecipientBase {
     email?: string;
     name?: string;
     type: "user";
+}
+
+// @alpha (undocumented)
+export interface IAutomationVisibleFilter {
+    // (undocumented)
+    localIdentifier?: string;
+    // (undocumented)
+    title?: string;
 }
 
 // @alpha
