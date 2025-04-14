@@ -161,13 +161,13 @@ const RelativeRangePickerComponent: React.FC<IRelativeRangePickerProps & Wrapped
     const [fromInputValue, setFromInputValue] = useState<string>(
         getInputValueFromValue(
             selectedFilterOption.from,
-            selectedFilterOption.from ? getItems(selectedFilterOption.from.toString()) : [],
+            selectedFilterOption.from !== undefined ? getItems(selectedFilterOption.from.toString()) : [],
         ),
     );
     const [toInputValue, setToInputValue] = useState<string>(
         getInputValueFromValue(
             selectedFilterOption.to,
-            selectedFilterOption.to ? getItems(selectedFilterOption.to.toString()) : [],
+            selectedFilterOption.to !== undefined ? getItems(selectedFilterOption.to.toString()) : [],
         ),
     );
 
