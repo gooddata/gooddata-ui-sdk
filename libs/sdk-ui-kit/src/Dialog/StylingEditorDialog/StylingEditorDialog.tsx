@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
@@ -11,7 +11,9 @@ import { BubbleHeaderSeparator } from "./BubbleHeaderSeparator.js";
 import { Button } from "../../Button/index.js";
 import { Dialog } from "../Dialog.js";
 import { Typography } from "../../Typography/index.js";
-import { StylingEditorDialogFooter, IStylingEditorDialogFooterProps } from "./StylingEditorDialogFooter.js";
+import { StylingEditorDialogFooter, TStylingEditorDialogFooterProps } from "./StylingEditorDialogFooter.js";
+import { IDialogBaseProps } from "../typings.js";
+import { useId } from "../../utils/useId.js";
 
 /**
  * @internal
@@ -31,7 +33,8 @@ export interface IStylingPickerItem<T extends StylingPickerItemContent> {
  * @internal
  */
 export interface IStylingEditorDialogProps<T extends StylingPickerItemContent>
-    extends IStylingEditorDialogFooterProps {
+    extends TStylingEditorDialogFooterProps,
+        Pick<IDialogBaseProps, "onClose" | "className"> {
     title: string;
     tooltip?: string;
     stylingItem?: IStylingPickerItem<T>;
@@ -140,6 +143,8 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
         };
     };
 
+    const titleElementId = useId();
+
     return (
         <Dialog
             className={cx(
@@ -155,6 +160,7 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
             }}
             displayCloseButton={true}
             submitOnEnterKey={false}
+            accessibilityConfig={{ titleElementId }}
         >
             <div className="gd-styling-editor-dialog-header">
                 {showBackButton ? (
@@ -170,7 +176,11 @@ const StylingEditorDialogCore = <T extends StylingPickerItemContent>(props: ISty
                         />
                     </div>
                 ) : null}
-                <Typography tagName="h2" className="gd-styling-editor-dialog-header-title">
+                <Typography
+                    tagName="h2"
+                    className="gd-styling-editor-dialog-header-title"
+                    id={titleElementId}
+                >
                     {title}
                 </Typography>
             </div>

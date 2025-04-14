@@ -13,6 +13,7 @@ import {
     Message,
     OverlayControllerProvider,
     OverlayController,
+    useId,
 } from "@gooddata/sdk-ui-kit";
 import { Textarea } from "./components/Textarea.js";
 import { Input } from "./components/Input.js";
@@ -249,6 +250,8 @@ export function ScheduledMailDialogRenderer({
         ? defineMessage({ id: "dialogs.schedule.email.footer.title.short" }).id
         : defineMessage({ id: "dialogs.schedule.email.footer.title" }).id;
 
+    const titleElementId = useId();
+
     return (
         <>
             <Overlay
@@ -272,6 +275,7 @@ export function ScheduledMailDialogRenderer({
                             closeButton: {
                                 ariaLabel: intl.formatMessage({ id: "dialogs.schedule.email.closeLabel" }),
                             },
+                            titleElementId,
                         }}
                         showProgressIndicator={isSavingScheduledEmail}
                         footerLeftRenderer={() => (
@@ -308,6 +312,9 @@ export function ScheduledMailDialogRenderer({
                             />
                         )}
                     >
+                        <h2 className={"sr-only"} id={titleElementId}>
+                            {intl.formatMessage({ id: "dialogs.schedule.email.accessibilityTitle" })}
+                        </h2>
                         <div className="gd-notifications-channel-dialog-content-wrapper">
                             <div className="gd-divider-with-margin" />
                             {enableAutomationFilterContext ? (

@@ -2,7 +2,7 @@
 
 import React, { useCallback, useState } from "react";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
-import { AddButton, Button, Dialog, Hyperlink, Typography } from "@gooddata/sdk-ui-kit";
+import { AddButton, Button, Dialog, Hyperlink, Typography, useId } from "@gooddata/sdk-ui-kit";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { ScheduledEmails } from "./components/ScheduledEmailsList.js";
@@ -70,15 +70,18 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
         ? defineMessage({ id: "dialogs.schedule.email.footer.title.short" }).id
         : defineMessage({ id: "dialogs.schedule.email.footer.title" }).id;
 
+    const titleElementId = useId();
+
     return (
         <>
             <Dialog
                 displayCloseButton={true}
                 onCancel={onClose}
                 className="gd-notifications-channels-management-dialog s-scheduled-email-management-dialog"
+                accessibilityConfig={{ titleElementId }}
             >
                 <div className="gd-notifications-channels-management-dialog-title">
-                    <Typography tagName="h3" className="gd-dialog-header">
+                    <Typography tagName="h3" className="gd-dialog-header" id={titleElementId}>
                         <FormattedMessage id="dialogs.schedule.management.title" />
                     </Typography>
                 </div>

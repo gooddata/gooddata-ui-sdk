@@ -1,24 +1,27 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { PureComponent } from "react";
+import React from "react";
 import cx from "classnames";
-import { Button } from "../Button/index.js";
 import { IDialogBaseProps } from "./typings.js";
-import { ENUM_KEY_CODE } from "../typings/utilities.js";
-import noop from "lodash/noop.js";
+import { DialogCloseButton } from "./DialogCloseButton.js";
+import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
 
-const checkKeyHandler = (event: React.KeyboardEvent, keyCode: number, handler: () => void): void => {
-    if (event.keyCode === keyCode && handler) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        handler();
+const checkKeyHandler = (event: React.KeyboardEvent, key: string, handler: () => void): void => {
+    if (event.key !== key) {
+        return;
     }
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    handler();
 };
 
-const shouldSubmitOnEnterPress = ({ target }: React.KeyboardEvent): boolean => {
-    const { tagName, type } = target as any;
+const isTargetTextInput = ({ target }: React.KeyboardEvent): boolean => {
+    const { tagName, type } = target as HTMLInputElement;
+
     const tagNameInLowercase = tagName.toLowerCase();
     const typeInLowercase = type ? type.toLowerCase() : "";
+
     return (
         tagNameInLowercase === "textarea" ||
         (tagNameInLowercase === "input" && (typeInLowercase === "text" || typeInLowercase === "number"))
@@ -28,57 +31,53 @@ const shouldSubmitOnEnterPress = ({ target }: React.KeyboardEvent): boolean => {
 /**
  * @internal
  */
-export class DialogBase<P extends IDialogBaseProps> extends PureComponent<P> {
-    static defaultProps: Partial<IDialogBaseProps> = {
-        children: false,
-        className: "",
-        displayCloseButton: false,
-        submitOnEnterKey: true,
-        onCancel: noop,
-        onSubmit: noop,
-    };
+export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
+    submitOnEnterKey,
+    onCancel,
+    onSubmit,
+    displayCloseButton,
+    onClose,
+    accessibilityConfig,
+    className,
+    autofocusOnOpen = true,
+    children,
+    CloseButton = DialogCloseButton,
+}) {
+    const handleKeyDown = React.useCallback<React.KeyboardEventHandler<HTMLDivElement>>(
+        (event) => {
+            // don't call onSubmit when pressing enter key on input fields
+            const isEnterKeyDownOnInputField = event.key === "Enter" && isTargetTextInput(event);
+            if (submitOnEnterKey === false && isEnterKeyDownOnInputField) {
+                return;
+            }
 
-    protected onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void | undefined => {
-        const { submitOnEnterKey, onCancel, onSubmit } = this.props;
+            checkKeyHandler(event, "Enter", onSubmit);
+            checkKeyHandler(event, "Escape", onCancel);
+        },
+        [onCancel, onSubmit, submitOnEnterKey],
+    );
 
-        // don't call onSubmit when pressing enter key on input fields
-        const isEnterKeyDownOnInputField =
-            event.keyCode === ENUM_KEY_CODE.KEY_CODE_ENTER && shouldSubmitOnEnterPress(event);
-        if (submitOnEnterKey === false && isEnterKeyDownOnInputField) {
-            return;
-        }
+    const dialogClasses = cx("overlay", "gd-dialog", className);
 
-        checkKeyHandler(event, ENUM_KEY_CODE.KEY_CODE_ENTER, onSubmit);
-        checkKeyHandler(event, ENUM_KEY_CODE.KEY_CODE_ESCAPE, onCancel);
-    };
-
-    protected getDialogClasses(additionalClassName?: string): string {
-        return cx("overlay", "gd-dialog", additionalClassName, this.props.className);
-    }
-
-    protected renderCloseButton(): JSX.Element {
-        return (
-            <div className="gd-dialog-close">
-                <Button
-                    className="gd-button-link gd-button-icon-only gd-icon-cross s-dialog-close-button"
-                    value=""
-                    onClick={this.props.onClose || this.props.onCancel}
-                    accessibilityConfig={this.props.accessibilityConfig?.closeButton}
-                />
-            </div>
-        );
-    }
-
-    public render(): JSX.Element {
-        const dialogClasses = this.getDialogClasses();
-
-        return (
-            <div tabIndex={0} onKeyDown={this.onKeyDown}>
+    return (
+        <UiFocusTrap autofocusOnOpen={autofocusOnOpen}>
+            <div
+                onKeyDown={handleKeyDown}
+                role={"dialog"}
+                aria-labelledby={accessibilityConfig.titleElementId}
+                aria-describedby={accessibilityConfig.descriptionElementId}
+            >
                 <div className={dialogClasses}>
-                    {this.props.displayCloseButton ? this.renderCloseButton() : null}
-                    {this.props.children}
+                    {displayCloseButton ? (
+                        <CloseButton
+                            onClose={onCancel ?? onClose}
+                            accessibilityConfig={accessibilityConfig}
+                        />
+                    ) : null}
+
+                    {children}
                 </div>
             </div>
-        );
-    }
-}
+        </UiFocusTrap>
+    );
+});

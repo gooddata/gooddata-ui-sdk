@@ -7,6 +7,7 @@ import {
     OverlayControllerProvider,
     OverlayController,
     UiSkeleton,
+    useId,
 } from "@gooddata/sdk-ui-kit";
 import { IScheduledEmailDialogProps } from "../types.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
@@ -17,6 +18,7 @@ export function DefaultLoadingScheduledEmailDialog({
     onCancel,
 }: Pick<IScheduledEmailDialogProps, "onCancel" | "scheduledExportToEdit">) {
     const intl = useIntl();
+    const titleElementId = useId();
 
     return (
         <>
@@ -50,7 +52,11 @@ export function DefaultLoadingScheduledEmailDialog({
                                 />
                             </div>
                         )}
+                        accessibilityConfig={{ titleElementId }}
                     >
+                        <h2 className={"sr-only"} id={titleElementId}>
+                            {intl.formatMessage({ id: "dialogs.schedule.email.accessibilityTitle" })}
+                        </h2>
                         <div className="gd-notifications-channel-dialog-content-wrapper">
                             <div className="gd-divider-with-margin" />
                             <UiSkeleton itemHeight={50} itemsCount={3} />
