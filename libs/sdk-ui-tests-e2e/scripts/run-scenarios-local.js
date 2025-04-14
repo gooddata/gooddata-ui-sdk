@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { spawn } from "child_process";
 
@@ -17,7 +17,7 @@ async function main() {
         `${process.env.PWD}/nginx/nginx.conf:/etc/nginx/nginx.conf:ro`,
         "-v",
         `${process.env.PWD}/nginx/proxy-isolated-tests-local.conf:/etc/nginx/extra-conf.d/proxy-isolated-tests-local.conf:ro`,
-        "nginxinc/nginx-unprivileged:1.23.1-alpine",
+        "nginxinc/nginx-unprivileged:1.27.4-alpine",
     ]);
 
     editorNginxProcess.stdout.on("data", (data) => {
