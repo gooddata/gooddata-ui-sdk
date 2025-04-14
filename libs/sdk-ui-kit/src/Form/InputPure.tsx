@@ -113,6 +113,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
 
     onClear = (e?: React.ChangeEvent<HTMLInputElement>): void => {
         this.props.onChange("", e);
+        this.autofocusDispatcher = runAutofocus(this.inputNodeRef, true);
     };
 
     getLabelClassNames(className: string): string {

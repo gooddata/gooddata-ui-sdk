@@ -5,13 +5,14 @@
     position: relative;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: stretch;
+    gap: 10px;
     align-items: baseline;
 
     .gd-relative-range-picker-select-wrapper {
         display: flex;
         flex-direction: column;
-        gap: 5px;
+        flex: 1;
 
         .gd-label {
             font-size: 13px;
@@ -19,6 +20,7 @@
         }
 
         &__error-message {
+            margin-top: 5px;
             max-width: 158px;
             font-size: 12px;
             line-height: 17px;

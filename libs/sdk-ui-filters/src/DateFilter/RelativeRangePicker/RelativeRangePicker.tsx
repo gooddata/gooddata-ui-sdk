@@ -230,9 +230,14 @@ const RelativeRangePickerComponent: React.FC<IRelativeRangePickerProps & Wrapped
                 handleFromChange(undefined);
             } else {
                 setFromError(null);
+                const items = getItems(value);
+                const matchingItem = findRelativeDateFilterOptionByLabel(items, value);
+                if (matchingItem) {
+                    handleFromChange(matchingItem.value);
+                }
             }
         },
-        [validator, handleFromChange],
+        [validator, handleFromChange, getItems],
     );
 
     const handleToInputChange = useCallback(
@@ -246,9 +251,14 @@ const RelativeRangePickerComponent: React.FC<IRelativeRangePickerProps & Wrapped
                 handleToChange(undefined);
             } else {
                 setToError(null);
+                const items = getItems(value);
+                const matchingItem = findRelativeDateFilterOptionByLabel(items, value);
+                if (matchingItem) {
+                    handleToChange(matchingItem.value);
+                }
             }
         },
-        [validator, handleToChange],
+        [validator, handleToChange, getItems],
     );
 
     const handleFromBlur = useCallback((): void => {
@@ -301,7 +311,6 @@ const RelativeRangePickerComponent: React.FC<IRelativeRangePickerProps & Wrapped
                 intl={intl}
                 isMobile={isMobile}
             />
-            <span className="gd-relative-range-picker-dash"></span>
             <RelativeRangePickerSelect
                 className="s-relative-range-picker-to"
                 wrapperClassName="s-relative-range-picker-to-wrapper"

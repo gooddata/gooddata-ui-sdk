@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useMemo, useCallback } from "react";
+import React, { useMemo, useCallback, useState } from "react";
 import DefaultDownshift, { ControllerStateAndHelpers } from "downshift";
 import cx from "classnames";
 import { getSelectableItems, itemToString } from "../Select/utils.js";
@@ -10,7 +10,7 @@ import {
 } from "../Select/VirtualizedSelectMenu.js";
 import { defaultImport } from "default-import";
 
-import { findRelativeDateFilterOptionByValue } from "./utils.js";
+import { findRelativeDateFilterOptionByValue, findRelativeDateFilterOptionIndexByLabel } from "./utils.js";
 import { DynamicSelectItem, DynamicSelectOption } from "./types.js";
 import noop from "lodash/noop.js";
 
@@ -57,9 +57,12 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
         onBlur,
     } = props;
 
+    const [searchValue, setSearchValue] = useState("");
+
     const handleChange = useCallback(
         (option: DynamicSelectOption | null): void => {
             if (option) {
+                setSearchValue(option.label);
                 onChange(option.value);
             }
         },
@@ -68,6 +71,7 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
 
     const handleInputValueChange = useCallback(
         (value: string): void => {
+            setSearchValue(value);
             onInputValueChange(value);
         },
         [onInputValueChange],
@@ -92,8 +96,6 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
         },
         [handleInputValueChange],
     );
-
-    const items = useMemo(() => getItems(inputValue), [getItems, inputValue]);
     const itemsByValue = useMemo(() => (value !== null ? getItems(value.toString()) : []), [getItems, value]);
     const selectedItem = useMemo(
         () =>
@@ -102,9 +104,33 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
             (value !== null && findRelativeDateFilterOptionByValue(itemsByValue, value)) || null,
         [value, itemsByValue],
     );
-    const selectableItems = useMemo(() => getSelectableItems(items), [items]);
-    const isFiltered = inputValue.trim() !== "";
 
+    const items = useMemo(() => {
+        const items = getItems(searchValue);
+        // when search value was reseted and selected item is not in the items, we need to add it to the items
+        if (
+            selectedItem &&
+            searchValue.trim() !== selectedItem.label &&
+            !findRelativeDateFilterOptionByValue(items, selectedItem.value)
+        ) {
+            if (selectedItem.value < 0) {
+                return [selectedItem, ...items];
+            }
+            return [...items, selectedItem];
+        } else {
+            return items;
+        }
+    }, [getItems, searchValue, selectedItem]);
+    const selectableItems = useMemo(() => getSelectableItems(items), [items]);
+    const isFiltered = searchValue.trim() !== "";
+    const selectedItemIndex = selectedItem
+        ? findRelativeDateFilterOptionIndexByLabel(selectableItems, selectedItem.label)
+        : undefined;
+    const highlightedIndex = isFiltered
+        ? 0
+        : selectedItem
+        ? selectedItemIndex
+        : getMedianIndex(selectableItems);
     return (
         <Downshift
             onChange={handleChange}
@@ -113,8 +139,9 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
             selectedItem={selectedItem}
             itemCount={selectableItems.length}
             inputValue={inputValue}
+            highlightedIndex={highlightedIndex}
             // automatically highlight (and therefore scroll to) the middle option if default items are displayed
-            defaultHighlightedIndex={selectedItem || isFiltered ? 0 : getMedianIndex(selectableItems)}
+            defaultHighlightedIndex={highlightedIndex}
         >
             {({
                 getInputProps,
@@ -122,18 +149,13 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
                 getItemProps,
                 isOpen,
                 openMenu,
-                highlightedIndex,
                 setHighlightedIndex,
                 selectItem,
             }: ControllerStateAndHelpers<DynamicSelectOption>) => {
-                // Without this, highlight is not properly reset during filtering
-                const effectiveHighlightedIndex =
-                    highlightedIndex > selectableItems.length - 1 ? 0 : highlightedIndex;
-
                 const menuProps = {
                     items,
                     selectedItem,
-                    highlightedIndex: effectiveHighlightedIndex,
+                    highlightedIndex,
                     getItemProps,
                     getMenuProps,
                     className: "gd-dynamic-select-menu",
@@ -142,7 +164,6 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
                     setHighlightedIndex,
                     visibleItemsRange,
                 };
-
                 return (
                     <div
                         className={cx("gd-dynamic-select", className)}
@@ -161,7 +182,10 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
                                     "aria-labelledby": accessibilityConfig?.labelId,
                                     placeholder,
                                     value: inputValue,
-                                    onFocus: openMenu,
+                                    onFocus: () => {
+                                        setSearchValue("");
+                                        openMenu();
+                                    },
                                     onChange: handleChangeInput,
                                     onBlur: () => handleBlur(selectedItem, selectItem),
                                 })}
