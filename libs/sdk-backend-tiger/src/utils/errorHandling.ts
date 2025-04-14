@@ -8,6 +8,7 @@ import {
     ContractExpired,
     UnexpectedResponseError,
     AbortError,
+    DataTooLargeError,
 } from "@gooddata/sdk-backend-spi";
 import { AxiosError, AxiosResponse, isCancel } from "axios";
 
@@ -18,17 +19,22 @@ export function convertApiError(error: Error): AnalyticalBackendError {
 
     const notAuthenticated = createNotAuthenticatedError(error);
     if (notAuthenticated) {
-        throw notAuthenticated;
+        return notAuthenticated;
     }
 
     const limitReached = createLimitReachedError(error);
     if (limitReached) {
-        throw limitReached;
+        return limitReached;
     }
 
     const contractExpired = createContractExpiredError(error);
     if (contractExpired) {
         return contractExpired;
+    }
+
+    const dataTooLarge = createDataTooLargeError(error);
+    if (dataTooLarge) {
+        return dataTooLarge;
     }
 
     const unexpectedResponseError = createUnexpectedResponseError(error);
@@ -37,7 +43,7 @@ export function convertApiError(error: Error): AnalyticalBackendError {
     }
 
     if (isCancel(error)) {
-        throw new AbortError("The request was cancelled");
+        return new AbortError("The request was cancelled");
     }
 
     return new UnexpectedError("An unexpected error has occurred", error);
@@ -93,6 +99,20 @@ function createContractExpiredError(error: Error): ContractExpired | undefined {
     return new ContractExpired(axiosErrorResponse.data.tier || "unspecified", error);
 }
 
+function createDataTooLargeError(error: Error): DataTooLargeError | undefined {
+    const axiosErrorResponse = (error as AxiosError<any>).response;
+
+    if (
+        !axiosErrorResponse ||
+        axiosErrorResponse.status !== 400 ||
+        !axiosErrorResponse.data?.structuredDetail?.limitBreaks?.length
+    ) {
+        return;
+    }
+
+    return new DataTooLargeError(axiosErrorResponse.data?.reason, error, axiosErrorResponse.data);
+}
+
 function createUnexpectedResponseError(error: Error): UnexpectedResponseError | undefined {
     const axiosErrorResponse = (error as AxiosError).response;
     if (!axiosErrorResponse) {
@@ -108,6 +128,6 @@ function createUnexpectedResponseError(error: Error): UnexpectedResponseError | 
     );
 }
 
-function getTraceId(axiosErrorResponse: AxiosResponse): string {
-    return axiosErrorResponse.headers ? axiosErrorResponse.headers["x-gdc-trace-id"] : null;
+function getTraceId(axiosErrorResponse: AxiosResponse): string | undefined {
+    return axiosErrorResponse.headers?.["x-gdc-trace-id"];
 }
