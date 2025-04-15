@@ -92,7 +92,7 @@ $gd-color-warning-label-dimmed: var(
 );
 
 // font and typo
-$gd-font-primary: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+$gd-font-primary: var(--gd-font-family, gdcustomfont, Avenir, "Helvetica Neue", arial, sans-serif);
 $gd-font-indigo: "Indigo", sans-serif;
 
 $gd-typo: (

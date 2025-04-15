@@ -10,6 +10,24 @@ import { IMetadataObject } from "../ldm/metadata/index.js";
 export type ThemeFontUri = string;
 
 /**
+ *
+ * @beta
+ *
+ * Definition of font URI and unicode range
+ */
+export type IThemeFontsDef = {
+    /**
+     * Font URI
+     */
+    font: ThemeFontUri;
+
+    /**
+     * Font unicode range
+     */
+    unicodeRange?: string;
+};
+
+/**
  * Definition of both normal and bold font URIs
  *
  * @beta
@@ -18,12 +36,12 @@ export interface IThemeTypography {
     /**
      * Normal font URI
      */
-    font?: ThemeFontUri;
+    font?: ThemeFontUri | IThemeFontsDef[];
 
     /**
      * Bold font URI
      */
-    fontBold?: ThemeFontUri;
+    fontBold?: ThemeFontUri | IThemeFontsDef[];
 }
 
 /**

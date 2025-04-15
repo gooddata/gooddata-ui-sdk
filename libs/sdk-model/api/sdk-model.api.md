@@ -4005,6 +4005,12 @@ export interface IThemeDefinition extends Partial<IMetadataObject> {
 }
 
 // @beta
+export type IThemeFontsDef = {
+    font: ThemeFontUri;
+    unicodeRange?: string;
+};
+
+// @beta
 export interface IThemeImages {
     coverImage?: ImageUri;
     logo?: ImageUri;
@@ -4081,8 +4087,8 @@ export interface IThemeTooltip {
 
 // @beta
 export interface IThemeTypography {
-    font?: ThemeFontUri;
-    fontBold?: ThemeFontUri;
+    font?: ThemeFontUri | IThemeFontsDef[];
+    fontBold?: ThemeFontUri | IThemeFontsDef[];
 }
 
 // @beta

@@ -3977,6 +3977,15 @@ export interface ExportSlidesInsightWidgetPayload {
     readonly ref: ObjRef;
 }
 
+// @alpha (undocumented)
+export function ExportThemeProvider({ children }: ExportThemeProviderProps): React_2.JSX.Element;
+
+// @alpha (undocumented)
+export interface ExportThemeProviderProps {
+    // (undocumented)
+    children: ReactNode;
+}
+
 // @public
 export type ExtendedDashboardItem<T = ExtendedDashboardWidget> = IDashboardLayoutItem<T>;
 

@@ -127,7 +127,8 @@ function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
             animation: false,
             backgroundColor,
             style: {
-                fontFamily: 'gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
+                fontFamily:
+                    'var(--gd-font-family, gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif)',
             },
             events: {
                 afterGetContainer() {

@@ -9,6 +9,7 @@ import {
     useDashboardSelector,
     selectEnableFlexibleLayout,
     selectEnableDashboardDescriptionDynamicHeight,
+    selectRenderMode,
 } from "../../../model/index.js";
 import { useDashboardDrop } from "../../dragAndDrop/index.js";
 import { DashboardLayout } from "../../layout/index.js";
@@ -16,6 +17,7 @@ import { IDashboardProps } from "../types.js";
 import { DateFilterConfigWarnings } from "../components/DateFilterConfigWarnings.js";
 import { useWidgetDragHoverHandlers as useFlexibleWidgetDragHoverHandlers } from "../../flexibleLayout/dragAndDrop/draggableWidget/useWidgetDragHoverHandlers.js";
 import { useWidgetDragHoverHandlers as useFluidWidgetDragHoverHandlers } from "../../layout/dragAndDrop/draggableWidget/useWidgetDragHoverHandlers.js";
+import { ExportThemeProvider } from "../../export/index.js";
 
 /**
  * @internal
@@ -28,6 +30,8 @@ export const DefaultDashboardMainContent = (_: IDashboardProps) => {
     const useWidgetDragHoverHandlers = isFlexibleLayoutEnabled
         ? useFlexibleWidgetDragHoverHandlers
         : useFluidWidgetDragHoverHandlers;
+
+    const renderMode = useDashboardSelector(selectRenderMode);
 
     const { handleDragHoverEnd } = useWidgetDragHoverHandlers();
     const [{ isOver }, dropRef] = useDashboardDrop(
@@ -58,10 +62,18 @@ export const DefaultDashboardMainContent = (_: IDashboardProps) => {
         "gd-auto-resized-dashboard-descriptions": isFlexibleLayoutEnabled || isDescriptionDynamicHeight,
     });
 
-    return (
-        <div className={classNames} ref={dropRef} onClick={deselectWidgets}>
-            <DateFilterConfigWarnings />
-            <DashboardLayout onFiltersChange={onFiltersChange} />
-        </div>
-    );
+    const renderContent = () => {
+        return (
+            <div className={classNames} ref={dropRef} onClick={deselectWidgets}>
+                <DateFilterConfigWarnings />
+                <DashboardLayout onFiltersChange={onFiltersChange} />
+            </div>
+        );
+    };
+
+    if (renderMode === "export") {
+        return <ExportThemeProvider>{renderContent()}</ExportThemeProvider>;
+    }
+
+    return renderContent();
 };
