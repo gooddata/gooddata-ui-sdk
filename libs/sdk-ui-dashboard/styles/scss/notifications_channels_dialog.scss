@@ -84,12 +84,16 @@ $min-content-height: 110px;
     }
 
     .gd-input-field {
-        resize: none;
+        resize: vertical;
         min-height: 30px;
         font-size: 13px;
         font-style: normal;
         font-weight: 400;
         line-height: 15px;
+
+        &.has-error {
+            outline-color: kit-variables.$gd-color-negative;
+        }
     }
 }
 
@@ -695,6 +699,25 @@ $min-content-height: 110px;
         font-weight: 400;
         line-height: 15px;
     }
+
+    .gd-notifications-channels-dialog-message-content {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 100%;
+
+        .has-error {
+            border-color: kit-variables.$gd-color-negative;
+        }
+    }
+
+    .gd-notifications-channels-dialog-message-error {
+        color: kit-variables.$gd-color-negative;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 13px;
+    }
 }
 
 .gd-notifications-channels-dialog-error {
@@ -715,6 +738,18 @@ $min-content-height: 110px;
         font-style: normal;
         font-weight: 400;
         line-height: 15px;
+    }
+
+    .gd-notifications-channels-dialog-subject-wrapper {
+        width: 100%;
+
+        .gd-notifications-channels-dialog-subject-error {
+            color: kit-variables.$gd-color-negative;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 13px;
+        }
     }
 }
 
@@ -745,14 +780,27 @@ $min-content-height: 110px;
         color: kit-variables.$gd-color-state-blank;
     }
 
-    &,
-    textarea {
+    .gd-input-field {
         font-size: 20px;
         font-style: normal;
         font-weight: 700;
         line-height: normal;
         font-family: Avenir, sans-serif;
+        height: 29px;
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &.has-error {
+            padding-right: 30px;
+        }
     }
+}
+
+.gd-notifications-channels-dialog-error-icon {
+    right: 5px;
+    position: absolute;
+    transform: translateY(25%);
 }
 
 .gd-notifications-channels-attachment-checkbox {

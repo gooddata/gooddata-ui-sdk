@@ -1,10 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 
-import * as React from "react";
+import React, { useState, useCallback, useId } from "react";
+import cx from "classnames";
 import { WeekStart } from "@gooddata/sdk-model";
 import { Datepicker } from "../Datepicker/index.js";
 import { Timepicker, normalizeTime } from "../Timepicker/index.js";
 import { DEFAULT_DROPDOWN_ZINDEX, MAX_VISIBLE_TIME_ITEMS_COUNT, TIME_ANCHOR } from "./constants.js";
+import { defineMessages, FormattedMessage } from "react-intl";
+import { parseDate } from "../Datepicker/Datepicker.js";
 
 interface IDateTimeProps {
     label: string;
@@ -17,32 +20,98 @@ interface IDateTimeProps {
     onDateChange: (date: Date | null, valid: boolean) => void;
 }
 
+const errorMessages = defineMessages({
+    empty: { id: "recurrence.datetime.empty.error" },
+    wrongFormat: { id: "recurrence.datetime.wrong.format.error" },
+});
+
 export const DateTime: React.FC<IDateTimeProps> = (props) => {
     const { label, date, dateFormat, locale, timezone, onDateChange, weekStart, timeFormat } = props;
 
-    const handleDateChange = (selectedDate: Date | null) => {
-        const newDate = normalizeTime(date, selectedDate, TIME_ANCHOR);
-        onDateChange(newDate, !!selectedDate);
-    };
+    const [errorDate, setErrorDate] = useState<string | null>(null);
 
-    const handleTimeChange = (selectedTime: Date | null) => {
-        const newDate = normalizeTime(selectedTime, date, TIME_ANCHOR);
-        onDateChange(newDate, !!selectedTime);
-    };
+    const errorId = `${useId()}-error`;
+
+    const validate = useCallback(
+        (selectedDate: string) => {
+            const parsedDate = parseDate(selectedDate, dateFormat);
+
+            if (selectedDate.length === 0) {
+                setErrorDate(errorMessages.empty.id);
+            } else if (!parsedDate) {
+                setErrorDate(errorMessages.wrongFormat.id);
+            } else {
+                setErrorDate(null);
+            }
+        },
+        [dateFormat],
+    );
+
+    const handleDateChange = useCallback(
+        (selectedDate: Date | null) => {
+            const newDate = normalizeTime(date, selectedDate, TIME_ANCHOR);
+            onDateChange(newDate, !!selectedDate);
+        },
+        [date, onDateChange],
+    );
+
+    const handleDateBlur = useCallback(
+        (selectedDate: string) => {
+            validate(selectedDate);
+        },
+        [validate],
+    );
+
+    const handleDateValidate = useCallback(
+        (value: string) => {
+            if (errorDate) {
+                validate(value);
+            }
+        },
+        [errorDate, validate],
+    );
+
+    const handleTimeChange = useCallback(
+        (selectedTime: Date | null) => {
+            const newDate = normalizeTime(selectedTime, date, TIME_ANCHOR);
+            onDateChange(newDate, !!selectedTime);
+        },
+        [date, onDateChange],
+    );
+
+    const datePickerClassNames = cx("gd-recurrence-form-datetime-date s-recurrence-form-datetime-date", {
+        "has-error": errorDate,
+    });
 
     return (
         <div className="gd-recurrence-form-datetime s-recurrence-form-datetime gd-input-component">
             <div className="gd-label">{label}</div>
             <div className="gd-recurrence-form-datetime-inner">
-                <Datepicker
-                    className="gd-recurrence-form-datetime-date s-recurrence-form-datetime-date"
-                    date={date}
-                    dateFormat={dateFormat}
-                    locale={locale}
-                    placeholder={dateFormat}
-                    onChange={handleDateChange}
-                    weekStart={weekStart}
-                />
+                <div className="gd-recurrence-form-date">
+                    <Datepicker
+                        className={datePickerClassNames}
+                        date={date}
+                        dateFormat={dateFormat}
+                        locale={locale}
+                        placeholder={dateFormat}
+                        onChange={handleDateChange}
+                        onValidateInput={handleDateValidate}
+                        onBlur={handleDateBlur}
+                        weekStart={weekStart}
+                        accessibilityConfig={{
+                            ariaDescribedBy: errorDate ? errorId : undefined,
+                        }}
+                    />
+                    {errorDate ? (
+                        <span id={errorId} className="gd-recurrence-form-datetime-error-message">
+                            <FormattedMessage id={errorDate} values={{ dateFormat }} />
+                        </span>
+                    ) : (
+                        <span className="gd-recurrence-form-datetime-help">
+                            <FormattedMessage id="recurrence.datetime.format.help" values={{ dateFormat }} />
+                        </span>
+                    )}
+                </div>
                 <Timepicker
                     className="gd-recurrence-form-datetime-time s-recurrence-form-datetime-time"
                     maxVisibleItemsCount={MAX_VISIBLE_TIME_ITEMS_COUNT}

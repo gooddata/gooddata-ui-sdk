@@ -1212,6 +1212,8 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
     // (undocumented)
     headline?: string;
     // (undocumented)
+    initialFocus?: React_2.RefObject<HTMLElement> | string;
+    // (undocumented)
     isCancelDisabled?: boolean;
     // (undocumented)
     isPositive?: boolean;
@@ -1309,7 +1311,11 @@ export interface IDatePickerOwnProps {
     // (undocumented)
     onAlign?: (align: string) => void;
     // (undocumented)
+    onBlur?: (selectedDate: string) => void;
+    // (undocumented)
     onChange?: (selectedData: Date) => void;
+    // (undocumented)
+    onValidateInput?: (value: string) => void;
     // (undocumented)
     placeholder?: string;
     // (undocumented)
@@ -1382,6 +1388,8 @@ export interface IDialogBaseProps {
     containerClassName?: string;
     // (undocumented)
     displayCloseButton?: boolean;
+    // (undocumented)
+    initialFocus?: React_2.RefObject<HTMLElement> | string;
     // (undocumented)
     onCancel?: (data?: any) => void;
     // (undocumented)
@@ -3193,6 +3201,8 @@ export class InputPure extends React_2.PureComponent<InputPureProps> implements 
 
 // @internal (undocumented)
 export interface InputPureProps extends IDomNativeProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
     // (undocumented)
     accessibilityType?: string;
     // (undocumented)
@@ -5087,6 +5097,7 @@ export interface UiFocusTrapProps {
     autofocusOnOpen?: boolean;
     // (undocumented)
     children: React_2.ReactNode;
+    initialFocus?: React_2.RefObject<HTMLElement> | string;
     // (undocumented)
     onDeactivate?: () => void;
     returnFocusTo?: React_2.RefObject<HTMLElement> | string;

@@ -42,6 +42,7 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
     autofocusOnOpen = true,
     children,
     CloseButton = DialogCloseButton,
+    initialFocus,
 }) {
     const handleKeyDown = React.useCallback<React.KeyboardEventHandler<HTMLDivElement>>(
         (event) => {
@@ -60,7 +61,7 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
     const dialogClasses = cx("overlay", "gd-dialog", className);
 
     return (
-        <UiFocusTrap autofocusOnOpen={autofocusOnOpen}>
+        <UiFocusTrap initialFocus={initialFocus} autofocusOnOpen={autofocusOnOpen}>
             <div
                 onKeyDown={handleKeyDown}
                 role={"dialog"}

@@ -298,6 +298,11 @@
         "comment": "",
         "limit": 0
     },
+    "dialogs.schedule.error.too_long": {
+        "value": "Error: Text too long — reduce to {value} characters or fewer.",
+        "comment": "",
+        "limit": 0
+    },
     "dialogs.save.as.new.title": {
         "value": "Save dashboard as new",
         "comment": "",

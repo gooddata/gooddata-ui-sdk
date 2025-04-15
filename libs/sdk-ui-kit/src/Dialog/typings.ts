@@ -35,6 +35,7 @@ export interface IDialogBaseProps {
      */
     autofocusOnOpen?: boolean;
     CloseButton?: React.ComponentType<IDialogCloseButtonProps>;
+    initialFocus?: React.RefObject<HTMLElement> | string;
 }
 
 /**
@@ -70,6 +71,7 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
     dialogHeaderClassName?: string;
     titleRightIconRenderer?: () => JSX.Element;
     headline?: string;
+    initialFocus?: React.RefObject<HTMLElement> | string;
     accessibilityConfig?: {
         closeButton?: IButtonAccessibilityConfig;
         titleElementId?: string;
