@@ -172,6 +172,7 @@ export const useAttributeFilterController = (
             setConnectedPlaceholderValue,
             resetOnParentFilterChange,
             selectionMode,
+            shouldReloadElements,
             setShouldReloadElements,
             displayAsLabel,
         },
@@ -291,6 +292,7 @@ function useInitOrReload(
         onSelect: OnSelectCallbackType;
         resetOnParentFilterChange: boolean;
         selectionMode: DashboardAttributeFilterSelectionMode;
+        shouldReloadElements: boolean;
         setShouldReloadElements: (value: boolean) => void;
         displayAsLabel: ObjRef;
     },
@@ -311,6 +313,7 @@ function useInitOrReload(
         onApply,
         onSelect,
         selectionMode,
+        shouldReloadElements,
         setShouldReloadElements,
         displayAsLabel,
     } = props;
@@ -425,7 +428,13 @@ function useInitOrReload(
                   enableDuplicatedLabelValuesInAttributeFilter,
                   enableDashboardFiltersApplyModes,
               );
-        refreshByType(handler, change, supportsKeepingDependentFiltersSelection);
+        refreshByType(
+            handler,
+            change,
+            supportsKeepingDependentFiltersSelection,
+            shouldReloadElements,
+            setShouldReloadElements,
+        );
 
         if (enableDashboardFiltersApplyModes) {
             updateWorkingSelection(handler, props);
@@ -448,6 +457,7 @@ function useInitOrReload(
         displayAsLabel,
         enableDuplicatedLabelValuesInAttributeFilter,
         enableDashboardFiltersApplyModes,
+        shouldReloadElements,
     ]);
 
     const isMountedRef = useRef(false);
@@ -666,9 +676,21 @@ function refreshByType(
     handler: IMultiSelectAttributeFilterHandler,
     change: UpdateFilterType,
     supportsKeepingDependentFiltersSelection: boolean,
+    shouldReloadElements: boolean,
+    setShouldReloadElements: (value: boolean) => void,
 ) {
     if (change === "init-parent") {
         if (supportsKeepingDependentFiltersSelection) {
+            // Reload elements when filter was changed by a parent filter change triggered by a filter view.
+            // Filter selection state could contain elements that are not loaded from server yet because
+            // filter started in limited state with elements filtered by another filter. These elements  will
+            // be used by re-execution widgets, which is correct, but will not be set to filter's button
+            // value, confusing the users.
+            if (shouldReloadElements) {
+                handler.loadInitialElementsPage(PARENT_FILTERS_CORRELATION);
+                handler.loadIrrelevantElements(IRRELEVANT_SELECTION);
+                setShouldReloadElements(false);
+            }
             return;
         }
 
