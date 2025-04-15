@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import noop from "lodash/noop.js";
 import { defineMessage, useIntl } from "react-intl";
 import {
@@ -31,17 +31,13 @@ import {
     selectIsCrossFiltering,
     selectIsWhiteLabeled,
     selectExecutionTimestamp,
-    useFiltersForDashboardScheduledExport,
     selectEnableAutomationFilterContext,
+    useFiltersForDashboardScheduledExport,
 } from "../../../model/index.js";
 import { IScheduledEmailDialogProps } from "../types.js";
 import { useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
 import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
-import {
-    FilterContextItem,
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-} from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX, DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
 import { DashboardAttachments } from "./components/Attachments/DashboardAttachments.js";
@@ -54,7 +50,6 @@ import { getDefaultCronExpression } from "../utils/cron.js";
 import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
 import { AutomationFiltersSelect } from "./components/AutomationFiltersSelect/AutomationFiltersSelect.js";
 import { useAutomationFiltersData } from "../../automationFilters/useAutomationFiltersData.js";
-import { validateAllFilterLocalIdentifiers } from "../../../presentation/automationFilters/utils.js";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
@@ -185,7 +180,7 @@ export function ScheduledMailDialogRenderer({
         isCrossFiltering,
         isExecutionTimestampMode,
         enableAutomationFilterContext,
-    } = useDefaultScheduledEmailDialogData({ filters: allDashboardFilters ?? [] });
+    } = useDefaultScheduledEmailDialogData();
 
     const { availableFilters, automationFilters, setAutomationFilters, allVisibleFiltersMetadata } =
         useAutomationFiltersData({
@@ -468,7 +463,7 @@ export const DefaultScheduledEmailDialog: React.FC<IScheduledEmailDialogProps> =
     );
 };
 
-function useDefaultScheduledEmailDialogData({ filters }: { filters: FilterContextItem[] }) {
+function useDefaultScheduledEmailDialogData() {
     const locale = useDashboardSelector(selectLocale);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const dateFormat = useDashboardSelector(selectDateFormat);
@@ -488,11 +483,7 @@ function useDefaultScheduledEmailDialogData({ filters }: { filters: FilterContex
 
     const isCrossFiltering = useDashboardSelector(selectIsCrossFiltering);
     const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
-    const enableAutomationFilterContextFlag = useDashboardSelector(selectEnableAutomationFilterContext);
-    const enableAutomationFilterContext = useMemo(() => {
-        const doAllFiltersHaveLocalIdentifiers = validateAllFilterLocalIdentifiers(filters);
-        return enableAutomationFilterContextFlag && doAllFiltersHaveLocalIdentifiers;
-    }, [filters, enableAutomationFilterContextFlag]);
+    const enableAutomationFilterContext = useDashboardSelector(selectEnableAutomationFilterContext);
 
     return {
         locale,

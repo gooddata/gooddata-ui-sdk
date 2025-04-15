@@ -1,12 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
-import { FilterContextItem, IAttributeFilter, IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
-import {
-    AttributeFilterButton,
-    IAttributeFilterButtonProps,
-    IAttributeFilterDropdownButtonProps,
-} from "@gooddata/sdk-ui-filters";
+import React from "react";
+import { FilterContextItem, IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+import { AttributeFilterButton } from "@gooddata/sdk-ui-filters";
 import { UiChip, UiSkeleton } from "@gooddata/sdk-ui-kit";
 import noop from "lodash/noop.js";
 import { DefaultDashboardAttributeFilter } from "../../../presentation/filterBar/index.js";
@@ -19,57 +15,43 @@ export const AutomationAttributeFilter: React.FC<{
     isLocked?: boolean;
     displayAsLabel?: ObjRef;
 }> = ({ filter, onChange, onDelete, isLocked, displayAsLabel }) => {
-    const CustomAttributeFilter = useMemo(() => {
-        return function AttributeFilter(props: IAttributeFilterButtonProps) {
-            const CustomLoadingComponent = useMemo(() => {
-                return function LoadingComponent() {
-                    return <UiSkeleton itemWidth={160} itemHeight={27} itemBorderRadius={20} />;
-                };
-            }, []);
-
-            const CustomDropdownButtonComponent = useMemo(() => {
-                return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
-                    return (
-                        <UiChip
-                            label={props.title! + ": " + props.subtitle!}
-                            tag={props.selectedItemsCount ? `(${props.selectedItemsCount})` : undefined}
-                            isLocked={isLocked}
-                            isActive={props.isOpen}
-                            isDeletable={!isLocked}
-                            onClick={props.onClick}
-                            onDelete={() => onDelete(filter)}
-                        />
-                    );
-                };
-            }, []);
-
-            const handleOnApply = useCallback((newFilter: IAttributeFilter) => {
-                onChange(
-                    attributeFilterToDashboardAttributeFilter(
-                        newFilter,
-                        filter.attributeFilter.localIdentifier,
-                        filter.attributeFilter.title,
-                    ),
-                );
-            }, []);
-
-            return (
-                <AttributeFilterButton
-                    {...props}
-                    onApply={handleOnApply}
-                    LoadingComponent={CustomLoadingComponent}
-                    DropdownButtonComponent={CustomDropdownButtonComponent}
-                />
-            );
-        };
-    }, [isLocked, onDelete, filter, onChange]);
-
     return (
         <DefaultDashboardAttributeFilter
             filter={filter}
             onFilterChanged={noop}
             displayAsLabel={displayAsLabel}
-            AttributeFilterComponent={CustomAttributeFilter}
+            AttributeFilterComponent={(props) => (
+                <AttributeFilterButton
+                    {...props}
+                    LoadingComponent={() => (
+                        <UiSkeleton itemWidth={160} itemHeight={27} itemBorderRadius={20} />
+                    )}
+                    onApply={(newFilter) =>
+                        onChange(
+                            attributeFilterToDashboardAttributeFilter(
+                                newFilter,
+                                filter.attributeFilter.localIdentifier,
+                                filter.attributeFilter.title,
+                            ),
+                        )
+                    }
+                    DropdownButtonComponent={(innerProps) => (
+                        <UiChip
+                            label={innerProps.title! + ": " + innerProps.subtitle!}
+                            tag={
+                                innerProps.selectedItemsCount
+                                    ? `(${innerProps.selectedItemsCount})`
+                                    : undefined
+                            }
+                            isLocked={isLocked}
+                            isActive={innerProps.isOpen}
+                            isDeletable={!isLocked}
+                            onClick={innerProps.onClick}
+                            onDelete={() => onDelete(filter)}
+                        />
+                    )}
+                />
+            )}
         />
     );
 };
