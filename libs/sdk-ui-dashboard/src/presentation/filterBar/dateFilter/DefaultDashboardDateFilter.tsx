@@ -49,7 +49,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
     const weekStart = useDashboardSelector(selectWeekStart);
     const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
     const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
-    const { filter, workingFilter, onFilterChanged, config, readonly, autoOpen, ButtonComponent } = props;
+    const { filter, workingFilter, onFilterChanged, config, readonly, autoOpen } = props;
 
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     let defaultDateFilterName: string;
@@ -87,32 +87,22 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
         (option, exclude) => {
             setLastSelectedOptionId(option.localIdentifier);
             onFilterChanged(
-                dateFilterOptionToDashboardDateFilter(
-                    option,
-                    exclude,
-                    filter?.dateFilter.dataSet,
-                    filter?.dateFilter.localIdentifier,
-                ),
+                dateFilterOptionToDashboardDateFilter(option, exclude, filter?.dateFilter.dataSet),
                 option.localIdentifier,
             );
         },
-        [onFilterChanged, filter?.dateFilter.dataSet, filter?.dateFilter.localIdentifier],
+        [onFilterChanged, filter?.dateFilter.dataSet],
     );
     const onSelect = useCallback<NonNullable<IDateFilterProps["onSelect"]>>(
         (option, exclude) => {
             setLastSelectedOptionId(option.localIdentifier);
             onFilterChanged(
-                dateFilterOptionToDashboardDateFilter(
-                    option,
-                    exclude,
-                    filter?.dateFilter.dataSet,
-                    filter?.dateFilter.localIdentifier,
-                ),
+                dateFilterOptionToDashboardDateFilter(option, exclude, filter?.dateFilter.dataSet),
                 option.localIdentifier,
                 true,
             );
         },
-        [onFilterChanged, filter?.dateFilter.dataSet, filter?.dateFilter.localIdentifier],
+        [onFilterChanged, filter?.dateFilter.dataSet],
     );
     const dateFormat = settings.formatLocale
         ? getLocalizedIcuDateFormatPattern(settings.formatLocale)
@@ -179,7 +169,6 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             FilterConfigurationComponent={isConfigurationEnabled ? FilterConfigurationComponent : undefined}
             withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes}
             enableDashboardFiltersApplyModes={enableDashboardFiltersApplyModes}
-            ButtonComponent={ButtonComponent}
         />
     );
 };

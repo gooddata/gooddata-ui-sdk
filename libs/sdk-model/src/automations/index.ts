@@ -71,23 +71,8 @@ export interface IAutomationMetadataObjectBase {
      */
     metadata?: {
         widget?: string;
-        /**
-         * Filters that are used in the alerting configuration when creating a condition with some measure.
-         */
         filters?: string[];
-        /**
-         * Filters description used for display in all client-related places (e.g. UI, e-mail, exports, etc.)
-         */
-        visibleFilters?: IAutomationVisibleFilter[];
     };
-}
-
-/**
- * @alpha
- */
-export interface IAutomationVisibleFilter {
-    localIdentifier?: string;
-    title?: string;
 }
 
 /**

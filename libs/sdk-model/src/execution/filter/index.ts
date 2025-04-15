@@ -695,7 +695,7 @@ export function filterObjRef(filter: IFilter): ObjRef | undefined {
  * Gets local identifier of filter.
  *
  * @remarks
- * So far valid only for attribute and date filters.
+ * So far valid only for attribute filters.
  *
  * @param filter - filter to work with
  * @returns local identifier of filter object if defined, undefined otherwise
@@ -705,7 +705,7 @@ export function filterLocalIdentifier(filter: IFilter): string | undefined;
 export function filterLocalIdentifier(filter: IFilter): string | undefined {
     invariant(filter, "filter must be specified");
 
-    if (!isAttributeFilter(filter) && !isDateFilter(filter)) {
+    if (!isAttributeFilter(filter)) {
         return undefined;
     }
 
@@ -714,12 +714,6 @@ export function filterLocalIdentifier(filter: IFilter): string | undefined {
     }
     if (isNegativeAttributeFilter(filter)) {
         return filter.negativeAttributeFilter.localIdentifier;
-    }
-    if (isAbsoluteDateFilter(filter)) {
-        return filter.absoluteDateFilter.localIdentifier;
-    }
-    if (isRelativeDateFilter(filter)) {
-        return filter.relativeDateFilter.localIdentifier;
     }
     return undefined;
 }

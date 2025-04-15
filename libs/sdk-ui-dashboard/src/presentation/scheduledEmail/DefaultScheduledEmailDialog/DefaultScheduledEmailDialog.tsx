@@ -31,8 +31,6 @@ import {
     selectIsCrossFiltering,
     selectIsWhiteLabeled,
     selectExecutionTimestamp,
-    selectEnableAutomationFilterContext,
-    useFiltersForDashboardScheduledExport,
 } from "../../../model/index.js";
 import { IScheduledEmailDialogProps } from "../types.js";
 import { useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
@@ -48,8 +46,6 @@ import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEma
 import { isMobileView } from "../utils/responsive.js";
 import { getDefaultCronExpression } from "../utils/cron.js";
 import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
-import { AutomationFiltersSelect } from "./components/AutomationFiltersSelect/AutomationFiltersSelect.js";
-import { useAutomationFiltersData } from "../../automationFilters/useAutomationFiltersData.js";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
@@ -163,8 +159,6 @@ export function ScheduledMailDialogRenderer({
 
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
 
-    const allDashboardFilters = useFiltersForDashboardScheduledExport({});
-
     const handleScheduleDeleteSuccess = () => {
         onDeleteSuccess?.();
         setScheduledEmailToDelete(null);
@@ -179,15 +173,7 @@ export function ScheduledMailDialogRenderer({
         allowHourlyRecurrence,
         isCrossFiltering,
         isExecutionTimestampMode,
-        enableAutomationFilterContext,
     } = useDefaultScheduledEmailDialogData();
-
-    const { availableFilters, automationFilters, setAutomationFilters, allVisibleFiltersMetadata } =
-        useAutomationFiltersData({
-            allFilters: allDashboardFilters,
-            storedFilters: dashboardFilters,
-            enableAutomationFilterContext,
-        });
 
     const {
         defaultUser,
@@ -204,7 +190,6 @@ export function ScheduledMailDialogRenderer({
         areDashboardFiltersChanged,
         warningMessage,
         validationErrorMessage,
-        useFilters,
         onDashboardAttachmentsChange,
         onWidgetAttachmentsChange,
         onWidgetAttachmentsSettingsChange,
@@ -214,20 +199,14 @@ export function ScheduledMailDialogRenderer({
         onRecurrenceChange,
         onSubjectChange,
         onTitleChange,
-        onFiltersChange,
-        onUseFiltersChange,
     } = useEditScheduledEmail({
         notificationChannels,
         insight,
         widget,
         scheduledExportToEdit,
-        allDashboardFilters,
-        dashboardFilters: automationFilters,
+        dashboardFilters,
         widgetFilters,
         maxAutomationsRecipients,
-        setAutomationFilters,
-        allVisibleFiltersMetadata,
-        enableAutomationFilterContext,
     });
 
     const { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage } =
@@ -316,20 +295,7 @@ export function ScheduledMailDialogRenderer({
                             {intl.formatMessage({ id: "dialogs.schedule.email.accessibilityTitle" })}
                         </h2>
                         <div className="gd-notifications-channel-dialog-content-wrapper">
-                            <div className="gd-divider-with-margin" />
-                            {enableAutomationFilterContext ? (
-                                <>
-                                    <AutomationFiltersSelect
-                                        availableFilters={availableFilters}
-                                        selectedFilters={automationFilters}
-                                        onFiltersChange={onFiltersChange}
-                                        useFilters={useFilters}
-                                        onUseFiltersChange={onUseFiltersChange}
-                                        isDashboardAutomation={isDashboardExportSelected}
-                                    />
-                                    <ContentDivider className="gd-divider-with-margin" />
-                                </>
-                            ) : null}
+                            <ContentDivider className="gd-divider-with-margin gd-divider-full-row" />
                             <RecurrenceForm
                                 startDate={startDate}
                                 cronExpression={
@@ -400,7 +366,6 @@ export function ScheduledMailDialogRenderer({
                                     settings={settings}
                                     onWidgetAttachmentsSelectionChange={onWidgetAttachmentsChange}
                                     onWidgetAttachmentsSettingsChange={onWidgetAttachmentsSettingsChange}
-                                    enableAutomationFilterContext={enableAutomationFilterContext}
                                 />
                             ) : (
                                 <DashboardAttachments
@@ -411,7 +376,6 @@ export function ScheduledMailDialogRenderer({
                                     isCrossFiltering={isCrossFiltering}
                                     filtersToDisplayInfo={dashboardScheduledExportFiltersInfo}
                                     onDashboardAttachmentsSelectionChange={onDashboardAttachmentsChange}
-                                    enableAutomationFilterContext={enableAutomationFilterContext}
                                 />
                             )}
                             {errorMessage ? (
@@ -424,6 +388,7 @@ export function ScheduledMailDialogRenderer({
                                     {warningMessage}
                                 </Message>
                             ) : null}
+                            <ContentDivider className="gd-divider-with-margin gd-divider-full-row" />
                         </div>
                     </ConfirmDialogBase>
                 </OverlayControllerProvider>
@@ -483,7 +448,6 @@ function useDefaultScheduledEmailDialogData() {
 
     const isCrossFiltering = useDashboardSelector(selectIsCrossFiltering);
     const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
-    const enableAutomationFilterContext = useDashboardSelector(selectEnableAutomationFilterContext);
 
     return {
         locale,
@@ -494,6 +458,5 @@ function useDefaultScheduledEmailDialogData() {
         allowHourlyRecurrence,
         isCrossFiltering,
         isExecutionTimestampMode,
-        enableAutomationFilterContext,
     };
 }
