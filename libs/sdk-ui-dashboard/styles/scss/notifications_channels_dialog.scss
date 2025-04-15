@@ -643,7 +643,11 @@ $min-content-height: 110px;
     background: variables.$dialog-background;
     margin: 0 (-$dialog-padding);
     padding: 0 $dialog-padding;
+    border-top: 1px solid kit-variables.$gd-border-color;
+    border-bottom: 1px solid kit-variables.$gd-border-color;
+}
 
+.gd-notification-channel-dialog-with-automation-filters {
     display: flex;
     flex-direction: column;
     box-sizing: content-box;
@@ -651,8 +655,6 @@ $min-content-height: 110px;
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
-    border-top: 1px solid kit-variables.$gd-border-color;
-    border-bottom: 1px solid kit-variables.$gd-border-color;
 
     @media #{kit-variables.$small-only} {
         height: inherit;

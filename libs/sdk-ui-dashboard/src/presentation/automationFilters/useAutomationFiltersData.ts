@@ -8,7 +8,7 @@ import {
 } from "@gooddata/sdk-model";
 import { useMemo, useState } from "react";
 import compact from "lodash/compact.js";
-import { getNonHiddenFilters, validateAllFilterLocalIdentifiers } from "./utils.js";
+import { getNonHiddenFilters } from "./utils.js";
 import { useFiltersNamings } from "../../_staging/sharedHooks/useFiltersNamings.js";
 import {
     selectAttributeFilterConfigsOverrides,
@@ -55,17 +55,13 @@ export const useAutomationFiltersData = ({
     );
 
     const allVisibleFilters = useAutomationVisibleFilters(allFilters);
-    const doAllFiltersHaveLocalIdentifiers = useMemo(
-        () => validateAllFilterLocalIdentifiers(allFilters ?? []),
-        [allFilters],
-    );
     const [selectedFilters, setSelectedFilters] = useState<FilterContextItem[]>(effectiveFilters ?? []);
 
-    // Just use filters without any changes when FF is off or filters do not have localIdentifiers
-    if (!enableAutomationFilterContext || !doAllFiltersHaveLocalIdentifiers) {
+    // Just use filters without any changes when FF is off
+    if (!enableAutomationFilterContext) {
         return {
             availableFilters: allFilters,
-            automationFilters: undefined,
+            automationFilters: storedFilters,
             setAutomationFilters: () => {},
             allVisibleFiltersMetadata: undefined,
         };

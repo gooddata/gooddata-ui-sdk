@@ -1,5 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { useMemo, useRef, useState } from "react";
+import cx from "classnames";
 import { defineMessage, useIntl } from "react-intl";
 import {
     ConfirmDialogBase,
@@ -278,7 +279,12 @@ export function ScheduledMailDialogRenderer({
                         <h2 className={"sr-only"} id={titleElementId}>
                             {intl.formatMessage({ id: "dialogs.schedule.email.accessibilityTitle" })}
                         </h2>
-                        <div className="gd-notifications-channel-dialog-content-wrapper">
+                        <div
+                            className={cx("gd-notifications-channel-dialog-content-wrapper", {
+                                "gd-notification-channel-dialog-with-automation-filters":
+                                    enableAutomationFilterContext,
+                            })}
+                        >
                             <div className="gd-divider-with-margin" />
                             {enableAutomationFilterContext ? (
                                 <>
