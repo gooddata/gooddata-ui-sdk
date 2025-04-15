@@ -8527,6 +8527,9 @@ export const selectEnableAlertAttributes: DashboardSelector<boolean>;
 export const selectEnableAlerting: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableAlertsEvaluationFrequencySetup: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableAnalyticalDashboardPermissions: DashboardSelector<boolean>;
 
 // @internal
