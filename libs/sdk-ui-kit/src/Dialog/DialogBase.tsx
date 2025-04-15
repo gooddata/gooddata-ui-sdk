@@ -5,8 +5,8 @@ import { IDialogBaseProps } from "./typings.js";
 import { DialogCloseButton } from "./DialogCloseButton.js";
 import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
 
-const checkKeyHandler = (event: React.KeyboardEvent, key: string, handler: () => void): void => {
-    if (event.key !== key) {
+const checkKeyHandler = (event: React.KeyboardEvent, key: string, handler?: () => void): void => {
+    if (event.key !== key || !handler) {
         return;
     }
 
