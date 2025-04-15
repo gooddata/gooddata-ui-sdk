@@ -4,7 +4,6 @@ import { useIntl } from "react-intl";
 import {
     ConfirmDialogBase,
     Overlay,
-    ContentDivider,
     OverlayControllerProvider,
     OverlayController,
     UiSkeleton,
@@ -59,7 +58,7 @@ export function DefaultLoadingScheduledEmailDialog({
                             {intl.formatMessage({ id: "dialogs.schedule.email.accessibilityTitle" })}
                         </h2>
                         <div className="gd-notifications-channel-dialog-content-wrapper">
-                            <ContentDivider className="gd-divider-with-margin gd-divider-full-row" />
+                            <div className="gd-divider-with-margin" />
                             <UiSkeleton itemHeight={50} itemsCount={3} />
                         </div>
                     </ConfirmDialogBase>

@@ -7,6 +7,7 @@ import {
 import {
     ICrossFilteringItem,
     selectCrossFilteringItems,
+    selectEnableAutomationFilterContext,
     selectFilterContextFilters,
     selectOriginalFilterContextFilters,
 } from "../../store/index.js";
@@ -51,12 +52,12 @@ export const useFiltersForDashboardScheduledExport = ({
         dashboardFilters,
         crossFilteringItems,
     );
+    const enableAutomationFilterContext = useDashboardSelector(selectEnableAutomationFilterContext);
 
     // Only changed filters should be stored in scheduled export
-    const dashboardFiltersForScheduledExport = !isEqual(
-        originalDashboardFilters,
-        dashboardFiltersWithoutCrossFiltering,
-    )
+    const dashboardFiltersForScheduledExport = enableAutomationFilterContext
+        ? dashboardFiltersWithoutCrossFiltering
+        : !isEqual(originalDashboardFilters, dashboardFiltersWithoutCrossFiltering)
         ? dashboardFiltersWithoutCrossFiltering
         : undefined;
 

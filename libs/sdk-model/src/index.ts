@@ -1042,6 +1042,7 @@ export type {
     IAlertRelativeArithmeticOperator,
     IAutomationAlertRelativeCondition,
     IAutomationDetails,
+    IAutomationVisibleFilter,
 } from "./automations/index.js";
 export {
     isAutomationMetadataObject,

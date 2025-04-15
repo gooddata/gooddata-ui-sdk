@@ -195,6 +195,7 @@ import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDashboardWidgetOverlay as IDashboardWidgetOverlay_2 } from '../../index.js';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilter } from '@gooddata/sdk-model';
+import { IDateFilterButtonProps } from '@gooddata/sdk-ui-filters';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { IDateHierarchyTemplate } from '@gooddata/sdk-model';
@@ -4632,6 +4633,8 @@ export interface IDashboardDateFilterConfig {
 // @public (undocumented)
 export interface IDashboardDateFilterProps {
     autoOpen?: boolean;
+    // @alpha
+    ButtonComponent?: ComponentType<IDateFilterButtonProps>;
     config: IDashboardDateFilterConfig;
     filter: IDashboardDateFilter | undefined;
     isDraggable?: boolean;

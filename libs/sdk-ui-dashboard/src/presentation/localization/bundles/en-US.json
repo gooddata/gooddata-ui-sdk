@@ -628,6 +628,11 @@
         "comment": "Emails of the schedule email.",
         "limit": 0
     },
+    "dialogs.schedule.email.filters": {
+        "value": "Filters ({count})",
+        "comment": "Pick filters for automated schedule. Do not translate variable enclosed in {}.",
+        "limit": 0
+    },
     "dialogs.schedule.email.destination": {
         "value": "Destination",
         "comment": "Way how to send automated schedule",
@@ -691,6 +696,36 @@
     "dialogs.schedule.email.destinationWarning": {
         "value": "The selected destination only supports sending the export to yourself.",
         "comment": "Schedule warning message",
+        "limit": 0
+    },
+    "dialogs.schedule.email.filters.showAll": {
+        "value": "Show all",
+        "comment": "Show full list of all filters",
+        "limit": 0
+    },
+    "dialogs.schedule.email.filters.showLess": {
+        "value": "Show less",
+        "comment": "Show shortened list of all filters",
+        "limit": 0
+    },
+    "dialogs.schedule.email.filters.title": {
+        "value": "Add filters",
+        "comment": "Schedule filters dialog title",
+        "limit": 0
+    },
+    "dialogs.schedule.email.filters.useFiltersMessage": {
+        "value": "Always use these filters for future exports",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.schedule.email.filters.useFiltersMessage.tooltip": {
+        "value": "Check to keep these filters for every export. If unchecked, the export will use the latest default filters from the dashboard. <a>Learn more</a>",
+        "comment": "Do not translate html tags <a>, </a>",
+        "limit": 0
+    },
+    "dialogs.schedule.email.filters.activeFilters": {
+        "value": "Note: These filters will always be used for future exports.",
+        "comment": "",
         "limit": 0
     },
     "dialogs.schedule.management.title": {
