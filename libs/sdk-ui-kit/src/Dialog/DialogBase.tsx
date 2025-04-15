@@ -64,13 +64,13 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
             <div
                 onKeyDown={handleKeyDown}
                 role={"dialog"}
-                aria-labelledby={accessibilityConfig.titleElementId}
-                aria-describedby={accessibilityConfig.descriptionElementId}
+                aria-labelledby={accessibilityConfig?.titleElementId}
+                aria-describedby={accessibilityConfig?.descriptionElementId}
             >
                 <div className={dialogClasses}>
                     {displayCloseButton ? (
                         <CloseButton
-                            onClose={onCancel ?? onClose}
+                            onClose={onClose ?? onCancel}
                             accessibilityConfig={accessibilityConfig}
                         />
                     ) : null}

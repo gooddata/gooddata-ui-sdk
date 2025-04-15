@@ -45,7 +45,7 @@ export const ConfirmDialogBase = React.memo<IConfirmDialogBaseProps>(function Co
     const titleElementIdWhenNotSet = useId();
     const accessibilityConfig = React.useMemo<IDialogBaseProps["accessibilityConfig"]>(() => {
         return {
-            ...dialogBaseProps.accessibilityConfig,
+            ...(dialogBaseProps.accessibilityConfig ?? {}),
             titleElementId: dialogBaseProps.accessibilityConfig?.titleElementId ?? titleElementIdWhenNotSet,
         };
     }, [dialogBaseProps.accessibilityConfig, titleElementIdWhenNotSet]);
