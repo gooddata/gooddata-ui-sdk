@@ -12,6 +12,7 @@ import {
 
 import {
     selectCrossFilteringEnabledAndSupported,
+    selectEnableAlertsEvaluationFrequencySetup,
     selectDateFormat,
     selectEnableFilterViews,
     selectLocale,
@@ -38,10 +39,11 @@ export const DefaultDashboardSettingsDialog = (props: IDashboardSettingsDialogPr
     const locale = useDashboardSelector(selectLocale);
 
     const isCrossFilteringEnabledAndSupported = useDashboardSelector(selectCrossFilteringEnabledAndSupported);
+    const enableAlertsEvaluationFrequencySetup = useDashboardSelector(
+        selectEnableAlertsEvaluationFrequencySetup,
+    );
     const isFilterViewsFeatureEnabled = useDashboardSelector(selectEnableFilterViews);
     const settings = useDashboardSelector(selectSettings);
-
-    const enableAlertsEvaluationFrequencySetup = settings.enableAlertsEvaluationFrequencySetup;
 
     const onApplyHandler = useCallback(() => {
         onApply(currentData);

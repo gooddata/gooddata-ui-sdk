@@ -354,7 +354,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableExecutionTimestamp: false,
     enableAutomationFilterContext: false,
     enableDateFilterIdentifiersRollout: false,
-    enableAlertsEvaluationFrequencySetup: false,
+    enableAlertsEvaluationFrequencySetup: true,
     enableRichTooManyDatapointsErrors: false,
 };
 

@@ -768,6 +768,18 @@ export const selectEnableFilterViews: DashboardSelector<boolean> = createSelecto
 });
 
 /**
+ * Returns whether filter views are enabled.
+ *
+ * @internal
+ */
+export const selectEnableAlertsEvaluationFrequencySetup: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableAlertsEvaluationFrequencySetup ?? true;
+    },
+);
+
+/**
  * Returns whether rich text widgets are enabled.
  *
  * @internal
