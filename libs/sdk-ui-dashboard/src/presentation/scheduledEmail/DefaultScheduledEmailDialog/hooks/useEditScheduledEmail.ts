@@ -16,8 +16,6 @@ import {
     isWidget,
     isAutomationExternalUserRecipient,
     isAutomationUnknownUserRecipient,
-    IAutomationVisibleFilter,
-    isInsightWidget,
 } from "@gooddata/sdk-model";
 import {
     useDashboardSelector,
@@ -51,10 +49,6 @@ import {
 } from "../../utils/date.js";
 import { isEmail } from "../../utils/validate.js";
 import { getUserTimezone } from "../../utils/timezone.js";
-import { getVisibleFiltersByFilters } from "../../../automationFilters/utils.js";
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/index.js";
-import { useAutomationWidgetFilters } from "../../../automationFilters/useAutomationWidgetFilters.js";
-import { useAutomationDashboardFilters } from "../../../automationFilters/useAutomationDashboardFilters.js";
 
 export interface IUseEditScheduledEmailProps {
     scheduledExportToEdit?: IAutomationMetadataObject;
@@ -66,20 +60,8 @@ export interface IUseEditScheduledEmailProps {
     insight?: IInsight;
     widgetFilters?: IFilter[];
 
-    // Dashboard filters at all times
-    allDashboardFilters?: FilterContextItem[];
-
     // In case we are editing dashboard scheduled export
     dashboardFilters?: FilterContextItem[];
-
-    setAutomationFilters: (filters: FilterContextItem[]) => void;
-
-    // Metadata for identifying visible filters shown on dashboards
-    allVisibleFiltersMetadata?: IAutomationVisibleFilter[] | undefined;
-
-    // Option to opt out of storing filters
-    useFilters?: boolean;
-    enableAutomationFilterContext?: boolean;
 }
 
 export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
@@ -88,15 +70,10 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         notificationChannels,
         insight,
         widget,
-        allDashboardFilters,
         dashboardFilters,
         widgetFilters,
         maxAutomationsRecipients,
-        setAutomationFilters,
-        allVisibleFiltersMetadata,
-        enableAutomationFilterContext,
     } = props;
-
     const intl = useIntl();
     const [isCronValid, setIsCronValid] = useState(true);
     const [warningMessage, setWarningMessage] = useState<string | undefined>(undefined);
@@ -118,22 +95,6 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
 
     const firstChannel = notificationChannels[0]?.id;
 
-    const { insightExecutionFilters, dashboardExecutionFilters, visibleWidgetFilters } =
-        useAutomationWidgetFilters({
-            widget,
-            allDashboardFilters,
-            widgetFilters,
-            allVisibleFiltersMetadata,
-            enableAutomationFilterContext,
-        });
-    const { useFilters, setUseFilters, effectiveDashboardFilters, visibleDashboardFilters } =
-        useAutomationDashboardFilters({
-            editAutomation: scheduledExportToEdit,
-            dashboardFilters,
-            allVisibleFiltersMetadata,
-            enableAutomationFilterContext,
-        });
-
     const [editedAutomation, setEditedAutomation] = useState<IAutomationMetadataObjectDefinition>(
         scheduledExportToEdit ??
             newAutomationMetadataObjectDefinition(
@@ -145,10 +106,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                           insight,
                           widget,
                           recipient: defaultRecipient,
-                          widgetFilters: enableAutomationFilterContext
-                              ? [...dashboardExecutionFilters, ...insightExecutionFilters]
-                              : widgetFilters,
-                          visibleFiltersMetadata: visibleWidgetFilters,
+                          widgetFilters,
                       }
                     : {
                           timezone,
@@ -156,8 +114,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                           notificationChannel: firstChannel,
                           title: dashboardTitle,
                           recipient: defaultRecipient,
-                          dashboardFilters: effectiveDashboardFilters,
-                          visibleFiltersMetadata: visibleDashboardFilters,
+                          dashboardFilters,
                       },
             ),
     );
@@ -344,107 +301,6 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         }));
     };
 
-    const onFiltersChange = (filters: FilterContextItem[], useFilters = true) => {
-        setAutomationFilters(filters);
-
-        // If filters are not used, we don't want to set them in the automation
-        if (!isWidget && !useFilters) {
-            return;
-        }
-
-        const visibleFilters = getVisibleFiltersByFilters(filters, allVisibleFiltersMetadata);
-
-        if (!isWidget) {
-            setEditedAutomation((s) => ({
-                ...s,
-                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                    if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
-                        return {
-                            ...exportDefinition,
-                            requestPayload: {
-                                ...exportDefinition.requestPayload,
-                                content: {
-                                    ...exportDefinition.requestPayload.content,
-                                    filters,
-                                },
-                            },
-                        };
-                    } else {
-                        return exportDefinition;
-                    }
-                }),
-                metadata: {
-                    ...s.metadata,
-                    visibleFilters,
-                },
-            }));
-        } else {
-            if (!isInsightWidget(widget)) {
-                return;
-            }
-
-            const convertedFilters = filterContextItemsToDashboardFiltersByWidget(filters, widget);
-
-            setEditedAutomation((s) => ({
-                ...s,
-                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                    if (
-                        isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)
-                    ) {
-                        return {
-                            ...exportDefinition,
-                            requestPayload: {
-                                ...exportDefinition.requestPayload,
-                                content: {
-                                    ...exportDefinition.requestPayload.content,
-                                    filters: [...convertedFilters, ...insightExecutionFilters],
-                                },
-                            },
-                        };
-                    } else {
-                        return exportDefinition;
-                    }
-                }),
-                metadata: {
-                    ...s.metadata,
-                    visibleFilters,
-                },
-            }));
-        }
-    };
-
-    const onUseFiltersChange = (value: boolean, filters: FilterContextItem[]) => {
-        setUseFilters(value);
-        if (value) {
-            onFiltersChange(filters, value);
-        } else {
-            setEditedAutomation((s) => ({
-                ...s,
-                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                    // Use filters flag is only relevant for dashboard automation
-                    if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
-                        return {
-                            ...exportDefinition,
-                            requestPayload: {
-                                ...exportDefinition.requestPayload,
-                                content: {
-                                    ...exportDefinition.requestPayload.content,
-                                    filters: undefined,
-                                },
-                            },
-                        };
-                    } else {
-                        return exportDefinition;
-                    }
-                }),
-                metadata: {
-                    ...s.metadata,
-                    visibleFilters: undefined,
-                },
-            }));
-        }
-    };
-
     const isDashboardExportSelected =
         editedAutomation.exportDefinitions?.some((exportDefinition) =>
             isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload),
@@ -546,7 +402,6 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         allowExternalRecipients,
         validationErrorMessage,
         isSubmitDisabled,
-        useFilters,
         onTitleChange,
         onRecurrenceChange,
         onDestinationChange,
@@ -556,8 +411,6 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         onDashboardAttachmentsChange,
         onWidgetAttachmentsChange,
         onWidgetAttachmentsSettingsChange,
-        onFiltersChange,
-        onUseFiltersChange,
     };
 }
 
@@ -639,7 +492,6 @@ function newAutomationMetadataObjectDefinition({
     recipient,
     dashboardFilters,
     widgetFilters,
-    visibleFiltersMetadata,
 }: {
     timezone?: string;
     dashboardId: string;
@@ -650,7 +502,6 @@ function newAutomationMetadataObjectDefinition({
     recipient: IAutomationRecipient;
     dashboardFilters?: FilterContextItem[];
     widgetFilters?: IFilter[];
-    visibleFiltersMetadata?: IAutomationVisibleFilter[];
 }): IAutomationMetadataObjectDefinition {
     const { firstRun, cron } = toNormalizedFirstRunAndCron(timezone);
     const exportDefinition =
@@ -667,14 +518,6 @@ function newAutomationMetadataObjectDefinition({
                   dashboardTitle: title ?? "",
                   dashboardFilters,
               });
-
-    const metadataObj = visibleFiltersMetadata
-        ? {
-              metadata: {
-                  visibleFilters: visibleFiltersMetadata,
-              },
-          }
-        : {};
 
     const automation: IAutomationMetadataObjectDefinition = {
         type: "automation",
@@ -694,7 +537,6 @@ function newAutomationMetadataObjectDefinition({
         recipients: [recipient],
         notificationChannel,
         dashboard: dashboardId,
-        ...metadataObj,
     };
 
     return automation;

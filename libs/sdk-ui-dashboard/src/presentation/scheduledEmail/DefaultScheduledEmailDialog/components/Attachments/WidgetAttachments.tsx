@@ -25,7 +25,6 @@ export interface IWidgetAttachmentsProps {
         filters?: IFilter[],
     ) => void;
     onWidgetAttachmentsSettingsChange: (obj: IExportDefinitionVisualizationObjectSettings) => void;
-    enableAutomationFilterContext?: boolean;
 }
 
 export const WidgetAttachments = (props: IWidgetAttachmentsProps) => {
@@ -39,10 +38,8 @@ export const WidgetAttachments = (props: IWidgetAttachmentsProps) => {
         scheduledExportToEdit,
         onWidgetAttachmentsSelectionChange,
         onWidgetAttachmentsSettingsChange,
-        enableAutomationFilterContext,
     } = props;
 
-    const renderFiltersMessage = !enableAutomationFilterContext;
     const isEditing = !!scheduledExportToEdit;
 
     const handleWidgetAttachmentSelectionChange = (format: WidgetAttachmentType) => {
@@ -63,9 +60,7 @@ export const WidgetAttachments = (props: IWidgetAttachmentsProps) => {
                     onSelectionChange={handleWidgetAttachmentSelectionChange}
                     onSettingsChange={onWidgetAttachmentsSettingsChange}
                 />
-                {renderFiltersMessage &&
-                (isEditing || areDashboardFiltersChanged) &&
-                (csvSelected || xlsxSelected) ? (
+                {(isEditing || areDashboardFiltersChanged) && (csvSelected || xlsxSelected) ? (
                     <div>
                         <FormattedMessage id="dialogs.schedule.management.attachments.filters.using" />{" "}
                         <FormattedMessage id="dialogs.schedule.management.attachments.filters.edited" />

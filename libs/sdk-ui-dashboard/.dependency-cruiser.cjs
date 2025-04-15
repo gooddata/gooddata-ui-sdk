@@ -176,7 +176,6 @@ options = {
             "src/presentation/dashboardContexts",
             "src/presentation/localization",
             "src/presentation/constants/*",
-            "src/presentation/automationFilters/*",
             "src/converters",
             "src/types.ts",
         ]),

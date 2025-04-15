@@ -20,7 +20,6 @@ export interface IDashboardAttachmentsProps {
         dashboardSelected: boolean,
         filters?: FilterContextItem[],
     ) => void;
-    enableAutomationFilterContext?: boolean;
 }
 
 export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
@@ -32,7 +31,6 @@ export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
         isCrossFiltering,
         filtersToDisplayInfo,
         onDashboardAttachmentsSelectionChange,
-        enableAutomationFilterContext,
     } = props;
 
     /**
@@ -52,9 +50,7 @@ export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
         !isEditing || savedFilters ? "edited" : "default",
     );
 
-    const showAttachmentFilters = enableAutomationFilterContext
-        ? false
-        : isEditing
+    const showAttachmentFilters = isEditing
         ? attachmentFilterType !== "default"
         : areDashboardFiltersChanged && dashboardSelected;
 
