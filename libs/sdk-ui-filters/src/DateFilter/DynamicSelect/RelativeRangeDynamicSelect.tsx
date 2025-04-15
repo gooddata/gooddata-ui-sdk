@@ -105,32 +105,58 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
         [value, itemsByValue],
     );
 
-    const items = useMemo(() => {
-        const items = getItems(searchValue);
-        // when search value was reseted and selected item is not in the items, we need to add it to the items
-        if (
-            selectedItem &&
-            searchValue.trim() !== selectedItem.label &&
-            !findRelativeDateFilterOptionByValue(items, selectedItem.value)
-        ) {
-            if (selectedItem.value < 0) {
-                return [selectedItem, ...items];
+    const getItemsIncludingSelectedItem = useCallback(
+        (searchValue: string) => {
+            const items = getItems(searchValue);
+            // when search value was reseted and selected item is not in the items, we need to add it to the items
+            if (
+                selectedItem &&
+                searchValue.trim() !== selectedItem.label &&
+                !findRelativeDateFilterOptionByValue(items, selectedItem.value)
+            ) {
+                if (selectedItem.value < 0) {
+                    return [selectedItem, ...items];
+                }
+                return [...items, selectedItem];
+            } else {
+                return items;
             }
-            return [...items, selectedItem];
-        } else {
-            return items;
-        }
-    }, [getItems, searchValue, selectedItem]);
+        },
+        [getItems, selectedItem],
+    );
+
+    const items = useMemo(
+        () => getItemsIncludingSelectedItem(searchValue),
+        [getItemsIncludingSelectedItem, searchValue],
+    );
     const selectableItems = useMemo(() => getSelectableItems(items), [items]);
     const isFiltered = searchValue.trim() !== "";
     const selectedItemIndex = selectedItem
         ? findRelativeDateFilterOptionIndexByLabel(selectableItems, selectedItem.label)
         : undefined;
-    const highlightedIndex = isFiltered
+    const defaultHighlightedIndex = isFiltered
         ? 0
         : selectedItem
         ? selectedItemIndex
         : getMedianIndex(selectableItems);
+
+    const refreshHighlightedIndex = useCallback(
+        (setHighlightedIndex: (index: number) => void, newSearchValue: string) => {
+            const items = getItemsIncludingSelectedItem(newSearchValue);
+            const selectableItems = getSelectableItems(items);
+            if (!selectedItem) {
+                setHighlightedIndex(getMedianIndex(selectableItems));
+                return;
+            }
+            const highlightedIndex = findRelativeDateFilterOptionIndexByLabel(
+                selectableItems,
+                selectedItem.label,
+            );
+            setHighlightedIndex(highlightedIndex);
+        },
+        [selectedItem, getItemsIncludingSelectedItem],
+    );
+
     return (
         <Downshift
             onChange={handleChange}
@@ -139,9 +165,8 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
             selectedItem={selectedItem}
             itemCount={selectableItems.length}
             inputValue={inputValue}
-            highlightedIndex={highlightedIndex}
             // automatically highlight (and therefore scroll to) the middle option if default items are displayed
-            defaultHighlightedIndex={highlightedIndex}
+            defaultHighlightedIndex={defaultHighlightedIndex}
         >
             {({
                 getInputProps,
@@ -149,13 +174,20 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
                 getItemProps,
                 isOpen,
                 openMenu,
+                highlightedIndex,
                 setHighlightedIndex,
                 selectItem,
             }: ControllerStateAndHelpers<DynamicSelectOption>) => {
+                // Without this, highlight is not properly reset during filtering
+                const effectiveHighlightedIndex =
+                    searchValue.trim() !== "" && highlightedIndex > selectableItems.length - 1
+                        ? 0
+                        : highlightedIndex;
+
                 const menuProps = {
                     items,
                     selectedItem,
-                    highlightedIndex,
+                    highlightedIndex: effectiveHighlightedIndex,
                     getItemProps,
                     getMenuProps,
                     className: "gd-dynamic-select-menu",
@@ -183,7 +215,13 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
                                     placeholder,
                                     value: inputValue,
                                     onFocus: () => {
-                                        setSearchValue("");
+                                        if (searchValue.trim() !== "") {
+                                            setSearchValue("");
+                                            // set highlighted index in Downshift inner state
+                                            // without making it fully controlled by this component
+                                            // to avoid keyboard navigation handling
+                                            refreshHighlightedIndex(setHighlightedIndex, "");
+                                        }
                                         openMenu();
                                     },
                                     onChange: handleChangeInput,
