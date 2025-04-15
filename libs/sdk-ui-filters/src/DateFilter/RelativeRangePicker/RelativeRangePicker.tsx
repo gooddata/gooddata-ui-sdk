@@ -139,7 +139,7 @@ const RelativeRangePickerSelect = React.memo((props: IRelativeRangePickerSelectP
                 })}
                 accessibilityConfig={{
                     labelId,
-                    descriptionId: errorId,
+                    ...(error && { descriptionId: errorId }),
                 }}
             />
         </SelectWrapper>
@@ -226,7 +226,6 @@ const RelativeRangePickerComponent: React.FC<IRelativeRangePickerProps & Wrapped
             const validationResult = validator(value);
             if (validationResult) {
                 // Store the error but don't show it yet
-                setFromError(null);
                 handleFromChange(undefined);
             } else {
                 setFromError(null);
@@ -247,7 +246,6 @@ const RelativeRangePickerComponent: React.FC<IRelativeRangePickerProps & Wrapped
             const validationResult = validator(value);
             if (validationResult) {
                 // Store the error but don't show it yet
-                setToError(null);
                 handleToChange(undefined);
             } else {
                 setToError(null);
