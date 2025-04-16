@@ -1,0 +1,80 @@
+// (C) 2025 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+$item-height: 27px;
+
+.gd-automation-filters {
+    width: 100%;
+
+    &__list {
+        max-height: $item-height;
+        display: inline-block;
+        overflow: hidden;
+        width: 100%;
+
+        &--expanded {
+            max-height: 100%;
+        }
+    }
+
+    &__list-item {
+        display: inline-block;
+        vertical-align: top;
+        height: $item-height;
+        margin-right: 5px;
+        margin-bottom: 5px;
+
+        > div {
+            vertical-align: top;
+        }
+    }
+
+    &__expansion-button {
+        float: right;
+        height: $item-height;
+        margin-top: -3px;
+    }
+
+    &__message {
+        color: var(--gd-palette-complementary-7, #6d7680);
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 21px;
+        margin-top: 5px;
+    }
+
+    &__dropdown {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    &__dropdown-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background: kit-variables.$is-focused-background;
+
+        h3 {
+            color: kit-variables.$gd-color-state-blank;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: normal;
+        }
+    }
+
+    &__use-filters-checkbox {
+        .input-label-text {
+            color: kit-variables.$gd-color-link;
+        }
+    }
+
+    &__checkbox-icon {
+        position: relative;
+        margin-left: 5px;
+        top: 3px;
+    }
+}

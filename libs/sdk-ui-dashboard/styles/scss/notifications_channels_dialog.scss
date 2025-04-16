@@ -97,6 +97,10 @@ $min-content-height: 110px;
     }
 }
 
+.gd-notification-channels-automation-filters {
+    align-items: normal;
+}
+
 .gd-notifications-channels-attachments {
     @media #{kit-variables.$medium-up} {
         align-items: flex-start;
@@ -639,6 +643,22 @@ $min-content-height: 110px;
     background: variables.$dialog-background;
     margin: 0 (-$dialog-padding);
     padding: 0 $dialog-padding;
+    border-top: 1px solid kit-variables.$gd-border-color;
+    border-bottom: 1px solid kit-variables.$gd-border-color;
+}
+
+.gd-notification-channel-dialog-with-automation-filters {
+    display: flex;
+    flex-direction: column;
+    box-sizing: content-box;
+    height: 544px;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    @media #{kit-variables.$small-only} {
+        height: inherit;
+    }
 }
 
 .gd-divider-with-margin {

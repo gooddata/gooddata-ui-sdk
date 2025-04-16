@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import { ComponentType } from "react";
 import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-model";
-import { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
+import { IDateFilterOptionsByType, IDateFilterButtonProps } from "@gooddata/sdk-ui-filters";
 
 /**
  * Defines the configuration of the DateFilter component.
@@ -74,6 +74,13 @@ export interface IDashboardDateFilterProps {
      * Specify whether should render filter with open dropdown
      */
     autoOpen?: boolean;
+
+    /**
+     * Specify custom button component
+     *
+     * @alpha
+     */
+    ButtonComponent?: ComponentType<IDateFilterButtonProps>;
 }
 
 /**
