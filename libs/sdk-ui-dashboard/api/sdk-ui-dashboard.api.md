@@ -3486,7 +3486,7 @@ export const DefaultScheduledEmailDialog: React_2.FC<IScheduledEmailDialogProps>
 export const DefaultScheduledEmailManagementDialog: React_2.FC<IScheduledEmailManagementDialogProps>;
 
 // @internal (undocumented)
-export function DefaultSettingButton({ isVisible, isEnabled, isSaving, buttonTitle, buttonValue, onSettingClick, }: ISettingButtonProps): React_2.JSX.Element | null;
+export function DefaultSettingButton({ isVisible, isEnabled, isSaving, buttonTitle, onSettingClick, }: ISettingButtonProps): React_2.JSX.Element | null;
 
 // @alpha (undocumented)
 export const DefaultShareButton: React_2.FC<IShareButtonProps>;

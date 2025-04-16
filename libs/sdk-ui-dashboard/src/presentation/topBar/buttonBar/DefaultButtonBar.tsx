@@ -30,9 +30,9 @@ export const DefaultButtonBar: React.FC<IButtonBarProps> = (props): JSX.Element 
     return (
         <div className="dash-control-buttons">
             {childContentPosition === "left" && children}
-            <SettingButton {...settingButtonProps} />
             <CancelButton {...cancelButtonProps} />
             <SaveButton {...saveButtonProps} />
+            <SettingButton {...settingButtonProps} />
             <EditButton {...editButtonProps} />
             <SaveAsNewButton {...saveAsNewButtonProps} />
             <ShareButton {...shareButtonProps} />

@@ -68,7 +68,7 @@ export const CronExpression: React.FC<ICronExpressionProps> = ({
             {Boolean(showTimezone && timezone) && (
                 <div className="gd-recurrence-form-repeat-type-description s-recurrence-form-repeat-type-description">
                     <FormattedMessage id="gs.date.at" tagName="span" />
-                    <span> {timezone}</span>
+                    <span> {timezone} time</span>
                 </div>
             )}
         </>
