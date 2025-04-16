@@ -91,7 +91,6 @@ const getRepeatItems = (
 };
 
 export interface IRepeatTypeSelectProps {
-    id: string;
     repeatType: RecurrenceType;
     showInheritValue?: boolean;
     startDate?: Date | null;
@@ -102,7 +101,6 @@ export interface IRepeatTypeSelectProps {
 
 export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
     const {
-        id,
         onChange,
         repeatType,
         startDate = null,
@@ -122,7 +120,6 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
             className="gd-recurrence-form-type s-recurrence-form-type"
             renderButton={({ toggleDropdown, isOpen, dropdownId }) => (
                 <DropdownButton
-                    id={id}
                     value={repeatTypeItem.title}
                     onClick={() => {
                         !isOpen && onRepeatDropdownOpen?.();

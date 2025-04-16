@@ -310,6 +310,7 @@ export function ScheduledMailDialogRenderer({
                                 weekStart={weekStart}
                                 onChange={onRecurrenceChange}
                                 allowHourlyRecurrence={allowHourlyRecurrence}
+                                isWhiteLabeled={isWhiteLabeled}
                             />
                             <ContentDivider className="gd-divider-with-margin" />
                             <DestinationSelect
