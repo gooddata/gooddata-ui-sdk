@@ -29,7 +29,9 @@ export function AlertTitle({ id, alert, measures, separators, onChange }: AlertT
             value={alert?.title}
             placeholder={description}
             onChange={onChange}
-            ariaLabel={intl.formatMessage({ id: "insightAlert.config.accessibility.title" })}
+            accessibilityConfig={{
+                ariaLabel: intl.formatMessage({ id: "insightAlert.config.accessibility.title" }),
+            }}
         />
     );
 }
