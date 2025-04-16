@@ -29,6 +29,7 @@ export interface IAutomationFiltersProps {
     useFilters: boolean;
     onUseFiltersChange: (value: boolean, filters: FilterContextItem[]) => void;
     isDashboardAutomation?: boolean;
+    areFiltersMissing?: boolean;
 }
 
 export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
@@ -39,6 +40,7 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
     isDashboardAutomation,
     useFilters,
     onUseFiltersChange,
+    areFiltersMissing,
 }) => {
     const theme = useTheme();
     const intl = useIntl();
@@ -133,6 +135,21 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                     )}
                 />
             </div>
+            {!isDashboardAutomation ? (
+                <div className="gd-automation-filters__message">
+                    <FormattedMessage id="dialogs.schedule.email.filters.activeFilters" />
+                </div>
+            ) : null}
+            {areFiltersMissing ? (
+                <div className="gd-automation-filters__warning-message">
+                    <FormattedMessage
+                        id="dialogs.schedule.email.filters.missing"
+                        values={{
+                            b: (chunk) => <strong>{chunk}</strong>,
+                        }}
+                    />
+                </div>
+            ) : null}
             {isDashboardAutomation ? (
                 <label className="input-checkbox-label gd-automation-filters__use-filters-checkbox s-automation-filters-use-filters-checkbox">
                     <input
@@ -173,11 +190,7 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                         </Bubble>
                     </BubbleHoverTrigger>
                 </label>
-            ) : (
-                <div className="gd-automation-filters__message">
-                    <FormattedMessage id="dialogs.schedule.email.filters.activeFilters" />
-                </div>
-            )}
+            ) : null}
         </div>
     );
 };
