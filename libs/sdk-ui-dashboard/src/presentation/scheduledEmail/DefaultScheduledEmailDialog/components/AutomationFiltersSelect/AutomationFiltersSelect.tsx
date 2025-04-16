@@ -12,6 +12,7 @@ export interface IAutomationFiltersSelectProps {
     useFilters: boolean;
     onUseFiltersChange: (value: boolean, filters: FilterContextItem[]) => void;
     isDashboardAutomation?: boolean;
+    areFiltersMissing?: boolean;
 }
 
 export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = ({
@@ -21,6 +22,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
     isDashboardAutomation,
     useFilters,
     onUseFiltersChange,
+    areFiltersMissing,
 }) => {
     const numberOfSelectedFilters = selectedFilters.length;
     const accessibilityValue = "schedule.filters";
@@ -41,6 +43,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                 useFilters={useFilters}
                 onUseFiltersChange={onUseFiltersChange}
                 isDashboardAutomation={isDashboardAutomation}
+                areFiltersMissing={areFiltersMissing}
             />
         </div>
     );

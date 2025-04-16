@@ -743,6 +743,11 @@
         "comment": "",
         "limit": 0
     },
+    "dialogs.schedule.email.filters.missing": {
+        "value": "<b>Warning:</b> Some filters couldn't be applied — they're no longer available on the dashboard.",
+        "comment": "",
+        "limit": 0
+    },
     "dialogs.schedule.management.title": {
         "value": "Scheduled exports",
         "comment": "",

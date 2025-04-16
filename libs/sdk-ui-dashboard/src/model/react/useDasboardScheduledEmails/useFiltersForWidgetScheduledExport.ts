@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import {
     filterLocalIdentifier,
@@ -6,6 +6,7 @@ import {
     IFilter,
     IInsightDefinition,
     isAllTimeDateFilter,
+    newAllTimeFilter,
 } from "@gooddata/sdk-model";
 import { useWidgetFilters } from "../useWidgetFilters.js";
 import { getAutomationVisualizationFilters } from "../../../_staging/automation/index.js";
@@ -15,6 +16,8 @@ import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { selectCrossFilteringItems } from "../../store/drill/drillSelectors.js";
 import { usePrevious } from "@gooddata/sdk-ui";
 import { useMemo } from "react";
+import { selectEnableAutomationFilterContext } from "../../../model/store/index.js";
+import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 /**
  * @alpha
  */
@@ -54,6 +57,7 @@ export function useFiltersForWidgetScheduledExport({
     insight,
 }: IUseFiltersForWidgetScheduledExportProps): QueryProcessingState<IFilter[]> {
     const savedWidgetFilters = getAutomationVisualizationFilters(scheduledExportToEdit);
+    const enableAutomationFilterContext = useDashboardSelector(selectEnableAutomationFilterContext);
 
     const previousWidgetRef = usePrevious(widget?.ref);
     const widgetFiltersQuery = useWidgetFilters(widget, insight);
@@ -84,8 +88,20 @@ export function useFiltersForWidgetScheduledExport({
         const filterLocalId = filterLocalIdentifier(f);
         return filterLocalId ? !crossFilteringFilterLocalIdentifiers.includes(filterLocalId) : true;
     });
-    const resolvedFiltersWithoutCrossFilteringAndAllTimeDateFilter =
-        resolvedFiltersWithoutCrossFiltering?.filter((f) => !isAllTimeDateFilter(f));
+    const resolvedFiltersWithoutCrossFilteringAndAllTimeDateFilter = enableAutomationFilterContext
+        ? [...(resolvedFiltersWithoutCrossFiltering ?? [])]
+        : resolvedFiltersWithoutCrossFiltering?.filter((f) => !isAllTimeDateFilter(f));
+
+    const commonDateFilter = widget?.dateDataSet
+        ? newAllTimeFilter(widget.dateDataSet, generateDateFilterLocalIdentifier(0))
+        : undefined;
+    const shouldAddCommonDateFilter =
+        enableAutomationFilterContext &&
+        !resolvedFiltersWithoutCrossFilteringAndAllTimeDateFilter?.some(isAllTimeDateFilter) &&
+        commonDateFilter;
+    const sanitizedFilters = shouldAddCommonDateFilter
+        ? [commonDateFilter, ...(resolvedFiltersWithoutCrossFilteringAndAllTimeDateFilter ?? [])]
+        : resolvedFiltersWithoutCrossFilteringAndAllTimeDateFilter;
 
     if (savedWidgetFilters) {
         return {
@@ -93,12 +109,9 @@ export function useFiltersForWidgetScheduledExport({
             error: undefined,
             status: "success",
         };
-    } else if (
-        resolvedFiltersWithoutCrossFilteringAndAllTimeDateFilter &&
-        correctedWidgetFiltersQuery.status === "success"
-    ) {
+    } else if (sanitizedFilters && correctedWidgetFiltersQuery.status === "success") {
         return {
-            result: resolvedFiltersWithoutCrossFilteringAndAllTimeDateFilter,
+            result: sanitizedFilters,
             error: undefined,
             status: "success",
         };
