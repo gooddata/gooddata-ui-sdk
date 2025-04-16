@@ -3490,8 +3490,13 @@
         "limit": 0
     },
     "recurrence.types.inherit": {
-        "value": "Inherit",
+        "value": "Organization default",
         "comment": "Repeats the schedule email using the same recurrence as the setup in parent.",
+        "limit": 0
+    },
+    "recurrence.types.inherit.info": {
+        "value": "Use the default evaluation frequency set by your organization.",
+        "comment": "Info tooltip for inherit option.",
         "limit": 0
     },
     "recurrence.description.hourly": {

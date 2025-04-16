@@ -359,7 +359,7 @@
         "limit": 0
     },
     "settingsDashboardDialog.section.alert.inherit": {
-        "value": "Uses the evaluation frequency set by the organization.",
+        "value": "Use the default evaluation frequency set by your organization.",
         "comment": "",
         "limit": 0
     },

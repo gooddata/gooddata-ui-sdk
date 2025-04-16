@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import { WeekStart } from "@gooddata/sdk-model";
@@ -23,7 +23,7 @@ export const RepeatTypeDescription: React.FC<IRepeatTypeDescriptionProps> = (pro
         <div className="gd-recurrence-form-repeat-type-description s-recurrence-form-repeat-type-description">
             <span>
                 {transformRecurrenceTypeToDescription(intl, repeatType, startDate, weekStart)}
-                {showTimezone && timezone ? <> {timezone}</> : null}
+                {showTimezone && timezone ? <> {timezone} time</> : null}
             </span>
         </div>
     );
