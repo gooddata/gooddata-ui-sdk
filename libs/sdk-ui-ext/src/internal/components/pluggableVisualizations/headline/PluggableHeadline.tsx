@@ -242,6 +242,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                 config={headlineConfig}
                 afterRender={this.afterRender}
                 onLoadingChanged={this.onLoadingChanged}
+                onDataView={this.onDataView}
                 pushData={this.pushData}
                 onError={this.onError}
                 LoadingComponent={null}

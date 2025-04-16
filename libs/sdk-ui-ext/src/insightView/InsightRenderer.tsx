@@ -181,11 +181,10 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
                     this.props.onError?.(error);
                     this.props.onLoadingChanged?.({ isLoading: false });
                 },
-                onLoadingChanged: ({ isLoading }) => {
-                    this.props.onLoadingChanged?.({ isLoading });
-                },
+                onLoadingChanged: this.props.onLoadingChanged,
                 pushData: this.props.pushData,
                 onDrill: this.props.onDrill,
+                onDataView: this.props.onDataView,
                 onExportReady: this.onExportReadyDecorator,
                 afterRender: this.props.afterRender,
             },
@@ -370,6 +369,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = (props) => {
         onError: onErrorCallBack,
         onExportReady: onExportReadyCallback,
         onLoadingChanged: onLoadingChangedCallback,
+        onDataView: onDataViewCallback,
         ...resProps
     } = props;
 
@@ -378,6 +378,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = (props) => {
     const onError = useUpdatableCallback(onErrorCallBack);
     const onExportReady = useUpdatableCallback(onExportReadyCallback);
     const onLoadingChanged = useUpdatableCallback(onLoadingChangedCallback);
+    const onDataView = useUpdatableCallback(onDataViewCallback);
 
     return (
         <IntlWrapper locale={props.locale}>
@@ -387,6 +388,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = (props) => {
                 onError={onError}
                 onExportReady={onExportReady}
                 onLoadingChanged={onLoadingChanged}
+                onDataView={onDataView}
                 {...resProps}
             />
         </IntlWrapper>

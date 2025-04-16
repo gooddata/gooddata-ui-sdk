@@ -1393,6 +1393,8 @@ PlaceholderValue<T> | undefined,
 export interface IVisualizationCallbacks {
     // @internal (undocumented)
     afterRender?: () => void;
+    // @alpha
+    onDataView?: OnDataView;
     onDrill?: OnFiredDrillEvent;
     onError?: OnError;
     onExportReady?: OnExportReady;
@@ -1519,6 +1521,9 @@ export function objMatch(obj: any): IHeaderPredicate;
 
 // @public
 export function objRefMatch(objRef: ObjRef): IHeaderPredicate;
+
+// @alpha (undocumented)
+export type OnDataView = (dataView: DataViewFacade) => void;
 
 // @public (undocumented)
 export type OnError = (error: GoodDataSdkError) => void;

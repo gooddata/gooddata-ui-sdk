@@ -372,6 +372,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
                 onLoadingChanged={this.onLoadingChanged}
                 pushData={this.handlePushData}
                 onError={this.onError}
+                onDataView={this.onDataView}
                 onColumnResized={this.onColumnResized}
                 intl={this.intl}
             />,

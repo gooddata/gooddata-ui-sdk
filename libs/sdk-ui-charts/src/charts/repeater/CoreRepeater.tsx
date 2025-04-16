@@ -47,6 +47,7 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
         pushData,
         onError,
         onColumnResized,
+        onDataView,
         config = {},
         drillableItems = [],
         onDrill = noop,
@@ -76,6 +77,7 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
             onSuccess: (dataView) => {
                 onLoadingChanged?.({ isLoading: false });
                 pushData?.({ dataView: dataView.dataView });
+                onDataView?.(dataView);
             },
             onError: (error) => {
                 onLoadingChanged?.({ isLoading: false });

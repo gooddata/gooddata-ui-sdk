@@ -4,7 +4,7 @@ import { ExplicitDrill, OnFiredDrillEvent } from "./DrillEvents.js";
 import React from "react";
 import { IErrorProps } from "../react/ErrorComponent.js";
 import { ILoadingProps } from "../react/LoadingComponent.js";
-import { IPushData, OnError, OnExportReady, OnLoadingChanged } from "./Events.js";
+import { IPushData, OnDataView, OnError, OnExportReady, OnLoadingChanged } from "./Events.js";
 import { IClusteringConfig, IForecastConfig, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
 /**
@@ -79,6 +79,13 @@ export interface IVisualizationCallbacks {
      * Called when user triggers a drill on a visualization.
      */
     onDrill?: OnFiredDrillEvent;
+
+    /**
+     * Called when the visualization loads a DataView, i.e. it receives data from the backend.
+     *
+     * @alpha
+     */
+    onDataView?: OnDataView;
 
     /**
      * @internal
