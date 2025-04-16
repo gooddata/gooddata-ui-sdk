@@ -42,7 +42,6 @@ export interface InputPureProps extends IDomNativeProps {
     type?: string;
     required?: boolean;
     accessibilityType?: string;
-    ariaLabel?: string;
     accessibilityConfig?: IAccessibilityConfigBase;
     autocomplete?: string;
 }

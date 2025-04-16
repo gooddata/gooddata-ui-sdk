@@ -3206,8 +3206,6 @@ export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
     accessibilityType?: string;
     // (undocumented)
-    ariaLabel?: string;
-    // (undocumented)
     autocomplete?: string;
     // (undocumented)
     className: string;
