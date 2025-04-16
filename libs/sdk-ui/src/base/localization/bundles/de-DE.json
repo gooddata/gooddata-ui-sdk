@@ -628,8 +628,6 @@
     "recurrence.description.weekly": "Am {dayOfWeekName} jede Woche um {hour} ",
     "recurrence.description.monthly_first": "Um {hour} zu Beginn jeden Monats",
     "recurrence.description.monthly": "Um {hour} am {dayOfWeekName} jeder{weekNumber}. Woche im Monat",
-    "recurrence.error.too_often": "Frequenz zu hoch",
-    "recurrence.cron.tooltip": "Verwenden Sie das Unix-Cron-String-Format. <a>Mehr erfahren </a>",
     "userManagement.workspace.permission.viewSaveViews": "Ansichten anzeigen und speichern",
     "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "Der Benutzer kann Dashboards anzeigen, die mit ihm geteilt wurden, und den Status der Dashboard-Filter als persönliche Ansichten für die zukünftige Verwendung speichern.",
     "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "Die Gruppenmitglieder können Dashboards anzeigen, die mit ihnen geteilt wurden, und den Status der Dashboard-Filter als persönliche Ansichten für die zukünftige Verwendung speichern.",
@@ -686,5 +684,12 @@
     "gs.header.help.label": "Hilfe-Links",
     "richText.no_data": "Keine Daten",
     "richText.no_fetch": "Daten konnten nicht abgerufen werden",
-    "recurrence.types.inherit": "Erben"
+    "recurrence.types.inherit": "Erben",
+    "recurrence.datetime.format.help": "Format: {dateFormat}",
+    "recurrence.datetime.empty.error": "Fehler: Pflichtfeld — Geben Sie ein gültiges Datum ein, um fortzufahren.",
+    "recurrence.datetime.wrong.format.error": "Fehler: Ungültiges Datum — Format muss sein {dateFormat}",
+    "recurrence.error.too_often": "Fehler: Frequenz zu hoch — auf max. 1 pro Stunde reduzieren",
+    "recurrence.error.empty": "Fehler: Erforderliches Feld — Geben Sie einen Frühlings-Cron-Ausdruck mit sechs Feldern ein: Sekunden, Minuten, Stunden, Monatstag, Monat und Wochentag. <a>Mehr erfahren</a>",
+    "recurrence.error.wrongFormat": "Fehler: Ungültiges Format — verwenden Sie das Frühlings-Cron-Format mit sechs Feldern: Sekunden, Minuten, Stunden, Tag des Monats, Monat und Tag der Woche. <a>Mehr erfahren</a>",
+    "recurrence.cron.tooltip": "Verwenden Sie das Frühlings-Cron-Format — sechs Felder: Sekunden, Minuten, Stunden, Tag des Monats, Monat, Tag der Woche. <a>Mehr erfahren</a>"
 }

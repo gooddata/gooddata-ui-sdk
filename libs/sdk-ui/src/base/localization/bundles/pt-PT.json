@@ -628,8 +628,6 @@
     "recurrence.description.weekly": "Às {hour} de {dayOfWeekName}todas as semanas",
     "recurrence.description.monthly_first": "Às {hour} no início de cada mês",
     "recurrence.description.monthly": "Às {hour} em {dayOfWeekName} todas as {weekNumber}. semana no mês",
-    "recurrence.error.too_often": "Frequência demasiado alta",
-    "recurrence.cron.tooltip": "Use o formato de string unix-cron. <a>Saiba mais</a>",
     "userManagement.workspace.permission.viewSaveViews": "Ver e Guardar Visualizações",
     "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "O utilizador pode ver os painéis que foram partilhados com ele e guardar o estado dos filtros do painel como vistas pessoais para utilização futura.",
     "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "Os membros do grupo podem ver os painéis que foram partilhados com eles e guardar o estado dos filtros do painel como vistas pessoais para utilização futura.",
@@ -686,5 +684,12 @@
     "gs.header.help.label": "Ligações de ajuda",
     "richText.no_data": "Sem dados",
     "richText.no_fetch": "Os dados não puderam ser recuperados",
-    "recurrence.types.inherit": "Herdar"
+    "recurrence.types.inherit": "Herdar",
+    "recurrence.datetime.format.help": "Formato: {dateFormat}",
+    "recurrence.datetime.empty.error": "Erro: Campo obrigatório - introduza uma data válida para continuar.",
+    "recurrence.datetime.wrong.format.error": "Erro: Data inválida - o formato tem de ser {dateFormat}",
+    "recurrence.error.too_often": "Erro: Frequência demasiado elevada - reduzir para um máximo de 1 por hora",
+    "recurrence.error.empty": "Erro: Campo obrigatório - introduza uma expressão cron do Spring com seis campos: segundos, minutos, horas, dia do mês, mês e dia da semana. <a>Saiba mais</a>",
+    "recurrence.error.wrongFormat": "Erro: Formato inválido - utilize o formato Spring cron com seis campos: segundos, minutos, horas, dia do mês, mês e dia da semana. <a>Saiba mais</a>",
+    "recurrence.cron.tooltip": "Utilize o formato Spring cron - seis campos: segundos, minutos, horas, dia do mês, mês, dia da semana. <a>Saber mais</a>"
 }

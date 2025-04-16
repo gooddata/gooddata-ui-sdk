@@ -704,5 +704,6 @@
     "settingsDashboardDialog.section.alert.label": "Evaluation Frequency",
     "filterBar.unappliedFiltersNotification": "<link>Apply filters</link> to see updated data.",
     "controlButtons.setting.value": "Settings",
-    "controlButtons.setting.title": "All settings related to this dashboard. You can change the dashboard description cross-filtering, saved filters allowed, and alerts evaluation frequency."
+    "controlButtons.setting.title": "All settings related to this dashboard. You can change the dashboard description cross-filtering, saved filters allowed, and alerts evaluation frequency.",
+    "dialogs.schedule.error.too_long": "Error: Text too long — reduce to {value} characters or fewer."
 }

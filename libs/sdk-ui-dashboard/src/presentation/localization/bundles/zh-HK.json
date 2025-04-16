@@ -704,5 +704,6 @@
     "settingsDashboardDialog.section.alert.label": "評估頻率",
     "filterBar.unappliedFiltersNotification": "<link>應用篩選器</link>以查看更新嘅數據。",
     "controlButtons.setting.value": "設置",
-    "controlButtons.setting.title": "與此控制面板相關嘅所有設置。 你可以更改控制面板描述交叉篩選、允許保存嘅篩選條件同警報評估頻率。"
+    "controlButtons.setting.title": "與此控制面板相關嘅所有設置。 你可以更改控制面板描述交叉篩選、允許保存嘅篩選條件同警報評估頻率。",
+    "dialogs.schedule.error.too_long": "錯誤：文本太長-減到{value}字符數或更少。"
 }

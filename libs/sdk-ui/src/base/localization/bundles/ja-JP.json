@@ -628,8 +628,6 @@
     "recurrence.description.weekly": "毎週{dayOfWeekName}{hour}に",
     "recurrence.description.monthly_first": "毎月初めの{hour}に",
     "recurrence.description.monthly": "毎月第{weekNumber}週の{dayOfWeekName}{hour}に",
-    "recurrence.error.too_often": "頻度が高すぎます",
-    "recurrence.cron.tooltip": "unix-cronの文字列フォーマットを使用します。<a>詳細</a>",
     "userManagement.workspace.permission.viewSaveViews": "ビューを表示&保存",
     "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "ユーザーは、共有されたダッシュボードを閲覧したり、ダッシュボードのフィルターの状態を個人用ビューとして保存して後から使用したりすることができます。",
     "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "グループのメンバーは、共有されたダッシュボードを閲覧したり、ダッシュボードのフィルターの状態を個人用ビューとして保存して後から使用したりすることができます。",
@@ -686,5 +684,12 @@
     "gs.header.help.label": "ヘルプリンク",
     "richText.no_data": "データなし",
     "richText.no_fetch": "データが取得できなかった",
-    "recurrence.types.inherit": "継承"
+    "recurrence.types.inherit": "継承",
+    "recurrence.datetime.format.help": "フォーマット{dateFormat}",
+    "recurrence.datetime.empty.error": "エラー続行するには有効な日付を入力してください。",
+    "recurrence.datetime.wrong.format.error": "エラー無効な日付です。{dateFormat}",
+    "recurrence.error.too_often": "エラー：頻度が高すぎる。",
+    "recurrence.error.empty": "エラー必須フィールド - 秒、分、時、月、日、週の6つのフィールドを持つSpring cron式を入力してください。<a>詳細はこちら</a>",
+    "recurrence.error.wrongFormat": "エラー無効なフォーマット - 秒、分、時、月、日、曜日の6つのフィールドを持つSpring cronフォーマットを使用してください。<a>詳細はこちら</a>",
+    "recurrence.cron.tooltip": "秒、分、時、月、日、曜日の6つのフィールドを使用します。<a>詳細はこちら</a>"
 }

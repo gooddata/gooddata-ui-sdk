@@ -628,8 +628,6 @@
     "recurrence.description.weekly": "Op {dayOfWeekName} om {hour} elke week",
     "recurrence.description.monthly_first": "Om {hour} aan het begin van elke maand",
     "recurrence.description.monthly": "{dayOfWeekName} om {hour} elke {weekNumber}. week in maand",
-    "recurrence.error.too_often": "Frequentie te hoog",
-    "recurrence.cron.tooltip": "Gebruik de unix-cron stringopmaak. <a>Lees meer</a>",
     "userManagement.workspace.permission.viewSaveViews": "Weergaven bekijken en opslaan",
     "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "De gebruiker kan dashboards bekijken die met hem zijn gedeeld en de status van dashboardfilters opslaan als persoonlijke weergaven voor toekomstig gebruik.",
     "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "De groepsleden kunnen dashboards bekijken die met hen zijn gedeeld en de status van dashboardfilters opslaan als persoonlijke weergaven voor toekomstig gebruik.",
@@ -686,5 +684,12 @@
     "gs.header.help.label": "Help-links",
     "richText.no_data": "Geen gegevens",
     "richText.no_fetch": "Gegevens konden niet worden opgehaald",
-    "recurrence.types.inherit": "Erven"
+    "recurrence.types.inherit": "Erven",
+    "recurrence.datetime.format.help": "Formaat: {dateFormat}",
+    "recurrence.datetime.empty.error": "Fout: Verplicht veld - voer een geldige datum in om verder te gaan.",
+    "recurrence.datetime.wrong.format.error": "Fout: Ongeldige datum - formaat moet zijn {dateFormat}",
+    "recurrence.error.too_often": "Fout: Frequentie te hoog - terugbrengen tot maximaal 1 per uur",
+    "recurrence.error.empty": "Fout: Verplicht veld - voer een Spring cron expressie in met zes velden: seconden, minuten, uren, dag van de maand, maand en dag van de week. <a>Meer informatie</a>",
+    "recurrence.error.wrongFormat": "Fout: Ongeldig formaat - gebruik het Spring cron formaat met zes velden: seconden, minuten, uren, dag van de maand, maand en dag van de week. <a>Meer informatie</a>",
+    "recurrence.cron.tooltip": "Gebruik Spring cron formaat - zes velden: seconden, minuten, uren, dag van de maand, maand, dag van de week. <a>Meer informatie</a>"
 }

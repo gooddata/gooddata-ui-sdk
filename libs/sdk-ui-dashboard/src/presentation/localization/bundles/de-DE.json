@@ -704,5 +704,6 @@
     "settingsDashboardDialog.section.alert.label": "Bewertungshäufigkeit",
     "filterBar.unappliedFiltersNotification": "<link>Wenden Sie Filter</link> an, um aktualisierte Daten anzuzeigen.",
     "controlButtons.setting.value": "Einstellungen",
-    "controlButtons.setting.title": "Alle Einstellungen im Zusammenhang mit diesem Dashboard. Sie können die Cross-Filterung der Dashboard-Beschreibung, die zulässigen gespeicherten Filter und die Bewertungshäufigkeit der Warnungen ändern."
+    "controlButtons.setting.title": "Alle Einstellungen im Zusammenhang mit diesem Dashboard. Sie können die Cross-Filterung der Dashboard-Beschreibung, die zulässigen gespeicherten Filter und die Bewertungshäufigkeit der Warnungen ändern.",
+    "dialogs.schedule.error.too_long": "Fehler: Text zu lang — auf {value} Zeichen oder weniger reduzieren."
 }

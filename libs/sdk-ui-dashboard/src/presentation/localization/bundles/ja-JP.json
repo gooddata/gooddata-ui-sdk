@@ -704,5 +704,6 @@
     "settingsDashboardDialog.section.alert.label": "評価頻度",
     "filterBar.unappliedFiltersNotification": "<link>フィルタを適用する</link> 更新されたデータを見る。",
     "controlButtons.setting.value": "設定",
-    "controlButtons.setting.title": "このダッシュボードに関するすべての設定。ダッシュボードの説明のクロスフィルタ、保存されたフィルタの許可、およびアラートの評価頻度を変更できます。"
+    "controlButtons.setting.title": "このダッシュボードに関するすべての設定。ダッシュボードの説明のクロスフィルタ、保存されたフィルタの許可、およびアラートの評価頻度を変更できます。",
+    "dialogs.schedule.error.too_long": "エラーが発生しました：テキストが長すぎます。{value} 文字以下に減らしてください。"
 }

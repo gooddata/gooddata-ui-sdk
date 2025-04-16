@@ -704,5 +704,6 @@
     "settingsDashboardDialog.section.alert.label": "Frequenza di valutazione",
     "filterBar.unappliedFiltersNotification": "<link>Applicare i filtri</link> per visualizzare i dati aggiornati.",
     "controlButtons.setting.value": "Impostazioni",
-    "controlButtons.setting.title": "Tutte le impostazioni relative a questo dashboard. È possibile modificare il filtraggio incrociato della descrizione del dashboard, i filtri salvati consentiti e la frequenza di valutazione degli avvisi."
+    "controlButtons.setting.title": "Tutte le impostazioni relative a questo dashboard. È possibile modificare il filtraggio incrociato della descrizione del dashboard, i filtri salvati consentiti e la frequenza di valutazione degli avvisi.",
+    "dialogs.schedule.error.too_long": "Errore: Testo troppo lungo - ridurre a {value} caratteri o meno."
 }
