@@ -628,8 +628,6 @@
     "recurrence.description.weekly": "{dayOfWeekName} Em {hour}  todas as semanas",
     "recurrence.description.monthly_first": "No {hour} início de cada mês",
     "recurrence.description.monthly": "{dayOfWeekName} Em {hour}  cada {weekNumber}. semana no mês",
-    "recurrence.error.too_often": "Frequência muito alta",
-    "recurrence.cron.tooltip": "Use o formato de string unix-cron. <a>Saiba Mais</a>",
     "userManagement.workspace.permission.viewSaveViews": "Visualizar e salvar exibições",
     "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "O usuário pode exibir painéis que foram compartilhados com ele e salvar o estado dos filtros do painel como exibições pessoais para uso futuro.",
     "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "Os membros do grupo podem visualizar painéis que foram compartilhados com eles e salvar o estado dos filtros do painel como exibições pessoais para uso futuro.",
@@ -686,5 +684,12 @@
     "gs.header.help.label": "Links de ajuda",
     "richText.no_data": "Sem dados",
     "richText.no_fetch": "Não foi possível recuperar os dados",
-    "recurrence.types.inherit": "Herdar"
+    "recurrence.types.inherit": "Herdar",
+    "recurrence.datetime.format.help": "Formato: {dateFormat}",
+    "recurrence.datetime.empty.error": "Erro: campo obrigatório — insira uma data válida para continuar.",
+    "recurrence.datetime.wrong.format.error": "Erro: Data inválida — o formato deve ser {dateFormat}",
+    "recurrence.error.too_often": "Erro: Frequência muito alta - reduza para no máximo 1 por hora",
+    "recurrence.error.empty": "Erro: campo obrigatório — insira uma expressão cron do Spring com seis campos: segundos, minutos, horas, dia do mês, mês e dia da semana. <a>Saiba Mais</a>",
+    "recurrence.error.wrongFormat": "Erro: Formato inválido — use o formato Spring cron com seis campos: segundos, minutos, horas, dia do mês, mês e dia da semana. <a>Saiba Mais</a>",
+    "recurrence.cron.tooltip": "Use o formato cron do Spring — seis campos: segundos, minutos, horas, dia do mês, mês, dia da semana. <a>Saiba Mais</a>"
 }

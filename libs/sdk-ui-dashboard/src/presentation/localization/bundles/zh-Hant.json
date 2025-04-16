@@ -704,5 +704,6 @@
     "settingsDashboardDialog.section.alert.label": "評估頻率",
     "filterBar.unappliedFiltersNotification": "<link>應用過濾器</link> 查看更新的數據。",
     "controlButtons.setting.value": "設定",
-    "controlButtons.setting.title": "與此儀表板相關的所有設定。您可以變更儀表板描述交叉過濾、允許儲存的過濾器以及警報評估頻率。"
+    "controlButtons.setting.title": "與此儀表板相關的所有設定。您可以變更儀表板描述交叉過濾、允許儲存的過濾器以及警報評估頻率。",
+    "dialogs.schedule.error.too_long": "錯誤：文字太長 — 縮短至{value} 字元或更少。"
 }

@@ -704,5 +704,6 @@
     "settingsDashboardDialog.section.alert.label": "Frecuencia de evaluación",
     "filterBar.unappliedFiltersNotification": "<link>Aplique los filtros</link> para ver los datos actualizados.",
     "controlButtons.setting.value": "Ajustes",
-    "controlButtons.setting.title": "Todos los ajustes relacionados con este cuadro de mandos. Puede cambiar el filtrado cruzado de la descripción del panel, los filtros guardados permitidos y la frecuencia de evaluación de las alertas."
+    "controlButtons.setting.title": "Todos los ajustes relacionados con este cuadro de mandos. Puede cambiar el filtrado cruzado de la descripción del panel, los filtros guardados permitidos y la frecuencia de evaluación de las alertas.",
+    "dialogs.schedule.error.too_long": "Error: Texto demasiado largo - reducir a {value} caracteres o menos."
 }

@@ -628,8 +628,6 @@
     "recurrence.description.weekly": "Klo {hour} {dayOfWeekName} joka viikko",
     "recurrence.description.monthly_first": "Klo {hour} joka kuukauden alussa",
     "recurrence.description.monthly": "Klo  {hour} {dayOfWeekName} kuukauden joka {weekNumber}. viikko",
-    "recurrence.error.too_often": "Taajuus on liian korkea",
-    "recurrence.cron.tooltip": "Käytä UNIX-CRON-merkkijonomuotoa. <a>Lisätietoja</a>",
     "userManagement.workspace.permission.viewSaveViews": "Tarkastele ja tallenna näkymiä",
     "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "Käyttäjä voi tarkastella hänelle jaettuja dashboardeja ja tallentaa dashboard-suodattimien tilan henkilökohtaisina näkyminä tulevaa käyttöä varten.",
     "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "Ryhmän jäsenet voivat tarkastella heille jaettuja dashboardeja ja tallentaa dashboard-suodattimien tilan henkilökohtaisina näkyminä tulevaa käyttöä varten.",
@@ -686,5 +684,12 @@
     "gs.header.help.label": "Apulinkit",
     "richText.no_data": "Ei tietoja",
     "richText.no_fetch": "Tietoja ei voitu noutaa",
-    "recurrence.types.inherit": "Peri"
+    "recurrence.types.inherit": "Peri",
+    "recurrence.datetime.format.help": "Muoto: {dateFormat}",
+    "recurrence.datetime.empty.error": "Virhe: Pakollinen kenttä — syötä kelvollinen päivämäärä jatkaaksesi.",
+    "recurrence.datetime.wrong.format.error": "Virhe: Virheellinen päivämäärä — muodon on oltava {dateFormat}",
+    "recurrence.error.too_often": "Virhe: Taajuus liian korkea — pienennä enintään 1 tuntiin",
+    "recurrence.error.empty": "Virhe: Pakollinen kenttä — syötä kevään cron-ilmaisu, jossa on kuusi kenttää: sekuntia, minuuttia, tuntia, kuukauden päivä, kuukausi ja viikonpäivä. <a>Lisätietoja</a>",
+    "recurrence.error.wrongFormat": "Virhe: Virheellinen muoto — käytä Spring cron -muotoa, jossa on kuusi kenttää: sekuntia, minuuttia, tuntia, kuukauden päivä, kuukausi ja viikonpäivä. <a>Lisätietoja</a>",
+    "recurrence.cron.tooltip": "Käytä Spring cron -muotoa — kuusi kenttää: sekuntia, minuuttia, tuntia, kuukauden päivä, kuukausi, viikonpäivä. <a>Lisätietoja</a>"
 }
