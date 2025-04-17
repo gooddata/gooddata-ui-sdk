@@ -280,6 +280,7 @@ export type {
     OnError,
     OnExportReady,
     OnLoadingChanged,
+    OnDataView,
     ILoadingState,
     IExportFunction,
     IExtendedExportConfig,

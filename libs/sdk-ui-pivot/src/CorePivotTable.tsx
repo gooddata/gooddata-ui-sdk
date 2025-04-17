@@ -188,6 +188,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         | "onExportReady"
         | "onLoadingChanged"
         | "onError"
+        | "onDataView"
         | "onDrill"
         | "ErrorComponent"
         | "LoadingComponent"
@@ -202,6 +203,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         onExportReady: noop,
         onLoadingChanged: noop,
         onError: noop,
+        onDataView: noop,
         onDrill: () => true,
         ErrorComponent,
         LoadingComponent,
@@ -739,7 +741,9 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         this.internal.isAltKeyPressed = event.altKey;
     };
 
-    private onPageLoaded = (_dv: DataViewFacade, newResult: boolean): void => {
+    private onPageLoaded = (dv: DataViewFacade, newResult: boolean): void => {
+        this.props.onDataView?.(dv);
+
         if (!this.internal.table) {
             return;
         }

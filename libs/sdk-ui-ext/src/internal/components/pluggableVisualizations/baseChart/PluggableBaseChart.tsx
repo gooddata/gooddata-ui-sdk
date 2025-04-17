@@ -289,6 +289,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 onExportReady={this.onExportReady}
                 onLoadingChanged={this.onLoadingChanged}
                 pushData={this.handlePushData}
+                onDataView={this.onDataView}
                 height={resultingHeight}
                 type={this.type}
                 locale={locale}

@@ -272,7 +272,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
             console.error(`Error: unsupported visualization type - ${visUri}`);
         }
 
-        let visualizationId;
+        let visualizationId: string;
         if (isInsight(insight)) {
             visualizationId = insight.insight.identifier;
         } else {
@@ -304,6 +304,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                     onExportReady: props.onExportReady,
                     pushData: props.pushData,
                     onDrill: props.onDrill,
+                    onDataView: props.onDataView,
                 },
                 featureFlags,
                 visualizationProperties: insightProperties(props.insight),

@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IDataView, IExportConfig, IExportResult } from "@gooddata/sdk-backend-spi";
 import {
     IColor,
@@ -10,6 +10,7 @@ import {
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "../errors/GoodDataSdkError.js";
 import { IMappingHeader } from "../headerMatching/MappingHeader.js";
+import { DataViewFacade } from "../results/facade.js";
 
 /**
  * @public
@@ -27,6 +28,11 @@ export type OnError = (error: GoodDataSdkError) => void;
  * @public
  */
 export type OnLoadingChanged = (loadingState: ILoadingState) => void;
+
+/**
+ * @alpha
+ */
+export type OnDataView = (dataView: DataViewFacade) => void;
 
 /**
  * @public
