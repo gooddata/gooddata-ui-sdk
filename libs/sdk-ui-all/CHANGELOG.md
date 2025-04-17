@@ -1,6 +1,15 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 03 Apr 2025 11:48:06 GMT and should not be manually modified.
+This log was last generated on Thu, 17 Apr 2025 06:58:58 GMT and should not be manually modified.
+
+## 10.25.0
+
+Thu, 17 Apr 2025 06:58:58 GMT
+
+### Updates
+
+-   Make relative range picker more accessible
+-   Make relative range picker more accessible
 
 ## 10.24.0
 

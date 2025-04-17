@@ -2,6 +2,21 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.25.0",
+            "tag": "@gooddata/sdk-ui-all_v10.25.0",
+            "date": "Thu, 17 Apr 2025 06:58:58 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Make relative range picker more accessible"
+                    },
+                    {
+                        "comment": "Make relative range picker more accessible"
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.24.0",
             "tag": "@gooddata/sdk-ui-all_v10.24.0",
             "date": "Thu, 03 Apr 2025 11:48:06 GMT",
