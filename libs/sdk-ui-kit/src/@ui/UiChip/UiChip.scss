@@ -196,7 +196,6 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
     }
 
     &__icon-chevron {
-        display: flex;
         align-items: center;
         justify-content: center;
         transition: var(--gd-transition-all);
