@@ -3871,7 +3871,7 @@ export interface ExecutedState {
 export function existBlacklistHierarchyPredicate(reference: IDrillDownReference, attributeHierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy, attributeIdentifier?: ObjRef): boolean;
 
 // @internal (undocumented)
-export const EXPORT_VIS_MINIMAL_HEIGHT = 100;
+export const EXPORT_VIS_MINIMAL_HEIGHT = 90;
 
 // @internal (undocumented)
 export const EXPORT_VIS_MINIMAL_WIDTH = 200;
