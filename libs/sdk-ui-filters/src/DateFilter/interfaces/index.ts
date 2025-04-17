@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     DateString,
     DateFilterGranularity,
@@ -125,6 +125,11 @@ export interface IDateFilterOptionsByType {
     relativePreset?: DateFilterRelativeOptionGroup;
 }
 
+export interface IDateTimePickerErrors {
+    dateError?: string;
+    timeError?: string;
+}
+
 /**
  * Absolute form date filter errors.
  *
@@ -133,6 +138,16 @@ export interface IDateFilterOptionsByType {
 export interface IDateFilterAbsoluteFormErrors {
     from?: string;
     to?: string;
+}
+
+/**
+ * Absolute form date filter errors.
+ *
+ * @public
+ */
+export interface IDateFilterAbsoluteDateTimeFormErrors {
+    from?: IDateTimePickerErrors;
+    to?: IDateTimePickerErrors;
 }
 
 /**
@@ -154,6 +169,10 @@ export interface IExtendedDateFilterErrors {
      * Global absolute date filter errors
      */
     absoluteForm?: IDateFilterAbsoluteFormErrors;
+    /**
+     *
+     */
+    absoluteDateTimeForm?: IDateFilterAbsoluteDateTimeFormErrors;
     /**
      * Global relative date filter errors
      */

@@ -1082,6 +1082,36 @@
         "comment": "Displayed as placeholder in static period inputs where user enters date",
         "limit": 0
     },
+    "filters.staticPeriod.dateFrom": {
+        "value": "Start date",
+        "comment": "Displayed as label of input where user enters a date that marks the start of date range.",
+        "limit": 0
+    },
+    "filters.staticPeriod.timeFrom": {
+        "value": "Start time",
+        "comment": "Displayed as label of input where user enters a time that marks the start of date range.",
+        "limit": 0
+    },
+    "filters.staticPeriod.dateTo": {
+        "value": "End date",
+        "comment": "Displayed as label of input where user enters a date that marks the end of date range.",
+        "limit": 0
+    },
+    "filters.staticPeriod.timeTo": {
+        "value": "End time",
+        "comment": "Displayed as label of input where user enters a time that marks the end of date range.",
+        "limit": 0
+    },
+    "filters.staticPeriod.dateFormatHint": {
+        "value": "Date format: {format}.",
+        "comment": "Displayed as a hint below input in which user enters a date. Do not translate {format} placeholder. It will be replaced in runtime with date format pattern.",
+        "limit": 0
+    },
+    "filters.staticPeriod.timeFormatHint": {
+        "value": "Time format: HH:MM, max. value 23:59.",
+        "comment": "Displayed as a hint below input in which user enters a time.",
+        "limit": 0
+    },
     "filters.date.accessibility.label.from": {
         "value": "Select date from",
         "comment": "",
@@ -1360,6 +1390,56 @@
     "filters.staticPeriod.endDateBeforeStartDate": {
         "value": "End time must be later than start time",
         "comment": "This error is displayed once there is a datetime range and End time is before To time",
+        "limit": 0
+    },
+    "filters.staticPeriod.errors.emptyStartDate": {
+        "value": "Error: Start date cannot be empty.",
+        "comment": "The error is displayed when user did not entered value that specifies start of the daterange.",
+        "limit": 0
+    },
+    "filters.staticPeriod.errors.invalidStartDate": {
+        "value": "Error: Start date is not in {format} format.",
+        "comment": "Placeholder '{format}' is used for showing date format. Example 'Error: Start date is not in MM/dd/yyyy format'. Don't translate placeholder '{format}'.",
+        "limit": 0
+    },
+    "filters.staticPeriod.errors.startDateAfterEndDate": {
+        "value": "Error: Start date cannot be after End date.",
+        "comment": "This error is displayed once there is a datetime range and Start date is after End date.",
+        "limit": 0
+    },
+    "filters.staticPeriod.errors.startTimeAfterEndTime": {
+        "value": "Error: Start time cannot be after End time.",
+        "comment": "This error is displayed once there is a datetime range and Start time is after End time.",
+        "limit": 0
+    },
+    "filters.staticPeriod.errors.startTimeAdjusted": {
+        "value": "Warning: Start time minutes were out of range and has been adjusted to the nearest valid value.",
+        "comment": "This warning is displayed when user entered invalid minutes value that is not in range 0-59 and the value has been automatically adjusted.",
+        "limit": 0
+    },
+    "filters.staticPeriod.errors.emptyEndDate": {
+        "value": "Error: End date cannot be empty.",
+        "comment": "The error is displayed when user did not entered value that specifies end of the daterange.",
+        "limit": 0
+    },
+    "filters.staticPeriod.errors.invalidEndDate": {
+        "value": "Error: End date is not in {format} format.",
+        "comment": "Placeholder '{format}' is used for showing date format. Example 'Error: End date is not in MM/dd/yyyy format'. Don't translate placeholder '{format}'.",
+        "limit": 0
+    },
+    "filters.staticPeriod.errors.endDateBeforeStartDate": {
+        "value": "Error: End date cannot be before Start date.",
+        "comment": "This error is displayed once there is a datetime range and End date is before Start date.",
+        "limit": 0
+    },
+    "filters.staticPeriod.errors.endTimeBeforeStartTime": {
+        "value": "Error: End time cannot be before Start time.",
+        "comment": "This error is displayed once there is a datetime range and End time is before Start time.",
+        "limit": 0
+    },
+    "filters.staticPeriod.errors.endTimeAdjusted": {
+        "value": "Warning: End time minutes were out of range and has been adjusted to the nearest valid value.",
+        "comment": "This warning is displayed when user entered invalid minutes value that is not in range 0-59 and the value has been automatically adjusted.",
         "limit": 0
     },
     "mvf.operator.all": {
