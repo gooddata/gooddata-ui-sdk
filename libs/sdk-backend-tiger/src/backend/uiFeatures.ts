@@ -144,6 +144,7 @@ export enum TigerFeaturesNames {
     EnableDateFilterIdentifiersRollout = "enableDateFilterIdentifiersRollout",
     EnableAlertsEvaluationFrequencySetup = "enableAlertsEvaluationFrequencySetup",
     EnableRichTooManyDatapointsErrors = "enableRichTooManyDatapointsErrors",
+    EnableLineChartTrendThreshold = "enableLineChartTrendThreshold",
 }
 
 export type ITigerFeatureFlags = {
@@ -250,6 +251,7 @@ export type ITigerFeatureFlags = {
     enableDateFilterIdentifiersRollout: typeof FeatureFlagsValues["enableDateFilterIdentifiersRollout"][number];
     enableAlertsEvaluationFrequencySetup: typeof FeatureFlagsValues["enableAlertsEvaluationFrequencySetup"][number];
     enableRichTooManyDatapointsErrors: typeof FeatureFlagsValues["enableRichTooManyDatapointsErrors"][number];
+    enableLineChartTrendThreshold: typeof FeatureFlagsValues["enableLineChartTrendThreshold"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -356,6 +358,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDateFilterIdentifiersRollout: false,
     enableAlertsEvaluationFrequencySetup: true,
     enableRichTooManyDatapointsErrors: false,
+    enableLineChartTrendThreshold: false,
 };
 
 export const FeatureFlagsValues = {
@@ -466,4 +469,5 @@ export const FeatureFlagsValues = {
     enableDateFilterIdentifiersRollout: [true, false] as const,
     enableAlertsEvaluationFrequencySetup: [true, false] as const,
     enableRichTooManyDatapointsErrors: [true, false] as const,
+    enableLineChartTrendThreshold: [true, false] as const,
 };

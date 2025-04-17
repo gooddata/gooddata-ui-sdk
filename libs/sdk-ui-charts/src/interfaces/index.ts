@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 export type {
     IForecast,
@@ -28,6 +28,7 @@ export type {
     ChartInlineVisualizationType,
     IInlineVisualizationsConfig,
     IChartClusteringConfig,
+    IThresholds,
 } from "./chartConfig.js";
 
 export type {

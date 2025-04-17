@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import includes from "lodash/includes.js";
@@ -25,6 +25,8 @@ import { bucketsById, bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
 import NameSubsection from "../configurationControls/axis/NameSubsection.js";
 import { messages } from "../../../locales.js";
+import TrendThresholdSubsection from "../configurationControls/axis/TrendThresholdSubsection.js";
+import { isLineChart } from "@gooddata/sdk-ui-charts";
 
 export default class BaseChartConfigurationPanel<
     T extends IConfigurationPanelContentProps = IConfigurationPanelContentProps,
@@ -180,6 +182,18 @@ export default class BaseChartConfigurationPanel<
                         pushData={pushData}
                         showFormat={showFormat}
                     />
+                    {featureFlags.enableLineChartTrendThreshold &&
+                    isLineChart(type) &&
+                    axis.name === "xaxis" ? (
+                        <TrendThresholdSubsection
+                            disabled={disabled}
+                            configPanelDisabled={controlsDisabled}
+                            axis={axis.name}
+                            properties={properties}
+                            pushData={pushData}
+                            propertiesMeta={propertiesMeta}
+                        />
+                    ) : null}
                     {axis.primary ? this.renderMinMax(axis.name) : null}
                 </ConfigSection>
             );

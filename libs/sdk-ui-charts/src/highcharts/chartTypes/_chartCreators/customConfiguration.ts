@@ -1277,7 +1277,7 @@ const getXAxisConfiguration = (
     const { forceDisableDrillOnAxes = false } = chartOptions;
     const type = chartOptions.type as ChartType;
     const xAxes = chartOptions.xAxes || [];
-    return xAxes.map((axis: any): XAxisOptions => {
+    return xAxes.map((axis: IAxis): XAxisOptions => {
         if (!axis) {
             return {
                 visible: false,
@@ -1319,6 +1319,17 @@ const getXAxisConfiguration = (
         const titleTextProp =
             visible && (!isViewByTwoAttributes || joinedAttributeAxisName) ? {} : { text: null }; // new way how to hide title instead of deprecated 'enabled'
 
+        const plotLines =
+            axis.plotLines?.length > 0
+                ? {
+                      plotLines: axis.plotLines.map((value) => ({
+                          value,
+                          width: 2,
+                          zIndex: 1,
+                      })),
+                  }
+                : {};
+
         // for bar chart take y axis options
         return {
             ...getAxisLineConfiguration(type, visible),
@@ -1359,6 +1370,7 @@ const getXAxisConfiguration = (
             ...maxProp,
             ...minProp,
             ...tickConfiguration,
+            ...plotLines,
         };
     });
 };

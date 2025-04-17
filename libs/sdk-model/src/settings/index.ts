@@ -666,6 +666,11 @@ export interface ISettings {
      */
     enableAlertsEvaluationFrequencySetup?: boolean;
 
+    /**
+     * Enable a configurable trend threshold in line chart visualization.
+     */
+    enableLineChartTrendThreshold?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

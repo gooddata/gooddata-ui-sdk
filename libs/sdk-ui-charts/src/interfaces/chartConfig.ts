@@ -380,6 +380,13 @@ export interface IChartConfig {
      * @internal
      */
     enableHighchartsAccessibility?: boolean;
+
+    /**
+     * Determine if support for a configurable trend threshold should be enabled for a line chart visualization.
+     * The flag enables the usage of lineChartTrendThreshold visualization property.
+     * @internal
+     */
+    enableLineChartTrendThreshold?: boolean;
 }
 
 /**
@@ -665,6 +672,29 @@ export interface IAxisNameConfig {
 }
 
 /**
+ * Definition of the axis thresholds.
+ * @internal
+ */
+export interface IThresholds {
+    /**
+     * Value determines if thresholds are enabled for the axis.
+     */
+    enabled: boolean;
+    /**
+     * The value that defines the trend threshold in line chart series. It delimits the series by a vertical
+     * line. The series are rendered as a solid line before the threshold and as a dashed line after it.
+     *
+     * When undefined or 0 is provided, no threshold is used.
+     * When positive number is provided, the threshold is set at the nth value on the X axis from its start.
+     * When negative number is provided, the threshold is set at the nth value on the X axis from its end.
+     * The value is not 0 indexed, i.e., value 3 puts the threshold on the third category on the X axis.
+     *
+     * enableLineChartTrendThreshold config property must be enabled for visualization to apply this value.
+     */
+    trendThreshold: number;
+}
+
+/**
  * @public
  */
 export interface IAxisConfig {
@@ -677,6 +707,12 @@ export interface IAxisConfig {
      * Toggle visibility of labels describing the different axis tics.
      */
     labelsEnabled?: boolean;
+
+    /**
+     * Definition of axes thresholds.
+     * @internal
+     */
+    thresholds?: IThresholds;
 
     /**
      * If labels are enabled, rotation lets you customize how they should be rotated. Specify this as a number

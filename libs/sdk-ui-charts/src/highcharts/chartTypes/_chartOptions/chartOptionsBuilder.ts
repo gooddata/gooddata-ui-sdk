@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { ITheme, IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
@@ -79,6 +79,7 @@ import {
     getWaterfallChartCategories,
 } from "../waterfallChart/waterfallChartOptions.js";
 import { assignForecastAxes } from "./chartForecast.js";
+import { injectTrendDivider } from "./chartTrendDivider.js";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
@@ -423,8 +424,6 @@ export function getChartOptions(
     const gridEnabled = config?.grid?.enabled ?? true;
     const stacking = getStackingConfig(stackByAttribute, config);
     const measureGroup = findMeasureGroupInDimensions(dimensions);
-    const xAxes = getXAxes(dv, config, measureGroup, viewByAttribute, viewByParentAttribute);
-    const yAxes = getYAxes(dv, config, measureGroup, stackByAttribute);
 
     const seriesWithoutDrillability = getSeries(
         dv,
@@ -447,9 +446,11 @@ export function getChartOptions(
         type,
     );
 
-    let series = assignYAxes(drillableSeries, yAxes);
+    const yAxes = getYAxes(dv, config, measureGroup, stackByAttribute);
 
-    let categories = viewByParentAttribute
+    let initialSeries = assignYAxes(drillableSeries, yAxes);
+
+    let initialCategories = viewByParentAttribute
         ? getCategoriesForTwoAttributes(viewByAttribute, viewByParentAttribute, emptyHeaderTitle)
         : getCategories(type, measureGroup, viewByAttribute, stackByAttribute, emptyHeaderTitle);
 
@@ -457,7 +458,7 @@ export function getChartOptions(
     // need to skip this, so the sort specified by the user does not get override.
     if (isAutoSortableChart(type, viewByAttribute) && !config.enableChartSorting) {
         // dataPoints are sorted by default by value in descending order
-        const dataPoints = series[0].data;
+        const dataPoints = initialSeries[0].data;
         const indexSortOrder: number[] = [];
         const sortedDataPoints = dataPoints
             .sort((pointDataA, pointDataB) => {
@@ -477,14 +478,23 @@ export function getChartOptions(
                 };
             });
         // categories need to be sorted in exactly the same order as dataPoints
-        categories = categories.map(
-            (_category: any, dataPointIndex: number) => categories[indexSortOrder[dataPointIndex]],
+        initialCategories = initialCategories.map(
+            (_category: any, dataPointIndex: number) => initialCategories[indexSortOrder[dataPointIndex]],
         );
-        series[0].data = sortedDataPoints;
+        initialSeries[0].data = sortedDataPoints;
     }
 
-    //Forecast
-    series = assignForecastAxes(type, series, dv.rawData().forecastTwoDimData());
+    // Forecast
+    initialSeries = assignForecastAxes(type, initialSeries, dv.rawData().forecastTwoDimData());
+
+    // Add additional series if trend divider is supported and enabled
+    initialSeries = injectTrendDivider(type, initialSeries, config);
+
+    // Modification of categories and series is finished (switch from let to const for a bit less of fragility)
+    const series = initialSeries;
+    const categories = initialCategories;
+
+    const xAxes = getXAxes(dv, config, measureGroup, viewByAttribute, viewByParentAttribute, categories);
 
     const colorAssignments = colorStrategy.getColorAssignment();
     const { colorPalette } = config;

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces/index.js";
 import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
@@ -19,6 +19,7 @@ import findIndex from "lodash/findIndex.js";
 import range from "lodash/range.js";
 import includes from "lodash/includes.js";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
+import { getTrendDividerPlotLines } from "./chartTrendDivider.js";
 
 function preprocessMeasureGroupItems(
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
@@ -44,6 +45,7 @@ export function getXAxes(
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
+    categories: any[], // categories are not typed sometimes
 ): IAxis[] {
     const { type, enableJoinedAttributeAxisName } = config;
 
@@ -89,9 +91,13 @@ export function getXAxes(
     }
 
     const xLabel = config.xLabel || (viewByAttribute ? viewByAttribute.formOf.name : "");
+    const plotLines = getTrendDividerPlotLines(type, categories, config);
+    const plotLinesProps = plotLines === undefined ? {} : { plotLines };
+
     return [
         {
             label: xLabel,
+            ...plotLinesProps,
         },
     ];
 }

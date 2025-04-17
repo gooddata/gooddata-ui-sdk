@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import {
     ColorAxisOptions,
@@ -300,4 +300,5 @@ export interface IAxis {
     format?: string;
     opposite?: boolean;
     seriesIndices?: number[];
+    plotLines?: number[]; // not used by all charts and by all axis
 }
