@@ -110,12 +110,16 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
         ...FORECAST_PROPERTIES,
         "dataPoints.visible",
         "continuousLine.enabled",
+        "xaxis.thresholds.enabled",
+        "xaxis.thresholds.trendThreshold",
     ],
     [AXIS.DUAL]: [
         ...BASE_CHART_SUPPORTED_PROPERTIES,
         ...BASE_SECONDARY_AXIS_PROPERTIES,
         "dataPoints.visible",
         "continuousLine.enabled",
+        "xaxis.thresholds.enabled",
+        "xaxis.thresholds.trendThreshold",
     ],
 };
 
