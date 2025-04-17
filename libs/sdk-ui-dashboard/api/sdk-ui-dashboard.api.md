@@ -748,7 +748,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
 }
 
 // @public
-export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionLocalId?: string, correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean): ChangeDateFilterSelection;
+export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionLocalId?: string, correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean, localIdentifier?: string): ChangeDateFilterSelection;
 
 // @alpha (undocumented)
 export interface ChangeDrillableItems extends IDashboardCommand {
@@ -1126,7 +1126,7 @@ export interface ChangeSharingPayload {
 export function changeWorkingAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string): ChangeAttributeFilterSelection;
 
 // @public
-export function clearDateFilterSelection(correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean): ChangeDateFilterSelection;
+export function clearDateFilterSelection(correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean, localIdentifier?: string): ChangeDateFilterSelection;
 
 // @alpha
 export function commandFailedEventHandler<TCommand extends IDashboardCommand>(type: TCommand["type"], handler: DashboardEventHandler<DashboardCommandFailed<TCommand>>["handler"]): DashboardEventHandler<DashboardCommandFailed<TCommand>>;
@@ -3333,6 +3333,7 @@ export interface DateFilterSelection {
     readonly from?: DateString | number;
     readonly granularity: DateFilterGranularity;
     readonly isWorkingSelectionChange?: boolean;
+    readonly localIdentifier?: string;
     readonly to?: DateString | number;
     readonly type: DateFilterType;
 }

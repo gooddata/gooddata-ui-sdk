@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 /**
  * This package provides foundational reusable code useful for building new or decorating existing Analytical Backend implementations.
  *
@@ -153,3 +153,5 @@ export {
 
 export type { ResultHeaderTransformer } from "./convertors/fromBackend/afm/result.js";
 export { transformResultHeaders } from "./convertors/fromBackend/afm/result.js";
+
+export { generateDateFilterLocalIdentifier } from "./generators/dateFilterLocalIdentifier.js";
