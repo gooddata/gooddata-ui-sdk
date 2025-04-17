@@ -46,6 +46,7 @@ import isEmpty from "lodash/isEmpty.js";
 import { ICustomWidget, FilterableDashboardWidget } from "../types/layoutTypes.js";
 import { selectSupportsMultipleDateFilters } from "../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 
 export const QueryWidgetFiltersService = createQueryService("GDC.DASH/QUERY.WIDGET.FILTERS", queryService);
 
@@ -284,7 +285,9 @@ function* queryWithInsight(
     // this will cause the all time filter to be used instead of the insight date filter
     // if the dashboard date filter is not ignored by the widget
     if (!widgetAwareDashboardCommonDateFilters.length && widget.dateDataSet) {
-        widgetAwareDashboardCommonDateFilters.push(newAllTimeFilter(widget.dateDataSet));
+        widgetAwareDashboardCommonDateFilters.push(
+            newAllTimeFilter(widget.dateDataSet, generateDateFilterLocalIdentifier(0)),
+        );
     }
 
     const effectiveInsightFilters = insightFilters(insight);

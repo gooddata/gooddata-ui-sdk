@@ -176,7 +176,10 @@ export function newRelativeDateFilter(
  * @param dateDataSet - ref or identifier of the date data set to filter on
  * @public
  */
-export function newAllTimeFilter(dateDataSet: ObjRef | Identifier): IRelativeDateFilter {
+export function newAllTimeFilter(
+    dateDataSet: ObjRef | Identifier,
+    localIdentifier?: string,
+): IRelativeDateFilter {
     const dataSet = isObjRef(dateDataSet) ? dateDataSet : idRef(dateDataSet);
     return {
         relativeDateFilter: {
@@ -184,6 +187,7 @@ export function newAllTimeFilter(dateDataSet: ObjRef | Identifier): IRelativeDat
             granularity: "ALL_TIME_GRANULARITY",
             from: 0,
             to: 0,
+            ...(localIdentifier ? { localIdentifier } : {}),
         },
     };
 }
