@@ -1131,6 +1131,21 @@
         "comment": "",
         "limit": 0
     },
+    "properties.axis.thresholds": {
+        "value": "Thresholds",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.axis.trendThreshold": {
+        "value": "Trend",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.axis.noThreshold": {
+        "value": "none",
+        "comment": "",
+        "limit": 0
+    },
     "properties.axis.format": {
         "value": "Format",
         "comment": "",

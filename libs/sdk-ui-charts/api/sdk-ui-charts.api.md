@@ -200,6 +200,8 @@ export interface IAxisConfig {
     min?: string;
     name?: IAxisNameConfig;
     rotation?: string;
+    // @internal
+    thresholds?: IThresholds;
     visible?: boolean;
 }
 
@@ -325,6 +327,8 @@ export interface IChartConfig {
     // @internal
     enableHighchartsAccessibility?: boolean;
     enableJoinedAttributeAxisName?: boolean;
+    // @internal
+    enableLineChartTrendThreshold?: boolean;
     enableReversedStacking?: boolean;
     // (undocumented)
     enableSeparateTotalLabels?: boolean;
@@ -884,6 +888,12 @@ export const isTreemap: LodashIsEqual1x1;
 
 // @internal (undocumented)
 export const isWaterfall: LodashIsEqual1x1;
+
+// @internal
+export interface IThresholds {
+    enabled: boolean;
+    trendThreshold: number;
+}
 
 // @public
 export interface ITooltipConfig {

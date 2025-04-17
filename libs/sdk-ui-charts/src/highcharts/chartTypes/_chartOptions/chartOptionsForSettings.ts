@@ -29,5 +29,6 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
         ...(settings.enableVisualizationFineTuning ? { enableVisualizationFineTuning: true } : {}),
         ...(settings.enableExecutionCancelling ? { enableExecutionCancelling: true } : {}),
         ...(settings.enableHighchartsAccessibility ? { enableHighchartsAccessibility: true } : {}),
+        ...(settings.enableLineChartTrendThreshold ? { enableLineChartTrendThreshold: true } : {}),
     };
 }

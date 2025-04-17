@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { AXIS } from "./axis.js";
 import { HeadlineControlProperties } from "../interfaces/ControlProperties.js";
 import { CalculateAs } from "@gooddata/sdk-ui-charts";
@@ -96,7 +96,13 @@ export const COLUMN_CHART_SUPPORTED_PROPERTIES = {
 };
 
 export const LINE_CHART_SUPPORTED_PROPERTIES = {
-    [AXIS.PRIMARY]: [...BASE_CHART_SUPPORTED_PROPERTIES, "dataPoints.visible", "continuousLine.enabled"],
+    [AXIS.PRIMARY]: [
+        ...BASE_CHART_SUPPORTED_PROPERTIES,
+        "dataPoints.visible",
+        "continuousLine.enabled",
+        "xaxis.thresholds.enabled",
+        "xaxis.thresholds.trendThreshold",
+    ],
     [AXIS.SECONDARY]: [
         ...BASE_PROPERTIES,
         ...BASE_X_AXIS_PROPERTIES,
