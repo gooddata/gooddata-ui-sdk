@@ -1,7 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-.gd-ui-kit-button,
-%ui-button {
+.gd-ui-kit-button {
     $root: &;
 
     font-family: var(--gd-font-family);
@@ -19,18 +18,6 @@
         cursor: default;
     }
 
-    //TODO: move this directly where used or set more globally
-    %ui-button__text {
-        transition: var(--gd-transition-all);
-    }
-
-    %ui-button__icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: var(--gd-transition-all);
-    }
-
     /**
      * Size
      */
@@ -39,13 +26,13 @@
             height: var(--gd-button-S);
             padding: 0 var(--gd-spacing-10px);
             font-size: 12px;
-            line-height: 14px;
-            &:has(svg + span) {
-                padding-left: 7px;
+
+            &#{$root}--hasIconBefore {
+                padding-left: var(--gd-spacing-7px);
             }
 
-            &:has(span + svg) {
-                padding-right: 7px;
+            &#{$root}--hasIconAfter {
+                padding-right: var(--gd-spacing-7px);
             }
         }
 
@@ -53,13 +40,13 @@
             height: var(--gd-button-M);
             padding: 0 var(--gd-spacing-15px);
             font-size: 14px;
-            line-height: 16px;
-            &:has(svg + span) {
-                padding-left: 10px;
+
+            &#{$root}--hasIconBefore {
+                padding-left: var(--gd-spacing-10px);
             }
 
-            &:has(span + svg) {
-                padding-right: 10px;
+            &#{$root}--hasIconAfter {
+                padding-right: var(--gd-spacing-10px);
             }
         }
 
@@ -67,13 +54,13 @@
             height: var(--gd-button-L);
             padding: 0 var(--gd-spacing-20px);
             font-size: 16px;
-            line-height: 18px;
-            &:has(svg + span) {
-                padding-left: 15px;
+
+            &#{$root}--hasIconBefore {
+                padding-left: var(--gd-spacing-15px);
             }
 
-            &:has(span + svg) {
-                padding-right: 15px;
+            &#{$root}--hasIconAfter {
+                padding-right: var(--gd-spacing-15px);
             }
         }
     }
@@ -166,8 +153,7 @@
             }
         }
 
-        &-tertiary,
-        %ui-button--variant-tertiary {
+        &-tertiary {
             svg {
                 color: var(--gd-palette-complementary-5);
             }

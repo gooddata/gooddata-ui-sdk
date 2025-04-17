@@ -48,10 +48,12 @@ export const UiButton = ({
     dataId,
 }: UiButtonProps) => {
     const iconSize = size === "small" ? 16 : 18;
+    const hasIconBefore = !!iconBefore;
+    const hasIconAfter = !!iconAfter;
     return (
         <button
             ref={buttonRef}
-            className={b({ size, variant, isLoading })}
+            className={b({ size, variant, isLoading, hasIconBefore, hasIconAfter })}
             disabled={isDisabled}
             tabIndex={0}
             onClick={onClick}

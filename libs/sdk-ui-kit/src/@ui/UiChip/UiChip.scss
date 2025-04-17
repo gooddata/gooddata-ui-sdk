@@ -1,7 +1,5 @@
 // (C) 2025 GoodData Corporation
 
-@use "../UiButton//UiButton.scss";
-
 $border-radius: 20px;
 $background-color: var(--gd-palette-complementary-0);
 $border-color: var(--gd-palette-complementary-4);
@@ -90,17 +88,21 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
         }
 
         #{$root}__delete {
-            svg {
-                --gd-icon-fill-color: var(--gd-palette-error-base);
-            }
+            color: var(--gd-palette-error-base);
         }
     }
 
     &__trigger,
     &__delete {
-        @extend %ui-button;
-        @extend %ui-button--variant-tertiary;
-
+        color: var(--gd-palette-complementary-7);
+        background-color: transparent;
+        line-height: 0;
+        border-radius: var(--gd-button-borderRadius);
+        transition: var(--gd-transition-all);
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
         height: 100%;
         min-width: 0;
         flex-shrink: 1;
@@ -108,6 +110,11 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
         text-decoration: none;
         padding: 0 10px;
         border: none;
+
+        &:disabled {
+            cursor: default;
+            color: var(--gd-palette-complementary-5);
+        }
     }
 
     &__trigger {
@@ -132,6 +139,18 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
             }
         }
 
+        &:not(&:disabled) {
+            &:hover,
+            &:focus,
+            &:active {
+                svg {
+                    color: var(--gd-palette-primary-base);
+                }
+
+                color: var(--gd-palette-complementary-8);
+            }
+        }
+
         &:not(&--isDeletable) {
             border-radius: $border-radius;
             border: none;
@@ -142,31 +161,45 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
         flex-shrink: 0;
         border-radius: 0 $border-radius $border-radius 0;
         padding: 0 7px 0 5px;
+
+        &:not(&:disabled) {
+            &:hover,
+            &:focus,
+            &:active {
+                svg {
+                    color: var(--gd-palette-error-base);
+                }
+
+                color: var(--gd-palette-complementary-8);
+            }
+        }
     }
 
     &__label {
-        @extend %ui-button__text;
-
+        transition: var(--gd-transition-all);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
     &__tag {
-        @extend %ui-button__text;
-
+        transition: var(--gd-transition-all);
         margin-left: 2px;
     }
 
     &__icon-before {
-        @extend %ui-button__icon;
-
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--gd-transition-all);
         margin-right: 5px;
     }
 
     &__icon-chevron {
-        @extend %ui-button__icon;
-
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--gd-transition-all);
         display: none;
         margin-left: 5px;
 
@@ -181,12 +214,18 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
     }
 
     &__icon-lock {
-        @extend %ui-button__icon;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--gd-transition-all);
 
         margin-left: 5px;
     }
 
     &__icon-delete {
-        @extend %ui-button__icon;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--gd-transition-all);
     }
 }
