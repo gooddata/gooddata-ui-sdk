@@ -70,6 +70,7 @@
      */
     &--variant {
         &-primary {
+            --gd-icon-fill-color: var(--gd-palette-complementary-0);
             color: var(--gd-palette-complementary-0);
             background-color: var(--gd-palette-primary-base);
             border-color: var(--gd-palette-complementary-9-t90);
@@ -102,10 +103,7 @@
         }
 
         &-secondary {
-            svg {
-                color: var(--gd-palette-complementary-5);
-            }
-
+            --gd-icon-fill-color: var(--gd-palette-complementary-5);
             color: var(--gd-palette-complementary-7);
             border-color: var(--gd-palette-complementary-4);
             background-color: var(--gd-palette-complementary-0);
@@ -113,9 +111,8 @@
 
             &:not(&:disabled) {
                 &:focus {
-                    svg {
-                        color: var(--gd-palette-primary-base);
-                    }
+                    --gd-icon-fill-color: var(--gd-palette-primary-base);
+
                     color: var(--gd-palette-complementary-8);
                     background: var(--gd-palette-complementary-1);
                     box-shadow: var(--gd-button-dropShadow, 0 -2px 0 0) var(--gd-palette-complementary-5-t40)
@@ -123,9 +120,8 @@
                 }
 
                 &:hover {
-                    svg {
-                        color: var(--gd-palette-primary-base);
-                    }
+                    --gd-icon-fill-color: var(--gd-palette-primary-base);
+
                     color: var(--gd-palette-complementary-8);
                     border-color: var(--gd-palette-complementary-5);
                     background: var(--gd-palette-complementary-0);
@@ -134,9 +130,8 @@
                 }
 
                 &:active {
-                    svg {
-                        color: var(--gd-palette-primary-base);
-                    }
+                    --gd-icon-fill-color: var(--gd-palette-primary-base);
+
                     color: var(--gd-palette-complementary-8);
                     border-color: var(--gd-palette-complementary-5);
                     background: var(--gd-palette-complementary-3);
@@ -154,13 +149,9 @@
         }
 
         &-tertiary {
-            svg {
-                color: var(--gd-palette-complementary-5);
-            }
-
-            padding: 0;
-
+            --gd-icon-fill-color: var(--gd-palette-complementary-5);
             color: var(--gd-palette-complementary-7);
+            padding: 0;
             text-decoration: underline;
             background-color: transparent;
             border-color: transparent;
@@ -169,9 +160,7 @@
                 &:hover,
                 &:focus,
                 &:active {
-                    svg {
-                        color: var(--gd-palette-primary-base);
-                    }
+                    --gd-icon-fill-color: var(--gd-palette-primary-base);
 
                     color: var(--gd-palette-complementary-8);
                 }
@@ -184,9 +173,9 @@
         }
 
         &-popout {
-            padding: 0;
-
+            --gd-icon-fill-color: var(--gd-palette-primary-base);
             color: var(--gd-palette-primary-base);
+            padding: 0;
             background-color: transparent;
             border-color: transparent;
 
@@ -204,8 +193,9 @@
         }
 
         &-danger {
-            background: var(--gd-palette-error-base);
+            --gd-icon-fill-color: var(--gd-palette-complementary-0);
             color: var(--gd-palette-complementary-0);
+            background: var(--gd-palette-error-base);
             border-color: var(--gd-palette-complementary-9-t90);
             font-weight: 700;
 
