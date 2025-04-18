@@ -1,16 +1,13 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 import { FilterContextItem, IAttributeFilter, IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
-import {
-    AttributeFilterButton,
-    IAttributeFilterButtonProps,
-    IAttributeFilterDropdownButtonProps,
-} from "@gooddata/sdk-ui-filters";
+import { AttributeFilterButton, IAttributeFilterButtonProps } from "@gooddata/sdk-ui-filters";
 import { UiChip, UiSkeleton } from "@gooddata/sdk-ui-kit";
 import noop from "lodash/noop.js";
 import { DefaultDashboardAttributeFilter } from "../../../presentation/filterBar/index.js";
 import { attributeFilterToDashboardAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
+import isEqual from "lodash/isEqual.js";
 
 export const AutomationAttributeFilter: React.FC<{
     filter: IDashboardAttributeFilter;
@@ -19,50 +16,60 @@ export const AutomationAttributeFilter: React.FC<{
     isLocked?: boolean;
     displayAsLabel?: ObjRef;
 }> = ({ filter, onChange, onDelete, isLocked, displayAsLabel }) => {
+    const localFilter = useRef(filter);
+    const [validator, invalidate] = useReducer((x) => x + 1, 0);
+
+    // We only invalidate the component if the filter changes
+    // from the outside and not by onChange handler.
+    useEffect(() => {
+        if (isEqual(localFilter.current, filter)) {
+            return;
+        }
+        localFilter.current = filter;
+        invalidate();
+    }, [filter, invalidate]);
+
     const CustomAttributeFilter = useMemo(() => {
         return function AttributeFilter(props: IAttributeFilterButtonProps) {
-            const CustomLoadingComponent = useMemo(() => {
-                return function LoadingComponent() {
-                    return <UiSkeleton itemWidth={160} itemHeight={27} itemBorderRadius={20} />;
-                };
-            }, []);
-
-            const CustomDropdownButtonComponent = useMemo(() => {
-                return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
-                    return (
-                        <UiChip
-                            label={props.title! + ": " + props.subtitle!}
-                            tag={props.selectedItemsCount ? `(${props.selectedItemsCount})` : undefined}
-                            isLocked={isLocked}
-                            isActive={props.isOpen}
-                            isDeletable={!isLocked}
-                            onClick={props.onClick}
-                            onDelete={() => onDelete(filter)}
-                        />
-                    );
-                };
-            }, []);
-
             const handleOnApply = useCallback((newFilter: IAttributeFilter) => {
-                onChange(
-                    attributeFilterToDashboardAttributeFilter(
-                        newFilter,
-                        filter.attributeFilter.localIdentifier,
-                        filter.attributeFilter.title,
-                    ),
+                // Store the updated filter locally to prevent the entire component from being reinitialized
+                localFilter.current = attributeFilterToDashboardAttributeFilter(
+                    newFilter,
+                    filter.attributeFilter.localIdentifier,
+                    filter.attributeFilter.title,
                 );
+                onChange(localFilter.current);
             }, []);
 
             return (
                 <AttributeFilterButton
                     {...props}
                     onApply={handleOnApply}
-                    LoadingComponent={CustomLoadingComponent}
-                    DropdownButtonComponent={CustomDropdownButtonComponent}
+                    LoadingComponent={() => (
+                        <UiSkeleton itemWidth={160} itemHeight={27} itemBorderRadius={20} />
+                    )}
+                    DropdownButtonComponent={(dropdownProps) => (
+                        <UiChip
+                            label={dropdownProps.title! + ": " + dropdownProps.subtitle!}
+                            tag={
+                                dropdownProps.selectedItemsCount
+                                    ? `(${dropdownProps.selectedItemsCount})`
+                                    : undefined
+                            }
+                            isLocked={isLocked}
+                            isActive={dropdownProps.isOpen}
+                            isDeletable={!isLocked}
+                            onClick={dropdownProps.onClick}
+                            onDelete={() => onDelete(filter)}
+                        />
+                    )}
                 />
             );
         };
-    }, [isLocked, onDelete, filter, onChange]);
+        // We only want this to be dependent on validator as all other props are already
+        // depenendent on changing filter, so the memoization would not work by design.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [validator]);
 
     return (
         <DefaultDashboardAttributeFilter
