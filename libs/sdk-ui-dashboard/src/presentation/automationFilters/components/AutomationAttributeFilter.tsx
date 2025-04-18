@@ -3,11 +3,16 @@
 import React, { useCallback, useEffect, useMemo, useReducer, useRef } from "react";
 import { FilterContextItem, IAttributeFilter, IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import { AttributeFilterButton, IAttributeFilterButtonProps } from "@gooddata/sdk-ui-filters";
-import { UiChip, UiSkeleton } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, UiChip, UiSkeleton } from "@gooddata/sdk-ui-kit";
 import noop from "lodash/noop.js";
 import { DefaultDashboardAttributeFilter } from "../../../presentation/filterBar/index.js";
 import { attributeFilterToDashboardAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import isEqual from "lodash/isEqual.js";
+
+const tooltipAlignPoints = [
+    { align: "bl tl", offset: { x: 11, y: 0 } },
+    { align: "tl bl", offset: { x: 11, y: 0 } },
+];
 
 export const AutomationAttributeFilter: React.FC<{
     filter: IDashboardAttributeFilter;
@@ -48,21 +53,29 @@ export const AutomationAttributeFilter: React.FC<{
                     LoadingComponent={() => (
                         <UiSkeleton itemWidth={160} itemHeight={27} itemBorderRadius={20} />
                     )}
-                    DropdownButtonComponent={(dropdownProps) => (
-                        <UiChip
-                            label={dropdownProps.title! + ": " + dropdownProps.subtitle!}
-                            tag={
-                                dropdownProps.selectedItemsCount
-                                    ? `(${dropdownProps.selectedItemsCount})`
-                                    : undefined
-                            }
-                            isLocked={isLocked}
-                            isActive={dropdownProps.isOpen}
-                            isDeletable={!isLocked}
-                            onClick={dropdownProps.onClick}
-                            onDelete={() => onDelete(filter)}
-                        />
-                    )}
+                    DropdownButtonComponent={(dropdownProps) => {
+                        const label = `${dropdownProps.title!}: ${dropdownProps.subtitle!}`;
+                        const tag = dropdownProps.selectedItemsCount
+                            ? `(${dropdownProps.selectedItemsCount})`
+                            : undefined;
+                        return (
+                            <BubbleHoverTrigger showDelay={200} hideDelay={0}>
+                                <UiChip
+                                    label={label}
+                                    tag={tag}
+                                    isLocked={isLocked}
+                                    isActive={dropdownProps.isOpen}
+                                    isDeletable={!isLocked}
+                                    onClick={dropdownProps.onClick}
+                                    onDelete={() => onDelete(filter)}
+                                />
+                                <Bubble alignPoints={tooltipAlignPoints}>
+                                    {label}
+                                    {tag ? ` ${tag}` : null}
+                                </Bubble>
+                            </BubbleHoverTrigger>
+                        );
+                    }}
                 />
             );
         };
