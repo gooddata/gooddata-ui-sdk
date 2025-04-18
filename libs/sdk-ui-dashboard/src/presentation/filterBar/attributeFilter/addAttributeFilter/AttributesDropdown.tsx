@@ -77,6 +77,7 @@ export function AttributesDropdown({
     openOnInit = true,
     DropdownButtonComponent = AddAttributeFilterButton,
     DropdownTitleComponent,
+    renderNoData,
 }: IDashboardAttributeFilterPlaceholderProps) {
     const intl = useIntl();
     const [searchQuery, setSearchQuery] = useState("");
@@ -222,6 +223,7 @@ export function AttributesDropdown({
                             searchPlaceholder={intl.formatMessage({
                                 id: "attributesDropdown.placeholder",
                             })}
+                            renderNoData={renderNoData}
                             renderItem={({ item }) => {
                                 if (isCatalogAttribute(item)) {
                                     return (

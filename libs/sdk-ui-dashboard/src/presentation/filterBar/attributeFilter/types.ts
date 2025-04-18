@@ -10,6 +10,7 @@ import {
 import { IDashboardAttributeFilterParentItem, IDashboardDependentDateFilter } from "../../../model/index.js";
 import type { IAttributeFilterButtonProps } from "@gooddata/sdk-ui-filters";
 import { IAddAttributeFilterButtonProps } from "./addAttributeFilter/AddAttributeFilterButton.js";
+import { IDropdownListNoDataRenderProps } from "@gooddata/sdk-ui-kit";
 
 /**
  * @public
@@ -102,6 +103,7 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     openOnInit?: boolean;
     DropdownButtonComponent?: ComponentType<IAddAttributeFilterButtonProps>;
     DropdownTitleComponent?: ComponentType;
+    renderNoData?: (props: IDropdownListNoDataRenderProps) => React.ReactNode;
 }
 
 /**

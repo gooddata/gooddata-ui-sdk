@@ -146,12 +146,20 @@ export function ScheduledMailDialogRenderer({
         enableAutomationFilterContext,
     } = useDefaultScheduledEmailDialogData({ filters: allDashboardFilters ?? [] });
 
-    const { availableFilters, automationFilters, setAutomationFilters, allVisibleFiltersMetadata } =
-        useAutomationFiltersData({
-            allFilters: allDashboardFilters,
-            storedFilters: dashboardFilters,
-            enableAutomationFilterContext,
-        });
+    const {
+        availableFilters,
+        automationFilters,
+        setAutomationFilters,
+        allVisibleFiltersMetadata,
+        arePersistedFiltersMissingOnDashboard,
+    } = useAutomationFiltersData({
+        allFilters: allDashboardFilters,
+        storedDashboardFilters: dashboardFilters,
+        storedWidgetFilters: widgetFilters,
+        metadataVisibleFilters: scheduledExportToEdit?.metadata?.visibleFilters,
+        enableAutomationFilterContext,
+        isEditing: !!scheduledExportToEdit,
+    });
 
     const {
         defaultUser,
@@ -295,6 +303,7 @@ export function ScheduledMailDialogRenderer({
                                         useFilters={useFilters}
                                         onUseFiltersChange={onUseFiltersChange}
                                         isDashboardAutomation={isDashboardExportSelected}
+                                        areFiltersMissing={arePersistedFiltersMissingOnDashboard}
                                     />
                                     <ContentDivider className="gd-divider-with-margin" />
                                 </>
