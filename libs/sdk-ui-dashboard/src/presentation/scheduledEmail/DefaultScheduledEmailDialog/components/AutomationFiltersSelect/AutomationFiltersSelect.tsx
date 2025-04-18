@@ -8,7 +8,7 @@ import { FilterContextItem } from "@gooddata/sdk-model";
 export interface IAutomationFiltersSelectProps {
     availableFilters: FilterContextItem[] | undefined;
     selectedFilters: FilterContextItem[] | undefined;
-    onFiltersChange: (filters: FilterContextItem[]) => void;
+    onFiltersChange: (filters: FilterContextItem[], storeFilters?: boolean) => void;
     useFilters: boolean;
     onUseFiltersChange: (value: boolean, filters: FilterContextItem[]) => void;
     isDashboardAutomation?: boolean;
