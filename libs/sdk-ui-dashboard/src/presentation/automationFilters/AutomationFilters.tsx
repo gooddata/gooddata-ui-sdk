@@ -11,7 +11,7 @@ import {
     IDashboardDateFilterConfigItem,
     isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, Button, Icon, Typography, UiButton } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Button, Icon, Typography } from "@gooddata/sdk-ui-kit";
 import { AttributesDropdown } from "../filterBar/index.js";
 import { useAutomationFilters } from "./useAutomationFilters.js";
 import { AutomationAttributeFilter } from "./components/AutomationAttributeFilter.js";
@@ -22,6 +22,7 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 const TOOLTIP_ALIGN_POINTS = [{ align: "cr cl" }, { align: "cl cr" }];
 
 export interface IAutomationFiltersProps {
+    id?: string;
     availableFilters: FilterContextItem[] | undefined;
     selectedFilters: FilterContextItem[] | undefined;
     onFiltersChange: (filters: FilterContextItem[]) => void;
@@ -31,6 +32,7 @@ export interface IAutomationFiltersProps {
 }
 
 export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
+    id,
     availableFilters = [],
     selectedFilters = [],
     onFiltersChange,
@@ -58,7 +60,7 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
     });
 
     return (
-        <div className="gd-automation-filters">
+        <div id={id} className="gd-automation-filters">
             <div
                 className={cx("gd-automation-filters__list", {
                     "gd-automation-filters__list--expanded": isExpanded,
@@ -66,14 +68,16 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
             >
                 {selectedFilters.length > 1 ? (
                     <span className="gd-automation-filters__expansion-button s-automation-filters-show-all-button">
-                        <UiButton
-                            label={
+                        <Button
+                            className={cx("gd-button gd-button-link-dimmed gd-button-small gd-icon-right", {
+                                "gd-icon-chevron-up": isExpanded,
+                                "gd-icon-chevron-down": !isExpanded,
+                            })}
+                            value={
                                 isExpanded
                                     ? intl.formatMessage({ id: "dialogs.schedule.email.filters.showLess" })
                                     : intl.formatMessage({ id: "dialogs.schedule.email.filters.showAll" })
                             }
-                            iconAfter={isExpanded ? "chevronUp" : "chevronDown"}
-                            variant="tertiary"
                             onClick={() => setIsExpanded(!isExpanded)}
                         />
                     </span>
@@ -108,6 +112,11 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                             className="gd-button-link gd-button-icon-only gd-icon-plus"
                             size="small"
                             onClick={onClick}
+                            accessibilityConfig={{
+                                ariaLabel: intl.formatMessage({
+                                    id: "dialogs.schedule.email.filters.add",
+                                }),
+                            }}
                         />
                     )}
                     DropdownTitleComponent={() => (
@@ -131,6 +140,9 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                         className="input-checkbox s-checkbox"
                         checked={useFilters}
                         onChange={(e) => onUseFiltersChange(e.target.checked, selectedFilters)}
+                        aria-label={intl.formatMessage({
+                            id: "dialogs.schedule.email.filters.attachment",
+                        })}
                     />
                     <span className="input-label-text">
                         <FormattedMessage id="dialogs.schedule.email.filters.useFiltersMessage" />
@@ -141,6 +153,7 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                             color={theme?.palette?.complementary?.c6 ?? gdColorStateBlank}
                             width={14}
                             height={14}
+                            ariaHidden={true}
                         />
                         <Bubble alignPoints={TOOLTIP_ALIGN_POINTS}>
                             <FormattedMessage
