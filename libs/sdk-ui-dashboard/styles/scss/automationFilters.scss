@@ -66,6 +66,14 @@ $item-height: 27px;
         }
     }
 
+    &__dropdown-no-filters {
+        margin: 12px;
+        color: kit-variables.$gd-color-state-blank;
+        text-align: center;
+        line-height: 19px;
+        font-size: 14px;
+    }
+
     &__use-filters-checkbox {
         .input-label-text {
             color: kit-variables.$gd-color-link;

@@ -117,6 +117,11 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                             </Typography>
                         </div>
                     )}
+                    renderNoData={() => (
+                        <div className="gd-automation-filters__dropdown-no-filters">
+                            <FormattedMessage id="dialogs.schedule.email.filters.noFilters" />
+                        </div>
+                    )}
                 />
             </div>
             {isDashboardAutomation ? (
