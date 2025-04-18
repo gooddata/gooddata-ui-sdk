@@ -34,6 +34,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                 />
             </label>
             <AutomationFilters
+                id={accessibilityValue}
                 availableFilters={availableFilters}
                 selectedFilters={selectedFilters}
                 onFiltersChange={onFiltersChange}
