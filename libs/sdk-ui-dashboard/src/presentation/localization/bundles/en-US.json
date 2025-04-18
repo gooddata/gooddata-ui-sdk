@@ -713,6 +713,11 @@
         "comment": "Schedule filters dialog title",
         "limit": 0
     },
+    "dialogs.schedule.email.filters.noFilters": {
+        "value": "No more filters available",
+        "comment": "Schedule filters selection message",
+        "limit": 0
+    },
     "dialogs.schedule.email.filters.useFiltersMessage": {
         "value": "Always use these filters for future exports",
         "comment": "",
