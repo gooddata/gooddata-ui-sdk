@@ -39,9 +39,16 @@ export const UiChip = ({
 
     useLayoutEffect(() => {
         if (elemRef.current) {
-            setStyleObj({ width: elemRef.current.offsetWidth });
+            // Reset width to auto to calculate the width of the label and tag
+            elemRef.current.style.width = "auto";
+            // Calculate the width of all child nodes
+            const width = Array.from(elemRef.current.childNodes).reduce((acc, item: HTMLElement) => {
+                return acc + Math.floor((item.offsetWidth ?? 0) + 1);
+            }, 0);
+
+            setStyleObj({ width: Math.floor(width + 1) });
         }
-    }, []);
+    }, [label, tag]);
 
     return (
         <div className={b()} ref={elemRef} style={{ ...styleObj }}>
