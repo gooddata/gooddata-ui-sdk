@@ -1,6 +1,6 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, forwardRef } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { AccessGranularPermission } from "@gooddata/sdk-model";
@@ -18,50 +18,59 @@ interface IGranularPermissionItemProps {
     handleSetSelectedPermission: (permission: AccessGranularPermission) => void;
 }
 
-const GranularPermissionSelectItem: React.FC<IGranularPermissionItemProps> = ({
-    permission,
-    grantee,
-    selectedPermission,
-    toggleDropdown,
-    handleSetSelectedPermission,
-    onChange,
-}) => {
-    const intl = useIntl();
+const GranularPermissionSelectItem = forwardRef<HTMLDivElement, IGranularPermissionItemProps>(
+    (
+        { permission, grantee, selectedPermission, toggleDropdown, handleSetSelectedPermission, onChange },
+        ref,
+    ) => {
+        const intl = useIntl();
 
-    const handleOnChange = useCallback(
-        (permission: IGranularPermissionTypeItem) => {
-            toggleDropdown();
-            if (permission.id !== selectedPermission) {
-                handleSetSelectedPermission(permission.id);
-                onChange({ ...grantee, permissions: [permission.id] });
-            }
-        },
-        [grantee, toggleDropdown, handleSetSelectedPermission, onChange, selectedPermission],
-    );
-
-    const isSelected = useMemo(() => permission.id === selectedPermission, [permission, selectedPermission]);
-
-    return (
-        <div
-            onClick={() => {
-                if (permission.enabled) {
-                    handleOnChange(permission);
+        const handleOnChange = useCallback(
+            (permission: IGranularPermissionTypeItem) => {
+                toggleDropdown();
+                if (permission.id !== selectedPermission) {
+                    handleSetSelectedPermission(permission.id);
+                    onChange({ ...grantee, permissions: [permission.id] });
                 }
-            }}
-            className={cx(
-                "gd-list-item",
-                "gd-menu-item",
-                "gd-granular-permission-select-item",
-                "s-granular-permission-item",
-                {
-                    "is-disabled": !permission.enabled,
-                    "is-selected": isSelected,
-                },
-            )}
-        >
-            <div>{intl.formatMessage(granularPermissionMessageLabels[permission.id])}</div>
-        </div>
-    );
-};
+            },
+            [grantee, toggleDropdown, handleSetSelectedPermission, onChange, selectedPermission],
+        );
+
+        const isSelected = useMemo(
+            () => permission.id === selectedPermission,
+            [permission, selectedPermission],
+        );
+
+        return (
+            <div
+                id={permission.id}
+                ref={ref}
+                onClick={() => {
+                    if (permission.enabled) {
+                        handleOnChange(permission);
+                    }
+                }}
+                tabIndex={permission.enabled ? 0 : -1}
+                role="option"
+                aria-selected={isSelected}
+                aria-disabled={!permission.enabled}
+                className={cx(
+                    "gd-list-item",
+                    "gd-menu-item",
+                    "gd-granular-permission-select-item",
+                    "s-granular-permission-item",
+                    {
+                        "is-disabled": !permission.enabled,
+                        "is-selected": isSelected,
+                    },
+                )}
+            >
+                <div>{intl.formatMessage(granularPermissionMessageLabels[permission.id])}</div>
+            </div>
+        );
+    },
+);
+
+GranularPermissionSelectItem.displayName = "GranularPermissionSelectItem";
 
 export const GranularPermissionSelectItemWithBubble = withBubble(GranularPermissionSelectItem);

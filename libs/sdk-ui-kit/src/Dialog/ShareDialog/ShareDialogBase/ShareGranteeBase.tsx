@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 import compact from "lodash/compact.js";
@@ -12,6 +12,7 @@ import { SharedObjectUnderLenientControl } from "./SharedObjectUnderLenientContr
 import { SharedObjectLockControl } from "./SharedObjectLockControl.js";
 import { useAdminInformationMessageState } from "./useAdminInformationMessage.js";
 import { AdminInformationMessage } from "./AdminInformationMessage.js";
+import { ADD_GRANTEE_ID } from "./utils.js";
 
 /**
  * @internal
@@ -79,6 +80,12 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
             submitButtonText={dialogLabels.submitButtonText}
             onCancel={onCancel}
             onSubmit={onSubmit}
+            initialFocus={ADD_GRANTEE_ID}
+            accessibilityConfig={{
+                closeButton: {
+                    ariaLabel: intl.formatMessage({ id: "dialogs.closeLabel" }),
+                },
+            }}
         >
             <ShareGranteeContent
                 currentUserPermissions={currentUserPermissions}

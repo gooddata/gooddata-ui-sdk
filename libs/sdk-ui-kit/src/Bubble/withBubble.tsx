@@ -1,8 +1,8 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { Bubble } from "./Bubble.js";
 import { BubbleHoverTrigger } from "./BubbleHoverTrigger.js";
-import React, { ReactNode } from "react";
+import React, { ReactNode, forwardRef } from "react";
 import { IAlignPoint } from "../typings/positioning.js";
 import { useIntl } from "react-intl";
 
@@ -20,7 +20,7 @@ export interface IWithBubbleProps {
  * @internal
  */
 export function withBubble<T>(WrappedComponent: React.ComponentType<T>) {
-    const ResultComponent: React.FC<T & IWithBubbleProps> = (props) => {
+    const ResultComponent = forwardRef<any, T & IWithBubbleProps>((props, ref) => {
         const {
             showBubble = true,
             alignPoints = [{ align: "cr cl" }],
@@ -32,7 +32,7 @@ export function withBubble<T>(WrappedComponent: React.ComponentType<T>) {
         const intl = useIntl();
 
         if (!showBubble || !bubbleTextId) {
-            return <WrappedComponent {...props} />;
+            return <WrappedComponent {...props} ref={ref} />;
         }
         const bubbleText = intl.formatMessage(
             { id: bubbleTextId },
@@ -41,12 +41,17 @@ export function withBubble<T>(WrappedComponent: React.ComponentType<T>) {
 
         return (
             <BubbleHoverTrigger className={triggerClassName}>
-                <WrappedComponent {...(wrappedComponentProps as T)} />
+                <WrappedComponent {...(wrappedComponentProps as T)} ref={ref} />
                 <Bubble alignPoints={alignPoints}>
                     <div>{bubbleText}</div>
                 </Bubble>
             </BubbleHoverTrigger>
         );
-    };
+    });
+
+    ResultComponent.displayName = `withBubble(${
+        WrappedComponent.displayName || WrappedComponent.name || "Component"
+    })`;
+
     return ResultComponent;
 }

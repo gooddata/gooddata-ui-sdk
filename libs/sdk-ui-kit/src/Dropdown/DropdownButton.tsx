@@ -48,7 +48,7 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
     dropdownId,
     buttonRef,
 }) => {
-    const { ariaLabel, ariaLabelledBy } = accessibilityConfig ?? {};
+    const { ariaLabel, ariaLabelledBy, ariaDescribedBy } = accessibilityConfig ?? {};
 
     const buttonClasses = cx(
         "gd-button-primary",
@@ -68,6 +68,7 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
               popupId: dropdownId,
               ariaLabel,
               ariaLabelledBy,
+              ariaDescribedBy,
               role: "combobox",
           }
         : {

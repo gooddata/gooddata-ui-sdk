@@ -47,10 +47,16 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
             headline={intl.formatMessage({ id: "shareDialog.share.grantee.add.info" })}
             cancelButtonText={intl.formatMessage({ id: "cancel" })}
             submitButtonText={intl.formatMessage({ id: "shareDialog.share.grantee.share" })}
+            submitOnEnterKey={false}
             onCancel={onBackClick}
             onSubmit={onSubmit}
             onClose={onCancel}
             headerLeftButtonRenderer={backButtonRenderer}
+            accessibilityConfig={{
+                closeButton: {
+                    ariaLabel: intl.formatMessage({ id: "dialogs.closeLabel" }),
+                },
+            }}
         >
             <AddGranteeContent
                 currentUserPermissions={currentUserPermissions}

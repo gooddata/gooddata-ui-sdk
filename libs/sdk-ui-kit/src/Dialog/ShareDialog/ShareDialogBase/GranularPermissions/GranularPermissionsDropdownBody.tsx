@@ -1,6 +1,6 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { AccessGranularPermission } from "@gooddata/sdk-model";
@@ -14,21 +14,24 @@ import { IAlignPoint } from "../../../../typings/positioning.js";
 import { withBubble } from "../../../../Bubble/index.js";
 import { granularPermissionMessageLabels } from "../../../../locales.js";
 import { useShareDialogInteraction } from "../ComponentInteractionContext.js";
+import { makeMenuKeyboardNavigation } from "../../../../@ui/@utils/keyboardNavigation.js";
 
 interface IGranularPermissionsDropdownBodyProps {
     alignTo: string;
     grantee: IGranularGrantee;
     granteePossibilities: IGranteePermissionsPossibilities;
-    isShowDropdown: boolean;
     selectedPermission: AccessGranularPermission;
     toggleDropdown(): void;
     onChange: (grantee: GranteeItem) => void;
     onDelete: (grantee: GranteeItem) => void;
     handleSetSelectedPermission: (permission: AccessGranularPermission) => void;
     mode: DialogModeType;
+    id?: string;
 }
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
+
+const REMOVE_GRANULAR_PERMISSION_ID = "granular-permission-remove-id";
 
 const RemoveItem: React.FC<{ disabled: boolean; tooltipId: string; onClick: () => void }> = ({
     disabled,
@@ -42,7 +45,13 @@ const RemoveItem: React.FC<{ disabled: boolean; tooltipId: string; onClick: () =
     const FormattedMessageWithBubble = withBubble(FormattedMessage);
 
     return (
-        <div className={className} onClick={onClick}>
+        <div
+            id={REMOVE_GRANULAR_PERMISSION_ID}
+            role="option"
+            tabIndex={disabled ? -1 : 0}
+            className={className}
+            onClick={onClick}
+        >
             <FormattedMessageWithBubble
                 id={granularPermissionMessageLabels.remove.id}
                 showBubble={disabled}
@@ -56,15 +65,25 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
     grantee,
     granteePossibilities,
     alignTo,
-    isShowDropdown,
     selectedPermission,
     toggleDropdown,
     onChange,
     onDelete,
     handleSetSelectedPermission,
     mode,
+    id,
 }) => {
     const { permissionsChangeInteraction, permissionsRemoveInteraction } = useShareDialogInteraction();
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    const selectedItemRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (selectedItemRef.current) {
+            setTimeout(() => {
+                selectedItemRef.current?.focus();
+            }, 100);
+        }
+    }, []);
 
     const handleOnDelete = useCallback(() => {
         if (granteePossibilities.remove.enabled) {
@@ -96,9 +115,69 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
         [grantee, onChange, mode, granteePossibilities, permissionsChangeInteraction],
     );
 
-    if (!isShowDropdown) {
-        return null;
-    }
+    const handleKeyDown = useCallback(
+        (event: React.KeyboardEvent) => {
+            if (!dropdownRef.current) return;
+
+            const items = Array.from(dropdownRef.current.querySelectorAll('[tabIndex="0"]'));
+            const currentIndex = items.findIndex((item) => item === document.activeElement);
+
+            const keyboardHandler = makeMenuKeyboardNavigation({
+                onFocusPrevious: () => {
+                    if (currentIndex > 0) {
+                        (items[currentIndex - 1] as HTMLElement).focus();
+                    } else {
+                        (items[items.length - 1] as HTMLElement).focus();
+                    }
+                },
+                onFocusNext: () => {
+                    if (currentIndex < items.length - 1) {
+                        (items[currentIndex + 1] as HTMLElement).focus();
+                    } else {
+                        (items[0] as HTMLElement).focus();
+                    }
+                },
+                onFocusFirst: () => {
+                    (items[0] as HTMLElement).focus();
+                },
+                onFocusLast: () => {
+                    (items[items.length - 1] as HTMLElement).focus();
+                },
+                onSelect: () => {
+                    if (document.activeElement) {
+                        const activeElement = document.activeElement;
+                        if (activeElement.id === REMOVE_GRANULAR_PERMISSION_ID) {
+                            handleOnDelete();
+                        } else {
+                            const permissionId = activeElement.id as AccessGranularPermission;
+                            if (permissionId && permissionId !== selectedPermission) {
+                                const changedGrantee: IGranularGrantee = {
+                                    ...grantee,
+                                    permissions: [permissionId],
+                                };
+                                toggleDropdown();
+                                handleSetSelectedPermission(permissionId);
+                                handleOnChange(changedGrantee);
+                            }
+                        }
+                    }
+                },
+                onClose: () => {
+                    toggleDropdown();
+                },
+            });
+
+            keyboardHandler(event);
+        },
+        [
+            toggleDropdown,
+            handleOnDelete,
+            handleOnChange,
+            handleSetSelectedPermission,
+            grantee,
+            selectedPermission,
+        ],
+    );
 
     return (
         <Overlay
@@ -111,31 +190,36 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
             closeOnParentScroll={true}
             onClose={toggleDropdown}
         >
-            <ItemsWrapper smallItemsSpacing={true}>
-                {granteePossibilities.assign.items.map((permissionItem) => {
-                    return (
-                        !permissionItem.hidden && (
-                            <GranularPermissionSelectItemWithBubble
-                                grantee={grantee}
-                                key={permissionItem.id}
-                                permission={permissionItem}
-                                selectedPermission={selectedPermission}
-                                toggleDropdown={toggleDropdown}
-                                onChange={handleOnChange}
-                                handleSetSelectedPermission={handleSetSelectedPermission}
-                                bubbleTextId={permissionItem.tooltip}
-                                showBubble={!permissionItem.enabled}
-                            />
-                        )
-                    );
-                })}
-                <Separator />
-                <RemoveItem
-                    disabled={!granteePossibilities.remove.enabled}
-                    onClick={handleOnDelete}
-                    tooltipId={granteePossibilities.remove.tooltip}
-                />
-            </ItemsWrapper>
+            <div id={id} ref={dropdownRef} onKeyDown={handleKeyDown} role="listbox">
+                <ItemsWrapper smallItemsSpacing={true}>
+                    {granteePossibilities.assign.items.map((permissionItem) => {
+                        return (
+                            !permissionItem.hidden && (
+                                <GranularPermissionSelectItemWithBubble
+                                    grantee={grantee}
+                                    key={permissionItem.id}
+                                    permission={permissionItem}
+                                    selectedPermission={selectedPermission}
+                                    toggleDropdown={toggleDropdown}
+                                    onChange={handleOnChange}
+                                    handleSetSelectedPermission={handleSetSelectedPermission}
+                                    bubbleTextId={permissionItem.tooltip}
+                                    showBubble={!permissionItem.enabled}
+                                    ref={
+                                        permissionItem.id === selectedPermission ? selectedItemRef : undefined
+                                    }
+                                />
+                            )
+                        );
+                    })}
+                    <Separator />
+                    <RemoveItem
+                        disabled={!granteePossibilities.remove.enabled}
+                        onClick={handleOnDelete}
+                        tooltipId={granteePossibilities.remove.tooltip}
+                    />
+                </ItemsWrapper>
+            </div>
         </Overlay>
     );
 };

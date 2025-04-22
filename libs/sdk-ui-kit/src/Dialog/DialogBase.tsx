@@ -4,7 +4,7 @@ import cx from "classnames";
 import { IDialogBaseProps } from "./typings.js";
 import { DialogCloseButton } from "./DialogCloseButton.js";
 import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
-import { isElementTextInput } from "../utils/domUtilities.js";
+import { isElementSubmitButton, isElementTextInput } from "../utils/domUtilities.js";
 
 const checkKeyHandler = (event: React.KeyboardEvent, key: string, handler?: () => void): void => {
     if (event.key !== key || !handler) {
@@ -38,6 +38,10 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
             // don't call onSubmit when pressing enter key on input fields
             const isEnterKeyDownOnInputField = event.key === "Enter" && isElementTextInput(event.target);
             if (submitOnEnterKey === false && isEnterKeyDownOnInputField) {
+                return;
+            }
+
+            if (event.key === "Enter" && !isElementSubmitButton(event) && !isElementTextInput(event.target)) {
                 return;
             }
 

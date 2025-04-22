@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
+import { CONFIRM_DIALOG_BASE_ID } from "../Dialog/elementId.js";
 import { IRegion } from "../typings/domUtilities.js";
 
 /**
@@ -142,4 +143,10 @@ export const isElementTextInput = (element: HTMLElement | EventTarget | null | u
         tagNameInLowercase === "textarea" ||
         (tagNameInLowercase === "input" && (typeInLowercase === "text" || typeInLowercase === "number"))
     );
+};
+
+export const isElementSubmitButton = (event: React.KeyboardEvent) => {
+    const { id } = event.target as HTMLElement;
+
+    return id === CONFIRM_DIALOG_BASE_ID;
 };

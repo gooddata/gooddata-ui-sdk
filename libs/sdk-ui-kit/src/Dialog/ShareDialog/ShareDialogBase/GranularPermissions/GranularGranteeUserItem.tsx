@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -19,12 +19,13 @@ interface IGranularGranteeUserItemProps {
     currentUserPermissions: CurrentUserPermissions;
     isSharedObjectLocked: boolean;
     mode: DialogModeType;
+    id?: string;
     onChange: (grantee: GranteeItem) => void;
     onDelete: (grantee: GranteeItem) => void;
 }
 
 export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = (props) => {
-    const { grantee, currentUserPermissions, isSharedObjectLocked, onChange, onDelete, mode } = props;
+    const { grantee, currentUserPermissions, isSharedObjectLocked, onChange, onDelete, mode, id } = props;
     const { email } = grantee;
     const { isDropdownOpen, toggleDropdown } = usePermissionsDropdownState();
     const { permissionsDropdownOpenInteraction } = useShareDialogInteraction();
@@ -73,8 +74,7 @@ export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = 
             <GranularPermissionsDropdownWithBubble
                 grantee={grantee}
                 granteePossibilities={granteePossibilities}
-                isDropdownOpen={isDropdownOpen}
-                toggleDropdown={handleToggleDropdown}
+                handleToggleDropdown={handleToggleDropdown}
                 onChange={onChange}
                 onDelete={onDelete}
                 isDropdownDisabled={!granteePossibilities.change.enabled}
@@ -82,8 +82,11 @@ export const GranularGranteeUserItem: React.FC<IGranularGranteeUserItemProps> = 
                 className="gd-grantee-granular-permission"
                 triggerClassName="gd-grantee-granular-permission-bubble-trigger"
                 mode={mode}
+                accessibilityConfig={{
+                    ariaDescribedBy: id,
+                }}
             />
-            <div className="gd-grantee-content">
+            <div id={id} className="gd-grantee-content">
                 <div className="gd-grantee-content-label">{label}</div>
                 {renderSubtitle ? (
                     <div className="gd-grantee-content-label gd-grantee-content-email">{email}</div>
