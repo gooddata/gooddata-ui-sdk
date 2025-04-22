@@ -497,6 +497,9 @@ export function* actionsToInitializeExistingDashboard(
             filterContextIdentity,
             attributeFilterDisplayForms,
         }),
+        overrideDefaultFilters
+            ? filterContextActions.setDefaultFilterOverrides(overrideDefaultFilters)
+            : null,
         layoutActions.setLayout(dashboardLayout),
         metaActions.setMeta({
             dashboard: persistedDashboard ?? dashboard,

@@ -193,6 +193,7 @@ export {
     selectIsAttributeFilterDependentByLocalIdentifier,
     selectFilterContextDateFilterByDataSet,
     selectPreloadedAttributesWithReferences,
+    selectDefaultFilterOverrides,
 } from "./filterContext/filterContextSelectors.js";
 export { getFilterIdentifier } from "./filterContext/filterContextUtils.js";
 export type { IImplicitDrillWithPredicates } from "./widgetDrills/widgetDrillSelectors.js";

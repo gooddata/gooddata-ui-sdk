@@ -4043,6 +4043,8 @@ export interface FilterContextState {
     // @beta
     attributesWithReferences?: IAttributeWithReferences[];
     // @beta
+    defaultFilterOverrides?: FilterContextItem[];
+    // @beta
     filterContextDefinition?: IFilterContextDefinition;
     // @beta
     filterContextIdentity?: IDashboardObjectIdentity;
@@ -8460,6 +8462,9 @@ export const selectDateFormat: DashboardSelector<string | undefined>;
 
 // @alpha (undocumented)
 export const selectDateHierarchyTemplates: DashboardSelector<IDateHierarchyTemplate[]>;
+
+// @beta
+export const selectDefaultFilterOverrides: DashboardSelector<FilterContextItem[] | undefined>;
 
 // @internal
 export const selectDeleteVisible: DashboardSelector<boolean>;

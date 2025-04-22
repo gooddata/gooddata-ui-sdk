@@ -666,3 +666,11 @@ export const selectPreloadedAttributesWithReferences: DashboardSelector<
 > = createSelector(selectSelf, (state) => {
     return state.attributesWithReferences;
 });
+
+/**
+ * Selects default filter overrides for the dashboard.
+ *
+ * @beta
+ */
+export const selectDefaultFilterOverrides: DashboardSelector<FilterContextItem[] | undefined> =
+    createSelector(selectSelf, (state) => state.defaultFilterOverrides);

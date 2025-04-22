@@ -800,6 +800,17 @@ const resetWorkingSelection: FilterContextReducer<PayloadAction> = (state) => {
 //
 //
 
+const setDefaultFilterOverrides: FilterContextReducer<PayloadAction<FilterContextItem[]>> = (
+    state,
+    action,
+) => {
+    state.defaultFilterOverrides = action.payload;
+};
+
+//
+//
+//
+
 export const filterContextReducers = {
     setFilterContext,
     updateFilterContextIdentity,
@@ -823,4 +834,5 @@ export const filterContextReducers = {
     setPreloadedAttributesWithReferences,
     applyWorkingSelection,
     resetWorkingSelection,
+    setDefaultFilterOverrides,
 };
