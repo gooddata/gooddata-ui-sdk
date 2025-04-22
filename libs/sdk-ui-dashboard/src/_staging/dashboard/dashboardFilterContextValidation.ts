@@ -200,6 +200,7 @@ function limitAttributeFilterToFirstElement(filter: IDashboardAttributeFilter): 
         ...filter,
         attributeFilter: {
             ...filter.attributeFilter,
+            selectionMode: "single",
         },
     };
 
