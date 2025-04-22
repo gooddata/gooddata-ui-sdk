@@ -1001,3 +1001,15 @@ export const selectEnableAutomationFilterContext: DashboardSelector<boolean> = c
         return Boolean(state.settings?.enableAutomationFilterContext) ?? false;
     },
 );
+
+/**
+ * Selector for the date filter local identifiers feature flag
+ *
+ * @internal
+ */
+export const selectEnableDateFilterIdentifiers: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return Boolean(state.settings?.enableDateFilterIdentifiersRollout) ?? false;
+    },
+);

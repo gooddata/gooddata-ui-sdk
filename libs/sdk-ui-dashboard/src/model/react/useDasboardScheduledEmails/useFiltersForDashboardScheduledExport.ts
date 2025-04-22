@@ -10,6 +10,7 @@ import {
     ICrossFilteringItem,
     selectCrossFilteringItems,
     selectEnableAutomationFilterContext,
+    selectEnableDateFilterIdentifiers,
     selectFilterContextFilters,
     selectOriginalFilterContextFilters,
 } from "../../store/index.js";
@@ -56,6 +57,7 @@ export const useFiltersForDashboardScheduledExport = ({
         crossFilteringItems,
     );
     const enableAutomationFilterContext = useDashboardSelector(selectEnableAutomationFilterContext);
+    const enableDateFilterIdentifiers = useDashboardSelector(selectEnableDateFilterIdentifiers);
 
     // Only changed filters should be stored in scheduled export
     const dashboardFiltersForScheduledExport = enableAutomationFilterContext
@@ -66,7 +68,7 @@ export const useFiltersForDashboardScheduledExport = ({
 
     const commonDateFilter: FilterContextItem = newAllTimeDashboardDateFilter(
         undefined,
-        generateDateFilterLocalIdentifier(0),
+        enableDateFilterIdentifiers ? generateDateFilterLocalIdentifier(0) : undefined,
     );
     const shouldAddCommonDateFilter =
         enableAutomationFilterContext &&

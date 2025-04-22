@@ -8573,6 +8573,9 @@ export const selectEnableDashboardShareLink: DashboardSelector<boolean>;
 export const selectEnableDashboardTabularExport: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableDateFilterIdentifiers: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableDrilledTooltip: DashboardSelector<boolean>;
 
 // @internal
