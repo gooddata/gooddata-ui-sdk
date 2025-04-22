@@ -65,6 +65,7 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
             <div
                 onKeyDown={handleKeyDown}
                 role={"dialog"}
+                aria-modal={accessibilityConfig?.isModal}
                 aria-labelledby={accessibilityConfig?.titleElementId}
                 aria-describedby={accessibilityConfig?.descriptionElementId}
             >
