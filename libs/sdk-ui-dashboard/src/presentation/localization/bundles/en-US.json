@@ -698,52 +698,52 @@
         "comment": "Schedule warning message",
         "limit": 0
     },
-    "dialogs.schedule.email.filters.showAll": {
+    "dialogs.automation.filters.showAll": {
         "value": "Show all",
         "comment": "Show full list of all filters",
         "limit": 0
     },
-    "dialogs.schedule.email.filters.showLess": {
+    "dialogs.automation.filters.showLess": {
         "value": "Show less",
         "comment": "Show shortened list of all filters",
         "limit": 0
     },
-    "dialogs.schedule.email.filters.add": {
+    "dialogs.automation.filters.add": {
         "value": "Add filter",
         "comment": "Label of add filter button in scheduling",
         "limit": 0
     },
-    "dialogs.schedule.email.filters.title": {
+    "dialogs.automation.filters.title": {
         "value": "Add filters",
         "comment": "Schedule filters dialog title",
         "limit": 0
     },
-    "dialogs.schedule.email.filters.noFilters": {
+    "dialogs.automation.filters.noFilters": {
         "value": "No more filters available",
         "comment": "Schedule filters selection message",
         "limit": 0
     },
-    "dialogs.schedule.email.filters.attachment": {
+    "dialogs.automation.filters.attachment": {
         "value": "Use filters in automation",
         "comment": "Label of a checkbox field for dashboard automation.",
         "limit": 0
     },
-    "dialogs.schedule.email.filters.useFiltersMessage": {
+    "dialogs.automation.filters.useFiltersMessage": {
         "value": "Always use these filters for future exports",
         "comment": "",
         "limit": 0
     },
-    "dialogs.schedule.email.filters.useFiltersMessage.tooltip": {
+    "dialogs.automation.filters.useFiltersMessage.tooltip": {
         "value": "Check to keep these filters for every export. If unchecked, the export will use the latest default filters from the dashboard. <a>Learn more</a>",
         "comment": "Do not translate html tags <a>, </a>",
         "limit": 0
     },
-    "dialogs.schedule.email.filters.activeFilters": {
+    "dialogs.automation.filters.activeFilters": {
         "value": "Note: These filters will always be used for future exports.",
         "comment": "",
         "limit": 0
     },
-    "dialogs.schedule.email.filters.missing": {
+    "dialogs.automation.filters.missing": {
         "value": "<b>Warning:</b> Some filters couldn't be applied — they're no longer available on the dashboard.",
         "comment": "",
         "limit": 0

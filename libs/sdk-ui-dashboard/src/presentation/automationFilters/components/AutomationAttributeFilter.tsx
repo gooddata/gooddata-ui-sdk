@@ -46,6 +46,9 @@ export const AutomationAttributeFilter: React.FC<{
                                 isDeletable={!isLocked}
                                 onClick={props.onClick}
                                 onDelete={() => onDelete(filter)}
+                                accessibilityConfig={{
+                                    isExpanded: props.isOpen,
+                                }}
                             />
                             <Bubble alignPoints={tooltipAlignPoints}>
                                 {label}
