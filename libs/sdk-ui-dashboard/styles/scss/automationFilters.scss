@@ -33,11 +33,18 @@ $item-height: 27px;
     &__expansion-button {
         float: right;
         height: $item-height;
-        margin-top: -3px;
     }
 
     &__message {
         color: var(--gd-palette-complementary-7, #6d7680);
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 21px;
+    }
+
+    &__warning-message {
+        color: kit-variables.$gd-palette-warning-base-text;
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -66,7 +73,17 @@ $item-height: 27px;
         }
     }
 
+    &__dropdown-no-filters {
+        margin: 12px;
+        color: kit-variables.$gd-color-state-blank;
+        text-align: center;
+        line-height: 19px;
+        font-size: 14px;
+    }
+
     &__use-filters-checkbox {
+        margin-top: 10px;
+
         .input-label-text {
             color: kit-variables.$gd-color-link;
         }

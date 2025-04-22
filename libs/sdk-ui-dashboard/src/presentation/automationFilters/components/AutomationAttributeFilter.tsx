@@ -7,10 +7,15 @@ import {
     IAttributeFilterButtonProps,
     IAttributeFilterDropdownButtonProps,
 } from "@gooddata/sdk-ui-filters";
-import { UiChip, UiSkeleton } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, UiChip, UiSkeleton } from "@gooddata/sdk-ui-kit";
 import noop from "lodash/noop.js";
 import { DefaultDashboardAttributeFilter } from "../../../presentation/filterBar/index.js";
 import { attributeFilterToDashboardAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
+
+const tooltipAlignPoints = [
+    { align: "bl tl", offset: { x: 11, y: 0 } },
+    { align: "tl bl", offset: { x: 11, y: 0 } },
+];
 
 export const AutomationAttributeFilter: React.FC<{
     filter: IDashboardAttributeFilter;
@@ -29,16 +34,24 @@ export const AutomationAttributeFilter: React.FC<{
 
             const CustomDropdownButtonComponent = useMemo(() => {
                 return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
+                    const label = `${props.title!}: ${props.subtitle!}`;
+                    const tag = props.selectedItemsCount ? `(${props.selectedItemsCount})` : undefined;
                     return (
-                        <UiChip
-                            label={props.title! + ": " + props.subtitle!}
-                            tag={props.selectedItemsCount ? `(${props.selectedItemsCount})` : undefined}
-                            isLocked={isLocked}
-                            isActive={props.isOpen}
-                            isDeletable={!isLocked}
-                            onClick={props.onClick}
-                            onDelete={() => onDelete(filter)}
-                        />
+                        <BubbleHoverTrigger showDelay={200} hideDelay={0}>
+                            <UiChip
+                                label={label}
+                                tag={tag}
+                                isLocked={isLocked}
+                                isActive={props.isOpen}
+                                isDeletable={!isLocked}
+                                onClick={props.onClick}
+                                onDelete={() => onDelete(filter)}
+                            />
+                            <Bubble alignPoints={tooltipAlignPoints}>
+                                {label}
+                                {tag ? ` ${tag}` : null}
+                            </Bubble>
+                        </BubbleHoverTrigger>
                     );
                 };
             }, []);

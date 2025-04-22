@@ -1,16 +1,27 @@
 // (C) 2025 GoodData Corporation
 
 import {
+    absoluteDateFilterValues,
     areObjRefsEqual,
+    DateFilterType,
+    filterAttributeElements,
     FilterContextItem,
+    filterLocalIdentifier,
     IAutomationVisibleFilter,
     ICatalogAttribute,
     ICatalogDateDataset,
     IDashboardAttributeFilterConfig,
     IDashboardDateFilterConfigItem,
+    IFilter,
+    isAbsoluteDateFilter,
+    isAllTimeDashboardDateFilter,
+    isAllTimeDateFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
+    isNegativeAttributeFilter,
+    isRelativeDateFilter,
     ObjRef,
+    relativeDateFilterValues,
 } from "@gooddata/sdk-model";
 import compact from "lodash/compact.js";
 
@@ -126,4 +137,81 @@ export const getNonHiddenFilters = (
             return config?.config.mode !== "hidden";
         }
     });
+};
+
+export const getFilterByLocalIdentifier = (
+    localIdentifier: string | undefined,
+    filters: FilterContextItem[],
+): FilterContextItem | undefined => {
+    if (!localIdentifier) {
+        return undefined;
+    }
+
+    return filters.find((filter) => {
+        const filterLocalIdentifier = getFilterLocalIdentifier(filter);
+        return filterLocalIdentifier === localIdentifier;
+    });
+};
+
+/**
+ * When working with widget execution filters, we find the filters in dashboard filters
+ * and update their values to match the execution filter values.
+ */
+export const updateFiltersByExecutionFilterValues = (
+    executionFilters: IFilter[] | undefined,
+    allFilters: FilterContextItem[],
+): FilterContextItem[] | undefined => {
+    if (!executionFilters) {
+        return undefined;
+    }
+
+    const updatedFilters = executionFilters.map((executionFilter) => {
+        const executionFilterLocalIdentifier = filterLocalIdentifier(executionFilter);
+        const dashboardFilter = getFilterByLocalIdentifier(executionFilterLocalIdentifier, allFilters);
+
+        if (!dashboardFilter) {
+            return undefined;
+        }
+
+        if (isDashboardAttributeFilter(dashboardFilter)) {
+            const elements = filterAttributeElements(executionFilter);
+            const elementsObj = elements
+                ? {
+                      attributeElements: elements,
+                      negativeSelection: isNegativeAttributeFilter(executionFilter),
+                  }
+                : {};
+
+            return {
+                ...dashboardFilter,
+                attributeFilter: {
+                    ...dashboardFilter.attributeFilter,
+                    ...elementsObj,
+                },
+            };
+        } else if (isAllTimeDateFilter(executionFilter) && isAllTimeDashboardDateFilter(dashboardFilter)) {
+            // All time date filter needs to be fully copied due to different granularity and values
+            return {
+                ...dashboardFilter,
+            };
+        } else {
+            const type: DateFilterType = isAbsoluteDateFilter(executionFilter) ? "absolute" : "relative";
+            const dateFilterValues = isAbsoluteDateFilter(executionFilter)
+                ? absoluteDateFilterValues(executionFilter)
+                : isRelativeDateFilter(executionFilter)
+                ? relativeDateFilterValues(executionFilter)
+                : {};
+
+            return {
+                ...dashboardFilter,
+                dateFilter: {
+                    ...dashboardFilter.dateFilter,
+                    ...dateFilterValues,
+                    type,
+                },
+            };
+        }
+    });
+
+    return compact(updatedFilters);
 };

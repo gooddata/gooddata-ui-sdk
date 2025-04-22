@@ -3,6 +3,8 @@ import {
     FilterContextItem,
     IAutomationMetadataObject,
     isDashboardAttributeFilter,
+    isDashboardCommonDateFilter,
+    newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import {
     ICrossFilteringItem,
@@ -14,6 +16,7 @@ import {
 import { getAutomationDashboardFilters } from "../../../_staging/automation/index.js";
 import isEqual from "lodash/isEqual.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
+import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 
 /**
  * @alpha
@@ -61,8 +64,20 @@ export const useFiltersForDashboardScheduledExport = ({
         ? dashboardFiltersWithoutCrossFiltering
         : undefined;
 
+    const commonDateFilter: FilterContextItem = newAllTimeDashboardDateFilter(
+        undefined,
+        generateDateFilterLocalIdentifier(0),
+    );
+    const shouldAddCommonDateFilter =
+        enableAutomationFilterContext &&
+        dashboardFiltersForScheduledExport &&
+        !dashboardFiltersForScheduledExport.some(isDashboardCommonDateFilter);
+    const sanitizedDashboardFilters = shouldAddCommonDateFilter
+        ? [commonDateFilter, ...dashboardFiltersWithoutCrossFiltering]
+        : dashboardFiltersForScheduledExport;
+
     // Saved filters have priority over dashboard filters
-    return savedScheduledExportFilters ?? dashboardFiltersForScheduledExport;
+    return savedScheduledExportFilters ?? sanitizedDashboardFilters;
 };
 
 const removeCrossFilteringFilters = (
