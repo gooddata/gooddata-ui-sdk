@@ -1255,6 +1255,9 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
 }
 
 // @internal (undocumented)
+export const iconPaths: Record<IconType, React_2.ReactNode>;
+
+// @internal (undocumented)
 export type IconType = "check" | "plus" | "sync" | "alert" | "close" | "question" | "crossCircle" | "chevronUp" | "chevronDown" | "date" | "lock" | "cross";
 
 // @internal (undocumented)
