@@ -11,6 +11,7 @@ import {
     IDashboardDateFilter,
     isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
+    isDashboardDateFilter,
     ObjRef,
     objRefToString,
     serializeObjRef,
@@ -68,6 +69,7 @@ import {
 } from "../../../_staging/dashboard/legacyFilterConvertors.js";
 import { areAllFiltersHidden } from "../utils.js";
 import { ResetFiltersButton } from "./ResetFiltersButton.js";
+import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 
 /**
  * @alpha
@@ -178,16 +180,24 @@ export const useFilterBarProps = (): IFilterBarProps => {
                     ),
                 );
             } else if (isAllTimeDashboardDateFilter(filter)) {
+                const localIdentifier =
+                    filter?.dateFilter.localIdentifier ?? generateDateFilterLocalIdentifier(0);
                 // all time filter
                 dispatch(
                     clearDateFilterSelection(
                         undefined,
                         filter?.dateFilter.dataSet,
                         isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                        localIdentifier,
                     ),
                 );
             } else {
-                const { type, granularity, from, to, dataSet } = filter.dateFilter;
+                const { type, granularity, from, to, dataSet, localIdentifier } = filter.dateFilter;
+                const filterIndex = filters
+                    .filter(isDashboardDateFilter)
+                    .findIndex((filter) => areObjRefsEqual(filter.dateFilter.dataSet, dataSet));
+                const sanitizedFilterIndex = filterIndex < 0 ? 0 : filterIndex;
+                const newLocalIdentifier = generateDateFilterLocalIdentifier(sanitizedFilterIndex, dataSet);
                 dispatch(
                     changeDateFilterSelection(
                         type,
@@ -198,11 +208,12 @@ export const useFilterBarProps = (): IFilterBarProps => {
                         undefined,
                         dataSet,
                         isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                        localIdentifier ?? newLocalIdentifier,
                     ),
                 );
             }
         },
-        [dispatch, enableDashboardFiltersApplyModes],
+        [dispatch, enableDashboardFiltersApplyModes, filters],
     );
 
     return { filters, workingFilters, onAttributeFilterChanged, onDateFilterChanged, DefaultFilterBar };

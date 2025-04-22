@@ -18,22 +18,41 @@ import { RecurrenceType } from "./types.js";
 interface IDropdownItem {
     id: RecurrenceType;
     title: string;
+    info?: string;
 }
 
-const getLocalizationKey = (id: RecurrenceType): MessageDescriptor => {
+const getLocalizationKey = (
+    id: RecurrenceType,
+): {
+    title: MessageDescriptor;
+    info?: MessageDescriptor;
+} => {
     switch (id) {
         case RECURRENCE_TYPES.HOURLY:
-            return messages.recurrence_hourly;
+            return {
+                title: messages.recurrence_hourly,
+            };
         case RECURRENCE_TYPES.DAILY:
-            return messages.recurrence_daily;
+            return {
+                title: messages.recurrence_daily,
+            };
         case RECURRENCE_TYPES.WEEKLY:
-            return messages.recurrence_weekly;
+            return {
+                title: messages.recurrence_weekly,
+            };
         case RECURRENCE_TYPES.MONTHLY:
-            return messages.recurrence_monthly;
+            return {
+                title: messages.recurrence_monthly,
+            };
         case RECURRENCE_TYPES.CRON:
-            return messages.recurrence_cron;
+            return {
+                title: messages.recurrence_cron,
+            };
         case RECURRENCE_TYPES.INHERIT:
-            return messages.recurrence_inherit;
+            return {
+                title: messages.recurrence_inherit,
+                info: messages.recurrence_inherit_info,
+            };
         default:
             throw new Error("Invariant: Unexpected localization key.");
     }
@@ -56,7 +75,7 @@ const getRepeatItems = (
     ];
 
     return recurrenceTypes.map((id): IDropdownItem => {
-        const localizationKey = getLocalizationKey(id);
+        const { title, info } = getLocalizationKey(id);
 
         if (id === RECURRENCE_TYPES.MONTHLY && !startDate) {
             return {
@@ -82,16 +101,16 @@ const getRepeatItems = (
 
         return {
             id,
-            title: intl.formatMessage(localizationKey, {
+            title: intl.formatMessage(title, {
                 day: getIntlDayName(intl, startDate),
                 week: getWeekNumber(startDate),
             }),
+            info: info ? intl.formatMessage(info) : undefined,
         };
     });
 };
 
 export interface IRepeatTypeSelectProps {
-    id: string;
     repeatType: RecurrenceType;
     showInheritValue?: boolean;
     startDate?: Date | null;
@@ -102,7 +121,6 @@ export interface IRepeatTypeSelectProps {
 
 export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
     const {
-        id,
         onChange,
         repeatType,
         startDate = null,
@@ -122,7 +140,6 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
             className="gd-recurrence-form-type s-recurrence-form-type"
             renderButton={({ toggleDropdown, isOpen, dropdownId }) => (
                 <DropdownButton
-                    id={id}
                     value={repeatTypeItem.title}
                     onClick={() => {
                         !isOpen && onRepeatDropdownOpen?.();
@@ -140,6 +157,7 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
                     renderItem={({ item }) => (
                         <SingleSelectListItem
                             title={item.title}
+                            info={item.info}
                             onClick={() => {
                                 onChange(item.id);
                                 closeDropdown();

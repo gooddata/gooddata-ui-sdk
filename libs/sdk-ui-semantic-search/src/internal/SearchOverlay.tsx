@@ -259,7 +259,9 @@ const SearchOverlayCore: React.FC<
                 className="gd-semantic-search__overlay-input"
                 autofocus
                 placeholder={intl.formatMessage({ id: "semantic-search.placeholder" })}
-                ariaLabel={intl.formatMessage({ id: "semantic-search.label" })}
+                accessibilityConfig={{
+                    ariaLabel: intl.formatMessage({ id: "semantic-search.label" }),
+                }}
                 isSearch
                 clearOnEsc
                 value={value}

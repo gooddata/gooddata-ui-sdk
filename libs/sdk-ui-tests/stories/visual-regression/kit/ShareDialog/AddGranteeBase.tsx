@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { storiesOf } from "../../../_infra/storyRepository.js";
 import { action } from "@storybook/addon-actions";
@@ -23,6 +23,7 @@ import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { idRef } from "@gooddata/sdk-model";
 import { LabelsMock } from "./LabelsMock.js";
+import { useResetFocus } from "../../../utils/useResetFocus.js";
 
 const sharedObject: IAffectedSharedObject = {
     ref: idRef("object"),
@@ -166,6 +167,8 @@ const SelectedItemsExample = (): JSX.Element => {
  * @internal
  */
 export const AddGranteeExamples = (): JSX.Element => {
+    useResetFocus(200);
+
     return (
         <InternalIntlWrapper>
             <div className="library-component screenshot-target">
@@ -189,5 +192,9 @@ export const AddGranteeExamples = (): JSX.Element => {
 };
 
 storiesOf(`${UiKit}/ShareDialog/AddGranteeBase`)
-    .add("full-featured", () => <AddGranteeExamples />, { screenshot: true })
-    .add("themed", () => wrapWithTheme(<AddGranteeExamples />), { screenshot: true });
+    .add("full-featured", () => <AddGranteeExamples />, {
+        screenshot: { delay: 300 },
+    })
+    .add("themed", () => wrapWithTheme(<AddGranteeExamples />), {
+        screenshot: { delay: 300 },
+    });

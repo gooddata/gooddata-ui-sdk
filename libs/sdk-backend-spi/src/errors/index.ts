@@ -61,7 +61,11 @@ export class NoDataError extends AnalyticalBackendError {
  * @public
  */
 export class DataTooLargeError extends AnalyticalBackendError {
-    constructor(message: string, cause?: Error) {
+    constructor(
+        message: string,
+        cause?: Error,
+        public readonly responseBody: unknown | undefined = undefined,
+    ) {
         super(message, AnalyticalBackendErrorTypes.DATA_TOO_LARGE, cause);
     }
 }

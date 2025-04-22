@@ -51,6 +51,7 @@ options = {
                 "src/presentation/saveAs",
                 "src/presentation/alerting",
                 "src/presentation/alerting/types.ts",
+                "src/presentation/export",
                 "src/presentation/topBar",
                 "src/presentation/toolbar",
                 "src/presentation/widget",

@@ -60,6 +60,7 @@ const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (pr
         onLoadingChanged,
         onExportReady,
         onError,
+        onDataView,
         onInsightLoaded,
         pushData,
 
@@ -248,6 +249,7 @@ const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (pr
                     onError={handleError}
                     onExportReady={onExportReady}
                     onLoadingChanged={handleLoadingChanged}
+                    onDataView={onDataView}
                     pushData={pushData}
                 />
             </div>

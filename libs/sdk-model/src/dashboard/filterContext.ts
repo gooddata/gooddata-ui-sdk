@@ -263,6 +263,7 @@ export function newRelativeDashboardDateFilter(
     from: number,
     to: number,
     dataSet?: ObjRef,
+    localIdentifier?: string,
 ): IDashboardDateFilter {
     return {
         dateFilter: {
@@ -271,6 +272,7 @@ export function newRelativeDashboardDateFilter(
             from,
             to,
             dataSet,
+            ...(localIdentifier ? { localIdentifier } : {}),
         },
     };
 }
@@ -286,6 +288,7 @@ export function newAbsoluteDashboardDateFilter(
     from: DateString,
     to: DateString,
     dataSet?: ObjRef,
+    localIdentifier?: string,
 ): IDashboardDateFilter {
     return {
         dateFilter: {
@@ -294,6 +297,7 @@ export function newAbsoluteDashboardDateFilter(
             from,
             to,
             dataSet,
+            ...(localIdentifier ? { localIdentifier } : {}),
         },
     };
 }
@@ -303,12 +307,16 @@ export function newAbsoluteDashboardDateFilter(
  *
  * @alpha
  */
-export function newAllTimeDashboardDateFilter(dataSet?: ObjRef): IDashboardDateFilter {
+export function newAllTimeDashboardDateFilter(
+    dataSet?: ObjRef,
+    localIdentifier?: string,
+): IDashboardDateFilter {
     return {
         dateFilter: {
             type: "relative",
             granularity: "GDC.time.date",
             dataSet,
+            ...(localIdentifier ? { localIdentifier } : {}),
         },
     };
 }

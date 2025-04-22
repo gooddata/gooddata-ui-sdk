@@ -628,8 +628,6 @@
     "recurrence.description.weekly": "Sur {hour} à {dayOfWeekName} chaque semaine",
     "recurrence.description.monthly_first": "Sur {hour} chaque début de mois",
     "recurrence.description.monthly": "A {hour} sur {dayOfWeekName} chaque {weekNumber}. semaine du mois",
-    "recurrence.error.too_often": "Fréquence trop élevée",
-    "recurrence.cron.tooltip": "Utilisez le format de chaîne unix-cron. <a>En savoir plus</a>",
     "userManagement.workspace.permission.viewSaveViews": "Visualiser et sauvegarder des vues",
     "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "L'utilisateur peut consulter les tableaux de bord qui ont été partagés avec lui et enregistrer l'état des filtres des tableaux de bord en tant que vues personnelles pour une utilisation ultérieure.",
     "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "Les membres du groupe peuvent consulter les tableaux de bord qui ont été partagés avec eux et enregistrer l'état des filtres des tableaux de bord en tant que vues personnelles pour une utilisation ultérieure.",
@@ -686,5 +684,12 @@
     "gs.header.help.label": "Liens d'aide",
     "richText.no_data": "Pas de données",
     "richText.no_fetch": "Les données n'ont pas pu être récupérées",
-    "recurrence.types.inherit": "Hériter"
+    "recurrence.types.inherit": "Hériter",
+    "recurrence.datetime.format.help": "Format : {dateFormat}",
+    "recurrence.datetime.empty.error": "Erreur : Champ obligatoire - entrez une date valide pour continuer.",
+    "recurrence.datetime.wrong.format.error": "Erreur : Date non valide - le format doit être {dateFormat}",
+    "recurrence.error.too_often": "Erreur : Fréquence trop élevée - réduire à 1 par heure maximum",
+    "recurrence.error.empty": "Erreur : Champ obligatoire - entrez une expression Spring cron avec six champs : secondes, minutes, heures, jour du mois, mois et jour de la semaine. <a>En savoir plus</a>",
+    "recurrence.error.wrongFormat": "Erreur : Format non valide - utilisez le format Spring cron avec six champs : secondes, minutes, heures, jour du mois, mois et jour de la semaine. <a>En savoir plus</a>",
+    "recurrence.cron.tooltip": "Utilisez le format Spring cron - six champs : secondes, minutes, heures, jour du mois, mois, jour de la semaine. <a>En savoir plus</a>"
 }

@@ -35,6 +35,7 @@ import {
     UnexpectedSdkError,
     isForecastNotReceived,
     isClusteringNotReceived,
+    DataViewFacade,
 } from "@gooddata/sdk-ui";
 import { IntlShape } from "react-intl";
 import { createInternalIntl } from "../../utils/internalIntlProvider.js";
@@ -290,6 +291,10 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
     protected onDrill = (event: IDrillEvent): void | boolean => {
         // in case onDrill is not specified, default to always firing drill events
         return this.callbacks.onDrill ? this.callbacks.onDrill(event) : true;
+    };
+
+    protected onDataView = (dataView: DataViewFacade): void => {
+        this.callbacks.onDataView?.(dataView);
     };
 
     //

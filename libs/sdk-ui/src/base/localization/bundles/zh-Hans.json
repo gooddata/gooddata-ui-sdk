@@ -628,8 +628,6 @@
     "recurrence.description.weekly": "在{hour} 在{dayOfWeekName} 每周",
     "recurrence.description.monthly_first": "在{hour} 每个月开始",
     "recurrence.description.monthly": "在{hour} 在{dayOfWeekName} 每一个{weekNumber}. 月中的第几周",
-    "recurrence.error.too_often": "频率过高",
-    "recurrence.cron.tooltip": "使用 unix-cron 字符串格式。<a>了解更多</a>",
     "userManagement.workspace.permission.viewSaveViews": "查看和保存视图",
     "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "用户可以查看与其共享的仪表板，并将仪表板过滤器的状态保存为个人视图以供将来使用。",
     "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "小组成员可以查看与他们共享的仪表板，并将仪表板过滤器的状态保存为个人视图以供将来使用。",
@@ -686,5 +684,12 @@
     "gs.header.help.label": "帮助链接",
     "richText.no_data": "没有数据",
     "richText.no_fetch": "无法检索数据",
-    "recurrence.types.inherit": "继承"
+    "recurrence.types.inherit": "继承",
+    "recurrence.datetime.format.help": "格式：{dateFormat}",
+    "recurrence.datetime.empty.error": "错误：必填字段 — 输入有效日期以继续。",
+    "recurrence.datetime.wrong.format.error": "错误：日期无效 — 格式必须是{dateFormat}",
+    "recurrence.error.too_often": "错误：频率太高——降低至每小时最多 1 次",
+    "recurrence.error.empty": "错误：必填字段 - 输入一个包含六个字段的 Spring cron 表达式：秒、分钟、小时、日期、月份和星期。<a>了解更多</a>",
+    "recurrence.error.wrongFormat": "错误：格式无效 - 使用包含六个字段的 Spring cron 格式：秒、分钟、小时、日期、月份和星期。<a>了解更多</a>",
+    "recurrence.cron.tooltip": "使用 Spring cron 格式 - 六个字段：秒、分钟、小时、日期、月份、星期。<a>了解更多</a>"
 }

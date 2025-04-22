@@ -15,6 +15,11 @@ export interface UiFocusTrapProps {
      * If a ref is provided, the focus will be returned to the element referenced by the ref.
      */
     returnFocusTo?: React.RefObject<HTMLElement> | string;
+    /**
+     * Specify the element that should receive focus when the trap is activated.
+     * If not provided, the first focusable element will be focused.
+     */
+    initialFocus?: React.RefObject<HTMLElement> | string;
 }
 const focusableElementsSelector = [
     // Interactive form elements
@@ -79,6 +84,7 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
     onDeactivate,
     returnFocusTo,
     autofocusOnOpen = false,
+    initialFocus,
 }) => {
     const trapRef = useRef<HTMLDivElement>(null);
     const defaultReturnFocusToRef = useRef<HTMLElement | null>(null);
@@ -134,18 +140,38 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
         defaultReturnFocusToRef.current = document.activeElement as HTMLElement;
 
         const focusTrapTimeout = setTimeout(() => {
-            if (autofocusOnOpen) {
-                // Move focus to the first element in the trap at start
-                const { firstElement } = getFocusableElements(trapRef.current);
-                firstElement?.focus();
+            if (!autofocusOnOpen) {
+                return;
             }
+
+            if (trapRef.current?.contains(document.activeElement)) {
+                // Do not change focus, if the focused element is already inside the trap
+                return;
+            }
+
+            if (initialFocus) {
+                if (typeof initialFocus === "string") {
+                    const element = document.getElementById(initialFocus);
+                    if (element) {
+                        element.focus();
+                        return;
+                    }
+                } else if (initialFocus.current) {
+                    initialFocus.current.focus();
+                    return;
+                }
+            }
+
+            // Move focus to the first element in the trap at start
+            const { firstElement } = getFocusableElements(trapRef.current);
+            firstElement?.focus();
         }, 100);
 
         return () => {
             document.removeEventListener("keydown", handleKeyDown);
             clearTimeout(focusTrapTimeout);
         };
-    }, [onDeactivate, returnFocusTo, autofocusOnOpen]);
+    }, [onDeactivate, returnFocusTo, autofocusOnOpen, initialFocus]);
 
     return (
         <div className="gd-focus-trap" ref={trapRef}>

@@ -17,15 +17,22 @@ $input-width: 128px;
             min-width: 100px;
         }
     }
+    .gd-recurrence-form-repeat-cron {
+        margin-bottom: 0;
+    }
 
     .gd-recurrence-form-datetime {
         display: flex;
         flex-direction: row;
-        align-items: center;
+        align-items: flex-start;
 
         > :not(:first-of-type):not(.gd-label),
         > :not(:last-of-type) {
             margin-right: 10px;
+        }
+
+        .gd-recurrence-form-datetime-timezone {
+            margin-top: 5px;
         }
 
         .gd-label {
@@ -54,10 +61,65 @@ $input-width: 128px;
     }
 
     .gd-recurrence-form-datetime-inner,
+    .gd-recurrence-form-time-inner,
     .gd-recurrence-form-repeat-inner {
         display: flex;
         gap: 10px;
         align-items: flex-start;
+    }
+
+    .gd-recurrence-form-datetime-inner {
+        .gd-recurrence-form-date {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+    }
+
+    .gd-recurrence-form-datetime-help,
+    .gd-recurrence-form-datetime-error-message {
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 13px;
+        width: 128px;
+    }
+
+    .gd-recurrence-form-datetime-error-message {
+        color: variables.$gd-color-negative;
+    }
+
+    .gd-recurrence-form-datetime-help {
+        color: variables.$gd-color-state-blank;
+    }
+    .gd-recurrence-form-hint-wrapper {
+        margin-bottom: 20px;
+
+        .gd-recurrence-form-cron-help,
+        .gd-recurrence-form-cron-error-message {
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 13px;
+        }
+
+        .gd-recurrence-form-cron-help,
+        .gd-recurrence-form-cron-help a {
+            color: variables.$gd-color-state-blank;
+        }
+
+        .gd-recurrence-form-cron-help a {
+            text-decoration: underline;
+        }
+
+        .gd-recurrence-form-cron-error-message {
+            color: variables.$gd-color-negative;
+        }
+
+        .gd-recurrence-form-cron-error-message a {
+            text-decoration: underline;
+            color: variables.$gd-color-negative;
+        }
     }
 
     .gd-recurrence-form-repeat {
@@ -99,7 +161,8 @@ $input-width: 128px;
                 color: variables.$gd-color-state-blank;
             }
 
-            .gd-recurrence-form-cron-error-message {
+            .gd-recurrence-form-cron-error-message,
+            .gd-recurrence-form-cron-error-message a {
                 color: variables.$gd-color-negative;
             }
         }
@@ -118,6 +181,7 @@ $input-width: 128px;
             font-size: 14px;
             line-height: 19px;
             gap: 5px;
+            margin-top: 5px;
         }
     }
 
@@ -135,6 +199,16 @@ $input-width: 128px;
         .gd-recurrence-form-datetime-timezone {
             margin-top: 10px;
             color: variables.$gd-color-link;
+        }
+    }
+}
+
+@media #{variables.$medium-up} {
+    .gd-notifications-channel-dialog-content-wrapper {
+        .gd-recurrence-form {
+            .gd-recurrence-form-hint-wrapper {
+                margin-left: 105px;
+            }
         }
     }
 }

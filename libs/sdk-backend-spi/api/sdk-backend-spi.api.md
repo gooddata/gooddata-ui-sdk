@@ -178,7 +178,9 @@ export class ContractExpired extends AnalyticalBackendError {
 
 // @public
 export class DataTooLargeError extends AnalyticalBackendError {
-    constructor(message: string, cause?: Error);
+    constructor(message: string, cause?: Error, responseBody?: unknown | undefined);
+    // (undocumented)
+    readonly responseBody: unknown | undefined;
 }
 
 // @public

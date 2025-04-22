@@ -89,6 +89,11 @@ export interface DateFilterSelection {
      * Determines if this command should change working (staged for application) filters or applied filters (used to compute data).
      */
     readonly isWorkingSelectionChange?: boolean;
+
+    /**
+     * Specify the local identifier of date filter
+     */
+    readonly localIdentifier?: string;
 }
 
 /**
@@ -117,6 +122,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
  * @param from - start date; if not specified, then the start date will be unbounded
  * @param to - end date; if not specified, then the end date will be unbounded
  * @param dateFilterOptionLocalId - localId of the {@link @gooddata/sdk-backend-spi#IDateFilterOption} selected
+ * @param localIdentifier - localId of the date filter
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @see {@link ChangeDateFilterSelection} for a more complete description of the different parameters
@@ -132,6 +138,7 @@ export function changeDateFilterSelection(
     correlationId?: string,
     dataSet?: ObjRef,
     isWorkingSelectionChange?: boolean,
+    localIdentifier?: string,
 ): ChangeDateFilterSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION",
@@ -144,6 +151,7 @@ export function changeDateFilterSelection(
             to,
             dateFilterOptionLocalId,
             isWorkingSelectionChange,
+            localIdentifier,
         },
     };
 }
@@ -181,6 +189,8 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
             undefined,
             correlationId,
             values.dataSet,
+            undefined,
+            filter.relativeDateFilter.localIdentifier,
         );
     } else {
         const values = absoluteDateFilterValues(filter, true);
@@ -192,6 +202,8 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
             undefined,
             correlationId,
             values.dataSet,
+            undefined,
+            filter.absoluteDateFilter.localIdentifier,
         );
     }
 }
@@ -208,6 +220,7 @@ export function clearDateFilterSelection(
     correlationId?: string,
     dataSet?: ObjRef,
     isWorkingSelectionChange?: boolean,
+    localIdentifier?: string,
 ): ChangeDateFilterSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION",
@@ -217,6 +230,7 @@ export function clearDateFilterSelection(
             type: "relative",
             granularity: "GDC.time.date",
             isWorkingSelectionChange,
+            localIdentifier,
         },
     };
 }

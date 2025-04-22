@@ -628,8 +628,6 @@
     "recurrence.description.weekly": "En {hour} en {dayOfWeekName} todas las semanas",
     "recurrence.description.monthly_first": "En {hour} cada principio de mes",
     "recurrence.description.monthly": "En {hour} en {dayOfWeekName} de cada {weekNumber}. semana en el mes",
-    "recurrence.error.too_often": "Frecuencia demasiado alta",
-    "recurrence.cron.tooltip": "Utilice el formato de cadena unix-cron. <a>Más información</a>",
     "userManagement.workspace.permission.viewSaveViews": "Ver y guardar vistas",
     "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "El usuario puede ver los paneles que se han compartido con él y guardar el estado de los filtros del panel como vistas personales para su uso futuro.",
     "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "Los miembros del grupo pueden ver los paneles que se han compartido con ellos y guardar el estado de los filtros de los paneles como vistas personales para su uso futuro.",
@@ -686,5 +684,12 @@
     "gs.header.help.label": "Enlaces de ayuda",
     "richText.no_data": "Sin datos",
     "richText.no_fetch": "No se han podido recuperar los datos",
-    "recurrence.types.inherit": "Heredar"
+    "recurrence.types.inherit": "Heredar",
+    "recurrence.datetime.format.help": "Formato: {dateFormat}",
+    "recurrence.datetime.empty.error": "Error: Campo obligatorio - introduzca una fecha válida para continuar.",
+    "recurrence.datetime.wrong.format.error": "Error: Fecha no válida - el formato debe ser {dateFormat}",
+    "recurrence.error.too_often": "Error: Frecuencia demasiado alta - reducir a un máximo de 1 por hora",
+    "recurrence.error.empty": "Error: Campo obligatorio - introduzca una expresión cron de Spring con seis campos: segundos, minutos, horas, día del mes, mes y día de la semana. <a>Más información</a>",
+    "recurrence.error.wrongFormat": "Error: Formato no válido - utilice el formato Spring cron con seis campos: segundos, minutos, horas, día del mes, mes y día de la semana. <a>Más información</a>",
+    "recurrence.cron.tooltip": "Utilice el formato Spring cron - seis campos: segundos, minutos, horas, día del mes, mes, día de la semana. <a>Más información</a>"
 }

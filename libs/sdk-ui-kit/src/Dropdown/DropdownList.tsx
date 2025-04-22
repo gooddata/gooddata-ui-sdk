@@ -177,7 +177,9 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
                     onEscKeyPress={onEscKeyPress}
                     isSearch={true}
                     autofocus={!disableAutofocus}
-                    ariaLabel={searchLabel}
+                    accessibilityConfig={{
+                        ariaLabel: searchLabel,
+                    }}
                 />
             ) : null}
             {showTabs ? (

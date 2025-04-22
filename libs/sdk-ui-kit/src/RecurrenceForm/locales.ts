@@ -14,6 +14,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     recurrence_weekly_first: { id: "recurrence.types.weekly.first" },
     recurrence_cron: { id: "recurrence.types.cron" },
     recurrence_inherit: { id: "recurrence.types.inherit" },
+    recurrence_inherit_info: { id: "recurrence.types.inherit.info" },
 
     description_recurrence_hourly: { id: "recurrence.description.hourly" },
     description_recurrence_daily: { id: "recurrence.description.daily" },

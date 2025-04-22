@@ -628,8 +628,6 @@
     "recurrence.description.weekly": "每周開{hour} {dayOfWeekName} ",
     "recurrence.description.monthly_first": "每個{hour}月開始時",
     "recurrence.description.monthly": "{dayOfWeekName}在 {hour} on every {weekNumber}.周IN month",
-    "recurrence.error.too_often": "頻率太高",
-    "recurrence.cron.tooltip": "使用unix-cron字符串格式。 <a>瞭解更多信息</a>",
     "userManagement.workspace.permission.viewSaveViews": "查看同保存视圖",
     "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "用戶可以查看已與佢哋共享嘅控制面板，並將控制面板過濾器嘅狀態保存為個人視圖以備將來使用。",
     "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "群組成員可以查看已與佢哋共享嘅控制面板，並將控制面板過濾器嘅狀態保存為個人視圖以供將來使用。",
@@ -686,5 +684,12 @@
     "gs.header.help.label": "幫助連結",
     "richText.no_data": "暫無數據",
     "richText.no_fetch": "無法檢索數據",
-    "recurrence.types.inherit": "繼承"
+    "recurrence.types.inherit": "繼承",
+    "recurrence.datetime.format.help": "格式： {dateFormat}",
+    "recurrence.datetime.empty.error": "錯誤：必填字段-輸入有效日期以繼續。",
+    "recurrence.datetime.wrong.format.error": "錯誤：日期無效-格式必須為 {dateFormat}",
+    "recurrence.error.too_often": "錯誤：頻率太高-減到每小時最多1次",
+    "recurrence.error.empty": "錯誤：必填字段-輸入包含六個字段嘅Spring cron表達式：秒、分鐘、鐘頭、月日、月和日。 <a>瞭解更多信息</a>",
+    "recurrence.error.wrongFormat": "錯誤：格式無效-使用具有六個字段嘅Spring cron格式：秒、分鐘、鐘頭、月日、月同星期幾。 <a>瞭解更多信息</a>",
+    "recurrence.cron.tooltip": "使用Spring cron格式-六個字段：秒、分鐘、鐘頭、月日、月、日。 <a>瞭解更多信息</a>"
 }

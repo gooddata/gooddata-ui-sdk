@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
     IAutomationMetadataObjectDefinition,
     IExportDefinitionMetadataObjectDefinition,
@@ -99,6 +99,9 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
 
     const intl = useIntl();
     const [isCronValid, setIsCronValid] = useState(true);
+    const [isTitleValid, setIsTitleValid] = useState(true);
+    const [isSubjectValid, setIsSubjectValid] = useState(true);
+    const [isOnMessageValid, setIsOnMessageValid] = useState(true);
     const [warningMessage, setWarningMessage] = useState<string | undefined>(undefined);
     const isWidget = !!widget && !!insight;
 
@@ -164,7 +167,10 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
 
     const [originalAutomation] = useState(editedAutomation);
 
-    const onTitleChange = (value: string) => setEditedAutomation((s) => ({ ...s, title: value }));
+    const onTitleChange = (value: string, isValid: boolean) => {
+        setIsTitleValid(isValid);
+        setEditedAutomation((s) => ({ ...s, title: value }));
+    };
 
     const onRecurrenceChange = (cronExpression: string, startDate: Date | null, isValid: boolean) => {
         setIsCronValid(isValid);
@@ -220,7 +226,8 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         }));
     };
 
-    const onSubjectChange = (value: string | number): void => {
+    const onSubjectChange = (value: string | number, isValid: boolean): void => {
+        setIsSubjectValid(isValid);
         setEditedAutomation((s) => ({
             ...s,
             details: {
@@ -230,7 +237,8 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         }));
     };
 
-    const onMessageChange = (value: string): void => {
+    const onMessageChange = (value: string, isValid: boolean): void => {
+        setIsOnMessageValid(isValid);
         setEditedAutomation((s) => ({
             ...s,
             details: {
@@ -344,106 +352,124 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         }));
     };
 
-    const onFiltersChange = (filters: FilterContextItem[], useFilters = true) => {
-        setAutomationFilters(filters);
+    const onFiltersChange = useCallback(
+        (filters: FilterContextItem[], storeFilters?: boolean) => {
+            setAutomationFilters(filters);
 
-        // If filters are not used, we don't want to set them in the automation
-        if (!isWidget && !useFilters) {
-            return;
-        }
+            const shouldStoreFilters = storeFilters ?? useFilters;
 
-        const visibleFilters = getVisibleFiltersByFilters(filters, allVisibleFiltersMetadata);
-
-        if (!isWidget) {
-            setEditedAutomation((s) => ({
-                ...s,
-                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                    if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
-                        return {
-                            ...exportDefinition,
-                            requestPayload: {
-                                ...exportDefinition.requestPayload,
-                                content: {
-                                    ...exportDefinition.requestPayload.content,
-                                    filters,
-                                },
-                            },
-                        };
-                    } else {
-                        return exportDefinition;
-                    }
-                }),
-                metadata: {
-                    ...s.metadata,
-                    visibleFilters,
-                },
-            }));
-        } else {
-            if (!isInsightWidget(widget)) {
+            // If useFilters is not toggled, we don't want to store them in the automation
+            if (!isWidget && !shouldStoreFilters) {
                 return;
             }
 
-            const convertedFilters = filterContextItemsToDashboardFiltersByWidget(filters, widget);
+            const visibleFilters = getVisibleFiltersByFilters(filters, allVisibleFiltersMetadata);
 
-            setEditedAutomation((s) => ({
-                ...s,
-                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                    if (
-                        isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)
-                    ) {
-                        return {
-                            ...exportDefinition,
-                            requestPayload: {
-                                ...exportDefinition.requestPayload,
-                                content: {
-                                    ...exportDefinition.requestPayload.content,
-                                    filters: [...convertedFilters, ...insightExecutionFilters],
+            if (!isWidget) {
+                setEditedAutomation((s) => ({
+                    ...s,
+                    exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                        if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
+                            return {
+                                ...exportDefinition,
+                                requestPayload: {
+                                    ...exportDefinition.requestPayload,
+                                    content: {
+                                        ...exportDefinition.requestPayload.content,
+                                        filters,
+                                    },
                                 },
-                            },
-                        };
-                    } else {
-                        return exportDefinition;
-                    }
-                }),
-                metadata: {
-                    ...s.metadata,
-                    visibleFilters,
-                },
-            }));
-        }
-    };
+                            };
+                        } else {
+                            return exportDefinition;
+                        }
+                    }),
+                    metadata: {
+                        ...s.metadata,
+                        visibleFilters,
+                    },
+                }));
+            } else {
+                if (!isInsightWidget(widget)) {
+                    return;
+                }
 
-    const onUseFiltersChange = (value: boolean, filters: FilterContextItem[]) => {
-        setUseFilters(value);
-        if (value) {
-            onFiltersChange(filters, value);
-        } else {
-            setEditedAutomation((s) => ({
-                ...s,
-                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                    // Use filters flag is only relevant for dashboard automation
-                    if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
-                        return {
-                            ...exportDefinition,
-                            requestPayload: {
-                                ...exportDefinition.requestPayload,
-                                content: {
-                                    ...exportDefinition.requestPayload.content,
-                                    filters: undefined,
+                const convertedFilters = filterContextItemsToDashboardFiltersByWidget(filters, widget);
+
+                setEditedAutomation((s) => ({
+                    ...s,
+                    exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                        if (
+                            isExportDefinitionVisualizationObjectRequestPayload(
+                                exportDefinition.requestPayload,
+                            )
+                        ) {
+                            return {
+                                ...exportDefinition,
+                                requestPayload: {
+                                    ...exportDefinition.requestPayload,
+                                    content: {
+                                        ...exportDefinition.requestPayload.content,
+                                        filters: [...convertedFilters, ...insightExecutionFilters],
+                                    },
                                 },
-                            },
-                        };
-                    } else {
-                        return exportDefinition;
-                    }
-                }),
-                metadata: {
-                    ...s.metadata,
-                    visibleFilters: undefined,
-                },
-            }));
-        }
-    };
+                            };
+                        } else {
+                            return exportDefinition;
+                        }
+                    }),
+                    metadata: {
+                        ...s.metadata,
+                        visibleFilters,
+                    },
+                }));
+            }
+        },
+        [
+            insightExecutionFilters,
+            allVisibleFiltersMetadata,
+            setAutomationFilters,
+            useFilters,
+            widget,
+            isWidget,
+            setEditedAutomation,
+        ],
+    );
+
+    const onUseFiltersChange = useCallback(
+        (value: boolean, filters: FilterContextItem[]) => {
+            setUseFilters(value);
+            if (value) {
+                onFiltersChange(filters, value);
+            } else {
+                setEditedAutomation((s) => ({
+                    ...s,
+                    exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                        // Use filters flag is only relevant for dashboard automation
+                        if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
+                            return {
+                                ...exportDefinition,
+                                requestPayload: {
+                                    ...exportDefinition.requestPayload,
+                                    content: {
+                                        ...exportDefinition.requestPayload.content,
+                                        filters: undefined,
+                                    },
+                                },
+                            };
+                        } else {
+                            return exportDefinition;
+                        }
+                    }),
+                    metadata: {
+                        ...s.metadata,
+                        visibleFilters: undefined,
+                    },
+                }));
+            }
+        },
+        [onFiltersChange, setUseFilters],
+    );
 
     const isDashboardExportSelected =
         editedAutomation.exportDefinitions?.some((exportDefinition) =>
@@ -524,7 +550,10 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         hasValidExternalRecipients &&
         hasValidCreatorRecipient &&
         hasNoUnknownRecipients &&
-        hasFilledEmails;
+        hasFilledEmails &&
+        isOnMessageValid &&
+        isTitleValid &&
+        isSubjectValid;
 
     const isSubmitDisabled =
         !isValid || (scheduledExportToEdit && areAutomationsEqual(originalAutomation, editedAutomation));

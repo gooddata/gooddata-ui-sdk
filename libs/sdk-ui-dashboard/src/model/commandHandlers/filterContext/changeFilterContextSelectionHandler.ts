@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes.js";
@@ -46,6 +46,7 @@ import {
     IDashboardAttributeFilterConfig,
     areObjRefsEqual,
     ObjRef,
+    filterLocalIdentifier,
 } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
@@ -70,6 +71,7 @@ function dashboardFilterToFilterContextItem(
                 displayForm: filterObjRef(filter),
                 attributeElements: filterAttributeElements(filter),
                 selectionMode: "multi",
+                localIdentifier: filterLocalIdentifier(filter),
             },
         };
     } else if (isAbsoluteDateFilter(filter)) {
@@ -77,15 +79,20 @@ function dashboardFilterToFilterContextItem(
             filter.absoluteDateFilter.from,
             filter.absoluteDateFilter.to,
             keepDatasets ? filter.absoluteDateFilter.dataSet : undefined,
+            filter.absoluteDateFilter.localIdentifier,
         );
     } else if (isAllTimeDateFilter(filter)) {
-        return newAllTimeDashboardDateFilter(keepDatasets ? filter.relativeDateFilter.dataSet : undefined);
+        return newAllTimeDashboardDateFilter(
+            keepDatasets ? filter.relativeDateFilter.dataSet : undefined,
+            filter.relativeDateFilter.localIdentifier,
+        );
     } else if (isRelativeDateFilter(filter)) {
         return newRelativeDashboardDateFilter(
             filter.relativeDateFilter.granularity as DateFilterGranularity,
             filter.relativeDateFilter.from,
             filter.relativeDateFilter.to,
             keepDatasets ? filter.relativeDateFilter.dataSet : undefined,
+            filter.relativeDateFilter.localIdentifier,
         );
     }
 

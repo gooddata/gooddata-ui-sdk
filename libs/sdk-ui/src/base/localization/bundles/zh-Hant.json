@@ -628,8 +628,6 @@
     "recurrence.description.weekly": "在{hour} 在{dayOfWeekName} 每週",
     "recurrence.description.monthly_first": "在{hour} 每個月開始",
     "recurrence.description.monthly": "在{hour} 在{dayOfWeekName} 每一個{weekNumber}。一個月中的一周",
-    "recurrence.error.too_often": "頻率太高",
-    "recurrence.cron.tooltip": "使用 unix-cron 字串格式。<a>了解更多</a>",
     "userManagement.workspace.permission.viewSaveViews": "查看並儲存視圖",
     "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "使用者可以查看與其共享的儀表板，並將儀表板過濾器的狀態儲存為個人視圖以供將來使用。",
     "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "群組成員可以查看與其共用的儀表板，並將儀表板篩選器的狀態儲存為個人視圖以供將來使用。",
@@ -686,5 +684,12 @@
     "gs.header.help.label": "幫助連結",
     "richText.no_data": "沒有數據",
     "richText.no_fetch": "無法檢索數據",
-    "recurrence.types.inherit": "繼承"
+    "recurrence.types.inherit": "繼承",
+    "recurrence.datetime.format.help": "格式：{dateFormat}",
+    "recurrence.datetime.empty.error": "錯誤：必填欄位 — 輸入有效日期以繼續。",
+    "recurrence.datetime.wrong.format.error": "錯誤：日期無效 — 格式必須是{dateFormat}",
+    "recurrence.error.too_often": "錯誤：頻率太高－降低至每小時最多 1 次",
+    "recurrence.error.empty": "錯誤：必填欄位 - 輸入一個包含六個欄位的 Spring cron 運算式：秒、分鐘、小時、月份、月份和星期幾。<a>了解更多</a>",
+    "recurrence.error.wrongFormat": "錯誤：格式無效 - 使用包含六個欄位的 Spring cron 格式：秒、分鐘、小時、月份、月份和星期幾。<a>了解更多</a>",
+    "recurrence.cron.tooltip": "使用 Spring cron 格式 - 六個欄位：秒、分鐘、小時、日期、月份、星期幾。<a>了解更多</a>"
 }

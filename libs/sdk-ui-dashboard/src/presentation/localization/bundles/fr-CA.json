@@ -704,5 +704,6 @@
     "settingsDashboardDialog.section.alert.label": "Fréquence d'évaluation",
     "filterBar.unappliedFiltersNotification": "<link>Appliquez les filtres</link> pour voir les données mises à jour.",
     "controlButtons.setting.value": "Paramètres",
-    "controlButtons.setting.title": "Tous les paramètres liés à ce tableau de bord. Vous pouvez modifier le filtrage croisé de la description du tableau de bord, les filtres enregistrés autorisés et la fréquence d'évaluation des alertes."
+    "controlButtons.setting.title": "Tous les paramètres liés à ce tableau de bord. Vous pouvez modifier le filtrage croisé de la description du tableau de bord, les filtres enregistrés autorisés et la fréquence d'évaluation des alertes.",
+    "dialogs.schedule.error.too_long": "Erreur : Texte trop long - réduire à {value} caractères ou moins."
 }

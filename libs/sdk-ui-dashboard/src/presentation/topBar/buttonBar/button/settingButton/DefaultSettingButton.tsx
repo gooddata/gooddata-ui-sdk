@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 
 import React, { useCallback } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Button, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -50,11 +50,8 @@ export function DefaultSettingButton({
     isEnabled,
     isSaving,
     buttonTitle,
-    buttonValue,
     onSettingClick,
 }: ISettingButtonProps) {
-    const intl = useIntl();
-
     if (!isVisible) {
         return null;
     }
@@ -62,8 +59,7 @@ export function DefaultSettingButton({
     return (
         <BubbleHoverTrigger>
             <Button
-                className="gd-button-secondary setting-button s-setting_button gd-icon-settings"
-                value={intl.formatMessage(buttonValue)}
+                className="gd-button-secondary gd-button-icon-only setting-button s-setting_button gd-icon-settings"
                 onClick={onSettingClick}
                 disabled={!isEnabled || isSaving}
             />

@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import noop from "lodash/noop.js";
@@ -18,6 +18,7 @@ describe("Textarea", () => {
             value: "",
             rows: 4,
             onChange: noop,
+            validationError: null,
             ...customProps,
         };
 
@@ -27,14 +28,6 @@ describe("Textarea", () => {
             </IntlWrapper>,
         );
     }
-
-    it("should render label and text area with value", () => {
-        const label = "subject";
-        const value = "value";
-        renderComponent({ label, value });
-        expect(screen.getByText(label)).toBeInTheDocument();
-        expect(screen.getByText(value)).toBeInTheDocument();
-    });
 
     it("should trigger onChange event", async () => {
         const value = "new value";

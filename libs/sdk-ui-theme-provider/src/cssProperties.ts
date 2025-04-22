@@ -1,7 +1,13 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import isObject from "lodash/isObject.js";
 import { transparentize } from "polished";
-import { IThemePalette, ITheme, IThemeComplementaryPalette } from "@gooddata/sdk-model";
+import {
+    IThemePalette,
+    ITheme,
+    IThemeComplementaryPalette,
+    ThemeFontUri,
+    IThemeFontsDef,
+} from "@gooddata/sdk-model";
 import { CssProperty, getCssProperty } from "./cssProperty.js";
 import { generateDerivedColors } from "./derivedColors.js";
 import { inconsistentVariables } from "./variablesSpec/inconsistent/inconsistent.js";
@@ -14,44 +20,59 @@ const BLACK_COLOR = "#000";
 
 /**
  *
- * @param src - Font src
- * @param number - Font weight
+ * @param sources - Font src
+ * @param weight - Weight of font
+ * @param isScoped - If the font is scoped
+ * @param scopeTo - The element to which the font is scoped
+ * @param scopeId - The id of the element to which the font is scoped
  */
-function createfontFace(
-    src: string,
+function createFontFace(
+    sources: IThemeFontsDef[] | ThemeFontUri,
     weight: number,
     isScoped?: boolean,
     scopeTo?: HTMLElement,
     scopeId?: string,
 ): undefined {
+    const src: IThemeFontsDef[] = Array.isArray(sources) ? sources : [{ font: sources }];
+
     if (isScoped) {
         if (scopeTo) {
             const styleTag = document.getElementById(scopeId) || document.createElement("style");
             styleTag.id = scopeId;
-            styleTag.appendChild(
-                document.createTextNode(`
-            @font-face {
-                font-family: ${scopeId};
-                src: ${src};
-                font-weight: ${weight};
-            }
-        `),
-            );
+
+            src.forEach((font) => {
+                styleTag.appendChild(
+                    document.createTextNode(`
+                        @font-face {
+                            font-family: ${scopeId};
+                            src: ${font.font};
+                            font-weight: ${weight};
+                            ${font.unicodeRange ? `unicode-range: ${font.unicodeRange};` : ""}
+                        }
+                    `),
+                );
+            });
+
             document.head.appendChild(styleTag);
         }
         return undefined;
     }
     const styleTag = document.getElementById("gdc-theme-custom-font") || document.createElement("style");
     styleTag.id = "gdc-theme-custom-font";
-    styleTag.appendChild(
-        document.createTextNode(`
-            @font-face {
-                font-family: GDCustomFont;
-                src: ${src};
-                font-weight: ${weight};
-            }
-        `),
-    );
+
+    src.forEach((font) => {
+        styleTag.appendChild(
+            document.createTextNode(`
+                        @font-face {
+                            font-family: GDCustomFont;
+                            src: ${font.font};
+                            font-weight: ${weight};
+                            ${font.unicodeRange ? `unicode-range: ${font.unicodeRange};` : ""}
+                        }
+                    `),
+        );
+    });
+
     document.head.appendChild(styleTag);
 
     return undefined; // undefined values are skipped while generating CSS properties
@@ -76,13 +97,25 @@ export type ParserFunction = {
 const customParserFunctions: ParserFunction[] = [
     {
         key: "--gd-typography-font",
-        fn: (value: string, isScoped?: boolean, scopeTo?: HTMLElement, scopeId?: string) =>
-            createfontFace(value, 400, isScoped, scopeTo, scopeId),
+        fn: (
+            value: IThemeFontsDef[] | ThemeFontUri,
+            isScoped?: boolean,
+            scopeTo?: HTMLElement,
+            scopeId?: string,
+        ) => {
+            return createFontFace(value, 400, isScoped, scopeTo, scopeId);
+        },
     },
     {
         key: "--gd-typography-fontBold",
-        fn: (value: string, isScoped?: boolean, scopeTo?: HTMLElement, scopeId?: string) =>
-            createfontFace(value, 700, isScoped, scopeTo, scopeId),
+        fn: (
+            value: IThemeFontsDef[] | ThemeFontUri,
+            isScoped?: boolean,
+            scopeTo?: HTMLElement,
+            scopeId?: string,
+        ) => {
+            return createFontFace(value, 700, isScoped, scopeTo, scopeId);
+        },
     },
     { key: "--gd-button-borderRadius", fn: handleUnits },
     { key: "--gd-button-textCapitalization", fn: (value: boolean) => (value ? "capitalize" : undefined) },
@@ -117,7 +150,6 @@ export function parseThemeToCssProperties(
     scopeId?: string,
 ): CssProperty[] {
     const cssProperties: CssProperty[] = [];
-
     for (const [key, value] of Object.entries(object)) {
         const newKey = `${currentKey}-${key}`;
 

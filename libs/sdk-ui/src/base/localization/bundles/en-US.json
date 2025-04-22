@@ -1113,12 +1113,12 @@
         "limit": 0
     },
     "filters.relative.from.invalid.value": {
-        "value": "Error: Invalid period start - enter a valid period or select it from the list.",
+        "value": "Error: Invalid period start — enter a valid period or select it from the list.",
         "comment": "",
         "limit": 0
     },
     "filters.relative.from.empty.value": {
-        "value": "Error: Period start is empty - enter a valid period or select it from the list.",
+        "value": "Error: Period start is empty — enter a valid period or select it from the list.",
         "comment": "",
         "limit": 0
     },
@@ -1128,12 +1128,12 @@
         "limit": 0
     },
     "filters.relative.to.invalid.value": {
-        "value": "Error: Invalid period end - enter a valid period or select it from the list.",
+        "value": "Error: Invalid period end — enter a valid period or select it from the list.",
         "comment": "",
         "limit": 0
     },
     "filters.relative.to.empty.value": {
-        "value": "Error: Period end is empty - enter a valid period or select it from the list.",
+        "value": "Error: Period end is empty — enter a valid period or select it from the list.",
         "comment": "",
         "limit": 0
     },
@@ -3490,8 +3490,13 @@
         "limit": 0
     },
     "recurrence.types.inherit": {
-        "value": "Inherit",
+        "value": "Organization default",
         "comment": "Repeats the schedule email using the same recurrence as the setup in parent.",
+        "limit": 0
+    },
+    "recurrence.types.inherit.info": {
+        "value": "Use the default evaluation frequency set by your organization.",
+        "comment": "Info tooltip for inherit option.",
         "limit": 0
     },
     "recurrence.description.hourly": {
@@ -3525,13 +3530,38 @@
         "limit": 0
     },
     "recurrence.error.too_often": {
-        "value": "Frequency too high",
+        "value": "Error: Frequency too high — reduce to max 1 per hour",
         "comment": "Invalid frequency recurrence.",
         "limit": 0
     },
+    "recurrence.error.empty": {
+        "value": "Error: Required field — enter a Spring cron expression with six fields: seconds, minutes, hours, day of month, month, and day of week. <a>Learn more</a>",
+        "comment": "Input field is required. Do not translate html tags <a>, </a>.",
+        "limit": 0
+    },
+    "recurrence.error.wrongFormat": {
+        "value": "Error: Invalid format — use Spring cron format with six fields: seconds, minutes, hours, day of month, month, and day of week. <a>Learn more</a>",
+        "comment": "Input field has wrong format. Do not translate html tags <a>, </a>.",
+        "limit": 0
+    },
     "recurrence.cron.tooltip": {
-        "value": "Use the <a>unix-cron</a> string format.",
-        "comment": "Do not translate html tags <a>, </a>. Do not translate 'unix-cron' as it is a name of specific tech.",
+        "value": "Use Spring cron format — six fields: seconds, minutes, hours, day of month, month, day of week. <a>Learn more</a>",
+        "comment": "Do not translate html tags <a>, </a>.",
+        "limit": 0
+    },
+    "recurrence.datetime.format.help": {
+        "value": "Format: {dateFormat}",
+        "comment": "Do not translate placeholde {dateFormat}",
+        "limit": 0
+    },
+    "recurrence.datetime.empty.error": {
+        "value": "Error: Required field — enter a valid date to continue.",
+        "comment": "Do not translate placeholde {dateFormat}",
+        "limit": 0
+    },
+    "recurrence.datetime.wrong.format.error": {
+        "value": "Error: Invalid date — format must be {dateFormat}",
+        "comment": "Do not translate placeholde {dateFormat}",
         "limit": 0
     },
     "message.accessibility.dismiss.notification": {

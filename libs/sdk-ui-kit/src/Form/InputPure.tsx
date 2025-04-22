@@ -8,6 +8,7 @@ import { defaultImport } from "default-import";
 import { ENUM_KEY_CODE } from "../typings/utilities.js";
 import { IDomNative, IDomNativeProps } from "../typings/domNative.js";
 import { runAutofocus } from "./focus.js";
+import { IAccessibilityConfigBase } from "../typings/accessibility.js";
 
 const NativeListener = defaultImport(DefaultNativeListener);
 
@@ -41,7 +42,7 @@ export interface InputPureProps extends IDomNativeProps {
     type?: string;
     required?: boolean;
     accessibilityType?: string;
-    ariaLabel?: string;
+    accessibilityConfig?: IAccessibilityConfigBase;
     autocomplete?: string;
 }
 /**
@@ -113,6 +114,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
 
     onClear = (e?: React.ChangeEvent<HTMLInputElement>): void => {
         this.props.onChange("", e);
+        this.autofocusDispatcher = runAutofocus(this.inputNodeRef, true);
     };
 
     getLabelClassNames(className: string): string {
@@ -201,7 +203,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
             name,
             type,
             required,
-            ariaLabel,
+            accessibilityConfig,
             autocomplete,
         } = this.props;
         return (
@@ -224,7 +226,9 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
                     placeholder={placeholder}
                     readOnly={readonly}
                     value={value}
-                    aria-label={ariaLabel ?? undefined}
+                    aria-label={accessibilityConfig?.ariaLabel ?? undefined}
+                    aria-describedby={accessibilityConfig?.ariaDescribedBy}
+                    aria-labelledby={accessibilityConfig?.ariaLabelledBy}
                     autoComplete={isSearch ? "off" : autocomplete}
                 />
                 {this.renderSearch(isSearch)}

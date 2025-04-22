@@ -211,6 +211,7 @@ import { IDrillToCustomUrl } from '@gooddata/sdk-model';
 import { IDrillToDashboard } from '@gooddata/sdk-model';
 import { IDrillToInsight } from '@gooddata/sdk-model';
 import { IDrillToLegacyDashboard } from '@gooddata/sdk-model';
+import { IDropdownListNoDataRenderProps } from '@gooddata/sdk-ui-kit';
 import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { IErrorProps } from '@gooddata/sdk-ui';
 import { IExecutionConfig } from '@gooddata/sdk-model';
@@ -588,7 +589,7 @@ export interface AttributeHierarchyModified extends IDashboardCommand {
 export function attributeHierarchyModified(correlationId?: string): AttributeHierarchyModified;
 
 // @internal (undocumented)
-export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, }: IDashboardAttributeFilterPlaceholderProps): React_2.JSX.Element;
+export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, }: IDashboardAttributeFilterPlaceholderProps): React_2.JSX.Element;
 
 // @alpha (undocumented)
 export type AutomationInteractionData = {
@@ -748,7 +749,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
 }
 
 // @public
-export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionLocalId?: string, correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean): ChangeDateFilterSelection;
+export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionLocalId?: string, correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean, localIdentifier?: string): ChangeDateFilterSelection;
 
 // @alpha (undocumented)
 export interface ChangeDrillableItems extends IDashboardCommand {
@@ -1126,7 +1127,7 @@ export interface ChangeSharingPayload {
 export function changeWorkingAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string): ChangeAttributeFilterSelection;
 
 // @public
-export function clearDateFilterSelection(correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean): ChangeDateFilterSelection;
+export function clearDateFilterSelection(correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean, localIdentifier?: string): ChangeDateFilterSelection;
 
 // @alpha
 export function commandFailedEventHandler<TCommand extends IDashboardCommand>(type: TCommand["type"], handler: DashboardEventHandler<DashboardCommandFailed<TCommand>>["handler"]): DashboardEventHandler<DashboardCommandFailed<TCommand>>;
@@ -3333,6 +3334,7 @@ export interface DateFilterSelection {
     readonly from?: DateString | number;
     readonly granularity: DateFilterGranularity;
     readonly isWorkingSelectionChange?: boolean;
+    readonly localIdentifier?: string;
     readonly to?: DateString | number;
     readonly type: DateFilterType;
 }
@@ -3486,7 +3488,7 @@ export const DefaultScheduledEmailDialog: React_2.FC<IScheduledEmailDialogProps>
 export const DefaultScheduledEmailManagementDialog: React_2.FC<IScheduledEmailManagementDialogProps>;
 
 // @internal (undocumented)
-export function DefaultSettingButton({ isVisible, isEnabled, isSaving, buttonTitle, buttonValue, onSettingClick, }: ISettingButtonProps): React_2.JSX.Element | null;
+export function DefaultSettingButton({ isVisible, isEnabled, isSaving, buttonTitle, onSettingClick, }: ISettingButtonProps): React_2.JSX.Element | null;
 
 // @alpha (undocumented)
 export const DefaultShareButton: React_2.FC<IShareButtonProps>;
@@ -3871,7 +3873,7 @@ export interface ExecutedState {
 export function existBlacklistHierarchyPredicate(reference: IDrillDownReference, attributeHierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy, attributeIdentifier?: ObjRef): boolean;
 
 // @internal (undocumented)
-export const EXPORT_VIS_MINIMAL_HEIGHT = 100;
+export const EXPORT_VIS_MINIMAL_HEIGHT = 90;
 
 // @internal (undocumented)
 export const EXPORT_VIS_MINIMAL_WIDTH = 200;
@@ -3976,6 +3978,15 @@ export interface ExportSlidesInsightWidgetPayload {
     readonly exportType: "pdf" | "pptx";
     readonly filename: string;
     readonly ref: ObjRef;
+}
+
+// @alpha (undocumented)
+export function ExportThemeProvider({ children }: ExportThemeProviderProps): React_2.JSX.Element;
+
+// @alpha (undocumented)
+export interface ExportThemeProviderProps {
+    // (undocumented)
+    children: ReactNode;
 }
 
 // @public
@@ -4466,6 +4477,8 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     onSelect: (displayForm: ObjRef) => void;
     // (undocumented)
     openOnInit?: boolean;
+    // (undocumented)
+    renderNoData?: (props: IDropdownListNoDataRenderProps) => React.ReactNode;
 }
 
 // @public (undocumented)
@@ -8519,6 +8532,9 @@ export const selectEnableAlertAttributes: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
 export const selectEnableAlerting: DashboardSelector<boolean>;
+
+// @internal
+export const selectEnableAlertsEvaluationFrequencySetup: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableAnalyticalDashboardPermissions: DashboardSelector<boolean>;

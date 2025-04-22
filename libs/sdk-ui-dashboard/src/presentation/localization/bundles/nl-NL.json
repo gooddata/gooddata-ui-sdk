@@ -704,5 +704,6 @@
     "settingsDashboardDialog.section.alert.label": "Evaluatiefrequentie",
     "filterBar.unappliedFiltersNotification": "<link>Pas filters toe op</link> om bijgewerkte gegevens te zien.",
     "controlButtons.setting.value": "Instellingen",
-    "controlButtons.setting.title": "Alle instellingen met betrekking tot dit dashboard. Je kunt de cross-filtering van de dashboardbeschrijving, toegestane opgeslagen filters en de evaluatiefrequentie van waarschuwingen wijzigen."
+    "controlButtons.setting.title": "Alle instellingen met betrekking tot dit dashboard. Je kunt de cross-filtering van de dashboardbeschrijving, toegestane opgeslagen filters en de evaluatiefrequentie van waarschuwingen wijzigen.",
+    "dialogs.schedule.error.too_long": "Fout: Tekst te lang - beperk tot {value} tekens of minder."
 }

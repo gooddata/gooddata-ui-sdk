@@ -34,7 +34,9 @@ export function InvertableSelectSearchBar(props: IInvertableSelectSearchBarProps
             isSearch
             isSmall={isSmall}
             type="search"
-            ariaLabel={intl.formatMessage({ id: "gs.list.acessibility.search.label" })}
+            accessibilityConfig={{
+                ariaLabel: intl.formatMessage({ id: "gs.list.acessibility.search.label" }),
+            }}
         />
     );
 }

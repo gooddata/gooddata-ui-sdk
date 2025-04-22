@@ -341,12 +341,7 @@ export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
 }
 
 // @internal (undocumented)
-export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
-    // (undocumented)
-    static defaultProps: IConfirmDialogBaseProps;
-    // (undocumented)
-    render(): JSX.Element;
-}
+export const ConfirmDialogBase: React_2.NamedExoticComponent<IConfirmDialogBaseProps>;
 
 // @internal (undocumented)
 export const ContentDivider: React_2.FC<{
@@ -416,24 +411,10 @@ export const DescriptionPanel: React_2.FC<IDescriptionPanelProps>;
 export const DescriptionPanelContent: React_2.FC<IDescriptionPanelProps>;
 
 // @internal (undocumented)
-export class Dialog extends Component<IDialogBaseProps> {
-    // (undocumented)
-    render(): JSX.Element;
-}
+export const Dialog: React_2.NamedExoticComponent<IDialogProps>;
 
 // @internal (undocumented)
-export class DialogBase<P extends IDialogBaseProps> extends PureComponent<P> {
-    // (undocumented)
-    static defaultProps: Partial<IDialogBaseProps>;
-    // (undocumented)
-    protected getDialogClasses(additionalClassName?: string): string;
-    // (undocumented)
-    protected onKeyDown: (event: React_2.KeyboardEvent<HTMLDivElement>) => void | undefined;
-    // (undocumented)
-    render(): JSX.Element;
-    // (undocumented)
-    protected renderCloseButton(): JSX.Element;
-}
+export const DialogBase: React_2.NamedExoticComponent<IDialogBaseProps>;
 
 // @internal (undocumented)
 export const DialogList: React_2.VFC<IDialogListProps>;
@@ -483,7 +464,7 @@ export type EmbedOptionsType = IReactOptions | IWebComponentsOptions;
 // @internal (undocumented)
 export type EmbedType = "react" | "webComponents";
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export enum ENUM_KEY_CODE {
     // (undocumented)
     KEY_CODE_ENTER = 13,
@@ -498,17 +479,10 @@ export class ErrorOverlay extends React_2.PureComponent<IErrorOverlayProps> {
 }
 
 // @internal (undocumented)
-export const ExportDialog: (props: IExportDialogBaseProps) => JSX.Element;
+export const ExportDialog: React_2.NamedExoticComponent<IExportDialogProps>;
 
 // @internal (undocumented)
-export class ExportDialogBase extends DialogBase<IExportDialogBaseProps> {
-    // (undocumented)
-    static defaultProps: IExportDialogBaseProps;
-    // (undocumented)
-    render(): JSX.Element;
-    // (undocumented)
-    state: IExportDialogBaseState;
-}
+export const ExportDialogBase: React_2.NamedExoticComponent<IExportDialogBaseProps>;
 
 // @internal (undocumented)
 export const FilterLabel: React_2.FC<WithIntlProps<IFilterLabelProps & WrappedComponentProps>> & {
@@ -1220,8 +1194,13 @@ export interface IComponentTableProps<TProps extends object, TProp extends keyof
 export const Icon: Record<string, React_2.FC<IIconProps>>;
 
 // @internal (undocumented)
-export interface IConfirmDialogBaseProps extends IDialogBaseProps {
-    autofocusOnOpen?: boolean;
+export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessibilityConfig"> {
+    // (undocumented)
+    accessibilityConfig?: {
+        closeButton?: IButtonAccessibilityConfig;
+        titleElementId?: string;
+        descriptionElementId?: string;
+    };
     // (undocumented)
     cancelButtonText?: string;
     // (undocumented)
@@ -1232,6 +1211,8 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     headerLeftButtonRenderer?: () => JSX.Element;
     // (undocumented)
     headline?: string;
+    // (undocumented)
+    initialFocus?: React_2.RefObject<HTMLElement> | string;
     // (undocumented)
     isCancelDisabled?: boolean;
     // (undocumented)
@@ -1333,7 +1314,11 @@ export interface IDatePickerOwnProps {
     // (undocumented)
     onAlign?: (align: string) => void;
     // (undocumented)
+    onBlur?: (selectedDate: string) => void;
+    // (undocumented)
     onChange?: (selectedData: Date) => void;
+    // (undocumented)
+    onValidateInput?: (value: string) => void;
     // (undocumented)
     placeholder?: string;
     // (undocumented)
@@ -1393,14 +1378,21 @@ export interface IDialogBaseProps {
     // (undocumented)
     accessibilityConfig?: {
         closeButton?: IButtonAccessibilityConfig;
+        titleElementId?: string;
+        descriptionElementId?: string;
     };
+    autofocusOnOpen?: boolean;
     // (undocumented)
     children?: React_2.ReactNode;
     // (undocumented)
     className?: string;
+    // (undocumented)
+    CloseButton?: React_2.ComponentType<IDialogCloseButtonProps>;
     containerClassName?: string;
     // (undocumented)
     displayCloseButton?: boolean;
+    // (undocumented)
+    initialFocus?: React_2.RefObject<HTMLElement> | string;
     // (undocumented)
     onCancel?: (data?: any) => void;
     // (undocumented)
@@ -1418,6 +1410,9 @@ export interface IDialogBaseProps {
     // (undocumented)
     submitOnEnterKey?: boolean;
 }
+
+// @internal (undocumented)
+export type IDialogCloseButtonProps = Pick<IDialogBaseProps, "onClose" | "accessibilityConfig">;
 
 // @internal (undocumented)
 export interface IDialogListHeaderProps {
@@ -1491,6 +1486,19 @@ export interface IDialogListProps<T extends IDialogListItem = IDialogListItem> {
     onItemClick?: (item: T) => void;
     // (undocumented)
     onItemDelete?: (item: T) => void;
+}
+
+// @internal (undocumented)
+export interface IDialogProps extends IDialogBaseProps {
+    containerClassName?: string;
+    // (undocumented)
+    onClick?: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    // (undocumented)
+    onMouseOver?: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    // (undocumented)
+    onMouseUp?: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    // (undocumented)
+    shouldCloseOnClick?: (e: Event) => boolean;
 }
 
 // @internal (undocumented)
@@ -1799,9 +1807,7 @@ export interface IErrorOverlayProps {
 }
 
 // @internal (undocumented)
-export interface IExportDialogBaseProps extends IDialogBaseProps {
-    // (undocumented)
-    cancelButtonText?: string;
+export interface IExportDialogBaseProps extends Pick<IConfirmDialogBaseProps, "className" | "displayCloseButton" | "isPositive" | "isSubmitDisabled" | "headline" | "cancelButtonText" | "submitButtonText" | "onCancel"> {
     // (undocumented)
     filterContextText?: string;
     // (undocumented)
@@ -1809,13 +1815,7 @@ export interface IExportDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     filterContextVisible?: boolean;
     // (undocumented)
-    headline?: string;
-    // (undocumented)
     includeFilterContext?: boolean;
-    // (undocumented)
-    isPositive?: boolean;
-    // (undocumented)
-    isSubmitDisabled?: boolean;
     // (undocumented)
     mergeHeaders?: boolean;
     // (undocumented)
@@ -1825,23 +1825,16 @@ export interface IExportDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     mergeHeadersTitle?: string;
     // (undocumented)
-    submitButtonText?: string;
+    onSubmit?: (data: IExportDialogData) => void;
 }
 
 // @internal (undocumented)
-export interface IExportDialogBaseState {
-    // (undocumented)
-    includeFilterContext: boolean;
-    // (undocumented)
-    mergeHeaders: boolean;
-}
+export type IExportDialogData = Pick<IExportDialogBaseProps, "includeFilterContext" | "mergeHeaders">;
 
 // @internal (undocumented)
-export interface IExportDialogData {
+export interface IExportDialogProps extends IExportDialogBaseProps {
     // (undocumented)
-    includeFilterContext: boolean;
-    // (undocumented)
-    mergeHeaders: boolean;
+    containerClassName?: string;
 }
 
 // @internal (undocumented)
@@ -2178,6 +2171,9 @@ export interface IHeaderWorkspacePickerProps {
 
 // @public (undocumented)
 export interface IHubspotConversionTouchPointDialogBaseProps {
+    accessibilityConfig?: {
+        titleElementId: string;
+    };
     cancelButtonText?: string;
     dialogTitle?: string;
     hubspotFormId: string;
@@ -2209,6 +2205,14 @@ export interface IHyperlinkProps {
     onClick?: () => void;
     // (undocumented)
     text?: string;
+}
+
+// @internal (undocumented)
+export interface IIconConfig {
+    // (undocumented)
+    content: React_2.ReactNode;
+    // (undocumented)
+    viewBox: string;
 }
 
 // @internal (undocumented)
@@ -3209,9 +3213,9 @@ export class InputPure extends React_2.PureComponent<InputPureProps> implements 
 // @internal (undocumented)
 export interface InputPureProps extends IDomNativeProps {
     // (undocumented)
-    accessibilityType?: string;
+    accessibilityConfig?: IAccessibilityConfigBase;
     // (undocumented)
-    ariaLabel?: string;
+    accessibilityType?: string;
     // (undocumented)
     autocomplete?: string;
     // (undocumented)
@@ -3527,6 +3531,8 @@ export interface IRecurrenceFormProps {
     // (undocumented)
     dateFormat?: string;
     // (undocumented)
+    isWhiteLabeled?: boolean;
+    // (undocumented)
     locale?: string;
     // (undocumented)
     onChange: (cronExpression: string, startDate: Date | null, isValid: boolean) => void;
@@ -3564,6 +3570,8 @@ export interface IRecurrenceProps {
     cronValue: string;
     // (undocumented)
     inheritRecurrenceType?: RecurrenceType;
+    // (undocumented)
+    isWhiteLabeled?: boolean;
     // (undocumented)
     label: string;
     // (undocumented)
@@ -4093,24 +4101,7 @@ export interface ISpinnerProps {
 export const isSpaceKey: (event: KeyboardEvent_2) => boolean;
 
 // @internal (undocumented)
-export interface IStylingEditorDialogFooterProps extends IDialogBaseProps {
-    // (undocumented)
-    disableSubmit?: boolean;
-    // (undocumented)
-    errorMessage?: string;
-    // (undocumented)
-    link: {
-        text: string;
-        url: string;
-    };
-    // (undocumented)
-    onHelpClick?: () => void;
-    // (undocumented)
-    showProgressIndicator?: boolean;
-}
-
-// @internal (undocumented)
-export interface IStylingEditorDialogProps<T extends StylingPickerItemContent> extends IStylingEditorDialogFooterProps {
+export interface IStylingEditorDialogProps<T extends StylingPickerItemContent> extends TStylingEditorDialogFooterProps, Pick<IDialogBaseProps, "onClose" | "className"> {
     // (undocumented)
     examples?: IStylingPickerItem<T>[];
     // (undocumented)
@@ -4349,6 +4340,8 @@ export interface ITypographyProps {
     children: React_2.ReactNode;
     // (undocumented)
     className?: string;
+    // (undocumented)
+    id?: string;
     // (undocumented)
     onClick?: (e: React_2.MouseEvent) => void;
     // (undocumented)
@@ -4905,7 +4898,7 @@ export type StyleProps = Record<string, string | boolean>;
 export const StylingEditorDialog: <T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>) => React_2.JSX.Element;
 
 // @internal (undocumented)
-export const StylingEditorDialogFooter: (props: IStylingEditorDialogFooterProps) => React_2.JSX.Element;
+export const StylingEditorDialogFooter: (props: TStylingEditorDialogFooterProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export const StylingExample: (props: IStylingExampleProps) => React_2.JSX.Element;
@@ -5036,6 +5029,18 @@ export function transform2Dropdown<T extends IDateDataset>(dateDatasets: T[]): A
 export const transformCronExpressionToRecurrenceType: (date: Date | null, cronExpression: string | undefined, allowHourlyRecurrence: boolean, allowInheritValue: boolean, weekStart: WeekStart) => RecurrenceType;
 
 // @internal (undocumented)
+export type TStylingEditorDialogFooterProps = {
+    link: {
+        text: string;
+        url: string;
+    };
+    disableSubmit?: boolean;
+    showProgressIndicator?: boolean;
+    errorMessage?: string;
+    onHelpClick?: () => void;
+} & Pick<IDialogBaseProps, "onCancel" | "onSubmit">;
+
+// @internal (undocumented)
 export type TUTMContent = "main_menu_help_documentation" | "main_menu_help_university" | "main_menu_help_community" | "main_menu_help_support" | "main_menu_help_ticket" | "main_menu_help_slack";
 
 // @internal (undocumented)
@@ -5105,6 +5110,7 @@ export interface UiFocusTrapProps {
     autofocusOnOpen?: boolean;
     // (undocumented)
     children: React_2.ReactNode;
+    initialFocus?: React_2.RefObject<HTMLElement> | string;
     // (undocumented)
     onDeactivate?: () => void;
     returnFocusTo?: React_2.RefObject<HTMLElement> | string;

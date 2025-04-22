@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Dialog } from "../Dialog.js";
@@ -6,7 +6,12 @@ import { IDialogBaseProps } from "../typings.js";
 import { describe, it, expect, vi } from "vitest";
 
 function renderDialog(options: Partial<IDialogBaseProps>) {
-    return render(<Dialog {...options}>DialogTest content</Dialog>);
+    return render(
+        <Dialog {...options} accessibilityConfig={{ titleElementId: "title" }}>
+            <h2 id={"title"}>Accessible title</h2>
+            DialogTest content
+        </Dialog>,
+    );
 }
 
 describe("Dialog", () => {

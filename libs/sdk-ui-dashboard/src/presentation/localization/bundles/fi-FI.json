@@ -704,5 +704,6 @@
     "settingsDashboardDialog.section.alert.label": "Arviointitiheys",
     "filterBar.unappliedFiltersNotification": "<link>Käytä suodattimia</link> nähdäksesi päivitetyt tiedot.",
     "controlButtons.setting.value": "Asetukset",
-    "controlButtons.setting.title": "Kaikki tähän ohjauspaneeliin liittyvät asetukset. Voit muuttaa ohjauspaneelin kuvauksen ristiinsuodatusta, tallennettuja sallittuja suodattimia ja hälytysten arviointitiheyttä."
+    "controlButtons.setting.title": "Kaikki tähän ohjauspaneeliin liittyvät asetukset. Voit muuttaa ohjauspaneelin kuvauksen ristiinsuodatusta, tallennettuja sallittuja suodattimia ja hälytysten arviointitiheyttä.",
+    "dialogs.schedule.error.too_long": "Virhe: Teksti on liian pitkä — vähennä {value} merkkeihin tai vähemmän."
 }

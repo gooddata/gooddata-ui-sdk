@@ -284,7 +284,11 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             onBlur={onBlur}
                             type="number"
                             suffix={getValueSuffix(updatedAlert.alert)}
-                            ariaLabel={intl.formatMessage({ id: "insightAlert.config.accessbility.input" })}
+                            accessibilityConfig={{
+                                ariaLabel: intl.formatMessage({
+                                    id: "insightAlert.config.accessbility.input",
+                                }),
+                            }}
                         />
                         <AlertComparisonPeriodSelect
                             measure={selectedMeasure}

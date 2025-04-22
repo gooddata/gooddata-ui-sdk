@@ -580,7 +580,7 @@ function getTreemapLabelsConfiguration(
                         style: {
                             ...style,
                             fontSize: "14px",
-                            fontFamily: "gdcustomfont, Avenir, 'Helvetica Neue', Arial, sans-serif",
+                            fontFamily: `var(--gd-font-family, gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif)`,
                         },
                         formatter: partial(level1LabelsFormatter, config),
                         allowOverlap: false,

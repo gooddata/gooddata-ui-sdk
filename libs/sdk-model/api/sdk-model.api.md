@@ -4014,6 +4014,12 @@ export interface IThemeDefinition extends Partial<IMetadataObject> {
 }
 
 // @beta
+export type IThemeFontsDef = {
+    font: ThemeFontUri;
+    unicodeRange?: string;
+};
+
+// @beta
 export interface IThemeImages {
     coverImage?: ImageUri;
     logo?: ImageUri;
@@ -4090,8 +4096,8 @@ export interface IThemeTooltip {
 
 // @beta
 export interface IThemeTypography {
-    font?: ThemeFontUri;
-    fontBold?: ThemeFontUri;
+    font?: ThemeFontUri | IThemeFontsDef[];
+    fontBold?: ThemeFontUri | IThemeFontsDef[];
 }
 
 // @beta
@@ -4599,16 +4605,16 @@ export function modifyPreviousPeriodMeasure(measure: IMeasure<IPreviousPeriodMea
 export function modifySimpleMeasure(measure: IMeasure<IMeasureDefinition>, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
 // @alpha
-export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString, dataSet?: ObjRef): IDashboardDateFilter;
+export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString, dataSet?: ObjRef, localIdentifier?: string): IDashboardDateFilter;
 
 // @public
 export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string, localIdentifier?: string): IAbsoluteDateFilter;
 
 // @alpha
-export function newAllTimeDashboardDateFilter(dataSet?: ObjRef): IDashboardDateFilter;
+export function newAllTimeDashboardDateFilter(dataSet?: ObjRef, localIdentifier?: string): IDashboardDateFilter;
 
 // @public
-export function newAllTimeFilter(dateDataSet: ObjRef | Identifier): IRelativeDateFilter;
+export function newAllTimeFilter(dateDataSet: ObjRef | Identifier, localIdentifier?: string): IRelativeDateFilter;
 
 // @public
 export function newArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<ArithmeticMeasureBuilder>): IMeasure<IArithmeticMeasureDefinition>;
@@ -4680,7 +4686,7 @@ export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string
 export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string, operator: RankingFilterOperator, value: number): IRankingFilter;
 
 // @alpha
-export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity, from: number, to: number, dataSet?: ObjRef): IDashboardDateFilter;
+export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity, from: number, to: number, dataSet?: ObjRef, localIdentifier?: string): IDashboardDateFilter;
 
 // @public
 export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: DateAttributeGranularity, from: number, to: number, localIdentifier?: string): IRelativeDateFilter;

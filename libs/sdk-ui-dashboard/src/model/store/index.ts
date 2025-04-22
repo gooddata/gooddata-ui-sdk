@@ -114,6 +114,7 @@ export {
     selectEnableDashboardTabularExport,
     selectEnableDashboardShareLink,
     selectEnableAutomationFilterContext,
+    selectEnableAlertsEvaluationFrequencySetup,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {

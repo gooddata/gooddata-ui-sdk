@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 
@@ -16,19 +16,21 @@ export interface ITypographyProps {
     className?: string;
     onClick?: (e: React.MouseEvent) => void;
     title?: string;
+    id?: string;
 }
 
 /**
  * @internal
  */
 export const Typography: React.FC<ITypographyProps> = (props) => {
-    const { tagName: Tag, children, className, title, onClick } = props;
+    const { tagName: Tag, children, className, title, id, onClick } = props;
 
     return (
         <Tag
             className={cx("gd-typography", `gd-typography--${Tag}`, className)}
             onClick={onClick}
             title={title}
+            id={id}
         >
             {children}
         </Tag>

@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop.js";
 import { Button } from "../../Button/index.js";
@@ -13,7 +13,7 @@ import { FooterButtons } from "../FooterButtons.js";
 /**
  * @internal
  */
-export interface IStylingEditorDialogFooterProps extends IDialogBaseProps {
+export type TStylingEditorDialogFooterProps = {
     link: {
         text: string;
         url: string;
@@ -22,12 +22,12 @@ export interface IStylingEditorDialogFooterProps extends IDialogBaseProps {
     showProgressIndicator?: boolean;
     errorMessage?: string;
     onHelpClick?: () => void;
-}
+} & Pick<IDialogBaseProps, "onCancel" | "onSubmit">;
 
 /**
  * @internal
  */
-export const StylingEditorDialogFooter = (props: IStylingEditorDialogFooterProps) => {
+export const StylingEditorDialogFooter = (props: TStylingEditorDialogFooterProps) => {
     const {
         link,
         disableSubmit = false,

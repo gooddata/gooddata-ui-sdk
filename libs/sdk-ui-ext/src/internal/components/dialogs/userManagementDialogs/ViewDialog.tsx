@@ -1,9 +1,9 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
-import { DialogBase, Typography, Button } from "@gooddata/sdk-ui-kit";
+import { DialogBase, Typography, Button, useId } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "./locales.js";
 import { DeleteLink } from "./DeleteLink.js";
@@ -36,17 +36,21 @@ export const ViewDialog: React.FC<IViewDialogProps> = ({
     onClose,
 }) => {
     const intl = useIntl();
+    const titleElementId = useId();
+
     return (
         <DialogBase
             className="gd-share-dialog gd-share-dialog-add-users gd-user-management-dialog-view s-user-management-view-mode"
             displayCloseButton={true}
-            isPositive={true}
             onClose={onClose}
+            accessibilityConfig={{ titleElementId }}
         >
             <div className="gd-dialog-header-wrapper">
                 <div className="gd-dialog-header">
                     <Typography tagName="h3" className="gd-dialog-header-title">
-                        <span className="s-user-management-title">{dialogTitle}</span>
+                        <span className="s-user-management-title" id={titleElementId}>
+                            {dialogTitle}
+                        </span>
                         {isAdmin ? (
                             <span className="gd-setting-widget-status-pill">
                                 {intl.formatMessage(messages.adminPill)}
