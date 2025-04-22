@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { useCallback, useEffect, useRef, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
@@ -155,6 +155,13 @@ export const useDashboardQueryProcessing = <
                         } else if (isDashboardQueryRejected(e)) {
                             setState({ status: "rejected", result: undefined, error: undefined });
                             onRejected?.(e);
+                        } else {
+                            setState({
+                                status: "error",
+                                result: undefined,
+                                error: e,
+                            });
+                            onError?.(e);
                         }
                     }
                 });

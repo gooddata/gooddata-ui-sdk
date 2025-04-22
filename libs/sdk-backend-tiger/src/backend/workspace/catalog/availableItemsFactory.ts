@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalogWithAvailableItemsFactoryOptions,
@@ -164,16 +164,21 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
                 auxMeasures,
             },
         };
+        const afmValidObjectsQueryEmpty = isAfmValidObjectsQueryEmpty(afmValidObjectsQuery);
 
-        const availableItemsResponse = await this.authCall((client) =>
-            client.validObjects.computeValidObjects({
-                workspaceId: this.workspace,
-                afmValidObjectsQuery,
-            }),
-        );
+        const availableItemsResponse = !afmValidObjectsQueryEmpty
+            ? await this.authCall((client) =>
+                  client.validObjects.computeValidObjects({
+                      workspaceId: this.workspace,
+                      afmValidObjectsQuery,
+                  }),
+              )
+            : null;
 
-        const availableObjRefs: ObjRef[] = availableItemsResponse.data.items.map(jsonApiIdToObjRef);
-        const availableItems = filterAvailableItems(availableObjRefs, this.items);
+        const availableObjRefs: ObjRef[] = availableItemsResponse?.data.items.map(jsonApiIdToObjRef) ?? [];
+        const availableItems = afmValidObjectsQueryEmpty
+            ? this.items
+            : filterAvailableItems(availableObjRefs, this.items);
         const allAvailableItems = types.includes("attributeHierarchy")
             ? [...availableItems, ...this.items.filter(isCatalogAttributeHierarchy)]
             : [...availableItems];
@@ -196,4 +201,16 @@ export function filterAvailableItems(refs: ObjRef[], items: CatalogItem[]): Cata
 
         return intersectionWith(refs, itemRefs, areObjRefsEqual).length > 0;
     });
+}
+
+function isAfmValidObjectsQueryEmpty(afmValidObjectsQuery: AfmValidObjectsQuery) {
+    const { afm } = afmValidObjectsQuery;
+    const { attributes, measures, filters, auxMeasures } = afm;
+
+    return (
+        attributes.length === 0 &&
+        measures.length === 0 &&
+        filters.length === 0 &&
+        (auxMeasures?.length ?? 0) === 0
+    );
 }
