@@ -91,6 +91,8 @@ export { UiChip } from "./@ui/UiChip/UiChip.js";
 export type { UiChipProps } from "./@ui/UiChip/UiChip.js";
 export { UiIcon } from "./@ui/UiIcon/UiIcon.js";
 export type { UiIconProps } from "./@ui/UiIcon/UiIcon.js";
+export { iconsConfig } from "./@ui/UiIcon/icons.js";
+export type { IIconConfig } from "./@ui/UiIcon/icons.js";
 export { UiSkeleton } from "./@ui/UiSkeleton/UiSkeleton.js";
 export type { UiSkeletonProps } from "./@ui/UiSkeleton/UiSkeleton.js";
 export { UiPagedVirtualList } from "./@ui/UiPagedVirtualList/UiPagedVirtualList.js";

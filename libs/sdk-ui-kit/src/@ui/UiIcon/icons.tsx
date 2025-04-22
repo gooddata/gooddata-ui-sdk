@@ -2,12 +2,16 @@
 import React from "react";
 import { e } from "./iconBem.js";
 import { IconType } from "../@types/icon.js";
-
+/**
+ * @internal
+ */
 export interface IIconConfig {
     content: React.ReactNode;
     viewBox: string;
 }
-
+/**
+ * @internal
+ */
 export const iconsConfig: Record<IconType, IIconConfig> = {
     check: {
         content: (
