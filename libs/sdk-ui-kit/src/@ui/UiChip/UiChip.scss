@@ -96,7 +96,6 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
     &__delete {
         color: var(--gd-palette-complementary-7);
         background-color: transparent;
-        line-height: 0;
         border-radius: var(--gd-button-borderRadius);
         transition: var(--gd-transition-all);
         display: inline-flex;
