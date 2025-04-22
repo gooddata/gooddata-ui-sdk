@@ -360,13 +360,18 @@ function* getDateFilterUpdateActions(
         }
 
         const upsertPayload: IUpsertDateFilterPayload = isAllTimeDashboardDateFilter(dateFilter)
-            ? { type: "allTime", dataSet: dateFilter.dateFilter.dataSet }
+            ? {
+                  type: "allTime",
+                  dataSet: dateFilter.dateFilter.dataSet,
+                  localIdentifier: dateFilter.dateFilter.localIdentifier,
+              }
             : {
                   type: dateFilter.dateFilter.type,
                   granularity: dateFilter.dateFilter.granularity,
                   from: dateFilter.dateFilter.from,
                   to: dateFilter.dateFilter.to,
                   dataSet: dateFilter.dateFilter.dataSet,
+                  localIdentifier: dateFilter.dateFilter.localIdentifier,
               };
 
         return [filterContextActions.upsertDateFilter(upsertPayload)];
@@ -392,13 +397,18 @@ function* getDateFiltersUpdateActions(
         if (dashboardFilter) {
             handledDataSets.add(serializeObjRef(dashboardFilter.dateFilter.dataSet!));
             const upsertPayload: IUpsertDateFilterPayload = isAllTimeDashboardDateFilter(dateFilter)
-                ? { type: "allTime", dataSet: dateFilter.dateFilter.dataSet }
+                ? {
+                      type: "allTime",
+                      dataSet: dateFilter.dateFilter.dataSet,
+                      localIdentifier: dateFilter.dateFilter.localIdentifier,
+                  }
                 : {
                       type: dateFilter.dateFilter.type,
                       granularity: dateFilter.dateFilter.granularity,
                       from: dateFilter.dateFilter.from,
                       to: dateFilter.dateFilter.to,
                       dataSet: dateFilter.dateFilter.dataSet,
+                      localIdentifier: dateFilter.dateFilter.localIdentifier,
                   };
 
             updateActions.push(filterContextActions.upsertDateFilter(upsertPayload));
@@ -419,6 +429,7 @@ function* getDateFiltersUpdateActions(
                     filterContextActions.upsertDateFilter({
                         type: "allTime",
                         dataSet: dateFilter.dateFilter.dataSet,
+                        localIdentifier: dateFilter.dateFilter.localIdentifier,
                     }),
                 );
             }
