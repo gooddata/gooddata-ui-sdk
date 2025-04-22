@@ -2208,14 +2208,6 @@ export interface IHyperlinkProps {
 }
 
 // @internal (undocumented)
-export interface IIconConfig {
-    // (undocumented)
-    content: React_2.ReactNode;
-    // (undocumented)
-    viewBox: string;
-}
-
-// @internal (undocumented)
 export interface IIconProps {
     // (undocumented)
     ariaHidden?: boolean;
