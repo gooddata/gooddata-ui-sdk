@@ -1,13 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
-import { UiIcon, iconsConfig, UiIconProps, ComponentTable, propCombinationsFor } from "@gooddata/sdk-ui-kit";
+import { ComponentTable, iconPaths, propCombinationsFor, UiIcon, UiIconProps } from "@gooddata/sdk-ui-kit";
 import React from "react";
 
-import { storiesOf } from "../../_infra/storyRepository.js";
 import { UiStories } from "../../_infra/storyGroups.js";
+import { storiesOf } from "../../_infra/storyRepository.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
 const iconCombinations = propCombinationsFor({ label: "icon", size: 20 } as UiIconProps);
-const types = Object.keys(iconsConfig) as Array<keyof typeof iconsConfig>;
+const types = Object.keys(iconPaths) as Array<keyof typeof iconPaths>;
 const iconTypes = iconCombinations("type", types);
 const iconSizes = iconCombinations("size", [12, 20]);
 const iconColors = iconCombinations(

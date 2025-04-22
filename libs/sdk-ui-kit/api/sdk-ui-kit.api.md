@@ -1236,7 +1236,7 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
 }
 
 // @internal (undocumented)
-export const iconsConfig: Record<IconType, IIconConfig>;
+export const iconPaths: Record<IconType, React_2.ReactNode>;
 
 // @internal (undocumented)
 export type IconType = "check" | "plus" | "sync" | "alert" | "close" | "question" | "crossCircle" | "chevronUp" | "chevronDown" | "date" | "lock" | "cross";
@@ -2205,14 +2205,6 @@ export interface IHyperlinkProps {
     onClick?: () => void;
     // (undocumented)
     text?: string;
-}
-
-// @internal (undocumented)
-export interface IIconConfig {
-    // (undocumented)
-    content: React_2.ReactNode;
-    // (undocumented)
-    viewBox: string;
 }
 
 // @internal (undocumented)
