@@ -77,8 +77,8 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                             })}
                             value={
                                 isExpanded
-                                    ? intl.formatMessage({ id: "dialogs.schedule.email.filters.showLess" })
-                                    : intl.formatMessage({ id: "dialogs.schedule.email.filters.showAll" })
+                                    ? intl.formatMessage({ id: "dialogs.automation.filters.showLess" })
+                                    : intl.formatMessage({ id: "dialogs.automation.filters.showAll" })
                             }
                             onClick={() => setIsExpanded(!isExpanded)}
                         />
@@ -116,7 +116,7 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                             onClick={onClick}
                             accessibilityConfig={{
                                 ariaLabel: intl.formatMessage({
-                                    id: "dialogs.schedule.email.filters.add",
+                                    id: "dialogs.automation.filters.add",
                                 }),
                             }}
                         />
@@ -124,26 +124,26 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                     DropdownTitleComponent={() => (
                         <div className="gd-automation-filters__dropdown-header">
                             <Typography tagName="h3">
-                                <FormattedMessage id="dialogs.schedule.email.filters.title" />
+                                <FormattedMessage id="dialogs.automation.filters.title" />
                             </Typography>
                         </div>
                     )}
                     renderNoData={() => (
                         <div className="gd-automation-filters__dropdown-no-filters">
-                            <FormattedMessage id="dialogs.schedule.email.filters.noFilters" />
+                            <FormattedMessage id="dialogs.automation.filters.noFilters" />
                         </div>
                     )}
                 />
             </div>
             {!isDashboardAutomation ? (
                 <div className="gd-automation-filters__message">
-                    <FormattedMessage id="dialogs.schedule.email.filters.activeFilters" />
+                    <FormattedMessage id="dialogs.automation.filters.activeFilters" />
                 </div>
             ) : null}
             {areFiltersMissing ? (
                 <div className="gd-automation-filters__warning-message">
                     <FormattedMessage
-                        id="dialogs.schedule.email.filters.missing"
+                        id="dialogs.automation.filters.missing"
                         values={{
                             b: (chunk) => <strong>{chunk}</strong>,
                         }}
@@ -158,11 +158,11 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                         checked={useFilters}
                         onChange={(e) => onUseFiltersChange(e.target.checked, selectedFilters)}
                         aria-label={intl.formatMessage({
-                            id: "dialogs.schedule.email.filters.attachment",
+                            id: "dialogs.automation.filters.attachment",
                         })}
                     />
                     <span className="input-label-text">
-                        <FormattedMessage id="dialogs.schedule.email.filters.useFiltersMessage" />
+                        <FormattedMessage id="dialogs.automation.filters.useFiltersMessage" />
                     </span>
                     <BubbleHoverTrigger eventsOnBubble>
                         <Icon.QuestionMark
@@ -174,7 +174,7 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                         />
                         <Bubble alignPoints={TOOLTIP_ALIGN_POINTS}>
                             <FormattedMessage
-                                id="dialogs.schedule.email.filters.useFiltersMessage.tooltip"
+                                id="dialogs.automation.useFiltersMessage.tooltip"
                                 values={{
                                     a: (chunk) => (
                                         <a
