@@ -96,6 +96,10 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
         }
     }
 
+    #{$root}__trigger--isDeletable {
+        border-right: 1px solid transparent;
+    }
+
     &__trigger,
     &__delete {
         @extend %ui-button;
