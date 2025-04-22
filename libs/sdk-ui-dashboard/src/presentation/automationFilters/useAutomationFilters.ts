@@ -28,7 +28,7 @@ export const useAutomationFilters = ({
 }: {
     availableFilters: FilterContextItem[];
     selectedFilters: FilterContextItem[];
-    onFiltersChange: (filters: FilterContextItem[], storeFilters?: boolean) => void;
+    onFiltersChange: (filters: FilterContextItem[]) => void;
 }) => {
     const allAttributes = useDashboardSelector(selectCatalogAttributes);
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
@@ -55,7 +55,7 @@ export const useAutomationFilters = ({
     );
 
     const handleChangeFilter = useCallback(
-        (filter: FilterContextItem | undefined, storeFilters?: boolean) => {
+        (filter: FilterContextItem | undefined) => {
             if (!filter) {
                 return;
             }
@@ -66,7 +66,7 @@ export const useAutomationFilters = ({
                 }
                 return prevFilter;
             });
-            onFiltersChange(updatedFilters, storeFilters);
+            onFiltersChange(updatedFilters);
         },
         [onFiltersChange, selectedFilters],
     );

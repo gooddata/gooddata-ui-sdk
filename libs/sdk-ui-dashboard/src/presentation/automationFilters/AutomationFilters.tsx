@@ -25,7 +25,7 @@ export interface IAutomationFiltersProps {
     id?: string;
     availableFilters: FilterContextItem[] | undefined;
     selectedFilters: FilterContextItem[] | undefined;
-    onFiltersChange: (filters: FilterContextItem[], storeFilters?: boolean) => void;
+    onFiltersChange: (filters: FilterContextItem[]) => void;
     useFilters: boolean;
     onUseFiltersChange: (value: boolean, filters: FilterContextItem[]) => void;
     isDashboardAutomation?: boolean;
@@ -99,7 +99,6 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                             dateConfigs={dateConfigs}
                             onChange={handleChangeFilter}
                             onDelete={handleDeleteFilter}
-                            storeFilters={useFilters}
                         />
                     </div>
                 ))}
@@ -200,9 +199,8 @@ interface IAutomationFilterProps {
     filter: FilterContextItem;
     attributeConfigs: IDashboardAttributeFilterConfig[];
     dateConfigs: IDashboardDateFilterConfigItem[];
-    onChange: (filter: FilterContextItem | undefined, storeFilters?: boolean) => void;
+    onChange: (filter: FilterContextItem | undefined) => void;
     onDelete: (filter: FilterContextItem) => void;
-    storeFilters?: boolean;
 }
 
 const AutomationFilter: React.FC<IAutomationFilterProps> = ({
@@ -211,7 +209,6 @@ const AutomationFilter: React.FC<IAutomationFilterProps> = ({
     dateConfigs,
     onChange,
     onDelete,
-    storeFilters,
 }) => {
     if (isDashboardAttributeFilter(filter)) {
         const config = attributeConfigs.find(
@@ -228,7 +225,6 @@ const AutomationFilter: React.FC<IAutomationFilterProps> = ({
                 onDelete={onDelete}
                 isLocked={isLocked}
                 displayAsLabel={displayAsLabel}
-                storeFilters={storeFilters}
             />
         );
     } else {
