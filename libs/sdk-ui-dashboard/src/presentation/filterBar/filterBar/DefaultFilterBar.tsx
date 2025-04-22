@@ -46,6 +46,7 @@ import {
     selectIsWorkingFilterContextChanged,
     selectDashboardFiltersApplyMode,
     selectCatalogAttributes,
+    selectEnableDateFilterIdentifiers,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
@@ -82,6 +83,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
         selectEnableDuplicatedLabelValuesInAttributeFilter,
     );
     const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+    const enableDateFilterIdentifiers = useDashboardSelector(selectEnableDateFilterIdentifiers);
 
     const dispatch = useDashboardDispatch();
     const onAttributeFilterChanged = useCallback(
@@ -181,7 +183,9 @@ export const useFilterBarProps = (): IFilterBarProps => {
                 );
             } else if (isAllTimeDashboardDateFilter(filter)) {
                 const localIdentifier =
-                    filter?.dateFilter.localIdentifier ?? generateDateFilterLocalIdentifier(0);
+                    filter?.dateFilter.localIdentifier ?? enableDateFilterIdentifiers
+                        ? generateDateFilterLocalIdentifier(0)
+                        : undefined;
                 // all time filter
                 dispatch(
                     clearDateFilterSelection(
@@ -197,7 +201,9 @@ export const useFilterBarProps = (): IFilterBarProps => {
                     .filter(isDashboardDateFilter)
                     .findIndex((filter) => areObjRefsEqual(filter.dateFilter.dataSet, dataSet));
                 const sanitizedFilterIndex = filterIndex < 0 ? 0 : filterIndex;
-                const newLocalIdentifier = generateDateFilterLocalIdentifier(sanitizedFilterIndex, dataSet);
+                const newLocalIdentifier = enableDateFilterIdentifiers
+                    ? generateDateFilterLocalIdentifier(sanitizedFilterIndex, dataSet)
+                    : undefined;
                 dispatch(
                     changeDateFilterSelection(
                         type,

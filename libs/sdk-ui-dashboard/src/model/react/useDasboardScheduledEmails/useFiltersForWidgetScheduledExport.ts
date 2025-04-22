@@ -16,7 +16,10 @@ import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { selectCrossFilteringItems } from "../../store/drill/drillSelectors.js";
 import { usePrevious } from "@gooddata/sdk-ui";
 import { useMemo } from "react";
-import { selectEnableAutomationFilterContext } from "../../../model/store/index.js";
+import {
+    selectEnableAutomationFilterContext,
+    selectEnableDateFilterIdentifiers,
+} from "../../../model/store/index.js";
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 /**
  * @alpha
@@ -58,6 +61,7 @@ export function useFiltersForWidgetScheduledExport({
 }: IUseFiltersForWidgetScheduledExportProps): QueryProcessingState<IFilter[]> {
     const savedWidgetFilters = getAutomationVisualizationFilters(scheduledExportToEdit);
     const enableAutomationFilterContext = useDashboardSelector(selectEnableAutomationFilterContext);
+    const enableDateFilterIdentifiers = useDashboardSelector(selectEnableDateFilterIdentifiers);
 
     const previousWidgetRef = usePrevious(widget?.ref);
     const widgetFiltersQuery = useWidgetFilters(widget, insight);
@@ -93,7 +97,10 @@ export function useFiltersForWidgetScheduledExport({
         : resolvedFiltersWithoutCrossFiltering?.filter((f) => !isAllTimeDateFilter(f));
 
     const commonDateFilter = widget?.dateDataSet
-        ? newAllTimeFilter(widget.dateDataSet, generateDateFilterLocalIdentifier(0))
+        ? newAllTimeFilter(
+              widget.dateDataSet,
+              enableDateFilterIdentifiers ? generateDateFilterLocalIdentifier(0) : undefined,
+          )
         : undefined;
     const shouldAddCommonDateFilter =
         enableAutomationFilterContext &&
