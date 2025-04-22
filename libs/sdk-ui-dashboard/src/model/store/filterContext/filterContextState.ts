@@ -7,6 +7,7 @@ import {
     IAttributeDisplayFormMetadataObject,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
+    FilterContextItem,
 } from "@gooddata/sdk-model";
 
 /**
@@ -100,6 +101,13 @@ export interface FilterContextState {
      * @beta
      */
     attributesWithReferences?: IAttributeWithReferences[];
+
+    /**
+     * Default filter overrides for the dashboard, provided via `overrideDefaultFilters` dashboard config,
+     * after sanitization and merging with the original filter context definition.
+     * @beta
+     */
+    defaultFilterOverrides?: FilterContextItem[];
 }
 
 export const filterContextInitialState: FilterContextState = {
@@ -108,4 +116,5 @@ export const filterContextInitialState: FilterContextState = {
     filterContextIdentity: undefined,
     attributeFilterDisplayForms: undefined,
     attributesWithReferences: undefined,
+    defaultFilterOverrides: undefined,
 };

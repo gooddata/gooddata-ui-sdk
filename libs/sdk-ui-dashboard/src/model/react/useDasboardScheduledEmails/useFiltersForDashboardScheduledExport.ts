@@ -13,6 +13,7 @@ import {
     selectEnableDateFilterIdentifiers,
     selectFilterContextFilters,
     selectOriginalFilterContextFilters,
+    selectDefaultFilterOverrides,
 } from "../../store/index.js";
 import { getAutomationDashboardFilters } from "../../../_staging/automation/index.js";
 import isEqual from "lodash/isEqual.js";
@@ -51,6 +52,7 @@ export const useFiltersForDashboardScheduledExport = ({
         ? getAutomationDashboardFilters(scheduledExportToEdit)
         : undefined;
     const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
+    const defaultFilterOverrides = useDashboardSelector(selectDefaultFilterOverrides);
     const crossFilteringItems = useDashboardSelector(selectCrossFilteringItems);
     const dashboardFiltersWithoutCrossFiltering = removeCrossFilteringFilters(
         dashboardFilters,
@@ -62,7 +64,9 @@ export const useFiltersForDashboardScheduledExport = ({
     // Only changed filters should be stored in scheduled export
     const dashboardFiltersForScheduledExport = enableAutomationFilterContext
         ? dashboardFiltersWithoutCrossFiltering
-        : !isEqual(originalDashboardFilters, dashboardFiltersWithoutCrossFiltering)
+        : // If there are any default filter overrides (e. g. coming from shared dashboard filter context in url),
+        // always store them in scheduled export. In this case we won't ever save the default dashboard filter context.
+        defaultFilterOverrides || !isEqual(originalDashboardFilters, dashboardFiltersWithoutCrossFiltering)
         ? dashboardFiltersWithoutCrossFiltering
         : undefined;
 
