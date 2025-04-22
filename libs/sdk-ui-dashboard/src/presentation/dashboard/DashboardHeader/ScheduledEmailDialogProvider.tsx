@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import React from "react";
 
@@ -96,13 +96,14 @@ export const ScheduledEmailDialogProvider = () => {
  * Load users only if dialog is open
  */
 function ScheduledEmailDialogWithUsers(props: Omit<IScheduledEmailDialogProps, "users">) {
-    const { users, status: usersStatus } = useWorkspaceUsers();
+    const { users, status: usersStatus, usersError } = useWorkspaceUsers();
 
     return (
         <ScheduledEmailDialog
             {...props}
             users={users ?? []}
             isLoading={props.isLoading || usersStatus === "pending" || usersStatus === "loading"}
+            usersError={usersError}
         />
     );
 }

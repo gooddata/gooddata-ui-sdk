@@ -102,6 +102,7 @@ const ScheduledEmailDialogFooter: React.FC<ScheduledEmailDialogFooterProps> = ({
 export function ScheduledMailDialogRenderer({
     scheduledExportToEdit,
     users,
+    usersError,
     notificationChannels,
     insight,
     widget,
@@ -174,7 +175,6 @@ export function ScheduledMailDialogRenderer({
         isCsvExportSelected,
         isXlsxExportSelected,
         areDashboardFiltersChanged,
-        warningMessage,
         validationErrorMessage,
         useFilters,
         onDashboardAttachmentsChange,
@@ -331,6 +331,7 @@ export function ScheduledMailDialogRenderer({
                             <RecipientsSelect
                                 loggedUser={defaultUser}
                                 users={users}
+                                usersError={usersError}
                                 value={editedAutomation.recipients ?? []}
                                 originalValue={originalAutomation.recipients || []}
                                 onChange={onRecipientsChange}
@@ -378,11 +379,6 @@ export function ScheduledMailDialogRenderer({
                             {errorMessage ? (
                                 <Message type="error" className="gd-notifications-channels-dialog-error">
                                     {errorMessage}
-                                </Message>
-                            ) : null}
-                            {warningMessage ? (
-                                <Message type="warning" className="gd-notifications-channels-dialog-warning">
-                                    {warningMessage}
                                 </Message>
                             ) : null}
                         </div>

@@ -102,7 +102,6 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     const [isTitleValid, setIsTitleValid] = useState(true);
     const [isSubjectValid, setIsSubjectValid] = useState(true);
     const [isOnMessageValid, setIsOnMessageValid] = useState(true);
-    const [warningMessage, setWarningMessage] = useState<string | undefined>(undefined);
     const isWidget = !!widget && !!insight;
 
     // Dashboard
@@ -185,36 +184,8 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     };
 
     const onDestinationChange = (notificationChannelId: string): void => {
-        const previousNotificationChannel = notificationChannels.find(
-            (channel) => editedAutomation.notificationChannel === channel.id,
-        );
-        const selectedNotificationChannel = notificationChannels.find(
-            (channel) => notificationChannelId === channel.id,
-        );
-
-        /**
-         * When allowed recipients are changed from "ALL" to "CREATOR", show warning message
-         */
-        const showWarningMessage =
-            selectedNotificationChannel?.allowedRecipients === "creator" &&
-            previousNotificationChannel?.allowedRecipients !== "creator";
-        setWarningMessage(
-            showWarningMessage
-                ? intl.formatMessage({ id: "dialogs.schedule.email.destinationWarning" })
-                : undefined,
-        );
-
-        /**
-         * Reset recipients when new notification channel only allows the author/creator
-         */
-        const updatedRecipients =
-            selectedNotificationChannel?.allowedRecipients === "creator"
-                ? { recipients: [defaultRecipient] }
-                : {};
-
         setEditedAutomation((s) => ({
             ...s,
-            ...updatedRecipients,
             notificationChannel: notificationChannelId,
         }));
     };
@@ -565,7 +536,6 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         editedAutomation,
         isCronValid,
         notificationChannels,
-        warningMessage,
         isDashboardExportSelected,
         isCsvExportSelected,
         isXlsxExportSelected,

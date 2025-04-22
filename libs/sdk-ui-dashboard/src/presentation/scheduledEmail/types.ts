@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { ComponentType } from "react";
 import {
     FilterContextItem,
@@ -37,6 +37,11 @@ export interface IScheduledEmailDialogProps {
      * Users in workspace
      */
     users: IWorkspaceUser[];
+
+    /**
+     * Error occurred while loading users
+     */
+    usersError?: GoodDataSdkError;
 
     /**
      * Notification channels in organization
