@@ -221,7 +221,10 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
             dateFilter.dateFilter.granularity = granularity;
             dateFilter.dateFilter.from = from;
             dateFilter.dateFilter.to = to;
-            dateFilter.dateFilter.localIdentifier = localIdentifier;
+
+            if (localIdentifier) {
+                dateFilter.dateFilter.localIdentifier = localIdentifier;
+            }
         }
     } else {
         const { type, granularity, from, to, dataSet, localIdentifier } = action.payload;
@@ -232,7 +235,7 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
                 from,
                 to,
                 ...(dataSet ? { dataSet } : {}),
-                localIdentifier,
+                ...(localIdentifier ? { localIdentifier } : {}),
             },
         });
     }

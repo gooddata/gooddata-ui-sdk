@@ -359,11 +359,14 @@ function* getDateFilterUpdateActions(
             return [];
         }
 
+        const localIdentifierObj = dateFilter.dateFilter.localIdentifier
+            ? { localIdentifier: dateFilter.dateFilter.localIdentifier }
+            : {};
         const upsertPayload: IUpsertDateFilterPayload = isAllTimeDashboardDateFilter(dateFilter)
             ? {
                   type: "allTime",
                   dataSet: dateFilter.dateFilter.dataSet,
-                  localIdentifier: dateFilter.dateFilter.localIdentifier,
+                  ...localIdentifierObj,
               }
             : {
                   type: dateFilter.dateFilter.type,
@@ -371,7 +374,7 @@ function* getDateFilterUpdateActions(
                   from: dateFilter.dateFilter.from,
                   to: dateFilter.dateFilter.to,
                   dataSet: dateFilter.dateFilter.dataSet,
-                  localIdentifier: dateFilter.dateFilter.localIdentifier,
+                  ...localIdentifierObj,
               };
 
         return [filterContextActions.upsertDateFilter(upsertPayload)];
@@ -395,12 +398,15 @@ function* getDateFiltersUpdateActions(
             yield select(selectFilterContextDateFilterByDataSet(filterRef));
 
         if (dashboardFilter) {
+            const localIdentifierObj = dateFilter.dateFilter.localIdentifier
+                ? { localIdentifier: dateFilter.dateFilter.localIdentifier }
+                : {};
             handledDataSets.add(serializeObjRef(dashboardFilter.dateFilter.dataSet!));
             const upsertPayload: IUpsertDateFilterPayload = isAllTimeDashboardDateFilter(dateFilter)
                 ? {
                       type: "allTime",
                       dataSet: dateFilter.dateFilter.dataSet,
-                      localIdentifier: dateFilter.dateFilter.localIdentifier,
+                      ...localIdentifierObj,
                   }
                 : {
                       type: dateFilter.dateFilter.type,
@@ -408,7 +414,7 @@ function* getDateFiltersUpdateActions(
                       from: dateFilter.dateFilter.from,
                       to: dateFilter.dateFilter.to,
                       dataSet: dateFilter.dateFilter.dataSet,
-                      localIdentifier: dateFilter.dateFilter.localIdentifier,
+                      ...localIdentifierObj,
                   };
 
             updateActions.push(filterContextActions.upsertDateFilter(upsertPayload));
@@ -425,11 +431,14 @@ function* getDateFiltersUpdateActions(
         );
         if (unhandledFilters.length > 0) {
             for (const dateFilter of dateFilters) {
+                const localIdentifierObj = dateFilter.dateFilter.localIdentifier
+                    ? { localIdentifier: dateFilter.dateFilter.localIdentifier }
+                    : {};
                 updateActions.push(
                     filterContextActions.upsertDateFilter({
                         type: "allTime",
                         dataSet: dateFilter.dateFilter.dataSet,
-                        localIdentifier: dateFilter.dateFilter.localIdentifier,
+                        ...localIdentifierObj,
                     }),
                 );
             }
