@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { IAlertNotification } from "@gooddata/sdk-model";
 import React from "react";
 import { UiSkeleton } from "@gooddata/sdk-ui-kit";
@@ -32,7 +32,7 @@ export function NotificationFiltersDetailDialog({
 }: INotificationFiltersDetailDialogProps) {
     const intl = useIntl();
     const { filtersInfo, automationPromise } = useNotificationsFilterDetail(notification);
-    const filtersCount = notification.details.data.alert.filterCount ?? 0;
+    const filtersCount = 0;
 
     return (
         <DetailsDialog

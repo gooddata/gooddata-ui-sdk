@@ -123,6 +123,7 @@ import {
     AutomationCustomMetric,
     AutomationPdfTableStyle,
     AutomationPdfTableStyleProperty,
+    AutomationNotificationFilter,
 } from "./automation.js";
 
 export type {
@@ -208,6 +209,7 @@ export type {
     AutomationCustomMetric,
     AutomationPdfTableStyle,
     AutomationPdfTableStyleProperty,
+    AutomationNotificationFilter,
 };
 export {
     tigerExecutionClientFactory,

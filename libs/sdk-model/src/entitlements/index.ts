@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 /**
  * Entitlement name
@@ -30,7 +30,8 @@ export type IEntitlementsName =
     | "DailyScheduledActionCount"
     | "UnlimitedDailyScheduledActions"
     | "ScheduledActionMinimumRecurrenceMinutes"
-    | "FederatedIdentityManagement";
+    | "FederatedIdentityManagement"
+    | "AuditLogging";
 /**
  * Entitlement descriptor
  *

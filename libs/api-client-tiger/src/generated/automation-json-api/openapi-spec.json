@@ -918,10 +918,6 @@
                     "attribute": {
                         "type": "string"
                     },
-                    "filterCount": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
                     "totalValueCount": {
                         "type": "integer",
                         "format": "int32"
@@ -929,6 +925,10 @@
                     "triggeredCount": {
                         "type": "integer",
                         "format": "int32"
+                    },
+                    "triggeredAt": {
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "threshold": {
                         "type": "number",
@@ -1017,6 +1017,10 @@
                     },
                     "traceId": {
                         "type": "string"
+                    },
+                    "triggeredAt": {
+                        "type": "string",
+                        "format": "date-time"
                     }
                 }
             },
@@ -1078,6 +1082,18 @@
                     "mapping": {
                         "AUTOMATION": "#/components/schemas/AutomationNotification",
                         "TEST": "#/components/schemas/TestNotification"
+                    }
+                }
+            },
+            "NotificationFilter": {
+                "required": ["filter", "title"],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "filter": {
+                        "type": "string"
                     }
                 }
             },
@@ -1206,6 +1222,12 @@
                     },
                     "alert": {
                         "$ref": "#/components/schemas/AlertDescription"
+                    },
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/NotificationFilter"
+                        }
                     }
                 }
             },

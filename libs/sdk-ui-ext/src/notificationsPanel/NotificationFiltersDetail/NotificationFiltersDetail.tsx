@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { alignConfigToAlignPoint, Overlay, UiButton } from "@gooddata/sdk-ui-kit";
 import React, { useRef, useState } from "react";
 import { IAlertNotification } from "@gooddata/sdk-model";
@@ -33,7 +33,7 @@ export function NotificationFiltersDetail({ notification }: INotificationFilters
     const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
     const intl = useIntl();
     const ref = useRef<HTMLButtonElement>(null);
-    const filterCount = notification.details.data.alert.filterCount;
+    const filterCount = 0;
     const closeFiltersDialog = () => setIsFiltersDialogOpen(false);
     const toggleFiltersDialog = () => setIsFiltersDialogOpen((x) => !x);
     const onButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {

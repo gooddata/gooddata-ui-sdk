@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import { ISettings } from "@gooddata/sdk-model";
 
-import { TigerSettingsType, TigerOrgSettingsType } from "../../types/index.js";
+import { TigerOrgSettingsType, TigerSettingsType } from "../../types/index.js";
 
 export function mapTypeToKey(
     type: TigerSettingsType | TigerOrgSettingsType | undefined,
@@ -45,6 +45,7 @@ export function mapTypeToKey(
         case "TIMEZONE_VALIDATION_ENABLED":
         case "ENABLE_FILE_ANALYTICS":
         case "JIT_PROVISIONING":
+        case "ENABLE_SLIDES_EXPORT":
         case undefined:
             return fallback;
         default:

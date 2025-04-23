@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
-import { IExportResult } from "../exports/index.js";
-import { IAutomationDetails } from "../automations/index.js";
 import isEmpty from "lodash/isEmpty.js";
+import { IAutomationDetails } from "../automations/index.js";
+import { IExportResult } from "../exports/index.js";
 
 /**
  * Type of the notification.
@@ -177,6 +177,11 @@ export interface IWebhookMessageDataBase {
     recipients?: WebhookRecipient[];
 
     /**
+     * Visible filters applied to the alert.
+     */
+    filters?: AlertFilters[];
+
+    /**
      * Automation details.
      */
     details?: IAutomationDetails;
@@ -267,11 +272,6 @@ export interface IAlertDescription {
      * Attribute of the alert (if sliced by attribute).
      */
     attribute?: string;
-
-    /**
-     * Filter count of the alert.
-     */
-    filterCount?: number;
 
     /**
      * Total values count that can trigger the alert.
@@ -378,6 +378,23 @@ export type WebhookRecipient = {
      * Email of the recipient.
      */
     email: string;
+};
+
+/**
+ * Visible filters applied.
+ *
+ * @public
+ */
+export type AlertFilters = {
+    /**
+     * Filter name.
+     */
+    title: string;
+
+    /**
+     * Filter values.
+     */
+    filter: string;
 };
 
 /**

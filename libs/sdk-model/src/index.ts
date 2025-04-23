@@ -78,6 +78,7 @@ export type {
     IWebhookMessageDataSchedule,
     NotificationType,
     WebhookRecipient,
+    AlertFilters,
 } from "./notifications/index.js";
 export {
     isAlertNotification,
