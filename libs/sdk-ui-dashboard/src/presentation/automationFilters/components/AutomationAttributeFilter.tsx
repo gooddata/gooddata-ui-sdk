@@ -11,6 +11,10 @@ import { Bubble, BubbleHoverTrigger, UiChip, UiSkeleton } from "@gooddata/sdk-ui
 import noop from "lodash/noop.js";
 import { DefaultDashboardAttributeFilter } from "../../../presentation/filterBar/index.js";
 import { attributeFilterToDashboardAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
+import {
+    AutomationAttributeFilterProvider,
+    useAutomationAttributeFilterContext,
+} from "./AutomationAttributeFilterContext.js";
 
 const tooltipAlignPoints = [
     { align: "bl tl", offset: { x: 11, y: 0 } },
@@ -24,68 +28,79 @@ export const AutomationAttributeFilter: React.FC<{
     isLocked?: boolean;
     displayAsLabel?: ObjRef;
 }> = ({ filter, onChange, onDelete, isLocked, displayAsLabel }) => {
-    const CustomAttributeFilter = useMemo(() => {
-        return function AttributeFilter(props: IAttributeFilterButtonProps) {
-            const CustomLoadingComponent = useMemo(() => {
-                return function LoadingComponent() {
-                    return <UiSkeleton itemWidth={160} itemHeight={27} itemBorderRadius={20} />;
-                };
-            }, []);
-
-            const CustomDropdownButtonComponent = useMemo(() => {
-                return function DropdownButton(props: IAttributeFilterDropdownButtonProps) {
-                    const label = `${props.title!}: ${props.subtitle!}`;
-                    const tag = props.selectedItemsCount ? `(${props.selectedItemsCount})` : undefined;
-                    return (
-                        <BubbleHoverTrigger showDelay={200} hideDelay={0}>
-                            <UiChip
-                                label={label}
-                                tag={tag}
-                                isLocked={isLocked}
-                                isActive={props.isOpen}
-                                isDeletable={!isLocked}
-                                onClick={props.onClick}
-                                onDelete={() => onDelete(filter)}
-                                accessibilityConfig={{
-                                    isExpanded: props.isOpen,
-                                }}
-                            />
-                            <Bubble alignPoints={tooltipAlignPoints}>
-                                {label}
-                                {tag ? ` ${tag}` : null}
-                            </Bubble>
-                        </BubbleHoverTrigger>
-                    );
-                };
-            }, []);
-
-            const handleOnApply = useCallback((newFilter: IAttributeFilter) => {
-                onChange(
-                    attributeFilterToDashboardAttributeFilter(
-                        newFilter,
-                        filter.attributeFilter.localIdentifier,
-                        filter.attributeFilter.title,
-                    ),
-                );
-            }, []);
-
-            return (
-                <AttributeFilterButton
-                    {...props}
-                    onApply={handleOnApply}
-                    LoadingComponent={CustomLoadingComponent}
-                    DropdownButtonComponent={CustomDropdownButtonComponent}
-                />
-            );
-        };
-    }, [isLocked, onDelete, filter, onChange]);
-
     return (
-        <DefaultDashboardAttributeFilter
+        <AutomationAttributeFilterProvider
             filter={filter}
-            onFilterChanged={noop}
-            displayAsLabel={displayAsLabel}
-            AttributeFilterComponent={CustomAttributeFilter}
-        />
+            onChange={onChange}
+            onDelete={onDelete}
+            isLocked={isLocked}
+        >
+            <DefaultDashboardAttributeFilter
+                filter={filter}
+                onFilterChanged={noop}
+                displayAsLabel={displayAsLabel}
+                AttributeFilterComponent={AttributeFilterBugFix}
+            />
+        </AutomationAttributeFilterProvider>
     );
 };
+
+function AttributeFilterBugFix(props: IAttributeFilterButtonProps) {
+    const { onChange, filter } = useAutomationAttributeFilterContext();
+
+    const filterTitle = useMemo(() => {
+        return filter?.attributeFilter.title;
+    }, [filter]);
+
+    const filterLocalIdentifier = useMemo(() => {
+        return filter?.attributeFilter.localIdentifier;
+    }, [filter]);
+
+    const handleOnApply = useCallback(
+        (newFilter: IAttributeFilter) => {
+            onChange?.(
+                attributeFilterToDashboardAttributeFilter(newFilter, filterLocalIdentifier, filterTitle),
+            );
+        },
+        [filterLocalIdentifier, filterTitle, onChange],
+    );
+
+    return (
+        <AttributeFilterButton
+            {...props}
+            onApply={handleOnApply}
+            LoadingComponent={AutomationAttributeFilterLoadingComponent}
+            DropdownButtonComponent={AutomationAttributeFilterDropdownButtonComponent}
+        />
+    );
+}
+
+function AutomationAttributeFilterLoadingComponent() {
+    return <UiSkeleton itemWidth={160} itemHeight={27} itemBorderRadius={20} />;
+}
+
+function AutomationAttributeFilterDropdownButtonComponent(props: IAttributeFilterDropdownButtonProps) {
+    const { isLocked, onDelete, filter } = useAutomationAttributeFilterContext();
+    const label = `${props.title!}: ${props.subtitle!}`;
+    const tag = props.selectedItemsCount ? `(${props.selectedItemsCount})` : undefined;
+    return (
+        <BubbleHoverTrigger showDelay={200} hideDelay={0}>
+            <UiChip
+                label={label}
+                tag={tag}
+                isLocked={isLocked}
+                isActive={props.isOpen}
+                isDeletable={!isLocked}
+                onClick={props.onClick}
+                onDelete={() => onDelete?.(filter!)}
+                accessibilityConfig={{
+                    isExpanded: props.isOpen,
+                }}
+            />
+            <Bubble alignPoints={tooltipAlignPoints}>
+                {label}
+                {tag ? ` ${tag}` : null}
+            </Bubble>
+        </BubbleHoverTrigger>
+    );
+}
