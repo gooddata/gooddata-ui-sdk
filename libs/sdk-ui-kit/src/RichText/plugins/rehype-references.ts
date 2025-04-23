@@ -1,6 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { areObjRefsEqual, DataValue, IdentifierRef, ISeparators } from "@gooddata/sdk-model";
+import { areObjRefsEqual, IdentifierRef, ISeparators } from "@gooddata/sdk-model";
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { IntlShape } from "react-intl";
 import { Parent } from "unist";
 import { Root } from "mdast";
@@ -10,7 +11,6 @@ import { EvaluatedMetric } from "../hooks/useEvaluatedMetricsAndAttributes.js";
 import { createReference } from "../helpers/references.js";
 
 import { HtmlNode, REFERENCE_REGEX_MATCH, REFERENCE_REGEX_SPLIT, TextNode } from "./types.js";
-import { ClientFormatterFacade } from "@gooddata/number-formatter";
 
 export function rehypeReferences(intl: IntlShape, metrics?: EvaluatedMetric[], separators?: ISeparators) {
     return function () {
@@ -192,22 +192,11 @@ function getValue(metric: EvaluatedMetric, intl: IntlShape, separators?: ISepara
         };
     }
 
-    let formattedValue = "";
-
-    if (typeof value === "string") {
-        formattedValue = value;
-    } else {
-        const { formattedValue: formatted, colors } = createNumberJsFormatter(
-            value,
-            metric.format,
-            separators,
-        );
-        formattedValue = formatted;
-        styles = {
-            ...(colors?.color ? { color: colors.color } : {}),
-            ...(colors?.backgroundColor ? { backgroundColor: colors.backgroundColor } : {}),
-        };
-    }
+    const { formattedValue, colors } = createNumberJsFormatter(metric, separators);
+    styles = {
+        ...(colors?.color ? { color: colors.color } : {}),
+        ...(colors?.backgroundColor ? { backgroundColor: colors.backgroundColor } : {}),
+    };
 
     // NOTE: If the results value is empty, we should display the empty value message
     if (formattedValue == "") {
@@ -230,9 +219,25 @@ function getValue(metric: EvaluatedMetric, intl: IntlShape, separators?: ISepara
     };
 }
 
-function createNumberJsFormatter(value: DataValue, format: string, separators?: ISeparators) {
+function createNumberJsFormatter(metric: EvaluatedMetric, separators?: ISeparators) {
+    const value = metric ? metric.data.rawValue : null;
+
+    if (!metric?.data.formatable) {
+        return {
+            formattedValue: value as string,
+            colors: {
+                color: undefined,
+                backgroundColor: undefined,
+            },
+        };
+    }
+
     const valueToFormat = ClientFormatterFacade.convertValue(value);
-    const { formattedValue, colors } = ClientFormatterFacade.formatValue(valueToFormat, format, separators);
+    const { formattedValue, colors } = ClientFormatterFacade.formatValue(
+        valueToFormat,
+        metric.format,
+        separators,
+    );
 
     return {
         formattedValue,

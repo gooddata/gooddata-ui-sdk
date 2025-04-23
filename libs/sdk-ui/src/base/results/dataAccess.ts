@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IAttribute,
     IMeasure,
@@ -47,6 +47,11 @@ export type DataPoint = {
      * series to which this point belongs.
      */
     formattedValue(): null | string;
+
+    /**
+     * Value is formatable, i.e. is a number and number format can be applied to it.
+     */
+    readonly formatable: boolean;
 
     /**
      * Coordinates into the data view. Coordinates are zero-based.
