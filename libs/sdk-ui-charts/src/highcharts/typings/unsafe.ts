@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import {
     ColorAxisOptions,
@@ -100,6 +100,11 @@ export interface IStackItem {
     column?: ISeriesDataItem[];
 }
 
+export interface IZone {
+    value?: number;
+    dashStyle?: "solid" | "shortDash";
+}
+
 export interface ISeriesItem {
     name?: string;
     segmentName?: string;
@@ -128,6 +133,8 @@ export interface ISeriesItem {
     marker?: {
         enabled?: boolean;
     };
+    zoneAxis?: "x" | "y";
+    zones?: IZone[];
 }
 
 export interface IChartOptionsData {
@@ -300,4 +307,5 @@ export interface IAxis {
     format?: string;
     opposite?: boolean;
     seriesIndices?: number[];
+    plotLines?: number[];
 }
