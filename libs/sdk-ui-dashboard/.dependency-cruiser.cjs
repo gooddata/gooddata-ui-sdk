@@ -128,6 +128,7 @@ options = {
             "src/presentation/flexibleLayout/dragAndDrop/Resize/BulletsBar/BulletsBar.tsx",
             "src/presentation/localization",
             "src/presentation/widget/common/configuration/ConfigurationBubble.tsx",
+            "src/presentation/scheduledEmail/utils/date.ts",
             "src/model/store/meta/index.ts",
         ]),
         depCruiser.moduleWithDependencies("layout", "src/presentation/layout", [
