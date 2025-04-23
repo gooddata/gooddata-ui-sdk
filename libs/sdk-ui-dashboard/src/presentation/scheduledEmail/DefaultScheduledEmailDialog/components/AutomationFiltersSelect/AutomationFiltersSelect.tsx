@@ -2,6 +2,7 @@
 
 import React from "react";
 import { AutomationFilters } from "../../../../automationFilters/AutomationFilters.js";
+import { useAutomationFilters } from "../../../../automationFilters/useAutomationFilters.js";
 import { FormattedMessage } from "react-intl";
 import { FilterContextItem } from "@gooddata/sdk-model";
 
@@ -9,8 +10,8 @@ export interface IAutomationFiltersSelectProps {
     availableFilters: FilterContextItem[] | undefined;
     selectedFilters: FilterContextItem[] | undefined;
     onFiltersChange: (filters: FilterContextItem[]) => void;
-    useFilters: boolean;
-    onUseFiltersChange: (value: boolean, filters: FilterContextItem[]) => void;
+    storeFilters: boolean;
+    onStoreFiltersChange: (value: boolean, filters: FilterContextItem[]) => void;
     isDashboardAutomation?: boolean;
     areFiltersMissing?: boolean;
 }
@@ -20,11 +21,26 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
     selectedFilters = [],
     onFiltersChange,
     isDashboardAutomation,
-    useFilters,
-    onUseFiltersChange,
+    storeFilters,
+    onStoreFiltersChange,
     areFiltersMissing,
 }) => {
-    const numberOfSelectedFilters = selectedFilters.length;
+    const {
+        visibleFilters,
+        attributes,
+        dateDatasets,
+        attributeConfigs,
+        dateConfigs,
+        handleAddFilter,
+        handleDeleteFilter,
+        handleChangeFilter,
+    } = useAutomationFilters({
+        availableFilters,
+        selectedFilters,
+        onFiltersChange,
+    });
+
+    const numberOfSelectedFilters = visibleFilters.length;
     const accessibilityValue = "schedule.filters";
 
     return (
@@ -37,11 +53,16 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
             </label>
             <AutomationFilters
                 id={accessibilityValue}
-                availableFilters={availableFilters}
-                selectedFilters={selectedFilters}
-                onFiltersChange={onFiltersChange}
-                useFilters={useFilters}
-                onUseFiltersChange={onUseFiltersChange}
+                filters={visibleFilters}
+                attributes={attributes}
+                dateDatasets={dateDatasets}
+                attributeConfigs={attributeConfigs}
+                dateConfigs={dateConfigs}
+                handleAddFilter={handleAddFilter}
+                handleDeleteFilter={handleDeleteFilter}
+                handleChangeFilter={handleChangeFilter}
+                storeFilters={storeFilters}
+                onStoreFiltersChange={onStoreFiltersChange}
                 isDashboardAutomation={isDashboardAutomation}
                 areFiltersMissing={areFiltersMissing}
             />

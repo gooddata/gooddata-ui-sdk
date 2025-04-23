@@ -7,13 +7,15 @@ import noop from "lodash/noop.js";
 import {
     areObjRefsEqual,
     FilterContextItem,
+    ICatalogAttribute,
+    ICatalogDateDataset,
     IDashboardAttributeFilterConfig,
     IDashboardDateFilterConfigItem,
     isDashboardAttributeFilter,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Button, Icon, Typography } from "@gooddata/sdk-ui-kit";
 import { AttributesDropdown } from "../filterBar/index.js";
-import { useAutomationFilters } from "./useAutomationFilters.js";
 import { AutomationAttributeFilter } from "./components/AutomationAttributeFilter.js";
 import { AutomationDateFilter } from "./components/AutomationDateFilter.js";
 import { gdColorStateBlank } from "../constants/colors.js";
@@ -23,43 +25,38 @@ const TOOLTIP_ALIGN_POINTS = [{ align: "cr cl" }, { align: "cl cr" }];
 
 export interface IAutomationFiltersProps {
     id?: string;
-    availableFilters: FilterContextItem[] | undefined;
-    selectedFilters: FilterContextItem[] | undefined;
-    onFiltersChange: (filters: FilterContextItem[]) => void;
-    useFilters: boolean;
-    onUseFiltersChange: (value: boolean, filters: FilterContextItem[]) => void;
+    filters: FilterContextItem[] | undefined;
+    attributeConfigs: IDashboardAttributeFilterConfig[];
+    dateConfigs: IDashboardDateFilterConfigItem[];
+    attributes: ICatalogAttribute[];
+    dateDatasets: ICatalogDateDataset[];
+    handleChangeFilter: (filter: FilterContextItem | undefined) => void;
+    handleDeleteFilter: (filter: FilterContextItem) => void;
+    handleAddFilter: (displayForm: ObjRef) => void;
+    storeFilters: boolean;
+    onStoreFiltersChange: (value: boolean, filters: FilterContextItem[]) => void;
     isDashboardAutomation?: boolean;
     areFiltersMissing?: boolean;
 }
 
 export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
     id,
-    availableFilters = [],
-    selectedFilters = [],
-    onFiltersChange,
+    filters = [],
+    attributeConfigs,
+    dateConfigs,
+    attributes,
+    dateDatasets,
+    handleChangeFilter,
+    handleDeleteFilter,
+    handleAddFilter,
     isDashboardAutomation,
-    useFilters,
-    onUseFiltersChange,
+    storeFilters,
+    onStoreFiltersChange,
     areFiltersMissing,
 }) => {
     const theme = useTheme();
     const intl = useIntl();
     const [isExpanded, setIsExpanded] = useState(false);
-
-    const {
-        visibleFilters,
-        attributes,
-        dateDatasets,
-        attributeConfigs,
-        dateConfigs,
-        handleAddFilter,
-        handleDeleteFilter,
-        handleChangeFilter,
-    } = useAutomationFilters({
-        availableFilters,
-        selectedFilters,
-        onFiltersChange,
-    });
 
     return (
         <div id={id} className="gd-automation-filters">
@@ -68,7 +65,7 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                     "gd-automation-filters__list--expanded": isExpanded,
                 })}
             >
-                {selectedFilters.length > 1 ? (
+                {filters.length > 1 ? (
                     <span className="gd-automation-filters__expansion-button s-automation-filters-show-all-button">
                         <Button
                             className={cx("gd-button gd-button-link-dimmed gd-button-small gd-icon-right", {
@@ -84,7 +81,7 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                         />
                     </span>
                 ) : undefined}
-                {visibleFilters.map((filter) => (
+                {filters.map((filter) => (
                     <div
                         key={
                             isDashboardAttributeFilter(filter)
@@ -155,8 +152,8 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                     <input
                         type="checkbox"
                         className="input-checkbox s-checkbox"
-                        checked={useFilters}
-                        onChange={(e) => onUseFiltersChange(e.target.checked, selectedFilters)}
+                        checked={storeFilters}
+                        onChange={(e) => onStoreFiltersChange(e.target.checked, filters)}
                         aria-label={intl.formatMessage({
                             id: "dialogs.automation.filters.attachment",
                         })}

@@ -39,13 +39,13 @@ export const AutomationAttributeFilter: React.FC<{
                 filter={filter}
                 onFilterChanged={noop}
                 displayAsLabel={displayAsLabel}
-                AttributeFilterComponent={AttributeFilterBugFix}
+                AttributeFilterComponent={AttributeFilter}
             />
         </AutomationAttributeFilterProvider>
     );
 };
 
-function AttributeFilterBugFix(props: IAttributeFilterButtonProps) {
+function AttributeFilter(props: IAttributeFilterButtonProps) {
     const { onChange, filter } = useAutomationAttributeFilterContext();
 
     const filterTitle = useMemo(() => {
