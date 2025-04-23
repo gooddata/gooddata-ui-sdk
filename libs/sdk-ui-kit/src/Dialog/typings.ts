@@ -16,6 +16,7 @@ export interface IDialogBaseProps {
         closeButton?: IButtonAccessibilityConfig;
         titleElementId?: string;
         descriptionElementId?: string;
+        isModal?: boolean;
     };
     submitOnEnterKey?: boolean;
     onCancel?: (data?: any) => void;

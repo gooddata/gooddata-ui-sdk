@@ -5893,6 +5893,7 @@ export interface IScheduledEmailDialogProps {
     onSuccess?: (scheduledEmailDefinition: IAutomationMetadataObject) => void;
     scheduledExportToEdit?: IAutomationMetadataObject;
     users: IWorkspaceUser[];
+    usersError?: GoodDataSdkError;
     widget?: ExtendedDashboardWidget;
     widgetFilters?: IFilter[];
 }

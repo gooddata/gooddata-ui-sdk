@@ -569,23 +569,43 @@
         "limit": 0
     },
     "dialogs.schedule.email.max.recipients": {
-        "value": "You can select up to {maxRecipients} recipients.",
+        "value": "Error: Too many recipients — you can add up to {maxRecipients}.",
         "comment": "Message for recipients input when the maximum number of recipients is reached",
         "limit": 0
     },
     "dialogs.schedule.email.min.recipients": {
-        "value": "There must be at least one recipient.",
+        "value": "Error: Required field — select a recipient to continue.",
         "comment": "Message for recipients input when the minimum number of recipients is reached",
         "limit": 0
     },
+    "dialogs.schedule.email.usersLoad.error": {
+        "value": "Error: Unable to load users — try again later.",
+        "comment": "Message for recipients input when users load fails",
+        "limit": 0
+    },
     "dialogs.schedule.email.user.missing.email": {
-        "value": "This user is missing an email address.",
+        "value": "Error: The following recipients have invalid email addresses — fix them to continue: {recipients}.",
+        "comment": "Message for recipients input when a user is missing an email address.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.user.missing.email.tooltip": {
+        "value": "Error: This recipient has invalid email address.",
         "comment": "Message for recipients input when a user is missing an email address.",
         "limit": 0
     },
     "dialogs.schedule.email.user.invalid.external": {
-        "value": "This user does not have access to the dashboard.",
+        "value": "Error: The following recipients don’t have the required access — remove them to continue: {recipients}.",
         "comment": "Message for recipients input when a user is external and not allowed.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.user.invalid.external.tooltip": {
+        "value": "Error: This recipient does not have the required access.",
+        "comment": "Tooltip for recipients input when a user is external and not allowed.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.user.invalid.onlyYou": {
+        "value": "Error: Only you can be a recipient — remove others to continue.",
+        "comment": "Message for recipients input when only author is allowed.",
         "limit": 0
     },
     "dialogs.schedule.email.user.used.external": {
@@ -599,13 +619,18 @@
         "limit": 0
     },
     "dialogs.schedule.email.user.warning.external": {
-        "value": "This email address does not belong to this workspace. The recipient may receive sensitive data.",
+        "value": "Warning: External recipient — “{email}” will receive the same dashboard view as you.",
         "comment": "Message for recipients input when a user is external",
         "limit": 0
     },
     "dialogs.schedule.email.user.unknown": {
         "value": "This is an unknown user and cannot be added as a recipient.",
         "comment": "Message for recipients input when a user is unknown",
+        "limit": 0
+    },
+    "dialogs.schedule.email.user.noMatch": {
+        "value": "No matching users or groups.",
+        "comment": "",
         "limit": 0
     },
     "dialogs.schedule.email.user.notMe": {
@@ -616,6 +641,11 @@
     "dialogs.schedule.email.user.guest": {
         "value": "(guest)",
         "comment": "Guest user label",
+        "limit": 0
+    },
+    "dialogs.schedule.email.recipients.note": {
+        "value": "Note: All recipients marked as “(guest)” will receive the same dashboard view as you.",
+        "comment": "Note for recipients input when some recipients are external",
         "limit": 0
     },
     "dialogs.schedule.email.subject.label": {

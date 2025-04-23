@@ -53,6 +53,7 @@ export const ConfirmDialogBase = React.memo<IConfirmDialogBaseProps>(function Co
         return {
             ...(dialogBaseProps.accessibilityConfig ?? {}),
             titleElementId,
+            isModal: true,
         };
     }, [dialogBaseProps.accessibilityConfig, headline, titleElementIdWhenNotSet]);
 

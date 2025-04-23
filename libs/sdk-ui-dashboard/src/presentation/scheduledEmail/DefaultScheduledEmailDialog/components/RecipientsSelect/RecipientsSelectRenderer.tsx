@@ -31,12 +31,14 @@ import {
     Overlay,
     OverlayController,
     OverlayControllerProvider,
+    UiIcon,
 } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../../constants/index.js";
 import { isEmail } from "../../../utils/validate.js";
 import { matchRecipient } from "../../../utils/users.js";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 const MAXIMUM_RECIPIENTS_RECEIVE = 60;
 const DELAY_TIME = 500;
@@ -94,6 +96,11 @@ export interface IRecipientsSelectRendererProps {
      * Show autocomplete loading indicator?
      */
     isLoading?: boolean;
+
+    /**
+     * Error occurred while loading users
+     */
+    usersError?: GoodDataSdkError;
 
     /**
      * Has user canListUsersInProject permission?
@@ -168,8 +175,57 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         }
     }
 
+    private evaluateErrors() {
+        const { value, maxRecipients, allowExternalRecipients, allowOnlyLoggedUserRecipients, loggedUser } =
+            this.props;
+
+        const maxRecipientsError = maxRecipients !== undefined && value.length > maxRecipients;
+        const minRecipientsError = this.state.minRecipientsError;
+        const someRecipientsMissingEmail = this.isEmailChannel()
+            ? value.some((v) => (isAutomationUserRecipient(v) ? !isEmail(v.email ?? "") : false))
+            : false;
+
+        const invalidExternalRecipients = value.filter((v) => v.type === "externalUser");
+        const invalidExternalError = !!invalidExternalRecipients.length && !allowExternalRecipients;
+
+        const invalidUnknownRecipients = value.filter((v) => v.type === "unknownUser");
+        const invalidUnknownError = !!invalidUnknownRecipients.length;
+
+        const invalidRecipientsValues = [...invalidExternalRecipients, ...invalidUnknownRecipients]
+            .map((v) => v.name ?? v.id)
+            .join(", ");
+
+        const authorOnlyError =
+            allowOnlyLoggedUserRecipients &&
+            ((value.length === 1 && value[0].id !== loggedUser?.id) || value.length > 1);
+
+        const missingEmailRecipients = value.filter((v) => this.getHasEmail(v) === false);
+        const missingEmailRecipientsValues = missingEmailRecipients.map((v) => v.name ?? v.id).join(", ");
+        const missingEmailError = !!missingEmailRecipients.length;
+
+        return {
+            maxRecipientsError,
+            minRecipientsError,
+            invalidExternalError,
+            invalidUnknownError,
+            authorOnlyError,
+            missingEmailError,
+            invalidRecipientsValues,
+            missingEmailRecipientsValues,
+            someRecipientsMissingEmail,
+        };
+    }
+
     public render() {
-        const { isMulti, options, value, maxRecipients, className } = this.props;
+        const {
+            isMulti,
+            options,
+            value,
+            maxRecipients,
+            className,
+            usersError,
+            allowOnlyLoggedUserRecipients,
+        } = this.props;
         const creatableSelectComponent: SelectComponentsConfig<
             IAutomationRecipient,
             boolean,
@@ -186,13 +242,29 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             MultiValueRemove: this.renderMultiValueRemove,
         };
 
-        const maxRecipientsError = maxRecipients && value.length > maxRecipients;
-        const minRecipientsError = this.state.minRecipientsError;
-        const someRecipientsMissingEmail = this.isEmailChannel()
-            ? value.some((v) => (isAutomationUserRecipient(v) ? !isEmail(v.email ?? "") : false))
-            : false;
+        const {
+            maxRecipientsError,
+            minRecipientsError,
+            invalidExternalError,
+            invalidUnknownError,
+            someRecipientsMissingEmail,
+            authorOnlyError,
+            missingEmailError,
+            invalidRecipientsValues,
+            missingEmailRecipientsValues,
+        } = this.evaluateErrors();
 
-        const showInputError = maxRecipientsError || minRecipientsError || someRecipientsMissingEmail;
+        const showInputError =
+            maxRecipientsError ||
+            minRecipientsError ||
+            invalidExternalError ||
+            invalidUnknownError ||
+            someRecipientsMissingEmail ||
+            !!usersError ||
+            authorOnlyError ||
+            missingEmailError;
+
+        const someExternalRecipients = value.some((v) => v.type === "externalUser");
 
         return (
             <div
@@ -228,24 +300,103 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                         value={value}
                         getOptionValue={(o) => o.id}
                         getOptionLabel={(o) => o.name ?? o.id}
+                        aria-errormessage={showInputError ? "gd-recipients-field-error" : undefined}
+                        aria-invalid={showInputError}
                     />
                     {showInputError ? (
-                        <div className="gd-recipients-field-error">
-                            {maxRecipientsError ? (
-                                <FormattedMessage
-                                    id="dialogs.schedule.email.max.recipients"
-                                    values={{ maxRecipients }}
-                                />
-                            ) : null}
-                            {minRecipientsError ? (
-                                <FormattedMessage id="dialogs.schedule.email.min.recipients" />
-                            ) : null}
+                        this.renderInputError({
+                            authorOnlyError,
+                            invalidExternalError,
+                            invalidUnknownError,
+                            maxRecipientsError,
+                            minRecipientsError,
+                            missingEmailError,
+                            invalidRecipientsValues,
+                            missingEmailRecipientsValues,
+                            maxRecipients,
+                            usersError,
+                        })
+                    ) : someExternalRecipients ? (
+                        <div className="gd-recipients-field-note">
+                            <FormattedMessage id="dialogs.schedule.email.recipients.note" />
+                        </div>
+                    ) : allowOnlyLoggedUserRecipients ? (
+                        <div className="gd-recipients-field-note">
+                            <FormattedMessage id="dialogs.schedule.email.destinationWarning" />
                         </div>
                     ) : null}
                 </div>
             </div>
         );
     }
+
+    private renderInputError = ({
+        authorOnlyError,
+        invalidExternalError,
+        invalidUnknownError,
+        maxRecipientsError,
+        minRecipientsError,
+        missingEmailError,
+        invalidRecipientsValues,
+        missingEmailRecipientsValues,
+        maxRecipients,
+        usersError,
+    }: {
+        authorOnlyError?: boolean;
+        invalidExternalError?: boolean;
+        invalidUnknownError?: boolean;
+        maxRecipientsError?: boolean;
+        minRecipientsError?: boolean;
+        missingEmailError?: boolean;
+        invalidRecipientsValues: string;
+        missingEmailRecipientsValues: string;
+        maxRecipients: number | undefined;
+        usersError: GoodDataSdkError | undefined;
+    }): React.ReactElement | null => {
+        return (
+            <div id="gd-recipients-field-error" className="gd-recipients-field-error">
+                {authorOnlyError ? (
+                    <div className="gd-recipients-field-error-item">
+                        <FormattedMessage id="dialogs.schedule.email.user.invalid.onlyYou" />
+                    </div>
+                ) : null}
+                {invalidExternalError || invalidUnknownError ? (
+                    <div className="gd-recipients-field-error-item">
+                        <FormattedMessage
+                            id="dialogs.schedule.email.user.invalid.external"
+                            values={{ recipients: invalidRecipientsValues }}
+                        />
+                    </div>
+                ) : null}
+                {maxRecipientsError ? (
+                    <div className="gd-recipients-field-error-item">
+                        <FormattedMessage
+                            id="dialogs.schedule.email.max.recipients"
+                            values={{ maxRecipients }}
+                        />
+                    </div>
+                ) : null}
+                {minRecipientsError ? (
+                    <div className="gd-recipients-field-error-item">
+                        <FormattedMessage id="dialogs.schedule.email.min.recipients" />
+                    </div>
+                ) : null}
+                {missingEmailError ? (
+                    <div className="gd-recipients-field-error-item">
+                        <FormattedMessage
+                            id="dialogs.schedule.email.user.missing.email"
+                            values={{ recipients: missingEmailRecipientsValues }}
+                        />
+                    </div>
+                ) : null}
+                {usersError ? (
+                    <div className="gd-recipients-field-error-item">
+                        <FormattedMessage id="dialogs.schedule.email.usersLoad.error" />
+                    </div>
+                ) : null}
+            </div>
+        );
+    };
 
     private renderEmptyContainer = (): React.ReactElement | null => {
         return null;
@@ -268,7 +419,11 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     }
 
     private renderNoOptionsContainer = (): React.ReactElement | null => {
-        return this.renderEmptyContainer();
+        return (
+            <div className="gd-recipients-no-match">
+                <FormattedMessage id="dialogs.schedule.email.user.noMatch" />
+            </div>
+        );
     };
 
     private renderMultiValueRemove = (
@@ -358,6 +513,11 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         const style = this.getStyle();
 
         const render = () => {
+            const showErrorIcon =
+                options.noExternal ||
+                options.invalidExternal ||
+                options.invalidLoggedUser ||
+                !options.hasEmail;
             return (
                 <div
                     style={{ maxWidth: style.maxWidth }}
@@ -367,6 +527,11 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                         "invalid-user": options.invalidLoggedUser,
                     })}
                 >
+                    {showErrorIcon ? (
+                        <div className="gd-recipient-label-error">
+                            <UiIcon type="crossCircle" size={12} color="error" />
+                        </div>
+                    ) : null}
                     <div className="gd-recipient-label">{label}</div>
                     {options.type === "externalUser" ? (
                         <div className="gd-recipient-quest">
@@ -405,7 +570,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                 <BubbleHoverTrigger>
                     {render()}
                     <Bubble className="bubble-negative" alignPoints={TOOLTIP_ALIGN_POINTS}>
-                        <FormattedMessage id="dialogs.schedule.email.user.missing.email" />
+                        <FormattedMessage id="dialogs.schedule.email.user.missing.email.tooltip" />
                     </Bubble>
                 </BubbleHoverTrigger>
             );
@@ -416,7 +581,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                 <BubbleHoverTrigger>
                     {render()}
                     <Bubble className="bubble-negative" alignPoints={TOOLTIP_ALIGN_POINTS}>
-                        <FormattedMessage id="dialogs.schedule.email.user.invalid.external" />
+                        <FormattedMessage id="dialogs.schedule.email.user.invalid.external.tooltip" />
                     </Bubble>
                 </BubbleHoverTrigger>
             );
@@ -429,9 +594,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                     <Bubble className="bubble-primary" alignPoints={TOOLTIP_ALIGN_POINTS}>
                         <FormattedMessage
                             id="dialogs.schedule.email.user.used.external"
-                            values={{
-                                email: label,
-                            }}
+                            values={{ email: label }}
                         />
                     </Bubble>
                 </BubbleHoverTrigger>
@@ -452,6 +615,12 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         return render();
     };
 
+    private getHasEmail = (recipient: IAutomationRecipient) => {
+        return this.isEmailChannel() && isAutomationUserRecipient(recipient)
+            ? isEmail(recipient.email ?? "")
+            : true;
+    };
+
     private renderMultiValueContainer = (
         multiValueProps: MultiValueGenericProps<IAutomationRecipient>,
     ): React.ReactElement => {
@@ -461,8 +630,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         // MultiValueRemove component from react-select
         const removeIcon: React.ReactElement | null = (children as any)![1];
         const name = data.name ?? data.id;
-        const hasEmail =
-            this.isEmailChannel() && isAutomationUserRecipient(data) ? isEmail(data.email ?? "") : true;
+        const hasEmail = this.getHasEmail(data);
         const noExternal = data.type === "externalUser" && !allowExternalRecipients;
         const invalidExternal = data.type === "unknownUser";
         const invalidLoggedUser = allowOnlyLoggedUserRecipients ? data.id !== loggedUser?.id : false;
@@ -482,31 +650,29 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         const displayName = recipient.name ?? recipient.id;
         const email = isAutomationUserRecipient(recipient) ? recipient.email ?? "" : "";
 
+        const value = this.renderRecipientValue(recipient);
+
         return (
             <BubbleHoverTrigger>
                 <div className="gd-recipient-option-item s-gd-recipient-option-item">
                     <span className="gd-recipient-option-label-item s-gd-recipient-option-label-item">
                         {displayName}
                     </span>
-                    {this.renderRecipientValue(recipient)}
+                    {allowExternalRecipients && recipient.type === "externalUser" ? (
+                        <span className="gd-recipient-quest">
+                            &nbsp;
+                            <FormattedMessage id="dialogs.schedule.email.user.guest" />
+                        </span>
+                    ) : (
+                        value
+                    )}
                     {allowExternalRecipients && recipient.type === "externalUser" ? (
                         <div className="gd-recipient-option-label-external-warning">
                             <Message type="warning">
-                                <FormattedMessage id="dialogs.schedule.email.user.warning.external" />
-                            </Message>
-                        </div>
-                    ) : null}
-                    {!allowExternalRecipients && recipient.type === "externalUser" ? (
-                        <div className="gd-recipient-option-label-external-warning">
-                            <Message type="error">
-                                <FormattedMessage id="dialogs.schedule.email.user.invalid.external" />
-                            </Message>
-                        </div>
-                    ) : null}
-                    {recipient.type === "unknownUser" ? (
-                        <div className="gd-recipient-option-label-external-warning">
-                            <Message type="error">
-                                <FormattedMessage id="dialogs.schedule.email.user.unknown" />
+                                <FormattedMessage
+                                    id="dialogs.schedule.email.user.warning.external"
+                                    values={{ email: displayName }}
+                                />
                             </Message>
                         </div>
                     ) : null}
@@ -545,6 +711,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             ...inputProps,
             id: "form.destination",
             "aria-controls": MENU_LIST_ID,
+            onBlur: this.onBlur,
         };
 
         return (
@@ -572,7 +739,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         if (newSelectedValues?.length === 0) {
             if (allowEmptySelection) {
                 this.props.onChange?.([]);
-                this.setState({ minRecipientsError: true });
+                //this.setState({ minRecipientsError: true });
             } else {
                 this.props.onChange?.([value[0]]);
             }
@@ -582,6 +749,14 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         }
 
         this.props.onChange?.(newSelectedValues);
+    };
+
+    private onBlur = (): void => {
+        const { value, allowEmptySelection } = this.props;
+
+        if (allowEmptySelection && value.length === 0) {
+            this.setState({ minRecipientsError: true });
+        }
     };
 
     private loadUserListItems = (searchString: string): void => {

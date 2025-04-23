@@ -1380,6 +1380,7 @@ export interface IDialogBaseProps {
         closeButton?: IButtonAccessibilityConfig;
         titleElementId?: string;
         descriptionElementId?: string;
+        isModal?: boolean;
     };
     autofocusOnOpen?: boolean;
     // (undocumented)
