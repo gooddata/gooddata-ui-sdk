@@ -72,7 +72,7 @@ export const useAutomationFiltersData = ({
     );
 
     const effectiveFilters = useMemo(() => {
-        if (!isEditing) {
+        if (!isEditing || !metadataVisibleFilters) {
             return (storedFilters ?? []).filter((filter) => {
                 if (isDashboardAttributeFilter(filter)) {
                     return !isAllValuesDashboardAttributeFilter(filter);
@@ -82,7 +82,7 @@ export const useAutomationFiltersData = ({
             });
         }
         return storedFilters ?? [];
-    }, [storedFilters, isEditing]);
+    }, [isEditing, metadataVisibleFilters, storedFilters]);
 
     const sanitizedEffectiveFilters = useMemo(() => {
         const allFiltersSet = new Set(allFilters.map(getFilterLocalIdentifier));

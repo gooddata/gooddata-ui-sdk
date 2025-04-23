@@ -12,7 +12,7 @@ import {
 import compact from "lodash/compact.js";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../converters/index.js";
 import { getFilterLocalIdentifier, getVisibleFiltersByFilters } from "./utils.js";
-import { ExtendedDashboardWidget } from "src/model/index.js";
+import { ExtendedDashboardWidget } from "../../model/index.js";
 
 interface IUseAutomationWidgetFilters {
     insightExecutionFilters: IFilter[];
@@ -50,7 +50,7 @@ export const useAutomationWidgetFilters = ({
         () =>
             (widgetFilters ?? []).filter((filter) => {
                 const localIdentifier = filterLocalIdentifier(filter);
-                return localIdentifier ? !dashboardFiltersLocalIdentifiers?.includes(localIdentifier) : false;
+                return localIdentifier ? !dashboardFiltersLocalIdentifiers.includes(localIdentifier) : false;
             }),
         [dashboardFiltersLocalIdentifiers, widgetFilters],
     );
