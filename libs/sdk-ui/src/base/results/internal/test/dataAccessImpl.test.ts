@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, dummyDataView, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
@@ -51,6 +51,7 @@ describe("DataAccessMethods", () => {
 
             expect(firstSeriesDataPoints[0].rawValue).toEqual(116625456.54);
             expect(firstSeriesDataPoints[0].formattedValue()).toEqual("$116,625,456.54");
+            expect(firstSeriesDataPoints[0].formatable).toEqual(true);
         });
     });
 

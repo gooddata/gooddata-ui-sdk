@@ -119,6 +119,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             this.onLoadingChanged = this.onLoadingChanged.bind(this);
             this.onDataTooLarge = this.onDataTooLarge.bind(this);
             this.onNegativeValues = this.onNegativeValues.bind(this);
+            this.onDataView = this.onDataView.bind(this);
             this.abortController = new AbortController();
         }
 
@@ -169,6 +170,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         public componentWillUnmount() {
             this.hasUnmounted = true;
             this.onLoadingChanged = noop;
+            this.onDataView = noop;
             this.onError = noop;
             this.refreshAbortController();
         }
@@ -194,6 +196,12 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             }
 
             this.setState(state);
+        }
+
+        private onDataView(dataView: IDataView) {
+            const { onDataView } = this.props;
+
+            onDataView?.(DataViewFacade.for(dataView));
         }
 
         private onError(error: GoodDataSdkError) {
@@ -301,6 +309,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
 
                 this.setState({ dataView, error: null, executionResult });
                 this.onLoadingChanged({ isLoading: false });
+                this.onDataView(dataView);
 
                 if (onExportReady) {
                     onExportReady(createExportFunction(dataView.result, exportTitle));

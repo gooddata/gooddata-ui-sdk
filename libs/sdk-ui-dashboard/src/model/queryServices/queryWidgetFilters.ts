@@ -46,6 +46,8 @@ import isEmpty from "lodash/isEmpty.js";
 import { ICustomWidget, FilterableDashboardWidget } from "../types/layoutTypes.js";
 import { selectSupportsMultipleDateFilters } from "../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
+import { selectEnableDateFilterIdentifiers } from "../store/config/configSelectors.js";
 
 export const QueryWidgetFiltersService = createQueryService("GDC.DASH/QUERY.WIDGET.FILTERS", queryService);
 
@@ -279,12 +281,18 @@ function* queryWithInsight(
     > = yield select(widgetAwareDashboardFiltersSelector);
 
     const supportsMultipleDateFilters = yield select(selectSupportsMultipleDateFilters);
+    const enableDateFilterIdentifiers = yield select(selectEnableDateFilterIdentifiers);
 
     // add all time filter explicitly in case the date widgetAwareDashboardFilters are empty
     // this will cause the all time filter to be used instead of the insight date filter
     // if the dashboard date filter is not ignored by the widget
     if (!widgetAwareDashboardCommonDateFilters.length && widget.dateDataSet) {
-        widgetAwareDashboardCommonDateFilters.push(newAllTimeFilter(widget.dateDataSet));
+        widgetAwareDashboardCommonDateFilters.push(
+            newAllTimeFilter(
+                widget.dateDataSet,
+                enableDateFilterIdentifiers ? generateDateFilterLocalIdentifier(0) : undefined,
+            ),
+        );
     }
 
     const effectiveInsightFilters = insightFilters(insight);

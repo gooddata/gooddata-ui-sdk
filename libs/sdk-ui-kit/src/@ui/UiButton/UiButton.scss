@@ -1,7 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-.gd-ui-kit-button,
-%ui-button {
+.gd-ui-kit-button {
     $root: &;
 
     font-family: var(--gd-font-family);
@@ -19,90 +18,49 @@
         cursor: default;
     }
 
-    &:not(&:disabled, &--variant-tertiary, &--variant-popout) {
-        &:active {
-            #{$root}__text {
-                // Move text inside the button on :active state.
-                padding-top: 1px;
-            }
-
-            #{$root}__icon {
-                // Move icon inside the button on :active state.
-                padding-top: 1px;
-            }
-        }
-    }
-
-    &__text,
-    %ui-button__text {
-        transition: var(--gd-transition-all);
-    }
-
-    &__icon,
-    %ui-button__icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: var(--gd-transition-all);
-    }
-
-    &--isLoading {
-        #{$root}__icon {
-            // Spin icon on loading state.
-            animation: rotate 1s infinite steps(30);
-        }
-    }
-
     /**
      * Size
      */
     &--size {
         &-small {
             height: var(--gd-button-S);
-            padding: var(--gd-spacing-6px) var(--gd-spacing-10px);
+            padding: 0 var(--gd-spacing-10px);
             font-size: 12px;
-            line-height: 14px;
 
-            &#{$root}--iconPosition {
-                &-left {
-                    padding-left: var(--gd-spacing-7px);
-                }
+            &#{$root}--hasIconBefore {
+                padding-left: var(--gd-spacing-7px);
+            }
 
-                &-right {
-                    padding-right: var(--gd-spacing-7px);
-                }
+            &#{$root}--hasIconAfter {
+                padding-right: var(--gd-spacing-7px);
             }
         }
 
         &-medium {
             height: var(--gd-button-M);
-            padding: var(--gd-spacing-6px) var(--gd-spacing-15px);
+            padding: 0 var(--gd-spacing-15px);
             font-size: 14px;
-            line-height: 16px;
-            &#{$root}--iconPosition {
-                &-left {
-                    padding-left: var(--gd-spacing-10px);
-                }
 
-                &-right {
-                    padding-right: var(--gd-spacing-10px);
-                }
+            &#{$root}--hasIconBefore {
+                padding-left: var(--gd-spacing-10px);
+            }
+
+            &#{$root}--hasIconAfter {
+                padding-right: var(--gd-spacing-10px);
             }
         }
 
         &-large {
             height: var(--gd-button-L);
-            padding: var(--gd-spacing-6px) var(--gd-spacing-20px);
+            padding: 0 var(--gd-spacing-20px);
             font-size: 16px;
-            line-height: 18px;
-            &#{$root}--iconPosition {
-                &-left {
-                    padding-left: var(--gd-spacing-15px);
-                }
 
-                &-right {
-                    padding-right: var(--gd-spacing-15px);
-                }
+            &#{$root}--hasIconBefore {
+                padding-left: var(--gd-spacing-15px);
+            }
+
+            &#{$root}--hasIconAfter {
+                padding-right: var(--gd-spacing-15px);
             }
         }
     }
@@ -113,7 +71,6 @@
     &--variant {
         &-primary {
             --gd-icon-fill-color: var(--gd-palette-complementary-0);
-
             color: var(--gd-palette-complementary-0);
             background-color: var(--gd-palette-primary-base);
             border-color: var(--gd-palette-complementary-9-t90);
@@ -147,7 +104,6 @@
 
         &-secondary {
             --gd-icon-fill-color: var(--gd-palette-complementary-5);
-
             color: var(--gd-palette-complementary-7);
             border-color: var(--gd-palette-complementary-4);
             background-color: var(--gd-palette-complementary-0);
@@ -192,26 +148,17 @@
             }
         }
 
-        &-tertiary,
-        %ui-button--variant-tertiary {
+        &-tertiary {
             --gd-icon-fill-color: var(--gd-palette-complementary-5);
-
             color: var(--gd-palette-complementary-7);
+            padding: 0;
             text-decoration: underline;
             background-color: transparent;
             border-color: transparent;
 
             &:not(&:disabled) {
-                &:focus {
-                    --gd-icon-fill-color: var(--gd-palette-primary-base);
-
-                    color: var(--gd-palette-complementary-8);
-                }
-                &:hover {
-                    --gd-icon-fill-color: var(--gd-palette-primary-base);
-
-                    color: var(--gd-palette-complementary-8);
-                }
+                &:hover,
+                &:focus,
                 &:active {
                     --gd-icon-fill-color: var(--gd-palette-primary-base);
 
@@ -223,36 +170,19 @@
                 color: var(--gd-palette-complementary-5);
                 text-decoration: none;
             }
-
-            &#{$root}--size {
-                &-small,
-                &-medium,
-                &-large {
-                    padding: 0;
-                    height: auto;
-                }
-            }
         }
 
         &-popout {
             --gd-icon-fill-color: var(--gd-palette-primary-base);
-
             color: var(--gd-palette-primary-base);
+            padding: 0;
             background-color: transparent;
             border-color: transparent;
 
             &:not(&:disabled) {
-                &:focus {
-                    text-decoration: underline;
-                }
-
-                &:hover {
-                    color: var(--gd-palette-complementary-8);
-                    text-decoration: underline;
-                }
-
+                &:hover,
+                &:focus,
                 &:active {
-                    color: var(--gd-palette-primary-base);
                     text-decoration: underline;
                 }
             }
@@ -260,22 +190,12 @@
             &:disabled {
                 color: var(--gd-palette-complementary-5);
             }
-
-            &#{$root}--size {
-                &-small,
-                &-medium,
-                &-large {
-                    padding: 0;
-                    height: auto;
-                }
-            }
         }
 
         &-danger {
             --gd-icon-fill-color: var(--gd-palette-complementary-0);
-
-            background: var(--gd-palette-error-base);
             color: var(--gd-palette-complementary-0);
+            background: var(--gd-palette-error-base);
             border-color: var(--gd-palette-complementary-9-t90);
             font-weight: 700;
 
@@ -307,14 +227,5 @@
                 border-color: transparent;
             }
         }
-    }
-}
-
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
     }
 }

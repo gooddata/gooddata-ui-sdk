@@ -11,4 +11,4 @@ export const EXPORT_VIS_MINIMAL_WIDTH = 200;
 /**
  * @internal
  */
-export const EXPORT_VIS_MINIMAL_HEIGHT = 100;
+export const EXPORT_VIS_MINIMAL_HEIGHT = 90;

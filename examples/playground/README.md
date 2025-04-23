@@ -27,13 +27,15 @@ git update-index --skip-worktree src/playground/Playground.tsx
 ## Set environment variables
 
 To make the playground work, you should set the following environment variables either via command line or by
-creating `.env` file based on `.env.template`. Note that `VITE_DASHBOARD` variable is optional.
+creating `.env` file based on `.env.template`. Note that `VITE_DASHBOARD` and `VITE_INSIGHT` variables
+are optional.
 
 ```
 VITE_BACKEND_URL=<your-backend-url>
 VITE_TIGER_API_TOKEN=<your-token>
 VITE_WORKSPACE=<your-workspace>
 VITE_DASHBOARD=<your-dashboard>
+VITE_INSIGHT=<your-insight>
 ```
 
 ## Development certificates for HTTPS

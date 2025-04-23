@@ -25,6 +25,7 @@ exports[`changeDateFilterSelectionHandler > should set the date filter in the st
   "dateFilter": {
     "from": -3,
     "granularity": "GDC.time.month",
+    "localIdentifier": "dateFilterLocalIdentifier",
     "to": 0,
     "type": "relative",
   },
@@ -36,6 +37,7 @@ exports[`changeDateFilterSelectionHandler > should set the date filter in the st
   "dateFilter": {
     "from": -3,
     "granularity": "GDC.time.month",
+    "localIdentifier": "dateFilterLocalIdentifier",
     "to": 0,
     "type": "relative",
   },

@@ -146,6 +146,7 @@ export interface IUpsertDateFilterAllTimePayload {
     readonly type: "allTime";
     readonly dataSet?: ObjRef;
     readonly isWorkingSelectionChange?: boolean;
+    readonly localIdentifier?: string;
 }
 
 export interface IUpsertDateFilterNonAllTimePayload {
@@ -155,6 +156,7 @@ export interface IUpsertDateFilterNonAllTimePayload {
     readonly from?: DateString | number;
     readonly to?: DateString | number;
     readonly isWorkingSelectionChange?: boolean;
+    readonly localIdentifier?: string;
 }
 
 export type IUpsertDateFilterPayload = IUpsertDateFilterAllTimePayload | IUpsertDateFilterNonAllTimePayload;
@@ -186,10 +188,13 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
             if (isDashboardDateFilter(dateFilter)) {
                 filterContextDefinition.filters[existingFilterIndex] = newAllTimeDashboardDateFilter(
                     dateFilter.dateFilter.dataSet,
+                    dateFilter.dateFilter.localIdentifier,
                 );
             }
         } else {
-            filterContextDefinition.filters.unshift(newAllTimeDashboardDateFilter(action.payload.dataSet));
+            filterContextDefinition.filters.unshift(
+                newAllTimeDashboardDateFilter(action.payload.dataSet, action.payload.localIdentifier),
+            );
         }
     } else if (action.payload.type === "allTime") {
         if (existingFilterIndex >= 0) {
@@ -199,6 +204,7 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
                 if (isDashboardDateFilter(dateFilter)) {
                     filterContextDefinition.filters[existingFilterIndex] = newAllTimeDashboardDateFilter(
                         dateFilter.dateFilter.dataSet,
+                        dateFilter.dateFilter.localIdentifier,
                     );
                 }
             } else {
@@ -207,7 +213,7 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
             }
         }
     } else if (existingFilterIndex >= 0) {
-        const { type, granularity, from, to } = action.payload;
+        const { type, granularity, from, to, localIdentifier } = action.payload;
         const dateFilter = filterContextDefinition.filters[existingFilterIndex];
 
         if (isDashboardDateFilter(dateFilter)) {
@@ -215,9 +221,13 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
             dateFilter.dateFilter.granularity = granularity;
             dateFilter.dateFilter.from = from;
             dateFilter.dateFilter.to = to;
+
+            if (localIdentifier) {
+                dateFilter.dateFilter.localIdentifier = localIdentifier;
+            }
         }
     } else {
-        const { type, granularity, from, to, dataSet } = action.payload;
+        const { type, granularity, from, to, dataSet, localIdentifier } = action.payload;
         filterContextDefinition.filters.unshift({
             dateFilter: {
                 granularity,
@@ -225,6 +235,7 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
                 from,
                 to,
                 ...(dataSet ? { dataSet } : {}),
+                ...(localIdentifier ? { localIdentifier } : {}),
             },
         });
     }
@@ -792,6 +803,17 @@ const resetWorkingSelection: FilterContextReducer<PayloadAction> = (state) => {
 //
 //
 
+const setDefaultFilterOverrides: FilterContextReducer<PayloadAction<FilterContextItem[]>> = (
+    state,
+    action,
+) => {
+    state.defaultFilterOverrides = action.payload;
+};
+
+//
+//
+//
+
 export const filterContextReducers = {
     setFilterContext,
     updateFilterContextIdentity,
@@ -815,4 +837,5 @@ export const filterContextReducers = {
     setPreloadedAttributesWithReferences,
     applyWorkingSelection,
     resetWorkingSelection,
+    setDefaultFilterOverrides,
 };

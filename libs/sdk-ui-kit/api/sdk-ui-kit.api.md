@@ -1236,6 +1236,9 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
 }
 
 // @internal (undocumented)
+export const iconPaths: Record<IconType, React_2.ReactNode>;
+
+// @internal (undocumented)
 export type IconType = "check" | "plus" | "sync" | "alert" | "close" | "question" | "crossCircle" | "chevronUp" | "chevronDown" | "date" | "lock" | "cross";
 
 // @internal (undocumented)
@@ -1377,6 +1380,7 @@ export interface IDialogBaseProps {
         closeButton?: IButtonAccessibilityConfig;
         titleElementId?: string;
         descriptionElementId?: string;
+        isModal?: boolean;
     };
     autofocusOnOpen?: boolean;
     // (undocumented)
@@ -4340,6 +4344,10 @@ export interface ITypographyProps {
 }
 
 // @internal (undocumented)
+export interface IUiChipAccessibilityConfig extends IAccessibilityConfigBase, IDropdownButtonAccessibilityConfig {
+}
+
+// @internal (undocumented)
 export interface IUiSettings {
     // (undocumented)
     displayAccountPage: boolean;
@@ -5068,10 +5076,12 @@ export interface UiButtonProps {
 }
 
 // @internal (undocumented)
-export const UiChip: ({ label, tag, isDeletable, isActive, isLocked, iconBefore, onClick, onDelete, }: UiChipProps) => React_2.JSX.Element;
+export const UiChip: ({ label, tag, isDeletable, isActive, isLocked, iconBefore, onClick, onDelete, accessibilityConfig, }: UiChipProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiChipProps {
+    // (undocumented)
+    accessibilityConfig?: IUiChipAccessibilityConfig;
     // (undocumented)
     iconBefore?: IconType;
     // (undocumented)

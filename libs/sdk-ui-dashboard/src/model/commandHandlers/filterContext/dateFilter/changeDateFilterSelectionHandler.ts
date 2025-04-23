@@ -47,10 +47,18 @@ export function* changeDateFilterSelectionHandler(
     const enableDashboardFiltersApplyModes: ReturnType<typeof selectEnableDashboardFiltersApplyModes> =
         yield select(selectEnableDashboardFiltersApplyModes);
     const isWorkingSelectionChange = cmd.payload.isWorkingSelectionChange && enableDashboardFiltersApplyModes;
+    const localIdentifierObj = cmd.payload.localIdentifier
+        ? { localIdentifier: cmd.payload.localIdentifier }
+        : {};
     yield put(
         filterContextActions.upsertDateFilter(
             isAllTime
-                ? { type: "allTime", dataSet: cmd.payload.dataSet, isWorkingSelectionChange }
+                ? {
+                      type: "allTime",
+                      dataSet: cmd.payload.dataSet,
+                      isWorkingSelectionChange,
+                      ...localIdentifierObj,
+                  }
                 : {
                       type: cmd.payload.type,
                       granularity: cmd.payload.granularity,
@@ -58,6 +66,7 @@ export function* changeDateFilterSelectionHandler(
                       to: cmd.payload.to,
                       dataSet: cmd.payload.dataSet,
                       isWorkingSelectionChange,
+                      ...localIdentifierObj,
                   },
         ),
     );
@@ -85,6 +94,8 @@ function dateFilterSelectionToDateFilter(dateFilterSelection: DateFilterSelectio
         return newAbsoluteDashboardDateFilter(
             dateFilterSelection.from.toString(),
             dateFilterSelection.to.toString(),
+            undefined,
+            dateFilterSelection.localIdentifier,
         );
     } else if (
         dateFilterSelection.type === "relative" &&
@@ -92,12 +103,14 @@ function dateFilterSelectionToDateFilter(dateFilterSelection: DateFilterSelectio
         dateFilterSelection.from === undefined &&
         dateFilterSelection.to === undefined
     ) {
-        return newAllTimeDashboardDateFilter();
+        return newAllTimeDashboardDateFilter(undefined, dateFilterSelection.localIdentifier);
     } else {
         return newRelativeDashboardDateFilter(
             dateFilterSelection.granularity,
             toNumber(dateFilterSelection.from),
             toNumber(dateFilterSelection.to),
+            undefined,
+            dateFilterSelection.localIdentifier,
         );
     }
 }

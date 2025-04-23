@@ -11,6 +11,7 @@ import {
     IDashboardDateFilter,
     isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
+    isDashboardDateFilter,
     ObjRef,
     objRefToString,
     serializeObjRef,
@@ -45,6 +46,7 @@ import {
     selectIsWorkingFilterContextChanged,
     selectDashboardFiltersApplyMode,
     selectCatalogAttributes,
+    selectEnableDateFilterIdentifiers,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
@@ -68,6 +70,7 @@ import {
 } from "../../../_staging/dashboard/legacyFilterConvertors.js";
 import { areAllFiltersHidden } from "../utils.js";
 import { ResetFiltersButton } from "./ResetFiltersButton.js";
+import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 
 /**
  * @alpha
@@ -80,6 +83,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
         selectEnableDuplicatedLabelValuesInAttributeFilter,
     );
     const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+    const enableDateFilterIdentifiers = useDashboardSelector(selectEnableDateFilterIdentifiers);
 
     const dispatch = useDashboardDispatch();
     const onAttributeFilterChanged = useCallback(
@@ -178,16 +182,28 @@ export const useFilterBarProps = (): IFilterBarProps => {
                     ),
                 );
             } else if (isAllTimeDashboardDateFilter(filter)) {
+                const localIdentifier =
+                    filter?.dateFilter.localIdentifier ?? enableDateFilterIdentifiers
+                        ? generateDateFilterLocalIdentifier(0)
+                        : undefined;
                 // all time filter
                 dispatch(
                     clearDateFilterSelection(
                         undefined,
                         filter?.dateFilter.dataSet,
                         isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                        localIdentifier,
                     ),
                 );
             } else {
-                const { type, granularity, from, to, dataSet } = filter.dateFilter;
+                const { type, granularity, from, to, dataSet, localIdentifier } = filter.dateFilter;
+                const filterIndex = filters
+                    .filter(isDashboardDateFilter)
+                    .findIndex((filter) => areObjRefsEqual(filter.dateFilter.dataSet, dataSet));
+                const sanitizedFilterIndex = filterIndex < 0 ? 0 : filterIndex;
+                const newLocalIdentifier = enableDateFilterIdentifiers
+                    ? generateDateFilterLocalIdentifier(sanitizedFilterIndex, dataSet)
+                    : undefined;
                 dispatch(
                     changeDateFilterSelection(
                         type,
@@ -198,11 +214,12 @@ export const useFilterBarProps = (): IFilterBarProps => {
                         undefined,
                         dataSet,
                         isWorkingSelectionChange && enableDashboardFiltersApplyModes,
+                        localIdentifier ?? newLocalIdentifier,
                     ),
                 );
             }
         },
-        [dispatch, enableDashboardFiltersApplyModes],
+        [dispatch, enableDashboardFiltersApplyModes, filters],
     );
 
     return { filters, workingFilters, onAttributeFilterChanged, onDateFilterChanged, DefaultFilterBar };

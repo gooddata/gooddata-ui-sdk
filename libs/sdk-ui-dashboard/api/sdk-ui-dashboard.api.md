@@ -211,6 +211,7 @@ import { IDrillToCustomUrl } from '@gooddata/sdk-model';
 import { IDrillToDashboard } from '@gooddata/sdk-model';
 import { IDrillToInsight } from '@gooddata/sdk-model';
 import { IDrillToLegacyDashboard } from '@gooddata/sdk-model';
+import { IDropdownListNoDataRenderProps } from '@gooddata/sdk-ui-kit';
 import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { IErrorProps } from '@gooddata/sdk-ui';
 import { IExecutionConfig } from '@gooddata/sdk-model';
@@ -588,7 +589,7 @@ export interface AttributeHierarchyModified extends IDashboardCommand {
 export function attributeHierarchyModified(correlationId?: string): AttributeHierarchyModified;
 
 // @internal (undocumented)
-export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, }: IDashboardAttributeFilterPlaceholderProps): React_2.JSX.Element;
+export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, }: IDashboardAttributeFilterPlaceholderProps): React_2.JSX.Element;
 
 // @alpha (undocumented)
 export type AutomationInteractionData = {
@@ -748,7 +749,7 @@ export interface ChangeDateFilterSelection extends IDashboardCommand {
 }
 
 // @public
-export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionLocalId?: string, correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean): ChangeDateFilterSelection;
+export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionLocalId?: string, correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean, localIdentifier?: string): ChangeDateFilterSelection;
 
 // @alpha (undocumented)
 export interface ChangeDrillableItems extends IDashboardCommand {
@@ -1126,7 +1127,7 @@ export interface ChangeSharingPayload {
 export function changeWorkingAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string): ChangeAttributeFilterSelection;
 
 // @public
-export function clearDateFilterSelection(correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean): ChangeDateFilterSelection;
+export function clearDateFilterSelection(correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean, localIdentifier?: string): ChangeDateFilterSelection;
 
 // @alpha
 export function commandFailedEventHandler<TCommand extends IDashboardCommand>(type: TCommand["type"], handler: DashboardEventHandler<DashboardCommandFailed<TCommand>>["handler"]): DashboardEventHandler<DashboardCommandFailed<TCommand>>;
@@ -3333,6 +3334,7 @@ export interface DateFilterSelection {
     readonly from?: DateString | number;
     readonly granularity: DateFilterGranularity;
     readonly isWorkingSelectionChange?: boolean;
+    readonly localIdentifier?: string;
     readonly to?: DateString | number;
     readonly type: DateFilterType;
 }
@@ -3871,7 +3873,7 @@ export interface ExecutedState {
 export function existBlacklistHierarchyPredicate(reference: IDrillDownReference, attributeHierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy, attributeIdentifier?: ObjRef): boolean;
 
 // @internal (undocumented)
-export const EXPORT_VIS_MINIMAL_HEIGHT = 100;
+export const EXPORT_VIS_MINIMAL_HEIGHT = 90;
 
 // @internal (undocumented)
 export const EXPORT_VIS_MINIMAL_WIDTH = 200;
@@ -4040,6 +4042,8 @@ export interface FilterContextState {
     attributeFilterDisplayForms?: IAttributeDisplayFormMetadataObject[];
     // @beta
     attributesWithReferences?: IAttributeWithReferences[];
+    // @beta
+    defaultFilterOverrides?: FilterContextItem[];
     // @beta
     filterContextDefinition?: IFilterContextDefinition;
     // @beta
@@ -4475,6 +4479,8 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     onSelect: (displayForm: ObjRef) => void;
     // (undocumented)
     openOnInit?: boolean;
+    // (undocumented)
+    renderNoData?: (props: IDropdownListNoDataRenderProps) => React.ReactNode;
 }
 
 // @public (undocumented)
@@ -5887,6 +5893,7 @@ export interface IScheduledEmailDialogProps {
     onSuccess?: (scheduledEmailDefinition: IAutomationMetadataObject) => void;
     scheduledExportToEdit?: IAutomationMetadataObject;
     users: IWorkspaceUser[];
+    usersError?: GoodDataSdkError;
     widget?: ExtendedDashboardWidget;
     widgetFilters?: IFilter[];
 }
@@ -8457,6 +8464,9 @@ export const selectDateFormat: DashboardSelector<string | undefined>;
 // @alpha (undocumented)
 export const selectDateHierarchyTemplates: DashboardSelector<IDateHierarchyTemplate[]>;
 
+// @beta
+export const selectDefaultFilterOverrides: DashboardSelector<FilterContextItem[] | undefined>;
+
 // @internal
 export const selectDeleteVisible: DashboardSelector<boolean>;
 
@@ -8567,6 +8577,9 @@ export const selectEnableDashboardShareLink: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectEnableDashboardTabularExport: DashboardSelector<boolean>;
+
+// @internal
+export const selectEnableDateFilterIdentifiers: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableDrilledTooltip: DashboardSelector<boolean>;

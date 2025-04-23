@@ -1,8 +1,9 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
 import isEmpty from "lodash/isEmpty.js";
 import cloneDeep from "lodash/cloneDeep.js";
+import isEqual from "lodash/isEqual.js";
 import set from "lodash/set.js";
 import { IInsight, IInsightDefinition, newAttributeSort } from "@gooddata/sdk-model";
 
@@ -135,6 +136,8 @@ export class PluggableLineChart extends PluggableBaseChart {
         if (!this.featureFlags.enableChartsSorting) {
             newReferencePoint = removeSort(newReferencePoint);
         }
+
+        newReferencePoint = this.setThresholdProperties(newReferencePoint);
 
         this.referencePoint = newReferencePoint;
 
@@ -376,5 +379,25 @@ export class PluggableLineChart extends PluggableBaseChart {
             disabled: viewBy.length < 1 || measures.length < 1 || availableSorts.length === 0,
             disabledExplanation,
         };
+    }
+
+    private setThresholdProperties(referencePoint: IExtendedReferencePoint) {
+        const { buckets, properties } = referencePoint;
+        const measureItems = getMeasureItems(buckets);
+
+        const listThresholdMeasures = measureItems
+            .filter((item) => item.isThresholdMeasure)
+            .map((item) => item.localIdentifier);
+        const existingThresholdMeasures = properties?.controls?.thresholdMeasures || [];
+
+        if (measureItems.length <= 1 && existingThresholdMeasures.length > 0) {
+            // In case there's just one measure item, we need to reset the threshold measures
+            set(referencePoint, "properties.controls.thresholdMeasures", []);
+        }
+        if (isEqual(listThresholdMeasures, existingThresholdMeasures)) {
+            return referencePoint;
+        }
+        set(referencePoint, "properties.controls.thresholdMeasures", listThresholdMeasures);
+        return referencePoint;
     }
 }

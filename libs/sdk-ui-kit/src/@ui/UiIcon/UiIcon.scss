@@ -1,5 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 .gd-ui-kit-icon {
+    fill: var(--gd-icon-fill-color);
     &--color {
         &-primary {
             --gd-icon-fill-color: var(--gd-palette-primary-base);
@@ -54,8 +55,7 @@
         }
     }
 
-    &__fill {
+    path {
         transition: var(--gd-transition-all);
-        fill: var(--gd-icon-fill-color);
     }
 }

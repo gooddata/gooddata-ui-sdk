@@ -30,7 +30,9 @@ import {
     selectIsWorkingFilterContextChanged,
     resetFilterContextWorkingSelection,
     selectEnableDashboardFiltersApplyModes,
+    selectEnableDateFilterIdentifiers,
 } from "../../../../model/index.js";
+import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 
 /**
  * @returns tuple with two items:
@@ -55,6 +57,7 @@ export const useResetFiltersButton = (): {
     const disableUserFilterReset = useDashboardSelector(selectDisableDashboardUserFilterReset);
     const isWorkingFilterContextChanged = useDashboardSelector(selectIsWorkingFilterContextChanged);
     const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
+    const enableDateFilterIdentifiers = useDashboardSelector(selectEnableDateFilterIdentifiers);
 
     const dispatch = useDashboardDispatch();
     const { filterContextStateReset } = useDashboardUserInteraction();
@@ -107,7 +110,13 @@ export const useResetFiltersButton = (): {
             // Dispatch a command, so it goes through the proper piping and trigger all the events
             dispatch(
                 changeFilterContextSelection([
-                    commonDateFilter ?? newAllTimeDashboardDateFilter(),
+                    commonDateFilter ??
+                        newAllTimeDashboardDateFilter(
+                            undefined,
+                            enableDateFilterIdentifiers
+                                ? generateDateFilterLocalIdentifier(0, undefined)
+                                : undefined,
+                        ),
                     ...otherFilters,
                 ]),
             );

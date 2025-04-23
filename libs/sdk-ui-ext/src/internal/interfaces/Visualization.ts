@@ -212,6 +212,7 @@ export interface IBucketItem {
     showInPercent?: boolean;
     showOnSecondaryAxis?: boolean;
     isTotalMeasure?: boolean;
+    isThresholdMeasure?: boolean;
     sort?: ISort;
     masterLocalIdentifier?: string;
     overTimeComparisonType?: OverTimeComparisonType;
@@ -274,6 +275,7 @@ export interface IBucketUiConfig {
     isShowInPercentVisible?: boolean;
     isShowOnSecondaryAxisVisible?: boolean;
     allowShowOnSecondaryAxis?: boolean;
+    allowThresholdMeasure?: boolean;
     allowSelectChartType?: boolean;
     allowOptionalStacking?: boolean;
     isTotalMeasureVisible?: boolean;

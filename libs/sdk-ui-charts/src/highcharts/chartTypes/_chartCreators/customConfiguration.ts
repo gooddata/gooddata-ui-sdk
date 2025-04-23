@@ -1273,11 +1273,12 @@ const getXAxisConfiguration = (
     chartConfig: IChartConfig,
     axisValueColor: string,
     axisLabelColor: string,
+    plotLineColor: string,
 ): HighchartsOptions["xAxis"] => {
     const { forceDisableDrillOnAxes = false } = chartOptions;
     const type = chartOptions.type as ChartType;
     const xAxes = chartOptions.xAxes || [];
-    return xAxes.map((axis: any): XAxisOptions => {
+    return xAxes.map((axis: IAxis): XAxisOptions => {
         if (!axis) {
             return {
                 visible: false,
@@ -1319,6 +1320,18 @@ const getXAxisConfiguration = (
         const titleTextProp =
             visible && (!isViewByTwoAttributes || joinedAttributeAxisName) ? {} : { text: null }; // new way how to hide title instead of deprecated 'enabled'
 
+        const plotLinesProp =
+            axis.plotLines?.length > 0
+                ? {
+                      plotLines: axis.plotLines.map((value) => ({
+                          value,
+                          color: plotLineColor,
+                          width: 1,
+                          zIndex: 1,
+                      })),
+                  }
+                : {};
+
         // for bar chart take y axis options
         return {
             ...getAxisLineConfiguration(type, visible),
@@ -1359,6 +1372,7 @@ const getXAxisConfiguration = (
             ...maxProp,
             ...minProp,
             ...tickConfiguration,
+            ...plotLinesProp,
         };
     });
 };
@@ -1375,7 +1389,8 @@ function getAxesConfiguration(
         theme?.chart?.axisValueColor ?? theme?.palette?.complementary?.c6 ?? styleVariables.gdColorStateBlank;
     const axisLabelColor =
         theme?.chart?.axisLabelColor ?? theme?.palette?.complementary?.c7 ?? styleVariables.gdColorLink;
-
+    const plotLineColor =
+        theme?.chart?.gridColor ?? theme?.palette?.complementary?.c3 ?? styleVariables.gdColorGrid;
     return {
         plotOptions: {
             series: {
@@ -1383,7 +1398,13 @@ function getAxesConfiguration(
             },
         },
         yAxis: getYAxisConfiguration(chartOptions, chartConfig, axisValueColor, axisLabelColor),
-        xAxis: getXAxisConfiguration(chartOptions, chartConfig, axisValueColor, axisLabelColor),
+        xAxis: getXAxisConfiguration(
+            chartOptions,
+            chartConfig,
+            axisValueColor,
+            axisLabelColor,
+            plotLineColor,
+        ),
     };
 }
 

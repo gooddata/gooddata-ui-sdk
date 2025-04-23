@@ -3,17 +3,22 @@ import {
     FilterContextItem,
     IAutomationMetadataObject,
     isDashboardAttributeFilter,
+    isDashboardCommonDateFilter,
+    newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import {
     ICrossFilteringItem,
     selectCrossFilteringItems,
     selectEnableAutomationFilterContext,
+    selectEnableDateFilterIdentifiers,
     selectFilterContextFilters,
     selectOriginalFilterContextFilters,
+    selectDefaultFilterOverrides,
 } from "../../store/index.js";
 import { getAutomationDashboardFilters } from "../../../_staging/automation/index.js";
 import isEqual from "lodash/isEqual.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
+import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 
 /**
  * @alpha
@@ -47,22 +52,38 @@ export const useFiltersForDashboardScheduledExport = ({
         ? getAutomationDashboardFilters(scheduledExportToEdit)
         : undefined;
     const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
+    const defaultFilterOverrides = useDashboardSelector(selectDefaultFilterOverrides);
     const crossFilteringItems = useDashboardSelector(selectCrossFilteringItems);
     const dashboardFiltersWithoutCrossFiltering = removeCrossFilteringFilters(
         dashboardFilters,
         crossFilteringItems,
     );
     const enableAutomationFilterContext = useDashboardSelector(selectEnableAutomationFilterContext);
+    const enableDateFilterIdentifiers = useDashboardSelector(selectEnableDateFilterIdentifiers);
 
     // Only changed filters should be stored in scheduled export
     const dashboardFiltersForScheduledExport = enableAutomationFilterContext
         ? dashboardFiltersWithoutCrossFiltering
-        : !isEqual(originalDashboardFilters, dashboardFiltersWithoutCrossFiltering)
+        : // If there are any default filter overrides (e. g. coming from shared dashboard filter context in url),
+        // always store them in scheduled export. In this case we won't ever save the default dashboard filter context.
+        defaultFilterOverrides || !isEqual(originalDashboardFilters, dashboardFiltersWithoutCrossFiltering)
         ? dashboardFiltersWithoutCrossFiltering
         : undefined;
 
+    const commonDateFilter: FilterContextItem = newAllTimeDashboardDateFilter(
+        undefined,
+        enableDateFilterIdentifiers ? generateDateFilterLocalIdentifier(0) : undefined,
+    );
+    const shouldAddCommonDateFilter =
+        enableAutomationFilterContext &&
+        dashboardFiltersForScheduledExport &&
+        !dashboardFiltersForScheduledExport.some(isDashboardCommonDateFilter);
+    const sanitizedDashboardFilters = shouldAddCommonDateFilter
+        ? [commonDateFilter, ...dashboardFiltersWithoutCrossFiltering]
+        : dashboardFiltersForScheduledExport;
+
     // Saved filters have priority over dashboard filters
-    return savedScheduledExportFilters ?? dashboardFiltersForScheduledExport;
+    return savedScheduledExportFilters ?? sanitizedDashboardFilters;
 };
 
 const removeCrossFilteringFilters = (

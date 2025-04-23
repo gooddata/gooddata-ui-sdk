@@ -780,6 +780,9 @@ export type ExtractBuilderType<TBuilder> = TBuilder extends IBuilder<infer TItem
 export class FactMetadataObjectBuilder<T extends IFactMetadataObject = IFactMetadataObject> extends MetadataObjectBuilder<T> {
 }
 
+// @internal
+export const generateDateFilterLocalIdentifier: (index: number, dateDatasetRef?: ObjRef) => string;
+
 // @beta
 export class GroupableCatalogItemBuilder<T extends IGroupableCatalogItemBase = IGroupableCatalogItemBase> extends Builder<T> implements IGroupableCatalogItemBuilder<T> {
     // (undocumented)

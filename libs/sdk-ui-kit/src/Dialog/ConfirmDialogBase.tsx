@@ -4,7 +4,7 @@ import cx from "classnames";
 import { Button } from "../Button/index.js";
 import { LoadingSpinner } from "../LoadingSpinner/index.js";
 import { DialogBase } from "./DialogBase.js";
-import { IConfirmDialogBaseProps, IDialogBaseProps } from "./typings.js";
+import { IConfirmDialogBaseProps } from "./typings.js";
 import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 import { Typography } from "../Typography/index.js";
 import { useId } from "../utils/useId.js";
@@ -44,12 +44,18 @@ export const ConfirmDialogBase = React.memo<IConfirmDialogBaseProps>(function Co
     const headerClassNames = cx("gd-dialog-header", dialogHeaderClassName);
 
     const titleElementIdWhenNotSet = useId();
-    const accessibilityConfig = React.useMemo<IDialogBaseProps["accessibilityConfig"]>(() => {
+    const accessibilityConfig = React.useMemo(() => {
+        let titleElementId = dialogBaseProps.accessibilityConfig?.titleElementId;
+        if (headline && !titleElementId) {
+            titleElementId = titleElementIdWhenNotSet;
+        }
+
         return {
             ...(dialogBaseProps.accessibilityConfig ?? {}),
-            titleElementId: dialogBaseProps.accessibilityConfig?.titleElementId ?? titleElementIdWhenNotSet,
+            titleElementId,
+            isModal: true,
         };
-    }, [dialogBaseProps.accessibilityConfig, titleElementIdWhenNotSet]);
+    }, [dialogBaseProps.accessibilityConfig, headline, titleElementIdWhenNotSet]);
 
     return (
         <DialogBase

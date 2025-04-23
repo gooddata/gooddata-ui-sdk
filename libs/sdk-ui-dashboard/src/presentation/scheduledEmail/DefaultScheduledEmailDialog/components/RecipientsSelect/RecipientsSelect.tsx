@@ -12,12 +12,19 @@ import { convertUserToAutomationRecipient } from "../../../../../_staging/automa
 import { createUser, matchUser } from "../../../utils/users.js";
 
 import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer.js";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { isEmail } from "../../../utils/validate.js";
 
 interface IRecipientsSelectProps {
     /**
      * Users to select from
      */
     users: IWorkspaceUser[];
+
+    /**
+     * Error occurred while loading users
+     */
+    usersError?: GoodDataSdkError;
 
     /**
      * Currently selected recipients.
@@ -77,6 +84,7 @@ interface IRecipientsSelectProps {
 export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
     const {
         users,
+        usersError,
         value,
         originalValue,
         onChange,
@@ -92,6 +100,10 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
 
     const [search, setSearch] = useState<string>();
 
+    const notificationChannel = useMemo(() => {
+        return notificationChannels?.find((channel) => channel.id === notificationChannelId);
+    }, [notificationChannelId, notificationChannels]);
+
     const options = useMemo(() => {
         const validUsers = [
             ...(allowOnlyLoggedUserRecipients ? [] : users),
@@ -101,16 +113,12 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
         const mappedUsers = sortBy(filteredUsers?.map(convertUserToAutomationRecipient) ?? [], "user.email");
 
         // If there is no user found and the search is an email, add it as an external recipient
-        if (search && mappedUsers.length === 0) {
+        if (search && mappedUsers.length === 0 && isEmail(search) && allowExternalRecipients) {
             mappedUsers.push(createUser(search));
         }
 
         return mappedUsers;
-    }, [allowOnlyLoggedUserRecipients, loggedUser, search, users]);
-
-    const notificationChannel = useMemo(() => {
-        return notificationChannels?.find((channel) => channel.id === notificationChannelId);
-    }, [notificationChannelId, notificationChannels]);
+    }, [allowOnlyLoggedUserRecipients, loggedUser, search, users, allowExternalRecipients]);
 
     return (
         <RecipientsSelectRenderer
@@ -130,6 +138,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
             maxRecipients={maxRecipients}
             className={className}
             notificationChannel={notificationChannel}
+            usersError={usersError}
         />
     );
 };

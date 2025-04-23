@@ -308,6 +308,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             onError: this.onError,
             onExportReady: this.onExportReady,
             onLoadingChanged: this.onLoadingChanged,
+            onDataView: this.onDataView,
             LoadingComponent: null,
             ErrorComponent: null,
             theme,

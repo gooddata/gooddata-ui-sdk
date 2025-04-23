@@ -102,6 +102,7 @@ const ScheduledEmailDialogFooter: React.FC<ScheduledEmailDialogFooterProps> = ({
 export function ScheduledMailDialogRenderer({
     scheduledExportToEdit,
     users,
+    usersError,
     notificationChannels,
     insight,
     widget,
@@ -146,12 +147,20 @@ export function ScheduledMailDialogRenderer({
         enableAutomationFilterContext,
     } = useDefaultScheduledEmailDialogData({ filters: allDashboardFilters ?? [] });
 
-    const { availableFilters, automationFilters, setAutomationFilters, allVisibleFiltersMetadata } =
-        useAutomationFiltersData({
-            allFilters: allDashboardFilters,
-            storedFilters: dashboardFilters,
-            enableAutomationFilterContext,
-        });
+    const {
+        availableFilters,
+        automationFilters,
+        setAutomationFilters,
+        allVisibleFiltersMetadata,
+        arePersistedFiltersMissingOnDashboard,
+    } = useAutomationFiltersData({
+        allFilters: allDashboardFilters,
+        storedDashboardFilters: dashboardFilters,
+        storedWidgetFilters: widgetFilters,
+        metadataVisibleFilters: scheduledExportToEdit?.metadata?.visibleFilters,
+        enableAutomationFilterContext,
+        isEditing: !!scheduledExportToEdit,
+    });
 
     const {
         defaultUser,
@@ -166,7 +175,6 @@ export function ScheduledMailDialogRenderer({
         isCsvExportSelected,
         isXlsxExportSelected,
         areDashboardFiltersChanged,
-        warningMessage,
         validationErrorMessage,
         useFilters,
         onDashboardAttachmentsChange,
@@ -295,6 +303,7 @@ export function ScheduledMailDialogRenderer({
                                         useFilters={useFilters}
                                         onUseFiltersChange={onUseFiltersChange}
                                         isDashboardAutomation={isDashboardExportSelected}
+                                        areFiltersMissing={arePersistedFiltersMissingOnDashboard}
                                     />
                                     <ContentDivider className="gd-divider-with-margin" />
                                 </>
@@ -322,6 +331,7 @@ export function ScheduledMailDialogRenderer({
                             <RecipientsSelect
                                 loggedUser={defaultUser}
                                 users={users}
+                                usersError={usersError}
                                 value={editedAutomation.recipients ?? []}
                                 originalValue={originalAutomation.recipients || []}
                                 onChange={onRecipientsChange}
@@ -369,11 +379,6 @@ export function ScheduledMailDialogRenderer({
                             {errorMessage ? (
                                 <Message type="error" className="gd-notifications-channels-dialog-error">
                                     {errorMessage}
-                                </Message>
-                            ) : null}
-                            {warningMessage ? (
-                                <Message type="warning" className="gd-notifications-channels-dialog-warning">
-                                    {warningMessage}
                                 </Message>
                             ) : null}
                         </div>

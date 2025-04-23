@@ -1,5 +1,62 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`testing rehype plugin to extract references > replace references ids for not formatted values in text 1`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "type": "text",
+          "value": "Hello, there are some ",
+        },
+        {
+          "children": [
+            {
+              "type": "text",
+              "value": 100,
+            },
+          ],
+          "position": undefined,
+          "properties": {
+            "className": "gd-rich-text-metric-value",
+            "style": {},
+          },
+          "tagName": "span",
+          "type": "element",
+        },
+        {
+          "type": "text",
+          "value": " and ",
+        },
+        {
+          "children": [
+            {
+              "type": "text",
+              "value": 200,
+            },
+          ],
+          "position": undefined,
+          "properties": {
+            "className": "gd-rich-text-metric-value",
+            "style": {},
+          },
+          "tagName": "span",
+          "type": "element",
+        },
+        {
+          "type": "text",
+          "value": " references.",
+        },
+      ],
+      "properties": {},
+      "tagName": "p",
+      "type": "element",
+    },
+  ],
+  "type": "root",
+}
+`;
+
 exports[`testing rehype plugin to extract references > replace references ids for real formatted values in image 1`] = `
 {
   "children": [
