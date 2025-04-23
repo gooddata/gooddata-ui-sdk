@@ -1,12 +1,12 @@
 // (C) 2025 GoodData Corporation
 
 import React, { CSSProperties, useLayoutEffect, useRef, useState } from "react";
+import { useIntl } from "react-intl";
+import { IDropdownButtonAccessibilityConfig } from "../../Button/typings.js";
+import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { IconType } from "../@types/icon.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
-import { IconType } from "../@types/icon.js";
-import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
-import { IDropdownButtonAccessibilityConfig } from "../../Button/typings.js";
-import { useIntl } from "react-intl";
 
 /**
  * @internal
@@ -46,20 +46,16 @@ export const UiChip = ({
     onDelete,
     accessibilityConfig,
 }: UiChipProps) => {
-    const elemRef = useRef<HTMLDivElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
     const [styleObj, setStyleObj] = useState<CSSProperties>();
     const intl = useIntl();
 
     useLayoutEffect(() => {
-        if (elemRef.current) {
+        if (buttonRef.current) {
             // Reset width to auto to calculate the width of the label and tag
-            elemRef.current.style.width = "auto";
-            // Calculate the width of all child nodes
-            const width = Array.from(elemRef.current.childNodes).reduce((acc, item: HTMLElement) => {
-                return acc + Math.floor((item.offsetWidth ?? 0) + 1);
-            }, 0);
-
-            setStyleObj({ width: Math.floor(width + 1) });
+            buttonRef.current.style.width = "auto";
+            const width = buttonRef.current.getBoundingClientRect().width;
+            setStyleObj({ width });
         }
     }, [label, tag]);
 
@@ -71,12 +67,14 @@ export const UiChip = ({
     };
 
     return (
-        <div className={b()} ref={elemRef} style={{ ...styleObj }}>
+        <div className={b()}>
             <button
                 aria-expanded={isActive}
                 className={e("trigger", { isDeletable, isActive, isLocked })}
                 disabled={isLocked}
                 onClick={onClick}
+                style={{ ...styleObj }}
+                ref={buttonRef}
                 aria-disabled={isLocked}
                 aria-label={ariaLabel}
                 aria-labelledby={ariaLabelledBy}
