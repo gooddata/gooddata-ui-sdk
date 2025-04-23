@@ -462,6 +462,15 @@
                 "responses": {
                     "200": {
                         "description": "AFM Execution response with links to the result and server-enhanced dimensions from the original request.",
+                        "headers": {
+                            "X-GDC-CANCEL-TOKEN": {
+                                "description": "A token that can be used to cancel this execution",
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -566,6 +575,52 @@
                 "x-gdc-security-info": {
                     "permissions": ["ANALYZE"],
                     "description": "Permissions required to analyze data."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/afm/cancel": {
+            "post": {
+                "tags": ["actions"],
+                "summary": "Applies all the given cancel tokens.",
+                "description": "Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is canceled.",
+                "operationId": "cancelExecutions",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AfmCancelTokens"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Status of the cancelling operation.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AfmCancelTokens"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["VIEW"],
+                    "description": "Permissions required to view a report or label elements."
                 }
             }
         },
@@ -1102,6 +1157,14 @@
                             "default": []
                         },
                         "example": "excludedTotalDimensions=dim_0,dim_1"
+                    },
+                    {
+                        "name": "X-GDC-CANCEL-TOKEN",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
@@ -2872,6 +2935,20 @@
                     }
                 },
                 "description": "Entity describing the valid descendants response."
+            },
+            "AfmCancelTokens": {
+                "required": ["tokenIds"],
+                "type": "object",
+                "properties": {
+                    "tokenIds": {
+                        "type": "array",
+                        "description": "Token ids to be used in the cancellation.",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "description": "Any information related to cancellation."
             },
             "SearchRequest": {
                 "required": ["question"],

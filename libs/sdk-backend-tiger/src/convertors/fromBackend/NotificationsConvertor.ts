@@ -66,7 +66,6 @@ function convertAlertDescription(alert: AlertDescription): IAlertDescription {
         status: alert.status as AlertDescriptionStatus,
         errorMessage: alert.errorMessage,
         traceId: alert.traceId,
-        filterCount: alert.filterCount,
     };
 }
 
@@ -92,6 +91,7 @@ function convertWebhookMessageData(
         tabularExports: data.tabularExports,
         visualExports: data.visualExports,
         alert: data.alert ? convertAlertDescription(data.alert) : undefined,
+        filters: data.filters,
     };
 }
 

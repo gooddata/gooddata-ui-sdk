@@ -21,6 +21,12 @@ export type AccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
 export type AlertDescriptionStatus = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "TIMEOUT";
 
 // @public
+export type AlertFilters = {
+    title: string;
+    filter: string;
+};
+
+// @public
 export type AllTimeGranularity = "ALL_TIME_GRANULARITY";
 
 // @public
@@ -666,7 +672,6 @@ export interface IAlertDescription {
     condition: string;
     currentValues?: IAlertEvaluationRow[];
     errorMessage?: string;
-    filterCount?: number;
     formattedThreshold?: string;
     lowerThreshold?: number;
     metric: string;
@@ -4260,6 +4265,7 @@ export interface IWebhookMessageDataAlert extends IWebhookMessageDataBase {
 export interface IWebhookMessageDataBase {
     automation: IWebhookAutomationInfo;
     details?: IAutomationDetails;
+    filters?: AlertFilters[];
     recipients?: WebhookRecipient[];
     remainingActionCount?: number;
     tabularExports?: IExportResult[];

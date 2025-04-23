@@ -132,12 +132,6 @@ export interface AlertDescription {
      * @type {number}
      * @memberof AlertDescription
      */
-    filterCount?: number;
-    /**
-     *
-     * @type {number}
-     * @memberof AlertDescription
-     */
     totalValueCount?: number;
     /**
      *
@@ -145,6 +139,12 @@ export interface AlertDescription {
      * @memberof AlertDescription
      */
     triggeredCount?: number;
+    /**
+     *
+     * @type {string}
+     * @memberof AlertDescription
+     */
+    triggeredAt?: string;
     /**
      *
      * @type {number}
@@ -526,6 +526,12 @@ export interface ExportResult {
      * @memberof ExportResult
      */
     traceId?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof ExportResult
+     */
+    triggeredAt?: string;
 }
 
 export const ExportResultStatusEnum = {
@@ -637,6 +643,25 @@ export interface NotificationContent {
      * @memberof NotificationContent
      */
     type: string;
+}
+/**
+ *
+ * @export
+ * @interface NotificationFilter
+ */
+export interface NotificationFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof NotificationFilter
+     */
+    title: string;
+    /**
+     *
+     * @type {string}
+     * @memberof NotificationFilter
+     */
+    filter: string;
 }
 /**
  *
@@ -1171,6 +1196,12 @@ export interface WebhookMessageData {
      * @memberof WebhookMessageData
      */
     alert?: AlertDescription;
+    /**
+     *
+     * @type {Array<NotificationFilter>}
+     * @memberof WebhookMessageData
+     */
+    filters?: Array<NotificationFilter>;
 }
 /**
  *

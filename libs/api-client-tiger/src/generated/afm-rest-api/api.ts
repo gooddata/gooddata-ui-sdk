@@ -140,6 +140,19 @@ export interface ActiveObjectIdentification {
     workspaceId: string;
 }
 /**
+ * Any information related to cancellation.
+ * @export
+ * @interface AfmCancelTokens
+ */
+export interface AfmCancelTokens {
+    /**
+     * Token ids to be used in the cancellation.
+     * @type {Array<string>}
+     * @memberof AfmCancelTokens
+     */
+    tokenIds: Array<string>;
+}
+/**
  *
  * @export
  * @interface AfmExecution
@@ -3946,6 +3959,58 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is canceled.
+         * @summary Applies all the given cancel tokens.
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmCancelTokens} afmCancelTokens
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cancelExecutions: async (
+            workspaceId: string,
+            afmCancelTokens: AfmCancelTokens,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("cancelExecutions", "workspaceId", workspaceId);
+            // verify required parameter 'afmCancelTokens' is not null or undefined
+            assertParamExists("cancelExecutions", "afmCancelTokens", afmCancelTokens);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/cancel`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof afmCancelTokens !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(afmCancelTokens !== undefined ? afmCancelTokens : {})
+                : afmCancelTokens || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
          * @summary (EXPERIMENTAL) Smart functions - Clustering
          * @param {string} workspaceId Workspace identifier
@@ -4661,6 +4726,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
          * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
          * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
+         * @param {string} [xGDCCANCELTOKEN]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -4670,6 +4736,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             offset?: Array<number>,
             limit?: Array<number>,
             excludedTotalDimensions?: Array<string>,
+            xGDCCANCELTOKEN?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -4702,6 +4769,10 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 localVarQueryParameter["excludedTotalDimensions"] = excludedTotalDimensions.join(
                     COLLECTION_FORMATS.csv,
                 );
+            }
+
+            if (xGDCCANCELTOKEN !== undefined && xGDCCANCELTOKEN !== null) {
+                localVarHeaderParameter["X-GDC-CANCEL-TOKEN"] = String(xGDCCANCELTOKEN);
             }
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -4855,6 +4926,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
                 resultId,
                 offset,
                 limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is canceled.
+         * @summary Applies all the given cancel tokens.
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmCancelTokens} afmCancelTokens
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async cancelExecutions(
+            workspaceId: string,
+            afmCancelTokens: AfmCancelTokens,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmCancelTokens>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cancelExecutions(
+                workspaceId,
+                afmCancelTokens,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -5168,6 +5259,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
          * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
          * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
          * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
+         * @param {string} [xGDCCANCELTOKEN]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5177,6 +5269,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             offset?: Array<number>,
             limit?: Array<number>,
             excludedTotalDimensions?: Array<string>,
+            xGDCCANCELTOKEN?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExecutionResult>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.retrieveResult(
@@ -5185,6 +5278,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
                 offset,
                 limit,
                 excludedTotalDimensions,
+                xGDCCANCELTOKEN,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -5303,6 +5397,21 @@ export const ActionsApiFactory = function (
                     requestParameters.limit,
                     options,
                 )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is canceled.
+         * @summary Applies all the given cancel tokens.
+         * @param {ActionsApiCancelExecutionsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        cancelExecutions(
+            requestParameters: ActionsApiCancelExecutionsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AfmCancelTokens> {
+            return localVarFp
+                .cancelExecutions(requestParameters.workspaceId, requestParameters.afmCancelTokens, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -5564,6 +5673,7 @@ export const ActionsApiFactory = function (
                     requestParameters.offset,
                     requestParameters.limit,
                     requestParameters.excludedTotalDimensions,
+                    requestParameters.xGDCCANCELTOKEN,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -5654,6 +5764,19 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiAnomalyDetectionResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<AnomalyDetectionResult>;
+
+    /**
+     * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is canceled.
+     * @summary Applies all the given cancel tokens.
+     * @param {ActionsApiCancelExecutionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    cancelExecutions(
+        requestParameters: ActionsApiCancelExecutionsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AfmCancelTokens>;
 
     /**
      * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
@@ -5977,6 +6100,27 @@ export interface ActionsApiAnomalyDetectionResultRequest {
      * @memberof ActionsApiAnomalyDetectionResult
      */
     readonly limit?: number;
+}
+
+/**
+ * Request parameters for cancelExecutions operation in ActionsApi.
+ * @export
+ * @interface ActionsApiCancelExecutionsRequest
+ */
+export interface ActionsApiCancelExecutionsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiCancelExecutions
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {AfmCancelTokens}
+     * @memberof ActionsApiCancelExecutions
+     */
+    readonly afmCancelTokens: AfmCancelTokens;
 }
 
 /**
@@ -6400,6 +6544,13 @@ export interface ActionsApiRetrieveResultRequest {
      * @memberof ActionsApiRetrieveResult
      */
     readonly excludedTotalDimensions?: Array<string>;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiRetrieveResult
+     */
+    readonly xGDCCANCELTOKEN?: string;
 }
 
 /**
@@ -6508,6 +6659,23 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
                 requestParameters.limit,
                 options,
             )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is canceled.
+     * @summary Applies all the given cancel tokens.
+     * @param {ActionsApiCancelExecutionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public cancelExecutions(
+        requestParameters: ActionsApiCancelExecutionsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .cancelExecutions(requestParameters.workspaceId, requestParameters.afmCancelTokens, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -6777,6 +6945,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
                 requestParameters.offset,
                 requestParameters.limit,
                 requestParameters.excludedTotalDimensions,
+                requestParameters.xGDCCANCELTOKEN,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -7269,6 +7438,7 @@ export const ComputationApiAxiosParamCreator = function (configuration?: Configu
          * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
          * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
          * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
+         * @param {string} [xGDCCANCELTOKEN]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7278,6 +7448,7 @@ export const ComputationApiAxiosParamCreator = function (configuration?: Configu
             offset?: Array<number>,
             limit?: Array<number>,
             excludedTotalDimensions?: Array<string>,
+            xGDCCANCELTOKEN?: string,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
@@ -7310,6 +7481,10 @@ export const ComputationApiAxiosParamCreator = function (configuration?: Configu
                 localVarQueryParameter["excludedTotalDimensions"] = excludedTotalDimensions.join(
                     COLLECTION_FORMATS.csv,
                 );
+            }
+
+            if (xGDCCANCELTOKEN !== undefined && xGDCCANCELTOKEN !== null) {
+                localVarHeaderParameter["X-GDC-CANCEL-TOKEN"] = String(xGDCCANCELTOKEN);
             }
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -7540,6 +7715,7 @@ export const ComputationApiFp = function (configuration?: Configuration) {
          * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
          * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
          * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
+         * @param {string} [xGDCCANCELTOKEN]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7549,6 +7725,7 @@ export const ComputationApiFp = function (configuration?: Configuration) {
             offset?: Array<number>,
             limit?: Array<number>,
             excludedTotalDimensions?: Array<string>,
+            xGDCCANCELTOKEN?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExecutionResult>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.retrieveResult(
@@ -7557,6 +7734,7 @@ export const ComputationApiFp = function (configuration?: Configuration) {
                 offset,
                 limit,
                 excludedTotalDimensions,
+                xGDCCANCELTOKEN,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -7750,6 +7928,7 @@ export const ComputationApiFactory = function (
                     requestParameters.offset,
                     requestParameters.limit,
                     requestParameters.excludedTotalDimensions,
+                    requestParameters.xGDCCANCELTOKEN,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -8162,6 +8341,13 @@ export interface ComputationApiRetrieveResultRequest {
      * @memberof ComputationApiRetrieveResult
      */
     readonly excludedTotalDimensions?: Array<string>;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ComputationApiRetrieveResult
+     */
+    readonly xGDCCANCELTOKEN?: string;
 }
 
 /**
@@ -8360,6 +8546,7 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
                 requestParameters.offset,
                 requestParameters.limit,
                 requestParameters.excludedTotalDimensions,
+                requestParameters.xGDCCANCELTOKEN,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
