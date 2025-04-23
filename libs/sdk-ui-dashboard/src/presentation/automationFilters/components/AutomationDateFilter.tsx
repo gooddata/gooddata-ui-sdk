@@ -64,6 +64,9 @@ export const AutomationDateFilter: React.FC<{
                             isLocked={isLocked}
                             isDeletable={!isLocked && !isCommonDateFilter}
                             onDelete={() => onDelete(filter)}
+                            accessibilityConfig={{
+                                isExpanded: props.isOpen,
+                            }}
                         />
                         <Bubble alignPoints={tooltipAlignPoints}>{label}</Bubble>
                     </BubbleHoverTrigger>

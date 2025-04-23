@@ -3578,5 +3578,10 @@
         "value": "Select starting time",
         "comment": "",
         "limit": 0
+    },
+    "uiChip.delete.label": {
+        "value": "Delete",
+        "comment": "Label of delete button.",
+        "limit": 0
     }
 }
