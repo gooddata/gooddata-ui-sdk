@@ -37,6 +37,7 @@ import {
     isRelativeDateFilter,
     IInsightWidget,
     isInsightWidget,
+    IAutomationMetadataObject,
 } from "@gooddata/sdk-model";
 import { changeFilterContextSelectionHandler } from "../filterContext/changeFilterContextSelectionHandler.js";
 import { changeFilterContextSelection } from "../../commands/filters.js";
@@ -94,10 +95,16 @@ export function* initializeAutomationsHandler(
 
         // Set filters according to provided automationId
         if (automationId) {
-            const targetAutomation = automations.find((a) => a.id === automationId);
-            const targetWidget = targetAutomation?.metadata?.widget;
-            const targetFilters = targetAutomation?.alert?.execution?.filters.filter(isDashboardFilter);
-            if (targetWidget && targetFilters) {
+            const {
+                targetWidget,
+                targetAlertFilters,
+                targetExportDefinition,
+                targetExportDefinitionFilters,
+                targetExportVisibleFilters,
+            } = extractRelevantFilters(automations, automationId);
+
+            // Set filters to the dashboard based on alert execution filters
+            if (targetWidget && targetAlertFilters) {
                 const widget: ReturnType<ReturnType<typeof selectWidgetByRef>> = yield select(
                     selectWidgetByRef(idRef(targetWidget)),
                 );
@@ -107,13 +114,34 @@ export function* initializeAutomationsHandler(
 
                 const filtersToSet =
                     insight && isInsightWidget(widget)
-                        ? getDashboardFiltersOnly(targetFilters, insight, widget)
-                        : targetFilters;
+                        ? getDashboardFiltersOnly(targetAlertFilters, insight, widget)
+                        : targetAlertFilters;
 
                 // Empty alert execution filters = reset all filters (set them to all).
                 // Empty sanitized filters = keep filters as they are, do not reset them (all alert execution filters are insight specific / ignored).
                 // Non-empty sanitized filters = set them (some alert execution filters are originating from the dashboard).
-                if (targetFilters.length === 0 || filtersToSet.length > 0) {
+                if (targetAlertFilters.length === 0 || filtersToSet.length > 0) {
+                    const cmd = changeFilterContextSelection(filtersToSet, true, automationId);
+                    yield call(changeFilterContextSelectionHandler, ctx, cmd);
+                }
+            }
+
+            // Set filters to the dashboard based on export definition filters
+            if (targetExportDefinition && targetExportDefinitionFilters) {
+                const filtersToSet =
+                    targetExportDefinitionFilters?.filter((filter) => {
+                        if (targetExportVisibleFilters) {
+                            return targetExportVisibleFilters.some(
+                                (f) => f.localIdentifier === filterLocalIdentifier(filter),
+                            );
+                        }
+                        return true;
+                    }) ?? [];
+
+                // Empty schedule execution filters = reset all filters (set them to all).
+                // Empty sanitized filters = keep filters as they are, do not reset them (all schedule execution filters are ignored).
+                // Non-empty sanitized filters = set them (some schedule export definition filters are originating from the dashboard).
+                if (targetExportDefinitionFilters.length === 0 || filtersToSet.length > 0) {
                     const cmd = changeFilterContextSelection(filtersToSet, true, automationId);
                     yield call(changeFilterContextSelectionHandler, ctx, cmd);
                 }
@@ -138,6 +166,28 @@ export function* initializeAutomationsHandler(
             ]),
         );
     }
+}
+
+function extractRelevantFilters(automations: IAutomationMetadataObject[], automationId: string) {
+    const targetAutomation = automations.find((a) => a.id === automationId);
+
+    //alert, widget
+    const targetWidget = targetAutomation?.metadata?.widget;
+    const targetAlertFilters = targetAutomation?.alert?.execution?.filters.filter(isDashboardFilter);
+
+    //export definition
+    const targetExportDefinition = targetAutomation?.exportDefinitions?.[0];
+    const targetExportDefinitionFilters =
+        targetExportDefinition?.requestPayload.content.filters?.filter(isDashboardFilter);
+    const targetExportVisibleFilters = targetAutomation?.metadata?.visibleFilters;
+
+    return {
+        targetWidget,
+        targetAlertFilters,
+        targetExportDefinition,
+        targetExportDefinitionFilters,
+        targetExportVisibleFilters,
+    };
 }
 
 /**
