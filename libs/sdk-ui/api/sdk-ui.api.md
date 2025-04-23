@@ -221,6 +221,7 @@ export type DataAccessConfig = {
 export type DataPoint = {
     readonly rawValue: DataValue;
     formattedValue(): null | string;
+    readonly formatable: boolean;
     readonly coordinates: DataPointCoordinates;
     readonly seriesDesc: DataSeriesDescriptor;
     readonly sliceDesc?: DataSliceDescriptor;

@@ -1,11 +1,15 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
     DataValue,
     IResultAttributeHeader,
     IResultTotalHeader,
+    isIdentifierRef,
+    isMeasureDefinition,
     isResultTotalHeader,
+    MeasureAggregation,
+    ObjectType,
     resultHeaderName,
 } from "@gooddata/sdk-model";
 import {
@@ -62,6 +66,7 @@ class SingleDimIterator implements Iterator<DataPoint> {
         const { valueFormatter } = this.config;
         const seriesDesc = this.accessors.seriesDescriptors(this.seriesIdx);
         const measureFormat = seriesDesc.measureFormat();
+        const formatable = canFormatValue(seriesDesc);
 
         this.returned = true;
 
@@ -71,13 +76,35 @@ class SingleDimIterator implements Iterator<DataPoint> {
                 rawValue,
                 seriesDesc,
                 coordinates,
+                formatable,
                 total: false,
                 formattedValue(): string | null {
-                    return valueFormatter(rawValue, measureFormat);
+                    if (formatable) {
+                        return valueFormatter(rawValue, measureFormat);
+                    }
+                    return String(rawValue);
                 },
             },
         };
     };
+}
+
+const types: ObjectType[] = ["attribute", "displayForm"];
+const aggregations: MeasureAggregation[] = ["min", "max"];
+
+function canFormatValue(desc: DataSeriesDescriptor): boolean {
+    const def = desc.measureDefinition.measure.definition;
+
+    if (isMeasureDefinition(def) && def.measureDefinition.aggregation) {
+        const agg = def.measureDefinition.aggregation;
+        const type = isIdentifierRef(def.measureDefinition.item)
+            ? def.measureDefinition.item.type
+            : def.measureDefinition.item.uri;
+
+        const notFormat = aggregations.includes(agg) && types.some((t) => type?.includes(t));
+        return !notFormat;
+    }
+    return true;
 }
 
 /**
@@ -122,6 +149,7 @@ class TwoDimIterator implements Iterator<DataPoint> {
         const seriesDesc = this.accessors.seriesDescriptors(seriesIdx);
         const sliceDesc = this.accessors.sliceDescriptors(sliceIdx);
         const measureFormat = seriesDesc.measureFormat();
+        const formatable = canFormatValue(seriesDesc);
 
         this.offset += 1;
 
@@ -132,9 +160,13 @@ class TwoDimIterator implements Iterator<DataPoint> {
                 seriesDesc,
                 sliceDesc,
                 coordinates,
+                formatable,
                 total: sliceDesc.isTotal,
                 formattedValue(): string | null {
-                    return valueFormatter(rawValue, measureFormat);
+                    if (formatable) {
+                        return valueFormatter(rawValue, measureFormat);
+                    }
+                    return String(rawValue);
                 },
             },
         };
