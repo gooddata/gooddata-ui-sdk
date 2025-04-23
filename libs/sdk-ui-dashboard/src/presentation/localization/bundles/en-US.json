@@ -158,22 +158,22 @@
         "limit": 0
     },
     "options.menu.export.PDF": {
-        "value": "Snapshot (PDF)",
+        "value": "Snapshot (.pdf)",
         "comment": "Export whole KPI dashboard to PDF",
         "limit": 0
     },
     "options.menu.export.EXCEL": {
-        "value": "Data (XLSX)",
+        "value": "Data (.xlsx)",
         "comment": "Export whole KPI dashboard to EXCEL",
         "limit": 0
     },
     "options.menu.export.presentation.PPTX": {
-        "value": "Slide Deck (PPTX)",
+        "value": "Slide Deck (.pptx)",
         "comment": "Export whole KPI dashboard to PowerPoint",
         "limit": 0
     },
     "options.menu.export.presentation.PDF": {
-        "value": "Slide Deck (PDF)",
+        "value": "Slide Deck (.pdf)",
         "comment": "Export whole KPI dashboard to PowerPoint",
         "limit": 0
     },
