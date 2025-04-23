@@ -3433,6 +3433,7 @@ export interface ISettings {
     enableKPIDashboardSaveAsNew?: boolean;
     enableKPIDashboardSchedule?: boolean;
     enableKPIDashboardScheduleRecipients?: boolean;
+    enableLineChartTrendThreshold?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
     // (undocumented)

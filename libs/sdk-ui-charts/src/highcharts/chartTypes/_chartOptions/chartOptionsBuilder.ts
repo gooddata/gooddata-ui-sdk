@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { ITheme, IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
@@ -79,6 +79,7 @@ import {
     getWaterfallChartCategories,
 } from "../waterfallChart/waterfallChartOptions.js";
 import { assignForecastAxes } from "./chartForecast.js";
+import { setupThresholdZones } from "./chartThresholds.js";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
@@ -423,7 +424,6 @@ export function getChartOptions(
     const gridEnabled = config?.grid?.enabled ?? true;
     const stacking = getStackingConfig(stackByAttribute, config);
     const measureGroup = findMeasureGroupInDimensions(dimensions);
-    const xAxes = getXAxes(dv, config, measureGroup, viewByAttribute, viewByParentAttribute);
     const yAxes = getYAxes(dv, config, measureGroup, stackByAttribute);
 
     const seriesWithoutDrillability = getSeries(
@@ -447,7 +447,7 @@ export function getChartOptions(
         type,
     );
 
-    let series = assignYAxes(drillableSeries, yAxes);
+    let initialSeries = assignYAxes(drillableSeries, yAxes);
 
     let categories = viewByParentAttribute
         ? getCategoriesForTwoAttributes(viewByAttribute, viewByParentAttribute, emptyHeaderTitle)
@@ -457,7 +457,7 @@ export function getChartOptions(
     // need to skip this, so the sort specified by the user does not get override.
     if (isAutoSortableChart(type, viewByAttribute) && !config.enableChartSorting) {
         // dataPoints are sorted by default by value in descending order
-        const dataPoints = series[0].data;
+        const dataPoints = initialSeries[0].data;
         const indexSortOrder: number[] = [];
         const sortedDataPoints = dataPoints
             .sort((pointDataA, pointDataB) => {
@@ -480,11 +480,16 @@ export function getChartOptions(
         categories = categories.map(
             (_category: any, dataPointIndex: number) => categories[indexSortOrder[dataPointIndex]],
         );
-        series[0].data = sortedDataPoints;
+        initialSeries[0].data = sortedDataPoints;
     }
 
-    //Forecast
-    series = assignForecastAxes(type, series, dv.rawData().forecastTwoDimData());
+    // Forecast
+    initialSeries = assignForecastAxes(type, initialSeries, dv.rawData().forecastTwoDimData());
+
+    // Remove threshold metric series and define zones based upon its data
+    const { series, plotLines } = setupThresholdZones(type, initialSeries, dv, config);
+
+    const xAxes = getXAxes(dv, config, measureGroup, viewByAttribute, viewByParentAttribute, plotLines);
 
     const colorAssignments = colorStrategy.getColorAssignment();
     const { colorPalette } = config;

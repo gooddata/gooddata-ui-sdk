@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces/index.js";
 import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
@@ -44,6 +44,7 @@ export function getXAxes(
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     viewByParentAttribute: IUnwrappedAttributeHeadersWithItems,
+    plotLines: number[] | undefined,
 ): IAxis[] {
     const { type, enableJoinedAttributeAxisName } = config;
 
@@ -89,9 +90,12 @@ export function getXAxes(
     }
 
     const xLabel = config.xLabel || (viewByAttribute ? viewByAttribute.formOf.name : "");
+    const plotLinesProps = plotLines === undefined ? {} : { plotLines };
+
     return [
         {
             label: xLabel,
+            ...plotLinesProps,
         },
     ];
 }

@@ -325,6 +325,8 @@ export interface IChartConfig {
     // @internal
     enableHighchartsAccessibility?: boolean;
     enableJoinedAttributeAxisName?: boolean;
+    // @internal
+    enableLineChartTrendThreshold?: boolean;
     enableReversedStacking?: boolean;
     // (undocumented)
     enableSeparateTotalLabels?: boolean;
@@ -357,6 +359,7 @@ export interface IChartConfig {
     stacking?: boolean;
     stackMeasures?: boolean;
     stackMeasuresToPercent?: boolean;
+    thresholdMeasures?: string[];
     // @internal (undocumented)
     tooltip?: ITooltipConfig;
     total?: ITotalConfig;

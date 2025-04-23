@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IUiConfig } from "../interfaces/Visualization.js";
 
 import { METRIC, FACT, ATTRIBUTE, DATE, GEO_ATTRIBUTE } from "./bucket.js";
@@ -244,6 +244,7 @@ export const DEFAULT_LINE_UICONFIG: IUiConfig = {
         measures: {
             ...measuresBase,
             isShowOnSecondaryAxisVisible: true,
+            allowThresholdMeasure: true,
         },
         trend: {
             ...viewBase,
@@ -266,6 +267,7 @@ export const LINE_UICONFIG_WITH_MULTIPLE_DATES: IUiConfig = {
         measures: {
             ...measuresBase,
             isShowOnSecondaryAxisVisible: true,
+            allowThresholdMeasure: true,
         },
         trend: {
             ...viewBase,

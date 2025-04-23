@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import {
     factoryNotationFor,
     isColorMappingItem,
@@ -57,6 +57,7 @@ const supportedChartConfigProperties = new Set<keyof IChartConfig>([
     "rowHeight",
     "inlineVisualizations",
     "hyperLinks",
+    "thresholdMeasures",
 ]);
 
 export function chartConfigFromInsight(
