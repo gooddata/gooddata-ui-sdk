@@ -1,19 +1,20 @@
 // (C) 2025 GoodData Corporation
 
 import React, { CSSProperties, useLayoutEffect, useRef, useState } from "react";
+import { IDropdownButtonAccessibilityConfig } from "../../Button/typings.js";
+import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { IconType } from "../@types/icon.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
-import { IconType } from "../@types/icon.js";
-import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
-import { IDropdownButtonAccessibilityConfig } from "../../Button/typings.js";
-import { useIntl } from "react-intl";
 
 /**
  * @internal
  */
 export interface IUiChipAccessibilityConfig
     extends IAccessibilityConfigBase,
-        IDropdownButtonAccessibilityConfig {}
+        IDropdownButtonAccessibilityConfig {
+    deleteAriaLabel?: string;
+}
 
 /**
  * @internal
@@ -48,7 +49,6 @@ export const UiChip = ({
 }: UiChipProps) => {
     const elemRef = useRef<HTMLDivElement>(null);
     const [styleObj, setStyleObj] = useState<CSSProperties>();
-    const intl = useIntl();
 
     useLayoutEffect(() => {
         if (elemRef.current) {
@@ -63,7 +63,7 @@ export const UiChip = ({
         }
     }, [label, tag]);
 
-    const { isExpanded, popupId, ariaLabel, ariaLabelledBy } = accessibilityConfig ?? {};
+    const { isExpanded, popupId, ariaLabel, ariaLabelledBy, deleteAriaLabel } = accessibilityConfig ?? {};
     const ariaDropdownProps = {
         ...(popupId && isExpanded ? { "aria-controls": popupId } : {}),
         ...(popupId ? { "aria-haspopup": !!popupId } : {}),
@@ -105,11 +105,7 @@ export const UiChip = ({
                 )}
             </button>
             {isDeletable ? (
-                <button
-                    aria-label={intl.formatMessage({ id: "uiChip.delete.label" })}
-                    className={e("delete")}
-                    onClick={onDelete}
-                >
+                <button aria-label={deleteAriaLabel} className={e("delete")} onClick={onDelete}>
                     <span className={e("icon-delete")}>
                         <UiIcon type="cross" color="complementary-6" size={14} ariaHidden={true} />
                     </span>

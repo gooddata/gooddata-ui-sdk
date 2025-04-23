@@ -4345,6 +4345,8 @@ export interface ITypographyProps {
 
 // @internal (undocumented)
 export interface IUiChipAccessibilityConfig extends IAccessibilityConfigBase, IDropdownButtonAccessibilityConfig {
+    // (undocumented)
+    deleteAriaLabel?: string;
 }
 
 // @internal (undocumented)

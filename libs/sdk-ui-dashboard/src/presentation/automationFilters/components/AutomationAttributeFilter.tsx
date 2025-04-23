@@ -15,6 +15,7 @@ import {
     AutomationAttributeFilterProvider,
     useAutomationAttributeFilterContext,
 } from "./AutomationAttributeFilterContext.js";
+import { useIntl } from "react-intl";
 
 const tooltipAlignPoints = [
     { align: "bl tl", offset: { x: 11, y: 0 } },
@@ -28,12 +29,15 @@ export const AutomationAttributeFilter: React.FC<{
     isLocked?: boolean;
     displayAsLabel?: ObjRef;
 }> = ({ filter, onChange, onDelete, isLocked, displayAsLabel }) => {
+    const intl = useIntl();
+    const deleteAriaLabel = intl.formatMessage({ id: "delete" });
     return (
         <AutomationAttributeFilterProvider
             filter={filter}
             onChange={onChange}
             onDelete={onDelete}
             isLocked={isLocked}
+            deleteAriaLabel={deleteAriaLabel}
         >
             <DefaultDashboardAttributeFilter
                 filter={filter}
@@ -80,7 +84,7 @@ function AutomationAttributeFilterLoadingComponent() {
 }
 
 function AutomationAttributeFilterDropdownButtonComponent(props: IAttributeFilterDropdownButtonProps) {
-    const { isLocked, onDelete, filter } = useAutomationAttributeFilterContext();
+    const { isLocked, onDelete, filter, deleteAriaLabel } = useAutomationAttributeFilterContext();
     const label = `${props.title!}: ${props.subtitle!}`;
     const tag = props.selectedItemsCount ? `(${props.selectedItemsCount})` : undefined;
     return (
@@ -95,6 +99,7 @@ function AutomationAttributeFilterDropdownButtonComponent(props: IAttributeFilte
                 onDelete={() => onDelete?.(filter!)}
                 accessibilityConfig={{
                     isExpanded: props.isOpen,
+                    deleteAriaLabel,
                 }}
             />
             <Bubble alignPoints={tooltipAlignPoints}>
