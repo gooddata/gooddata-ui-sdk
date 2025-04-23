@@ -1,21 +1,23 @@
 // (C) 2025 GoodData Corporation
 
 import { ILocale } from "@gooddata/sdk-ui";
+import { useCallback } from "react";
+import { toModifiedISOStringToTimezone } from "../../scheduledEmail/utils/date.js";
 import {
     selectLocale,
     selectExecutionTimestamp,
     useDashboardDispatch,
     useDashboardSelector,
     changeIgnoreExecutionTimestamp,
+    selectTimezone,
 } from "../../../model/index.js";
-import { useCallback } from "react";
 
-function formatDate(isoString: string | undefined, locale: ILocale) {
+function formatDate(isoString: string | undefined, locale: ILocale, timezone?: string) {
     if (!isoString) {
         return undefined;
     }
 
-    const date = new Date(isoString);
+    const { date } = toModifiedISOStringToTimezone(new Date(isoString), timezone);
 
     const formattedDate = date.toLocaleDateString(locale, {
         year: "numeric",
@@ -33,9 +35,10 @@ function formatDate(isoString: string | undefined, locale: ILocale) {
 
 export const useExecutionTimestampMessage = () => {
     const locale = useDashboardSelector(selectLocale);
+    const timezone = useDashboardSelector(selectTimezone);
     const dashboardExecutionTimestamp = useDashboardSelector(selectExecutionTimestamp);
     const showExecutionTimestampMessage = dashboardExecutionTimestamp !== undefined;
-    const formattedDate = formatDate(dashboardExecutionTimestamp, locale);
+    const formattedDate = formatDate(dashboardExecutionTimestamp, locale, timezone);
 
     const dispatch = useDashboardDispatch();
 
