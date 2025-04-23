@@ -410,9 +410,9 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     const onUseFiltersChange = useCallback(
         (value: boolean, filters: FilterContextItem[]) => {
             setUseFilters(value);
-            if (value) {
-                onFiltersChange(filters, value);
-            } else {
+            onFiltersChange(filters, value);
+
+            if (!value) {
                 setEditedAutomation((s) => ({
                     ...s,
                     exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
