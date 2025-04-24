@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import {
     SingleColumn,
@@ -72,7 +72,7 @@ describe("searchForLocatorMatch", () => {
                 ),
             ],
             SingleMeasureWithTwoRowAndTwoColumnAttributes,
-            "c_0",
+            "c_8",
         ],
         [
             "does match another locator in table with two column attributes and single measure",

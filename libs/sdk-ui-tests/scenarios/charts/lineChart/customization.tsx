@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { LineChart, ILineChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
@@ -17,6 +17,8 @@ import {
     legendResponsiveVariants,
     legendResponsiveSizeVariants,
 } from "../_infra/legendResponsiveVariants.js";
+import { measureLocalId, newAbsoluteDateFilter } from "@gooddata/sdk-model";
+import { ReferenceMd } from "@gooddata/reference-workspace";
 
 const legendScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
@@ -55,10 +57,27 @@ const continuousLineScenario = scenariosFor<ILineChartProps>("LineChart", LineCh
         config: { continuousLine: { enabled: true } },
     });
 
+const thresholdZonesScenario = scenariosFor<ILineChartProps>("LineChart", LineChart)
+    .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
+    .addScenario("threshold zones", {
+        measures: [
+            ReferenceMd.SnapshotBOP,
+            ReferenceMd.SnapshotEOP,
+            ReferenceMd.TimelineBOP,
+            ReferenceMd.MetricHasNullValue,
+        ],
+        trendBy: ReferenceMd.DateDatasets.Closed.ClosedDate.Default,
+        filters: [newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2013-04-17", "2013-05-31")],
+        config: {
+            thresholdMeasures: [measureLocalId(ReferenceMd.MetricHasNullValue)],
+        },
+    });
+
 export default [
     legendScenarios,
     dataLabelScenarios,
     dataPointScenarios,
     continuousLineScenario,
+    thresholdZonesScenario,
     ...legendResponziveScenarios,
 ];

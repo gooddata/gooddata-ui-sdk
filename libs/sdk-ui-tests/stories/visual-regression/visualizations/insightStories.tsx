@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -80,6 +80,7 @@ const DefaultSettings: ISettings = {
     enableHidingOfDataPoints: true,
     enableSeparateTotalLabels: true,
     enableChartsSorting: true,
+    enableLineChartTrendThreshold: true,
 };
 
 //

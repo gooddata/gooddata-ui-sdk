@@ -869,7 +869,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -895,7 +895,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -926,7 +926,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -964,7 +964,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -1377,7 +1377,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -1403,7 +1403,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -1431,7 +1431,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -1457,7 +1457,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -1488,7 +1488,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -1513,7 +1513,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -1902,7 +1902,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -1928,7 +1928,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -1959,7 +1959,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -1997,7 +1997,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -2035,7 +2035,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -2072,7 +2072,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -2109,7 +2109,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -2661,7 +2661,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -2687,7 +2687,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -2718,7 +2718,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -2756,7 +2756,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -2794,7 +2794,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -3826,7 +3826,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -3852,7 +3852,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -3883,7 +3883,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -3921,7 +3921,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -3959,7 +3959,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -4002,7 +4002,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -4028,7 +4028,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -4056,7 +4056,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -4082,7 +4082,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -4107,7 +4107,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -4138,7 +4138,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -4176,7 +4176,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -4214,7 +4214,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -5041,7 +5041,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -5067,7 +5067,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -5098,7 +5098,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -5136,7 +5136,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -5174,7 +5174,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -6059,7 +6059,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -6085,7 +6085,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -6113,7 +6113,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -6139,7 +6139,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -6164,7 +6164,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -6195,7 +6195,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -6568,7 +6568,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -6594,7 +6594,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -6622,7 +6622,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -6648,7 +6648,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -6673,7 +6673,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -6704,7 +6704,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -6742,7 +6742,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -6780,7 +6780,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -8501,7 +8501,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -8527,7 +8527,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -8558,7 +8558,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -8596,7 +8596,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -8634,7 +8634,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -9433,7 +9433,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -9459,7 +9459,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -9490,7 +9490,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -9528,7 +9528,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -9566,7 +9566,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -9609,7 +9609,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -9635,7 +9635,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -9663,7 +9663,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -9689,7 +9689,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -9714,7 +9714,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -9745,7 +9745,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -9783,7 +9783,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -9821,7 +9821,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -11465,7 +11465,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -11491,7 +11491,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -11522,7 +11522,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -11560,7 +11560,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -15192,7 +15192,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -15218,7 +15218,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -15270,7 +15270,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -15516,7 +15516,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -15542,7 +15542,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -15594,7 +15594,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -15638,7 +15638,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "QQQ y",
           },
           "granularity": "QUARTER",
@@ -15664,7 +15664,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -15695,7 +15695,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -15733,7 +15733,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -15771,7 +15771,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -15808,7 +15808,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -15851,7 +15851,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "QQQ y",
           },
           "granularity": "QUARTER",
@@ -15877,7 +15877,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -15908,7 +15908,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -15946,7 +15946,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16010,7 +16010,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "QQQ y",
           },
           "granularity": "QUARTER",
@@ -16036,7 +16036,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16067,7 +16067,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16111,7 +16111,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "QQQ y",
           },
           "granularity": "QUARTER",
@@ -16137,7 +16137,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16168,7 +16168,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16258,7 +16258,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "QQQ y",
           },
           "granularity": "QUARTER",
@@ -16284,7 +16284,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16336,7 +16336,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16380,7 +16380,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "QQQ y",
           },
           "granularity": "QUARTER",
@@ -16406,7 +16406,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16437,7 +16437,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16475,7 +16475,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16506,6 +16506,221 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: LineChart - threshold zones 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "dt_closedate_timestamp.day",
+            "name": "Closed - Date",
+            "ref": undefined,
+            "uri": "",
+          },
+          "format": {
+            "locale": "en-US",
+            "pattern": "M/d/y",
+          },
+          "granularity": "DAY",
+          "identifier": "dt_closedate_timestamp.day",
+          "localIdentifier": "a_dt_closedate_timestamp.day",
+          "name": "Closed - Date",
+          "primaryLabel": {
+            "identifier": "dt_closedate_timestamp.day",
+            "type": "displayForm",
+          },
+          "ref": undefined,
+          "totalItems": [],
+          "uri": "",
+        },
+      },
+      "intersectionAttributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
+              "identifier": "dt_closedate_timestamp.day",
+              "name": "Closed - Date",
+              "ref": undefined,
+              "uri": "",
+            },
+            "format": {
+              "locale": "en-US",
+              "pattern": "M/d/y",
+            },
+            "granularity": "DAY",
+            "identifier": "dt_closedate_timestamp.day",
+            "localIdentifier": "a_dt_closedate_timestamp.day",
+            "name": "Closed - Date",
+            "primaryLabel": {
+              "identifier": "dt_closedate_timestamp.day",
+              "type": "displayForm",
+            },
+            "ref": undefined,
+            "totalItems": [],
+            "uri": "",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": [
+    {
+      "attributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
+              "identifier": "dt_closedate_timestamp.day",
+              "name": "Closed - Date",
+              "ref": undefined,
+              "uri": "",
+            },
+            "format": {
+              "locale": "en-US",
+              "pattern": "M/d/y",
+            },
+            "granularity": "DAY",
+            "identifier": "dt_closedate_timestamp.day",
+            "localIdentifier": "a_dt_closedate_timestamp.day",
+            "name": "Closed - Date",
+            "primaryLabel": {
+              "identifier": "dt_closedate_timestamp.day",
+              "type": "displayForm",
+            },
+            "ref": undefined,
+            "totalItems": [],
+            "uri": "",
+          },
+        },
+      ],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "#,##0",
+          "identifier": "snapshot_bop",
+          "localIdentifier": "m_snapshot_bop",
+          "name": "_Snapshot [BOP]",
+          "ref": undefined,
+        },
+      },
+    },
+    {
+      "attributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
+              "identifier": "dt_closedate_timestamp.day",
+              "name": "Closed - Date",
+              "ref": undefined,
+              "uri": "",
+            },
+            "format": {
+              "locale": "en-US",
+              "pattern": "M/d/y",
+            },
+            "granularity": "DAY",
+            "identifier": "dt_closedate_timestamp.day",
+            "localIdentifier": "a_dt_closedate_timestamp.day",
+            "name": "Closed - Date",
+            "primaryLabel": {
+              "identifier": "dt_closedate_timestamp.day",
+              "type": "displayForm",
+            },
+            "ref": undefined,
+            "totalItems": [],
+            "uri": "",
+          },
+        },
+      ],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "#,##0.00",
+          "identifier": "c5ee7836-126c-41aa-bd69-1873d379a065",
+          "localIdentifier": "m_c5ee7836_126c_41aa_bd69_1873d379a065",
+          "name": "_Snapshot [EOP]",
+          "ref": undefined,
+        },
+      },
+    },
+    {
+      "attributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
+              "identifier": "dt_closedate_timestamp.day",
+              "name": "Closed - Date",
+              "ref": undefined,
+              "uri": "",
+            },
+            "format": {
+              "locale": "en-US",
+              "pattern": "M/d/y",
+            },
+            "granularity": "DAY",
+            "identifier": "dt_closedate_timestamp.day",
+            "localIdentifier": "a_dt_closedate_timestamp.day",
+            "name": "Closed - Date",
+            "primaryLabel": {
+              "identifier": "dt_closedate_timestamp.day",
+              "type": "displayForm",
+            },
+            "ref": undefined,
+            "totalItems": [],
+            "uri": "",
+          },
+        },
+      ],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "#,##0",
+          "identifier": "timeline_bop",
+          "localIdentifier": "m_timeline_bop",
+          "name": "_Timeline [BOP]",
+          "ref": undefined,
+        },
+      },
+    },
+    {
+      "attributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
+              "identifier": "dt_closedate_timestamp.day",
+              "name": "Closed - Date",
+              "ref": undefined,
+              "uri": "",
+            },
+            "format": {
+              "locale": "en-US",
+              "pattern": "M/d/y",
+            },
+            "granularity": "DAY",
+            "identifier": "dt_closedate_timestamp.day",
+            "localIdentifier": "a_dt_closedate_timestamp.day",
+            "name": "Closed - Date",
+            "primaryLabel": {
+              "identifier": "dt_closedate_timestamp.day",
+              "type": "displayForm",
+            },
+            "ref": undefined,
+            "totalItems": [],
+            "uri": "",
+          },
+        },
+      ],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "#,##0",
+          "identifier": "metric_has_null_value",
+          "localIdentifier": "m_metric_has_null_value",
+          "name": "Metric has null value",
+          "ref": undefined,
+        },
+      },
+    },
+  ],
+}
+`;
+
 exports[`getAvailableDrillTargets > should provide correct available drill targets for: LineChart - two measures with trendBy 1`] = `
 {
   "attributes": [
@@ -16519,7 +16734,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "QQQ y",
           },
           "granularity": "QUARTER",
@@ -16545,7 +16760,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16576,7 +16791,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16614,7 +16829,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16658,7 +16873,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "QQQ y",
           },
           "granularity": "QUARTER",
@@ -16684,7 +16899,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16715,7 +16930,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16753,7 +16968,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16797,7 +17012,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "QQQ y",
           },
           "granularity": "QUARTER",
@@ -16823,7 +17038,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16854,7 +17069,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16892,7 +17107,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -16936,7 +17151,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -16962,7 +17177,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -16993,7 +17208,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -17037,7 +17252,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -17063,7 +17278,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -17091,7 +17306,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -17117,7 +17332,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -17148,7 +17363,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -17173,7 +17388,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -17217,7 +17432,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -17243,7 +17458,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -17274,7 +17489,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -17312,7 +17527,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -19631,7 +19846,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -19657,7 +19872,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -19688,7 +19903,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -19726,7 +19941,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -20200,7 +20415,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "QQQ y",
           },
           "granularity": "QUARTER",
@@ -20226,7 +20441,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -20257,7 +20472,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -20295,7 +20510,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -20333,7 +20548,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "QQQ y",
             },
             "granularity": "QUARTER",
@@ -21472,7 +21687,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -21498,7 +21713,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -21526,7 +21741,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -21552,7 +21767,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -21577,7 +21792,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -21608,7 +21823,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -21633,7 +21848,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -22140,7 +22355,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -22166,7 +22381,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -22197,7 +22412,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -22241,7 +22456,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -22267,7 +22482,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -22298,7 +22513,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -22362,7 +22577,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -22388,7 +22603,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -22419,7 +22634,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -22463,7 +22678,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
             "uri": "",
           },
           "format": {
-            "locale": "vn-VN",
+            "locale": "en-US",
             "pattern": "y",
           },
           "granularity": "YEAR",
@@ -22489,7 +22704,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
@@ -22520,7 +22735,7 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
               "uri": "",
             },
             "format": {
-              "locale": "vn-VN",
+              "locale": "en-US",
               "pattern": "y",
             },
             "granularity": "YEAR",
