@@ -38,12 +38,14 @@ import {
     IInsightWidget,
     isInsightWidget,
     IAutomationMetadataObject,
+    IDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import { changeFilterContextSelectionHandler } from "../filterContext/changeFilterContextSelectionHandler.js";
 import { changeFilterContextSelection } from "../../commands/filters.js";
 import { IDashboardFilter, isDashboardFilter } from "../../../types.js";
 import { selectInsightByWidgetRef } from "../../store/insights/insightsSelectors.js";
 import { selectWidgetByRef } from "../../store/layout/layoutSelectors.js";
+import { selectFilterContextDateFilter } from "../../store/filterContext/filterContextSelectors.js";
 import omit from "lodash/omit.js";
 
 export function* initializeAutomationsHandler(
@@ -111,10 +113,12 @@ export function* initializeAutomationsHandler(
                 const insight: ReturnType<ReturnType<typeof selectInsightByWidgetRef>> = yield select(
                     selectInsightByWidgetRef(idRef(targetWidget)),
                 );
-
+                const commonFilter: ReturnType<typeof selectFilterContextDateFilter> = yield select(
+                    selectFilterContextDateFilter,
+                );
                 const filtersToSet =
                     insight && isInsightWidget(widget)
-                        ? getDashboardFiltersOnly(targetAlertFilters, insight, widget)
+                        ? getDashboardFiltersOnly(targetAlertFilters, commonFilter, insight, widget)
                         : targetAlertFilters;
 
                 // Empty alert execution filters = reset all filters (set them to all).
@@ -195,7 +199,12 @@ function extractRelevantFilters(automations: IAutomationMetadataObject[], automa
  *
  * @internal
  */
-function getDashboardFiltersOnly(filters: IFilter[], insight: IInsight, widget: IInsightWidget) {
+function getDashboardFiltersOnly(
+    filters: IFilter[],
+    common: IDashboardDateFilter | undefined,
+    insight: IInsight,
+    widget: IInsightWidget,
+) {
     // Remove specific alert filters.
     const withoutAlertFilters = removeAlertFilters(filters);
 
@@ -211,9 +220,15 @@ function getDashboardFiltersOnly(filters: IFilter[], insight: IInsight, widget: 
     // Remove dataSet from date filters, as it's not relevant for the dashboard date filter.
     return withoutInsightDateFilters.map((f) => {
         if (isDateFilter(f)) {
-            if (isRelativeDateFilter(f)) {
+            if (
+                isRelativeDateFilter(f) &&
+                common?.dateFilter.localIdentifier === f.relativeDateFilter.localIdentifier
+            ) {
                 return omit(f, "relativeDateFilter.dataSet");
-            } else if (isAbsoluteDateFilter(f)) {
+            } else if (
+                isAbsoluteDateFilter(f) &&
+                common?.dateFilter.localIdentifier === f.absoluteDateFilter.localIdentifier
+            ) {
                 return omit(f, "absoluteDateFilter.dataSet");
             }
         }
