@@ -1,0 +1,255 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`generateZones > should generate expected zones and plot lines for threshold series [ +0 ] 1`] = `
+{
+  "plotLines": [],
+  "zones": [
+    {
+      "dashStyle": "shortDash",
+    },
+  ],
+}
+`;
+
+exports[`generateZones > should generate expected zones and plot lines for threshold series [ +0, +0 ] 1`] = `
+{
+  "plotLines": [],
+  "zones": [
+    {
+      "dashStyle": "shortDash",
+    },
+  ],
+}
+`;
+
+exports[`generateZones > should generate expected zones and plot lines for threshold series [ +0, +0, 1 ] 1`] = `
+{
+  "plotLines": [
+    2,
+  ],
+  "zones": [
+    {
+      "dashStyle": "shortDash",
+      "value": 2,
+    },
+    {
+      "dashStyle": "solid",
+    },
+  ],
+}
+`;
+
+exports[`generateZones > should generate expected zones and plot lines for threshold series [ +0, 1 ] 1`] = `
+{
+  "plotLines": [
+    1,
+  ],
+  "zones": [
+    {
+      "dashStyle": "shortDash",
+      "value": 1,
+    },
+    {
+      "dashStyle": "solid",
+    },
+  ],
+}
+`;
+
+exports[`generateZones > should generate expected zones and plot lines for threshold series [ +0, 1, +0, 1 ] 1`] = `
+{
+  "plotLines": [
+    1,
+    1,
+    3,
+  ],
+  "zones": [
+    {
+      "dashStyle": "shortDash",
+      "value": 1,
+    },
+    {
+      "dashStyle": "solid",
+      "value": 1,
+    },
+    {
+      "dashStyle": "shortDash",
+      "value": 3,
+    },
+    {
+      "dashStyle": "solid",
+    },
+  ],
+}
+`;
+
+exports[`generateZones > should generate expected zones and plot lines for threshold series [ +0, 1, 1 ] 1`] = `
+{
+  "plotLines": [
+    1,
+  ],
+  "zones": [
+    {
+      "dashStyle": "shortDash",
+      "value": 1,
+    },
+    {
+      "dashStyle": "solid",
+    },
+  ],
+}
+`;
+
+exports[`generateZones > should generate expected zones and plot lines for threshold series [ 1 ] 1`] = `
+{
+  "plotLines": [],
+  "zones": [],
+}
+`;
+
+exports[`generateZones > should generate expected zones and plot lines for threshold series [ 1, +0 ] 1`] = `
+{
+  "plotLines": [
+    0,
+  ],
+  "zones": [
+    {
+      "dashStyle": "solid",
+      "value": 0,
+    },
+    {
+      "dashStyle": "shortDash",
+    },
+  ],
+}
+`;
+
+exports[`generateZones > should generate expected zones and plot lines for threshold series [ 1, +0, +0 ] 1`] = `
+{
+  "plotLines": [
+    0,
+  ],
+  "zones": [
+    {
+      "dashStyle": "solid",
+      "value": 0,
+    },
+    {
+      "dashStyle": "shortDash",
+    },
+  ],
+}
+`;
+
+exports[`generateZones > should generate expected zones and plot lines for threshold series [ 1, +0, 1, +0 ] 1`] = `
+{
+  "plotLines": [
+    0,
+    2,
+    2,
+  ],
+  "zones": [
+    {
+      "dashStyle": "solid",
+      "value": 0,
+    },
+    {
+      "dashStyle": "shortDash",
+      "value": 2,
+    },
+    {
+      "dashStyle": "solid",
+      "value": 2,
+    },
+    {
+      "dashStyle": "shortDash",
+    },
+  ],
+}
+`;
+
+exports[`generateZones > should generate expected zones and plot lines for threshold series [ 1, +0, 1, 1 ] 1`] = `
+{
+  "plotLines": [
+    0,
+    2,
+  ],
+  "zones": [
+    {
+      "dashStyle": "solid",
+      "value": 0,
+    },
+    {
+      "dashStyle": "shortDash",
+      "value": 2,
+    },
+    {
+      "dashStyle": "solid",
+    },
+  ],
+}
+`;
+
+exports[`generateZones > should generate expected zones and plot lines for threshold series [ 1, 1 ] 1`] = `
+{
+  "plotLines": [],
+  "zones": [],
+}
+`;
+
+exports[`generateZones > should generate expected zones and plot lines for threshold series [ 1, 1, +0 ] 1`] = `
+{
+  "plotLines": [
+    1,
+  ],
+  "zones": [
+    {
+      "dashStyle": "solid",
+      "value": 1,
+    },
+    {
+      "dashStyle": "shortDash",
+    },
+  ],
+}
+`;
+
+exports[`generateZones > should generate expected zones and plot lines for threshold series [ 1, 1, +0, 1 ] 1`] = `
+{
+  "plotLines": [
+    1,
+    3,
+  ],
+  "zones": [
+    {
+      "dashStyle": "solid",
+      "value": 1,
+    },
+    {
+      "dashStyle": "shortDash",
+      "value": 3,
+    },
+    {
+      "dashStyle": "solid",
+    },
+  ],
+}
+`;
+
+exports[`generateZones > should generate expected zones and plot lines for threshold series [ null ] 1`] = `
+{
+  "plotLines": [],
+  "zones": [
+    {
+      "dashStyle": "shortDash",
+    },
+  ],
+}
+`;
+
+exports[`generateZones > should generate expected zones and plot lines for threshold series [] 1`] = `
+{
+  "plotLines": [],
+  "zones": [],
+}
+`;
