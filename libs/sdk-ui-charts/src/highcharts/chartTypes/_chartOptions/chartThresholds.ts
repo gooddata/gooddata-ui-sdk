@@ -12,45 +12,44 @@ const isEmptyDataPoint = (value: DataPoint) => value === undefined || value === 
 
 const getDashStyle = (value: DataPoint) => (isEmptyDataPoint(value) ? "shortDash" : "solid");
 
-const generateZones = (data: ISeriesDataItem[]): IZone[] => {
-    if (data.length === 0) {
-        return [];
-    }
-    const zones = data.reduce<IZone[]>((zones, dataItem, index) => {
-        const currentDashStyle = getDashStyle(dataItem.y);
-        const previousZone = zones.length > 0 ? zones[zones.length - 1] : null;
-        const previousDashStyle = previousZone ? previousZone.dashStyle : null;
-
-        // Start a new zone when dash style changes
-        if (!zones.length || currentDashStyle !== previousDashStyle) {
-            // Mark the end of the previous zone
-            if (previousZone) {
-                previousZone.value = index;
+export const generateZones = (thresholdSeries: ISeriesDataItem[]): IZone[] => {
+    const zones = thresholdSeries.reduce<IZone[]>((zones, { y: value }, i, arr) => {
+        if (i > 0) {
+            const currentIsEmpty = isEmptyDataPoint(value);
+            const previousIsEmpty = isEmptyDataPoint(arr[i - 1].y);
+            if (currentIsEmpty && !previousIsEmpty) {
+                zones.push({ value: i - 1, dashStyle: "solid" }); // the plot line will be placed at last non-empty point
             }
-            // Start a new zone
-            zones.push({ dashStyle: currentDashStyle });
+            if (!currentIsEmpty && previousIsEmpty) {
+                zones.push({ value: i, dashStyle: "shortDash" }); // the plot line will be placed at the current non-empty point
+            }
         }
         return zones;
     }, []);
-
-    // Process the final zone (should not have a value property to signify it runs to the end)
     if (zones.length > 0) {
-        const lastZone = zones[zones.length - 1];
-        return [...zones.slice(0, -1), { dashStyle: lastZone.dashStyle }];
+        // add final zone based on the last point value, it has index value to signify it runs to the end
+        const dashStyle = getDashStyle(thresholdSeries[thresholdSeries.length - 1].y);
+        return [...zones, { dashStyle: dashStyle }];
+    } else if (thresholdSeries.length > 0 && thresholdSeries.every((item) => isEmptyDataPoint(item.y))) {
+        // Add dashed zone that runs across all series if no zone was created and all points are empty.
+        // This is necessary, as the previous reduce algo did not create any zone due to all points being
+        // same. The line is solid by default so this must be done only for empty points.
+        return [{ dashStyle: "shortDash" }];
     }
     return zones;
 };
 
-const isThresholdCrossingPoint = (currentValue: DataPoint, previousValue: DataPoint) => {
-    const currentIsThreshold = isEmptyDataPoint(currentValue);
-    const previousIsThreshold = isEmptyDataPoint(previousValue);
-    return previousIsThreshold !== currentIsThreshold;
-};
-
-const getTrendDividerPlotLines = (thresholdSeries: ISeriesDataItem[]) =>
+export const getTrendDividerPlotLines = (thresholdSeries: ISeriesDataItem[]) =>
     thresholdSeries.reduce<number[]>((indexes, { y: value }, i, arr) => {
-        if (i > 0 && isThresholdCrossingPoint(value, arr[i - 1].y)) {
-            indexes.push(i);
+        if (i > 0) {
+            const currentIsEmpty = isEmptyDataPoint(value);
+            const previousIsEmpty = isEmptyDataPoint(arr[i - 1].y);
+            if (currentIsEmpty && !previousIsEmpty) {
+                indexes.push(i - 1); // the plot line will be placed at last non-empty point
+            }
+            if (!currentIsEmpty && previousIsEmpty) {
+                indexes.push(i); // the plot line will be placed at the current non-empty point
+            }
         }
         return indexes;
     }, []);
@@ -82,23 +81,21 @@ export function setupThresholdZones(
         return { series };
     }
 
+    const renderedSeries = series.filter((_value, index) => index !== thresholdMeasureIndex);
     const thresholdSeries = series[thresholdMeasureIndex];
     const zones = generateZones(thresholdSeries.data);
 
     if (zones.length === 0 || (zones.length === 1 && zones[0].dashStyle === "solid")) {
-        return { series };
+        // no zone was generated, there's no need to update series, just don't render the threshold series
+        return { series: renderedSeries };
     }
 
     return {
-        series: series
-            .filter((_value, index) => index !== thresholdMeasureIndex)
-            .map((series) => {
-                return {
-                    ...series,
-                    zoneAxis: "x",
-                    zones,
-                };
-            }),
+        series: renderedSeries.map((series) => ({
+            ...series,
+            zoneAxis: "x",
+            zones,
+        })),
         plotLines: getTrendDividerPlotLines(thresholdSeries.data),
     };
 }
