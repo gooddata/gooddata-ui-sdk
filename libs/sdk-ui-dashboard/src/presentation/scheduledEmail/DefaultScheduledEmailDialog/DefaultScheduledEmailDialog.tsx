@@ -152,7 +152,7 @@ export function ScheduledMailDialogRenderer({
         automationFilters,
         setAutomationFilters,
         allVisibleFiltersMetadata,
-        arePersistedFiltersMissingOnDashboard,
+        areVisibleFiltersMissingOnDashboard,
     } = useAutomationFiltersData({
         allFilters: allDashboardFilters,
         storedDashboardFilters: dashboardFilters,
@@ -303,7 +303,7 @@ export function ScheduledMailDialogRenderer({
                                         storeFilters={storeFilters}
                                         onStoreFiltersChange={onStoreFiltersChange}
                                         isDashboardAutomation={isDashboardExportSelected}
-                                        areFiltersMissing={arePersistedFiltersMissingOnDashboard}
+                                        areFiltersMissing={areVisibleFiltersMissingOnDashboard}
                                     />
                                     <ContentDivider className="gd-divider-with-margin" />
                                 </>
