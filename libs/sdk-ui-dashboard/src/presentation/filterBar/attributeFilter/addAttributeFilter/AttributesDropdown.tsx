@@ -152,7 +152,10 @@ export function AttributesDropdown({
     }, [dateDatasets, searchQuery]);
 
     const hasAttributes = useMemo(() => attributes.length > 0, [attributes]);
-    const hasDateFilters = useMemo(() => offerDateFilters, [offerDateFilters]);
+    const hasDateFilters = useMemo(
+        () => offerDateFilters && dateDatasets.length > 0,
+        [dateDatasets, offerDateFilters],
+    );
 
     const [selectedTabId, setSelectedTabId] = useState(
         !hasAttributes && hasDateFilters ? "dateDatasets" : "attributes",
