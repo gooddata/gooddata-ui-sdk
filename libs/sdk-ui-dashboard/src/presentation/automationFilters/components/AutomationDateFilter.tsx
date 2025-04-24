@@ -15,6 +15,7 @@ import {
     selectEffectiveDateFilterOptions,
     useDashboardSelector,
 } from "../../../model/index.js";
+import { useIntl } from "react-intl";
 
 const tooltipAlignPoints = [
     { align: "bl tl", offset: { x: 11, y: 0 } },
@@ -27,8 +28,8 @@ export const AutomationDateFilter: React.FC<{
     onDelete: (filter: FilterContextItem) => void;
     isLocked?: boolean;
 }> = ({ filter, onChange, onDelete, isLocked }) => {
+    const intl = useIntl();
     const isCommonDateFilter = isDashboardCommonDateFilter(filter);
-
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
@@ -66,6 +67,7 @@ export const AutomationDateFilter: React.FC<{
                             onDelete={() => onDelete(filter)}
                             accessibilityConfig={{
                                 isExpanded: props.isOpen,
+                                deleteAriaLabel: intl.formatMessage({ id: "delete" }),
                             }}
                         />
                         <Bubble alignPoints={tooltipAlignPoints}>{label}</Bubble>

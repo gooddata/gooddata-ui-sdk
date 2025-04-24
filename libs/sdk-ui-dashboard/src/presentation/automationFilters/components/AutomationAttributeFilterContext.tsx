@@ -13,6 +13,7 @@ export interface IAutomationAttributeFilterContext {
     onDelete: (filter: FilterContextItem) => void;
     filter: IDashboardAttributeFilter;
     isLocked?: boolean;
+    deleteAriaLabel?: string;
 }
 
 /**
@@ -38,9 +39,12 @@ export const AutomationAttributeFilterProvider = ({
     onDelete,
     isLocked,
     filter,
+    deleteAriaLabel,
 }: IAutomationAttributeFilterProviderProps) => {
     return (
-        <AutomationAttributeFilterContext.Provider value={{ onChange, onDelete, isLocked, filter }}>
+        <AutomationAttributeFilterContext.Provider
+            value={{ onChange, onDelete, isLocked, filter, deleteAriaLabel }}
+        >
             {children}
         </AutomationAttributeFilterContext.Provider>
     );
