@@ -6,7 +6,6 @@ import {
     filterLocalIdentifier,
     IAutomationVisibleFilter,
     IFilter,
-    IInsightWidget,
     isInsightWidget,
 } from "@gooddata/sdk-model";
 import compact from "lodash/compact.js";
@@ -25,24 +24,24 @@ interface IUseAutomationWidgetFilters {
  */
 export const useAutomationWidgetFilters = ({
     widget,
-    allDashboardFilters,
+    allDashboardFilters = [],
+    automationFilters = [],
     widgetFilters,
     allVisibleFiltersMetadata,
-    enableAutomationFilterContext,
 }: {
     widget: ExtendedDashboardWidget | undefined;
-    allDashboardFilters?: FilterContextItem[] | undefined;
+    allDashboardFilters?: FilterContextItem[];
+    automationFilters?: FilterContextItem[];
     widgetFilters?: IFilter[] | undefined;
     allVisibleFiltersMetadata?: IAutomationVisibleFilter[] | undefined;
-    enableAutomationFilterContext?: boolean;
 }): IUseAutomationWidgetFilters => {
     const visibleFilters = useMemo(
-        () => getVisibleFiltersByFilters(allDashboardFilters, allVisibleFiltersMetadata),
-        [allDashboardFilters, allVisibleFiltersMetadata],
+        () => getVisibleFiltersByFilters(automationFilters, allVisibleFiltersMetadata),
+        [automationFilters, allVisibleFiltersMetadata],
     );
 
     const dashboardFiltersLocalIdentifiers = useMemo(
-        () => compact((allDashboardFilters ?? []).map(getFilterLocalIdentifier)),
+        () => compact(allDashboardFilters.map(getFilterLocalIdentifier)),
         [allDashboardFilters],
     );
 
@@ -56,17 +55,8 @@ export const useAutomationWidgetFilters = ({
     );
 
     const dashboardExecutionFilters = isInsightWidget(widget)
-        ? filterContextItemsToDashboardFiltersByWidget(allDashboardFilters ?? [], widget as IInsightWidget)
+        ? filterContextItemsToDashboardFiltersByWidget(automationFilters, widget)
         : [];
-
-    // When FF is off, return widget filters for previous experience
-    if (!enableAutomationFilterContext) {
-        return {
-            insightExecutionFilters: widgetFilters ?? [],
-            dashboardExecutionFilters: [],
-            visibleWidgetFilters: undefined,
-        };
-    }
 
     return {
         insightExecutionFilters,

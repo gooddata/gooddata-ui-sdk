@@ -34,7 +34,7 @@ export interface IAutomationFiltersProps {
     handleDeleteFilter: (filter: FilterContextItem) => void;
     handleAddFilter: (displayForm: ObjRef) => void;
     storeFilters: boolean;
-    onStoreFiltersChange: (value: boolean, filters: FilterContextItem[]) => void;
+    handleStoreFiltersChange: (value: boolean) => void;
     isDashboardAutomation?: boolean;
     areFiltersMissing?: boolean;
 }
@@ -51,7 +51,7 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
     handleAddFilter,
     isDashboardAutomation,
     storeFilters,
-    onStoreFiltersChange,
+    handleStoreFiltersChange,
     areFiltersMissing,
 }) => {
     const theme = useTheme();
@@ -153,7 +153,7 @@ export const AutomationFilters: React.FC<IAutomationFiltersProps> = ({
                         type="checkbox"
                         className="input-checkbox s-checkbox"
                         checked={storeFilters}
-                        onChange={(e) => onStoreFiltersChange(e.target.checked, filters)}
+                        onChange={(e) => handleStoreFiltersChange(e.target.checked)}
                         aria-label={intl.formatMessage({
                             id: "dialogs.automation.filters.attachment",
                         })}

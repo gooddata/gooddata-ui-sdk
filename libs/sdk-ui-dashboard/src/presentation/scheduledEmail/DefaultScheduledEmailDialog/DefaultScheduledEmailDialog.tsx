@@ -158,7 +158,6 @@ export function ScheduledMailDialogRenderer({
         storedDashboardFilters: dashboardFilters,
         storedWidgetFilters: widgetFilters,
         metadataVisibleFilters: scheduledExportToEdit?.metadata?.visibleFilters,
-        enableAutomationFilterContext,
         isEditing: !!scheduledExportToEdit,
     });
 
@@ -194,7 +193,8 @@ export function ScheduledMailDialogRenderer({
         widget,
         scheduledExportToEdit,
         allDashboardFilters,
-        dashboardFilters: automationFilters,
+        automationFilters,
+        dashboardFilters,
         widgetFilters,
         maxAutomationsRecipients,
         setAutomationFilters,
