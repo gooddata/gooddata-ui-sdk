@@ -60,7 +60,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
                 { ...new TigerCancellationConverter(this.options?.signal ?? null).forAxios() },
             ),
         ).then((response) => {
-            const resultCancelToken = response?.headers["X-Gdc-Cancel-Token"];
+            const resultCancelToken = response?.headers["x-gdc-cancel-token"];
             return new TigerExecutionResult(
                 this.authCall,
                 this.definition,
