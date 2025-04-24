@@ -1669,6 +1669,9 @@ export type UnionToIntersection<T> = (T extends any ? (x: T) => any : never) ext
 // @public
 export function uriMatch(uri: string): IHeaderPredicate;
 
+// @internal
+export const useAutoupdateRef: <T>(value: T) => React_2.MutableRefObject<T>;
+
 // @public
 export const useBackend: (backend?: IAnalyticalBackend) => IAnalyticalBackend | undefined;
 

@@ -89,6 +89,19 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
     const trapRef = useRef<HTMLDivElement>(null);
     const defaultReturnFocusToRef = useRef<HTMLElement | null>(null);
 
+    const returnFocus = React.useCallback(() => {
+        if (typeof returnFocusTo === "string") {
+            const element = document.getElementById(returnFocusTo);
+            if (element) {
+                element.focus();
+            }
+        } else if (returnFocusTo?.current) {
+            returnFocusTo.current.focus();
+        } else if (defaultReturnFocusToRef.current) {
+            defaultReturnFocusToRef.current.focus();
+        }
+    }, [returnFocusTo]);
+
     useEffect(() => {
         const getNextElement = (focusableElements, firstElement, lastElement, shiftKey: boolean) => {
             const elements = Array.from(focusableElements);
@@ -123,16 +136,7 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
                 if (onDeactivate) {
                     onDeactivate();
                 }
-                if (typeof returnFocusTo === "string") {
-                    const element = document.getElementById(returnFocusTo);
-                    if (element) {
-                        element.focus();
-                    }
-                } else if (returnFocusTo?.current) {
-                    returnFocusTo.current.focus();
-                } else if (defaultReturnFocusToRef.current) {
-                    defaultReturnFocusToRef.current.focus();
-                }
+                returnFocus();
             }
         };
 
@@ -170,8 +174,9 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
         return () => {
             document.removeEventListener("keydown", handleKeyDown);
             clearTimeout(focusTrapTimeout);
+            returnFocus();
         };
-    }, [onDeactivate, returnFocusTo, autofocusOnOpen, initialFocus]);
+    }, [onDeactivate, returnFocusTo, autofocusOnOpen, initialFocus, returnFocus]);
 
     return (
         <div className="gd-focus-trap" ref={trapRef}>

@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { IRegion } from "../typings/domUtilities.js";
 
@@ -126,4 +126,20 @@ export const elementRegion = (
     elem.style.visibility = originalCss.visibility;
 
     return reg;
+};
+
+export const isElementTextInput = (element: HTMLElement | EventTarget | null | undefined): boolean => {
+    if (!element || !("tagName" in element)) {
+        return false;
+    }
+
+    const { tagName, type } = element as HTMLInputElement;
+
+    const tagNameInLowercase = tagName.toLowerCase();
+    const typeInLowercase = type ? type.toLowerCase() : "";
+
+    return (
+        tagNameInLowercase === "textarea" ||
+        (tagNameInLowercase === "input" && (typeInLowercase === "text" || typeInLowercase === "number"))
+    );
 };
