@@ -99,7 +99,9 @@ export function useFiltersForWidgetScheduledExport({
     const commonDateFilter = widget?.dateDataSet
         ? newAllTimeFilter(
               widget.dateDataSet,
-              enableDateFilterIdentifiers ? generateDateFilterLocalIdentifier(0) : undefined,
+              enableDateFilterIdentifiers
+                  ? generateDateFilterLocalIdentifier(0, widget.dateDataSet)
+                  : undefined,
           )
         : undefined;
     const shouldAddCommonDateFilter =

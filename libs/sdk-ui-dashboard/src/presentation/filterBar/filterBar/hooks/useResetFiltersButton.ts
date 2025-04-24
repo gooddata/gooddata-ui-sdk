@@ -4,10 +4,12 @@ import isEqual from "lodash/isEqual.js";
 import partition from "lodash/partition.js";
 import difference from "lodash/difference.js";
 import {
+    dashboardFilterLocalIdentifier,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
+    isDashboardDateFilter,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
@@ -72,10 +74,37 @@ export const useResetFiltersButton = (): {
         return difference(currentFiltersLocalIds, originalAttributeFiltersLocalIds);
     }, [currentFilters, originalFilters]);
 
+    const sanitizedCurrentFilters = React.useMemo(() => {
+        // When date filter identifiers are enabled and original filters do not have identifiers yet,
+        // we omit them in current filters to avoid false positive results when comparing the objects
+        const shouldIgnoreDateFilterLocalIdentifiers =
+            enableDateFilterIdentifiers &&
+            originalFilters.some(
+                (filter) =>
+                    isDashboardDateFilter(filter) && dashboardFilterLocalIdentifier(filter) === undefined,
+            );
+
+        return shouldIgnoreDateFilterLocalIdentifiers
+            ? currentFilters.map((filter) => {
+                  if (isDashboardDateFilter(filter)) {
+                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                      const { localIdentifier, ...rest } = filter.dateFilter;
+                      return {
+                          ...filter,
+                          dateFilter: {
+                              ...rest,
+                          },
+                      };
+                  }
+                  return filter;
+              })
+            : currentFilters;
+    }, [enableDateFilterIdentifiers, originalFilters, currentFilters]);
+
     const canReset = React.useMemo((): boolean => {
         return (
             !isEditMode &&
-            ((!isEqual(currentFilters, originalFilters) &&
+            ((!isEqual(sanitizedCurrentFilters, originalFilters) &&
                 // If the cross filter add some filters, we should allow the reset
                 ((!disableUserFilterReset && !disableUserFilterResetByConfig) ||
                     newlyAddedFiltersLocalIds.length > 0)) ||
@@ -83,7 +112,7 @@ export const useResetFiltersButton = (): {
         );
     }, [
         isEditMode,
-        currentFilters,
+        sanitizedCurrentFilters,
         originalFilters,
         disableUserFilterReset,
         disableUserFilterResetByConfig,

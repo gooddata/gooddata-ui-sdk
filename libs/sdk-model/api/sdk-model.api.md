@@ -21,6 +21,12 @@ export type AccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
 export type AlertDescriptionStatus = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "TIMEOUT";
 
 // @public
+export type AlertFilters = {
+    title: string;
+    filter: string;
+};
+
+// @public
 export type AllTimeGranularity = "ALL_TIME_GRANULARITY";
 
 // @public
@@ -666,7 +672,6 @@ export interface IAlertDescription {
     condition: string;
     currentValues?: IAlertEvaluationRow[];
     errorMessage?: string;
-    filterCount?: number;
     formattedThreshold?: string;
     lowerThreshold?: number;
     metric: string;
@@ -1844,7 +1849,7 @@ export interface IEntitlementDescriptor {
 }
 
 // @public
-export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement";
+export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement" | "AuditLogging";
 
 // @public
 export interface IExecutionConfig {
@@ -4261,6 +4266,7 @@ export interface IWebhookMessageDataAlert extends IWebhookMessageDataBase {
 export interface IWebhookMessageDataBase {
     automation: IWebhookAutomationInfo;
     details?: IAutomationDetails;
+    filters?: AlertFilters[];
     recipients?: WebhookRecipient[];
     remainingActionCount?: number;
     tabularExports?: IExportResult[];

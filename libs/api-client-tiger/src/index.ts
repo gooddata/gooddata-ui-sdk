@@ -201,6 +201,8 @@ export type {
     AttributePositiveFilter,
     DateAbsoluteFilter,
     DateRelativeFilter,
+    ActionsApiCancelExecutionsRequest,
+    AfmCancelTokens,
 } from "./generated/afm-rest-api/api.js";
 export {
     AfmObjectIdentifierAttributeIdentifierTypeEnum as AfmModelObjectIdentifierAttributeIdentifierTypeEnum,

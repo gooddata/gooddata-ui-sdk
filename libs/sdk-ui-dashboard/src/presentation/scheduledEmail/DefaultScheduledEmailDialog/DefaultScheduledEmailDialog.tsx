@@ -176,7 +176,7 @@ export function ScheduledMailDialogRenderer({
         isXlsxExportSelected,
         areDashboardFiltersChanged,
         validationErrorMessage,
-        useFilters,
+        storeFilters,
         onDashboardAttachmentsChange,
         onWidgetAttachmentsChange,
         onWidgetAttachmentsSettingsChange,
@@ -187,7 +187,7 @@ export function ScheduledMailDialogRenderer({
         onSubjectChange,
         onTitleChange,
         onFiltersChange,
-        onUseFiltersChange,
+        onStoreFiltersChange,
     } = useEditScheduledEmail({
         notificationChannels,
         insight,
@@ -300,8 +300,8 @@ export function ScheduledMailDialogRenderer({
                                         availableFilters={availableFilters}
                                         selectedFilters={automationFilters}
                                         onFiltersChange={onFiltersChange}
-                                        useFilters={useFilters}
-                                        onUseFiltersChange={onUseFiltersChange}
+                                        storeFilters={storeFilters}
+                                        onStoreFiltersChange={onStoreFiltersChange}
                                         isDashboardAutomation={isDashboardExportSelected}
                                         areFiltersMissing={arePersistedFiltersMissingOnDashboard}
                                     />

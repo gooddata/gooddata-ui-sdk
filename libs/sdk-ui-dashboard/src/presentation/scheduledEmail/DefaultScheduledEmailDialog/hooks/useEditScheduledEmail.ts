@@ -78,7 +78,7 @@ export interface IUseEditScheduledEmailProps {
     allVisibleFiltersMetadata?: IAutomationVisibleFilter[] | undefined;
 
     // Option to opt out of storing filters
-    useFilters?: boolean;
+    storeFilters?: boolean;
     enableAutomationFilterContext?: boolean;
 }
 
@@ -128,7 +128,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
             allVisibleFiltersMetadata,
             enableAutomationFilterContext,
         });
-    const { useFilters, setUseFilters, effectiveDashboardFilters, visibleDashboardFilters } =
+    const { storeFilters, setStoreFilters, effectiveDashboardFilters, visibleDashboardFilters } =
         useAutomationDashboardFilters({
             editAutomation: scheduledExportToEdit,
             dashboardFilters,
@@ -324,12 +324,12 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     };
 
     const onFiltersChange = useCallback(
-        (filters: FilterContextItem[], storeFilters?: boolean) => {
+        (filters: FilterContextItem[], storeFiltersParam?: boolean) => {
             setAutomationFilters(filters);
 
-            const shouldStoreFilters = storeFilters ?? useFilters;
+            const shouldStoreFilters = storeFiltersParam ?? storeFilters;
 
-            // If useFilters is not toggled, we don't want to store them in the automation
+            // If storeFilters is not toggled, we don't want to store them in the automation
             if (!isWidget && !shouldStoreFilters) {
                 return;
             }
@@ -400,19 +400,19 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
             insightExecutionFilters,
             allVisibleFiltersMetadata,
             setAutomationFilters,
-            useFilters,
+            storeFilters,
             widget,
             isWidget,
             setEditedAutomation,
         ],
     );
 
-    const onUseFiltersChange = useCallback(
+    const onStoreFiltersChange = useCallback(
         (value: boolean, filters: FilterContextItem[]) => {
-            setUseFilters(value);
-            if (value) {
-                onFiltersChange(filters, value);
-            } else {
+            setStoreFilters(value);
+            onFiltersChange(filters, value);
+
+            if (!value) {
                 setEditedAutomation((s) => ({
                     ...s,
                     exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
@@ -439,7 +439,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                 }));
             }
         },
-        [onFiltersChange, setUseFilters],
+        [onFiltersChange, setStoreFilters],
     );
 
     const isDashboardExportSelected =
@@ -545,7 +545,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         allowExternalRecipients,
         validationErrorMessage,
         isSubmitDisabled,
-        useFilters,
+        storeFilters,
         onTitleChange,
         onRecurrenceChange,
         onDestinationChange,
@@ -556,7 +556,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         onWidgetAttachmentsChange,
         onWidgetAttachmentsSettingsChange,
         onFiltersChange,
-        onUseFiltersChange,
+        onStoreFiltersChange,
     };
 }
 
