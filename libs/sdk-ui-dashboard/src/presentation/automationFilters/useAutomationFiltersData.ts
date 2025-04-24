@@ -1,7 +1,6 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    dashboardFilterLocalIdentifier,
     FilterContextItem,
     IAutomationVisibleFilter,
     IFilter,
@@ -28,7 +27,7 @@ interface IUseAutomationFiltersData {
     automationFilters: FilterContextItem[] | undefined;
     setAutomationFilters: (filters: FilterContextItem[]) => void;
     allVisibleFiltersMetadata: IAutomationVisibleFilter[] | undefined;
-    arePersistedFiltersMissingOnDashboard: boolean;
+    areVisibleFiltersMissingOnDashboard: boolean;
 }
 
 /**
@@ -104,26 +103,15 @@ export const useAutomationFiltersData = ({
         );
     }, [allFilters, effectiveFiltersWithDateFilter]);
 
-    // check is some of the filters are hidden
+    // if some of the visible stored filter are missing on dashboard, we want to know about it
     const allVisibleFilters = useAutomationVisibleFilters(allFilters);
-    const hiddenFilters = useMemo(() => {
-        return sanitizedEffectiveFilters.filter((filter) => {
-            const localId = dashboardFilterLocalIdentifier(filter);
-            return !allVisibleFilters.some((visibleFilter) => {
-                return visibleFilter.localIdentifier === localId;
-            });
-        });
-    }, [allVisibleFilters, sanitizedEffectiveFilters]);
-
-    // if some of the visible stored filter is missing on dashboard, we want to know about it
-    const arePersistedFiltersMissingOnDashboard = useMemo(
-        () =>
-            storedVisibleLocalIdentifiersToShow
-                ? sanitizedEffectiveFilters.length - hiddenFilters.length !==
-                  storedVisibleLocalIdentifiersToShow.length
-                : false,
-        [hiddenFilters.length, sanitizedEffectiveFilters.length, storedVisibleLocalIdentifiersToShow],
-    );
+    const areVisibleFiltersMissingOnDashboard = useMemo(() => {
+        const allVisibleFiltersSet = new Set(allVisibleFilters.map((filter) => filter.localIdentifier));
+        return (
+            storedVisibleLocalIdentifiersToShow?.some((localId) => !allVisibleFiltersSet.has(localId)) ??
+            false
+        );
+    }, [allVisibleFilters, storedVisibleLocalIdentifiersToShow]);
 
     const [selectedFilters, setSelectedFilters] = useState<FilterContextItem[]>(sanitizedEffectiveFilters);
 
@@ -132,7 +120,7 @@ export const useAutomationFiltersData = ({
         automationFilters: selectedFilters,
         setAutomationFilters: setSelectedFilters,
         allVisibleFiltersMetadata: allVisibleFilters,
-        arePersistedFiltersMissingOnDashboard,
+        areVisibleFiltersMissingOnDashboard,
     };
 };
 
