@@ -60,13 +60,28 @@ function AttributeFilter(props: IAttributeFilterButtonProps) {
         return filter?.attributeFilter.localIdentifier;
     }, [filter]);
 
+    const filterIsInverted = useMemo(() => {
+        return filter?.attributeFilter.negativeSelection;
+    }, [filter]);
+
+    const filterSelectionMode = useMemo(() => {
+        return filter?.attributeFilter.selectionMode;
+    }, [filter]);
+
     const handleOnApply = useCallback(
         (newFilter: IAttributeFilter) => {
             onChange?.(
-                attributeFilterToDashboardAttributeFilter(newFilter, filterLocalIdentifier, filterTitle),
+                attributeFilterToDashboardAttributeFilter(
+                    newFilter,
+                    filterLocalIdentifier,
+                    filterTitle,
+                    undefined,
+                    filterIsInverted,
+                    filterSelectionMode,
+                ),
             );
         },
-        [filterLocalIdentifier, filterTitle, onChange],
+        [filterIsInverted, filterLocalIdentifier, filterSelectionMode, filterTitle, onChange],
     );
 
     return (
