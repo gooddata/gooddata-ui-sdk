@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useState, useCallback, useId } from "react";
+import React, { useState, useCallback } from "react";
 import cx from "classnames";
 import { WeekStart } from "@gooddata/sdk-model";
 import { Datepicker } from "../Datepicker/index.js";
@@ -8,6 +8,7 @@ import { Timepicker, normalizeTime } from "../Timepicker/index.js";
 import { DEFAULT_DROPDOWN_ZINDEX, MAX_VISIBLE_TIME_ITEMS_COUNT, TIME_ANCHOR } from "./constants.js";
 import { defineMessages, FormattedMessage } from "react-intl";
 import { parseDate } from "../Datepicker/Datepicker.js";
+import { useId } from "../utils/useId.js";
 
 interface IDateTimeProps {
     label: string;
