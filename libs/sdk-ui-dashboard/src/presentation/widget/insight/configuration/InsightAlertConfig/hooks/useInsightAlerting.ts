@@ -176,7 +176,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const [isDeletingAlert, setIsDeletingAlert] = useState(false);
     const isLoadingFilters = widgetFiltersStatus === "pending" || widgetFiltersStatus === "running";
     const [viewMode, setViewMode] = useState<InsightWidgetAlertingViewMode>(
-        alerts.length > 0 || !canCreateAutomation ? "list" : "create",
+        alerts.length > 0 || !canCreateAutomation || isExecutionTimestampMode ? "list" : "create",
     );
     const [defaultAlert, setDefaultAlert] = useState<
         IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null
