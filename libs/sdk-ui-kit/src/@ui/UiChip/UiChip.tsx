@@ -47,19 +47,15 @@ export const UiChip = ({
     onDelete,
     accessibilityConfig,
 }: UiChipProps) => {
-    const elemRef = useRef<HTMLDivElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
     const [styleObj, setStyleObj] = useState<CSSProperties>();
 
     useLayoutEffect(() => {
-        if (elemRef.current) {
+        if (buttonRef.current) {
             // Reset width to auto to calculate the width of the label and tag
-            elemRef.current.style.width = "auto";
-            // Calculate the width of all child nodes
-            const width = Array.from(elemRef.current.childNodes).reduce((acc, item: HTMLElement) => {
-                return acc + Math.floor((item.offsetWidth ?? 0) + 1);
-            }, 0);
-
-            setStyleObj({ width: Math.floor(width + 1) });
+            buttonRef.current.style.width = "auto";
+            const width = buttonRef.current.getBoundingClientRect().width;
+            setStyleObj({ width });
         }
     }, [label, tag]);
 
@@ -71,12 +67,14 @@ export const UiChip = ({
     };
 
     return (
-        <div className={b()} ref={elemRef} style={{ ...styleObj }}>
+        <div className={b()}>
             <button
                 aria-expanded={isActive}
                 className={e("trigger", { isDeletable, isActive, isLocked })}
                 disabled={isLocked}
                 onClick={onClick}
+                style={{ ...styleObj }}
+                ref={buttonRef}
                 aria-disabled={isLocked}
                 aria-label={ariaLabel}
                 aria-labelledby={ariaLabelledBy}
