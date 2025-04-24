@@ -1,8 +1,8 @@
-// (C) 2024 GoodData Corporation
+// (C) 2025 GoodData Corporation
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-08-13T16:35:03.950Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-04-24T12:39:12.325Z; */
 const fp_004031cbc9081950b7284311b004fe11 = {
     definition: require("./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/definition.json"),
     executionResult: require("./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/executionResult.json"),
@@ -495,6 +495,11 @@ const fp_6a50c768721c7b8e6c52051b4e699359 = {
     definition: require("./uiTestScenarios/executions/6a50c768721c7b8e6c52051b4e699359/definition.json"),
     executionResult: require("./uiTestScenarios/executions/6a50c768721c7b8e6c52051b4e699359/executionResult.json"),
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/6a50c768721c7b8e6c52051b4e699359/dataView_o0_0s100_1000.json"),
+};
+const fp_6ab1d72398965e9ed38fbcd87dbdbaa6 = {
+    definition: require("./uiTestScenarios/executions/6ab1d72398965e9ed38fbcd87dbdbaa6/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/6ab1d72398965e9ed38fbcd87dbdbaa6/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/6ab1d72398965e9ed38fbcd87dbdbaa6/dataView_all.json"),
 };
 const fp_6ad17cce441c93f0c1f6c5cfffb7d7af = {
     definition: require("./uiTestScenarios/executions/6ad17cce441c93f0c1f6c5cfffb7d7af/definition.json"),
@@ -4823,6 +4828,9 @@ const i_LineChart_cd83fa57c3b4b69d618f678e8070cbfb = {
 const i_LineChart_d1d5671fbe4843b307d8d1cfcdd3eb7e = {
     obj: require("./uiTestScenarios/insights/LineChart.d1d5671fbe4843b307d8d1cfcdd3eb7e/obj.json"),
 };
+const i_LineChart_d9455444afa1b3b22a3da9ff4bf2fd1a = {
+    obj: require("./uiTestScenarios/insights/LineChart.d9455444afa1b3b22a3da9ff4bf2fd1a/obj.json"),
+};
 const i_LineChart_dd2fbeaac58234eadce0f1bed9542acf = {
     obj: require("./uiTestScenarios/insights/LineChart.dd2fbeaac58234eadce0f1bed9542acf/obj.json"),
 };
@@ -6804,6 +6812,7 @@ export const Recordings = {
         fp_665e488c2b214f2a3a6a4f43bec859a6,
         fp_681fd174545bf5e693b9b0df873870cb,
         fp_6a50c768721c7b8e6c52051b4e699359,
+        fp_6ab1d72398965e9ed38fbcd87dbdbaa6,
         fp_6ad17cce441c93f0c1f6c5cfffb7d7af,
         fp_6b38289e3de520261ba662868a3bc5ba,
         fp_6ba712c32ecf424769a2563d805d6106,
@@ -7904,6 +7913,7 @@ export const Recordings = {
             i_LineChart_cd70877bbacbc71af936d3d96c87e49b,
             i_LineChart_cd83fa57c3b4b69d618f678e8070cbfb,
             i_LineChart_d1d5671fbe4843b307d8d1cfcdd3eb7e,
+            i_LineChart_d9455444afa1b3b22a3da9ff4bf2fd1a,
             i_LineChart_dd2fbeaac58234eadce0f1bed9542acf,
             i_LineChart_dec5097d5a050a9874c44e1a7c0e8ea9,
             i_LineChart_e0b1b0c97bdb74bf90a51004c74e49c7,

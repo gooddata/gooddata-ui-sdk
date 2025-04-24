@@ -1,8 +1,13 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { LineChart, ILineChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
-import { newAttributeSort, newMeasureSort, newMeasureValueFilter } from "@gooddata/sdk-model";
+import {
+    newAttributeSort,
+    newMeasureSort,
+    newMeasureValueFilter,
+    newAbsoluteDateFilter,
+} from "@gooddata/sdk-model";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export const LineChartTwoMeasuresWithTrendyBy = {
@@ -53,6 +58,16 @@ export const LineChartWithTrendByDateAndSegmentByDate = {
 export const LineChartViewByDate = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won],
     trendBy: ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
+};
+export const LineChartViewByDayDate = {
+    measures: [
+        ReferenceMd.SnapshotBOP,
+        ReferenceMd.SnapshotEOP,
+        ReferenceMd.TimelineBOP,
+        ReferenceMd.MetricHasNullValue,
+    ],
+    trendBy: ReferenceMd.DateDatasets.Created.CreatedDate.Default,
+    filters: [newAbsoluteDateFilter(ReferenceMd.DateDatasets.Created.ref, "2013-04-17", "2013-05-31")],
 };
 
 export default scenariosFor<ILineChartProps>("LineChart", LineChart)

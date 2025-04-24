@@ -3164,6 +3164,9 @@
     "LineChart.d1d5671fbe4843b307d8d1cfcdd3eb7e": {
         "comment": "Auto-generated insight for test scenario LineChart - data points - sparse chart - auto visibility."
     },
+    "LineChart.d9455444afa1b3b22a3da9ff4bf2fd1a": {
+        "comment": "Auto-generated insight for test scenario LineChart - threshold zones."
+    },
     "LineChart.dd2fbeaac58234eadce0f1bed9542acf": {
         "comment": "Auto-generated insight for test scenario LineChart - Y axis min/max configuration."
     },

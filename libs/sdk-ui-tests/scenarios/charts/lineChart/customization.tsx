@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { LineChart, ILineChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
@@ -10,6 +10,7 @@ import {
     LineChartWithManyDataPoints,
     LineChartWithLotArithmeticMeasuresAndViewBy,
     LineChartViewByDate,
+    LineChartViewByDayDate,
 } from "./base.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
@@ -55,10 +56,22 @@ const continuousLineScenario = scenariosFor<ILineChartProps>("LineChart", LineCh
         config: { continuousLine: { enabled: true } },
     });
 
+const thresholdZonesScenario = scenariosFor<ILineChartProps>("LineChart", LineChart)
+    .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenario("threshold zones", {
+        ...LineChartViewByDayDate,
+        config: {
+            enableLineChartTrendThreshold: true,
+            thresholdMeasures: ["m_metric_has_null_value"],
+        },
+    });
+
 export default [
     legendScenarios,
     dataLabelScenarios,
     dataPointScenarios,
     continuousLineScenario,
+    thresholdZonesScenario,
     ...legendResponziveScenarios,
 ];
