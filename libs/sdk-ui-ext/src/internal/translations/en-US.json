@@ -2069,12 +2069,12 @@
         "limit": 0
     },
     "notifications.filters.buttonLabel": {
-        "value": "Show filters",
+        "value": "{count, plural, one {# filter} other {# filters}}",
         "comment": "",
         "limit": 0
     },
     "notifications.filters.dialog.title": {
-        "value": "Applied filters",
+        "value": "Filters",
         "comment": "",
         "limit": 0
     },

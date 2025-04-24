@@ -1,9 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
+import { AlertFilters } from "@gooddata/sdk-model";
 import { alignConfigToAlignPoint, Overlay, UiButton } from "@gooddata/sdk-ui-kit";
 import React, { useRef, useState } from "react";
-import { IAlertNotification } from "@gooddata/sdk-model";
-import { NotificationFiltersDetailDialog } from "./NotificationFiltersDetailDialog.js";
 import { defineMessages, useIntl } from "react-intl";
+import { NotificationFiltersDetailDialog } from "./NotificationFiltersDetailDialog.js";
 
 const ALIGN_POINTS = [
     alignConfigToAlignPoint({
@@ -17,7 +17,7 @@ const ALIGN_POINTS = [
  * @internal
  */
 export interface INotificationFiltersDetailProps {
-    notification: IAlertNotification;
+    filters: AlertFilters[];
 }
 
 const messages = defineMessages({
@@ -29,11 +29,11 @@ const messages = defineMessages({
 /**
  * @internal
  */
-export function NotificationFiltersDetail({ notification }: INotificationFiltersDetailProps) {
+export function NotificationFiltersDetail({ filters }: INotificationFiltersDetailProps) {
     const [isFiltersDialogOpen, setIsFiltersDialogOpen] = useState(false);
     const intl = useIntl();
     const ref = useRef<HTMLButtonElement>(null);
-    const filterCount = 0;
+
     const closeFiltersDialog = () => setIsFiltersDialogOpen(false);
     const toggleFiltersDialog = () => setIsFiltersDialogOpen((x) => !x);
     const onButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -43,13 +43,13 @@ export function NotificationFiltersDetail({ notification }: INotificationFilters
 
     return (
         <>
-            {filterCount && filterCount > 0 ? (
+            {filters.length ? (
                 <UiButton
                     buttonRef={ref}
                     onClick={onButtonClick}
                     variant="tertiary"
                     size="small"
-                    label={intl.formatMessage(messages.buttonLabel)}
+                    label={intl.formatMessage(messages.buttonLabel, { count: filters.length })}
                 />
             ) : null}
             {isFiltersDialogOpen ? (
@@ -63,10 +63,7 @@ export function NotificationFiltersDetail({ notification }: INotificationFilters
                     closeOnMouseDrag={false}
                     onClose={closeFiltersDialog}
                 >
-                    <NotificationFiltersDetailDialog
-                        notification={notification}
-                        onClose={closeFiltersDialog}
-                    />
+                    <NotificationFiltersDetailDialog filters={filters} onClose={closeFiltersDialog} />
                 </Overlay>
             ) : null}
         </>

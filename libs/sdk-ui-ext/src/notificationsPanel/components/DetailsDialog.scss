@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 .gd-ui-ext-notification-details-dialog {
     width: 245px;
@@ -39,6 +39,8 @@
 
     &__content {
         padding: 10px;
+        max-height: 350px;
+        overflow: auto;
     }
 
     &__footer {
