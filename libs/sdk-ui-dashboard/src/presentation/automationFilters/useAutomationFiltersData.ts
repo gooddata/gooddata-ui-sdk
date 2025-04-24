@@ -1,11 +1,13 @@
 // (C) 2025 GoodData Corporation
 
 import {
+    dashboardFilterLocalIdentifier,
     FilterContextItem,
     IAutomationVisibleFilter,
     IFilter,
     isAllValuesDashboardAttributeFilter,
     isDashboardAttributeFilter,
+    isDashboardCommonDateFilter,
 } from "@gooddata/sdk-model";
 import { useMemo, useState } from "react";
 import compact from "lodash/compact.js";
@@ -37,7 +39,6 @@ export const useAutomationFiltersData = ({
     storedDashboardFilters,
     storedWidgetFilters,
     metadataVisibleFilters,
-    enableAutomationFilterContext,
     isEditing,
 }: {
     /**
@@ -55,7 +56,6 @@ export const useAutomationFiltersData = ({
      */
     storedWidgetFilters: IFilter[] | undefined;
     metadataVisibleFilters: IAutomationVisibleFilter[] | undefined;
-    enableAutomationFilterContext: boolean;
     isEditing: boolean;
 }): IUseAutomationFiltersData => {
     const storedVisibleLocalIdentifiersToShow = useMemo(() => {
@@ -84,32 +84,48 @@ export const useAutomationFiltersData = ({
         return storedFilters ?? [];
     }, [isEditing, metadataVisibleFilters, storedFilters]);
 
+    // add common date filter when it is not present
+    const effectiveFiltersWithDateFilter = useMemo(() => {
+        const hasCommonDateFilter = effectiveFilters.find(isDashboardCommonDateFilter);
+        const existingCommonDateFilter = allFilters?.find(isDashboardCommonDateFilter);
+
+        if (!hasCommonDateFilter && existingCommonDateFilter) {
+            return [existingCommonDateFilter, ...effectiveFilters];
+        }
+
+        return effectiveFilters;
+    }, [effectiveFilters, allFilters]);
+
+    // filter out local identifiers that are not on the dashboard
     const sanitizedEffectiveFilters = useMemo(() => {
         const allFiltersSet = new Set(allFilters.map(getFilterLocalIdentifier));
-        return effectiveFilters.filter((filter) => allFiltersSet.has(getFilterLocalIdentifier(filter)));
-    }, [allFilters, effectiveFilters]);
+        return effectiveFiltersWithDateFilter.filter((filter) =>
+            allFiltersSet.has(getFilterLocalIdentifier(filter)),
+        );
+    }, [allFilters, effectiveFiltersWithDateFilter]);
 
+    // check is some of the filters are hidden
+    const allVisibleFilters = useAutomationVisibleFilters(allFilters);
+    const hiddenFilters = useMemo(() => {
+        return sanitizedEffectiveFilters.filter((filter) => {
+            const localId = dashboardFilterLocalIdentifier(filter);
+            return !allVisibleFilters.some((visibleFilter) => {
+                return visibleFilter.localIdentifier === localId;
+            });
+        });
+    }, [allVisibleFilters, sanitizedEffectiveFilters]);
+
+    // if some of the visible stored filter is missing on dashboard, we want to know about it
     const arePersistedFiltersMissingOnDashboard = useMemo(
         () =>
             storedVisibleLocalIdentifiersToShow
-                ? sanitizedEffectiveFilters.length !== storedVisibleLocalIdentifiersToShow.length
+                ? sanitizedEffectiveFilters.length - hiddenFilters.length !==
+                  storedVisibleLocalIdentifiersToShow.length
                 : false,
-        [sanitizedEffectiveFilters, storedVisibleLocalIdentifiersToShow],
+        [hiddenFilters.length, sanitizedEffectiveFilters.length, storedVisibleLocalIdentifiersToShow],
     );
 
     const [selectedFilters, setSelectedFilters] = useState<FilterContextItem[]>(sanitizedEffectiveFilters);
-    const allVisibleFilters = useAutomationVisibleFilters(allFilters);
-
-    // Just use filters without any changes when FF is off
-    if (!enableAutomationFilterContext) {
-        return {
-            availableFilters: allFilters,
-            automationFilters: storedFilters,
-            setAutomationFilters: () => {},
-            allVisibleFiltersMetadata: undefined,
-            arePersistedFiltersMissingOnDashboard: false,
-        };
-    }
 
     return {
         availableFilters: allFilters,

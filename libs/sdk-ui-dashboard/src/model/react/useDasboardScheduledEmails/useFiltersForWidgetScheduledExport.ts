@@ -1,11 +1,13 @@
 // (C) 2020-2025 GoodData Corporation
 
 import {
+    filterIsEmpty,
     filterLocalIdentifier,
     IAutomationMetadataObjectDefinition,
     IFilter,
     IInsightDefinition,
     isAllTimeDateFilter,
+    isAttributeFilter,
 } from "@gooddata/sdk-model";
 import { useWidgetFilters } from "../useWidgetFilters.js";
 import { getAutomationVisualizationFilters } from "../../../_staging/automation/index.js";
@@ -15,6 +17,7 @@ import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { selectCrossFilteringItems } from "../../store/drill/drillSelectors.js";
 import { usePrevious } from "@gooddata/sdk-ui";
 import { useMemo } from "react";
+import { selectEnableAutomationFilterContext } from "../../../model/store/index.js";
 /**
  * @alpha
  */
@@ -54,6 +57,7 @@ export function useFiltersForWidgetScheduledExport({
     insight,
 }: IUseFiltersForWidgetScheduledExportProps): QueryProcessingState<IFilter[]> {
     const savedWidgetFilters = getAutomationVisualizationFilters(scheduledExportToEdit);
+    const enableAutomationFilterContext = useDashboardSelector(selectEnableAutomationFilterContext);
 
     const previousWidgetRef = usePrevious(widget?.ref);
     const widgetFiltersQuery = useWidgetFilters(widget, insight);
@@ -87,18 +91,24 @@ export function useFiltersForWidgetScheduledExport({
     const resolvedFiltersWithoutCrossFilteringAndAllTimeDateFilter =
         resolvedFiltersWithoutCrossFiltering?.filter((f) => !isAllTimeDateFilter(f));
 
+    const nonEmptyResolvedFilters = enableAutomationFilterContext
+        ? resolvedFiltersWithoutCrossFilteringAndAllTimeDateFilter?.filter((filter) => {
+              if (isAttributeFilter(filter)) {
+                  return !filterIsEmpty(filter);
+              }
+              return true;
+          })
+        : resolvedFiltersWithoutCrossFilteringAndAllTimeDateFilter;
+
     if (savedWidgetFilters) {
         return {
             result: savedWidgetFilters,
             error: undefined,
             status: "success",
         };
-    } else if (
-        resolvedFiltersWithoutCrossFilteringAndAllTimeDateFilter &&
-        correctedWidgetFiltersQuery.status === "success"
-    ) {
+    } else if (nonEmptyResolvedFilters && correctedWidgetFiltersQuery.status === "success") {
         return {
-            result: resolvedFiltersWithoutCrossFilteringAndAllTimeDateFilter,
+            result: nonEmptyResolvedFilters,
             error: undefined,
             status: "success",
         };

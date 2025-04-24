@@ -7,7 +7,7 @@ import { getVisibleFiltersByFilters } from "./utils.js";
 interface IUseAutomationDashboardFiltersResult {
     storeFilters: boolean;
     setStoreFilters: React.Dispatch<React.SetStateAction<boolean>>;
-    effectiveDashboardFilters: FilterContextItem[] | undefined;
+    automationDashboardFilters: FilterContextItem[] | undefined;
     visibleDashboardFilters: IAutomationVisibleFilter[] | undefined;
 }
 
@@ -16,14 +16,12 @@ interface IUseAutomationDashboardFiltersResult {
  */
 export const useAutomationDashboardFilters = ({
     editAutomation,
-    dashboardFilters,
+    automationFilters,
     allVisibleFiltersMetadata,
-    enableAutomationFilterContext,
 }: {
     editAutomation: IAutomationMetadataObject | undefined;
-    dashboardFilters: FilterContextItem[] | undefined;
+    automationFilters: FilterContextItem[] | undefined;
     allVisibleFiltersMetadata?: IAutomationVisibleFilter[] | undefined;
-    enableAutomationFilterContext?: boolean;
 }): IUseAutomationDashboardFiltersResult => {
     const areFiltersStored = useMemo(
         () =>
@@ -33,25 +31,16 @@ export const useAutomationDashboardFilters = ({
         [editAutomation],
     );
     const visibleFilters = useMemo(
-        () => getVisibleFiltersByFilters(dashboardFilters, allVisibleFiltersMetadata),
-        [dashboardFilters, allVisibleFiltersMetadata],
+        () => getVisibleFiltersByFilters(automationFilters, allVisibleFiltersMetadata),
+        [automationFilters, allVisibleFiltersMetadata],
     );
 
     const [storeFilters, setStoreFilters] = useState(areFiltersStored);
 
-    if (!enableAutomationFilterContext) {
-        return {
-            storeFilters: false,
-            setStoreFilters: () => {},
-            effectiveDashboardFilters: dashboardFilters,
-            visibleDashboardFilters: undefined,
-        };
-    }
-
     return {
         storeFilters,
         setStoreFilters,
-        effectiveDashboardFilters: storeFilters ? dashboardFilters : undefined,
+        automationDashboardFilters: storeFilters ? automationFilters : undefined,
         visibleDashboardFilters: storeFilters ? visibleFilters : undefined,
     };
 };

@@ -69,6 +69,9 @@ export interface IUseEditScheduledEmailProps {
     // Dashboard filters at all times
     allDashboardFilters?: FilterContextItem[];
 
+    // New automation filters
+    automationFilters?: FilterContextItem[];
+
     // In case we are editing dashboard scheduled export
     dashboardFilters?: FilterContextItem[];
 
@@ -89,6 +92,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         insight,
         widget,
         allDashboardFilters,
+        automationFilters,
         dashboardFilters,
         widgetFilters,
         maxAutomationsRecipients,
@@ -124,17 +128,27 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         useAutomationWidgetFilters({
             widget,
             allDashboardFilters,
+            automationFilters,
             widgetFilters,
             allVisibleFiltersMetadata,
-            enableAutomationFilterContext,
         });
-    const { storeFilters, setStoreFilters, effectiveDashboardFilters, visibleDashboardFilters } =
+    const { storeFilters, setStoreFilters, automationDashboardFilters, visibleDashboardFilters } =
         useAutomationDashboardFilters({
             editAutomation: scheduledExportToEdit,
-            dashboardFilters,
+            automationFilters,
             allVisibleFiltersMetadata,
-            enableAutomationFilterContext,
         });
+
+    const effectiveWidgetFilters = enableAutomationFilterContext
+        ? [...dashboardExecutionFilters, ...insightExecutionFilters]
+        : widgetFilters;
+    const effectiveVisibleWidgetFilters = enableAutomationFilterContext ? visibleWidgetFilters : undefined;
+    const effectiveDashboardFilters = enableAutomationFilterContext
+        ? automationDashboardFilters
+        : dashboardFilters;
+    const effectiveVisibleDashboardFilters = enableAutomationFilterContext
+        ? visibleDashboardFilters
+        : undefined;
 
     const [editedAutomation, setEditedAutomation] = useState<IAutomationMetadataObjectDefinition>(
         scheduledExportToEdit ??
@@ -147,10 +161,8 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                           insight,
                           widget,
                           recipient: defaultRecipient,
-                          widgetFilters: enableAutomationFilterContext
-                              ? [...dashboardExecutionFilters, ...insightExecutionFilters]
-                              : widgetFilters,
-                          visibleFiltersMetadata: visibleWidgetFilters,
+                          widgetFilters: effectiveWidgetFilters,
+                          visibleFiltersMetadata: effectiveVisibleWidgetFilters,
                       }
                     : {
                           timezone,
@@ -159,7 +171,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                           title: dashboardTitle,
                           recipient: defaultRecipient,
                           dashboardFilters: effectiveDashboardFilters,
-                          visibleFiltersMetadata: visibleDashboardFilters,
+                          visibleFiltersMetadata: effectiveVisibleDashboardFilters,
                       },
             ),
     );

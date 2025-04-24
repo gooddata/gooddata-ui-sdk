@@ -34,10 +34,12 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
         handleAddFilter,
         handleDeleteFilter,
         handleChangeFilter,
+        handleStoreFiltersChange,
     } = useAutomationFilters({
         availableFilters,
         selectedFilters,
         onFiltersChange,
+        onStoreFiltersChange,
     });
 
     const numberOfSelectedFilters = visibleFilters.length;
@@ -62,7 +64,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                 handleDeleteFilter={handleDeleteFilter}
                 handleChangeFilter={handleChangeFilter}
                 storeFilters={storeFilters}
-                onStoreFiltersChange={onStoreFiltersChange}
+                handleStoreFiltersChange={handleStoreFiltersChange}
                 isDashboardAutomation={isDashboardAutomation}
                 areFiltersMissing={areFiltersMissing}
             />
