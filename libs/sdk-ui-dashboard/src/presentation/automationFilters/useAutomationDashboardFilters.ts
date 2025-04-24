@@ -5,8 +5,8 @@ import { FilterContextItem, IAutomationMetadataObject, IAutomationVisibleFilter 
 import { getVisibleFiltersByFilters } from "./utils.js";
 
 interface IUseAutomationDashboardFiltersResult {
-    useFilters: boolean;
-    setUseFilters: React.Dispatch<React.SetStateAction<boolean>>;
+    storeFilters: boolean;
+    setStoreFilters: React.Dispatch<React.SetStateAction<boolean>>;
     effectiveDashboardFilters: FilterContextItem[] | undefined;
     visibleDashboardFilters: IAutomationVisibleFilter[] | undefined;
 }
@@ -37,21 +37,21 @@ export const useAutomationDashboardFilters = ({
         [dashboardFilters, allVisibleFiltersMetadata],
     );
 
-    const [useFilters, setUseFilters] = useState(areFiltersStored);
+    const [storeFilters, setStoreFilters] = useState(areFiltersStored);
 
     if (!enableAutomationFilterContext) {
         return {
-            useFilters: false,
-            setUseFilters: () => {},
+            storeFilters: false,
+            setStoreFilters: () => {},
             effectiveDashboardFilters: dashboardFilters,
             visibleDashboardFilters: undefined,
         };
     }
 
     return {
-        useFilters,
-        setUseFilters,
-        effectiveDashboardFilters: useFilters ? dashboardFilters : undefined,
-        visibleDashboardFilters: useFilters ? visibleFilters : undefined,
+        storeFilters,
+        setStoreFilters,
+        effectiveDashboardFilters: storeFilters ? dashboardFilters : undefined,
+        visibleDashboardFilters: storeFilters ? visibleFilters : undefined,
     };
 };
