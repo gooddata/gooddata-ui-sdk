@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { cleanup } from "@testing-library/react";
 import { expect, afterEach, vi } from "vitest";
 
@@ -44,6 +44,9 @@ document.createRange = () => {
 
     return range;
 };
+
+// This needs a manual stub; see https://github.com/jsdom/jsdom/issues/1695
+globalThis.HTMLElement.prototype.scrollIntoView = vi.fn();
 
 global.ResizeObserver = class ResizeObserver {
     observe() {

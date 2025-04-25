@@ -381,6 +381,9 @@ export const defaultColorPaletteMetadataObject: IColorPaletteDefinition;
 export const defaultThemeMetadataObject: IThemeDefinition;
 
 // @internal (undocumented)
+export function DefaultUiListboxItemComponent<T>({ item, isFocused, isSelected, onSelect, }: UiListboxItemProps<T>): React_2.ReactNode;
+
+// @internal (undocumented)
 export const DESCRIPTION_PANEL_ALIGN_POINTS: {
     align: string;
 }[];
@@ -1531,6 +1534,11 @@ export interface IDomNativeProps {
 // @internal (undocumented)
 export interface IDropdownBodyRenderProps {
     // (undocumented)
+    ariaAttributes: Pick<React_2.AriaAttributes, "aria-labelledby"> & {
+        role: React_2.AriaAttributes["aria-haspopup"] & React_2.AriaRole;
+        id: string;
+    };
+    // (undocumented)
     closeDropdown: () => void;
     // (undocumented)
     isMobile: boolean;
@@ -1577,6 +1585,10 @@ export interface IDropdownButtonProps {
 // @internal (undocumented)
 export interface IDropdownButtonRenderProps {
     // (undocumented)
+    ariaAttributes: {
+        role: "button" | string;
+    } & Pick<React_2.AriaAttributes, "aria-haspopup" | "aria-expanded" | "aria-controls">;
+    // (undocumented)
     buttonRef: React_2.MutableRefObject<HTMLElement | null>;
     // (undocumented)
     closeDropdown: () => void;
@@ -1589,7 +1601,7 @@ export interface IDropdownButtonRenderProps {
     // (undocumented)
     openDropdown: () => void;
     // (undocumented)
-    toggleDropdown: () => void;
+    toggleDropdown: (desiredState?: boolean | unknown) => void;
 }
 
 // @internal (undocumented)
@@ -1668,6 +1680,10 @@ export interface IDropdownListProps<T> extends IListProps<T> {
 // @internal (undocumented)
 export interface IDropdownProps {
     // (undocumented)
+    accessibilityConfig?: {
+        popupRole?: "listbox" | "tree" | "grid" | "dialog";
+    };
+    // (undocumented)
     alignPoints?: IAlignPoint[];
     // (undocumented)
     autofocusOnOpen?: boolean;
@@ -1687,7 +1703,10 @@ export interface IDropdownProps {
     // (undocumented)
     ignoreClicksOnByClass?: string[];
     // (undocumented)
+    isOpen?: boolean;
+    // (undocumented)
     onOpenStateChanged?: (isOpen: boolean) => void;
+    onToggle?: (desiredState?: boolean | unknown) => void;
     // (undocumented)
     openOnInit?: boolean;
     // (undocumented)
@@ -2785,6 +2804,24 @@ export interface ILegacySingleSelectListProps<T> {
     selection?: T;
     // (undocumented)
     width: number;
+}
+
+// @internal (undocumented)
+export interface IListboxContext<T> {
+    // (undocumented)
+    focusedIndex: number;
+    // (undocumented)
+    itemRefs: React_2.MutableRefObject<(HTMLLIElement | null)[]>;
+    // (undocumented)
+    items: IUiListboxItem<T>[];
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    onSelect: (item: IUiListboxItem<T>) => void;
+    // (undocumented)
+    selectedItemId?: string;
+    // (undocumented)
+    setFocusedIndex: React_2.Dispatch<React_2.SetStateAction<number>>;
 }
 
 // @internal (undocumented)
@@ -4350,6 +4387,18 @@ export interface IUiChipAccessibilityConfig extends IAccessibilityConfigBase, ID
 }
 
 // @internal (undocumented)
+export interface IUiListboxItem<T> {
+    // (undocumented)
+    data: T;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    stringTitle: string;
+}
+
+// @internal (undocumented)
 export interface IUiSettings {
     // (undocumented)
     displayAccountPage: boolean;
@@ -4530,6 +4579,9 @@ export const LoadingSpinner: React_2.FC<ILoadingSpinner>;
 
 // @internal (undocumented)
 export const LocaleSetting: React_2.VFC<ILocaleSettingProps>;
+
+// @internal (undocumented)
+export const makeSeparatorItem: () => IUiListboxItem<typeof separatorItemSymbol>;
 
 // @internal (undocumented)
 export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFormatOwnProps> {
@@ -4740,6 +4792,9 @@ export type SelectedTime = {
 
 // @internal (undocumented)
 export const Separator: React_2.FC;
+
+// @internal (undocumented)
+export const separatorItemSymbol: unique symbol;
 
 // @internal (undocumented)
 export function SeparatorLine({ mT: marginTop, mR: marginRight, mB: marginBottom, mL: marginLeft, pT: paddingTop, pR: paddingRight, pB: paddingBottom, pL: paddingLeft, m, p, height, }: ISeparatorLineProps): React_2.JSX.Element;
@@ -5132,6 +5187,47 @@ export interface UiIconProps {
     size?: number;
     // (undocumented)
     type: IconType;
+}
+
+// @internal
+export function UiListbox<T>({ items, className, maxWidth, onSelect, onClose, selectedItemId, ariaAttributes, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, ItemComponent, onUnhandledKeyDown, }: UiListboxProps<T>): React_2.ReactNode;
+
+// @internal (undocumented)
+export interface UiListboxItemProps<T> {
+    // (undocumented)
+    isFocused: boolean;
+    // (undocumented)
+    isSelected: boolean;
+    // (undocumented)
+    item: IUiListboxItem<T>;
+    // (undocumented)
+    onSelect: () => void;
+}
+
+// @internal (undocumented)
+export interface UiListboxProps<T> {
+    // (undocumented)
+    ariaAttributes: IDropdownBodyRenderProps["ariaAttributes"];
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    ItemComponent?: React_2.ComponentType<UiListboxItemProps<any>>;
+    // (undocumented)
+    items: IUiListboxItem<T>[];
+    // (undocumented)
+    maxWidth?: number;
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    onSelect?: (item: IUiListboxItem<T>) => void;
+    // (undocumented)
+    onUnhandledKeyDown?: (event: React_2.KeyboardEvent, context: IListboxContext<T>) => void;
+    // (undocumented)
+    selectedItemId?: string;
+    // (undocumented)
+    shouldKeyboardActionPreventDefault?: boolean;
+    // (undocumented)
+    shouldKeyboardActionStopPropagation?: boolean;
 }
 
 // @internal (undocumented)

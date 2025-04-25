@@ -101,3 +101,15 @@ export type {
 } from "./@ui/UiPagedVirtualList/UiPagedVirtualList.js";
 export { UiFocusTrap } from "./@ui/UiFocusTrap/UiFocusTrap.js";
 export type { UiFocusTrapProps } from "./@ui/UiFocusTrap/UiFocusTrap.js";
+export { UiListbox } from "./@ui/UiListbox/UiListbox.js";
+export {
+    makeSeparatorItem,
+    separatorItemSymbol,
+    DefaultUiListboxItemComponent,
+} from "./@ui/UiListbox/defaults/DefaultUiListboxItemComponent.js";
+export type {
+    UiListboxProps,
+    IListboxContext,
+    UiListboxItemProps,
+    IUiListboxItem,
+} from "./@ui/UiListbox/types.js";

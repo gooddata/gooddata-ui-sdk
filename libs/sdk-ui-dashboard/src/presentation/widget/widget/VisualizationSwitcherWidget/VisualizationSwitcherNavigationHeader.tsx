@@ -1,12 +1,11 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useCallback } from "react";
-import { IInsightWidget, IVisualizationSwitcherWidget, objRefToString, widgetRef } from "@gooddata/sdk-model";
+import React from "react";
+import { IInsightWidget, IVisualizationSwitcherWidget } from "@gooddata/sdk-model";
 
 import { DashboardItemHeadline } from "../../../presentationComponents/index.js";
 
-import { ItemsWrapper, Overlay, ShortenedText } from "@gooddata/sdk-ui-kit";
+import { Dropdown, UiListbox, IDropdownButtonRenderProps, IUiListboxItem } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import { stringUtils } from "@gooddata/util";
 import { useDashboardUserInteraction } from "../../../../model/index.js";
 import { CommonExportDataAttributes } from "../../../export/index.js";
 
@@ -40,122 +39,82 @@ export const VisualizationSwitcherNavigationHeader: React.FC<IVisualizationSwitc
 }) => {
     const userInteraction = useDashboardUserInteraction();
 
-    const [isOpen, setIsOpen] = React.useState(false);
+    const items = React.useMemo(() => {
+        return [
+            ...widget.visualizations.map((visualization) => ({
+                id: visualization.identifier,
+                stringTitle: visualization.title,
+                data: visualization,
+            })),
+        ];
+    }, [widget.visualizations]);
 
-    const widgetRefAsString = objRefToString(widgetRef(widget));
-
-    const alignTo = `gd-visualization-switcher-widget-header-${stringUtils.simplifyText(widgetRefAsString)}`;
-
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen);
-    };
-
-    const onSelect = useCallback(
-        (item: IInsightWidget) => {
-            onActiveVisualizationChange(item.identifier);
-            setIsOpen(false);
+    const handleSelectVisualization = React.useCallback(
+        (item: IUiListboxItem<IInsightWidget>) => {
+            onActiveVisualizationChange(item.id);
+            userInteraction.visualizationSwitcherInteraction("visualizationSwitcherSwitched");
         },
-        [onActiveVisualizationChange],
+        [onActiveVisualizationChange, userInteraction],
     );
 
     return (
-        <>
-            <VisualizationSwitcherNavigationHeaderButton
-                className={alignTo}
-                title={activeVisualization.title}
-                isOpen={isOpen}
-                toggleDropdown={toggleDropdown}
-                clientHeight={clientHeight}
-                exportData={exportData}
-            />
-
-            {isOpen ? (
-                <Overlay
-                    key="VisualizationSwitcherNavigationHeader"
-                    alignTo={`.${alignTo}`}
-                    alignPoints={alignPoints}
-                    className="s-visualization-switcher-widget-header"
-                    closeOnMouseDrag={true}
-                    closeOnOutsideClick={true}
-                    closeOnParentScroll={true}
-                    onClose={toggleDropdown}
-                >
-                    <ItemsWrapper className="gd-visualization-switcher-widget-header-list">
-                        <div className="gd-visualization-switcher-widget-header-list-container">
-                            {widget.visualizations.map((visualization) => {
-                                return (
-                                    <VisualizationSwitcherNavigationHeaderItem
-                                        key={visualization.identifier}
-                                        onSelect={(item) => {
-                                            onSelect(item);
-                                            userInteraction.visualizationSwitcherInteraction(
-                                                "visualizationSwitcherSwitched",
-                                            );
-                                        }}
-                                        item={visualization}
-                                        isSelected={
-                                            visualization.identifier === activeVisualization.identifier
-                                        }
-                                        maxWidth={clientWidth ?? 200}
-                                    />
-                                );
-                            })}
-                        </div>
-                    </ItemsWrapper>
-                </Overlay>
-            ) : null}
-        </>
+        <Dropdown
+            alignPoints={alignPoints}
+            autofocusOnOpen={true}
+            renderBody={({ closeDropdown, ariaAttributes }) => (
+                <UiListbox
+                    items={items}
+                    selectedItemId={activeVisualization.identifier}
+                    onSelect={handleSelectVisualization}
+                    onClose={closeDropdown}
+                    ariaAttributes={ariaAttributes}
+                    maxWidth={clientWidth ?? 200}
+                />
+            )}
+            renderButton={({ toggleDropdown, isOpen, ariaAttributes, buttonRef }) => (
+                <VisualizationSwitcherNavigationHeaderButton
+                    title={activeVisualization.title}
+                    isOpen={isOpen}
+                    toggleDropdown={toggleDropdown}
+                    clientHeight={clientHeight}
+                    exportData={exportData}
+                    ariaAttributes={ariaAttributes}
+                    ref={buttonRef}
+                />
+            )}
+        />
     );
 };
 
 type VisualizationSwitcherNavigationHeaderButtonProps = {
     title: string;
     isOpen: boolean;
-    toggleDropdown: () => void;
-    className: string;
+    toggleDropdown: (desiredState?: boolean | unknown) => void;
     clientHeight?: number;
     exportData?: CommonExportDataAttributes;
+    ariaAttributes: IDropdownButtonRenderProps["ariaAttributes"];
 };
 
-const VisualizationSwitcherNavigationHeaderButton: React.FC<
+const VisualizationSwitcherNavigationHeaderButton = React.forwardRef<
+    HTMLElement,
     VisualizationSwitcherNavigationHeaderButtonProps
-> = ({ isOpen, toggleDropdown, title, className, clientHeight, exportData }) => {
-    const classNames = cx("gd-visualization-switcher-widget-header", className, {
+>(function VisualizationSwitcherNavigationHeaderButton(
+    { isOpen, toggleDropdown, title, clientHeight, ariaAttributes, exportData },
+    ref,
+) {
+    const classNames = cx("gd-visualization-switcher-widget-header", {
         "is-open": isOpen,
     });
     return (
-        <div className={classNames} onClick={toggleDropdown} {...exportData}>
+        <div
+            ref={ref as React.RefObject<HTMLDivElement>}
+            className={classNames}
+            onClick={toggleDropdown}
+            tabIndex={0}
+            {...exportData}
+            {...ariaAttributes}
+        >
             <DashboardItemHeadline clientHeight={clientHeight} title={title} />
         </div>
     );
-};
-
-type VisualizationSwitcherNavigationHeaderItemProps = {
-    item: IInsightWidget;
-    isSelected: boolean;
-    maxWidth: number;
-    onSelect: (item: IInsightWidget) => void;
-};
-
-const VisualizationSwitcherNavigationHeaderItem: React.FC<VisualizationSwitcherNavigationHeaderItemProps> = ({
-    item,
-    isSelected,
-    onSelect,
-    maxWidth,
-}) => {
-    const classNames = cx("gd-visualization-switcher-widget-header-item", "gd-list-item", {
-        "is-selected": isSelected,
-    });
-    return (
-        <div
-            className={classNames}
-            onClick={() => {
-                onSelect(item);
-            }}
-        >
-            <div className="gd-visualization-switcher-widget-header-item-content" style={{ maxWidth }}>
-                <ShortenedText className="title">{item.title}</ShortenedText>
-            </div>
-        </div>
-    );
-};
+});

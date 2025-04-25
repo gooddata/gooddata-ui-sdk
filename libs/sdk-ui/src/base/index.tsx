@@ -175,6 +175,7 @@ export type {
 export { resolveLCMWorkspaceIdentifiers } from "./react/ClientWorkspaceContext/resolveLCMWorkspaceIdentifiers.js";
 export { usePrevious } from "./react/usePrevious.js";
 export { usePropState } from "./react/usePropState.js";
+export { useAutoupdateRef } from "./react/useAutoupdateRef.js";
 export { useLocalStorage } from "./react/useLocalStorage.js";
 /*
  * Localization exports

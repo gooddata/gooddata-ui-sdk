@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 export type { IItemProps, IItemsWrapperProps, IHeaderProps } from "./MenuList.js";
 export { Item, ItemsWrapper, Separator, Header } from "./MenuList.js";
