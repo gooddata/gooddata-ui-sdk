@@ -25,7 +25,7 @@
                             "name": "Created - Quarter/Year",
                             "uri": ""
                         },
-                        "format": { "locale": "vn-VN", "pattern": "QQQ y" },
+                        "format": { "locale": "en-US", "pattern": "QQQ y" },
                         "granularity": "QUARTER",
                         "identifier": "dt_oppcreated_timestamp.quarter",
                         "localIdentifier": "a_dt_oppcreated_timestamp.quarter",

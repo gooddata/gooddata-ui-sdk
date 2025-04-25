@@ -56,7 +56,7 @@
                             "name": "Closed - Year",
                             "uri": ""
                         },
-                        "format": { "locale": "vn-VN", "pattern": "y" },
+                        "format": { "locale": "en-US", "pattern": "y" },
                         "granularity": "YEAR",
                         "identifier": "dt_closedate_timestamp.year",
                         "localIdentifier": "a_dt_closedate_timestamp.year",
