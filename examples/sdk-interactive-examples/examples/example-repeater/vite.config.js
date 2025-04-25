@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import { createHtmlPlugin } from "vite-plugin-html";
@@ -32,6 +32,7 @@ export default defineConfig({
     },
     server: {
         port: 8080,
+        allowedHosts: [".csb.app"],
         fs: {
             strict: false,
         },

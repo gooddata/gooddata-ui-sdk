@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import { createHtmlPlugin } from "vite-plugin-html";
@@ -26,12 +26,13 @@ export default defineConfig({
             "~@gooddata": "/node_modules/@gooddata",
         },
     },
-    build:{
-        outDir: 'esm',
-        chunkSizeWarningLimit:10000
+    build: {
+        outDir: "esm",
+        chunkSizeWarningLimit: 10000,
     },
     server: {
         port: 8080,
+        allowedHosts: [".csb.app"],
         fs: {
             strict: false,
         },
