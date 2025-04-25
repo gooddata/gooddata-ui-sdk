@@ -46,10 +46,10 @@ export function useNotifications({ workspace, refreshInterval, itemsPerPage }: I
 
     const {
         notifications,
-        hasNextPage: notificationsHasNextPage,
         error: notificationsError,
-        loadNextPage: notificationsLoadNextPage,
         status: notificationsStatus,
+        hasNextPage: notificationsHasNextPage,
+        loadNextPage: notificationsLoadNextPage,
         reset: notificationsReset,
     } = useFetchNotifications({
         workspace: effectiveWorkspace,
@@ -57,11 +57,11 @@ export function useNotifications({ workspace, refreshInterval, itemsPerPage }: I
         itemsPerPage,
     });
     const {
+        notifications: unreadNotifications,
         error: unreadNotificationsError,
+        status: unreadNotificationsStatus,
         hasNextPage: unreadNotificationsHasNextPage,
         loadNextPage: unreadNotificationsLoadNextPage,
-        notifications: unreadNotifications,
-        status: unreadNotificationsStatus,
         totalNotificationsCount: unreadNotificationsCount,
         reset: unreadNotificationsReset,
     } = useFetchNotifications({

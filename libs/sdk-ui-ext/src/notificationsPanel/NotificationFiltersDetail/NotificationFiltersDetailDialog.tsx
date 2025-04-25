@@ -1,11 +1,9 @@
 // (C) 2024-2025 GoodData Corporation
-import { IAlertNotification } from "@gooddata/sdk-model";
+import { AlertFilters } from "@gooddata/sdk-model";
 import React from "react";
-import { UiSkeleton } from "@gooddata/sdk-ui-kit";
-import { DetailsDialog } from "../components/DetailsDialog.js";
-import { useNotificationsFilterDetail } from "../data/useNotificationFiltersDetail.js";
-import { bem } from "../bem.js";
 import { defineMessages, useIntl } from "react-intl";
+import { bem } from "../bem.js";
+import { DetailsDialog } from "../components/DetailsDialog.js";
 
 const { b, e } = bem("gd-ui-ext-notification-filters-detail-dialog");
 
@@ -19,36 +17,27 @@ const messages = defineMessages({
  * @internal
  */
 export interface INotificationFiltersDetailDialogProps {
-    notification: IAlertNotification;
+    filters: AlertFilters[];
     onClose: () => void;
 }
 
 /**
  * @internal
  */
-export function NotificationFiltersDetailDialog({
-    notification,
-    onClose,
-}: INotificationFiltersDetailDialogProps) {
+export function NotificationFiltersDetailDialog({ filters, onClose }: INotificationFiltersDetailDialogProps) {
     const intl = useIntl();
-    const { filtersInfo, automationPromise } = useNotificationsFilterDetail(notification);
-    const filtersCount = 0;
 
     return (
         <DetailsDialog
-            title={intl.formatMessage(messages.title)}
+            title={`${intl.formatMessage(messages.title)} (${filters.length})`}
             content={
                 <div className={b()}>
-                    {automationPromise.status !== "success" ? (
-                        <UiSkeleton itemHeight={32} itemsCount={filtersCount} />
-                    ) : (
-                        filtersInfo?.map(({ title, subtitle }, idx) => (
-                            <div className={e("item")} key={idx}>
-                                <div className={e("label")}>{title}</div>
-                                <div className={e("values")}>{subtitle}</div>
-                            </div>
-                        ))
-                    )}
+                    {filters.map(({ title, filter }, idx) => (
+                        <div className={e("item")} key={idx}>
+                            <div className={e("label")}>{title}</div>
+                            <div className={e("values")}>{filter}</div>
+                        </div>
+                    ))}
                 </div>
             }
             onClose={onClose}

@@ -1,13 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useCallback } from "react";
 import { IAlertDescription, IAlertNotification, INotification } from "@gooddata/sdk-model";
-import { getDateTimeConfig, IDateConfig, UiIcon, isActionKey } from "@gooddata/sdk-ui-kit";
-import { bem } from "../bem.js";
-import { Tooltip } from "../components/Tooltip.js";
-import { Popup } from "../components/Popup.js";
-// import { NotificationFiltersDetail } from "../NotificationFiltersDetail/NotificationFiltersDetail.js";
-import { NotificationTriggerDetail } from "../NotificationTriggersDetail/NotificationTriggersDetail.js";
+import { getDateTimeConfig, IDateConfig, isActionKey, UiIcon } from "@gooddata/sdk-ui-kit";
+import React, { useCallback } from "react";
 import { defineMessages, FormattedDate, FormattedMessage, FormattedTime, useIntl } from "react-intl";
+import { bem } from "../bem.js";
+import { Popup } from "../components/Popup.js";
+import { Tooltip } from "../components/Tooltip.js";
+import { NotificationFiltersDetail } from "../NotificationFiltersDetail/NotificationFiltersDetail.js";
+import { NotificationTriggerDetail } from "../NotificationTriggersDetail/NotificationTriggersDetail.js";
+import compact from "lodash/compact.js";
 
 /**
  * @internal
@@ -58,16 +59,22 @@ export function AlertNotification({
         }
     };
 
-    // Hide filters for now, as there is lot of unresolved cases to consider
-    // const filterCount = notification.details.data.alert.filterCount;
-    // const isSliced = notification.details.data.alert.attribute;
-    // const showSeparator = filterCount && filterCount > 0 && isSliced;
     const notificationTitle = getNotificationTitle(notification);
+
+    const filters = notification.details.data.filters;
+    const hasFilters = !!filters?.length;
+
     const isSliced = notification.details.data.alert.attribute;
-    const hasTriggers = notification.details.data.alert.totalValueCount > 0;
+    const hasTriggers = !!notification.details.data.alert.totalValueCount;
+
     const isError = notification.details.data.alert.status !== "SUCCESS";
     const errorMessage = notification.details.data.alert.errorMessage;
     const traceId = notification.details.data.alert.traceId;
+
+    const actions = compact([
+        hasFilters && <NotificationFiltersDetail filters={filters} />,
+        hasTriggers && isSliced && <NotificationTriggerDetail notification={notification} />,
+    ]);
 
     return (
         <div
@@ -103,25 +110,21 @@ export function AlertNotification({
                                 }
                             >
                                 {({ toggle, id }) => (
-                                    <u
-                                        data-id="notification-error"
-                                        id={id}
-                                        onClick={() => {
-                                            toggle();
-                                        }}
-                                    >
+                                    <u data-id="notification-error" id={id} onClick={toggle}>
                                         <FormattedMessage id="notifications.panel.error.learnMore" />
                                     </u>
                                 )}
                             </Popup>
                         </div>
                     </div>
-                ) : null}
-                {!isError && isSliced && hasTriggers ? (
+                ) : actions.length ? (
                     <div className={e("links")}>
-                        {/* <NotificationFiltersDetail notification={notification} />
-                        {showSeparator ? "・" : null} */}
-                        <NotificationTriggerDetail notification={notification} />
+                        {actions.map((action, index) => (
+                            <React.Fragment key={index}>
+                                {!!index && "・"}
+                                {action}
+                            </React.Fragment>
+                        ))}
                     </div>
                 ) : null}
             </div>
