@@ -2070,7 +2070,7 @@
     },
     "notifications.filters.buttonLabel": {
         "value": "{count, plural, one {# filter} other {# filters}}",
-        "comment": "",
+        "comment": "Follow this guide for pluralization per locale https://formatjs.github.io/docs/core-concepts/icu-syntax#plural-format",
         "limit": 0
     },
     "notifications.filters.dialog.title": {

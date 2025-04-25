@@ -2,13 +2,13 @@
 import { IAlertDescription, IAlertNotification, INotification } from "@gooddata/sdk-model";
 import { getDateTimeConfig, IDateConfig, isActionKey, UiIcon } from "@gooddata/sdk-ui-kit";
 import React, { useCallback } from "react";
+import { defineMessages, FormattedDate, FormattedMessage, FormattedTime, useIntl } from "react-intl";
 import { bem } from "../bem.js";
 import { Popup } from "../components/Popup.js";
 import { Tooltip } from "../components/Tooltip.js";
-// import { NotificationFiltersDetail } from "../NotificationFiltersDetail/NotificationFiltersDetail.js";
-import { defineMessages, FormattedDate, FormattedMessage, FormattedTime, useIntl } from "react-intl";
 import { NotificationFiltersDetail } from "../NotificationFiltersDetail/NotificationFiltersDetail.js";
 import { NotificationTriggerDetail } from "../NotificationTriggersDetail/NotificationTriggersDetail.js";
+import compact from "lodash/compact.js";
 
 /**
  * @internal
@@ -71,10 +71,10 @@ export function AlertNotification({
     const errorMessage = notification.details.data.alert.errorMessage;
     const traceId = notification.details.data.alert.traceId;
 
-    const actions = [
+    const actions = compact([
         hasFilters && <NotificationFiltersDetail filters={filters} />,
         hasTriggers && isSliced && <NotificationTriggerDetail notification={notification} />,
-    ].filter((x): x is React.JSX.Element => !!x);
+    ]);
 
     return (
         <div
