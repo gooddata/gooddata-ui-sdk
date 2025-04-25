@@ -182,6 +182,22 @@ $input-width: 128px;
             line-height: 19px;
             gap: 5px;
             margin-top: 5px;
+
+            .gd-recurrence-form-timezone-wrapper {
+                display: flex;
+            }
+
+            .gd-recurrence-form-timezone {
+                display: inline-block;
+                white-space: nowrap;
+                max-width: 200px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+
+            .s-portal-scroll-anchor {
+                display: none;
+            }
         }
     }
 
