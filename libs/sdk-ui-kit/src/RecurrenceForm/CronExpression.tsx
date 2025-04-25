@@ -1,9 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React, { useCallback } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import { IAccessibilityConfigBase } from "src/typings/accessibility.js";
+import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 
 interface ICronExpressionProps {
     expression: string;
@@ -27,6 +28,8 @@ export const CronExpression: React.FC<ICronExpressionProps> = ({
     validationError,
     accessibilityConfig,
 }) => {
+    const intl = useIntl();
+
     const handleBlur = useCallback(
         (e: React.FocusEvent<HTMLInputElement>) => {
             const value = e.target.value;
@@ -68,7 +71,19 @@ export const CronExpression: React.FC<ICronExpressionProps> = ({
             {Boolean(showTimezone && timezone) && (
                 <div className="gd-recurrence-form-repeat-type-description s-recurrence-form-repeat-type-description">
                     <FormattedMessage id="gs.date.at" tagName="span" />
-                    <span> {timezone} time</span>
+                    <BubbleHoverTrigger
+                        showDelay={0}
+                        hideDelay={0}
+                        className="gd-recurrence-form-timezone-wrapper"
+                    >
+                        <span className="gd-recurrence-form-timezone">
+                            {" "}
+                            {timezone} {intl.formatMessage({ id: "gs.time" })}
+                        </span>
+                        <Bubble className="bubble-primary" alignPoints={[{ align: "bc tc" }]}>
+                            {timezone} {intl.formatMessage({ id: "gs.time" })}
+                        </Bubble>
+                    </BubbleHoverTrigger>
                 </div>
             )}
         </>

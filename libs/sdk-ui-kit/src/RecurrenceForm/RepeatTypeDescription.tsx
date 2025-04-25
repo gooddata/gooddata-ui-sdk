@@ -23,7 +23,12 @@ export const RepeatTypeDescription: React.FC<IRepeatTypeDescriptionProps> = (pro
         <div className="gd-recurrence-form-repeat-type-description s-recurrence-form-repeat-type-description">
             <span>
                 {transformRecurrenceTypeToDescription(intl, repeatType, startDate, weekStart)}
-                {showTimezone && timezone ? <> {timezone} time</> : null}
+                {showTimezone && timezone ? (
+                    <>
+                        {" "}
+                        {timezone} {intl.formatMessage({ id: "gs.time" })}
+                    </>
+                ) : null}
             </span>
         </div>
     );

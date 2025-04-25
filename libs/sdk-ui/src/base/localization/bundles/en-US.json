@@ -9,6 +9,11 @@
         "comment": "",
         "limit": 0
     },
+    "gs.time": {
+        "value": "time",
+        "comment": "",
+        "limit": 0
+    },
     "gs.header.help": {
         "value": "Help",
         "comment": "",
