@@ -1,12 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 
+import { IntlWrapper } from "@gooddata/sdk-ui";
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
-import { IntlWrapper } from "@gooddata/sdk-ui";
-import { IRichTextProps, RichText } from "./RichText.js";
-import { IAlignPoint } from "../typings/positioning.js";
-import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 import { Bubble } from "../Bubble/Bubble.js";
+import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
+import { IAlignPoint } from "../typings/positioning.js";
+import { IRichTextProps, RichText } from "./RichText.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "bc tc" }, { align: "tc bc" }];
 const descriptionMarkdown = (
@@ -17,6 +17,12 @@ const descriptionMarkdown = (
         * List
         <br />
         [link](http://thisisalink.com)
+        <br />
+        ![image](http://url/img.png)
+        <br />
+        {"{metric/metric_id}"}
+        <br />
+        {"{label/label_id}"}
     </>
 );
 

@@ -20,6 +20,8 @@ const RICH_TEXT_PLACEHOLDER = `
 * List
 [link](http://thisisalink.com)
 ![image](http://url/img.png)
+{metric/metric_id}
+{label/label_id}
 `;
 
 function DefaultLoadingComponent() {
