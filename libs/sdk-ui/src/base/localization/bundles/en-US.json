@@ -3420,7 +3420,7 @@
         "limit": 0
     },
     "richText.placeholder": {
-        "value": "Add markdown text here...",
+        "value": "Use Markdown to style text and reference data:",
         "comment": "Do not translate word 'Markdown'",
         "limit": 0
     },
