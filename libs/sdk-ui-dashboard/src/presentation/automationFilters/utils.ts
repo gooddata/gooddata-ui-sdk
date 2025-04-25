@@ -3,7 +3,7 @@
 import {
     absoluteDateFilterValues,
     areObjRefsEqual,
-    DateFilterType,
+    DateFilterGranularity,
     filterAttributeElements,
     FilterContextItem,
     filterLocalIdentifier,
@@ -14,12 +14,15 @@ import {
     IDashboardDateFilterConfigItem,
     IFilter,
     isAbsoluteDateFilter,
-    isAllTimeDashboardDateFilter,
     isAllTimeDateFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
     isNegativeAttributeFilter,
+    isPositiveAttributeFilter,
     isRelativeDateFilter,
+    newAbsoluteDashboardDateFilter,
+    newAllTimeDashboardDateFilter,
+    newRelativeDashboardDateFilter,
     ObjRef,
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
@@ -173,43 +176,47 @@ export const updateFiltersByExecutionFilterValues = (
             return undefined;
         }
 
-        if (isDashboardAttributeFilter(dashboardFilter)) {
-            const elements = filterAttributeElements(executionFilter);
-            const elementsObj = elements
-                ? {
-                      attributeElements: elements,
-                      negativeSelection: isNegativeAttributeFilter(executionFilter),
-                  }
-                : {};
-
+        if (
+            (isPositiveAttributeFilter(executionFilter) || isNegativeAttributeFilter(executionFilter)) &&
+            isDashboardAttributeFilter(dashboardFilter)
+        ) {
             return {
                 ...dashboardFilter,
                 attributeFilter: {
                     ...dashboardFilter.attributeFilter,
-                    ...elementsObj,
+                    negativeSelection: isNegativeAttributeFilter(executionFilter),
+                    attributeElements: filterAttributeElements(executionFilter),
                 },
             };
-        } else if (isAllTimeDateFilter(executionFilter) && isAllTimeDashboardDateFilter(dashboardFilter)) {
-            // All time date filter needs to be fully copied due to different granularity and values
-            return {
-                ...dashboardFilter,
-            };
-        } else {
-            const type: DateFilterType = isAbsoluteDateFilter(executionFilter) ? "absolute" : "relative";
-            const dateFilterValues = isAbsoluteDateFilter(executionFilter)
-                ? absoluteDateFilterValues(executionFilter)
-                : isRelativeDateFilter(executionFilter)
-                ? relativeDateFilterValues(executionFilter)
-                : {};
+        } else if (isAllTimeDateFilter(executionFilter) && isDashboardDateFilter(dashboardFilter)) {
+            return newAllTimeDashboardDateFilter(
+                // This is important to omit, as common date filter check is done based on missing date dataset
+                undefined,
+                dashboardFilter.dateFilter.localIdentifier,
+            );
+        } else if (isAbsoluteDateFilter(executionFilter) && isDashboardDateFilter(dashboardFilter)) {
+            const values = absoluteDateFilterValues(executionFilter, true);
 
-            return {
-                ...dashboardFilter,
-                dateFilter: {
-                    ...dashboardFilter.dateFilter,
-                    ...dateFilterValues,
-                    type,
-                },
-            };
+            return newAbsoluteDashboardDateFilter(
+                values.from,
+                values.to,
+                values.dataSet || dashboardFilter.dateFilter.dataSet,
+                dashboardFilter.dateFilter.localIdentifier,
+            );
+        } else if (isRelativeDateFilter(executionFilter) && isDashboardDateFilter(dashboardFilter)) {
+            const values = relativeDateFilterValues(executionFilter, true);
+
+            return newRelativeDashboardDateFilter(
+                // This conversion happens from stored filters which were originally
+                // shown as dashboard filters, so the type cast here is safe.
+                values.granularity as DateFilterGranularity,
+                values.from,
+                values.to,
+                values.dataSet || dashboardFilter.dateFilter.dataSet,
+                dashboardFilter.dateFilter.localIdentifier,
+            );
+        } else {
+            return undefined;
         }
     });
 

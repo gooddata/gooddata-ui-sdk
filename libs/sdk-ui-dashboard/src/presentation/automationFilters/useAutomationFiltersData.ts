@@ -7,6 +7,7 @@ import {
     isAllValuesDashboardAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
+    isDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import { useMemo, useState } from "react";
 import compact from "lodash/compact.js";
@@ -86,10 +87,22 @@ export const useAutomationFiltersData = ({
     // add common date filter when it is not present
     const effectiveFiltersWithDateFilter = useMemo(() => {
         const hasCommonDateFilter = effectiveFilters.find(isDashboardCommonDateFilter);
-        const existingCommonDateFilter = allFilters?.find(isDashboardCommonDateFilter);
+        const dashboardCommonDateFilter = allFilters?.find(isDashboardCommonDateFilter);
 
-        if (!hasCommonDateFilter && existingCommonDateFilter) {
-            return [existingCommonDateFilter, ...effectiveFilters];
+        const dashboardCommonDateFilterLocalId = dashboardCommonDateFilter?.dateFilter.localIdentifier;
+        const dashboardCommonDateFilterExistsInEffectiveFilters = effectiveFilters.some((filter) => {
+            if (isDashboardDateFilter(filter)) {
+                return filter.dateFilter.localIdentifier === dashboardCommonDateFilterLocalId;
+            }
+            return false;
+        });
+
+        if (
+            !hasCommonDateFilter &&
+            dashboardCommonDateFilter &&
+            !dashboardCommonDateFilterExistsInEffectiveFilters
+        ) {
+            return [dashboardCommonDateFilter, ...effectiveFilters];
         }
 
         return effectiveFilters;

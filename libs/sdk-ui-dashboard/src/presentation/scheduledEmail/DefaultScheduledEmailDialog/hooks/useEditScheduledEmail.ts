@@ -52,7 +52,7 @@ import {
 import { isEmail } from "../../utils/validate.js";
 import { getUserTimezone } from "../../utils/timezone.js";
 import { getVisibleFiltersByFilters } from "../../../automationFilters/utils.js";
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/index.js";
+import { filterContextItemsToAutomationDashboardFiltersByWidget } from "../../../../converters/index.js";
 import { useAutomationWidgetFilters } from "../../../automationFilters/useAutomationWidgetFilters.js";
 import { useAutomationDashboardFilters } from "../../../automationFilters/useAutomationDashboardFilters.js";
 
@@ -377,7 +377,10 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                     return;
                 }
 
-                const convertedFilters = filterContextItemsToDashboardFiltersByWidget(filters, widget);
+                const convertedFilters = filterContextItemsToAutomationDashboardFiltersByWidget(
+                    filters,
+                    widget,
+                );
 
                 setEditedAutomation((s) => ({
                     ...s,

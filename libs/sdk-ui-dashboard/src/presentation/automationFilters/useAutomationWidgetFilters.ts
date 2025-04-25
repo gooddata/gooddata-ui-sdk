@@ -9,7 +9,7 @@ import {
     isInsightWidget,
 } from "@gooddata/sdk-model";
 import compact from "lodash/compact.js";
-import { filterContextItemsToDashboardFiltersByWidget } from "../../converters/index.js";
+import { filterContextItemsToAutomationDashboardFiltersByWidget } from "../../converters/index.js";
 import { getFilterLocalIdentifier, getVisibleFiltersByFilters } from "./utils.js";
 import { ExtendedDashboardWidget } from "../../model/index.js";
 
@@ -55,7 +55,7 @@ export const useAutomationWidgetFilters = ({
     );
 
     const dashboardExecutionFilters = isInsightWidget(widget)
-        ? filterContextItemsToDashboardFiltersByWidget(automationFilters, widget)
+        ? filterContextItemsToAutomationDashboardFiltersByWidget(automationFilters, widget)
         : [];
 
     return {

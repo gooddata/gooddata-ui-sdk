@@ -5,7 +5,9 @@ export {
     filterContextToDashboardFiltersByWidget,
     filterContextToDashboardFiltersByDateDataSet,
     filterContextItemsToDashboardFiltersByRichTextWidget,
+    filterContextItemsToAutomationDashboardFiltersByWidget,
     dashboardDateFilterToDateFilterByWidget,
     dashboardDateFilterToDateFilterByDateDataSet,
     dashboardAttributeFilterToAttributeFilter,
+    dashboardDateFilterToAutomationDateFilterByWidget,
 } from "./filterConverters.js";
