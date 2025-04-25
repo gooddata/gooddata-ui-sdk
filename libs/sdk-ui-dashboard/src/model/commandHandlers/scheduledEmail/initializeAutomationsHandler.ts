@@ -39,6 +39,11 @@ import {
     isInsightWidget,
     IAutomationMetadataObject,
     IDashboardDateFilter,
+    IExportDefinitionDashboardRequestPayload,
+    IExportDefinitionVisualizationObjectRequestPayload,
+    isExportDefinitionDashboardRequestPayload,
+    isDashboardAttributeFilter,
+    isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
 import { changeFilterContextSelectionHandler } from "../filterContext/changeFilterContextSelectionHandler.js";
 import { changeFilterContextSelection } from "../../commands/filters.js";
@@ -47,6 +52,10 @@ import { selectInsightByWidgetRef } from "../../store/insights/insightsSelectors
 import { selectWidgetByRef } from "../../store/layout/layoutSelectors.js";
 import { selectFilterContextDateFilter } from "../../store/filterContext/filterContextSelectors.js";
 import omit from "lodash/omit.js";
+import {
+    dashboardAttributeFilterToAttributeFilter,
+    dashboardDateFilterToDateFilterByWidget,
+} from "../../../converters/index.js";
 
 export function* initializeAutomationsHandler(
     ctx: DashboardContext,
@@ -181,8 +190,9 @@ function extractRelevantFilters(automations: IAutomationMetadataObject[], automa
 
     //export definition
     const targetExportDefinition = targetAutomation?.exportDefinitions?.[0];
-    const targetExportDefinitionFilters =
-        targetExportDefinition?.requestPayload.content.filters?.filter(isDashboardFilter);
+    const targetExportDefinitionFilters = extractExportDefinitionFilters(
+        targetExportDefinition?.requestPayload,
+    );
     const targetExportVisibleFilters = targetAutomation?.metadata?.visibleFilters;
 
     return {
@@ -192,6 +202,24 @@ function extractRelevantFilters(automations: IAutomationMetadataObject[], automa
         targetExportDefinitionFilters,
         targetExportVisibleFilters,
     };
+}
+
+function extractExportDefinitionFilters(
+    content?: IExportDefinitionVisualizationObjectRequestPayload | IExportDefinitionDashboardRequestPayload,
+) {
+    if (isExportDefinitionDashboardRequestPayload(content)) {
+        return content.content.filters?.map((filter) => {
+            if (isDashboardAttributeFilter(filter)) {
+                return dashboardAttributeFilterToAttributeFilter(filter);
+            } else {
+                return dashboardDateFilterToDateFilterByWidget(filter);
+            }
+        });
+    }
+    if (isExportDefinitionVisualizationObjectRequestPayload(content)) {
+        return content.content.filters?.filter(isDashboardFilter);
+    }
+    return [];
 }
 
 /**
