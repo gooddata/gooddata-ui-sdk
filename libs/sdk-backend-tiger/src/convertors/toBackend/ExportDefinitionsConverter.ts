@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import {
     JsonApiExportDefinitionInDocument,
     JsonApiExportDefinitionOutWithLinksTypeEnum,
@@ -42,7 +42,7 @@ export const convertExportDefinitionRequestPayload = (
             ...(isMetadataFilled
                 ? {
                       metadata: {
-                          ...(exportRequest.content.filters ? { filters } : {}),
+                          ...(filters ? { filters: filters.map(cloneWithSanitizedIds) } : {}),
                           ...(title ? { title } : {}),
                       },
                   }
