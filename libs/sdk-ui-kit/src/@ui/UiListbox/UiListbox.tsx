@@ -5,9 +5,10 @@ import { useId } from "../../utils/useId.js";
 import { b, e } from "./listboxBem.js";
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
-import { DefaultUiListboxItemComponent } from "./defaults/DefaultUiListboxItemComponent.js";
+import { DefaultUiListboxInteractiveItemComponent } from "./defaults/DefaultUiListboxInteractiveItemComponent.js";
 import { firstCharacterSearch } from "./defaults/firstCharacterSearch.js";
-import { IListboxContext, IUiListboxItem, UiListboxProps } from "./types.js";
+import { IListboxContext, IUiListboxInteractiveItem, IUiListboxItem, UiListboxProps } from "./types.js";
+import { DefaultUiListboxStaticItemComponent } from "./defaults/DefaultUiListboxStaticItemComponent.js";
 
 /**
  * An accessible listbox component that can be navigated by keyboard.
@@ -16,7 +17,7 @@ import { IListboxContext, IUiListboxItem, UiListboxProps } from "./types.js";
  *
  * @internal
  */
-export function UiListbox<T>({
+export function UiListbox<InteractiveItemData, StaticItemData>({
     items,
     className,
     maxWidth,
@@ -27,20 +28,35 @@ export function UiListbox<T>({
 
     shouldKeyboardActionPreventDefault,
     shouldKeyboardActionStopPropagation,
+    shouldCloseOnSelect = true,
+    isDisabledFocusable = false,
 
-    ItemComponent = DefaultUiListboxItemComponent,
+    InteractiveItemComponent = DefaultUiListboxInteractiveItemComponent,
+    StaticItemComponent = DefaultUiListboxStaticItemComponent,
+
     onUnhandledKeyDown = firstCharacterSearch,
-}: UiListboxProps<T>): React.ReactNode {
-    const [focusedIndex, setFocusedIndex] = React.useState<number>(() => {
-        // First try to find the selected item if it's not disabled
-        const selectedIndex = items.findIndex((item) => item.id === selectedItemId && !item.isDisabled);
+}: UiListboxProps<InteractiveItemData, StaticItemData>): React.ReactNode {
+    const isItemFocusable = React.useCallback(
+        (item?: IUiListboxItem<InteractiveItemData, StaticItemData>) => {
+            if (!item || item.type !== "interactive") {
+                return false;
+            }
+
+            return isDisabledFocusable || !item.isDisabled;
+        },
+        [isDisabledFocusable],
+    );
+
+    const [focusedIndex, setFocusedIndex] = React.useState<number | undefined>(() => {
+        // First try to find the selected item if it's focusable
+        const selectedIndex = items.findIndex((item) => item.id === selectedItemId && isItemFocusable(item));
         if (selectedIndex >= 0) {
             return selectedIndex;
         }
 
-        // Otherwise find the first non-disabled item
-        const firstNonDisabledIndex = items.findIndex((item) => !item.isDisabled);
-        return firstNonDisabledIndex >= 0 ? firstNonDisabledIndex : 0;
+        // Otherwise find the first focusable item
+        const firstFocusableIndex = items.findIndex(isItemFocusable);
+        return firstFocusableIndex >= 0 ? firstFocusableIndex : undefined;
     });
 
     const itemRefs = React.useRef<(HTMLLIElement | null)[]>([]);
@@ -50,26 +66,30 @@ export function UiListbox<T>({
         itemRefs.current = itemRefs.current.slice(0, items.length);
     }, [items]);
 
+    const focusedItem = focusedIndex == null ? undefined : items[focusedIndex];
+    const focusedItemNode = focusedIndex == null ? undefined : itemRefs.current[focusedIndex];
+
     // Scroll focused item into view
     React.useEffect(() => {
-        const focusedItem = itemRefs.current[focusedIndex];
-        if (focusedItem) {
-            focusedItem.scrollIntoView({ block: "nearest" });
+        if (!focusedItemNode) {
+            return;
         }
-    }, [focusedIndex]);
+
+        focusedItemNode.scrollIntoView({ block: "nearest" });
+    }, [focusedItemNode]);
 
     const handleSelectItem = React.useCallback(
-        (item?: IUiListboxItem<T>) => {
+        (item?: IUiListboxInteractiveItem<InteractiveItemData>) => {
             if (!item || item.isDisabled) {
                 return;
             }
             onSelect?.(item);
-            onClose?.();
+            shouldCloseOnSelect && onClose?.();
         },
-        [onClose, onSelect],
+        [onClose, onSelect, shouldCloseOnSelect],
     );
 
-    const contextRef = useAutoupdateRef<IListboxContext<T>>({
+    const contextRef = useAutoupdateRef<IListboxContext<InteractiveItemData, StaticItemData>>({
         itemRefs,
         focusedIndex,
         items,
@@ -77,6 +97,7 @@ export function UiListbox<T>({
         onSelect: handleSelectItem,
         setFocusedIndex,
         selectedItemId,
+        isItemFocusable,
     });
     const handleKeyDown = React.useMemo(
         () =>
@@ -86,9 +107,9 @@ export function UiListbox<T>({
 
                 onFocusPrevious: () => {
                     setFocusedIndex((prevIndex) => {
-                        let newIndex = prevIndex - 1;
-                        // Skip disabled items
-                        while (newIndex >= 0 && items[newIndex].isDisabled) {
+                        let newIndex = (prevIndex ?? 0) - 1;
+                        // Skip non-focusable items
+                        while (newIndex >= 0 && !isItemFocusable(items[newIndex])) {
                             newIndex--;
                         }
                         return newIndex >= 0 ? newIndex : prevIndex;
@@ -96,31 +117,31 @@ export function UiListbox<T>({
                 },
                 onFocusNext: () => {
                     setFocusedIndex((prevIndex) => {
-                        let newIndex = prevIndex + 1;
-                        // Skip disabled items
-                        while (newIndex < items.length && items[newIndex].isDisabled) {
+                        let newIndex = (prevIndex ?? 0) + 1;
+                        // Skip non-focusable items
+                        while (newIndex < items.length && !isItemFocusable(items[newIndex])) {
                             newIndex++;
                         }
                         return newIndex < items.length ? newIndex : prevIndex;
                     });
                 },
                 onFocusFirst: () => {
-                    // Find the first non-disabled item
-                    const firstNonDisabledIndex = items.findIndex((item) => !item.isDisabled);
-                    setFocusedIndex(firstNonDisabledIndex >= 0 ? firstNonDisabledIndex : 0);
+                    // Find the first focusable item
+                    const firstFocusableIndex = items.findIndex(isItemFocusable);
+                    setFocusedIndex(firstFocusableIndex >= 0 ? firstFocusableIndex : undefined);
                 },
                 onFocusLast: () => {
-                    // Find the last non-disabled item
+                    // Find the last focusable item
                     for (let i = items.length - 1; i >= 0; i--) {
-                        if (!items[i].isDisabled) {
+                        if (isItemFocusable(items[i])) {
                             setFocusedIndex(i);
                             return;
                         }
                     }
-                    setFocusedIndex(items.length - 1);
+                    setFocusedIndex(undefined);
                 },
                 onSelect: () => {
-                    handleSelectItem(items[focusedIndex]);
+                    focusedItem && focusedItem.type === "interactive" && handleSelectItem(focusedItem);
                 },
                 onClose: () => {
                     onClose?.();
@@ -131,8 +152,9 @@ export function UiListbox<T>({
             }),
         [
             contextRef,
-            focusedIndex,
+            focusedItem,
             handleSelectItem,
+            isItemFocusable,
             items,
             onClose,
             onUnhandledKeyDown,
@@ -146,36 +168,43 @@ export function UiListbox<T>({
     return (
         <div className={cx(b(), className)} style={{ maxWidth }}>
             <ul
-                role="listbox"
                 className={e("items")}
                 tabIndex={0}
                 onKeyDown={handleKeyDown}
-                aria-activedescendant={makeItemId(listboxId, items[focusedIndex])}
+                aria-activedescendant={makeItemId(listboxId, focusedItem)}
                 {...ariaAttributes}
+                role="listbox"
             >
-                {items.map((item, index) => (
-                    <li
-                        key={item.id}
-                        ref={(el) => (itemRefs.current[index] = el)}
-                        role="option"
-                        aria-selected={item.id === selectedItemId}
-                        aria-disabled={item.isDisabled}
-                        tabIndex={-1}
-                        id={makeItemId(listboxId, item)}
-                    >
-                        <ItemComponent
-                            onSelect={() => {
-                                handleSelectItem(item);
-                            }}
-                            item={item}
-                            isFocused={index === focusedIndex}
-                            isSelected={item.id === selectedItemId}
-                        />
-                    </li>
-                ))}
+                {items.map((item, index) =>
+                    item.type === "interactive" ? (
+                        <li
+                            key={item.id}
+                            ref={(el) => (itemRefs.current[index] = el)}
+                            role="option"
+                            aria-selected={item.id === selectedItemId}
+                            aria-disabled={item.isDisabled}
+                            tabIndex={-1}
+                            id={makeItemId(listboxId, item)}
+                        >
+                            <InteractiveItemComponent
+                                onSelect={() => {
+                                    handleSelectItem(item);
+                                }}
+                                item={item}
+                                isFocused={index === focusedIndex}
+                                isSelected={item.id === selectedItemId}
+                            />
+                        </li>
+                    ) : (
+                        <li key={item.id ?? index} ref={(el) => (itemRefs.current[index] = el)}>
+                            <StaticItemComponent item={item} />
+                        </li>
+                    ),
+                )}
             </ul>
         </div>
     );
 }
 
-const makeItemId = (listboxId: string, item: IUiListboxItem<unknown>) => `item-${listboxId}-${item.id}`;
+const makeItemId = (listboxId: string, item?: IUiListboxItem<unknown, unknown>) =>
+    item && item.type === "interactive" ? `item-${listboxId}-${item.id}` : undefined;

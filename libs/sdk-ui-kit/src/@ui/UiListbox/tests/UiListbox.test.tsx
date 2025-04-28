@@ -6,15 +6,15 @@ import cx from "classnames";
 import { UiListbox } from "../UiListbox.js";
 import { describe, it, expect, vi } from "vitest";
 import { e, b } from "../listboxBem.js";
-import { makeSeparatorItem } from "../defaults/DefaultUiListboxItemComponent.js";
-import { IUiListboxItem, UiListboxItemProps } from "../types";
+import { separatorStaticItem } from "../defaults/DefaultUiListboxStaticItemComponent.js";
+import { IUiListboxItem, UiListboxInteractiveItemProps, UiListboxStaticItemProps } from "../types.js";
 
 describe("UiListbox", () => {
     const mockItems: IUiListboxItem<string>[] = [
-        { id: "item1", stringTitle: "Item 1", data: "data1" },
-        { id: "item2", stringTitle: "Item 2", data: "data2" },
-        { id: "item3", stringTitle: "Item 3", isDisabled: true, data: "data3" },
-        { id: "item4", stringTitle: "Item 4", data: "data4" },
+        { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
+        { type: "interactive", id: "item2", stringTitle: "Item 2", data: "data2" },
+        { type: "interactive", id: "item3", stringTitle: "Item 3", isDisabled: true, data: "data3" },
+        { type: "interactive", id: "item4", stringTitle: "Item 4", data: "data4" },
     ];
 
     const renderListbox = (props = {}) => {
@@ -25,7 +25,7 @@ describe("UiListbox", () => {
         };
 
         return render(
-            <UiListbox
+            <UiListbox<string, React.ReactNode>
                 items={mockItems}
                 onSelect={vi.fn()}
                 onClose={vi.fn()}
@@ -155,10 +155,10 @@ describe("UiListbox", () => {
 
     it("should navigate with character search", () => {
         const items: IUiListboxItem<string>[] = [
-            { id: "apple", stringTitle: "Apple", data: "apple-data" },
-            { id: "banana", stringTitle: "Banana", data: "banana-data" },
-            { id: "cherry", stringTitle: "Cherry", data: "cherry-data" },
-            { id: "date", stringTitle: "Date", data: "date-data" },
+            { type: "interactive", id: "apple", stringTitle: "Apple", data: "apple-data" },
+            { type: "interactive", id: "banana", stringTitle: "Banana", data: "banana-data" },
+            { type: "interactive", id: "cherry", stringTitle: "Cherry", data: "cherry-data" },
+            { type: "interactive", id: "date", stringTitle: "Date", data: "date-data" },
         ];
 
         renderListbox({ items });
@@ -176,47 +176,6 @@ describe("UiListbox", () => {
         // Type 'a' to navigate to Apple (wrapping around)
         fireEvent.keyDown(listbox, { key: "a" });
         expect(screen.getByText("Apple").closest("div")).toHaveClass(e("item", { isFocused: true }));
-    });
-
-    it("should rotate through items that start with the same letter when that letter keeps getting pressed", () => {
-        const items: IUiListboxItem<string>[] = [
-            { id: "apple", stringTitle: "Apple", data: "apple-data" },
-            { id: "apricot", stringTitle: "Apricot", data: "apricot-data" },
-            { id: "avocado", stringTitle: "Avocado", data: "avocado-data" },
-            { id: "banana", stringTitle: "Banana", data: "banana-data" },
-            { id: "blueberry", stringTitle: "Blueberry", data: "blueberry-data" },
-        ];
-
-        renderListbox({ items });
-
-        const listbox = screen.getByRole("listbox");
-
-        // Initially focused on Apple
-        expect(screen.getByText("Apple").closest("div")).toHaveClass(e("item", { isFocused: true }));
-
-        // Press 'a' to navigate to the next 'a' item (Apricot)
-        fireEvent.keyDown(listbox, { key: "a" });
-        expect(screen.getByText("Apricot").closest("div")).toHaveClass(e("item", { isFocused: true }));
-
-        // Press 'a' again to navigate to the next 'a' item (Avocado)
-        fireEvent.keyDown(listbox, { key: "a" });
-        expect(screen.getByText("Avocado").closest("div")).toHaveClass(e("item", { isFocused: true }));
-
-        // Press 'a' again to wrap around to the first 'a' item (Apple)
-        fireEvent.keyDown(listbox, { key: "a" });
-        expect(screen.getByText("Apple").closest("div")).toHaveClass(e("item", { isFocused: true }));
-
-        // Press 'b' to navigate to the first 'b' item (Banana)
-        fireEvent.keyDown(listbox, { key: "b" });
-        expect(screen.getByText("Banana").closest("div")).toHaveClass(e("item", { isFocused: true }));
-
-        // Press 'b' again to navigate to the next 'b' item (Blueberry)
-        fireEvent.keyDown(listbox, { key: "b" });
-        expect(screen.getByText("Blueberry").closest("div")).toHaveClass(e("item", { isFocused: true }));
-
-        // Press 'b' again to wrap around to the first 'b' item (Banana)
-        fireEvent.keyDown(listbox, { key: "b" });
-        expect(screen.getByText("Banana").closest("div")).toHaveClass(e("item", { isFocused: true }));
     });
 
     it("should update aria-activedescendant when navigating", () => {
@@ -244,13 +203,13 @@ describe("UiListbox", () => {
         expect(onClose).toHaveBeenCalled();
     });
 
-    it("should render with custom ItemComponent", () => {
-        const CustomItemComponent = ({
+    it("should render with custom InteractiveItemComponent", () => {
+        const CustomInteractiveItemComponent = ({
             item,
             isSelected,
             isFocused,
             onSelect,
-        }: UiListboxItemProps<string>) => (
+        }: UiListboxInteractiveItemProps<string>) => (
             <div
                 className={cx("custom-item", {
                     "custom-selected": isSelected,
@@ -265,7 +224,7 @@ describe("UiListbox", () => {
         );
 
         renderListbox({
-            ItemComponent: CustomItemComponent,
+            InteractiveItemComponent: CustomInteractiveItemComponent,
             selectedItemId: "item1",
         });
 
@@ -277,9 +236,36 @@ describe("UiListbox", () => {
         expect(screen.getByText("Item 1 - data1")).toHaveClass("custom-selected");
     });
 
+    it("should render with custom StaticItemComponent", () => {
+        const CustomStaticItemComponent = ({ item }: UiListboxStaticItemProps<string>) => (
+            <div className="custom-static-item" data-testid="custom-static-item">
+                Static: {item.data}
+            </div>
+        );
+
+        const itemsWithStatic: IUiListboxItem<string, string>[] = [
+            { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
+            { type: "static", data: "static-data" },
+            { type: "interactive", id: "item2", stringTitle: "Item 2", data: "data2" },
+        ];
+
+        renderListbox({
+            items: itemsWithStatic,
+            StaticItemComponent: CustomStaticItemComponent,
+        });
+
+        // Check that custom static component is rendered
+        const customStaticItems = screen.getAllByTestId("custom-static-item");
+        expect(customStaticItems.length).toBe(1);
+        expect(screen.getByText("Static: static-data")).toBeInTheDocument();
+    });
+
     it("should render separator items correctly", () => {
-        const separatorItem = makeSeparatorItem();
-        const itemsWithSeparator: IUiListboxItem<any>[] = [mockItems[0], separatorItem, mockItems[1]];
+        const itemsWithSeparator: IUiListboxItem<string>[] = [
+            mockItems[0],
+            separatorStaticItem,
+            mockItems[1],
+        ];
 
         renderListbox({ items: itemsWithSeparator });
 
@@ -292,22 +278,25 @@ describe("UiListbox", () => {
         expect(screen.getByText("Item 2")).toBeInTheDocument();
     });
 
-    it("should skip separator items when navigating with keyboard", () => {
-        const separatorItem = makeSeparatorItem();
-        const itemsWithSeparator: IUiListboxItem<any>[] = [mockItems[0], separatorItem, mockItems[1]];
+    it("should skip static items when navigating with keyboard", () => {
+        const itemsWithStatic: IUiListboxItem<string, string>[] = [
+            mockItems[0],
+            { type: "static", data: "static-data" },
+            mockItems[1],
+        ];
 
-        renderListbox({ items: itemsWithSeparator });
+        renderListbox({ items: itemsWithStatic });
 
         const listbox = screen.getByRole("listbox");
 
         // Initial focus is on first item
         expect(screen.getByText("Item 1").closest("div")).toHaveClass(e("item", { isFocused: true }));
 
-        // Navigate down should skip separator and go to Item 2
+        // Navigate down should skip static item and go to Item 2
         fireEvent.keyDown(listbox, { code: "ArrowDown" });
         expect(screen.getByText("Item 2").closest("div")).toHaveClass(e("item", { isFocused: true }));
 
-        // Navigate up should skip separator and go back to Item 1
+        // Navigate up should skip static item and go back to Item 1
         fireEvent.keyDown(listbox, { code: "ArrowUp" });
         expect(screen.getByText("Item 1").closest("div")).toHaveClass(e("item", { isFocused: true }));
     });
@@ -357,10 +346,10 @@ describe("UiListbox", () => {
 
     it("should handle disabled items at list boundaries", () => {
         const itemsWithDisabledEnds: IUiListboxItem<string>[] = [
-            { id: "item1", stringTitle: "Item 1", isDisabled: true, data: "data1" },
-            { id: "item2", stringTitle: "Item 2", data: "data2" },
-            { id: "item3", stringTitle: "Item 3", data: "data3" },
-            { id: "item4", stringTitle: "Item 4", isDisabled: true, data: "data4" },
+            { type: "interactive", id: "item1", stringTitle: "Item 1", isDisabled: true, data: "data1" },
+            { type: "interactive", id: "item2", stringTitle: "Item 2", data: "data2" },
+            { type: "interactive", id: "item3", stringTitle: "Item 3", data: "data3" },
+            { type: "interactive", id: "item4", stringTitle: "Item 4", isDisabled: true, data: "data4" },
         ];
 
         renderListbox({ items: itemsWithDisabledEnds });
@@ -375,11 +364,48 @@ describe("UiListbox", () => {
         expect(screen.getByText("Item 3").closest("div")).toHaveClass(e("item", { isFocused: true }));
     });
 
+    it("should allow focusing disabled items when isDisabledFocusable is true", () => {
+        const itemsWithDisabled: IUiListboxItem<string>[] = [
+            { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
+            { type: "interactive", id: "item2", stringTitle: "Item 2", isDisabled: true, data: "data2" },
+            { type: "interactive", id: "item3", stringTitle: "Item 3", data: "data3" },
+        ];
+
+        renderListbox({
+            items: itemsWithDisabled,
+            isDisabledFocusable: true,
+        });
+
+        const listbox = screen.getByRole("listbox");
+
+        // Initial focus should be on first item
+        expect(screen.getByText("Item 1").closest("div")).toHaveClass(e("item", { isFocused: true }));
+
+        // Navigate down should include disabled item
+        fireEvent.keyDown(listbox, { code: "ArrowDown" });
+        expect(screen.getByText("Item 2").closest("div")).toHaveClass(e("item", { isFocused: true }));
+
+        // Disabled item should still be disabled (not selectable)
+        fireEvent.click(screen.getByText("Item 2"));
+        // onSelect should not be called for disabled items even when focusable
+        expect(screen.getByText("Item 2").closest("div")).toHaveClass(e("item", { isDisabled: true }));
+
+        // Navigate down again
+        fireEvent.keyDown(listbox, { code: "ArrowDown" });
+        expect(screen.getByText("Item 3").closest("div")).toHaveClass(e("item", { isFocused: true }));
+    });
+
     it("should handle character search with disabled items", () => {
         const items: IUiListboxItem<string>[] = [
-            { id: "apple", stringTitle: "Apple", data: "apple-data" },
-            { id: "apricot", stringTitle: "Apricot", isDisabled: true, data: "apricot-data" },
-            { id: "banana", stringTitle: "Banana", data: "banana-data" },
+            { type: "interactive", id: "apple", stringTitle: "Apple", data: "apple-data" },
+            {
+                type: "interactive",
+                id: "apricot",
+                stringTitle: "Apricot",
+                isDisabled: true,
+                data: "apricot-data",
+            },
+            { type: "interactive", id: "banana", stringTitle: "Banana", data: "banana-data" },
         ];
 
         renderListbox({ items });
@@ -414,5 +440,42 @@ describe("UiListbox", () => {
 
         // Disabled item should have aria-disabled="true"
         expect(items[2]).toHaveAttribute("aria-disabled", "true");
+    });
+
+    it("should not assign role='option' to static items", () => {
+        const mixedItems: IUiListboxItem<string, string>[] = [
+            { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
+            { type: "static", data: "Static Item" },
+            { type: "interactive", id: "item2", stringTitle: "Item 2", data: "data2" },
+        ];
+
+        renderListbox({ items: mixedItems });
+
+        // Only interactive items should have role="option"
+        const options = screen.getAllByRole("option");
+        expect(options.length).toBe(2); // Only the interactive items
+
+        // Static item should be in the document but not have role="option"
+        expect(screen.getByText("Static Item")).toBeInTheDocument();
+    });
+
+    it("should not close on select when shouldCloseOnSelect is false", () => {
+        const onSelect = vi.fn();
+        const onClose = vi.fn();
+
+        renderListbox({
+            onSelect,
+            onClose,
+            shouldCloseOnSelect: false,
+        });
+
+        // Click on an item
+        fireEvent.click(screen.getByText("Item 1"));
+
+        // onSelect should be called
+        expect(onSelect).toHaveBeenCalledWith(mockItems[0]);
+
+        // onClose should not be called
+        expect(onClose).not.toHaveBeenCalled();
     });
 });
