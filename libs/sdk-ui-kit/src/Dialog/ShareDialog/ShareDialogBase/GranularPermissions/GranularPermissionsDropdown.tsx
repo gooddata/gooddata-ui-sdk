@@ -12,7 +12,7 @@ import { granularPermissionMessageLabels } from "../../../../locales.js";
 import { GranularPermissionsDropdownBody } from "./GranularPermissionsDropdownBody.js";
 import { withBubble } from "../../../../Bubble/index.js";
 import { IAccessibilityConfigBase } from "../../../../typings/accessibility.js";
-import { Dropdown, DropdownButton } from "../../../../Dropdown/index.js";
+import { Dropdown } from "../../../../Dropdown/index.js";
 
 interface IGranularPermissionsDropdownProps {
     grantee: IGranularGrantee;
@@ -29,6 +29,7 @@ interface IGranularPermissionsDropdownProps {
 export const GranularPermissionsDropdown: React.FC<IGranularPermissionsDropdownProps> = ({
     grantee,
     granteePossibilities,
+    isDropdownDisabled,
     handleToggleDropdown,
     onChange,
     onDelete,
@@ -48,35 +49,44 @@ export const GranularPermissionsDropdown: React.FC<IGranularPermissionsDropdownP
 
     const granularGranteeClassName = getGranularGranteeClassNameId(grantee);
     const buttonValue = intl.formatMessage(granularPermissionMessageLabels[selectedPermission]);
-    const buttonClassName = cx(
-        "s-granular-permission-button",
-        "gd-granular-permission-button",
-        "dropdown-button",
-        "customizable",
-        granularGranteeClassName,
-    );
 
     return (
         <Dropdown
             className={className}
             renderButton={({ isOpen, toggleDropdown, buttonRef, dropdownId }) => (
-                <DropdownButton
-                    buttonRef={buttonRef}
+                <button
+                    className={cx(
+                        "s-granular-permission-button",
+                        "gd-granular-permission-button",
+                        "dropdown-button",
+                        granularGranteeClassName,
+                        {
+                            "is-active": isOpen,
+                            "gd-icon-navigateup": !isDropdownDisabled && isOpen,
+                            "gd-icon-navigatedown": !isDropdownDisabled && !isOpen,
+                            disabled: isDropdownDisabled,
+                            "gd-icon-right": !isDropdownDisabled,
+                        },
+                    )}
                     onClick={() => {
-                        toggleDropdown();
-                        handleToggleDropdown();
+                        if (!isDropdownDisabled) {
+                            toggleDropdown();
+                            handleToggleDropdown();
+                        }
                     }}
-                    value={buttonValue}
-                    isOpen={isOpen}
-                    className={buttonClassName}
-                    accessibilityConfig={{
-                        ariaLabel: intl.formatMessage({
-                            id: "shareDialog.share.granular.grantee.permission.label",
-                        }),
-                        ariaDescribedBy,
-                    }}
-                    dropdownId={dropdownId}
-                />
+                    aria-label={intl.formatMessage({
+                        id: "shareDialog.share.granular.grantee.permission.label",
+                    })}
+                    ref={buttonRef as any}
+                    aria-haspopup
+                    aria-expanded={isOpen ? true : false}
+                    aria-controls={isOpen ? dropdownId : undefined}
+                    aria-describedby={ariaDescribedBy}
+                >
+                    <div className="s-granular-permission-button-title gd-granular-permission-button-title">
+                        {buttonValue}
+                    </div>
+                </button>
             )}
             renderBody={({ closeDropdown, ariaAttributes }) => (
                 <GranularPermissionsDropdownBody
