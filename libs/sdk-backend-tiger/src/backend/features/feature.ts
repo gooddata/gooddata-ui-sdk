@@ -662,13 +662,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableDashboardAfterRenderDetection,
-            "enableDashboardAfterRenderDetection",
-            "BOOLEAN",
-            FeatureFlagsValues.enableDashboardAfterRenderDetection,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableImmediateAttributeFilterDisplayAsLabelMigration,
             "enableImmediateAttributeFilterDisplayAsLabelMigration",
             "BOOLEAN",

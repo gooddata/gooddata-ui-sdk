@@ -132,7 +132,6 @@ export enum TigerFeaturesNames {
     EnableRawExports = "enableRawExports",
     EnableDashboardFiltersApplyModes = "enableDashboardFiltersApplyModes",
     EnableExecutionCancelling = "enableExecutionCancelling",
-    EnableDashboardAfterRenderDetection = "enableDashboardAfterRenderDetection",
     EnableDashboardTabularExport = "enableDashboardTabularExport",
     EnableOrchestratedTabularExports = "enableOrchestratedTabularExports",
     EnableImmediateAttributeFilterDisplayAsLabelMigration = "enableImmediateAttributeFilterDisplayAsLabelMigration",
@@ -240,7 +239,6 @@ export type ITigerFeatureFlags = {
     enableRawExports: typeof FeatureFlagsValues["enableRawExports"][number];
     enableDashboardFiltersApplyModes: typeof FeatureFlagsValues["enableDashboardFiltersApplyModes"][number];
     enableExecutionCancelling: typeof FeatureFlagsValues["enableExecutionCancelling"][number];
-    enableDashboardAfterRenderDetection: typeof FeatureFlagsValues["enableDashboardAfterRenderDetection"][number];
     enableImmediateAttributeFilterDisplayAsLabelMigration: typeof FeatureFlagsValues["enableImmediateAttributeFilterDisplayAsLabelMigration"][number];
     enableRichTextDynamicReferences: typeof FeatureFlagsValues["enableRichTextDynamicReferences"][number];
     enableAnalyticalDesignerCatalogSideload: typeof FeatureFlagsValues["enableAnalyticalDesignerCatalogSideload"][number];
@@ -347,7 +345,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRawExports: false,
     enableDashboardFiltersApplyModes: false,
     enableExecutionCancelling: false,
-    enableDashboardAfterRenderDetection: true,
     enableImmediateAttributeFilterDisplayAsLabelMigration: false,
     enableRichTextDynamicReferences: true,
     enableAnalyticalDesignerCatalogSideload: false,
@@ -458,7 +455,6 @@ export const FeatureFlagsValues = {
     enableRawExports: [true, false] as const,
     enableDashboardFiltersApplyModes: [true, false] as const,
     enableExecutionCancelling: [true, false] as const,
-    enableDashboardAfterRenderDetection: [true, false] as const,
     enableImmediateAttributeFilterDisplayAsLabelMigration: [true, false] as const,
     enableRichTextDynamicReferences: [true, false] as const,
     enableAnalyticalDesignerCatalogSideload: [true, false] as const,

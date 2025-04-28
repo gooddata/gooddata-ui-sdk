@@ -32,14 +32,6 @@ beforeEach(() => {
                         strategies: [],
                     },
                     {
-                        id: "75c7f72d-34f8-43b1-adab-64a84f2a7fde",
-                        key: "enableDashboardAfterRenderDetection",
-                        l: false,
-                        version: 1,
-                        type: "BOOLEAN",
-                        value: true,
-                    },
-                    {
                         id: "3d6febf7-430f-44df-a537-2436e2e07520",
                         key: "enableDateFilterIdentifiersRollout",
                         l: false,
