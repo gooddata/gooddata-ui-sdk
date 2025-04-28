@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
@@ -30,6 +30,7 @@ import { Button } from "../../../Button/index.js";
 import { GranularGranteeUserItem } from "./GranularPermissions/GranularGranteeUserItem.js";
 import { GranularGranteeGroupItem } from "./GranularPermissions/GranularGranteeGroupItem.js";
 import { invariant } from "ts-invariant";
+import { useId } from "../../../utils/useId.js";
 
 interface IGranteeUserItemProps {
     grantee: IGranteeUser;
@@ -175,6 +176,8 @@ const GranteeGroupItem: React.FC<IGranteeGroupItemProps> = (props) => {
 export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
     const { grantee, mode, currentUserPermissions, isSharedObjectLocked, onDelete, onChange } = props;
 
+    const granularGranteeItemId = `${useId()}-grantee-item`;
+
     if (isGranularGranteeUser(grantee)) {
         return (
             <GranularGranteeUserItem
@@ -184,6 +187,7 @@ export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
                 onChange={onChange}
                 onDelete={onDelete}
                 mode={mode}
+                id={granularGranteeItemId}
             />
         );
     } else if (isGranularGranteeGroup(grantee) || isGranteeRules(grantee)) {
@@ -195,6 +199,7 @@ export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
                 onChange={onChange}
                 onDelete={onDelete}
                 mode={mode}
+                id={granularGranteeItemId}
             />
         );
     } else if (isGranteeUser(grantee)) {

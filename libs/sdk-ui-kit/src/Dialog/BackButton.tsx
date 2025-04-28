@@ -1,6 +1,7 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React from "react";
+import { useIntl } from "react-intl";
 import cx from "classnames";
 
 import { Button } from "../Button/index.js";
@@ -17,6 +18,8 @@ export interface IBackButtonProps {
  * @internal
  */
 export const BackButton: React.FC<IBackButtonProps> = ({ onClick, className }) => {
+    const intl = useIntl();
+
     return (
         <Button
             value={""}
@@ -25,6 +28,9 @@ export const BackButton: React.FC<IBackButtonProps> = ({ onClick, className }) =
                 className,
             )}
             onClick={onClick}
+            accessibilityConfig={{
+                ariaLabel: intl.formatMessage({ id: "dialogs.backButtonLabel" }),
+            }}
         />
     );
 };

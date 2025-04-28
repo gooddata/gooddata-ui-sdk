@@ -1,15 +1,18 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useCallback } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import { BubbleHoverTrigger, Bubble } from "../../../Bubble/index.js";
 import { IAddUserOrGroupButton } from "./types.js";
+import { ADD_GRANTEE_ID } from "./utils.js";
 
 /**
  * @internal
  */
 export const AddUserOrGroupButton: React.FC<IAddUserOrGroupButton> = (props) => {
     const { isDisabled, onClick } = props;
+
+    const intl = useIntl();
 
     const buttonClassNames = cx(
         {
@@ -35,14 +38,14 @@ export const AddUserOrGroupButton: React.FC<IAddUserOrGroupButton> = (props) => 
     return (
         <div>
             <BubbleHoverTrigger showDelay={0} hideDelay={0}>
-                <a
+                <button
+                    id={ADD_GRANTEE_ID}
                     className={buttonClassNames}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     onClick={handleClick}
+                    aria-label={intl.formatMessage({ id: "shareDialog.share.grantee.addLabel" })}
                 >
                     <FormattedMessage id="shareDialog.share.grantee.add" />
-                </a>
+                </button>
                 <Bubble className="bubble-primary" alignPoints={[{ align: "cr cl" }]}>
                     <FormattedMessage id={"shareDialog.share.grantee.add.info"} />
                 </Bubble>

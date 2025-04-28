@@ -5378,7 +5378,7 @@ export type VariantTertiary = "tertiary";
 export type VerticalPosition = "top" | "center" | "bottom";
 
 // @internal (undocumented)
-export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React_2.FC<T & IWithBubbleProps>;
+export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React_2.ForwardRefExoticComponent<React_2.PropsWithoutRef<T & IWithBubbleProps> & React_2.RefAttributes<any>>;
 
 // @internal (undocumented)
 export const WorkspacePickerHomeFooter: React_2.ComponentType<Omit<IWorkspacePickerHomeFooterProps, "theme" | "themeIsLoading" | "themeStatus">>;

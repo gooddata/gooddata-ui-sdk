@@ -1735,6 +1735,11 @@
         "comment": "Label of button than adds a new grantee in share dialog.",
         "limit": 0
     },
+    "shareDialog.share.grantee.addLabel": {
+        "value": "Add users or groups",
+        "comment": "Label of button than adds a new grantee in share dialog.",
+        "limit": 0
+    },
     "shareDialog.share.grantee.add.empty.selection": {
         "value": "No user or group selected.",
         "comment": "Information message shown when there is no user or group in grantees list in share dialog.",
@@ -1873,6 +1878,21 @@
     "shareDialog.share.granular.administrator.info": {
         "value": "<b>Note.</b> You and other administrators have full access to all dashboards.",
         "comment": "",
+        "limit": 0
+    },
+    "shareDialog.share.granular.grantee.permission.label": {
+        "value": "Permission",
+        "comment": "Label for permissions selector",
+        "limit": 0
+    },
+    "dialogs.closeLabel": {
+        "value": "Close dialog",
+        "comment": "Label of a close button",
+        "limit": 0
+    },
+    "dialogs.backButtonLabel": {
+        "value": "Back to previous step",
+        "comment": "Label of a back button",
         "limit": 0
     },
     "sorting.dropdown.header|insight": {

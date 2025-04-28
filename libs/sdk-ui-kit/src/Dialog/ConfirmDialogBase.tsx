@@ -8,6 +8,7 @@ import { IConfirmDialogBaseProps } from "./typings.js";
 import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 import { Typography } from "../Typography/index.js";
 import { useId } from "../utils/useId.js";
+import { CONFIRM_DIALOG_BASE_ID } from "./elementId.js";
 
 /**
  * @internal
@@ -98,6 +99,7 @@ export const ConfirmDialogBase = React.memo<IConfirmDialogBaseProps>(function Co
                 {submitButtonText ? (
                     <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
                         <Button
+                            id={CONFIRM_DIALOG_BASE_ID}
                             onClick={dialogBaseProps.onSubmit}
                             className={submitButtonClasses}
                             value={submitButtonText}

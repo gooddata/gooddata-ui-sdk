@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IntlShape } from "react-intl";
 import {
     AccessGranularPermission,
@@ -23,6 +23,11 @@ import {
 import differenceWith from "lodash/differenceWith.js";
 import partition from "lodash/partition.js";
 import { CurrentUserPermissions } from "../types.js";
+
+/**
+ * @internal
+ */
+export const ADD_GRANTEE_ID = "add-grantee-id";
 
 /**
  * @internal

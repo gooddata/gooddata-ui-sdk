@@ -35,7 +35,14 @@ export class Button extends React.Component<IButtonProps> {
             accessibilityConfig,
             buttonRef,
         } = this.props;
-        const { isExpanded, popupId, ariaLabel, ariaLabelledBy, role = "button" } = accessibilityConfig ?? {};
+        const {
+            isExpanded,
+            popupId,
+            ariaLabel,
+            ariaLabelledBy,
+            ariaDescribedBy,
+            role = "button",
+        } = accessibilityConfig ?? {};
         const TagName = tagName as any;
         const effectiveValue = this.getEffectiveValue();
 
@@ -62,6 +69,7 @@ export class Button extends React.Component<IButtonProps> {
                 aria-disabled={disabled}
                 aria-label={ariaLabel}
                 aria-labelledby={ariaLabelledBy}
+                aria-describedby={ariaDescribedBy}
                 {...ariaDropdownProps}
                 role={role}
             >

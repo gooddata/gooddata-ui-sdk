@@ -1,5 +1,5 @@
-// (C) 2021-2023 GoodData Corporation
-import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
+// (C) 2021-2025 GoodData Corporation
+import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import debounce from "debounce-promise";
 import { useIntl } from "react-intl";
 import { OnChangeValue, SelectInstance } from "react-select";
@@ -29,6 +29,7 @@ const SEARCH_INTERVAL = 400;
  */
 export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
     const { appliedGrantees, currentUser, sharedObjectRef, onSelectGrantee } = props;
+    const [inputValue, setInputValue] = useState<string>("");
     const backend: IAnalyticalBackend = useBackendStrict();
     const workspace: string = useWorkspaceStrict();
     const { availableGranteeListOpenInteraction } = useShareDialogInteraction();
@@ -94,13 +95,19 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
         // We need disable this behavior for space key by set e.preventDefault when input is empty and for tab key completely
 
         //space
-        if (e.keyCode === 32 && !target.value) {
+        if (e.key === " " && !target.value) {
             e.preventDefault();
         }
 
         // tab
-        if (e.keyCode === 9) {
+        if (e.key === "Tab") {
             e.preventDefault();
+        }
+
+        // escape
+        if (e.key === "Escape") {
+            e.stopPropagation();
+            setInputValue("");
         }
     }, []);
 
@@ -143,6 +150,13 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
                 onChange={onSelect}
                 value={null}
                 filterOption={filterOption}
+                onInputChange={(newValue, actionMeta) => {
+                    // Prevent clearing input on blur
+                    if (actionMeta.action !== "menu-close" && actionMeta.action !== "input-blur") {
+                        setInputValue(newValue);
+                    }
+                }}
+                inputValue={inputValue}
             />
         </div>
     );

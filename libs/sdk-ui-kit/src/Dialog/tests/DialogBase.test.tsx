@@ -5,6 +5,7 @@ import { DialogBase } from "../DialogBase.js";
 import { Input } from "../../Form/Input.js";
 import { IDialogBaseProps } from "../typings.js";
 import { describe, it, expect, vi } from "vitest";
+import { CONFIRM_DIALOG_BASE_ID } from "../elementId.js";
 
 function renderDialog(options: Partial<IDialogBaseProps>, children?: ReactNode) {
     return render(
@@ -34,11 +35,14 @@ describe("Dialog", () => {
     describe("submit", () => {
         it("should call `onSubmit` when enter is pressed", () => {
             const onSubmit = vi.fn();
-            renderDialog({
-                onSubmit,
-            });
+            renderDialog(
+                {
+                    onSubmit,
+                },
+                <button id={CONFIRM_DIALOG_BASE_ID} data-testid={CONFIRM_DIALOG_BASE_ID} />,
+            );
 
-            fireEvent.keyDown(screen.getByText("Dialog content"), {
+            fireEvent.keyDown(screen.getByTestId(CONFIRM_DIALOG_BASE_ID), {
                 key: "Enter",
                 keyCode: 13,
                 which: 13,
