@@ -61,6 +61,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         widget,
         backend,
         workspace,
+        drillStep,
         onError,
         onDrill: onDrillFn,
         onExportReady,
@@ -188,6 +189,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
                                 ErrorComponent={ErrorComponent}
                                 LoadingComponent={LoadingComponent}
                                 execConfig={execConfig}
+                                drillStep={drillStep}
                             />
                         </div>
                     ) : null}

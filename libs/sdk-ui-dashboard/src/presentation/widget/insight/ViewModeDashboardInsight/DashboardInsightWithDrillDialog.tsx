@@ -84,6 +84,7 @@ export const DashboardInsightWithDrillDialog = (props: IDashboardInsightProps): 
                     onBackButtonClick={goBack}
                     onClose={onClose}
                     enableDrillDescription={enableDrillDescription}
+                    drillStep={activeDrillStep}
                 />
             ) : null}
         </>

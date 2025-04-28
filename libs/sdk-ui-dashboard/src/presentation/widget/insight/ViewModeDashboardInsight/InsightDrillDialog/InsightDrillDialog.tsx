@@ -24,7 +24,7 @@ import cx from "classnames";
 
 import { DOWNLOADER_ID } from "../../../../../_staging/fileUtils/downloadFile.js";
 import { useInsightExport } from "../../../common/index.js";
-import { OnDrillDownSuccess, WithDrillSelect } from "../../../../drill/index.js";
+import { OnDrillDownSuccess, WithDrillSelect, DrillStep } from "../../../../drill/index.js";
 import { IntlWrapper } from "../../../../localization/index.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
 import {
@@ -54,6 +54,7 @@ export interface InsightDrillDialogProps {
     breadcrumbs: string[];
     widget: IInsightWidget;
     insight: IInsight;
+    drillStep: DrillStep;
     onDrillDown?: OnDrillDownSuccess;
     onClose: () => void;
     onBackButtonClick: () => void;
@@ -100,6 +101,7 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
         breadcrumbs,
         insight,
         enableDrillDescription,
+        drillStep,
         onClose,
         onBackButtonClick,
         onDrillDown,
@@ -213,6 +215,7 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                                                 pushData={executionsHandler.onPushData}
                                                 ErrorComponent={ErrorComponent}
                                                 LoadingComponent={LoadingComponent}
+                                                drillStep={drillStep}
                                             />
                                         </div>
                                     </div>
@@ -225,6 +228,7 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                                         pushData={executionsHandler.onPushData}
                                         ErrorComponent={ErrorComponent}
                                         LoadingComponent={LoadingComponent}
+                                        drillStep={drillStep}
                                     />
                                 );
                             }}

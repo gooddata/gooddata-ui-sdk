@@ -3709,7 +3709,7 @@ export interface DrillState {
     drillableItems: ExplicitDrill[];
 }
 
-// @internal (undocumented)
+// @beta (undocumented)
 export interface DrillStep {
     // (undocumented)
     drillDefinition: IDrillToInsight | IDrillDownDefinition;
@@ -4787,6 +4787,7 @@ export interface IDashboardInsightProps {
     clientHeight?: number;
     // @alpha (undocumented)
     clientWidth?: number;
+    drillStep?: DrillStep;
     // @alpha
     ErrorComponent: ComponentType<IErrorProps>;
     // @alpha (undocumented)
@@ -5293,6 +5294,7 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
         selectedPoints?: IDrillEventIntersectionElement[][];
     };
     drillableItems: ExplicitDrill[] | undefined;
+    drillStep?: DrillStep;
     ErrorComponent: React.ComponentType<IErrorProps>;
     execConfig?: IExecutionConfig;
     insight: IInsight;

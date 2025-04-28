@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IAvailableDrillTargetMeasure, IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import isEmpty from "lodash/isEmpty.js";
 import {
@@ -114,7 +114,7 @@ export type OnDrillToLegacyDashboard = (cmd: DrillToLegacyDashboard) => void;
 export type OnDrillToLegacyDashboardSuccess = (event: DashboardDrillToLegacyDashboardResolved) => void;
 
 /**
- * @internal
+ * @beta
  */
 export interface DrillStep {
     drillEvent: IDashboardDrillEvent;
