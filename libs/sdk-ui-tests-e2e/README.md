@@ -145,13 +145,25 @@ $ CYPRESS_HOST=http://localhost:9500 rushx run-integrated
 
 2. Ensure the backend host is provided from the `.env` file.
 
-3. Provide the Tiger token and run the scenarios app:
+3. Basic working `.env` file can look like this. Other params may cause cross issues, so beware.
+
+```
+HOST=https://staging.dev-latest.stg11.panther.intgdc.com
+TIGER_API_TOKEN=<token>
+FIXTURE_TYPE=goodsales
+TIGER_DATASOURCES_NAME=vertica_staging-goodsales
+VISUAL_MODE=true
+CYPRESS_TEST_TAGS=pre-merge_isolated_tiger
+FILTER=
+```
+
+4. Provide the Tiger token and run the scenarios app:
 
     ```
     export TIGER_API_TOKEN=xxx && rushx start-scenarios
     ```
 
-4. In your browser, specify the scenario you want to view as a variable:
+5. In your browser, specify the scenario you want to view as a variable:
 
     ```
     http://localhost:9500/gooddata-ui-sdk?scenario=dashboard/dashboard
