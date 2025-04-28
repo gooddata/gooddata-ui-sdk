@@ -121,7 +121,7 @@ const convertExportDefinitionRequestPayload = (
         };
     } else {
         const metadata = exportRequest.metadata as MetadataObjectDefinition | undefined;
-        const filters = metadata?.filters?.map(cloneWithSanitizedIds);
+        const filters = metadata?.filters;
         const filtersObj = filters ? { filters } : {};
 
         return {

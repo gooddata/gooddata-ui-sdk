@@ -42,7 +42,7 @@ export const convertExportDefinitionRequestPayload = (
             ...(isMetadataFilled
                 ? {
                       metadata: {
-                          ...(filters ? { filters: filters.map(cloneWithSanitizedIds) } : {}),
+                          ...(exportRequest.content.filters ? { filters } : {}),
                           ...(title ? { title } : {}),
                       },
                   }
