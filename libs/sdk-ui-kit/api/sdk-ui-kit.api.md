@@ -381,7 +381,10 @@ export const defaultColorPaletteMetadataObject: IColorPaletteDefinition;
 export const defaultThemeMetadataObject: IThemeDefinition;
 
 // @internal (undocumented)
-export function DefaultUiListboxItemComponent<T>({ item, isFocused, isSelected, onSelect, }: UiListboxItemProps<T>): React_2.ReactNode;
+export function DefaultUiListboxInteractiveItemComponent<T>({ item, isFocused, isSelected, onSelect, }: UiListboxInteractiveItemProps<T>): React_2.ReactNode;
+
+// @internal
+export function DefaultUiListboxStaticItemComponent<T>({ item, }: UiListboxStaticItemProps<T>): React_2.ReactNode;
 
 // @internal (undocumented)
 export const DESCRIPTION_PANEL_ALIGN_POINTS: {
@@ -2807,19 +2810,21 @@ export interface ILegacySingleSelectListProps<T> {
 }
 
 // @internal (undocumented)
-export interface IListboxContext<T> {
+export interface IListboxContext<InteractiveItemData, StaticItemData = React_2.ReactNode> {
     // (undocumented)
-    focusedIndex: number;
+    focusedIndex: number | undefined;
+    // (undocumented)
+    isItemFocusable: (item: IUiListboxItem<InteractiveItemData, StaticItemData>) => boolean;
     // (undocumented)
     itemRefs: React_2.MutableRefObject<(HTMLLIElement | null)[]>;
     // (undocumented)
-    items: IUiListboxItem<T>[];
+    items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
     // (undocumented)
     onClose?: () => void;
     // (undocumented)
-    onSelect: (item: IUiListboxItem<T>) => void;
+    onSelect: (item: IUiListboxInteractiveItem<InteractiveItemData>) => void;
     // (undocumented)
-    selectedItemId?: string;
+    selectedItemId: string | undefined;
     // (undocumented)
     setFocusedIndex: React_2.Dispatch<React_2.SetStateAction<number>>;
 }
@@ -4387,7 +4392,7 @@ export interface IUiChipAccessibilityConfig extends IAccessibilityConfigBase, ID
 }
 
 // @internal (undocumented)
-export interface IUiListboxItem<T> {
+export interface IUiListboxInteractiveItem<T> {
     // (undocumented)
     data: T;
     // (undocumented)
@@ -4396,6 +4401,21 @@ export interface IUiListboxItem<T> {
     isDisabled?: boolean;
     // (undocumented)
     stringTitle: string;
+    // (undocumented)
+    type: "interactive";
+}
+
+// @internal (undocumented)
+export type IUiListboxItem<InteractiveItemData, StaticItemData = React_2.ReactNode> = IUiListboxStaticItem<StaticItemData> | IUiListboxInteractiveItem<InteractiveItemData>;
+
+// @internal (undocumented)
+export interface IUiListboxStaticItem<T> {
+    // (undocumented)
+    data: T;
+    // (undocumented)
+    id?: string;
+    // (undocumented)
+    type: "static";
 }
 
 // @internal (undocumented)
@@ -4579,9 +4599,6 @@ export const LoadingSpinner: React_2.FC<ILoadingSpinner>;
 
 // @internal (undocumented)
 export const LocaleSetting: React_2.VFC<ILocaleSettingProps>;
-
-// @internal (undocumented)
-export const makeSeparatorItem: () => IUiListboxItem<typeof separatorItemSymbol>;
 
 // @internal (undocumented)
 export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFormatOwnProps> {
@@ -4794,9 +4811,6 @@ export type SelectedTime = {
 export const Separator: React_2.FC;
 
 // @internal (undocumented)
-export const separatorItemSymbol: unique symbol;
-
-// @internal (undocumented)
 export function SeparatorLine({ mT: marginTop, mR: marginRight, mB: marginBottom, mL: marginLeft, pT: paddingTop, pR: paddingRight, pB: paddingBottom, pL: paddingLeft, m, p, height, }: ISeparatorLineProps): React_2.JSX.Element;
 
 // @internal (undocumented)
@@ -4804,6 +4818,9 @@ export type Separators = {
     thousand: string;
     decimal: string;
 };
+
+// @internal (undocumented)
+export const separatorStaticItem: IUiListboxStaticItem<React_2.ReactNode>;
 
 // @internal (undocumented)
 export const SettingItem: React_2.FC<ISettingItem>;
@@ -5190,44 +5207,56 @@ export interface UiIconProps {
 }
 
 // @internal
-export function UiListbox<T>({ items, className, maxWidth, onSelect, onClose, selectedItemId, ariaAttributes, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, ItemComponent, onUnhandledKeyDown, }: UiListboxProps<T>): React_2.ReactNode;
+export function UiListbox<InteractiveItemData, StaticItemData>({ items, className, maxWidth, onSelect, onClose, selectedItemId, ariaAttributes, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, InteractiveItemComponent, StaticItemComponent, onUnhandledKeyDown, }: UiListboxProps<InteractiveItemData, StaticItemData>): React_2.ReactNode;
 
 // @internal (undocumented)
-export interface UiListboxItemProps<T> {
+export interface UiListboxInteractiveItemProps<T> {
     // (undocumented)
     isFocused: boolean;
     // (undocumented)
     isSelected: boolean;
     // (undocumented)
-    item: IUiListboxItem<T>;
+    item: IUiListboxInteractiveItem<T>;
     // (undocumented)
     onSelect: () => void;
 }
 
 // @internal (undocumented)
-export interface UiListboxProps<T> {
+export interface UiListboxProps<InteractiveItemData, StaticItemData = React_2.ReactNode> {
     // (undocumented)
     ariaAttributes: IDropdownBodyRenderProps["ariaAttributes"];
     // (undocumented)
     className?: string;
     // (undocumented)
-    ItemComponent?: React_2.ComponentType<UiListboxItemProps<any>>;
+    InteractiveItemComponent?: React_2.ComponentType<UiListboxInteractiveItemProps<InteractiveItemData>>;
     // (undocumented)
-    items: IUiListboxItem<T>[];
+    isDisabledFocusable?: boolean;
+    // (undocumented)
+    items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
     // (undocumented)
     maxWidth?: number;
     // (undocumented)
     onClose?: () => void;
     // (undocumented)
-    onSelect?: (item: IUiListboxItem<T>) => void;
+    onSelect?: (item: IUiListboxInteractiveItem<InteractiveItemData>) => void;
     // (undocumented)
-    onUnhandledKeyDown?: (event: React_2.KeyboardEvent, context: IListboxContext<T>) => void;
+    onUnhandledKeyDown?: (event: React_2.KeyboardEvent, context: IListboxContext<InteractiveItemData, StaticItemData>) => void;
     // (undocumented)
     selectedItemId?: string;
+    // (undocumented)
+    shouldCloseOnSelect?: boolean;
     // (undocumented)
     shouldKeyboardActionPreventDefault?: boolean;
     // (undocumented)
     shouldKeyboardActionStopPropagation?: boolean;
+    // (undocumented)
+    StaticItemComponent?: React_2.ComponentType<UiListboxStaticItemProps<StaticItemData>>;
+}
+
+// @internal (undocumented)
+export interface UiListboxStaticItemProps<T> {
+    // (undocumented)
+    item: IUiListboxStaticItem<T>;
 }
 
 // @internal (undocumented)

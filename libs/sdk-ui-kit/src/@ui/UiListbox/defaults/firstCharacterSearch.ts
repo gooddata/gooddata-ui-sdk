@@ -8,9 +8,14 @@ import { IListboxContext } from "../types.js";
  * This is a basic implementation of moving focus to items on character key press.
  * Having this functionality is recommended by the listbox spec.
  */
-export function firstCharacterSearch(
+export function firstCharacterSearch<InteractiveItemData, StaticItemData>(
     event: React.KeyboardEvent,
-    { items, focusedIndex, setFocusedIndex }: IListboxContext<any>,
+    {
+        items,
+        focusedIndex,
+        setFocusedIndex,
+        isItemFocusable,
+    }: IListboxContext<InteractiveItemData, StaticItemData>,
 ) {
     const char = event.key.toLowerCase();
 
@@ -20,7 +25,10 @@ export function firstCharacterSearch(
 
     const itemIndex = items.findIndex(
         (item, index) =>
-            index > focusedIndex && item.stringTitle.toLowerCase().startsWith(char) && !item.isDisabled,
+            index > focusedIndex &&
+            isItemFocusable(item) &&
+            item.type === "interactive" &&
+            item.stringTitle.toLowerCase().startsWith(char),
     );
 
     if (itemIndex !== -1) {
@@ -30,7 +38,10 @@ export function firstCharacterSearch(
 
     // If not found after the current index, start from the beginning
     const fromStartIndex = items.findIndex(
-        (item) => item.stringTitle.toLowerCase().startsWith(char) && !item.isDisabled,
+        (item) =>
+            isItemFocusable(item) &&
+            item.type === "interactive" &&
+            item.stringTitle.toLowerCase().startsWith(char),
     );
 
     if (fromStartIndex !== -1) {

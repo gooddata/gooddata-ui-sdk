@@ -102,14 +102,17 @@ export type {
 export { UiFocusTrap } from "./@ui/UiFocusTrap/UiFocusTrap.js";
 export type { UiFocusTrapProps } from "./@ui/UiFocusTrap/UiFocusTrap.js";
 export { UiListbox } from "./@ui/UiListbox/UiListbox.js";
+export { DefaultUiListboxInteractiveItemComponent } from "./@ui/UiListbox/defaults/DefaultUiListboxInteractiveItemComponent.js";
 export {
-    makeSeparatorItem,
-    separatorItemSymbol,
-    DefaultUiListboxItemComponent,
-} from "./@ui/UiListbox/defaults/DefaultUiListboxItemComponent.js";
+    separatorStaticItem,
+    DefaultUiListboxStaticItemComponent,
+} from "./@ui/UiListbox/defaults/DefaultUiListboxStaticItemComponent.js";
 export type {
     UiListboxProps,
     IListboxContext,
-    UiListboxItemProps,
     IUiListboxItem,
+    IUiListboxStaticItem,
+    UiListboxStaticItemProps,
+    IUiListboxInteractiveItem,
+    UiListboxInteractiveItemProps,
 } from "./@ui/UiListbox/types.js";

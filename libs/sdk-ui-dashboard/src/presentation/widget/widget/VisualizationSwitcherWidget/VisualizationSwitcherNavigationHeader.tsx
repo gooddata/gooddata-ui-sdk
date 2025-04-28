@@ -4,7 +4,13 @@ import { IInsightWidget, IVisualizationSwitcherWidget } from "@gooddata/sdk-mode
 
 import { DashboardItemHeadline } from "../../../presentationComponents/index.js";
 
-import { Dropdown, UiListbox, IDropdownButtonRenderProps, IUiListboxItem } from "@gooddata/sdk-ui-kit";
+import {
+    Dropdown,
+    UiListbox,
+    IDropdownButtonRenderProps,
+    IUiListboxItem,
+    IUiListboxInteractiveItem,
+} from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { useDashboardUserInteraction } from "../../../../model/index.js";
 import { CommonExportDataAttributes } from "../../../export/index.js";
@@ -39,18 +45,17 @@ export const VisualizationSwitcherNavigationHeader: React.FC<IVisualizationSwitc
 }) => {
     const userInteraction = useDashboardUserInteraction();
 
-    const items = React.useMemo(() => {
-        return [
-            ...widget.visualizations.map((visualization) => ({
-                id: visualization.identifier,
-                stringTitle: visualization.title,
-                data: visualization,
-            })),
-        ];
+    const items = React.useMemo<IUiListboxItem<IInsightWidget>[]>(() => {
+        return widget.visualizations.map((visualization) => ({
+            type: "interactive",
+            id: visualization.identifier,
+            stringTitle: visualization.title,
+            data: visualization,
+        }));
     }, [widget.visualizations]);
 
     const handleSelectVisualization = React.useCallback(
-        (item: IUiListboxItem<IInsightWidget>) => {
+        (item: IUiListboxInteractiveItem<IInsightWidget>) => {
             onActiveVisualizationChange(item.id);
             userInteraction.visualizationSwitcherInteraction("visualizationSwitcherSwitched");
         },
