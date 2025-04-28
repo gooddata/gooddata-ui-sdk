@@ -32,6 +32,7 @@ import {
     OnDrillToDashboardSuccess,
     OnDrillToInsightSuccess,
     OnWidgetDrill,
+    DrillStep,
 } from "../../drill/types.js";
 import { WidgetExportDataAttributes } from "../../export/index.js";
 
@@ -191,6 +192,14 @@ export interface IDashboardInsightProps {
      * @internal
      */
     minimalWidth?: number;
+
+    /**
+     * This property contains current drill step context.
+     *
+     * It is undefined if rendered insight is placed directly in the dashboard.
+     * It is defined when the insight is rendered in a drill dialog.
+     */
+    drillStep?: DrillStep;
 }
 
 /**
@@ -267,6 +276,14 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
      * Contains configuration that should be part of insight execution
      */
     execConfig?: IExecutionConfig;
+
+    /**
+     * This property contains current drill step context.
+     *
+     * It is undefined if rendered insight is placed directly in the dashboard.
+     * It is defined when the insight is rendered in a drill dialog.
+     */
+    drillStep?: DrillStep;
 }
 
 ///
