@@ -478,4 +478,17 @@ describe("UiListbox", () => {
         // onClose should not be called
         expect(onClose).not.toHaveBeenCalled();
     });
+
+    it("should add itemClassName to items", () => {
+        renderListbox({
+            itemClassName: "test-item-class",
+            items: [
+                { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
+                { type: "static", data: "Static Item" },
+            ],
+        });
+
+        const items = screen.getByRole("listbox").querySelectorAll(".test-item-class");
+        expect(items).toHaveLength(2);
+    });
 });

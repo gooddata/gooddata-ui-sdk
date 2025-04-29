@@ -19,22 +19,26 @@ import { DefaultUiListboxStaticItemComponent } from "./defaults/DefaultUiListbox
  */
 export function UiListbox<InteractiveItemData, StaticItemData>({
     items,
+
     className,
+    itemClassName,
     maxWidth,
+
     onSelect,
     onClose,
+    onUnhandledKeyDown = firstCharacterSearch,
+
     selectedItemId,
-    ariaAttributes,
+
+    InteractiveItemComponent = DefaultUiListboxInteractiveItemComponent,
+    StaticItemComponent = DefaultUiListboxStaticItemComponent,
 
     shouldKeyboardActionPreventDefault,
     shouldKeyboardActionStopPropagation,
     shouldCloseOnSelect = true,
     isDisabledFocusable = false,
 
-    InteractiveItemComponent = DefaultUiListboxInteractiveItemComponent,
-    StaticItemComponent = DefaultUiListboxStaticItemComponent,
-
-    onUnhandledKeyDown = firstCharacterSearch,
+    ariaAttributes,
 }: UiListboxProps<InteractiveItemData, StaticItemData>): React.ReactNode {
     const isItemFocusable = React.useCallback(
         (item?: IUiListboxItem<InteractiveItemData, StaticItemData>) => {
@@ -185,6 +189,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                             aria-disabled={item.isDisabled}
                             tabIndex={-1}
                             id={makeItemId(listboxId, item)}
+                            className={itemClassName}
                         >
                             <InteractiveItemComponent
                                 onSelect={() => {
@@ -196,7 +201,11 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                             />
                         </li>
                     ) : (
-                        <li key={item.id ?? index} ref={(el) => (itemRefs.current[index] = el)}>
+                        <li
+                            key={item.id ?? index}
+                            ref={(el) => (itemRefs.current[index] = el)}
+                            className={itemClassName}
+                        >
                             <StaticItemComponent item={item} />
                         </li>
                     ),

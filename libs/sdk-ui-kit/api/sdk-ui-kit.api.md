@@ -5207,7 +5207,7 @@ export interface UiIconProps {
 }
 
 // @internal
-export function UiListbox<InteractiveItemData, StaticItemData>({ items, className, maxWidth, onSelect, onClose, selectedItemId, ariaAttributes, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, InteractiveItemComponent, StaticItemComponent, onUnhandledKeyDown, }: UiListboxProps<InteractiveItemData, StaticItemData>): React_2.ReactNode;
+export function UiListbox<InteractiveItemData, StaticItemData>({ items, className, itemClassName, maxWidth, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, ariaAttributes, }: UiListboxProps<InteractiveItemData, StaticItemData>): React_2.ReactNode;
 
 // @internal (undocumented)
 export interface UiListboxInteractiveItemProps<T> {
@@ -5231,6 +5231,8 @@ export interface UiListboxProps<InteractiveItemData, StaticItemData = React_2.Re
     InteractiveItemComponent?: React_2.ComponentType<UiListboxInteractiveItemProps<InteractiveItemData>>;
     // (undocumented)
     isDisabledFocusable?: boolean;
+    // (undocumented)
+    itemClassName?: string;
     // (undocumented)
     items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
     // (undocumented)

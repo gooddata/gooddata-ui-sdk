@@ -70,6 +70,7 @@ export interface UiListboxProps<InteractiveItemData, StaticItemData = React.Reac
     items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
 
     className?: string;
+    itemClassName?: string;
     maxWidth?: number;
 
     onSelect?: (item: IUiListboxInteractiveItem<InteractiveItemData>) => void;
