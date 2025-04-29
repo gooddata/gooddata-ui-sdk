@@ -4132,7 +4132,11 @@ export interface ISingleSelectListItemProps {
     // (undocumented)
     icon?: string | ReactNode;
     // (undocumented)
+    iconRenderer?: (icon: string | ReactNode | React_2.FC) => ReactNode;
+    // (undocumented)
     info?: string | ReactNode;
+    // (undocumented)
+    infoRenderer?: (info: string | ReactNode | React_2.FC) => ReactNode;
     // (undocumented)
     isMenu?: boolean;
     // (undocumented)

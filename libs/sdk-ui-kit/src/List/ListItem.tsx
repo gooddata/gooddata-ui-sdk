@@ -29,6 +29,9 @@ export interface ISingleSelectListItemProps {
     tabIndex?: number;
     elementType?: "div" | "button";
 
+    iconRenderer?: (icon: string | ReactNode | React.FC) => ReactNode;
+    infoRenderer?: (info: string | ReactNode | React.FC) => ReactNode;
+
     onClick?: (e: React.MouseEvent<HTMLElement>) => void;
     onMouseOver?: (e: React.MouseEvent<HTMLElement>) => void;
     onMouseOut?: (e: React.MouseEvent<HTMLElement>) => void;
@@ -109,6 +112,8 @@ export const SingleSelectListItem = forwardRef<
         isSelected,
         isMenu,
         elementType = "div",
+        iconRenderer,
+        infoRenderer,
     } = props;
 
     const [isOverflowed, setIsOverflowed] = useState(false);
@@ -208,9 +213,9 @@ export const SingleSelectListItem = forwardRef<
 
     const children = (
         <>
-            {renderIcon(icon)}
+            {iconRenderer ? iconRenderer(icon) : renderIcon(icon)}
             {renderTitle()}
-            {renderInfo()}
+            {infoRenderer ? infoRenderer(info) : renderInfo()}
         </>
     );
 
