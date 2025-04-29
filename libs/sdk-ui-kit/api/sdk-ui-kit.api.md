@@ -5121,12 +5121,10 @@ export const Typography: React_2.FC<ITypographyProps>;
 export type TypographyTagName = "h1" | "h2" | "h3" | "p";
 
 // @internal (undocumented)
-export const UiButton: ({ buttonRef, size, variant, label, isDisabled, isLoading, iconBefore, iconAfter, onClick, dataId, }: UiButtonProps) => React_2.JSX.Element;
+export const UiButton: React_2.ForwardRefExoticComponent<UiButtonProps & React_2.RefAttributes<HTMLButtonElement>>;
 
 // @internal (undocumented)
 export interface UiButtonProps {
-    // (undocumented)
-    buttonRef?: React_2.RefObject<HTMLButtonElement>;
     // (undocumented)
     dataId?: string;
     // (undocumented)
@@ -5191,6 +5189,27 @@ export interface UiFocusTrapProps {
 
 // @internal (undocumented)
 export const UiIcon: ({ type, label, color, ariaHidden, size }: UiIconProps) => React_2.JSX.Element;
+
+// @internal (undocumented)
+export const UiIconButton: React_2.ForwardRefExoticComponent<UiIconButtonProps & React_2.RefAttributes<HTMLButtonElement>>;
+
+// @internal (undocumented)
+export interface UiIconButtonProps {
+    // (undocumented)
+    dataId?: string;
+    // (undocumented)
+    icon: IconType;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    onClick?: (e: React_2.MouseEvent<HTMLButtonElement>) => void;
+    // (undocumented)
+    size?: SizeSmall | SizeMedium | SizeLarge;
+    // (undocumented)
+    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger;
+}
 
 // @internal (undocumented)
 export interface UiIconProps {

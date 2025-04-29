@@ -2,8 +2,8 @@
 import { IAlertDescription, IAlertNotification } from "@gooddata/sdk-model";
 import { alignConfigToAlignPoint, Overlay, UiButton } from "@gooddata/sdk-ui-kit";
 import React, { useRef, useState } from "react";
-import { NotificationTriggersDetailDialog } from "./NotificationTriggersDetailDialog.js";
 import { defineMessages, IntlShape, useIntl } from "react-intl";
+import { NotificationTriggersDetailDialog } from "./NotificationTriggersDetailDialog.js";
 
 const ALIGN_POINTS = [
     alignConfigToAlignPoint({
@@ -46,7 +46,7 @@ export function NotificationTriggerDetail({ notification }: INotificationTrigger
     return (
         <>
             <UiButton
-                buttonRef={ref}
+                ref={ref}
                 onClick={() => {
                     toggleTriggersDialog();
                 }}
