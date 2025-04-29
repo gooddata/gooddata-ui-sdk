@@ -30,6 +30,7 @@ export const ConfirmDialogBase = React.memo<IConfirmDialogBaseProps>(function Co
     footerLeftRenderer,
     dialogHeaderClassName,
     initialFocus,
+    returnFocusTo,
     titleRightIconRenderer,
 
     ...dialogBaseProps
@@ -65,6 +66,7 @@ export const ConfirmDialogBase = React.memo<IConfirmDialogBaseProps>(function Co
             displayCloseButton={displayCloseButton}
             accessibilityConfig={accessibilityConfig}
             initialFocus={initialFocus}
+            returnFocusTo={returnFocusTo}
         >
             <div className="gd-dialog-header-wrapper">
                 {headerLeftButtonRenderer?.()}

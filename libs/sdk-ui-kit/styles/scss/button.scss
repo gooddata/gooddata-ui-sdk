@@ -264,14 +264,6 @@
         }
     }
 
-    &:focus {
-        box-shadow: button-variables.$button-link-box-shadow-x-offset
-            button-variables.$button-action-color-t80;
-        color: button-variables.$button-action-color;
-        border-color: button-variables.$button-action-color-t70;
-        border-radius: 2px;
-    }
-
     &:hover,
     &:focus,
     &:active,

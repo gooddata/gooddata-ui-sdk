@@ -20,6 +20,7 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
         isDirty,
         currentUserPermissions,
         sharedObject,
+        previouslyFocusedRef,
         onCancel,
         onSubmit,
         onBackClick,
@@ -48,6 +49,8 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
             cancelButtonText={intl.formatMessage({ id: "cancel" })}
             submitButtonText={intl.formatMessage({ id: "shareDialog.share.grantee.share" })}
             submitOnEnterKey={false}
+            shouldCloseOnEscape={true}
+            returnFocusTo={previouslyFocusedRef}
             onCancel={onBackClick}
             onSubmit={onSubmit}
             onClose={onCancel}

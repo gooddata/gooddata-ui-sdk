@@ -32,6 +32,11 @@ export const ADD_GRANTEE_ID = "add-grantee-id";
 /**
  * @internal
  */
+export const ADD_GRANTEE_SELECT_ID = "add-grantee-select-id";
+
+/**
+ * @internal
+ */
 export const ALL_WORKSPACE_USERS = "allWorkspaceUsers";
 
 /**

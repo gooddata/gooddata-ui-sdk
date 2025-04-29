@@ -1,5 +1,5 @@
-// (C) 2021-2023 GoodData Corporation
-import React, { useCallback, useEffect } from "react";
+// (C) 2021-2025 GoodData Corporation
+import React, { useCallback, useEffect, useRef } from "react";
 
 import { Overlay } from "../../../Overlay/index.js";
 import { IAlignPoint } from "../../../typings/positioning.js";
@@ -52,6 +52,8 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
         onGranularGranteeShareChange,
     } = useShareDialogBase(props);
 
+    const previouslyFocusedRef = useRef<HTMLElement>(document.activeElement as HTMLHtmlElement);
+
     return (
         <Overlay
             alignPoints={alignPoints}
@@ -87,6 +89,7 @@ export const ShareDialogBase: React.FC<IShareDialogBaseProps> = (props) => {
                         appliedGrantees={appliedGranteesWithOwner}
                         addedGrantees={granteesToAdd}
                         sharedObject={sharedObject}
+                        previouslyFocusedRef={previouslyFocusedRef}
                         onAddUserOrGroups={onGranteeAdd}
                         onDelete={onAddedGranteeDelete}
                         onCancel={handleCancel}

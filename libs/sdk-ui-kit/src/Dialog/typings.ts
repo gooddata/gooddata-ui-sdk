@@ -19,6 +19,7 @@ export interface IDialogBaseProps {
         isModal?: boolean;
     };
     submitOnEnterKey?: boolean;
+    shouldCloseOnEscape?: boolean;
     onCancel?: (data?: any) => void;
     onClose?: (data?: any) => void;
     onSubmit?: (data?: any) => void;
@@ -37,6 +38,7 @@ export interface IDialogBaseProps {
     autofocusOnOpen?: boolean;
     CloseButton?: React.ComponentType<IDialogCloseButtonProps>;
     initialFocus?: React.RefObject<HTMLElement> | string;
+    returnFocusTo?: React.RefObject<HTMLElement> | string;
 }
 
 /**
@@ -73,6 +75,7 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
     titleRightIconRenderer?: () => JSX.Element;
     headline?: string;
     initialFocus?: React.RefObject<HTMLElement> | string;
+    returnFocusTo?: React.RefObject<HTMLElement> | string;
     accessibilityConfig?: {
         closeButton?: IButtonAccessibilityConfig;
         titleElementId?: string;

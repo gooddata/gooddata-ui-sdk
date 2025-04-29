@@ -21,6 +21,7 @@ import {
 } from "./AsyncSelectComponents.js";
 import { loadGranteeOptionsPromise } from "./backend/loadGranteeOptionsPromise.js";
 import { useShareDialogInteraction } from "./ComponentInteractionContext.js";
+import { ADD_GRANTEE_SELECT_ID } from "./utils.js";
 
 const SEARCH_INTERVAL = 400;
 
@@ -126,6 +127,7 @@ export const AddGranteeSelect: React.FC<IAddGranteeSelectProps> = (props) => {
     return (
         <div className="gd-share-dialog-content-select">
             <AsyncSelect
+                inputId={ADD_GRANTEE_SELECT_ID}
                 ref={selectRef}
                 defaultMenuIsOpen={true}
                 classNamePrefix="gd-share-dialog"

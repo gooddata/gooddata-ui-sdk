@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { AccessGranularPermission, IUser, ObjRef, ShareStatus } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 
@@ -298,6 +298,7 @@ export interface IAddGranteeBaseProps {
     appliedGrantees: GranteeItem[];
     currentUserPermissions: CurrentUserPermissions;
     sharedObject: IAffectedSharedObject;
+    previouslyFocusedRef?: React.MutableRefObject<HTMLElement>;
     onBackClick?: () => void;
     onDelete: (grantee: GranteeItem) => void;
     onAddUserOrGroups?: (grantee: GranteeItem) => void; // rename

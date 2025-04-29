@@ -757,6 +757,8 @@ export interface IAddGranteeBaseProps {
     // (undocumented)
     onSubmit: () => void;
     // (undocumented)
+    previouslyFocusedRef?: React.MutableRefObject<HTMLElement>;
+    // (undocumented)
     sharedObject: IAffectedSharedObject;
 }
 
@@ -1226,6 +1228,8 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
     // (undocumented)
     isSubmitDisabled?: boolean;
     // (undocumented)
+    returnFocusTo?: React_2.RefObject<HTMLElement> | string;
+    // (undocumented)
     showProgressIndicator?: boolean;
     // (undocumented)
     submitButtonText?: string;
@@ -1413,7 +1417,11 @@ export interface IDialogBaseProps {
     // (undocumented)
     onSubmit?: (data?: any) => void;
     // (undocumented)
+    returnFocusTo?: React_2.RefObject<HTMLElement> | string;
+    // (undocumented)
     shouldCloseOnClick?: (e: Event) => boolean;
+    // (undocumented)
+    shouldCloseOnEscape?: boolean;
     // (undocumented)
     submitOnEnterKey?: boolean;
 }
