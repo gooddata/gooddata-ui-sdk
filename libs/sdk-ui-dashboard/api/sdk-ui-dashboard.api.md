@@ -1771,6 +1771,9 @@ export interface DashboardDateFilterSelectionChangedPayload {
     readonly filter: IDashboardDateFilter | undefined;
 }
 
+// @alpha
+export function dashboardDateFilterToAutomationDateFilterByWidget(filter: IDashboardDateFilter, widget?: Partial<IFilterableWidget>): IDateFilter;
+
 // @public
 export function dashboardDateFilterToDateFilterByDateDataSet(filter: IDashboardDateFilter, dateDataSet: ObjRef): IDateFilter;
 
@@ -4026,6 +4029,9 @@ export type FilterBarComponentProvider = (props: IFilterBarProps) => CustomFilte
 
 // @public
 export type FilterBarRenderingMode = "default" | "hidden";
+
+// @alpha
+export function filterContextItemsToAutomationDashboardFiltersByWidget(filterContextItems: FilterContextItem[], widget: Partial<IFilterableWidget>): IDashboardFilter[];
 
 // @public
 export function filterContextItemsToDashboardFiltersByDateDataSet(filterContextItems: FilterContextItem[], dateDataSet: ObjRef): IDashboardFilter[];

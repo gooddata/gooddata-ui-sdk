@@ -16,6 +16,8 @@ import {
     isDashboardAttributeFilter,
     IFilterableWidget,
     IWidgetDefinition,
+    newAllTimeFilter,
+    isRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import isString from "lodash/isString.js";
 
@@ -141,6 +143,46 @@ export function dashboardDateFilterToDateFilterByDateDataSet(
 }
 
 /**
+ * Converts {@link @gooddata/sdk-backend-spi#IDashboardDateFilter} to {@link @gooddata/sdk-model#IDateFilter} instance.
+ * The convertor also considers all time date filter and its granularity. This is specifically useful for filters
+ * in automation context as the filters need to reflect correct granularity even for all time filters.
+ *
+ * @param filter - filter context attribute filter to convert
+ * @param widget - widget to use to get dateDataSet for date filters
+ * @alpha
+ */
+export function dashboardDateFilterToAutomationDateFilterByWidget(
+    filter: IDashboardDateFilter,
+    widget?: Partial<IFilterableWidget>,
+): IDateFilter {
+    if (isRelativeDashboardDateFilter(filter)) {
+        // When from and to are not specified in relative date filter,
+        // we expect all time filter and take date dataset from the widget or filter.
+        if (filter.dateFilter.from === undefined && filter.dateFilter.to === undefined) {
+            return newAllTimeFilter(
+                widget ? filter.dateFilter.dataSet || widget.dateDataSet! : filter.dateFilter.dataSet!,
+                filter.dateFilter.localIdentifier,
+            );
+        }
+
+        return newRelativeDateFilter(
+            widget ? filter.dateFilter.dataSet || widget.dateDataSet! : filter.dateFilter.dataSet!,
+            filter.dateFilter.granularity,
+            numberOrStringToNumber(filter.dateFilter.from!),
+            numberOrStringToNumber(filter.dateFilter.to!),
+            filter.dateFilter.localIdentifier,
+        );
+    } else {
+        return newAbsoluteDateFilter(
+            widget ? filter.dateFilter.dataSet || widget.dateDataSet! : filter.dateFilter.dataSet!,
+            filter.dateFilter.from!.toString(),
+            filter.dateFilter.to!.toString(),
+            filter.dateFilter.localIdentifier,
+        );
+    }
+}
+
+/**
  * Gets {@link IDashboardFilter} items for filters specified as {@link @gooddata/sdk-backend-spi#FilterContextItem} instances.
  *
  * @param filterContextItems - filter context items to get filters for
@@ -156,6 +198,28 @@ export function filterContextItemsToDashboardFiltersByWidget(
             return dashboardAttributeFilterToAttributeFilter(filter);
         } else {
             return dashboardDateFilterToDateFilterByWidget(filter, widget);
+        }
+    });
+}
+
+/**
+ * Gets {@link IDashboardFilter} items for filters specified as {@link @gooddata/sdk-backend-spi#FilterContextItem} instances.
+ * The convertor also considers all time date filter and its granularity. This is specifically useful for filters
+ * in automation context as the filters need to reflect correct granularity even for all time filters.
+ *
+ * @param filterContextItems - filter context items to get filters for
+ * @param widget - widget to use to get dateDataSet for date filters
+ * @alpha
+ */
+export function filterContextItemsToAutomationDashboardFiltersByWidget(
+    filterContextItems: FilterContextItem[],
+    widget: Partial<IFilterableWidget>,
+): IDashboardFilter[] {
+    return filterContextItems.map((filter) => {
+        if (isDashboardAttributeFilter(filter)) {
+            return dashboardAttributeFilterToAttributeFilter(filter);
+        } else {
+            return dashboardDateFilterToAutomationDateFilterByWidget(filter, widget);
         }
     });
 }
