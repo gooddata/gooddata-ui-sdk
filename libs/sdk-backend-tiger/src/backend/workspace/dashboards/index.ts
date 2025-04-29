@@ -244,7 +244,13 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             return null;
         }
 
-        const convertedExportMetadata = convertFromBackendExportMetadata(metadata);
+        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
+        const enableAutomationFilterContext = userSettings.enableAutomationFilterContext ?? false;
+
+        const convertedExportMetadata = convertFromBackendExportMetadata(
+            metadata,
+            enableAutomationFilterContext,
+        );
 
         return {
             ...(convertedExportMetadata?.filters

@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     EntitiesApiGetAllEntitiesExportDefinitionsRequest,
     jsonApiHeaders,
@@ -31,6 +31,7 @@ import {
 } from "../../../convertors/toBackend/ExportDefinitionsConverter.js";
 import { ExportDefinitionsQuery } from "./exportDefinitionsQuery.js";
 import { exportDefinitionsListComparator } from "./comparator.js";
+import { getSettingsForCurrentUser } from "../settings/index.js";
 
 export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefinitionsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -39,6 +40,8 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
         options?: IExportDefinitionsQueryOptions,
     ): Promise<IExportDefinitionsQueryResult> => {
         const requestParameters = this.getExportDefinitionsRequestParameters(options);
+        const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
+
         const allExportDefinitions = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
@@ -58,9 +61,21 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
 
                                 return title && title.toLowerCase().indexOf(lowercaseSearch) > -1;
                             })
-                            .map((ed) => convertExportDefinitionMdObjectFromBackend(ed, res.included));
+                            .map((ed) =>
+                                convertExportDefinitionMdObjectFromBackend(
+                                    ed,
+                                    res.included,
+                                    enableAutomationFilterContext,
+                                ),
+                            );
                     }
-                    return res.data.map((ep) => convertExportDefinitionMdObjectFromBackend(ep, res.included));
+                    return res.data.map((ep) =>
+                        convertExportDefinitionMdObjectFromBackend(
+                            ep,
+                            res.included,
+                            enableAutomationFilterContext,
+                        ),
+                    );
                 });
         });
 
@@ -105,6 +120,8 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
         options: IGetExportDefinitionOptions = {},
     ): Promise<IExportDefinitionMetadataObject> => {
         const id = await objRefToIdentifier(ref, this.authCall);
+        const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
+
         const includeUser = options?.loadUserData
             ? { include: ["createdBy" as const, "modifiedBy" as const] }
             : {};
@@ -125,18 +142,27 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
             throw new UnexpectedError(`Export definition for ${objRefToString(ref)} not found!`);
         }
 
-        return convertExportDefinitionMdObjectFromBackend(response.data.data, response.data.included);
+        return convertExportDefinitionMdObjectFromBackend(
+            response.data.data,
+            response.data.included,
+            enableAutomationFilterContext,
+        );
     };
 
     public createExportDefinition = async (
         exportDefinition: IExportDefinitionMetadataObjectDefinition,
     ): Promise<IExportDefinitionMetadataObject> => {
+        const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
+
         const createResponse = await this.authCall((client) => {
             return client.entities.createEntityExportDefinitions(
                 {
                     workspaceId: this.workspace,
                     jsonApiExportDefinitionPostOptionalIdDocument:
-                        convertExportDefinitionMdObjectDefinitionToBackend(exportDefinition),
+                        convertExportDefinitionMdObjectDefinitionToBackend(
+                            exportDefinition,
+                            enableAutomationFilterContext,
+                        ),
                 },
                 {
                     headers: jsonApiHeaders,
@@ -147,6 +173,7 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
         return convertExportDefinitionMdObjectFromBackend(
             createResponse.data.data,
             createResponse.data.included,
+            enableAutomationFilterContext,
         );
     };
 
@@ -155,6 +182,7 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
         exportDefinition: IExportDefinitionMetadataObjectDefinition,
     ): Promise<IExportDefinitionMetadataObject> => {
         const id = await objRefToIdentifier(ref, this.authCall);
+        const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
 
         const updateResponse = await this.authCall((client) => {
             return client.entities.updateEntityExportDefinitions(
@@ -164,6 +192,7 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
                     jsonApiExportDefinitionInDocument: convertExportDefinitionMdObjectToBackend(
                         exportDefinition,
                         id,
+                        enableAutomationFilterContext,
                     ),
                 },
                 {
@@ -175,6 +204,7 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
         return convertExportDefinitionMdObjectFromBackend(
             updateResponse.data.data,
             updateResponse.data.included,
+            enableAutomationFilterContext,
         );
     };
 
@@ -187,5 +217,10 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
                 workspaceId: this.workspace,
             }),
         );
+    };
+
+    private getEnableAutomationFilterContext = async (): Promise<boolean> => {
+        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
+        return userSettings.enableAutomationFilterContext ?? false;
     };
 }

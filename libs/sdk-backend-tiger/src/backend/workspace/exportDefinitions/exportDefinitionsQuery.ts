@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import {
     EntitiesApiGetAllEntitiesExportDefinitionsRequest,
@@ -16,6 +16,7 @@ import isNil from "lodash/isNil.js";
 import { convertExportDefinitionMdObject } from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { invariant } from "ts-invariant";
+import { getSettingsForCurrentUser } from "../settings/index.js";
 
 export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
     private size = 50;
@@ -97,6 +98,12 @@ export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
                     ? { filter: `title=containsic=${this.filter.title}` } // contains + ignore case
                     : {};
 
+                const userSettings = await getSettingsForCurrentUser(
+                    this.authCall,
+                    this.requestParameters.workspaceId,
+                );
+                const enableAutomationFilterContext = userSettings.enableAutomationFilterContext ?? false;
+
                 const items = await this.authCall((client) =>
                     client.entities.getAllEntitiesExportDefinitions({
                         ...this.requestParameters,
@@ -111,7 +118,9 @@ export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;
                         !isNil(totalCount) && this.setTotalCount(totalCount);
-                        return data.data.map((ed) => convertExportDefinitionMdObject(ed, data.included));
+                        return data.data.map((ed) =>
+                            convertExportDefinitionMdObject(ed, data.included, enableAutomationFilterContext),
+                        );
                     });
 
                 return { items, totalCount: this.totalCount! };

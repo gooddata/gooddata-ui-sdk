@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { AutomationType, IAutomationsQuery, IAutomationsQueryResult } from "@gooddata/sdk-backend-spi";
@@ -7,6 +7,7 @@ import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { convertAutomationListToAutomations } from "../../../convertors/fromBackend/AutomationConverter.js";
 import isNil from "lodash/isNil.js";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { getSettingsForCurrentUser } from "../settings/index.js";
 
 export class AutomationsQuery implements IAutomationsQuery {
     private size = 100;
@@ -87,6 +88,12 @@ export class AutomationsQuery implements IAutomationsQuery {
 
                 const filterObj = this.constructFilter();
 
+                const userSettings = await getSettingsForCurrentUser(
+                    this.authCall,
+                    this.requestParameters.workspaceId,
+                );
+                const enableAutomationFilterContext = userSettings.enableAutomationFilterContext ?? false;
+
                 const items = await this.authCall((client) =>
                     client.entities.getAllEntitiesAutomations({
                         ...this.requestParameters,
@@ -110,7 +117,7 @@ export class AutomationsQuery implements IAutomationsQuery {
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;
                         !isNil(totalCount) && this.setTotalCount(totalCount);
-                        return convertAutomationListToAutomations(data);
+                        return convertAutomationListToAutomations(data, enableAutomationFilterContext);
                     });
 
                 return { items, totalCount: this.totalCount! };
