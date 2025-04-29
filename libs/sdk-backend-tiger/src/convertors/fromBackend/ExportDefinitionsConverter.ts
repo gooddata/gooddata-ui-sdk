@@ -29,6 +29,7 @@ type MetadataObjectDefinition = {
 export const convertExportDefinitionMdObject = (
     exportDefinitionOut: JsonApiExportDefinitionOutWithLinks,
     included: JsonApiExportDefinitionOutIncludes[] = [],
+    enableAutomationFilterContext: boolean,
 ): IExportDefinitionMetadataObject => {
     const { id, attributes, links, relationships = {} } = exportDefinitionOut;
     const { createdBy, modifiedBy } = relationships;
@@ -42,6 +43,7 @@ export const convertExportDefinitionMdObject = (
     } = attributes ?? {};
     const request = convertExportDefinitionRequestPayload(
         requestPayload as VisualExportRequest | TabularExportRequest,
+        enableAutomationFilterContext,
     );
 
     return {
@@ -67,10 +69,12 @@ export const convertInlineExportDefinitionMdObject = (
     exportDefinitionOut:
         | JsonApiAutomationOutAttributesTabularExports
         | JsonApiAutomationOutAttributesVisualExports,
+    enableAutomationFilterContext: boolean,
 ): IExportDefinitionMetadataObject => {
     const id = uuid();
     const request = convertExportDefinitionRequestPayload(
         exportDefinitionOut.requestPayload as VisualExportRequest | TabularExportRequest,
+        enableAutomationFilterContext,
     );
     const metadata = exportDefinitionOut.requestPayload.metadata as MetadataObjectDefinition | undefined;
 
@@ -91,6 +95,7 @@ export const convertInlineExportDefinitionMdObject = (
 
 const convertExportDefinitionRequestPayload = (
     exportRequest: VisualExportRequest | TabularExportRequest,
+    enableAutomationFilterContext: boolean,
 ): IExportDefinitionRequestPayload => {
     if (isTabularRequest(exportRequest)) {
         const { widget } = (exportRequest.metadata as MetadataObjectDefinition) ?? {};
@@ -121,7 +126,9 @@ const convertExportDefinitionRequestPayload = (
         };
     } else {
         const metadata = exportRequest.metadata as MetadataObjectDefinition | undefined;
-        const filters = metadata?.filters;
+        const filters = enableAutomationFilterContext
+            ? metadata?.filters?.map(cloneWithSanitizedIds)
+            : metadata?.filters;
         const filtersObj = filters ? { filters } : {};
 
         return {

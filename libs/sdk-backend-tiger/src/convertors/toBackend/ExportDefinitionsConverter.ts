@@ -15,6 +15,7 @@ import { cloneWithSanitizedIds } from "./IdSanitization.js";
 
 export const convertExportDefinitionMdObjectDefinition = (
     exportDefinition: IExportDefinitionMetadataObjectDefinition,
+    enableAutomationFilterContext: boolean,
 ): JsonApiExportDefinitionPostOptionalIdDocument => {
     const { title, description, tags, requestPayload } = exportDefinition;
 
@@ -25,7 +26,11 @@ export const convertExportDefinitionMdObjectDefinition = (
                 title,
                 description,
                 tags,
-                requestPayload: convertExportDefinitionRequestPayload(requestPayload, title),
+                requestPayload: convertExportDefinitionRequestPayload(
+                    requestPayload,
+                    enableAutomationFilterContext,
+                    title,
+                ),
             },
         },
     };
@@ -33,6 +38,7 @@ export const convertExportDefinitionMdObjectDefinition = (
 
 export const convertExportDefinitionRequestPayload = (
     exportRequest: IExportDefinitionRequestPayload,
+    enableAutomationFilterContext: boolean,
     title?: string,
 ): TabularExportRequest | VisualExportRequest => {
     if (isExportDefinitionDashboardRequestPayload(exportRequest)) {
@@ -42,7 +48,13 @@ export const convertExportDefinitionRequestPayload = (
             ...(isMetadataFilled
                 ? {
                       metadata: {
-                          ...(exportRequest.content.filters ? { filters } : {}),
+                          ...(filters
+                              ? {
+                                    filters: enableAutomationFilterContext
+                                        ? filters.map(cloneWithSanitizedIds)
+                                        : filters,
+                                }
+                              : {}),
                           ...(title ? { title } : {}),
                       },
                   }
@@ -82,8 +94,12 @@ export const convertExportDefinitionRequestPayload = (
 export const convertExportDefinitionMdObject = (
     exportDefinition: IExportDefinitionMetadataObjectDefinition,
     identifier: string,
+    enableAutomationFilterContext: boolean,
 ): JsonApiExportDefinitionInDocument => {
-    const postDefinition = convertExportDefinitionMdObjectDefinition(exportDefinition);
+    const postDefinition = convertExportDefinitionMdObjectDefinition(
+        exportDefinition,
+        enableAutomationFilterContext,
+    );
 
     return {
         data: {

@@ -27,6 +27,7 @@ import { convertExportDefinitionRequestPayload } from "./ExportDefinitionsConver
 
 export function convertAutomation(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
+    enableAutomationFilterContext: boolean,
 ): JsonApiAutomationIn {
     const {
         id,
@@ -86,12 +87,20 @@ export function convertAutomation(
     const tabularExports = exportDefinitions
         ?.filter((ed) => isExportDefinitionVisualizationObjectRequestPayload(ed.requestPayload))
         .map((ed) => ({
-            requestPayload: convertExportDefinitionRequestPayload(ed.requestPayload, ed.title),
+            requestPayload: convertExportDefinitionRequestPayload(
+                ed.requestPayload,
+                enableAutomationFilterContext,
+                ed.title,
+            ),
         }));
     const visualExports = exportDefinitions
         ?.filter((ed) => isExportDefinitionDashboardRequestPayload(ed.requestPayload))
         .map((ed) => ({
-            requestPayload: convertExportDefinitionRequestPayload(ed.requestPayload, ed.title),
+            requestPayload: convertExportDefinitionRequestPayload(
+                ed.requestPayload,
+                enableAutomationFilterContext,
+                ed.title,
+            ),
         }));
 
     const attributes = omitBy(

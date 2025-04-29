@@ -70,6 +70,7 @@ function convertExternalRecipient(
 export function convertAutomation(
     automation: JsonApiAutomationOutWithLinks,
     included: JsonApiAutomationOutIncludes[],
+    enableAutomationFilterContext: boolean,
 ): IAutomationMetadataObject {
     const { id, attributes = {}, relationships = {} } = automation;
     const {
@@ -99,10 +100,18 @@ export function convertAutomation(
 
     const exportDefinitions = [
         ...includedExportDefinitions.map((ed) =>
-            convertExportDefinitionMdObjectFromBackend(ed as JsonApiExportDefinitionOutWithLinks),
+            convertExportDefinitionMdObjectFromBackend(
+                ed as JsonApiExportDefinitionOutWithLinks,
+                undefined,
+                enableAutomationFilterContext,
+            ),
         ),
-        ...(visualExports?.map((ve) => convertInlineExportDefinitionMdObject(ve)) ?? []),
-        ...(tabularExports?.map((te) => convertInlineExportDefinitionMdObject(te)) ?? []),
+        ...(visualExports?.map((ve) =>
+            convertInlineExportDefinitionMdObject(ve, enableAutomationFilterContext),
+        ) ?? []),
+        ...(tabularExports?.map((te) =>
+            convertInlineExportDefinitionMdObject(te, enableAutomationFilterContext),
+        ) ?? []),
     ];
 
     const recipients = [
@@ -161,9 +170,10 @@ export function convertAutomation(
 
 export const convertAutomationListToAutomations = (
     automationList: JsonApiAutomationOutList,
+    enableAutomationFilterContext: boolean,
 ): IAutomationMetadataObject[] => {
     return automationList.data.map((automationObject) =>
-        convertAutomation(automationObject, automationList.included ?? []),
+        convertAutomation(automationObject, automationList.included ?? [], enableAutomationFilterContext),
     );
 };
 
