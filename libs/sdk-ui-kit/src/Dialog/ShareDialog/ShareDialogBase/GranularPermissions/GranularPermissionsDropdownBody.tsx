@@ -15,6 +15,7 @@ import { withBubble } from "../../../../Bubble/index.js";
 import { granularPermissionMessageLabels } from "../../../../locales.js";
 import { useShareDialogInteraction } from "../ComponentInteractionContext.js";
 import { makeMenuKeyboardNavigation } from "../../../../@ui/@utils/keyboardNavigation.js";
+import { ADD_GRANTEE_ID, ADD_GRANTEE_SELECT_ID } from "../utils.js";
 
 interface IGranularPermissionsDropdownBodyProps {
     alignTo: string;
@@ -99,6 +100,11 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
                 granteePossibilities.assign.effective,
             );
             toggleDropdown();
+
+            const elementId = mode === "ShareGrantee" ? ADD_GRANTEE_ID : ADD_GRANTEE_SELECT_ID;
+            const element = document.getElementById(elementId);
+
+            element?.focus();
         }
     }, [grantee, onDelete, toggleDropdown, mode, granteePossibilities, permissionsRemoveInteraction]);
 
@@ -158,12 +164,17 @@ export const GranularPermissionsDropdownBody: React.FC<IGranularPermissionsDropd
                                 toggleDropdown();
                                 handleSetSelectedPermission(permissionId);
                                 handleOnChange(changedGrantee);
+                            } else {
+                                toggleDropdown();
                             }
                         }
                     }
                 },
                 onClose: () => {
                     toggleDropdown();
+                },
+                onUnhandledKeyDown: (event) => {
+                    event.preventDefault();
                 },
             });
 
