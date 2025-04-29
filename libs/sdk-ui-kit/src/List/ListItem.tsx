@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { Component, ReactNode, createRef } from "react";
+import React, { forwardRef, useEffect, useRef, useState, ReactNode, useCallback } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
-
+import { IMenuAccessibilityConfig } from "../typings/accessibility.js";
 import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 
 const BUBBLE_OFFSET_X = 16;
@@ -25,90 +25,144 @@ export interface ISingleSelectListItemProps {
     hideDelayBubble?: number;
     isSelected?: boolean;
     isMenu?: boolean;
+    accessibilityConfig?: IMenuAccessibilityConfig;
+    tabIndex?: number;
+    elementType?: "div" | "button";
 
     onClick?: (e: React.MouseEvent<HTMLElement>) => void;
     onMouseOver?: (e: React.MouseEvent<HTMLElement>) => void;
     onMouseOut?: (e: React.MouseEvent<HTMLElement>) => void;
 }
+
 /**
  * @internal
  */
-export interface ISingleSelectListItemState {
-    isOverflowed: boolean;
-}
+const DivElement = forwardRef<HTMLDivElement, ISingleSelectListItemProps & { children?: React.ReactNode }>(
+    function DivElement({ children, ...props }, ref) {
+        return (
+            <div
+                ref={ref}
+                className={props.className}
+                onClick={props.onClick}
+                onMouseOver={props.onMouseOver}
+                onMouseOut={props.onMouseOut}
+                role={props.accessibilityConfig?.role}
+                aria-disabled={props.accessibilityConfig?.ariaDisabled}
+                aria-haspopup={props.accessibilityConfig?.ariaHaspopup}
+                aria-expanded={props.accessibilityConfig?.ariaExpanded}
+                tabIndex={props.tabIndex}
+                data-testid={
+                    props.type === "separator"
+                        ? "item-separator"
+                        : props.type === "header"
+                        ? "item-header"
+                        : undefined
+                }
+            >
+                {children}
+            </div>
+        );
+    },
+);
+
 /**
  * @internal
  */
-export class SingleSelectListItem extends Component<ISingleSelectListItemProps, ISingleSelectListItemState> {
-    private titleRef = createRef<HTMLSpanElement>();
+const ButtonElement = forwardRef<
+    HTMLButtonElement,
+    ISingleSelectListItemProps & { children?: React.ReactNode }
+>(function ButtonElement({ children, ...props }, ref) {
+    return (
+        <button
+            ref={ref}
+            type="button"
+            className={props.className}
+            onClick={props.onClick}
+            onMouseOver={props.onMouseOver}
+            onMouseOut={props.onMouseOut}
+            role={props.accessibilityConfig?.role}
+            aria-disabled={props.accessibilityConfig?.ariaDisabled}
+            aria-haspopup={props.accessibilityConfig?.ariaHaspopup}
+            aria-expanded={props.accessibilityConfig?.ariaExpanded}
+            tabIndex={props.tabIndex}
+        >
+            {children}
+        </button>
+    );
+});
 
-    constructor(props: ISingleSelectListItemProps) {
-        super(props);
-        this.state = { isOverflowed: false };
-    }
+/**
+ * @internal
+ */
+export const SingleSelectListItem = forwardRef<
+    HTMLDivElement | HTMLButtonElement,
+    ISingleSelectListItemProps
+>(function SingleSelectListItem(props, ref) {
+    const {
+        title,
+        icon,
+        type,
+        className,
+        info,
+        eventsOnBubble = false,
+        hideDelayBubble,
+        isSelected,
+        isMenu,
+        elementType = "div",
+    } = props;
 
-    public componentDidMount(): void {
-        this.checkOverflow();
-    }
+    const [isOverflowed, setIsOverflowed] = useState(false);
+    const titleRef = useRef<HTMLSpanElement>(null);
 
-    public componentDidUpdate(): void {
-        this.checkOverflow();
-    }
-
-    private checkOverflow(): void {
-        if (this.titleRef.current) {
-            // Checks if ellipsis has been applied on title span
-            const isOverflowed = this.titleRef.current.offsetWidth < this.titleRef.current.scrollWidth;
-            if (isOverflowed !== this.state.isOverflowed) {
-                // eslint-disable-next-line react/no-did-mount-set-state
-                this.setState({
-                    isOverflowed,
-                });
-            }
+    const checkOverflow = useCallback(() => {
+        if (titleRef.current) {
+            const hasOverflow = titleRef.current.offsetWidth < titleRef.current.scrollWidth;
+            setIsOverflowed(hasOverflow);
         }
-    }
+    }, []);
 
-    private getClassNames = () => {
-        const { title, isSelected, isMenu, className } = this.props;
+    useEffect(() => {
+        checkOverflow();
+
+        window.addEventListener("resize", checkOverflow);
+
+        let resizeObserver: ResizeObserver | null = null;
+        if (titleRef.current && window.ResizeObserver) {
+            resizeObserver = new ResizeObserver(checkOverflow);
+            resizeObserver.observe(titleRef.current);
+        }
+
+        return () => {
+            window.removeEventListener("resize", checkOverflow);
+            if (resizeObserver) {
+                resizeObserver.disconnect();
+            }
+        };
+    }, [title, checkOverflow]);
+
+    const getClassNames = () => {
         const generatedSeleniumClass = `s-${stringUtils.simplifyText(title)}`;
-
         return cx("gd-list-item", className, generatedSeleniumClass, {
             "is-selected": isSelected,
             "is-submenu": isMenu,
         });
     };
 
-    public render(): JSX.Element {
-        const { icon, onClick, onMouseOver, onMouseOut, type } = this.props;
+    const renderIcon = (iconProp: string | ReactNode) => {
+        if (!iconProp) return null;
 
-        if (type === "separator") {
-            return this.renderSeparatorItem();
-        }
-
-        if (type === "header") {
-            return this.renderHeaderItem();
-        }
-
+        const iconClasses = cx("gd-list-icon", typeof iconProp === "string" ? iconProp : undefined);
         return (
-            <div
-                className={this.getClassNames()}
-                onClick={onClick}
-                onMouseOver={onMouseOver}
-                onMouseOut={onMouseOut}
-            >
-                {this.renderIcon(icon)}
-                {this.renderTitle()}
-                {this.renderInfo()}
-            </div>
+            <span role="icon" data-testid="icon" aria-hidden={true} className={iconClasses}>
+                {typeof iconProp === "string" ? null : iconProp}
+            </span>
         );
-    }
+    };
 
-    private renderTitle = () => {
-        const { title } = this.props;
+    const renderTitle = () => {
+        const titleElement = <span ref={titleRef}>{title}</span>;
 
-        const titleElement = <span ref={this.titleRef}>{title}</span>;
-
-        if (this.state.isOverflowed) {
+        if (isOverflowed) {
             return (
                 <BubbleHoverTrigger>
                     {titleElement}
@@ -125,61 +179,14 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
                 </BubbleHoverTrigger>
             );
         }
-
         return titleElement;
     };
 
-    private renderIcon = (icon: string | ReactNode) => {
-        if (icon && typeof icon === "string") {
-            const iconClasses = cx("gd-list-icon", icon);
-            return <span role="icon" aria-hidden={true} className={iconClasses} />;
-        }
-        if (icon) {
-            const iconClasses = cx("gd-list-icon");
-            return (
-                <span role="icon" aria-hidden={true} className={iconClasses}>
-                    {icon}
-                </span>
-            );
-        }
-        return null;
-    };
-
-    private renderSeparatorItem = () => {
-        return (
-            <div
-                role="item-separator"
-                className={cx(
-                    "gd-list-item",
-                    "gd-list-item-separator",
-                    "s-list-separator",
-                    this.props.className,
-                )}
-            />
-        );
-    };
-
-    private renderHeaderItem = () => {
-        return (
-            <div
-                role="item-header"
-                className={cx("gd-list-item", "gd-list-item-header", "s-list-header", this.props.className)}
-            >
-                {this.props.title}
-                {this.renderInfo()}
-            </div>
-        );
-    };
-
-    private renderInfo = () => {
-        if (!this.props.info) {
-            return null;
-        }
-
-        const { eventsOnBubble = false, hideDelayBubble } = this.props;
+    const renderInfo = () => {
+        if (!info) return null;
 
         return (
-            <div role="item-info" className="gd-list-item-bubble s-list-item-info">
+            <div data-testid="item-info" className="gd-list-item-bubble s-list-item-info">
                 <BubbleHoverTrigger
                     tagName="div"
                     showDelay={200}
@@ -192,10 +199,46 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
                         alignPoints={[{ align: "cr cl" }]}
                         arrowOffsets={{ "cr cl": [15, 0] }}
                     >
-                        {this.props.info}
+                        {info}
                     </Bubble>
                 </BubbleHoverTrigger>
             </div>
         );
     };
-}
+
+    const children = (
+        <>
+            {renderIcon(icon)}
+            {renderTitle()}
+            {renderInfo()}
+        </>
+    );
+
+    if (type === "separator" || type === "header") {
+        return (
+            <DivElement
+                ref={ref as React.Ref<HTMLDivElement>}
+                {...props}
+                className={cx(
+                    "gd-list-item",
+                    type === "separator"
+                        ? "gd-list-item-separator s-list-separator"
+                        : "gd-list-item-header s-list-header",
+                    className,
+                )}
+            >
+                {type === "header" ? children : null}
+            </DivElement>
+        );
+    }
+
+    return elementType === "button" ? (
+        <ButtonElement ref={ref as React.Ref<HTMLButtonElement>} {...props} className={getClassNames()}>
+            {children}
+        </ButtonElement>
+    ) : (
+        <DivElement ref={ref as React.Ref<HTMLDivElement>} {...props} className={getClassNames()}>
+            {children}
+        </DivElement>
+    );
+});
