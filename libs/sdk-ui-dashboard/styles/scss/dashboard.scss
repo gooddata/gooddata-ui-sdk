@@ -759,6 +759,12 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 }
 
 .gd-header-menu-overlay {
+    .configuration-panel-header-back-button {
+        border: none;
+        background: none;
+        color: kit-variables.$gd-color-state-blank;
+        padding: 0;
+    }
     .gd-menu-item {
         //stylelint-disable-next-line declaration-no-important
         padding: 5px 10px !important;

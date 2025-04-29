@@ -1,6 +1,7 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import classnames from "classnames";
+import { IMenuContainerAccessibilityConfig } from "../typings/accessibility.js";
 
 /**
  * @internal
@@ -10,7 +11,10 @@ export interface IItemsWrapperProps {
     children: React.ReactNode;
     className?: string;
     style?: React.CSSProperties;
+    accessibilityConfig?: IMenuContainerAccessibilityConfig;
+    wrapperRef?: React.MutableRefObject<HTMLDivElement>;
 }
+
 /**
  * @internal
  */
@@ -19,6 +23,8 @@ export const ItemsWrapper: React.FC<IItemsWrapperProps> = ({
     className,
     children,
     style,
+    accessibilityConfig,
+    wrapperRef,
 }) => (
     <div
         className={classnames(
@@ -29,6 +35,10 @@ export const ItemsWrapper: React.FC<IItemsWrapperProps> = ({
             className,
         )}
         style={style}
+        role={accessibilityConfig?.role}
+        id={accessibilityConfig?.id}
+        aria-labelledby={accessibilityConfig?.ariaLabelledBy}
+        ref={wrapperRef}
     >
         {children}
     </div>

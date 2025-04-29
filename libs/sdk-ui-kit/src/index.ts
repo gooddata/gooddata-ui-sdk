@@ -21,6 +21,7 @@ export * from "./utils/debounce.js";
 export * from "./utils/dateTimeConfig.js";
 export * from "./utils/events.js";
 export * from "./utils/useId.js";
+export { getFocusableElements } from "./utils/domUtilities.js";
 export * from "./measureNumberFormat/index.js";
 export * from "./syntaxHighlightingInput/index.js";
 export * from "./Button/index.js";
@@ -103,6 +104,11 @@ export type {
 } from "./@ui/UiPagedVirtualList/UiPagedVirtualList.js";
 export { UiFocusTrap } from "./@ui/UiFocusTrap/UiFocusTrap.js";
 export type { UiFocusTrapProps } from "./@ui/UiFocusTrap/UiFocusTrap.js";
+export type {
+    IAccessibilityConfigBase,
+    IMenuAccessibilityConfig,
+    IMenuContainerAccessibilityConfig,
+} from "./typings/accessibility.js";
 export { UiListbox } from "./@ui/UiListbox/UiListbox.js";
 export { DefaultUiListboxInteractiveItemComponent } from "./@ui/UiListbox/defaults/DefaultUiListboxInteractiveItemComponent.js";
 export {
@@ -118,3 +124,5 @@ export type {
     IUiListboxInteractiveItem,
     UiListboxInteractiveItemProps,
 } from "./@ui/UiListbox/types.js";
+
+export { makeMenuKeyboardNavigation } from "./@ui/@utils/keyboardNavigation.js";

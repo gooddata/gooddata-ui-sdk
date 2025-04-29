@@ -1,6 +1,8 @@
 // (C) 2025 GoodData Corporation
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
+import { makeDialogKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+import { getFocusableElements } from "../../utils/domUtilities.js";
 
 /**
  * @internal
@@ -20,35 +22,12 @@ export interface UiFocusTrapProps {
      * If not provided, the first focusable element will be focused.
      */
     initialFocus?: React.RefObject<HTMLElement> | string;
+    /**
+     * Specify a custom keyboard navigation handler.
+     * If not provided, the default keyboard navigation handler will be used.
+     */
+    customKeyboardNavigationHandler?: (event: KeyboardEvent) => void;
 }
-const focusableElementsSelector = [
-    // Interactive form elements
-    'button:not(:disabled):not([aria-disabled="true"])',
-    'input:not(:disabled):not([aria-disabled="true"])',
-    'select:not(:disabled):not([aria-disabled="true"])',
-    'textarea:not(:disabled):not([aria-disabled="true"])',
-
-    // Links and areas
-    "a[href]",
-    "area[href]",
-
-    // Custom elements with tabindex
-    '[tabindex]:not([tabindex="-1"]):not(:disabled):not([aria-disabled="true"])',
-
-    // Media with controls
-    "audio[controls]",
-    "video[controls]",
-
-    // Editable content
-    '[contenteditable]:not([contenteditable="false"])',
-].join(",");
-
-const getFocusableElements = (element?: HTMLElement) => {
-    const focusableElements = element?.querySelectorAll<HTMLElement>(focusableElementsSelector);
-    const firstElement = focusableElements?.[0];
-    const lastElement = focusableElements?.[focusableElements.length - 1];
-    return { focusableElements, firstElement, lastElement };
-};
 
 /**
  * Attempts to find a truly focusable element by trying subsequent elements in the focusable elements collection
@@ -76,6 +55,83 @@ const focusAndEnsureReachableElement = (
     }
 };
 
+const useDialogKeyboardNavigation = (
+    trapRef: React.RefObject<HTMLDivElement>,
+    onDeactivate: () => void,
+    returnFocusTo: React.RefObject<HTMLElement> | string,
+) => {
+    const returnFocus = useCallback(() => {
+        if (typeof returnFocusTo === "string") {
+            const element = document.getElementById(returnFocusTo);
+            if (element) {
+                element.focus();
+            }
+        } else if (returnFocusTo?.current) {
+            returnFocusTo.current.focus();
+        }
+    }, [returnFocusTo]);
+
+    const handleFocusNavigation = useCallback(
+        (focusableElements: NodeListOf<HTMLElement>, shiftKey: boolean) => {
+            const elements = Array.from(focusableElements);
+            const currentIndex = elements.indexOf(document.activeElement as HTMLElement);
+            const firstElement = elements[0];
+            const lastElement = elements[elements.length - 1];
+
+            let nextElement;
+
+            if (shiftKey) {
+                // Shift + Tab - moving backwards
+                nextElement = currentIndex <= 0 ? lastElement : elements[currentIndex - 1];
+            } else {
+                // Tab - moving forwards
+                nextElement =
+                    currentIndex === elements.length - 1 ? firstElement : elements[currentIndex + 1];
+            }
+
+            if (nextElement) {
+                focusAndEnsureReachableElement(nextElement, focusableElements, shiftKey);
+            }
+        },
+        [],
+    );
+
+    const keyboardNavigationHandler = useCallback(
+        (event: KeyboardEvent) => {
+            if (!trapRef.current?.contains(event.target as Node)) {
+                return;
+            }
+
+            return makeDialogKeyboardNavigation({
+                onFocusNext: () => {
+                    const { focusableElements } = getFocusableElements(trapRef.current);
+                    if (!focusableElements?.length) {
+                        return;
+                    }
+                    handleFocusNavigation(focusableElements, false);
+                },
+                onFocusPrevious: () => {
+                    const { focusableElements } = getFocusableElements(trapRef.current);
+                    if (!focusableElements?.length) {
+                        return;
+                    }
+                    handleFocusNavigation(focusableElements, true);
+                },
+                onClose: () => {
+                    onDeactivate?.();
+                    returnFocus();
+                },
+            })(event);
+        },
+        [handleFocusNavigation, onDeactivate, returnFocus, trapRef],
+    );
+
+    return {
+        keyboardNavigationHandler,
+        returnFocus,
+    };
+};
+
 /**
  * @internal
  */
@@ -85,64 +141,25 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
     returnFocusTo,
     autofocusOnOpen = false,
     initialFocus,
+    customKeyboardNavigationHandler,
 }) => {
     const trapRef = useRef<HTMLDivElement>(null);
     const defaultReturnFocusToRef = useRef<HTMLElement | null>(null);
 
-    const returnFocus = React.useCallback(() => {
-        if (typeof returnFocusTo === "string") {
-            const element = document.getElementById(returnFocusTo);
-            if (element) {
-                element.focus();
-            }
-        } else if (returnFocusTo?.current) {
-            returnFocusTo.current.focus();
-        } else if (defaultReturnFocusToRef.current) {
-            defaultReturnFocusToRef.current.focus();
-        }
-    }, [returnFocusTo]);
+    useEffect(() => {
+        defaultReturnFocusToRef.current = document.activeElement as HTMLElement;
+    }, []);
+
+    const { keyboardNavigationHandler, returnFocus } = useDialogKeyboardNavigation(
+        trapRef,
+        onDeactivate,
+        returnFocusTo ?? defaultReturnFocusToRef,
+    );
+
+    const keyboardHandler = customKeyboardNavigationHandler ?? keyboardNavigationHandler;
 
     useEffect(() => {
-        const getNextElement = (focusableElements, firstElement, lastElement, shiftKey: boolean) => {
-            const elements = Array.from(focusableElements);
-            const currentIndex = elements.indexOf(document.activeElement as HTMLElement);
-
-            if (shiftKey) {
-                // Shift + Tab - moving backwards
-                return currentIndex <= 0 ? lastElement : elements[currentIndex - 1];
-            } else {
-                // Tab - moving forwards
-                return currentIndex === elements.length - 1 ? firstElement : elements[currentIndex + 1];
-            }
-        };
-
-        const handleKeyDown = (event: KeyboardEvent) => {
-            // get fresh focusable elements set as they could change in meantime
-            const { firstElement, lastElement, focusableElements } = getFocusableElements(trapRef.current);
-            if (event.key === "Tab" && trapRef.current?.contains(event.target as Node)) {
-                const nextElement = getNextElement(
-                    focusableElements,
-                    firstElement,
-                    lastElement,
-                    event.shiftKey,
-                );
-
-                if (nextElement) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    focusAndEnsureReachableElement(nextElement, focusableElements, event.shiftKey);
-                }
-            } else if (event.key === "Escape") {
-                if (onDeactivate) {
-                    onDeactivate();
-                }
-                returnFocus();
-            }
-        };
-
-        document.addEventListener("keydown", handleKeyDown);
-        defaultReturnFocusToRef.current = document.activeElement as HTMLElement;
-
+        document.addEventListener("keydown", keyboardHandler);
         const focusTrapTimeout = setTimeout(() => {
             if (!autofocusOnOpen) {
                 return;
@@ -172,11 +189,11 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
         }, 100);
 
         return () => {
-            document.removeEventListener("keydown", handleKeyDown);
             clearTimeout(focusTrapTimeout);
+            document.removeEventListener("keydown", keyboardHandler);
             returnFocus();
         };
-    }, [onDeactivate, returnFocusTo, autofocusOnOpen, initialFocus, returnFocus]);
+    }, [autofocusOnOpen, initialFocus, returnFocus, keyboardHandler]);
 
     return (
         <div className="gd-focus-trap" ref={trapRef}>

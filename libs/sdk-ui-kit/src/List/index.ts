@@ -45,11 +45,7 @@ export {
     InvertableSelectStatus,
     useInvertableSelectionStatusText,
 } from "./InvertableSelect/index.js";
-export type {
-    ISingleSelectListItemProps,
-    ISingleSelectListItemState,
-    SingleSelectListItemType,
-} from "./ListItem.js";
+export type { ISingleSelectListItemProps, SingleSelectListItemType } from "./ListItem.js";
 export { SingleSelectListItem } from "./ListItem.js";
 
 // components from goodstrap/lib root which have its new equivalent

@@ -1440,6 +1440,16 @@
         "comment": "",
         "limit": 0
     },
+    "controlButtons.options.back": {
+        "value": "Back to previous step",
+        "comment": "",
+        "limit": 0
+    },
+    "controlButtons.options.close": {
+        "value": "Close",
+        "comment": "",
+        "limit": 0
+    },
     "controlButtons.edit.value": {
         "value": "Edit",
         "comment": "",
