@@ -45,7 +45,7 @@ export function NotificationFiltersDetail({ filters }: INotificationFiltersDetai
         <>
             {filters.length ? (
                 <UiButton
-                    buttonRef={ref}
+                    ref={ref}
                     onClick={onButtonClick}
                     variant="tertiary"
                     size="small"

@@ -16,57 +16,37 @@ import { UiIcon } from "../UiIcon/UiIcon.js";
 /**
  * @internal
  */
-export interface UiButtonProps {
+export interface UiIconButtonProps {
+    icon: IconType;
+    label: string;
     size?: SizeSmall | SizeMedium | SizeLarge;
     variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger;
-    iconBefore?: IconType;
-    iconAfter?: IconType;
-    label: string;
     isDisabled?: boolean;
-    isLoading?: boolean;
-    tooltip?: React.ReactNode;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     dataId?: string;
 }
 
-const { b, e } = bem("gd-ui-kit-button");
+const { b } = bem("gd-ui-kit-icon-button");
 
 /**
  * @internal
  */
-export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
-    (
-        {
-            size = "medium",
-            variant = "secondary",
-            label,
-            isDisabled,
-            isLoading,
-            iconBefore,
-            iconAfter,
-            onClick,
-            dataId,
-        },
-        ref,
-    ) => {
+export const UiIconButton = forwardRef<HTMLButtonElement, UiIconButtonProps>(
+    ({ icon, label, size = "medium", variant = "secondary", isDisabled, onClick, dataId }, ref) => {
         const iconSize = size === "small" ? 16 : 18;
-        const hasIconBefore = !!iconBefore;
-        const hasIconAfter = !!iconAfter;
         return (
             <button
                 ref={ref}
-                className={b({ size, variant, isLoading, hasIconBefore, hasIconAfter })}
+                aria-label={label}
+                className={b({ size, variant })}
                 disabled={isDisabled}
-                tabIndex={0}
                 onClick={onClick}
                 data-id={dataId}
             >
-                {iconBefore ? <UiIcon type={iconBefore} size={iconSize} /> : null}
-                <span className={e("text")}>{label}</span>
-                {iconAfter ? <UiIcon type={iconAfter} size={iconSize} /> : null}
+                <UiIcon type={icon} size={iconSize} ariaHidden />
             </button>
         );
     },
 );
 
-UiButton.displayName = "UiButton";
+UiIconButton.displayName = "UiIconButton";
