@@ -74,6 +74,8 @@ export const VisualizationSwitcherNavigationHeader: React.FC<IVisualizationSwitc
                     onClose={closeDropdown}
                     ariaAttributes={ariaAttributes}
                     maxWidth={clientWidth ?? 200}
+                    className={"s-visualization-switcher-widget-list"}
+                    itemClassName={"s-visualization-switcher-widget-list-item"}
                 />
             )}
             renderButton={({ toggleDropdown, isOpen, ariaAttributes, buttonRef }) => (
@@ -107,7 +109,7 @@ const VisualizationSwitcherNavigationHeaderButton = React.forwardRef<
     { isOpen, toggleDropdown, title, clientHeight, ariaAttributes, exportData },
     ref,
 ) {
-    const classNames = cx("gd-visualization-switcher-widget-header", {
+    const classNames = cx("gd-visualization-switcher-widget-header s-visualization-switcher-widget-header", {
         "is-open": isOpen,
     });
     return (
