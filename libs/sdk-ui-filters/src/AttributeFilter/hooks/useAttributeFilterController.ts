@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, MutableRefObject } from "react";
 import isEqual from "lodash/isEqual.js";
 import debounce from "lodash/debounce.js";
 import difference from "lodash/difference.js";
@@ -115,9 +115,23 @@ export const useAttributeFilterController = (
     const supportsShowingFilteredElements = backend.capabilities.supportsShowingFilteredElements;
     const supportsSingleSelectDependentFilters = backend.capabilities.supportsSingleSelectDependentFilters;
 
-    const { shouldReloadElements, setShouldReloadElements } = useShouldReloadElements(
-        supportsKeepingDependentFiltersSelection,
-        supportsCircularDependencyInFilters,
+    /**
+     * This flag handles elements reload when shouldElementsReload flag is true.
+     * In case the backend does not support keeping dependent filter selection or
+     * does not support circular dependency in filter, we do not care about the flag
+     * as elements are reloaded on every limiting filter change.
+     * Ref must be used instead of internal state because the value is checked by condition in the same
+     * render cycle as in which the value is changed.
+     */
+    const shouldReloadElements = useRef<boolean>(false);
+    const setShouldReloadElements = useCallback(
+        (value: boolean) => {
+            if (!supportsKeepingDependentFiltersSelection || !supportsCircularDependencyInFilters) {
+                return;
+            }
+            shouldReloadElements.current = value;
+        },
+        [supportsCircularDependencyInFilters, supportsKeepingDependentFiltersSelection],
     );
     const { shouldIncludeLimitingFilters, setShouldIncludeLimitingFilters } = useShouldIncludeLimitingFilters(
         supportsShowingFilteredElements,
@@ -292,7 +306,7 @@ function useInitOrReload(
         onSelect: OnSelectCallbackType;
         resetOnParentFilterChange: boolean;
         selectionMode: DashboardAttributeFilterSelectionMode;
-        shouldReloadElements: boolean;
+        shouldReloadElements: MutableRefObject<boolean>;
         setShouldReloadElements: (value: boolean) => void;
         displayAsLabel: ObjRef;
     },
@@ -676,7 +690,7 @@ function refreshByType(
     handler: IMultiSelectAttributeFilterHandler,
     change: UpdateFilterType,
     supportsKeepingDependentFiltersSelection: boolean,
-    shouldReloadElements: boolean,
+    shouldReloadElements: MutableRefObject<boolean>,
     setShouldReloadElements: (value: boolean) => void,
 ) {
     if (change === "init-parent") {
@@ -686,7 +700,7 @@ function refreshByType(
             // filter started in limited state with elements filtered by another filter. These elements  will
             // be used by re-execution widgets, which is correct, but will not be set to filter's button
             // value, confusing the users.
-            if (shouldReloadElements) {
+            if (shouldReloadElements.current) {
                 handler.loadInitialElementsPage(PARENT_FILTERS_CORRELATION);
                 handler.loadIrrelevantElements(IRRELEVANT_SELECTION);
                 setShouldReloadElements(false);
@@ -694,11 +708,11 @@ function refreshByType(
             return;
         }
 
-        if (handler.getInitStatus() !== "success") {
-            handler.init(PARENT_FILTERS_CORRELATION);
-        } else {
+        if (handler.getInitStatus() === "success") {
             handler.initTotalCount(PARENT_FILTERS_CORRELATION);
             handler.loadInitialElementsPage(PARENT_FILTERS_CORRELATION);
+        } else {
+            handler.init(PARENT_FILTERS_CORRELATION);
         }
     }
     if (change === "init-self") {
@@ -730,7 +744,7 @@ function useCallbacks(
         onApply: OnApplyCallbackType;
         onSelect: OnSelectCallbackType;
         selectionMode: DashboardAttributeFilterSelectionMode;
-        shouldReloadElements: boolean;
+        shouldReloadElements: MutableRefObject<boolean>;
         setShouldReloadElements: (value: boolean) => void;
         shouldIncludeLimitingFilters: boolean;
         setShouldIncludeLimitingFilters: (value: boolean) => void;
@@ -923,7 +937,7 @@ function useCallbacks(
     );
 
     const onOpen = useCallback(() => {
-        if (shouldReloadElements) {
+        if (shouldReloadElements.current) {
             handler.loadInitialElementsPage(RESET_CORRELATION);
             !handler.isWorkingSelectionEmpty() && handler.loadIrrelevantElements(IRRELEVANT_SELECTION);
             setShouldReloadElements(false);
@@ -1028,32 +1042,6 @@ const useSingleSelectModeHandler = (
         enableDuplicatedLabelValuesInAttributeFilter,
         enableDashboardFiltersApplyModes,
     ]);
-};
-
-/**
- * This flag handles elements reload when shouldElementsReload flag is true.
- * In case the backend does not support keeping dependent filter selection or
- * does not support circular dependency in filter, we do not care about the flag
- * as elements are reloaded on every limiting filter change.
- */
-const useShouldReloadElements = (
-    supportsKeepingDependentFiltersSelection: boolean,
-    supportsCircularDependencyInFilters: boolean,
-) => {
-    const [shouldReloadElements, setShouldReloadElements] = useState(false);
-
-    const handleSetShouldReloadElements = useCallback(
-        (value: boolean) => {
-            if (!supportsKeepingDependentFiltersSelection || !supportsCircularDependencyInFilters) {
-                return;
-            }
-
-            setShouldReloadElements(value);
-        },
-        [supportsCircularDependencyInFilters, supportsKeepingDependentFiltersSelection],
-    );
-
-    return { shouldReloadElements, setShouldReloadElements: handleSetShouldReloadElements };
 };
 
 const useShouldIncludeLimitingFilters = (supportsShowingFilteredElements: boolean) => {
