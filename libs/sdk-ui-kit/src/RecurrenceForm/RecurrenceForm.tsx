@@ -28,6 +28,7 @@ import {
 export interface IRecurrenceFormProps {
     startDate?: Date | null;
     cronExpression?: string;
+    cronDescription?: string;
     placeholder?: string;
     onChange: (cronExpression: string, startDate: Date | null, isValid: boolean) => void;
     locale?: string;
@@ -50,6 +51,7 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
     const {
         startDate = null,
         cronExpression = "",
+        cronDescription = "",
         placeholder,
         onChange,
         locale = DEFAULT_LOCALE,
@@ -148,6 +150,7 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
                 startDate={dateValue}
                 cronValue={cronValue}
                 cronPlaceholder={placeholder}
+                cronDescription={cronDescription}
                 onRepeatTypeChange={onRepeatTypeChange}
                 onCronValueChange={onCronValueChange}
                 allowHourlyRecurrence={allowHourlyRecurrence}

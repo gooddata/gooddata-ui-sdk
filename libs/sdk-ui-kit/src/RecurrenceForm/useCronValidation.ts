@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { useCallback, useState } from "react";
-import cronParser from "cron-parser";
+import * as cronParser from "cron-parser";
 import { isCronExpressionValid } from "./utils.js";
 import { defineMessages } from "react-intl";
 

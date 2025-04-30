@@ -314,6 +314,7 @@ export function ScheduledMailDialogRenderer({
                                 cronExpression={
                                     editedAutomation.schedule?.cron ?? getDefaultCronExpression(startDate)
                                 }
+                                cronDescription={editedAutomation.schedule?.cronDescription}
                                 timezone={editedAutomation.schedule?.timezone ?? TIMEZONE_DEFAULT.identifier}
                                 dateFormat={dateFormat ?? "MM/dd/yyyy"}
                                 locale={locale}
