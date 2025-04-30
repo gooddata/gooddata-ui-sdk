@@ -1,13 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
-import { IAccessibilityConfigBase } from "src/typings/accessibility.js";
 import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
+import { IAccessibilityConfigBase } from "../typings/accessibility.js";
 
 interface ICronExpressionProps {
     expression: string;
+    description?: string;
     onChange: (expression: string) => void;
     onBlur: (expression: string) => void;
     allowHourlyRecurrence?: boolean;
@@ -20,6 +21,7 @@ interface ICronExpressionProps {
 
 export const CronExpression: React.FC<ICronExpressionProps> = ({
     expression,
+    description,
     onChange,
     onBlur,
     showTimezone,
@@ -29,6 +31,8 @@ export const CronExpression: React.FC<ICronExpressionProps> = ({
     accessibilityConfig,
 }) => {
     const intl = useIntl();
+    const [originalExpression] = useState(expression);
+    const [changed, setChanged] = useState(false);
 
     const handleBlur = useCallback(
         (e: React.FocusEvent<HTMLInputElement>) => {
@@ -42,11 +46,14 @@ export const CronExpression: React.FC<ICronExpressionProps> = ({
         (e: React.ChangeEvent<HTMLInputElement>) => {
             const value = e.target.value;
             onChange(value);
+            setChanged(originalExpression !== value);
         },
-        [onChange],
+        [onChange, originalExpression],
     );
 
     const cronPlaceholder = "* * * * * *";
+    const hasTimezone = Boolean(showTimezone && timezone);
+    const hasDescription = Boolean(description);
 
     return (
         <>
@@ -68,24 +75,29 @@ export const CronExpression: React.FC<ICronExpressionProps> = ({
                     aria-labelledby={accessibilityConfig?.ariaLabelledBy}
                 />
             </div>
-            {Boolean(showTimezone && timezone) && (
+            {hasDescription || hasTimezone ? (
                 <div className="gd-recurrence-form-repeat-type-description s-recurrence-form-repeat-type-description">
-                    <FormattedMessage id="gs.date.at" tagName="span" />
-                    <BubbleHoverTrigger
-                        showDelay={0}
-                        hideDelay={0}
-                        className="gd-recurrence-form-timezone-wrapper"
-                    >
-                        <span className="gd-recurrence-form-timezone">
-                            {" "}
-                            {timezone} {intl.formatMessage({ id: "gs.time" })}
-                        </span>
-                        <Bubble className="bubble-primary" alignPoints={[{ align: "bc tc" }]}>
-                            {timezone} {intl.formatMessage({ id: "gs.time" })}
-                        </Bubble>
-                    </BubbleHoverTrigger>
+                    {hasDescription && !changed ? <span>{description}</span> : null}
+                    {hasTimezone ? (
+                        <>
+                            <FormattedMessage id="gs.date.at" tagName="span" />
+                            <BubbleHoverTrigger
+                                showDelay={0}
+                                hideDelay={0}
+                                className="gd-recurrence-form-timezone-wrapper"
+                            >
+                                <span className="gd-recurrence-form-timezone">
+                                    {" "}
+                                    {timezone} {intl.formatMessage({ id: "gs.time" })}
+                                </span>
+                                <Bubble className="bubble-primary" alignPoints={[{ align: "bc tc" }]}>
+                                    {timezone} {intl.formatMessage({ id: "gs.time" })}
+                                </Bubble>
+                            </BubbleHoverTrigger>
+                        </>
+                    ) : null}
                 </div>
-            )}
+            ) : null}
         </>
     );
 };

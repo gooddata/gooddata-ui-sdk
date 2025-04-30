@@ -25,6 +25,7 @@ export interface IRecurrenceProps {
     timezone?: string;
     cronValue: string;
     cronPlaceholder?: string;
+    cronDescription?: string;
     weekStart?: WeekStart;
     onRepeatTypeChange: (repeatType: string) => void;
     onCronValueChange: (cronValue: string, isValid: boolean) => void;
@@ -48,6 +49,7 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
         startDate,
         cronValue,
         cronPlaceholder,
+        cronDescription,
         timezone,
         onRepeatTypeChange,
         onCronValueChange,
@@ -109,6 +111,7 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
                     {isCron ? (
                         <CronExpression
                             expression={isInherit ? cronPlaceholder : cronValue}
+                            description={cronDescription}
                             onChange={handleChange}
                             allowHourlyRecurrence={allowHourlyRecurrence}
                             timezone={timezone}

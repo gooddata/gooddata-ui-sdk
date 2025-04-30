@@ -3570,6 +3570,8 @@ export interface IRecurrenceFormProps {
     // (undocumented)
     className?: string;
     // (undocumented)
+    cronDescription?: string;
+    // (undocumented)
     cronExpression?: string;
     // (undocumented)
     dateFormat?: string;
@@ -3607,6 +3609,8 @@ export interface IRecurrenceFormProps {
 export interface IRecurrenceProps {
     // (undocumented)
     allowHourlyRecurrence?: boolean;
+    // (undocumented)
+    cronDescription?: string;
     // (undocumented)
     cronPlaceholder?: string;
     // (undocumented)
