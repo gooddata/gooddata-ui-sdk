@@ -3,7 +3,7 @@ import React from "react";
 import unescape from "lodash/unescape.js";
 import { ITheme } from "@gooddata/sdk-model";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
-import { useId } from "@gooddata/sdk-ui-kit";
+import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 const DEFAULT_DISABLED_COLOR = "#CCCCCC";
 
@@ -42,8 +42,7 @@ const LegendItem: React.FC<ILegendItemProps> = ({
         return onItemClick(item);
     };
 
-    const id = useId();
-    const legendItemId = `legend-item-${id}`;
+    const legendItemId = useIdPrefixed("legend-item");
 
     return (
         <button

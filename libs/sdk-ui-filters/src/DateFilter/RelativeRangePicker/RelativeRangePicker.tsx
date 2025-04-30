@@ -15,7 +15,7 @@ import { injectIntl, IntlShape, WrappedComponentProps } from "react-intl";
 
 import { defaultVisibleItemsRange } from "../Select/VirtualizedSelectMenu.js";
 import { IUiRelativeDateFilterForm, DateFilterOption } from "../interfaces/index.js";
-import { useId } from "@gooddata/sdk-ui-kit";
+import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { DynamicSelectItem } from "../DynamicSelect/types.js";
 import { itemToString } from "../Select/utils.js";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
@@ -114,8 +114,8 @@ const RelativeRangePickerSelect = React.memo((props: IRelativeRangePickerSelectP
         wrapperClassName,
     } = props;
 
-    const labelId = `${useId()}-label`;
-    const errorId = `${useId()}-error`;
+    const labelId = useIdPrefixed("label");
+    const errorId = useIdPrefixed("error");
 
     return (
         <SelectWrapper

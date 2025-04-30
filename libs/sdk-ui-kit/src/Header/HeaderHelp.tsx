@@ -8,7 +8,7 @@ import { Overlay } from "../Overlay/index.js";
 import { HelpMenuDropdownAlignPoints, IAlignPoint } from "../typings/positioning.js";
 import { Button } from "../Button/index.js";
 import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
-import { useId } from "../utils/useId.js";
+import { useIdPrefixed } from "../utils/useId.js";
 
 interface IHelpItem {
     key: string;
@@ -46,8 +46,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
     const helpMenuRef = useRef<Button>(null);
     const helpMenuButtonRef = useRef<HTMLButtonElement>(null);
 
-    const id = useId();
-    const dropdownId = `help-dropdown-${id}`;
+    const dropdownId = useIdPrefixed("help-dropdown");
 
     const classNames = cx({
         "gd-header-help": true,

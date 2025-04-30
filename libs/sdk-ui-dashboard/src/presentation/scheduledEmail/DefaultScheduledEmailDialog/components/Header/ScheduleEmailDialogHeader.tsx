@@ -2,7 +2,7 @@
 import React, { useState, useCallback, forwardRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
-import { Bubble, BubbleHoverTrigger, Button, Icon, useId } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Button, Icon, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 const TITLE_MAX_LENGTH = 255;
 
@@ -24,7 +24,7 @@ export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, ISchedule
         const intl = useIntl();
         const [titleError, setTitleError] = useState<string | null>(null);
 
-        const errorId = `${useId()}-error`;
+        const errorId = useIdPrefixed("error");
 
         const errorMessage = intl.formatMessage(
             { id: "dialogs.schedule.error.too_long" },

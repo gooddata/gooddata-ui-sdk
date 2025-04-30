@@ -12,7 +12,7 @@ export interface IItemsWrapperProps {
     className?: string;
     style?: React.CSSProperties;
     accessibilityConfig?: IMenuContainerAccessibilityConfig;
-    wrapperRef?: React.MutableRefObject<HTMLDivElement>;
+    wrapperRef?: React.RefObject<HTMLDivElement>;
 }
 
 /**

@@ -6,7 +6,7 @@ import { IExportDialogBaseProps } from "./typings.js";
 import { Checkbox } from "../Form/index.js";
 import { ConfirmDialogBase } from "./ConfirmDialogBase.js";
 import { usePropState } from "@gooddata/sdk-ui";
-import { useId } from "../utils/useId.js";
+import { useIdPrefixed } from "../utils/useId.js";
 
 /**
  * @internal
@@ -38,7 +38,7 @@ export const ExportDialogBase = React.memo<IExportDialogBaseProps>(function Expo
     const [isFilterContextIncluded, setIsFilterContextIncluded] = usePropState(includeFilterContext);
     const [shouldMergeHeaders, setShouldMergeHeaders] = usePropState(mergeHeaders);
 
-    const mergeHeadersId = `${useId()}-mergeHeaders`;
+    const mergeHeadersId = useIdPrefixed("mergeHeaders");
 
     const handleSubmit = React.useCallback(() => {
         onSubmit({

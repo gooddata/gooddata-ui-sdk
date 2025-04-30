@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useCallback } from "react";
 import { makeDialogKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import { getFocusableElements } from "../../utils/domUtilities.js";
 
+type NavigationDirection = "forward" | "backward";
+
 /**
  * @internal
  */
@@ -36,7 +38,7 @@ export interface UiFocusTrapProps {
 const focusAndEnsureReachableElement = (
     initialElement: HTMLElement,
     focusableElements: NodeListOf<HTMLElement>,
-    shiftKey: boolean,
+    direction: NavigationDirection,
 ): void => {
     let nextElement = initialElement;
     let attempts = 0;
@@ -47,9 +49,10 @@ const focusAndEnsureReachableElement = (
     while (nextElement !== document.activeElement && attempts < maxAttempts) {
         attempts++;
         const currentIndex = Array.from(focusableElements).indexOf(nextElement);
-        const nextIndex = shiftKey
-            ? (currentIndex - 1 + focusableElements.length) % focusableElements.length
-            : (currentIndex + 1) % focusableElements.length;
+        const nextIndex =
+            direction === "backward"
+                ? (currentIndex - 1 + focusableElements.length) % focusableElements.length
+                : (currentIndex + 1) % focusableElements.length;
         nextElement = focusableElements[nextIndex];
         nextElement?.focus();
     }
@@ -57,22 +60,11 @@ const focusAndEnsureReachableElement = (
 
 const useDialogKeyboardNavigation = (
     trapRef: React.RefObject<HTMLDivElement>,
-    onDeactivate: () => void,
-    returnFocusTo: React.RefObject<HTMLElement> | string,
+    returnFocus,
+    onDeactivate?: () => void,
 ) => {
-    const returnFocus = useCallback(() => {
-        if (typeof returnFocusTo === "string") {
-            const element = document.getElementById(returnFocusTo);
-            if (element) {
-                element.focus();
-            }
-        } else if (returnFocusTo?.current) {
-            returnFocusTo.current.focus();
-        }
-    }, [returnFocusTo]);
-
     const handleFocusNavigation = useCallback(
-        (focusableElements: NodeListOf<HTMLElement>, shiftKey: boolean) => {
+        (focusableElements: NodeListOf<HTMLElement>, direction: NavigationDirection) => {
             const elements = Array.from(focusableElements);
             const currentIndex = elements.indexOf(document.activeElement as HTMLElement);
             const firstElement = elements[0];
@@ -80,7 +72,7 @@ const useDialogKeyboardNavigation = (
 
             let nextElement;
 
-            if (shiftKey) {
+            if (direction === "backward") {
                 // Shift + Tab - moving backwards
                 nextElement = currentIndex <= 0 ? lastElement : elements[currentIndex - 1];
             } else {
@@ -90,7 +82,7 @@ const useDialogKeyboardNavigation = (
             }
 
             if (nextElement) {
-                focusAndEnsureReachableElement(nextElement, focusableElements, shiftKey);
+                focusAndEnsureReachableElement(nextElement, focusableElements, direction);
             }
         },
         [],
@@ -102,20 +94,20 @@ const useDialogKeyboardNavigation = (
                 return;
             }
 
-            return makeDialogKeyboardNavigation({
+            return makeDialogKeyboardNavigation<KeyboardEvent>({
                 onFocusNext: () => {
                     const { focusableElements } = getFocusableElements(trapRef.current);
                     if (!focusableElements?.length) {
                         return;
                     }
-                    handleFocusNavigation(focusableElements, false);
+                    handleFocusNavigation(focusableElements, "forward");
                 },
                 onFocusPrevious: () => {
                     const { focusableElements } = getFocusableElements(trapRef.current);
                     if (!focusableElements?.length) {
                         return;
                     }
-                    handleFocusNavigation(focusableElements, true);
+                    handleFocusNavigation(focusableElements, "backward");
                 },
                 onClose: () => {
                     onDeactivate?.();
@@ -128,7 +120,6 @@ const useDialogKeyboardNavigation = (
 
     return {
         keyboardNavigationHandler,
-        returnFocus,
     };
 };
 
@@ -138,23 +129,28 @@ const useDialogKeyboardNavigation = (
 export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
     children,
     onDeactivate,
-    returnFocusTo,
+    returnFocusTo: returnFocusToProp,
     autofocusOnOpen = false,
     initialFocus,
     customKeyboardNavigationHandler,
 }) => {
     const trapRef = useRef<HTMLDivElement>(null);
-    const defaultReturnFocusToRef = useRef<HTMLElement | null>(null);
+    const defaultReturnFocusToRef = useRef<HTMLElement | null>(document.activeElement as HTMLElement);
 
-    useEffect(() => {
-        defaultReturnFocusToRef.current = document.activeElement as HTMLElement;
-    }, []);
+    const returnFocusTo = returnFocusToProp ?? defaultReturnFocusToRef;
 
-    const { keyboardNavigationHandler, returnFocus } = useDialogKeyboardNavigation(
-        trapRef,
-        onDeactivate,
-        returnFocusTo ?? defaultReturnFocusToRef,
-    );
+    const returnFocus = useCallback(() => {
+        if (typeof returnFocusTo === "string") {
+            const element = document.getElementById(returnFocusTo);
+            if (element) {
+                element.focus();
+            }
+        } else if (returnFocusTo?.current) {
+            returnFocusTo.current.focus();
+        }
+    }, [returnFocusTo]);
+
+    const { keyboardNavigationHandler } = useDialogKeyboardNavigation(trapRef, returnFocus, onDeactivate);
 
     const keyboardHandler = customKeyboardNavigationHandler ?? keyboardNavigationHandler;
 

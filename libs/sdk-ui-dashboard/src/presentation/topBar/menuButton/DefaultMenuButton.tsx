@@ -16,7 +16,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 
-import { IMenuButtonItemButton, IMenuButtonItemMenu, IMenuButtonProps } from "./types.js";
+import { IMenuButtonItem, IMenuButtonItemButton, IMenuButtonItemMenu, IMenuButtonProps } from "./types.js";
 import { DefaultSubmenuHeader } from "./DefaultSubmenuHeader.js";
 const ALIGN_POINTS_TOOLTIP = [{ align: "bc tr" }, { align: "cl cr" }];
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
@@ -33,7 +33,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
     const tooltipText = intl.formatMessage({ id: "controlButtons.options.tooltip" });
     const backLabel = intl.formatMessage({ id: "controlButtons.options.back" });
     const closeLabel = intl.formatMessage({ id: "controlButtons.options.close" });
-    const menuWrapperRef = useRef<HTMLDivElement>(null!);
+    const menuWrapperRef = useRef<HTMLDivElement>(null);
     const [parentItemId, setParentItemId] = useState<string | null>(null);
     const menuItemRefs = useRef<Map<string, HTMLElement>>(new Map());
 
@@ -49,13 +49,10 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
     );
 
     // generate unique IDs for accessibility and dropdown positioning
-    const idPrefix = useId();
-    const buttonId = `${idPrefix}-menu-button`;
-    const menuId = `${idPrefix}-menu`;
-    const dropdownAnchorClassName = useMemo(
-        () => `dash-header-options-anchor-${idPrefix.slice(1)}`,
-        [idPrefix],
-    );
+    const id = useId();
+    const buttonId = `menu-button-${id}`;
+    const menuId = `menu-${id}`;
+    const dropdownAnchorClassName = `dash-header-options-anchor-${id}`;
 
     const onMenuButtonClick = useCallback(() => {
         setIsOpen((prevIsOpen) => !prevIsOpen);
@@ -89,8 +86,10 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
 
     const menuKeyboardNavigationHandler = makeMenuKeyboardNavigation<KeyboardEvent>({
         onFocusFirst: () => {
-            const { firstElement } = getFocusableElements(menuWrapperRef.current ?? undefined);
-            firstElement?.focus();
+            if (menuWrapperRef.current) {
+                const { firstElement } = getFocusableElements(menuWrapperRef.current);
+                firstElement?.focus();
+            }
         },
         onFocusNext: () => {
             const elements = Array.from(menuItemRefs.current.values());
@@ -127,33 +126,32 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
             }
         },
         onUnhandledKeyDown(event) {
-            if (selectedMenuItem && event.key === "Tab") {
-                const { focusableElements } = getFocusableElements(menuWrapperRef.current ?? undefined);
-                let currentIndex = Array.from(focusableElements).indexOf(
-                    document.activeElement as HTMLElement,
-                );
-                let nextElement;
-
-                const isMenuItemExceptTheFirstOne = (element: HTMLElement) =>
-                    element.getAttribute("role") === "menuitem" &&
-                    element !== Array.from(menuItemRefs.current.values())[0];
-
-                const getNextElementIndex = (currentIndex: number, isShiftKey: boolean) => {
-                    if (isShiftKey) {
-                        return currentIndex <= 0 ? focusableElements.length - 1 : currentIndex - 1;
-                    }
-                    return (currentIndex + 1) % focusableElements.length;
-                };
-
-                do {
-                    currentIndex = getNextElementIndex(currentIndex, event.shiftKey);
-                    nextElement = focusableElements[currentIndex];
-                } while (isMenuItemExceptTheFirstOne(nextElement));
-
-                nextElement?.focus();
-            }
-            event.preventDefault();
             event.stopPropagation();
+            event.preventDefault();
+            if (!selectedMenuItem || event.key !== "Tab" || !menuWrapperRef.current) {
+                return;
+            }
+            const { focusableElements } = getFocusableElements(menuWrapperRef.current);
+            let currentIndex = Array.from(focusableElements).indexOf(document.activeElement as HTMLElement);
+            let nextElement;
+
+            const isMenuItemExceptTheFirstOne = (element: HTMLElement) =>
+                element.getAttribute("role") === "menuitem" &&
+                element !== Array.from(menuItemRefs.current.values())[0];
+
+            const getNextElementIndex = (currentIndex: number, isShiftKey: boolean) => {
+                if (isShiftKey) {
+                    return currentIndex <= 0 ? focusableElements.length - 1 : currentIndex - 1;
+                }
+                return (currentIndex + 1) % focusableElements.length;
+            };
+
+            do {
+                currentIndex = getNextElementIndex(currentIndex, event.shiftKey);
+                nextElement = focusableElements[currentIndex];
+            } while (isMenuItemExceptTheFirstOne(nextElement));
+
+            nextElement?.focus();
         },
     });
 
@@ -222,131 +220,22 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                             />
                         ) : null}
                         {visibleMenuItems.map((menuItem) => {
-                            if (menuItem.type === "separator") {
-                                return (
-                                    <SingleSelectListItem
-                                        key={menuItem.itemId}
-                                        type={menuItem.type}
-                                        className={menuItem.className}
-                                        accessibilityConfig={{
-                                            role: "separator",
-                                        }}
-                                    />
-                                );
-                            }
-
-                            if (menuItem.type === "header") {
-                                return (
-                                    <SingleSelectListItem
-                                        ref={setMenuItemRef(menuItem.itemId)}
-                                        key={menuItem.itemId}
-                                        type={menuItem.type}
-                                        title={menuItem.itemName}
-                                        className={menuItem.className}
-                                        accessibilityConfig={{
-                                            role: "presentation",
-                                        }}
-                                    />
-                                );
-                            }
-
-                            if (menuItem.type === "menu") {
-                                return renderWithOptionalTooltip(menuItem, ({ selectorClassName }) => (
-                                    <SingleSelectListItem
-                                        ref={setMenuItemRef(menuItem.itemId)}
-                                        className={cx(
-                                            "gd-menu-item",
-                                            menuItem.className,
-                                            `s-${menuItem.itemId}`,
-                                            {
-                                                [selectorClassName]: menuItem.tooltip,
-                                                "is-disabled": menuItem.disabled,
-                                            },
-                                        )}
-                                        key={menuItem.itemId}
-                                        title={menuItem.itemName}
-                                        icon={menuItem.icon}
-                                        isMenu={true}
-                                        onClick={
-                                            menuItem.disabled
-                                                ? undefined
-                                                : () => {
-                                                      setAutofocusSubmenu(true);
-                                                      setParentItemId(menuItem.itemId);
-                                                      setSelectedMenuItem(menuItem);
-                                                  }
-                                        }
-                                        elementType="button"
-                                        accessibilityConfig={{
-                                            role: "menuitem",
-                                            ariaHaspopup: "menu",
-                                            ariaExpanded:
-                                                selectedMenuItem?.itemId === menuItem.itemId
-                                                    ? "true"
-                                                    : "false",
-                                            ariaDisabled: menuItem.disabled ? "true" : undefined,
-                                        }}
-                                    />
-                                ));
-                            }
-
-                            return renderWithOptionalTooltip(menuItem, ({ selectorClassName }) => (
-                                <SingleSelectListItem
-                                    ref={setMenuItemRef(menuItem.itemId)}
-                                    className={cx(
-                                        "gd-menu-item",
-                                        menuItem.className,
-                                        `s-${menuItem.itemId}`,
-                                        {
-                                            [selectorClassName]: menuItem.tooltip,
-                                            "is-disabled": menuItem.disabled,
-                                        },
-                                    )}
+                            return (
+                                <MenuItem
                                     key={menuItem.itemId}
-                                    title={menuItem.itemName}
-                                    icon={menuItem.icon}
-                                    onClick={
-                                        menuItem.disabled
-                                            ? undefined
-                                            : () => {
-                                                  menuItem.onClick?.();
-                                                  setIsOpen(false);
-                                                  setSelectedMenuItem(null);
-                                              }
-                                    }
-                                    elementType="button"
-                                    accessibilityConfig={{
-                                        role: "menuitem",
-                                        ariaDisabled: menuItem.disabled ? "true" : undefined,
-                                    }}
+                                    menuItem={menuItem}
+                                    selectedMenuItem={selectedMenuItem}
+                                    setMenuItemRef={setMenuItemRef}
+                                    setSelectedMenuItem={setSelectedMenuItem}
+                                    setParentItemId={setParentItemId}
+                                    setAutofocusSubmenu={setAutofocusSubmenu}
+                                    setIsOpen={setIsOpen}
                                 />
-                            ));
+                            );
                         })}
                     </ItemsWrapper>
                 </UiFocusTrap>
             </Overlay>
-        );
-    };
-
-    const renderWithOptionalTooltip = (
-        menuItem: IMenuButtonItemButton | IMenuButtonItemMenu,
-        children: (data: { selectorClassName: string }) => ReactElement,
-    ) => {
-        const selectorClassName = `gd-menu-item-${menuItem.itemId}`;
-
-        if (!menuItem.tooltip) {
-            return children({ selectorClassName });
-        }
-
-        return (
-            <BubbleHoverTrigger key={menuItem.itemId} eventsOnBubble={true}>
-                {children({
-                    selectorClassName,
-                })}
-                <Bubble alignTo={`.${selectorClassName}`} alignPoints={bubbleAlignPoints}>
-                    <span>{menuItem.tooltip}</span>
-                </Bubble>
-            </BubbleHoverTrigger>
         );
     };
 
@@ -380,4 +269,132 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
             {isOpen ? renderMenuItems() : null}
         </>
     );
+};
+
+interface IMenuItemProps {
+    menuItem: IMenuButtonItem;
+    selectedMenuItem: IMenuButtonItem | null;
+    setMenuItemRef: (itemId: string) => (element: HTMLDivElement | HTMLButtonElement | null) => void;
+    setSelectedMenuItem: (menuItem: IMenuButtonItemMenu | null) => void;
+    setParentItemId: (itemId: string | null) => void;
+    setAutofocusSubmenu: (autofocusSubmenu: boolean) => void;
+    setIsOpen: (isOpen: boolean) => void;
+}
+
+const MenuItem = ({
+    menuItem,
+    selectedMenuItem,
+    setMenuItemRef,
+    setSelectedMenuItem,
+    setParentItemId,
+    setAutofocusSubmenu,
+    setIsOpen,
+}: IMenuItemProps) => {
+    const renderWithOptionalTooltip = (
+        menuItem: IMenuButtonItemButton | IMenuButtonItemMenu,
+        children: (data: { selectorClassName: string }) => ReactElement,
+    ) => {
+        const selectorClassName = `gd-menu-item-${menuItem.itemId}`;
+
+        if (!menuItem.tooltip) {
+            return children({ selectorClassName });
+        }
+
+        return (
+            <BubbleHoverTrigger key={menuItem.itemId} eventsOnBubble={true}>
+                {children({
+                    selectorClassName,
+                })}
+                <Bubble alignTo={`.${selectorClassName}`} alignPoints={bubbleAlignPoints}>
+                    <span>{menuItem.tooltip}</span>
+                </Bubble>
+            </BubbleHoverTrigger>
+        );
+    };
+
+    if (menuItem.type === "separator") {
+        return (
+            <SingleSelectListItem
+                key={menuItem.itemId}
+                type={menuItem.type}
+                className={menuItem.className}
+                accessibilityConfig={{
+                    role: "separator",
+                }}
+            />
+        );
+    }
+    if (menuItem.type === "header") {
+        return (
+            <SingleSelectListItem
+                ref={setMenuItemRef(menuItem.itemId)}
+                key={menuItem.itemId}
+                type={menuItem.type}
+                title={menuItem.itemName}
+                className={menuItem.className}
+                accessibilityConfig={{
+                    role: "presentation",
+                }}
+            />
+        );
+    }
+
+    if (menuItem.type === "menu") {
+        return renderWithOptionalTooltip(menuItem, ({ selectorClassName }) => (
+            <SingleSelectListItem
+                ref={setMenuItemRef(menuItem.itemId)}
+                className={cx("gd-menu-item", menuItem.className, `s-${menuItem.itemId}`, {
+                    [selectorClassName]: menuItem.tooltip,
+                    "is-disabled": menuItem.disabled,
+                })}
+                key={menuItem.itemId}
+                title={menuItem.itemName}
+                icon={menuItem.icon}
+                isMenu={true}
+                onClick={
+                    menuItem.disabled
+                        ? undefined
+                        : () => {
+                              setAutofocusSubmenu(true);
+                              setParentItemId(menuItem.itemId);
+                              setSelectedMenuItem(menuItem);
+                          }
+                }
+                elementType="button"
+                accessibilityConfig={{
+                    role: "menuitem",
+                    ariaHaspopup: "menu",
+                    ariaExpanded: selectedMenuItem?.itemId === menuItem.itemId ? "true" : "false",
+                    ariaDisabled: menuItem.disabled ? "true" : undefined,
+                }}
+            />
+        ));
+    }
+
+    return renderWithOptionalTooltip(menuItem, ({ selectorClassName }) => (
+        <SingleSelectListItem
+            ref={setMenuItemRef(menuItem.itemId)}
+            className={cx("gd-menu-item", menuItem.className, `s-${menuItem.itemId}`, {
+                [selectorClassName]: menuItem.tooltip,
+                "is-disabled": menuItem.disabled,
+            })}
+            key={menuItem.itemId}
+            title={menuItem.itemName}
+            icon={menuItem.icon}
+            onClick={
+                menuItem.disabled
+                    ? undefined
+                    : () => {
+                          menuItem.onClick?.();
+                          setIsOpen(false);
+                          setSelectedMenuItem(null);
+                      }
+            }
+            elementType="button"
+            accessibilityConfig={{
+                role: "menuitem",
+                ariaDisabled: menuItem.disabled ? "true" : undefined,
+            }}
+        />
+    ));
 };

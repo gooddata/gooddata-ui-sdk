@@ -1,25 +1,45 @@
 // (C) 2025 GoodData Corporation
 
-const handleAction = <T extends React.KeyboardEvent | KeyboardEvent>(
+interface IHandleActionProps {
+    shouldPreventDefault?: boolean;
+    shouldStopPropagation?: boolean;
+}
+
+const handleAction = <T extends React.KeyboardEvent | KeyboardEvent = React.KeyboardEvent>(
     event: T,
     action?: (e: T) => void,
-    shouldPreventDefault = true,
-    shouldStopPropagation = true,
+    { shouldPreventDefault = true, shouldStopPropagation = true }: IHandleActionProps = {},
 ) => {
     if (!action) {
         return;
     }
 
-    shouldPreventDefault && event.preventDefault();
-    shouldStopPropagation && event.stopPropagation();
+    if (shouldPreventDefault) {
+        event.preventDefault();
+    }
+    if (shouldStopPropagation) {
+        event.stopPropagation();
+    }
 
     action(event);
+};
+
+const handleActionEvent = <T extends React.KeyboardEvent | KeyboardEvent = React.KeyboardEvent>(
+    event: T,
+    shouldPreventDefault,
+    shouldStopPropagation,
+): ((action?: (e: T) => void) => void) => {
+    return (action?: (e: T) => void) => {
+        handleAction(event, action, { shouldPreventDefault, shouldStopPropagation });
+    };
 };
 
 /**
  * @internal
  */
-export const makeMenuKeyboardNavigation = <T extends React.KeyboardEvent | KeyboardEvent>({
+export const makeMenuKeyboardNavigation = <
+    T extends React.KeyboardEvent | KeyboardEvent = React.KeyboardEvent,
+>({
     onFocusPrevious,
     onFocusNext,
     onFocusFirst,
@@ -47,31 +67,32 @@ export const makeMenuKeyboardNavigation = <T extends React.KeyboardEvent | Keybo
     shouldStopPropagation?: boolean;
 }) => {
     return (event: T) => {
+        const handleAction = handleActionEvent(event, shouldPreventDefault, shouldStopPropagation);
         switch (event.code) {
             case "ArrowDown":
-                handleAction(event, onFocusNext, shouldPreventDefault, shouldStopPropagation);
+                handleAction(onFocusNext);
                 break;
             case "ArrowUp":
-                handleAction(event, onFocusPrevious, shouldPreventDefault, shouldStopPropagation);
+                handleAction(onFocusPrevious);
                 break;
             case "ArrowLeft":
-                handleAction(event, onLeaveLevel, shouldPreventDefault, shouldStopPropagation);
+                handleAction(onLeaveLevel);
                 break;
             case "ArrowRight":
-                handleAction(event, onEnterLevel, shouldPreventDefault, shouldStopPropagation);
+                handleAction(onEnterLevel);
                 break;
             case "Home":
-                handleAction(event, onFocusFirst, shouldPreventDefault, shouldStopPropagation);
+                handleAction(onFocusFirst);
                 break;
             case "End":
-                handleAction(event, onFocusLast, shouldPreventDefault, shouldStopPropagation);
+                handleAction(onFocusLast);
                 break;
             case "Enter":
             case "Space":
-                handleAction(event, onSelect, shouldPreventDefault, shouldStopPropagation);
+                handleAction(onSelect);
                 break;
             case "Escape":
-                handleAction(event, onClose, shouldPreventDefault, shouldStopPropagation);
+                handleAction(onClose);
                 break;
             default:
                 onUnhandledKeyDown?.(event);
@@ -83,7 +104,9 @@ export const makeMenuKeyboardNavigation = <T extends React.KeyboardEvent | Keybo
 /**
  * @internal
  */
-export const makeDialogKeyboardNavigation = <T extends React.KeyboardEvent | KeyboardEvent>({
+export const makeDialogKeyboardNavigation = <
+    T extends React.KeyboardEvent | KeyboardEvent = React.KeyboardEvent,
+>({
     onFocusPrevious,
     onFocusNext,
     onClose,
@@ -104,13 +127,22 @@ export const makeDialogKeyboardNavigation = <T extends React.KeyboardEvent | Key
         switch (event.code) {
             case "Tab":
                 if (event.shiftKey) {
-                    handleAction(event, onFocusPrevious, shouldPreventDefault, shouldStopPropagation);
+                    handleAction(event, onFocusPrevious, {
+                        shouldPreventDefault,
+                        shouldStopPropagation,
+                    });
                 } else {
-                    handleAction(event, onFocusNext, shouldPreventDefault, shouldStopPropagation);
+                    handleAction(event, onFocusNext, {
+                        shouldPreventDefault,
+                        shouldStopPropagation,
+                    });
                 }
                 break;
             case "Escape":
-                handleAction(event, onClose, shouldPreventDefault, shouldStopPropagation);
+                handleAction(event, onClose, {
+                    shouldPreventDefault,
+                    shouldStopPropagation,
+                });
                 break;
             default:
                 onUnhandledKeyDown?.(event);

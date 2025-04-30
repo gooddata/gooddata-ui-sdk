@@ -4,7 +4,7 @@ import cx from "classnames";
 import { Overlay } from "../Overlay/index.js";
 import { Button } from "../Button/index.js";
 import { useHeaderSearch } from "./headerSearchContext.js";
-import { useId } from "../utils/useId.js";
+import { useIdPrefixed } from "../utils/useId.js";
 import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
 
 export type HeaderSearchProps = React.PropsWithChildren<{
@@ -38,8 +38,7 @@ export const HeaderSearchButton: React.FC<HeaderSearchProps> = ({ children, titl
         };
     }, [isOpen, toggleOpen]);
 
-    const id = useId();
-    const dropdownId = `search-dropdown-${id}`;
+    const dropdownId = useIdPrefixed("search-dropdown");
 
     const classNames = cx("gd-header-measure", "gd-header-button", "gd-header-search", {
         "is-open": isOpen,

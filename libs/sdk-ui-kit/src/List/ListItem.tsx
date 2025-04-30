@@ -146,14 +146,14 @@ export const SingleSelectListItem = forwardRef<
     }, [title, checkOverflow]);
 
     const getClassNames = () => {
-        const generatedSeleniumClass = `s-${stringUtils.simplifyText(title)}`;
-        return cx("gd-list-item", className, generatedSeleniumClass, {
+        const testClassName = `s-${stringUtils.simplifyText(title)}`;
+        return cx("gd-list-item", className, testClassName, {
             "is-selected": isSelected,
             "is-submenu": isMenu,
         });
     };
 
-    const renderIcon = (iconProp: string | ReactNode) => {
+    const renderIcon = (iconProp: ReactNode) => {
         if (!iconProp) return null;
 
         const iconClasses = cx("gd-list-icon", typeof iconProp === "string" ? iconProp : undefined);
@@ -188,7 +188,9 @@ export const SingleSelectListItem = forwardRef<
     };
 
     const renderInfo = () => {
-        if (!info) return null;
+        if (!info) {
+            return null;
+        }
 
         return (
             <div data-testid="item-info" className="gd-list-item-bubble s-list-item-info">
@@ -226,9 +228,10 @@ export const SingleSelectListItem = forwardRef<
                 {...props}
                 className={cx(
                     "gd-list-item",
-                    type === "separator"
-                        ? "gd-list-item-separator s-list-separator"
-                        : "gd-list-item-header s-list-header",
+                    {
+                        "gd-list-item-separator s-list-separator": type === "separator",
+                        "gd-list-item-header s-list-header": type === "header",
+                    },
                     className,
                 )}
             >

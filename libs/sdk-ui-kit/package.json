@@ -14,7 +14,8 @@
     "exports": {
         ".": "./esm/index.js",
         "./styles/*": "./styles/*",
-        "./esm/assets/*": "./esm/assets/*"
+        "./esm/assets/*": "./esm/assets/*",
+        "./utils/*": "./esm/utils/*.js"
     },
     "types": "./esm/index.d.ts",
     "sideEffects": [

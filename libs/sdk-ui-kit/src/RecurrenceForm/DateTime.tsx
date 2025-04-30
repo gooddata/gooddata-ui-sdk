@@ -8,7 +8,7 @@ import { Timepicker, normalizeTime } from "../Timepicker/index.js";
 import { DEFAULT_DROPDOWN_ZINDEX, MAX_VISIBLE_TIME_ITEMS_COUNT, TIME_ANCHOR } from "./constants.js";
 import { defineMessages, FormattedMessage } from "react-intl";
 import { parseDate } from "../Datepicker/Datepicker.js";
-import { useId } from "../utils/useId.js";
+import { useIdPrefixed } from "../utils/useId.js";
 
 interface IDateTimeProps {
     label: string;
@@ -31,7 +31,7 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
 
     const [errorDate, setErrorDate] = useState<string | null>(null);
 
-    const errorId = `${useId()}-error`;
+    const errorId = useIdPrefixed("error");
 
     const validate = useCallback(
         (selectedDate: string) => {

@@ -12,7 +12,7 @@ import {
     Message,
     OverlayControllerProvider,
     OverlayController,
-    useId,
+    useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 import { RecipientsSelect } from "./components/RecipientsSelect/RecipientsSelect.js";
 import { IntlWrapper } from "../../localization/index.js";
@@ -222,7 +222,7 @@ export function ScheduledMailDialogRenderer({
         ? defineMessage({ id: "dialogs.schedule.email.footer.title.short" }).id
         : defineMessage({ id: "dialogs.schedule.email.footer.title" }).id;
 
-    const titleElementId = useId();
+    const titleElementId = useIdPrefixed("title");
 
     return (
         <>

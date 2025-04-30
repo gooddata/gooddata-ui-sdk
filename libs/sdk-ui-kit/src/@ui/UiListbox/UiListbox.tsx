@@ -105,7 +105,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     });
     const handleKeyDown = React.useMemo(
         () =>
-            makeMenuKeyboardNavigation<React.KeyboardEvent>({
+            makeMenuKeyboardNavigation({
                 shouldPreventDefault: shouldKeyboardActionPreventDefault,
                 shouldStopPropagation: shouldKeyboardActionStopPropagation,
 

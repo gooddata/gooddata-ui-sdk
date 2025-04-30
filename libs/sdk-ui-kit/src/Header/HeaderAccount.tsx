@@ -8,7 +8,7 @@ import { Button } from "../Button/index.js";
 
 import { IHeaderMenuItem, IHeaderAccountProps } from "./typings.js";
 import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
-import { useId } from "../utils/useId.js";
+import { useIdPrefixed } from "../utils/useId.js";
 import { isActionKey } from "../utils/events.js";
 
 export const HeaderAccount: React.FC<IHeaderAccountProps> = ({
@@ -20,8 +20,7 @@ export const HeaderAccount: React.FC<IHeaderAccountProps> = ({
     const [isOpen, setIsOpen] = useState(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const intl = useIntl();
-    const id = useId();
-    const dropdownId = `account-dropdown-${id}`;
+    const dropdownId = useIdPrefixed("account-dropdown");
 
     const classNames = cx("gd-header-button", {
         "gd-header-account": true,

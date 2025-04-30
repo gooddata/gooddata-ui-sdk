@@ -8,7 +8,6 @@ import {
     IAlignPoint,
     OverlayPositionType,
     UiFocusTrap,
-    //UiFocusTrap,
 } from "@gooddata/sdk-ui-kit";
 
 import { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "../../../constants/index.js";

@@ -10,7 +10,7 @@ import { RepeatTypeDescription } from "./RepeatTypeDescription.js";
 import { WeekStart } from "@gooddata/sdk-model";
 import { CronExpressionSuggestion } from "./CronExpressionSuggestion.js";
 import { useCronValidation } from "./useCronValidation.js";
-import { useId } from "../utils/useId.js";
+import { useIdPrefixed } from "../utils/useId.js";
 
 /**
  * @internal
@@ -67,8 +67,8 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
         onCronValueChange,
     });
 
-    const labelId = `${useId()}-label`;
-    const errorId = `${useId()}-error`;
+    const labelId = useIdPrefixed("label");
+    const errorId = useIdPrefixed("error");
 
     const recurrenceFormClasses = cx("gd-recurrence-form-repeat", "gd-input-component", {
         "gd-recurrence-form-repeat-cron": recurrenceType === RECURRENCE_TYPES.CRON,

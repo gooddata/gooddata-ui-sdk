@@ -2585,7 +2585,7 @@ export interface IItemsWrapperProps {
     // (undocumented)
     style?: React_2.CSSProperties;
     // (undocumented)
-    wrapperRef?: React_2.MutableRefObject<HTMLDivElement>;
+    wrapperRef?: React_2.RefObject<HTMLDivElement>;
 }
 
 // @internal (undocumented)
@@ -4652,7 +4652,7 @@ export const LoadingSpinner: React_2.FC<ILoadingSpinner>;
 export const LocaleSetting: React_2.VFC<ILocaleSettingProps>;
 
 // @internal (undocumented)
-export const makeMenuKeyboardNavigation: <T extends KeyboardEvent | KeyboardEvent_2<Element>>({ onFocusPrevious, onFocusNext, onFocusFirst, onFocusLast, onEnterLevel, onLeaveLevel, onSelect, onClose, onUnhandledKeyDown, shouldPreventDefault, shouldStopPropagation, }: {
+export const makeMenuKeyboardNavigation: <T extends KeyboardEvent | KeyboardEvent_2<Element> = KeyboardEvent_2<Element>>({ onFocusPrevious, onFocusNext, onFocusFirst, onFocusLast, onEnterLevel, onLeaveLevel, onSelect, onClose, onUnhandledKeyDown, shouldPreventDefault, shouldStopPropagation, }: {
     onFocusNext?: (event: T) => void;
     onFocusPrevious?: (event: T) => void;
     onFocusFirst?: (event: T) => void;
@@ -5422,6 +5422,9 @@ export const useHeaderSearch: () => HeaderSearchContext;
 
 // @internal
 export const useId: () => string;
+
+// @internal
+export const useIdPrefixed: (prefix?: string) => string;
 
 // @internal (undocumented)
 export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInverted: boolean, getItemTitle: (item: T) => string): string;

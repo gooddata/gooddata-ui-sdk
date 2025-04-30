@@ -30,7 +30,7 @@ import { Button } from "../../../Button/index.js";
 import { GranularGranteeUserItem } from "./GranularPermissions/GranularGranteeUserItem.js";
 import { GranularGranteeGroupItem } from "./GranularPermissions/GranularGranteeGroupItem.js";
 import { invariant } from "ts-invariant";
-import { useId } from "../../../utils/useId.js";
+import { useIdPrefixed } from "../../../utils/useId.js";
 
 interface IGranteeUserItemProps {
     grantee: IGranteeUser;
@@ -176,7 +176,7 @@ const GranteeGroupItem: React.FC<IGranteeGroupItemProps> = (props) => {
 export const GranteeItemComponent: React.FC<IGranteeItemProps> = (props) => {
     const { grantee, mode, currentUserPermissions, isSharedObjectLocked, onDelete, onChange } = props;
 
-    const granularGranteeItemId = `${useId()}-grantee-item`;
+    const granularGranteeItemId = useIdPrefixed("grantee-item");
 
     if (isGranularGranteeUser(grantee)) {
         return (
