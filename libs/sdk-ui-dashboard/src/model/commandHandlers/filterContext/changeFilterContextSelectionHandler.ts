@@ -13,7 +13,7 @@ import {
 } from "../../store/filterContext/filterContextSelectors.js";
 import { batchActions } from "redux-batched-actions";
 import { AnyAction } from "@reduxjs/toolkit";
-import { canApplyDateFilter, dispatchFilterContextChanged } from "./common.js";
+import { canApplyDateFilter, dispatchFilterContextChanged, resetCrossFiltering } from "./common.js";
 import partition from "lodash/partition.js";
 import uniqBy from "lodash/uniqBy.js";
 import compact from "lodash/compact.js";
@@ -59,6 +59,7 @@ import { IDashboardFilter } from "../../../types.js";
 import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../store/config/configSelectors.js";
 import { attributeFilterConfigsActions } from "../../store/attributeFilterConfigs/index.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectIsCrossFiltering } from "../../store/drill/drillSelectors.js";
 
 function dashboardFilterToFilterContextItem(
     filter: IDashboardFilter,
@@ -104,6 +105,11 @@ export function* changeFilterContextSelectionHandler(
     cmd: ChangeFilterContextSelection,
 ): SagaIterator<void> {
     const { filters, resetOthers, attributeFilterConfigs = [] } = cmd.payload;
+
+    const isCrossFiltering = yield select(selectIsCrossFiltering);
+    if (isCrossFiltering) {
+        yield call(resetCrossFiltering, cmd);
+    }
 
     const normalizedFilters: FilterContextItem[] = filters.map((filter) => {
         if (isDashboardAttributeFilter(filter) || isDashboardDateFilter(filter)) {
