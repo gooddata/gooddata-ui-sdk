@@ -159,6 +159,7 @@ export function ScheduledMailDialogRenderer({
         storedWidgetFilters: widgetFilters,
         metadataVisibleFilters: scheduledExportToEdit?.metadata?.visibleFilters,
         isEditing: !!scheduledExportToEdit,
+        widget,
     });
 
     const {

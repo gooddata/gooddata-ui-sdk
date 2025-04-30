@@ -8,6 +8,7 @@ import {
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
+    isInsightWidget,
 } from "@gooddata/sdk-model";
 import { useMemo, useState } from "react";
 import compact from "lodash/compact.js";
@@ -18,6 +19,7 @@ import {
 } from "./utils.js";
 import { useFiltersNamings } from "../../_staging/sharedHooks/useFiltersNamings.js";
 import {
+    ExtendedDashboardWidget,
     selectAttributeFilterConfigsOverrides,
     selectDateFilterConfigsOverrides,
     useDashboardSelector,
@@ -40,6 +42,7 @@ export const useAutomationFiltersData = ({
     storedWidgetFilters,
     metadataVisibleFilters,
     isEditing,
+    widget,
 }: {
     /**
      * All possible filters at all times.
@@ -57,6 +60,7 @@ export const useAutomationFiltersData = ({
     storedWidgetFilters: IFilter[] | undefined;
     metadataVisibleFilters: IAutomationVisibleFilter[] | undefined;
     isEditing: boolean;
+    widget: ExtendedDashboardWidget | undefined;
 }): IUseAutomationFiltersData => {
     const storedVisibleLocalIdentifiersToShow = useMemo(() => {
         return metadataVisibleFilters?.map((filter) => filter.localIdentifier);
@@ -86,7 +90,7 @@ export const useAutomationFiltersData = ({
 
     // add common date filter when it is not present
     const effectiveFiltersWithDateFilter = useMemo(() => {
-        const hasCommonDateFilter = effectiveFilters.find(isDashboardCommonDateFilter);
+        const hasCommonDateFilter = !!effectiveFilters.find(isDashboardCommonDateFilter);
         const dashboardCommonDateFilter = allFilters?.find(isDashboardCommonDateFilter);
 
         const dashboardCommonDateFilterLocalId = dashboardCommonDateFilter?.dateFilter.localIdentifier;
@@ -97,16 +101,19 @@ export const useAutomationFiltersData = ({
             return false;
         });
 
+        const widgetSupportsDateFiltering = widget ? isInsightWidget(widget) && !!widget.dateDataSet : true;
+
         if (
             !hasCommonDateFilter &&
             dashboardCommonDateFilter &&
-            !dashboardCommonDateFilterExistsInEffectiveFilters
+            !dashboardCommonDateFilterExistsInEffectiveFilters &&
+            widgetSupportsDateFiltering
         ) {
             return [dashboardCommonDateFilter, ...effectiveFilters];
         }
 
         return effectiveFilters;
-    }, [effectiveFilters, allFilters]);
+    }, [effectiveFilters, allFilters, widget]);
 
     // filter out local identifiers that are not on the dashboard
     const sanitizedEffectiveFilters = useMemo(() => {
