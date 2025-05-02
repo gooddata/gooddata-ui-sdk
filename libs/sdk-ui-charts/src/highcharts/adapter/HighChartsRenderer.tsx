@@ -481,7 +481,12 @@ export class HighChartsRenderer extends React.PureComponent<
             isHeatmap: isHeatmap(chartOptions.type),
             legendLabel: chartOptions.legendLabel,
         };
-        const legendDetails = getLegendDetails(legend.position, legend.responsive, legendDetailOptions);
+        const legendDetails = getLegendDetails(
+            legend.position,
+            legend.responsive,
+            legendDetailOptions,
+            this.props.config?.respectLegendPosition,
+        );
         if (!legendDetails) {
             return null;
         }

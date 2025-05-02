@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IntlShape } from "react-intl";
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
@@ -17,6 +17,8 @@ const geoPushPinBucketColorIcon = "local:geoPushpin/bucket-title-color-icon.svg"
 const geoPushPinBucketSegmentIcon = "local:geoPushpin/bucket-title-segment-icon.svg";
 
 import { BucketNames } from "@gooddata/sdk-ui";
+import { IGeoConfig } from "@gooddata/sdk-ui-geo";
+import { ISettings } from "@gooddata/sdk-model";
 
 export function setGeoPushpinUiConfig(
     referencePoint: IExtendedReferencePoint,
@@ -50,4 +52,15 @@ export function setGeoPushpinUiConfig(
     });
 
     return referencePointConfigured;
+}
+
+export function updateConfigWithSettings(config: IGeoConfig, settings: ISettings): IGeoConfig {
+    if (!settings) {
+        return config;
+    }
+
+    return {
+        ...config,
+        ...(settings.enableKDRespectLegendPosition ? { respectLegendPosition: true } : {}),
+    };
 }

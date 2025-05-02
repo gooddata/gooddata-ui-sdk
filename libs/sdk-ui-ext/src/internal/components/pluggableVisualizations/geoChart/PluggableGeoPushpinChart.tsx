@@ -28,7 +28,10 @@ import {
     removeAllDerivedMeasures,
     removeShowOnSecondaryAxis,
 } from "../../../utils/bucketHelper.js";
-import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpinChartUiConfigHelper.js";
+import {
+    setGeoPushpinUiConfig,
+    updateConfigWithSettings,
+} from "../../../utils/uiConfigHelpers/geoPushpinChartUiConfigHelper.js";
 import { DASHBOARDS_ENVIRONMENT, ANALYTICAL_ENVIRONMENT } from "../../../constants/properties.js";
 import { GEOPUSHPIN_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import GeoPushpinConfigurationPanel from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
@@ -297,7 +300,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
 
         const geoPushpinProps: ICoreGeoChartProps & WrappedComponentProps = {
             drillableItems,
-            config: fullConfig,
+            config: updateConfigWithSettings(fullConfig, this.featureFlags),
             height: resultingHeight,
             intl,
             locale,

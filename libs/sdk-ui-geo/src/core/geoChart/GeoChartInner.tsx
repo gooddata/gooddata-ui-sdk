@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { Suspense, lazy } from "react";
 import cx from "classnames";
 import throttle from "lodash/throttle.js";
@@ -300,6 +300,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
             position,
             getResponsiveInfo(config?.legend?.responsive),
             legendDetailOptions,
+            config?.respectLegendPosition,
         );
     }
 

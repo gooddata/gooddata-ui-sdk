@@ -30,5 +30,6 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
         ...(settings.enableExecutionCancelling ? { enableExecutionCancelling: true } : {}),
         ...(settings.enableHighchartsAccessibility ? { enableHighchartsAccessibility: true } : {}),
         ...(settings.enableLineChartTrendThreshold ? { enableLineChartTrendThreshold: true } : {}),
+        ...(settings.enableKDRespectLegendPosition ? { respectLegendPosition: true } : {}),
     };
 }

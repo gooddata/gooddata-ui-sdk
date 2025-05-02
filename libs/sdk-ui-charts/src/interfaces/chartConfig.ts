@@ -394,6 +394,12 @@ export interface IChartConfig {
      * Requires enableLineChartTrendThreshold to be true to be applied.
      */
     thresholdMeasures?: string[];
+
+    /**
+     * Legend positioning is not respected in some contexts. This flag enforces the specific
+     * legend position to be respected in all contexts.
+     */
+    respectLegendPosition?: boolean;
 }
 
 /**

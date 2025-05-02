@@ -117,7 +117,7 @@ export function getColorPaletteFromColors(colors: string[]): IColorPalette;
 export const getHeadlineResponsiveClassName: (width: number | undefined, isShortened?: boolean) => string;
 
 // @internal (undocumented)
-export function getLegendDetails(legendPosition: PositionType, responsive: boolean | "autoPositionWithPopup", options: ILegendDetailOptions): ILegendDetails | null;
+export function getLegendDetails(legendPosition: PositionType, responsive: boolean | "autoPositionWithPopup", options: ILegendDetailOptions, respectLegendPosition?: boolean): ILegendDetails | null;
 
 // @internal
 export function getLighterColor(color: string, percent: number): string;
