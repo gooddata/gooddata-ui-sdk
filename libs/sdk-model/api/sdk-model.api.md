@@ -3426,6 +3426,7 @@ export interface ISettings {
     enableInvalidValuesInAttributeFilter?: boolean;
     enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
+    enableKDRespectLegendPosition?: boolean;
     enableKDRichText?: boolean;
     enableKDVisualizationSwitcher?: boolean;
     enableKDWidgetCustomHeight?: boolean;

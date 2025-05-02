@@ -144,6 +144,7 @@ export enum TigerFeaturesNames {
     EnableAlertsEvaluationFrequencySetup = "enableAlertsEvaluationFrequencySetup",
     EnableRichTooManyDatapointsErrors = "enableRichTooManyDatapointsErrors",
     EnableLineChartTrendThreshold = "enableLineChartTrendThreshold",
+    EnableKDRespectLegendPosition = "enableKDRespectLegendPosition",
 }
 
 export type ITigerFeatureFlags = {
@@ -250,6 +251,7 @@ export type ITigerFeatureFlags = {
     enableAlertsEvaluationFrequencySetup: typeof FeatureFlagsValues["enableAlertsEvaluationFrequencySetup"][number];
     enableRichTooManyDatapointsErrors: typeof FeatureFlagsValues["enableRichTooManyDatapointsErrors"][number];
     enableLineChartTrendThreshold: typeof FeatureFlagsValues["enableLineChartTrendThreshold"][number];
+    enableKDRespectLegendPosition: typeof FeatureFlagsValues["enableKDRespectLegendPosition"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -356,6 +358,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAlertsEvaluationFrequencySetup: true,
     enableRichTooManyDatapointsErrors: false,
     enableLineChartTrendThreshold: false,
+    enableKDRespectLegendPosition: false,
 };
 
 export const FeatureFlagsValues = {
@@ -466,4 +469,5 @@ export const FeatureFlagsValues = {
     enableAlertsEvaluationFrequencySetup: [true, false] as const,
     enableRichTooManyDatapointsErrors: [true, false] as const,
     enableLineChartTrendThreshold: [true, false] as const,
+    enableKDRespectLegendPosition: [true, false] as const,
 };
