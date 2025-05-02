@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:color";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
@@ -39,6 +39,20 @@
             -webkit-backface-visibility: hidden;
         }
 
+        .gd-headline-drillable-button {
+            background: none;
+            border: none;
+            font-size: 50px;
+            overflow: hidden;
+            line-height: 60px;
+            white-space: nowrap;
+            color: var(--gd-kpi-primaryMeasureColor, kit-variables.$gd-color-dark);
+            display: inline-block;
+            font-family: inherit;
+            font-weight: bold;
+            padding: 0;
+        }
+
         &.is-drillable,
         .is-drillable {
             .headline-value-wrapper {
@@ -72,6 +86,16 @@
     .headline-compare-item {
         flex-shrink: 1;
         padding-right: 0;
+
+        .gd-headline-drillable-button {
+            background: none;
+            border: none;
+            display: inline-block;
+            font-family: inherit;
+            color: inherit;
+            width: 100%;
+            padding: 0;
+        }
 
         &.is-drillable,
         .is-drillable {

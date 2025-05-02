@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import { wrapDisplayName } from "@gooddata/sdk-ui";
 
@@ -14,7 +14,7 @@ export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataIte
         const { fireDrillEvent } = useBaseHeadline();
 
         const handleDrillable = useCallback(
-            (event: React.MouseEvent<EventTarget>) => {
+            (event: React.MouseEvent<EventTarget> | React.KeyboardEvent<EventTarget>) => {
                 if (dataItem?.isDrillable) {
                     fireDrillEvent(dataItem, elementType, event.target);
                 }
@@ -23,12 +23,12 @@ export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataIte
         );
 
         return dataItem?.isDrillable ? (
-            <div
-                className="is-drillable s-is-drillable headline-item-link s-headline-item-link"
+            <button
+                className="gd-headline-drillable-button is-drillable s-is-drillable headline-item-link s-headline-item-link"
                 onClick={handleDrillable}
             >
                 <BaseHeadlineValueItem {...props} />
-            </div>
+            </button>
         ) : (
             <BaseHeadlineValueItem {...props} />
         );

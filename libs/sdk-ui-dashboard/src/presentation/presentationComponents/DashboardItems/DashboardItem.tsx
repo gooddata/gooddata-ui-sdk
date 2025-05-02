@@ -7,6 +7,7 @@ import { useId } from "@gooddata/sdk-ui-kit";
 interface IDashboardItemProps extends React.HTMLAttributes<HTMLDivElement> {
     screen: ScreenSize;
     description?: string;
+    titleId?: string;
     ref?: React.Ref<HTMLDivElement>;
     exportData?: CommonExportDataAttributes;
 }
@@ -21,7 +22,7 @@ const screenClasses: { [S in ScreenSize]: string } = {
 };
 
 export const DashboardItem: React.FC<IDashboardItemProps> = React.forwardRef(
-    ({ className, screen, description, exportData, ...props }, ref) => {
+    ({ className, screen, description, exportData, titleId, ...props }, ref) => {
         const id = useId();
         const itemFigureId = `dashboard-item-${id}`;
         return (
@@ -39,6 +40,7 @@ export const DashboardItem: React.FC<IDashboardItemProps> = React.forwardRef(
                 ref={ref}
                 role="figure"
                 aria-describedby={description ? itemFigureId : undefined}
+                aria-labelledby={titleId ? titleId : undefined}
             >
                 {description ? (
                     <span className={"sr-only"} id={itemFigureId}>

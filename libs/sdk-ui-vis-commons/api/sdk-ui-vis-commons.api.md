@@ -231,6 +231,11 @@ export interface IGeoChartLegendData {
 // @internal (undocumented)
 export interface IHeadlinePaginationProps {
     // (undocumented)
+    accessibilityConfig?: {
+        nextAriaLabel?: string;
+        previousAriaLabel?: string;
+    };
+    // (undocumented)
     renderSecondaryItem: () => JSX.Element;
     // (undocumented)
     renderTertiaryItem: () => JSX.Element;

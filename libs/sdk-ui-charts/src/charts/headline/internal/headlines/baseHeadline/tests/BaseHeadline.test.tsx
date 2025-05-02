@@ -7,6 +7,7 @@ import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import * as PrimarySection from "../PrimarySection.js";
 import * as CompareSection from "../CompareSection.js";
+import { withIntl } from "@gooddata/sdk-ui";
 
 describe("BaseHeadline", () => {
     let MockPrimarySection: SpyInstance;
@@ -45,7 +46,9 @@ describe("BaseHeadline", () => {
             onDrill: vi.fn(),
             onAfterRender: params.onAfterRender || vi.fn(),
         };
-        return render(<BaseHeadline {...props} />);
+
+        const WrappedBaseHeadline = withIntl(BaseHeadline);
+        return render(<WrappedBaseHeadline {...props} />);
     };
 
     beforeEach(() => {
