@@ -303,6 +303,11 @@
         "comment": "",
         "limit": 0
     },
+    "dialogs.alert.error.too_long": {
+        "value": "Error: Text too long — reduce to {value} characters or fewer.",
+        "comment": "",
+        "limit": 0
+    },
     "dialogs.save.as.new.title": {
         "value": "Save dashboard as new",
         "comment": "",
@@ -558,6 +563,16 @@
         "comment": "Placeholder for schedule title input",
         "limit": 0
     },
+    "dialogs.alert.title.placeholder": {
+        "value": "Alert name",
+        "comment": "Placeholder for alert title input",
+        "limit": 0
+    },
+    "dialogs.alert.accessibility.label.title": {
+        "value": "Alert name",
+        "comment": "",
+        "limit": 0
+    },
     "dialogs.schedule.accessibility.label.email.title": {
         "value": "Schedule name",
         "comment": "",
@@ -698,6 +713,16 @@
         "comment": "Label of a back button",
         "limit": 0
     },
+    "dialogs.alert.backLabel": {
+        "value": "Back to previous step",
+        "comment": "Label of a back button",
+        "limit": 0
+    },
+    "dialogs.alert.closeLabel": {
+        "value": "Close dialog",
+        "comment": "Label of a close button",
+        "limit": 0
+    },
     "dialogs.schedule.email.footer.title": {
         "value": "How to schedule export?",
         "comment": "Title of a link to documentation",
@@ -715,6 +740,11 @@
     },
     "dialogs.schedule.email.save.executionTimestampMode": {
         "value": "To create or edit scheduled exports, reset the dashboard date to today.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alert.save.executionTimestampMode": {
+        "value": "To create or edit alerts, reset the dashboard date to today.",
         "comment": "",
         "limit": 0
     },
@@ -895,6 +925,26 @@
     },
     "dialogs.alerting.management.load.error": {
         "value": "Failed to load. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.create.error": {
+        "value": "Failed to create alert. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.create.success": {
+        "value": "Alert created successfully.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.update.error": {
+        "value": "Failed to update alert. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.update.success": {
+        "value": "Alert updated successfully.",
         "comment": "",
         "limit": 0
     },
@@ -2989,6 +3039,31 @@
     },
     "insightAlert.config.for": {
         "value": "For",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.condition": {
+        "value": "Condition",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.threshold": {
+        "value": "Threshold",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.comparison": {
+        "value": "Comparison",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.recipients": {
+        "value": "Recipients",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.do": {
+        "value": "Do",
         "comment": "Title of the section in insight configuration",
         "limit": 0
     },

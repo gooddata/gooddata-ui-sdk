@@ -30,23 +30,11 @@ import {
     attributeElementsIsEmpty,
     isSingleSelectionFilter,
     FilterContextItem,
-    DateFilterGranularity,
-    isAttributeFilter,
-    isNegativeAttributeFilter,
-    filterObjRef,
-    filterAttributeElements,
-    isAbsoluteDateFilter,
-    newAbsoluteDashboardDateFilter,
-    isAllTimeDateFilter,
-    newAllTimeDashboardDateFilter,
-    isRelativeDateFilter,
-    newRelativeDashboardDateFilter,
     serializeObjRef,
     isDashboardCommonDateFilter,
     IDashboardAttributeFilterConfig,
     areObjRefsEqual,
     ObjRef,
-    filterLocalIdentifier,
 } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
@@ -55,50 +43,11 @@ import {
 } from "../../store/filterContext/filterContextReducers.js";
 import { DisplayFormResolutionResult, resolveDisplayFormMetadata } from "../../utils/displayFormResolver.js";
 import { resolveAttributeMetadata } from "../../utils/attributeResolver.js";
-import { IDashboardFilter } from "../../../types.js";
 import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../store/config/configSelectors.js";
 import { attributeFilterConfigsActions } from "../../store/attributeFilterConfigs/index.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectIsCrossFiltering } from "../../store/drill/drillSelectors.js";
-
-function dashboardFilterToFilterContextItem(
-    filter: IDashboardFilter,
-    keepDatasets: boolean,
-): FilterContextItem {
-    if (isAttributeFilter(filter)) {
-        return {
-            attributeFilter: {
-                negativeSelection: isNegativeAttributeFilter(filter),
-                displayForm: filterObjRef(filter),
-                attributeElements: filterAttributeElements(filter),
-                selectionMode: "multi",
-                localIdentifier: filterLocalIdentifier(filter),
-            },
-        };
-    } else if (isAbsoluteDateFilter(filter)) {
-        return newAbsoluteDashboardDateFilter(
-            filter.absoluteDateFilter.from,
-            filter.absoluteDateFilter.to,
-            keepDatasets ? filter.absoluteDateFilter.dataSet : undefined,
-            filter.absoluteDateFilter.localIdentifier,
-        );
-    } else if (isAllTimeDateFilter(filter)) {
-        return newAllTimeDashboardDateFilter(
-            keepDatasets ? filter.relativeDateFilter.dataSet : undefined,
-            filter.relativeDateFilter.localIdentifier,
-        );
-    } else if (isRelativeDateFilter(filter)) {
-        return newRelativeDashboardDateFilter(
-            filter.relativeDateFilter.granularity as DateFilterGranularity,
-            filter.relativeDateFilter.from,
-            filter.relativeDateFilter.to,
-            keepDatasets ? filter.relativeDateFilter.dataSet : undefined,
-            filter.relativeDateFilter.localIdentifier,
-        );
-    }
-
-    throw new NotSupported("Unsupported filter type! Please provide valid dashboard filter.");
-}
+import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 
 export function* changeFilterContextSelectionHandler(
     ctx: DashboardContext,

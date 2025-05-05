@@ -141,6 +141,7 @@ import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessControlAware } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
+import { IAlertDialogContext as IAlertDialogContext_2 } from '../../../types.js';
 import { IAlertTriggerMode } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
@@ -1441,7 +1442,14 @@ export interface DashboardAlertCreatedPayload {
 // @beta
 export interface DashboardAlertSaved extends IDashboardEvent {
     // (undocumented)
+    readonly payload: DashboardAlertSavedPayload;
+    // (undocumented)
     readonly type: "GDC.DASH/EVT.ALERT.SAVED";
+}
+
+// @beta
+export interface DashboardAlertSavedPayload {
+    readonly alert: IAutomationMetadataObject;
 }
 
 // @public
@@ -3362,10 +3370,16 @@ export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | Date
 export const DEFAULT_MAX_AUTOMATIONS = "10";
 
 // @alpha (undocumented)
-export const DefaultAlertingDialog: React_2.FC<IAlertingDialogProps>;
+export const DefaultAlertingDialogNew: React_2.FC<IAlertingDialogProps>;
 
 // @alpha (undocumented)
-export const DefaultAlertingManagementDialog: React_2.FC<IAlertingManagementDialogProps>;
+export const DefaultAlertingDialogOld: React_2.FC<IAlertingDialogOldProps>;
+
+// @alpha (undocumented)
+export const DefaultAlertingManagementDialogNew: React_2.FC<IAlertingManagementDialogProps>;
+
+// @alpha (undocumented)
+export const DefaultAlertingManagementDialogOld: React_2.FC<IAlertingManagementDialogOldProps>;
 
 // @alpha (undocumented)
 export const DefaultButtonBar: React_2.FC<IButtonBarProps>;
@@ -4298,8 +4312,14 @@ export interface IAddAttributeFilterButtonProps {
     title?: string;
 }
 
+// @internal (undocumented)
+export interface IAlertDialogContext {
+    alert?: IAutomationMetadataObject;
+    widgetRef?: ObjRef;
+}
+
 // @alpha (undocumented)
-export interface IAlertingDialogProps {
+export interface IAlertingDialogOldProps {
     anchorEl?: HTMLElement | null;
     editAlert?: IAutomationMetadataObject;
     editWidget?: IInsightWidget;
@@ -4308,7 +4328,27 @@ export interface IAlertingDialogProps {
 }
 
 // @alpha (undocumented)
-export interface IAlertingManagementDialogProps {
+export interface IAlertingDialogProps {
+    alertToEdit?: IAutomationMetadataObject;
+    dashboardFilters?: FilterContextItem[];
+    insight?: IInsight;
+    isLoading?: boolean;
+    notificationChannels: INotificationChannelMetadataObject[];
+    onCancel?: () => void;
+    onDeleteError?: (error: GoodDataSdkError) => void;
+    onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
+    onError?: (error: GoodDataSdkError) => void;
+    onSaveError?: (error: GoodDataSdkError) => void;
+    onSaveSuccess?: (alert: IAutomationMetadataObject) => void;
+    onSuccess?: (alertDefinition: IAutomationMetadataObject) => void;
+    users: IWorkspaceUser[];
+    usersError?: GoodDataSdkError;
+    widget?: ExtendedDashboardWidget;
+    widgetFilters?: IFilter[];
+}
+
+// @alpha (undocumented)
+export interface IAlertingManagementDialogOldProps {
     alertingDataError?: GoodDataSdkError;
     automations: IAutomationMetadataObject[];
     isLoadingAlertingData: boolean;
@@ -4316,6 +4356,21 @@ export interface IAlertingManagementDialogProps {
     onDeleteError?: (error: GoodDataSdkError) => void;
     onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
     onEdit?: (alertingDefinition: IAutomationMetadataObject, widget: IInsightWidget | undefined, anchor: HTMLElement | null, onClosed: () => void) => void;
+    onPauseError: (error: GoodDataSdkError, pause: boolean) => void;
+    onPauseSuccess: (alert: IAutomationMetadataObject, pause: boolean) => void;
+}
+
+// @alpha (undocumented)
+export interface IAlertingManagementDialogProps {
+    alertDataError?: GoodDataSdkError;
+    automations: IAutomationMetadataObject[];
+    isLoadingAlertingData: boolean;
+    notificationChannels: INotificationChannelMetadataObject[];
+    onAdd?: () => void;
+    onClose?: () => void;
+    onDeleteError?: (error: GoodDataSdkError) => void;
+    onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
+    onEdit?: (alert: IAutomationMetadataObject) => void;
     onPauseError: (error: GoodDataSdkError, pause: boolean) => void;
     onPauseSuccess: (alert: IAutomationMetadataObject, pause: boolean) => void;
 }
@@ -5930,11 +5985,6 @@ export interface IScheduleEmailContext {
     widgetRef?: ObjRef | undefined;
 }
 
-// @internal (undocumented)
-export interface IScheduleEmailDialogContext {
-    widgetRef?: ObjRef | undefined;
-}
-
 // @internal
 export const isCreateAttributeHierarchyRequested: (obj: unknown) => obj is CreateAttributeHierarchyRequested;
 
@@ -6533,6 +6583,16 @@ export interface IUseCustomWidgetInsightDataViewConfig {
 }
 
 // @alpha (undocumented)
+export interface IUseDashboardAlertFiltersProps {
+    // (undocumented)
+    alertToEdit?: IAutomationMetadataObject;
+    // (undocumented)
+    insight?: IInsight;
+    // (undocumented)
+    widget?: FilterableDashboardWidget;
+}
+
+// @alpha (undocumented)
 export interface IUseDashboardScheduledEmailsFiltersProps {
     // (undocumented)
     insight?: IInsight;
@@ -6545,6 +6605,13 @@ export interface IUseDashboardScheduledEmailsFiltersProps {
 // @alpha (undocumented)
 export interface IUseFiltersForDashboardScheduledExportProps {
     scheduledExportToEdit?: IAutomationMetadataObject;
+}
+
+// @alpha (undocumented)
+export interface IUseFiltersForWidgetAlertProps {
+    alertToEdit?: IAutomationMetadataObjectDefinition;
+    insight?: IInsightDefinition;
+    widget?: FilterableDashboardWidget;
 }
 
 // @alpha (undocumented)
@@ -9004,13 +9071,13 @@ export const selectIsSaveAsNewButtonHidden: DashboardSelector<boolean>;
 export const selectIsSaveAsNewButtonVisible: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
-export const selectIsScheduleEmailDialogContext: DashboardSelector<IScheduleEmailDialogContext>;
+export const selectIsScheduleEmailDialogContext: DashboardSelector<IScheduleEmailContext>;
 
 // @alpha (undocumented)
 export const selectIsScheduleEmailDialogOpen: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
-export const selectIsScheduleEmailManagementDialogContext: DashboardSelector<IScheduleEmailDialogContext>;
+export const selectIsScheduleEmailManagementDialogContext: DashboardSelector<IScheduleEmailContext>;
 
 // @alpha (undocumented)
 export const selectIsScheduleEmailManagementDialogOpen: DashboardSelector<boolean>;
@@ -9674,7 +9741,7 @@ type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
 closeAlertingManagementDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 openAlertingDialog: (state: WritableDraft<UiState_2>, action: {
-payload: void;
+payload: IAlertDialogContext_2;
 type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
 closeAlertingDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
@@ -9821,6 +9888,7 @@ export interface UiState {
     // (undocumented)
     alertsDialog: {
         open: boolean;
+        context?: IAlertDialogContext;
     };
     // (undocumented)
     alertsManagementDialog: {
@@ -9885,12 +9953,12 @@ export interface UiState {
     scheduleEmailDialog: {
         open: boolean;
         defaultAttachmentRef: ObjRef | undefined;
-        context?: IScheduleEmailDialogContext;
+        context?: IScheduleEmailContext;
     };
     // (undocumented)
     scheduleEmailManagementDialog: {
         open: boolean;
-        context?: IScheduleEmailDialogContext;
+        context?: IScheduleEmailContext;
     };
     // (undocumented)
     selectedFilterIndex: number | undefined;
@@ -10010,8 +10078,51 @@ export function useCustomWidgetInsightDataView({ widget, insight, enableExecutio
 // @public
 export type UseCustomWidgetInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
 
+// @alpha (undocumented)
+export const useDashboardAlertFilters: ({ alertToEdit, widget, insight, }: IUseDashboardAlertFiltersProps) => {
+    widgetFilters: IFilter[] | undefined;
+    widgetFiltersLoading: boolean;
+    widgetFiltersError: GoodDataSdkError | undefined;
+    dashboardFilters: FilterContextItem[] | undefined;
+};
+
 // @alpha
 export const useDashboardAlerts: () => {
+    alertToEdit: IAutomationMetadataObject | undefined;
+    isInitialized: boolean;
+    notificationChannels: INotificationChannelMetadataObject[];
+    automations: IAutomationMetadataObject[];
+    automationsCount: number;
+    numberOfAvailableDestinations: number;
+    widget: IWidget | ICustomWidget_2 | undefined;
+    insight: IInsight | undefined;
+    automationsLoading: boolean;
+    automationsError: GoodDataSdkError | undefined;
+    isAlertingVisible: boolean;
+    isAlertDialogOpen: boolean;
+    defaultOnAlerting: (widget?: IWidget | undefined) => void;
+    onAlertingOpen: (widget?: IWidget | undefined, alert?: IAutomationMetadataObject | undefined) => void;
+    onAlertingCancel: () => void;
+    onAlertingCreateError: () => void;
+    onAlertingCreateSuccess: (alert: IAutomationMetadataObject) => void;
+    onAlertingSaveError: () => void;
+    onAlertingSaveSuccess: () => void;
+    isAlertManagementVisible: boolean;
+    isAlertManagementDialogOpen: boolean;
+    defaultOnAlertingManagement: () => void;
+    onAlertingManagementOpen: () => void;
+    onAlertingManagementClose: () => void;
+    onAlertingManagementAdd: (widget?: IWidget | undefined) => void;
+    onAlertingManagementDeleteError: () => void;
+    onAlertingManagementDeleteSuccess: () => void;
+    onAlertingManagementEdit: (alert: IAutomationMetadataObject, widget?: IWidget | undefined) => void;
+    onAlertingManagementLoadingError: () => void;
+    onAlertingManagementPauseSuccess: (_alert: IAutomationMetadataObject, pause: boolean) => void;
+    onAlertingManagementPauseError: (_error: GoodDataSdkError, pause: boolean) => void;
+};
+
+// @alpha
+export const useDashboardAlertsOld: () => {
     isInitialized: boolean;
     automations: IAutomationMetadataObject[];
     alertingToEdit: {
@@ -10675,11 +10786,17 @@ export interface UseDrillToLegacyDashboardProps {
 // @internal (undocumented)
 export function useEditButtonProps(): IEditButtonProps;
 
+// @internal (undocumented)
+export const useEnableAlertingAutomationFilterContext: () => boolean;
+
 // @alpha (undocumented)
 export const useFilterBarProps: () => IFilterBarProps;
 
 // @alpha
 export const useFiltersForDashboardScheduledExport: ({ scheduledExportToEdit, }: IUseFiltersForDashboardScheduledExportProps) => FilterContextItem[] | undefined;
+
+// @alpha
+export function useFiltersForWidgetAlert({ alertToEdit, widget, insight, }: IUseFiltersForWidgetAlertProps): QueryProcessingState<IFilter[]>;
 
 // @alpha
 export function useFiltersForWidgetScheduledExport({ scheduledExportToEdit, widget, insight, }: IUseFiltersForWidgetScheduledExportProps): QueryProcessingState<IFilter[]>;
@@ -10753,24 +10870,6 @@ export interface UserState {
     // @beta (undocumented)
     user?: IUser;
 }
-
-// @internal (undocumented)
-export function useSaveAlertToBackend({ onCreateSuccess, onCreateError, onUpdateSuccess, onUpdateError, onPauseSuccess, onPauseError, onResumeSuccess, onResumeError, }: {
-    onCreateSuccess?: (alert: IAutomationMetadataObject) => void;
-    onCreateError?: (error: Error) => void;
-    onUpdateSuccess?: () => void;
-    onUpdateError?: (error: Error) => void;
-    onPauseSuccess?: () => void;
-    onPauseError?: (error: Error) => void;
-    onResumeSuccess?: () => void;
-    onResumeError?: (error: Error) => void;
-}): {
-    handleCreateAlert: (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
-    handleUpdateAlert: (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
-    handlePauseAlert: (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
-    handleResumeAlert: (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
-    isSavingAlert: boolean;
-};
 
 // @internal (undocumented)
 export function useSaveAsDialogProps(): ISaveAsDialogProps;

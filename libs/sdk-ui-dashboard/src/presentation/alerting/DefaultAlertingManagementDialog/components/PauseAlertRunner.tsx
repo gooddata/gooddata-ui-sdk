@@ -1,10 +1,10 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import React, { useCallback, useEffect } from "react";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { convertError, GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { useSaveAlertToBackend } from "../../../widget/index.js";
+import { useSaveAlertToBackend } from "../../DefaultAlertingDialog/hooks/useSaveAlertToBackend.js";
 
 interface IPauseAlertRunnerProps {
     alert: IAutomationMetadataObject | null;

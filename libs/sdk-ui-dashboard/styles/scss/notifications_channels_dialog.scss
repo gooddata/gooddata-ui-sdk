@@ -50,6 +50,12 @@ $min-content-height: 110px;
 .gd-input-component {
     margin-bottom: $vertical-space;
 
+    &--no-last-child-margin {
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
     @media #{kit-variables.$small-only} {
         .gd-label {
             display: block;
@@ -651,7 +657,7 @@ $min-content-height: 110px;
     display: flex;
     flex-direction: column;
     box-sizing: content-box;
-    height: 544px;
+    max-height: 544px;
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;

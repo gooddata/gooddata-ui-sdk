@@ -7,8 +7,22 @@ import {
     isTempFilterContext,
     IDashboard,
     FilterContextItem,
+    newAbsoluteDashboardDateFilter,
+    filterObjRef,
+    isAttributeFilter,
+    isNegativeAttributeFilter,
+    filterAttributeElements,
+    filterLocalIdentifier,
+    isAbsoluteDateFilter,
+    isAllTimeDateFilter,
+    newAllTimeDashboardDateFilter,
+    isRelativeDateFilter,
+    newRelativeDashboardDateFilter,
+    DateFilterGranularity,
 } from "@gooddata/sdk-model";
 import { createDefaultFilterContext } from "./defaultFilterContext.js";
+import { IDashboardFilter } from "src/types.js";
+import { NotSupported } from "@gooddata/sdk-backend-spi";
 
 /**
  * Given a dashboard, this function will inspect its filter context and always return a valid instance of IFilterContextDefinition to use.
@@ -122,4 +136,46 @@ export function dashboardFilterContextSanitize(
         ...filterContext,
         filters: sanitizedFilters,
     };
+}
+
+/**
+ * Transform supported dashboard filter to filter context item.
+ */
+export function dashboardFilterToFilterContextItem(
+    filter: IDashboardFilter,
+    keepDatasets: boolean,
+): FilterContextItem {
+    if (isAttributeFilter(filter)) {
+        return {
+            attributeFilter: {
+                negativeSelection: isNegativeAttributeFilter(filter),
+                displayForm: filterObjRef(filter),
+                attributeElements: filterAttributeElements(filter),
+                selectionMode: "multi",
+                localIdentifier: filterLocalIdentifier(filter),
+            },
+        };
+    } else if (isAbsoluteDateFilter(filter)) {
+        return newAbsoluteDashboardDateFilter(
+            filter.absoluteDateFilter.from,
+            filter.absoluteDateFilter.to,
+            keepDatasets ? filter.absoluteDateFilter.dataSet : undefined,
+            filter.absoluteDateFilter.localIdentifier,
+        );
+    } else if (isAllTimeDateFilter(filter)) {
+        return newAllTimeDashboardDateFilter(
+            keepDatasets ? filter.relativeDateFilter.dataSet : undefined,
+            filter.relativeDateFilter.localIdentifier,
+        );
+    } else if (isRelativeDateFilter(filter)) {
+        return newRelativeDashboardDateFilter(
+            filter.relativeDateFilter.granularity as DateFilterGranularity,
+            filter.relativeDateFilter.from,
+            filter.relativeDateFilter.to,
+            keepDatasets ? filter.relativeDateFilter.dataSet : undefined,
+            filter.relativeDateFilter.localIdentifier,
+        );
+    }
+
+    throw new NotSupported("Unsupported filter type! Please provide valid dashboard filter.");
 }

@@ -1,3 +1,3 @@
-// (C) 2022-2024 GoodData Corporation
-
-export { AlertingDialog as DefaultAlertingDialog } from "./DefaultAlertingDialog.js";
+// (C) 2022-2025 GoodData Corporation
+export { DefaultAlertingDialogNew } from "./DefaultAlertingDialogNew.js";
+export { DefaultAlertingDialogOld } from "./DefaultAlertingDialogOld.js";

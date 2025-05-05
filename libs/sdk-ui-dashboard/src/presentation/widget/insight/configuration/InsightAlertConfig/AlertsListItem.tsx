@@ -12,8 +12,8 @@ import {
 } from "../../../../../model/index.js";
 import { gdColorNegative } from "../../../../constants/colors.js";
 
-import { useAlertValidation } from "./hooks/useAlertValidation.js";
-import { AlertActionsDropdown } from "./AlertActionsDropdown.js";
+import { useAlertValidation } from "../../../../alerting/DefaultAlertingDialog/hooks/useAlertValidation.js";
+import { AlertActionsDropdown } from "../../../../alerting/DefaultAlertingDialog/components/AlertActionsDropdown.js";
 
 interface IAlertsListItemProps {
     alert: IAutomationMetadataObject;

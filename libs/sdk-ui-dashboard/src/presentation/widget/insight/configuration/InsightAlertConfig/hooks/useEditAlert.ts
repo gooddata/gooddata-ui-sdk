@@ -17,17 +17,6 @@ import {
     ISeparators,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
-import { isAlertRecipientsValid, isAlertValueDefined } from "../utils/guards.js";
-import {
-    transformAlertByAttribute,
-    transformAlertByComparisonOperator,
-    transformAlertByDestination,
-    transformAlertByMetric,
-    transformAlertByRelativeOperator,
-    transformAlertByTitle,
-    transformAlertByValue,
-} from "../utils/transformation.js";
-import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../../types.js";
 import {
     selectCurrentUser,
     selectEnableExternalRecipients,
@@ -39,7 +28,24 @@ import {
     convertCurrentUserToWorkspaceUser,
 } from "../../../../../../_staging/automation/index.js";
 import { isEmail } from "../../../../../scheduledEmail/utils/validate.js";
-import { getDescription, IMeasureFormatMap } from "../utils/getters.js";
+import {
+    getDescription,
+    IMeasureFormatMap,
+} from "../../../../../alerting/DefaultAlertingDialog/utils/getters.js";
+import {
+    transformAlertByAttribute,
+    transformAlertByComparisonOperator,
+    transformAlertByDestination,
+    transformAlertByMetric,
+    transformAlertByRelativeOperator,
+    transformAlertByTitle,
+    transformAlertByValue,
+} from "../../../../../alerting/DefaultAlertingDialog/utils/transformation.js";
+import {
+    isAlertRecipientsValid,
+    isAlertValueDefined,
+} from "../../../../../alerting/DefaultAlertingDialog/utils/guards.js";
+import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../../../../alerting/types.js";
 
 export interface IUseEditAlertProps {
     metrics: AlertMetric[];

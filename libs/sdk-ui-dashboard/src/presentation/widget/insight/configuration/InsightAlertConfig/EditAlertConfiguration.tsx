@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Button, Icon, OverlayPositionType } from "@gooddata/sdk-ui-kit";
-import { AlertTriggerModeSelect } from "./AlertTriggerModeSelect.js";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { FormattedMessage } from "react-intl";
 import { gdColorStateBlank } from "../../../../constants/index.js";
+import { AlertTriggerModeSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertTriggerModeSelect.js";
 
 const TOOLTIP_ALIGN_POINTS = [
     { align: "cr cl", offset: { x: 0, y: -1 } },

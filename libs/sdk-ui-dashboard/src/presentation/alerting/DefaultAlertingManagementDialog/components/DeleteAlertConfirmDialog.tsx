@@ -1,8 +1,8 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import React, { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { convertError, GoodDataSdkError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 import {
@@ -12,9 +12,9 @@ import {
 } from "../../../../model/index.js";
 
 interface IDeleteAlertConfirmDialogProps {
-    alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition;
+    alert: IAutomationMetadataObject;
     onCancel: () => void;
-    onSuccess?: (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
+    onSuccess?: (alert: IAutomationMetadataObject) => void;
     onError?: (error: GoodDataSdkError) => void;
 }
 

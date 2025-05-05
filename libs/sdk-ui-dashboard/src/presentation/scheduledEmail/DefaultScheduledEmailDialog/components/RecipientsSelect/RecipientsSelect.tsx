@@ -79,10 +79,21 @@ interface IRecipientsSelectProps {
      * Notification channel id
      */
     notificationChannelId?: string;
+
+    /**
+     * Show label?
+     */
+    showLabel?: boolean;
+
+    /**
+     * Id
+     */
+    id: string;
 }
 
 export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
     const {
+        id,
         users,
         usersError,
         value,
@@ -96,6 +107,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
         className,
         notificationChannels,
         notificationChannelId,
+        showLabel = true,
     } = props;
 
     const [search, setSearch] = useState<string>();
@@ -122,6 +134,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
 
     return (
         <RecipientsSelectRenderer
+            id={id}
             canListUsersInProject
             isMulti
             options={options}
@@ -139,6 +152,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
             className={className}
             notificationChannel={notificationChannel}
             usersError={usersError}
+            showLabel={showLabel}
         />
     );
 };

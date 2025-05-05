@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
-import { MessageDescriptor, defineMessages } from "react-intl";
+import { defineMessages } from "react-intl";
 
-export const messages: Record<string, MessageDescriptor> = defineMessages({
+export const messages = defineMessages({
     messagesDashboardSaveSuccess: { id: "messages.dashboardSaveSuccess" },
     messagesDashboardSaveFailed: { id: "messages.dashboardSaveFailed" },
     messagesExportResultStart: { id: "messages.exportResultStart" },
@@ -25,6 +25,10 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     scheduleManagementListTitle: { id: "dialogs.schedule.management.list.title" },
     scheduleManagementExecutionTimestampMode: { id: "dialogs.schedule.email.save.executionTimestampMode" },
 
+    alertAddSuccess: { id: "dialogs.alerting.create.success" },
+    alertAddError: { id: "dialogs.alerting.create.error" },
+    alertUpdateSuccess: { id: "dialogs.alerting.update.success" },
+    alertUpdateError: { id: "dialogs.alerting.update.error" },
     alertingManagementLoadError: { id: "dialogs.alerting.management.load.error" },
     alertingManagementDeleteError: { id: "dialogs.alerting.management.delete.error" },
     alertingManagementPauseError: { id: "dialogs.alerting.management.pause.error" },

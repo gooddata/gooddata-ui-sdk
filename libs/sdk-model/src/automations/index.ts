@@ -15,6 +15,11 @@ import { IMeasure } from "../execution/measure/index.js";
  */
 export interface IAutomationDetails {
     /**
+     * Name of the widget.
+     */
+    widgetName?: string;
+
+    /**
      * Subject of the email.
      */
     subject?: string;
@@ -70,11 +75,17 @@ export interface IAutomationMetadataObjectBase {
      * Additional metadata of the automation.
      */
     metadata?: {
+        /**
+         * Local identifier of the widget, if the automation is alerting
+         * (scheduled exports widget local identifier is stored in exportDefinition)
+         */
         widget?: string;
+
         /**
          * Filters that are used in the alerting configuration when creating a condition with some measure.
          */
         filters?: string[];
+
         /**
          * Filters description used for display in all client-related places (e.g. UI, e-mail, exports, etc.)
          */

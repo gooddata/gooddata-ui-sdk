@@ -428,7 +428,12 @@ export {
     isDashboardWidgetExecutionFailed,
 } from "./widget.js";
 
-export type { DashboardAlertCreated, DashboardAlertCreatedPayload, DashboardAlertSaved } from "./alerts.js";
+export type {
+    DashboardAlertCreated,
+    DashboardAlertCreatedPayload,
+    DashboardAlertSaved,
+    DashboardAlertSavedPayload,
+} from "./alerts.js";
 export { isDashboardAlertCreated, isDashboardAlertSaved } from "./alerts.js";
 
 export type {

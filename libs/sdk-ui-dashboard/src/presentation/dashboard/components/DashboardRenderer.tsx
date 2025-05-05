@@ -25,7 +25,7 @@ import {
     DefaultScheduledEmailDialog,
     DefaultScheduledEmailManagementDialog,
 } from "../../scheduledEmail/index.js";
-import { DefaultAlertingManagementDialog, DefaultAlertingDialog } from "../../alerting/index.js";
+import { DefaultAlertingManagementDialogNew, DefaultAlertingDialogNew } from "../../alerting/index.js";
 import { DefaultShareDialog } from "../../shareDialog/index.js";
 import {
     DefaultButtonBar,
@@ -148,10 +148,10 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         }
                                         AlertingManagementDialogComponent={
                                             props.AlertingManagementDialogComponent ??
-                                            DefaultAlertingManagementDialog
+                                            DefaultAlertingManagementDialogNew
                                         }
                                         AlertingDialogComponent={
-                                            props.AlertingDialogComponent ?? DefaultAlertingDialog
+                                            props.AlertingDialogComponent ?? DefaultAlertingDialogNew
                                         }
                                         SaveAsDialogComponent={
                                             props.SaveAsDialogComponent ?? DefaultSaveAsDialog

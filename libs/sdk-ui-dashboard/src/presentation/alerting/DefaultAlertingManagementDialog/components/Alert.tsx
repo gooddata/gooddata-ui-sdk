@@ -15,8 +15,8 @@ import {
     selectWidgetByRef,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { useAlertValidation } from "../../../widget/insight/configuration/InsightAlertConfig/hooks/useAlertValidation.js";
-import { getSubtitle } from "../../../widget/insight/configuration/InsightAlertConfig/utils/getters.js";
+import { useAlertValidation } from "../../DefaultAlertingDialog/hooks/useAlertValidation.js";
+import { getSubtitle } from "../../DefaultAlertingDialog/utils/getters.js";
 
 import { AlertDropdown } from "./AlertDropdown.js";
 

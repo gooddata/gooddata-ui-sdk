@@ -9,11 +9,11 @@ import {
     ISeparators,
     IWorkspaceUser,
 } from "@gooddata/sdk-model";
-import { AlertAttribute, AlertMetric } from "../../types.js";
+import { AlertAttribute, AlertMetric } from "../../../../alerting/types.js";
 
 import { EditAlert } from "./EditAlert.js";
 import { IExecutionResultEnvelope } from "../../../../../model/index.js";
-import { IMeasureFormatMap } from "./utils/getters.js";
+import { IMeasureFormatMap } from "../../../../alerting/DefaultAlertingDialog/utils/getters.js";
 
 interface ICreateAlertProps {
     canManageAttributes: boolean;

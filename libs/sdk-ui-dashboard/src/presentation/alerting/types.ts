@@ -1,7 +1,20 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { ComponentType } from "react";
-import { IAutomationMetadataObject, IInsightWidget } from "@gooddata/sdk-model";
+import {
+    DateAttributeGranularity,
+    FilterContextItem,
+    IAttribute,
+    IAutomationMetadataObject,
+    IDataSetMetadataObject,
+    IFilter,
+    IInsight,
+    IInsightWidget,
+    IMeasure,
+    INotificationChannelMetadataObject,
+    IWorkspaceUser,
+} from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { ExtendedDashboardWidget } from "../../model/index.js";
 
 ///
 /// Component props
@@ -12,6 +25,117 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
  */
 export interface IAlertingDialogProps {
     /**
+     * In case, we are not creating new alert, but editing existing one, this is the active alert to be edited.
+     */
+    alertToEdit?: IAutomationMetadataObject;
+
+    /**
+     * Users in workspace
+     */
+    users: IWorkspaceUser[];
+
+    /**
+     * Error occurred while loading users
+     */
+    usersError?: GoodDataSdkError;
+
+    /**
+     * Notification channels in organization
+     */
+    notificationChannels: INotificationChannelMetadataObject[];
+
+    /**
+     * Widget to be used for alert.
+     *
+     * Note: this is available only when alerting for widget, not dashboard.
+     */
+    widget?: ExtendedDashboardWidget;
+
+    /**
+     * Insight to be used for alert.
+     *
+     * Note: this is available only when alerting for widget, not dashboard.
+     */
+    insight?: IInsight;
+
+    /**
+     * Dashboard filters to be used for alert.
+     *
+     * Note:
+     * - Provided filters exclude cross-filtering filters, as these are typically not desired in exported reports.
+     *
+     * - If the current dashboard filters (excluding cross-filtering) match the saved dashboard filters, this will be undefined.
+     *   In such cases, the alert will use the most recent saved dashboard filters, guaranteeing that
+     *   the alert reflects the latest intended filter configuration and we don't want to save them.
+     *
+     * - If we are editing an existing alert, this will contain its filters, as changing saved filters is currently not allowed.
+     */
+    dashboardFilters?: FilterContextItem[];
+
+    /**
+     * Widget filters to be used for alert.
+     *
+     * Note:
+     * - Provided filters are a combination of insight and dashboard filters, following these rules:
+     *     - Cross-filtering filters are excluded as they are typically not desired in the alert.
+     *     - The widget's ignored filters configuration is honored (ignored filters are not overridden by dashboard filters and remain as is).
+     *     - If the resulting filters include all-time date filter, it is excluded as it has no effect on the alert execution.
+     *
+     * - If we are editing an existing alert, this will contain its filters, as changing saved filters is currently not allowed.
+     */
+    widgetFilters?: IFilter[];
+
+    /**
+     * Is alert dialog loading initial data, before it can be rendered?
+     */
+    isLoading?: boolean;
+
+    /**
+     * Callback to be called, when user closes the alert dialog.
+     */
+    onCancel?: () => void;
+
+    /**
+     * Callback to be called, when error occurs.
+     */
+    onError?: (error: GoodDataSdkError) => void;
+
+    /**
+     * Callback to be called, when alerting finishes successfully.
+     */
+    onSuccess?: (alertDefinition: IAutomationMetadataObject) => void;
+
+    /**
+     * Callback to be called, when error occurs.
+     */
+    onSaveError?: (error: GoodDataSdkError) => void;
+
+    /**
+     * Callback to be called, when alerting finishes successfully.
+     */
+    onSaveSuccess?: (alert: IAutomationMetadataObject) => void;
+
+    /**
+     * Callback to be called, when alert is deleted.
+     */
+    onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
+
+    /**
+     * Callback to be called, when alert fails to delete.
+     */
+    onDeleteError?: (error: GoodDataSdkError) => void;
+}
+
+/**
+ * @alpha
+ */
+export interface IAlertingDialogOldProps {
+    /**
+     * Alert to be edited in the dialog.
+     */
+    editAlert?: IAutomationMetadataObject;
+
+    /**
      * Callback to be called, when user save the existing alert.
      */
     onUpdate?: (alertingDefinition: IAutomationMetadataObject) => void;
@@ -20,11 +144,6 @@ export interface IAlertingDialogProps {
      * Callback to be called, when user closes the alerting dialog.
      */
     onCancel?: () => void;
-
-    /**
-     * Alert to be edited in the dialog.
-     */
-    editAlert?: IAutomationMetadataObject;
 
     /**
      * Widget to be edited in the dialog.
@@ -37,10 +156,78 @@ export interface IAlertingDialogProps {
     anchorEl?: HTMLElement | null;
 }
 
+//
+//
+//
 /**
  * @alpha
  */
 export interface IAlertingManagementDialogProps {
+    /**
+     * Is loading alert data?
+     */
+    isLoadingAlertingData: boolean;
+
+    /**
+     * Error occurred while loading alert data?
+     */
+    alertDataError?: GoodDataSdkError;
+
+    /**
+     * Notification channels in organization
+     */
+    notificationChannels: INotificationChannelMetadataObject[];
+
+    /**
+     * Automations in workspace
+     */
+    automations: IAutomationMetadataObject[];
+
+    /**
+     * Callback to be called, when user adds new alert item.
+     */
+    onAdd?: () => void;
+
+    /**
+     * Callback to be called, when user clicks alert item for editing.
+     */
+    onEdit?: (alert: IAutomationMetadataObject) => void;
+
+    /**
+     * Callback to be called, when user closes the alert management dialog.
+     */
+    onClose?: () => void;
+
+    /**
+     * Callback to be called, when alert is deleted.
+     * @param alert - alert that was deleted
+     */
+    onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
+
+    /**
+     * Callback to be called, when alert fails to delete.
+     */
+    onDeleteError?: (error: GoodDataSdkError) => void;
+
+    /**
+     * Callback to be called, when alert is paused.
+     * @param alert - alert that was paused
+     * @param pause - true if alert was paused, false if it was resumed
+     */
+    onPauseSuccess: (alert: IAutomationMetadataObject, pause: boolean) => void;
+
+    /**
+     * Callback to be called, when alert fails to pause.
+     * @param error - error that occurred
+     * @param pause - true if alert was paused, false if it was resumed
+     */
+    onPauseError: (error: GoodDataSdkError, pause: boolean) => void;
+}
+
+/**
+ * @alpha
+ */
+export interface IAlertingManagementDialogOldProps {
     /**
      * Callback to be called, when user clicks alert item for editing.
      */
@@ -124,3 +311,44 @@ export interface IAlertDropdownProps {
     onEdit: () => void;
     onResume: () => void;
 }
+
+//
+//
+//
+
+/**
+ * @internal
+ */
+export enum AlertMetricComparatorType {
+    PreviousPeriod,
+    SamePeriodPreviousYear,
+}
+
+/**
+ * @internal
+ */
+export type AlertMetricComparator = {
+    measure: IMeasure;
+    isPrimary: boolean;
+    comparator: AlertMetricComparatorType;
+    //date attribute related
+    dataset?: IDataSetMetadataObject;
+    granularity?: DateAttributeGranularity;
+};
+
+/**
+ * @internal
+ */
+export type AlertMetric = {
+    measure: IMeasure;
+    isPrimary: boolean;
+    comparators: AlertMetricComparator[];
+};
+
+/**
+ * @internal
+ */
+export type AlertAttribute = {
+    attribute: IAttribute;
+    type: "dateAttribute" | "attribute";
+};

@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import {
     IAutomationMetadataObject,
     IExportDefinitionVisualizationObjectContent,
@@ -27,12 +27,7 @@ import {
     selectNotificationChannelsCountForScheduledExports,
 } from "../../store/index.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
-
-/**
- * @alpha
- * Default maximum number of automations.
- */
-export const DEFAULT_MAX_AUTOMATIONS = "10";
+import { DEFAULT_MAX_AUTOMATIONS } from "../useDashboardAutomations/constants.js";
 
 interface IUseDashboardScheduledEmailsDataProps {
     scheduledExportToEdit?: IAutomationMetadataObject;
