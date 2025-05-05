@@ -2,14 +2,14 @@
 
 import React from "react";
 import { Separator } from "../../../List/index.js";
-import { IUiListboxStaticItem, UiListboxStaticItemProps } from "../types.js";
+import { UiListboxStaticItemProps } from "../types.js";
 
 /**
  * @internal
  */
-export const separatorStaticItem: IUiListboxStaticItem<React.ReactNode> = {
+export const separatorStaticItem = {
     data: <Separator />,
-    type: "static",
+    type: "static" as const,
 };
 
 /**

@@ -1,13 +1,12 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { useId } from "../../utils/useId.js";
 import { b, e } from "./listboxBem.js";
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 import { DefaultUiListboxInteractiveItemComponent } from "./defaults/DefaultUiListboxInteractiveItemComponent.js";
 import { firstCharacterSearch } from "./defaults/firstCharacterSearch.js";
-import { IListboxContext, IUiListboxInteractiveItem, IUiListboxItem, UiListboxProps } from "./types.js";
+import { IUiListboxContext, IUiListboxInteractiveItem, IUiListboxItem, UiListboxProps } from "./types.js";
 import { DefaultUiListboxStaticItemComponent } from "./defaults/DefaultUiListboxStaticItemComponent.js";
 
 /**
@@ -93,7 +92,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
         [onClose, onSelect, shouldCloseOnSelect],
     );
 
-    const contextRef = useAutoupdateRef<IListboxContext<InteractiveItemData, StaticItemData>>({
+    const contextRef = useAutoupdateRef<IUiListboxContext<InteractiveItemData, StaticItemData>>({
         itemRefs,
         focusedIndex,
         items,
@@ -167,15 +166,13 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
         ],
     );
 
-    const listboxId = useId();
-
     return (
         <div className={cx(b(), className)} style={{ maxWidth }}>
             <ul
                 className={e("items")}
                 tabIndex={0}
                 onKeyDown={handleKeyDown}
-                aria-activedescendant={makeItemId(listboxId, focusedItem)}
+                aria-activedescendant={makeItemId(ariaAttributes.id, focusedItem)}
                 {...ariaAttributes}
                 role="listbox"
             >
@@ -188,7 +185,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                             aria-selected={item.id === selectedItemId}
                             aria-disabled={item.isDisabled}
                             tabIndex={-1}
-                            id={makeItemId(listboxId, item)}
+                            id={makeItemId(ariaAttributes.id, item)}
                             className={itemClassName}
                         >
                             <InteractiveItemComponent

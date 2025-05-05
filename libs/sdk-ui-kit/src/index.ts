@@ -117,12 +117,25 @@ export {
 } from "./@ui/UiListbox/defaults/DefaultUiListboxStaticItemComponent.js";
 export type {
     UiListboxProps,
-    IListboxContext,
+    IUiListboxContext,
     IUiListboxItem,
     IUiListboxStaticItem,
     UiListboxStaticItemProps,
     IUiListboxInteractiveItem,
     UiListboxInteractiveItemProps,
 } from "./@ui/UiListbox/types.js";
+export { UiMenu } from "./@ui/UiMenu/UiMenu.js";
+export { DefaultUiMenuInteractiveItemComponent } from "./@ui/UiMenu/defaults/DefaultUiMenuInteractiveItemComponent.js";
+export { DefaultUiMenuStaticItemComponent } from "./@ui/UiMenu/defaults/DefaultUiMenuStaticItemComponent.js";
+export type {
+    UiMenuProps,
+    IUiMenuContext,
+    IUiMenuItem,
+    IUiMenuStaticItem,
+    UiMenuStaticItemProps,
+    IUiMenuInteractiveItem,
+    UiMenuInteractiveItemProps,
+    UiMenuHeaderProps,
+} from "./@ui/UiMenu/types.js";
 
 export { makeMenuKeyboardNavigation } from "./@ui/@utils/keyboardNavigation.js";

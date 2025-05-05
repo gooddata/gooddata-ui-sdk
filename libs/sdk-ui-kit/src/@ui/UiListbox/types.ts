@@ -52,14 +52,14 @@ export interface UiListboxStaticItemProps<T> {
 /**
  * @internal
  */
-export interface IListboxContext<InteractiveItemData, StaticItemData = React.ReactNode> {
+export interface IUiListboxContext<InteractiveItemData, StaticItemData = React.ReactNode> {
     items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
     itemRefs: React.MutableRefObject<(HTMLLIElement | null)[]>;
     onSelect: (item: IUiListboxInteractiveItem<InteractiveItemData>) => void;
     onClose?: () => void;
     selectedItemId: string | undefined;
     focusedIndex: number | undefined;
-    setFocusedIndex: React.Dispatch<React.SetStateAction<number>>;
+    setFocusedIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
     isItemFocusable: (item: IUiListboxItem<InteractiveItemData, StaticItemData>) => boolean;
 }
 
@@ -77,7 +77,7 @@ export interface UiListboxProps<InteractiveItemData, StaticItemData = React.Reac
     onClose?: () => void;
     onUnhandledKeyDown?: (
         event: React.KeyboardEvent,
-        context: IListboxContext<InteractiveItemData, StaticItemData>,
+        context: IUiListboxContext<InteractiveItemData, StaticItemData>,
     ) => void;
 
     selectedItemId?: string;
@@ -90,5 +90,5 @@ export interface UiListboxProps<InteractiveItemData, StaticItemData = React.Reac
     shouldCloseOnSelect?: boolean;
     isDisabledFocusable?: boolean;
 
-    ariaAttributes: IDropdownBodyRenderProps["ariaAttributes"];
+    ariaAttributes: Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
 }

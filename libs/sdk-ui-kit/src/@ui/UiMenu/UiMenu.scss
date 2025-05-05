@@ -1,0 +1,115 @@
+// (C) 2025 GoodData Corporation
+
+@use "../../../styles/scss/variables";
+
+.gd-ui-kit-menu {
+    $root: &;
+
+    max-height: 300px;
+    width: 100%;
+    min-width: 200px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+
+    &__items-container {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    @media #{variables.$small-only} {
+        // !important to override inline style from maxWidth prop
+        /* stylelint-disable-next-line declaration-no-important */
+        max-width: 100vw !important;
+        max-height: 100vh;
+        width: 100vw;
+    }
+
+    &__menu-header {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        width: 100%;
+        background: variables.$default-is-focused-background;
+        border-bottom: 1px solid variables.$gd-border-color;
+
+        &-title {
+            line-height: 2rem;
+            cursor: pointer;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-grow: 1;
+            background: none;
+            border: none;
+            font-size: 11px;
+            color: variables.$gd-color-state-blank;
+            overflow: hidden;
+
+            &-text {
+                margin: 0;
+                white-space: nowrap;
+                font-weight: bold;
+                text-transform: uppercase;
+                overflow: hidden;
+            }
+        }
+        &-close-icon {
+            flex-shrink: 0;
+        }
+    }
+
+    &__items {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        outline: none;
+
+        &:focus-visible #{$root}__item--isFocused {
+            outline-offset: -2px;
+            outline: auto 5px Highlight; /* For Firefox */
+            // stylelint-disable-next-line declaration-block-no-duplicate-properties
+            outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
+        }
+    }
+
+    &__item {
+        padding: 8px 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        line-height: 20px;
+        color: variables.$gd-color-text;
+        transition: background-color 0.2s;
+
+        // Controlled by mouse and has hover
+        #{$root}--controlType-mouse &:hover:not(&--isDisabled) {
+            background-color: variables.$is-focused-background;
+            color: variables.$is-focused-color;
+        }
+
+        // Controlled by keyboard and has focus, not disabled
+        #{$root}--controlType-keyboard #{$root}__items:focus &--isFocused:not(&--isDisabled) {
+            background-color: variables.$is-focused-background;
+            color: variables.$is-focused-color;
+        }
+        // Controlled by keyboard and has focus, disabled
+        #{$root}--controlType-keyboard #{$root}__items:focus &--isFocused#{&}--isDisabled {
+            background-color: variables.$is-focused-background;
+        }
+
+        &--isDisabled {
+            color: variables.$gd-color-disabled;
+            cursor: not-allowed;
+        }
+    }
+
+    &__item-title {
+        width: 100%;
+        white-space: nowrap;
+    }
+}

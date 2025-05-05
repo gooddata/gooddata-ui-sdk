@@ -1,0 +1,376 @@
+// (C) 2025 GoodData Corporation
+
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import cx from "classnames";
+import { IntlProvider } from "react-intl";
+import { pickCorrectWording, messagesMap } from "@gooddata/sdk-ui";
+import { UiMenu } from "../UiMenu.js";
+import { describe, it, expect, vi } from "vitest";
+import { e, b } from "../menuBem.js";
+import { IUiMenuItem, UiMenuInteractiveItemProps, UiMenuStaticItemProps } from "../types.js";
+
+describe("UiMenu", () => {
+    const mockItems: IUiMenuItem<string>[] = [
+        { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
+        { type: "interactive", id: "item2", stringTitle: "Item 2", data: "data2" },
+        { type: "interactive", id: "item3", stringTitle: "Item 3", isDisabled: true, data: "data3" },
+        { type: "static", id: "static1", data: "Static Item 1" },
+        {
+            type: "interactive",
+            id: "item4",
+            stringTitle: "Item 4",
+            data: "data4",
+            subMenu: [
+                { type: "interactive", id: "subitem1", stringTitle: "SubItem 1", data: "subdata1" },
+                { type: "static", id: "substatic1", data: "SubStatic Item 1" },
+                { type: "interactive", id: "subitem2", stringTitle: "SubItem 2", data: "subdata2" },
+            ],
+        },
+    ];
+
+    const DefaultLocale = "en-US";
+
+    const messages = pickCorrectWording(messagesMap[DefaultLocale], {
+        workspace: "mockWorkspace",
+        enableRenamingMeasureToMetric: true,
+    });
+
+    const renderMenu = (props = {}) => {
+        const defaultAriaAttributes = {
+            id: "test-dropdown-menu",
+            "aria-labelledby": "test-dropdown-button",
+            role: "menu" as const,
+        };
+
+        return render(
+            <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>
+                <UiMenu<string, React.ReactNode>
+                    items={mockItems}
+                    onSelect={vi.fn()}
+                    onClose={vi.fn()}
+                    ariaAttributes={defaultAriaAttributes}
+                    {...props}
+                />
+            </IntlProvider>,
+        );
+    };
+
+    it("should render all top-level items", () => {
+        renderMenu();
+
+        expect(screen.getByText("Item 1")).toBeInTheDocument();
+        expect(screen.getByText("Item 2")).toBeInTheDocument();
+        expect(screen.getByText("Item 3")).toBeInTheDocument();
+        expect(screen.getByText("Static Item 1")).toBeInTheDocument();
+        expect(screen.getByText("Item 4")).toBeInTheDocument();
+    });
+
+    it("should mark disabled item", () => {
+        renderMenu();
+
+        const disabledItemLi = screen.getByText("Item 3").closest("li");
+
+        expect(disabledItemLi).toHaveAttribute("aria-disabled", "true");
+    });
+
+    it("should call onSelect when item is clicked", () => {
+        const onSelect = vi.fn();
+        renderMenu({ onSelect });
+
+        fireEvent.click(screen.getByText("Item 1"));
+
+        expect(onSelect).toHaveBeenCalledWith(mockItems[0]);
+    });
+
+    it("should not call onSelect when disabled item is clicked", () => {
+        const onSelect = vi.fn();
+        renderMenu({ onSelect });
+
+        fireEvent.click(screen.getByText("Item 3"));
+
+        expect(onSelect).not.toHaveBeenCalled();
+    });
+
+    it("should navigate with keyboard", () => {
+        renderMenu();
+
+        const menu = screen.getByRole("menu");
+
+        // Initial focus is on first item
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item1"));
+
+        // Navigate down
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item2"));
+
+        // Navigate up
+        fireEvent.keyDown(menu, { code: "ArrowUp" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item1"));
+
+        // Navigate to end
+        fireEvent.keyDown(menu, { code: "End" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item4"));
+
+        // Navigate to home
+        fireEvent.keyDown(menu, { code: "Home" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item1"));
+    });
+
+    it("should select with Enter key", () => {
+        const onSelect = vi.fn();
+        renderMenu({ onSelect });
+
+        const menu = screen.getByRole("menu");
+
+        // Navigate to second item
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+
+        // Select with Enter
+        fireEvent.keyDown(menu, { code: "Enter" });
+
+        expect(onSelect).toHaveBeenCalledWith(mockItems[1]);
+    });
+
+    it("should select with Space key", () => {
+        const onSelect = vi.fn();
+        renderMenu({ onSelect });
+
+        const menu = screen.getByRole("menu");
+
+        // Navigate to second item
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+
+        // Select with Space
+        fireEvent.keyDown(menu, { code: "Space" }); // Space key is represented as "Space" in event.code
+
+        expect(onSelect).toHaveBeenCalledWith(mockItems[1]);
+    });
+
+    it("should close with Escape key", () => {
+        const onClose = vi.fn();
+        renderMenu({ onClose });
+
+        const menu = screen.getByRole("menu");
+
+        // Press Escape
+        fireEvent.keyDown(menu, { code: "Escape" });
+
+        expect(onClose).toHaveBeenCalled();
+    });
+
+    it("should call onClose after selection when shouldCloseOnSelect is true", () => {
+        const onSelect = vi.fn();
+        const onClose = vi.fn();
+        renderMenu({ onSelect, onClose, shouldCloseOnSelect: true });
+
+        // Click on an item
+        fireEvent.click(screen.getByText("Item 1"));
+
+        expect(onSelect).toHaveBeenCalledWith(mockItems[0]);
+        expect(onClose).toHaveBeenCalled();
+    });
+
+    it("should not call onClose after selection when shouldCloseOnSelect is false", () => {
+        const onSelect = vi.fn();
+        const onClose = vi.fn();
+        renderMenu({ onSelect, onClose, shouldCloseOnSelect: false });
+
+        // Click on an item
+        fireEvent.click(screen.getByText("Item 1"));
+
+        expect(onSelect).toHaveBeenCalledWith(mockItems[0]);
+        expect(onClose).not.toHaveBeenCalled();
+    });
+
+    it("should open submenu when item with submenu is selected", () => {
+        renderMenu();
+
+        const menu = screen.getByRole("menu");
+
+        // Navigate to item with submenu
+        fireEvent.keyDown(menu, { code: "End" });
+
+        // Select to open submenu
+        fireEvent.keyDown(menu, { code: "Enter" });
+
+        // Should focus first item in submenu
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("subitem1"));
+    });
+
+    it("should navigate back to parent menu with left arrow key", () => {
+        renderMenu();
+
+        const menu = screen.getByRole("menu");
+
+        // Navigate to item with submenu
+        fireEvent.keyDown(menu, { code: "End" });
+
+        // Select to open submenu
+        fireEvent.keyDown(menu, { code: "Enter" });
+
+        // Should be in submenu
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("subitem1"));
+
+        // Navigate back to parent with left arrow
+        fireEvent.keyDown(menu, { code: "ArrowLeft" });
+
+        // Should focus parent item
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item4"));
+    });
+
+    it("should render with custom InteractiveItemComponent", () => {
+        const CustomInteractiveItemComponent = ({
+            item,
+            isFocused,
+            onSelect,
+        }: UiMenuInteractiveItemProps<string>) => (
+            <div
+                className={cx("custom-item", {
+                    "custom-focused": isFocused,
+                    "custom-disabled": item.isDisabled,
+                })}
+                onClick={item.isDisabled ? undefined : onSelect}
+                data-testid="custom-item"
+            >
+                {item.stringTitle} - {item.data}
+            </div>
+        );
+
+        renderMenu({
+            InteractiveItemComponent: CustomInteractiveItemComponent,
+        });
+
+        // Check that custom component is rendered
+        const customItems = screen.getAllByTestId("custom-item");
+        expect(customItems.length).toBe(4); // 4 interactive items in mockItems
+
+        // Check content of custom component
+        expect(screen.getByText("Item 1 - data1")).toBeInTheDocument();
+    });
+
+    it("should render with custom StaticItemComponent", () => {
+        const CustomStaticItemComponent = ({ item }: UiMenuStaticItemProps<string>) => (
+            <div className="custom-static-item" data-testid="custom-static-item">
+                Static: {item.data}
+            </div>
+        );
+
+        renderMenu({
+            StaticItemComponent: CustomStaticItemComponent,
+        });
+
+        // Check that custom static component is rendered
+        const customStaticItems = screen.getAllByTestId("custom-static-item");
+        expect(customStaticItems.length).toBe(1);
+        expect(screen.getByText("Static: Static Item 1")).toBeInTheDocument();
+    });
+
+    it("should apply maxWidth style when provided", () => {
+        const maxWidth = 300;
+        renderMenu({ maxWidth });
+
+        const menuContainer = document.querySelector(`.${b()}`);
+        expect(menuContainer).toHaveStyle({ maxWidth: `${maxWidth}px` });
+    });
+
+    it("should call onUnhandledKeyDown for unhandled key events", () => {
+        const onUnhandledKeyDown = vi.fn();
+        renderMenu({ onUnhandledKeyDown });
+
+        const menu = screen.getByRole("menu");
+
+        // Press an unhandled key
+        fireEvent.keyDown(menu, { code: "F1" });
+
+        expect(onUnhandledKeyDown).toHaveBeenCalled();
+        expect(onUnhandledKeyDown.mock.calls[0][0].code).toBe("F1");
+        expect(onUnhandledKeyDown.mock.calls[0][1]).toHaveProperty("items", mockItems);
+    });
+
+    it("should maintain proper aria attributes", () => {
+        renderMenu();
+
+        const menu = screen.getByRole("menu");
+
+        // Check that menu has proper ARIA attributes
+        expect(menu).toHaveAttribute("id", "test-dropdown-menu");
+        expect(menu).toHaveAttribute("aria-labelledby", "test-dropdown-button");
+        expect(menu).toHaveAttribute("role", "menu");
+
+        // Check that items have proper ARIA attributes
+        const items = screen.getAllByRole("menuitem");
+
+        // Item with submenu should have aria-haspopup
+        const itemWithSubmenu = screen.getByText("Item 4").closest("li");
+        expect(itemWithSubmenu).toHaveAttribute("aria-haspopup", "menu");
+    });
+
+    it("should allow focusing disabled items when isDisabledFocusable is true", () => {
+        const onSelect = vi.fn();
+        renderMenu({
+            isDisabledFocusable: true,
+            onSelect,
+        });
+
+        const menu = screen.getByRole("menu");
+
+        // Initial focus should be on first item
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item1"));
+
+        // Navigate down
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item2"));
+
+        // Navigate down again should focus disabled item
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item3"));
+
+        // Selecting a disabled item should not work
+        fireEvent.keyDown(menu, { code: "Enter" });
+        expect(onSelect).not.toHaveBeenCalled();
+    });
+
+    it("should not allow focusing disabled items when isDisabledFocusable is false", () => {
+        renderMenu({
+            isDisabledFocusable: false,
+        });
+
+        const menu = screen.getByRole("menu");
+
+        // Initial focus should be on first item
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item1"));
+
+        // Navigate down
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item2"));
+
+        // Navigate down again should skip disabled item and focus item4
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item4"));
+    });
+
+    it("should add itemClassName to items", () => {
+        renderMenu({
+            itemClassName: "test-item-class",
+        });
+
+        const items = screen.getByRole("menu").querySelectorAll(".test-item-class");
+        expect(items).toHaveLength(5); // All items should have the class
+    });
+
+    it("should handle mouse interaction to focus items", () => {
+        renderMenu();
+
+        // Simulate mouse movement to set control type to mouse
+        const menuContainer = document.querySelector(`.${b()}`);
+        fireEvent.mouseMove(menuContainer!);
+
+        // Mouse over an item
+        fireEvent.mouseMove(screen.getByText("Item 2").closest("li")!);
+
+        // Check that item is focused
+        const menu = screen.getByRole("menu");
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item2"));
+    });
+});
