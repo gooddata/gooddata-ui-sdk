@@ -49,9 +49,9 @@ import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEma
 import { isMobileView } from "../utils/responsive.js";
 import { getDefaultCronExpression } from "../utils/cron.js";
 import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
-import { AutomationFiltersSelect } from "./components/AutomationFiltersSelect/AutomationFiltersSelect.js";
+import { AutomationFiltersSelect } from "../../automationFilters/components/AutomationFiltersSelect.js";
 import { useAutomationFiltersData } from "../../automationFilters/useAutomationFiltersData.js";
-import { validateAllFilterLocalIdentifiers } from "../../../presentation/automationFilters/utils.js";
+import { validateAllFilterLocalIdentifiers } from "../../automationFilters/utils.js";
 
 import { MessageForm } from "./components/MessageForm/MessageForm.js";
 import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
@@ -331,6 +331,7 @@ export function ScheduledMailDialogRenderer({
                             />
                             <ContentDivider className="gd-divider-with-margin" />
                             <RecipientsSelect
+                                id="schedule.email.recipients"
                                 loggedUser={defaultUser}
                                 users={users}
                                 usersError={usersError}

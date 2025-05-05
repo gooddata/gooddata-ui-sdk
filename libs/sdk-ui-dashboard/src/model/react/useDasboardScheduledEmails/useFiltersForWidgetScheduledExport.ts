@@ -17,7 +17,7 @@ import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { selectCrossFilteringItems } from "../../store/drill/drillSelectors.js";
 import { usePrevious } from "@gooddata/sdk-ui";
 import { useMemo } from "react";
-import { selectEnableAutomationFilterContext } from "../../../model/store/index.js";
+import { useEnableAlertingAutomationFilterContext } from "../useDashboardAlerting/useEnableAutomationFilterContext.js";
 /**
  * @alpha
  */
@@ -57,7 +57,7 @@ export function useFiltersForWidgetScheduledExport({
     insight,
 }: IUseFiltersForWidgetScheduledExportProps): QueryProcessingState<IFilter[]> {
     const savedWidgetFilters = getAutomationVisualizationFilters(scheduledExportToEdit);
-    const enableAutomationFilterContext = useDashboardSelector(selectEnableAutomationFilterContext);
+    const enableAutomationFilterContext = useEnableAlertingAutomationFilterContext();
 
     const previousWidgetRef = usePrevious(widget?.ref);
     const widgetFiltersQuery = useWidgetFilters(widget, insight);

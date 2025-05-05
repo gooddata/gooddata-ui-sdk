@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call } from "redux-saga/effects";
 import { IAutomationMetadataObject, isObjRef } from "@gooddata/sdk-model";
@@ -20,5 +20,5 @@ function saveAlert(
 export function* saveAlertHandler(ctx: DashboardContext, cmd: SaveAlert): SagaIterator<DashboardAlertSaved> {
     yield call(saveAlert, ctx, cmd.payload.alert);
 
-    return alertSaved(ctx, cmd.correlationId);
+    return alertSaved(ctx, cmd.payload.alert, cmd.correlationId);
 }

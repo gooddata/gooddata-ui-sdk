@@ -122,6 +122,19 @@ export const getVisibleFiltersByFilters = (
     return compact(filters);
 };
 
+export const getVisibleFiltersByWidgetFilters = (
+    selectedFilters: IFilter[] | undefined,
+    visibleFiltersMetadata: IAutomationVisibleFilter[] | undefined,
+): IAutomationVisibleFilter[] => {
+    const filters = (selectedFilters ?? []).map((selectedFilter) => {
+        return (visibleFiltersMetadata ?? []).find((visibleFilter) => {
+            return filterLocalIdentifier(selectedFilter) === visibleFilter.localIdentifier;
+        });
+    });
+
+    return compact(filters);
+};
+
 export const getNonHiddenFilters = (
     filters: FilterContextItem[] | undefined,
     attributeConfigs: IDashboardAttributeFilterConfig[],

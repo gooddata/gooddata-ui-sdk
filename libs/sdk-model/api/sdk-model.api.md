@@ -979,6 +979,7 @@ export interface IAutomationAlertTrigger {
 export interface IAutomationDetails {
     message?: string;
     subject?: string;
+    widgetName?: string;
 }
 
 // @alpha (undocumented)

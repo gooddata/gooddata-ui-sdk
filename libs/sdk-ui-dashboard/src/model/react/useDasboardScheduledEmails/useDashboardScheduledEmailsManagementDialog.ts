@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { IAutomationMetadataObject, IWidget } from "@gooddata/sdk-model";
@@ -6,7 +6,7 @@ import { messages } from "../../../locales.js";
 import { useDashboardScheduledEmailsCommands } from "./useDashboardScheduledEmailsCommands.js";
 import { selectDashboardRef } from "../../store/index.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
-import { useDashboardAutomations } from "./useDashboardAutomations.js";
+import { useDashboardAutomations } from "../useDashboardAutomations/useDashboardAutomations.js";
 
 /**
  * @internal

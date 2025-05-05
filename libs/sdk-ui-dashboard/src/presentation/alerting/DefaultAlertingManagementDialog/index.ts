@@ -1,3 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-export { AlertingManagementDialog as DefaultAlertingManagementDialog } from "./DefaultAlertingManagementDialog.js";
+export { DefaultAlertingManagementDialogOld } from "./DefaultAlertingManagementDialogOld.js";
+export { DefaultAlertingManagementDialogNew } from "./DefaultAlertingManagementDialogNew.js";

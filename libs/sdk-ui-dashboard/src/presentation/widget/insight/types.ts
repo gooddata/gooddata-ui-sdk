@@ -2,13 +2,9 @@
 import { ComponentType } from "react";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
-    IDataSetMetadataObject,
-    DateAttributeGranularity,
-    IAttribute,
     IColorPalette,
     IInsight,
     IInsightWidget,
-    IMeasure,
     ISeparators,
     IFilter,
     IExecutionConfig,
@@ -304,40 +300,3 @@ export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightPro
  * @public
  */
 export type CustomInsightBodyComponent = ComponentType<IInsightBodyProps>;
-
-/**
- * @internal
- */
-export enum AlertMetricComparatorType {
-    PreviousPeriod,
-    SamePeriodPreviousYear,
-}
-
-/**
- * @internal
- */
-export type AlertMetricComparator = {
-    measure: IMeasure;
-    isPrimary: boolean;
-    comparator: AlertMetricComparatorType;
-    //date attribute related
-    dataset?: IDataSetMetadataObject;
-    granularity?: DateAttributeGranularity;
-};
-
-/**
- * @internal
- */
-export type AlertMetric = {
-    measure: IMeasure;
-    isPrimary: boolean;
-    comparators: AlertMetricComparator[];
-};
-
-/**
- * @internal
- */
-export type AlertAttribute = {
-    attribute: IAttribute;
-    type: "dateAttribute" | "attribute";
-};

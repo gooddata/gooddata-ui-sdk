@@ -14,6 +14,7 @@ import {
     IWidget,
     ShareStatus,
     IAccessGrantee,
+    IAutomationMetadataObject,
 } from "@gooddata/sdk-model";
 import { IDrillEvent, OnFiredDrillEvent } from "@gooddata/sdk-ui";
 import { DateFilterConfigValidationResult } from "./_staging/dateFilterConfig/validation.js";
@@ -366,9 +367,14 @@ export interface IScheduleEmailContext {
 /**
  * @internal
  */
-export interface IScheduleEmailDialogContext {
+export interface IAlertDialogContext {
     /**
-     * Widget to schedule email for.
+     * Widget to create/edit alert for.
      */
-    widgetRef?: ObjRef | undefined;
+    widgetRef?: ObjRef;
+
+    /**
+     * Alert to edit.
+     */
+    alert?: IAutomationMetadataObject;
 }

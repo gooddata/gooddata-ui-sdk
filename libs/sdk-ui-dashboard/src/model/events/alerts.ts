@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { DashboardContext } from "../types/commonTypes.js";
@@ -50,19 +50,38 @@ export function alertCreated(
 export const isDashboardAlertCreated = eventGuard<DashboardAlertCreated>("GDC.DASH/EVT.ALERT.CREATED");
 
 /**
+ * Payload of the {@link DashboardAlertCreated} event.
+ * @beta
+ */
+export interface DashboardAlertSavedPayload {
+    /**
+     * The alert saved.
+     */
+    readonly alert: IAutomationMetadataObject;
+}
+
+/**
  * This event is emitted after the alert is saved.
  *
  * @beta
  */
 export interface DashboardAlertSaved extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.ALERT.SAVED";
+    readonly payload: DashboardAlertSavedPayload;
 }
 
-export function alertSaved(ctx: DashboardContext, correlationId?: string): DashboardAlertSaved {
+export function alertSaved(
+    ctx: DashboardContext,
+    alert: IAutomationMetadataObject,
+    correlationId?: string,
+): DashboardAlertSaved {
     return {
         type: "GDC.DASH/EVT.ALERT.SAVED",
         ctx,
         correlationId,
+        payload: {
+            alert,
+        },
     };
 }
 

@@ -1,11 +1,9 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useState } from "react";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useDashboardScheduledEmailsData } from "./useDashboardScheduledEmailsData.js";
 import { useDashboardScheduledEmailsDialog } from "./useDashboardScheduledEmailsDialog.js";
 import { useDashboardScheduledEmailsManagementDialog } from "./useDashboardScheduledEmailsManagementDialog.js";
-
-export { DEFAULT_MAX_AUTOMATIONS } from "./useDashboardScheduledEmailsData.js";
 
 /**
  * Hook that handles schedule emailing dialogs.

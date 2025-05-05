@@ -22,15 +22,22 @@ import { defineMessages, FormattedMessage, MessageDescriptor, useIntl } from "re
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 import { RecipientsSelect } from "../../../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
 import { IExecutionResultEnvelope } from "../../../../../model/index.js";
-import { AlertAttribute, AlertMetric } from "../../types.js";
 
-import { AlertMeasureSelect } from "./AlertMeasureSelect.js";
-import { AlertComparisonOperatorSelect } from "./AlertComparisonOperatorSelect.js";
-import { AlertDestinationSelect } from "./AlertDestinationSelect.js";
 import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
+import { AlertTitle } from "./AlertTitle.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
-import { useAlertValidation, AlertInvalidityReason } from "./hooks/useAlertValidation.js";
-import { AlertComparisonPeriodSelect } from "./AlertComparisonPeriodSelect.js";
+import { AlertAttribute, AlertMetric } from "../../../../alerting/types.js";
+import { AlertAttributeSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertAttributeSelect.js";
+import { AlertComparisonOperatorSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertComparisonOperatorSelect.js";
+import { AlertComparisonPeriodSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertComparisonPeriodSelect.js";
+import { AlertDestinationSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertDestinationSelect.js";
+import { AlertMeasureSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertMeasureSelect.js";
+import { useAttributeValuesFromExecResults } from "../../../../alerting/DefaultAlertingDialog/hooks/useAttributeValuesFromExecResults.js";
+import { useThresholdValue } from "../../../../alerting/DefaultAlertingDialog/hooks/useThresholdValue.js";
+import {
+    useAlertValidation,
+    AlertInvalidityReason,
+} from "../../../../alerting/DefaultAlertingDialog/hooks/useAlertValidation.js";
 import {
     getAlertAttribute,
     getAlertCompareOperator,
@@ -40,12 +47,8 @@ import {
     getAlertRelativeOperator,
     getValueSuffix,
     IMeasureFormatMap,
-} from "./utils/getters.js";
-import { AlertAttributeSelect } from "./AlertAttributeSelect.js";
-import { AlertTitle } from "./AlertTitle.js";
-import { translateGranularity } from "./utils/granularity.js";
-import { useAttributeValuesFromExecResults } from "./hooks/useAttributeValuesFromExecResults.js";
-import { useThresholdValue } from "./hooks/useThresholdValue.js";
+} from "../../../../alerting/DefaultAlertingDialog/utils/getters.js";
+import { translateGranularity } from "../../../../alerting/DefaultAlertingDialog/utils/granularity.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
 
@@ -202,6 +205,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                         {Boolean(canManageAttributes) && (
                             <>
                                 <AlertAttributeSelect
+                                    id="alert.attribute"
                                     selectedAttribute={selectedAttribute}
                                     selectedValue={selectedValue}
                                     onAttributeChange={changeAttribute}
@@ -268,6 +272,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             </div>
                         ) : null}
                         <AlertComparisonOperatorSelect
+                            id="alert.comparisonOperator"
                             measure={selectedMeasure}
                             selectedComparisonOperator={selectedComparisonOperator}
                             selectedRelativeOperator={selectedRelativeOperator}
@@ -291,6 +296,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             }}
                         />
                         <AlertComparisonPeriodSelect
+                            id="alert.comparison"
                             measure={selectedMeasure}
                             alert={updatedAlert}
                             selectedComparison={selectedComparator?.comparator}
@@ -322,6 +328,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             </>
                         )}
                         <RecipientsSelect
+                            id="alert.recipients"
                             loggedUser={defaultUser}
                             users={users}
                             value={updatedAlert.recipients ?? []}

@@ -3,9 +3,10 @@ import { ObjRef, Identifier, Uri } from "@gooddata/sdk-model";
 
 import {
     IMenuButtonItemsVisibility,
-    IScheduleEmailDialogContext,
     ILayoutItemPath,
     ILayoutSectionPath,
+    IAlertDialogContext,
+    IScheduleEmailContext,
 } from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
@@ -32,18 +33,19 @@ export type FilterViewDialogMode = "list" | "add";
 export interface UiState {
     scheduleEmailManagementDialog: {
         open: boolean;
-        context?: IScheduleEmailDialogContext;
+        context?: IScheduleEmailContext;
     };
     scheduleEmailDialog: {
         open: boolean;
         defaultAttachmentRef: ObjRef | undefined;
-        context?: IScheduleEmailDialogContext;
+        context?: IScheduleEmailContext;
     };
     alertsManagementDialog: {
         open: boolean;
     };
     alertsDialog: {
         open: boolean;
+        context?: IAlertDialogContext;
     };
     saveAsDialog: {
         open: boolean;

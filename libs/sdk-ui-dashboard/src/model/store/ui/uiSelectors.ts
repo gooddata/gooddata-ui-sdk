@@ -11,7 +11,8 @@ import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import {
     IMenuButtonItemsVisibility,
-    IScheduleEmailDialogContext,
+    IScheduleEmailContext,
+    IAlertDialogContext,
     ILayoutItemPath,
     ILayoutSectionPath,
     ILayoutCoordinates,
@@ -36,8 +37,10 @@ export const selectIsScheduleEmailDialogOpen: DashboardSelector<boolean> = creat
 /**
  * @alpha
  */
-export const selectIsScheduleEmailDialogContext: DashboardSelector<IScheduleEmailDialogContext> =
-    createSelector(selectSelf, (state) => state.scheduleEmailDialog.context ?? {});
+export const selectIsScheduleEmailDialogContext: DashboardSelector<IScheduleEmailContext> = createSelector(
+    selectSelf,
+    (state) => state.scheduleEmailDialog.context ?? {},
+);
 
 /**
  * @alpha
@@ -56,15 +59,22 @@ export const selectIsScheduleEmailManagementDialogOpen: DashboardSelector<boolea
 /**
  * @alpha
  */
-export const selectIsScheduleEmailManagementDialogContext: DashboardSelector<IScheduleEmailDialogContext> =
+export const selectIsScheduleEmailManagementDialogContext: DashboardSelector<IScheduleEmailContext> =
     createSelector(selectSelf, (state) => state.scheduleEmailManagementDialog.context ?? {});
 
 /**
  * @alpha
  */
-export const selectIsAlertingDialogOpen: DashboardSelector<boolean> = createSelector(
+export const selectIsAlertingDialogOpen: DashboardSelector<boolean> = createSelector(selectSelf, (state) => {
+    return state.alertsDialog.open;
+});
+
+/**
+ * @alpha
+ */
+export const selectAlertingDialogContext: DashboardSelector<IAlertDialogContext> = createSelector(
     selectSelf,
-    (state) => state.alertsDialog.open,
+    (state) => state.alertsDialog.context ?? {},
 );
 
 /**

@@ -16,6 +16,7 @@ import {
     IScheduleEmailContext,
     ILayoutItemPath,
     ILayoutSectionPath,
+    IAlertDialogContext,
 } from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
@@ -70,12 +71,14 @@ const closeAlertingManagementDialog: UiReducer = (state) => {
     state.alertsManagementDialog.open = false;
 };
 
-const openAlertingDialog: UiReducer<PayloadAction> = (state) => {
+const openAlertingDialog: UiReducer<PayloadAction<IAlertDialogContext>> = (state, action) => {
     state.alertsDialog.open = true;
+    state.alertsDialog.context = action.payload;
 };
 
 const closeAlertingDialog: UiReducer = (state) => {
     state.alertsDialog.open = false;
+    state.alertsDialog.context = undefined;
 };
 
 const openSaveAsDialog: UiReducer = (state) => {

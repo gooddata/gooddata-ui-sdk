@@ -320,3 +320,51 @@ $input-height: 28px;
         padding: 0;
     }
 }
+
+.gd-dashboard-alerting-dialog-form-field {
+    display: flex;
+    align-items: flex-start;
+
+    @media #{kit-variables.$small-only} {
+        flex-wrap: wrap;
+    }
+
+    &__label-container {
+        width: 100px;
+        min-height: 23px;
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        min-width: 100px;
+    }
+
+    &__content-container {
+        min-height: 23px;
+        flex: 1;
+        min-width: 200px;
+    }
+}
+
+.gd-dashboard-alerting-dialog-form-field-group {
+    display: flex;
+    align-items: flex-start;
+
+    @media #{kit-variables.$small-only} {
+        flex-wrap: wrap;
+    }
+
+    &__label-container {
+        width: 100px;
+        min-height: 23px;
+        display: flex;
+        gap: 5px;
+        align-items: center;
+    }
+
+    &__content-container {
+        min-height: 23px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+}

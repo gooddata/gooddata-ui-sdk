@@ -67,7 +67,10 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         defaultOnScheduleEmailingManagement,
     } = useDashboardScheduledEmails();
 
-    const { defaultOnAlertsManagement, isAlertsManagementVisible } = useDashboardAlerts();
+    const {
+        defaultOnAlertingManagement: defaultOnAlertsManagement,
+        isAlertManagementVisible: isAlertsManagementVisible,
+    } = useDashboardAlerts();
 
     const dispatch = useDashboardDispatch();
     const openSaveAsDialog = useCallback(() => dispatch(uiActions.openSaveAsDialog()), [dispatch]);

@@ -141,6 +141,16 @@ export interface IRecipientsSelectRendererProps {
      * Notification channel
      */
     notificationChannel?: INotificationChannelMetadataObject;
+
+    /**
+     * Show label?
+     */
+    showLabel?: boolean;
+
+    /**
+     * Id
+     */
+    id: string;
 }
 
 interface IRecipientsSelectRendererState {
@@ -225,6 +235,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             className,
             usersError,
             allowOnlyLoggedUserRecipients,
+            id,
         } = this.props;
         const creatableSelectComponent: SelectComponentsConfig<
             IAutomationRecipient,
@@ -273,11 +284,14 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                     className,
                 )}
             >
-                <label htmlFor="form.destination" className="gd-label">
-                    <FormattedMessage id="dialogs.schedule.email.to.label" />
-                </label>
+                {this.props.showLabel ? (
+                    <label htmlFor="form.destination" className="gd-label">
+                        <FormattedMessage id="dialogs.schedule.email.to.label" />
+                    </label>
+                ) : null}
                 <div ref={this.recipientRef} className="gd-input s-gd-recipients-value">
                     <ReactSelect
+                        id={id}
                         className={cx("gd-recipients-container", {
                             "gd-input-component--invalid": showInputError,
                         })}

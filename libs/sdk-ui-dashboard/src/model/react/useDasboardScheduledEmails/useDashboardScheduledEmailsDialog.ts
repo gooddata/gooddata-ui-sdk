@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import {
@@ -19,7 +19,7 @@ import {
     selectNotificationChannels,
     selectWidgets,
 } from "../../store/index.js";
-import { useDashboardAutomations } from "./useDashboardAutomations.js";
+import { useDashboardAutomations } from "../useDashboardAutomations/useDashboardAutomations.js";
 import { useDashboardUserInteraction } from "../useDashboardUserInteraction.js";
 
 /**
