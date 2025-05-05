@@ -1,23 +1,23 @@
 // (C) 2024-2025 GoodData Corporation
 
 import React from "react";
-import Skeleton from "react-loading-skeleton";
+import { Typography } from "@gooddata/sdk-ui-kit";
+import { FormattedMessage } from "react-intl";
+
 import { Contents } from "../../model.js";
 import { TextContentsComponent } from "./contents/TextContents.js";
 import { ErrorContentsComponent } from "./contents/ErrorContents.js";
 import { RoutingContentsComponent } from "./contents/RoutingContents.js";
 import { SearchContentsComponent } from "./contents/SearchContents.js";
 import { VisualizationContentsComponent } from "./contents/VisualizationContents.js";
-import { Typography } from "@gooddata/sdk-ui-kit";
-import { FormattedMessage } from "react-intl";
 
 type MessageContentsProps = {
     content: Contents[];
+    messageId: string;
     isComplete?: boolean;
     isCancelled?: boolean;
     isLastMessage?: boolean;
     useMarkdown?: boolean;
-    messageId: string;
 };
 
 export const MessageContents: React.FC<MessageContentsProps> = ({
@@ -61,7 +61,11 @@ export const MessageContents: React.FC<MessageContentsProps> = ({
                         return assertNever(type);
                 }
             })}
-            {!isComplete ? <Skeleton /> : null}
+            {!isComplete ? (
+                <Typography tagName="p">
+                    <FormattedMessage id="gd.gen-ai.state.generating" />
+                </Typography>
+            ) : null}
             {isCancelled ? (
                 <Typography tagName="p">
                     <FormattedMessage id="gd.gen-ai.state.cancelled" />

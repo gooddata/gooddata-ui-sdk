@@ -6,16 +6,18 @@ import { Icon } from "../Icon/index.js";
 import { Button } from "../Button/index.js";
 
 type HeaderChatButtonProps = {
+    title?: string;
+    color?: string;
     onClick: (e: React.MouseEvent) => void;
 };
 
-export const HeaderChatButton: React.FC<HeaderChatButtonProps> = ({ onClick }) => {
+export const HeaderChatButton: React.FC<HeaderChatButtonProps> = ({ color, title, onClick }) => {
     const classNames = cx("gd-header-measure", "gd-header-button", "gd-header-chat");
 
     // The text is not l18n-ed because it is not final
     return (
-        <Button title="Open AI Assistant" className={classNames} onClick={onClick}>
-            <Icon.GenAI width={32} height={32} ariaHidden />
+        <Button title={title} className={classNames} onClick={onClick}>
+            <Icon.GenAI color={color} width={32} height={32} ariaHidden />
         </Button>
     );
 };

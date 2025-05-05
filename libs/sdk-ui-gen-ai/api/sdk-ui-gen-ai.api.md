@@ -7,10 +7,10 @@
 import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IColorPalette } from '@gooddata/sdk-model';
 import { IGenAIVisualization } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
-
 import { SdkErrorType } from '@gooddata/sdk-ui';
 
 // @alpha (undocumented)
@@ -100,6 +100,7 @@ export const GenAIChat: React_2.FC<GenAIChatProps>;
 // @alpha
 export interface GenAIChatProps {
     backend?: IAnalyticalBackend;
+    colorPalette?: IColorPalette;
     eventHandlers?: ChatEventHandler[];
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
     workspace?: string;

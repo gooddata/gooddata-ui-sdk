@@ -2,18 +2,11 @@
 
 import React from "react";
 import cx from "classnames";
-import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
-import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { BarChart, ColumnChart, Headline, LineChart, PieChart } from "@gooddata/sdk-ui-charts";
-import { makeTextContents, makeUserMessage, VisualizationContents } from "../../../model.js";
-import { useExecution } from "./useExecution.js";
-import { VisualizationErrorBoundary } from "./VisualizationErrorBoundary.js";
-import { MarkdownComponent } from "./Markdown.js";
+import { IAttribute, IColorPalette, IFilter, IMeasure } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Button, Icon } from "@gooddata/sdk-ui-kit";
-import { useDispatch } from "react-redux";
-import { newMessageAction, visualizationErrorAction } from "../../../store/index.js";
-import { useConfig } from "../../ConfigContext.js";
-import { VisualizationSaveDialog } from "./VisualizationSaveDialog.js";
+import { PivotTable } from "@gooddata/sdk-ui-pivot";
+import { connect, useDispatch } from "react-redux";
+import { BarChart, ColumnChart, Headline, LineChart, PieChart } from "@gooddata/sdk-ui-charts";
 import { FormattedMessage } from "react-intl";
 import {
     GoodDataSdkError,
@@ -22,6 +15,20 @@ import {
     OnLoadingChanged,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
+
+import { makeTextContents, makeUserMessage, VisualizationContents } from "../../../model.js";
+import { useConfig } from "../../ConfigContext.js";
+import {
+    RootState,
+    newMessageAction,
+    visualizationErrorAction,
+    colorPaletteSelector,
+} from "../../../store/index.js";
+
+import { VisualizationErrorBoundary } from "./VisualizationErrorBoundary.js";
+import { VisualizationSaveDialog } from "./VisualizationSaveDialog.js";
+import { useExecution } from "./useExecution.js";
+import { MarkdownComponent } from "./Markdown.js";
 
 const VIS_HEIGHT = 250;
 
@@ -34,12 +41,14 @@ export type VisualizationContentsProps = {
     messageId: string;
     useMarkdown?: boolean;
     showSuggestions?: boolean;
+    colorPalette?: IColorPalette;
 };
 
-export const VisualizationContentsComponent: React.FC<VisualizationContentsProps> = ({
+const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> = ({
     content,
     messageId,
     useMarkdown,
+    colorPalette,
     showSuggestions = false,
 }) => {
     const dispatch = useDispatch();
@@ -107,6 +116,7 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
                                             metrics,
                                             dimensions,
                                             filters,
+                                            colorPalette,
                                             handleSdkError,
                                             handleLoadingChanged,
                                         );
@@ -115,6 +125,7 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
                                             metrics,
                                             dimensions,
                                             filters,
+                                            colorPalette,
                                             handleSdkError,
                                             handleLoadingChanged,
                                         );
@@ -123,6 +134,7 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
                                             metrics,
                                             dimensions,
                                             filters,
+                                            colorPalette,
                                             handleSdkError,
                                             handleLoadingChanged,
                                         );
@@ -131,6 +143,7 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
                                             metrics,
                                             dimensions,
                                             filters,
+                                            colorPalette,
                                             handleSdkError,
                                             handleLoadingChanged,
                                         );
@@ -147,6 +160,7 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
                                             metrics,
                                             dimensions,
                                             filters,
+                                            colorPalette,
                                             handleSdkError,
                                             handleLoadingChanged,
                                         );
@@ -255,6 +269,7 @@ const renderBarChart = (
     metrics: IMeasure[],
     dimensions: IAttribute[],
     filters: IFilter[],
+    colorPalette: IColorPalette | undefined,
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
 ) => (
@@ -266,6 +281,7 @@ const renderBarChart = (
         config={{
             ...visualizationTooltipOptions,
             ...legendTooltipOptions,
+            colorPalette,
             // Better visibility with stacked bars if there are multiple metrics and dimensions
             stackMeasures: metrics.length > 1 && dimensions.length === 2,
         }}
@@ -279,6 +295,7 @@ const renderColumnChart = (
     metrics: IMeasure[],
     dimensions: IAttribute[],
     filters: IFilter[],
+    colorPalette: IColorPalette | undefined,
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
 ) => (
@@ -290,6 +307,7 @@ const renderColumnChart = (
         config={{
             ...visualizationTooltipOptions,
             ...legendTooltipOptions,
+            colorPalette,
             // Better visibility with stacked bars if there are multiple metrics and dimensions
             stackMeasures: metrics.length > 1 && dimensions.length === 2,
         }}
@@ -303,6 +321,7 @@ const renderLineChart = (
     metrics: IMeasure[],
     dimensions: IAttribute[],
     filters: IFilter[],
+    colorPalette: IColorPalette | undefined,
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
 ) => (
@@ -315,6 +334,7 @@ const renderLineChart = (
         config={{
             ...visualizationTooltipOptions,
             ...legendTooltipOptions,
+            colorPalette,
         }}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
@@ -325,6 +345,7 @@ const renderPieChart = (
     metrics: IMeasure[],
     dimensions: IAttribute[],
     filters: IFilter[],
+    colorPalette: IColorPalette | undefined,
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
 ) => (
@@ -335,6 +356,7 @@ const renderPieChart = (
         filters={filters}
         config={{
             ...visualizationTooltipOptions,
+            colorPalette,
         }}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
@@ -361,6 +383,7 @@ const renderHeadline = (
     metrics: IMeasure[],
     _dimensions: IAttribute[],
     filters: IFilter[],
+    colorPalette: IColorPalette | undefined,
     onError: OnError,
     onLoadingChanged: OnLoadingChanged,
 ) => (
@@ -370,8 +393,18 @@ const renderHeadline = (
         filters={filters}
         config={{
             ...visualizationTooltipOptions,
+            colorPalette,
         }}
         onError={onError}
         onLoadingChanged={onLoadingChanged}
     />
 );
+
+const mapStateToProps = (state: RootState): Pick<VisualizationContentsProps, "colorPalette"> => ({
+    colorPalette: colorPaletteSelector(state),
+});
+
+export const VisualizationContentsComponent = connect(
+    mapStateToProps,
+    undefined,
+)(VisualizationContentsComponentCore);

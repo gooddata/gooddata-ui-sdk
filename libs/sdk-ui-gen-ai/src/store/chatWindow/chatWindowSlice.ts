@@ -1,5 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IColorPalette } from "@gooddata/sdk-model";
 
 type ChatWindowSliceState = {
     /**
@@ -10,6 +11,10 @@ type ChatWindowSliceState = {
      * Defines if the chat window is in fullscreen mode.
      */
     isFullscreen: boolean;
+    /**
+     * Color palette to use for the chat UI.
+     */
+    colorPalette?: IColorPalette;
 };
 
 export const chatWindowSliceName = "chatWindow";
@@ -17,6 +22,7 @@ export const chatWindowSliceName = "chatWindow";
 const initialState: ChatWindowSliceState = {
     isOpen: false,
     isFullscreen: false,
+    colorPalette: undefined,
 };
 
 const chatWindowSlice = createSlice({
@@ -32,8 +38,14 @@ const chatWindowSlice = createSlice({
         ) => {
             state.isFullscreen = isFullscreen;
         },
+        setColorPaletteAction: (
+            state,
+            { payload: { colorPalette } }: PayloadAction<{ colorPalette?: IColorPalette }>,
+        ) => {
+            state.colorPalette = colorPalette;
+        },
     },
 });
 
 export const chatWindowSliceReducer = chatWindowSlice.reducer;
-export const { setOpenAction, setFullscreenAction } = chatWindowSlice.actions;
+export const { setOpenAction, setFullscreenAction, setColorPaletteAction } = chatWindowSlice.actions;

@@ -29,6 +29,11 @@
         "comment": "A global semantic search button label in the main menu",
         "limit": 0
     },
+    "gs.header.ai": {
+        "value": "Open AI Assistant",
+        "comment": "A global open AI Assistant button label in the main menu",
+        "limit": 0
+    },
     "gs.header.logo.title.accessibility": {
         "value": "Application logo",
         "comment": "",
