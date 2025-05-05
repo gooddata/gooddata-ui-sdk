@@ -42,14 +42,15 @@
         .gd-headline-drillable-button {
             background: none;
             border: none;
+            height: inherit;
             font-size: 50px;
-            overflow: hidden;
             line-height: 60px;
-            white-space: nowrap;
+            overflow: hidden;
             color: var(--gd-kpi-primaryMeasureColor, kit-variables.$gd-color-dark);
             display: inline-block;
             font-family: inherit;
-            font-weight: bold;
+            font-weight: inherit;
+            width: 100%;
             padding: 0;
         }
 
