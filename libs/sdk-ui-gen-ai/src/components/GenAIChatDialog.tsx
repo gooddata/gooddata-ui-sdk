@@ -35,7 +35,9 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
 }) => {
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
-    const genAIStore = useGenAIStore(effectiveBackend, effectiveWorkspace, eventHandlers);
+    const genAIStore = useGenAIStore(effectiveBackend, effectiveWorkspace, {
+        eventHandlers,
+    });
 
     React.useEffect(() => {
         // Save the open state into the store

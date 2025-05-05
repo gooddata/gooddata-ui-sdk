@@ -2,13 +2,15 @@
 
 import React from "react";
 import cx from "classnames";
-import { AssistantMessage, isErrorContents } from "../../model.js";
-import { AgentIcon } from "./AgentIcon.js";
-import { MessageContents } from "./MessageContents.js";
-import { defineMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import { Icon } from "@gooddata/sdk-ui-kit";
+import { defineMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import { connect } from "react-redux";
+
+import { AssistantMessage, isErrorContents } from "../../model.js";
 import { setUserFeedback } from "../../store/index.js";
+
+import { MessageContents } from "./MessageContents.js";
+import { AgentIcon } from "./AgentIcon.js";
 
 type AssistantMessageProps = {
     message: AssistantMessage;

@@ -37,4 +37,8 @@ export {
 
 export { setOpenAction, setFullscreenAction } from "./chatWindow/chatWindowSlice.js";
 
-export { isOpenSelector, isFullscreenSelector } from "./chatWindow/chatWindowSelectors.js";
+export {
+    isOpenSelector,
+    isFullscreenSelector,
+    colorPaletteSelector,
+} from "./chatWindow/chatWindowSelectors.js";

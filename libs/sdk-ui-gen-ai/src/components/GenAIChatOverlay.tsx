@@ -1,7 +1,10 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
-import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
+import { connect } from "react-redux";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 import { Icon, Overlay } from "@gooddata/sdk-ui-kit";
+import cx from "classnames";
+
 import {
     clearThreadAction,
     hasMessagesSelector,
@@ -9,10 +12,9 @@ import {
     RootState,
     setFullscreenAction,
 } from "../store/index.js";
-import cx from "classnames";
+
+import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { HeaderIcon } from "./HeaderIcon.js";
-import { connect } from "react-redux";
-import { injectIntl, WrappedComponentProps } from "react-intl";
 
 type GenAIChatOverlayOwnProps = {
     onClose: () => void;

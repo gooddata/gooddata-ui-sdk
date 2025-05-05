@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 @use "sass:color";
 @use "variables" as variables;
@@ -9,7 +9,7 @@
 // Needed for spinner as a mid-point color
 $gd-palette-primary-base-midpoint: color-mix(
     in sRGB,
-    kit-variables.$gd-color-highlight 50%,
+    kit-variables.$gd-palette-primary-base 50%,
     kit-variables.$gd-palette-primary-dimmed 50%
 );
 
@@ -121,12 +121,12 @@ $gd-palette-primary-base-midpoint: color-mix(
 
 @keyframes gd-gen-ai-chat__agent_icon--appear--error {
     0% {
-        fill: #fff0;
+        fill: kit-variables.$gd-color-text-light;
     }
     50% {
         fill: kit-variables.$gd-palette-error-dimmed;
     }
     100% {
-        fill: #fff0;
+        fill: kit-variables.$gd-color-text-light;
     }
 }

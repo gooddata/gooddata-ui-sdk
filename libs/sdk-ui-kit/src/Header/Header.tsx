@@ -554,7 +554,13 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
 
                 {this.renderTrialItems()}
 
-                {this.props.showChatItem ? <HeaderChatButton onClick={this.props.onChatItemClick} /> : null}
+                {this.props.showChatItem ? (
+                    <HeaderChatButton
+                        title={this.props.intl.formatMessage({ id: "gs.header.ai" })}
+                        color={this.props.theme?.palette?.primary?.base}
+                        onClick={this.props.onChatItemClick}
+                    />
+                ) : null}
 
                 {this.props.notificationsPanel
                     ? this.props.notificationsPanel({

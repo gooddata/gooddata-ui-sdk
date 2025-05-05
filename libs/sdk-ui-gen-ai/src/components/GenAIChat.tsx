@@ -2,11 +2,14 @@
 import React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BackendProvider, useBackendStrict, useWorkspaceStrict, WorkspaceProvider } from "@gooddata/sdk-ui";
+import { IColorPalette } from "@gooddata/sdk-model";
 import { Provider as StoreProvider } from "react-redux";
+
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
-import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { ChatEventHandler } from "../store/events.js";
+
+import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { ConfigProvider, LinkHandlerEvent } from "./ConfigContext.js";
 
 /**
@@ -23,6 +26,10 @@ export interface GenAIChatProps {
      */
     workspace?: string;
     /**
+     * Color palette to use for the chat UI.
+     */
+    colorPalette?: IColorPalette;
+    /**
      * Event handlers to subscribe to chat events.
      */
     eventHandlers?: ChatEventHandler[];
@@ -37,10 +44,19 @@ export interface GenAIChatProps {
  * UI component that renders the Gen AI chat.
  * @alpha
  */
-export const GenAIChat: React.FC<GenAIChatProps> = ({ backend, workspace, eventHandlers, onLinkClick }) => {
+export const GenAIChat: React.FC<GenAIChatProps> = ({
+    backend,
+    workspace,
+    colorPalette,
+    eventHandlers,
+    onLinkClick,
+}) => {
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
-    const genAIStore = useGenAIStore(effectiveBackend, effectiveWorkspace, eventHandlers);
+    const genAIStore = useGenAIStore(effectiveBackend, effectiveWorkspace, {
+        colorPalette,
+        eventHandlers,
+    });
 
     return (
         <IntlWrapper>

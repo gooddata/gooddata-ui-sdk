@@ -1,8 +1,9 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { configureStore } from "@reduxjs/toolkit";
 import defaultReduxSaga from "redux-saga";
 import { defaultImport } from "default-import";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IColorPalette } from "@gooddata/sdk-model";
 import { messagesSliceName, messagesSliceReducer } from "./messages/messagesSlice.js";
 import { chatWindowSliceName, chatWindowSliceReducer } from "./chatWindow/chatWindowSlice.js";
 import { rootSaga } from "./sideEffects/index.js";
@@ -17,7 +18,12 @@ export const getStore = (
     backend: IAnalyticalBackend,
     workspace: string,
     eventDispatcher: EventDispatcher,
+    opts: {
+        colorPalette?: IColorPalette;
+    },
 ) => {
+    const { colorPalette } = opts;
+
     const sagaMiddleware = createSagaMiddleware({
         context: {
             backend,
@@ -36,7 +42,7 @@ export const getStore = (
         },
     });
 
-    sagaMiddleware.run(rootSaga);
+    sagaMiddleware.run(rootSaga, { colorPalette });
 
     return store;
 };

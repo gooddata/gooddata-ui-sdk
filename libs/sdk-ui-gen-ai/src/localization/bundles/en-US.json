@@ -104,6 +104,11 @@
         "comment": "Use ellipsis at the end …",
         "limit": 0
     },
+    "gd.gen-ai.state.generating": {
+        "value": "Generating your response…",
+        "comment": "Use ellipsis at the end …",
+        "limit": 0
+    },
     "gd.gen-ai.button.send": {
         "value": "Send",
         "comment": "",
