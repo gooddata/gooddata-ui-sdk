@@ -19,6 +19,11 @@ export interface UiFocusTrapProps {
      * If a ref is provided, the focus will be returned to the element referenced by the ref.
      */
     returnFocusTo?: React.RefObject<HTMLElement> | string;
+
+    /**
+     * If true, the focus will be returned to the element referenced by the returnFocusTo prop when the trap is unmounted.
+     */
+    returnFocusOnUnmount?: boolean;
     /**
      * Specify the element that should receive focus when the trap is activated.
      * If not provided, the first focusable element will be focused.
@@ -131,6 +136,7 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
     onDeactivate,
     returnFocusTo: returnFocusToProp,
     autofocusOnOpen = false,
+    returnFocusOnUnmount = false,
     initialFocus,
     customKeyboardNavigationHandler,
 }) => {
@@ -142,9 +148,7 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
     const returnFocus = useCallback(() => {
         if (typeof returnFocusTo === "string") {
             const element = document.getElementById(returnFocusTo);
-            if (element) {
-                element.focus();
-            }
+            element?.focus();
         } else if (returnFocusTo?.current) {
             returnFocusTo.current.focus();
         }
@@ -155,7 +159,14 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
     const keyboardHandler = customKeyboardNavigationHandler ?? keyboardNavigationHandler;
 
     useEffect(() => {
-        document.addEventListener("keydown", keyboardHandler);
+        return () => {
+            if (returnFocusOnUnmount) {
+                returnFocus();
+            }
+        };
+    }, [returnFocusOnUnmount, returnFocus]);
+
+    useEffect(() => {
         const focusTrapTimeout = setTimeout(() => {
             if (!autofocusOnOpen) {
                 return;
@@ -169,10 +180,8 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
             if (initialFocus) {
                 if (typeof initialFocus === "string") {
                     const element = document.getElementById(initialFocus);
-                    if (element) {
-                        element.focus();
-                        return;
-                    }
+                    element?.focus();
+                    return;
                 } else if (initialFocus.current) {
                     initialFocus.current.focus();
                     return;
@@ -186,10 +195,16 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
 
         return () => {
             clearTimeout(focusTrapTimeout);
-            document.removeEventListener("keydown", keyboardHandler);
-            returnFocus();
         };
-    }, [autofocusOnOpen, initialFocus, returnFocus, keyboardHandler]);
+    }, [autofocusOnOpen, initialFocus, returnFocus, keyboardHandler, returnFocusOnUnmount]);
+
+    useEffect(() => {
+        document.addEventListener("keydown", keyboardHandler);
+
+        return () => {
+            document.removeEventListener("keydown", keyboardHandler);
+        };
+    }, [keyboardHandler]);
 
     return (
         <div className="gd-focus-trap" ref={trapRef}>

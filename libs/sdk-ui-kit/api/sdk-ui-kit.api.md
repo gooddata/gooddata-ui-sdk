@@ -5243,6 +5243,7 @@ export interface UiFocusTrapProps {
     initialFocus?: React_2.RefObject<HTMLElement> | string;
     // (undocumented)
     onDeactivate?: () => void;
+    returnFocusOnUnmount?: boolean;
     returnFocusTo?: React_2.RefObject<HTMLElement> | string;
 }
 
