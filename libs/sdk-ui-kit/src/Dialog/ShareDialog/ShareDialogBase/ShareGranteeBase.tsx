@@ -81,11 +81,6 @@ export const ShareGranteeBase: React.FC<IShareGranteeBaseProps> = (props) => {
             onCancel={onCancel}
             onSubmit={onSubmit}
             initialFocus={ADD_GRANTEE_ID}
-            accessibilityConfig={{
-                closeButton: {
-                    ariaLabel: intl.formatMessage({ id: "dialogs.closeLabel" }),
-                },
-            }}
         >
             <ShareGranteeContent
                 currentUserPermissions={currentUserPermissions}

@@ -34,6 +34,7 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
     initialFocus,
     returnFocusTo,
     shouldCloseOnEscape = false,
+    returnFocusAfterClose = false,
 }) {
     const handleKeyDown = React.useCallback<React.KeyboardEventHandler<HTMLDivElement>>(
         (event) => {
@@ -60,6 +61,7 @@ export const DialogBase = React.memo<IDialogBaseProps>(function DialogBase({
             initialFocus={initialFocus}
             returnFocusTo={returnFocusTo}
             autofocusOnOpen={autofocusOnOpen}
+            returnFocusOnUnmount={returnFocusAfterClose}
         >
             <div
                 onKeyDown={handleKeyDown}

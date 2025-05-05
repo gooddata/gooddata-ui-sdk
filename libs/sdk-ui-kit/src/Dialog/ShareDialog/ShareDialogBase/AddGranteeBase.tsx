@@ -55,11 +55,6 @@ export const AddGranteeBase: React.FC<IAddGranteeBaseProps> = (props) => {
             onSubmit={onSubmit}
             onClose={onCancel}
             headerLeftButtonRenderer={backButtonRenderer}
-            accessibilityConfig={{
-                closeButton: {
-                    ariaLabel: intl.formatMessage({ id: "dialogs.closeLabel" }),
-                },
-            }}
         >
             <AddGranteeContent
                 currentUserPermissions={currentUserPermissions}

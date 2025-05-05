@@ -39,6 +39,7 @@ export interface IDialogBaseProps {
     CloseButton?: React.ComponentType<IDialogCloseButtonProps>;
     initialFocus?: React.RefObject<HTMLElement> | string;
     returnFocusTo?: React.RefObject<HTMLElement> | string;
+    returnFocusAfterClose?: boolean;
 }
 
 /**
