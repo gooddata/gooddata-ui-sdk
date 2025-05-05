@@ -86,7 +86,7 @@ describe("DropdownControl", () => {
 
             await userEvent.click(screen.getByRole("combobox"));
             await waitFor(() => {
-                expect(screen.getByRole(role, { hidden: true })).toBeInTheDocument();
+                expect(screen.getByTestId(role)).toBeInTheDocument();
             });
         });
     });

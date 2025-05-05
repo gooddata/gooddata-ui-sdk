@@ -1,6 +1,6 @@
 // (C) 2025 GoodData Corporation
 import React, { useState, useCallback } from "react";
-import { Input, useId } from "@gooddata/sdk-ui-kit";
+import { Input, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 import { IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { DASHBOARD_TITLE_MAX_LENGTH } from "../../../../../presentation/constants/index.js";
@@ -22,8 +22,8 @@ export const SubjectForm: React.FC<ISubjectFormProps> = ({ dashboardTitle, edite
     const intl = useIntl();
     const [subjectError, setSubjectError] = useState<string | null>(null);
 
-    const labelId = `${useId()}-label`;
-    const errorId = `${useId()}-error`;
+    const labelId = useIdPrefixed("label");
+    const errorId = useIdPrefixed("error");
 
     const errorMessage = intl.formatMessage(
         { id: "dialogs.schedule.error.too_long" },

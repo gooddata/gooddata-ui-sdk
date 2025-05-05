@@ -286,6 +286,8 @@ export interface CheckboxProps {
     // (undocumented)
     disabled: boolean;
     // (undocumented)
+    id?: string;
+    // (undocumented)
     labelSize: LabelSize;
     // (undocumented)
     name: string;
@@ -580,6 +582,13 @@ export function getDateTimeConfig(date: string, options?: IDateTimeConfigOptions
 
 // @internal (undocumented)
 export const getDefaultEmbedTypeOptions: (embedType: EmbedType) => EmbedOptionsType;
+
+// @internal
+export const getFocusableElements: (element?: HTMLElement) => {
+    focusableElements: NodeListOf<HTMLElement>;
+    firstElement: HTMLElement;
+    lastElement: HTMLElement;
+};
 
 // @internal (undocumented)
 export const getGranteeItemTestId: (grantee: GranteeItem, prefix?: "option") => string;
@@ -2566,6 +2575,8 @@ export interface IItemProps {
 // @internal (undocumented)
 export interface IItemsWrapperProps {
     // (undocumented)
+    accessibilityConfig?: IMenuContainerAccessibilityConfig;
+    // (undocumented)
     children: React_2.ReactNode;
     // (undocumented)
     className?: string;
@@ -2573,6 +2584,8 @@ export interface IItemsWrapperProps {
     smallItemsSpacing?: boolean;
     // (undocumented)
     style?: React_2.CSSProperties;
+    // (undocumented)
+    wrapperRef?: React_2.RefObject<HTMLDivElement>;
 }
 
 // @internal (undocumented)
@@ -2955,6 +2968,28 @@ export interface IMediaQueries {
     sm: string;
     xl: string;
     xxl: string;
+}
+
+// @internal (undocumented)
+export interface IMenuAccessibilityConfig extends IAccessibilityConfigBase {
+    // (undocumented)
+    ariaControls?: string;
+    // (undocumented)
+    ariaDisabled?: "true" | "false";
+    // (undocumented)
+    ariaExpanded?: "true" | "false";
+    // (undocumented)
+    ariaHaspopup?: "true" | "false" | "menu" | "listbox" | "tree" | "grid" | "dialog";
+    // (undocumented)
+    id?: string;
+    // (undocumented)
+    role?: "menu" | "menuitem" | "separator" | "presentation";
+}
+
+// @internal (undocumented)
+export interface IMenuContainerAccessibilityConfig extends IMenuAccessibilityConfig {
+    // (undocumented)
+    role?: "menu";
 }
 
 // @internal (undocumented)
@@ -4085,7 +4120,11 @@ export interface ISimpleSettingWidgetProps {
 // @internal (undocumented)
 export interface ISingleSelectListItemProps {
     // (undocumented)
+    accessibilityConfig?: IMenuAccessibilityConfig;
+    // (undocumented)
     className?: string;
+    // (undocumented)
+    elementType?: "div" | "button";
     // (undocumented)
     eventsOnBubble?: boolean;
     // (undocumented)
@@ -4093,7 +4132,11 @@ export interface ISingleSelectListItemProps {
     // (undocumented)
     icon?: string | ReactNode;
     // (undocumented)
+    iconRenderer?: (icon: string | ReactNode | React_2.FC) => ReactNode;
+    // (undocumented)
     info?: string | ReactNode;
+    // (undocumented)
+    infoRenderer?: (info: string | ReactNode | React_2.FC) => ReactNode;
     // (undocumented)
     isMenu?: boolean;
     // (undocumented)
@@ -4105,15 +4148,11 @@ export interface ISingleSelectListItemProps {
     // (undocumented)
     onMouseOver?: (e: React_2.MouseEvent<HTMLElement>) => void;
     // (undocumented)
+    tabIndex?: number;
+    // (undocumented)
     title?: string;
     // (undocumented)
     type?: SingleSelectListItemType;
-}
-
-// @internal (undocumented)
-export interface ISingleSelectListItemState {
-    // (undocumented)
-    isOverflowed: boolean;
 }
 
 // @internal (undocumented)
@@ -4613,6 +4652,21 @@ export const LoadingSpinner: React_2.FC<ILoadingSpinner>;
 export const LocaleSetting: React_2.VFC<ILocaleSettingProps>;
 
 // @internal (undocumented)
+export const makeMenuKeyboardNavigation: <T extends KeyboardEvent | KeyboardEvent_2<Element> = KeyboardEvent_2<Element>>({ onFocusPrevious, onFocusNext, onFocusFirst, onFocusLast, onEnterLevel, onLeaveLevel, onSelect, onClose, onUnhandledKeyDown, shouldPreventDefault, shouldStopPropagation, }: {
+    onFocusNext?: (event: T) => void;
+    onFocusPrevious?: (event: T) => void;
+    onFocusFirst?: (event: T) => void;
+    onFocusLast?: (event: T) => void;
+    onEnterLevel?: (event: T) => void;
+    onLeaveLevel?: (event: T) => void;
+    onSelect?: (event: T) => void;
+    onClose?: (event: T) => void;
+    onUnhandledKeyDown?: (event: T) => void;
+    shouldPreventDefault?: boolean;
+    shouldStopPropagation?: boolean;
+}) => (event: T) => void;
+
+// @internal (undocumented)
 export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFormatOwnProps> {
     // (undocumented)
     render(): React_2.JSX.Element;
@@ -4894,15 +4948,7 @@ export function shouldHidePPExperience(featureFlags: ISettings): boolean;
 export const SimpleSettingWidget: React_2.FC<ISimpleSettingWidgetProps>;
 
 // @internal (undocumented)
-export class SingleSelectListItem extends Component<ISingleSelectListItemProps, ISingleSelectListItemState> {
-    constructor(props: ISingleSelectListItemProps);
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentDidUpdate(): void;
-    // (undocumented)
-    render(): JSX.Element;
-}
+export const SingleSelectListItem: React_2.ForwardRefExoticComponent<ISingleSelectListItemProps & React_2.RefAttributes<HTMLButtonElement | HTMLDivElement>>;
 
 // @internal (undocumented)
 export type SingleSelectListItemType = "header" | "separator";
@@ -5193,9 +5239,11 @@ export interface UiFocusTrapProps {
     autofocusOnOpen?: boolean;
     // (undocumented)
     children: React_2.ReactNode;
+    customKeyboardNavigationHandler?: (event: KeyboardEvent) => void;
     initialFocus?: React_2.RefObject<HTMLElement> | string;
     // (undocumented)
     onDeactivate?: () => void;
+    returnFocusOnUnmount?: boolean;
     returnFocusTo?: React_2.RefObject<HTMLElement> | string;
 }
 
@@ -5375,6 +5423,9 @@ export const useHeaderSearch: () => HeaderSearchContext;
 
 // @internal
 export const useId: () => string;
+
+// @internal
+export const useIdPrefixed: (prefix?: string) => string;
 
 // @internal (undocumented)
 export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInverted: boolean, getItemTitle: (item: T) => string): string;

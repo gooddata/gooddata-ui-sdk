@@ -1,11 +1,45 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
+interface IHandleActionProps {
+    shouldPreventDefault?: boolean;
+    shouldStopPropagation?: boolean;
+}
+
+const handleAction = <T extends React.KeyboardEvent | KeyboardEvent = React.KeyboardEvent>(
+    event: T,
+    action?: (e: T) => void,
+    { shouldPreventDefault = true, shouldStopPropagation = true }: IHandleActionProps = {},
+) => {
+    if (!action) {
+        return;
+    }
+
+    if (shouldPreventDefault) {
+        event.preventDefault();
+    }
+    if (shouldStopPropagation) {
+        event.stopPropagation();
+    }
+
+    action(event);
+};
+
+const handleActionEvent = <T extends React.KeyboardEvent | KeyboardEvent = React.KeyboardEvent>(
+    event: T,
+    shouldPreventDefault,
+    shouldStopPropagation,
+): ((action?: (e: T) => void) => void) => {
+    return (action?: (e: T) => void) => {
+        handleAction(event, action, { shouldPreventDefault, shouldStopPropagation });
+    };
+};
 
 /**
  * @internal
  */
-export const makeMenuKeyboardNavigation = ({
+export const makeMenuKeyboardNavigation = <
+    T extends React.KeyboardEvent | KeyboardEvent = React.KeyboardEvent,
+>({
     onFocusPrevious,
     onFocusNext,
     onFocusFirst,
@@ -19,56 +53,96 @@ export const makeMenuKeyboardNavigation = ({
     shouldPreventDefault = true,
     shouldStopPropagation = true,
 }: {
-    onFocusNext?: (event: React.KeyboardEvent) => void;
-    onFocusPrevious?: (event: React.KeyboardEvent) => void;
-    onFocusFirst?: (event: React.KeyboardEvent) => void;
-    onFocusLast?: (event: React.KeyboardEvent) => void;
-    onEnterLevel?: (event: React.KeyboardEvent) => void;
-    onLeaveLevel?: (event: React.KeyboardEvent) => void;
-    onSelect?: (event: React.KeyboardEvent) => void;
-    onClose?: (event: React.KeyboardEvent) => void;
-    onUnhandledKeyDown?: (event: React.KeyboardEvent) => void;
+    onFocusNext?: (event: T) => void;
+    onFocusPrevious?: (event: T) => void;
+    onFocusFirst?: (event: T) => void;
+    onFocusLast?: (event: T) => void;
+    onEnterLevel?: (event: T) => void;
+    onLeaveLevel?: (event: T) => void;
+    onSelect?: (event: T) => void;
+    onClose?: (event: T) => void;
+    onUnhandledKeyDown?: (event: T) => void;
 
     shouldPreventDefault?: boolean;
     shouldStopPropagation?: boolean;
 }) => {
-    function handleAction(event: React.KeyboardEvent, action?: (e: React.KeyboardEvent) => void) {
-        if (!action) {
-            return;
-        }
-
-        shouldPreventDefault && event.preventDefault();
-        shouldStopPropagation && event.stopPropagation();
-
-        action(event);
-    }
-
-    return (event: React.KeyboardEvent) => {
+    return (event: T) => {
+        const handleAction = handleActionEvent(event, shouldPreventDefault, shouldStopPropagation);
         switch (event.code) {
             case "ArrowDown":
-                handleAction(event, onFocusNext);
+                handleAction(onFocusNext);
                 break;
             case "ArrowUp":
-                handleAction(event, onFocusPrevious);
+                handleAction(onFocusPrevious);
                 break;
             case "ArrowLeft":
-                handleAction(event, onLeaveLevel);
+                handleAction(onLeaveLevel);
                 break;
             case "ArrowRight":
-                handleAction(event, onEnterLevel);
+                handleAction(onEnterLevel);
                 break;
             case "Home":
-                handleAction(event, onFocusFirst);
+                handleAction(onFocusFirst);
                 break;
             case "End":
-                handleAction(event, onFocusLast);
+                handleAction(onFocusLast);
                 break;
             case "Enter":
             case "Space":
-                handleAction(event, onSelect);
+                handleAction(onSelect);
                 break;
             case "Escape":
-                handleAction(event, onClose);
+                handleAction(onClose);
+                break;
+            default:
+                onUnhandledKeyDown?.(event);
+                break;
+        }
+    };
+};
+
+/**
+ * @internal
+ */
+export const makeDialogKeyboardNavigation = <
+    T extends React.KeyboardEvent | KeyboardEvent = React.KeyboardEvent,
+>({
+    onFocusPrevious,
+    onFocusNext,
+    onClose,
+    onUnhandledKeyDown,
+
+    shouldPreventDefault = true,
+    shouldStopPropagation = true,
+}: {
+    onFocusNext?: (event: T) => void;
+    onFocusPrevious?: (event: T) => void;
+    onClose?: (event: T) => void;
+    onUnhandledKeyDown?: (event: T) => void;
+
+    shouldPreventDefault?: boolean;
+    shouldStopPropagation?: boolean;
+}) => {
+    return (event: T) => {
+        switch (event.code) {
+            case "Tab":
+                if (event.shiftKey) {
+                    handleAction(event, onFocusPrevious, {
+                        shouldPreventDefault,
+                        shouldStopPropagation,
+                    });
+                } else {
+                    handleAction(event, onFocusNext, {
+                        shouldPreventDefault,
+                        shouldStopPropagation,
+                    });
+                }
+                break;
+            case "Escape":
+                handleAction(event, onClose, {
+                    shouldPreventDefault,
+                    shouldStopPropagation,
+                });
                 break;
             default:
                 onUnhandledKeyDown?.(event);

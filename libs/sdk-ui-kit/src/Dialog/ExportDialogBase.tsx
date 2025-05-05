@@ -6,6 +6,7 @@ import { IExportDialogBaseProps } from "./typings.js";
 import { Checkbox } from "../Form/index.js";
 import { ConfirmDialogBase } from "./ConfirmDialogBase.js";
 import { usePropState } from "@gooddata/sdk-ui";
+import { useIdPrefixed } from "../utils/useId.js";
 
 /**
  * @internal
@@ -37,6 +38,8 @@ export const ExportDialogBase = React.memo<IExportDialogBaseProps>(function Expo
     const [isFilterContextIncluded, setIsFilterContextIncluded] = usePropState(includeFilterContext);
     const [shouldMergeHeaders, setShouldMergeHeaders] = usePropState(mergeHeaders);
 
+    const mergeHeadersId = useIdPrefixed("mergeHeaders");
+
     const handleSubmit = React.useCallback(() => {
         onSubmit({
             includeFilterContext: isFilterContextIncluded,
@@ -55,23 +58,27 @@ export const ExportDialogBase = React.memo<IExportDialogBaseProps>(function Expo
             submitButtonText={submitButtonText}
             onCancel={onCancel}
             onSubmit={handleSubmit}
+            initialFocus={mergeHeadersId}
         >
+            <h4>{mergeHeadersTitle}</h4>
             <Checkbox
+                id={mergeHeadersId}
                 disabled={mergeHeadersDisabled}
                 name="gs.dialog.export.checkbox.mergeHeaders"
                 text={mergeHeadersText}
-                title={mergeHeadersTitle}
                 value={shouldMergeHeaders}
                 onChange={setShouldMergeHeaders}
             />
             {filterContextVisible ? (
-                <Checkbox
-                    name="gs.dialog.export.checkbox.includeFilterContext"
-                    text={filterContextText}
-                    title={filterContextTitle}
-                    value={isFilterContextIncluded}
-                    onChange={setIsFilterContextIncluded}
-                />
+                <>
+                    <h4>{filterContextTitle}</h4>
+                    <Checkbox
+                        name="gs.dialog.export.checkbox.includeFilterContext"
+                        text={filterContextText}
+                        value={isFilterContextIncluded}
+                        onChange={setIsFilterContextIncluded}
+                    />
+                </>
             ) : null}
         </ConfirmDialogBase>
     );

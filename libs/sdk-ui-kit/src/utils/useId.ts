@@ -11,3 +11,13 @@ export const useId = (): string => {
     const [id] = useState<string>(uuid());
     return id;
 };
+
+/**
+ * This is a hook that generates a unique ID for purposes of aria references and so on. Can be enhanced with a prefix.
+ * @param prefix - The prefix to be added to the generated ID.
+ * @internal
+ */
+export const useIdPrefixed = (prefix?: string): string => {
+    const id = useId();
+    return prefix ? `${prefix}-${id}` : id;
+};

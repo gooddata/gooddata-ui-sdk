@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 
 import cx from "classnames";
@@ -10,6 +10,7 @@ import { LabelSize } from "./typings.js";
  */
 
 export interface CheckboxProps {
+    id?: string;
     disabled: boolean;
     name: string;
     text: string;
@@ -39,7 +40,7 @@ export class Checkbox extends React.PureComponent<CheckboxProps> {
     };
 
     render() {
-        const { disabled, name, text, title, value, labelSize } = this.props;
+        const { disabled, name, text, title, value, labelSize, id } = this.props;
 
         const labelClasses = cx("input-label-text", {
             "gd-label-small gd-checkbox-label-small": labelSize === "small",
@@ -51,6 +52,7 @@ export class Checkbox extends React.PureComponent<CheckboxProps> {
                 {title ? <h6>{title}</h6> : null}
                 <label className="input-checkbox-label">
                     <input
+                        id={id}
                         type="checkbox"
                         className="input-checkbox"
                         name={name}

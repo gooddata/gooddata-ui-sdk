@@ -3,7 +3,7 @@ import React, { useRef, useState, useCallback } from "react";
 import { Textarea } from "../Textarea.js";
 import { useIntl } from "react-intl";
 import { ErrorWrapper } from "../ErrorWrapper/ErrorWrapper.js";
-import { useId } from "@gooddata/sdk-ui-kit";
+import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 const MAX_MESSAGE_LENGTH = 10000;
 
@@ -21,8 +21,8 @@ export const MessageForm: React.FC<IMessageFormProps> = ({ value, onChange }) =>
     const textareaRef = useRef<Textarea | null>(null);
     const [messageError, setMessageError] = useState<string | null>(null);
 
-    const labelId = `${useId()}-label`;
-    const errorId = `${useId()}-error`;
+    const labelId = useIdPrefixed("label");
+    const errorId = useIdPrefixed("error");
 
     const errorMessage = intl.formatMessage(
         { id: "dialogs.schedule.error.too_long" },

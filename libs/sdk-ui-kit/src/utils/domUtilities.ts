@@ -150,3 +150,38 @@ export const isElementSubmitButton = (event: React.KeyboardEvent) => {
 
     return id === CONFIRM_DIALOG_BASE_ID;
 };
+
+const focusableElementsSelector = [
+    // Interactive form elements
+    'button:not(:disabled):not([aria-disabled="true"])',
+    'input:not(:disabled):not([aria-disabled="true"])',
+    'select:not(:disabled):not([aria-disabled="true"])',
+    'textarea:not(:disabled):not([aria-disabled="true"])',
+
+    // Links and areas
+    "a[href]",
+    "area[href]",
+
+    // Custom elements with tabindex
+    '[tabindex]:not([tabindex="-1"]):not(:disabled):not([aria-disabled="true"])',
+
+    // Media with controls
+    "audio[controls]",
+    "video[controls]",
+
+    // Editable content
+    '[contenteditable]:not([contenteditable="false"])',
+].join(",");
+
+/**
+ * @internal
+ * Returns the focusable elements of the given element
+ * @param element - the element to get the focusable elements from
+ * @returns an object containing the focusable elements, the first focusable element, and the last focusable element
+ */
+export const getFocusableElements = (element?: HTMLElement) => {
+    const focusableElements = element?.querySelectorAll<HTMLElement>(focusableElementsSelector);
+    const firstElement = focusableElements?.[0];
+    const lastElement = focusableElements?.[focusableElements.length - 1];
+    return { focusableElements, firstElement, lastElement };
+};

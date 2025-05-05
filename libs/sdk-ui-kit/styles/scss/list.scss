@@ -133,6 +133,13 @@ $menu-item-icon-width: 30px;
     }
 }
 
+button.gd-list-item {
+    width: 100%;
+    border: none;
+    background: none;
+    text-align: left;
+}
+
 .gd-list-item {
     position: relative;
     box-sizing: border-box;
