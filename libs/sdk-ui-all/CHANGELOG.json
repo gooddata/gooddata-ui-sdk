@@ -2,6 +2,18 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.26.0",
+            "tag": "@gooddata/sdk-ui-all_v10.26.0",
+            "date": "Mon, 05 May 2025 06:30:05 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "add property drillStep into InsightBody component so dashboard customizations can behave based on drill context"
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.25.1",
             "tag": "@gooddata/sdk-ui-all_v10.25.1",
             "date": "Wed, 23 Apr 2025 14:19:46 GMT",

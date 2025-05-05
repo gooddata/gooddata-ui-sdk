@@ -1,6 +1,14 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Wed, 23 Apr 2025 14:19:46 GMT and should not be manually modified.
+This log was last generated on Mon, 05 May 2025 06:30:05 GMT and should not be manually modified.
+
+## 10.26.0
+
+Mon, 05 May 2025 06:30:05 GMT
+
+### Updates
+
+-   add property drillStep into InsightBody component so dashboard customizations can behave based on drill context
 
 ## 10.25.1
 
