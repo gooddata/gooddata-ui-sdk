@@ -347,6 +347,7 @@ export interface IChartConfig {
     // @internal
     orientation?: IOrientationConfig;
     primaryChartType?: "line" | "column" | "area";
+    respectLegendPosition?: boolean;
     // @beta
     rowHeight?: ChartRowHeight;
     secondary_xaxis?: IAxisConfig;

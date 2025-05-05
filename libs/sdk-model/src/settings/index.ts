@@ -671,6 +671,11 @@ export interface ISettings {
      */
     enableLineChartTrendThreshold?: boolean;
 
+    /**
+     * Enable to respect chart legend position in KD.
+     */
+    enableKDRespectLegendPosition?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

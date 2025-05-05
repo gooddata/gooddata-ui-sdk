@@ -184,6 +184,8 @@ export interface IGeoConfig {
     // (undocumented)
     points?: IGeoPointsConfig;
     // (undocumented)
+    respectLegendPosition?: boolean;
+    // (undocumented)
     selectedSegmentItems?: string[];
     // (undocumented)
     separators?: ISeparators;

@@ -185,6 +185,7 @@ export interface IGeoConfig {
     showLabels?: boolean;
     cooperativeGestures?: boolean;
     enableExecutionCancelling?: boolean;
+    respectLegendPosition?: boolean;
 }
 
 /**
