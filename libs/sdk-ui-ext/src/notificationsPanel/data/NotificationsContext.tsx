@@ -32,6 +32,7 @@ export interface INotificationsProviderProps {
     children?: React.ReactNode;
     refreshInterval: number;
     itemsPerPage: number;
+    showSchedulingNotifications?: boolean;
 }
 
 /**
@@ -43,8 +44,15 @@ export const NotificationsProvider: React.FC<INotificationsProviderProps> = ({
     workspace,
     refreshInterval,
     itemsPerPage,
+    showSchedulingNotifications,
 }) => {
-    const notifications = useNotifications({ backend, workspace, refreshInterval, itemsPerPage });
+    const notifications = useNotifications({
+        backend,
+        workspace,
+        refreshInterval,
+        itemsPerPage,
+        showSchedulingNotifications,
+    });
 
     return <NotificationsContext.Provider value={notifications}>{children}</NotificationsContext.Provider>;
 };
