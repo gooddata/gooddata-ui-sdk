@@ -272,6 +272,16 @@
         "comment": "The label will be used when the arithmetic operation is `difference` and primary value is equals secondary value.",
         "limit": 0
     },
+    "visualizations.headline.pagination.next.metricLabel": {
+        "value": "Show next comparative metric",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizations.headline.pagination.previous.metricLabel": {
+        "value": "Show previous comparative metric",
+        "comment": "",
+        "limit": 0
+    },
     "visualization.numericValues.k": {
         "value": "k",
         "comment": "Character 'k' stands for metric prefix kilo (1.000).",

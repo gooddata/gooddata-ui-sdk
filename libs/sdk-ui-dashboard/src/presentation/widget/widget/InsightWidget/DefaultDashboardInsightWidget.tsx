@@ -26,6 +26,7 @@ import { IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { useAlertingAndScheduling } from "./useAlertingAndScheduling.js";
 import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
 import { useInsightWidgetDescriptionComponent } from "../../description/InsightWidgetDescriptionComponentProvider.js";
+import { useId } from "@gooddata/sdk-ui-kit";
 
 export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsightWidgetProps, "insight">> = (
     props,
@@ -164,6 +165,8 @@ const DefaultDashboardInsightWidgetCore: React.FC<
             : insight.insight.summary
         : "";
 
+    const titleId = useId();
+
     return (
         <DashboardItem
             className={cx(
@@ -177,6 +180,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
             ref={elementRef}
             description={accessibilityWidgetDescription}
             exportData={exportData?.section}
+            titleId={titleId}
         >
             <DashboardItemVisualization
                 isExport={!!exportData}
@@ -184,6 +188,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                     !widget.configuration?.hideTitle && (
                         <DashboardItemHeadline
                             title={widget.title}
+                            titleId={titleId}
                             clientHeight={clientHeight}
                             exportData={exportData?.title}
                         />

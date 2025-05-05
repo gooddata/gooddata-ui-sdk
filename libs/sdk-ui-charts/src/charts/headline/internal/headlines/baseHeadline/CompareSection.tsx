@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { createRef, useMemo } from "react";
 
 import { HeadlinePagination, shouldRenderPagination } from "@gooddata/sdk-ui-vis-commons";
@@ -7,6 +7,7 @@ import CompareSectionItem from "./CompareSectionItem.js";
 import { getCompareSectionClasses } from "../../utils/HeadlineDataItemUtils.js";
 import { useBaseHeadline } from "./BaseHeadlineContext.js";
 import { BaseHeadlineItemAccepted, IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
+import { useIntl } from "react-intl";
 
 interface ICompareSectionProps {
     secondaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
@@ -16,6 +17,8 @@ interface ICompareSectionProps {
 const CompareSection: React.FC<ICompareSectionProps> = ({ secondaryItem, tertiaryItem }) => {
     const { config, clientHeight, clientWidth } = useBaseHeadline();
     const { enableCompactSize } = config;
+
+    const intl = useIntl();
 
     const secondaryItemTitleWrapperRef = createRef<HTMLDivElement>();
 
@@ -36,6 +39,14 @@ const CompareSection: React.FC<ICompareSectionProps> = ({ secondaryItem, tertiar
                     <CompareSectionItem dataItem={secondaryItem} titleRef={secondaryItemTitleWrapperRef} />
                 )}
                 renderTertiaryItem={() => <CompareSectionItem dataItem={tertiaryItem} />}
+                accessibilityConfig={{
+                    nextAriaLabel: intl.formatMessage({
+                        id: "visualizations.headline.pagination.next.metricLabel",
+                    }),
+                    previousAriaLabel: intl.formatMessage({
+                        id: "visualizations.headline.pagination.previous.metricLabel",
+                    }),
+                }}
             />
         </div>
     ) : (

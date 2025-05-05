@@ -4,6 +4,7 @@ import { CommonExportDataAttributes } from "../../export/index.js";
 
 interface IDashboardItemHeadlineContainerProps {
     children: React.ReactNode;
+    titleId?: string;
     clientHeight?: number;
     exportData?: CommonExportDataAttributes;
 }
@@ -48,11 +49,13 @@ function getOuterStyle(
 const DashboardItemHeadlineContainerInner: React.FC<{
     hasCustomMargin: boolean;
     isCustomHeightSmall: boolean;
+    titleId?: string;
     exportData?: CommonExportDataAttributes;
     children?: React.ReactNode;
 }> = memo(function DashboardItemHeadlineContainerInner({
     hasCustomMargin,
     isCustomHeightSmall,
+    titleId,
     exportData,
     children,
 }) {
@@ -62,7 +65,11 @@ const DashboardItemHeadlineContainerInner: React.FC<{
             style={getOuterStyle(hasCustomMargin, isCustomHeightSmall)}
             {...exportData}
         >
-            <div className="item-headline" style={isCustomHeightSmall ? INNER_STYLE_SMALL : undefined}>
+            <div
+                id={titleId}
+                className="item-headline"
+                style={isCustomHeightSmall ? INNER_STYLE_SMALL : undefined}
+            >
                 {children}
             </div>
         </div>
@@ -71,6 +78,7 @@ const DashboardItemHeadlineContainerInner: React.FC<{
 
 export const DashboardItemHeadlineContainer: React.FC<IDashboardItemHeadlineContainerProps> = ({
     children,
+    titleId,
     clientHeight,
     exportData,
 }) => {
@@ -79,6 +87,7 @@ export const DashboardItemHeadlineContainer: React.FC<IDashboardItemHeadlineCont
             hasCustomMargin={clientHeight !== undefined ? clientHeight <= SMALL_WIDGET_HEIGHT : false}
             isCustomHeightSmall={isSmallCustomHeight(clientHeight)}
             exportData={exportData}
+            titleId={titleId}
         >
             {children}
         </DashboardItemHeadlineContainerInner>

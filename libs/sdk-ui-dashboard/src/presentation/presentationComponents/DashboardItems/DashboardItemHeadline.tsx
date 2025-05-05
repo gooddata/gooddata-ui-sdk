@@ -10,12 +10,14 @@ import { CommonExportDataAttributes } from "../../export/index.js";
 
 interface IDashboardItemHeadlineProps {
     title: string;
+    titleId?: string;
     clientHeight?: number;
     exportData?: CommonExportDataAttributes;
 }
 
 export const DashboardItemHeadline: React.FC<IDashboardItemHeadlineProps> = ({
     title,
+    titleId,
     clientHeight,
     exportData,
 }) => {
@@ -51,7 +53,7 @@ export const DashboardItemHeadline: React.FC<IDashboardItemHeadlineProps> = ({
     }, [title, elementWidth]);
 
     return (
-        <DashboardItemHeadlineContainer clientHeight={clientHeight} exportData={exportData}>
+        <DashboardItemHeadlineContainer clientHeight={clientHeight} exportData={exportData} titleId={titleId}>
             {truncatedTitlePart}
         </DashboardItemHeadlineContainer>
     );
