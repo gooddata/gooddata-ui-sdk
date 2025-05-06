@@ -2939,6 +2939,16 @@
         "comment": "Create automation permission tooltip",
         "limit": 0
     },
+    "userManagement.workspace.permission.useAiAssistant": {
+        "value": "AI Assistant",
+        "comment": "Name of the workspace permission that allows user to use ai assistant in workspace.",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.useAiAssistant.tooltip": {
+        "value": "Adds USE_AI_ASSISTANT permission to access and interact with the AI chatbot for analytics questions.",
+        "comment": "Use AI Assistant permission tooltip",
+        "limit": 0
+    },
     "userManagement.workspace.granularPermission.noWorkspace": {
         "value": "No workspace selected",
         "comment": "Empty content message",

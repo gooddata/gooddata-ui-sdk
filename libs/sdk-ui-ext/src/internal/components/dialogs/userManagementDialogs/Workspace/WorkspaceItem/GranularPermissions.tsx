@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React, { ReactNode, useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DialogListHeader, Message } from "@gooddata/sdk-ui-kit";
@@ -25,11 +25,12 @@ import {
 import { QuestionMarkIcon } from "./QuestionMarkIcon.js";
 
 const granularPermissions: IPermissionsItem[] = [
-    { id: "CREATE_FILTER_VIEW", enabled: true },
     { id: "CREATE_AUTOMATION", enabled: true },
+    { id: "USE_AI_ASSISTANT", enabled: true },
     { id: "EXPORT", enabled: true },
     { id: "EXPORT_PDF", enabled: true, group: true },
     { id: "EXPORT_TABULAR", enabled: true, group: true },
+    { id: "CREATE_FILTER_VIEW", enabled: true },
 ];
 
 interface IGranularPermissionsProps {

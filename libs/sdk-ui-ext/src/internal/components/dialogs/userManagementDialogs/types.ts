@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import isEmpty from "lodash/isEmpty.js";
 import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
@@ -63,13 +63,10 @@ export type UserTabId = "WORKSPACES" | "USER_GROUPS" | "DETAILS" | "DATA_SOURCES
  * once the flat permissions are fully in the use.
  */
 export type WorkspacePermission =
-    | "VIEW"
     | "VIEW_AND_SAVE_VIEWS"
     | "VIEW_AND_EXPORT"
     | "VIEW_AND_EXPORT_AND_SAVE_VIEWS"
-    | "ANALYZE"
     | "ANALYZE_AND_EXPORT"
-    | "MANAGE"
     | AssignedWorkspacePermission;
 
 export type WorkspacePermissions = WorkspacePermission[];

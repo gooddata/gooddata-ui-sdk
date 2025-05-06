@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import isEqual from "lodash/isEqual.js";
 import { IntlShape } from "react-intl";
@@ -24,7 +24,14 @@ export const getImplicitGranularPermissions = (
         case "ANALYZE":
             return ["CREATE_FILTER_VIEW"];
         case "MANAGE":
-            return ["EXPORT", "EXPORT_PDF", "EXPORT_TABULAR", "CREATE_AUTOMATION", "CREATE_FILTER_VIEW"];
+            return [
+                "EXPORT",
+                "EXPORT_PDF",
+                "EXPORT_TABULAR",
+                "CREATE_AUTOMATION",
+                "CREATE_FILTER_VIEW",
+                "USE_AI_ASSISTANT",
+            ];
         default:
             return [];
     }
