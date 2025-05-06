@@ -4,11 +4,14 @@ import { Provider as StoreProvider } from "react-redux";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BackendProvider, useBackendStrict, useWorkspaceStrict, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { OverlayController, OverlayControllerProvider, useOverlayController } from "@gooddata/sdk-ui-kit";
+import { IColorPalette } from "@gooddata/sdk-model";
+
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
-import { GenAIChatOverlay } from "./GenAIChatOverlay.js";
 import { ChatEventHandler } from "../store/events.js";
 import { isOpenSelector, setOpenAction } from "../store/index.js";
+
+import { GenAIChatOverlay } from "./GenAIChatOverlay.js";
 import { ConfigProvider, LinkHandlerEvent } from "./ConfigContext.js";
 
 export type GenAIChatDialogProps = {
@@ -17,6 +20,7 @@ export type GenAIChatDialogProps = {
     isOpen: boolean;
     onClose: () => void;
     eventHandlers?: ChatEventHandler[];
+    colorPalette?: IColorPalette;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
 };
 
@@ -31,12 +35,14 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
     isOpen,
     onClose,
     eventHandlers,
+    colorPalette,
     onLinkClick,
 }) => {
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
     const genAIStore = useGenAIStore(effectiveBackend, effectiveWorkspace, {
         eventHandlers,
+        colorPalette,
     });
 
     React.useEffect(() => {
