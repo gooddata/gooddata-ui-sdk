@@ -1426,6 +1426,8 @@ export interface IDialogBaseProps {
     // (undocumented)
     onSubmit?: (data?: any) => void;
     // (undocumented)
+    returnFocusAfterClose?: boolean;
+    // (undocumented)
     returnFocusTo?: React_2.RefObject<HTMLElement> | string;
     // (undocumented)
     shouldCloseOnClick?: (e: Event) => boolean;
