@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { IListboxContext } from "../types.js";
+import { IUiListboxContext } from "../types.js";
 
 /**
  * This is a basic implementation of moving focus to items on character key press.
@@ -15,7 +15,7 @@ export function firstCharacterSearch<InteractiveItemData, StaticItemData>(
         focusedIndex,
         setFocusedIndex,
         isItemFocusable,
-    }: IListboxContext<InteractiveItemData, StaticItemData>,
+    }: IUiListboxContext<InteractiveItemData, StaticItemData>,
 ) {
     const char = event.key.toLowerCase();
 
@@ -25,7 +25,7 @@ export function firstCharacterSearch<InteractiveItemData, StaticItemData>(
 
     const itemIndex = items.findIndex(
         (item, index) =>
-            index > focusedIndex &&
+            index > (focusedIndex ?? 0) &&
             isItemFocusable(item) &&
             item.type === "interactive" &&
             item.stringTitle.toLowerCase().startsWith(char),

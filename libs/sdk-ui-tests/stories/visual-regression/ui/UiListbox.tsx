@@ -17,7 +17,7 @@ const interactiveItems: IUiListboxItem<string>[] = [
     { type: "interactive", id: "item4", stringTitle: "Item 4", data: "data4" },
 ];
 
-const mixedItems: IUiListboxItem<string>[] = [
+const mixedItems: IUiListboxItem<string, React.ReactNode>[] = [
     { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
     { type: "static", data: "<<Static item>>" },
     { type: "interactive", id: "item2", stringTitle: "Item 2", data: "data2" },

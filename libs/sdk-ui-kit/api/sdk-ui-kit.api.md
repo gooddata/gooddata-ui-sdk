@@ -389,6 +389,12 @@ export function DefaultUiListboxInteractiveItemComponent<T>({ item, isFocused, i
 export function DefaultUiListboxStaticItemComponent<T>({ item, }: UiListboxStaticItemProps<T>): React_2.ReactNode;
 
 // @internal (undocumented)
+export function DefaultUiMenuInteractiveItemComponent<InteractiveItemData, StaticItemData>({ item, isFocused, onSelect, }: UiMenuInteractiveItemProps<InteractiveItemData, StaticItemData>): React_2.ReactNode;
+
+// @internal
+export function DefaultUiMenuStaticItemComponent<T>({ item }: UiMenuStaticItemProps<T>): React_2.ReactNode;
+
+// @internal (undocumented)
 export const DESCRIPTION_PANEL_ALIGN_POINTS: {
     align: string;
 }[];
@@ -2833,26 +2839,6 @@ export interface ILegacySingleSelectListProps<T> {
 }
 
 // @internal (undocumented)
-export interface IListboxContext<InteractiveItemData, StaticItemData = React_2.ReactNode> {
-    // (undocumented)
-    focusedIndex: number | undefined;
-    // (undocumented)
-    isItemFocusable: (item: IUiListboxItem<InteractiveItemData, StaticItemData>) => boolean;
-    // (undocumented)
-    itemRefs: React_2.MutableRefObject<(HTMLLIElement | null)[]>;
-    // (undocumented)
-    items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
-    // (undocumented)
-    onClose?: () => void;
-    // (undocumented)
-    onSelect: (item: IUiListboxInteractiveItem<InteractiveItemData>) => void;
-    // (undocumented)
-    selectedItemId: string | undefined;
-    // (undocumented)
-    setFocusedIndex: React_2.Dispatch<React_2.SetStateAction<number>>;
-}
-
-// @internal (undocumented)
 export interface IListProps<T> {
     // (undocumented)
     className?: string;
@@ -4445,6 +4431,26 @@ export interface IUiChipAccessibilityConfig extends IAccessibilityConfigBase, ID
 }
 
 // @internal (undocumented)
+export interface IUiListboxContext<InteractiveItemData, StaticItemData = React_2.ReactNode> {
+    // (undocumented)
+    focusedIndex: number | undefined;
+    // (undocumented)
+    isItemFocusable: (item: IUiListboxItem<InteractiveItemData, StaticItemData>) => boolean;
+    // (undocumented)
+    itemRefs: React_2.MutableRefObject<(HTMLLIElement | null)[]>;
+    // (undocumented)
+    items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    onSelect: (item: IUiListboxInteractiveItem<InteractiveItemData>) => void;
+    // (undocumented)
+    selectedItemId: string | undefined;
+    // (undocumented)
+    setFocusedIndex: React_2.Dispatch<React_2.SetStateAction<number | undefined>>;
+}
+
+// @internal (undocumented)
 export interface IUiListboxInteractiveItem<T> {
     // (undocumented)
     data: T;
@@ -4463,6 +4469,55 @@ export type IUiListboxItem<InteractiveItemData, StaticItemData = React_2.ReactNo
 
 // @internal (undocumented)
 export interface IUiListboxStaticItem<T> {
+    // (undocumented)
+    data: T;
+    // (undocumented)
+    id?: string;
+    // (undocumented)
+    type: "static";
+}
+
+// @internal (undocumented)
+export interface IUiMenuContext<InteractiveItemData, StaticItemData = React_2.ReactNode> {
+    // (undocumented)
+    focusedItem: IUiMenuInteractiveItem<InteractiveItemData, StaticItemData> | undefined;
+    // (undocumented)
+    isItemFocusable: (item: IUiMenuItem<InteractiveItemData, StaticItemData>) => boolean;
+    // (undocumented)
+    itemRefs: React_2.MutableRefObject<{
+        [id: string]: HTMLElement;
+    }>;
+    // (undocumented)
+    items: IUiMenuItem<InteractiveItemData, StaticItemData>[];
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    onSelect: (item: IUiMenuInteractiveItem<InteractiveItemData, StaticItemData> | undefined) => void;
+    // (undocumented)
+    setFocusedId: React_2.Dispatch<React_2.SetStateAction<string | undefined>>;
+}
+
+// @internal (undocumented)
+export interface IUiMenuInteractiveItem<InteractiveItemData, StaticItemData = React_2.ReactNode> {
+    // (undocumented)
+    data: InteractiveItemData;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    stringTitle: string;
+    // (undocumented)
+    subMenu?: IUiMenuItem<InteractiveItemData, StaticItemData>[];
+    // (undocumented)
+    type: "interactive";
+}
+
+// @internal (undocumented)
+export type IUiMenuItem<InteractiveItemData, StaticItemData = React_2.ReactNode> = IUiMenuStaticItem<StaticItemData> | IUiMenuInteractiveItem<InteractiveItemData, StaticItemData>;
+
+// @internal (undocumented)
+export interface IUiMenuStaticItem<T> {
     // (undocumented)
     data: T;
     // (undocumented)
@@ -4888,7 +4943,10 @@ export type Separators = {
 };
 
 // @internal (undocumented)
-export const separatorStaticItem: IUiListboxStaticItem<React_2.ReactNode>;
+export const separatorStaticItem: {
+    data: React_2.JSX.Element;
+    type: "static";
+};
 
 // @internal (undocumented)
 export const SettingItem: React_2.FC<ISettingItem>;
@@ -5305,7 +5363,7 @@ export interface UiListboxInteractiveItemProps<T> {
 // @internal (undocumented)
 export interface UiListboxProps<InteractiveItemData, StaticItemData = React_2.ReactNode> {
     // (undocumented)
-    ariaAttributes: IDropdownBodyRenderProps["ariaAttributes"];
+    ariaAttributes: Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
     // (undocumented)
     className?: string;
     // (undocumented)
@@ -5323,7 +5381,7 @@ export interface UiListboxProps<InteractiveItemData, StaticItemData = React_2.Re
     // (undocumented)
     onSelect?: (item: IUiListboxInteractiveItem<InteractiveItemData>) => void;
     // (undocumented)
-    onUnhandledKeyDown?: (event: React_2.KeyboardEvent, context: IListboxContext<InteractiveItemData, StaticItemData>) => void;
+    onUnhandledKeyDown?: (event: React_2.KeyboardEvent, context: IUiListboxContext<InteractiveItemData, StaticItemData>) => void;
     // (undocumented)
     selectedItemId?: string;
     // (undocumented)
@@ -5340,6 +5398,69 @@ export interface UiListboxProps<InteractiveItemData, StaticItemData = React_2.Re
 export interface UiListboxStaticItemProps<T> {
     // (undocumented)
     item: IUiListboxStaticItem<T>;
+}
+
+// @internal
+export function UiMenu<InteractiveItemData, StaticItemData>({ items, className, itemClassName, maxWidth, onSelect, onClose, onUnhandledKeyDown, InteractiveItemComponent, StaticItemComponent, MenuHeaderComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, ariaAttributes, }: UiMenuProps<InteractiveItemData, StaticItemData>): React_2.ReactNode;
+
+// @internal (undocumented)
+export interface UiMenuHeaderProps<InteractiveItemData, StaticItemData = React_2.ReactNode> {
+    // (undocumented)
+    onBack?: () => void;
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    parentItem?: IUiMenuInteractiveItem<InteractiveItemData, StaticItemData>;
+}
+
+// @internal (undocumented)
+export interface UiMenuInteractiveItemProps<InteractiveItemData, StaticItemData = React_2.ReactNode> {
+    // (undocumented)
+    isFocused: boolean;
+    // (undocumented)
+    item: IUiMenuInteractiveItem<InteractiveItemData, StaticItemData>;
+    // (undocumented)
+    onSelect: () => void;
+}
+
+// @internal (undocumented)
+export interface UiMenuProps<InteractiveItemData, StaticItemData = React_2.ReactNode> {
+    // (undocumented)
+    ariaAttributes: Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    InteractiveItemComponent?: React_2.ComponentType<UiMenuInteractiveItemProps<InteractiveItemData, StaticItemData>>;
+    // (undocumented)
+    isDisabledFocusable?: boolean;
+    // (undocumented)
+    itemClassName?: ((item: IUiMenuItem<InteractiveItemData, StaticItemData>) => string | undefined) | string;
+    // (undocumented)
+    items: IUiMenuItem<InteractiveItemData, StaticItemData>[];
+    // (undocumented)
+    maxWidth?: number;
+    // (undocumented)
+    MenuHeaderComponent?: React_2.ComponentType<UiMenuHeaderProps<InteractiveItemData, StaticItemData>>;
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    onSelect?: (item: IUiMenuInteractiveItem<InteractiveItemData, StaticItemData>) => void;
+    // (undocumented)
+    onUnhandledKeyDown?: (event: React_2.KeyboardEvent, context: IUiMenuContext<InteractiveItemData, StaticItemData>) => void;
+    // (undocumented)
+    shouldCloseOnSelect?: boolean;
+    // (undocumented)
+    shouldKeyboardActionPreventDefault?: boolean;
+    // (undocumented)
+    shouldKeyboardActionStopPropagation?: boolean;
+    // (undocumented)
+    StaticItemComponent?: React_2.ComponentType<UiMenuStaticItemProps<StaticItemData>>;
+}
+
+// @internal (undocumented)
+export interface UiMenuStaticItemProps<T> {
+    // (undocumented)
+    item: IUiMenuStaticItem<T>;
 }
 
 // @internal (undocumented)

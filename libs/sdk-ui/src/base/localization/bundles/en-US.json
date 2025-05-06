@@ -3628,5 +3628,15 @@
         "value": "Select starting time",
         "comment": "",
         "limit": 0
+    },
+    "menu.close": {
+        "value": "Close menu",
+        "comment": "",
+        "limit": 0
+    },
+    "menu.back": {
+        "value": "Back to the parent menu",
+        "comment": "",
+        "limit": 0
     }
 }
