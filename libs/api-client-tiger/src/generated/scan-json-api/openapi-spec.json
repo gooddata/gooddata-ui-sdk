@@ -965,10 +965,11 @@
                             "MYSQL",
                             "MARIADB",
                             "ORACLE",
-                            "PINOT",
                             "SINGLESTORE",
                             "MOTHERDUCK",
-                            "FLEXCONNECT"
+                            "FLEXCONNECT",
+                            "STARROCKS",
+                            "ATHENA"
                         ]
                     },
                     "url": {

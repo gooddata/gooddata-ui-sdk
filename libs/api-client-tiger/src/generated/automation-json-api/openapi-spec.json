@@ -396,7 +396,7 @@
                 }
             },
             "AutomationMetadata": {
-                "maxLength": 15000,
+                "maxLength": 250000,
                 "type": "object",
                 "properties": {
                     "widget": {

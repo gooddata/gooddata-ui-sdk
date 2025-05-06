@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { defineMessages } from "react-intl";
 import { WorkspacePermission, WorkspacePermissions } from "../../types.js";
@@ -49,6 +49,7 @@ export const workspaceGranularPermissionMessages = defineMessages({
     EXPORT_PDF: { id: "userManagement.workspace.permission.exportPdf" },
     CREATE_FILTER_VIEW: { id: "userManagement.workspace.permission.createFilterView" },
     CREATE_AUTOMATION: { id: "userManagement.workspace.permission.createAutomation" },
+    USE_AI_ASSISTANT: { id: "userManagement.workspace.permission.useAiAssistant" },
     viewDescription: { id: "userManagement.workspace.granularPermission.view.description" },
     analyzeDescription: { id: "userManagement.workspace.granularPermission.analyze.description" },
     manageDescription: { id: "userManagement.workspace.granularPermission.manage.description" },
@@ -63,6 +64,7 @@ export const granularTooltipMessages = defineMessages({
     EXPORT_PDF: { id: "userManagement.workspace.permission.exportPdf.tooltip" },
     CREATE_FILTER_VIEW: { id: "userManagement.workspace.permission.createFilterView.tooltip" },
     CREATE_AUTOMATION: { id: "userManagement.workspace.permission.createAutomation.tooltip" },
+    USE_AI_ASSISTANT: { id: "userManagement.workspace.permission.useAiAssistant.tooltip" },
 });
 
 export const getGranularPermissionTitle = (permission: WorkspacePermission) => {
@@ -83,6 +85,8 @@ export const getGranularPermissionTitle = (permission: WorkspacePermission) => {
             return workspaceGranularPermissionMessages.VIEW;
         case "CREATE_AUTOMATION":
             return workspaceGranularPermissionMessages.CREATE_AUTOMATION;
+        case "USE_AI_ASSISTANT":
+            return workspaceGranularPermissionMessages.USE_AI_ASSISTANT;
         default:
             throw new Error("There's no localization key for the unsupported permission.");
     }

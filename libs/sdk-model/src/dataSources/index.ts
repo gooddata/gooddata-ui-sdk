@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 /**
  * @alpha
@@ -24,6 +24,8 @@ export type DataSourceType =
     | "MARIADB"
     | "ORACLE"
     | "PINOT"
+    | "STARROCKS"
+    | "ATHENA"
     | "SINGLESTORE"
     | "MOTHERDUCK"
     | "FLEXCONNECT";

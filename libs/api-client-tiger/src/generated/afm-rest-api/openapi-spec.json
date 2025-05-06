@@ -582,7 +582,7 @@
             "post": {
                 "tags": ["actions"],
                 "summary": "Applies all the given cancel tokens.",
-                "description": "Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is canceled.",
+                "description": "Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is cancelled.",
                 "operationId": "cancelExecutions",
                 "parameters": [
                     {
@@ -608,7 +608,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Status of the cancelling operation.",
+                        "description": "Status of the cancellation operation.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -2937,15 +2937,16 @@
                 "description": "Entity describing the valid descendants response."
             },
             "AfmCancelTokens": {
-                "required": ["tokenIds"],
+                "required": ["resultIdToCancelTokenPairs"],
                 "type": "object",
                 "properties": {
-                    "tokenIds": {
-                        "type": "array",
-                        "description": "Token ids to be used in the cancellation.",
-                        "items": {
-                            "type": "string"
-                        }
+                    "resultIdToCancelTokenPairs": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "description": "resultId to cancel token pairs"
+                        },
+                        "description": "resultId to cancel token pairs"
                     }
                 },
                 "description": "Any information related to cancellation."

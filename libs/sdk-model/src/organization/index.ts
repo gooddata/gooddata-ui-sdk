@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { ObjRef } from "../objRef/index.js";
 
@@ -59,6 +59,7 @@ export const AssignedWorkspacePermissionValue = {
     CREATE_FILTER_VIEW: "CREATE_FILTER_VIEW",
     VIEW: "VIEW",
     CREATE_AUTOMATION: "CREATE_AUTOMATION",
+    USE_AI_ASSISTANT: "USE_AI_ASSISTANT",
 } as const;
 
 /**

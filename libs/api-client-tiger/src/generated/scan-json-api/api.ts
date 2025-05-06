@@ -708,10 +708,11 @@ export const TestDefinitionRequestTypeEnum = {
     MYSQL: "MYSQL",
     MARIADB: "MARIADB",
     ORACLE: "ORACLE",
-    PINOT: "PINOT",
     SINGLESTORE: "SINGLESTORE",
     MOTHERDUCK: "MOTHERDUCK",
     FLEXCONNECT: "FLEXCONNECT",
+    STARROCKS: "STARROCKS",
+    ATHENA: "ATHENA",
 } as const;
 
 export type TestDefinitionRequestTypeEnum =

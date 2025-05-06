@@ -146,11 +146,11 @@ export interface ActiveObjectIdentification {
  */
 export interface AfmCancelTokens {
     /**
-     * Token ids to be used in the cancellation.
-     * @type {Array<string>}
+     * resultId to cancel token pairs
+     * @type {{ [key: string]: string; }}
      * @memberof AfmCancelTokens
      */
-    tokenIds: Array<string>;
+    resultIdToCancelTokenPairs: { [key: string]: string };
 }
 /**
  *
@@ -3959,7 +3959,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is canceled.
+         * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is cancelled.
          * @summary Applies all the given cancel tokens.
          * @param {string} workspaceId Workspace identifier
          * @param {AfmCancelTokens} afmCancelTokens
@@ -4931,7 +4931,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is canceled.
+         * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is cancelled.
          * @summary Applies all the given cancel tokens.
          * @param {string} workspaceId Workspace identifier
          * @param {AfmCancelTokens} afmCancelTokens
@@ -5400,7 +5400,7 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
-         * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is canceled.
+         * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is cancelled.
          * @summary Applies all the given cancel tokens.
          * @param {ActionsApiCancelExecutionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -5766,7 +5766,7 @@ export interface ActionsApiInterface {
     ): AxiosPromise<AnomalyDetectionResult>;
 
     /**
-     * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is canceled.
+     * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is cancelled.
      * @summary Applies all the given cancel tokens.
      * @param {ActionsApiCancelExecutionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6663,7 +6663,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is canceled.
+     * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is cancelled.
      * @summary Applies all the given cancel tokens.
      * @param {ActionsApiCancelExecutionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
