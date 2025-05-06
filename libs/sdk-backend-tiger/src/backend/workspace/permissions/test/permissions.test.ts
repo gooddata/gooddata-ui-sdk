@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { TigerWorkspacePermissionsFactory } from "../index.js";
 import { describe, expect, it, vi } from "vitest";
@@ -56,6 +56,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canRefreshData: false,
             canUploadNonProductionCSV: false,
             canCreateFilterView: false,
+            canUseAiAssistant: false,
         });
     });
 
@@ -92,6 +93,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canRefreshData: true,
             canUploadNonProductionCSV: false,
             canCreateFilterView: false,
+            canUseAiAssistant: false,
         });
     });
 
@@ -128,6 +130,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canRefreshData: true,
             canUploadNonProductionCSV: false,
             canCreateFilterView: false,
+            canUseAiAssistant: false,
         });
     });
 });

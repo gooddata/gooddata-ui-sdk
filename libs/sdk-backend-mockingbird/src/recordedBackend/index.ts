@@ -644,6 +644,7 @@ function recordedPermissionsFactory(): IWorkspacePermissionsService {
             canManageScheduledMail: true,
             canCreateFilterView: true,
             canCreateAutomation: true,
+            canUseAiAssistant: true,
         }),
     };
 }

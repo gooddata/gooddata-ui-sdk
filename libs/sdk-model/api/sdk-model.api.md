@@ -5013,6 +5013,10 @@ export type WorkspacePermission =
 /**
 * Whether the current user has permissions to create an automation.
 */
-| "canCreateAutomation";
+| "canCreateAutomation"
+/**
+* Whether the current user has permissions to use AI Assistant.
+*/
+| "canUseAiAssistant";
 
 ```

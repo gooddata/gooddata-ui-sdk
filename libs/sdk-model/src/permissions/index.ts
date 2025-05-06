@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 /**
  * Workspace permission types
@@ -97,7 +97,11 @@ export type WorkspacePermission =
     /**
      * Whether the current user has permissions to create an automation.
      */
-    | "canCreateAutomation";
+    | "canCreateAutomation"
+    /**
+     * Whether the current user has permissions to use AI Assistant.
+     */
+    | "canUseAiAssistant";
 
 /**
  * Dictionary of workspace permissions

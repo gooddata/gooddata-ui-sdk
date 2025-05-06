@@ -229,6 +229,7 @@ exports[`initialize dashboard handler > for any dashboard > should resolve permi
   "canManageScheduledMail": true,
   "canRefreshData": true,
   "canUploadNonProductionCSV": true,
+  "canUseAiAssistant": true,
 }
 `;
 
