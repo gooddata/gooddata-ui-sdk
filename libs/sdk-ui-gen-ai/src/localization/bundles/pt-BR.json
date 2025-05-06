@@ -28,5 +28,6 @@
     "gd.gen-ai.button.edit": "Editar",
     "gd.gen-ai.save-dialog.label": "Nome",
     "gd.gen-ai.save-dialog.title": "Nomeie sua visualização",
-    "gd.gen-ai.save-dialog.description": "Dê à sua nova visualização um novo nome descritivo, para que seja mais fácil encontrá-la mais tarde."
+    "gd.gen-ai.save-dialog.description": "Dê à sua nova visualização um novo nome descritivo, para que seja mais fácil encontrá-la mais tarde.",
+    "gd.gen-ai.state.generating": "A gerar a sua resposta…"
 }

@@ -609,7 +609,7 @@
     "userManagement.createUserGroup.inputPlaceholder": "Nom",
     "gs.header.account.title": "Compte",
     "visualization.cluster": "Cluster",
-    "richText.placeholder": "Ajoutez le texte en forme Markdown ici...",
+    "richText.placeholder": "Utiliser Markdown pour styliser le texte et les données de référence :",
     "richText.tooltip": "Vous pouvez utiliser la syntaxe Markdown pour styliser la description :",
     "recurrence.starts": "Commence la",
     "recurrence.repeats": "Répétitions",
@@ -693,5 +693,15 @@
     "recurrence.error.wrongFormat": "Erreur : Format non valide - utilisez le format Spring cron avec six champs : secondes, minutes, heures, jour du mois, mois et jour de la semaine. <a>En savoir plus</a>",
     "recurrence.datetime.format.help": "Format : {dateFormat}",
     "recurrence.datetime.empty.error": "Erreur : Champ obligatoire - entrez une date valide pour continuer.",
-    "recurrence.datetime.wrong.format.error": "Erreur : Date non valide - le format doit être {dateFormat}"
+    "recurrence.datetime.wrong.format.error": "Erreur : Date non valide - le format doit être {dateFormat}",
+    "gs.time": "temps",
+    "gs.header.ai": "Assistant IA ouvert",
+    "visualizations.headline.pagination.next.metricLabel": "Afficher la mesure comparative suivante",
+    "visualizations.headline.pagination.previous.metricLabel": "Afficher la métrique comparative précédente",
+    "shareDialog.share.grantee.addLabel": "Ajouter des utilisateurs ou des groupes",
+    "shareDialog.share.granular.grantee.permission.label": "Autorisation",
+    "dialogs.closeLabel": "Fermer le dialogue",
+    "dialogs.backButtonLabel": "Retour à l'étape précédente",
+    "userManagement.workspace.permission.useAiAssistant": "Assistant IA",
+    "userManagement.workspace.permission.useAiAssistant.tooltip": "Ajoute l'autorisation USE_AI_ASSISTANT pour accéder et interagir avec le chatbot d'IA pour les questions d'analyse."
 }

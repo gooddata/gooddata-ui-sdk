@@ -609,7 +609,7 @@
     "userManagement.createUserGroup.inputPlaceholder": "Nimi",
     "gs.header.account.title": "Tili",
     "visualization.cluster": "Klusteri",
-    "richText.placeholder": "Lisää merkintäteksti tähän...",
+    "richText.placeholder": "Käytä Markdownia tekstin ja viitetietojen muotoiluun:",
     "richText.tooltip": "Voit käyttää Markdown-syntaksia kuvauksen muotoiluun:",
     "recurrence.starts": "Alkaa",
     "recurrence.repeats": "Toistuu",
@@ -693,5 +693,15 @@
     "recurrence.error.wrongFormat": "Virhe: Virheellinen muoto — käytä Spring cron -muotoa, jossa on kuusi kenttää: sekuntia, minuuttia, tuntia, kuukauden päivä, kuukausi ja viikonpäivä. <a>Lisätietoja</a>",
     "recurrence.datetime.format.help": "Muoto: {dateFormat}",
     "recurrence.datetime.empty.error": "Virhe: Pakollinen kenttä — syötä kelvollinen päivämäärä jatkaaksesi.",
-    "recurrence.datetime.wrong.format.error": "Virhe: Virheellinen päivämäärä — muodon on oltava {dateFormat}"
+    "recurrence.datetime.wrong.format.error": "Virhe: Virheellinen päivämäärä — muodon on oltava {dateFormat}",
+    "gs.time": "aika",
+    "gs.header.ai": "Avaa tekoälyavustaja",
+    "visualizations.headline.pagination.next.metricLabel": "Näytä seuraava vertailuluku",
+    "visualizations.headline.pagination.previous.metricLabel": "Näytä edellinen vertailuluku",
+    "shareDialog.share.grantee.addLabel": "Lisää käyttäjiä tai ryhmiä",
+    "shareDialog.share.granular.grantee.permission.label": "Käyttöoikeus",
+    "dialogs.closeLabel": "Sulje valintaikkuna",
+    "dialogs.backButtonLabel": "Takaisin edelliseen vaiheeseen",
+    "userManagement.workspace.permission.useAiAssistant": "Tekoälyavustaja",
+    "userManagement.workspace.permission.useAiAssistant.tooltip": "Lisää USE_AI_ASSISTANT oikeuden käyttää tekoälyä käyttävää chatbottia ja olla vuorovaikutuksessa sen kanssa analytiikkakysymyksissä."
 }
