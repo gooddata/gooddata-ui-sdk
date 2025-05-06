@@ -47,7 +47,7 @@ jobs:
         needs: [publish-documentation, get-version-from-release-branch]
         steps:
             - name: Notify to slack
-              uses: slackapi/slack-github-action@v1.25.0
+              uses: slackapi/slack-github-action@v2.1.0
               with:
                   channel-id: ${{ matrix.channels }}
                   slack-message: "The release of *gooddata-ui-sdk@${{ needs.get-version-from-release-branch.outputs.version }}*, has been successful. :tada:"
