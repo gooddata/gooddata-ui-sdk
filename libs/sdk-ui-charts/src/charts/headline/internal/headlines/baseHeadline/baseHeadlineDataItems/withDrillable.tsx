@@ -5,6 +5,7 @@ import { wrapDisplayName } from "@gooddata/sdk-ui";
 import { IWithDrillableItemProps } from "../../../interfaces/BaseHeadlines.js";
 import { useBaseHeadline } from "../BaseHeadlineContext.js";
 import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
+import { isActionKey } from "@gooddata/sdk-ui-kit";
 
 export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataItem>>(
     BaseHeadlineValueItem: React.ComponentType<T>,
@@ -14,7 +15,7 @@ export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataIte
         const { fireDrillEvent } = useBaseHeadline();
 
         const handleDrillable = useCallback(
-            (event: React.MouseEvent<EventTarget> | React.KeyboardEvent<EventTarget>) => {
+            (event: React.MouseEvent<EventTarget>) => {
                 if (dataItem?.isDrillable) {
                     fireDrillEvent(dataItem, elementType, event.target);
                 }
@@ -22,13 +23,24 @@ export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataIte
             [dataItem, elementType, fireDrillEvent],
         );
 
+        const handleKeyDown = useCallback(
+            (event: React.KeyboardEvent<HTMLDivElement>) => {
+                if (dataItem?.isDrillable && isActionKey(event)) {
+                    fireDrillEvent(dataItem, elementType, event.target);
+                }
+            },
+            [dataItem, elementType, fireDrillEvent],
+        );
+
         return dataItem?.isDrillable ? (
-            <button
-                className="gd-headline-drillable-button is-drillable s-is-drillable headline-item-link s-headline-item-link"
+            <div
+                className="is-drillable s-is-drillable headline-item-link s-headline-item-link"
                 onClick={handleDrillable}
+                onKeyDown={handleKeyDown}
+                tabIndex={0}
             >
                 <BaseHeadlineValueItem {...props} />
-            </button>
+            </div>
         ) : (
             <BaseHeadlineValueItem {...props} />
         );

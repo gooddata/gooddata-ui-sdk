@@ -39,21 +39,6 @@
             -webkit-backface-visibility: hidden;
         }
 
-        .gd-headline-drillable-button {
-            background: none;
-            border: none;
-            height: inherit;
-            font-size: 50px;
-            line-height: 60px;
-            overflow: hidden;
-            color: var(--gd-kpi-primaryMeasureColor, kit-variables.$gd-color-dark);
-            display: inline-block;
-            font-family: inherit;
-            font-weight: inherit;
-            width: 100%;
-            padding: 0;
-        }
-
         &.is-drillable,
         .is-drillable {
             .headline-value-wrapper {
@@ -87,16 +72,6 @@
     .headline-compare-item {
         flex-shrink: 1;
         padding-right: 0;
-
-        .gd-headline-drillable-button {
-            background: none;
-            border: none;
-            display: inline-block;
-            font-family: inherit;
-            color: inherit;
-            width: 100%;
-            padding: 0;
-        }
 
         &.is-drillable,
         .is-drillable {
