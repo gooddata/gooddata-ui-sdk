@@ -200,6 +200,9 @@ export function convertError(error: unknown): GoodDataSdkError;
 export const CorrelationProvider: React_2.FC<ICorrelationProviderProps>;
 
 // @internal
+export const createContextStore: <T>(name: string) => IContextStore<T>;
+
+// @internal
 export function createExportErrorFunction(error: GoodDataSdkError): IExportFunction;
 
 // @internal
@@ -643,6 +646,21 @@ export interface IComposedPlaceholder<TReturn, TValue extends any[], TContext> {
     // (undocumented)
     use: IUseComposedPlaceholderHook<IComposedPlaceholder<TReturn, TValue, TContext>>;
 }
+
+// @internal (undocumented)
+export type IContextStore<T> = IContextStoreProvider<T> & {
+    useContextStore: IUseContextStore<T>;
+    createSelector: <SelectorResult>(selector: IContextStoreSelector<T, SelectorResult>) => IContextStoreSelector<T, SelectorResult>;
+};
+
+// @internal (undocumented)
+export type IContextStoreProvider<T> = React_2.FC<{
+    value: T;
+    children: React_2.ReactNode;
+}>;
+
+// @internal (undocumented)
+export type IContextStoreSelector<T, SelectorResult> = (state: T) => SelectorResult;
 
 // @public
 export interface ICorrelationProviderProps {
@@ -1346,6 +1364,9 @@ export type ITranslationsProviderProps = ITranslationsProviderOwnProps & Wrapped
 
 // @public
 export type IUseComposedPlaceholderHook<T extends IComposedPlaceholder<any, any, any>> = (resolutionContext: ComposedPlaceholderResolutionContext<T>) => PlaceholderResolvedValue<T>;
+
+// @internal (undocumented)
+export type IUseContextStore<T> = <SelectorResult>(selector?: IContextStoreSelector<T, SelectorResult>, equalityFn?: (a: SelectorResult, b: SelectorResult) => boolean) => SelectorResult;
 
 // @public
 export interface IUseExecutionDataViewConfig {

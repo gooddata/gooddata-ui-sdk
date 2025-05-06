@@ -11,19 +11,19 @@ import noop from "lodash/noop.js";
 import { IntlProvider } from "react-intl";
 
 // Mock items for the menu
-const interactiveItems: IUiMenuItem<string>[] = [
+const interactiveItems: IUiMenuItem[] = [
     { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
     { type: "interactive", id: "item2", stringTitle: "Item 2", data: "data2" },
     { type: "interactive", id: "item3", stringTitle: "Item 3", isDisabled: true, data: "data3" },
     { type: "interactive", id: "item4", stringTitle: "Item 4", data: "data4" },
 ];
 
-const staticItem: IUiMenuItem<string, React.ReactNode> = {
+const staticItem: IUiMenuItem = {
     type: "static",
     data: "<<Static item>>",
 };
 
-const mixedItems: IUiMenuItem<string, React.ReactNode>[] = [
+const mixedItems: IUiMenuItem[] = [
     { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
     staticItem,
     { type: "interactive", id: "item2", stringTitle: "Item 2", data: "data2" },
@@ -31,16 +31,31 @@ const mixedItems: IUiMenuItem<string, React.ReactNode>[] = [
     { type: "interactive", id: "item3", stringTitle: "Item 3", data: "data3" },
 ];
 
-const itemsWithSubMenu: IUiMenuItem<string, React.ReactNode>[] = [
+const itemsWithSubMenu: IUiMenuItem[] = [
     { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
     {
         type: "interactive",
         id: "item2",
         stringTitle: "Item with submenu",
         data: "data2",
-        subMenu: [
+        subItems: [
             { type: "interactive", id: "subitem1", stringTitle: "Submenu Item 1", data: "subdata1" },
             { type: "interactive", id: "subitem2", stringTitle: "Submenu Item 2", data: "subdata2" },
+        ],
+    },
+    { type: "interactive", id: "item3", stringTitle: "Item 3", data: "data3" },
+];
+
+const itemsWithGroup: IUiMenuItem[] = [
+    { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
+    {
+        type: "group",
+        id: "group1",
+        stringTitle: "Group 1",
+        data: "Group title",
+        subItems: [
+            { type: "interactive", id: "groupitem1", stringTitle: "Group Item 1", data: "groupdata1" },
+            { type: "interactive", id: "groupitem2", stringTitle: "Group Item 2", data: "groupdata2" },
         ],
     },
     { type: "interactive", id: "item3", stringTitle: "Item 3", data: "data3" },
@@ -97,6 +112,10 @@ const UiMenuExamples = () => (
                     onSelect={noop}
                     ariaAttributes={defaultAriaAttributes}
                 />
+            </Example>
+
+            <Example title="Menu with Group Items">
+                <UiMenu items={itemsWithGroup} onSelect={noop} ariaAttributes={defaultAriaAttributes} />
             </Example>
         </div>
     </IntlProvider>

@@ -8,10 +8,16 @@ import { pickCorrectWording, messagesMap } from "@gooddata/sdk-ui";
 import { UiMenu } from "../UiMenu.js";
 import { describe, it, expect, vi } from "vitest";
 import { e, b } from "../menuBem.js";
-import { IUiMenuItem, UiMenuInteractiveItemProps, UiMenuStaticItemProps } from "../types.js";
+import {
+    IUiMenuItem,
+    UiMenuInteractiveItemProps,
+    UiMenuStaticItemProps,
+    UiMenuGroupItemProps,
+} from "../types.js";
+import { typedUiMenuContextStore } from "../context.js";
 
 describe("UiMenu", () => {
-    const mockItems: IUiMenuItem<string>[] = [
+    const mockItems: IUiMenuItem[] = [
         { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
         { type: "interactive", id: "item2", stringTitle: "Item 2", data: "data2" },
         { type: "interactive", id: "item3", stringTitle: "Item 3", isDisabled: true, data: "data3" },
@@ -21,10 +27,20 @@ describe("UiMenu", () => {
             id: "item4",
             stringTitle: "Item 4",
             data: "data4",
-            subMenu: [
+            subItems: [
                 { type: "interactive", id: "subitem1", stringTitle: "SubItem 1", data: "subdata1" },
                 { type: "static", id: "substatic1", data: "SubStatic Item 1" },
                 { type: "interactive", id: "subitem2", stringTitle: "SubItem 2", data: "subdata2" },
+            ],
+        },
+        {
+            type: "group",
+            id: "group1",
+            stringTitle: "Group 1",
+            data: "Group title",
+            subItems: [
+                { type: "interactive", id: "groupitem1", stringTitle: "Group Item 1", data: "groupdata1" },
+                { type: "interactive", id: "groupitem2", stringTitle: "Group Item 2", data: "groupdata2" },
             ],
         },
     ];
@@ -45,7 +61,7 @@ describe("UiMenu", () => {
 
         return render(
             <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>
-                <UiMenu<string, React.ReactNode>
+                <UiMenu
                     items={mockItems}
                     onSelect={vi.fn()}
                     onClose={vi.fn()}
@@ -110,7 +126,10 @@ describe("UiMenu", () => {
 
         // Navigate to end
         fireEvent.keyDown(menu, { code: "End" });
-        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item4"));
+        expect(menu).toHaveAttribute(
+            "aria-activedescendant",
+            expect.stringContaining("item-test-dropdown-menu-groupitem2"),
+        );
 
         // Navigate to home
         fireEvent.keyDown(menu, { code: "Home" });
@@ -186,13 +205,10 @@ describe("UiMenu", () => {
     it("should open submenu when item with submenu is selected", () => {
         renderMenu();
 
+        // Click directly on the item with submenu
+        fireEvent.click(screen.getByText("Item 4"));
+
         const menu = screen.getByRole("menu");
-
-        // Navigate to item with submenu
-        fireEvent.keyDown(menu, { code: "End" });
-
-        // Select to open submenu
-        fireEvent.keyDown(menu, { code: "Enter" });
 
         // Should focus first item in submenu
         expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("subitem1"));
@@ -201,13 +217,10 @@ describe("UiMenu", () => {
     it("should navigate back to parent menu with left arrow key", () => {
         renderMenu();
 
+        // Click directly on the item with submenu
+        fireEvent.click(screen.getByText("Item 4"));
+
         const menu = screen.getByRole("menu");
-
-        // Navigate to item with submenu
-        fireEvent.keyDown(menu, { code: "End" });
-
-        // Select to open submenu
-        fireEvent.keyDown(menu, { code: "Enter" });
 
         // Should be in submenu
         expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("subitem1"));
@@ -224,7 +237,7 @@ describe("UiMenu", () => {
             item,
             isFocused,
             onSelect,
-        }: UiMenuInteractiveItemProps<string>) => (
+        }: UiMenuInteractiveItemProps<{ interactive: string }>) => (
             <div
                 className={cx("custom-item", {
                     "custom-focused": isFocused,
@@ -243,14 +256,14 @@ describe("UiMenu", () => {
 
         // Check that custom component is rendered
         const customItems = screen.getAllByTestId("custom-item");
-        expect(customItems.length).toBe(4); // 4 interactive items in mockItems
+        expect(customItems.length).toBe(6); // 6 interactive items in mockItems (including group items)
 
         // Check content of custom component
         expect(screen.getByText("Item 1 - data1")).toBeInTheDocument();
     });
 
     it("should render with custom StaticItemComponent", () => {
-        const CustomStaticItemComponent = ({ item }: UiMenuStaticItemProps<string>) => (
+        const CustomStaticItemComponent = ({ item }: UiMenuStaticItemProps<{ static: string }>) => (
             <div className="custom-static-item" data-testid="custom-static-item">
                 Static: {item.data}
             </div>
@@ -356,7 +369,7 @@ describe("UiMenu", () => {
         });
 
         const items = screen.getByRole("menu").querySelectorAll(".test-item-class");
-        expect(items).toHaveLength(5); // All items should have the class
+        expect(items).toHaveLength(7); // All items should have the class (including group and its items)
     });
 
     it("should handle mouse interaction to focus items", () => {
@@ -372,5 +385,50 @@ describe("UiMenu", () => {
         // Check that item is focused
         const menu = screen.getByRole("menu");
         expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item2"));
+    });
+
+    it("should render group items with their title", () => {
+        renderMenu();
+
+        // Check that group title is rendered
+        expect(screen.getByText("Group 1")).toBeInTheDocument();
+
+        // Check that group items are rendered
+        expect(screen.getByText("Group Item 1")).toBeInTheDocument();
+        expect(screen.getByText("Group Item 2")).toBeInTheDocument();
+    });
+
+    it("should render with custom GroupItemComponent", () => {
+        const CustomGroupItemComponent = ({ item }: UiMenuGroupItemProps<{ group: string }>) => {
+            const { ItemComponent } = typedUiMenuContextStore<{ group: string }>().useContextStore((ctx) => ({
+                ItemComponent: ctx.ItemComponent,
+            }));
+
+            return (
+                <div className="custom-group" data-testid="custom-group">
+                    <div className="custom-group-title">{item.data}</div>
+                    <div className="custom-group-items">
+                        {item.subItems.map((groupItem, index) => (
+                            <ItemComponent key={"id" in groupItem ? groupItem.id : index} item={groupItem} />
+                        ))}
+                    </div>
+                </div>
+            );
+        };
+
+        renderMenu({
+            GroupItemComponent: CustomGroupItemComponent,
+        });
+
+        // Check that custom component is rendered
+        const customGroups = screen.getAllByTestId("custom-group");
+        expect(customGroups.length).toBe(1);
+
+        // Check that group title is rendered
+        expect(screen.getByText("Group title")).toBeInTheDocument();
+
+        // Check that group items are still rendered
+        expect(screen.getByText("Group Item 1")).toBeInTheDocument();
+        expect(screen.getByText("Group Item 2")).toBeInTheDocument();
     });
 });
