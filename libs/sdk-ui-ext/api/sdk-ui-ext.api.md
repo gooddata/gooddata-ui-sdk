@@ -561,6 +561,7 @@ export interface INotificationsPanelProps extends INotificationsPanelCustomCompo
     onNotificationClick?: (notification: INotification) => void;
     refreshInterval?: number;
     renderInline?: boolean;
+    showSchedulingNotifications?: boolean;
     skeletonItemsCount?: number;
     workspace?: string;
 }
