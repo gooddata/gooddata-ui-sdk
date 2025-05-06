@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import debounce from "lodash/debounce.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import { invariant } from "ts-invariant";
@@ -166,9 +166,19 @@ const chartClickDebounced = debounce(
         if (isGroupHighchartsDrillEvent(event)) {
             const points = event.points as IHighchartsPointObject[];
             drillContext = composeDrillContextGroup(points, type);
+            // Reset points state to remove focus border
+            points.forEach((point) => {
+                if (point && typeof point.setState === "function") {
+                    point.setState("");
+                }
+            });
         } else {
             const point: IHighchartsPointObject = event.point as IHighchartsPointObject;
             drillContext = composeDrillContextPoint(point, type);
+            // Reset point state to remove focus border
+            if (point && typeof point.setState === "function") {
+                point.setState("");
+            }
         }
 
         const data: IDrillEvent = {

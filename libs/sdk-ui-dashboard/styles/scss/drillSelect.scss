@@ -49,6 +49,9 @@
         padding: 0 10px;
         cursor: pointer;
         text-decoration: none;
+        background: none;
+        border: none;
+        width: 100%;
 
         .gd-drill-modal-picker-selector-list & {
             padding: 4px 10px;
@@ -79,7 +82,8 @@
         }
 
         &:hover {
-            background: var(--gd-palette-complementary-2, #ebeff4);
+            // stylelint-disable-next-line declaration-no-important
+            background: var(--gd-palette-complementary-2, #ebeff4) !important;
             span {
                 color: var(--gd-palette-complementary-9-from-theme);
             }

@@ -468,6 +468,11 @@
         "comment": "",
         "limit": 0
     },
+    "drill_modal_picker.label": {
+        "value": "Choose drill action",
+        "comment": "",
+        "limit": 0
+    },
     "drillModal.backToTop": {
         "value": "Back to top",
         "comment": "",
