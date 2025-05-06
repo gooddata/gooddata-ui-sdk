@@ -343,7 +343,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDrilledTooltip: true,
     enableDashboardDescriptionDynamicHeight: false,
     enableAmplitudeTracker: false,
-    enableSlideshowExports: false,
+    enableSlideshowExports: true,
     enableRawExports: false,
     enableDashboardFiltersApplyModes: false,
     enableExecutionCancelling: false,
