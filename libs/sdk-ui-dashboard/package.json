@@ -75,7 +75,7 @@
         "@reduxjs/toolkit": "^1.9.3",
         "classnames": "^2.3.1",
         "date-fns": "^2.22.1",
-        "default-import": "1.1.5",
+        "default-import": "1.1.7",
         "immer": "^9.0.3",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.21",
