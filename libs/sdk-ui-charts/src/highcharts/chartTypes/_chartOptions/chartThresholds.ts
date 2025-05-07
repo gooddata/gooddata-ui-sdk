@@ -143,8 +143,9 @@ function computeZonesForNonStackedChart(
     }
 
     return {
-        series: renderedSeries.map((series) => ({
+        series: renderedSeries.map((series, index) => ({
             ...series,
+            legendIndex: index,
             zoneAxis: "x",
             zones,
         })),
@@ -185,7 +186,7 @@ function computeZonesForStackedChart(
     });
 
     // compute zone per series pair, hide threshold series, even when no zone was generated
-    const zonedSeries: ISeriesItem[] = pairedSeries.map(([dataSeries, thresholdSeries]) => {
+    const zonedSeries: ISeriesItem[] = pairedSeries.map(([dataSeries, thresholdSeries], index) => {
         const zones = generateZones(thresholdSeries.data);
         if (!areZonesValid(zones)) {
             return dataSeries;
@@ -193,6 +194,7 @@ function computeZonesForStackedChart(
 
         return {
             ...dataSeries,
+            legendIndex: index,
             zoneAxis: "x",
             zones,
         };
