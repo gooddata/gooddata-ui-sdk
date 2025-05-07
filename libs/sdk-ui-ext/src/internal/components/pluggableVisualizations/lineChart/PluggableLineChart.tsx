@@ -32,7 +32,6 @@ import {
     getAllAttributeItemsWithPreference,
     getAttributeItemsWithoutStacks,
     getDateItems,
-    getFilteredMeasuresForStackedCharts,
     getFistDateItemWithMultipleDates,
     getMeasureItems,
     getStackItems,
@@ -40,6 +39,7 @@ import {
     sanitizeFilters,
     getBucketItems,
     limitNumberOfMeasuresInBuckets,
+    getFilteredMeasuresForStackedChartsWithStyleControlMetricSupport,
 } from "../../../utils/bucketHelper.js";
 import {
     getReferencePointWithSupportedProperties,
@@ -180,7 +180,7 @@ export class PluggableLineChart extends PluggableBaseChart {
 
     private getBucketMeasures(buckets: IBucketOfFun[] = []) {
         const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, MAX_METRICS_COUNT, true);
-        return getFilteredMeasuresForStackedCharts(limitedBuckets);
+        return getFilteredMeasuresForStackedChartsWithStyleControlMetricSupport(limitedBuckets);
     }
 
     protected configureBuckets(newReferencePoint: IExtendedReferencePoint): void {

@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import set from "lodash/set.js";
 import uniqBy from "lodash/uniqBy.js";
 import negate from "lodash/negate.js";
@@ -740,6 +740,19 @@ export function getFilteredMeasuresForStackedCharts(buckets: IBucketOfFun[]): IB
     const hasStacks = getStackItems(buckets, [ATTRIBUTE, DATE]).length > 0;
     if (hasStacks) {
         const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, 1);
+        return getMeasureItems(limitedBuckets);
+    }
+    return getMeasureItems(buckets);
+}
+
+export function getFilteredMeasuresForStackedChartsWithStyleControlMetricSupport(
+    buckets: IBucketOfFun[],
+): IBucketItem[] {
+    const hasStacks = getStackItems(buckets, [ATTRIBUTE, DATE]).length > 0;
+    if (hasStacks) {
+        const measureItems = getMeasureItems(buckets);
+        const hasLineStyleControlMeasure = measureItems.some((measure) => measure.isThresholdMeasure);
+        const limitedBuckets = limitNumberOfMeasuresInBuckets(buckets, hasLineStyleControlMeasure ? 2 : 1);
         return getMeasureItems(limitedBuckets);
     }
     return getMeasureItems(buckets);

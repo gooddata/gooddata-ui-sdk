@@ -79,7 +79,7 @@ import {
     getWaterfallChartCategories,
 } from "../waterfallChart/waterfallChartOptions.js";
 import { assignForecastAxes } from "./chartForecast.js";
-import { setupThresholdZones } from "./chartThresholds.js";
+import { filterThresholdZonesCategories, setupThresholdZones } from "./chartThresholds.js";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
@@ -488,6 +488,7 @@ export function getChartOptions(
 
     // Remove threshold metric series and define zones based upon its data
     const { series, plotLines } = setupThresholdZones(type, initialSeries, dv, config);
+    categories = filterThresholdZonesCategories(type, categories, initialSeries, dv, config);
 
     const xAxes = getXAxes(dv, config, measureGroup, viewByAttribute, viewByParentAttribute, plotLines);
 
