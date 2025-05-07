@@ -8,7 +8,7 @@ import { HelpMenuDropdownAlignPoints } from "../typings/positioning.js";
  * @internal
  */
 export interface IHeaderMenuItem {
-    key: string;
+    key: string; // used both as React key as well as localization message ID
     href?: string;
     isActive?: boolean;
     className?: string;

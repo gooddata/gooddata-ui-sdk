@@ -1,7 +1,13 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ISettings, IWorkspacePermissions } from "@gooddata/sdk-model";
+import { defineMessages } from "react-intl";
 
 import { IHeaderMenuItem } from "./typings.js";
+
+const messages = defineMessages({
+    workspaceSettingsMenuItem: { id: "gs.header.workspaceSettings" },
+    logoutMenuItem: { id: "gs.header.logout" },
+});
 
 /**
  * @internal
@@ -14,40 +20,52 @@ export interface IUiSettings {
  * @internal
  */
 export function generateHeaderAccountMenuItems(
-    workspacePermissions: IWorkspacePermissions, // bootstrapResource.current.projectPermissions
-    uiSettings: IUiSettings, // bootstrapResource.settings
-    workspaceId?: string, // parsed from bootstrapResource.current.project.links.self
+    workspacePermissions: IWorkspacePermissions,
+    uiSettings: IUiSettings,
+    workspaceId?: string,
     showOnlyLogoutItem?: boolean,
     featureFlags?: ISettings,
+): IHeaderMenuItem[];
+/**
+ * @internal
+ */
+export function generateHeaderAccountMenuItems(
+    workspacePermissions: IWorkspacePermissions,
+    workspaceId?: string,
+    featureFlags?: ISettings,
+): IHeaderMenuItem[];
+/**
+ * @internal
+ */
+export function generateHeaderAccountMenuItems(
+    workspacePermissions: IWorkspacePermissions,
+    uiSettingsOrWorkspaceId?: IUiSettings | string,
+    workspaceIdOrFeatureFlags?: string | ISettings,
+    _showOnlyLogoutItem?: boolean,
+    featureFlags?: ISettings,
 ): IHeaderMenuItem[] {
-    const { canInitData } = workspacePermissions;
-    const { displayAccountPage } = uiSettings;
-    const accountMenuItems: IHeaderMenuItem[] = [];
-    const workspaceRef = featureFlags?.enableRenamingProjectToWorkspace ? "workspaces" : "projects";
+    const workspaceId =
+        typeof uiSettingsOrWorkspaceId === "string"
+            ? uiSettingsOrWorkspaceId
+            : (workspaceIdOrFeatureFlags as string);
+    const featureFlagsFinal =
+        typeof workspaceIdOrFeatureFlags === "string" ? featureFlags : workspaceIdOrFeatureFlags;
 
-    const accountItem = {
-        key: "gs.header.account",
-        className: "s-account",
-        href: `/#s=/gdc/${workspaceRef}/${workspaceId}|accountPage|`,
-    };
-    const dataIntegrationConsoleItem = {
-        key: "gs.header.dic",
-        className: "s-dic",
-        href: "/admin/disc/",
+    const { canManageProject } = workspacePermissions;
+    const accountMenuItems: IHeaderMenuItem[] = [];
+
+    const workspaceSettingsItem = {
+        key: messages.workspaceSettingsMenuItem.id,
+        className: "s-workspace-settings",
+        href: `/workspaces/${workspaceId}/settings`,
     };
     const logoutItem = {
-        key: "gs.header.logout",
+        key: messages.logoutMenuItem.id,
         className: "s-logout",
     };
 
-    const showAccountItem = workspaceId && displayAccountPage && !showOnlyLogoutItem;
-    const showDataIntegrationConsoleItem = canInitData === true && !showOnlyLogoutItem;
-
-    if (showAccountItem) {
-        accountMenuItems.push(accountItem);
-    }
-    if (showDataIntegrationConsoleItem) {
-        accountMenuItems.push(dataIntegrationConsoleItem);
+    if (canManageProject && featureFlagsFinal?.enableWorkspaceSettingsAppHeaderMenuItem) {
+        accountMenuItems.push(workspaceSettingsItem);
     }
     accountMenuItems.push(logoutItem);
 

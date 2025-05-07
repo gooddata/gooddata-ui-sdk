@@ -676,6 +676,11 @@ export interface ISettings {
      */
     enableKDRespectLegendPosition?: boolean;
 
+    /**
+     * Enables workspace settings link in account menu of the user in every app header.
+     */
+    enableWorkspaceSettingsAppHeaderMenuItem?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

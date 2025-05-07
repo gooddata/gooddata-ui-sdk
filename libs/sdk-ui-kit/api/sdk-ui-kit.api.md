@@ -560,10 +560,10 @@ export const GD_COLOR_STATE_HOVER = "#94a1ad";
 export const GD_COLOR_WHITE = "#fff";
 
 // @internal (undocumented)
-export function generateHeaderAccountMenuItems(workspacePermissions: IWorkspacePermissions, // bootstrapResource.current.projectPermissions
-uiSettings: IUiSettings, // bootstrapResource.settings
-workspaceId?: string, // parsed from bootstrapResource.current.project.links.self
-showOnlyLogoutItem?: boolean, featureFlags?: ISettings): IHeaderMenuItem[];
+export function generateHeaderAccountMenuItems(workspacePermissions: IWorkspacePermissions, uiSettings: IUiSettings, workspaceId?: string, showOnlyLogoutItem?: boolean, featureFlags?: ISettings): IHeaderMenuItem[];
+
+// @internal (undocumented)
+export function generateHeaderAccountMenuItems(workspacePermissions: IWorkspacePermissions, workspaceId?: string, featureFlags?: ISettings): IHeaderMenuItem[];
 
 // @internal (undocumented)
 export function generateHeaderHelpMenuItems(documentationUrl?: string, supportForumUrl?: string, userEmail?: string, workspaceId?: string, sessionId?: string, supportEmail?: string, isBranded?: boolean, featureFlags?: ISettings): IHeaderMenuItem[];
