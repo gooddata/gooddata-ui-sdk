@@ -3196,6 +3196,11 @@
     "LineChart.f1549e99b31f4a59bd086b37c25e48d0": {
         "comment": "Auto-generated insight for test scenario LineChart - 140x354 - without y axis title."
     },
+    "LineChart.f24dfe2eeb31cbd9c41e5a2d65afd020": {
+        "comment": "Auto-generated insight for test scenario LineChart - stacked threshold zones.",
+        "scenarioName": "stacked threshold zones",
+        "visName": "LineChart"
+    },
     "LineChart.f2f3b7183019e9665e8b07b23bd89ae5": {
         "comment": "Auto-generated insight for test scenario LineChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."
     },

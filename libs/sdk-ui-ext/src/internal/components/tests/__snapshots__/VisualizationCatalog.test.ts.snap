@@ -37364,6 +37364,44 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality > should generate code for LineChart - stacked threshold zones 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAbsoluteDateFilter, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IChartConfig, LineChart } from "@gooddata/sdk-ui-charts";
+
+const measures: IAttributeOrMeasure[] = [
+    newMeasure(idRef("timeline_bop", "measure"), m => m.localId("m_timeline_bop")),
+    newMeasure(idRef("metric_has_null_value", "measure"), m => m.localId("m_metric_has_null_value"))
+];
+const trendBy: IAttribute = newAttribute(idRef("dt_closedate_timestamp.day", "displayForm"), a => a.localId("a_dt_closedate_timestamp.day"));
+const segmentBy: IAttribute = newAttribute(idRef("dt_closedate_timestamp.month", "displayForm"), a => a.localId("a_dt_closedate_timestamp.month"));
+const filters: IFilter[] = [
+    newAbsoluteDateFilter(idRef("dt_closedate_timestamp", "dataSet"), "2013-04-17", "2013-05-31")
+];
+const config: IChartConfig = {
+    thresholdMeasures: ["m_metric_has_null_value"],
+    separators: {decimal: ".", thousand: ","},
+    legend: {position: "right"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <LineChart
+                measures={measures}
+                trendBy={trendBy}
+                segmentBy={segmentBy}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality > should generate code for LineChart - themed 1`] = `
 "import React from "react";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
