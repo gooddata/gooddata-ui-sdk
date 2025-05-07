@@ -1,7 +1,7 @@
 // (C) 2023-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
-import { DashboardMenu } from "../../tools/dashboardMenu";
+import { DashboardMenu, ExportMenu } from "../../tools/dashboardMenu";
 import { AttributeFilter } from "../../tools/filterBar";
 import { Export } from "../../tools/export";
 import { TopBar } from "../../tools/dashboards";
@@ -29,7 +29,7 @@ describe(
                         Navigation.visit(dashboardInfo.dashboardURL, { enableKPIDashboardExportPDF: true });
                         widget.waitTableLoaded();
                         topBar.dashboardTitleExist().dashboardTitleHasValue(dashboardInfo.dashboardTitle);
-                        dashboardMenu.toggle().clickOption("Export to PDF");
+                        dashboardMenu.toggle().clickExport().clickExportOption(ExportMenu.EXPORT_SNAPSHOT);
                         exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
                     },
                 );
@@ -48,7 +48,7 @@ describe(
                         Navigation.visit(dashboardInfo.dashboardURL);
                         widget.waitChartLoaded();
                         topBar.dashboardTitleExist().dashboardTitleHasValue(dashboardInfo.dashboardTitle);
-                        dashboardMenu.toggle().clickOption("Export to PDF");
+                        dashboardMenu.toggle().clickExport().clickExportOption(ExportMenu.EXPORT_SNAPSHOT);
                         exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
                     },
                 );
@@ -72,7 +72,10 @@ describe(
                             productFilter.open().selectAttributeWithoutSearch("PhoenixSoft");
                             widget.waitTableLoaded();
 
-                            dashboardMenu.toggle().clickOption("Export to PDF");
+                            dashboardMenu
+                                .toggle()
+                                .clickExport()
+                                .clickExportOption(ExportMenu.EXPORT_SNAPSHOT);
                             exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
                         },
                     );
@@ -92,7 +95,7 @@ describe(
                         Navigation.visit(dashboardInfo.dashboardURL);
                         widget.waitChartLoaded();
                         topBar.dashboardTitleExist().dashboardTitleHasValue(dashboardInfo.dashboardTitle);
-                        dashboardMenu.toggle().clickOption("Export to PDF");
+                        dashboardMenu.toggle().clickExport().clickExportOption(ExportMenu.EXPORT_SNAPSHOT);
                         exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
                     },
                 );
