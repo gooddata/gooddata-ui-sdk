@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     IExtendedDateFilterErrors,
     DateFilterOption,
@@ -19,8 +19,29 @@ const validateVisibility = (filterOption: DateFilterOption): IExtendedDateFilter
     return errors;
 };
 
+// TODO somehow make work with local validation
 const validateAbsoluteForm = (filterOption: IUiAbsoluteDateFilterForm): IExtendedDateFilterErrors => {
     const errors = validateVisibility(filterOption);
+
+    if (filterOption.from === undefined) {
+        errors.absoluteDateTimeForm = {
+            ...(errors.absoluteDateTimeForm ?? {}),
+            from: {
+                ...(errors.absoluteDateTimeForm?.from ?? {}),
+                dateError: messages.errorEmptyStartDate.id,
+            },
+        };
+    }
+    if (filterOption.to === undefined) {
+        errors.absoluteDateTimeForm = {
+            ...(errors.absoluteDateTimeForm ?? {}),
+            to: {
+                ...(errors.absoluteDateTimeForm?.to ?? {}),
+                dateError: messages.errorEmptyEndDate.id,
+            },
+        };
+    }
+
     const absoluteFormKeys: Array<keyof IExtendedDateFilterErrors["absoluteForm"]> = ["from", "to"];
     absoluteFormKeys.forEach((field) => {
         if (!filterOption[field]) {
