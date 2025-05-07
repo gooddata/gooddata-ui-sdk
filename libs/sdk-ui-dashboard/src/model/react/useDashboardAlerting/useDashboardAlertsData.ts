@@ -16,10 +16,10 @@ import {
     selectInsightByWidgetRef,
     selectAutomationsIsInitialized,
     selectFilterableWidgetByRef,
-    selectNotificationChannelsForScheduledExports,
-    selectNotificationChannelsCountForScheduledExports,
     selectEnableAlerting,
     selectIsAlertingDialogOpen,
+    selectNotificationChannels,
+    selectNotificationChannelsCount,
 } from "../../store/index.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { selectAlertingDialogContext } from "../../store/ui/uiSelectors.js";
@@ -58,10 +58,8 @@ export const useDashboardAlertsData = ({ alertToEdit }: IUseDashboardAlertsDataP
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
 
-    const notificationChannels = useDashboardSelector(selectNotificationChannelsForScheduledExports);
-    const numberOfAvailableDestinations = useDashboardSelector(
-        selectNotificationChannelsCountForScheduledExports,
-    );
+    const notificationChannels = useDashboardSelector(selectNotificationChannels);
+    const numberOfAvailableDestinations = useDashboardSelector(selectNotificationChannelsCount);
     const maxAutomationsReached = automationsCount >= maxAutomations && !unlimitedAutomationsEntitlement;
 
     /**
