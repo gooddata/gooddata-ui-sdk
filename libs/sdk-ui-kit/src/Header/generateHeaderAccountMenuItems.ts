@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ISettings, IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { IHeaderMenuItem } from "./typings.js";
@@ -20,7 +20,7 @@ export function generateHeaderAccountMenuItems(
     showOnlyLogoutItem?: boolean,
     featureFlags?: ISettings,
 ): IHeaderMenuItem[] {
-    const { canInitData } = workspacePermissions;
+    const { canInitData, canManageProject } = workspacePermissions;
     const { displayAccountPage } = uiSettings;
     const accountMenuItems: IHeaderMenuItem[] = [];
     const workspaceRef = featureFlags?.enableRenamingProjectToWorkspace ? "workspaces" : "projects";
@@ -39,6 +39,11 @@ export function generateHeaderAccountMenuItems(
         key: "gs.header.logout",
         className: "s-logout",
     };
+    const workspaceSettingsItem = {
+        key: "gs.header.workspaceSettings",
+        className: "s-workspace-settings",
+        href: `/workspaces/${workspaceId}/settings`,
+    };
 
     const showAccountItem = workspaceId && displayAccountPage && !showOnlyLogoutItem;
     const showDataIntegrationConsoleItem = canInitData === true && !showOnlyLogoutItem;
@@ -48,6 +53,9 @@ export function generateHeaderAccountMenuItems(
     }
     if (showDataIntegrationConsoleItem) {
         accountMenuItems.push(dataIntegrationConsoleItem);
+    }
+    if (canManageProject && featureFlags?.enableWorkspaceSettingsAppHeaderMenuItem) {
+        accountMenuItems.push(workspaceSettingsItem);
     }
     accountMenuItems.push(logoutItem);
 

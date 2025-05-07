@@ -3494,6 +3494,7 @@ export interface ISettings {
     enableWaterfallChart?: boolean;
     enableWeekFilters?: boolean;
     enableWidgetIdentifiersRollout?: boolean;
+    enableWorkspaceSettingsAppHeaderMenuItem?: boolean;
     formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;
     // (undocumented)
