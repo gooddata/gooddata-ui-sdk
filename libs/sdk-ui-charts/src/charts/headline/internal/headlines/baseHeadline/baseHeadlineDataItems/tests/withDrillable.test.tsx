@@ -1,9 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { fireEvent, render } from "@testing-library/react";
 
-import { HeadlineElementType } from "@gooddata/sdk-ui";
+import { HeadlineElementType, withIntl } from "@gooddata/sdk-ui";
 
 import { IWithDrillableItemProps } from "../../../../interfaces/BaseHeadlines.js";
 import { TEST_DATA_ITEM, HEADLINE_ITEM_LINK_SELECTOR } from "../../../../tests/TestData.fixtures.js";
@@ -16,7 +16,8 @@ describe("withDrillable", () => {
     const WrappedComponent = vi.fn().mockReturnValue(<div className={wrappedComponentClassName}></div>);
     const WithDrillableComponent = withDrillable(WrappedComponent);
     const renderWithDrillableComponent = (props: IWithDrillableItemProps) => {
-        return render(<WithDrillableComponent {...props} />);
+        const WrappedWithDrillableComponent = withIntl(WithDrillableComponent);
+        return render(<WrappedWithDrillableComponent {...props} />);
     };
 
     beforeEach(() => {

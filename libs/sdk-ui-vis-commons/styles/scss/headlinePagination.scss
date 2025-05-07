@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 @use "sass:color";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
@@ -52,7 +52,8 @@ $legend-paging-background: #eee;
                 }
             }
 
-            &[disabled] {
+            &.is-disabled {
+                cursor: default;
                 // stylelint-disable-next-line max-nesting-depth
                 @include mixins.active-states-and-self {
                     background-color: var(

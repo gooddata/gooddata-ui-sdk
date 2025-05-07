@@ -5,7 +5,8 @@ import { wrapDisplayName } from "@gooddata/sdk-ui";
 import { IWithDrillableItemProps } from "../../../interfaces/BaseHeadlines.js";
 import { useBaseHeadline } from "../BaseHeadlineContext.js";
 import { IHeadlineDataItem } from "../../../interfaces/Headlines.js";
-import { isActionKey } from "@gooddata/sdk-ui-kit";
+import { isActionKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { FormattedMessage } from "react-intl";
 
 export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataItem>>(
     BaseHeadlineValueItem: React.ComponentType<T>,
@@ -13,6 +14,8 @@ export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataIte
     const WithDrillable: React.FC<T> = (props) => {
         const { dataItem, elementType } = props;
         const { fireDrillEvent } = useBaseHeadline();
+
+        const drillId = useIdPrefixed("drill-hint");
 
         const handleDrillable = useCallback(
             (event: React.MouseEvent<EventTarget>) => {
@@ -38,7 +41,13 @@ export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataIte
                 onClick={handleDrillable}
                 onKeyDown={handleKeyDown}
                 tabIndex={0}
+                role="button"
+                aria-haspopup="dialog"
+                aria-describedby={drillId}
             >
+                <span id={drillId} className="sr-only">
+                    <FormattedMessage id="visualizations.headline.pagination.drill.hint" />
+                </span>
                 <BaseHeadlineValueItem {...props} />
             </div>
         ) : (

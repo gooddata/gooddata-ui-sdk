@@ -287,6 +287,11 @@
         "comment": "",
         "limit": 0
     },
+    "visualizations.headline.pagination.drill.hint": {
+        "value": "Drilling available. Press Enter or Space to continue.",
+        "comment": "",
+        "limit": 0
+    },
     "visualization.numericValues.k": {
         "value": "k",
         "comment": "Character 'k' stands for metric prefix kilo (1.000).",

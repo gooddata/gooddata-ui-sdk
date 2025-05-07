@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import React from "react";
+import React, { useCallback } from "react";
+import cx from "classnames";
 
 interface IHeadlinePaginationProps {
     item: number;
@@ -23,19 +24,33 @@ export const HeadlinePaginationRenderer: React.FC<IHeadlinePaginationProps> = ({
     const isFirstItemDisabled = item === 1;
     const isSecondItemDisabled = item === 2;
 
+    const handleFirstItemClick = useCallback(() => {
+        if (!isFirstItemDisabled) {
+            showPrevItem();
+        }
+    }, [isFirstItemDisabled, showPrevItem]);
+
+    const handleSecondItemClick = useCallback(() => {
+        if (!isSecondItemDisabled) {
+            showNextItem();
+        }
+    }, [isSecondItemDisabled, showNextItem]);
+
     return (
         <div className="headline-pagination">
             <button
-                className={`${commonClassNames} first-item gd-icon-chevron-left`}
-                onClick={showPrevItem}
-                disabled={isFirstItemDisabled}
+                className={cx(`${commonClassNames} first-item gd-icon-chevron-left`, {
+                    "is-disabled": isFirstItemDisabled,
+                })}
+                onClick={handleFirstItemClick}
                 aria-disabled={isFirstItemDisabled}
                 aria-label={previousAriaLabel}
             />
             <button
-                className={`${commonClassNames} second-item gd-icon-chevron-right`}
-                onClick={showNextItem}
-                disabled={isSecondItemDisabled}
+                className={cx(`${commonClassNames} second-item gd-icon-chevron-right`, {
+                    "is-disabled": isSecondItemDisabled,
+                })}
+                onClick={handleSecondItemClick}
                 aria-disabled={isSecondItemDisabled}
                 aria-label={nextAriaLabel}
             />
