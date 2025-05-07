@@ -136,7 +136,7 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
     onDeactivate,
     returnFocusTo: returnFocusToProp,
     autofocusOnOpen = false,
-    returnFocusOnUnmount = false,
+    returnFocusOnUnmount = true,
     initialFocus,
     customKeyboardNavigationHandler,
 }) => {
@@ -146,6 +146,15 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
     const returnFocusTo = returnFocusToProp ?? defaultReturnFocusToRef;
 
     const returnFocus = useCallback(() => {
+        if (
+            // different browsers have different default focusable element
+            document.activeElement !== document.body &&
+            document.activeElement !== document.documentElement &&
+            !trapRef.current?.contains(document.activeElement)
+        ) {
+            // if Trap was closed by clicking outside, do not return focus
+            return;
+        }
         if (typeof returnFocusTo === "string") {
             const element = document.getElementById(returnFocusTo);
             element?.focus();
