@@ -44,7 +44,7 @@
         "tslib": "^2.5.0"
     },
     "devDependencies": {
-        "@gooddata/fixtures": "1.32.25",
+        "@gooddata/fixtures": "1.32.26",
         "@gooddata/eslint-config": "^4.1.0",
         "@types/lodash": "^4.14.202",
         "@types/node": "^18.17.6",
