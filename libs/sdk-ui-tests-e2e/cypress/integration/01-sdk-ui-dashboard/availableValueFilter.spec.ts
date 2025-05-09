@@ -1,7 +1,7 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { Headline } from "../../tools/headline";
-import { FilterBar, TopBar } from "../../tools/dashboards";
+import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
 import { AttributeFilter } from "../../tools/filterBar";
 import { DateFilter } from "../../tools/dateFilter";
 import { DateFilterAbsoluteForm } from "../../tools/dateFilterAbsoluteForm";
@@ -26,39 +26,45 @@ describe("Available value filter", () => {
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
             Navigation.visit("dashboard/dashboard-tiger-hide-filters");
-            cy.intercept("GET", "**/attributes**").as("attributes");
+            new Dashboard().waitForDashboardLoaded();
+
             topBar.enterEditMode().editButtonIsVisible(false);
             new InsightsCatalog().waitForCatalogLoad();
             new FilterBar().clickDateFilter().selectDateFilterOption(".s-all-time").clickApply();
-            cy.wait("@attributes").then(() => {
-                accountFilter.open().selectAttribute(["101 Financial"]).apply();
-            });
+            //wait for headline computed so that stabilize filter interaction
+            cy.intercept("GET", "**/afm/execute/result/**").as("headlineExecution");
+            cy.wait("@headlineExecution", { timeout: 15000 });
+            accountFilter.isLoaded().open().elementsAreLoaded().selectAttribute(["101 Financial"]).apply();
 
             headline.waitLoaded().hasValue("7,200");
 
             cityFilter
+                .isLoaded()
                 .open()
                 .elementsAreLoaded()
                 .configureLimitingParentFilterDependency("Account")
+                .elementsAreLoaded()
                 .hasFilterListSize(2);
 
             cityFilter
-                .elementsAreLoaded()
                 .configureLimitingMetricDependency("# of Lost Opps.")
+                .elementsAreLoaded()
                 .hasFilterListSize(1)
                 .selectConfiguration()
                 .searchMetricDependency("Invalid")
                 .getNoDataMetricDependency()
                 .searchMetricDependency("Account")
                 .selectMetricDependency("Account")
+                .elementsAreLoaded()
                 .hasFilterListSize(2)
                 .showAllElementValues()
                 .selectAttribute(["Anaheim"])
                 .apply();
 
+            headline.waitLoaded().hasEmpty();
+
             cityFilter
                 .open()
-                .elementsAreLoaded()
                 .clearIrrelevantElementValuesIsVisible(true)
                 .clearIrrelevantElementValues()
                 .selectAttribute(["Seattle"])
@@ -68,7 +74,6 @@ describe("Available value filter", () => {
 
             cityFilter
                 .open()
-                .elementsAreLoaded()
                 .deleteFiltervaluesBy("Count of Account", "aggregated")
                 .elementsAreLoaded()
                 .hasFilterListSize(1);
@@ -109,21 +114,23 @@ describe("Available value filter", () => {
                 .should("deep.equal", ["$4,108,360.80", "$2,267,528.48", "$3,461,373.87"]);
 
             salesRepFilter
+                .isLoaded()
                 .open()
                 .elementsAreLoaded()
                 .hasFilterListSize(22)
                 .selectConfiguration()
                 .configureLimitingDateFilterDependency("activity", "Date range")
+                .elementsAreLoaded()
                 .hasFilterListSize(20);
 
             salesRepFilter
-                .elementsAreLoaded()
                 .selectConfiguration()
                 .isSpecificDateFilterVisible("activity", false)
                 .closeConfiguration()
                 .deleteFiltervaluesBy("Date range as Activity")
                 .selectConfiguration()
                 .configureLimitingDateFilterDependency("activity", "Date specific")
+                .elementsAreLoaded()
                 .hasFilterListSize(20)
                 .selectConfiguration()
                 .isCommonDateFilterVisible("activity", false)
