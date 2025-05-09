@@ -1,61 +1,61 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useMemo, useRef, useState } from "react";
-import cx from "classnames";
-import { defineMessage, useIntl } from "react-intl";
-import {
-    ConfirmDialogBase,
-    Overlay,
-    ContentDivider,
-    Button,
-    Hyperlink,
-    RecurrenceForm,
-    Message,
-    OverlayControllerProvider,
-    OverlayController,
-    useIdPrefixed,
-} from "@gooddata/sdk-ui-kit";
-import { RecipientsSelect } from "./components/RecipientsSelect/RecipientsSelect.js";
-import { IntlWrapper } from "../../localization/index.js";
-import { DestinationSelect } from "./components/DestinationSelect/DestinationSelect.js";
-import {
-    selectLocale,
-    useDashboardSelector,
-    selectDateFormat,
-    selectWeekStart,
-    selectDashboardTitle,
-    selectEntitlementMaxAutomationRecipients,
-    selectEntitlementMinimumRecurrenceMinutes,
-    selectIsCrossFiltering,
-    selectIsWhiteLabeled,
-    selectExecutionTimestamp,
-    useFiltersForDashboardScheduledExport,
-    selectEnableAutomationFilterContext,
-} from "../../../model/index.js";
-import { IScheduledEmailDialogProps } from "../types.js";
-import { useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
-import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
 import {
     FilterContextItem,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
 } from "@gooddata/sdk-model";
-import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
-import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
-import { DashboardAttachments } from "./components/Attachments/DashboardAttachments.js";
-import { WidgetAttachments } from "./components/Attachments/WidgetAttachments.js";
-import { useFiltersForDashboardScheduledExportInfo } from "./hooks/useFiltersForDashboardScheduledExportInfo.js";
-import { DEFAULT_MAX_RECIPIENTS } from "./constants.js";
-import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEmailDialog.js";
-import { isMobileView } from "../utils/responsive.js";
-import { getDefaultCronExpression } from "../utils/cron.js";
-import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
+import {
+    Button,
+    ConfirmDialogBase,
+    ContentDivider,
+    Hyperlink,
+    Message,
+    Overlay,
+    OverlayController,
+    OverlayControllerProvider,
+    RecurrenceForm,
+    useIdPrefixed,
+} from "@gooddata/sdk-ui-kit";
+import cx from "classnames";
+import React, { useMemo, useRef, useState } from "react";
+import { defineMessage, useIntl } from "react-intl";
+import {
+    selectDashboardTitle,
+    selectDateFormat,
+    selectEnableAutomationFilterContext,
+    selectEntitlementMaxAutomationRecipients,
+    selectEntitlementMinimumRecurrenceMinutes,
+    selectExecutionTimestamp,
+    selectIsCrossFiltering,
+    selectIsWhiteLabeled,
+    selectLocale,
+    selectWeekStart,
+    useDashboardSelector,
+    useFiltersForDashboardScheduledExport,
+} from "../../../model/index.js";
 import { AutomationFiltersSelect } from "../../automationFilters/components/AutomationFiltersSelect.js";
 import { useAutomationFiltersData } from "../../automationFilters/useAutomationFiltersData.js";
 import { validateAllFilterLocalIdentifiers } from "../../automationFilters/utils.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
+import { IntlWrapper } from "../../localization/index.js";
+import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
+import { IScheduledEmailDialogProps } from "../types.js";
+import { getDefaultCronExpression } from "../utils/cron.js";
+import { isMobileView } from "../utils/responsive.js";
+import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
+import { DashboardAttachments } from "./components/Attachments/DashboardAttachments.js";
+import { WidgetAttachments } from "./components/Attachments/WidgetAttachments.js";
+import { DestinationSelect } from "./components/DestinationSelect/DestinationSelect.js";
+import { RecipientsSelect } from "./components/RecipientsSelect/RecipientsSelect.js";
+import { DEFAULT_MAX_RECIPIENTS } from "./constants.js";
+import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEmailDialog.js";
+import { useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
+import { useFiltersForDashboardScheduledExportInfo } from "./hooks/useFiltersForDashboardScheduledExportInfo.js";
+import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
 
+import { ScheduledEmailDialogHeader } from "./components/Header/ScheduleEmailDialogHeader.js";
 import { MessageForm } from "./components/MessageForm/MessageForm.js";
 import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
-import { ScheduledEmailDialogHeader } from "./components/Header/ScheduleEmailDialogHeader.js";
 
 const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 

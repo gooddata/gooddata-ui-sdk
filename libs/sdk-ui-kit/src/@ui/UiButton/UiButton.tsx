@@ -12,6 +12,7 @@ import {
 } from "../@types/variant.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
+import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 
 /**
  * @internal
@@ -27,6 +28,7 @@ export interface UiButtonProps {
     tooltip?: React.ReactNode;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     dataId?: string;
+    accessibilityConfig?: IAccessibilityConfigBase;
 }
 
 const { b, e } = bem("gd-ui-kit-button");
@@ -46,6 +48,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
             iconAfter,
             onClick,
             dataId,
+            accessibilityConfig,
         },
         ref,
     ) => {
@@ -60,6 +63,10 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
                 tabIndex={0}
                 onClick={onClick}
                 data-id={dataId}
+                aria-label={accessibilityConfig?.ariaLabel}
+                aria-labelledby={accessibilityConfig?.ariaLabelledBy}
+                aria-describedby={accessibilityConfig?.ariaDescribedBy}
+                role={accessibilityConfig?.role}
             >
                 {iconBefore ? <UiIcon type={iconBefore} size={iconSize} /> : null}
                 <span className={e("text")}>{label}</span>

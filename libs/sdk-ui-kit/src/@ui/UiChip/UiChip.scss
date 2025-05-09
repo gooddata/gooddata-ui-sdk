@@ -26,6 +26,7 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
 
     border-radius: $border-radius;
     border: 1px solid $border-color;
+    background-color: $background-color;
 
     &:has(#{$root}__trigger:hover) {
         border-color: $border-color;

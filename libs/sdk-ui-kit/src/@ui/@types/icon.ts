@@ -15,4 +15,6 @@ export type IconType =
     | "chevronDown"
     | "date"
     | "lock"
-    | "cross";
+    | "cross"
+    | "navigateUp"
+    | "navigateDown";

@@ -724,6 +724,8 @@ export interface IAccessibilityConfigBase {
     // (undocumented)
     ariaDescribedBy?: React.AriaAttributes["aria-describedby"];
     // (undocumented)
+    ariaExpanded?: "true" | "false";
+    // (undocumented)
     ariaLabel?: React.AriaAttributes["aria-label"];
     // (undocumented)
     ariaLabelledBy?: React.AriaAttributes["aria-labelledby"];
@@ -1264,7 +1266,7 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
 export const iconPaths: Record<IconType, React_2.ReactNode>;
 
 // @internal (undocumented)
-export type IconType = "check" | "plus" | "sync" | "alert" | "close" | "question" | "crossCircle" | "chevronUp" | "chevronDown" | "date" | "lock" | "cross";
+export type IconType = "check" | "plus" | "sync" | "alert" | "close" | "question" | "crossCircle" | "chevronUp" | "chevronDown" | "date" | "lock" | "cross" | "navigateUp" | "navigateDown";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
@@ -2964,8 +2966,6 @@ export interface IMenuAccessibilityConfig extends IAccessibilityConfigBase {
     ariaControls?: string;
     // (undocumented)
     ariaDisabled?: "true" | "false";
-    // (undocumented)
-    ariaExpanded?: "true" | "false";
     // (undocumented)
     ariaHaspopup?: "true" | "false" | "menu" | "listbox" | "tree" | "grid" | "dialog";
     // (undocumented)
@@ -5243,6 +5243,8 @@ export const UiButton: React_2.ForwardRefExoticComponent<UiButtonProps & React_2
 
 // @internal (undocumented)
 export interface UiButtonProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
     // (undocumented)
     dataId?: string;
     // (undocumented)

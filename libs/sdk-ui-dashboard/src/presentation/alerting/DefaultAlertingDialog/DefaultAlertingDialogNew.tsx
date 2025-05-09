@@ -337,7 +337,6 @@ export function AlertingDialogRenderer({
                                         id="alert.value"
                                         className="gd-edit-alert__value-input s-alert-value-input"
                                         isSmall
-                                        autofocus
                                         value={value}
                                         onChange={onChange}
                                         onBlur={onBlur}
