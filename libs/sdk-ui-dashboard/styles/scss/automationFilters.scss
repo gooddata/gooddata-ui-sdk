@@ -2,37 +2,14 @@
 
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
-$item-height: 27px;
-
 .gd-automation-filters {
     width: 100%;
 
     &__list {
-        max-height: $item-height;
-        display: inline-block;
-        overflow: hidden;
-        width: 100%;
-
-        &--expanded {
-            max-height: 100%;
-        }
-    }
-
-    &__list-item {
-        display: inline-block;
-        vertical-align: top;
-        height: $item-height;
-        margin-right: 5px;
-        margin-bottom: 5px;
-
-        > div {
-            vertical-align: top;
-        }
-    }
-
-    &__expansion-button {
-        float: right;
-        height: $item-height;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        align-items: center;
     }
 
     &__message {
@@ -50,11 +27,6 @@ $item-height: 27px;
         font-weight: 400;
         line-height: 21px;
         margin-top: 5px;
-    }
-
-    &__dropdown {
-        display: inline-block;
-        vertical-align: top;
     }
 
     &__dropdown-header {

@@ -1,10 +1,43 @@
 // (C) 2025 GoodData Corporation
 
-import React from "react";
-import { AutomationFilters } from "../AutomationFilters.js";
+import {
+    areObjRefsEqual,
+    FilterContextItem,
+    ICatalogAttribute,
+    ICatalogDateDataset,
+    IDashboardAttributeFilterConfig,
+    IDashboardDateFilterConfigItem,
+    isDashboardAttributeFilter,
+    ObjRef,
+} from "@gooddata/sdk-model";
+import { Bubble, BubbleHoverTrigger, Icon, Typography, UiButton, UiIconButton } from "@gooddata/sdk-ui-kit";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import noop from "lodash/noop.js";
+import React, { useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+import { gdColorStateBlank } from "../../constants/colors.js";
+import { AttributesDropdown } from "../../filterBar/index.js";
 import { useAutomationFilters } from "../useAutomationFilters.js";
-import { FormattedMessage } from "react-intl";
-import { FilterContextItem } from "@gooddata/sdk-model";
+import { AutomationAttributeFilter } from "./AutomationAttributeFilter.js";
+import { AutomationDateFilter } from "./AutomationDateFilter.js";
+
+const COLLAPSED_FILTERS_COUNT = 2;
+
+export interface IAutomationFiltersProps {
+    id?: string;
+    filters: FilterContextItem[] | undefined;
+    attributeConfigs: IDashboardAttributeFilterConfig[];
+    dateConfigs: IDashboardDateFilterConfigItem[];
+    attributes: ICatalogAttribute[];
+    dateDatasets: ICatalogDateDataset[];
+    handleChangeFilter: (filter: FilterContextItem | undefined) => void;
+    handleDeleteFilter: (filter: FilterContextItem) => void;
+    handleAddFilter: (displayForm: ObjRef) => void;
+    storeFilters: boolean;
+    handleStoreFiltersChange: (value: boolean) => void;
+    isDashboardAutomation?: boolean;
+    areFiltersMissing?: boolean;
+}
 
 export interface IAutomationFiltersSelectProps {
     availableFilters: FilterContextItem[] | undefined;
@@ -26,7 +59,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
     areFiltersMissing,
 }) => {
     const {
-        visibleFilters,
+        visibleFilters: filters,
         attributes,
         dateDatasets,
         attributeConfigs,
@@ -42,32 +75,199 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
         onStoreFiltersChange,
     });
 
-    const numberOfSelectedFilters = visibleFilters.length;
-    const accessibilityValue = "schedule.filters";
+    const theme = useTheme();
+    const intl = useIntl();
+    const [isExpanded, setIsExpanded] = useState(false);
+    const isExpandable = filters.length > COLLAPSED_FILTERS_COUNT;
 
     return (
         <div className="gd-input-component gd-notification-channels-automation-filters s-gd-notifications-channels-dialog-automation-filters">
-            <label htmlFor={accessibilityValue} className="gd-label">
-                <FormattedMessage
-                    id="dialogs.schedule.email.filters"
-                    values={{ count: numberOfSelectedFilters }}
-                />
-            </label>
-            <AutomationFilters
-                id={accessibilityValue}
-                filters={visibleFilters}
-                attributes={attributes}
-                dateDatasets={dateDatasets}
-                attributeConfigs={attributeConfigs}
-                dateConfigs={dateConfigs}
-                handleAddFilter={handleAddFilter}
-                handleDeleteFilter={handleDeleteFilter}
-                handleChangeFilter={handleChangeFilter}
-                storeFilters={storeFilters}
-                handleStoreFiltersChange={handleStoreFiltersChange}
-                isDashboardAutomation={isDashboardAutomation}
-                areFiltersMissing={areFiltersMissing}
-            />
+            <div className="gd-label">
+                {isExpandable ? (
+                    <BubbleHoverTrigger showDelay={500} hideDelay={0}>
+                        <UiButton
+                            label={intl.formatMessage(
+                                { id: "dialogs.schedule.email.filters" },
+                                { count: filters.length },
+                            )}
+                            variant="tertiary"
+                            onClick={() => setIsExpanded(!isExpanded)}
+                            iconAfter={isExpanded ? "navigateUp" : "navigateDown"}
+                            accessibilityConfig={{ ariaExpanded: isExpanded ? "true" : "false" }}
+                        />
+                        <Bubble className="bubble-primary" alignPoints={[{ align: "bc tc" }]}>
+                            {isExpanded ? (
+                                <FormattedMessage id="dialogs.automation.filters.showLess" />
+                            ) : (
+                                <FormattedMessage id="dialogs.automation.filters.showAll" />
+                            )}
+                        </Bubble>
+                    </BubbleHoverTrigger>
+                ) : (
+                    <FormattedMessage
+                        id="dialogs.schedule.email.filters"
+                        values={{ count: filters.length }}
+                    />
+                )}
+            </div>
+            <div className="gd-automation-filters">
+                <div className="gd-automation-filters__list">
+                    {filters.slice(0, isExpanded ? filters.length : COLLAPSED_FILTERS_COUNT).map((filter) => (
+                        <AutomationFilter
+                            key={
+                                isDashboardAttributeFilter(filter)
+                                    ? filter.attributeFilter.localIdentifier
+                                    : filter.dateFilter.localIdentifier
+                            }
+                            filter={filter}
+                            attributeConfigs={attributeConfigs}
+                            dateConfigs={dateConfigs}
+                            onChange={handleChangeFilter}
+                            onDelete={handleDeleteFilter}
+                        />
+                    ))}
+                    {isExpanded || !isExpandable ? (
+                        <AttributesDropdown
+                            onClose={noop}
+                            onSelect={(value) => {
+                                handleAddFilter(value);
+                                setIsExpanded(true);
+                            }}
+                            attributes={attributes}
+                            dateDatasets={dateDatasets}
+                            openOnInit={false}
+                            className="gd-automation-filters__dropdown s-automation-filters-add-filter-dropdown"
+                            DropdownButtonComponent={({ onClick }) => (
+                                <UiIconButton
+                                    icon="plus"
+                                    label={intl.formatMessage({
+                                        id: "dialogs.automation.filters.add",
+                                    })}
+                                    onClick={onClick}
+                                    variant="tertiary"
+                                />
+                            )}
+                            DropdownTitleComponent={() => (
+                                <div className="gd-automation-filters__dropdown-header">
+                                    <Typography tagName="h3">
+                                        <FormattedMessage id="dialogs.automation.filters.title" />
+                                    </Typography>
+                                </div>
+                            )}
+                            renderNoData={() => (
+                                <div className="gd-automation-filters__dropdown-no-filters">
+                                    <FormattedMessage id="dialogs.automation.filters.noFilters" />
+                                </div>
+                            )}
+                        />
+                    ) : null}
+                </div>
+                {isDashboardAutomation ? (
+                    <label className="input-checkbox-label gd-automation-filters__use-filters-checkbox s-automation-filters-use-filters-checkbox">
+                        <input
+                            type="checkbox"
+                            className="input-checkbox s-checkbox"
+                            checked={storeFilters}
+                            onChange={(e) => handleStoreFiltersChange(e.target.checked)}
+                            aria-label={intl.formatMessage({
+                                id: "dialogs.automation.filters.attachment",
+                            })}
+                        />
+                        <span className="input-label-text">
+                            <FormattedMessage id="dialogs.automation.filters.useFiltersMessage" />
+                        </span>
+                        <BubbleHoverTrigger eventsOnBubble>
+                            <Icon.QuestionMark
+                                className="gd-automation-filters__checkbox-icon"
+                                color={theme?.palette?.complementary?.c6 ?? gdColorStateBlank}
+                                width={14}
+                                height={14}
+                                ariaHidden={true}
+                            />
+                            <Bubble alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}>
+                                <FormattedMessage
+                                    id="dialogs.automation.filters.useFiltersMessage.tooltip"
+                                    values={{
+                                        a: (chunk) => (
+                                            <a
+                                                href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#filters"
+                                                target="_blank"
+                                                rel="noreferrer"
+                                            >
+                                                {chunk}
+                                            </a>
+                                        ),
+                                    }}
+                                />
+                            </Bubble>
+                        </BubbleHoverTrigger>
+                    </label>
+                ) : (
+                    <div className="gd-automation-filters__message">
+                        <FormattedMessage id="dialogs.automation.filters.activeFilters" />
+                    </div>
+                )}
+                {areFiltersMissing ? (
+                    <div className="gd-automation-filters__warning-message">
+                        <FormattedMessage
+                            id="dialogs.automation.filters.missing"
+                            values={{
+                                b: (chunk) => <strong>{chunk}</strong>,
+                            }}
+                        />
+                    </div>
+                ) : null}
+            </div>
         </div>
     );
+};
+
+interface IAutomationFilterProps {
+    filter: FilterContextItem;
+    attributeConfigs: IDashboardAttributeFilterConfig[];
+    dateConfigs: IDashboardDateFilterConfigItem[];
+    onChange: (filter: FilterContextItem | undefined) => void;
+    onDelete: (filter: FilterContextItem) => void;
+}
+
+const AutomationFilter: React.FC<IAutomationFilterProps> = ({
+    filter,
+    attributeConfigs,
+    dateConfigs,
+    onChange,
+    onDelete,
+}) => {
+    if (isDashboardAttributeFilter(filter)) {
+        const config = attributeConfigs.find(
+            (attribute) => attribute.localIdentifier === filter.attributeFilter.localIdentifier,
+        );
+        const displayAsLabel = config?.displayAsLabel;
+        const isLocked = config?.mode === "readonly";
+
+        return (
+            <AutomationAttributeFilter
+                key={filter.attributeFilter.localIdentifier}
+                filter={filter}
+                onChange={onChange}
+                onDelete={onDelete}
+                isLocked={isLocked}
+                displayAsLabel={displayAsLabel}
+            />
+        );
+    } else {
+        const config = dateConfigs.find((date) =>
+            areObjRefsEqual(date.dateDataSet, filter.dateFilter.dataSet),
+        );
+        const isLocked = config?.config.mode === "readonly";
+
+        return (
+            <AutomationDateFilter
+                key={filter.dateFilter.localIdentifier}
+                filter={filter}
+                onChange={onChange}
+                onDelete={onDelete}
+                isLocked={isLocked}
+            />
+        );
+    }
 };
