@@ -135,7 +135,13 @@ export type {
     UiMenuStaticItemProps,
     IUiMenuInteractiveItem,
     UiMenuInteractiveItemProps,
-    UiMenuHeaderProps,
+    IUiMenuGroupItem,
+    UiMenuGroupItemProps,
+    UiMenuInteractiveItemWrapperProps,
+    UiMenuItemProps,
+    IUiMenuControlType,
+    IUiMenuPluggableComponents,
+    IUiMenuItemData,
 } from "./@ui/UiMenu/types.js";
 
 export { makeMenuKeyboardNavigation } from "./@ui/@utils/keyboardNavigation.js";
