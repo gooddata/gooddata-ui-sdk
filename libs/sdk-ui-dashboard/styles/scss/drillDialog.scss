@@ -13,7 +13,8 @@ $border-color: #dde4eb;
 $description-width: 220px;
 $description-width-mobile: 320px;
 
-.gd-dialog.gd-drill-modal-dialog {
+.gd-dialog.gd-drill-modal-dialog,
+.gd-dialog.gd-drill-modal-dialog.overlay {
     position: relative;
     display: flex;
     flex-direction: column;

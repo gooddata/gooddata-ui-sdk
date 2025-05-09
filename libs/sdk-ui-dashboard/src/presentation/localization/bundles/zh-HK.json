@@ -22,6 +22,8 @@
     "options.menu.export.PDF": "快照（.pdf）",
     "options.menu.schedule.email": "排程匯出",
     "options.menu.delete": "刪除",
+    "options.menu.data.too.large": "由於結果中的數據點過多，無法導出。",
+    "options.menu.unsupported.raw.error": "由於數據點過多或結果錯誤，無法匯出",
     "dialogs.export.cells": "細胞",
     "dialogs.export.filters": "可視化上下文",
     "dialogs.export.includeFilters": "包括應用嘅過濾器",

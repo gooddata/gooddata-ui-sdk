@@ -22,6 +22,8 @@
     "options.menu.export.PDF": "Tilannekuva (.pdf)",
     "options.menu.schedule.email": "Aikatauluta vienti",
     "options.menu.delete": "Poista",
+    "options.menu.data.too.large": "Vienti ei ole käytettävissä, koska tuloksessa on liian monta datapistettä.",
+    "options.menu.unsupported.raw.error": "Vienti ei ole käytettävissä liian monien tietopisteiden tai tuloksen virheen vuoksi",
     "dialogs.export.cells": "SOLUT",
     "dialogs.export.filters": "VISUALISOINNIN KONTEKSTI",
     "dialogs.export.includeFilters": "Sisällytä käytetyt suodattimet",

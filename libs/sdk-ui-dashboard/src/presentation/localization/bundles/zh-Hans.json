@@ -129,6 +129,8 @@
     "options.menu.schedule.email.recipient.warning.existed": "您已经添加了此收件人。",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "此电子邮件地址不属于此工作区。收件人可能会收到敏感数据。",
     "options.menu.schedule.email.recipient.external.not.allowed": "此电子邮件地址不属于此工作区。只有此计划的作者才能添加此电子邮件地址。",
+    "options.menu.data.too.large": "由于结果中的数据点过多，无法导出。",
+    "options.menu.unsupported.raw.error": "由于数据点过多或结果有误，无法导出。",
     "delete": "删除",
     "close": "关",
     "cancel": "取消",

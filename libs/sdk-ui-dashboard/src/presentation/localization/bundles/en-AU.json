@@ -22,6 +22,8 @@
     "options.menu.export.PDF": "Snapshot (.pdf)",
     "options.menu.schedule.email": "Schedule export",
     "options.menu.delete": "Delete",
+    "options.menu.data.too.large": "Export unavailable due to too many data points in the result.",
+    "options.menu.unsupported.raw.error": "Export unavailable due to too many data points or error in the result.",
     "dialogs.export.cells": "CELLS",
     "dialogs.export.filters": "VISUALISATION CONTEXT",
     "dialogs.export.includeFilters": "Include applied filters",

@@ -22,6 +22,8 @@
     "options.menu.export.PDF": "Schnappschuss (.pdf)",
     "options.menu.schedule.email": "Exportvorgang planen",
     "options.menu.delete": "Löschen",
+    "options.menu.data.too.large": "Export aufgrund zu vieler Datenpunkte im Ergebnis nicht verfügbar.",
+    "options.menu.unsupported.raw.error": "Export aufgrund zu vieler Datenpunkte oder Fehler im Ergebnis nicht verfügbar",
     "dialogs.export.cells": "ZELLEN",
     "dialogs.export.filters": "KONTEXT DER VISUALISIERUNG",
     "dialogs.export.includeFilters": "Angewendete Filter einschließen",

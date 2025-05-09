@@ -215,7 +215,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
         dropdownId,
         ariaAttributes: {
             role: "button",
-            "aria-controls": dropdownId,
+            "aria-controls": isOpen ? dropdownId : undefined,
             "aria-expanded": isOpen,
             "aria-haspopup": accessibilityConfig?.popupRole,
         },
