@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Icon, Typography, UiButton, UiIconButton } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { noop } from "lodash";
+import noop from "lodash/noop.js";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { gdColorStateBlank } from "../../constants/colors.js";
