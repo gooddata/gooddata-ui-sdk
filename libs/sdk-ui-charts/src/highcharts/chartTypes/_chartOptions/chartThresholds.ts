@@ -40,62 +40,191 @@ export const generateZones = (thresholdSeries: ISeriesDataItem[]): IZone[] => {
 };
 
 export const getTrendDividerPlotLines = (thresholdSeries: ISeriesDataItem[]) =>
-    thresholdSeries.reduce<number[]>((indexes, { y: value }, i, arr) => {
-        if (i > 0) {
-            const currentIsEmpty = isEmptyDataPoint(value);
-            const previousIsEmpty = isEmptyDataPoint(arr[i - 1].y);
+    thresholdSeries.reduce<number[]>((indexes, dataPoint, index, arr) => {
+        if (index > 0) {
+            const currentIsEmpty = isEmptyDataPoint(dataPoint.y);
+            const previousIsEmpty = isEmptyDataPoint(arr[index - 1].y);
             if (currentIsEmpty && !previousIsEmpty) {
-                indexes.push(i - 1); // the plot line will be placed at last non-empty point
+                indexes.push(index - 1); // the plot line will be placed at last non-empty point
             }
             if (!currentIsEmpty && previousIsEmpty) {
-                indexes.push(i); // the plot line will be placed at the current non-empty point
+                indexes.push(index); // the plot line will be placed at the current non-empty point
             }
         }
         return indexes;
     }, []);
+
+export const getStackedTrendDividerPlotLines = (
+    dataSeries: ISeriesDataItem[],
+    thresholdSeries: ISeriesDataItem[],
+) =>
+    thresholdSeries.reduce<number[]>((indexes, dataPoint, index, arr) => {
+        if (index > 0) {
+            const currentThresholdIsEmpty = isEmptyDataPoint(dataPoint.y);
+            const previousThresholdIsEmpty = isEmptyDataPoint(arr[index - 1].y);
+            const currentDataIsEmpty = isEmptyDataPoint(dataSeries[index].y);
+            const previousDataIsEmpty = isEmptyDataPoint(dataSeries[index - 1].y);
+
+            if (currentThresholdIsEmpty && !previousThresholdIsEmpty && !currentDataIsEmpty) {
+                indexes.push(index - 1); // the plot line will be placed at last non-empty point
+            }
+            if (!currentThresholdIsEmpty && previousThresholdIsEmpty && !previousDataIsEmpty) {
+                indexes.push(index); // the plot line will be placed at the current non-empty point
+            }
+        }
+        return indexes;
+    }, []);
+
+export interface ISeriesWithPlotLines {
+    series: ISeriesItem[];
+    plotLines?: number[];
+}
+
+const isThresholdSetupValid = (
+    type: VisType,
+    series: ISeriesItem[],
+    config: IChartConfig,
+    thresholdMeasures: string[],
+) =>
+    isLineChart(type) &&
+    config.enableLineChartTrendThreshold &&
+    thresholdMeasures.length > 0 &&
+    series.length > 0 &&
+    series[0].data.length > 0;
+
+const findThresholdMeasureIndex = (dv: DataViewFacade, thresholdMeasures: string[]) =>
+    dv
+        .meta()
+        .measureDescriptors()
+        .findIndex((measure) => thresholdMeasures.includes(measure.measureHeaderItem.localIdentifier));
+
+const isStackedChart = (dv: DataViewFacade) => dv.meta().attributeDescriptors().length === 2;
+
+const isThresholdMeasureIndexValid = (thresholdMeasureIndex: number, series: ISeriesItem[]) =>
+    thresholdMeasureIndex > -1 && thresholdMeasureIndex < series.length;
 
 export function setupThresholdZones(
     type: VisType,
     series: ISeriesItem[],
     dv: DataViewFacade,
     config: IChartConfig,
-): { series: ISeriesItem[]; plotLines?: number[] } {
+): ISeriesWithPlotLines {
     const thresholdMeasures = config.thresholdMeasures || [];
 
-    if (
-        !isLineChart(type) ||
-        !config.enableLineChartTrendThreshold ||
-        thresholdMeasures.length === 0 ||
-        series.length === 0 ||
-        series[0].data.length === 0
-    ) {
+    if (!isThresholdSetupValid(type, series, config, thresholdMeasures)) {
         return { series };
     }
 
-    const thresholdMeasureIndex = dv
-        .meta()
-        .measureDescriptors()
-        .findIndex((measure) => thresholdMeasures.includes(measure.measureHeaderItem.localIdentifier));
+    const thresholdMeasureIndex = findThresholdMeasureIndex(dv, thresholdMeasures);
 
-    if (thresholdMeasureIndex === -1) {
+    if (!isThresholdMeasureIndexValid(thresholdMeasureIndex, series)) {
         return { series };
     }
+    return isStackedChart(dv)
+        ? computeZonesForStackedChart(series, thresholdMeasureIndex)
+        : computeZonesForNonStackedChart(series, thresholdMeasureIndex);
+}
 
+const areZonesValid = (zones: IZone[]) =>
+    !(zones.length === 0 || (zones.length === 1 && zones[0].dashStyle === "solid"));
+
+function computeZonesForNonStackedChart(
+    series: ISeriesItem[],
+    thresholdMeasureIndex: number,
+): ISeriesWithPlotLines {
     const renderedSeries = series.filter((_value, index) => index !== thresholdMeasureIndex);
     const thresholdSeries = series[thresholdMeasureIndex];
+
     const zones = generateZones(thresholdSeries.data);
 
-    if (zones.length === 0 || (zones.length === 1 && zones[0].dashStyle === "solid")) {
+    if (!areZonesValid(zones)) {
         // no zone was generated, there's no need to update series, just don't render the threshold series
         return { series: renderedSeries };
     }
 
     return {
-        series: renderedSeries.map((series) => ({
+        series: renderedSeries.map((series, index) => ({
             ...series,
+            legendIndex: index,
             zoneAxis: "x",
             zones,
         })),
         plotLines: getTrendDividerPlotLines(thresholdSeries.data),
     };
 }
+
+function computeZonesForStackedChart(
+    series: ISeriesItem[],
+    thresholdMeasureIndex: number,
+): ISeriesWithPlotLines {
+    const pairedSeries = series.map((series) => {
+        // split each series data to two new series, one with series data, one with threshold zone data
+        const [oddData, evenData] = series.data.reduce<[ISeriesDataItem[], ISeriesDataItem[]]>(
+            ([odd, even], item, index) => {
+                if (index % 2 === 0) {
+                    even.push(item);
+                } else {
+                    odd.push(item);
+                }
+                return [odd, even];
+            },
+            [[], []],
+        );
+        // determine which series will go first, based on order of measures in bucket (to match the buckets)
+        const firstSeriesData = thresholdMeasureIndex === 0 ? oddData : evenData;
+        const secondSeriesData = thresholdMeasureIndex === 0 ? evenData : oddData;
+        return [
+            {
+                ...series,
+                data: firstSeriesData,
+            },
+            {
+                ...series,
+                data: secondSeriesData,
+            },
+        ];
+    });
+
+    // compute zone per series pair, hide threshold series, even when no zone was generated
+    const zonedSeries: ISeriesItem[] = pairedSeries.map(([dataSeries, thresholdSeries], index) => {
+        const zones = generateZones(thresholdSeries.data);
+        if (!areZonesValid(zones)) {
+            return dataSeries;
+        }
+
+        return {
+            ...dataSeries,
+            legendIndex: index,
+            zoneAxis: "x",
+            zones,
+        };
+    });
+
+    const plotLines = pairedSeries.flatMap(([dataSeries, thresholdSeries]) =>
+        getStackedTrendDividerPlotLines(dataSeries.data, thresholdSeries.data),
+    );
+
+    return { series: zonedSeries, plotLines };
+}
+
+export const filterThresholdZonesCategories = (
+    type: VisType,
+    categories: any[],
+    series: ISeriesItem[],
+    dv: DataViewFacade,
+    config: IChartConfig,
+): any[] => {
+    const thresholdMeasures = config.thresholdMeasures || [];
+
+    if (!isThresholdSetupValid(type, series, config, thresholdMeasures)) {
+        return categories;
+    }
+
+    const thresholdMeasureIndex = findThresholdMeasureIndex(dv, thresholdMeasures);
+    if (!isThresholdMeasureIndexValid(thresholdMeasureIndex, series)) {
+        return categories;
+    }
+    // threshold chart series are split: odd numbers go to data series, even to threshold series,
+    // therefore we must filter out odd categories, as each category is duplicated
+    return isStackedChart(dv) ? categories.filter((_, index) => index % 2 === 0) : categories;
+};

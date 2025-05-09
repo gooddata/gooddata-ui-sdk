@@ -1,12 +1,12 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
 import { describe, it, expect } from "vitest";
+import { BucketNames } from "@gooddata/sdk-ui";
 
 import { IBucketItem, IBucketOfFun, IFilters } from "../../interfaces/Visualization.js";
 import * as bucketRules from "../bucketRules.js";
 import * as referencePointMocks from "../../tests/mocks/referencePointMocks.js";
-import { BucketNames } from "@gooddata/sdk-ui";
 
 describe("isShowInPercentAllowed", () => {
     it("should return true if buckets rules met", () => {
@@ -562,6 +562,75 @@ describe("partial rules", () => {
         it("should return false when only attribute filter is in the filter bucket", () => {
             expect(
                 bucketRules.hasGlobalDateFilterIgnoreAllTime(referencePointMocks.attributeFilterBucketItem),
+            ).toBeFalsy();
+        });
+    });
+
+    describe("hasOneMeasureOrAlsoLineStyleControlMeasure", () => {
+        it("should return true when there's just one measure in bucket", () => {
+            const bucketsWithOneMeasure: IBucketOfFun[] = [
+                {
+                    localIdentifier: BucketNames.MEASURES,
+                    items: [referencePointMocks.masterMeasureItems[0]],
+                },
+            ];
+            expect(
+                bucketRules.hasOneMeasureOrAlsoLineStyleControlMeasure(bucketsWithOneMeasure),
+            ).toBeTruthy();
+        });
+
+        it("should return false when there's two measures in bucket", () => {
+            const bucketsWithTwoMeasures: IBucketOfFun[] = [
+                {
+                    localIdentifier: BucketNames.MEASURES,
+                    items: [
+                        referencePointMocks.masterMeasureItems[0],
+                        referencePointMocks.masterMeasureItems[1],
+                    ],
+                },
+            ];
+            expect(
+                bucketRules.hasOneMeasureOrAlsoLineStyleControlMeasure(bucketsWithTwoMeasures),
+            ).toBeFalsy();
+        });
+
+        it("should return true when there's two measures in bucket but one is line style control metric", () => {
+            const bucketsWithTwoMeasures: IBucketOfFun[] = [
+                {
+                    localIdentifier: BucketNames.MEASURES,
+                    items: [referencePointMocks.masterMeasureItems[0], referencePointMocks.thresholdMeasure],
+                },
+            ];
+            expect(
+                bucketRules.hasOneMeasureOrAlsoLineStyleControlMeasure(bucketsWithTwoMeasures),
+            ).toBeTruthy();
+        });
+
+        it("should return false when there's three measures in bucket but one is line style control metric", () => {
+            const bucketsWithTwoMeasures: IBucketOfFun[] = [
+                {
+                    localIdentifier: BucketNames.MEASURES,
+                    items: [
+                        referencePointMocks.masterMeasureItems[0],
+                        referencePointMocks.masterMeasureItems[1],
+                        referencePointMocks.thresholdMeasure,
+                    ],
+                },
+            ];
+            expect(
+                bucketRules.hasOneMeasureOrAlsoLineStyleControlMeasure(bucketsWithTwoMeasures),
+            ).toBeFalsy();
+        });
+
+        it("should return false when there's two measures in bucket, both are line style control metric", () => {
+            const bucketsWithTwoMeasures: IBucketOfFun[] = [
+                {
+                    localIdentifier: BucketNames.MEASURES,
+                    items: [referencePointMocks.thresholdMeasure, referencePointMocks.thresholdMeasure],
+                },
+            ];
+            expect(
+                bucketRules.hasOneMeasureOrAlsoLineStyleControlMeasure(bucketsWithTwoMeasures),
             ).toBeFalsy();
         });
     });

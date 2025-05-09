@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IReferencePoint,
     IBucketItem,
@@ -4206,4 +4206,14 @@ export const tableWith50MeasuresAndDerivedMeasuresNoRowsNoColumns: IReferencePoi
     properties: {
         sortItems: [],
     },
+};
+
+export const thresholdMeasure: IBucketItem = {
+    localIdentifier: "thresholdMeasure",
+    type: "metric",
+    aggregation: null,
+    attribute: "aazb6kroa3iC",
+    showInPercent: null,
+    showOnSecondaryAxis: null,
+    isThresholdMeasure: true,
 };

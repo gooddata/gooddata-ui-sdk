@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-04-24T14:50:40.562Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-05-07T11:21:04.989Z; */
 const fp_004031cbc9081950b7284311b004fe11 = {
     definition: require("./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/definition.json"),
     executionResult: require("./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/executionResult.json"),
@@ -1009,6 +1009,12 @@ const fp_c669c516467718db4b1e2d4f23e0b3fa = {
     executionResult: require("./uiTestScenarios/executions/c669c516467718db4b1e2d4f23e0b3fa/executionResult.json"),
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/c669c516467718db4b1e2d4f23e0b3fa/dataView_o0_0s100_1000.json"),
 };
+const fp_c925112d00db27fd227dcc3945f3467e = {
+    definition: require("./uiTestScenarios/executions/c925112d00db27fd227dcc3945f3467e/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/c925112d00db27fd227dcc3945f3467e/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/c925112d00db27fd227dcc3945f3467e/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/c925112d00db27fd227dcc3945f3467e/scenarios.json"),
+};
 const fp_cd90f05d3866c307575d70866a88b1de = {
     definition: require("./uiTestScenarios/executions/cd90f05d3866c307575d70866a88b1de/definition.json"),
     executionResult: require("./uiTestScenarios/executions/cd90f05d3866c307575d70866a88b1de/executionResult.json"),
@@ -1633,6 +1639,7 @@ export const Scenarios = {
             execution: fp_93f2f2113af0d1b68bc490daca8180d9,
         },
         SingleMeasureWithTrendBy: { scenarioIndex: 0, execution: fp_afde79742c581671ba35008bf5c3a1e6 },
+        StackedThresholdZones: { scenarioIndex: 0, execution: fp_c925112d00db27fd227dcc3945f3467e },
         ThresholdZones: { scenarioIndex: 0, execution: fp_d1829d7c8b6eed85fdb839f4f78dc813 },
         TwoMeasuresWithTrendBy: { scenarioIndex: 0, execution: fp_d5fe35d865cc73bd6090e9f8c121bf99 },
         Themed: { scenarioIndex: 1, execution: fp_d5fe35d865cc73bd6090e9f8c121bf99 },
@@ -4860,6 +4867,9 @@ const i_LineChart_f08c92332b746f94d3c08c53ecf330d0 = {
 const i_LineChart_f1549e99b31f4a59bd086b37c25e48d0 = {
     obj: require("./uiTestScenarios/insights/LineChart.f1549e99b31f4a59bd086b37c25e48d0/obj.json"),
 };
+const i_LineChart_f24dfe2eeb31cbd9c41e5a2d65afd020 = {
+    obj: require("./uiTestScenarios/insights/LineChart.f24dfe2eeb31cbd9c41e5a2d65afd020/obj.json"),
+};
 const i_LineChart_f2f3b7183019e9665e8b07b23bd89ae5 = {
     obj: require("./uiTestScenarios/insights/LineChart.f2f3b7183019e9665e8b07b23bd89ae5/obj.json"),
 };
@@ -6555,6 +6565,7 @@ export const Insights = {
         SingleMeasure: i_LineChart_a9b12ed216e07806395dd7afe624fc1e,
         SingleMeasureWithTrendByAndSegmentBy: i_LineChart_bdaca36f01c7ddfca3e23feedc428bfd,
         ThresholdZones: i_LineChart_d9455444afa1b3b22a3da9ff4bf2fd1a,
+        StackedThresholdZones: i_LineChart_f24dfe2eeb31cbd9c41e5a2d65afd020,
         SingleMeasureWithTrendBy: i_LineChart_f53080815428049f4d855f171c225465,
         TwoMeasuresWithTrendByAndSortByAttribute: i_LineChart_f58a5d06393484961a2b86498c591843,
         WithOneMeasureAndSegmentByDate: i_LineChart_fbc06303a4c4d293de075e38d9a4a3e9,
@@ -6902,6 +6913,7 @@ export const Recordings = {
         fp_c4c31413a7b65502296aba901f6b50f8,
         fp_c4fde85b0451ca50074d2b871a914cc2,
         fp_c669c516467718db4b1e2d4f23e0b3fa,
+        fp_c925112d00db27fd227dcc3945f3467e,
         fp_cd90f05d3866c307575d70866a88b1de,
         fp_cfa87f64d11e0f72705ca631d6d73a52,
         fp_d0ce98c16101df0c8b103babf6a85a4c,
@@ -7926,6 +7938,7 @@ export const Recordings = {
             i_LineChart_e7e8c59a406f3a142124f1ccfe33e17e,
             i_LineChart_f08c92332b746f94d3c08c53ecf330d0,
             i_LineChart_f1549e99b31f4a59bd086b37c25e48d0,
+            i_LineChart_f24dfe2eeb31cbd9c41e5a2d65afd020,
             i_LineChart_f2f3b7183019e9665e8b07b23bd89ae5,
             i_LineChart_f53080815428049f4d855f171c225465,
             i_LineChart_f58a5d06393484961a2b86498c591843,

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
 import forEach from "lodash/forEach.js";
@@ -10,7 +10,12 @@ import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
 import { UICONFIG, OPEN_AS_REPORT, SUPPORTED } from "../../constants/uiConfig.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
 
-import { hasNoMeasures, hasOneMeasure, hasSomeSegmentByItems, hasNoStacksWithDate } from "../bucketRules.js";
+import {
+    hasNoMeasures,
+    hasSomeSegmentByItems,
+    hasNoStacksWithDate,
+    hasOneMeasureOrAlsoLineStyleControlMeasure,
+} from "../bucketRules.js";
 
 import { getStackItems, setBucketTitles } from "../bucketHelper.js";
 import { getTranslation } from "../translations.js";
@@ -66,7 +71,9 @@ export function setLineChartUiConfig(
 
     const measuresCanAddItems = hasNoMeasures(buckets) || hasNoStacksWithDate(buckets);
     const segmentCanAddItems =
-        hasSomeSegmentByItems(buckets) || hasNoMeasures(buckets) || hasOneMeasure(buckets);
+        hasSomeSegmentByItems(buckets) ||
+        hasNoMeasures(buckets) ||
+        hasOneMeasureOrAlsoLineStyleControlMeasure(buckets);
 
     set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
     set(

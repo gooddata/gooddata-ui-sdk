@@ -16367,6 +16367,249 @@ exports[`getAvailableDrillTargets > should provide correct available drill targe
 }
 `;
 
+exports[`getAvailableDrillTargets > should provide correct available drill targets for: LineChart - stacked threshold zones 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "dt_closedate_timestamp.month",
+            "name": "Closed - Month/Year",
+            "ref": undefined,
+            "uri": "",
+          },
+          "format": {
+            "locale": "en-US",
+            "pattern": "MMM y",
+          },
+          "granularity": "MONTH",
+          "identifier": "dt_closedate_timestamp.month",
+          "localIdentifier": "a_dt_closedate_timestamp.month",
+          "name": "Closed - Month/Year",
+          "primaryLabel": {
+            "identifier": "dt_closedate_timestamp.month",
+            "type": "displayForm",
+          },
+          "ref": undefined,
+          "totalItems": [],
+          "uri": "",
+        },
+      },
+      "intersectionAttributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
+              "identifier": "dt_closedate_timestamp.month",
+              "name": "Closed - Month/Year",
+              "ref": undefined,
+              "uri": "",
+            },
+            "format": {
+              "locale": "en-US",
+              "pattern": "MMM y",
+            },
+            "granularity": "MONTH",
+            "identifier": "dt_closedate_timestamp.month",
+            "localIdentifier": "a_dt_closedate_timestamp.month",
+            "name": "Closed - Month/Year",
+            "primaryLabel": {
+              "identifier": "dt_closedate_timestamp.month",
+              "type": "displayForm",
+            },
+            "ref": undefined,
+            "totalItems": [],
+            "uri": "",
+          },
+        },
+      ],
+    },
+    {
+      "attribute": {
+        "attributeHeader": {
+          "formOf": {
+            "identifier": "dt_closedate_timestamp.day",
+            "name": "Closed - Date",
+            "ref": undefined,
+            "uri": "",
+          },
+          "format": {
+            "locale": "en-US",
+            "pattern": "M/d/y",
+          },
+          "granularity": "DAY",
+          "identifier": "dt_closedate_timestamp.day",
+          "localIdentifier": "a_dt_closedate_timestamp.day",
+          "name": "Closed - Date",
+          "primaryLabel": {
+            "identifier": "dt_closedate_timestamp.day",
+            "type": "displayForm",
+          },
+          "ref": undefined,
+          "totalItems": [],
+          "uri": "",
+        },
+      },
+      "intersectionAttributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
+              "identifier": "dt_closedate_timestamp.day",
+              "name": "Closed - Date",
+              "ref": undefined,
+              "uri": "",
+            },
+            "format": {
+              "locale": "en-US",
+              "pattern": "M/d/y",
+            },
+            "granularity": "DAY",
+            "identifier": "dt_closedate_timestamp.day",
+            "localIdentifier": "a_dt_closedate_timestamp.day",
+            "name": "Closed - Date",
+            "primaryLabel": {
+              "identifier": "dt_closedate_timestamp.day",
+              "type": "displayForm",
+            },
+            "ref": undefined,
+            "totalItems": [],
+            "uri": "",
+          },
+        },
+      ],
+    },
+  ],
+  "measures": [
+    {
+      "attributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
+              "identifier": "dt_closedate_timestamp.month",
+              "name": "Closed - Month/Year",
+              "ref": undefined,
+              "uri": "",
+            },
+            "format": {
+              "locale": "en-US",
+              "pattern": "MMM y",
+            },
+            "granularity": "MONTH",
+            "identifier": "dt_closedate_timestamp.month",
+            "localIdentifier": "a_dt_closedate_timestamp.month",
+            "name": "Closed - Month/Year",
+            "primaryLabel": {
+              "identifier": "dt_closedate_timestamp.month",
+              "type": "displayForm",
+            },
+            "ref": undefined,
+            "totalItems": [],
+            "uri": "",
+          },
+        },
+        {
+          "attributeHeader": {
+            "formOf": {
+              "identifier": "dt_closedate_timestamp.day",
+              "name": "Closed - Date",
+              "ref": undefined,
+              "uri": "",
+            },
+            "format": {
+              "locale": "en-US",
+              "pattern": "M/d/y",
+            },
+            "granularity": "DAY",
+            "identifier": "dt_closedate_timestamp.day",
+            "localIdentifier": "a_dt_closedate_timestamp.day",
+            "name": "Closed - Date",
+            "primaryLabel": {
+              "identifier": "dt_closedate_timestamp.day",
+              "type": "displayForm",
+            },
+            "ref": undefined,
+            "totalItems": [],
+            "uri": "",
+          },
+        },
+      ],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "#,##0",
+          "identifier": "timeline_bop",
+          "localIdentifier": "m_timeline_bop",
+          "name": "_Timeline [BOP]",
+          "ref": undefined,
+        },
+      },
+    },
+    {
+      "attributes": [
+        {
+          "attributeHeader": {
+            "formOf": {
+              "identifier": "dt_closedate_timestamp.month",
+              "name": "Closed - Month/Year",
+              "ref": undefined,
+              "uri": "",
+            },
+            "format": {
+              "locale": "en-US",
+              "pattern": "MMM y",
+            },
+            "granularity": "MONTH",
+            "identifier": "dt_closedate_timestamp.month",
+            "localIdentifier": "a_dt_closedate_timestamp.month",
+            "name": "Closed - Month/Year",
+            "primaryLabel": {
+              "identifier": "dt_closedate_timestamp.month",
+              "type": "displayForm",
+            },
+            "ref": undefined,
+            "totalItems": [],
+            "uri": "",
+          },
+        },
+        {
+          "attributeHeader": {
+            "formOf": {
+              "identifier": "dt_closedate_timestamp.day",
+              "name": "Closed - Date",
+              "ref": undefined,
+              "uri": "",
+            },
+            "format": {
+              "locale": "en-US",
+              "pattern": "M/d/y",
+            },
+            "granularity": "DAY",
+            "identifier": "dt_closedate_timestamp.day",
+            "localIdentifier": "a_dt_closedate_timestamp.day",
+            "name": "Closed - Date",
+            "primaryLabel": {
+              "identifier": "dt_closedate_timestamp.day",
+              "type": "displayForm",
+            },
+            "ref": undefined,
+            "totalItems": [],
+            "uri": "",
+          },
+        },
+      ],
+      "measure": {
+        "measureHeaderItem": {
+          "format": "#,##0",
+          "identifier": "metric_has_null_value",
+          "localIdentifier": "m_metric_has_null_value",
+          "name": "Metric has null value",
+          "ref": undefined,
+        },
+      },
+    },
+  ],
+}
+`;
+
 exports[`getAvailableDrillTargets > should provide correct available drill targets for: LineChart - themed 1`] = `
 {
   "attributes": [

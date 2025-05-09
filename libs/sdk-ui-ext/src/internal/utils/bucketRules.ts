@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import some from "lodash/some.js";
 import every from "lodash/every.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -51,6 +51,12 @@ export function getMasterMeasuresCount(buckets: IBucketOfFun[], bucketLocalIdent
 
 export function hasOneMasterMeasureInBucket(buckets: IBucketOfFun[], bucketLocalIdentifier: string): boolean {
     return getMasterMeasuresCount(buckets, bucketLocalIdentifier) === 1;
+}
+
+export function hasOneMeasureOrAlsoLineStyleControlMeasure(buckets: IBucketOfFun[]): boolean {
+    const measures = getBucketItems(buckets, BucketNames.MEASURES);
+    const lineStyleControlMetrics = measures.filter((measure) => measure.isThresholdMeasure);
+    return measures.length === 1 || (measures.length === 2 && lineStyleControlMetrics.length === 1);
 }
 
 export function filteredByDerivedMeasure(buckets: IBucketOfFun[], filters: IFilters): boolean {

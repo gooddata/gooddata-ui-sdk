@@ -4040,6 +4040,53 @@ exports[`DataAccess > should correctly identify series and slices for: LineChart
 }
 `;
 
+exports[`DataAccess > should correctly identify series and slices for: LineChart - stacked threshold zones 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 26,
+    "attributes": 1,
+    "measures": 2,
+    "seriesNames": [
+      "2013-04-17 > _Timeline [BOP]",
+      "2013-04-17 > Metric has null value",
+      "2013-04-20 > _Timeline [BOP]",
+      "2013-04-20 > Metric has null value",
+      "2013-04-24 > _Timeline [BOP]",
+      "2013-04-24 > Metric has null value",
+      "2013-04-26 > _Timeline [BOP]",
+      "2013-04-26 > Metric has null value",
+      "2013-04-27 > _Timeline [BOP]",
+      "2013-04-27 > Metric has null value",
+      "2013-05-02 > _Timeline [BOP]",
+      "2013-05-02 > Metric has null value",
+      "2013-05-03 > _Timeline [BOP]",
+      "2013-05-03 > Metric has null value",
+      "2013-05-15 > _Timeline [BOP]",
+      "2013-05-15 > Metric has null value",
+      "2013-05-17 > _Timeline [BOP]",
+      "2013-05-17 > Metric has null value",
+      "2013-05-18 > _Timeline [BOP]",
+      "2013-05-18 > Metric has null value",
+      "2013-05-22 > _Timeline [BOP]",
+      "2013-05-22 > Metric has null value",
+      "2013-05-24 > _Timeline [BOP]",
+      "2013-05-24 > Metric has null value",
+      "2013-05-31 > _Timeline [BOP]",
+      "2013-05-31 > Metric has null value",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 2,
+    "attributes": 1,
+    "sliceNames": [
+      "2013-04",
+      "2013-05",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess > should correctly identify series and slices for: LineChart - themed 1`] = `
 {
   "seriesDigest": {

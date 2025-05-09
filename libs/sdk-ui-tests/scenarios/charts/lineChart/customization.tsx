@@ -73,11 +73,24 @@ const thresholdZonesScenario = scenariosFor<ILineChartProps>("LineChart", LineCh
         },
     });
 
+const stackedThresholdZonesScenario = scenariosFor<ILineChartProps>("LineChart", LineChart)
+    .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
+    .addScenario("stacked threshold zones", {
+        measures: [ReferenceMd.TimelineBOP, ReferenceMd.MetricHasNullValue],
+        trendBy: ReferenceMd.DateDatasets.Closed.ClosedDate.Default,
+        segmentBy: ReferenceMd.DateDatasets.Closed.ClosedMonthYear.Default,
+        filters: [newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2013-04-17", "2013-05-31")],
+        config: {
+            thresholdMeasures: [measureLocalId(ReferenceMd.MetricHasNullValue)],
+        },
+    });
+
 export default [
     legendScenarios,
     dataLabelScenarios,
     dataPointScenarios,
     continuousLineScenario,
     thresholdZonesScenario,
+    stackedThresholdZonesScenario,
     ...legendResponziveScenarios,
 ];
