@@ -64,6 +64,11 @@
         "comment": "",
         "limit": 0
     },
+    "gs.header.workspaceSettings": {
+        "value": "Workspace settings",
+        "comment": "",
+        "limit": 0
+    },
     "gs.header.account.title": {
         "value": "Account",
         "comment": "",
