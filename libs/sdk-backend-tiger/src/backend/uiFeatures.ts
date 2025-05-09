@@ -271,7 +271,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSankeyChart: true,
     enableDependencyWheelChart: true,
     enableWaterfallChart: true,
-    enableCompositeGrain: false,
+    enableCompositeGrain: true,
     enableTableTotalRows: true,
     enablePdmRemovalDeprecationPhase: false,
     enableNewHeadline: true,
