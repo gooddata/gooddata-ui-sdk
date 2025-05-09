@@ -11,8 +11,8 @@ export const findItem = <InteractiveItemData, StaticItemData>(
             return item;
         }
 
-        if (item.type === "interactive" && item.subMenu) {
-            const foundItemInSubMenu = findItem(item.subMenu, predicate);
+        if ("subItems" in item && item.subItems !== undefined) {
+            const foundItemInSubMenu = findItem(item.subItems, predicate);
 
             if (foundItemInSubMenu) {
                 return foundItemInSubMenu;
@@ -45,23 +45,36 @@ export const getInteractiveItem = <InteractiveItemData, StaticItemData>(
     return findInteractiveItem(items, (item) => item.id === itemId);
 };
 
-export const getItemsByParent = <InteractiveItemData, StaticItemData>(
+export const getItemsByInteractiveParent = <InteractiveItemData, StaticItemData>(
     items: IUiMenuItem<InteractiveItemData, StaticItemData>[],
     parentId?: string,
 ): IUiMenuItem<InteractiveItemData, StaticItemData>[] | undefined => {
     const isRootLevel = parentId === undefined;
 
-    return isRootLevel ? items : findInteractiveItem(items, (item) => item.id === parentId)?.subMenu;
+    return isRootLevel ? items : findInteractiveItem(items, (item) => item.id === parentId)?.subItems;
 };
 
-export const getItemParent = <InteractiveItemData, StaticItemData>(
+export const getItemInteractiveParent = <InteractiveItemData, StaticItemData>(
     items: IUiMenuItem<InteractiveItemData, StaticItemData>[],
     itemId: string,
 ): IUiMenuInteractiveItem<InteractiveItemData, StaticItemData> | undefined => {
-    return findInteractiveItem(
-        items,
-        (item) => !!item.subMenu?.some((subMenuItem) => subMenuItem.id === itemId),
-    );
+    const parent = findItem(items, (item) => {
+        if (!("subItems" in item) || item.subItems === undefined) {
+            return false;
+        }
+
+        return item.subItems.some((subMenuItem) => subMenuItem.id === itemId);
+    });
+
+    if (parent?.type === "interactive") {
+        return parent;
+    }
+
+    if (parent?.type === "group") {
+        return getItemInteractiveParent(items, parent.id);
+    }
+
+    return undefined;
 };
 
 export const getSiblingItems = <InteractiveItemData, StaticItemData>(
@@ -73,7 +86,7 @@ export const getSiblingItems = <InteractiveItemData, StaticItemData>(
         return undefined;
     }
 
-    return getItemsByParent(items, getItemParent(items, itemId)?.id);
+    return getItemsByInteractiveParent(items, getItemInteractiveParent(items, itemId)?.id);
 };
 
 export const getNextSiblings = <InteractiveItemData, StaticItemData>(
@@ -114,16 +127,40 @@ export const getClosestFocusableSibling = <InteractiveItemData, StaticItemData>(
 }): IUiMenuItem<InteractiveItemData, StaticItemData> | undefined => {
     const { items, isItemFocusable, itemId, direction } = args;
 
+    const unwrappedItems = unwrapGroupItems(items);
+
     switch (direction) {
         case "forward":
             if (itemId === undefined) {
-                return items.find(isItemFocusable);
+                return unwrappedItems.find(isItemFocusable);
             }
-            return getNextSiblings(items, itemId).find(isItemFocusable);
+            return getNextSiblings(unwrappedItems, itemId).find(isItemFocusable);
         case "backward":
             if (itemId === undefined) {
-                return [...items].reverse().find(isItemFocusable);
+                return [...unwrappedItems].reverse().find(isItemFocusable);
             }
-            return getPreviousSiblings(items, itemId).find(isItemFocusable);
+            return getPreviousSiblings(unwrappedItems, itemId).find(isItemFocusable);
     }
 };
+
+export function unwrapGroupItems<InteractiveItemData, StaticItemData>(
+    items: IUiMenuItem<InteractiveItemData, StaticItemData>[],
+) {
+    const result: IUiMenuItem<InteractiveItemData, StaticItemData>[] = [];
+
+    for (const item of items) {
+        if (item.type === "group") {
+            result.push(...unwrapGroupItems(item.subItems));
+            continue;
+        }
+
+        if (item.type === "interactive" && item.subItems !== undefined) {
+            result.push({ ...item, subItems: unwrapGroupItems(item.subItems) });
+            continue;
+        }
+
+        result.push(item);
+    }
+
+    return result;
+}

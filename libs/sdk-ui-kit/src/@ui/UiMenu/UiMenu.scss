@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 @use "../../../styles/scss/variables";
+@use "../../../styles/scss/mixins";
 
 .gd-ui-kit-menu {
     $root: &;
@@ -62,18 +63,29 @@
         }
     }
 
+    &__group {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    &__group-title-container {
+        padding: 4px 10px;
+    }
+
+    &__group-title {
+        text-transform: uppercase;
+        color: variables.$gd-color-text-dimmed;
+        font-size: 10px;
+        font-weight: normal;
+        margin: 0;
+    }
+
     &__items {
         list-style: none;
         margin: 0;
         padding: 0;
         outline: none;
-
-        &:focus-visible #{$root}__item--isFocused {
-            outline-offset: -2px;
-            outline: auto 5px Highlight; /* For Firefox */
-            // stylelint-disable-next-line declaration-block-no-duplicate-properties
-            outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
-        }
     }
 
     &__item {
@@ -96,10 +108,14 @@
         #{$root}--controlType-keyboard #{$root}__items:focus &--isFocused:not(&--isDisabled) {
             background-color: variables.$is-focused-background;
             color: variables.$is-focused-color;
+
+            @include mixins.focus-ring;
         }
         // Controlled by keyboard and has focus, disabled
         #{$root}--controlType-keyboard #{$root}__items:focus &--isFocused#{&}--isDisabled {
             background-color: variables.$is-focused-background;
+
+            @include mixins.focus-ring;
         }
 
         &--isDisabled {

@@ -1,6 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 @use "../../../styles/scss/variables";
+@use "../../../styles/scss/mixins";
 
 .gd-ui-kit-listbox {
     $root: &;
@@ -26,10 +27,7 @@
         outline: none;
 
         &:focus-visible #{$root}__item--isFocused {
-            outline-offset: -2px;
-            outline: auto 5px Highlight; /* For Firefox */
-            // stylelint-disable-next-line declaration-block-no-duplicate-properties
-            outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
+            @include mixins.focus-ring;
         }
     }
 

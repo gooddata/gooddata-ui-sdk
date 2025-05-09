@@ -233,3 +233,9 @@
         visibility: hidden;
     }
 }
+
+@mixin focus-ring() {
+    outline-offset: -2px;
+    outline: auto 5px Highlight; /* For Firefox */
+    outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
+}

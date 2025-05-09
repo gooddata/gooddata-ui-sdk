@@ -38,9 +38,24 @@ const itemsWithSubMenu: IUiMenuItem<string, React.ReactNode>[] = [
         id: "item2",
         stringTitle: "Item with submenu",
         data: "data2",
-        subMenu: [
+        subItems: [
             { type: "interactive", id: "subitem1", stringTitle: "Submenu Item 1", data: "subdata1" },
             { type: "interactive", id: "subitem2", stringTitle: "Submenu Item 2", data: "subdata2" },
+        ],
+    },
+    { type: "interactive", id: "item3", stringTitle: "Item 3", data: "data3" },
+];
+
+const itemsWithGroup: IUiMenuItem<string, React.ReactNode>[] = [
+    { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
+    {
+        type: "group",
+        id: "group1",
+        stringTitle: "Group 1",
+        data: "Group title",
+        subItems: [
+            { type: "interactive", id: "groupitem1", stringTitle: "Group Item 1", data: "groupdata1" },
+            { type: "interactive", id: "groupitem2", stringTitle: "Group Item 2", data: "groupdata2" },
         ],
     },
     { type: "interactive", id: "item3", stringTitle: "Item 3", data: "data3" },
@@ -97,6 +112,10 @@ const UiMenuExamples = () => (
                     onSelect={noop}
                     ariaAttributes={defaultAriaAttributes}
                 />
+            </Example>
+
+            <Example title="Menu with Group Items">
+                <UiMenu items={itemsWithGroup} onSelect={noop} ariaAttributes={defaultAriaAttributes} />
             </Example>
         </div>
     </IntlProvider>
