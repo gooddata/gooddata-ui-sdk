@@ -3,10 +3,10 @@ import { extract } from "@formatjs/cli-lib";
 import fastGlob from "fast-glob";
 import * as path from "path";
 
-import { skipped, done, message, resultsInfo, fail } from "../utils/console.js";
-import { ToolkitConfigFile, DefaultLocale, UsageResult } from "../data.js";
-import { checkTranslations } from "./usage/checkTranslations.js";
+import { DefaultLocale, ToolkitConfigFile, UsageResult } from "../data.js";
 import { LocalesStructure } from "../schema/localization.js";
+import { done, fail, message, resultsInfo, skipped } from "../utils/console.js";
+import { checkTranslations } from "./usage/checkTranslations.js";
 
 const { sync } = fastGlob;
 
@@ -79,13 +79,28 @@ function errorBasedOnResults(results: UsageResult[], uncontrolled: Array<string>
         return new Error(`There are some uncontrolled and not ignored keys in localisation files.`);
     }
 
-    return results.reduce((error, { ignore, stats }) => {
+    return results.reduce((error, { ignore, stats, data }) => {
+        const unusedMessages = data.unusedMessages;
+        const missingMessages = data.missingMessages;
+
         if (ignore) {
             return error;
         }
 
         if (stats.missing > 0 || stats.unused > 0) {
-            return new Error(`There are some missing and unused keys in localisation files.`);
+            const details = [];
+            if (unusedMessages.length > 0) {
+                details.push(`Unused messages: ${unusedMessages.join(", ")}`);
+            }
+            if (missingMessages.length > 0) {
+                details.push(`Missing messages: ${missingMessages.join(", ")}`);
+            }
+
+            return new Error(
+                `There are some missing and unused keys in localisation files. Found ${
+                    stats.missing
+                } missing and ${stats.unused} unused keys.\n${details.join("\n")}`,
+            );
         }
 
         return error;
