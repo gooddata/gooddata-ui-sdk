@@ -96,7 +96,13 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                             accessibilityConfig={{ ariaExpanded: isExpanded ? "true" : "false" }}
                         />
                         <Bubble className="bubble-primary" alignPoints={[{ align: "bc tc" }]}>
-                            <FormattedMessage id={isExpanded ? "dialogs.showLess" : "dialogs.showAll"} />
+                            <FormattedMessage
+                                id={
+                                    isExpanded
+                                        ? "dialogs.automation.filters.showLess"
+                                        : "dialogs.automation.filters.showAll"
+                                }
+                            />
                         </Bubble>
                     </BubbleHoverTrigger>
                 ) : (
