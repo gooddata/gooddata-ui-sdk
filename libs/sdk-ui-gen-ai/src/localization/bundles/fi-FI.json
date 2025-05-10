@@ -28,5 +28,6 @@
     "gd.gen-ai.button.edit": "Muokkaa",
     "gd.gen-ai.save-dialog.label": "Nimi",
     "gd.gen-ai.save-dialog.title": "Nimeä visualisointisi",
-    "gd.gen-ai.save-dialog.description": "Anna uudelle visualisoinnille kuvaava nimi, jotta se on helpompi löytää myöhemmin."
+    "gd.gen-ai.save-dialog.description": "Anna uudelle visualisoinnille kuvaava nimi, jotta se on helpompi löytää myöhemmin.",
+    "gd.gen-ai.state.generating": "Luodaan vastaustasi…"
 }

@@ -609,7 +609,7 @@
     "userManagement.createUserGroup.inputPlaceholder": "Naam",
     "gs.header.account.title": "Account",
     "visualization.cluster": "Cluster",
-    "richText.placeholder": "Markdown-tekst hier toevoegen...",
+    "richText.placeholder": "Markdown gebruiken om tekst en referentiegegevens op te maken:",
     "richText.tooltip": "U kunt markdown-syntaxis gebruiken om de beschrijving op te maken:",
     "recurrence.starts": "Begint op",
     "recurrence.repeats": "Herhaalt",
@@ -693,5 +693,15 @@
     "recurrence.error.wrongFormat": "Fout: Ongeldig formaat - gebruik het Spring cron formaat met zes velden: seconden, minuten, uren, dag van de maand, maand en dag van de week. <a>Meer informatie</a>",
     "recurrence.datetime.format.help": "Formaat: {dateFormat}",
     "recurrence.datetime.empty.error": "Fout: Verplicht veld - voer een geldige datum in om verder te gaan.",
-    "recurrence.datetime.wrong.format.error": "Fout: Ongeldige datum - formaat moet zijn {dateFormat}"
+    "recurrence.datetime.wrong.format.error": "Fout: Ongeldige datum - formaat moet zijn {dateFormat}",
+    "gs.time": "tijd",
+    "gs.header.ai": "Open AI-assistent",
+    "visualizations.headline.pagination.next.metricLabel": "Toon volgende vergelijkende metriek",
+    "visualizations.headline.pagination.previous.metricLabel": "Toon vorige vergelijkende metriek",
+    "shareDialog.share.grantee.addLabel": "Gebruikers of groepen toevoegen",
+    "shareDialog.share.granular.grantee.permission.label": "Toestemming",
+    "dialogs.closeLabel": "Dialoog sluiten",
+    "dialogs.backButtonLabel": "Terug naar vorige stap",
+    "userManagement.workspace.permission.useAiAssistant": "AI-assistent",
+    "userManagement.workspace.permission.useAiAssistant.tooltip": "Voegt USE_AI_ASSISTANT-toestemming toe voor toegang tot en interactie met de AI-chatbot voor analytische vragen."
 }

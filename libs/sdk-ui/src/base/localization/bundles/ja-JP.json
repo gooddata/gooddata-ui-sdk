@@ -609,7 +609,7 @@
     "userManagement.createUserGroup.inputPlaceholder": "名前",
     "gs.header.account.title": "アカウント",
     "visualization.cluster": "クラスタ",
-    "richText.placeholder": "ここにマークダウンテキストを追加する...",
+    "richText.placeholder": "Markdownを使用して、テキストと参照データのスタイルを設定します：",
     "richText.tooltip": "Markdown構文を使って、説明文のスタイルを設定することができます：",
     "recurrence.starts": "開始日：",
     "recurrence.repeats": "反復",
@@ -693,5 +693,15 @@
     "recurrence.error.wrongFormat": "エラー無効なフォーマット - 秒、分、時、月、日、曜日の6つのフィールドを持つSpring cronフォーマットを使用してください。<a>詳細はこちら</a>",
     "recurrence.datetime.format.help": "フォーマット{dateFormat}",
     "recurrence.datetime.empty.error": "エラー続行するには有効な日付を入力してください。",
-    "recurrence.datetime.wrong.format.error": "エラー無効な日付です。{dateFormat}"
+    "recurrence.datetime.wrong.format.error": "エラー無効な日付です。{dateFormat}",
+    "gs.time": "時間",
+    "gs.header.ai": "オープンAIアシスタント",
+    "visualizations.headline.pagination.next.metricLabel": "次の比較指標を表示",
+    "visualizations.headline.pagination.previous.metricLabel": "前回の比較指標を表示",
+    "shareDialog.share.grantee.addLabel": "ユーザーまたはグループの追加",
+    "shareDialog.share.granular.grantee.permission.label": "許可",
+    "dialogs.closeLabel": "ダイアログを閉じる",
+    "dialogs.backButtonLabel": "前のステップに戻る",
+    "userManagement.workspace.permission.useAiAssistant": "AIアシスタント",
+    "userManagement.workspace.permission.useAiAssistant.tooltip": "分析に関する質問のためにAIチャットボットにアクセスし、対話するためのUSE_AI_ASSISTANT権限を追加します。"
 }

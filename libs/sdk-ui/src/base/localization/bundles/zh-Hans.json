@@ -609,7 +609,7 @@
     "userManagement.createUserGroup.inputPlaceholder": "名称",
     "gs.header.account.title": "账户",
     "visualization.cluster": "聚类",
-    "richText.placeholder": "在此处添加 markdown 文本……",
+    "richText.placeholder": "使用 Markdown 设置文本样式和参考数据：",
     "richText.tooltip": "您可以使用 Markdown 语法来设置描述样式：",
     "recurrence.starts": "开始于",
     "recurrence.repeats": "重复",
@@ -693,5 +693,15 @@
     "recurrence.error.wrongFormat": "错误：格式无效 - 使用包含六个字段的 Spring cron 格式：秒、分钟、小时、月份、月份和星期几。<a>了解更多</a>",
     "recurrence.datetime.format.help": "格式：{dateFormat}",
     "recurrence.datetime.empty.error": "错误：必填字段 — 输入有效日期以继续。",
-    "recurrence.datetime.wrong.format.error": "错误：日期无效 — 格式必须是{dateFormat}"
+    "recurrence.datetime.wrong.format.error": "错误：日期无效 — 格式必须是{dateFormat}",
+    "gs.time": "时间",
+    "gs.header.ai": "打开AI助手",
+    "visualizations.headline.pagination.next.metricLabel": "显示下一个比较指标",
+    "visualizations.headline.pagination.previous.metricLabel": "显示之前的比较指标",
+    "shareDialog.share.grantee.addLabel": "添加用户或组",
+    "shareDialog.share.granular.grantee.permission.label": "允许",
+    "dialogs.closeLabel": "关闭对话框",
+    "dialogs.backButtonLabel": "返回上一步",
+    "userManagement.workspace.permission.useAiAssistant": "人工智能助手",
+    "userManagement.workspace.permission.useAiAssistant.tooltip": "添加 USE_AI_ASSISTANT 权限以访问和与 AI 聊天机器人交互以进行分析问题。"
 }

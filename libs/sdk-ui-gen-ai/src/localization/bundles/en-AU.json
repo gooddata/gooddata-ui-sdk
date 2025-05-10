@@ -1,7 +1,7 @@
 {
     "gd.gen-ai.invalid-question": "Invalid question. Try again.",
     "gd.gen-ai.global-error": "Something went wrong",
-    "gd.gen-ai.global-error.button-details": "Show error details",
+    "gd.gen-ai.global-error.button-details": "See details",
     "gd.gen-ai.global-error.button-clear": "Restart chatbot",
     "gd.gen-ai.input-placeholder": "Ask here…",
     "gd.gen-ai.disclaimer": "AI assistants can make mistakes. Check before relying on these answers.",
@@ -28,5 +28,6 @@
     "gd.gen-ai.button.edit": "Edit",
     "gd.gen-ai.save-dialog.label": "Name",
     "gd.gen-ai.save-dialog.title": "Name your visualisation",
-    "gd.gen-ai.save-dialog.description": "Give your new visualisation a new descriptive name, so it's easier to find it later on."
+    "gd.gen-ai.save-dialog.description": "Give your new visualisation a new descriptive name, so it's easier to find it later on.",
+    "gd.gen-ai.state.generating": "Generating your response…"
 }
