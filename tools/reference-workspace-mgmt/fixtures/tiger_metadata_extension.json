@@ -1047,7 +1047,8 @@
                                 "from": 0,
                                 "granularity": "GDC.time.month",
                                 "to": 0,
-                                "type": "relative"
+                                "type": "relative",
+                                "localIdentifier": "0_dateFilter"
                             }
                         }
                     ],
@@ -1065,7 +1066,8 @@
                                 "from": "2010-09-10 00:00",
                                 "granularity": "GDC.time.date",
                                 "to": "2010-11-11 23:59",
-                                "type": "absolute"
+                                "type": "absolute",
+                                "localIdentifier": "0_dateFilter"
                             }
                         },
                         {
