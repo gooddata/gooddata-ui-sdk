@@ -1,3 +1,5 @@
+// (C) 2025 GoodData Corporation
+
 /* tslint:disable */
 /* eslint-disable */
 /**
