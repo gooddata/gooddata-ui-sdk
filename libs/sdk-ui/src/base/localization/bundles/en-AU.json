@@ -609,7 +609,7 @@
     "userManagement.createUserGroup.inputPlaceholder": "Name",
     "gs.header.account.title": "Account",
     "visualization.cluster": "Cluster",
-    "richText.placeholder": "Add markdown text here...",
+    "richText.placeholder": "Use Markdown to style text and reference data.",
     "richText.tooltip": "You can utilise Markdown syntax to style the description:",
     "recurrence.starts": "Starts on",
     "recurrence.repeats": "Repeats",
@@ -702,5 +702,15 @@
     "recurrence.error.wrongFormat": "Error: Invalid format — use Spring cron format with six fields: seconds, minutes, hours, day of month, month, and day of week. <a>Learn more</a>",
     "recurrence.datetime.format.help": "Format: {dateFormat}",
     "recurrence.datetime.empty.error": "Error: Required field — enter a valid date to proceed.",
-    "recurrence.datetime.wrong.format.error": "Error: Invalid date — format must be {dateFormat}"
+    "recurrence.datetime.wrong.format.error": "Error: Invalid date — format must be {dateFormat}",
+    "gs.time": "time",
+    "gs.header.ai": "Open AI Assistant",
+    "visualizations.headline.pagination.next.metricLabel": "Show next comparative metric",
+    "visualizations.headline.pagination.previous.metricLabel": "Show previous comparative metric",
+    "shareDialog.share.grantee.addLabel": "Add users or groups",
+    "shareDialog.share.granular.grantee.permission.label": "Permission",
+    "dialogs.closeLabel": "Close dialogue",
+    "dialogs.backButtonLabel": "Back to the previous step.",
+    "userManagement.workspace.permission.useAiAssistant": "AI Assistant",
+    "userManagement.workspace.permission.useAiAssistant.tooltip": "Adds USE_AI_ASSISTANT permission to access and interact with the AI chatbot for analytics questions."
 }

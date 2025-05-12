@@ -609,7 +609,7 @@
     "userManagement.createUserGroup.inputPlaceholder": "Name",
     "gs.header.account.title": "Konto",
     "visualization.cluster": "Cluster",
-    "richText.placeholder": "Markdown-Text hier hinzufügen...",
+    "richText.placeholder": "Verwenden Sie Markdown, um Text und Referenzdaten zu formatieren:",
     "richText.tooltip": "Sie können die Markdown-Syntax verwenden, um die Beschreibung zu formatieren:",
     "recurrence.starts": "Beginnt am",
     "recurrence.repeats": "Wiederholt",
@@ -693,5 +693,15 @@
     "recurrence.error.wrongFormat": "Fehler: Ungültiges Format — verwenden Sie das Frühlings-Cron-Format mit sechs Feldern: Sekunden, Minuten, Stunden, Tag des Monats, Monat und Tag der Woche. <a>Mehr erfahren</a>",
     "recurrence.datetime.format.help": "Format: {dateFormat}",
     "recurrence.datetime.empty.error": "Fehler: Pflichtfeld — Geben Sie ein gültiges Datum ein, um fortzufahren.",
-    "recurrence.datetime.wrong.format.error": "Fehler: Ungültiges Datum — Format muss sein {dateFormat}"
+    "recurrence.datetime.wrong.format.error": "Fehler: Ungültiges Datum — Format muss sein {dateFormat}",
+    "gs.time": "Zeit",
+    "gs.header.ai": "KI-Assistent öffnen",
+    "visualizations.headline.pagination.next.metricLabel": "Nächste Vergleichsmetrik anzeigen",
+    "visualizations.headline.pagination.previous.metricLabel": "Vorherige Vergleichsmetrik anzeigen",
+    "shareDialog.share.grantee.addLabel": "Benutzer oder Gruppen hinzufügen",
+    "shareDialog.share.granular.grantee.permission.label": "Berechtigung",
+    "dialogs.closeLabel": "Dialog schließen",
+    "dialogs.backButtonLabel": "Zurück zum vorherigen Schritt",
+    "userManagement.workspace.permission.useAiAssistant": "KI-Assistent",
+    "userManagement.workspace.permission.useAiAssistant.tooltip": "Fügt DIE USE_AI_ASSISTANT-BERECHTIGUNG hinzu, um auf den KI-Chatbot für Analysefragen zuzugreifen und mit ihm zu interagieren."
 }

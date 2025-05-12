@@ -28,5 +28,6 @@
     "gd.gen-ai.button.edit": "編集",
     "gd.gen-ai.save-dialog.label": "名前",
     "gd.gen-ai.save-dialog.title": "ビジュアライゼーションに名前づけ",
-    "gd.gen-ai.save-dialog.description": "新しいビジュアライゼーションに新しい説明的な名前をつけて、後で見つけやすくしましょう。"
+    "gd.gen-ai.save-dialog.description": "新しいビジュアライゼーションに新しい説明的な名前をつけて、後で見つけやすくしましょう。",
+    "gd.gen-ai.state.generating": "返答を生成中…"
 }

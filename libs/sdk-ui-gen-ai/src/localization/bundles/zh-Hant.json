@@ -28,5 +28,6 @@
     "gd.gen-ai.button.edit": "編輯",
     "gd.gen-ai.save-dialog.label": "姓名",
     "gd.gen-ai.save-dialog.title": "為您的視覺化命名",
-    "gd.gen-ai.save-dialog.description": "為您的新視覺化指定一個新的描述性名稱，以便以後更容易找到它。"
+    "gd.gen-ai.save-dialog.description": "為您的新視覺化指定一個新的描述性名稱，以便以後更容易找到它。",
+    "gd.gen-ai.state.generating": "正在產生您的回覆…"
 }

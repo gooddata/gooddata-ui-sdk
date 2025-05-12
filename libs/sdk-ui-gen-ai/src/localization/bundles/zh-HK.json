@@ -1,5 +1,5 @@
 {
-    "gd.gen-ai.invalid-question": "問題無效。 試多次.",
+    "gd.gen-ai.invalid-question": "無效問題。 試多次。",
     "gd.gen-ai.global-error": "發生不可預見的錯誤。",
     "gd.gen-ai.global-error.button-details": "查看詳情",
     "gd.gen-ai.global-error.button-clear": "重新啟動Chatbot",
@@ -28,5 +28,6 @@
     "gd.gen-ai.button.edit": "編輯",
     "gd.gen-ai.save-dialog.label": "名字",
     "gd.gen-ai.save-dialog.title": "為可視化效果命名",
-    "gd.gen-ai.save-dialog.description": "為新的可視化效果指定一個新的描述性名稱，以便以後更容易找到它。"
+    "gd.gen-ai.save-dialog.description": "為新的可視化效果指定一個新的描述性名稱，方便日後容易找到。",
+    "gd.gen-ai.state.generating": "正在生成您的響應…"
 }

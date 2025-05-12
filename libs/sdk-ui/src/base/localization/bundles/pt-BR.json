@@ -609,7 +609,7 @@
     "userManagement.createUserGroup.inputPlaceholder": "Nome",
     "gs.header.account.title": "Conta",
     "visualization.cluster": "Cluster",
-    "richText.placeholder": "Adicione o texto do markdown aqui...",
+    "richText.placeholder": "Use Markdown para estilizar texto e dados de referência:",
     "richText.tooltip": "Você pode usar a sintaxe Markdown para estilizar a descrição:",
     "recurrence.starts": "Começa em",
     "recurrence.repeats": "Repete",
@@ -693,5 +693,15 @@
     "recurrence.error.wrongFormat": "Erro: Formato inválido — use o formato Spring cron com seis campos: segundos, minutos, horas, dia do mês, mês e dia da semana. <a>Saiba Mais</a>",
     "recurrence.datetime.format.help": "Formato: {dateFormat}",
     "recurrence.datetime.empty.error": "Erro: campo obrigatório — insira uma data válida para continuar.",
-    "recurrence.datetime.wrong.format.error": "Erro: Data inválida — o formato deve ser {dateFormat}"
+    "recurrence.datetime.wrong.format.error": "Erro: Data inválida — o formato deve ser {dateFormat}",
+    "gs.time": "hora",
+    "gs.header.ai": "Assistente de IA aberta",
+    "visualizations.headline.pagination.next.metricLabel": "Mostrar próxima métrica comparativa",
+    "visualizations.headline.pagination.previous.metricLabel": "Mostrar métrica comparativa anterior",
+    "shareDialog.share.grantee.addLabel": "Adicionar usuários ou grupos",
+    "shareDialog.share.granular.grantee.permission.label": "Permissão",
+    "dialogs.closeLabel": "Fechar caixa de diálogo",
+    "dialogs.backButtonLabel": "Voltar para a etapa anterior",
+    "userManagement.workspace.permission.useAiAssistant": "Assistente de IA",
+    "userManagement.workspace.permission.useAiAssistant.tooltip": "Adiciona USE_AI_ASSISTANT permissão para acessar e interagir com o chatbot de IA para perguntas de análise."
 }
