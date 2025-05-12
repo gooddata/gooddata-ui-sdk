@@ -644,7 +644,7 @@ export interface IExecutionFactory {
 }
 
 // @public
-export interface IExecutionResult {
+export interface IExecutionResult extends ICancelable<IExecutionResult> {
     readonly definition: IExecutionDefinition;
     readonly dimensions: IDimensionDescriptor[];
     equals(other: IExecutionResult): boolean;

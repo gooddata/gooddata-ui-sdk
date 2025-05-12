@@ -472,6 +472,9 @@ function dummyExecutionResult(
         transform(): IPreparedExecution {
             return executionFactory.forDefinition(definition);
         },
+        withSignal(_signal: AbortSignal): IExecutionResult {
+            throw new NotSupported("canceling is not supported in dummy backend");
+        },
     };
 
     return result;

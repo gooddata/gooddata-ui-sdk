@@ -239,18 +239,26 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         this.boundAgGridCallbacks = this.createBoundAgGridCallbacks();
         this.pivotTableId = uuidv4().replace(/-/g, "");
         this.onLoadingChanged = this.onLoadingChanged.bind(this);
+        if (this.props.config?.enableExecutionCancelling) {
+            this.abortController = new AbortController();
+        }
     }
 
     //
     // Lifecycle
     //
 
-    private abortController: AbortController = new AbortController();
+    private abortController: AbortController | undefined;
+
     private refreshAbortController = (): void => {
         if (this.props.config?.enableExecutionCancelling) {
-            this.abortController.abort();
+            this.abortController?.abort();
             this.abortController = new AbortController();
         }
+    };
+
+    private getCurrentAbortController = (): AbortController | undefined => {
+        return this.props.config?.enableExecutionCancelling ? this.abortController : undefined;
     };
 
     /**
@@ -274,7 +282,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             execution,
             this.getTableMethods(),
             this.props,
-            this.props.config?.enableExecutionCancelling ? this.abortController : undefined,
+            this.getCurrentAbortController,
         );
 
         initializer.initialize().then((result) => {

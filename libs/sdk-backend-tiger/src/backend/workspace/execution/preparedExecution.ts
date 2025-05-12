@@ -37,6 +37,7 @@ import { TigerCancellationConverter } from "../../../cancelation/index.js";
 
 export class TigerPreparedExecution implements IPreparedExecution {
     private _fingerprint: string | undefined;
+    public readonly signal: AbortSignal | undefined = undefined;
 
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
@@ -44,7 +45,9 @@ export class TigerPreparedExecution implements IPreparedExecution {
         private readonly executionFactory: IExecutionFactory,
         private readonly dateFormatter: DateFormatter,
         public readonly options?: IPreparedExecutionOptions,
-    ) {}
+    ) {
+        this.signal = this.options?.signal;
+    }
 
     public async execute(): Promise<IExecutionResult> {
         checkDefIsExecutable(this.definition);
@@ -57,11 +60,11 @@ export class TigerPreparedExecution implements IPreparedExecution {
                     workspaceId: this.definition.workspace,
                     afmExecution,
                 },
-                { ...new TigerCancellationConverter(this.options?.signal ?? null).forAxios() },
+                { ...new TigerCancellationConverter(this.signal ?? null).forAxios() },
             ),
         ).then((response) => {
             let resultCancelToken: string | undefined = undefined;
-            if (this.options?.signal) {
+            if (this.signal) {
                 resultCancelToken = response?.headers["x-gdc-cancel-token"];
             }
             return new TigerExecutionResult(
@@ -70,7 +73,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
                 this.executionFactory,
                 response.data,
                 this.dateFormatter,
-                this.options?.signal,
+                this.signal,
                 resultCancelToken,
             );
         });
@@ -155,7 +158,7 @@ export class TigerPreparedExecution implements IPreparedExecution {
     }
 
     public equals(other: IPreparedExecution): boolean {
-        return isEqual(this.definition, other.definition);
+        return isEqual(defFingerprint(this.definition), defFingerprint(other.definition));
     }
 }
 

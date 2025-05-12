@@ -139,12 +139,8 @@ type CachingContext = {
 //
 
 class WithExecutionCaching extends DecoratedPreparedExecution {
-    constructor(
-        decorated: IPreparedExecution,
-        private readonly ctx: CachingContext,
-        signal?: AbortSignal | undefined,
-    ) {
-        super(decorated, signal);
+    constructor(decorated: IPreparedExecution, private readonly ctx: CachingContext) {
+        super(decorated);
     }
 
     public execute = async (): Promise<IExecutionResult> => {
@@ -163,7 +159,7 @@ class WithExecutionCaching extends DecoratedPreparedExecution {
         // we need cache execution only after successful resolution,
         // because running execution can be cancelled.
         if (this.signal) {
-            if (!cacheEntry) {
+            if (!cacheEntry || this.signal.aborted) {
                 try {
                     const result = await super.execute().then((res) => {
                         return new WithExecutionResultCaching(
@@ -171,7 +167,6 @@ class WithExecutionCaching extends DecoratedPreparedExecution {
                             this.createNew,
                             this.ctx,
                             deleteExecutionCacheEntry,
-                            this.signal,
                         );
                     });
 
@@ -181,6 +176,17 @@ class WithExecutionCaching extends DecoratedPreparedExecution {
                     deleteExecutionCacheEntry();
                     throw e;
                 }
+            } else {
+                // In case of cache hit, we need to replace the signal in the result
+                // because the signal might have changed since the result was cached
+                const result = await cacheEntry.result;
+                const resultWithCurrentSignal = result.withSignal(this.signal);
+                cache.set(cacheKey, { result: Promise.resolve(resultWithCurrentSignal) });
+                return new DefinitionSanitizingExecutionResult(
+                    resultWithCurrentSignal,
+                    this.createNew,
+                    this.definition,
+                );
             }
         } else {
             if (!cacheEntry) {
@@ -192,7 +198,6 @@ class WithExecutionCaching extends DecoratedPreparedExecution {
                             this.createNew,
                             this.ctx,
                             deleteExecutionCacheEntry,
-                            undefined,
                         );
                     })
                     .catch((e) => {
@@ -213,7 +218,7 @@ class WithExecutionCaching extends DecoratedPreparedExecution {
     };
 
     protected createNew = (decorated: IPreparedExecution): IPreparedExecution => {
-        return new WithExecutionCaching(decorated, this.ctx, this.signal);
+        return new WithExecutionCaching(decorated, this.ctx);
     };
 }
 
@@ -241,11 +246,11 @@ class DefinitionSanitizingDataView extends DecoratedDataView {
 class DefinitionSanitizingExecutionResult extends DecoratedExecutionResult {
     constructor(
         decorated: IExecutionResult,
-        wrapper: PreparedExecutionWrapper,
-        definitionOverride: IExecutionDefinition,
+        private readonly execWrapper: PreparedExecutionWrapper,
+        private readonly execDefinitionOverride: IExecutionDefinition,
     ) {
-        super(decorated, wrapper);
-        this.definition = definitionOverride;
+        super(decorated, execWrapper);
+        this.definition = execDefinitionOverride;
     }
 
     public readAll = async (): Promise<IDataView> => {
@@ -259,6 +264,14 @@ class DefinitionSanitizingExecutionResult extends DecoratedExecutionResult {
     private withSanitizedDefinition = (original: IDataView): IDataView => {
         return new DefinitionSanitizingDataView(original, this);
     };
+
+    protected createNew = (decorated: IExecutionResult): IExecutionResult => {
+        return new DefinitionSanitizingExecutionResult(
+            decorated,
+            this.execWrapper,
+            this.execDefinitionOverride,
+        );
+    };
 }
 
 function windowKey(offset: number[], size: number[]): string {
@@ -266,27 +279,25 @@ function windowKey(offset: number[], size: number[]): string {
 }
 
 class WithExecutionResultCaching extends DecoratedExecutionResult {
-    private allData: Promise<IDataView> | undefined;
-    private allForecastConfig: IForecastConfig | undefined;
-    private allForecastData: Promise<IForecastResult> | undefined;
-    private windows: LRUCache<string, Promise<IDataView>> | undefined;
-
     constructor(
         decorated: IExecutionResult,
-        wrapper: PreparedExecutionWrapper,
+        private readonly execWrapper: PreparedExecutionWrapper,
         private readonly ctx: CachingContext,
-        private deleteExecutionCacheEntry: () => void,
-        public readonly signal: AbortSignal | undefined,
+        private readonly deleteExecutionCacheEntry: () => void,
+        private allData: Promise<IDataView> | undefined = undefined,
+        private allForecastConfig: IForecastConfig | undefined = undefined,
+        private allForecastData: Promise<IForecastResult> | undefined = undefined,
+        private windows: LRUCache<string, Promise<IDataView>> | undefined = undefined,
     ) {
-        super(decorated, wrapper, signal);
+        super(decorated, execWrapper);
 
-        if (cachingEnabled(this.ctx.config.maxResultWindows)) {
+        if (cachingEnabled(this.ctx.config.maxResultWindows) && !this.windows) {
             this.windows = new LRUCache({ max: this.ctx.config.maxResultWindows! });
         }
     }
 
     public readAll = async (): Promise<IDataView> => {
-        if (!this.allData && this.signal) {
+        if (this.signal && (!this.allData || this.signal.aborted)) {
             try {
                 const allData = await super.readAll();
                 this.allData = Promise.resolve(allData);
@@ -331,8 +342,7 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
 
         const cacheKey = windowKey(offset, size);
         let window: Promise<IDataView> | undefined = this.windows.get(cacheKey);
-
-        if (this.signal && !window) {
+        if (this.signal && (!window || this.signal.aborted)) {
             const result = await super.readWindow(offset, size).catch((e) => {
                 if (this.windows) {
                     this.windows.delete(cacheKey);
@@ -357,6 +367,19 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         }
 
         return window;
+    };
+
+    protected createNew = (decorated: IExecutionResult): IExecutionResult => {
+        return new WithExecutionResultCaching(
+            decorated,
+            this.execWrapper,
+            this.ctx,
+            this.deleteExecutionCacheEntry,
+            this.allData,
+            this.allForecastConfig,
+            this.allForecastData,
+            this.windows,
+        );
     };
 }
 
@@ -1276,10 +1299,7 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
 
 function cachedExecutions(ctx: CachingContext): ExecutionDecoratorFactory {
     return (original: IExecutionFactory) =>
-        new DecoratedExecutionFactory(
-            original,
-            (execution) => new WithExecutionCaching(execution, ctx, execution.signal),
-        );
+        new DecoratedExecutionFactory(original, (execution) => new WithExecutionCaching(execution, ctx));
 }
 
 function cachedCatalog(ctx: CachingContext): CatalogDecoratorFactory {

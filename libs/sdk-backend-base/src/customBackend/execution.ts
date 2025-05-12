@@ -150,6 +150,10 @@ class CustomExecutionResult implements IExecutionResult {
         this.definition = execution.definition;
     }
 
+    public withSignal = (_signal: AbortSignal): IExecutionResult => {
+        return this;
+    };
+
     public readAll = (): Promise<IDataView> => {
         return this.state.authApiCall((client) => {
             if (!this.config.dataProvider) {

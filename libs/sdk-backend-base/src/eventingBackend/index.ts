@@ -24,12 +24,8 @@ import {
 } from "../decoratedBackend/execution.js";
 
 class WithExecutionEventing extends DecoratedPreparedExecution {
-    constructor(
-        decorated: IPreparedExecution,
-        private readonly callbacks: AnalyticalBackendCallbacks,
-        signal?: AbortSignal,
-    ) {
-        super(decorated, signal);
+    constructor(decorated: IPreparedExecution, private readonly callbacks: AnalyticalBackendCallbacks) {
+        super(decorated);
     }
 
     public execute = (): Promise<IExecutionResult> => {
@@ -52,19 +48,19 @@ class WithExecutionEventing extends DecoratedPreparedExecution {
             });
     };
 
-    protected createNew = (decorated: IPreparedExecution, signal?: AbortSignal): IPreparedExecution => {
-        return new WithExecutionEventing(decorated, this.callbacks, signal);
+    protected createNew = (decorated: IPreparedExecution): IPreparedExecution => {
+        return new WithExecutionEventing(decorated, this.callbacks);
     };
 }
 
 class WithExecutionResultEventing extends DecoratedExecutionResult {
     constructor(
         decorated: IExecutionResult,
-        wrapper: PreparedExecutionWrapper,
+        private readonly execWrapper: PreparedExecutionWrapper,
         private readonly callbacks: AnalyticalBackendCallbacks,
         private readonly executionId: string,
     ) {
-        super(decorated, wrapper);
+        super(decorated, execWrapper);
     }
 
     public readAll = (): Promise<IDataView> => {
@@ -127,6 +123,10 @@ class WithExecutionResultEventing extends DecoratedExecutionResult {
 
                 throw e;
             });
+    };
+
+    protected createNew = (decorated: IExecutionResult): IExecutionResult => {
+        return new WithExecutionResultEventing(decorated, this.execWrapper, this.callbacks, this.executionId);
     };
 }
 
@@ -240,7 +240,7 @@ export function withEventing(
         execution: (original) =>
             new DecoratedExecutionFactory(
                 original,
-                (execution) => new WithExecutionEventing(execution, callbacks, execution.signal),
+                (execution) => new WithExecutionEventing(execution, callbacks),
             ),
     });
 }

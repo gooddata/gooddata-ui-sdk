@@ -417,6 +417,9 @@ function recordedExecutionResult(
         transform(): IPreparedExecution {
             return executionFactory.forDefinition(definition);
         },
+        withSignal(_signal: AbortSignal) {
+            throw new NotSupported("not supported");
+        },
     };
 
     return result;

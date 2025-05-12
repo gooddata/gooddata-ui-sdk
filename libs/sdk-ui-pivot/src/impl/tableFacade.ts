@@ -130,7 +130,7 @@ export class TableFacade {
         dataView: IDataView,
         tableMethods: TableDataCallbacks & TableConfigAccessors,
         props: Readonly<ICorePivotTableProps>,
-        private readonly abortController?: AbortController,
+        private readonly getCurrentAbortController: () => AbortController | undefined,
     ) {
         this.intl = props.intl;
 
@@ -198,7 +198,6 @@ export class TableFacade {
         this.gridApi = undefined;
         this.columnApi = undefined;
         this.destroyed = true;
-        this.abortController?.abort();
     };
 
     public isFullyInitialized = (): boolean => {
@@ -267,7 +266,7 @@ export class TableFacade {
             this.visibleData,
             this.gridApiGuard,
             this.intl,
-            this.abortController,
+            this.getCurrentAbortController,
         );
     };
 

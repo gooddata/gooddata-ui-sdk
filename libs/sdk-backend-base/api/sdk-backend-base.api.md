@@ -421,7 +421,8 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
 
 // @alpha
 export abstract class DecoratedExecutionResult implements IExecutionResult {
-    protected constructor(decorated: IExecutionResult, wrapper?: PreparedExecutionWrapper, signal?: AbortSignal | undefined);
+    protected constructor(decorated: IExecutionResult, wrapper?: PreparedExecutionWrapper);
+    protected abstract createNew(decorated: IExecutionResult): IExecutionResult;
     // (undocumented)
     definition: IExecutionDefinition;
     // (undocumented)
@@ -443,15 +444,17 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     // (undocumented)
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
     // (undocumented)
-    readonly signal: AbortSignal | undefined;
+    signal: AbortSignal | undefined;
     // (undocumented)
     transform(): IPreparedExecution;
+    // (undocumented)
+    withSignal(signal: AbortSignal): IExecutionResult;
 }
 
 // @alpha
 export abstract class DecoratedPreparedExecution implements IPreparedExecution {
-    protected constructor(decorated: IPreparedExecution, signal?: AbortSignal | undefined);
-    protected abstract createNew(decorated: IPreparedExecution, signal?: AbortSignal): IPreparedExecution;
+    protected constructor(decorated: IPreparedExecution);
+    protected abstract createNew(decorated: IPreparedExecution): IPreparedExecution;
     // (undocumented)
     protected readonly decorated: IPreparedExecution;
     // (undocumented)

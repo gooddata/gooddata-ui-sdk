@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { DataViewFacade, getIntl } from "@gooddata/sdk-ui";
 import { flatMap, noop } from "lodash";
 import { TableConfigAccessors, TableDataCallbacks, TableLegacyCallbacks } from "../privateTypes.js";
@@ -69,7 +69,12 @@ export async function createTestTableFacade(
 
     const testProps = createTestPivotTableProps(dv);
 
-    return new TableFacadeInitializer(dv.result().transform(), testTableMethods, testProps)
+    return new TableFacadeInitializer(
+        dv.result().transform(),
+        testTableMethods,
+        testProps,
+        () => new AbortController(),
+    )
         .initialize()
         .then((res) => {
             invariant(res);

@@ -377,7 +377,7 @@ export interface IPreparedExecution extends ICancelable<IPreparedExecution> {
  *
  * @public
  */
-export interface IExecutionResult {
+export interface IExecutionResult extends ICancelable<IExecutionResult> {
     /**
      * Full definition of execution that yielded this result.
      */
