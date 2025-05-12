@@ -17,6 +17,7 @@ import {
     IClusteringConfig,
     IClusteringResult,
     IPreparedExecutionOptions,
+    IExecutionResultMetadata,
 } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeOrMeasure,
@@ -248,11 +249,12 @@ export abstract class DecoratedDataView implements IDataView {
     public totalTotals?: DataValue[][][];
     public definition: IExecutionDefinition;
     public result: IExecutionResult;
+    public metadata: IExecutionResultMetadata;
     public warnings?: IResultWarning[];
     public forecastConfig?: IForecastConfig;
     public forecastResult?: IForecastResult;
 
-    constructor(private readonly decorated: IDataView, result?: IExecutionResult) {
+    protected constructor(private readonly decorated: IDataView, result?: IExecutionResult) {
         this.result = result ?? decorated.result;
         this.forecastConfig = decorated.forecastConfig;
         this.forecastResult = decorated.forecastResult;
@@ -261,6 +263,7 @@ export abstract class DecoratedDataView implements IDataView {
         this.data = decorated.data;
         this.definition = decorated.definition;
         this.headerItems = decorated.headerItems;
+        this.metadata = decorated.metadata;
         this.offset = decorated.offset;
         this.totalCount = decorated.totalCount;
         this.totals = decorated.totals;

@@ -315,6 +315,9 @@ function recordedDataView(
         offset: afmResult.paging.offset,
         count: afmResult.paging.count,
         totalCount: afmResult.paging.total,
+        metadata: {
+            dataSourceMessages: [],
+        },
         fingerprint(): string {
             return fp;
         },

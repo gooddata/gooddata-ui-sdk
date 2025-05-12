@@ -26,6 +26,7 @@ import {
     IAnomalyDetectionResult,
     IClusteringConfig,
     IClusteringResult,
+    IExecutionResultMetadata,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition, DataValue, IDimensionDescriptor, IResultHeader } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
@@ -42,6 +43,7 @@ import { resolveCustomOverride } from "./utils.js";
 import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
 import { transformForecastResult } from "../../../convertors/fromBackend/afm/forecast.js";
 import { TigerCancellationConverter } from "../../../cancelation/index.js";
+import { convertExecutionResultMetadata } from "../../../convertors/fromBackend/afm/MetadataConverter.js";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 const DEFAULT_POLL_DELAY = 5000;
@@ -369,6 +371,7 @@ class TigerDataView implements IDataView {
     public readonly clusteringConfig?: IClusteringConfig;
     public readonly clusteringResult?: IClusteringResult;
     public readonly totalTotals?: DataValue[][][];
+    public readonly metadata: IExecutionResultMetadata;
     private readonly _fingerprint: string;
     private readonly _execResult: ExecutionResult;
     private readonly _dateFormatter: DateFormatter;
@@ -416,6 +419,8 @@ class TigerDataView implements IDataView {
         const grandTotalItem = execResult.grandTotals?.find((item) => item?.totalDimensions?.length === 0);
         const totalTotals = grandTotalItem?.data as DataValue[][];
         this.totalTotals = totalTotals ? [totalTotals] : undefined;
+
+        this.metadata = convertExecutionResultMetadata(this._execResult.metadata);
 
         this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}/f:${
             this.forecastConfig?.forecastPeriod

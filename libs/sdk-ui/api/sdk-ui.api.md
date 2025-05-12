@@ -29,6 +29,7 @@ import { IDimensionDescriptor } from '@gooddata/sdk-model';
 import { IDimensionItemDescriptor } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
+import { IExecutionResultDataSourceMessage } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
@@ -297,6 +298,8 @@ export class DataViewFacade {
     protected constructor(dataView: IDataView);
     // (undocumented)
     data(config?: DataAccessConfig): IDataAccessMethods;
+    // @alpha
+    dataSourceMessages(): ReadonlyArray<IExecutionResultDataSourceMessage>;
     // (undocumented)
     readonly dataView: IDataView;
     // @internal (undocumented)

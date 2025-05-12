@@ -282,6 +282,9 @@ export function dummyDataView(
         offset: [0, 0],
         count: [0, 0],
         totalCount: [0, 0],
+        metadata: {
+            dataSourceMessages: [],
+        },
         fingerprint(): string {
             return fp;
         },
@@ -1031,12 +1034,15 @@ class DummyElementsQueryResult implements IElementsQueryResult {
     next(): Promise<IPagedResource<IAttributeElement>> {
         throw new NotSupported("not supported");
     }
+
     goTo(_pageIndex: number): Promise<IPagedResource<IAttributeElement>> {
         throw new NotSupported("not supported");
     }
+
     all(): Promise<IAttributeElement[]> {
         throw new NotSupported("not supported");
     }
+
     allSorted(
         _compareFn: (a: IAttributeElement, b: IAttributeElement) => number,
     ): Promise<IAttributeElement[]> {
@@ -1059,9 +1065,11 @@ class DummyElementsQuery implements IElementsQuery {
         this.offset = offset;
         return this;
     }
+
     withAttributeFilters(_filters: IElementsQueryAttributeFilter[]): IElementsQuery {
         throw new NotSupported("not supported");
     }
+
     withMeasures(_measures: IMeasure<IMeasureDefinitionType>[]): IElementsQuery {
         throw new NotSupported("not supported");
     }
@@ -1073,12 +1081,15 @@ class DummyElementsQuery implements IElementsQuery {
     withOptions(_options: IElementsQueryOptions): IElementsQuery {
         throw new NotSupported("not supported");
     }
+
     query = async (): Promise<IElementsQueryResult> => {
         return new DummyElementsQueryResult([], this.limit, this.offset, 0);
     };
+
     withDateFilters(_filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): IElementsQuery {
         throw new NotSupported("not supported");
     }
+
     withSignal(_: AbortSignal): IElementsQuery {
         throw new NotSupported("not supported");
     }
@@ -1101,9 +1112,11 @@ class DummyElementsQueryFactory implements IElementsQueryFactory {
 
 class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
     constructor(public readonly workspace: string) {}
+
     elements(): IElementsQueryFactory {
         return new DummyElementsQueryFactory(this.workspace);
     }
+
     async getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> {
         return {
             attribute: idRef("dummyAttribute"),
@@ -1118,12 +1131,15 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
             uri: isUriRef(ref) ? ref.uri : `/gdc/md/${ref.identifier}`,
         };
     }
+
     getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
         return Promise.all(refs.map((ref) => this.getAttributeDisplayForm(ref)));
     }
+
     getAttribute(_ref: ObjRef): Promise<IAttributeMetadataObject> {
         throw new NotSupported("not supported");
     }
+
     async getAttributeByDisplayForm(ref: ObjRef): Promise<IAttributeMetadataObject> {
         return {
             deprecated: false,
@@ -1151,21 +1167,27 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
             uri: "/gdc/md/dummyAttribute",
         };
     }
+
     getAttributes(_refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
         throw new NotSupported("not supported");
     }
+
     getCommonAttributes(_attributeRefs: ObjRef[]): Promise<ObjRef[]> {
         throw new NotSupported("not supported");
     }
+
     getCommonAttributesBatch(_attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]> {
         throw new NotSupported("not supported");
     }
+
     getAttributeDatasetMeta(_ref: ObjRef): Promise<IMetadataObject> {
         throw new NotSupported("not supported");
     }
+
     getAttributesWithReferences(_refs: ObjRef[]): Promise<IAttributeWithReferences[]> {
         throw new NotSupported("not supported");
     }
+
     getConnectedAttributesByDisplayForm(_ref: ObjRef): Promise<ObjRef[]> {
         throw new NotSupported("Not supported");
     }

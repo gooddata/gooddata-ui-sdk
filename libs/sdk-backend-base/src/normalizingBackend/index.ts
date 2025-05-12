@@ -19,6 +19,7 @@ import {
     IClusteringConfig,
     IClusteringResult,
     IPreparedExecutionOptions,
+    IExecutionResultMetadata,
 } from "@gooddata/sdk-backend-spi";
 import { decoratedBackend } from "../decoratedBackend/index.js";
 import { DecoratedExecutionFactory, DecoratedPreparedExecution } from "../decoratedBackend/execution.js";
@@ -224,6 +225,7 @@ class DenormalizedDataView implements IDataView {
     public readonly totalCount: number[];
     public readonly totals: DataValue[][][] | undefined;
     public readonly totalTotals: DataValue[][][] | undefined;
+    public readonly metadata: IExecutionResultMetadata;
 
     private readonly _fingerprint: string;
     private readonly _denormalizer: Denormalizer;
@@ -253,6 +255,7 @@ class DenormalizedDataView implements IDataView {
         this.totalCount = cloneDeep(this.normalizedDataView.totalCount);
         this.totals = cloneDeep(this.normalizedDataView.totals);
         this.totalTotals = cloneDeep(this.normalizedDataView.totalTotals);
+        this.metadata = cloneDeep(this.normalizedDataView.metadata);
 
         this._fingerprint = `${this.result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}`;
     }
