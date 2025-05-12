@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { ISettings, PlatformEdition, IWorkspacePermissions } from "@gooddata/sdk-model";
 
 export const getHelpMenuFeatureFlagsMock = (
@@ -34,6 +34,7 @@ export const getAccountMenuFeatureFlagsMock = (
 export const getWorkspacePermissionsMock = (
     canInitData: boolean,
     canManageMetric: boolean,
+    canManageProject = true,
 ): IWorkspacePermissions => {
     return {
         canAccessWorkbench: true,
@@ -50,12 +51,15 @@ export const getWorkspacePermissionsMock = (
         canManageAnalyticalDashboard: true,
         canManageDomain: true,
         canManageMetric,
-        canManageProject: true,
+        canManageProject,
         canManageReport: true,
         canManageScheduledMail: true,
         canUploadNonProductionCSV: true,
         canInviteUserToProject: true,
         canRefreshData: true,
         canManageACL: true,
+        canCreateAutomation: false,
+        canCreateFilterView: false,
+        canUseAiAssistant: false,
     };
 };

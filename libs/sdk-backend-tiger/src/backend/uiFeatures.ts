@@ -145,6 +145,7 @@ export enum TigerFeaturesNames {
     EnableRichTooManyDatapointsErrors = "enableRichTooManyDatapointsErrors",
     EnableLineChartTrendThreshold = "enableLineChartTrendThreshold",
     EnableKDRespectLegendPosition = "enableKDRespectLegendPosition",
+    EnableWorkspaceSettingsAppHeaderMenuItem = "enableWorkspaceSettingsAppHeaderMenuItem",
 }
 
 export type ITigerFeatureFlags = {
@@ -252,6 +253,7 @@ export type ITigerFeatureFlags = {
     enableRichTooManyDatapointsErrors: typeof FeatureFlagsValues["enableRichTooManyDatapointsErrors"][number];
     enableLineChartTrendThreshold: typeof FeatureFlagsValues["enableLineChartTrendThreshold"][number];
     enableKDRespectLegendPosition: typeof FeatureFlagsValues["enableKDRespectLegendPosition"][number];
+    enableWorkspaceSettingsAppHeaderMenuItem: typeof FeatureFlagsValues["enableWorkspaceSettingsAppHeaderMenuItem"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -359,6 +361,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRichTooManyDatapointsErrors: false,
     enableLineChartTrendThreshold: false,
     enableKDRespectLegendPosition: false,
+    enableWorkspaceSettingsAppHeaderMenuItem: false,
 };
 
 export const FeatureFlagsValues = {
@@ -470,4 +473,5 @@ export const FeatureFlagsValues = {
     enableRichTooManyDatapointsErrors: [true, false] as const,
     enableLineChartTrendThreshold: [true, false] as const,
     enableKDRespectLegendPosition: [true, false] as const,
+    enableWorkspaceSettingsAppHeaderMenuItem: [true, false] as const,
 };
