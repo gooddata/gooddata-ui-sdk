@@ -2,7 +2,7 @@
 
 import React from "react";
 import cx from "classnames";
-import { IAttribute, IColorPalette, IFilter, IMeasure } from "@gooddata/sdk-model";
+import { IAttribute, IColorPalette, IFilter, IGenAIVisualization, IMeasure } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Button, Icon } from "@gooddata/sdk-ui-kit";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { connect, useDispatch } from "react-redux";
@@ -64,17 +64,24 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
     const [visLoading, setVisLoading] = React.useState(true);
     const workspaceId = useWorkspaceStrict();
 
+    const handleOpen = (e: React.MouseEvent, vis: IGenAIVisualization) => {
+        if (!vis.savedVisualizationId) {
+            return;
+        }
+        config.linkHandler?.({
+            id: vis.id,
+            type: "visualization",
+            workspaceId,
+            newTab: e.metaKey,
+            preventDefault: e.preventDefault.bind(e),
+            itemUrl: getVisualizationHref(workspaceId, vis.savedVisualizationId),
+        });
+        e.stopPropagation();
+    };
+
     const handleButtonClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLDivElement>) => {
         if (visualization?.savedVisualizationId) {
-            config.linkHandler?.({
-                id: visualization.id,
-                type: "visualization",
-                workspaceId,
-                newTab: e.metaKey,
-                preventDefault: e.preventDefault.bind(e),
-                itemUrl: getVisualizationHref(workspaceId, visualization.savedVisualizationId),
-            });
-            e.stopPropagation();
+            handleOpen(e, visualization);
         } else {
             setSaveDialogOpen(true);
         }

@@ -253,6 +253,10 @@ const messagesSlice = createSlice({
             {
                 payload,
             }: PayloadAction<{
+                error: {
+                    name: string;
+                    message: string;
+                };
                 visualizationId: string;
                 assistantMessageId: string;
             }>,

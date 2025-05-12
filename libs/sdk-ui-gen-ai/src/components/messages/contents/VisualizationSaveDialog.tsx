@@ -1,10 +1,13 @@
 // (C) 2024-2025 GoodData Corporation
 import * as React from "react";
+import { connect } from "react-redux";
 import { ConfirmDialog, Input, Typography } from "@gooddata/sdk-ui-kit";
 import { IGenAIVisualization } from "@gooddata/sdk-model";
-import { connect } from "react-redux";
-import { saveVisualizationAction } from "../../../store/index.js";
 import { injectIntl, WrappedComponentProps } from "react-intl";
+
+import { saveVisualizationAction } from "../../../store/index.js";
+
+import { useVisualisationSaving } from "./hooks/useVisualisationSaving.js";
 
 export type VisualizationSaveDialogProps = {
     onClose: () => void;
@@ -20,16 +23,7 @@ const VisualizationSaveDialogCore: React.FC<
     VisualizationSaveDialogProps & VisualizationSaveDialogDispatchProps & WrappedComponentProps
 > = ({ onClose, visualization, messageId, saveVisualizationAction, intl }) => {
     const [value, setValue] = React.useState<string>(visualization.title);
-    const [savingStarted, setSavingStarted] = React.useState<boolean>(false);
-
-    // Close the dialog automatically once the item is saved
-    // TODO - error handling
-    const isSaving = visualization.saving;
-    React.useEffect(() => {
-        if (savingStarted && !isSaving) {
-            onClose();
-        }
-    }, [savingStarted, isSaving, onClose]);
+    const { setSavingStarted } = useVisualisationSaving(visualization, onClose);
 
     return (
         <ConfirmDialog

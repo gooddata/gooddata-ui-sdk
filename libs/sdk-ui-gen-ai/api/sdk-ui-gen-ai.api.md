@@ -47,7 +47,7 @@ export type ChatClosedEvent = BaseEvent & {
 };
 
 // @alpha
-export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatVisualizationErrorEvent;
+export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent;
 
 // @alpha
 export interface ChatEventHandler<TEvent extends ChatEvent = any> {
@@ -70,6 +70,19 @@ export type ChatOpenedEvent = BaseEvent & {
 // @alpha
 export type ChatResetEvent = BaseEvent & {
     type: "chatReset";
+};
+
+// @alpha
+export type ChatSaveVisualizationErrorEvent = BaseEvent & {
+    type: "chatSaveVisualizationError";
+    errorType: string;
+    errorMessage?: string;
+};
+
+// @alpha
+export type ChatSaveVisualizationSuccessEvent = BaseEvent & {
+    type: "chatSaveVisualizationSuccess";
+    savedVisualizationId: string;
 };
 
 // @alpha
@@ -120,6 +133,12 @@ export const isChatOpenedEvent: (event: ChatEvent) => event is ChatOpenedEvent;
 
 // @alpha
 export const isChatResetEvent: (event: ChatEvent) => event is ChatResetEvent;
+
+// @alpha
+export const isChatSaveVisualizationErrorEvent: (event: ChatEvent) => event is ChatSaveVisualizationErrorEvent;
+
+// @alpha
+export const isChatSaveVisualizationSuccessEvent: (event: ChatEvent) => event is ChatSaveVisualizationSuccessEvent;
 
 // @alpha
 export const isChatUserMessageEvent: (event: ChatEvent) => event is ChatUserMessageEvent;

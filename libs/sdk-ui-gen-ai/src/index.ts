@@ -31,6 +31,8 @@ export {
     type ChatFeedbackEvent,
     type ChatEvent,
     type ChatVisualizationErrorEvent,
+    type ChatSaveVisualizationErrorEvent,
+    type ChatSaveVisualizationSuccessEvent,
     isChatAssistantMessageEvent,
     isChatUserMessageEvent,
     isChatClosedEvent,
@@ -38,6 +40,8 @@ export {
     isChatResetEvent,
     isChatFeedbackEvent,
     isChatVisualizationErrorEvent,
+    isChatSaveVisualizationErrorEvent,
+    isChatSaveVisualizationSuccessEvent,
 } from "./store/events.js";
 
 export type { LinkHandlerEvent } from "./components/ConfigContext.js";
