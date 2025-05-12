@@ -45,10 +45,10 @@ export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataIte
                 aria-haspopup="dialog"
                 aria-describedby={drillId}
             >
-                <span id={drillId} className="sr-only">
+                <BaseHeadlineValueItem {...props} />
+                <span id={drillId} hidden>
                     <FormattedMessage id="visualizations.headline.pagination.drill.hint" />
                 </span>
-                <BaseHeadlineValueItem {...props} />
             </div>
         ) : (
             <BaseHeadlineValueItem {...props} />
