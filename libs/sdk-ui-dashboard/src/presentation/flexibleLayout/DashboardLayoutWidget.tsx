@@ -32,6 +32,7 @@ import {
     selectIsExport,
     useWidgetSelection,
     isExtendedDashboardLayoutWidget,
+    selectEnableSnapshotExportAccessibility,
 } from "../../model/index.js";
 import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets/index.js";
 import { getSizeInfo, calculateWidgetMinHeight } from "../../_staging/layout/sizing.js";
@@ -109,6 +110,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const isExportMode = useDashboardSelector(selectIsInExportMode);
     const isExport = useDashboardSelector(selectIsExport);
+    const isSnapshotAccessibilityEnabled = useDashboardSelector(selectEnableSnapshotExportAccessibility);
     const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
 
     const handleDragEnd = useWidgetDragEndHandler();
@@ -222,6 +224,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                     {
                         "gd-custom-widget-export": isCustom && isExport,
                         "gd-nested-layout-widget-wrapper": isNestedLayout,
+                        "gd-widget-export": isSnapshotAccessibilityEnabled && isExport,
                     },
                 ])}
             >

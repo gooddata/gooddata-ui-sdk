@@ -11,7 +11,7 @@ options = {
         depCruiser.moduleWithDependencies(
             "presentationComponents",
             "src/presentation/presentationComponents",
-            ["src/presentation/export"],
+            ["src/presentation/export", "src/model"],
         ),
 
         // TODO: RAIL-3611

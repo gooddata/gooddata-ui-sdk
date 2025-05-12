@@ -3483,6 +3483,7 @@ export interface ISettings {
     enableSlidesExport?: boolean;
     enableSlideshowExports?: boolean;
     enableSmtp?: boolean;
+    enableSnapshotExportAccessibility?: boolean;
     // (undocumented)
     enableSnowflakeKeyPairAuthentication?: boolean;
     enableTableColumnsAutoResizing?: boolean;

@@ -61,6 +61,11 @@ export interface IDashboardItemBaseProps {
 
     onEnter?: () => void;
     onLeave?: () => void;
+
+    /**
+     * Flag indicating the given item is hidden in some context (e.g. in export mode).
+     */
+    ariaHidden?: boolean;
 }
 
 const noopRender = () => null;
@@ -81,6 +86,7 @@ export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
     onSelected,
     onEnter,
     onLeave,
+    ariaHidden,
 }) => {
     return (
         <DashboardItemContentWrapper>
@@ -98,7 +104,7 @@ export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
                         onLeave={onLeave}
                     >
                         {renderBeforeVisualization()}
-                        <div className={visualizationClassName}>
+                        <div className={visualizationClassName} aria-hidden={ariaHidden}>
                             {renderHeadline(clientHeight, clientWidth)}
                             {children({ clientWidth, clientHeight })}
                         </div>

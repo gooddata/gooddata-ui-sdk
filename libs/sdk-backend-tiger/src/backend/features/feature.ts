@@ -751,6 +751,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableWorkspaceSettingsAppHeaderMenuItem,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableSnapshotExportAccessibility,
+            "enableSnapshotExportAccessibility",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSnapshotExportAccessibility,
+        ),
     };
 }
 

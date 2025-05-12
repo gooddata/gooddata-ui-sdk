@@ -70,6 +70,36 @@
     .gd-grid-layout__container--nested {
         padding-bottom: 300px;
     }
+
+    /* =====================================================================
+    Export Mode Accessibility Enhancements
+    ===================================================================== */
+
+    // Reset z-index during export to ensure proper element stacking in PDF
+    // This prevents issues with z-index values affecting the print layout
+    .gd-widget-export {
+        z-index: auto;
+    }
+
+    // Always left align row header title during export
+    // This overrides the default centered alignment at small resolutions
+    .gd-row-header-export {
+        text-align: left;
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    // Hide the decorative line before the title in export mode since we want left alignment
+    // This overrides the line that appears at small resolutions
+    .gd-row-header-title-wrapper-export {
+        &::before {
+            display: none;
+        }
+    }
+
+    /* =====================================================================
+    Export Mode Accessibility Enhancements
+    ===================================================================== */
 }
 
 .gd-dashboard-meta {

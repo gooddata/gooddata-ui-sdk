@@ -8758,6 +8758,9 @@ export const selectEnableScheduling: DashboardSelector<boolean>;
 export const selectEnableSlideshowExports: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableSnapshotExportAccessibility: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean>;
 
 // @internal
