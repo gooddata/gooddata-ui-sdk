@@ -197,16 +197,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                     autofocusOnOpen={true}
                     customKeyboardNavigationHandler={menuKeyboardNavigationHandler}
                 >
-                    <ItemsWrapper
-                        wrapperRef={menuWrapperRef}
-                        smallItemsSpacing
-                        className="gd-menu"
-                        accessibilityConfig={{
-                            role: "menu",
-                            ariaLabelledBy: buttonId,
-                            id: menuId,
-                        }}
-                    >
+                    <ItemsWrapper smallItemsSpacing className="gd-menu" wrapperRef={menuWrapperRef}>
                         {selectedMenuItem ? (
                             <DefaultSubmenuHeader
                                 title={selectedMenuItem.itemName}
@@ -219,20 +210,22 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                                 }}
                             />
                         ) : null}
-                        {visibleMenuItems.map((menuItem) => {
-                            return (
-                                <MenuItem
-                                    key={menuItem.itemId}
-                                    menuItem={menuItem}
-                                    selectedMenuItem={selectedMenuItem}
-                                    setMenuItemRef={setMenuItemRef}
-                                    setSelectedMenuItem={setSelectedMenuItem}
-                                    setParentItemId={setParentItemId}
-                                    setAutofocusSubmenu={setAutofocusSubmenu}
-                                    setIsOpen={setIsOpen}
-                                />
-                            );
-                        })}
+                        <div role={"menu"} id={menuId} aria-labelledby={buttonId}>
+                            {visibleMenuItems.map((menuItem) => {
+                                return (
+                                    <MenuItem
+                                        key={menuItem.itemId}
+                                        menuItem={menuItem}
+                                        selectedMenuItem={selectedMenuItem}
+                                        setMenuItemRef={setMenuItemRef}
+                                        setSelectedMenuItem={setSelectedMenuItem}
+                                        setParentItemId={setParentItemId}
+                                        setAutofocusSubmenu={setAutofocusSubmenu}
+                                        setIsOpen={setIsOpen}
+                                    />
+                                );
+                            })}
+                        </div>
                     </ItemsWrapper>
                 </UiFocusTrap>
             </Overlay>
