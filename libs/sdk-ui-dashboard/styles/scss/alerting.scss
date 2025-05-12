@@ -149,6 +149,9 @@
     overflow: auto;
     flex: 1 1 auto;
     min-height: 0;
+    button {
+        margin-bottom: 10px;
+    }
 }
 
 .gd-edit-alert__destination-label,
@@ -156,12 +159,7 @@
     margin-bottom: 5px;
 }
 
-.gd-edit-alert__measure-label {
-    margin-bottom: 5px;
-}
-
 .gd-edit-alert__measure-info {
-    margin-top: 10px;
     margin-bottom: 10px;
     display: flex;
     gap: 5px;
