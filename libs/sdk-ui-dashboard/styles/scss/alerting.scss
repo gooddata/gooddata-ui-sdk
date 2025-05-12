@@ -271,14 +271,6 @@
     }
 }
 
-//
-// Measure, Attribute select
-//
-.gd-alert-measure-select,
-.gd-alert-attribute-select {
-    margin-bottom: 10px;
-}
-
 .gd-alert-measure-select__button,
 .gd-alert-attribute-select__button {
     width: 100%;
@@ -379,23 +371,8 @@
     }
 }
 
-//
-// Comparison operator select
-//
-.gd-alert-comparison-operator-select {
-    margin-bottom: 10px;
-}
-
 .gd-alert-comparison-operator-select__button {
     width: 100%;
-}
-
-//
-// Alert destination select
-//
-.gd-alert-destination-select,
-.gd-alert-comparison-select {
-    margin-bottom: 10px;
 }
 
 // TODO: support "invisible" styling of the Button on sdk-ui-kit component level.

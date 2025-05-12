@@ -33,55 +33,53 @@ export const AlertMeasureSelect = ({
         : intl.formatMessage({ id: "insightAlert.config.selectMetric" });
 
     return (
-        <div className="gd-alert-measure-select">
-            <Dropdown
-                overlayPositionType={overlayPositionType}
-                renderButton={({ isOpen, toggleDropdown }) => {
-                    return (
-                        <div
-                            ref={(item) => {
-                                ref.current = item;
-                            }}
+        <Dropdown
+            overlayPositionType={overlayPositionType}
+            renderButton={({ isOpen, toggleDropdown }) => {
+                return (
+                    <div
+                        ref={(item) => {
+                            ref.current = item;
+                        }}
+                    >
+                        <Button
+                            id={id}
+                            className={cx("gd-alert-measure-select__button s-alert-measure-select", {
+                                "is-active": isOpen,
+                            })}
+                            size="small"
+                            variant="secondary"
+                            iconLeft={selectedMeasure ? "gd-icon-metric" : undefined}
+                            iconRight={`gd-icon-navigate${isOpen ? "up" : "down"}`}
+                            onClick={toggleDropdown}
                         >
-                            <Button
-                                id={id}
-                                className={cx("gd-alert-measure-select__button s-alert-measure-select", {
-                                    "is-active": isOpen,
-                                })}
-                                size="small"
-                                variant="secondary"
-                                iconLeft={selectedMeasure ? "gd-icon-metric" : undefined}
-                                iconRight={`gd-icon-navigate${isOpen ? "up" : "down"}`}
-                                onClick={toggleDropdown}
-                            >
-                                {selectedMeasureTitle}
-                            </Button>
-                        </div>
-                    );
-                }}
-                renderBody={({ closeDropdown }) => {
-                    return (
-                        <List
-                            width={ref.current?.offsetWidth}
-                            className="gd-alert-measure-select__list s-alert-measure-select-list"
-                            items={measures}
-                            itemHeight={DROPDOWN_ITEM_HEIGHT}
-                            renderItem={(i) => (
-                                <SingleSelectListItem
-                                    key={i.rowIndex}
-                                    icon={measureIcon}
-                                    title={getMeasureTitle(i.item.measure)}
-                                    isSelected={i.item.measure === selectedMeasure?.measure}
-                                    onClick={() => {
-                                        onMeasureChange(i.item);
-                                        closeDropdown();
-                                    }}
-                                />
-                            )}
-                        />
-                    );
-                }}
-            />
-        </div>
+                            {selectedMeasureTitle}
+                        </Button>
+                    </div>
+                );
+            }}
+            renderBody={({ closeDropdown }) => {
+                return (
+                    <List
+                        width={ref.current?.offsetWidth}
+                        className="gd-alert-measure-select__list s-alert-measure-select-list"
+                        items={measures}
+                        itemHeight={DROPDOWN_ITEM_HEIGHT}
+                        renderItem={(i) => (
+                            <SingleSelectListItem
+                                key={i.rowIndex}
+                                icon={measureIcon}
+                                title={getMeasureTitle(i.item.measure)}
+                                isSelected={i.item.measure === selectedMeasure?.measure}
+                                onClick={() => {
+                                    onMeasureChange(i.item);
+                                    closeDropdown();
+                                }}
+                            />
+                        )}
+                    />
+                );
+            }}
+        />
     );
 };

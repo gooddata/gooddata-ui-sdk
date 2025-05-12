@@ -1,15 +1,15 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useMemo } from "react";
 import { DateGranularity, IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { Button, Dropdown, List, OverlayPositionType, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
-import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
+import React, { useMemo } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { AlertMetric, AlertMetricComparator, AlertMetricComparatorType } from "../../types.js";
 
-import { isChangeOrDifferenceOperator } from "../utils/guards.js";
-import { translateGranularity } from "../utils/granularity.js";
 import { DROPDOWN_ITEM_HEIGHT } from "../constants.js";
+import { translateGranularity } from "../utils/granularity.js";
+import { isChangeOrDifferenceOperator } from "../utils/guards.js";
 
 export interface IAlertComparisonPeriodSelectProps {
     alert: IAutomationMetadataObject | undefined;
@@ -90,55 +90,53 @@ export const AlertComparisonPeriodSelect = (props: IAlertComparisonPeriodSelectP
     }
 
     return (
-        <div className="gd-alert-comparison-select">
-            <Dropdown
-                overlayPositionType={overlayPositionType}
-                renderButton={({ isOpen, toggleDropdown }) => {
-                    return (
-                        <Button
-                            id={id}
-                            onClick={toggleDropdown}
-                            iconRight={isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
-                            size="small"
-                            variant="primary"
-                            className={cx(
-                                "gd-alert-comparison-select__button s-alert-comparison-select",
-                                "button-dropdown",
-                                "dropdown-button",
-                                {
-                                    "gd-alert-comparison-select__button--open": isOpen,
-                                    "is-active": isOpen,
-                                },
-                            )}
-                        >
-                            <DropdownButtonLabel selectedOperator={selectedOperator} />
-                        </Button>
-                    );
-                }}
-                renderBody={({ closeDropdown }) => {
-                    return (
-                        <List
-                            className="gd-alert-comparison-select__list s-alert-comparison-select-list"
-                            items={comparisons}
-                            itemHeight={DROPDOWN_ITEM_HEIGHT}
-                            renderItem={(i) => (
-                                <SingleSelectListItem
-                                    key={i.rowIndex}
-                                    title={i.item.title}
-                                    isSelected={i.item.type === selectedComparison}
-                                    onClick={() => {
-                                        if (i.item.type !== selectedComparison) {
-                                            onComparisonChange(i.item.type);
-                                        }
-                                        closeDropdown();
-                                    }}
-                                />
-                            )}
-                        />
-                    );
-                }}
-            />
-        </div>
+        <Dropdown
+            overlayPositionType={overlayPositionType}
+            renderButton={({ isOpen, toggleDropdown }) => {
+                return (
+                    <Button
+                        id={id}
+                        onClick={toggleDropdown}
+                        iconRight={isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
+                        size="small"
+                        variant="primary"
+                        className={cx(
+                            "gd-alert-comparison-select__button s-alert-comparison-select",
+                            "button-dropdown",
+                            "dropdown-button",
+                            {
+                                "gd-alert-comparison-select__button--open": isOpen,
+                                "is-active": isOpen,
+                            },
+                        )}
+                    >
+                        <DropdownButtonLabel selectedOperator={selectedOperator} />
+                    </Button>
+                );
+            }}
+            renderBody={({ closeDropdown }) => {
+                return (
+                    <List
+                        className="gd-alert-comparison-select__list s-alert-comparison-select-list"
+                        items={comparisons}
+                        itemHeight={DROPDOWN_ITEM_HEIGHT}
+                        renderItem={(i) => (
+                            <SingleSelectListItem
+                                key={i.rowIndex}
+                                title={i.item.title}
+                                isSelected={i.item.type === selectedComparison}
+                                onClick={() => {
+                                    if (i.item.type !== selectedComparison) {
+                                        onComparisonChange(i.item.type);
+                                    }
+                                    closeDropdown();
+                                }}
+                            />
+                        )}
+                    />
+                );
+            }}
+        />
     );
 };
 

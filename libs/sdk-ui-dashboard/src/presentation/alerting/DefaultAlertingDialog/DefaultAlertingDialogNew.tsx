@@ -1,44 +1,44 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useRef, useState } from "react";
+import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import {
+    Button,
+    ConfirmDialogBase,
+    ContentDivider,
+    Hyperlink,
+    Input,
+    Message,
+    Overlay,
+    OverlayController,
+    OverlayControllerProvider,
+    useId,
+} from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
+import React, { useRef, useState } from "react";
 import { defineMessage, FormattedMessage, useIntl } from "react-intl";
 import {
-    ConfirmDialogBase,
-    Overlay,
-    ContentDivider,
-    Button,
-    Hyperlink,
-    Message,
-    OverlayControllerProvider,
-    OverlayController,
-    useId,
-    Input,
-} from "@gooddata/sdk-ui-kit";
-import { IntlWrapper } from "../../localization/index.js";
-import {
+    selectEntitlementMaxAutomationRecipients,
+    selectExecutionTimestamp,
+    selectIsWhiteLabeled,
     selectLocale,
     useDashboardSelector,
-    selectEntitlementMaxAutomationRecipients,
-    selectIsWhiteLabeled,
-    selectExecutionTimestamp,
-    useFiltersForDashboardScheduledExport,
     useEnableAlertingAutomationFilterContext,
+    useFiltersForDashboardScheduledExport,
 } from "../../../model/index.js";
-import { IAlertingDialogProps } from "../types.js";
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
-import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
-import { useAutomationFiltersData } from "../../automationFilters/useAutomationFiltersData.js";
 import { AutomationFiltersSelect } from "../../automationFilters/components/AutomationFiltersSelect.js";
+import { useAutomationFiltersData } from "../../automationFilters/useAutomationFiltersData.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
+import { IntlWrapper } from "../../localization/index.js";
+import { IAlertingDialogProps } from "../types.js";
 //
 import { RecipientsSelect } from "../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
 import { DEFAULT_MAX_RECIPIENTS } from "../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
 //
+import { AlertAttributeSelect } from "./components/AlertAttributeSelect.js";
+import { AlertComparisonOperatorSelect } from "./components/AlertComparisonOperatorSelect.js";
+import { AlertComparisonPeriodSelect } from "./components/AlertComparisonPeriodSelect.js";
+import { AlertDestinationSelect } from "./components/AlertDestinationSelect.js";
 import { AlertMeasureSelect } from "./components/AlertMeasureSelect.js";
 import { AlertTriggerModeSelect } from "./components/AlertTriggerModeSelect.js";
-import { AlertDestinationSelect } from "./components/AlertDestinationSelect.js";
-import { AlertComparisonPeriodSelect } from "./components/AlertComparisonPeriodSelect.js";
-import { AlertComparisonOperatorSelect } from "./components/AlertComparisonOperatorSelect.js";
-import { AlertAttributeSelect } from "./components/AlertAttributeSelect.js";
 
 import { useEditAlert } from "./hooks/useEditAlert.js";
 import { useSaveAlertToBackend } from "./hooks/useSaveAlertToBackend.js";
@@ -50,9 +50,9 @@ import { DefaultLoadingAlertingDialog } from "./DefaultLoadingAlertingDialog.js"
 
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
 
+import { convertError } from "@gooddata/sdk-ui";
 import { getDescription, getValueSuffix } from "./utils/getters.js";
 import { isChangeOrDifferenceOperator } from "./utils/guards.js";
-import { convertError } from "@gooddata/sdk-ui";
 
 const OVERLAY_POSITION_TYPE = "fixed";
 
@@ -404,6 +404,7 @@ export function AlertingDialogRenderer({
                                 <FormField
                                     label={<FormattedMessage id="insightAlert.config.recipients" />}
                                     htmlFor="alert.recipients"
+                                    fullWidth
                                 >
                                     <RecipientsSelect
                                         id="alert.recipients"
@@ -523,10 +524,12 @@ function FormField({
     label,
     children,
     htmlFor,
+    fullWidth = false,
 }: {
     label: React.ReactNode;
     children: React.ReactNode;
     htmlFor?: string;
+    fullWidth?: boolean;
 }) {
     return (
         <div className="gd-input-component gd-input-component--no-last-child-margin gd-dashboard-alerting-dialog-form-field">
@@ -535,7 +538,15 @@ function FormField({
                     {label}
                 </label>
             </div>
-            <div className="gd-dashboard-alerting-dialog-form-field__content-container">{children}</div>
+            <div
+                className={
+                    fullWidth
+                        ? "gd-dashboard-alerting-dialog-form-field__content-container-full-width"
+                        : "gd-dashboard-alerting-dialog-form-field__content-container"
+                }
+            >
+                {children}
+            </div>
         </div>
     );
 }

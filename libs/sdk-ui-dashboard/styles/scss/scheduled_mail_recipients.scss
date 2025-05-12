@@ -342,6 +342,13 @@ $input-height: 28px;
         min-height: 23px;
         flex: 1;
         min-width: 200px;
+        max-width: 240px;
+    }
+
+    &__content-container-full-width {
+        min-height: 23px;
+        flex: 1;
+        min-width: 200px;
     }
 }
 
