@@ -1495,8 +1495,8 @@
         "comment": "",
         "limit": 0
     },
-    "controlButtons.options.close": {
-        "value": "Close",
+    "controlButtons.options.closeMenu": {
+        "value": "Close menu",
         "comment": "",
         "limit": 0
     },

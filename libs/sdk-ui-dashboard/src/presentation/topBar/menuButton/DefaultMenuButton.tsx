@@ -32,7 +32,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
     const intl = useIntl();
     const tooltipText = intl.formatMessage({ id: "controlButtons.options.tooltip" });
     const backLabel = intl.formatMessage({ id: "controlButtons.options.back" });
-    const closeLabel = intl.formatMessage({ id: "controlButtons.options.close" });
+    const closeLabel = intl.formatMessage({ id: "controlButtons.options.closeMenu" });
     const menuWrapperRef = useRef<HTMLDivElement>(null);
     const [parentItemId, setParentItemId] = useState<string | null>(null);
     const menuItemRefs = useRef<Map<string, HTMLElement>>(new Map());

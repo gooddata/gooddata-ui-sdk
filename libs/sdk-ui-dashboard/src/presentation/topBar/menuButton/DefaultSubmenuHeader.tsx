@@ -24,7 +24,7 @@ export const DefaultSubmenuHeader: React.FC<IDefaultSubmenuHeaderProps> = ({
     return (
         <div className="configuration-panel-header">
             {onGoBack ? (
-                <Typography tagName="h3" className={headerClassNames} onClick={onGoBack}>
+                <>
                     <button
                         className="configuration-panel-header-back-button"
                         onClick={onGoBack}
@@ -32,8 +32,10 @@ export const DefaultSubmenuHeader: React.FC<IDefaultSubmenuHeaderProps> = ({
                     >
                         <i className="gd-icon-navigateleft" role="img" aria-hidden="true" />
                     </button>
-                    {title}
-                </Typography>
+                    <Typography tagName="h3" className={headerClassNames} onClick={onGoBack}>
+                        {title}
+                    </Typography>
+                </>
             ) : (
                 <Typography tagName="h3" className={headerClassNames}>
                     {title}
@@ -42,7 +44,9 @@ export const DefaultSubmenuHeader: React.FC<IDefaultSubmenuHeaderProps> = ({
             <Button
                 className="gd-button-link gd-button-icon-only gd-icon-cross configuration-panel-header-close-button s-configuration-panel-header-close-button"
                 onClick={onClose}
-                aria-label={closeLabel}
+                accessibilityConfig={{
+                    ariaLabel: closeLabel,
+                }}
             />
         </div>
     );
