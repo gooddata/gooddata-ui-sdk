@@ -59,8 +59,13 @@ export function* onVisualizationSave({
     } catch (e) {
         console.error(e);
 
+        const error = e as Error;
         yield put(
             saveVisualizationErrorAction({
+                error: {
+                    name: error.name,
+                    message: error.message,
+                },
                 visualizationId: payload.visualizationId,
                 assistantMessageId: payload.assistantMessageId,
             }),

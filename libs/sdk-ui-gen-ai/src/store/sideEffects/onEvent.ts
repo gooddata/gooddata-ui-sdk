@@ -9,6 +9,8 @@ import {
     setUserFeedback,
     loadThreadSuccessAction,
     visualizationErrorAction,
+    saveVisualizationErrorAction,
+    saveVisualizationSuccessAction,
 } from "../messages/messagesSlice.js";
 import { EventDispatcher } from "../events.js";
 import { isRoutingContents, isTextContents, isUserMessage, Message, RoutingContents } from "../../model.js";
@@ -22,6 +24,8 @@ export function* onEvent() {
     yield takeEvery(evaluateMessageCompleteAction.type, onEvaluateMessageComplete);
     yield takeEvery(setUserFeedback.type, onUserFeedback);
     yield takeEvery(visualizationErrorAction.type, onVisualizationError);
+    yield takeEvery(saveVisualizationErrorAction.type, onSaveVisualizationError);
+    yield takeEvery(saveVisualizationSuccessAction.type, onSaveVisualizationSuccess);
 }
 
 function* onSetOpen({ payload: { isOpen } }: ReturnType<typeof setOpenAction>) {
@@ -136,5 +140,30 @@ function* onVisualizationError({
         threadId,
         errorMessage,
         errorType,
+    });
+}
+
+function* onSaveVisualizationError({ payload: { error } }: ReturnType<typeof saveVisualizationErrorAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatSaveVisualizationError",
+        threadId,
+        errorMessage: error.message,
+        errorType: error.name,
+    });
+}
+
+function* onSaveVisualizationSuccess({
+    payload: { savedVisualizationId },
+}: ReturnType<typeof saveVisualizationSuccessAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatSaveVisualizationSuccess",
+        threadId,
+        savedVisualizationId,
     });
 }

@@ -220,14 +220,17 @@
         top: 0.5em;
         right: 0.5em;
         cursor: pointer;
-        opacity: 0.8;
         background: kit-variables.$gd-color-text;
         border-radius: 3px;
         height: 35px;
         width: 40px;
 
         svg path {
-            fill: kit-variables.$gd-color-white;
+            fill: color-mix(in sRGB, kit-variables.$gd-palette-primary-base, transparent 20%);
+        }
+
+        &:hover svg path {
+            fill: kit-variables.$gd-palette-primary-base;
         }
     }
 

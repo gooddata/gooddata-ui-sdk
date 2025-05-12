@@ -130,6 +130,45 @@ export const isChatVisualizationErrorEvent = (event: ChatEvent): event is ChatVi
 };
 
 /**
+ * A chat save visualization error event.
+ * @alpha
+ */
+export type ChatSaveVisualizationErrorEvent = BaseEvent & {
+    type: "chatSaveVisualizationError";
+    errorType: string;
+    errorMessage?: string;
+};
+
+/**
+ * Type guard for the ChatVisualizationErrorEvent.
+ * @alpha
+ */
+export const isChatSaveVisualizationErrorEvent = (
+    event: ChatEvent,
+): event is ChatSaveVisualizationErrorEvent => {
+    return event.type === "chatSaveVisualizationError";
+};
+
+/**
+ * A chat save visualization success event.
+ * @alpha
+ */
+export type ChatSaveVisualizationSuccessEvent = BaseEvent & {
+    type: "chatSaveVisualizationSuccess";
+    savedVisualizationId: string;
+};
+
+/**
+ * Type guard for the isChatSaveVisualizationSuccessEvent.
+ * @alpha
+ */
+export const isChatSaveVisualizationSuccessEvent = (
+    event: ChatEvent,
+): event is ChatSaveVisualizationSuccessEvent => {
+    return event.type === "chatSaveVisualizationSuccess";
+};
+
+/**
  * A union type for all chat events.
  * @alpha
  */
@@ -140,7 +179,9 @@ export type ChatEvent =
     | ChatUserMessageEvent
     | ChatAssistantMessageEvent
     | ChatFeedbackEvent
-    | ChatVisualizationErrorEvent;
+    | ChatVisualizationErrorEvent
+    | ChatSaveVisualizationErrorEvent
+    | ChatSaveVisualizationSuccessEvent;
 
 /**
  * An event handler for the Chat component.
