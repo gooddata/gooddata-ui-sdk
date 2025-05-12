@@ -314,7 +314,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                         value={value}
                         getOptionValue={(o) => o.id}
                         getOptionLabel={(o) => o.name ?? o.id}
-                        aria-errormessage={showInputError ? "gd-recipients-field-error" : undefined}
+                        aria-describedby={showInputError ? "gd-recipients-field-error" : undefined}
                         aria-invalid={showInputError}
                     />
                     {showInputError ? (
