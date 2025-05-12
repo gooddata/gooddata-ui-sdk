@@ -182,6 +182,11 @@ export interface INotificationsPanelProps extends INotificationsPanelCustomCompo
      * Callback for notification click.
      */
     onNotificationClick?: (notification: INotification) => void;
+
+    /**
+     * Show scheduling notifications.
+     */
+    showSchedulingNotifications?: boolean;
 }
 
 /**
@@ -193,7 +198,14 @@ const TEN_MINUTES = 1000 * 60 * 10;
  * @public
  */
 export function NotificationsPanel(props: INotificationsPanelProps) {
-    const { locale, refreshInterval = TEN_MINUTES, itemsPerPage = 50, backend, workspace } = props;
+    const {
+        locale,
+        refreshInterval = TEN_MINUTES,
+        itemsPerPage = 50,
+        backend,
+        workspace,
+        showSchedulingNotifications,
+    } = props;
 
     return (
         <OrganizationProvider>
@@ -202,6 +214,7 @@ export function NotificationsPanel(props: INotificationsPanelProps) {
                 workspace={workspace}
                 refreshInterval={refreshInterval}
                 itemsPerPage={itemsPerPage}
+                showSchedulingNotifications={showSchedulingNotifications}
             >
                 <IntlWrapper locale={locale}>
                     <NotificationsPanelController {...props} />

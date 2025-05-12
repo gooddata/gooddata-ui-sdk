@@ -676,6 +676,11 @@ export interface ISettings {
      */
     enableKDRespectLegendPosition?: boolean;
 
+    /**
+     * Enable to export to document storage.
+     */
+    enableExportToDocumentStorage?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

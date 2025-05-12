@@ -36,12 +36,22 @@ export interface IUseNotificationsProps {
      * Number of items per page.
      */
     itemsPerPage: number;
+
+    /**
+     * Show scheduling notifications.
+     */
+    showSchedulingNotifications?: boolean;
 }
 
 /**
  * @internal
  */
-export function useNotifications({ workspace, refreshInterval, itemsPerPage }: IUseNotificationsProps) {
+export function useNotifications({
+    workspace,
+    refreshInterval,
+    itemsPerPage,
+    showSchedulingNotifications,
+}: IUseNotificationsProps) {
     const effectiveWorkspace = useWorkspace(workspace);
 
     const {
@@ -125,21 +135,28 @@ export function useNotifications({ workspace, refreshInterval, itemsPerPage }: I
             return notifications;
         }
 
-        return notifications.filter(isAlertNotification).map((notification) => {
+        const filteredNotifications = showSchedulingNotifications
+            ? notifications
+            : notifications.filter(isAlertNotification);
+
+        return filteredNotifications.map((notification) => {
             if (markedAsReadNotifications.includes(notification.id)) {
                 return { ...notification, isRead: true };
             }
             return notification;
         });
-    }, [notifications, markedAsReadNotifications]);
+    }, [notifications, markedAsReadNotifications, showSchedulingNotifications]);
 
     const effectiveUnreadNotifications = useMemo(() => {
         if (!unreadNotifications) {
             return unreadNotifications;
         }
 
-        return unreadNotifications
-            .filter(isAlertNotification)
+        const filteredUnreadNotifications = showSchedulingNotifications
+            ? unreadNotifications
+            : unreadNotifications.filter(isAlertNotification);
+
+        return filteredUnreadNotifications
             .map((notification) => {
                 if (markedAsReadNotifications.includes(notification.id)) {
                     return { ...notification, isRead: true };
@@ -147,7 +164,7 @@ export function useNotifications({ workspace, refreshInterval, itemsPerPage }: I
                 return notification;
             })
             .filter((x) => !x.isRead);
-    }, [unreadNotifications, markedAsReadNotifications]);
+    }, [unreadNotifications, markedAsReadNotifications, showSchedulingNotifications]);
 
     /**
      * Generally, we filter out notifications that are not of type alert and here we prepare
@@ -156,6 +173,21 @@ export function useNotifications({ workspace, refreshInterval, itemsPerPage }: I
     const numberOfInvalidUnreadNotifications = useMemo(() => {
         return unreadNotifications.filter((notification) => !isAlertNotification(notification)).length;
     }, [unreadNotifications]);
+
+    const numberOfUnreadNotifications = useMemo(() => {
+        if (showSchedulingNotifications) {
+            return unreadNotificationsCount - markedAsReadNotifications.length;
+        }
+
+        return (
+            unreadNotificationsCount - markedAsReadNotifications.length - numberOfInvalidUnreadNotifications
+        );
+    }, [
+        showSchedulingNotifications,
+        markedAsReadNotifications,
+        numberOfInvalidUnreadNotifications,
+        unreadNotificationsCount,
+    ]);
 
     return {
         notifications: effectiveNotifications,
@@ -170,10 +202,7 @@ export function useNotifications({ workspace, refreshInterval, itemsPerPage }: I
         unreadNotificationsHasNextPage: unreadNotificationsHasNextPage,
         unreadNotificationsLoadNextPage: unreadNotificationsLoadNextPage,
         unreadNotificationsReset,
-        unreadNotificationsCount: Math.max(
-            0,
-            unreadNotificationsCount - markedAsReadNotifications.length - numberOfInvalidUnreadNotifications,
-        ),
+        unreadNotificationsCount: Math.max(0, numberOfUnreadNotifications),
         markNotificationAsRead,
         markAllNotificationsAsRead,
     };

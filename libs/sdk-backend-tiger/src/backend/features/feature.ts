@@ -744,6 +744,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableKDRespectLegendPosition,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableExportToDocumentStorage,
+            "enableExportToDocumentStorage",
+            "BOOLEAN",
+            FeatureFlagsValues.enableExportToDocumentStorage,
+        ),
     };
 }
 
