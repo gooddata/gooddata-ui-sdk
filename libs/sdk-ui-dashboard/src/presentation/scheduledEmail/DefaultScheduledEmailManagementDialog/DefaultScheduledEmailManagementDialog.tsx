@@ -78,7 +78,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                 displayCloseButton={true}
                 onCancel={onClose}
                 className="gd-notifications-channels-management-dialog s-scheduled-email-management-dialog"
-                accessibilityConfig={{ titleElementId }}
+                accessibilityConfig={{ titleElementId, isModal: true }}
             >
                 <div className="gd-notifications-channels-management-dialog-title">
                     <Typography tagName="h3" className="gd-dialog-header" id={titleElementId}>
