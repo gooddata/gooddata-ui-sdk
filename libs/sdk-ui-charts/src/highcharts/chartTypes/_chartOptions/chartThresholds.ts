@@ -128,6 +128,9 @@ export function setupThresholdZones(
 const areZonesValid = (zones: IZone[]) =>
     !(zones.length === 0 || (zones.length === 1 && zones[0].dashStyle === "solid"));
 
+const fixLegendIndex = (series: ISeriesItem[]) =>
+    series.map((series, index) => ({ ...series, legendIndex: index }));
+
 function computeZonesForNonStackedChart(
     series: ISeriesItem[],
     thresholdMeasureIndex: number,
@@ -138,8 +141,8 @@ function computeZonesForNonStackedChart(
     const zones = generateZones(thresholdSeries.data);
 
     if (!areZonesValid(zones)) {
-        // no zone was generated, there's no need to update series, just don't render the threshold series
-        return { series: renderedSeries };
+        // no zone was generated, just don't render the threshold series, and fix legend index for the rest
+        return { series: fixLegendIndex(renderedSeries) };
     }
 
     return {
@@ -185,8 +188,10 @@ function computeZonesForStackedChart(
         ];
     });
 
-    // compute zone per series pair, hide threshold series, even when no zone was generated
-    const zonedSeries: ISeriesItem[] = pairedSeries.map(([dataSeries, thresholdSeries], index) => {
+    // compute zone per series pair, hide threshold series, even when no zone was generated, no need to touch
+    // legend index as the legend contains segments, not the metrics, and there's still the same amount of
+    // segments
+    const zonedSeries: ISeriesItem[] = pairedSeries.map(([dataSeries, thresholdSeries]) => {
         const zones = generateZones(thresholdSeries.data);
         if (!areZonesValid(zones)) {
             return dataSeries;
@@ -194,7 +199,6 @@ function computeZonesForStackedChart(
 
         return {
             ...dataSeries,
-            legendIndex: index,
             zoneAxis: "x",
             zones,
         };
