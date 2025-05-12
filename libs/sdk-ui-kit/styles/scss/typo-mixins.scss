@@ -67,7 +67,6 @@
 
     line-height: list.nth(map.get(variables.$gd-typo, line-heights), 2);
     color: variables.$gd-color-label;
-    word-break: break-word;
 }
 
 @mixin gd-label-top {
