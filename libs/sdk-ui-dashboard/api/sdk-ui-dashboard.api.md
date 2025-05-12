@@ -5536,6 +5536,8 @@ export interface IMenuButtonItemButton extends IMenuItemCommonProps {
     itemName: string;
     // (undocumented)
     onClick?: () => void;
+    // (undocumented)
+    opensDialog?: boolean;
     tooltip?: string | ReactNode;
     // (undocumented)
     type: "button";

@@ -363,7 +363,7 @@ const MenuItem = ({
                 elementType="button"
                 accessibilityConfig={{
                     role: "menuitem",
-                    ariaHaspopup: "menu",
+                    ariaHasPopup: "menu",
                     ariaExpanded: selectedMenuItem?.itemId === menuItem.itemId ? "true" : "false",
                     ariaDisabled: menuItem.disabled ? "true" : undefined,
                 }}
@@ -394,6 +394,7 @@ const MenuItem = ({
             accessibilityConfig={{
                 role: "menuitem",
                 ariaDisabled: menuItem.disabled ? "true" : undefined,
+                ariaHasPopup: menuItem.opensDialog ? "dialog" : undefined,
             }}
         />
     ));

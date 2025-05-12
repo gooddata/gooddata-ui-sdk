@@ -217,6 +217,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                             : undefined,
                     onClick: defaultOnSaveAs,
                     icon: "gd-icon-save-as-new",
+                    opensDialog: true,
                 },
             ],
             // alerts section
@@ -230,6 +231,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                     onClick: defaultOnAlertsManagement,
                     visible: isAlertsManagementVisible,
                     icon: "gd-icon-bell",
+                    opensDialog: true,
                 },
             ],
             // schedules section
@@ -254,6 +256,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                               )
                             : undefined,
                     icon: "gd-icon-clock",
+                    opensDialog: true,
                 },
                 {
                     type: "button",
@@ -264,6 +267,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                     onClick: defaultOnScheduleEmailingManagement,
                     visible: isScheduledManagementEmailingVisible,
                     icon: canCreateAutomation ? "gd-icon-list" : "gd-icon-clock",
+                    opensDialog: true,
                 },
             ],
             // filter views section
@@ -275,6 +279,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                     onClick: openFilterViewsAddDialog,
                     visible: isFilterViewsVisible,
                     icon: "gd-icon-filter",
+                    opensDialog: true,
                 },
                 {
                     type: "button",
@@ -283,6 +288,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                     onClick: openFilterViewsListDialog,
                     visible: isFilterViewsVisible,
                     icon: "gd-icon-list",
+                    opensDialog: true,
                 },
             ],
             // export section

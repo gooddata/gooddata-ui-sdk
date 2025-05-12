@@ -2967,7 +2967,7 @@ export interface IMenuAccessibilityConfig extends IAccessibilityConfigBase {
     // (undocumented)
     ariaDisabled?: "true" | "false";
     // (undocumented)
-    ariaHaspopup?: "true" | "false" | "menu" | "listbox" | "tree" | "grid" | "dialog";
+    ariaHasPopup?: "true" | "false" | "menu" | "listbox" | "tree" | "grid" | "dialog";
     // (undocumented)
     id?: string;
     // (undocumented)

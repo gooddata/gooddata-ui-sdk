@@ -19,7 +19,7 @@ export interface IMenuAccessibilityConfig extends IAccessibilityConfigBase {
     role?: "menu" | "menuitem" | "separator" | "presentation";
     ariaDisabled?: "true" | "false";
     // to support submenu
-    ariaHaspopup?: "true" | "false" | "menu" | "listbox" | "tree" | "grid" | "dialog";
+    ariaHasPopup?: "true" | "false" | "menu" | "listbox" | "tree" | "grid" | "dialog";
     ariaControls?: string;
 }
 

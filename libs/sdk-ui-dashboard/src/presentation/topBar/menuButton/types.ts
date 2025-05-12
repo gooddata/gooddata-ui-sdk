@@ -23,6 +23,7 @@ export interface IMenuButtonItemButton extends IMenuItemCommonProps {
     tooltip?: string | ReactNode;
     disabled?: boolean;
     icon?: string | ReactNode;
+    opensDialog?: boolean;
 }
 
 /**
