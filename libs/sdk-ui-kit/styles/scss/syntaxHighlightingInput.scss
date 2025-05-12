@@ -1,24 +1,15 @@
 // (C) 2020-2025 GoodData Corporation
-@use "codemirror/lib/codemirror.css";
 @use "sass:color";
 @use "mixins";
 @use "variables";
 
-$cm-color-matching-bracket: #000;
-$cm-color-matching-bracket-bg: #fef9d3;
-$cm-color-non-matching-bracket: #e54d42;
-$cm-color-variable-brackets: #94a1ad;
-$cm-color-variable-4: #13b1e2;
-$cm-color-variable-5: #00c18e;
-$cm-color-keyword: #ab55a3;
-
 .gd-input-syntax-highlighting-input {
-    .CodeMirror {
+    .cm-editor {
         // start of gd-input-base mixin body
         box-sizing: border-box;
         height: 100px;
         margin: 0;
-        padding: 2px 2px 0 3px;
+        padding: 0;
         border: 1px solid variables.$gd-input-text-border;
         line-height: normal;
         vertical-align: middle;
@@ -50,46 +41,22 @@ $cm-color-keyword: #ab55a3;
             }
         }
 
-        &.CodeMirror-focused {
+        &.cm-focused {
             border-color: variables.$gd-palette-primary-base;
+            outline: none;
             @include mixins.box-shadow(
                 inset 0 1px 1px 0 color.adjust(variables.$gd-input-text-box-shadow-color, $alpha: -0.85)
             );
         }
-    }
 
-    .CodeMirror-empty {
-        color: variables.$gd-color-disabled;
-    }
-
-    .CodeMirror-code {
-        .CodeMirror-matchingbracket {
+        .cm-matchingBracket {
             font-weight: bold;
-            color: $cm-color-matching-bracket;
-            background-color: $cm-color-matching-bracket-bg;
+            color: #000;
+            background-color: #fef9d3;
         }
 
-        .CodeMirror-nonmatchingbracket {
-            color: $cm-color-non-matching-bracket;
-        }
-
-        .cm-variable-brackets {
-            color: $cm-color-variable-brackets;
-        }
-
-        .cm-variable-4 {
-            font-weight: bold;
-            color: $cm-color-variable-4;
-        }
-
-        .cm-variable-5 {
-            font-weight: bold;
-            color: $cm-color-variable-5;
-        }
-
-        .cm-keyword {
-            font-weight: bold;
-            color: $cm-color-keyword;
+        .cm-nonmatchingBracket {
+            color: #e54d42;
         }
     }
 }

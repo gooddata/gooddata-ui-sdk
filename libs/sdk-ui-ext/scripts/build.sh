@@ -15,7 +15,7 @@ _generate_translations_bundles() {
 }
 
 _build_styles() {
-    sass --load-path=node_modules --load-path=node_modules/codemirror/lib styles/internal/scss:styles/internal/css
+    sass --load-path=node_modules styles/internal/scss:styles/internal/css
     sass --load-path=node_modules styles/scss:styles/css
 }
 

@@ -5,6 +5,7 @@ import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import defaultUserEvent from "@testing-library/user-event";
 import { describe, it, expect, vi, afterAll, beforeAll } from "vitest";
 import { defaultImport } from "default-import";
+import "vitest-dom/extend-expect";
 
 import * as SyntaxHighlightingInput from "../SyntaxHighlightingInput.js";
 
@@ -43,7 +44,7 @@ describe("SyntaxHighlightingInput", () => {
                 const onChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
                     onChange(e.target.value);
 
-                    if (value === multiLineValue) {
+                    if (value === multiLineValue && onCursor) {
                         onCursor(8, 8);
                     }
                 };

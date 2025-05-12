@@ -7,7 +7,8 @@ import cx from "classnames";
 import { ISeparators, withIntl } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
 import { defaultImport } from "default-import";
-
+import "vitest-dom/extend-expect";
+import { EditorView } from "@codemirror/view";
 import { MeasureNumberFormat, IMeasureNumberFormatOwnProps } from "../MeasureNumberFormat.js";
 
 import { IFormatTemplate, IToggleButtonProps } from "../typings.js";
@@ -72,14 +73,20 @@ const renderComponent = (props?: Partial<IMeasureNumberFormatOwnProps>) => {
 };
 
 describe("Measure number format", () => {
-    const getCodeMirrorInstance = (): CodeMirror.Editor => {
-        return (document.querySelector(".CodeMirror") as any).CodeMirror;
+    const getCodeMirrorInstance = (): EditorView => {
+        const editorElement = document.querySelector(".cm-editor");
+        if (!editorElement) {
+            throw new Error("Editor element not found");
+        }
+        return EditorView.findFromDOM(editorElement as HTMLElement)!;
     };
 
     const setCustomFormatValue = (value: string) => {
         act(() => {
             const codeMirrorEditor = getCodeMirrorInstance();
-            codeMirrorEditor.setValue(value);
+            codeMirrorEditor.dispatch({
+                changes: { from: 0, to: codeMirrorEditor.state.doc.length, insert: value },
+            });
         });
     };
 

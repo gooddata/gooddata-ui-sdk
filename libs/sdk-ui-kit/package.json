@@ -55,7 +55,7 @@
         "validate-locales": "cd ../sdk-ui && npm run validate-locales",
         "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci",
         "validate-theming": "npm run scss && node scripts/validateCss.js",
-        "scss": "sass --load-path=node_modules --load-path=node_modules/fixed-data-table-2/dist --load-path=node_modules/codemirror/lib styles/scss:styles/css"
+        "scss": "sass --load-path=node_modules --load-path=node_modules/fixed-data-table-2/dist styles/scss:styles/css"
     },
     "dependencies": {
         "@types/mdast": "^4.0.4",
@@ -69,7 +69,6 @@
         "@gooddata/util": "workspace:*",
         "@tanstack/react-virtual": "^3.11.1",
         "classnames": "^2.3.1",
-        "codemirror": "^5.54.0",
         "copy-to-clipboard": "^3.3.1",
         "date-fns": "^2.22.1",
         "date-fns-tz": "^2.0.0",
@@ -96,7 +95,12 @@
         "ts-invariant": "^0.7.5",
         "tslib": "^2.5.0",
         "uuid": "^8.3.2",
-        "unified": "^11.0.5"
+        "unified": "^11.0.5",
+        "@codemirror/language": "~6.11.0",
+        "@codemirror/state": "~6.5.2",
+        "@codemirror/view": "~6.36.4",
+        "@lezer/highlight": "~1.2.1",
+        "@codemirror/commands": "~6.8.1"
     },
     "peerDependencies": {
         "react": "^16.10.0 || ^17.0.0 || ^18.0.0",
@@ -112,7 +116,6 @@
         "@testing-library/dom": "~9.2.0",
         "@testing-library/react": "^14.0.0",
         "@testing-library/user-event": "^14.4.2",
-        "@types/codemirror": "^5.60.7",
         "@types/debounce-promise": "^3.1.4",
         "@types/kefir": "^3.8.5",
         "@types/lodash": "^4.14.202",

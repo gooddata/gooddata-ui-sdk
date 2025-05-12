@@ -55,6 +55,30 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@codemirror/commands",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@codemirror/lang-yaml",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@codemirror/language",
+      "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "@codemirror/lint",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@codemirror/state",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@codemirror/view",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@componentdriven/csf",
       "allowedCategories": [ "production" ]
     },
@@ -135,6 +159,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@gooddata/sdk-ui-charts",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-dashboard",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -152,10 +180,6 @@
     },
     {
       "name": "@gooddata/sdk-ui-geo",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-charts",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
@@ -192,6 +216,10 @@
     },
     {
       "name": "@gooddata/util",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@lezer/highlight",
       "allowedCategories": [ "production" ]
     },
     {
@@ -539,6 +567,14 @@
       "allowedCategories": [ "examples", "tools" ]
     },
     {
+      "name": "chalk",
+      "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "chokidar",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "circular-dependency-plugin",
       "allowedCategories": [ "examples", "production" ]
     },
@@ -781,14 +817,6 @@
     {
       "name": "http-status-codes",
       "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "chalk",
-      "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "chokidar",
-      "allowedCategories": [ "tools" ]
     },
     {
       "name": "immer",
@@ -1055,16 +1083,16 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "recharts",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "redux-batched-actions",
       "allowedCategories": [ "production" ]
     },
     {
       "name": "redux-saga",
       "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "recharts",
-      "allowedCategories": [ "examples" ]
     },
     {
       "name": "remark",
@@ -1131,11 +1159,11 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-config-prettier",
+      "name": "stylelint-checkstyle-formatter",
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-checkstyle-formatter",
+      "name": "stylelint-config-prettier",
       "allowedCategories": [ "production" ]
     },
     {

@@ -1,6 +1,4 @@
 // (C) 2007-2025 GoodData Corporation
-@use "codemirror/lib/codemirror.css";
-@use "codemirror/addon/lint/lint.css";
 @use "sass:color";
 @use "variables.scss";
 @use "@gooddata/sdk-ui-kit/styles/scss/colorPicker";
@@ -353,65 +351,52 @@ $color-picker-spacing: 5px;
     background-size: 12px 12px;
 }
 
-// class name generated from provided "theme" prop with value "gd-advanced-customization-dialog__theme"
-.cm-s-gd-advanced-customization-dialog__theme {
-    // The colors in this section are not themed in any way for now.
-    // The feature is for internal use only for now.
-    &.CodeMirror {
-        border: 1px solid kit-variables.$gd-border-color;
+// CodeMirror 6 theme
+.gd-advanced-customization-dialog__theme {
+    display: flex;
+    height: 100%;
+
+    .cm-editor {
+        flex: 1;
+        max-height: 300px;
+        border: 1px solid var(--gd-palette-complementary-3, #dde4eb);
         border-radius: 3px;
+        background: #fff;
 
-        .cm-keyword {
-            color: #7364cf;
-        }
-        .cm-variable,
-        .cm-atom {
-            color: #7364cf;
-        }
-        .cm-string,
-        .cm-meta {
-            color: #464e56;
-        }
-        .cm-number {
-            color: #464e56;
-        }
-        .cm-comment {
-            color: #94a1ad;
-            font-style: italic;
+        .cm-content {
+            padding: 0 10px;
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.5;
         }
 
-        .CodeMirror-gutters {
+        .cm-gutters {
             background: #fff;
-            border-right: 1px solid #ebeff4;
+            border-right: 1px solid var(--gd-palette-complementary-3, #dde4eb);
         }
 
-        .CodeMirror-lint-marker-error {
-            @include code-mirror-icon--error;
-        }
-
-        .CodeMirror-line {
+        .cm-line {
             padding: 0 10px;
         }
     }
-}
 
-// For some reason the tooltip wrapper does not provided "theme" prop
-// "gd-advanced-customization-dialog__theme" prefixed with "cm-s-" as the main container.
-.gd-advanced-customization-dialog__theme {
-    &.CodeMirror-lint-tooltip {
+    .cm-tooltip {
         z-index: 6000;
-        border: 1px solid kit-variables.$gd-border-color;
+        border: 1px solid var(--gd-palette-complementary-3, #dde4eb);
         background: white;
         color: var(--gd-palette-complementary-8, #464e56);
         padding: 10px;
+        font-size: 12px;
+        border-radius: 3px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-        .CodeMirror-lint-message {
-            padding-left: 25px;
-            background-position: top 4px left;
-        }
-
-        .CodeMirror-lint-message-error {
-            @include code-mirror-icon--error;
+    .cm-tooltip-lint {
+        .cm-lintRange-error {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23e54d42' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
+            background-position: left center;
+            background-repeat: no-repeat;
+            padding-left: 20px;
         }
     }
 }
