@@ -431,4 +431,98 @@ describe("UiMenu", () => {
         expect(screen.getByText("Group Item 1")).toBeInTheDocument();
         expect(screen.getByText("Group Item 2")).toBeInTheDocument();
     });
+    it("should handle menu with only group items at top level", () => {
+        // Create a menu with only group items at the top level
+        const onlyGroupItems: IUiMenuItem[] = [
+            {
+                type: "group",
+                id: "group1",
+                stringTitle: "Group 1",
+                data: "Group 1 title",
+                subItems: [
+                    {
+                        type: "interactive",
+                        id: "group1item1",
+                        stringTitle: "Group 1 Item 1",
+                        data: "group1data1",
+                    },
+                    {
+                        type: "interactive",
+                        id: "group1item2",
+                        stringTitle: "Group 1 Item 2",
+                        data: "group1data2",
+                    },
+                ],
+            },
+            {
+                type: "group",
+                id: "group2",
+                stringTitle: "Group 2",
+                data: "Group 2 title",
+                subItems: [
+                    {
+                        type: "interactive",
+                        id: "group2item1",
+                        stringTitle: "Group 2 Item 1",
+                        data: "group2data1",
+                    },
+                    {
+                        type: "interactive",
+                        id: "group2item2",
+                        stringTitle: "Group 2 Item 2",
+                        data: "group2data2",
+                    },
+                ],
+            },
+        ];
+
+        const onSelect = vi.fn();
+        render(
+            <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>
+                <UiMenu
+                    items={onlyGroupItems}
+                    onSelect={onSelect}
+                    onClose={vi.fn()}
+                    ariaAttributes={{
+                        id: "test-group-menu",
+                        "aria-labelledby": "test-group-button",
+                    }}
+                />
+            </IntlProvider>,
+        );
+
+        // Check that all group items are rendered
+        expect(screen.getByText("Group 1")).toBeInTheDocument();
+        expect(screen.getByText("Group 2")).toBeInTheDocument();
+        expect(screen.getByText("Group 1 Item 1")).toBeInTheDocument();
+        expect(screen.getByText("Group 1 Item 2")).toBeInTheDocument();
+        expect(screen.getByText("Group 2 Item 1")).toBeInTheDocument();
+        expect(screen.getByText("Group 2 Item 2")).toBeInTheDocument();
+
+        const menu = screen.getByRole("menu");
+
+        // Initial focus should be on the first interactive item from the first group
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("group1item1"));
+
+        // Navigate down
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("group1item2"));
+
+        // Navigate down again to reach the next group
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("group2item1"));
+
+        // Navigate to end
+        fireEvent.keyDown(menu, { code: "End" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("group2item2"));
+
+        // Navigate to home
+        fireEvent.keyDown(menu, { code: "Home" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("group1item1"));
+
+        // Select an item
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        fireEvent.keyDown(menu, { code: "Enter" });
+        expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: "group1item2" }));
+    });
 });

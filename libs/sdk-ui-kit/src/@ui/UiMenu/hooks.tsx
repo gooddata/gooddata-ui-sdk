@@ -72,7 +72,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object>(
     );
 
     const [focusedId, setFocusedId_internal] = React.useState<string | undefined>(
-        () => items.find(isItemFocusable)?.id,
+        () => unwrapGroupItems(items).find(isItemFocusable)?.id,
     );
     const setFocusedId = React.useCallback<typeof setFocusedId_internal>(
         (...args) => {
@@ -230,7 +230,7 @@ export function useKeyNavigation<T extends IUiMenuItemData = object>({
 
             setFocusedId((prevId) => {
                 if (prevId === undefined) {
-                    return items.find(isItemFocusable)?.id;
+                    return unwrapGroupItems(items).find(isItemFocusable)?.id;
                 }
 
                 return unwrapGroupItems(getSiblingItems(items, prevId) ?? []).find(isItemFocusable)?.id;
@@ -241,7 +241,7 @@ export function useKeyNavigation<T extends IUiMenuItemData = object>({
 
             setFocusedId((prevId) => {
                 if (prevId === undefined) {
-                    return [...items].reverse().find(isItemFocusable)?.id;
+                    return [...unwrapGroupItems(items)].reverse().find(isItemFocusable)?.id;
                 }
 
                 return [...unwrapGroupItems(getSiblingItems(items, prevId) ?? [])]

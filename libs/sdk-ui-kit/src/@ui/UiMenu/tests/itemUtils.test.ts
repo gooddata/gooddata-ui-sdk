@@ -290,6 +290,72 @@ describe("itemUtils", () => {
             expect(result.some((item) => item.type === "group")).toBe(false);
         });
 
+        it("should handle items with only group items at top level", () => {
+            // Create a list with only group items at the top level
+            const onlyGroupItems: IUiMenuItem[] = [
+                {
+                    type: "group",
+                    id: "group1",
+                    stringTitle: "Group 1",
+                    data: "Group 1 title",
+                    subItems: [
+                        {
+                            type: "interactive",
+                            id: "group1item1",
+                            stringTitle: "Group 1 Item 1",
+                            data: "group1data1",
+                        },
+                        {
+                            type: "interactive",
+                            id: "group1item2",
+                            stringTitle: "Group 1 Item 2",
+                            data: "group1data2",
+                        },
+                    ],
+                },
+                {
+                    type: "group",
+                    id: "group2",
+                    stringTitle: "Group 2",
+                    data: "Group 2 title",
+                    subItems: [
+                        {
+                            type: "interactive",
+                            id: "group2item1",
+                            stringTitle: "Group 2 Item 1",
+                            data: "group2data1",
+                        },
+                        {
+                            type: "interactive",
+                            id: "group2item2",
+                            stringTitle: "Group 2 Item 2",
+                            data: "group2data2",
+                        },
+                    ],
+                },
+            ];
+
+            const result = unwrapGroupItems(onlyGroupItems);
+
+            // Should include all interactive items from all groups
+            expect(result).toHaveLength(4); // group1item1, group1item2, group2item1, group2item2
+
+            // Should include all the group items' children
+            expect(result.some((item) => item.id === "group1item1")).toBe(true);
+            expect(result.some((item) => item.id === "group1item2")).toBe(true);
+            expect(result.some((item) => item.id === "group2item1")).toBe(true);
+            expect(result.some((item) => item.id === "group2item2")).toBe(true);
+
+            // Should not include any group items
+            expect(result.some((item) => item.type === "group")).toBe(false);
+
+            // First item should be the first item from the first group
+            expect(result[0].id).toBe("group1item1");
+
+            // Last item should be the last item from the last group
+            expect(result[result.length - 1].id).toBe("group2item2");
+        });
+
         it("should preserve interactive items with subItems", () => {
             const result = unwrapGroupItems(mockItems);
 
@@ -392,6 +458,97 @@ describe("itemUtils", () => {
                 direction: "forward",
             });
             expect(result).toBeUndefined();
+        });
+
+        it("should navigate correctly when top level only contains group items", () => {
+            // Create a list with only group items at the top level
+            const onlyGroupItems: IUiMenuItem[] = [
+                {
+                    type: "group",
+                    id: "group1",
+                    stringTitle: "Group 1",
+                    data: "Group 1 title",
+                    subItems: [
+                        {
+                            type: "interactive",
+                            id: "group1item1",
+                            stringTitle: "Group 1 Item 1",
+                            data: "group1data1",
+                        },
+                        {
+                            type: "interactive",
+                            id: "group1item2",
+                            stringTitle: "Group 1 Item 2",
+                            data: "group1data2",
+                        },
+                    ],
+                },
+                {
+                    type: "group",
+                    id: "group2",
+                    stringTitle: "Group 2",
+                    data: "Group 2 title",
+                    subItems: [
+                        {
+                            type: "interactive",
+                            id: "group2item1",
+                            stringTitle: "Group 2 Item 1",
+                            data: "group2data1",
+                        },
+                        {
+                            type: "interactive",
+                            id: "group2item2",
+                            stringTitle: "Group 2 Item 2",
+                            data: "group2data2",
+                        },
+                    ],
+                },
+            ];
+
+            // Test forward navigation from undefined (initial focus)
+            const firstFocusable = getClosestFocusableSibling({
+                items: onlyGroupItems,
+                isItemFocusable,
+                itemId: undefined,
+                direction: "forward",
+            });
+            expect(firstFocusable?.id).toBe("group1item1");
+
+            // Test backward navigation from undefined (initial focus)
+            const lastFocusable = getClosestFocusableSibling({
+                items: onlyGroupItems,
+                isItemFocusable,
+                itemId: undefined,
+                direction: "backward",
+            });
+            expect(lastFocusable?.id).toBe("group2item2");
+
+            // Test forward navigation from first item
+            const nextFromFirst = getClosestFocusableSibling({
+                items: onlyGroupItems,
+                isItemFocusable,
+                itemId: "group1item1",
+                direction: "forward",
+            });
+            expect(nextFromFirst?.id).toBe("group1item2");
+
+            // Test forward navigation from last item in first group
+            const nextFromLastInFirstGroup = getClosestFocusableSibling({
+                items: onlyGroupItems,
+                isItemFocusable,
+                itemId: "group1item2",
+                direction: "forward",
+            });
+            expect(nextFromLastInFirstGroup?.id).toBe("group2item1");
+
+            // Test backward navigation from first item in second group
+            const prevFromFirstInSecondGroup = getClosestFocusableSibling({
+                items: onlyGroupItems,
+                isItemFocusable,
+                itemId: "group2item1",
+                direction: "backward",
+            });
+            expect(prevFromFirstInSecondGroup?.id).toBe("group1item2");
         });
     });
 });
