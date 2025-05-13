@@ -383,7 +383,13 @@ export function ScheduledMailDialogRenderer({
                                 />
                             )}
                             {errorMessage ? (
-                                <Message type="error" className="gd-notifications-channels-dialog-error">
+                                <Message
+                                    type="error"
+                                    className={cx("gd-notifications-channels-dialog-error", {
+                                        "gd-notifications-channels-dialog-error-scrollable":
+                                            enableAutomationFilterContext,
+                                    })}
+                                >
                                     {errorMessage}
                                 </Message>
                             ) : null}

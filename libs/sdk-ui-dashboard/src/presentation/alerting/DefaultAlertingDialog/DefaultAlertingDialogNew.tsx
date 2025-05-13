@@ -430,7 +430,10 @@ export function AlertingDialogRenderer({
                                 </FormField>
                             </FormFieldGroup>
                             {errorMessage ? (
-                                <Message type="error" className="gd-notifications-channels-dialog-error">
+                                <Message
+                                    type="error"
+                                    className="gd-notifications-channels-dialog-error gd-notifications-channels-dialog-error-scrollable"
+                                >
                                     {errorMessage}
                                 </Message>
                             ) : null}
