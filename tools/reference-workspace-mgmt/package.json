@@ -45,7 +45,7 @@
     },
     "devDependencies": {
         "@gooddata/fixtures": "1.32.25",
-        "@gooddata/eslint-config": "^4.1.0",
+        "@gooddata/eslint-config": "^4.1.1",
         "@types/lodash": "^4.14.202",
         "@types/node": "^18.17.6",
         "@typescript-eslint/eslint-plugin": "^5.57.1",
