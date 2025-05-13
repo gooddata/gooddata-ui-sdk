@@ -1013,3 +1013,15 @@ export const selectEnableDateFilterIdentifiers: DashboardSelector<boolean> = cre
         return Boolean(state.settings?.enableDateFilterIdentifiersRollout) ?? false;
     },
 );
+
+/**
+ * Returns whether snapshot export accessibility is enabled.
+ *
+ * @internal
+ */
+export const selectEnableSnapshotExportAccessibility: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return Boolean(state.settings?.enableSnapshotExportAccessibility) ?? false;
+    },
+);

@@ -10,6 +10,12 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/index.js"
 
 import { DashboardLayoutSectionHeaderDescription } from "./DashboardLayoutSectionHeaderDescription.js";
 import { HeaderExportData } from "../../export/index.js";
+import {
+    selectEnableSnapshotExportAccessibility,
+    selectIsExport,
+    useDashboardSelector,
+} from "../../../model/index.js";
+import cx from "classnames";
 
 export interface IDashboardLayoutSectionHeaderProps {
     section: IDashboardLayoutSectionFacade<unknown>;
@@ -26,6 +32,9 @@ export const DashboardLayoutViewSectionHeader: React.FC<IDashboardLayoutSectionH
 }) => {
     const { areSectionHeadersEnabled } = useLayoutSectionsConfiguration(section.layout().raw());
     const { LoadingComponent } = useDashboardComponentsContext();
+    const isExport = useDashboardSelector(selectIsExport);
+    const isSnapshotAccessibilityEnabled = useDashboardSelector(selectEnableSnapshotExportAccessibility);
+    const useAccessibilityExportClasses = isSnapshotAccessibilityEnabled && isExport;
 
     const title = section.title();
     const description = section.description();
@@ -34,11 +43,21 @@ export const DashboardLayoutViewSectionHeader: React.FC<IDashboardLayoutSectionH
     }
     const isNestedLayout = section.layout().path() !== undefined;
     return (
-        <div className="gd-fluid-layout-row-header s-fluid-layout-row-header" {...exportData?.info}>
+        <div
+            className={cx("gd-fluid-layout-row-header s-fluid-layout-row-header", {
+                "gd-row-header-export": useAccessibilityExportClasses,
+            })}
+            {...exportData?.info}
+        >
             <div className={"gd-fluid-layout-row-header-container"}>
                 <div className="gd-row-header-view">
                     {title ? (
-                        <div className="gd-row-header-title-wrapper" {...exportData?.title}>
+                        <div
+                            className={cx("gd-row-header-title-wrapper", {
+                                "gd-row-header-title-wrapper-export": useAccessibilityExportClasses,
+                            })}
+                            {...exportData?.title}
+                        >
                             <span className="title">
                                 <Typography
                                     tagName={isNestedLayout ? "h3" : "h2"}

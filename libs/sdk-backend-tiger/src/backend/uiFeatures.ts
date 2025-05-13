@@ -146,6 +146,7 @@ export enum TigerFeaturesNames {
     EnableLineChartTrendThreshold = "enableLineChartTrendThreshold",
     EnableKDRespectLegendPosition = "enableKDRespectLegendPosition",
     EnableWorkspaceSettingsAppHeaderMenuItem = "enableWorkspaceSettingsAppHeaderMenuItem",
+    EnableSnapshotExportAccessibility = "enableSnapshotExportAccessibility",
 }
 
 export type ITigerFeatureFlags = {
@@ -254,6 +255,7 @@ export type ITigerFeatureFlags = {
     enableLineChartTrendThreshold: typeof FeatureFlagsValues["enableLineChartTrendThreshold"][number];
     enableKDRespectLegendPosition: typeof FeatureFlagsValues["enableKDRespectLegendPosition"][number];
     enableWorkspaceSettingsAppHeaderMenuItem: typeof FeatureFlagsValues["enableWorkspaceSettingsAppHeaderMenuItem"][number];
+    enableSnapshotExportAccessibility: typeof FeatureFlagsValues["enableSnapshotExportAccessibility"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -362,6 +364,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableLineChartTrendThreshold: false,
     enableKDRespectLegendPosition: false,
     enableWorkspaceSettingsAppHeaderMenuItem: false,
+    enableSnapshotExportAccessibility: false,
 };
 
 export const FeatureFlagsValues = {
@@ -474,4 +477,5 @@ export const FeatureFlagsValues = {
     enableLineChartTrendThreshold: [true, false] as const,
     enableKDRespectLegendPosition: [true, false] as const,
     enableWorkspaceSettingsAppHeaderMenuItem: [true, false] as const,
+    enableSnapshotExportAccessibility: [true, false] as const,
 };

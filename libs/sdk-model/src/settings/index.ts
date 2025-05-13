@@ -681,6 +681,11 @@ export interface ISettings {
      */
     enableWorkspaceSettingsAppHeaderMenuItem?: boolean;
 
+    /**
+     * Enable accessibility enhancements for snapshot export.
+     */
+    enableSnapshotExportAccessibility?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
