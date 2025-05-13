@@ -1263,10 +1263,101 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
 }
 
 // @internal (undocumented)
-export const iconPaths: Record<IconType, React_2.ReactNode>;
+export const iconPaths: {
+    check: React_2.JSX.Element;
+    checkCircle: React_2.JSX.Element;
+    plus: React_2.JSX.Element;
+    plusCircle: React_2.JSX.Element;
+    sync: React_2.JSX.Element;
+    alert: React_2.JSX.Element;
+    alertPaused: React_2.JSX.Element;
+    close: React_2.JSX.Element;
+    cross: React_2.JSX.Element;
+    crossCircle: React_2.JSX.Element;
+    question: React_2.JSX.Element;
+    chevronUp: React_2.JSX.Element;
+    chevronRight: React_2.JSX.Element;
+    chevronDown: React_2.JSX.Element;
+    chevronLeft: React_2.JSX.Element;
+    date: React_2.JSX.Element;
+    navigateUp: React_2.JSX.Element;
+    navigateDown: React_2.JSX.Element;
+    navigateRight: React_2.JSX.Element;
+    download: React_2.JSX.Element;
+    slack: React_2.JSX.Element;
+    expand: React_2.JSX.Element;
+    exclamationCircle: React_2.JSX.Element;
+    book: React_2.JSX.Element;
+    visible: React_2.JSX.Element;
+    invisible: React_2.JSX.Element;
+    lock: React_2.JSX.Element;
+    unlock: React_2.JSX.Element;
+    ai: React_2.JSX.Element;
+    aiFill: React_2.JSX.Element;
+    drawer: React_2.JSX.Element;
+    prohibited: React_2.JSX.Element;
+    dropDown: React_2.JSX.Element;
+    dropRight: React_2.JSX.Element;
+    clock: React_2.JSX.Element;
+    questionMark: React_2.JSX.Element;
+    upload: React_2.JSX.Element;
+    expandRectangle: React_2.JSX.Element;
+    file: React_2.JSX.Element;
+    number: React_2.JSX.Element;
+    code: React_2.JSX.Element;
+    user: React_2.JSX.Element;
+    userPlus: React_2.JSX.Element;
+    users: React_2.JSX.Element;
+    magic: React_2.JSX.Element;
+    tab: React_2.JSX.Element;
+    pauseCircle: React_2.JSX.Element;
+    filter: React_2.JSX.Element;
+    timer: React_2.JSX.Element;
+    mail: React_2.JSX.Element;
+    envelope: React_2.JSX.Element;
+    copy: React_2.JSX.Element;
+    rain: React_2.JSX.Element;
+    earth: React_2.JSX.Element;
+    minimize: React_2.JSX.Element;
+    copyright: React_2.JSX.Element;
+    ellipsis: React_2.JSX.Element;
+    pencil: React_2.JSX.Element;
+    folder: React_2.JSX.Element;
+    folderPlus: React_2.JSX.Element;
+    trash: React_2.JSX.Element;
+    arrowUp: React_2.JSX.Element;
+    arrowRight: React_2.JSX.Element;
+    arrowDown: React_2.JSX.Element;
+    arrowLeft: React_2.JSX.Element;
+    undo: React_2.JSX.Element;
+    redo: React_2.JSX.Element;
+    trendDown: React_2.JSX.Element;
+    trendUp: React_2.JSX.Element;
+    save: React_2.JSX.Element;
+    minusCircle: React_2.JSX.Element;
+    percent: React_2.JSX.Element;
+    enter: React_2.JSX.Element;
+    enterRight: React_2.JSX.Element;
+    money: React_2.JSX.Element;
+    ghost: React_2.JSX.Element;
+    warning: React_2.JSX.Element;
+    home: React_2.JSX.Element;
+    settings: React_2.JSX.Element;
+    search: React_2.JSX.Element;
+    university: React_2.JSX.Element;
+    printer: React_2.JSX.Element;
+    picture: React_2.JSX.Element;
+    visualization: React_2.JSX.Element;
+    dashboard: React_2.JSX.Element;
+    sharp: React_2.JSX.Element;
+    attribute: React_2.JSX.Element;
+    horn: React_2.JSX.Element;
+    cw: React_2.JSX.Element;
+    ccw: React_2.JSX.Element;
+};
 
 // @internal (undocumented)
-export type IconType = "check" | "plus" | "sync" | "alert" | "close" | "question" | "crossCircle" | "chevronUp" | "chevronDown" | "date" | "lock" | "cross" | "navigateUp" | "navigateDown";
+export type IconType = "check" | "checkCircle" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "prohibited" | "dropDown" | "dropRight" | "clock" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "minimize" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "sharp" | "attribute" | "horn" | "cw" | "ccw";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
