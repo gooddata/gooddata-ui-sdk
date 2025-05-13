@@ -22,6 +22,8 @@
     "options.menu.export.PDF": "Instantâneo (.pdf)",
     "options.menu.schedule.email": "Exportação de programação",
     "options.menu.delete": "Eliminar",
+    "options.menu.data.too.large": "Exportação indisponível devido a demasiados pontos de dados no resultado.",
+    "options.menu.unsupported.raw.error": "Exportação indisponível devido a demasiados pontos de dados ou erro no resultado",
     "dialogs.export.cells": "CÉLULAS",
     "dialogs.export.filters": "CONTEXTO DE VISUALIZAÇÃO",
     "dialogs.export.includeFilters": "Incluir filtros aplicados",

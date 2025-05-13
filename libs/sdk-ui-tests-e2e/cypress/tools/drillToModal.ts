@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { Chart } from "./chart";
 import { Table } from "./table";
 
@@ -22,7 +22,7 @@ export class DrillToModal {
     }
 
     close() {
-        this.getElement().find(".s-drill-close-button").should("be.visible").click();
+        this.getElement().find(".s-dialog-close-button").should("be.visible").click();
         this.getElement().should("not.exist");
     }
 

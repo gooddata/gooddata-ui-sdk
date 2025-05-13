@@ -1,14 +1,23 @@
 // (C) 2019-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { FormattedMessage } from "react-intl";
-import { Button, Bubble, BubbleHoverTrigger, ShortenedText, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { FormattedMessage, useIntl } from "react-intl";
+import {
+    Button,
+    Bubble,
+    BubbleHoverTrigger,
+    ShortenedText,
+    IAlignPoint,
+    DialogBase,
+    useId,
+    IDialogBaseProps,
+} from "@gooddata/sdk-ui-kit";
 import { selectCanExportTabular, selectSettings, useDashboardSelector } from "../../../../../model/index.js";
 import { PoweredByGDLogo } from "./PoweredByGDLogo.js";
-import { DrillModalFooter } from "./DrillModalFooter.js";
+import { DrillDialogExportDropdown } from "./DrillDialogExportDropdown.js";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
 
-export interface DrillDialogProps {
+export interface DrillDialogProps extends Pick<IDialogBaseProps, "initialFocus" | "returnFocusTo"> {
     insightTitle: string;
     breadcrumbs: string[];
     onCloseDialog: () => void;
@@ -51,6 +60,8 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     isLoading,
     isExporting,
     isExportRawVisible,
+    initialFocus,
+    returnFocusTo,
 }) => {
     const settings = useDashboardSelector(selectSettings);
     const canExport = useDashboardSelector(selectCanExportTabular);
@@ -58,11 +69,22 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
 
     const titleWithBreadcrumbs = getTitleWithBreadcrumbs(insightTitle, breadcrumbs);
 
+    const titleElementId = useId();
+
+    const { formatMessage } = useIntl();
+
     return (
-        <div
-            className={cx("gd-dialog gd-drill-modal-dialog s-drill-modal-dialog", {
+        <DialogBase
+            submitOnEnterKey={false}
+            className={cx("gd-drill-modal-dialog s-drill-modal-dialog", {
                 "gd-ff-drill-description": enableDrillDescription,
             })}
+            onClose={onCloseDialog}
+            displayCloseButton={true}
+            accessibilityConfig={{ isModal: true, titleElementId }}
+            initialFocus={initialFocus}
+            returnFocusTo={returnFocusTo}
+            shouldCloseOnEscape={true}
         >
             <div
                 className={cx("gd-dialog-header gd-dialog-header-with-border gd-drill-modal-dialog-header", {
@@ -74,13 +96,14 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
                         <Button
                             className="gd-button-primary gd-button-icon-only gd-icon-navigateleft s-drill-reset-button gd-drill-reset-button"
                             onClick={onBackButtonClick}
+                            accessibilityConfig={{ ariaLabel: formatMessage({ id: "drillModal.backToTop" }) }}
                         />
                         <Bubble className="bubble-primary" alignPoints={bubbleAlignPoints}>
                             <FormattedMessage id="drillModal.backToTop" tagName="span" />
                         </Bubble>
                     </BubbleHoverTrigger>
                 ) : null}
-                <div className="gd-drill-title s-drill-title">
+                <div className="gd-drill-title s-drill-title" id={titleElementId}>
                     <ShortenedText
                         tagName="div"
                         tooltipAlignPoints={tooltipAlignPoints}
@@ -89,10 +112,6 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
                         {titleWithBreadcrumbs}
                     </ShortenedText>
                 </div>
-                <Button
-                    className="gd-button-link gd-button-icon-only gd-icon-cross gd-drill-close-button s-drill-close-button"
-                    onClick={onCloseDialog}
-                />
             </div>
             <div
                 className={cx("gd-drill-modal-dialog-content visualization", {
@@ -103,7 +122,7 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
             </div>
             {shouldShowDrilledInsightExport ? (
                 <div className="gd-drill-modal-dialog-footer gd-drill-modal-dialog-footer-with-border s-drill-modal-dialog-footer">
-                    <DrillModalFooter
+                    <DrillDialogExportDropdown
                         exportAvailable={exportAvailable}
                         exportXLSXEnabled={exportXLSXEnabled}
                         exportCSVEnabled={exportCSVEnabled}
@@ -118,6 +137,6 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
                 </div>
             ) : null}
             <PoweredByGDLogo isSmall />
-        </div>
+        </DialogBase>
     );
 };

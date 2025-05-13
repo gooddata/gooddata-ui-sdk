@@ -217,6 +217,16 @@
         "comment": "Translate as imperative. Schedule alerts for dashboard or widget, without create permissions.",
         "limit": 0
     },
+    "options.menu.data.too.large": {
+        "value": "Export unavailable due to too many data points in the result.",
+        "comment": "",
+        "limit": 0
+    },
+    "options.menu.unsupported.raw.error": {
+        "value": "Export unavailable due to too many data points or error in the result",
+        "comment": "Error popup. Visualization cannot be exported to the file.",
+        "limit": 0
+    },
     "options.menu.delete": {
         "value": "Delete",
         "comment": "Delete Dashboard",

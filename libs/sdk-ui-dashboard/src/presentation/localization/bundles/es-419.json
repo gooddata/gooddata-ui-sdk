@@ -436,6 +436,8 @@
     "controlButtons.options.tooltip": "Más acciones",
     "controlButtons.edit.tooltip": "Editar panel",
     "options.menu.schedule.email.tooltip": "No hay ningún destino disponible. Para programar una exportación, <a>crear destino</a>.",
+    "options.menu.data.too.large": "Exportación no disponible debido a demasiados puntos de datos en el resultado.",
+    "options.menu.unsupported.raw.error": "Exportación no disponible debido a demasiados puntos de datos o error en el resultado",
     "filters.configurationPanel.crossFiltering.toggle.tooltip": "Permitir a los usuarios filtrar el cuadro de mando haciendo clic en los puntos de datos de las visualizaciones.",
     "filters.configurationPanel.userFilterReset.toggle": "Restablecer",
     "filters.configurationPanel.userFilterReset.toggle.tooltip": "Permitir a los usuarios restablecer todos los filtros por defecto.",

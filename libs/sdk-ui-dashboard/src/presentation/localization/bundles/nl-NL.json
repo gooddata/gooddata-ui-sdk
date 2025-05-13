@@ -22,6 +22,8 @@
     "options.menu.export.PDF": "Momentopname (.pdf)",
     "options.menu.schedule.email": "Planning export",
     "options.menu.delete": "Verwijderen",
+    "options.menu.data.too.large": "Export niet beschikbaar vanwege te veel datapunten in het resultaat.",
+    "options.menu.unsupported.raw.error": "Export niet beschikbaar vanwege te veel datapunten of fout in het resultaat",
     "dialogs.export.cells": "CELLEN",
     "dialogs.export.filters": "VISUALISATIECONTEXT",
     "dialogs.export.includeFilters": "Inclusief toegepaste filters",

@@ -22,6 +22,8 @@
     "options.menu.export.PDF": "スナップショット (.pdf)",
     "options.menu.schedule.email": "エクスポート予定",
     "options.menu.delete": "削除",
+    "options.menu.data.too.large": "結果のデータポイントが多すぎるため、エクスポートできません。",
+    "options.menu.unsupported.raw.error": "データポイントが多すぎるか、結果にエラーがあるため、エクスポートできません",
     "dialogs.export.cells": "セル",
     "dialogs.export.filters": "ビジュアライゼーションコンテキスト",
     "dialogs.export.includeFilters": "適用済みフィルターを含める",
