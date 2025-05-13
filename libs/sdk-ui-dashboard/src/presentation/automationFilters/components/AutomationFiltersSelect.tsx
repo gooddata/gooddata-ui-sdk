@@ -8,6 +8,8 @@ import {
     IDashboardAttributeFilterConfig,
     IDashboardDateFilterConfigItem,
     isDashboardAttributeFilter,
+    isDashboardCommonDateFilter,
+    isDashboardDateFilter,
     ObjRef,
 } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Icon, Typography, UiButton, UiIconButton } from "@gooddata/sdk-ui-kit";
@@ -20,6 +22,7 @@ import { AttributesDropdown } from "../../filterBar/index.js";
 import { useAutomationFilters } from "../useAutomationFilters.js";
 import { AutomationAttributeFilter } from "./AutomationAttributeFilter.js";
 import { AutomationDateFilter } from "./AutomationDateFilter.js";
+import { useAutomationCommonDateFilterId } from "../useAutomationFiltersData.js";
 
 const COLLAPSED_FILTERS_COUNT = 2;
 
@@ -74,6 +77,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
         onFiltersChange,
         onStoreFiltersChange,
     });
+    const commonDateFilterId = useAutomationCommonDateFilterId();
 
     const theme = useTheme();
     const intl = useIntl();
@@ -112,20 +116,28 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
             </div>
             <div className="gd-automation-filters">
                 <div className="gd-automation-filters__list">
-                    {filters.slice(0, isExpanded ? filters.length : COLLAPSED_FILTERS_COUNT).map((filter) => (
-                        <AutomationFilter
-                            key={
-                                isDashboardAttributeFilter(filter)
-                                    ? filter.attributeFilter.localIdentifier
-                                    : filter.dateFilter.localIdentifier
-                            }
-                            filter={filter}
-                            attributeConfigs={attributeConfigs}
-                            dateConfigs={dateConfigs}
-                            onChange={handleChangeFilter}
-                            onDelete={handleDeleteFilter}
-                        />
-                    ))}
+                    {filters.slice(0, isExpanded ? filters.length : COLLAPSED_FILTERS_COUNT).map((filter) => {
+                        const isCommonDateFilter =
+                            isDashboardCommonDateFilter(filter) ||
+                            (isDashboardDateFilter(filter) &&
+                                commonDateFilterId === filter.dateFilter.localIdentifier);
+
+                        return (
+                            <AutomationFilter
+                                key={
+                                    isDashboardAttributeFilter(filter)
+                                        ? filter.attributeFilter.localIdentifier
+                                        : filter.dateFilter.localIdentifier
+                                }
+                                filter={filter}
+                                attributeConfigs={attributeConfigs}
+                                dateConfigs={dateConfigs}
+                                onChange={handleChangeFilter}
+                                onDelete={handleDeleteFilter}
+                                isCommonDateFilter={isCommonDateFilter}
+                            />
+                        );
+                    })}
                     {isExpanded || !isExpandable ? (
                         <AttributesDropdown
                             onClose={noop}
@@ -228,6 +240,7 @@ interface IAutomationFilterProps {
     dateConfigs: IDashboardDateFilterConfigItem[];
     onChange: (filter: FilterContextItem | undefined) => void;
     onDelete: (filter: FilterContextItem) => void;
+    isCommonDateFilter?: boolean;
 }
 
 const AutomationFilter: React.FC<IAutomationFilterProps> = ({
@@ -236,6 +249,7 @@ const AutomationFilter: React.FC<IAutomationFilterProps> = ({
     dateConfigs,
     onChange,
     onDelete,
+    isCommonDateFilter,
 }) => {
     if (isDashboardAttributeFilter(filter)) {
         const config = attributeConfigs.find(
@@ -267,6 +281,7 @@ const AutomationFilter: React.FC<IAutomationFilterProps> = ({
                 onChange={onChange}
                 onDelete={onDelete}
                 isLocked={isLocked}
+                isCommonDateFilter={isCommonDateFilter}
             />
         );
     }

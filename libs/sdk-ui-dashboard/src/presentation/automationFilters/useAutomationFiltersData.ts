@@ -23,6 +23,7 @@ import {
     selectAttributeFilterConfigsOverrides,
     selectDateFilterConfigsOverrides,
     useDashboardSelector,
+    useFiltersForDashboardScheduledExport,
 } from "../../model/index.js";
 
 interface IUseAutomationFiltersData {
@@ -164,4 +165,10 @@ const useAutomationVisibleFilters = (
             };
         });
     }, [filterNamings]);
+};
+
+export const useAutomationCommonDateFilterId = () => {
+    const allDashboardFilters = useFiltersForDashboardScheduledExport({});
+    const commonDateFilter = allDashboardFilters?.find(isDashboardCommonDateFilter);
+    return commonDateFilter?.dateFilter.localIdentifier;
 };
