@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -52,7 +52,7 @@ export const selectDashboardUserAutomationAlerts: DashboardSelector<IAutomationM
  */
 export const selectDashboardUserAutomationSchedules: DashboardSelector<IAutomationMetadataObject[]> =
     createSelector(selectSelf, (state) => {
-        return state.userAutomations.filter((automation) => !!automation.schedule);
+        return state.userAutomations.filter((automation) => !!automation.schedule && !automation.alert);
     });
 
 /**
