@@ -18,6 +18,7 @@ export type GenAIChatDialogProps = {
     backend?: IAnalyticalBackend;
     workspace?: string;
     isOpen: boolean;
+    locale?: string;
     onClose: () => void;
     eventHandlers?: ChatEventHandler[];
     colorPalette?: IColorPalette;
@@ -32,6 +33,7 @@ const DEFAULT_CHAT_Z_INDEX = 3000;
 export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
     backend,
     workspace,
+    locale,
     isOpen,
     onClose,
     eventHandlers,
@@ -64,7 +66,7 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
     if (!isOpen) return null;
 
     return (
-        <IntlWrapper>
+        <IntlWrapper locale={locale}>
             <StoreProvider store={genAIStore}>
                 <BackendProvider backend={effectiveBackend}>
                     <WorkspaceProvider workspace={effectiveWorkspace}>

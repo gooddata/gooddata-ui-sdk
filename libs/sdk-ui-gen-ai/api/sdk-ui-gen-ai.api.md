@@ -115,6 +115,7 @@ export interface GenAIChatProps {
     backend?: IAnalyticalBackend;
     colorPalette?: IColorPalette;
     eventHandlers?: ChatEventHandler[];
+    locale?: string;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
     workspace?: string;
 }
