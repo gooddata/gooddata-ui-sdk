@@ -59,6 +59,9 @@ jobs:
         run: |
             echo "Target branch is: ${TARGET_BRANCH#refs/heads/}"
             git fetch origin ${TARGET_BRANCH#refs/heads/} --depth=100
+
+            echo "Debug target branch revision for: $TARGET_BRANCH"
+            git log -1 origin/${TARGET_BRANCH#refs/heads/}
       - name: Rush detect changes
         id: detect-changes
         run: |
