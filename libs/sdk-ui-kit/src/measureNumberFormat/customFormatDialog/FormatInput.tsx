@@ -1,43 +1,127 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
+import { StreamLanguage } from "@codemirror/language";
 
 import { FormatTemplatesDropdown } from "./formatTemplatesDropdown/FormatTemplatesDropdown.js";
 import { SyntaxHighlightingInput } from "../../syntaxHighlightingInput/SyntaxHighlightingInput.js";
 import { IFormatTemplate } from "../typings.js";
 
-const formattingRules = {
-    start: [
-        { regex: /"(?:[^\\]|\\.)*?"/, token: "string" },
-        { regex: /(?:black|blue|cyan|green|magenta|red|yellow|white)\b/i, token: "keyword" },
-        {
-            regex: /(backgroundColor|color)(=)([a-f0-9]{6}|[a-f0-9]{3})/i,
-            token: ["variable-4", null, "keyword"],
-        },
-        {
-            // disabling for legibility
-            // eslint-disable-next-line regexp/prefer-character-class
-            regex: /(<|>|=|>=|<=)(-?)(\d*(\.|,)?\d+|Null)/i,
-            token: ["variable-5", "variable-5", "variable-5"],
-        },
-        { regex: /\/\/.*/, token: "comment" },
-        { regex: /\/(?:[^\\]|\\.)*?\//, token: "variable-3" },
-        { regex: /\/\*/, token: "comment", next: "comment" },
-        { regex: /[{[(]/, indent: true, token: "variable-brackets" },
-        { regex: /[}\])]/, dedent: true, token: "variable-brackets" },
-        { regex: /[a-z$][\w$]*/, token: "variable" },
-        { regex: /<</, token: "meta", mode: { spec: "xml", end: />>/ } },
-    ],
-    comment: [
-        { regex: /.*?\*\//, token: "comment", next: "start" },
-        { regex: /.*/, token: "comment" },
-    ],
-    meta: {
-        dontIndentStates: ["comment"],
-        lineComment: "//",
-    },
+type LanguageState = {
+    isInColor: boolean;
+    isInCustomColor: boolean;
+    isInCondition: boolean;
+    isInArithmeticExpression: boolean;
 };
+
+export const formattingLanguage = StreamLanguage.define<LanguageState>({
+    startState(): LanguageState {
+        return {
+            isInColor: false,
+            isInCustomColor: false,
+            isInCondition: false,
+            isInArithmeticExpression: false,
+        };
+    },
+
+    token(stream, state) {
+        // Arithmetic expressions
+        if (
+            state.isInArithmeticExpression ||
+            stream.match(/^\{\{\{(?:\d+(?:\.\d+)?)?\|(?:\d+\.?)?\|[^}]+\}\}\}/, false)
+        ) {
+            if (stream.match("{{{")) {
+                state.isInArithmeticExpression = true;
+                return "bracket";
+            }
+            if (stream.match("}}}")) {
+                state.isInArithmeticExpression = false;
+                return "bracket";
+            }
+            if (stream.match(/^(?:\d+(?:\.\d+)?)?\|(?:\d+\.?)?\|/)) {
+                return "variableName";
+            }
+            // For the last section, fall through, as arithmetic expression can contain other tokens
+        }
+
+        // Colors
+        if (
+            state.isInColor ||
+            stream.match(/^\[(?:black|blue|cyan|green|magenta|red|white|yellow|none)\]/i, false)
+        ) {
+            if (stream.match("[")) {
+                state.isInColor = true;
+                return "bracket";
+            }
+            if (stream.match(/^[^\]]+/)) {
+                return "keyword";
+            }
+            if (stream.match("]")) {
+                state.isInColor = false;
+                return "bracket";
+            }
+        }
+
+        // Custom colors
+        if (
+            state.isInCustomColor ||
+            stream.match(/^\[(?:backgroundColor|color)=#?(?:[a-f0-9]{6}|[a-f0-9]{3})\]/i, false)
+        ) {
+            if (stream.match("[")) {
+                state.isInCustomColor = true;
+                return "bracket";
+            }
+            if (stream.match("]")) {
+                state.isInCustomColor = false;
+                return "bracket";
+            }
+            if (stream.match(/^(?:backgroundColor|color)/i)) {
+                return "variableName.special";
+            }
+            if (stream.match(/=/)) {
+                return "bracket";
+            }
+            if (stream.match(/^#?(?:[a-f0-9]{6}|[a-f0-9]{3})/i)) {
+                return "keyword";
+            }
+        }
+
+        // Condition separator
+        if (stream.match(";")) {
+            return "bracket";
+        }
+
+        // Explicit conditions
+        if (state.isInCondition || stream.match(/^\[(?:>=|<=|[<>=])-?(?:\d+(?:[.,]\d+)?|Null)\]/i, false)) {
+            if (stream.match("[")) {
+                state.isInCondition = true;
+                return "bracket";
+            }
+            if (stream.match("]")) {
+                state.isInCondition = false;
+                return "bracket";
+            }
+            stream.eat(/^[^\]]/);
+            return "variableName.standard";
+        }
+
+        // Escaping special characters
+        if (stream.match(/^\\[0#?,.\\[\];]/)) {
+            return "variableName";
+        }
+
+        // Number formatting
+        if (stream.match(/^[0#?,]+(?:\.[0#?,]*)?/)) {
+            return "string";
+        }
+
+        stream.next(); // Move the stream forward
+        return "variableName";
+    },
+});
+
+const codeMirrorExtensions = [formattingLanguage];
 
 interface IFormatInputOwnProps {
     format: string;
@@ -65,7 +149,7 @@ class FormatInput extends React.PureComponent<IFormatInputProps> {
                 </div>
                 <SyntaxHighlightingInput
                     value={format}
-                    formatting={formattingRules}
+                    extensions={codeMirrorExtensions}
                     onChange={this.handleInputChange}
                     className={"s-custom-format-input"}
                 />

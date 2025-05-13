@@ -12,6 +12,7 @@ import { ColorFormats } from 'tinycolor2';
 import { Component } from 'react';
 import { CSSProperties } from 'react';
 import { DebouncedFunc } from 'lodash';
+import { Extension } from '@codemirror/state';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAccessControlAware } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
@@ -4376,13 +4377,13 @@ export interface ISyntaxHighlightingInputProps {
     // (undocumented)
     className?: string;
     // (undocumented)
-    customOptions?: any;
-    // (undocumented)
-    formatting?: any;
+    extensions?: Extension[];
     // (undocumented)
     onChange: (value: string) => void;
     // (undocumented)
     onCursor?: (from: number, to: number) => void;
+    // (undocumented)
+    placeholder?: string;
     // (undocumented)
     value: string;
 }
