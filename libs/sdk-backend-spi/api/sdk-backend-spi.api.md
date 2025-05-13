@@ -540,6 +540,8 @@ export interface IDataView {
     // @beta
     readonly forecastResult?: IForecastResult;
     readonly headerItems: IResultHeader[][][];
+    // @alpha
+    readonly metadata: IExecutionResultMetadata;
     readonly offset: number[];
     readonly result: IExecutionResult;
     readonly totalCount: number[];
@@ -660,6 +662,19 @@ export interface IExecutionResult extends ICancelable<IExecutionResult> {
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
     readonly signal?: AbortSignal;
     transform(): IPreparedExecution;
+}
+
+// @alpha
+export interface IExecutionResultDataSourceMessage {
+    correlationId: string;
+    data?: object;
+    source: string;
+    type: string;
+}
+
+// @alpha
+export interface IExecutionResultMetadata {
+    readonly dataSourceMessages: ReadonlyArray<IExecutionResultDataSourceMessage>;
 }
 
 // @internal

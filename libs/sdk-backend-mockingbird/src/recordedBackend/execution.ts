@@ -17,6 +17,7 @@ import {
     IAnomalyDetectionResult,
     IClusteringResult,
     IClusteringConfig,
+    IExecutionResultMetadata,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -331,6 +332,7 @@ class RecordedDataView implements IDataView {
     public readonly totalCount: number[];
     public readonly totals: DataValue[][][];
     public readonly totalTotals: DataValue[][][];
+    public readonly metadata: IExecutionResultMetadata;
 
     private readonly _fp: string;
 
@@ -354,6 +356,7 @@ class RecordedDataView implements IDataView {
         this.count = recordedDataView.count;
         this.offset = recordedDataView.offset;
         this.totalCount = recordedDataView.totalCount;
+        this.metadata = recordedDataView.metadata;
 
         this._fp = `${defFingerprint(this.definition)}/dataView/${this.offset.join(",")}_${this.count.join(
             ",",

@@ -1,10 +1,11 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { defFingerprint, IExecutionDefinition, IResultWarning } from "@gooddata/sdk-model";
 import {
     IClusteringConfig,
     IClusteringResult,
     IDataView,
     IExecutionResult,
+    IExecutionResultDataSourceMessage,
     IForecastConfig,
     IForecastResult,
     IForecastView,
@@ -111,6 +112,14 @@ export class DataViewFacade {
     }
 
     /**
+     * Returns all the data source messages included in the result.
+     * @alpha
+     */
+    public dataSourceMessages(): ReadonlyArray<IExecutionResultDataSourceMessage> {
+        return this.dataView.metadata.dataSourceMessages;
+    }
+
+    /**
      * @returns methods to access data in a curated fashion using data slices and data series iterators
      * @public
      */
@@ -192,6 +201,9 @@ export function emptyDataViewForResult(
         offset: [0, 0],
         count: [0, 0],
         totalCount: [0, 0],
+        metadata: {
+            dataSourceMessages: [],
+        },
         fingerprint(): string {
             return fp;
         },

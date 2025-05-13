@@ -44,6 +44,8 @@ export type {
     IAnomalyDetectionResult,
     IClusteringConfig,
     IClusteringResult,
+    IExecutionResultMetadata,
+    IExecutionResultDataSourceMessage,
 } from "./workspace/execution/index.js";
 
 export type { IWorkspaceSettingsService } from "./workspace/settings/index.js";

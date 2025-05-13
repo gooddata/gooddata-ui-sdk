@@ -92,6 +92,42 @@ export interface IClusteringResult {
 }
 
 /**
+ * A piece of extra information related to the results (e.g. debug information, warnings, etc.).
+ * @alpha
+ */
+export interface IExecutionResultDataSourceMessage {
+    /**
+     * Id correlating different pieces of supplementary info together.
+     */
+    correlationId: string;
+    /**
+     * Information about what part of the system created this piece of supplementary info.
+     */
+    source: string;
+    /**
+     * Type of the supplementary info instance.
+     * There are currently no well-known values for this, but there might be some in the future.
+     */
+    type: string;
+    /**
+     * Data of this particular supplementary info item:
+     * a free-form JSON specific to the particular supplementary info item type.
+     */
+    data?: object;
+}
+
+/**
+ * Additional metadata for the particular execution result.
+ * @alpha
+ */
+export interface IExecutionResultMetadata {
+    /**
+     * Additional information sent by the underlying data source.
+     */
+    readonly dataSourceMessages: ReadonlyArray<IExecutionResultDataSourceMessage>;
+}
+
+/**
  * Additional options for the prepared execution.
  *
  * @public
@@ -258,6 +294,7 @@ export type IExplainResult = {
  */
 export interface IExplainProvider<T extends ExplainType | undefined> {
     download(): Promise<void>;
+
     data(): Promise<T extends undefined ? void : IExplainResult[NonNullable<T>]>;
 }
 
@@ -570,6 +607,12 @@ export interface IDataView {
      * Result of the execution that calculated data for this view.
      */
     readonly result: IExecutionResult;
+
+    /**
+     * Additional metadata for the particular execution result.
+     * @alpha
+     */
+    readonly metadata: IExecutionResultMetadata;
 
     /**
      * Configuration for the forecasting, if available.

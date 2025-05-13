@@ -3845,7 +3845,7 @@
                 "description": "Contains the dimension-specific header information."
             },
             "ExecutionResult": {
-                "required": ["data", "dimensionHeaders", "grandTotals", "paging"],
+                "required": ["data", "dimensionHeaders", "grandTotals", "metadata", "paging"],
                 "type": "object",
                 "properties": {
                     "data": {
@@ -3874,9 +3874,35 @@
                     },
                     "paging": {
                         "$ref": "#/components/schemas/ExecutionResultPaging"
+                    },
+                    "metadata": {
+                        "$ref": "#/components/schemas/ExecutionResultMetadata"
                     }
                 },
                 "description": "Contains the result of an AFM execution."
+            },
+            "ExecutionResultDataSourceMessage": {
+                "required": ["correlationId", "source", "type"],
+                "type": "object",
+                "properties": {
+                    "correlationId": {
+                        "type": "string",
+                        "description": "Id correlating different pieces of supplementary info together."
+                    },
+                    "source": {
+                        "type": "string",
+                        "description": "Information about what part of the system created this piece of supplementary info."
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Type of the supplementary info instance. There are currently no well-known values for this, but there might be some in the future."
+                    },
+                    "data": {
+                        "type": "object",
+                        "description": "Data of this particular supplementary info item: a free-form JSON specific to the particular supplementary info item type."
+                    }
+                },
+                "description": "A piece of extra information related to the results (e.g. debug information, warnings, etc.)."
             },
             "ExecutionResultGrandTotal": {
                 "required": ["data", "dimensionHeaders", "totalDimensions"],
@@ -3925,6 +3951,20 @@
                         "$ref": "#/components/schemas/TotalExecutionResultHeader"
                     }
                 ]
+            },
+            "ExecutionResultMetadata": {
+                "required": ["dataSourceMessages"],
+                "type": "object",
+                "properties": {
+                    "dataSourceMessages": {
+                        "type": "array",
+                        "description": "Additional information sent by the underlying data source.",
+                        "items": {
+                            "$ref": "#/components/schemas/ExecutionResultDataSourceMessage"
+                        }
+                    }
+                },
+                "description": "Additional metadata for the particular execution result."
             },
             "ExecutionResultPaging": {
                 "required": ["count", "offset", "total"],

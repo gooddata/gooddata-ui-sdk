@@ -1888,6 +1888,43 @@ export interface ExecutionResult {
      * @memberof ExecutionResult
      */
     paging: ExecutionResultPaging;
+    /**
+     *
+     * @type {ExecutionResultMetadata}
+     * @memberof ExecutionResult
+     */
+    metadata: ExecutionResultMetadata;
+}
+/**
+ * A piece of extra information related to the results (e.g. debug information, warnings, etc.).
+ * @export
+ * @interface ExecutionResultDataSourceMessage
+ */
+export interface ExecutionResultDataSourceMessage {
+    /**
+     * Id correlating different pieces of supplementary info together.
+     * @type {string}
+     * @memberof ExecutionResultDataSourceMessage
+     */
+    correlationId: string;
+    /**
+     * Information about what part of the system created this piece of supplementary info.
+     * @type {string}
+     * @memberof ExecutionResultDataSourceMessage
+     */
+    source: string;
+    /**
+     * Type of the supplementary info instance. There are currently no well-known values for this, but there might be some in the future.
+     * @type {string}
+     * @memberof ExecutionResultDataSourceMessage
+     */
+    type: string;
+    /**
+     * Data of this particular supplementary info item: a free-form JSON specific to the particular supplementary info item type.
+     * @type {object}
+     * @memberof ExecutionResultDataSourceMessage
+     */
+    data?: object;
 }
 /**
  * Contains the data of grand totals with the same dimensions.
@@ -1924,6 +1961,19 @@ export type ExecutionResultHeader =
     | MeasureExecutionResultHeader
     | TotalExecutionResultHeader;
 
+/**
+ * Additional metadata for the particular execution result.
+ * @export
+ * @interface ExecutionResultMetadata
+ */
+export interface ExecutionResultMetadata {
+    /**
+     * Additional information sent by the underlying data source.
+     * @type {Array<ExecutionResultDataSourceMessage>}
+     * @memberof ExecutionResultMetadata
+     */
+    dataSourceMessages: Array<ExecutionResultDataSourceMessage>;
+}
 /**
  * A paging information related to the data presented in the execution result. These paging information are multi-dimensional.
  * @export
