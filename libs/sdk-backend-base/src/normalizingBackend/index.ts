@@ -14,21 +14,22 @@ import {
     NoDataError,
     IForecastResult,
     IForecastConfig,
-    IAnomalyDetectionConfig,
-    IAnomalyDetectionResult,
     IClusteringConfig,
     IClusteringResult,
     IPreparedExecutionOptions,
 } from "@gooddata/sdk-backend-spi";
 import { decoratedBackend } from "../decoratedBackend/index.js";
-import { DecoratedExecutionFactory, DecoratedPreparedExecution } from "../decoratedBackend/execution.js";
+import {
+    DecoratedExecutionFactory,
+    DecoratedPreparedExecution,
+    DecoratedExecutionResult,
+} from "../decoratedBackend/execution.js";
 import {
     defFingerprint,
     IExecutionDefinition,
     IFilter,
     IInsight,
     DataValue,
-    IDimensionDescriptor,
     IResultHeader,
 } from "@gooddata/sdk-model";
 import { Denormalizer, NormalizationState, Normalizer } from "./normalizer.js";
@@ -57,7 +58,7 @@ class WithNormalizationExecutionFactory extends DecoratedExecutionFactory {
     }
 
     protected wrap = (original: IPreparedExecution): IPreparedExecution => {
-        return new NormalizingPreparedExecution(original, this.decorated, this.config, original.signal);
+        return new NormalizingPreparedExecution(original, this.decorated, this.config);
     };
 }
 
@@ -75,9 +76,8 @@ class NormalizingPreparedExecution extends DecoratedPreparedExecution {
         decorated: IPreparedExecution,
         private readonly originalExecutionFactory: IExecutionFactory,
         private readonly config: NormalizationConfig,
-        public readonly signal: AbortSignal | undefined,
     ) {
-        super(decorated, signal);
+        super(decorated);
     }
 
     public execute = (): Promise<IExecutionResult> => {
@@ -94,13 +94,8 @@ class NormalizingPreparedExecution extends DecoratedPreparedExecution {
         });
     };
 
-    protected createNew = (decorated: IPreparedExecution, signal?: AbortSignal): IPreparedExecution => {
-        return new NormalizingPreparedExecution(
-            decorated,
-            this.originalExecutionFactory,
-            this.config,
-            signal,
-        );
+    protected createNew = (decorated: IPreparedExecution): IPreparedExecution => {
+        return new NormalizingPreparedExecution(decorated, this.originalExecutionFactory, this.config);
     };
 }
 
@@ -121,22 +116,21 @@ class NormalizingPreparedExecution extends DecoratedPreparedExecution {
  * titles, formats and so on. See the export() implementation - this actually performs the original execution
  * and exports result from it.
  */
-class DenormalizingExecutionResult implements IExecutionResult {
-    public readonly definition: IExecutionDefinition;
-    public readonly dimensions: IDimensionDescriptor[];
+class DenormalizingExecutionResult extends DecoratedExecutionResult {
     private readonly denormalizer: Denormalizer;
     private readonly _fingerprint: string;
 
     constructor(
-        private readonly normalizedResult: IExecutionResult,
+        decorated: IExecutionResult,
         private readonly normalizationState: NormalizationState,
         private readonly normalizingExecution: IPreparedExecution,
         private readonly originalExecution: IPreparedExecution,
     ) {
+        super(decorated, () => normalizingExecution);
         this.denormalizer = Denormalizer.from(normalizationState);
 
         this.definition = this.normalizationState.original;
-        this.dimensions = this.denormalizer.denormalizeDimDescriptors(normalizedResult.dimensions);
+        this.dimensions = this.denormalizer.denormalizeDimDescriptors(decorated.dimensions);
         this._fingerprint = `normalizedResult_${defFingerprint(this.definition)}`;
     }
 
@@ -151,36 +145,22 @@ class DenormalizingExecutionResult implements IExecutionResult {
     };
 
     public readAll = (): Promise<IDataView> => {
-        const promisedDataView = this.normalizedResult.readAll();
-
-        return promisedDataView
-            .then((dataView) => {
+        return super
+            .readAll()
+            .then((dataView: IDataView) => {
                 return new DenormalizedDataView(this, dataView, this.denormalizer);
             })
             .catch(this.handleDataViewError);
     };
 
     public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
-        const promisedDataView = this.normalizedResult.readWindow(offset, size);
-
-        return promisedDataView
-            .then((dataView) => {
+        return super
+            .readWindow(offset, size)
+            .then((dataView: IDataView) => {
                 return new DenormalizedDataView(this, dataView, this.denormalizer);
             })
             .catch(this.handleDataViewError);
     };
-
-    public readForecastAll(config: IForecastConfig): Promise<IForecastResult> {
-        return this.normalizedResult.readForecastAll(config);
-    }
-
-    public readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult> {
-        return this.normalizedResult.readAnomalyDetectionAll(config);
-    }
-
-    public readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult> {
-        return this.normalizedResult.readClusteringAll(config);
-    }
 
     public equals = (other: IExecutionResult): boolean => {
         return this._fingerprint === other.fingerprint();
@@ -202,6 +182,15 @@ class DenormalizingExecutionResult implements IExecutionResult {
 
         throw error;
     };
+
+    protected createNew = (decorated: IExecutionResult): IExecutionResult => {
+        return new DenormalizingExecutionResult(
+            decorated,
+            this.normalizationState,
+            this.normalizingExecution,
+            this.originalExecution,
+        );
+    };
 }
 
 /**
@@ -211,7 +200,7 @@ class DenormalizingExecutionResult implements IExecutionResult {
  */
 class DenormalizedDataView implements IDataView {
     public readonly definition: IExecutionDefinition;
-    public readonly result: IExecutionResult;
+    public readonly result: DenormalizingExecutionResult;
     public readonly forecastConfig?: IForecastConfig;
     public readonly forecastResult?: IForecastResult;
     public readonly clusteringConfig?: IClusteringConfig;
@@ -281,7 +270,7 @@ class DenormalizedDataView implements IDataView {
     public withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView {
         const normalizedDataView = this.normalizedDataView.withForecast(config, result);
         return new DenormalizedDataView(
-            this.result as DenormalizingExecutionResult,
+            this.result,
             normalizedDataView,
             this._denormalizer,
             normalizedDataView.forecastConfig,
@@ -294,7 +283,7 @@ class DenormalizedDataView implements IDataView {
     public withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView {
         const normalizedDataView = this.normalizedDataView.withClustering(config, result);
         return new DenormalizedDataView(
-            this.result as DenormalizingExecutionResult,
+            this.result,
             normalizedDataView,
             this._denormalizer,
             normalizedDataView.forecastConfig,

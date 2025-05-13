@@ -317,6 +317,10 @@ class RecordedExecutionResult implements IExecutionResult {
     public fingerprint = (): string => {
         return this._fp;
     };
+
+    public withSignal = (_signal: AbortSignal): IExecutionResult => {
+        return this;
+    };
 }
 
 class RecordedDataView implements IDataView {

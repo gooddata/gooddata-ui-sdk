@@ -113,12 +113,11 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
  */
 export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     public readonly definition: IExecutionDefinition;
+    public readonly signal: AbortSignal | undefined;
 
-    protected constructor(
-        protected readonly decorated: IPreparedExecution,
-        public readonly signal: AbortSignal | undefined = decorated.signal,
-    ) {
+    protected constructor(protected readonly decorated: IPreparedExecution) {
         this.definition = decorated.definition;
+        this.signal = decorated.signal;
     }
 
     public equals(other: IPreparedExecution): boolean {
@@ -130,7 +129,7 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     }
 
     public withSignal(signal: AbortSignal): IPreparedExecution {
-        return this.createNew(this.decorated.withSignal(signal), signal);
+        return this.createNew(this.decorated.withSignal(signal));
     }
 
     public explain<T extends ExplainType | undefined>(
@@ -144,23 +143,23 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     }
 
     public withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-        return this.createNew(this.decorated.withDimensions(...dim), this.signal);
+        return this.createNew(this.decorated.withDimensions(...dim));
     }
 
     public withSorting(...items: ISortItem[]): IPreparedExecution {
-        return this.createNew(this.decorated.withSorting(...items), this.signal);
+        return this.createNew(this.decorated.withSorting(...items));
     }
 
     public withBuckets(...buckets: IBucket[]): IPreparedExecution {
-        return this.createNew(this.decorated.withBuckets(...buckets), this.signal);
+        return this.createNew(this.decorated.withBuckets(...buckets));
     }
 
     public withDateFormat(dateFormat: string): IPreparedExecution {
-        return this.createNew(this.decorated.withDateFormat(dateFormat), this.signal);
+        return this.createNew(this.decorated.withDateFormat(dateFormat));
     }
 
     public withExecConfig(config: IExecutionConfig): IPreparedExecution {
-        return this.createNew(this.decorated.withExecConfig(config), this.signal);
+        return this.createNew(this.decorated.withExecConfig(config));
     }
 
     /**
@@ -170,7 +169,7 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
      *
      * @param decorated - instance to decorate
      */
-    protected abstract createNew(decorated: IPreparedExecution, signal?: AbortSignal): IPreparedExecution;
+    protected abstract createNew(decorated: IPreparedExecution): IPreparedExecution;
 }
 
 /**
@@ -185,14 +184,15 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
 export abstract class DecoratedExecutionResult implements IExecutionResult {
     public definition: IExecutionDefinition;
     public dimensions: IDimensionDescriptor[];
+    public signal: AbortSignal | undefined;
 
     protected constructor(
         private readonly decorated: IExecutionResult,
         private readonly wrapper: PreparedExecutionWrapper = identity,
-        public readonly signal: AbortSignal | undefined = decorated.signal,
     ) {
         this.definition = decorated.definition;
         this.dimensions = decorated.dimensions;
+        this.signal = decorated.signal;
     }
 
     public export(options: IExportConfig): Promise<IExportResult> {
@@ -230,6 +230,19 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     public fingerprint(): string {
         return this.decorated.fingerprint();
     }
+
+    public withSignal(signal: AbortSignal): IExecutionResult {
+        return this.createNew(this.decorated.withSignal(signal));
+    }
+
+    /**
+     * Methods that create new instances of execution results (withSignal) will
+     * call out to this method to create decorated execution result. This is essential to maintain the decoration
+     * during immutable operations where decorated implementation creates new instances.
+     *
+     * @param decorated - instance to decorate
+     */
+    protected abstract createNew(decorated: IExecutionResult): IExecutionResult;
 }
 
 /**

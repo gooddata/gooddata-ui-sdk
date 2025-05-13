@@ -26,7 +26,7 @@ export class TableFacadeInitializer {
         private readonly execution: IPreparedExecution,
         private readonly tableMethods: TableDataCallbacks & TableLegacyCallbacks & TableConfigAccessors,
         private readonly props: Readonly<ICorePivotTableProps>,
-        private readonly abortController?: AbortController | undefined,
+        private readonly getCurrentAbortController: () => AbortController | undefined,
     ) {}
 
     /**
@@ -63,8 +63,9 @@ export class TableFacadeInitializer {
         tableMethods.onLoadingChanged({ isLoading: true });
 
         let effectiveExecution = execution;
-        if (this.abortController) {
-            effectiveExecution = execution.withSignal(this.abortController.signal);
+        const abortController = this.getCurrentAbortController();
+        if (abortController) {
+            effectiveExecution = execution.withSignal(abortController.signal);
         }
 
         return effectiveExecution
@@ -147,6 +148,12 @@ export class TableFacadeInitializer {
     };
 
     private createTableFacade = (result: IExecutionResult, dataView: IDataView): TableFacade => {
-        return new TableFacade(result, dataView, this.tableMethods, this.props, this.abortController);
+        return new TableFacade(
+            result,
+            dataView,
+            this.tableMethods,
+            this.props,
+            this.getCurrentAbortController,
+        );
     };
 }

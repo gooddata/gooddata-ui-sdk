@@ -41,9 +41,9 @@ export function createAgGridDatasource(
     initialDv: DataViewFacade,
     gridApiProvider: GridApiProvider,
     intl: IntlShape,
-    abortController?: AbortController,
+    getCurrentAbortController: () => AbortController | undefined,
 ): AgGridDatasource {
-    return new AgGridDatasource(config, initialDv, gridApiProvider, intl, abortController);
+    return new AgGridDatasource(config, initialDv, gridApiProvider, intl, getCurrentAbortController);
 }
 
 export type GridApiProvider = () => GridApi | undefined;
@@ -60,7 +60,7 @@ export class AgGridDatasource implements IDatasource {
         private readonly initialDv: DataViewFacade,
         private readonly gridApiProvider: GridApiProvider,
         private readonly intl: IntlShape,
-        private readonly abortController?: AbortController,
+        private readonly getCurrentAbortController: () => AbortController | undefined,
     ) {
         this.currentResult = initialDv.result();
         this.currentSorts = initialDv.meta().effectiveSortItems();
@@ -151,7 +151,9 @@ export class AgGridDatasource implements IDatasource {
          */
         this.resetGroupingProvider(sortModel);
 
-        let transformedExecution = result
+        const abortController = this.getCurrentAbortController();
+        const transformedResult = abortController ? result.withSignal(abortController.signal) : result;
+        let transformedExecution = transformedResult
             .transform()
             .withSorting(...(desiredSorts ?? []))
             .withDimensions(
@@ -188,8 +190,9 @@ export class AgGridDatasource implements IDatasource {
     ): void => {
         const { startRow, endRow, failCallback } = params;
         let effectiveExecution = execution;
-        if (this.abortController) {
-            effectiveExecution = execution.withSignal(this.abortController.signal);
+        const abortController = this.getCurrentAbortController();
+        if (abortController) {
+            effectiveExecution = execution.withSignal(abortController.signal);
         }
 
         effectiveExecution
@@ -243,7 +246,6 @@ export class AgGridDatasource implements IDatasource {
             return;
         }
 
-        this.abortController?.abort();
         this.destroyed = true;
         this.onDestroy();
     };

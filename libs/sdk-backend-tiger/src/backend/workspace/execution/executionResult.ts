@@ -90,6 +90,18 @@ export class TigerExecutionResult implements IExecutionResult {
         this._fingerprint = SparkMD5.hash(this.resultId);
     }
 
+    public withSignal = (signal: AbortSignal): IExecutionResult => {
+        return new TigerExecutionResult(
+            this.authCall,
+            this.definition,
+            this.executionFactory,
+            this.execResponse,
+            this.dateFormatter,
+            signal,
+            this.resultCancelToken,
+        );
+    };
+
     public async readAll(): Promise<IDataView> {
         const executionResultPromise = this.authCall((client) =>
             client.executionResult
