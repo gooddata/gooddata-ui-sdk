@@ -26,6 +26,10 @@ export interface GenAIChatProps {
      */
     workspace?: string;
     /**
+     * The locale to use for the chat UI.
+     */
+    locale?: string;
+    /**
      * Color palette to use for the chat UI.
      */
     colorPalette?: IColorPalette;
@@ -47,6 +51,7 @@ export interface GenAIChatProps {
 export const GenAIChat: React.FC<GenAIChatProps> = ({
     backend,
     workspace,
+    locale,
     colorPalette,
     eventHandlers,
     onLinkClick,
@@ -59,7 +64,7 @@ export const GenAIChat: React.FC<GenAIChatProps> = ({
     });
 
     return (
-        <IntlWrapper>
+        <IntlWrapper locale={locale}>
             <StoreProvider store={genAIStore}>
                 <BackendProvider backend={effectiveBackend}>
                     <WorkspaceProvider workspace={effectiveWorkspace}>
