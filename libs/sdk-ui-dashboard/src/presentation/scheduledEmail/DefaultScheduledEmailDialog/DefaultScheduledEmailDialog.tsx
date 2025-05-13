@@ -35,7 +35,10 @@ import {
 } from "../../../model/index.js";
 import { AutomationFiltersSelect } from "../../automationFilters/components/AutomationFiltersSelect.js";
 import { useAutomationFiltersData } from "../../automationFilters/useAutomationFiltersData.js";
-import { validateAllFilterLocalIdentifiers } from "../../automationFilters/utils.js";
+import {
+    isLatestAutomationVersion,
+    validateAllFilterLocalIdentifiers,
+} from "../../automationFilters/utils.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 import { IntlWrapper } from "../../localization/index.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
@@ -145,7 +148,7 @@ export function ScheduledMailDialogRenderer({
         isCrossFiltering,
         isExecutionTimestampMode,
         enableAutomationFilterContext,
-    } = useDefaultScheduledEmailDialogData({ filters: allDashboardFilters ?? [] });
+    } = useDefaultScheduledEmailDialogData({ filters: allDashboardFilters ?? [], scheduledExportToEdit });
 
     const {
         availableFilters,
@@ -423,7 +426,13 @@ export const DefaultScheduledEmailDialog: React.FC<IScheduledEmailDialogProps> =
     );
 };
 
-function useDefaultScheduledEmailDialogData({ filters }: { filters: FilterContextItem[] }) {
+function useDefaultScheduledEmailDialogData({
+    filters,
+    scheduledExportToEdit,
+}: {
+    filters: FilterContextItem[];
+    scheduledExportToEdit?: IAutomationMetadataObject;
+}) {
     const locale = useDashboardSelector(selectLocale);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const dateFormat = useDashboardSelector(selectDateFormat);
@@ -444,10 +453,17 @@ function useDefaultScheduledEmailDialogData({ filters }: { filters: FilterContex
     const isCrossFiltering = useDashboardSelector(selectIsCrossFiltering);
     const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
     const enableAutomationFilterContextFlag = useDashboardSelector(selectEnableAutomationFilterContext);
+    const isLatestVersionOfAutomation = useMemo(() => {
+        return isLatestAutomationVersion(scheduledExportToEdit);
+    }, [scheduledExportToEdit]);
     const enableAutomationFilterContext = useMemo(() => {
-        const doAllFiltersHaveLocalIdentifiers = validateAllFilterLocalIdentifiers(filters);
-        return enableAutomationFilterContextFlag && doAllFiltersHaveLocalIdentifiers;
-    }, [filters, enableAutomationFilterContextFlag]);
+        const doAllDashboardFiltersHaveLocalIdentifiers = validateAllFilterLocalIdentifiers(filters);
+        return (
+            enableAutomationFilterContextFlag &&
+            doAllDashboardFiltersHaveLocalIdentifiers &&
+            isLatestVersionOfAutomation
+        );
+    }, [filters, enableAutomationFilterContextFlag, isLatestVersionOfAutomation]);
 
     return {
         locale,
