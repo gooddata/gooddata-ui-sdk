@@ -1,7 +1,13 @@
 // (C) 2025 GoodData Corporation
 
 import React, { useCallback, useMemo } from "react";
-import { FilterContextItem, IAttributeFilter, IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+import {
+    FilterContextItem,
+    IAttributeFilter,
+    IDashboardAttributeFilter,
+    isNegativeAttributeFilter,
+    ObjRef,
+} from "@gooddata/sdk-model";
 import {
     AttributeFilterButton,
     IAttributeFilterButtonProps,
@@ -60,10 +66,6 @@ function AttributeFilter(props: IAttributeFilterButtonProps) {
         return filter?.attributeFilter.localIdentifier;
     }, [filter]);
 
-    const filterIsInverted = useMemo(() => {
-        return filter?.attributeFilter.negativeSelection;
-    }, [filter]);
-
     const filterSelectionMode = useMemo(() => {
         return filter?.attributeFilter.selectionMode;
     }, [filter]);
@@ -76,12 +78,12 @@ function AttributeFilter(props: IAttributeFilterButtonProps) {
                     filterLocalIdentifier,
                     filterTitle,
                     undefined,
-                    filterIsInverted,
+                    isNegativeAttributeFilter(newFilter),
                     filterSelectionMode,
                 ),
             );
         },
-        [filterIsInverted, filterLocalIdentifier, filterSelectionMode, filterTitle, onChange],
+        [filterLocalIdentifier, filterSelectionMode, filterTitle, onChange],
     );
 
     return (
