@@ -24,8 +24,8 @@ import {
 import { IAttributeFilterElementsSelectLoadingProps } from "./Components/ElementsSelect/AttributeFilterElementsSelectLoading.js";
 import { IAttributeFilterElementsSelectErrorProps } from "./Components/ElementsSelect/AttributeFilterElementsSelectError.js";
 import { IAttributeFilterEmptyResultProps } from "./Components/ElementsSelect/EmptyResult/AttributeFilterEmptyResult.js";
-import { IAttributeFilterStatusBarProps } from "./Components/ElementsSelect/StatusBar/AttributeFilterStatusBar.js";
 import { IFilterButtonCustomIcon } from "../shared/index.js";
+import { IAttributeFilterStatusBarProps } from "./Components/ElementsSelect/StatusBar/types.js";
 
 /**
  * @public

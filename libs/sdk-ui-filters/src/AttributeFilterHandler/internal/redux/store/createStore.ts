@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { Action, AnyAction, configureStore, Middleware } from "@reduxjs/toolkit";
 import defaultReduxSaga from "redux-saga";
 import { actions, sliceReducer } from "./slice.js";
@@ -88,6 +88,7 @@ export function createAttributeFilterHandlerStore(
             config: {
                 hiddenElements: context.hiddenElements,
                 staticElements: context.staticElements,
+                withoutApply: context.withoutApply,
             },
             originalFilter: context.attributeFilter,
         },

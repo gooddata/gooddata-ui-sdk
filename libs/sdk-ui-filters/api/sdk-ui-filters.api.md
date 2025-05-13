@@ -615,6 +615,7 @@ export interface IAttributeFilterHandlerOptionsBase {
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
+    withoutApply?: boolean;
 }
 
 // @public
@@ -1127,6 +1128,8 @@ export interface IUseAttributeFilterHandlerProps {
     hiddenElements?: string[];
     // (undocumented)
     staticElements?: IAttributeElement[];
+    // (undocumented)
+    withoutApply?: boolean;
     // (undocumented)
     workspace: string;
 }
