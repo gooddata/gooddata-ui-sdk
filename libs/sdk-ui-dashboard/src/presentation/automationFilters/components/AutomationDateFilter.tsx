@@ -2,12 +2,7 @@
 
 import React from "react";
 import { Bubble, BubbleHoverTrigger, UiChip } from "@gooddata/sdk-ui-kit";
-import {
-    areObjRefsEqual,
-    FilterContextItem,
-    isDashboardCommonDateFilter,
-    IDashboardDateFilter,
-} from "@gooddata/sdk-model";
+import { areObjRefsEqual, FilterContextItem, IDashboardDateFilter } from "@gooddata/sdk-model";
 import { DefaultDashboardDateFilter, IDashboardDateFilterConfig } from "../../filterBar/index.js";
 import {
     selectCatalogDateDatasets,
@@ -27,9 +22,9 @@ export const AutomationDateFilter: React.FC<{
     onChange: (filter: FilterContextItem | undefined) => void;
     onDelete: (filter: FilterContextItem) => void;
     isLocked?: boolean;
-}> = ({ filter, onChange, onDelete, isLocked }) => {
+    isCommonDateFilter?: boolean;
+}> = ({ filter, onChange, onDelete, isLocked, isCommonDateFilter }) => {
     const intl = useIntl();
-    const isCommonDateFilter = isDashboardCommonDateFilter(filter);
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);

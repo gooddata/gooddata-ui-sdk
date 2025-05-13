@@ -752,6 +752,12 @@ $min-content-height: 110px;
     margin-bottom: $vertical-space;
 }
 
+.gd-notifications-channels-dialog-error-scrollable {
+    min-height: unset;
+    max-height: 100%;
+    overflow: unset;
+}
+
 .gd-notifications-channels-dialog-warning {
     width: 100%;
     margin-bottom: $vertical-space;
