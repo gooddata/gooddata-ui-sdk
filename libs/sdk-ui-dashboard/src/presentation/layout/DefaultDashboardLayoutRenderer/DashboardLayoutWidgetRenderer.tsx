@@ -1,7 +1,12 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { CSSProperties, useMemo } from "react";
 import cx from "classnames";
 import { IDashboardLayoutWidgetRenderProps } from "./interfaces.js";
+import {
+    selectEnableSnapshotExportAccessibility,
+    selectIsExport,
+    useDashboardSelector,
+} from "../../../model/index.js";
 
 export function DashboardLayoutWidgetRenderer(props: IDashboardLayoutWidgetRenderProps<any>): JSX.Element {
     const {
@@ -16,6 +21,9 @@ export function DashboardLayoutWidgetRenderer(props: IDashboardLayoutWidgetRende
         allowOverflow,
         children,
     } = props;
+
+    const isExport = useDashboardSelector(selectIsExport);
+    const isSnapshotAccessibilityEnabled = useDashboardSelector(selectEnableSnapshotExportAccessibility);
 
     const { heightAsRatio, gridHeight } = item.size()[screen]!;
 
@@ -48,6 +56,7 @@ export function DashboardLayoutWidgetRenderer(props: IDashboardLayoutWidgetRende
             ref={contentRef}
             className={cx("gd-fluidlayout-column-container", className, {
                 "custom-height": !!gridHeight,
+                "gd-fluidlayout-column-container-export": isSnapshotAccessibilityEnabled && isExport,
             })}
             style={style}
         >

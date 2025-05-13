@@ -80,6 +80,9 @@
     .gd-widget-export {
         z-index: auto;
     }
+    .gd-fluidlayout-column-container-export {
+        z-index: auto;
+    }
 
     // Always left align row header title during export
     // This overrides the default centered alignment at small resolutions
