@@ -68,7 +68,7 @@
         "react-dom": "^16.10.0 || ^17.0.0 || ^18.0.0"
     },
     "devDependencies": {
-        "@gooddata/eslint-config": "^4.1.0",
+        "@gooddata/eslint-config": "^4.1.1",
         "@gooddata/reference-workspace": "workspace:*",
         "@gooddata/sdk-backend-mockingbird": "workspace:*",
         "@gooddata/stylelint-config": "^5.0.0",

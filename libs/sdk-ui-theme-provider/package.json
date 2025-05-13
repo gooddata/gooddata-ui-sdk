@@ -58,7 +58,7 @@
         "react-dom": "^16.10.0 || ^17.0.0 || ^18.0.0"
     },
     "devDependencies": {
-        "@gooddata/eslint-config": "^4.1.0",
+        "@gooddata/eslint-config": "^4.1.1",
         "@gooddata/sdk-backend-mockingbird": "workspace:*",
         "@gooddata/reference-workspace": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",

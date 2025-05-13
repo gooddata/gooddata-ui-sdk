@@ -14,8 +14,8 @@ importers:
         specifier: workspace:*
         version: link:../../tools/catalog-export
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../libs/sdk-backend-base
@@ -1247,8 +1247,8 @@ importers:
         version: 2.6.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -1365,8 +1365,8 @@ importers:
         version: 8.3.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -1465,8 +1465,8 @@ importers:
         version: 8.3.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -1550,8 +1550,8 @@ importers:
         version: 2.6.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.23.14(@types/node@18.19.3)
@@ -1665,8 +1665,8 @@ importers:
         specifier: workspace:*
         version: link:../../tools/catalog-export
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/fixtures':
         specifier: 1.32.25
         version: 1.32.25
@@ -1762,8 +1762,8 @@ importers:
         version: 2.6.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.23.14(@types/node@18.19.3)
@@ -1847,8 +1847,8 @@ importers:
         version: 2.6.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.23.14(@types/node@18.19.3)
@@ -1971,8 +1971,8 @@ importers:
         version: 8.3.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/i18n-toolkit':
         specifier: workspace:*
         version: link:../../tools/i18n-toolkit
@@ -2149,8 +2149,8 @@ importers:
         version: 2.6.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.23.14(@types/node@18.19.3)
@@ -2285,8 +2285,8 @@ importers:
         version: 8.3.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -2532,8 +2532,8 @@ importers:
         version: 8.3.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/i18n-toolkit':
         specifier: workspace:*
         version: link:../../tools/i18n-toolkit
@@ -2782,8 +2782,8 @@ importers:
         version: 8.3.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/i18n-toolkit':
         specifier: workspace:*
         version: link:../../tools/i18n-toolkit
@@ -3011,8 +3011,8 @@ importers:
         version: 8.3.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -3219,8 +3219,8 @@ importers:
         version: 8.3.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/i18n-toolkit':
         specifier: workspace:*
         version: link:../../tools/i18n-toolkit
@@ -3409,8 +3409,8 @@ importers:
         version: 8.3.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/sdk-backend-mockingbird':
         specifier: workspace:*
         version: link:../sdk-backend-mockingbird
@@ -3653,8 +3653,8 @@ importers:
         version: 8.3.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -3849,8 +3849,8 @@ importers:
         version: 2.6.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.23.14(@types/node@18.19.3)
@@ -3994,8 +3994,8 @@ importers:
         version: 8.3.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -4154,8 +4154,8 @@ importers:
         version: 2.6.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/i18n-toolkit':
         specifier: workspace:*
         version: link:../../tools/i18n-toolkit
@@ -4289,8 +4289,8 @@ importers:
         specifier: ^0.0.2-alpha.0
         version: 0.0.2-alpha.0
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/mock-handling':
         specifier: workspace:*
         version: link:../../tools/mock-handling
@@ -4571,8 +4571,8 @@ importers:
         specifier: workspace:*
         version: link:../../tools/catalog-export
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/fixtures':
         specifier: 1.32.25
         version: 1.32.25
@@ -4848,8 +4848,8 @@ importers:
         version: 2.6.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -4990,8 +4990,8 @@ importers:
         version: 2.6.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -5162,8 +5162,8 @@ importers:
         version: 2.6.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/sdk-backend-mockingbird':
         specifier: workspace:*
         version: link:../sdk-backend-mockingbird
@@ -5298,8 +5298,8 @@ importers:
         version: 2.6.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.23.14(@types/node@18.19.3)
@@ -5371,8 +5371,8 @@ importers:
         version: 2.6.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.23.14(@types/node@18.19.3)
@@ -5444,8 +5444,8 @@ importers:
         version: 2.6.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.23.14(@types/node@18.19.3)
@@ -5601,8 +5601,8 @@ importers:
         version: 5.0.0
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@types/columnify':
         specifier: ^1.5.1
         version: 1.5.4
@@ -5679,8 +5679,8 @@ importers:
   ../../tools/applink:
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@types/blessed':
         specifier: ^0.1.17
         version: 0.1.25
@@ -5821,8 +5821,8 @@ importers:
         version: 2.6.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@types/babel__core':
         specifier: ^7.20.1
         version: 7.20.5
@@ -5912,8 +5912,8 @@ importers:
         specifier: workspace:*
         version: link:../catalog-export
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/plugin-toolkit':
         specifier: workspace:*
         version: link:../plugin-toolkit
@@ -6117,8 +6117,8 @@ importers:
         version: 0.12.5
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -6229,8 +6229,8 @@ importers:
         version: 2.6.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@types/inquirer':
         specifier: ^8.2.6
         version: 8.2.10
@@ -6365,8 +6365,8 @@ importers:
         version: 5.0.0
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@types/columnify':
         specifier: ^1.5.1
         version: 1.5.4
@@ -6489,8 +6489,8 @@ importers:
         specifier: workspace:*
         version: link:../catalog-export
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/sdk-ui-kit':
         specifier: workspace:*
         version: link:../../libs/sdk-ui-kit
@@ -6607,8 +6607,8 @@ importers:
         version: 2.6.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -6674,8 +6674,8 @@ importers:
         version: 2.6.2
     devDependencies:
       '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+        specifier: ^4.1.1
+        version: 4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/fixtures':
         specifier: 1.32.25
         version: 1.32.25
@@ -9360,8 +9360,8 @@ packages:
       tslib: 2.6.2
     dev: true
 
-  /@gooddata/eslint-config@4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3):
-    resolution: {integrity: sha512-59fOsukUqIlweZJki0Jd5Rm2Tkev7Psl9pCOLHZFRnU71Rk4J/ZSgKX59+GWb/8Rj0sKabxQEG/yknU404Pq7g==}
+  /@gooddata/eslint-config@4.1.1(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3):
+    resolution: {integrity: sha512-8vY5hnzSqUoyKFZunMXqEFOm6Llm0jNLBnLvv3zgHtD1vwn+Tb5GSW/19T2Gx4iqz7GeGyNeoXE6cMFUI7DdLw==}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': '>=5.29.0'
       eslint: '>=8.18.0'
@@ -24048,7 +24048,7 @@ packages:
       dom-accessibility-api: 0.6.3
       lodash-es: 4.17.21
       redent: 4.0.0
-      vitest: 3.0.8(@types/node@18.19.3)(jsdom@26.0.0)(sass@1.69.5)
+      vitest: 3.0.8(@types/node@18.19.3)(happy-dom@15.10.2)
     dev: true
 
   /vitest@3.0.8(@types/node@18.19.3)(happy-dom@15.10.2):

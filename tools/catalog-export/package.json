@@ -57,7 +57,7 @@
         "tslib": "^2.5.0"
     },
     "devDependencies": {
-        "@gooddata/eslint-config": "^4.1.0",
+        "@gooddata/eslint-config": "^4.1.1",
         "@types/babel__core": "^7.20.1",
         "@types/inquirer": "^8.2.6",
         "@types/lodash": "^4.14.202",

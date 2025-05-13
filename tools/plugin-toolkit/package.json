@@ -69,7 +69,7 @@
         "validate-npm-package-name": "^5.0.0"
     },
     "devDependencies": {
-        "@gooddata/eslint-config": "^4.1.0",
+        "@gooddata/eslint-config": "^4.1.1",
         "@types/columnify": "^1.5.1",
         "@types/cross-spawn": "^6.0.2",
         "@types/fs-extra": "^9.0.13",
