@@ -13,7 +13,7 @@ import {
     useId,
 } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { defineMessage, FormattedMessage, useIntl } from "react-intl";
 import {
     selectEntitlementMaxAutomationRecipients,
@@ -53,6 +53,7 @@ import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/com
 import { convertError } from "@gooddata/sdk-ui";
 import { getDescription, getValueSuffix } from "./utils/getters.js";
 import { isChangeOrDifferenceOperator } from "./utils/guards.js";
+import { isLatestAutomationVersion } from "../../automationFilters/utils.js";
 
 const OVERLAY_POSITION_TYPE = "fixed";
 
@@ -156,6 +157,10 @@ export function AlertingDialogRenderer({
         allVisibleFiltersMetadata,
         setAutomationFilters,
     });
+
+    const isLatestVersionOfAutomation = useMemo(() => {
+        return isLatestAutomationVersion(alertToEdit);
+    }, [alertToEdit]);
 
     const { isSavingAlert, handleCreateAlert, handleUpdateAlert } = useSaveAlertToBackend({
         onCreateSuccess: (alert) => {
@@ -271,7 +276,7 @@ export function AlertingDialogRenderer({
                             })}
                         >
                             <div className="gd-divider-with-margin" />
-                            {enableAutomationFilterContext ? (
+                            {enableAutomationFilterContext && isLatestVersionOfAutomation ? (
                                 <>
                                     <AutomationFiltersSelect
                                         availableFilters={availableFilters}
