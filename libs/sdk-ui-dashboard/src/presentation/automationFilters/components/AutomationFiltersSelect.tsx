@@ -142,7 +142,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                         <AttributesDropdown
                             onClose={noop}
                             onSelect={(value) => {
-                                handleAddFilter(value);
+                                handleAddFilter(value, attributes);
                                 setIsExpanded(true);
                             }}
                             attributes={attributes}
