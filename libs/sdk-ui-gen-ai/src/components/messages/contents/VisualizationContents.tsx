@@ -65,7 +65,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
     const workspaceId = useWorkspaceStrict();
 
     const handleOpen = (e: React.MouseEvent, vis: IGenAIVisualization) => {
-        if (!vis.savedVisualizationId) {
+        if (!vis?.savedVisualizationId) {
             return;
         }
         config.linkHandler?.({
