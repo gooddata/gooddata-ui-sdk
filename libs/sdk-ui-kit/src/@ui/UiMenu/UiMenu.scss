@@ -86,6 +86,11 @@
         margin: 0;
         padding: 0;
         outline: none;
+
+        // Focus ring when not controlling by mouse
+        #{$root}:not(#{$root}--controlType-mouse) &:focus-visible #{$root}__item-wrapper--isFocused {
+            @include mixins.focus-ring;
+        }
     }
 
     &__item {
@@ -102,20 +107,6 @@
         #{$root}--controlType-mouse &:hover:not(&--isDisabled) {
             background-color: variables.$is-focused-background;
             color: variables.$is-focused-color;
-        }
-
-        // Controlled by keyboard and has focus, not disabled
-        #{$root}--controlType-keyboard #{$root}__items:focus &--isFocused:not(&--isDisabled) {
-            background-color: variables.$is-focused-background;
-            color: variables.$is-focused-color;
-
-            @include mixins.focus-ring;
-        }
-        // Controlled by keyboard and has focus, disabled
-        #{$root}--controlType-keyboard #{$root}__items:focus &--isFocused#{&}--isDisabled {
-            background-color: variables.$is-focused-background;
-
-            @include mixins.focus-ring;
         }
 
         &--isDisabled {
