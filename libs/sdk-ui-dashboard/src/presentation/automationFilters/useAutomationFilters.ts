@@ -16,7 +16,7 @@ import {
     getNonHiddenFilters,
     getNonSelectedFilters,
 } from "./utils.js";
-import { FilterContextItem, ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, FilterContextItem, ICatalogAttribute, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * Logic for handling inner filters component logic.
@@ -84,8 +84,21 @@ export const useAutomationFilters = ({
     );
 
     const handleAddFilter = useCallback(
-        (catalogItemRef: ObjRef) => {
-            const filter = getFilterByCatalogItemRef(catalogItemRef, nonSelectedFilters);
+        (catalogItemRef: ObjRef, attributes: ICatalogAttribute[]) => {
+            // We need to go through all display forms of the attribute in case
+            // the filter is using different display form.
+            const selectedAttributeDisplayForms =
+                attributes
+                    .find((attribute) =>
+                        attribute.displayForms.some((df) => areObjRefsEqual(df.ref, catalogItemRef)),
+                    )
+                    ?.displayForms?.map((df) => df.ref) ?? [];
+
+            const filter = selectedAttributeDisplayForms.reduce<FilterContextItem | undefined>(
+                (acc, displayFormRef) => acc || getFilterByCatalogItemRef(displayFormRef, nonSelectedFilters),
+                undefined,
+            );
+
             if (filter) {
                 const updatedFilters = [...selectedFilters, filter];
                 onFiltersChange(updatedFilters);
