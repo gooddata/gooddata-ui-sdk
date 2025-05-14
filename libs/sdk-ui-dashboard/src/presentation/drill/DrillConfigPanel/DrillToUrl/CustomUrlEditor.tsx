@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useState, useMemo, useCallback } from "react";
 import { IntlShape, FormattedMessage, useIntl } from "react-intl";
 import {
@@ -39,14 +39,52 @@ import compact from "lodash/compact.js";
 import uniqBy from "lodash/uniqBy.js";
 import { dashboardAttributeFilterToAttributeFilter } from "../../../../converters/index.js";
 import { useInvalidFilteringParametersIdentifiers } from "../../../widget/insight/configuration/DrillTargets/useInvalidFilteringParametersIdentifiers.js";
+import { StreamLanguage, StringStream, syntaxHighlighting, HighlightStyle } from "@codemirror/language";
+import { Tag } from "@lezer/highlight";
 
 export interface IUrlInputProps {
     currentUrlValue: string;
     onChange: (value: string) => void;
     onCursor: (from: number, to: number) => void;
-    syntaxHighlightingRules?: IFormattingRules;
+    syntaxHighlightingRules?: IFormattingRule[];
     intl: IntlShape;
 }
+
+// Define custom tags for tokenization
+const customTags = {
+    attribute: Tag.define("attribute"),
+    invalidAttribute: Tag.define("invalidAttribute"),
+    identifier: Tag.define("identifier"),
+    invalidIdentifier: Tag.define("invalidIdentifier"),
+    filter: Tag.define("filter"),
+    invalidFilter: Tag.define("invalidFilter"),
+};
+
+// Map tags to class names for styling
+const customHighlightStyle = HighlightStyle.define([
+    { tag: customTags.identifier, class: "cm-identifier" },
+    { tag: [customTags.attribute, customTags.filter], class: "cm-attribute" },
+    {
+        tag: [customTags.invalidAttribute, customTags.invalidFilter, customTags.invalidIdentifier],
+        class: "cm-invalid",
+    },
+]);
+
+const createUrlLanguage = (rules: IFormattingRule[]) => {
+    return StreamLanguage.define({
+        name: "customUrl",
+        token: (stream: StringStream) => {
+            for (const rule of rules) {
+                if (stream.match(rule.regex)) {
+                    return rule.token;
+                }
+            }
+            stream.next();
+            return null;
+        },
+        tokenTable: customTags,
+    });
+};
 
 export const UrlInput: React.FC<IUrlInputProps> = (props) => {
     const { onChange, onCursor, currentUrlValue, intl, syntaxHighlightingRules } = props;
@@ -54,17 +92,23 @@ export const UrlInput: React.FC<IUrlInputProps> = (props) => {
         id: "configurationPanel.drillIntoUrl.editor.textAreaPlaceholder",
     });
 
+    const extensions = useMemo(() => {
+        if (!syntaxHighlightingRules) return [];
+        return [createUrlLanguage(syntaxHighlightingRules), syntaxHighlighting(customHighlightStyle)];
+    }, [syntaxHighlightingRules]);
+
     return syntaxHighlightingRules ? (
         <SyntaxHighlightingInput
             onChange={onChange}
             onCursor={onCursor}
             value={currentUrlValue}
-            customOptions={{ placeholder }}
+            placeholder={placeholder}
             className={"gd-input-syntax-highlighting-input"}
-            formatting={syntaxHighlightingRules}
+            extensions={extensions}
         />
     ) : null;
 };
+
 const HelpLink: React.FC<{ link: string }> = ({ link }) => {
     return (
         <a
@@ -100,7 +144,7 @@ const buildValidDisplayFormsFormattingRule = (attributeDisplayForms: IAttributeW
     const validAttributePlaceholders = attributeDisplayForms
         .map(({ displayForm }) => `{attribute_title\\(${displayForm.id}\\)}`)
         .join("|");
-    return { regex: new RegExp(validAttributePlaceholders), token: "attribute" };
+    return { regex: new RegExp(`^${validAttributePlaceholders}`), token: customTags.attribute.toString() };
 };
 
 const buildValidInsightFiltersFormattingRule = (attributeFilters: IAttributeFilter[]) => {
@@ -115,7 +159,10 @@ const buildValidInsightFiltersFormattingRule = (attributeFilters: IAttributeFilt
             return `{attribute_filter_selection\\(${id}\\)}`;
         })
         .join("|");
-    return { regex: new RegExp(validInsightAttributeFilterPlaceholders), token: "filter" };
+    return {
+        regex: new RegExp(`^${validInsightAttributeFilterPlaceholders}`),
+        token: customTags.filter.toString(),
+    };
 };
 
 const buildValidDashboardFiltersFormattingRule = (
@@ -141,7 +188,10 @@ const buildValidDashboardFiltersFormattingRule = (
     const validDashboardAttributeFilterPlaceholders = [...filterPlaceholders, ...configPlaceholders].join(
         "|",
     );
-    return { regex: new RegExp(validDashboardAttributeFilterPlaceholders), token: "filter" };
+    return {
+        regex: new RegExp(`^${validDashboardAttributeFilterPlaceholders}`),
+        token: customTags.filter.toString(),
+    };
 };
 
 interface IFormattingRule {
@@ -149,26 +199,22 @@ interface IFormattingRule {
     token: string;
 }
 
-interface IFormattingRules {
-    start: IFormattingRule[];
-}
-
 const IDENTIFIER_RULE: IFormattingRule = {
-    regex: /\{workspace_id\}|\{project_id\}|\{visualization_id\}|\{widget_id\}|\{dashboard_id\}|\{client_id\}|\{data_product_id\}/,
-    token: "identifier",
+    regex: /^\{workspace_id\}|\{project_id\}|\{visualization_id\}|\{widget_id\}|\{dashboard_id\}|\{client_id\}|\{data_product_id\}/,
+    token: customTags.identifier.toString(),
 };
-const INVALID_IDENTIFIER_RULE: IFormattingRule = { regex: /\{[^}{]*\}/, token: "invalid-identifier" };
+const INVALID_IDENTIFIER_RULE: IFormattingRule = { regex: /^\{[^}{]*\}/, token: "invalid" };
 const INVALID_DISPLAY_FORMS_RULE: IFormattingRule = {
-    regex: /\{attribute_title\(.*?\)\}/,
-    token: "invalid-attribute",
+    regex: /^\{attribute_title\(.*?\)\}/,
+    token: customTags.invalidAttribute.toString(),
 };
 const INVALID_DASHBOARD_ATTRIBUTE_FILTER_RULE: IFormattingRule = {
-    regex: /\{dash_attribute_filter_selection\(.*?\)\}/,
-    token: "invalid-filter",
+    regex: /^\{dash_attribute_filter_selection\(.*?\)\}/,
+    token: customTags.invalidFilter.toString(),
 };
 const INVALID_INSIGHT_ATTRIBUTE_FILTER_RULE: IFormattingRule = {
-    regex: /\{attribute_filter_selection\(.*?\)\}/,
-    token: "invalid-filter",
+    regex: /^\{attribute_filter_selection\(.*?\)\}/,
+    token: customTags.invalidFilter.toString(),
 };
 const DEFAULT_RULES: IFormattingRule[] = [
     INVALID_DISPLAY_FORMS_RULE,
@@ -183,21 +229,19 @@ const buildFormattingRules = (
     dashboardFilters: IAttributeFilter[],
     insightFilters: IAttributeFilter[],
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[],
-): IFormattingRules => {
+): IFormattingRule[] => {
     const validDisplayFormsRule = buildValidDisplayFormsFormattingRule(attributeDisplayForms);
     const validInsightFiltersRule = buildValidInsightFiltersFormattingRule(insightFilters);
     const validDashboardFiltersRule = buildValidDashboardFiltersFormattingRule(
         dashboardFilters,
         attributeFilterConfigs,
     );
-    return {
-        start: compact([
-            validDisplayFormsRule,
-            validDashboardFiltersRule,
-            validInsightFiltersRule,
-            ...DEFAULT_RULES,
-        ]),
-    };
+    return compact([
+        validDisplayFormsRule,
+        validDashboardFiltersRule,
+        validInsightFiltersRule,
+        ...DEFAULT_RULES,
+    ]);
 };
 
 const UrlInputPanel: React.FC<IUrlInputPanelProps> = (props) => {
@@ -325,7 +369,7 @@ const CustomUrlEditorDialog: React.FunctionComponent<CustomUrlEditorProps> = (pr
 
     const [currentValue, setCurrentValue] = useState(previousValue);
     const apply = () => onSelect(assertValidUrl(currentValue));
-    const handleOnChange = (value: string) => setCurrentValue(value.trim());
+    const handleOnChange = (value: string) => setCurrentValue(value);
 
     const isApplyEnabled = currentValue && currentValue.localeCompare(previousValue) !== 0;
 

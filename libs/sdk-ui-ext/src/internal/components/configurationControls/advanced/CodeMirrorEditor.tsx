@@ -1,23 +1,29 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { useRef, useEffect } from "react";
-import CodeMirror from "codemirror";
+import { EditorView, ViewUpdate, keymap } from "@codemirror/view";
+import { EditorState } from "@codemirror/state";
+import { yaml } from "@codemirror/lang-yaml";
+import { syntaxHighlighting, defaultHighlightStyle } from "@codemirror/language";
+import { defaultKeymap, history, historyKeymap, indentWithTab } from "@codemirror/commands";
+import { linter, lintGutter, Diagnostic } from "@codemirror/lint";
 import * as jsYaml from "js-yaml";
 
-// eslint-disable-next-line import/no-unassigned-import
-import "codemirror/addon/lint/lint.js";
-// eslint-disable-next-line import/no-unassigned-import
-import "codemirror/mode/yaml/yaml.js";
+export interface ICodeMirrorEditorProps {
+    value?: string;
+    onChange: (value: string) => void;
+}
 
-function yamlValidator(text: string) {
-    const errors = [];
+// YAML validator
+function yamlValidator(view: EditorView): Diagnostic[] {
+    const errors: Diagnostic[] = [];
+
     try {
-        jsYaml.load(text); // Attempt to parse YAML
+        jsYaml.load(view.state.doc.toString());
     } catch (e) {
-        // If an error occurs, push it to the errors array
         errors.push({
-            from: CodeMirror.Pos(e.mark.line, e.mark.column),
-            to: CodeMirror.Pos(e.mark.line, e.mark.column + 1),
+            from: e.mark.position - 1,
+            to: e.mark.position - 1,
             message: e.message,
             severity: "error",
         });
@@ -25,49 +31,55 @@ function yamlValidator(text: string) {
     return errors;
 }
 
-export interface ICodeMirrorEditorProps {
-    value?: string;
-    onChange: (value: string) => void;
-}
-
-const TEXTAREA_ID = "configurationEditor";
-
 export const CodeMirrorEditor: React.FC<ICodeMirrorEditorProps> = ({ value, onChange }) => {
-    const editorRef = useRef(null);
+    const editorRef = useRef<HTMLDivElement>(null);
+    const viewRef = useRef<EditorView>();
 
     useEffect(() => {
-        const editor = CodeMirror.fromTextArea(document.getElementById(TEXTAREA_ID) as HTMLTextAreaElement, {
-            mode: "yaml",
-            lineNumbers: false,
-            theme: "default gd-advanced-customization-dialog__theme",
-            gutters: ["CodeMirror-lint-markers"], // display lint markers on rows with errors
-            lint: {
-                getAnnotations: yamlValidator,
-                async: false,
-            },
-            // use space for tabs to adhere to the linter
-            extraKeys: {
-                Tab: (cm) => cm.execCommand("indentMore"),
-                "Shift-Tab": (cm) => cm.execCommand("indentLess"),
-            },
+        if (!editorRef.current) {
+            return undefined;
+        }
+
+        const changeHandler = EditorView.updateListener.of((update: ViewUpdate) => {
+            if (update.docChanged) {
+                const newValue = update.state.doc.toString();
+                onChange(newValue);
+            }
         });
 
-        editorRef.current = editor; // store the editor instance in the ref for effects
-
-        editor.on("change", (instance) => {
-            const value = instance.getValue(); // get the editor's current value
-            onChange(value); // Update the state
+        const view = new EditorView({
+            state: EditorState.create({
+                doc: viewRef.current?.state.doc.toString() ?? "",
+                extensions: [
+                    history(),
+                    syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+                    keymap.of([indentWithTab, ...defaultKeymap, ...historyKeymap]),
+                    yaml(),
+                    EditorView.lineWrapping,
+                    linter(yamlValidator, { markerFilter: () => [] }),
+                    lintGutter(),
+                    changeHandler,
+                ],
+            }),
+            parent: editorRef.current,
         });
 
-        return () => editor.toTextArea(); // Clean up on unmount
+        viewRef.current = view;
+
+        return () => view.destroy();
     }, [onChange]);
 
     useEffect(() => {
-        if (editorRef.current.getValue() !== value) {
-            // Use setValue to update the editor's content
-            editorRef.current.setValue(value === undefined ? "" : value);
+        const view = viewRef.current;
+        if (!view) return;
+
+        const currentValue = view.state.doc.toString();
+        if (currentValue !== value) {
+            view.dispatch({
+                changes: { from: 0, to: currentValue.length, insert: value || "" },
+            });
         }
     }, [value]);
 
-    return <textarea id={TEXTAREA_ID} defaultValue={value} />;
+    return <div className="gd-advanced-customization-dialog__theme" ref={editorRef} />;
 };

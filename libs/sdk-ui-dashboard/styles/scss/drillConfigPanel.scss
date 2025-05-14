@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
@@ -618,7 +618,7 @@ $gd-gd-drill-to-url-body-width: 230px;
     .gd-input-syntax-highlighting-input {
         padding: 2px 20px 0 0;
 
-        .CodeMirror {
+        .cm-editor {
             width: 340px;
             height: 270px;
         }
@@ -702,13 +702,13 @@ $gd-gd-drill-to-url-body-width: 230px;
         }
     }
 
-    .CodeMirror-code {
-        .CodeMirror-matchingbracket {
+    .cm-code {
+        .cm-matchingbracket {
             color: inherit;
             background-color: #fff;
         }
 
-        .CodeMirror-nonmatchingbracket {
+        .cm-nonmatchingbracket {
             color: inherit;
         }
 

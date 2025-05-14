@@ -55,6 +55,30 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@codemirror/commands",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@codemirror/lang-yaml",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@codemirror/language",
+      "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "@codemirror/lint",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@codemirror/state",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@codemirror/view",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@componentdriven/csf",
       "allowedCategories": [ "production" ]
     },
@@ -195,6 +219,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@lezer/highlight",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@microsoft/api-documenter",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -265,10 +293,6 @@
     {
       "name": "@types/blessed",
       "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@types/codemirror",
-      "allowedCategories": [ "production" ]
     },
     {
       "name": "@types/columnify",
