@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
 import { put, call, takeLatest, select, cancelled, SagaReturnType } from "redux-saga/effects";
@@ -6,12 +6,12 @@ import { CancelableOptions } from "@gooddata/sdk-backend-spi";
 import difference from "lodash/difference.js";
 
 import { getAttributeFilterContext } from "../common/sagas.js";
-import { selectElementsForm } from "../common/selectors.js";
+import { selectElementsForm, selectWithoutApply } from "../common/selectors.js";
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { selectLoadElementsOptions } from "../elements/elementsSelectors.js";
 import { actions } from "../store/slice.js";
 import { ILoadElementsOptions } from "../../../types/index.js";
-import { selectCommittedSelection } from "../store/selectors.js";
+import { selectCommittedSelection, selectWorkingSelection } from "../store/selectors.js";
 import { shouldExcludePrimaryLabel } from "../utils.js";
 
 /**
@@ -52,8 +52,10 @@ export function* loadIrrelevantElementsSaga(
             selectLoadElementsOptions,
         );
 
+        const withoutApply = yield select(selectWithoutApply);
+
         const allSelectedElementTitles: SagaReturnType<typeof selectCommittedSelection> = yield select(
-            selectCommittedSelection,
+            withoutApply ? selectWorkingSelection : selectCommittedSelection,
         );
         const elements =
             elementsForm === "values"

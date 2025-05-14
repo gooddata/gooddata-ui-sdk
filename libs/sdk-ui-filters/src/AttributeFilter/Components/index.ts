@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 export type { IAttributeFilterDropdownButtonProps } from "./DropdownButton/AttributeFilterDropdownButton.js";
 export { AttributeFilterDropdownButton } from "./DropdownButton/AttributeFilterDropdownButton.js";
@@ -36,7 +36,7 @@ export type { IAttributeFilterFilteredStatusProps } from "./ElementsSelect/Statu
 export { AttributeFilterFilteredStatus } from "./ElementsSelect/StatusBar/AttributeFilterFilteredStatus.js";
 export type { IAttributeFilterSelectionStatusProps } from "./ElementsSelect/StatusBar/AttributeFilterSelectionStatus.js";
 export { AttributeFilterSelectionStatus } from "./ElementsSelect/StatusBar/AttributeFilterSelectionStatus.js";
-export type { IAttributeFilterStatusBarProps } from "./ElementsSelect/StatusBar/AttributeFilterStatusBar.js";
+export type { IAttributeFilterStatusBarProps } from "./ElementsSelect/StatusBar/types.js";
 export { AttributeFilterStatusBar } from "./ElementsSelect/StatusBar/AttributeFilterStatusBar.js";
 export { SingleSelectionAttributeFilterStatusBar } from "./ElementsSelect/StatusBar/SingleSelectionAttributeFilterStatusBar.js";
 export type { IAttributeFilterErrorProps } from "./AttributeFilterError.js";

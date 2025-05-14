@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IAttributeElement, IAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import { MultiSelectAttributeFilterHandler, SingleSelectAttributeFilterHandler } from "./internal/index.js";
@@ -57,6 +57,12 @@ export interface IAttributeFilterHandlerOptionsBase {
      * If specified, the attribute filter will display the elements in specified label form.
      */
     displayAsLabel?: ObjRef;
+
+    /**
+     * if true, the attribute filter will not display the apply button
+     * Several other behaviours are also affected by this option like dependent filters
+     */
+    withoutApply?: boolean;
 }
 
 /**
@@ -115,6 +121,7 @@ export function newAttributeFilterHandler(
         selectionMode: "multi",
         displayAsLabel: undefined,
         enableDuplicatedLabelValuesInAttributeFilter: true,
+        withoutApply: false,
     },
 ): IAttributeFilterHandler {
     const {
@@ -123,6 +130,7 @@ export function newAttributeFilterHandler(
         staticElements,
         enableDuplicatedLabelValuesInAttributeFilter,
         displayAsLabel,
+        withoutApply,
     } = options;
 
     if (selectionMode === "multi") {
@@ -134,6 +142,7 @@ export function newAttributeFilterHandler(
             staticElements,
             enableDuplicatedLabelValuesInAttributeFilter,
             displayAsLabel,
+            withoutApply,
         });
     }
 
@@ -145,5 +154,6 @@ export function newAttributeFilterHandler(
         staticElements,
         enableDuplicatedLabelValuesInAttributeFilter,
         displayAsLabel,
+        withoutApply,
     });
 }

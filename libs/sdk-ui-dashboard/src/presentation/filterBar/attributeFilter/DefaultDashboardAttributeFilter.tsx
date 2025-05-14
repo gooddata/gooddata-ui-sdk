@@ -395,10 +395,6 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                 userInteraction.attributeFilterInteraction("attributeFilterShowAllValuesClicked");
             };
 
-            if (filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes) {
-                return null;
-            }
-
             if (filter.attributeFilter.selectionMode === "single") {
                 return (
                     <SingleSelectionAttributeFilterStatusBar
@@ -434,8 +430,6 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
         filter.attributeFilter.validateElementsBy,
         capabilities.supportsShowingFilteredElements,
         userInteraction,
-        filtersApplyMode.mode,
-        enableDashboardFiltersApplyModes,
     ]);
 
     const AttributeFilterComponent = props.AttributeFilterComponent ?? AttributeFilterButton;

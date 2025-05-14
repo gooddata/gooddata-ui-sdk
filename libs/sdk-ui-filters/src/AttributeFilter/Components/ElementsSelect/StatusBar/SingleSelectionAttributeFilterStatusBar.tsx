@@ -1,9 +1,9 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
-import { IAttributeFilterStatusBarProps } from "./AttributeFilterStatusBar.js";
 import { AttributeFilterFilteredStatus } from "./AttributeFilterFilteredStatus.js";
 import { AttributeFilterIrrelevantSelectionStatus } from "./AttributeFilterIrrelevantSelectionStatus.js";
 import { AttributeFilterShowFilteredElements } from "./AttributeFilterShowFilteredElements.js";
+import type { IAttributeFilterStatusBarProps } from "./types.js";
 
 /**
  * A component that displays only effective parent filters.

@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { CaseReducer, AnyAction } from "@reduxjs/toolkit";
 import { IAttributeElement, ObjRef, IAttributeMetadataObject, IAttributeFilter } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -59,6 +59,7 @@ export interface AttributeFilterState {
     config: {
         hiddenElements?: string[];
         staticElements?: IAttributeElement[];
+        withoutApply?: boolean;
     };
     originalFilter?: IAttributeFilter;
 }

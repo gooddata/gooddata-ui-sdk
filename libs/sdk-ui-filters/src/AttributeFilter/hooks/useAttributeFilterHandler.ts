@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useEffect, useRef, useState, useCallback } from "react";
 import isEqual from "lodash/isEqual.js";
 import { usePrevious } from "@gooddata/sdk-ui";
@@ -24,6 +24,7 @@ export interface IUseAttributeFilterHandlerProps {
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
     enableDuplicatedLabelValuesInAttributeFilter: boolean;
+    withoutApply?: boolean;
 }
 
 /**
@@ -42,6 +43,7 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
         hiddenElements,
         staticElements,
         enableDuplicatedLabelValuesInAttributeFilter = true,
+        withoutApply = false,
     } = props;
 
     const [, setInvalidate] = useState(0);
@@ -63,6 +65,7 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
                 staticElements,
                 enableDuplicatedLabelValuesInAttributeFilter,
                 displayAsLabel,
+                withoutApply,
             },
         );
     }, [
@@ -73,6 +76,7 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
         staticElements,
         enableDuplicatedLabelValuesInAttributeFilter,
         displayAsLabel,
+        withoutApply,
     ]);
 
     if (!handlerRef.current) {

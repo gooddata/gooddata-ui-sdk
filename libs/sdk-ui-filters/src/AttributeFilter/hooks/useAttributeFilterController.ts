@@ -155,6 +155,7 @@ export const useAttributeFilterController = (
         staticElements,
         enableDuplicatedLabelValuesInAttributeFilter,
         displayAsLabel,
+        withoutApply,
     });
     const attributeFilterControllerData = useAttributeFilterControllerData(
         handler,
