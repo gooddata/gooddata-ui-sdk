@@ -47,7 +47,7 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
             return this.authCall(async (client: ITigerClient) => {
                 const result = await client.automation.testExistingNotificationChannel({
                     notificationChannelId: channel.id,
-                    testDestinationRequest: {
+                    automationTestDestinationRequest: {
                         destination,
                     },
                 });
@@ -57,7 +57,7 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
 
         return this.authCall(async (client: ITigerClient) => {
             const result = await client.automation.testNotificationChannel({
-                testDestinationRequest: {
+                automationTestDestinationRequest: {
                     destination,
                 },
             });

@@ -249,6 +249,15 @@ export type {
 export { ActionsApiFactory as AuthActionsApiFactory } from "./generated/auth-json-api/api.js";
 export type { ConfigurationParameters } from "./generated/auth-json-api/configuration.js";
 export { Configuration } from "./generated/auth-json-api/configuration.js";
+export * from "./generated/automation-json-api/index.js";
+export type {
+    Configuration as AutomationConfiguration,
+    ConfigurationParameters as AutomationConfigurationParameters,
+} from "./generated/automation-json-api/index.js";
+export type {
+    BaseAPI as AutomationBaseAPI,
+    RequestArgs as AutomationRequestArgs,
+} from "./generated/automation-json-api/base.js";
 export * from "./generated/metadata-json-api/api.js";
 export type {
     AFM as AfmExport,
@@ -330,6 +339,16 @@ export type {
     RawCustomLabel,
     RawCustomMetric,
     SlidesExportRequestFormatEnum,
+    ActionsApiCreateImageExportRequest,
+    ActionsApiGetImageExportRequest,
+    ActionsApiGetImageExportMetadataRequest,
+    DashboardTabularExportRequest,
+    DashboardTabularExportRequestFormatEnum,
+    DashboardAttributeFilter,
+    DashboardDateFilter,
+    ImageExportRequest,
+    DashboardFilter,
+    ImageExportRequestFormatEnum,
 } from "./generated/export-json-api/api.js";
 
 export type {

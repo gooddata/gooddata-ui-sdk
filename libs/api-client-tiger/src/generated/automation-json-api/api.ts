@@ -25,1209 +25,2600 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base.js';
 
 /**
+ * A datetime filter specifying exact from and to values.
+ * @export
+ * @interface AutomationAbsoluteDateFilter
+ */
+export interface AutomationAbsoluteDateFilter {
+    /**
+     *
+     * @type {AutomationAbsoluteDateFilterAbsoluteDateFilter}
+     * @memberof AutomationAbsoluteDateFilter
+     */
+    absoluteDateFilter: AutomationAbsoluteDateFilterAbsoluteDateFilter;
+}
+/**
  *
  * @export
- * @interface AdHocAutomation
+ * @interface AutomationAbsoluteDateFilterAbsoluteDateFilter
  */
-export interface AdHocAutomation {
+export interface AutomationAbsoluteDateFilterAbsoluteDateFilter {
     /**
      *
      * @type {string}
-     * @memberof AdHocAutomation
+     * @memberof AutomationAbsoluteDateFilterAbsoluteDateFilter
+     */
+    from: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationAbsoluteDateFilterAbsoluteDateFilter
+     */
+    to: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationAbsoluteDateFilterAbsoluteDateFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof AutomationAbsoluteDateFilterAbsoluteDateFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {AutomationAfmObjectIdentifierDataset}
+     * @memberof AutomationAbsoluteDateFilterAbsoluteDateFilter
+     */
+    dataset: AutomationAfmObjectIdentifierDataset;
+}
+/**
+ * @type AutomationAbstractMeasureValueFilter
+ * @export
+ */
+export type AutomationAbstractMeasureValueFilter =
+    | AutomationComparisonMeasureValueFilter
+    | AutomationRangeMeasureValueFilter
+    | AutomationRankingFilter;
+
+/**
+ *
+ * @export
+ * @interface AutomationAdHocAutomation
+ */
+export interface AutomationAdHocAutomation {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationAdHocAutomation
      */
     title?: string;
     /**
      *
      * @type {string}
-     * @memberof AdHocAutomation
+     * @memberof AutomationAdHocAutomation
      */
     description?: string;
     /**
      * A list of tags.
      * @type {Array<string>}
-     * @memberof AdHocAutomation
+     * @memberof AutomationAdHocAutomation
      */
     tags?: Array<string>;
     /**
      * Additional details to be included in the automated message.
      * @type {{ [key: string]: string; }}
-     * @memberof AdHocAutomation
+     * @memberof AutomationAdHocAutomation
      */
     details?: { [key: string]: string };
     /**
      *
-     * @type {AutomationMetadata}
-     * @memberof AdHocAutomation
+     * @type {AutomationAutomationMetadata}
+     * @memberof AutomationAdHocAutomation
      */
-    metadata?: AutomationMetadata | null;
+    metadata?: AutomationAutomationMetadata | null;
     /**
      *
-     * @type {Array<AutomationTabularExport>}
-     * @memberof AdHocAutomation
+     * @type {AutomationAutomationAlert}
+     * @memberof AutomationAdHocAutomation
      */
-    tabularExports?: Array<AutomationTabularExport>;
+    alert?: AutomationAutomationAlert;
     /**
      *
-     * @type {Array<AutomationVisualExport>}
-     * @memberof AdHocAutomation
+     * @type {Array<AutomationAutomationTabularExport>}
+     * @memberof AutomationAdHocAutomation
      */
-    visualExports?: Array<AutomationVisualExport>;
+    tabularExports?: Array<AutomationAutomationTabularExport>;
+    /**
+     *
+     * @type {Array<AutomationAutomationVisualExport>}
+     * @memberof AutomationAdHocAutomation
+     */
+    visualExports?: Array<AutomationAutomationVisualExport>;
     /**
      * External recipients of the automation action results.
-     * @type {Array<AutomationExternalRecipient>}
-     * @memberof AdHocAutomation
+     * @type {Array<AutomationAutomationExternalRecipient>}
+     * @memberof AutomationAdHocAutomation
      */
-    externalRecipients?: Array<AutomationExternalRecipient>;
+    externalRecipients?: Array<AutomationAutomationExternalRecipient>;
     /**
      *
-     * @type {DeclarativeNotificationChannelIdentifier}
-     * @memberof AdHocAutomation
+     * @type {AutomationDeclarativeNotificationChannelIdentifier}
+     * @memberof AutomationAdHocAutomation
      */
-    notificationChannel?: DeclarativeNotificationChannelIdentifier;
+    notificationChannel?: AutomationDeclarativeNotificationChannelIdentifier;
     /**
      *
-     * @type {Array<DeclarativeUserIdentifier>}
-     * @memberof AdHocAutomation
+     * @type {Array<AutomationDeclarativeUserIdentifier>}
+     * @memberof AutomationAdHocAutomation
      */
-    recipients?: Array<DeclarativeUserIdentifier>;
+    recipients?: Array<AutomationDeclarativeUserIdentifier>;
     /**
      *
-     * @type {DeclarativeAnalyticalDashboardIdentifier}
-     * @memberof AdHocAutomation
+     * @type {AutomationDeclarativeAnalyticalDashboardIdentifier}
+     * @memberof AutomationAdHocAutomation
      */
-    analyticalDashboard?: DeclarativeAnalyticalDashboardIdentifier;
+    analyticalDashboard?: AutomationDeclarativeAnalyticalDashboardIdentifier;
+}
+/**
+ * @type AutomationAfmIdentifier
+ * Reference to the attribute label to which the filter should be applied.
+ * @export
+ */
+export type AutomationAfmIdentifier = AutomationAfmLocalIdentifier | AutomationAfmObjectIdentifier;
+
+/**
+ *
+ * @export
+ * @interface AutomationAfmLocalIdentifier
+ */
+export interface AutomationAfmLocalIdentifier {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationAfmLocalIdentifier
+     */
+    localIdentifier: string;
+}
+/**
+ * ObjectIdentifier with `identifier` wrapper. This serves to distinguish MD object identifiers in AFM request from local identifiers.
+ * @export
+ * @interface AutomationAfmObjectIdentifier
+ */
+export interface AutomationAfmObjectIdentifier {
+    /**
+     *
+     * @type {AutomationAfmObjectIdentifierIdentifier}
+     * @memberof AutomationAfmObjectIdentifier
+     */
+    identifier: AutomationAfmObjectIdentifierIdentifier;
+}
+/**
+ * Reference to the date attribute to use.
+ * @export
+ * @interface AutomationAfmObjectIdentifierAttribute
+ */
+export interface AutomationAfmObjectIdentifierAttribute {
+    /**
+     *
+     * @type {AutomationAfmObjectIdentifierAttributeIdentifier}
+     * @memberof AutomationAfmObjectIdentifierAttribute
+     */
+    identifier: AutomationAfmObjectIdentifierAttributeIdentifier;
 }
 /**
  *
  * @export
- * @interface AlertDescription
+ * @interface AutomationAfmObjectIdentifierAttributeIdentifier
  */
-export interface AlertDescription {
+export interface AutomationAfmObjectIdentifierAttributeIdentifier {
     /**
      *
      * @type {string}
-     * @memberof AlertDescription
+     * @memberof AutomationAfmObjectIdentifierAttributeIdentifier
+     */
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationAfmObjectIdentifierAttributeIdentifier
+     */
+    type: AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum;
+}
+
+export const AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum = {
+    ATTRIBUTE: "attribute",
+} as const;
+
+export type AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum =
+    typeof AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum[keyof typeof AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum];
+
+/**
+ * Reference to the metric, fact or attribute object to use for the metric.
+ * @export
+ * @interface AutomationAfmObjectIdentifierCore
+ */
+export interface AutomationAfmObjectIdentifierCore {
+    /**
+     *
+     * @type {AutomationAfmObjectIdentifierCoreIdentifier}
+     * @memberof AutomationAfmObjectIdentifierCore
+     */
+    identifier: AutomationAfmObjectIdentifierCoreIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface AutomationAfmObjectIdentifierCoreIdentifier
+ */
+export interface AutomationAfmObjectIdentifierCoreIdentifier {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationAfmObjectIdentifierCoreIdentifier
+     */
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationAfmObjectIdentifierCoreIdentifier
+     */
+    type: AutomationAfmObjectIdentifierCoreIdentifierTypeEnum;
+}
+
+export const AutomationAfmObjectIdentifierCoreIdentifierTypeEnum = {
+    ATTRIBUTE: "attribute",
+    LABEL: "label",
+    FACT: "fact",
+    METRIC: "metric",
+} as const;
+
+export type AutomationAfmObjectIdentifierCoreIdentifierTypeEnum =
+    typeof AutomationAfmObjectIdentifierCoreIdentifierTypeEnum[keyof typeof AutomationAfmObjectIdentifierCoreIdentifierTypeEnum];
+
+/**
+ * Reference to the date dataset to which the filter should be applied.
+ * @export
+ * @interface AutomationAfmObjectIdentifierDataset
+ */
+export interface AutomationAfmObjectIdentifierDataset {
+    /**
+     *
+     * @type {AutomationAfmObjectIdentifierDatasetIdentifier}
+     * @memberof AutomationAfmObjectIdentifierDataset
+     */
+    identifier: AutomationAfmObjectIdentifierDatasetIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface AutomationAfmObjectIdentifierDatasetIdentifier
+ */
+export interface AutomationAfmObjectIdentifierDatasetIdentifier {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationAfmObjectIdentifierDatasetIdentifier
+     */
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationAfmObjectIdentifierDatasetIdentifier
+     */
+    type: AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum;
+}
+
+export const AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum = {
+    DATASET: "dataset",
+} as const;
+
+export type AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum =
+    typeof AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum[keyof typeof AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface AutomationAfmObjectIdentifierIdentifier
+ */
+export interface AutomationAfmObjectIdentifierIdentifier {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationAfmObjectIdentifierIdentifier
+     */
+    type: AutomationAfmObjectIdentifierIdentifierTypeEnum;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationAfmObjectIdentifierIdentifier
+     */
+    id: string;
+}
+
+export const AutomationAfmObjectIdentifierIdentifierTypeEnum = {
+    ANALYTICAL_DASHBOARD: "analyticalDashboard",
+    ATTRIBUTE: "attribute",
+    DASHBOARD_PLUGIN: "dashboardPlugin",
+    DATASET: "dataset",
+    FACT: "fact",
+    LABEL: "label",
+    METRIC: "metric",
+    PROMPT: "prompt",
+    VISUALIZATION_OBJECT: "visualizationObject",
+    FILTER_CONTEXT: "filterContext",
+} as const;
+
+export type AutomationAfmObjectIdentifierIdentifierTypeEnum =
+    typeof AutomationAfmObjectIdentifierIdentifierTypeEnum[keyof typeof AutomationAfmObjectIdentifierIdentifierTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface AutomationAfmObjectIdentifierLabel
+ */
+export interface AutomationAfmObjectIdentifierLabel {
+    /**
+     *
+     * @type {AutomationAfmObjectIdentifierLabelIdentifier}
+     * @memberof AutomationAfmObjectIdentifierLabel
+     */
+    identifier: AutomationAfmObjectIdentifierLabelIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface AutomationAfmObjectIdentifierLabelIdentifier
+ */
+export interface AutomationAfmObjectIdentifierLabelIdentifier {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationAfmObjectIdentifierLabelIdentifier
+     */
+    type: AutomationAfmObjectIdentifierLabelIdentifierTypeEnum;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationAfmObjectIdentifierLabelIdentifier
+     */
+    id: string;
+}
+
+export const AutomationAfmObjectIdentifierLabelIdentifierTypeEnum = {
+    LABEL: "label",
+} as const;
+
+export type AutomationAfmObjectIdentifierLabelIdentifierTypeEnum =
+    typeof AutomationAfmObjectIdentifierLabelIdentifierTypeEnum[keyof typeof AutomationAfmObjectIdentifierLabelIdentifierTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface AutomationAlertAfm
+ */
+export interface AutomationAlertAfm {
+    /**
+     * Attributes to be used in the computation.
+     * @type {Array<AutomationAttributeItem>}
+     * @memberof AutomationAlertAfm
+     */
+    attributes?: Array<AutomationAttributeItem>;
+    /**
+     * Various filter types to filter execution result.
+     * @type {Array<AutomationFilterDefinition>}
+     * @memberof AutomationAlertAfm
+     */
+    filters: Array<AutomationFilterDefinition>;
+    /**
+     * Metrics to be computed. One metric if the alert condition is evaluated to a scalar. Two metrics when they should be evaluated to each other.
+     * @type {Array<AutomationMeasureItem>}
+     * @memberof AutomationAlertAfm
+     */
+    measures: Array<AutomationMeasureItem>;
+    /**
+     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
+     * @type {Array<AutomationMeasureItem>}
+     * @memberof AutomationAlertAfm
+     */
+    auxMeasures?: Array<AutomationMeasureItem>;
+}
+/**
+ * @type AutomationAlertCondition
+ * Alert trigger condition.
+ * @export
+ */
+export type AutomationAlertCondition =
+    | AutomationComparisonWrapper
+    | AutomationRangeWrapper
+    | AutomationRelativeWrapper;
+
+/**
+ * @type AutomationAlertConditionOperand
+ * Operand of the alert condition.
+ * @export
+ */
+export type AutomationAlertConditionOperand = AutomationLocalIdentifier | AutomationValue;
+
+/**
+ *
+ * @export
+ * @interface AutomationAlertDescription
+ */
+export interface AutomationAlertDescription {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationAlertDescription
      */
     metric: string;
     /**
      *
      * @type {string}
-     * @memberof AlertDescription
+     * @memberof AutomationAlertDescription
      */
     condition: string;
     /**
      *
-     * @type {Array<AlertEvaluationRow>}
-     * @memberof AlertDescription
+     * @type {Array<AutomationAlertEvaluationRow>}
+     * @memberof AutomationAlertDescription
      */
-    currentValues?: Array<AlertEvaluationRow>;
+    currentValues?: Array<AutomationAlertEvaluationRow>;
     /**
      *
      * @type {string}
-     * @memberof AlertDescription
+     * @memberof AutomationAlertDescription
      */
     attribute?: string;
     /**
      *
      * @type {number}
-     * @memberof AlertDescription
+     * @memberof AutomationAlertDescription
      */
     totalValueCount?: number;
     /**
      *
      * @type {number}
-     * @memberof AlertDescription
+     * @memberof AutomationAlertDescription
      */
     triggeredCount?: number;
     /**
      *
      * @type {string}
-     * @memberof AlertDescription
+     * @memberof AutomationAlertDescription
      */
     triggeredAt?: string;
     /**
      *
      * @type {number}
-     * @memberof AlertDescription
+     * @memberof AutomationAlertDescription
      */
     threshold?: number;
     /**
      *
      * @type {string}
-     * @memberof AlertDescription
+     * @memberof AutomationAlertDescription
      */
     formattedThreshold?: string;
     /**
      *
      * @type {number}
-     * @memberof AlertDescription
+     * @memberof AutomationAlertDescription
      */
     lowerThreshold?: number;
     /**
      *
      * @type {number}
-     * @memberof AlertDescription
+     * @memberof AutomationAlertDescription
      */
     upperThreshold?: number;
     /**
      *
      * @type {number}
-     * @memberof AlertDescription
+     * @memberof AutomationAlertDescription
      */
     remainingAlertEvaluationCount?: number;
     /**
      *
      * @type {string}
-     * @memberof AlertDescription
+     * @memberof AutomationAlertDescription
      */
-    status?: AlertDescriptionStatusEnum;
+    status?: AutomationAlertDescriptionStatusEnum;
     /**
      *
      * @type {string}
-     * @memberof AlertDescription
+     * @memberof AutomationAlertDescription
      */
     errorMessage?: string;
     /**
      *
      * @type {string}
-     * @memberof AlertDescription
+     * @memberof AutomationAlertDescription
      */
     traceId?: string;
 }
 
-export const AlertDescriptionStatusEnum = {
+export const AutomationAlertDescriptionStatusEnum = {
     SUCCESS: "SUCCESS",
     ERROR: "ERROR",
     INTERNAL_ERROR: "INTERNAL_ERROR",
     TIMEOUT: "TIMEOUT",
 } as const;
 
-export type AlertDescriptionStatusEnum =
-    typeof AlertDescriptionStatusEnum[keyof typeof AlertDescriptionStatusEnum];
+export type AutomationAlertDescriptionStatusEnum =
+    typeof AutomationAlertDescriptionStatusEnum[keyof typeof AutomationAlertDescriptionStatusEnum];
 
 /**
  *
  * @export
- * @interface AlertEvaluationRow
+ * @interface AutomationAlertEvaluationRow
  */
-export interface AlertEvaluationRow {
+export interface AutomationAlertEvaluationRow {
     /**
      *
-     * @type {MetricRecord}
-     * @memberof AlertEvaluationRow
+     * @type {AutomationMetricRecord}
+     * @memberof AutomationAlertEvaluationRow
      */
-    primaryMetric?: MetricRecord;
+    primaryMetric?: AutomationMetricRecord;
     /**
      *
-     * @type {MetricRecord}
-     * @memberof AlertEvaluationRow
+     * @type {AutomationMetricRecord}
+     * @memberof AutomationAlertEvaluationRow
      */
-    secondaryMetric?: MetricRecord;
+    secondaryMetric?: AutomationMetricRecord;
     /**
      *
-     * @type {MetricRecord}
-     * @memberof AlertEvaluationRow
+     * @type {AutomationMetricRecord}
+     * @memberof AutomationAlertEvaluationRow
      */
-    computedMetric?: MetricRecord;
+    computedMetric?: AutomationMetricRecord;
     /**
      *
      * @type {string}
-     * @memberof AlertEvaluationRow
+     * @memberof AutomationAlertEvaluationRow
      */
     labelValue?: string;
 }
 /**
  *
  * @export
- * @interface AutomationExternalRecipient
+ * @interface AutomationArithmeticMeasure
  */
-export interface AutomationExternalRecipient {
+export interface AutomationArithmeticMeasure {
+    /**
+     * Arithmetic operator. DIFFERENCE - m₁−m₂ - the difference between two metrics. CHANGE - (m₁−m₂)÷m₂ - the relative difference between two metrics.
+     * @type {string}
+     * @memberof AutomationArithmeticMeasure
+     */
+    operator: AutomationArithmeticMeasureOperatorEnum;
+    /**
+     *
+     * @type {AutomationLocalIdentifier}
+     * @memberof AutomationArithmeticMeasure
+     */
+    left: AutomationLocalIdentifier;
+    /**
+     *
+     * @type {AutomationLocalIdentifier}
+     * @memberof AutomationArithmeticMeasure
+     */
+    right: AutomationLocalIdentifier;
+}
+
+export const AutomationArithmeticMeasureOperatorEnum = {
+    DIFFERENCE: "DIFFERENCE",
+    CHANGE: "CHANGE",
+} as const;
+
+export type AutomationArithmeticMeasureOperatorEnum =
+    typeof AutomationArithmeticMeasureOperatorEnum[keyof typeof AutomationArithmeticMeasureOperatorEnum];
+
+/**
+ * Metric representing arithmetics between other metrics.
+ * @export
+ * @interface AutomationArithmeticMeasureDefinition
+ */
+export interface AutomationArithmeticMeasureDefinition {
+    /**
+     *
+     * @type {AutomationArithmeticMeasureDefinitionArithmeticMeasure}
+     * @memberof AutomationArithmeticMeasureDefinition
+     */
+    arithmeticMeasure: AutomationArithmeticMeasureDefinitionArithmeticMeasure;
+}
+/**
+ *
+ * @export
+ * @interface AutomationArithmeticMeasureDefinitionArithmeticMeasure
+ */
+export interface AutomationArithmeticMeasureDefinitionArithmeticMeasure {
+    /**
+     * List of metrics to apply arithmetic operation by chosen operator.
+     * @type {Array<AutomationAfmLocalIdentifier>}
+     * @memberof AutomationArithmeticMeasureDefinitionArithmeticMeasure
+     */
+    measureIdentifiers: Array<AutomationAfmLocalIdentifier>;
+    /**
+     * Arithmetic operator describing operation between metrics.
+     * @type {string}
+     * @memberof AutomationArithmeticMeasureDefinitionArithmeticMeasure
+     */
+    operator: AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum;
+}
+
+export const AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = {
+    SUM: "SUM",
+    DIFFERENCE: "DIFFERENCE",
+    MULTIPLICATION: "MULTIPLICATION",
+    RATIO: "RATIO",
+    CHANGE: "CHANGE",
+} as const;
+
+export type AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum =
+    typeof AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum[keyof typeof AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
+
+/**
+ * @type AutomationAttributeFilter
+ * Abstract filter definition type attributes
+ * @export
+ */
+export type AutomationAttributeFilter = AutomationNegativeAttributeFilter | AutomationPositiveAttributeFilter;
+
+/**
+ * Filter on specific set of label values.
+ * @export
+ * @interface AutomationAttributeFilterElements
+ */
+export interface AutomationAttributeFilterElements {
+    /**
+     * Set of label values.
+     * @type {Array<string>}
+     * @memberof AutomationAttributeFilterElements
+     */
+    values: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface AutomationAttributeItem
+ */
+export interface AutomationAttributeItem {
+    /**
+     * Local identifier of the attribute. This can be used to reference the attribute in other parts of the execution definition.
+     * @type {string}
+     * @memberof AutomationAttributeItem
+     */
+    localIdentifier: string;
+    /**
+     *
+     * @type {AutomationAfmObjectIdentifierLabel}
+     * @memberof AutomationAttributeItem
+     */
+    label: AutomationAfmObjectIdentifierLabel;
+    /**
+     * Indicates whether to show all values of given attribute even if the data bound to those values is not available.
+     * @type {boolean}
+     * @memberof AutomationAttributeItem
+     */
+    showAllValues?: boolean;
+}
+/**
+ *
+ * @export
+ * @interface AutomationAutomationAlert
+ */
+export interface AutomationAutomationAlert {
+    /**
+     *
+     * @type {AutomationAlertAfm}
+     * @memberof AutomationAutomationAlert
+     */
+    execution: AutomationAlertAfm;
+    /**
+     *
+     * @type {AutomationComparisonWrapper | AutomationRangeWrapper | AutomationRelativeWrapper}
+     * @memberof AutomationAutomationAlert
+     */
+    condition: AutomationComparisonWrapper | AutomationRangeWrapper | AutomationRelativeWrapper;
+    /**
+     * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met.
+     * @type {string}
+     * @memberof AutomationAutomationAlert
+     */
+    trigger?: AutomationAutomationAlertTriggerEnum;
+}
+
+export const AutomationAutomationAlertTriggerEnum = {
+    ALWAYS: "ALWAYS",
+    ONCE: "ONCE",
+} as const;
+
+export type AutomationAutomationAlertTriggerEnum =
+    typeof AutomationAutomationAlertTriggerEnum[keyof typeof AutomationAutomationAlertTriggerEnum];
+
+/**
+ *
+ * @export
+ * @interface AutomationAutomationExternalRecipient
+ */
+export interface AutomationAutomationExternalRecipient {
     /**
      * E-mail address to send notifications from.
      * @type {string}
-     * @memberof AutomationExternalRecipient
+     * @memberof AutomationAutomationExternalRecipient
      */
     email: string;
 }
 /**
  * Additional information for the automation.
  * @export
- * @interface AutomationMetadata
+ * @interface AutomationAutomationMetadata
  */
-export interface AutomationMetadata {
+export interface AutomationAutomationMetadata {
     /**
      *
      * @type {string}
-     * @memberof AutomationMetadata
+     * @memberof AutomationAutomationMetadata
      */
     widget?: string;
     /**
      *
-     * @type {Array<VisibleFilter>}
-     * @memberof AutomationMetadata
+     * @type {Array<AutomationVisibleFilter>}
+     * @memberof AutomationAutomationMetadata
      */
-    visibleFilters?: Array<VisibleFilter>;
+    visibleFilters?: Array<AutomationVisibleFilter>;
 }
 /**
  *
  * @export
- * @interface AutomationNotification
+ * @interface AutomationAutomationNotification
  */
-export interface AutomationNotification extends NotificationContent {
+export interface AutomationAutomationNotification extends AutomationNotificationContent {
     /**
      *
-     * @type {WebhookMessage}
-     * @memberof AutomationNotification
+     * @type {AutomationWebhookMessage}
+     * @memberof AutomationAutomationNotification
      */
-    content: WebhookMessage;
+    content: AutomationWebhookMessage;
 }
 /**
  *
  * @export
- * @interface AutomationNotificationAllOf
+ * @interface AutomationAutomationNotificationAllOf
  */
-export interface AutomationNotificationAllOf {
+export interface AutomationAutomationNotificationAllOf {
     /**
      *
-     * @type {WebhookMessage}
-     * @memberof AutomationNotificationAllOf
+     * @type {AutomationWebhookMessage}
+     * @memberof AutomationAutomationNotificationAllOf
      */
-    content?: WebhookMessage;
+    content?: AutomationWebhookMessage;
 }
 /**
  *
  * @export
- * @interface AutomationTabularExport
+ * @interface AutomationAutomationTabularExport
  */
-export interface AutomationTabularExport {
+export interface AutomationAutomationTabularExport {
     /**
      *
-     * @type {TabularExportRequest}
-     * @memberof AutomationTabularExport
+     * @type {AutomationTabularExportRequest}
+     * @memberof AutomationAutomationTabularExport
      */
-    requestPayload: TabularExportRequest;
+    requestPayload: AutomationTabularExportRequest;
 }
 /**
  *
  * @export
- * @interface AutomationVisualExport
+ * @interface AutomationAutomationVisualExport
  */
-export interface AutomationVisualExport {
+export interface AutomationAutomationVisualExport {
     /**
      *
-     * @type {VisualExportRequest}
-     * @memberof AutomationVisualExport
+     * @type {AutomationVisualExportRequest}
+     * @memberof AutomationAutomationVisualExport
      */
-    requestPayload: VisualExportRequest;
+    requestPayload: AutomationVisualExportRequest;
+}
+/**
+ *
+ * @export
+ * @interface AutomationComparison
+ */
+export interface AutomationComparison {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationComparison
+     */
+    operator: AutomationComparisonOperatorEnum;
+    /**
+     *
+     * @type {AutomationLocalIdentifier}
+     * @memberof AutomationComparison
+     */
+    left: AutomationLocalIdentifier;
+    /**
+     *
+     * @type {AutomationAlertConditionOperand}
+     * @memberof AutomationComparison
+     */
+    right: AutomationAlertConditionOperand;
+}
+
+export const AutomationComparisonOperatorEnum = {
+    GREATER_THAN: "GREATER_THAN",
+    GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO",
+    LESS_THAN: "LESS_THAN",
+    LESS_THAN_OR_EQUAL_TO: "LESS_THAN_OR_EQUAL_TO",
+    EQUAL_TO: "EQUAL_TO",
+    NOT_EQUAL_TO: "NOT_EQUAL_TO",
+} as const;
+
+export type AutomationComparisonOperatorEnum =
+    typeof AutomationComparisonOperatorEnum[keyof typeof AutomationComparisonOperatorEnum];
+
+/**
+ * Filter the result by comparing specified metric to given constant value, using given comparison operator.
+ * @export
+ * @interface AutomationComparisonMeasureValueFilter
+ */
+export interface AutomationComparisonMeasureValueFilter {
+    /**
+     *
+     * @type {AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter}
+     * @memberof AutomationComparisonMeasureValueFilter
+     */
+    comparisonMeasureValueFilter: AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter;
+}
+/**
+ *
+ * @export
+ * @interface AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter
+ */
+export interface AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter {
+    /**
+     * References to the attributes to be used when filtering.
+     * @type {Array<AutomationAfmIdentifier>}
+     * @memberof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    dimensionality?: Array<AutomationAfmIdentifier>;
+    /**
+     * A value that will be substituted for null values in the metric for the comparisons.
+     * @type {number}
+     * @memberof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    treatNullValuesAs?: number;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    operator: AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    value: number;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {AutomationAfmIdentifier}
+     * @memberof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    measure: AutomationAfmIdentifier;
+}
+
+export const AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = {
+    GREATER_THAN: "GREATER_THAN",
+    GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO",
+    LESS_THAN: "LESS_THAN",
+    LESS_THAN_OR_EQUAL_TO: "LESS_THAN_OR_EQUAL_TO",
+    EQUAL_TO: "EQUAL_TO",
+    NOT_EQUAL_TO: "NOT_EQUAL_TO",
+} as const;
+
+export type AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum =
+    typeof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum[keyof typeof AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
+
+/**
+ *
+ * @export
+ * @interface AutomationComparisonWrapper
+ */
+export interface AutomationComparisonWrapper {
+    /**
+     *
+     * @type {AutomationComparison}
+     * @memberof AutomationComparisonWrapper
+     */
+    comparison: AutomationComparison;
 }
 /**
  * Custom label object override.
  * @export
- * @interface CustomLabel
+ * @interface AutomationCustomLabel
  */
-export interface CustomLabel {
+export interface AutomationCustomLabel {
     /**
      * Override value.
      * @type {string}
-     * @memberof CustomLabel
+     * @memberof AutomationCustomLabel
      */
     title: string;
 }
 /**
  * Custom metric object override.
  * @export
- * @interface CustomMetric
+ * @interface AutomationCustomMetric
  */
-export interface CustomMetric {
+export interface AutomationCustomMetric {
     /**
      * Metric title override.
      * @type {string}
-     * @memberof CustomMetric
+     * @memberof AutomationCustomMetric
      */
     title: string;
     /**
      * Format override.
      * @type {string}
-     * @memberof CustomMetric
+     * @memberof AutomationCustomMetric
      */
     format: string;
 }
 /**
  * Custom cell value overrides (IDs will be replaced with specified values).
  * @export
- * @interface CustomOverride
+ * @interface AutomationCustomOverride
  */
-export interface CustomOverride {
+export interface AutomationCustomOverride {
     /**
      * Map of CustomLabels with keys used as placeholders in document.
-     * @type {{ [key: string]: CustomLabel; }}
-     * @memberof CustomOverride
+     * @type {{ [key: string]: AutomationCustomLabel; }}
+     * @memberof AutomationCustomOverride
      */
-    labels?: { [key: string]: CustomLabel };
+    labels?: { [key: string]: AutomationCustomLabel };
     /**
      * Map of CustomMetrics with keys used as placeholders in document.
-     * @type {{ [key: string]: CustomMetric; }}
-     * @memberof CustomOverride
+     * @type {{ [key: string]: AutomationCustomMetric; }}
+     * @memberof AutomationCustomOverride
      */
-    metrics?: { [key: string]: CustomMetric };
+    metrics?: { [key: string]: AutomationCustomMetric };
 }
+/**
+ * @type AutomationDateFilter
+ * Abstract filter definition type for dates.
+ * @export
+ */
+export type AutomationDateFilter = AutomationAbsoluteDateFilter | AutomationRelativeDateFilter;
+
 /**
  * An analytical dashboard identifier.
  * @export
- * @interface DeclarativeAnalyticalDashboardIdentifier
+ * @interface AutomationDeclarativeAnalyticalDashboardIdentifier
  */
-export interface DeclarativeAnalyticalDashboardIdentifier {
+export interface AutomationDeclarativeAnalyticalDashboardIdentifier {
     /**
      * Identifier of the analytical dashboard.
      * @type {string}
-     * @memberof DeclarativeAnalyticalDashboardIdentifier
+     * @memberof AutomationDeclarativeAnalyticalDashboardIdentifier
      */
     id: string;
     /**
      * A type.
      * @type {string}
-     * @memberof DeclarativeAnalyticalDashboardIdentifier
+     * @memberof AutomationDeclarativeAnalyticalDashboardIdentifier
      */
-    type: DeclarativeAnalyticalDashboardIdentifierTypeEnum;
+    type: AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum;
 }
 
-export const DeclarativeAnalyticalDashboardIdentifierTypeEnum = {
+export const AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum = {
     ANALYTICAL_DASHBOARD: "analyticalDashboard",
 } as const;
 
-export type DeclarativeAnalyticalDashboardIdentifierTypeEnum =
-    typeof DeclarativeAnalyticalDashboardIdentifierTypeEnum[keyof typeof DeclarativeAnalyticalDashboardIdentifierTypeEnum];
+export type AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum =
+    typeof AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum[keyof typeof AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum];
 
 /**
  * A notification channel identifier.
  * @export
- * @interface DeclarativeNotificationChannelIdentifier
+ * @interface AutomationDeclarativeNotificationChannelIdentifier
  */
-export interface DeclarativeNotificationChannelIdentifier {
+export interface AutomationDeclarativeNotificationChannelIdentifier {
     /**
      * Notification channel identifier.
      * @type {string}
-     * @memberof DeclarativeNotificationChannelIdentifier
+     * @memberof AutomationDeclarativeNotificationChannelIdentifier
      */
     id: string;
     /**
      * A type.
      * @type {string}
-     * @memberof DeclarativeNotificationChannelIdentifier
+     * @memberof AutomationDeclarativeNotificationChannelIdentifier
      */
-    type: DeclarativeNotificationChannelIdentifierTypeEnum;
+    type: AutomationDeclarativeNotificationChannelIdentifierTypeEnum;
 }
 
-export const DeclarativeNotificationChannelIdentifierTypeEnum = {
+export const AutomationDeclarativeNotificationChannelIdentifierTypeEnum = {
     NOTIFICATION_CHANNEL: "notificationChannel",
 } as const;
 
-export type DeclarativeNotificationChannelIdentifierTypeEnum =
-    typeof DeclarativeNotificationChannelIdentifierTypeEnum[keyof typeof DeclarativeNotificationChannelIdentifierTypeEnum];
+export type AutomationDeclarativeNotificationChannelIdentifierTypeEnum =
+    typeof AutomationDeclarativeNotificationChannelIdentifierTypeEnum[keyof typeof AutomationDeclarativeNotificationChannelIdentifierTypeEnum];
 
 /**
  * A user identifier.
  * @export
- * @interface DeclarativeUserIdentifier
+ * @interface AutomationDeclarativeUserIdentifier
  */
-export interface DeclarativeUserIdentifier {
+export interface AutomationDeclarativeUserIdentifier {
     /**
      * User identifier.
      * @type {string}
-     * @memberof DeclarativeUserIdentifier
+     * @memberof AutomationDeclarativeUserIdentifier
      */
     id: string;
     /**
      * A type.
      * @type {string}
-     * @memberof DeclarativeUserIdentifier
+     * @memberof AutomationDeclarativeUserIdentifier
      */
-    type: DeclarativeUserIdentifierTypeEnum;
+    type: AutomationDeclarativeUserIdentifierTypeEnum;
 }
 
-export const DeclarativeUserIdentifierTypeEnum = {
+export const AutomationDeclarativeUserIdentifierTypeEnum = {
     USER: "user",
 } as const;
 
-export type DeclarativeUserIdentifierTypeEnum =
-    typeof DeclarativeUserIdentifierTypeEnum[keyof typeof DeclarativeUserIdentifierTypeEnum];
+export type AutomationDeclarativeUserIdentifierTypeEnum =
+    typeof AutomationDeclarativeUserIdentifierTypeEnum[keyof typeof AutomationDeclarativeUserIdentifierTypeEnum];
 
 /**
  * Default SMTP destination for notifications.
  * @export
- * @interface DefaultSmtp
+ * @interface AutomationDefaultSmtp
  */
-export interface DefaultSmtp {
+export interface AutomationDefaultSmtp {
     /**
      * E-mail address to send notifications from. Currently this does not have any effect. E-mail \'no-reply@gooddata.com\' is used instead.
      * @type {string}
-     * @memberof DefaultSmtp
+     * @memberof AutomationDefaultSmtp
      */
     fromEmail?: string;
     /**
      * An optional e-mail name to send notifications from. Currently this does not have any effect. E-mail from name \'GoodData\' is used instead.
      * @type {string}
-     * @memberof DefaultSmtp
+     * @memberof AutomationDefaultSmtp
      */
     fromEmailName?: string;
     /**
      * The destination type.
      * @type {string}
-     * @memberof DefaultSmtp
+     * @memberof AutomationDefaultSmtp
      */
-    type: DefaultSmtpTypeEnum;
+    type: AutomationDefaultSmtpTypeEnum;
 }
 
-export const DefaultSmtpTypeEnum = {
+export const AutomationDefaultSmtpTypeEnum = {
     DEFAULT_SMTP: "DEFAULT_SMTP",
 } as const;
 
-export type DefaultSmtpTypeEnum = typeof DefaultSmtpTypeEnum[keyof typeof DefaultSmtpTypeEnum];
+export type AutomationDefaultSmtpTypeEnum =
+    typeof AutomationDefaultSmtpTypeEnum[keyof typeof AutomationDefaultSmtpTypeEnum];
 
 /**
  *
  * @export
- * @interface ExportResult
+ * @interface AutomationExportResult
  */
-export interface ExportResult {
+export interface AutomationExportResult {
     /**
      *
      * @type {string}
-     * @memberof ExportResult
+     * @memberof AutomationExportResult
      */
     fileName: string;
     /**
      *
      * @type {string}
-     * @memberof ExportResult
+     * @memberof AutomationExportResult
      */
     exportId: string;
     /**
      *
      * @type {string}
-     * @memberof ExportResult
+     * @memberof AutomationExportResult
      */
-    status: ExportResultStatusEnum;
+    status: AutomationExportResultStatusEnum;
     /**
      *
      * @type {string}
-     * @memberof ExportResult
+     * @memberof AutomationExportResult
      */
     fileUri?: string;
     /**
      *
      * @type {string}
-     * @memberof ExportResult
+     * @memberof AutomationExportResult
      */
     errorMessage?: string;
     /**
      *
      * @type {string}
-     * @memberof ExportResult
+     * @memberof AutomationExportResult
      */
     traceId?: string;
     /**
      *
      * @type {string}
-     * @memberof ExportResult
+     * @memberof AutomationExportResult
      */
     triggeredAt?: string;
 }
 
-export const ExportResultStatusEnum = {
+export const AutomationExportResultStatusEnum = {
     SUCCESS: "SUCCESS",
     ERROR: "ERROR",
     INTERNAL_ERROR: "INTERNAL_ERROR",
     TIMEOUT: "TIMEOUT",
 } as const;
 
-export type ExportResultStatusEnum = typeof ExportResultStatusEnum[keyof typeof ExportResultStatusEnum];
+export type AutomationExportResultStatusEnum =
+    typeof AutomationExportResultStatusEnum[keyof typeof AutomationExportResultStatusEnum];
+
+/**
+ * @type AutomationFilterDefinition
+ * Abstract filter definition type
+ * @export
+ */
+export type AutomationFilterDefinition =
+    | AutomationAbsoluteDateFilter
+    | AutomationComparisonMeasureValueFilter
+    | AutomationInlineFilterDefinition
+    | AutomationNegativeAttributeFilter
+    | AutomationPositiveAttributeFilter
+    | AutomationRangeMeasureValueFilter
+    | AutomationRankingFilter
+    | AutomationRelativeDateFilter;
+
+/**
+ * @type AutomationFilterDefinitionForSimpleMeasure
+ * Abstract filter definition type for simple metric.
+ * @export
+ */
+export type AutomationFilterDefinitionForSimpleMeasure = AutomationAttributeFilter | AutomationDateFilter;
 
 /**
  * In-platform destination for notifications.
  * @export
- * @interface InPlatform
+ * @interface AutomationInPlatform
  */
-export interface InPlatform {
+export interface AutomationInPlatform {
     /**
      * The destination type.
      * @type {string}
-     * @memberof InPlatform
+     * @memberof AutomationInPlatform
      */
-    type: InPlatformTypeEnum;
+    type: AutomationInPlatformTypeEnum;
 }
 
-export const InPlatformTypeEnum = {
+export const AutomationInPlatformTypeEnum = {
     IN_PLATFORM: "IN_PLATFORM",
 } as const;
 
-export type InPlatformTypeEnum = typeof InPlatformTypeEnum[keyof typeof InPlatformTypeEnum];
+export type AutomationInPlatformTypeEnum =
+    typeof AutomationInPlatformTypeEnum[keyof typeof AutomationInPlatformTypeEnum];
+
+/**
+ * Filter in form of direct MAQL query.
+ * @export
+ * @interface AutomationInlineFilterDefinition
+ */
+export interface AutomationInlineFilterDefinition {
+    /**
+     *
+     * @type {AutomationInlineFilterDefinitionInline}
+     * @memberof AutomationInlineFilterDefinition
+     */
+    inline: AutomationInlineFilterDefinitionInline;
+}
+/**
+ *
+ * @export
+ * @interface AutomationInlineFilterDefinitionInline
+ */
+export interface AutomationInlineFilterDefinitionInline {
+    /**
+     * MAQL query representing the filter.
+     * @type {string}
+     * @memberof AutomationInlineFilterDefinitionInline
+     */
+    filter: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationInlineFilterDefinitionInline
+     */
+    localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof AutomationInlineFilterDefinitionInline
+     */
+    applyOnResult?: boolean;
+}
+/**
+ * Metric defined by the raw MAQL query.
+ * @export
+ * @interface AutomationInlineMeasureDefinition
+ */
+export interface AutomationInlineMeasureDefinition {
+    /**
+     *
+     * @type {AutomationInlineMeasureDefinitionInline}
+     * @memberof AutomationInlineMeasureDefinition
+     */
+    inline: AutomationInlineMeasureDefinitionInline;
+}
+/**
+ *
+ * @export
+ * @interface AutomationInlineMeasureDefinitionInline
+ */
+export interface AutomationInlineMeasureDefinitionInline {
+    /**
+     * MAQL query defining the metric.
+     * @type {string}
+     * @memberof AutomationInlineMeasureDefinitionInline
+     */
+    maql: string;
+}
+/**
+ *
+ * @export
+ * @interface AutomationLocalIdentifier
+ */
+export interface AutomationLocalIdentifier {
+    /**
+     * Local identifier of the metric to be compared.
+     * @type {string}
+     * @memberof AutomationLocalIdentifier
+     */
+    localIdentifier: string;
+    /**
+     * Metric format.
+     * @type {string}
+     * @memberof AutomationLocalIdentifier
+     */
+    format?: string | null;
+    /**
+     * Metric title.
+     * @type {string}
+     * @memberof AutomationLocalIdentifier
+     */
+    title?: string | null;
+}
+/**
+ * @type AutomationMeasureDefinition
+ * Abstract metric definition type
+ * @export
+ */
+export type AutomationMeasureDefinition =
+    | AutomationArithmeticMeasureDefinition
+    | AutomationInlineMeasureDefinition
+    | AutomationPopMeasureDefinition
+    | AutomationSimpleMeasureDefinition;
+
+/**
+ * Metric is a quantity that is calculated from the data.
+ * @export
+ * @interface AutomationMeasureItem
+ */
+export interface AutomationMeasureItem {
+    /**
+     * Local identifier of the metric. This can be used to reference the metric in other parts of the execution definition.
+     * @type {string}
+     * @memberof AutomationMeasureItem
+     */
+    localIdentifier: string;
+    /**
+     *
+     * @type {AutomationArithmeticMeasureDefinition | AutomationInlineMeasureDefinition | AutomationPopDatasetMeasureDefinition | AutomationPopDateMeasureDefinition | AutomationPopMeasureDefinition | AutomationSimpleMeasureDefinition}
+     * @memberof AutomationMeasureItem
+     */
+    definition:
+        | AutomationArithmeticMeasureDefinition
+        | AutomationInlineMeasureDefinition
+        | AutomationPopDatasetMeasureDefinition
+        | AutomationPopDateMeasureDefinition
+        | AutomationPopMeasureDefinition
+        | AutomationSimpleMeasureDefinition;
+}
+/**
+ * @type AutomationMeasureValueFilter
+ * Abstract filter definition type filtering by the value of the metric.
+ * @export
+ */
+export type AutomationMeasureValueFilter =
+    | AutomationComparisonMeasureValueFilter
+    | AutomationRangeMeasureValueFilter;
 
 /**
  *
  * @export
- * @interface MetricRecord
+ * @interface AutomationMetricRecord
  */
-export interface MetricRecord {
+export interface AutomationMetricRecord {
     /**
      *
      * @type {number}
-     * @memberof MetricRecord
+     * @memberof AutomationMetricRecord
      */
     value: number;
     /**
      *
      * @type {string}
-     * @memberof MetricRecord
+     * @memberof AutomationMetricRecord
      */
     formattedValue?: string;
 }
 /**
+ * Filter able to limit element values by label and related selected negated elements.
+ * @export
+ * @interface AutomationNegativeAttributeFilter
+ */
+export interface AutomationNegativeAttributeFilter {
+    /**
+     *
+     * @type {AutomationNegativeAttributeFilterNegativeAttributeFilter}
+     * @memberof AutomationNegativeAttributeFilter
+     */
+    negativeAttributeFilter: AutomationNegativeAttributeFilterNegativeAttributeFilter;
+}
+/**
  *
  * @export
- * @interface Notification
+ * @interface AutomationNegativeAttributeFilterNegativeAttributeFilter
  */
-export interface Notification {
+export interface AutomationNegativeAttributeFilterNegativeAttributeFilter {
+    /**
+     *
+     * @type {AutomationAttributeFilterElements}
+     * @memberof AutomationNegativeAttributeFilterNegativeAttributeFilter
+     */
+    notIn: AutomationAttributeFilterElements;
     /**
      *
      * @type {string}
-     * @memberof Notification
+     * @memberof AutomationNegativeAttributeFilterNegativeAttributeFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof AutomationNegativeAttributeFilterNegativeAttributeFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {AutomationAfmIdentifier}
+     * @memberof AutomationNegativeAttributeFilterNegativeAttributeFilter
+     */
+    label: AutomationAfmIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface AutomationNotification
+ */
+export interface AutomationNotification {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationNotification
      */
     id: string;
     /**
      *
      * @type {string}
-     * @memberof Notification
+     * @memberof AutomationNotification
      */
     workspaceId?: string;
     /**
      *
      * @type {string}
-     * @memberof Notification
+     * @memberof AutomationNotification
      */
     automationId?: string;
     /**
      *
-     * @type {AutomationNotification | TestNotification}
-     * @memberof Notification
+     * @type {AutomationAutomationNotification | AutomationTestNotification}
+     * @memberof AutomationNotification
      */
-    data: AutomationNotification | TestNotification;
+    data: AutomationAutomationNotification | AutomationTestNotification;
     /**
      *
      * @type {boolean}
-     * @memberof Notification
+     * @memberof AutomationNotification
      */
     isRead: boolean;
     /**
      *
      * @type {string}
-     * @memberof Notification
+     * @memberof AutomationNotification
      */
     createdAt: string;
 }
 /**
- * @type NotificationChannelDestination
+ * @type AutomationNotificationChannelDestination
  * @export
  */
-export type NotificationChannelDestination = DefaultSmtp | InPlatform | Smtp | Webhook;
+export type AutomationNotificationChannelDestination =
+    | AutomationDefaultSmtp
+    | AutomationInPlatform
+    | AutomationSmtp
+    | AutomationWebhook;
 
 /**
  *
  * @export
- * @interface NotificationContent
+ * @interface AutomationNotificationContent
  */
-export interface NotificationContent {
+export interface AutomationNotificationContent {
     /**
      *
      * @type {string}
-     * @memberof NotificationContent
+     * @memberof AutomationNotificationContent
      */
     type: string;
 }
 /**
  *
  * @export
- * @interface NotificationFilter
+ * @interface AutomationNotificationFilter
  */
-export interface NotificationFilter {
+export interface AutomationNotificationFilter {
     /**
      *
      * @type {string}
-     * @memberof NotificationFilter
+     * @memberof AutomationNotificationFilter
      */
     title: string;
     /**
      *
      * @type {string}
-     * @memberof NotificationFilter
+     * @memberof AutomationNotificationFilter
      */
     filter: string;
 }
 /**
  *
  * @export
- * @interface Notifications
+ * @interface AutomationNotifications
  */
-export interface Notifications {
+export interface AutomationNotifications {
     /**
      *
-     * @type {Array<Notification>}
-     * @memberof Notifications
+     * @type {Array<AutomationNotification>}
+     * @memberof AutomationNotifications
      */
-    data: Array<Notification>;
+    data: Array<AutomationNotification>;
     /**
      *
-     * @type {NotificationsMeta}
-     * @memberof Notifications
+     * @type {AutomationNotificationsMeta}
+     * @memberof AutomationNotifications
      */
-    meta: NotificationsMeta;
+    meta: AutomationNotificationsMeta;
 }
 /**
  *
  * @export
- * @interface NotificationsMeta
+ * @interface AutomationNotificationsMeta
  */
-export interface NotificationsMeta {
+export interface AutomationNotificationsMeta {
     /**
      *
-     * @type {NotificationsMetaTotal}
-     * @memberof NotificationsMeta
+     * @type {AutomationNotificationsMetaTotal}
+     * @memberof AutomationNotificationsMeta
      */
-    total?: NotificationsMetaTotal;
+    total?: AutomationNotificationsMetaTotal;
 }
 /**
  *
  * @export
- * @interface NotificationsMetaTotal
+ * @interface AutomationNotificationsMetaTotal
  */
-export interface NotificationsMetaTotal {
+export interface AutomationNotificationsMetaTotal {
     /**
      *
      * @type {number}
-     * @memberof NotificationsMetaTotal
+     * @memberof AutomationNotificationsMetaTotal
      */
     unread: number;
     /**
      *
      * @type {number}
-     * @memberof NotificationsMetaTotal
+     * @memberof AutomationNotificationsMetaTotal
      */
     all: number;
 }
 /**
  * Custom CSS styles for the table. (PDF, HTML)
  * @export
- * @interface PdfTableStyle
+ * @interface AutomationPdfTableStyle
  */
-export interface PdfTableStyle {
+export interface AutomationPdfTableStyle {
     /**
      * CSS selector where to apply given properties.
      * @type {string}
-     * @memberof PdfTableStyle
+     * @memberof AutomationPdfTableStyle
      */
     selector: string;
     /**
      * List of CSS properties.
-     * @type {Array<PdfTableStyleProperty>}
-     * @memberof PdfTableStyle
+     * @type {Array<AutomationPdfTableStyleProperty>}
+     * @memberof AutomationPdfTableStyle
      */
-    properties?: Array<PdfTableStyleProperty>;
+    properties?: Array<AutomationPdfTableStyleProperty>;
 }
 /**
  * CSS property.
  * @export
- * @interface PdfTableStyleProperty
+ * @interface AutomationPdfTableStyleProperty
  */
-export interface PdfTableStyleProperty {
+export interface AutomationPdfTableStyleProperty {
     /**
      * CSS property key.
      * @type {string}
-     * @memberof PdfTableStyleProperty
+     * @memberof AutomationPdfTableStyleProperty
      */
     key: string;
     /**
      * CSS property value.
      * @type {string}
-     * @memberof PdfTableStyleProperty
+     * @memberof AutomationPdfTableStyleProperty
      */
     value: string;
 }
 /**
+ * Combination of the date data set to use and how many periods ago to calculate the previous period for.
+ * @export
+ * @interface AutomationPopDataset
+ */
+export interface AutomationPopDataset {
+    /**
+     *
+     * @type {AutomationAfmObjectIdentifierDataset}
+     * @memberof AutomationPopDataset
+     */
+    dataset: AutomationAfmObjectIdentifierDataset;
+    /**
+     * Number of periods ago to calculate the previous period for.
+     * @type {number}
+     * @memberof AutomationPopDataset
+     */
+    periodsAgo: number;
+}
+/**
+ * Previous period type of metric.
+ * @export
+ * @interface AutomationPopDatasetMeasureDefinition
+ */
+export interface AutomationPopDatasetMeasureDefinition {
+    /**
+     *
+     * @type {AutomationPopDatasetMeasureDefinitionPreviousPeriodMeasure}
+     * @memberof AutomationPopDatasetMeasureDefinition
+     */
+    previousPeriodMeasure: AutomationPopDatasetMeasureDefinitionPreviousPeriodMeasure;
+}
+/**
+ *
+ * @export
+ * @interface AutomationPopDatasetMeasureDefinitionPreviousPeriodMeasure
+ */
+export interface AutomationPopDatasetMeasureDefinitionPreviousPeriodMeasure {
+    /**
+     *
+     * @type {AutomationAfmLocalIdentifier}
+     * @memberof AutomationPopDatasetMeasureDefinitionPreviousPeriodMeasure
+     */
+    measureIdentifier: AutomationAfmLocalIdentifier;
+    /**
+     * Specification of which date data sets to use for determining the period to calculate the previous period for.
+     * @type {Array<AutomationPopDataset>}
+     * @memberof AutomationPopDatasetMeasureDefinitionPreviousPeriodMeasure
+     */
+    dateDatasets: Array<AutomationPopDataset>;
+}
+/**
+ * Combination of the date attribute to use and how many periods ago to calculate the PoP for.
+ * @export
+ * @interface AutomationPopDate
+ */
+export interface AutomationPopDate {
+    /**
+     *
+     * @type {AutomationAfmObjectIdentifierAttribute}
+     * @memberof AutomationPopDate
+     */
+    attribute: AutomationAfmObjectIdentifierAttribute;
+    /**
+     * Number of periods ago to calculate the previous period for.
+     * @type {number}
+     * @memberof AutomationPopDate
+     */
+    periodsAgo: number;
+}
+/**
+ * Period over period type of metric.
+ * @export
+ * @interface AutomationPopDateMeasureDefinition
+ */
+export interface AutomationPopDateMeasureDefinition {
+    /**
+     *
+     * @type {AutomationPopDateMeasureDefinitionOverPeriodMeasure}
+     * @memberof AutomationPopDateMeasureDefinition
+     */
+    overPeriodMeasure: AutomationPopDateMeasureDefinitionOverPeriodMeasure;
+}
+/**
+ *
+ * @export
+ * @interface AutomationPopDateMeasureDefinitionOverPeriodMeasure
+ */
+export interface AutomationPopDateMeasureDefinitionOverPeriodMeasure {
+    /**
+     *
+     * @type {AutomationAfmLocalIdentifier}
+     * @memberof AutomationPopDateMeasureDefinitionOverPeriodMeasure
+     */
+    measureIdentifier: AutomationAfmLocalIdentifier;
+    /**
+     * Attributes to use for determining the period to calculate the PoP for.
+     * @type {Array<AutomationPopDate>}
+     * @memberof AutomationPopDateMeasureDefinitionOverPeriodMeasure
+     */
+    dateAttributes: Array<AutomationPopDate>;
+}
+/**
+ * @type AutomationPopMeasureDefinition
+ * @export
+ */
+export type AutomationPopMeasureDefinition =
+    | AutomationPopDatasetMeasureDefinition
+    | AutomationPopDateMeasureDefinition;
+
+/**
+ * Filter able to limit element values by label and related selected elements.
+ * @export
+ * @interface AutomationPositiveAttributeFilter
+ */
+export interface AutomationPositiveAttributeFilter {
+    /**
+     *
+     * @type {AutomationPositiveAttributeFilterPositiveAttributeFilter}
+     * @memberof AutomationPositiveAttributeFilter
+     */
+    positiveAttributeFilter: AutomationPositiveAttributeFilterPositiveAttributeFilter;
+}
+/**
+ *
+ * @export
+ * @interface AutomationPositiveAttributeFilterPositiveAttributeFilter
+ */
+export interface AutomationPositiveAttributeFilterPositiveAttributeFilter {
+    /**
+     *
+     * @type {AutomationAttributeFilterElements}
+     * @memberof AutomationPositiveAttributeFilterPositiveAttributeFilter
+     */
+    in: AutomationAttributeFilterElements;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationPositiveAttributeFilterPositiveAttributeFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof AutomationPositiveAttributeFilterPositiveAttributeFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {AutomationAfmIdentifier}
+     * @memberof AutomationPositiveAttributeFilterPositiveAttributeFilter
+     */
+    label: AutomationAfmIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface AutomationRange
+ */
+export interface AutomationRange {
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationRange
+     */
+    operator: AutomationRangeOperatorEnum;
+    /**
+     *
+     * @type {AutomationLocalIdentifier}
+     * @memberof AutomationRange
+     */
+    measure: AutomationLocalIdentifier;
+    /**
+     *
+     * @type {AutomationValue}
+     * @memberof AutomationRange
+     */
+    from: AutomationValue;
+    /**
+     *
+     * @type {AutomationValue}
+     * @memberof AutomationRange
+     */
+    to: AutomationValue;
+}
+
+export const AutomationRangeOperatorEnum = {
+    BETWEEN: "BETWEEN",
+    NOT_BETWEEN: "NOT_BETWEEN",
+} as const;
+
+export type AutomationRangeOperatorEnum =
+    typeof AutomationRangeOperatorEnum[keyof typeof AutomationRangeOperatorEnum];
+
+/**
+ * Filter the result by comparing specified metric to given range of values.
+ * @export
+ * @interface AutomationRangeMeasureValueFilter
+ */
+export interface AutomationRangeMeasureValueFilter {
+    /**
+     *
+     * @type {AutomationRangeMeasureValueFilterRangeMeasureValueFilter}
+     * @memberof AutomationRangeMeasureValueFilter
+     */
+    rangeMeasureValueFilter: AutomationRangeMeasureValueFilterRangeMeasureValueFilter;
+}
+/**
+ *
+ * @export
+ * @interface AutomationRangeMeasureValueFilterRangeMeasureValueFilter
+ */
+export interface AutomationRangeMeasureValueFilterRangeMeasureValueFilter {
+    /**
+     * References to the attributes to be used when filtering.
+     * @type {Array<AutomationAfmIdentifier>}
+     * @memberof AutomationRangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    dimensionality?: Array<AutomationAfmIdentifier>;
+    /**
+     * A value that will be substituted for null values in the metric for the comparisons.
+     * @type {number}
+     * @memberof AutomationRangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    treatNullValuesAs?: number;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationRangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    operator: AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof AutomationRangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    from: number;
+    /**
+     *
+     * @type {number}
+     * @memberof AutomationRangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    to: number;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationRangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof AutomationRangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {AutomationAfmIdentifier}
+     * @memberof AutomationRangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    measure: AutomationAfmIdentifier;
+}
+
+export const AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = {
+    BETWEEN: "BETWEEN",
+    NOT_BETWEEN: "NOT_BETWEEN",
+} as const;
+
+export type AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum =
+    typeof AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum[keyof typeof AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
+
+/**
+ *
+ * @export
+ * @interface AutomationRangeWrapper
+ */
+export interface AutomationRangeWrapper {
+    /**
+     *
+     * @type {AutomationRange}
+     * @memberof AutomationRangeWrapper
+     */
+    range: AutomationRange;
+}
+/**
+ * Filter the result on top/bottom N values according to given metric(s).
+ * @export
+ * @interface AutomationRankingFilter
+ */
+export interface AutomationRankingFilter {
+    /**
+     *
+     * @type {AutomationRankingFilterRankingFilter}
+     * @memberof AutomationRankingFilter
+     */
+    rankingFilter: AutomationRankingFilterRankingFilter;
+}
+/**
+ *
+ * @export
+ * @interface AutomationRankingFilterRankingFilter
+ */
+export interface AutomationRankingFilterRankingFilter {
+    /**
+     * References to the attributes to be used when filtering.
+     * @type {Array<AutomationAfmIdentifier>}
+     * @memberof AutomationRankingFilterRankingFilter
+     */
+    dimensionality?: Array<AutomationAfmIdentifier>;
+    /**
+     * References to the metrics to be used when filtering.
+     * @type {Array<AutomationAfmIdentifier>}
+     * @memberof AutomationRankingFilterRankingFilter
+     */
+    measures: Array<AutomationAfmIdentifier>;
+    /**
+     * The type of ranking to use, TOP or BOTTOM.
+     * @type {string}
+     * @memberof AutomationRankingFilterRankingFilter
+     */
+    operator: AutomationRankingFilterRankingFilterOperatorEnum;
+    /**
+     * Number of top/bottom values to filter.
+     * @type {number}
+     * @memberof AutomationRankingFilterRankingFilter
+     */
+    value: number;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationRankingFilterRankingFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof AutomationRankingFilterRankingFilter
+     */
+    applyOnResult?: boolean;
+}
+
+export const AutomationRankingFilterRankingFilterOperatorEnum = {
+    TOP: "TOP",
+    BOTTOM: "BOTTOM",
+} as const;
+
+export type AutomationRankingFilterRankingFilterOperatorEnum =
+    typeof AutomationRankingFilterRankingFilterOperatorEnum[keyof typeof AutomationRankingFilterRankingFilterOperatorEnum];
+
+/**
+ *
+ * @export
+ * @interface AutomationRelative
+ */
+export interface AutomationRelative {
+    /**
+     * Relative condition operator. INCREASES_BY - the metric increases by the specified value. DECREASES_BY - the metric decreases by the specified value. CHANGES_BY - the metric increases or decreases by the specified value.
+     * @type {string}
+     * @memberof AutomationRelative
+     */
+    operator: AutomationRelativeOperatorEnum;
+    /**
+     *
+     * @type {AutomationArithmeticMeasure}
+     * @memberof AutomationRelative
+     */
+    measure: AutomationArithmeticMeasure;
+    /**
+     *
+     * @type {AutomationValue}
+     * @memberof AutomationRelative
+     */
+    threshold: AutomationValue;
+}
+
+export const AutomationRelativeOperatorEnum = {
+    INCREASES_BY: "INCREASES_BY",
+    DECREASES_BY: "DECREASES_BY",
+    CHANGES_BY: "CHANGES_BY",
+} as const;
+
+export type AutomationRelativeOperatorEnum =
+    typeof AutomationRelativeOperatorEnum[keyof typeof AutomationRelativeOperatorEnum];
+
+/**
+ * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension.
+ * @export
+ * @interface AutomationRelativeDateFilter
+ */
+export interface AutomationRelativeDateFilter {
+    /**
+     *
+     * @type {AutomationRelativeDateFilterRelativeDateFilter}
+     * @memberof AutomationRelativeDateFilter
+     */
+    relativeDateFilter: AutomationRelativeDateFilterRelativeDateFilter;
+}
+/**
+ *
+ * @export
+ * @interface AutomationRelativeDateFilterRelativeDateFilter
+ */
+export interface AutomationRelativeDateFilterRelativeDateFilter {
+    /**
+     * Date granularity specifying particular date attribute in given dimension.
+     * @type {string}
+     * @memberof AutomationRelativeDateFilterRelativeDateFilter
+     */
+    granularity: AutomationRelativeDateFilterRelativeDateFilterGranularityEnum;
+    /**
+     * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
+     * @type {number}
+     * @memberof AutomationRelativeDateFilterRelativeDateFilter
+     */
+    from: number;
+    /**
+     * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
+     * @type {number}
+     * @memberof AutomationRelativeDateFilterRelativeDateFilter
+     */
+    to: number;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationRelativeDateFilterRelativeDateFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof AutomationRelativeDateFilterRelativeDateFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {AutomationAfmObjectIdentifierDataset}
+     * @memberof AutomationRelativeDateFilterRelativeDateFilter
+     */
+    dataset: AutomationAfmObjectIdentifierDataset;
+}
+
+export const AutomationRelativeDateFilterRelativeDateFilterGranularityEnum = {
+    MINUTE: "MINUTE",
+    HOUR: "HOUR",
+    DAY: "DAY",
+    WEEK: "WEEK",
+    MONTH: "MONTH",
+    QUARTER: "QUARTER",
+    YEAR: "YEAR",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+} as const;
+
+export type AutomationRelativeDateFilterRelativeDateFilterGranularityEnum =
+    typeof AutomationRelativeDateFilterRelativeDateFilterGranularityEnum[keyof typeof AutomationRelativeDateFilterRelativeDateFilterGranularityEnum];
+
+/**
+ *
+ * @export
+ * @interface AutomationRelativeWrapper
+ */
+export interface AutomationRelativeWrapper {
+    /**
+     *
+     * @type {AutomationRelative}
+     * @memberof AutomationRelativeWrapper
+     */
+    relative: AutomationRelative;
+}
+/**
  * Additional settings.
  * @export
- * @interface Settings
+ * @interface AutomationSettings
  */
-export interface Settings {
+export interface AutomationSettings {
     /**
      * Merge equal headers in neighbouring cells. (XLSX)
      * @type {boolean}
-     * @memberof Settings
+     * @memberof AutomationSettings
      */
     mergeHeaders?: boolean;
     /**
      * Print applied filters on top of the document. (PDF/HTML when visualizationObject is given)
      * @type {boolean}
-     * @memberof Settings
+     * @memberof AutomationSettings
      */
     showFilters?: boolean;
     /**
      * Page size and orientation. (PDF)
      * @type {string}
-     * @memberof Settings
+     * @memberof AutomationSettings
      */
     pdfPageSize?: string;
     /**
      * Custom CSS styles for the table. (PDF, HTML)
-     * @type {Array<PdfTableStyle>}
-     * @memberof Settings
+     * @type {Array<AutomationPdfTableStyle>}
+     * @memberof AutomationSettings
      */
-    pdfTableStyle?: Array<PdfTableStyle>;
+    pdfTableStyle?: Array<AutomationPdfTableStyle>;
     /**
      * Top left header content. (PDF)
      * @type {string}
-     * @memberof Settings
+     * @memberof AutomationSettings
      */
     pdfTopLeftContent?: string;
     /**
      * Top right header content. (PDF)
      * @type {string}
-     * @memberof Settings
+     * @memberof AutomationSettings
      */
     pdfTopRightContent?: string;
 }
 /**
+ * Metric defined by referencing a MAQL metric or an LDM fact object with aggregation.
+ * @export
+ * @interface AutomationSimpleMeasureDefinition
+ */
+export interface AutomationSimpleMeasureDefinition {
+    /**
+     *
+     * @type {AutomationSimpleMeasureDefinitionMeasure}
+     * @memberof AutomationSimpleMeasureDefinition
+     */
+    measure: AutomationSimpleMeasureDefinitionMeasure;
+}
+/**
+ *
+ * @export
+ * @interface AutomationSimpleMeasureDefinitionMeasure
+ */
+export interface AutomationSimpleMeasureDefinitionMeasure {
+    /**
+     *
+     * @type {AutomationAfmObjectIdentifierCore}
+     * @memberof AutomationSimpleMeasureDefinitionMeasure
+     */
+    item: AutomationAfmObjectIdentifierCore;
+    /**
+     * Definition of aggregation type of the metric.
+     * @type {string}
+     * @memberof AutomationSimpleMeasureDefinitionMeasure
+     */
+    aggregation?: AutomationSimpleMeasureDefinitionMeasureAggregationEnum;
+    /**
+     * If true, compute the percentage of given metric values (broken down by AFM attributes) to the total (not broken down).
+     * @type {boolean}
+     * @memberof AutomationSimpleMeasureDefinitionMeasure
+     */
+    computeRatio?: boolean;
+    /**
+     * Metrics can be filtered by attribute filters with the same interface as ones for global AFM. Note that only one DateFilter is allowed.
+     * @type {Array<AutomationFilterDefinitionForSimpleMeasure>}
+     * @memberof AutomationSimpleMeasureDefinitionMeasure
+     */
+    filters?: Array<AutomationFilterDefinitionForSimpleMeasure>;
+}
+
+export const AutomationSimpleMeasureDefinitionMeasureAggregationEnum = {
+    SUM: "SUM",
+    COUNT: "COUNT",
+    AVG: "AVG",
+    MIN: "MIN",
+    MAX: "MAX",
+    MEDIAN: "MEDIAN",
+    RUNSUM: "RUNSUM",
+    APPROXIMATE_COUNT: "APPROXIMATE_COUNT",
+} as const;
+
+export type AutomationSimpleMeasureDefinitionMeasureAggregationEnum =
+    typeof AutomationSimpleMeasureDefinitionMeasureAggregationEnum[keyof typeof AutomationSimpleMeasureDefinitionMeasureAggregationEnum];
+
+/**
  * Custom SMTP destination for notifications. The properties host, port, username, and password are required on create and update
  * @export
- * @interface Smtp
+ * @interface AutomationSmtp
  */
-export interface Smtp {
+export interface AutomationSmtp {
     /**
      * E-mail address to send notifications from.
      * @type {string}
-     * @memberof Smtp
+     * @memberof AutomationSmtp
      */
     fromEmail?: string;
     /**
      * An optional e-mail name to send notifications from.
      * @type {string}
-     * @memberof Smtp
+     * @memberof AutomationSmtp
      */
     fromEmailName?: string;
     /**
      * The SMTP server address.
      * @type {string}
-     * @memberof Smtp
+     * @memberof AutomationSmtp
      */
     host?: string;
     /**
      * The SMTP server port.
      * @type {number}
-     * @memberof Smtp
+     * @memberof AutomationSmtp
      */
-    port?: SmtpPortEnum;
+    port?: AutomationSmtpPortEnum;
     /**
      * The SMTP server username.
      * @type {string}
-     * @memberof Smtp
+     * @memberof AutomationSmtp
      */
     username?: string;
     /**
      * The SMTP server password.
      * @type {string}
-     * @memberof Smtp
+     * @memberof AutomationSmtp
      */
     password?: string;
     /**
      * The destination type.
      * @type {string}
-     * @memberof Smtp
+     * @memberof AutomationSmtp
      */
-    type: SmtpTypeEnum;
+    type: AutomationSmtpTypeEnum;
 }
 
-export const SmtpPortEnum = {
+export const AutomationSmtpPortEnum = {
     NUMBER_25: 25,
     NUMBER_465: 465,
     NUMBER_587: 587,
     NUMBER_2525: 2525,
 } as const;
 
-export type SmtpPortEnum = typeof SmtpPortEnum[keyof typeof SmtpPortEnum];
-export const SmtpTypeEnum = {
+export type AutomationSmtpPortEnum = typeof AutomationSmtpPortEnum[keyof typeof AutomationSmtpPortEnum];
+export const AutomationSmtpTypeEnum = {
     SMTP: "SMTP",
 } as const;
 
-export type SmtpTypeEnum = typeof SmtpTypeEnum[keyof typeof SmtpTypeEnum];
+export type AutomationSmtpTypeEnum = typeof AutomationSmtpTypeEnum[keyof typeof AutomationSmtpTypeEnum];
 
 /**
  * Export request object describing the export properties and overrides for tabular exports.
  * @export
- * @interface TabularExportRequest
+ * @interface AutomationTabularExportRequest
  */
-export interface TabularExportRequest {
+export interface AutomationTabularExportRequest {
     /**
      * Expected file format.
      * @type {string}
-     * @memberof TabularExportRequest
+     * @memberof AutomationTabularExportRequest
      */
-    format: TabularExportRequestFormatEnum;
+    format: AutomationTabularExportRequestFormatEnum;
     /**
      * Execution result identifier.
      * @type {string}
-     * @memberof TabularExportRequest
+     * @memberof AutomationTabularExportRequest
      */
     executionResult?: string;
     /**
      * Filename of downloaded file without extension.
      * @type {string}
-     * @memberof TabularExportRequest
+     * @memberof AutomationTabularExportRequest
      */
     fileName: string;
     /**
      *
-     * @type {Settings}
-     * @memberof TabularExportRequest
+     * @type {AutomationSettings}
+     * @memberof AutomationTabularExportRequest
      */
-    settings?: Settings;
+    settings?: AutomationSettings;
     /**
      *
-     * @type {CustomOverride}
-     * @memberof TabularExportRequest
+     * @type {AutomationCustomOverride}
+     * @memberof AutomationTabularExportRequest
      */
-    customOverride?: CustomOverride;
+    customOverride?: AutomationCustomOverride;
     /**
      * Visualization object identifier. Alternative to executionResult property.
      * @type {string}
-     * @memberof TabularExportRequest
+     * @memberof AutomationTabularExportRequest
      */
     visualizationObject?: string;
     /**
      * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given.
      * @type {Array<object>}
-     * @memberof TabularExportRequest
+     * @memberof AutomationTabularExportRequest
      */
     visualizationObjectCustomFilters?: Array<object>;
     /**
      * Analytical dashboard identifier. Optional identifier, which informs the system that the export is related to a specific dashboard.
      * @type {string}
-     * @memberof TabularExportRequest
+     * @memberof AutomationTabularExportRequest
      */
     relatedDashboardId?: string;
     /**
      * Metadata definition in free-form JSON format.
      * @type {object}
-     * @memberof TabularExportRequest
+     * @memberof AutomationTabularExportRequest
      */
     metadata?: object | null;
 }
 
-export const TabularExportRequestFormatEnum = {
+export const AutomationTabularExportRequestFormatEnum = {
     CSV: "CSV",
     XLSX: "XLSX",
     HTML: "HTML",
     PDF: "PDF",
 } as const;
 
-export type TabularExportRequestFormatEnum =
-    typeof TabularExportRequestFormatEnum[keyof typeof TabularExportRequestFormatEnum];
+export type AutomationTabularExportRequestFormatEnum =
+    typeof AutomationTabularExportRequestFormatEnum[keyof typeof AutomationTabularExportRequestFormatEnum];
 
 /**
  * Request body with notification channel destination to test.
  * @export
- * @interface TestDestinationRequest
+ * @interface AutomationTestDestinationRequest
  */
-export interface TestDestinationRequest {
+export interface AutomationTestDestinationRequest {
     /**
      *
-     * @type {DefaultSmtp | InPlatform | Smtp | Webhook}
-     * @memberof TestDestinationRequest
+     * @type {AutomationDefaultSmtp | AutomationInPlatform | AutomationSmtp | AutomationWebhook}
+     * @memberof AutomationTestDestinationRequest
      */
-    destination: DefaultSmtp | InPlatform | Smtp | Webhook;
+    destination: AutomationDefaultSmtp | AutomationInPlatform | AutomationSmtp | AutomationWebhook;
 }
 /**
  *
  * @export
- * @interface TestNotification
+ * @interface AutomationTestNotification
  */
-export interface TestNotification extends NotificationContent {
+export interface AutomationTestNotification extends AutomationNotificationContent {
     /**
      *
      * @type {string}
-     * @memberof TestNotification
+     * @memberof AutomationTestNotification
      */
     message: string;
 }
 /**
  *
  * @export
- * @interface TestNotificationAllOf
+ * @interface AutomationTestNotificationAllOf
  */
-export interface TestNotificationAllOf {
+export interface AutomationTestNotificationAllOf {
     /**
      *
      * @type {string}
-     * @memberof TestNotificationAllOf
+     * @memberof AutomationTestNotificationAllOf
      */
     message?: string;
 }
 /**
  * Response from notification channel testing.
  * @export
- * @interface TestResponse
+ * @interface AutomationTestResponse
  */
-export interface TestResponse {
+export interface AutomationTestResponse {
     /**
      * A flag indicating whether test passed or not.
      * @type {boolean}
-     * @memberof TestResponse
+     * @memberof AutomationTestResponse
      */
     successful: boolean;
     /**
      * Field containing more details in case of a failure. Details are available to a privileged user only.
      * @type {string}
-     * @memberof TestResponse
+     * @memberof AutomationTestResponse
      */
     error?: string;
 }
 /**
  *
  * @export
- * @interface TriggerAutomationRequest
+ * @interface AutomationTriggerAutomationRequest
  */
-export interface TriggerAutomationRequest {
+export interface AutomationTriggerAutomationRequest {
     /**
      *
-     * @type {AdHocAutomation}
-     * @memberof TriggerAutomationRequest
+     * @type {AutomationAdHocAutomation}
+     * @memberof AutomationTriggerAutomationRequest
      */
-    automation: AdHocAutomation;
+    automation: AutomationAdHocAutomation;
 }
 /**
  *
  * @export
- * @interface VisibleFilter
+ * @interface AutomationValue
  */
-export interface VisibleFilter {
+export interface AutomationValue {
+    /**
+     * Value of the alert threshold to compare the metric to.
+     * @type {number}
+     * @memberof AutomationValue
+     */
+    value: number;
+}
+/**
+ *
+ * @export
+ * @interface AutomationVisibleFilter
+ */
+export interface AutomationVisibleFilter {
     /**
      *
      * @type {string}
-     * @memberof VisibleFilter
+     * @memberof AutomationVisibleFilter
      */
     localIdentifier?: string;
     /**
      *
      * @type {string}
-     * @memberof VisibleFilter
+     * @memberof AutomationVisibleFilter
      */
     title?: string;
 }
 /**
  * Export request object describing the export properties and metadata for dashboard PDF exports.
  * @export
- * @interface VisualExportRequest
+ * @interface AutomationVisualExportRequest
  */
-export interface VisualExportRequest {
+export interface AutomationVisualExportRequest {
     /**
      * File name to be used for retrieving the pdf document.
      * @type {string}
-     * @memberof VisualExportRequest
+     * @memberof AutomationVisualExportRequest
      */
     fileName: string;
     /**
      * Dashboard identifier
      * @type {string}
-     * @memberof VisualExportRequest
+     * @memberof AutomationVisualExportRequest
      */
     dashboardId: string;
     /**
      * Metadata definition in free-form JSON format.
      * @type {object}
-     * @memberof VisualExportRequest
+     * @memberof AutomationVisualExportRequest
      */
     metadata?: object;
 }
 /**
  * Webhook destination for notifications. The property url is required on create and update.
  * @export
- * @interface Webhook
+ * @interface AutomationWebhook
  */
-export interface Webhook {
+export interface AutomationWebhook {
     /**
      * The webhook URL.
      * @type {string}
-     * @memberof Webhook
+     * @memberof AutomationWebhook
      */
     url?: string;
     /**
      * Bearer token for the webhook.
      * @type {string}
-     * @memberof Webhook
+     * @memberof AutomationWebhook
      */
     token?: string | null;
     /**
      * Flag indicating if webhook has a token.
      * @type {boolean}
-     * @memberof Webhook
+     * @memberof AutomationWebhook
      */
     hasToken?: boolean | null;
     /**
      * The destination type.
      * @type {string}
-     * @memberof Webhook
+     * @memberof AutomationWebhook
      */
-    type: WebhookTypeEnum;
+    type: AutomationWebhookTypeEnum;
 }
 
-export const WebhookTypeEnum = {
+export const AutomationWebhookTypeEnum = {
     WEBHOOK: "WEBHOOK",
 } as const;
 
-export type WebhookTypeEnum = typeof WebhookTypeEnum[keyof typeof WebhookTypeEnum];
+export type AutomationWebhookTypeEnum =
+    typeof AutomationWebhookTypeEnum[keyof typeof AutomationWebhookTypeEnum];
 
 /**
  *
  * @export
- * @interface WebhookAutomationInfo
+ * @interface AutomationWebhookAutomationInfo
  */
-export interface WebhookAutomationInfo {
+export interface AutomationWebhookAutomationInfo {
     /**
      *
      * @type {string}
-     * @memberof WebhookAutomationInfo
+     * @memberof AutomationWebhookAutomationInfo
      */
     id: string;
     /**
      *
      * @type {string}
-     * @memberof WebhookAutomationInfo
+     * @memberof AutomationWebhookAutomationInfo
      */
     title?: string;
     /**
      *
      * @type {string}
-     * @memberof WebhookAutomationInfo
+     * @memberof AutomationWebhookAutomationInfo
      */
     dashboardURL: string;
     /**
      *
      * @type {boolean}
-     * @memberof WebhookAutomationInfo
+     * @memberof AutomationWebhookAutomationInfo
      */
     isCustomDashboardURL: boolean;
 }
 /**
  *
  * @export
- * @interface WebhookMessage
+ * @interface AutomationWebhookMessage
  */
-export interface WebhookMessage {
+export interface AutomationWebhookMessage {
     /**
      *
      * @type {string}
-     * @memberof WebhookMessage
+     * @memberof AutomationWebhookMessage
      */
     timestamp: string;
     /**
      *
-     * @type {WebhookMessageData}
-     * @memberof WebhookMessage
+     * @type {AutomationWebhookMessageData}
+     * @memberof AutomationWebhookMessage
      */
-    data: WebhookMessageData;
+    data: AutomationWebhookMessageData;
     /**
      *
      * @type {string}
-     * @memberof WebhookMessage
+     * @memberof AutomationWebhookMessage
      */
-    type: WebhookMessageTypeEnum;
+    type: AutomationWebhookMessageTypeEnum;
 }
 
-export const WebhookMessageTypeEnum = {
+export const AutomationWebhookMessageTypeEnum = {
     COMPLETED: "automation-task.completed",
     LIMIT_EXCEEDED: "automation-task.limit-exceeded",
 } as const;
 
-export type WebhookMessageTypeEnum = typeof WebhookMessageTypeEnum[keyof typeof WebhookMessageTypeEnum];
+export type AutomationWebhookMessageTypeEnum =
+    typeof AutomationWebhookMessageTypeEnum[keyof typeof AutomationWebhookMessageTypeEnum];
 
 /**
  *
  * @export
- * @interface WebhookMessageData
+ * @interface AutomationWebhookMessageData
  */
-export interface WebhookMessageData {
+export interface AutomationWebhookMessageData {
     /**
      *
-     * @type {WebhookAutomationInfo}
-     * @memberof WebhookMessageData
+     * @type {AutomationWebhookAutomationInfo}
+     * @memberof AutomationWebhookMessageData
      */
-    automation: WebhookAutomationInfo;
+    automation: AutomationWebhookAutomationInfo;
     /**
      *
-     * @type {Array<WebhookRecipient>}
-     * @memberof WebhookMessageData
+     * @type {Array<AutomationWebhookRecipient>}
+     * @memberof AutomationWebhookMessageData
      */
-    recipients?: Array<WebhookRecipient>;
+    recipients?: Array<AutomationWebhookRecipient>;
     /**
      *
      * @type {{ [key: string]: string; }}
-     * @memberof WebhookMessageData
+     * @memberof AutomationWebhookMessageData
      */
     details?: { [key: string]: string };
     /**
      *
      * @type {number}
-     * @memberof WebhookMessageData
+     * @memberof AutomationWebhookMessageData
      */
     remainingActionCount?: number;
     /**
      *
-     * @type {Array<ExportResult>}
-     * @memberof WebhookMessageData
+     * @type {Array<AutomationExportResult>}
+     * @memberof AutomationWebhookMessageData
      */
-    tabularExports?: Array<ExportResult>;
+    tabularExports?: Array<AutomationExportResult>;
     /**
      *
-     * @type {Array<ExportResult>}
-     * @memberof WebhookMessageData
+     * @type {Array<AutomationExportResult>}
+     * @memberof AutomationWebhookMessageData
      */
-    visualExports?: Array<ExportResult>;
+    visualExports?: Array<AutomationExportResult>;
     /**
      *
-     * @type {AlertDescription}
-     * @memberof WebhookMessageData
+     * @type {AutomationAlertDescription}
+     * @memberof AutomationWebhookMessageData
      */
-    alert?: AlertDescription;
+    alert?: AutomationAlertDescription;
     /**
      *
-     * @type {Array<NotificationFilter>}
-     * @memberof WebhookMessageData
+     * @type {Array<AutomationNotificationFilter>}
+     * @memberof AutomationWebhookMessageData
      */
-    filters?: Array<NotificationFilter>;
+    filters?: Array<AutomationNotificationFilter>;
 }
 /**
  *
  * @export
- * @interface WebhookRecipient
+ * @interface AutomationWebhookRecipient
  */
-export interface WebhookRecipient {
+export interface AutomationWebhookRecipient {
     /**
      *
      * @type {string}
-     * @memberof WebhookRecipient
+     * @memberof AutomationWebhookRecipient
      */
     id: string;
     /**
      *
      * @type {string}
-     * @memberof WebhookRecipient
+     * @memberof AutomationWebhookRecipient
      */
     email: string;
 }
 
 /**
- * ActionsApi - axios parameter creator
+ * ActionsAutomation - axios parameter creator
  * @export
  */
-export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ActionsAutomationAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * Get latest in-platform notifications for the current user.
@@ -1375,13 +2766,13 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          * Tests the existing notification channel by sending a test notification.
          * @summary Test existing notification channel.
          * @param {string} notificationChannelId
-         * @param {TestDestinationRequest} [testDestinationRequest]
+         * @param {AutomationTestDestinationRequest} [automationTestDestinationRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         testExistingNotificationChannel: async (
             notificationChannelId: string,
-            testDestinationRequest?: TestDestinationRequest,
+            automationTestDestinationRequest?: AutomationTestDestinationRequest,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'notificationChannelId' is not null or undefined
@@ -1414,11 +2805,13 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 ...options.headers,
             };
             const needsSerialization =
-                typeof testDestinationRequest !== "string" ||
+                typeof automationTestDestinationRequest !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
             localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(testDestinationRequest !== undefined ? testDestinationRequest : {})
-                : testDestinationRequest || "";
+                ? JSON.stringify(
+                      automationTestDestinationRequest !== undefined ? automationTestDestinationRequest : {},
+                  )
+                : automationTestDestinationRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1428,16 +2821,20 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Tests the notification channel by sending a test notification.
          * @summary Test notification channel.
-         * @param {TestDestinationRequest} testDestinationRequest
+         * @param {AutomationTestDestinationRequest} automationTestDestinationRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         testNotificationChannel: async (
-            testDestinationRequest: TestDestinationRequest,
+            automationTestDestinationRequest: AutomationTestDestinationRequest,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
-            // verify required parameter 'testDestinationRequest' is not null or undefined
-            assertParamExists("testNotificationChannel", "testDestinationRequest", testDestinationRequest);
+            // verify required parameter 'automationTestDestinationRequest' is not null or undefined
+            assertParamExists(
+                "testNotificationChannel",
+                "automationTestDestinationRequest",
+                automationTestDestinationRequest,
+            );
             const localVarPath = `/api/v1/actions/notificationChannels/test`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1459,11 +2856,13 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 ...options.headers,
             };
             const needsSerialization =
-                typeof testDestinationRequest !== "string" ||
+                typeof automationTestDestinationRequest !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
             localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(testDestinationRequest !== undefined ? testDestinationRequest : {})
-                : testDestinationRequest || "";
+                ? JSON.stringify(
+                      automationTestDestinationRequest !== undefined ? automationTestDestinationRequest : {},
+                  )
+                : automationTestDestinationRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1474,19 +2873,23 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          * Trigger the automation in the request.
          * @summary Trigger automation.
          * @param {string} workspaceId
-         * @param {TriggerAutomationRequest} triggerAutomationRequest
+         * @param {AutomationTriggerAutomationRequest} automationTriggerAutomationRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         triggerAutomation: async (
             workspaceId: string,
-            triggerAutomationRequest: TriggerAutomationRequest,
+            automationTriggerAutomationRequest: AutomationTriggerAutomationRequest,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("triggerAutomation", "workspaceId", workspaceId);
-            // verify required parameter 'triggerAutomationRequest' is not null or undefined
-            assertParamExists("triggerAutomation", "triggerAutomationRequest", triggerAutomationRequest);
+            // verify required parameter 'automationTriggerAutomationRequest' is not null or undefined
+            assertParamExists(
+                "triggerAutomation",
+                "automationTriggerAutomationRequest",
+                automationTriggerAutomationRequest,
+            );
             const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/automations/trigger`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -1511,11 +2914,15 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 ...options.headers,
             };
             const needsSerialization =
-                typeof triggerAutomationRequest !== "string" ||
+                typeof automationTriggerAutomationRequest !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
             localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(triggerAutomationRequest !== undefined ? triggerAutomationRequest : {})
-                : triggerAutomationRequest || "";
+                ? JSON.stringify(
+                      automationTriggerAutomationRequest !== undefined
+                          ? automationTriggerAutomationRequest
+                          : {},
+                  )
+                : automationTriggerAutomationRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1569,11 +2976,11 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
 };
 
 /**
- * ActionsApi - functional programming interface
+ * ActionsAutomation - functional programming interface
  * @export
  */
-export const ActionsApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = ActionsApiAxiosParamCreator(configuration);
+export const ActionsAutomationFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = ActionsAutomationAxiosParamCreator(configuration);
     return {
         /**
          * Get latest in-platform notifications for the current user.
@@ -1593,7 +3000,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             size?: string,
             metaInclude?: Array<"total" | "ALL">,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Notifications>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutomationNotifications>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getNotifications(
                 workspaceId,
                 isRead,
@@ -1642,18 +3049,18 @@ export const ActionsApiFp = function (configuration?: Configuration) {
          * Tests the existing notification channel by sending a test notification.
          * @summary Test existing notification channel.
          * @param {string} notificationChannelId
-         * @param {TestDestinationRequest} [testDestinationRequest]
+         * @param {AutomationTestDestinationRequest} [automationTestDestinationRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async testExistingNotificationChannel(
             notificationChannelId: string,
-            testDestinationRequest?: TestDestinationRequest,
+            automationTestDestinationRequest?: AutomationTestDestinationRequest,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutomationTestResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.testExistingNotificationChannel(
                 notificationChannelId,
-                testDestinationRequest,
+                automationTestDestinationRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -1661,16 +3068,16 @@ export const ActionsApiFp = function (configuration?: Configuration) {
         /**
          * Tests the notification channel by sending a test notification.
          * @summary Test notification channel.
-         * @param {TestDestinationRequest} testDestinationRequest
+         * @param {AutomationTestDestinationRequest} automationTestDestinationRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async testNotificationChannel(
-            testDestinationRequest: TestDestinationRequest,
+            automationTestDestinationRequest: AutomationTestDestinationRequest,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutomationTestResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.testNotificationChannel(
-                testDestinationRequest,
+                automationTestDestinationRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -1679,18 +3086,18 @@ export const ActionsApiFp = function (configuration?: Configuration) {
          * Trigger the automation in the request.
          * @summary Trigger automation.
          * @param {string} workspaceId
-         * @param {TriggerAutomationRequest} triggerAutomationRequest
+         * @param {AutomationTriggerAutomationRequest} automationTriggerAutomationRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async triggerAutomation(
             workspaceId: string,
-            triggerAutomationRequest: TriggerAutomationRequest,
+            automationTriggerAutomationRequest: AutomationTriggerAutomationRequest,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.triggerAutomation(
                 workspaceId,
-                triggerAutomationRequest,
+                automationTriggerAutomationRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -1719,27 +3126,27 @@ export const ActionsApiFp = function (configuration?: Configuration) {
 };
 
 /**
- * ActionsApi - factory interface
+ * ActionsAutomation - factory interface
  * @export
  */
-export const ActionsApiFactory = function (
+export const ActionsAutomationFactory = function (
     configuration?: Configuration,
     basePath?: string,
     axios?: AxiosInstance,
 ) {
-    const localVarFp = ActionsApiFp(configuration);
+    const localVarFp = ActionsAutomationFp(configuration);
     return {
         /**
          * Get latest in-platform notifications for the current user.
          * @summary Get latest notifications.
-         * @param {ActionsApiGetNotificationsRequest} requestParameters Request parameters.
+         * @param {ActionsAutomationGetNotificationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getNotifications(
-            requestParameters: ActionsApiGetNotificationsRequest,
+            requestParameters: ActionsAutomationGetNotificationsRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<Notifications> {
+        ): AxiosPromise<AutomationNotifications> {
             return localVarFp
                 .getNotifications(
                     requestParameters.workspaceId,
@@ -1754,12 +3161,12 @@ export const ActionsApiFactory = function (
         /**
          * Mark in-platform notification by its ID as read.
          * @summary Mark notification as read.
-         * @param {ActionsApiMarkAsReadNotificationRequest} requestParameters Request parameters.
+         * @param {ActionsAutomationMarkAsReadNotificationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         markAsReadNotification(
-            requestParameters: ActionsApiMarkAsReadNotificationRequest,
+            requestParameters: ActionsAutomationMarkAsReadNotificationRequest,
             options?: AxiosRequestConfig,
         ): AxiosPromise<void> {
             return localVarFp
@@ -1769,12 +3176,12 @@ export const ActionsApiFactory = function (
         /**
          * Mark all user in-platform notifications as read.
          * @summary Mark all notifications as read.
-         * @param {ActionsApiMarkAsReadNotificationAllRequest} requestParameters Request parameters.
+         * @param {ActionsAutomationMarkAsReadNotificationAllRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         markAsReadNotificationAll(
-            requestParameters: ActionsApiMarkAsReadNotificationAllRequest,
+            requestParameters: ActionsAutomationMarkAsReadNotificationAllRequest,
             options?: AxiosRequestConfig,
         ): AxiosPromise<void> {
             return localVarFp
@@ -1784,18 +3191,18 @@ export const ActionsApiFactory = function (
         /**
          * Tests the existing notification channel by sending a test notification.
          * @summary Test existing notification channel.
-         * @param {ActionsApiTestExistingNotificationChannelRequest} requestParameters Request parameters.
+         * @param {ActionsAutomationTestExistingNotificationChannelRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         testExistingNotificationChannel(
-            requestParameters: ActionsApiTestExistingNotificationChannelRequest,
+            requestParameters: ActionsAutomationTestExistingNotificationChannelRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<TestResponse> {
+        ): AxiosPromise<AutomationTestResponse> {
             return localVarFp
                 .testExistingNotificationChannel(
                     requestParameters.notificationChannelId,
-                    requestParameters.testDestinationRequest,
+                    requestParameters.automationTestDestinationRequest,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -1803,33 +3210,33 @@ export const ActionsApiFactory = function (
         /**
          * Tests the notification channel by sending a test notification.
          * @summary Test notification channel.
-         * @param {ActionsApiTestNotificationChannelRequest} requestParameters Request parameters.
+         * @param {ActionsAutomationTestNotificationChannelRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         testNotificationChannel(
-            requestParameters: ActionsApiTestNotificationChannelRequest,
+            requestParameters: ActionsAutomationTestNotificationChannelRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<TestResponse> {
+        ): AxiosPromise<AutomationTestResponse> {
             return localVarFp
-                .testNotificationChannel(requestParameters.testDestinationRequest, options)
+                .testNotificationChannel(requestParameters.automationTestDestinationRequest, options)
                 .then((request) => request(axios, basePath));
         },
         /**
          * Trigger the automation in the request.
          * @summary Trigger automation.
-         * @param {ActionsApiTriggerAutomationRequest} requestParameters Request parameters.
+         * @param {ActionsAutomationTriggerAutomationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         triggerAutomation(
-            requestParameters: ActionsApiTriggerAutomationRequest,
+            requestParameters: ActionsAutomationTriggerAutomationRequest,
             options?: AxiosRequestConfig,
         ): AxiosPromise<void> {
             return localVarFp
                 .triggerAutomation(
                     requestParameters.workspaceId,
-                    requestParameters.triggerAutomationRequest,
+                    requestParameters.automationTriggerAutomationRequest,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -1837,12 +3244,12 @@ export const ActionsApiFactory = function (
         /**
          * Trigger the existing automation to execute immediately.
          * @summary Trigger existing automation.
-         * @param {ActionsApiTriggerExistingAutomationRequest} requestParameters Request parameters.
+         * @param {ActionsAutomationTriggerExistingAutomationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         triggerExistingAutomation(
-            requestParameters: ActionsApiTriggerExistingAutomationRequest,
+            requestParameters: ActionsAutomationTriggerExistingAutomationRequest,
             options?: AxiosRequestConfig,
         ): AxiosPromise<void> {
             return localVarFp
@@ -1857,270 +3264,270 @@ export const ActionsApiFactory = function (
 };
 
 /**
- * ActionsApi - interface
+ * ActionsAutomation - interface
  * @export
- * @interface ActionsApi
+ * @interface ActionsAutomation
  */
-export interface ActionsApiInterface {
+export interface ActionsAutomationInterface {
     /**
      * Get latest in-platform notifications for the current user.
      * @summary Get latest notifications.
-     * @param {ActionsApiGetNotificationsRequest} requestParameters Request parameters.
+     * @param {ActionsAutomationGetNotificationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActionsApiInterface
+     * @memberof ActionsAutomationInterface
      */
     getNotifications(
-        requestParameters: ActionsApiGetNotificationsRequest,
+        requestParameters: ActionsAutomationGetNotificationsRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<Notifications>;
+    ): AxiosPromise<AutomationNotifications>;
 
     /**
      * Mark in-platform notification by its ID as read.
      * @summary Mark notification as read.
-     * @param {ActionsApiMarkAsReadNotificationRequest} requestParameters Request parameters.
+     * @param {ActionsAutomationMarkAsReadNotificationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActionsApiInterface
+     * @memberof ActionsAutomationInterface
      */
     markAsReadNotification(
-        requestParameters: ActionsApiMarkAsReadNotificationRequest,
+        requestParameters: ActionsAutomationMarkAsReadNotificationRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
      * Mark all user in-platform notifications as read.
      * @summary Mark all notifications as read.
-     * @param {ActionsApiMarkAsReadNotificationAllRequest} requestParameters Request parameters.
+     * @param {ActionsAutomationMarkAsReadNotificationAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActionsApiInterface
+     * @memberof ActionsAutomationInterface
      */
     markAsReadNotificationAll(
-        requestParameters: ActionsApiMarkAsReadNotificationAllRequest,
+        requestParameters: ActionsAutomationMarkAsReadNotificationAllRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
      * Tests the existing notification channel by sending a test notification.
      * @summary Test existing notification channel.
-     * @param {ActionsApiTestExistingNotificationChannelRequest} requestParameters Request parameters.
+     * @param {ActionsAutomationTestExistingNotificationChannelRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActionsApiInterface
+     * @memberof ActionsAutomationInterface
      */
     testExistingNotificationChannel(
-        requestParameters: ActionsApiTestExistingNotificationChannelRequest,
+        requestParameters: ActionsAutomationTestExistingNotificationChannelRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<TestResponse>;
+    ): AxiosPromise<AutomationTestResponse>;
 
     /**
      * Tests the notification channel by sending a test notification.
      * @summary Test notification channel.
-     * @param {ActionsApiTestNotificationChannelRequest} requestParameters Request parameters.
+     * @param {ActionsAutomationTestNotificationChannelRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActionsApiInterface
+     * @memberof ActionsAutomationInterface
      */
     testNotificationChannel(
-        requestParameters: ActionsApiTestNotificationChannelRequest,
+        requestParameters: ActionsAutomationTestNotificationChannelRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<TestResponse>;
+    ): AxiosPromise<AutomationTestResponse>;
 
     /**
      * Trigger the automation in the request.
      * @summary Trigger automation.
-     * @param {ActionsApiTriggerAutomationRequest} requestParameters Request parameters.
+     * @param {ActionsAutomationTriggerAutomationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActionsApiInterface
+     * @memberof ActionsAutomationInterface
      */
     triggerAutomation(
-        requestParameters: ActionsApiTriggerAutomationRequest,
+        requestParameters: ActionsAutomationTriggerAutomationRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
      * Trigger the existing automation to execute immediately.
      * @summary Trigger existing automation.
-     * @param {ActionsApiTriggerExistingAutomationRequest} requestParameters Request parameters.
+     * @param {ActionsAutomationTriggerExistingAutomationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActionsApiInterface
+     * @memberof ActionsAutomationInterface
      */
     triggerExistingAutomation(
-        requestParameters: ActionsApiTriggerExistingAutomationRequest,
+        requestParameters: ActionsAutomationTriggerExistingAutomationRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 }
 
 /**
- * Request parameters for getNotifications operation in ActionsApi.
+ * Request parameters for getNotifications operation in ActionsAutomation.
  * @export
- * @interface ActionsApiGetNotificationsRequest
+ * @interface ActionsAutomationGetNotificationsRequest
  */
-export interface ActionsApiGetNotificationsRequest {
+export interface ActionsAutomationGetNotificationsRequest {
     /**
      * Workspace ID to filter notifications by.
      * @type {string}
-     * @memberof ActionsApiGetNotifications
+     * @memberof ActionsAutomationGetNotifications
      */
     readonly workspaceId?: string;
 
     /**
      * Filter notifications by read status.
      * @type {boolean}
-     * @memberof ActionsApiGetNotifications
+     * @memberof ActionsAutomationGetNotifications
      */
     readonly isRead?: boolean;
 
     /**
      * Zero-based page index (0..N)
      * @type {string}
-     * @memberof ActionsApiGetNotifications
+     * @memberof ActionsAutomationGetNotifications
      */
     readonly page?: string;
 
     /**
      * The size of the page to be returned.
      * @type {string}
-     * @memberof ActionsApiGetNotifications
+     * @memberof ActionsAutomationGetNotifications
      */
     readonly size?: string;
 
     /**
      * Additional meta information to include in the response.
      * @type {Array<'total' | 'ALL'>}
-     * @memberof ActionsApiGetNotifications
+     * @memberof ActionsAutomationGetNotifications
      */
     readonly metaInclude?: Array<"total" | "ALL">;
 }
 
 /**
- * Request parameters for markAsReadNotification operation in ActionsApi.
+ * Request parameters for markAsReadNotification operation in ActionsAutomation.
  * @export
- * @interface ActionsApiMarkAsReadNotificationRequest
+ * @interface ActionsAutomationMarkAsReadNotificationRequest
  */
-export interface ActionsApiMarkAsReadNotificationRequest {
+export interface ActionsAutomationMarkAsReadNotificationRequest {
     /**
      * Notification ID to mark as read.
      * @type {string}
-     * @memberof ActionsApiMarkAsReadNotification
+     * @memberof ActionsAutomationMarkAsReadNotification
      */
     readonly notificationId: string;
 }
 
 /**
- * Request parameters for markAsReadNotificationAll operation in ActionsApi.
+ * Request parameters for markAsReadNotificationAll operation in ActionsAutomation.
  * @export
- * @interface ActionsApiMarkAsReadNotificationAllRequest
+ * @interface ActionsAutomationMarkAsReadNotificationAllRequest
  */
-export interface ActionsApiMarkAsReadNotificationAllRequest {
+export interface ActionsAutomationMarkAsReadNotificationAllRequest {
     /**
      * Workspace ID where to mark notifications as read.
      * @type {string}
-     * @memberof ActionsApiMarkAsReadNotificationAll
+     * @memberof ActionsAutomationMarkAsReadNotificationAll
      */
     readonly workspaceId?: string;
 }
 
 /**
- * Request parameters for testExistingNotificationChannel operation in ActionsApi.
+ * Request parameters for testExistingNotificationChannel operation in ActionsAutomation.
  * @export
- * @interface ActionsApiTestExistingNotificationChannelRequest
+ * @interface ActionsAutomationTestExistingNotificationChannelRequest
  */
-export interface ActionsApiTestExistingNotificationChannelRequest {
+export interface ActionsAutomationTestExistingNotificationChannelRequest {
     /**
      *
      * @type {string}
-     * @memberof ActionsApiTestExistingNotificationChannel
+     * @memberof ActionsAutomationTestExistingNotificationChannel
      */
     readonly notificationChannelId: string;
 
     /**
      *
-     * @type {TestDestinationRequest}
-     * @memberof ActionsApiTestExistingNotificationChannel
+     * @type {AutomationTestDestinationRequest}
+     * @memberof ActionsAutomationTestExistingNotificationChannel
      */
-    readonly testDestinationRequest?: TestDestinationRequest;
+    readonly automationTestDestinationRequest?: AutomationTestDestinationRequest;
 }
 
 /**
- * Request parameters for testNotificationChannel operation in ActionsApi.
+ * Request parameters for testNotificationChannel operation in ActionsAutomation.
  * @export
- * @interface ActionsApiTestNotificationChannelRequest
+ * @interface ActionsAutomationTestNotificationChannelRequest
  */
-export interface ActionsApiTestNotificationChannelRequest {
+export interface ActionsAutomationTestNotificationChannelRequest {
     /**
      *
-     * @type {TestDestinationRequest}
-     * @memberof ActionsApiTestNotificationChannel
+     * @type {AutomationTestDestinationRequest}
+     * @memberof ActionsAutomationTestNotificationChannel
      */
-    readonly testDestinationRequest: TestDestinationRequest;
+    readonly automationTestDestinationRequest: AutomationTestDestinationRequest;
 }
 
 /**
- * Request parameters for triggerAutomation operation in ActionsApi.
+ * Request parameters for triggerAutomation operation in ActionsAutomation.
  * @export
- * @interface ActionsApiTriggerAutomationRequest
+ * @interface ActionsAutomationTriggerAutomationRequest
  */
-export interface ActionsApiTriggerAutomationRequest {
+export interface ActionsAutomationTriggerAutomationRequest {
     /**
      *
      * @type {string}
-     * @memberof ActionsApiTriggerAutomation
+     * @memberof ActionsAutomationTriggerAutomation
      */
     readonly workspaceId: string;
 
     /**
      *
-     * @type {TriggerAutomationRequest}
-     * @memberof ActionsApiTriggerAutomation
+     * @type {AutomationTriggerAutomationRequest}
+     * @memberof ActionsAutomationTriggerAutomation
      */
-    readonly triggerAutomationRequest: TriggerAutomationRequest;
+    readonly automationTriggerAutomationRequest: AutomationTriggerAutomationRequest;
 }
 
 /**
- * Request parameters for triggerExistingAutomation operation in ActionsApi.
+ * Request parameters for triggerExistingAutomation operation in ActionsAutomation.
  * @export
- * @interface ActionsApiTriggerExistingAutomationRequest
+ * @interface ActionsAutomationTriggerExistingAutomationRequest
  */
-export interface ActionsApiTriggerExistingAutomationRequest {
+export interface ActionsAutomationTriggerExistingAutomationRequest {
     /**
      *
      * @type {string}
-     * @memberof ActionsApiTriggerExistingAutomation
+     * @memberof ActionsAutomationTriggerExistingAutomation
      */
     readonly workspaceId: string;
 
     /**
      *
      * @type {string}
-     * @memberof ActionsApiTriggerExistingAutomation
+     * @memberof ActionsAutomationTriggerExistingAutomation
      */
     readonly automationId: string;
 }
 
 /**
- * ActionsApi - object-oriented interface
+ * ActionsAutomation - object-oriented interface
  * @export
- * @class ActionsApi
+ * @class ActionsAutomation
  * @extends {BaseAPI}
  */
-export class ActionsApi extends BaseAPI implements ActionsApiInterface {
+export class ActionsAutomation extends BaseAPI implements ActionsAutomationInterface {
     /**
      * Get latest in-platform notifications for the current user.
      * @summary Get latest notifications.
-     * @param {ActionsApiGetNotificationsRequest} requestParameters Request parameters.
+     * @param {ActionsAutomationGetNotificationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActionsApi
+     * @memberof ActionsAutomation
      */
     public getNotifications(
-        requestParameters: ActionsApiGetNotificationsRequest = {},
+        requestParameters: ActionsAutomationGetNotificationsRequest = {},
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
+        return ActionsAutomationFp(this.configuration)
             .getNotifications(
                 requestParameters.workspaceId,
                 requestParameters.isRead,
@@ -2135,16 +3542,16 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     /**
      * Mark in-platform notification by its ID as read.
      * @summary Mark notification as read.
-     * @param {ActionsApiMarkAsReadNotificationRequest} requestParameters Request parameters.
+     * @param {ActionsAutomationMarkAsReadNotificationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActionsApi
+     * @memberof ActionsAutomation
      */
     public markAsReadNotification(
-        requestParameters: ActionsApiMarkAsReadNotificationRequest,
+        requestParameters: ActionsAutomationMarkAsReadNotificationRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
+        return ActionsAutomationFp(this.configuration)
             .markAsReadNotification(requestParameters.notificationId, options)
             .then((request) => request(this.axios, this.basePath));
     }
@@ -2152,16 +3559,16 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     /**
      * Mark all user in-platform notifications as read.
      * @summary Mark all notifications as read.
-     * @param {ActionsApiMarkAsReadNotificationAllRequest} requestParameters Request parameters.
+     * @param {ActionsAutomationMarkAsReadNotificationAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActionsApi
+     * @memberof ActionsAutomation
      */
     public markAsReadNotificationAll(
-        requestParameters: ActionsApiMarkAsReadNotificationAllRequest = {},
+        requestParameters: ActionsAutomationMarkAsReadNotificationAllRequest = {},
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
+        return ActionsAutomationFp(this.configuration)
             .markAsReadNotificationAll(requestParameters.workspaceId, options)
             .then((request) => request(this.axios, this.basePath));
     }
@@ -2169,19 +3576,19 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     /**
      * Tests the existing notification channel by sending a test notification.
      * @summary Test existing notification channel.
-     * @param {ActionsApiTestExistingNotificationChannelRequest} requestParameters Request parameters.
+     * @param {ActionsAutomationTestExistingNotificationChannelRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActionsApi
+     * @memberof ActionsAutomation
      */
     public testExistingNotificationChannel(
-        requestParameters: ActionsApiTestExistingNotificationChannelRequest,
+        requestParameters: ActionsAutomationTestExistingNotificationChannelRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
+        return ActionsAutomationFp(this.configuration)
             .testExistingNotificationChannel(
                 requestParameters.notificationChannelId,
-                requestParameters.testDestinationRequest,
+                requestParameters.automationTestDestinationRequest,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -2190,36 +3597,36 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     /**
      * Tests the notification channel by sending a test notification.
      * @summary Test notification channel.
-     * @param {ActionsApiTestNotificationChannelRequest} requestParameters Request parameters.
+     * @param {ActionsAutomationTestNotificationChannelRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActionsApi
+     * @memberof ActionsAutomation
      */
     public testNotificationChannel(
-        requestParameters: ActionsApiTestNotificationChannelRequest,
+        requestParameters: ActionsAutomationTestNotificationChannelRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
-            .testNotificationChannel(requestParameters.testDestinationRequest, options)
+        return ActionsAutomationFp(this.configuration)
+            .testNotificationChannel(requestParameters.automationTestDestinationRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Trigger the automation in the request.
      * @summary Trigger automation.
-     * @param {ActionsApiTriggerAutomationRequest} requestParameters Request parameters.
+     * @param {ActionsAutomationTriggerAutomationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActionsApi
+     * @memberof ActionsAutomation
      */
     public triggerAutomation(
-        requestParameters: ActionsApiTriggerAutomationRequest,
+        requestParameters: ActionsAutomationTriggerAutomationRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
+        return ActionsAutomationFp(this.configuration)
             .triggerAutomation(
                 requestParameters.workspaceId,
-                requestParameters.triggerAutomationRequest,
+                requestParameters.automationTriggerAutomationRequest,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -2228,44 +3635,48 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     /**
      * Trigger the existing automation to execute immediately.
      * @summary Trigger existing automation.
-     * @param {ActionsApiTriggerExistingAutomationRequest} requestParameters Request parameters.
+     * @param {ActionsAutomationTriggerExistingAutomationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ActionsApi
+     * @memberof ActionsAutomation
      */
     public triggerExistingAutomation(
-        requestParameters: ActionsApiTriggerExistingAutomationRequest,
+        requestParameters: ActionsAutomationTriggerExistingAutomationRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ActionsApiFp(this.configuration)
+        return ActionsAutomationFp(this.configuration)
             .triggerExistingAutomation(requestParameters.workspaceId, requestParameters.automationId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 }
 
 /**
- * AutomationsApi - axios parameter creator
+ * AutomationsAutomation - axios parameter creator
  * @export
  */
-export const AutomationsApiAxiosParamCreator = function (configuration?: Configuration) {
+export const AutomationsAutomationAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * Trigger the automation in the request.
          * @summary Trigger automation.
          * @param {string} workspaceId
-         * @param {TriggerAutomationRequest} triggerAutomationRequest
+         * @param {AutomationTriggerAutomationRequest} automationTriggerAutomationRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         triggerAutomation: async (
             workspaceId: string,
-            triggerAutomationRequest: TriggerAutomationRequest,
+            automationTriggerAutomationRequest: AutomationTriggerAutomationRequest,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("triggerAutomation", "workspaceId", workspaceId);
-            // verify required parameter 'triggerAutomationRequest' is not null or undefined
-            assertParamExists("triggerAutomation", "triggerAutomationRequest", triggerAutomationRequest);
+            // verify required parameter 'automationTriggerAutomationRequest' is not null or undefined
+            assertParamExists(
+                "triggerAutomation",
+                "automationTriggerAutomationRequest",
+                automationTriggerAutomationRequest,
+            );
             const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/automations/trigger`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -2290,11 +3701,15 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
                 ...options.headers,
             };
             const needsSerialization =
-                typeof triggerAutomationRequest !== "string" ||
+                typeof automationTriggerAutomationRequest !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
             localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(triggerAutomationRequest !== undefined ? triggerAutomationRequest : {})
-                : triggerAutomationRequest || "";
+                ? JSON.stringify(
+                      automationTriggerAutomationRequest !== undefined
+                          ? automationTriggerAutomationRequest
+                          : {},
+                  )
+                : automationTriggerAutomationRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2348,28 +3763,28 @@ export const AutomationsApiAxiosParamCreator = function (configuration?: Configu
 };
 
 /**
- * AutomationsApi - functional programming interface
+ * AutomationsAutomation - functional programming interface
  * @export
  */
-export const AutomationsApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = AutomationsApiAxiosParamCreator(configuration);
+export const AutomationsAutomationFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = AutomationsAutomationAxiosParamCreator(configuration);
     return {
         /**
          * Trigger the automation in the request.
          * @summary Trigger automation.
          * @param {string} workspaceId
-         * @param {TriggerAutomationRequest} triggerAutomationRequest
+         * @param {AutomationTriggerAutomationRequest} automationTriggerAutomationRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async triggerAutomation(
             workspaceId: string,
-            triggerAutomationRequest: TriggerAutomationRequest,
+            automationTriggerAutomationRequest: AutomationTriggerAutomationRequest,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.triggerAutomation(
                 workspaceId,
-                triggerAutomationRequest,
+                automationTriggerAutomationRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -2398,31 +3813,31 @@ export const AutomationsApiFp = function (configuration?: Configuration) {
 };
 
 /**
- * AutomationsApi - factory interface
+ * AutomationsAutomation - factory interface
  * @export
  */
-export const AutomationsApiFactory = function (
+export const AutomationsAutomationFactory = function (
     configuration?: Configuration,
     basePath?: string,
     axios?: AxiosInstance,
 ) {
-    const localVarFp = AutomationsApiFp(configuration);
+    const localVarFp = AutomationsAutomationFp(configuration);
     return {
         /**
          * Trigger the automation in the request.
          * @summary Trigger automation.
-         * @param {AutomationsApiTriggerAutomationRequest} requestParameters Request parameters.
+         * @param {AutomationsAutomationTriggerAutomationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         triggerAutomation(
-            requestParameters: AutomationsApiTriggerAutomationRequest,
+            requestParameters: AutomationsAutomationTriggerAutomationRequest,
             options?: AxiosRequestConfig,
         ): AxiosPromise<void> {
             return localVarFp
                 .triggerAutomation(
                     requestParameters.workspaceId,
-                    requestParameters.triggerAutomationRequest,
+                    requestParameters.automationTriggerAutomationRequest,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -2430,12 +3845,12 @@ export const AutomationsApiFactory = function (
         /**
          * Trigger the existing automation to execute immediately.
          * @summary Trigger existing automation.
-         * @param {AutomationsApiTriggerExistingAutomationRequest} requestParameters Request parameters.
+         * @param {AutomationsAutomationTriggerExistingAutomationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         triggerExistingAutomation(
-            requestParameters: AutomationsApiTriggerExistingAutomationRequest,
+            requestParameters: AutomationsAutomationTriggerExistingAutomationRequest,
             options?: AxiosRequestConfig,
         ): AxiosPromise<void> {
             return localVarFp
@@ -2450,103 +3865,103 @@ export const AutomationsApiFactory = function (
 };
 
 /**
- * AutomationsApi - interface
+ * AutomationsAutomation - interface
  * @export
- * @interface AutomationsApi
+ * @interface AutomationsAutomation
  */
-export interface AutomationsApiInterface {
+export interface AutomationsAutomationInterface {
     /**
      * Trigger the automation in the request.
      * @summary Trigger automation.
-     * @param {AutomationsApiTriggerAutomationRequest} requestParameters Request parameters.
+     * @param {AutomationsAutomationTriggerAutomationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AutomationsApiInterface
+     * @memberof AutomationsAutomationInterface
      */
     triggerAutomation(
-        requestParameters: AutomationsApiTriggerAutomationRequest,
+        requestParameters: AutomationsAutomationTriggerAutomationRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
      * Trigger the existing automation to execute immediately.
      * @summary Trigger existing automation.
-     * @param {AutomationsApiTriggerExistingAutomationRequest} requestParameters Request parameters.
+     * @param {AutomationsAutomationTriggerExistingAutomationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AutomationsApiInterface
+     * @memberof AutomationsAutomationInterface
      */
     triggerExistingAutomation(
-        requestParameters: AutomationsApiTriggerExistingAutomationRequest,
+        requestParameters: AutomationsAutomationTriggerExistingAutomationRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 }
 
 /**
- * Request parameters for triggerAutomation operation in AutomationsApi.
+ * Request parameters for triggerAutomation operation in AutomationsAutomation.
  * @export
- * @interface AutomationsApiTriggerAutomationRequest
+ * @interface AutomationsAutomationTriggerAutomationRequest
  */
-export interface AutomationsApiTriggerAutomationRequest {
+export interface AutomationsAutomationTriggerAutomationRequest {
     /**
      *
      * @type {string}
-     * @memberof AutomationsApiTriggerAutomation
+     * @memberof AutomationsAutomationTriggerAutomation
      */
     readonly workspaceId: string;
 
     /**
      *
-     * @type {TriggerAutomationRequest}
-     * @memberof AutomationsApiTriggerAutomation
+     * @type {AutomationTriggerAutomationRequest}
+     * @memberof AutomationsAutomationTriggerAutomation
      */
-    readonly triggerAutomationRequest: TriggerAutomationRequest;
+    readonly automationTriggerAutomationRequest: AutomationTriggerAutomationRequest;
 }
 
 /**
- * Request parameters for triggerExistingAutomation operation in AutomationsApi.
+ * Request parameters for triggerExistingAutomation operation in AutomationsAutomation.
  * @export
- * @interface AutomationsApiTriggerExistingAutomationRequest
+ * @interface AutomationsAutomationTriggerExistingAutomationRequest
  */
-export interface AutomationsApiTriggerExistingAutomationRequest {
+export interface AutomationsAutomationTriggerExistingAutomationRequest {
     /**
      *
      * @type {string}
-     * @memberof AutomationsApiTriggerExistingAutomation
+     * @memberof AutomationsAutomationTriggerExistingAutomation
      */
     readonly workspaceId: string;
 
     /**
      *
      * @type {string}
-     * @memberof AutomationsApiTriggerExistingAutomation
+     * @memberof AutomationsAutomationTriggerExistingAutomation
      */
     readonly automationId: string;
 }
 
 /**
- * AutomationsApi - object-oriented interface
+ * AutomationsAutomation - object-oriented interface
  * @export
- * @class AutomationsApi
+ * @class AutomationsAutomation
  * @extends {BaseAPI}
  */
-export class AutomationsApi extends BaseAPI implements AutomationsApiInterface {
+export class AutomationsAutomation extends BaseAPI implements AutomationsAutomationInterface {
     /**
      * Trigger the automation in the request.
      * @summary Trigger automation.
-     * @param {AutomationsApiTriggerAutomationRequest} requestParameters Request parameters.
+     * @param {AutomationsAutomationTriggerAutomationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AutomationsApi
+     * @memberof AutomationsAutomation
      */
     public triggerAutomation(
-        requestParameters: AutomationsApiTriggerAutomationRequest,
+        requestParameters: AutomationsAutomationTriggerAutomationRequest,
         options?: AxiosRequestConfig,
     ) {
-        return AutomationsApiFp(this.configuration)
+        return AutomationsAutomationFp(this.configuration)
             .triggerAutomation(
                 requestParameters.workspaceId,
-                requestParameters.triggerAutomationRequest,
+                requestParameters.automationTriggerAutomationRequest,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -2555,26 +3970,26 @@ export class AutomationsApi extends BaseAPI implements AutomationsApiInterface {
     /**
      * Trigger the existing automation to execute immediately.
      * @summary Trigger existing automation.
-     * @param {AutomationsApiTriggerExistingAutomationRequest} requestParameters Request parameters.
+     * @param {AutomationsAutomationTriggerExistingAutomationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AutomationsApi
+     * @memberof AutomationsAutomation
      */
     public triggerExistingAutomation(
-        requestParameters: AutomationsApiTriggerExistingAutomationRequest,
+        requestParameters: AutomationsAutomationTriggerExistingAutomationRequest,
         options?: AxiosRequestConfig,
     ) {
-        return AutomationsApiFp(this.configuration)
+        return AutomationsAutomationFp(this.configuration)
             .triggerExistingAutomation(requestParameters.workspaceId, requestParameters.automationId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 }
 
 /**
- * NotificationChannelsApi - axios parameter creator
+ * NotificationChannelsAutomation - axios parameter creator
  * @export
  */
-export const NotificationChannelsApiAxiosParamCreator = function (configuration?: Configuration) {
+export const NotificationChannelsAutomationAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * Get latest in-platform notifications for the current user.
@@ -2722,13 +4137,13 @@ export const NotificationChannelsApiAxiosParamCreator = function (configuration?
          * Tests the existing notification channel by sending a test notification.
          * @summary Test existing notification channel.
          * @param {string} notificationChannelId
-         * @param {TestDestinationRequest} [testDestinationRequest]
+         * @param {AutomationTestDestinationRequest} [automationTestDestinationRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         testExistingNotificationChannel: async (
             notificationChannelId: string,
-            testDestinationRequest?: TestDestinationRequest,
+            automationTestDestinationRequest?: AutomationTestDestinationRequest,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'notificationChannelId' is not null or undefined
@@ -2761,11 +4176,13 @@ export const NotificationChannelsApiAxiosParamCreator = function (configuration?
                 ...options.headers,
             };
             const needsSerialization =
-                typeof testDestinationRequest !== "string" ||
+                typeof automationTestDestinationRequest !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
             localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(testDestinationRequest !== undefined ? testDestinationRequest : {})
-                : testDestinationRequest || "";
+                ? JSON.stringify(
+                      automationTestDestinationRequest !== undefined ? automationTestDestinationRequest : {},
+                  )
+                : automationTestDestinationRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2775,16 +4192,20 @@ export const NotificationChannelsApiAxiosParamCreator = function (configuration?
         /**
          * Tests the notification channel by sending a test notification.
          * @summary Test notification channel.
-         * @param {TestDestinationRequest} testDestinationRequest
+         * @param {AutomationTestDestinationRequest} automationTestDestinationRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         testNotificationChannel: async (
-            testDestinationRequest: TestDestinationRequest,
+            automationTestDestinationRequest: AutomationTestDestinationRequest,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
-            // verify required parameter 'testDestinationRequest' is not null or undefined
-            assertParamExists("testNotificationChannel", "testDestinationRequest", testDestinationRequest);
+            // verify required parameter 'automationTestDestinationRequest' is not null or undefined
+            assertParamExists(
+                "testNotificationChannel",
+                "automationTestDestinationRequest",
+                automationTestDestinationRequest,
+            );
             const localVarPath = `/api/v1/actions/notificationChannels/test`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2806,11 +4227,13 @@ export const NotificationChannelsApiAxiosParamCreator = function (configuration?
                 ...options.headers,
             };
             const needsSerialization =
-                typeof testDestinationRequest !== "string" ||
+                typeof automationTestDestinationRequest !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
             localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(testDestinationRequest !== undefined ? testDestinationRequest : {})
-                : testDestinationRequest || "";
+                ? JSON.stringify(
+                      automationTestDestinationRequest !== undefined ? automationTestDestinationRequest : {},
+                  )
+                : automationTestDestinationRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -2821,11 +4244,11 @@ export const NotificationChannelsApiAxiosParamCreator = function (configuration?
 };
 
 /**
- * NotificationChannelsApi - functional programming interface
+ * NotificationChannelsAutomation - functional programming interface
  * @export
  */
-export const NotificationChannelsApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = NotificationChannelsApiAxiosParamCreator(configuration);
+export const NotificationChannelsAutomationFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = NotificationChannelsAutomationAxiosParamCreator(configuration);
     return {
         /**
          * Get latest in-platform notifications for the current user.
@@ -2845,7 +4268,7 @@ export const NotificationChannelsApiFp = function (configuration?: Configuration
             size?: string,
             metaInclude?: Array<"total" | "ALL">,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Notifications>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutomationNotifications>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getNotifications(
                 workspaceId,
                 isRead,
@@ -2894,18 +4317,18 @@ export const NotificationChannelsApiFp = function (configuration?: Configuration
          * Tests the existing notification channel by sending a test notification.
          * @summary Test existing notification channel.
          * @param {string} notificationChannelId
-         * @param {TestDestinationRequest} [testDestinationRequest]
+         * @param {AutomationTestDestinationRequest} [automationTestDestinationRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async testExistingNotificationChannel(
             notificationChannelId: string,
-            testDestinationRequest?: TestDestinationRequest,
+            automationTestDestinationRequest?: AutomationTestDestinationRequest,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutomationTestResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.testExistingNotificationChannel(
                 notificationChannelId,
-                testDestinationRequest,
+                automationTestDestinationRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -2913,16 +4336,16 @@ export const NotificationChannelsApiFp = function (configuration?: Configuration
         /**
          * Tests the notification channel by sending a test notification.
          * @summary Test notification channel.
-         * @param {TestDestinationRequest} testDestinationRequest
+         * @param {AutomationTestDestinationRequest} automationTestDestinationRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async testNotificationChannel(
-            testDestinationRequest: TestDestinationRequest,
+            automationTestDestinationRequest: AutomationTestDestinationRequest,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AutomationTestResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.testNotificationChannel(
-                testDestinationRequest,
+                automationTestDestinationRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -2931,27 +4354,27 @@ export const NotificationChannelsApiFp = function (configuration?: Configuration
 };
 
 /**
- * NotificationChannelsApi - factory interface
+ * NotificationChannelsAutomation - factory interface
  * @export
  */
-export const NotificationChannelsApiFactory = function (
+export const NotificationChannelsAutomationFactory = function (
     configuration?: Configuration,
     basePath?: string,
     axios?: AxiosInstance,
 ) {
-    const localVarFp = NotificationChannelsApiFp(configuration);
+    const localVarFp = NotificationChannelsAutomationFp(configuration);
     return {
         /**
          * Get latest in-platform notifications for the current user.
          * @summary Get latest notifications.
-         * @param {NotificationChannelsApiGetNotificationsRequest} requestParameters Request parameters.
+         * @param {NotificationChannelsAutomationGetNotificationsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getNotifications(
-            requestParameters: NotificationChannelsApiGetNotificationsRequest,
+            requestParameters: NotificationChannelsAutomationGetNotificationsRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<Notifications> {
+        ): AxiosPromise<AutomationNotifications> {
             return localVarFp
                 .getNotifications(
                     requestParameters.workspaceId,
@@ -2966,12 +4389,12 @@ export const NotificationChannelsApiFactory = function (
         /**
          * Mark in-platform notification by its ID as read.
          * @summary Mark notification as read.
-         * @param {NotificationChannelsApiMarkAsReadNotificationRequest} requestParameters Request parameters.
+         * @param {NotificationChannelsAutomationMarkAsReadNotificationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         markAsReadNotification(
-            requestParameters: NotificationChannelsApiMarkAsReadNotificationRequest,
+            requestParameters: NotificationChannelsAutomationMarkAsReadNotificationRequest,
             options?: AxiosRequestConfig,
         ): AxiosPromise<void> {
             return localVarFp
@@ -2981,12 +4404,12 @@ export const NotificationChannelsApiFactory = function (
         /**
          * Mark all user in-platform notifications as read.
          * @summary Mark all notifications as read.
-         * @param {NotificationChannelsApiMarkAsReadNotificationAllRequest} requestParameters Request parameters.
+         * @param {NotificationChannelsAutomationMarkAsReadNotificationAllRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         markAsReadNotificationAll(
-            requestParameters: NotificationChannelsApiMarkAsReadNotificationAllRequest,
+            requestParameters: NotificationChannelsAutomationMarkAsReadNotificationAllRequest,
             options?: AxiosRequestConfig,
         ): AxiosPromise<void> {
             return localVarFp
@@ -2996,18 +4419,18 @@ export const NotificationChannelsApiFactory = function (
         /**
          * Tests the existing notification channel by sending a test notification.
          * @summary Test existing notification channel.
-         * @param {NotificationChannelsApiTestExistingNotificationChannelRequest} requestParameters Request parameters.
+         * @param {NotificationChannelsAutomationTestExistingNotificationChannelRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         testExistingNotificationChannel(
-            requestParameters: NotificationChannelsApiTestExistingNotificationChannelRequest,
+            requestParameters: NotificationChannelsAutomationTestExistingNotificationChannelRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<TestResponse> {
+        ): AxiosPromise<AutomationTestResponse> {
             return localVarFp
                 .testExistingNotificationChannel(
                     requestParameters.notificationChannelId,
-                    requestParameters.testDestinationRequest,
+                    requestParameters.automationTestDestinationRequest,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -3015,218 +4438,221 @@ export const NotificationChannelsApiFactory = function (
         /**
          * Tests the notification channel by sending a test notification.
          * @summary Test notification channel.
-         * @param {NotificationChannelsApiTestNotificationChannelRequest} requestParameters Request parameters.
+         * @param {NotificationChannelsAutomationTestNotificationChannelRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         testNotificationChannel(
-            requestParameters: NotificationChannelsApiTestNotificationChannelRequest,
+            requestParameters: NotificationChannelsAutomationTestNotificationChannelRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<TestResponse> {
+        ): AxiosPromise<AutomationTestResponse> {
             return localVarFp
-                .testNotificationChannel(requestParameters.testDestinationRequest, options)
+                .testNotificationChannel(requestParameters.automationTestDestinationRequest, options)
                 .then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * NotificationChannelsApi - interface
+ * NotificationChannelsAutomation - interface
  * @export
- * @interface NotificationChannelsApi
+ * @interface NotificationChannelsAutomation
  */
-export interface NotificationChannelsApiInterface {
+export interface NotificationChannelsAutomationInterface {
     /**
      * Get latest in-platform notifications for the current user.
      * @summary Get latest notifications.
-     * @param {NotificationChannelsApiGetNotificationsRequest} requestParameters Request parameters.
+     * @param {NotificationChannelsAutomationGetNotificationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof NotificationChannelsApiInterface
+     * @memberof NotificationChannelsAutomationInterface
      */
     getNotifications(
-        requestParameters: NotificationChannelsApiGetNotificationsRequest,
+        requestParameters: NotificationChannelsAutomationGetNotificationsRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<Notifications>;
+    ): AxiosPromise<AutomationNotifications>;
 
     /**
      * Mark in-platform notification by its ID as read.
      * @summary Mark notification as read.
-     * @param {NotificationChannelsApiMarkAsReadNotificationRequest} requestParameters Request parameters.
+     * @param {NotificationChannelsAutomationMarkAsReadNotificationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof NotificationChannelsApiInterface
+     * @memberof NotificationChannelsAutomationInterface
      */
     markAsReadNotification(
-        requestParameters: NotificationChannelsApiMarkAsReadNotificationRequest,
+        requestParameters: NotificationChannelsAutomationMarkAsReadNotificationRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
      * Mark all user in-platform notifications as read.
      * @summary Mark all notifications as read.
-     * @param {NotificationChannelsApiMarkAsReadNotificationAllRequest} requestParameters Request parameters.
+     * @param {NotificationChannelsAutomationMarkAsReadNotificationAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof NotificationChannelsApiInterface
+     * @memberof NotificationChannelsAutomationInterface
      */
     markAsReadNotificationAll(
-        requestParameters: NotificationChannelsApiMarkAsReadNotificationAllRequest,
+        requestParameters: NotificationChannelsAutomationMarkAsReadNotificationAllRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
      * Tests the existing notification channel by sending a test notification.
      * @summary Test existing notification channel.
-     * @param {NotificationChannelsApiTestExistingNotificationChannelRequest} requestParameters Request parameters.
+     * @param {NotificationChannelsAutomationTestExistingNotificationChannelRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof NotificationChannelsApiInterface
+     * @memberof NotificationChannelsAutomationInterface
      */
     testExistingNotificationChannel(
-        requestParameters: NotificationChannelsApiTestExistingNotificationChannelRequest,
+        requestParameters: NotificationChannelsAutomationTestExistingNotificationChannelRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<TestResponse>;
+    ): AxiosPromise<AutomationTestResponse>;
 
     /**
      * Tests the notification channel by sending a test notification.
      * @summary Test notification channel.
-     * @param {NotificationChannelsApiTestNotificationChannelRequest} requestParameters Request parameters.
+     * @param {NotificationChannelsAutomationTestNotificationChannelRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof NotificationChannelsApiInterface
+     * @memberof NotificationChannelsAutomationInterface
      */
     testNotificationChannel(
-        requestParameters: NotificationChannelsApiTestNotificationChannelRequest,
+        requestParameters: NotificationChannelsAutomationTestNotificationChannelRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<TestResponse>;
+    ): AxiosPromise<AutomationTestResponse>;
 }
 
 /**
- * Request parameters for getNotifications operation in NotificationChannelsApi.
+ * Request parameters for getNotifications operation in NotificationChannelsAutomation.
  * @export
- * @interface NotificationChannelsApiGetNotificationsRequest
+ * @interface NotificationChannelsAutomationGetNotificationsRequest
  */
-export interface NotificationChannelsApiGetNotificationsRequest {
+export interface NotificationChannelsAutomationGetNotificationsRequest {
     /**
      * Workspace ID to filter notifications by.
      * @type {string}
-     * @memberof NotificationChannelsApiGetNotifications
+     * @memberof NotificationChannelsAutomationGetNotifications
      */
     readonly workspaceId?: string;
 
     /**
      * Filter notifications by read status.
      * @type {boolean}
-     * @memberof NotificationChannelsApiGetNotifications
+     * @memberof NotificationChannelsAutomationGetNotifications
      */
     readonly isRead?: boolean;
 
     /**
      * Zero-based page index (0..N)
      * @type {string}
-     * @memberof NotificationChannelsApiGetNotifications
+     * @memberof NotificationChannelsAutomationGetNotifications
      */
     readonly page?: string;
 
     /**
      * The size of the page to be returned.
      * @type {string}
-     * @memberof NotificationChannelsApiGetNotifications
+     * @memberof NotificationChannelsAutomationGetNotifications
      */
     readonly size?: string;
 
     /**
      * Additional meta information to include in the response.
      * @type {Array<'total' | 'ALL'>}
-     * @memberof NotificationChannelsApiGetNotifications
+     * @memberof NotificationChannelsAutomationGetNotifications
      */
     readonly metaInclude?: Array<"total" | "ALL">;
 }
 
 /**
- * Request parameters for markAsReadNotification operation in NotificationChannelsApi.
+ * Request parameters for markAsReadNotification operation in NotificationChannelsAutomation.
  * @export
- * @interface NotificationChannelsApiMarkAsReadNotificationRequest
+ * @interface NotificationChannelsAutomationMarkAsReadNotificationRequest
  */
-export interface NotificationChannelsApiMarkAsReadNotificationRequest {
+export interface NotificationChannelsAutomationMarkAsReadNotificationRequest {
     /**
      * Notification ID to mark as read.
      * @type {string}
-     * @memberof NotificationChannelsApiMarkAsReadNotification
+     * @memberof NotificationChannelsAutomationMarkAsReadNotification
      */
     readonly notificationId: string;
 }
 
 /**
- * Request parameters for markAsReadNotificationAll operation in NotificationChannelsApi.
+ * Request parameters for markAsReadNotificationAll operation in NotificationChannelsAutomation.
  * @export
- * @interface NotificationChannelsApiMarkAsReadNotificationAllRequest
+ * @interface NotificationChannelsAutomationMarkAsReadNotificationAllRequest
  */
-export interface NotificationChannelsApiMarkAsReadNotificationAllRequest {
+export interface NotificationChannelsAutomationMarkAsReadNotificationAllRequest {
     /**
      * Workspace ID where to mark notifications as read.
      * @type {string}
-     * @memberof NotificationChannelsApiMarkAsReadNotificationAll
+     * @memberof NotificationChannelsAutomationMarkAsReadNotificationAll
      */
     readonly workspaceId?: string;
 }
 
 /**
- * Request parameters for testExistingNotificationChannel operation in NotificationChannelsApi.
+ * Request parameters for testExistingNotificationChannel operation in NotificationChannelsAutomation.
  * @export
- * @interface NotificationChannelsApiTestExistingNotificationChannelRequest
+ * @interface NotificationChannelsAutomationTestExistingNotificationChannelRequest
  */
-export interface NotificationChannelsApiTestExistingNotificationChannelRequest {
+export interface NotificationChannelsAutomationTestExistingNotificationChannelRequest {
     /**
      *
      * @type {string}
-     * @memberof NotificationChannelsApiTestExistingNotificationChannel
+     * @memberof NotificationChannelsAutomationTestExistingNotificationChannel
      */
     readonly notificationChannelId: string;
 
     /**
      *
-     * @type {TestDestinationRequest}
-     * @memberof NotificationChannelsApiTestExistingNotificationChannel
+     * @type {AutomationTestDestinationRequest}
+     * @memberof NotificationChannelsAutomationTestExistingNotificationChannel
      */
-    readonly testDestinationRequest?: TestDestinationRequest;
+    readonly automationTestDestinationRequest?: AutomationTestDestinationRequest;
 }
 
 /**
- * Request parameters for testNotificationChannel operation in NotificationChannelsApi.
+ * Request parameters for testNotificationChannel operation in NotificationChannelsAutomation.
  * @export
- * @interface NotificationChannelsApiTestNotificationChannelRequest
+ * @interface NotificationChannelsAutomationTestNotificationChannelRequest
  */
-export interface NotificationChannelsApiTestNotificationChannelRequest {
+export interface NotificationChannelsAutomationTestNotificationChannelRequest {
     /**
      *
-     * @type {TestDestinationRequest}
-     * @memberof NotificationChannelsApiTestNotificationChannel
+     * @type {AutomationTestDestinationRequest}
+     * @memberof NotificationChannelsAutomationTestNotificationChannel
      */
-    readonly testDestinationRequest: TestDestinationRequest;
+    readonly automationTestDestinationRequest: AutomationTestDestinationRequest;
 }
 
 /**
- * NotificationChannelsApi - object-oriented interface
+ * NotificationChannelsAutomation - object-oriented interface
  * @export
- * @class NotificationChannelsApi
+ * @class NotificationChannelsAutomation
  * @extends {BaseAPI}
  */
-export class NotificationChannelsApi extends BaseAPI implements NotificationChannelsApiInterface {
+export class NotificationChannelsAutomation
+    extends BaseAPI
+    implements NotificationChannelsAutomationInterface
+{
     /**
      * Get latest in-platform notifications for the current user.
      * @summary Get latest notifications.
-     * @param {NotificationChannelsApiGetNotificationsRequest} requestParameters Request parameters.
+     * @param {NotificationChannelsAutomationGetNotificationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof NotificationChannelsApi
+     * @memberof NotificationChannelsAutomation
      */
     public getNotifications(
-        requestParameters: NotificationChannelsApiGetNotificationsRequest = {},
+        requestParameters: NotificationChannelsAutomationGetNotificationsRequest = {},
         options?: AxiosRequestConfig,
     ) {
-        return NotificationChannelsApiFp(this.configuration)
+        return NotificationChannelsAutomationFp(this.configuration)
             .getNotifications(
                 requestParameters.workspaceId,
                 requestParameters.isRead,
@@ -3241,16 +4667,16 @@ export class NotificationChannelsApi extends BaseAPI implements NotificationChan
     /**
      * Mark in-platform notification by its ID as read.
      * @summary Mark notification as read.
-     * @param {NotificationChannelsApiMarkAsReadNotificationRequest} requestParameters Request parameters.
+     * @param {NotificationChannelsAutomationMarkAsReadNotificationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof NotificationChannelsApi
+     * @memberof NotificationChannelsAutomation
      */
     public markAsReadNotification(
-        requestParameters: NotificationChannelsApiMarkAsReadNotificationRequest,
+        requestParameters: NotificationChannelsAutomationMarkAsReadNotificationRequest,
         options?: AxiosRequestConfig,
     ) {
-        return NotificationChannelsApiFp(this.configuration)
+        return NotificationChannelsAutomationFp(this.configuration)
             .markAsReadNotification(requestParameters.notificationId, options)
             .then((request) => request(this.axios, this.basePath));
     }
@@ -3258,16 +4684,16 @@ export class NotificationChannelsApi extends BaseAPI implements NotificationChan
     /**
      * Mark all user in-platform notifications as read.
      * @summary Mark all notifications as read.
-     * @param {NotificationChannelsApiMarkAsReadNotificationAllRequest} requestParameters Request parameters.
+     * @param {NotificationChannelsAutomationMarkAsReadNotificationAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof NotificationChannelsApi
+     * @memberof NotificationChannelsAutomation
      */
     public markAsReadNotificationAll(
-        requestParameters: NotificationChannelsApiMarkAsReadNotificationAllRequest = {},
+        requestParameters: NotificationChannelsAutomationMarkAsReadNotificationAllRequest = {},
         options?: AxiosRequestConfig,
     ) {
-        return NotificationChannelsApiFp(this.configuration)
+        return NotificationChannelsAutomationFp(this.configuration)
             .markAsReadNotificationAll(requestParameters.workspaceId, options)
             .then((request) => request(this.axios, this.basePath));
     }
@@ -3275,19 +4701,19 @@ export class NotificationChannelsApi extends BaseAPI implements NotificationChan
     /**
      * Tests the existing notification channel by sending a test notification.
      * @summary Test existing notification channel.
-     * @param {NotificationChannelsApiTestExistingNotificationChannelRequest} requestParameters Request parameters.
+     * @param {NotificationChannelsAutomationTestExistingNotificationChannelRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof NotificationChannelsApi
+     * @memberof NotificationChannelsAutomation
      */
     public testExistingNotificationChannel(
-        requestParameters: NotificationChannelsApiTestExistingNotificationChannelRequest,
+        requestParameters: NotificationChannelsAutomationTestExistingNotificationChannelRequest,
         options?: AxiosRequestConfig,
     ) {
-        return NotificationChannelsApiFp(this.configuration)
+        return NotificationChannelsAutomationFp(this.configuration)
             .testExistingNotificationChannel(
                 requestParameters.notificationChannelId,
-                requestParameters.testDestinationRequest,
+                requestParameters.automationTestDestinationRequest,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -3296,17 +4722,17 @@ export class NotificationChannelsApi extends BaseAPI implements NotificationChan
     /**
      * Tests the notification channel by sending a test notification.
      * @summary Test notification channel.
-     * @param {NotificationChannelsApiTestNotificationChannelRequest} requestParameters Request parameters.
+     * @param {NotificationChannelsAutomationTestNotificationChannelRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof NotificationChannelsApi
+     * @memberof NotificationChannelsAutomation
      */
     public testNotificationChannel(
-        requestParameters: NotificationChannelsApiTestNotificationChannelRequest,
+        requestParameters: NotificationChannelsAutomationTestNotificationChannelRequest,
         options?: AxiosRequestConfig,
     ) {
-        return NotificationChannelsApiFp(this.configuration)
-            .testNotificationChannel(requestParameters.testDestinationRequest, options)
+        return NotificationChannelsAutomationFp(this.configuration)
+            .testNotificationChannel(requestParameters.automationTestDestinationRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
 }

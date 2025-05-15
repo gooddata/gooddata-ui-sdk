@@ -540,7 +540,25 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
 
         return this.authCall(async (client) => {
+            const dashboardResponse = await client.entities.getEntityAnalyticalDashboards(
+                {
+                    workspaceId: this.workspace,
+                    objectId: dashboardId,
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            );
+
+            const { title } = convertDashboard(dashboardResponse.data);
+            const sanitizedTitle = title.replace(/[^a-z0-9]/gi, "_").toLowerCase();
+            const fileName = `${sanitizedTitle}_export`;
+
             const slideshowExport = await client.export.createDashboardExportRequest({
+                dashboardTabularExportRequest: {
+                    fileName,
+                    format: "XLSX",
+                },
                 workspaceId: this.workspace,
                 dashboardId,
             });

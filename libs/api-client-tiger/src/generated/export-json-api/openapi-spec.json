@@ -133,7 +133,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Raw export request created successfully.",
+                        "description": "Slides export request created successfully.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -193,6 +193,50 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/export/image": {
+            "post": {
+                "tags": ["Image export", "actions"],
+                "summary": "(EXPERIMENTAL) Create image export request",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. An image export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
+                "operationId": "createImageExport",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ImageExportRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Image export request created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExportResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT_PDF"],
+                    "description": "Permissions required to execute image export."
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/analyticalDashboards/{dashboardId}/export/tabular": {
             "post": {
                 "tags": ["Tabular export", "actions"],
@@ -217,6 +261,16 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DashboardTabularExportRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
                 "responses": {
                     "201": {
                         "description": "Tabular export request created successfully.",
@@ -651,6 +705,136 @@
                 },
                 "x-gdc-security-info": {
                     "permissions": ["EXPORT_TABULAR"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/image/{exportId}/metadata": {
+            "get": {
+                "tags": ["Image export", "actions"],
+                "summary": "(EXPERIMENTAL) Retrieve metadata context",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/image endpoint. The metadata structure is not verified.",
+                "operationId": "getImageExportMetadata",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "exportId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Json metadata representation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT_PDF"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/export/image/{exportId}": {
+            "get": {
+                "tags": ["Image export", "actions"],
+                "summary": "(EXPERIMENTAL) Retrieve exported files",
+                "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn't ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.",
+                "operationId": "getImageExport",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "exportId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Binary export result.",
+                        "headers": {
+                            "Content-Disposition": {
+                                "style": "simple",
+                                "schema": {
+                                    "pattern": "attachment; filename='[^']+'",
+                                    "type": "string",
+                                    "example": "attachment; filename='result.png'"
+                                }
+                            }
+                        },
+                        "content": {
+                            "image/png": {}
+                        }
+                    },
+                    "202": {
+                        "description": "Request is accepted, provided exportId exists, but export is not yet ready.",
+                        "content": {
+                            "image/png": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "short": {
+                                                "type": "integer",
+                                                "format": "int32"
+                                            },
+                                            "char": {
+                                                "type": "string"
+                                            },
+                                            "int": {
+                                                "type": "integer",
+                                                "format": "int32"
+                                            },
+                                            "long": {
+                                                "type": "integer",
+                                                "format": "int64"
+                                            },
+                                            "float": {
+                                                "type": "number",
+                                                "format": "float"
+                                            },
+                                            "double": {
+                                                "type": "number",
+                                                "format": "double"
+                                            },
+                                            "direct": {
+                                                "type": "boolean"
+                                            },
+                                            "readOnly": {
+                                                "type": "boolean"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["EXPORT_PDF"],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
@@ -1843,6 +2027,238 @@
                     }
                 },
                 "description": "Metric defined by referencing a MAQL metric or an LDM fact object with aggregation."
+            },
+            "ImageExportRequest": {
+                "required": ["dashboardId", "fileName", "format"],
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "type": "string",
+                        "description": "Requested resulting file type.",
+                        "example": "PNG",
+                        "enum": ["PNG"]
+                    },
+                    "fileName": {
+                        "type": "string",
+                        "description": "File name to be used for retrieving the image document.",
+                        "example": "filename"
+                    },
+                    "dashboardId": {
+                        "type": "string",
+                        "description": "Dashboard identifier",
+                        "example": "761cd28b-3f57-4ac9-bbdc-1c552cc0d1d0"
+                    },
+                    "widgetIds": {
+                        "maxItems": 1,
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "List of widget identifiers to be exported. Note that only one widget is currently supported.",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "metadata": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    }
+                },
+                "description": "Export request object describing the export properties and metadata for image exports."
+            },
+            "AttributeElements": {
+                "type": "object"
+            },
+            "AttributeFilterByDate": {
+                "required": ["filterLocalIdentifier", "isCommonDate"],
+                "type": "object",
+                "properties": {
+                    "filterLocalIdentifier": {
+                        "type": "string"
+                    },
+                    "isCommonDate": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "AttributeFilterParent": {
+                "required": ["filterLocalIdentifier", "over"],
+                "type": "object",
+                "properties": {
+                    "filterLocalIdentifier": {
+                        "type": "string"
+                    },
+                    "over": {
+                        "$ref": "#/components/schemas/Over"
+                    }
+                }
+            },
+            "DashboardAttributeFilter": {
+                "required": ["attributeFilter"],
+                "type": "object",
+                "properties": {
+                    "attributeFilter": {
+                        "required": ["attributeElements", "displayForm", "negativeSelection"],
+                        "type": "object",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/DashboardFilter"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "displayForm": {
+                                        "type": "string"
+                                    },
+                                    "negativeSelection": {
+                                        "type": "boolean"
+                                    },
+                                    "attributeElements": {
+                                        "$ref": "#/components/schemas/AttributeElements"
+                                    },
+                                    "filterElementsBy": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/AttributeFilterParent"
+                                        }
+                                    },
+                                    "filterElementsByDate": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/AttributeFilterByDate"
+                                        }
+                                    },
+                                    "validateElementsBy": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "selectionMode": {
+                                        "type": "string",
+                                        "enum": ["single", "multi"]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "DashboardDateFilter": {
+                "required": ["dateFilter"],
+                "type": "object",
+                "properties": {
+                    "dateFilter": {
+                        "required": ["granularity", "type"],
+                        "type": "object",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/DashboardFilter"
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "enum": ["relative", "absolute"]
+                                    },
+                                    "granularity": {
+                                        "type": "string",
+                                        "enum": [
+                                            "ALL_TIME_GRANULARITY",
+                                            "GDC.time.year",
+                                            "GDC.time.week_us",
+                                            "GDC.time.week_in_year",
+                                            "GDC.time.week_in_quarter",
+                                            "GDC.time.week",
+                                            "GDC.time.euweek_in_year",
+                                            "GDC.time.euweek_in_quarter",
+                                            "GDC.time.quarter",
+                                            "GDC.time.quarter_in_year",
+                                            "GDC.time.month",
+                                            "GDC.time.month_in_quarter",
+                                            "GDC.time.month_in_year",
+                                            "GDC.time.day_in_year",
+                                            "GDC.time.day_in_quarter",
+                                            "GDC.time.day_in_month",
+                                            "GDC.time.day_in_week",
+                                            "GDC.time.day_in_euweek",
+                                            "GDC.time.date",
+                                            "GDC.time.hour",
+                                            "GDC.time.hour_in_day",
+                                            "GDC.time.minute",
+                                            "GDC.time.minute_in_hour"
+                                        ]
+                                    },
+                                    "from": {
+                                        "type": "string"
+                                    },
+                                    "to": {
+                                        "type": "string"
+                                    },
+                                    "dataSet": {
+                                        "type": "string"
+                                    },
+                                    "attribute": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "DashboardFilter": {
+                "type": "object",
+                "properties": {
+                    "localIdentifier": {
+                        "type": "string"
+                    }
+                }
+            },
+            "DashboardTabularExportRequest": {
+                "required": ["fileName", "format"],
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "type": "string",
+                        "description": "Requested tabular export type.",
+                        "example": "XLSX",
+                        "enum": ["XLSX"]
+                    },
+                    "fileName": {
+                        "type": "string",
+                        "description": "Filename of downloaded file without extension.",
+                        "example": "result"
+                    },
+                    "dashboardFiltersOverride": {
+                        "type": "array",
+                        "description": "List of filters that will be used instead of the default dashboard filters.",
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/DashboardAttributeFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/DashboardDateFilter"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "description": "Export request object describing the export properties for dashboard tabular exports."
+            },
+            "Over": {
+                "required": ["attributes"],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
             }
         }
     }

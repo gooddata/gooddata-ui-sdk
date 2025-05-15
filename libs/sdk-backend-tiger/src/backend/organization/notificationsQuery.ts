@@ -1,11 +1,11 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { INotificationsQuery, INotificationsQueryResult } from "@gooddata/sdk-backend-spi";
 import { INotification } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { convertNotificationFromBackend } from "../../convertors/fromBackend/NotificationsConvertor.js";
-import { AutomationActionsApiGetNotificationsRequest } from "@gooddata/api-client-tiger";
+import { ActionsAutomationGetNotificationsRequest } from "@gooddata/api-client-tiger";
 import isNil from "lodash/isNil.js";
 
 export class NotificationsQuery implements INotificationsQuery {
@@ -44,7 +44,7 @@ export class NotificationsQuery implements INotificationsQuery {
     query(): Promise<INotificationsQueryResult> {
         return ServerPaging.for(
             async ({ limit, offset }) => {
-                let params: AutomationActionsApiGetNotificationsRequest = {
+                let params: ActionsAutomationGetNotificationsRequest = {
                     workspaceId: this.workspaceId,
                     page: String(offset / limit),
                     size: String(limit),
