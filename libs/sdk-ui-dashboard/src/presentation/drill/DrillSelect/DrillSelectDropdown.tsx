@@ -1,11 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 
-import React, { useMemo } from "react";
+import React, { useMemo, useCallback, useEffect, useRef } from "react";
 import stringify from "json-stable-stringify";
 import { useIntl, IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
+import partition from "lodash/partition.js";
 import { IDrillEvent, UnexpectedSdkError } from "@gooddata/sdk-ui";
-import { Overlay, UiFocusTrap } from "@gooddata/sdk-ui-kit";
+import { Overlay, UiFocusTrap, UiMenu } from "@gooddata/sdk-ui-kit";
 import { DashboardDrillDefinition, isDrillDownDefinition } from "../../../types.js";
 import {
     IInsight,
@@ -23,7 +24,6 @@ import {
     IWidget,
 } from "@gooddata/sdk-model";
 import { isDrillToUrl } from "../types.js";
-import { DrillSelectListBody } from "./DrillSelectListBody.js";
 import {
     getDrillDownTitle,
     getDrillOriginAttributeElementTitle,
@@ -42,6 +42,8 @@ import { dashboardMatch } from "../utils/dashboardPredicate.js";
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import compact from "lodash/compact.js";
+import { DrillSelectDropdownMenuItem } from "./DrillSelectDropdownMenuItem.js";
+import { useDrillSelectDropdownMenuItems } from "../hooks/useDrillSelectDropdownMenuItems.js";
 
 export interface DrillSelectDropdownProps extends DrillSelectContext {
     dropDownAnchorClass: string;
@@ -50,14 +52,79 @@ export interface DrillSelectDropdownProps extends DrillSelectContext {
     onSelect: (item: DashboardDrillDefinition) => void;
 }
 
-export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = (props) => {
-    const { isOpen, dropDownAnchorClass, onClose, onSelect, drillDefinitions, drillEvent } = props;
+export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = ({
+    isOpen,
+    dropDownAnchorClass,
+    onClose,
+    onSelect,
+    drillDefinitions,
+    drillEvent,
+}) => {
     const intl = useIntl();
+
     const dashboardList = useDashboardSelector(selectAccessibleDashboards);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const insights = useDashboardSelector(selectInsightsMap);
     const widget = useDashboardSelector(selectWidgetByRef(drillEvent.widgetRef));
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
+
+    const stopPropagation = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+        e.stopPropagation();
+    }, []);
+
+    const previouslyFocusedRef = useRef<HTMLElement>(document.activeElement as HTMLElement);
+
+    useEffect(() => {
+        if (isOpen) {
+            previouslyFocusedRef.current = document.activeElement as HTMLElement;
+        }
+    }, [isOpen]);
+
+    const handleClose = () => {
+        onClose();
+    };
+
+    const removeHighchartsFocusBorders = useCallback(() => {
+        const focusBorders = document.getElementsByClassName("highcharts-focus-border");
+        Array.from(focusBorders).forEach((el) => el.remove());
+    }, []);
+
+    const findNextFocusableVisualisation = useCallback(
+        (currentElement: HTMLElement | null): HTMLElement | null => {
+            if (!currentElement) {
+                return null;
+            }
+
+            const focusableElements = Array.from(document.querySelectorAll<HTMLElement>("figure"));
+            const currentIndex = focusableElements.findIndex((el) => el === currentElement.closest("figure"));
+
+            if (currentIndex === -1) {
+                return null;
+            }
+
+            const nextIndex = (currentIndex + 1) % focusableElements.length;
+            return nextIndex === 0 ? null : focusableElements[nextIndex] ?? null;
+        },
+        [],
+    );
+
+    const handleKeyDown = useCallback(
+        (e: React.KeyboardEvent) => {
+            if (e.key !== "Tab") {
+                return;
+            }
+
+            e.preventDefault();
+            removeHighchartsFocusBorders();
+            onClose();
+
+            const nextElement = findNextFocusableVisualisation(previouslyFocusedRef.current);
+            if (nextElement) {
+                nextElement.focus();
+            }
+        },
+        [previouslyFocusedRef, onClose, removeHighchartsFocusBorders, findNextFocusableVisualisation],
+    );
 
     const drillSelectItems = useMemo(
         () =>
@@ -83,20 +150,58 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = (props) =
         ],
     );
 
-    return isOpen ? (
+    const [drillDownAndCrossFilteringItems, drillItems] = partition(
+        drillSelectItems,
+        (item: DrillSelectItem) =>
+            isDrillDownDefinition(item.drillDefinition) || isCrossFiltering(item.drillDefinition),
+    );
+
+    const [drillDownItems, crossFilteringItems] = partition(
+        drillDownAndCrossFilteringItems,
+        (item: DrillSelectItem) => isDrillDownDefinition(item.drillDefinition),
+    );
+
+    const menuItems = useDrillSelectDropdownMenuItems({
+        drillDownItems,
+        drillItems,
+        crossFilteringItems,
+        onSelect,
+    });
+
+    if (!isOpen) {
+        return null;
+    }
+
+    return (
         <div className="gd-drill-modal-picker-overlay-mask">
             <Overlay
                 closeOnOutsideClick={true}
                 closeOnEscape={true}
                 alignTo={`.${dropDownAnchorClass}`}
-                onClose={onClose}
+                onClose={handleClose}
             >
                 <UiFocusTrap autofocusOnOpen={true}>
-                    <DrillSelectListBody items={drillSelectItems} onSelect={onSelect} />
+                    <div
+                        onScroll={stopPropagation}
+                        className="gd-drill-modal-picker-dropdown s-drill-item-selector-dropdown"
+                    >
+                        <UiMenu
+                            items={menuItems}
+                            onSelect={(item) => onSelect(item.data.drillDefinition!)}
+                            onClose={handleClose}
+                            onUnhandledKeyDown={handleKeyDown}
+                            className="gd-drill-modal-picker-body"
+                            ariaAttributes={{
+                                id: "drill-select-menu",
+                                "aria-label": intl.formatMessage({ id: "drill_modal_picker.label" }),
+                            }}
+                            InteractiveItemComponent={DrillSelectDropdownMenuItem}
+                        />
+                    </div>
                 </UiFocusTrap>
             </Overlay>
         </div>
-    ) : null;
+    );
 };
 
 const getDashboardTitle = (dashboardRef: ObjRef, dashboardList: IListedDashboard[]) => {

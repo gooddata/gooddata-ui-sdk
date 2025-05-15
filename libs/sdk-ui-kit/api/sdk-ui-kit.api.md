@@ -1656,7 +1656,7 @@ export interface IDomNativeProps {
 // @internal (undocumented)
 export interface IDropdownBodyRenderProps {
     // (undocumented)
-    ariaAttributes: Pick<React_2.AriaAttributes, "aria-labelledby"> & {
+    ariaAttributes: Pick<React_2.AriaAttributes, "aria-labelledby" | "aria-label"> & {
         role: React_2.AriaAttributes["aria-haspopup"] & React_2.AriaRole;
         id: string;
     };

@@ -20,9 +20,11 @@ export function DefaultUiMenuGroupItemComponent<T extends IUiMenuItemData = obje
 
     const { makeItemId, ItemComponent } = useContextStore(selector);
 
+    const menuGroupItemId = makeItemId(item);
+
     return (
-        <ul className={e("group")} role={"group"} aria-labelledby={makeItemId(item)}>
-            <li className={e("group-title-container")} role={"presentation"} id={makeItemId(item)}>
+        <ul className={e("group")} role={"group"} aria-labelledby={menuGroupItemId}>
+            <li className={e("group-title-container")} role={"presentation"} id={menuGroupItemId}>
                 <ShortenedText className={e("group-title")} ellipsisPosition={"end"}>
                     {item.stringTitle}
                 </ShortenedText>

@@ -64,7 +64,7 @@ export interface IDropdownButtonRenderProps {
 export interface IDropdownBodyRenderProps {
     isMobile: boolean;
     closeDropdown: () => void;
-    ariaAttributes: Pick<React.AriaAttributes, "aria-labelledby"> & {
+    ariaAttributes: Pick<React.AriaAttributes, "aria-labelledby" | "aria-label"> & {
         role: React.AriaAttributes["aria-haspopup"] & React.AriaRole;
         id: string;
     };
