@@ -74,7 +74,8 @@ const specs = [
     {
         path: "/api/v1/schemas/automation",
         name: "automation-json-api",
-        // modelNamePrefix: "Result" // we should consider prefixing in next major, due to lot of name clashes
+        modelNamePrefix: "Automation",
+        apiNameSuffix: "Automation",
     },
 ];
 
@@ -115,6 +116,10 @@ const generate = async (specMeta, outputDir, outputFile) => {
 
     if (specMeta.modelNamePrefix) {
         command += ` --model-name-prefix=${specMeta.modelNamePrefix}`;
+    }
+
+    if (specMeta.apiNameSuffix) {
+        command += ` --api-name-suffix=${specMeta.apiNameSuffix}`;
     }
 
     await execPromise(command);

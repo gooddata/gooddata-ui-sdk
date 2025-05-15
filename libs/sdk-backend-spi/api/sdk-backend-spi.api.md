@@ -476,6 +476,11 @@ export interface ICommentExpressionToken {
 }
 
 // @alpha
+export interface IDashboardExportTabularOptions {
+    title?: string;
+}
+
+// @alpha
 export interface IDashboardReferences {
     dataSets?: IDataSetMetadataObject[];
     insights: IInsight[];
@@ -1421,7 +1426,7 @@ export interface IWorkspaceDashboardsService {
         widgetIds?: ObjRef[];
         filename?: string;
     }): Promise<IExportResult>;
-    exportDashboardToTabular(ref: ObjRef): Promise<IExportResult>;
+    exportDashboardToTabular(ref: ObjRef, options?: IDashboardExportTabularOptions): Promise<IExportResult>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
     getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions>;

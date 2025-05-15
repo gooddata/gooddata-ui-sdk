@@ -34,6 +34,7 @@ import {
     IDashboardsQuery,
     IRawExportCustomOverrides,
     walkLayout,
+    IDashboardExportTabularOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -536,11 +537,37 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
     };
 
-    public exportDashboardToTabular = async (dashboardRef: ObjRef): Promise<IExportResult> => {
+    public exportDashboardToTabular = async (
+        dashboardRef: ObjRef,
+        options?: IDashboardExportTabularOptions,
+    ): Promise<IExportResult> => {
         const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
 
         return this.authCall(async (client) => {
+            let title: string;
+            if (options?.title) {
+                title = options.title;
+            } else {
+                const dashboardResponse = await client.entities.getEntityAnalyticalDashboards(
+                    {
+                        workspaceId: this.workspace,
+                        objectId: dashboardId,
+                    },
+                    {
+                        headers: jsonApiHeaders,
+                    },
+                );
+                title = convertDashboard(dashboardResponse.data).title;
+            }
+
+            const sanitizedTitle = title.replace(/[^a-z0-9]/gi, "_").toLowerCase();
+            const fileName = `${sanitizedTitle}_export`;
+
             const slideshowExport = await client.export.createDashboardExportRequest({
+                dashboardTabularExportRequest: {
+                    fileName,
+                    format: "XLSX",
+                },
                 workspaceId: this.workspace,
                 dashboardId,
             });

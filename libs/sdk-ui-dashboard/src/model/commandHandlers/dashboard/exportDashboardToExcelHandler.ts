@@ -11,13 +11,17 @@ import {
     dashboardExportToExcelRequested,
     dashboardExportToExcelResolved,
 } from "../../events/dashboard.js";
-import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
+import { selectDashboardRef, selectDashboardTitle } from "../../store/meta/metaSelectors.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 
-function exportDashboardToTabular(ctx: DashboardContext, dashboardRef: ObjRef): Promise<IExportResult> {
+function exportDashboardToTabular(
+    ctx: DashboardContext,
+    dashboardRef: ObjRef,
+    title?: string,
+): Promise<IExportResult> {
     const { backend, workspace } = ctx;
-    return backend.workspace(workspace).dashboards().exportDashboardToTabular(dashboardRef);
+    return backend.workspace(workspace).dashboards().exportDashboardToTabular(dashboardRef, { title });
 }
 
 export function* exportDashboardToExcelHandler(
@@ -31,10 +35,12 @@ export function* exportDashboardToExcelHandler(
         throw invalidArgumentsProvided(ctx, cmd, "Dashboard to export to EXCEL must have an ObjRef.");
     }
 
+    const title = yield select(selectDashboardTitle);
     const result: PromiseFnReturnType<typeof exportDashboardToTabular> = yield call(
         exportDashboardToTabular,
         ctx,
         dashboardRef,
+        title,
     );
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

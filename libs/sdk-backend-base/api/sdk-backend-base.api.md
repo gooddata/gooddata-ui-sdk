@@ -44,6 +44,7 @@ import { IClusteringResult } from '@gooddata/sdk-backend-spi';
 import { IDashboard } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
+import { IDashboardExportTabularOptions } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardFilterView } from '@gooddata/sdk-model';
 import { IDashboardMetadataObject } from '@gooddata/sdk-model';
@@ -578,7 +579,7 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         filename?: string;
     }): Promise<IExportResult>;
     // (undocumented)
-    exportDashboardToTabular(ref: ObjRef): Promise<IExportResult>;
+    exportDashboardToTabular(ref: ObjRef, options?: IDashboardExportTabularOptions): Promise<IExportResult>;
     // (undocumented)
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     // (undocumented)

@@ -398,6 +398,25 @@ export type ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum =
 export type AttributeFilter = NegativeAttributeFilter | PositiveAttributeFilter;
 
 /**
+ *
+ * @export
+ * @interface AttributeFilterByDate
+ */
+export interface AttributeFilterByDate {
+    /**
+     *
+     * @type {string}
+     * @memberof AttributeFilterByDate
+     */
+    filterLocalIdentifier: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof AttributeFilterByDate
+     */
+    isCommonDate: boolean;
+}
+/**
  * Filter on specific set of label values.
  * @export
  * @interface AttributeFilterElements
@@ -409,6 +428,25 @@ export interface AttributeFilterElements {
      * @memberof AttributeFilterElements
      */
     values: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface AttributeFilterParent
+ */
+export interface AttributeFilterParent {
+    /**
+     *
+     * @type {string}
+     * @memberof AttributeFilterParent
+     */
+    filterLocalIdentifier: string;
+    /**
+     *
+     * @type {Over}
+     * @memberof AttributeFilterParent
+     */
+    over: Over;
 }
 /**
  *
@@ -562,6 +600,78 @@ export interface CustomOverride {
     metrics?: { [key: string]: CustomMetric };
 }
 /**
+ *
+ * @export
+ * @interface DashboardAttributeFilter
+ */
+export interface DashboardAttributeFilter {
+    /**
+     *
+     * @type {DashboardFilter & object}
+     * @memberof DashboardAttributeFilter
+     */
+    attributeFilter: DashboardFilter & object;
+}
+/**
+ *
+ * @export
+ * @interface DashboardDateFilter
+ */
+export interface DashboardDateFilter {
+    /**
+     *
+     * @type {DashboardFilter & object}
+     * @memberof DashboardDateFilter
+     */
+    dateFilter: DashboardFilter & object;
+}
+/**
+ *
+ * @export
+ * @interface DashboardFilter
+ */
+export interface DashboardFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof DashboardFilter
+     */
+    localIdentifier?: string;
+}
+/**
+ * Export request object describing the export properties for dashboard tabular exports.
+ * @export
+ * @interface DashboardTabularExportRequest
+ */
+export interface DashboardTabularExportRequest {
+    /**
+     * Requested tabular export type.
+     * @type {string}
+     * @memberof DashboardTabularExportRequest
+     */
+    format: DashboardTabularExportRequestFormatEnum;
+    /**
+     * Filename of downloaded file without extension.
+     * @type {string}
+     * @memberof DashboardTabularExportRequest
+     */
+    fileName: string;
+    /**
+     * List of filters that will be used instead of the default dashboard filters.
+     * @type {Array<DashboardAttributeFilter | DashboardDateFilter>}
+     * @memberof DashboardTabularExportRequest
+     */
+    dashboardFiltersOverride?: Array<DashboardAttributeFilter | DashboardDateFilter>;
+}
+
+export const DashboardTabularExportRequestFormatEnum = {
+    XLSX: "XLSX",
+} as const;
+
+export type DashboardTabularExportRequestFormatEnum =
+    typeof DashboardTabularExportRequestFormatEnum[keyof typeof DashboardTabularExportRequestFormatEnum];
+
+/**
  * @type DateFilter
  * Abstract filter definition type for dates.
  * @export
@@ -621,6 +731,51 @@ export type FilterDefinition =
  * @export
  */
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
+
+/**
+ * Export request object describing the export properties and metadata for image exports.
+ * @export
+ * @interface ImageExportRequest
+ */
+export interface ImageExportRequest {
+    /**
+     * Requested resulting file type.
+     * @type {string}
+     * @memberof ImageExportRequest
+     */
+    format: ImageExportRequestFormatEnum;
+    /**
+     * File name to be used for retrieving the image document.
+     * @type {string}
+     * @memberof ImageExportRequest
+     */
+    fileName: string;
+    /**
+     * Dashboard identifier
+     * @type {string}
+     * @memberof ImageExportRequest
+     */
+    dashboardId: string;
+    /**
+     * List of widget identifiers to be exported. Note that only one widget is currently supported.
+     * @type {Array<string>}
+     * @memberof ImageExportRequest
+     */
+    widgetIds?: Array<string>;
+    /**
+     * Metadata definition in free-form JSON format.
+     * @type {object}
+     * @memberof ImageExportRequest
+     */
+    metadata?: object | null;
+}
+
+export const ImageExportRequestFormatEnum = {
+    PNG: "PNG",
+} as const;
+
+export type ImageExportRequestFormatEnum =
+    typeof ImageExportRequestFormatEnum[keyof typeof ImageExportRequestFormatEnum];
 
 /**
  * Filter in form of direct MAQL query.
@@ -821,6 +976,19 @@ export interface NegativeAttributeFilterNegativeAttributeFilter {
      * @memberof NegativeAttributeFilterNegativeAttributeFilter
      */
     label: AfmIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface Over
+ */
+export interface Over {
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof Over
+     */
+    attributes: Array<string>;
 }
 /**
  * Custom CSS styles for the table. (PDF, HTML)
@@ -1593,18 +1761,26 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          * @summary (EXPERIMENTAL) Create dashboard tabular export request
          * @param {string} workspaceId
          * @param {string} dashboardId
+         * @param {DashboardTabularExportRequest} dashboardTabularExportRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createDashboardExportRequest: async (
             workspaceId: string,
             dashboardId: string,
+            dashboardTabularExportRequest: DashboardTabularExportRequest,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("createDashboardExportRequest", "workspaceId", workspaceId);
             // verify required parameter 'dashboardId' is not null or undefined
             assertParamExists("createDashboardExportRequest", "dashboardId", dashboardId);
+            // verify required parameter 'dashboardTabularExportRequest' is not null or undefined
+            assertParamExists(
+                "createDashboardExportRequest",
+                "dashboardTabularExportRequest",
+                dashboardTabularExportRequest,
+            );
             const localVarPath =
                 `/api/v1/actions/workspaces/{workspaceId}/analyticalDashboards/{dashboardId}/export/tabular`
                     .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
@@ -1619,6 +1795,8 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {
@@ -1626,6 +1804,66 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 ...headersFromBaseOptions,
                 ...options.headers,
             };
+            const needsSerialization =
+                typeof dashboardTabularExportRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      dashboardTabularExportRequest !== undefined ? dashboardTabularExportRequest : {},
+                  )
+                : dashboardTabularExportRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. An image export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create image export request
+         * @param {string} workspaceId
+         * @param {ImageExportRequest} imageExportRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createImageExport: async (
+            workspaceId: string,
+            imageExportRequest: ImageExportRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("createImageExport", "workspaceId", workspaceId);
+            // verify required parameter 'imageExportRequest' is not null or undefined
+            assertParamExists("createImageExport", "imageExportRequest", imageExportRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/image`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof imageExportRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(imageExportRequest !== undefined ? imageExportRequest : {})
+                : imageExportRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1884,6 +2122,92 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getImageExport: async (
+            workspaceId: string,
+            exportId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getImageExport", "workspaceId", workspaceId);
+            // verify required parameter 'exportId' is not null or undefined
+            assertParamExists("getImageExport", "exportId", exportId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/image/{exportId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/image endpoint. The metadata structure is not verified.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getImageExportMetadata: async (
+            workspaceId: string,
+            exportId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getImageExportMetadata", "workspaceId", workspaceId);
+            // verify required parameter 'exportId' is not null or undefined
+            assertParamExists("getImageExportMetadata", "exportId", exportId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/image/{exportId}/metadata`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified.
          * @summary Retrieve metadata context
          * @param {string} workspaceId
@@ -2113,17 +2437,40 @@ export const ActionsApiFp = function (configuration?: Configuration) {
          * @summary (EXPERIMENTAL) Create dashboard tabular export request
          * @param {string} workspaceId
          * @param {string} dashboardId
+         * @param {DashboardTabularExportRequest} dashboardTabularExportRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async createDashboardExportRequest(
             workspaceId: string,
             dashboardId: string,
+            dashboardTabularExportRequest: DashboardTabularExportRequest,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createDashboardExportRequest(
                 workspaceId,
                 dashboardId,
+                dashboardTabularExportRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. An image export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create image export request
+         * @param {string} workspaceId
+         * @param {ImageExportRequest} imageExportRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createImageExport(
+            workspaceId: string,
+            imageExportRequest: ImageExportRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createImageExport(
+                workspaceId,
+                imageExportRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -2222,6 +2569,46 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getExportedFile(
+                workspaceId,
+                exportId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getImageExport(
+            workspaceId: string,
+            exportId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getImageExport(
+                workspaceId,
+                exportId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/image endpoint. The metadata structure is not verified.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getImageExportMetadata(
+            workspaceId: string,
+            exportId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getImageExportMetadata(
                 workspaceId,
                 exportId,
                 options,
@@ -2357,6 +2744,26 @@ export const ActionsApiFactory = function (
                 .createDashboardExportRequest(
                     requestParameters.workspaceId,
                     requestParameters.dashboardId,
+                    requestParameters.dashboardTabularExportRequest,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. An image export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create image export request
+         * @param {ActionsApiCreateImageExportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createImageExport(
+            requestParameters: ActionsApiCreateImageExportRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ExportResponse> {
+            return localVarFp
+                .createImageExport(
+                    requestParameters.workspaceId,
+                    requestParameters.imageExportRequest,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -2446,6 +2853,36 @@ export const ActionsApiFactory = function (
         ): AxiosPromise<void> {
             return localVarFp
                 .getExportedFile(requestParameters.workspaceId, requestParameters.exportId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {ActionsApiGetImageExportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getImageExport(
+            requestParameters: ActionsApiGetImageExportRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .getImageExport(requestParameters.workspaceId, requestParameters.exportId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/image endpoint. The metadata structure is not verified.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * @param {ActionsApiGetImageExportMetadataRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getImageExportMetadata(
+            requestParameters: ActionsApiGetImageExportMetadataRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .getImageExportMetadata(requestParameters.workspaceId, requestParameters.exportId, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -2546,6 +2983,19 @@ export interface ActionsApiInterface {
     ): AxiosPromise<ExportResponse>;
 
     /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. An image export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create image export request
+     * @param {ActionsApiCreateImageExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    createImageExport(
+        requestParameters: ActionsApiCreateImageExportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ExportResponse>;
+
+    /**
      * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
      * @summary Create visual - pdf export request
      * @param {ActionsApiCreatePdfExportRequest} requestParameters Request parameters.
@@ -2607,6 +3057,32 @@ export interface ActionsApiInterface {
      */
     getExportedFile(
         requestParameters: ActionsApiGetExportedFileRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary (EXPERIMENTAL) Retrieve exported files
+     * @param {ActionsApiGetImageExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getImageExport(
+        requestParameters: ActionsApiGetImageExportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/image endpoint. The metadata structure is not verified.
+     * @summary (EXPERIMENTAL) Retrieve metadata context
+     * @param {ActionsApiGetImageExportMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getImageExportMetadata(
+        requestParameters: ActionsApiGetImageExportMetadataRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
@@ -2695,6 +3171,34 @@ export interface ActionsApiCreateDashboardExportRequestRequest {
      * @memberof ActionsApiCreateDashboardExportRequest
      */
     readonly dashboardId: string;
+
+    /**
+     *
+     * @type {DashboardTabularExportRequest}
+     * @memberof ActionsApiCreateDashboardExportRequest
+     */
+    readonly dashboardTabularExportRequest: DashboardTabularExportRequest;
+}
+
+/**
+ * Request parameters for createImageExport operation in ActionsApi.
+ * @export
+ * @interface ActionsApiCreateImageExportRequest
+ */
+export interface ActionsApiCreateImageExportRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiCreateImageExport
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ImageExportRequest}
+     * @memberof ActionsApiCreateImageExport
+     */
+    readonly imageExportRequest: ImageExportRequest;
 }
 
 /**
@@ -2798,6 +3302,48 @@ export interface ActionsApiGetExportedFileRequest {
      *
      * @type {string}
      * @memberof ActionsApiGetExportedFile
+     */
+    readonly exportId: string;
+}
+
+/**
+ * Request parameters for getImageExport operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetImageExportRequest
+ */
+export interface ActionsApiGetImageExportRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetImageExport
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetImageExport
+     */
+    readonly exportId: string;
+}
+
+/**
+ * Request parameters for getImageExportMetadata operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetImageExportMetadataRequest
+ */
+export interface ActionsApiGetImageExportMetadataRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetImageExportMetadata
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetImageExportMetadata
      */
     readonly exportId: string;
 }
@@ -2930,8 +3476,26 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
             .createDashboardExportRequest(
                 requestParameters.workspaceId,
                 requestParameters.dashboardId,
+                requestParameters.dashboardTabularExportRequest,
                 options,
             )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. An image export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create image export request
+     * @param {ActionsApiCreateImageExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public createImageExport(
+        requestParameters: ActionsApiCreateImageExportRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .createImageExport(requestParameters.workspaceId, requestParameters.imageExportRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -3025,6 +3589,37 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary (EXPERIMENTAL) Retrieve exported files
+     * @param {ActionsApiGetImageExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getImageExport(requestParameters: ActionsApiGetImageExportRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .getImageExport(requestParameters.workspaceId, requestParameters.exportId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/image endpoint. The metadata structure is not verified.
+     * @summary (EXPERIMENTAL) Retrieve metadata context
+     * @param {ActionsApiGetImageExportMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getImageExportMetadata(
+        requestParameters: ActionsApiGetImageExportMetadataRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .getImageExportMetadata(requestParameters.workspaceId, requestParameters.exportId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified.
      * @summary Retrieve metadata context
      * @param {ActionsApiGetMetadataRequest} requestParameters Request parameters.
@@ -3100,6 +3695,454 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     ) {
         return ActionsApiFp(this.configuration)
             .getTabularExport(requestParameters.workspaceId, requestParameters.exportId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
+ * ImageExportApi - axios parameter creator
+ * @export
+ */
+export const ImageExportApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. An image export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create image export request
+         * @param {string} workspaceId
+         * @param {ImageExportRequest} imageExportRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createImageExport: async (
+            workspaceId: string,
+            imageExportRequest: ImageExportRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("createImageExport", "workspaceId", workspaceId);
+            // verify required parameter 'imageExportRequest' is not null or undefined
+            assertParamExists("createImageExport", "imageExportRequest", imageExportRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/image`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof imageExportRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(imageExportRequest !== undefined ? imageExportRequest : {})
+                : imageExportRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getImageExport: async (
+            workspaceId: string,
+            exportId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getImageExport", "workspaceId", workspaceId);
+            // verify required parameter 'exportId' is not null or undefined
+            assertParamExists("getImageExport", "exportId", exportId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/image/{exportId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/image endpoint. The metadata structure is not verified.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getImageExportMetadata: async (
+            workspaceId: string,
+            exportId: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("getImageExportMetadata", "workspaceId", workspaceId);
+            // verify required parameter 'exportId' is not null or undefined
+            assertParamExists("getImageExportMetadata", "exportId", exportId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/image/{exportId}/metadata`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"exportId"}}`, encodeURIComponent(String(exportId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    };
+};
+
+/**
+ * ImageExportApi - functional programming interface
+ * @export
+ */
+export const ImageExportApiFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = ImageExportApiAxiosParamCreator(configuration);
+    return {
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. An image export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create image export request
+         * @param {string} workspaceId
+         * @param {ImageExportRequest} imageExportRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createImageExport(
+            workspaceId: string,
+            imageExportRequest: ImageExportRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createImageExport(
+                workspaceId,
+                imageExportRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getImageExport(
+            workspaceId: string,
+            exportId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getImageExport(
+                workspaceId,
+                exportId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/image endpoint. The metadata structure is not verified.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * @param {string} workspaceId
+         * @param {string} exportId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getImageExportMetadata(
+            workspaceId: string,
+            exportId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getImageExportMetadata(
+                workspaceId,
+                exportId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    };
+};
+
+/**
+ * ImageExportApi - factory interface
+ * @export
+ */
+export const ImageExportApiFactory = function (
+    configuration?: Configuration,
+    basePath?: string,
+    axios?: AxiosInstance,
+) {
+    const localVarFp = ImageExportApiFp(configuration);
+    return {
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. An image export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+         * @summary (EXPERIMENTAL) Create image export request
+         * @param {ImageExportApiCreateImageExportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createImageExport(
+            requestParameters: ImageExportApiCreateImageExportRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ExportResponse> {
+            return localVarFp
+                .createImageExport(
+                    requestParameters.workspaceId,
+                    requestParameters.imageExportRequest,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+         * @summary (EXPERIMENTAL) Retrieve exported files
+         * @param {ImageExportApiGetImageExportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getImageExport(
+            requestParameters: ImageExportApiGetImageExportRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .getImageExport(requestParameters.workspaceId, requestParameters.exportId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/image endpoint. The metadata structure is not verified.
+         * @summary (EXPERIMENTAL) Retrieve metadata context
+         * @param {ImageExportApiGetImageExportMetadataRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getImageExportMetadata(
+            requestParameters: ImageExportApiGetImageExportMetadataRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .getImageExportMetadata(requestParameters.workspaceId, requestParameters.exportId, options)
+                .then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ImageExportApi - interface
+ * @export
+ * @interface ImageExportApi
+ */
+export interface ImageExportApiInterface {
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. An image export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create image export request
+     * @param {ImageExportApiCreateImageExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImageExportApiInterface
+     */
+    createImageExport(
+        requestParameters: ImageExportApiCreateImageExportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ExportResponse>;
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary (EXPERIMENTAL) Retrieve exported files
+     * @param {ImageExportApiGetImageExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImageExportApiInterface
+     */
+    getImageExport(
+        requestParameters: ImageExportApiGetImageExportRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/image endpoint. The metadata structure is not verified.
+     * @summary (EXPERIMENTAL) Retrieve metadata context
+     * @param {ImageExportApiGetImageExportMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImageExportApiInterface
+     */
+    getImageExportMetadata(
+        requestParameters: ImageExportApiGetImageExportMetadataRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+}
+
+/**
+ * Request parameters for createImageExport operation in ImageExportApi.
+ * @export
+ * @interface ImageExportApiCreateImageExportRequest
+ */
+export interface ImageExportApiCreateImageExportRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ImageExportApiCreateImageExport
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ImageExportRequest}
+     * @memberof ImageExportApiCreateImageExport
+     */
+    readonly imageExportRequest: ImageExportRequest;
+}
+
+/**
+ * Request parameters for getImageExport operation in ImageExportApi.
+ * @export
+ * @interface ImageExportApiGetImageExportRequest
+ */
+export interface ImageExportApiGetImageExportRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ImageExportApiGetImageExport
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ImageExportApiGetImageExport
+     */
+    readonly exportId: string;
+}
+
+/**
+ * Request parameters for getImageExportMetadata operation in ImageExportApi.
+ * @export
+ * @interface ImageExportApiGetImageExportMetadataRequest
+ */
+export interface ImageExportApiGetImageExportMetadataRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ImageExportApiGetImageExportMetadata
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {string}
+     * @memberof ImageExportApiGetImageExportMetadata
+     */
+    readonly exportId: string;
+}
+
+/**
+ * ImageExportApi - object-oriented interface
+ * @export
+ * @class ImageExportApi
+ * @extends {BaseAPI}
+ */
+export class ImageExportApi extends BaseAPI implements ImageExportApiInterface {
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. An image export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
+     * @summary (EXPERIMENTAL) Create image export request
+     * @param {ImageExportApiCreateImageExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImageExportApi
+     */
+    public createImageExport(
+        requestParameters: ImageExportApiCreateImageExportRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ImageExportApiFp(this.configuration)
+            .createImageExport(requestParameters.workspaceId, requestParameters.imageExportRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
+     * @summary (EXPERIMENTAL) Retrieve exported files
+     * @param {ImageExportApiGetImageExportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImageExportApi
+     */
+    public getImageExport(
+        requestParameters: ImageExportApiGetImageExportRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ImageExportApiFp(this.configuration)
+            .getImageExport(requestParameters.workspaceId, requestParameters.exportId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/image endpoint. The metadata structure is not verified.
+     * @summary (EXPERIMENTAL) Retrieve metadata context
+     * @param {ImageExportApiGetImageExportMetadataRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ImageExportApi
+     */
+    public getImageExportMetadata(
+        requestParameters: ImageExportApiGetImageExportMetadataRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ImageExportApiFp(this.configuration)
+            .getImageExportMetadata(requestParameters.workspaceId, requestParameters.exportId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 }
@@ -3875,18 +4918,26 @@ export const TabularExportApiAxiosParamCreator = function (configuration?: Confi
          * @summary (EXPERIMENTAL) Create dashboard tabular export request
          * @param {string} workspaceId
          * @param {string} dashboardId
+         * @param {DashboardTabularExportRequest} dashboardTabularExportRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createDashboardExportRequest: async (
             workspaceId: string,
             dashboardId: string,
+            dashboardTabularExportRequest: DashboardTabularExportRequest,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("createDashboardExportRequest", "workspaceId", workspaceId);
             // verify required parameter 'dashboardId' is not null or undefined
             assertParamExists("createDashboardExportRequest", "dashboardId", dashboardId);
+            // verify required parameter 'dashboardTabularExportRequest' is not null or undefined
+            assertParamExists(
+                "createDashboardExportRequest",
+                "dashboardTabularExportRequest",
+                dashboardTabularExportRequest,
+            );
             const localVarPath =
                 `/api/v1/actions/workspaces/{workspaceId}/analyticalDashboards/{dashboardId}/export/tabular`
                     .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
@@ -3901,6 +4952,8 @@ export const TabularExportApiAxiosParamCreator = function (configuration?: Confi
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {
@@ -3908,6 +4961,14 @@ export const TabularExportApiAxiosParamCreator = function (configuration?: Confi
                 ...headersFromBaseOptions,
                 ...options.headers,
             };
+            const needsSerialization =
+                typeof dashboardTabularExportRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      dashboardTabularExportRequest !== undefined ? dashboardTabularExportRequest : {},
+                  )
+                : dashboardTabularExportRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4024,17 +5085,20 @@ export const TabularExportApiFp = function (configuration?: Configuration) {
          * @summary (EXPERIMENTAL) Create dashboard tabular export request
          * @param {string} workspaceId
          * @param {string} dashboardId
+         * @param {DashboardTabularExportRequest} dashboardTabularExportRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async createDashboardExportRequest(
             workspaceId: string,
             dashboardId: string,
+            dashboardTabularExportRequest: DashboardTabularExportRequest,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createDashboardExportRequest(
                 workspaceId,
                 dashboardId,
+                dashboardTabularExportRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -4108,6 +5172,7 @@ export const TabularExportApiFactory = function (
                 .createDashboardExportRequest(
                     requestParameters.workspaceId,
                     requestParameters.dashboardId,
+                    requestParameters.dashboardTabularExportRequest,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -4214,6 +5279,13 @@ export interface TabularExportApiCreateDashboardExportRequestRequest {
      * @memberof TabularExportApiCreateDashboardExportRequest
      */
     readonly dashboardId: string;
+
+    /**
+     *
+     * @type {DashboardTabularExportRequest}
+     * @memberof TabularExportApiCreateDashboardExportRequest
+     */
+    readonly dashboardTabularExportRequest: DashboardTabularExportRequest;
 }
 
 /**
@@ -4281,6 +5353,7 @@ export class TabularExportApi extends BaseAPI implements TabularExportApiInterfa
             .createDashboardExportRequest(
                 requestParameters.workspaceId,
                 requestParameters.dashboardId,
+                requestParameters.dashboardTabularExportRequest,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
