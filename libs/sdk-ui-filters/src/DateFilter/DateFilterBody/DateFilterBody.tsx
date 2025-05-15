@@ -1,8 +1,8 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import isEmpty from "lodash/isEmpty.js";
 import cx from "classnames";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { ListItem } from "../ListItem/ListItem.js";
 import {
@@ -33,6 +33,14 @@ import {
     isRelativeDateFilterForm,
     WeekStart,
 } from "@gooddata/sdk-model";
+import {
+    DATE_FILTER_APPLY_BUTTON_ID,
+    DATE_FILTER_CANCEL_BUTTON_ID,
+    DATE_FILTER_INPUT_HECKBOX_ID,
+    DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID,
+    DATE_FILTER_RELATIVE_PERIOD_WRAPPER_SELECT_MENU_ID,
+} from "../utils/accessibility/elementId.js";
+import { getFocusableElements, makeMenuKeyboardNavigation, UiFocusTrap, useId } from "@gooddata/sdk-ui-kit";
 
 const ACTIONS_BUTTONS_HEIGHT = 53;
 const EXCLUDE_OPEN_PERIOD_HEIGHT = 30; // height of 'Exclude open period' checkbox component
@@ -71,148 +79,51 @@ export interface IDateFilterBodyProps {
     withoutApply?: boolean;
 }
 
-interface IDateFilterBodyState {
-    route: DateFilterRoute;
-}
-
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
 
-export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateFilterBodyState> {
-    public state: IDateFilterBodyState = {
-        route: null,
+export const DateFilterBody = React.forwardRef<HTMLDivElement, IDateFilterBodyProps>((props, ref) => {
+    const [route, setRoute] = useState<DateFilterRoute>(null);
+    const relativeDateFilterRef = useRef<HTMLDivElement>(null);
+    const tabGranularityRef = useRef<HTMLDivElement>(null);
+
+    const relativeDateFilterId = useId();
+
+    const intl = useIntl();
+    const changeRoute = (newRoute: DateFilterRoute = null): void => {
+        setRoute(newRoute);
     };
 
-    public changeRoute = (route: IDateFilterBodyState["route"] = null): void => {
-        this.setState({ route });
-    };
-
-    public componentDidMount(): void {
+    useEffect(() => {
         // Dropdown component does not expose isOpened prop but it mounts
         // this component every time it is opened and un-mounts when closed
-        if (this.props.isMobile) {
-            if (isAbsoluteDateFilterForm(this.props.selectedFilterOption)) {
-                this.changeRoute("absoluteForm");
-            } else if (isRelativeDateFilterForm(this.props.selectedFilterOption)) {
-                this.changeRoute("relativeForm");
+        if (props.isMobile) {
+            if (isAbsoluteDateFilterForm(props.selectedFilterOption)) {
+                changeRoute("absoluteForm");
+            } else if (isRelativeDateFilterForm(props.selectedFilterOption)) {
+                changeRoute("relativeForm");
             }
         }
-    }
+    }, [props.isMobile, props.selectedFilterOption]);
 
-    public render() {
-        const {
-            isExcludeCurrentPeriodEnabled,
-            isMobile,
-            onApplyClick,
-            onCancelClick,
-            closeDropdown,
-            onConfigurationClick,
-            dateFilterButton,
-            errors,
-            isConfigurationEnabled,
-            withoutApply,
-        } = this.props;
-        const { route } = this.state;
-
-        const showExcludeCurrent: boolean = !isMobile || isExcludeCurrentPeriodEnabled;
-
-        return (
-            <div className="gd-extended-date-filter-container">
-                <div
-                    className={cx(
-                        "gd-extended-date-filter-body",
-                        "s-extended-date-filters-body",
-                        isMobile && "gd-extended-date-filter-body-mobile",
-                    )}
-                >
-                    {route === null && isMobile ? (
-                        <div
-                            onClick={() => {
-                                onCancelClick();
-                                closeDropdown();
-                            }}
-                        >
-                            {dateFilterButton}
-                        </div>
-                    ) : null}
-                    {this.renderDateFilterBody()}
-                    {showExcludeCurrent ? this.renderExcludeCurrent() : null}
-
-                    <div className={cx("gd-extended-date-filter-actions")}>
-                        <div className="gd-extended-date-filter-actions-left-content">
-                            {isConfigurationEnabled ? (
-                                <DateFilterConfigurationButton onConfiguration={onConfigurationClick} />
-                            ) : null}
-                        </div>
-                        <div className="gd-extended-date-filter-actions-buttons">
-                            <DateFilterBodyButton
-                                messageId={withoutApply ? "close" : "cancel"}
-                                className="gd-button-secondary gd-button-small s-date-filter-cancel"
-                                onClick={() => {
-                                    onCancelClick();
-                                    closeDropdown();
-                                }}
-                            />
-                            {!withoutApply && (
-                                <DateFilterBodyButton
-                                    messageId="apply"
-                                    className="gd-button-action gd-button-small s-date-filter-apply"
-                                    disabled={!isEmpty(errors)}
-                                    onClick={() => {
-                                        onApplyClick();
-                                        closeDropdown();
-                                    }}
-                                />
-                            )}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
-    private renderDateFilterBody = () => {
-        const {
-            isExcludeCurrentPeriodEnabled,
-            isMobile,
-            isEditMode,
-            selectedFilterOption,
-            showHeaderMessage = true,
-        } = this.props;
-
-        const showExcludeCurrent: boolean = !isMobile || isExcludeCurrentPeriodEnabled;
-        const bodyHeight: number = this.calculateHeight(showExcludeCurrent);
-        const visibleScrollbarClassName = this.getVisibleScrollbarClassName();
-        let wrapperStyle: React.CSSProperties = {};
-        let scrollerStyle: React.CSSProperties = {};
-        if (bodyHeight) {
-            // display: flex causes the scroller is cut off when scrolling
-            wrapperStyle = { display: "block", height: `${bodyHeight}px` };
-            scrollerStyle = { minHeight: `${bodyHeight}px` };
+    const calculateHeight = (showExcludeCurrent: boolean): number => {
+        // Mobile in Horizontal Layout
+        if (window.innerHeight <= MOBILE_WIDTH) {
+            const excludeOpenPeriodHeight = showExcludeCurrent ? EXCLUDE_OPEN_PERIOD_HEIGHT : 0;
+            return window.innerHeight - excludeOpenPeriodHeight - ACTIONS_BUTTONS_HEIGHT - MARGIN_BOTTOM;
         }
-        return (
-            <>
-                <div
-                    className={cx("gd-extended-date-filter-body-wrapper", {
-                        "gd-extended-date-filter-body-wrapper-wide":
-                            isRelativeDateFilterForm(selectedFilterOption),
-                    })}
-                    style={wrapperStyle}
-                >
-                    {isEditMode && !isMobile && showHeaderMessage ? <EditModeMessage /> : null}
-                    {isMobile ? (
-                        this.renderMobileContent()
-                    ) : (
-                        <VisibleScrollbar className={visibleScrollbarClassName} style={scrollerStyle}>
-                            {this.renderDefaultContent()}
-                        </VisibleScrollbar>
-                    )}
-                </div>
-            </>
-        );
+        return undefined;
     };
 
-    private renderAllTime = () => {
-        const { filterOptions, isMobile, selectedFilterOption, onSelectedFilterOptionChange } = this.props;
+    const getVisibleScrollbarClassName = (): string => {
+        if (window.innerHeight <= SMALL_SCREEN_HEIGHT) {
+            return "gd-extended-date-filter-body-scrollable-small-screen";
+        }
+
+        return "gd-extended-date-filter-body-scrollable";
+    };
+
+    const renderAllTime = () => {
+        const { filterOptions, isMobile, selectedFilterOption, onSelectedFilterOptionChange } = props;
         return filterOptions.allTime ? (
             <AllTimeFilterItem
                 filterOption={filterOptions.allTime}
@@ -223,7 +134,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
         ) : null;
     };
 
-    private renderAbsoluteForm = () => {
+    const renderAbsoluteForm = () => {
         const {
             dateFormat,
             filterOptions,
@@ -233,13 +144,12 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
             isMobile,
             errors,
             weekStart,
-        } = this.props;
+        } = props;
 
         if (!filterOptions.absoluteForm) {
             return null;
         }
 
-        const { route } = this.state;
         const isSelected =
             filterOptions.absoluteForm.localIdentifier === selectedFilterOption.localIdentifier;
         const isOnRoute = route === "absoluteForm";
@@ -249,7 +159,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                     <ListItem
                         isSelected={isSelected}
                         onClick={() => {
-                            this.changeRoute("absoluteForm");
+                            changeRoute("absoluteForm");
                             if (!isAbsoluteDateFilterForm(selectedFilterOption)) {
                                 onSelectedFilterOptionChange(filterOptions.absoluteForm);
                             }
@@ -284,19 +194,112 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
         );
     };
 
-    private renderRelativeForm = () => {
+    const handleKeyDown = useCallback(
+        (event: React.KeyboardEvent, closeDropdown: () => void) => {
+            if (!tabGranularityRef.current) return;
+
+            const items = Array.from(tabGranularityRef.current.querySelectorAll("[tabindex]"));
+            const activeElement = document.activeElement as HTMLElement;
+            const currentIndex = items.findIndex((item) => item === activeElement);
+            const keyboardHandler = makeMenuKeyboardNavigation({
+                onFocusNext: (event) => {
+                    event.stopPropagation();
+                },
+                onFocusPrevious: (event) => {
+                    event.stopPropagation();
+                },
+                onLeaveLevel: () => {
+                    const previousElement =
+                        currentIndex <= 0 ? items[items.length - 1] : items[currentIndex - 1];
+
+                    (previousElement as HTMLElement)?.focus();
+                },
+                onEnterLevel: () => {
+                    const nextElement =
+                        currentIndex === items.length - 1 ? items[0] : items[currentIndex + 1];
+
+                    (nextElement as HTMLElement)?.focus();
+                },
+                onFocusFirst: () => {
+                    const { firstElement } = getFocusableElements(tabGranularityRef.current);
+                    firstElement?.focus();
+                },
+                onFocusLast: () => {
+                    const { lastElement } = getFocusableElements(tabGranularityRef.current);
+                    lastElement?.focus();
+                },
+                onClose: () => {
+                    const isMenuSelectOpen = document.getElementById(
+                        DATE_FILTER_RELATIVE_PERIOD_WRAPPER_SELECT_MENU_ID,
+                    );
+                    if (!isMenuSelectOpen) {
+                        closeDropdown();
+                    }
+                },
+                onUnhandledKeyDown: (event) => {
+                    if (event.key !== "Tab") {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    const focusableElementsSelector = [
+                        'input:not(:disabled):not([aria-disabled="true"])',
+                        '[tabindex]:not([tabindex="-1"]):not(:disabled):not([aria-disabled="true"])',
+                    ].join(",");
+
+                    const focusableElements = Array.from(
+                        relativeDateFilterRef.current.querySelectorAll<HTMLElement>(
+                            focusableElementsSelector,
+                        ),
+                    );
+
+                    const active = document.activeElement as HTMLElement;
+                    const elements = Array.from(focusableElements);
+                    const currentIndex = elements.indexOf(active);
+
+                    if (currentIndex === elements.length - 1) {
+                        const focusIds = [
+                            DATE_FILTER_INPUT_HECKBOX_ID,
+                            DATE_FILTER_CANCEL_BUTTON_ID,
+                            DATE_FILTER_APPLY_BUTTON_ID,
+                        ];
+
+                        const focusElements = focusIds
+                            .map((id) => document.getElementById(id))
+                            .filter((el) => el && !el.hasAttribute("disabled"));
+
+                        focusElements[0]?.focus();
+                    }
+
+                    if (currentIndex !== -1) {
+                        const direction = event.shiftKey ? -1 : 1;
+                        const nextIndex = (currentIndex + direction + elements.length) % elements.length;
+
+                        elements[nextIndex].focus();
+                    }
+                },
+            });
+
+            keyboardHandler(event);
+        },
+        [relativeDateFilterRef, tabGranularityRef],
+    );
+
+    const renderRelativeForm = () => {
         const {
             filterOptions,
             selectedFilterOption,
             onSelectedFilterOptionChange,
             availableGranularities,
+            closeDropdown,
             isMobile,
-        } = this.props;
+        } = props;
 
         if (!filterOptions.relativeForm) {
             return null;
         }
-        const { route } = this.state;
         const isSelected =
             filterOptions.relativeForm.localIdentifier === selectedFilterOption.localIdentifier;
         const isOnRoute = route === "relativeForm";
@@ -307,7 +310,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                     <ListItem
                         isSelected={isSelected}
                         onClick={() => {
-                            this.changeRoute("relativeForm");
+                            changeRoute("relativeForm");
                             if (!isRelativeDateFilterForm(selectedFilterOption)) {
                                 onSelectedFilterOptionChange(filterOptions.relativeForm);
                             }
@@ -332,24 +335,33 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                 ) : null}
 
                 {isSelected && (!isMobile || isOnRoute) ? (
-                    <DateFilterFormWrapper isMobile={isMobile}>
-                        <RelativeDateFilterForm
-                            onSelectedFilterOptionChange={(option) => {
-                                onSelectedFilterOptionChange(option);
-                            }}
-                            selectedFilterOption={selectedFilterOption as IUiRelativeDateFilterForm}
-                            availableGranularities={availableGranularities}
-                            isMobile={isMobile}
-                        />
-                    </DateFilterFormWrapper>
+                    <UiFocusTrap autofocusOnOpen initialFocus={DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID}>
+                        <DateFilterFormWrapper isMobile={isMobile}>
+                            <div
+                                ref={relativeDateFilterRef}
+                                onKeyDown={(e) => handleKeyDown(e, closeDropdown)}
+                            >
+                                <RelativeDateFilterForm
+                                    onSelectedFilterOptionChange={(option) => {
+                                        onSelectedFilterOptionChange(option);
+                                    }}
+                                    selectedFilterOption={selectedFilterOption as IUiRelativeDateFilterForm}
+                                    availableGranularities={availableGranularities}
+                                    isMobile={isMobile}
+                                    ref={tabGranularityRef}
+                                    relativeDateFilterId={relativeDateFilterId}
+                                />
+                            </div>
+                        </DateFilterFormWrapper>
+                    </UiFocusTrap>
                 ) : null}
             </>
         );
     };
 
-    private renderAbsolutePreset = () => {
+    const renderAbsolutePreset = () => {
         const { dateFormat, filterOptions, selectedFilterOption, onSelectedFilterOptionChange, isMobile } =
-            this.props;
+            props;
         return filterOptions.absolutePreset && filterOptions.absolutePreset.length > 0 ? (
             <AbsolutePresetFilterItems
                 dateFormat={dateFormat}
@@ -361,9 +373,9 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
         ) : null;
     };
 
-    private renderRelativePreset = () => {
+    const renderRelativePreset = () => {
         const { dateFormat, filterOptions, selectedFilterOption, onSelectedFilterOptionChange, isMobile } =
-            this.props;
+            props;
         return filterOptions.relativePreset ? (
             <RelativePresetFilterItems
                 dateFormat={dateFormat}
@@ -375,13 +387,13 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
         ) : null;
     };
 
-    private renderExcludeCurrent = () => {
+    const renderExcludeCurrent = () => {
         const {
             selectedFilterOption,
             onExcludeCurrentPeriodChange,
             excludeCurrentPeriod,
             isExcludeCurrentPeriodEnabled,
-        } = this.props;
+        } = props;
         return (
             <ExcludeCurrentPeriodToggle
                 value={excludeCurrentPeriod}
@@ -392,57 +404,157 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
         );
     };
 
-    private renderMobileContent() {
-        const { route } = this.state;
+    const renderMobileContent = () => {
         if (route === "absoluteForm") {
             return (
                 <>
-                    <DateFilterHeader changeRoute={this.changeRoute}>
+                    <DateFilterHeader changeRoute={changeRoute}>
                         <FormattedMessage id="filters.staticPeriod" />
                     </DateFilterHeader>
-                    {this.renderAbsoluteForm()}
+                    {renderAbsoluteForm()}
                 </>
             );
         }
         if (route === "relativeForm") {
-            return isEmpty(this.props.availableGranularities) ? null : (
+            return isEmpty(props.availableGranularities) ? null : (
                 <>
-                    <DateFilterHeader changeRoute={this.changeRoute}>
+                    <DateFilterHeader changeRoute={changeRoute}>
                         <FormattedMessage id="filters.floatingRange" />
                     </DateFilterHeader>
-                    {this.renderRelativeForm()}
+                    {renderRelativeForm()}
                 </>
             );
         }
-        return this.renderDefaultContent();
-    }
+        return renderDefaultContent();
+    };
 
-    private renderDefaultContent() {
+    const renderDefaultContent = () => {
         return (
             <>
-                {this.renderAllTime()}
-                {this.renderAbsoluteForm()}
-                {!isEmpty(this.props.availableGranularities) ? this.renderRelativeForm() : null}
-                {this.renderAbsolutePreset()}
-                {this.renderRelativePreset()}
+                {renderAllTime()}
+                {renderAbsoluteForm()}
+                {!isEmpty(props.availableGranularities) ? renderRelativeForm() : null}
+                {renderAbsolutePreset()}
+                {renderRelativePreset()}
             </>
         );
-    }
-
-    private calculateHeight = (showExcludeCurrent: boolean): number => {
-        // Mobile in Horizontal Layout
-        if (window.innerHeight <= MOBILE_WIDTH) {
-            const excludeOpenPeriodHeight = showExcludeCurrent ? EXCLUDE_OPEN_PERIOD_HEIGHT : 0;
-            return window.innerHeight - excludeOpenPeriodHeight - ACTIONS_BUTTONS_HEIGHT - MARGIN_BOTTOM;
-        }
-        return undefined;
     };
 
-    private getVisibleScrollbarClassName = (): string => {
-        if (window.innerHeight <= SMALL_SCREEN_HEIGHT) {
-            return "gd-extended-date-filter-body-scrollable-small-screen";
+    const renderDateFilterBody = () => {
+        const {
+            isExcludeCurrentPeriodEnabled,
+            isMobile,
+            isEditMode,
+            selectedFilterOption,
+            showHeaderMessage = true,
+        } = props;
+
+        const showExcludeCurrent: boolean = !isMobile || isExcludeCurrentPeriodEnabled;
+        const bodyHeight: number = calculateHeight(showExcludeCurrent);
+        const visibleScrollbarClassName = getVisibleScrollbarClassName();
+        let wrapperStyle: React.CSSProperties = {};
+        let scrollerStyle: React.CSSProperties = {};
+        if (bodyHeight) {
+            // display: flex causes the scroller is cut off when scrolling
+            wrapperStyle = { display: "block", height: `${bodyHeight}px` };
+            scrollerStyle = { minHeight: `${bodyHeight}px` };
         }
 
-        return "gd-extended-date-filter-body-scrollable";
+        return (
+            <>
+                <div
+                    ref={ref}
+                    role="listbox"
+                    aria-label={intl.formatMessage({ id: "dateFilterDropdown.label" })}
+                    className={cx("gd-extended-date-filter-body-wrapper", {
+                        "gd-extended-date-filter-body-wrapper-wide":
+                            isRelativeDateFilterForm(selectedFilterOption),
+                    })}
+                    style={wrapperStyle}
+                >
+                    {isEditMode && !isMobile && showHeaderMessage ? <EditModeMessage /> : null}
+                    {isMobile ? (
+                        renderMobileContent()
+                    ) : (
+                        <VisibleScrollbar className={visibleScrollbarClassName} style={scrollerStyle}>
+                            {renderDefaultContent()}
+                        </VisibleScrollbar>
+                    )}
+                </div>
+            </>
+        );
     };
-}
+
+    const {
+        isExcludeCurrentPeriodEnabled,
+        isMobile,
+        onApplyClick,
+        onCancelClick,
+        closeDropdown,
+        onConfigurationClick,
+        dateFilterButton,
+        errors,
+        isConfigurationEnabled,
+        withoutApply,
+    } = props;
+
+    const showExcludeCurrent: boolean = !isMobile || isExcludeCurrentPeriodEnabled;
+
+    return (
+        <div className="gd-extended-date-filter-container">
+            <div
+                className={cx(
+                    "gd-extended-date-filter-body",
+                    "s-extended-date-filters-body",
+                    isMobile && "gd-extended-date-filter-body-mobile",
+                )}
+            >
+                {route === null && isMobile ? (
+                    <div
+                        onClick={() => {
+                            onCancelClick();
+                            closeDropdown();
+                        }}
+                    >
+                        {dateFilterButton}
+                    </div>
+                ) : null}
+                {renderDateFilterBody()}
+                {showExcludeCurrent ? renderExcludeCurrent() : null}
+
+                <div className={cx("gd-extended-date-filter-actions")}>
+                    <div className="gd-extended-date-filter-actions-left-content">
+                        {isConfigurationEnabled ? (
+                            <DateFilterConfigurationButton onConfiguration={onConfigurationClick} />
+                        ) : null}
+                    </div>
+                    <div className="gd-extended-date-filter-actions-buttons">
+                        <DateFilterBodyButton
+                            id={DATE_FILTER_CANCEL_BUTTON_ID}
+                            messageId={withoutApply ? "close" : "cancel"}
+                            className="gd-button-secondary gd-button-small s-date-filter-cancel"
+                            onClick={() => {
+                                onCancelClick();
+                                closeDropdown();
+                            }}
+                        />
+                        {!withoutApply && (
+                            <DateFilterBodyButton
+                                id={DATE_FILTER_APPLY_BUTTON_ID}
+                                messageId="apply"
+                                className="gd-button-action gd-button-small s-date-filter-apply"
+                                disabled={!isEmpty(errors)}
+                                onClick={() => {
+                                    onApplyClick();
+                                    closeDropdown();
+                                }}
+                            />
+                        )}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+});
+
+DateFilterBody.displayName = "DateFilterBody";

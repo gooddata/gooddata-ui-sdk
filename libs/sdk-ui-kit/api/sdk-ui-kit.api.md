@@ -723,6 +723,8 @@ export const Hyperlink: React_2.FC<IHyperlinkProps>;
 // @internal (undocumented)
 export interface IAccessibilityConfigBase {
     // (undocumented)
+    ariaControls?: string;
+    // (undocumented)
     ariaDescribedBy?: React.AriaAttributes["aria-describedby"];
     // (undocumented)
     ariaExpanded?: "true" | "false";
@@ -1824,6 +1826,8 @@ export interface IDropdownProps {
     fullscreenOnMobile?: boolean;
     // (undocumented)
     ignoreClicksOnByClass?: string[];
+    // (undocumented)
+    initialFocus?: React_2.RefObject<HTMLElement> | string;
     // (undocumented)
     isOpen?: boolean;
     // (undocumented)

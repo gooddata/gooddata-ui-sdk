@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
@@ -7,6 +7,7 @@ import sortBy from "lodash/sortBy.js";
 import { TabsWrapper, Tab } from "../Tabs/Tabs.js";
 import { granularityIntlCodes } from "../constants/i18n.js";
 import { messages } from "../../locales.js";
+import { IAccessibilityConfigBase } from "@gooddata/sdk-ui-kit";
 
 const granularityOrders: { [G in DateFilterGranularity]: number } = {
     "GDC.time.year": 0,
@@ -24,13 +25,15 @@ const sortGranularities = (granularities: DateFilterGranularity[]): DateFilterGr
 export interface IGranularityTabsProps {
     availableGranularities: DateFilterGranularity[];
     selectedGranularity: DateFilterGranularity;
+    accessibilityConfig?: IAccessibilityConfigBase;
     onSelectedGranularityChange: (granularity: DateFilterGranularity) => void;
 }
 
 export const GranularityTabs: React.FC<IGranularityTabsProps> = ({
     availableGranularities,
-    onSelectedGranularityChange,
     selectedGranularity,
+    accessibilityConfig,
+    onSelectedGranularityChange,
 }) => (
     <TabsWrapper className="gd-relative-filter-form-granularity-tabs s-relative-filter-form-granularity-tabs">
         {sortGranularities(availableGranularities).map((granularity) => {
@@ -41,6 +44,7 @@ export const GranularityTabs: React.FC<IGranularityTabsProps> = ({
                     selected={granularity === selectedGranularity}
                     onClick={() => onSelectedGranularityChange(granularity)}
                     className={`s-granularity-${intlGranularity}`}
+                    accessibilityConfig={accessibilityConfig}
                 >
                     <FormattedMessage id={messages[intlGranularity].id} />
                 </Tab>
