@@ -55,7 +55,7 @@ import { getDescription, getValueSuffix } from "./utils/getters.js";
 import { isChangeOrDifferenceOperator } from "./utils/guards.js";
 import { isLatestAutomationVersion } from "../../automationFilters/utils.js";
 
-const OVERLAY_POSITION_TYPE = "fixed";
+const OVERLAY_POSITION_TYPE = "sameAsTarget";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
