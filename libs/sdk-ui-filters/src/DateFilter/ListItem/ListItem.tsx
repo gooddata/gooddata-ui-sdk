@@ -5,6 +5,7 @@ import DefaultMediaQuery from "react-responsive";
 import { defaultImport } from "default-import";
 import { CustomizableCheckmark } from "@gooddata/sdk-ui-kit";
 import { MediaQueries } from "../../constants/index.js";
+import { DATE_FILTER_SELECTED_LIST_ITEM_ID } from "../accessibility/elementId.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -19,6 +20,7 @@ export const ListItem: React.FC<{ isSelected?: boolean } & React.HTMLProps<HTMLB
 }) => (
     <>
         <button
+            id={isActive ? DATE_FILTER_SELECTED_LIST_ITEM_ID : undefined}
             role="option"
             className={cx(
                 "gd-list-item",
@@ -29,6 +31,8 @@ export const ListItem: React.FC<{ isSelected?: boolean } & React.HTMLProps<HTMLB
                 },
                 className,
             )}
+            tabIndex={isActive ? 0 : -1}
+            aria-selected={isActive}
             {...(restProps as any)}
         >
             {children}

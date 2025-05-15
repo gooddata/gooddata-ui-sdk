@@ -286,7 +286,6 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
                                     placeholder={dateFormat}
                                     onChange={(event) => onDateInputChange(event.target.value)}
                                     onClick={handleDayClick}
-                                    onFocus={handleDayClick}
                                     onBlur={onDateInputBlur}
                                     value={inputValue}
                                     className="input-text s-date-range-picker-input-field"
