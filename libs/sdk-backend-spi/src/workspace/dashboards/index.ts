@@ -361,9 +361,10 @@ export interface IWorkspaceDashboardsService {
      * Tabular file is downloaded and attached as Blob data to the current window instance.
      *
      * @param ref - dashboard reference
+     * @param options - options
      * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
      */
-    exportDashboardToTabular(ref: ObjRef): Promise<IExportResult>;
+    exportDashboardToTabular(ref: ObjRef, options?: { title?: string }): Promise<IExportResult>;
 
     /**
      * Export dashboard to CSV raw.

@@ -111,8 +111,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         return this.decorated.exportDashboardToPresentation(ref, format, filters, options);
     }
 
-    exportDashboardToTabular(ref: ObjRef): Promise<IExportResult> {
-        return this.decorated.exportDashboardToTabular(ref);
+    exportDashboardToTabular(ref: ObjRef, options?: { title?: string }): Promise<IExportResult> {
+        return this.decorated.exportDashboardToTabular(ref, options);
     }
 
     exportDashboardToCSVRaw(

@@ -578,7 +578,9 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         filename?: string;
     }): Promise<IExportResult>;
     // (undocumented)
-    exportDashboardToTabular(ref: ObjRef): Promise<IExportResult>;
+    exportDashboardToTabular(ref: ObjRef, options?: {
+        title?: string;
+    }): Promise<IExportResult>;
     // (undocumented)
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     // (undocumented)

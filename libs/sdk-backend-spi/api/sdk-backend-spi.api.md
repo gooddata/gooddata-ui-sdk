@@ -1421,7 +1421,9 @@ export interface IWorkspaceDashboardsService {
         widgetIds?: ObjRef[];
         filename?: string;
     }): Promise<IExportResult>;
-    exportDashboardToTabular(ref: ObjRef): Promise<IExportResult>;
+    exportDashboardToTabular(ref: ObjRef, options?: {
+        title?: string;
+    }): Promise<IExportResult>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;
     getDashboardPermissions(ref: ObjRef): Promise<IDashboardPermissions>;
