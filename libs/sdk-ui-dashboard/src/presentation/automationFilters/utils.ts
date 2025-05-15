@@ -63,13 +63,23 @@ export const getNonSelectedFilters = (
 export const getCatalogAttributesByFilters = (
     filters: FilterContextItem[],
     attributes: ICatalogAttribute[],
+    attributeConfigs: IDashboardAttributeFilterConfig[],
 ): ICatalogAttribute[] => {
+    const ignoredLocalIdentifiers = attributeConfigs
+        .filter((config) => config.mode === "hidden")
+        .map((config) => config.localIdentifier);
+
     return attributes.filter((attribute) => {
         return filters.some((filter) => {
             if (isDashboardAttributeFilter(filter)) {
-                return attribute.displayForms.some((displayForm) => {
-                    return areObjRefsEqual(displayForm.ref, filter.attributeFilter.displayForm);
-                });
+                const localIdentifier = filter.attributeFilter.localIdentifier;
+                return (
+                    localIdentifier &&
+                    !ignoredLocalIdentifiers.includes(localIdentifier) &&
+                    attribute.displayForms.some((displayForm) => {
+                        return areObjRefsEqual(displayForm.ref, filter.attributeFilter.displayForm);
+                    })
+                );
             }
 
             return false;
@@ -80,11 +90,22 @@ export const getCatalogAttributesByFilters = (
 export const getCatalogDateDatasetsByFilters = (
     filters: FilterContextItem[],
     dateDataset: ICatalogDateDataset[],
+    dateConfigs: IDashboardDateFilterConfigItem[],
 ): ICatalogDateDataset[] => {
+    const ignoredDateDatasets = dateConfigs
+        .filter((config) => {
+            return config.config.mode === "hidden";
+        })
+        .map((config) => config.dateDataSet);
+
     return dateDataset.filter((dateDataset) => {
         return filters.some((filter) => {
             if (isDashboardDateFilter(filter)) {
-                return areObjRefsEqual(dateDataset.dataSet.ref, filter.dateFilter.dataSet);
+                return (
+                    !ignoredDateDatasets.some((ignoredDataset) =>
+                        areObjRefsEqual(dateDataset.dataSet.ref, ignoredDataset),
+                    ) && areObjRefsEqual(dateDataset.dataSet.ref, filter.dateFilter.dataSet)
+                );
             }
 
             return false;
