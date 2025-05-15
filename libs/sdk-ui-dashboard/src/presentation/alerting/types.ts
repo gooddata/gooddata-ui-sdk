@@ -2,7 +2,6 @@
 import { ComponentType } from "react";
 import {
     DateAttributeGranularity,
-    FilterContextItem,
     IAttribute,
     IAutomationMetadataObject,
     IDataSetMetadataObject,
@@ -57,20 +56,6 @@ export interface IAlertingDialogProps {
      * Note: this is available only when alerting for widget, not dashboard.
      */
     insight?: IInsight;
-
-    /**
-     * Dashboard filters to be used for alert.
-     *
-     * Note:
-     * - Provided filters exclude cross-filtering filters, as these are typically not desired in exported reports.
-     *
-     * - If the current dashboard filters (excluding cross-filtering) match the saved dashboard filters, this will be undefined.
-     *   In such cases, the alert will use the most recent saved dashboard filters, guaranteeing that
-     *   the alert reflects the latest intended filter configuration and we don't want to save them.
-     *
-     * - If we are editing an existing alert, this will contain its filters, as changing saved filters is currently not allowed.
-     */
-    dashboardFilters?: FilterContextItem[];
 
     /**
      * Widget filters to be used for alert.

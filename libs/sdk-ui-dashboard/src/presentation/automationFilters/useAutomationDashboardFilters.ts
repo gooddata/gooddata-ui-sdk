@@ -23,18 +23,26 @@ export const useAutomationDashboardFilters = ({
     automationFilters: FilterContextItem[] | undefined;
     allVisibleFiltersMetadata?: IAutomationVisibleFilter[] | undefined;
 }): IUseAutomationDashboardFiltersResult => {
-    const areFiltersStored = useMemo(
-        () =>
-            editAutomation?.exportDefinitions?.some((exportDefinition) => {
-                return (exportDefinition.requestPayload.content.filters?.length ?? 0) > 0;
-            }) ?? false,
-        [editAutomation],
-    );
+    // Is dashboard stored with "frozen" filters or is it using the latest saved ones?
+    const areFiltersStored = useMemo(() => {
+        const hasSavedSomeAllTimeDateFilters = editAutomation?.metadata?.visibleFilters?.some(
+            (f) => f.isAllTimeDateFilter,
+        );
+        const hasSavedFiltersInExportDefinitions = editAutomation?.exportDefinitions?.some(
+            (exportDefinition) => {
+                return !!exportDefinition.requestPayload.content.filters;
+            },
+        );
+        return hasSavedFiltersInExportDefinitions ?? hasSavedSomeAllTimeDateFilters ?? false;
+    }, [editAutomation]);
+
+    // Pair visible filters metadata with the filters that are currently selected
     const visibleFilters = useMemo(
         () => getVisibleFiltersByFilters(automationFilters, allVisibleFiltersMetadata),
         [automationFilters, allVisibleFiltersMetadata],
     );
 
+    // Store filters or not? (checkbox to use latest saved dashboard filters vs "freeze" filters state as is)
     const [storeFilters, setStoreFilters] = useState(areFiltersStored);
 
     return {

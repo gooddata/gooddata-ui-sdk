@@ -3,7 +3,7 @@
 import React from "react";
 
 import { AlertingDialog, AlertingManagementDialog, IAlertingDialogProps } from "../../alerting/index.js";
-import { useDashboardAlerts, useDashboardAlertFilters, useWorkspaceUsers } from "../../../model/index.js";
+import { useDashboardAlerts, useAlertFilters, useWorkspaceUsers } from "../../../model/index.js";
 
 export const AlertingDialogProviderNew = () => {
     const {
@@ -35,12 +35,11 @@ export const AlertingDialogProviderNew = () => {
         onAlertingManagementPauseError,
     } = useDashboardAlerts();
 
-    const { widgetFilters, widgetFiltersError, widgetFiltersLoading, dashboardFilters } =
-        useDashboardAlertFilters({
-            alertToEdit,
-            widget,
-            insight,
-        });
+    const { widgetFilters, widgetFiltersError, widgetFiltersLoading } = useAlertFilters({
+        alertToEdit,
+        widget,
+        insight,
+    });
 
     const isLoading = [widgetFiltersLoading, automationsLoading].some(Boolean);
     const loadingError = [widgetFiltersError, automationsError].find(Boolean);
@@ -81,7 +80,6 @@ export const AlertingDialogProviderNew = () => {
                     onSaveSuccess={onAlertingSaveSuccess}
                     onDeleteSuccess={onAlertingManagementDeleteSuccess}
                     onDeleteError={onAlertingManagementDeleteError}
-                    dashboardFilters={dashboardFilters}
                 />
             ) : null}
         </>

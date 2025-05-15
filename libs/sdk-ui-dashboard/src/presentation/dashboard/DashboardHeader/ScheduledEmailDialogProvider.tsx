@@ -10,7 +10,7 @@ import {
 
 import {
     useDashboardScheduledEmails,
-    useDashboardScheduledEmailsFilters,
+    useScheduledExportFilters,
     useWorkspaceUsers,
 } from "../../../model/index.js";
 
@@ -43,7 +43,7 @@ export const ScheduledEmailDialogProvider = () => {
     } = useDashboardScheduledEmails();
 
     const { widgetFilters, dashboardFilters, widgetFiltersError, widgetFiltersLoading } =
-        useDashboardScheduledEmailsFilters({
+        useScheduledExportFilters({
             scheduledExportToEdit,
             widget,
             insight,

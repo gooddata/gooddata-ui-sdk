@@ -31,14 +31,13 @@ import {
     selectLocale,
     selectWeekStart,
     useDashboardSelector,
-    useFiltersForDashboardScheduledExport,
 } from "../../../model/index.js";
 import { AutomationFiltersSelect } from "../../automationFilters/components/AutomationFiltersSelect.js";
-import { useAutomationFiltersData } from "../../automationFilters/useAutomationFiltersData.js";
 import {
     isLatestAutomationVersion,
     validateAllFilterLocalIdentifiers,
 } from "../../automationFilters/utils.js";
+import { useAutomationFiltersSelect } from "../../automationFilters/useAutomationFiltersSelect.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 import { IntlWrapper } from "../../localization/index.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
@@ -131,12 +130,21 @@ export function ScheduledMailDialogRenderer({
 
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
 
-    const allDashboardFilters = useFiltersForDashboardScheduledExport({});
-
     const handleScheduleDeleteSuccess = () => {
         onDeleteSuccess?.();
         setScheduledEmailToDelete(null);
     };
+
+    const {
+        availableFilters,
+        automationFilters,
+        setAutomationFilters,
+        allVisibleFiltersMetadata,
+        areVisibleFiltersMissingOnDashboard,
+    } = useAutomationFiltersSelect({
+        automationToEdit: scheduledExportToEdit,
+        widget,
+    });
 
     const {
         locale,
@@ -148,22 +156,7 @@ export function ScheduledMailDialogRenderer({
         isCrossFiltering,
         isExecutionTimestampMode,
         enableAutomationFilterContext,
-    } = useDefaultScheduledEmailDialogData({ filters: allDashboardFilters ?? [], scheduledExportToEdit });
-
-    const {
-        availableFilters,
-        automationFilters,
-        setAutomationFilters,
-        allVisibleFiltersMetadata,
-        areVisibleFiltersMissingOnDashboard,
-    } = useAutomationFiltersData({
-        allFilters: allDashboardFilters,
-        storedDashboardFilters: dashboardFilters,
-        storedWidgetFilters: widgetFilters,
-        metadataVisibleFilters: scheduledExportToEdit?.metadata?.visibleFilters,
-        isEditing: !!scheduledExportToEdit,
-        widget,
-    });
+    } = useDefaultScheduledEmailDialogData({ filters: availableFilters ?? [], scheduledExportToEdit });
 
     const {
         defaultUser,
@@ -196,7 +189,6 @@ export function ScheduledMailDialogRenderer({
         insight,
         widget,
         scheduledExportToEdit,
-        allDashboardFilters,
         automationFilters,
         dashboardFilters,
         widgetFilters,

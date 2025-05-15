@@ -21,7 +21,7 @@ import {
     DateFilterGranularity,
 } from "@gooddata/sdk-model";
 import { createDefaultFilterContext } from "./defaultFilterContext.js";
-import { IDashboardFilter } from "src/types.js";
+import { IDashboardFilter } from "../../types.js";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 
 /**

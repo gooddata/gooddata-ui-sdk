@@ -99,6 +99,7 @@ export interface IAutomationMetadataObjectBase {
 export interface IAutomationVisibleFilter {
     localIdentifier?: string;
     title?: string;
+    isAllTimeDateFilter?: boolean;
 }
 
 /**

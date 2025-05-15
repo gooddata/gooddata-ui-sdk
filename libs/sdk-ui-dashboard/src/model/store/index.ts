@@ -362,6 +362,7 @@ export {
     selectDisableFilterViews,
     selectDashboardDescriptor,
     selectEvaluationFrequency,
+    selectPersistedDashboardFilterContextDateFilterConfig,
 } from "./meta/metaSelectors.js";
 export { metaActions } from "./meta/index.js";
 export {

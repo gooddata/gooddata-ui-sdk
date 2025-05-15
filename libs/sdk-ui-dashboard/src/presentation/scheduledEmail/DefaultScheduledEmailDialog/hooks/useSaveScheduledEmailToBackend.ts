@@ -1,6 +1,15 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { useCallback, useState } from "react";
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import {
+    IAutomationMetadataObject,
+    IAutomationMetadataObjectDefinition,
+    IExportDefinitionMetadataObject,
+    IExportDefinitionMetadataObjectDefinition,
+    isAllTimeDateFilter,
+    isExportDefinitionVisualizationObjectRequestPayload,
+    isExportDefinitionDashboardRequestPayload,
+    isAllTimeDashboardDateFilter,
+} from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail.js";
 import { useUpdateScheduledEmail } from "./useUpdateScheduledEmail.js";
@@ -46,9 +55,10 @@ export function useSaveScheduledEmailToBackend(
     });
     const handleCreateScheduledEmail = useCallback(
         (scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            scheduledEmailCreator.create(scheduledEmail as IAutomationMetadataObjectDefinition);
+            const sanitizedAutomation = sanitizeAutomation(scheduledEmail, intl);
+            scheduledEmailCreator.create(sanitizedAutomation as IAutomationMetadataObjectDefinition);
         },
-        [scheduledEmailCreator],
+        [scheduledEmailCreator, intl],
     );
 
     const scheduledEmailUpdater = useUpdateScheduledEmail({
@@ -72,9 +82,10 @@ export function useSaveScheduledEmailToBackend(
 
     const handleUpdateScheduledEmail = useCallback(
         (scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            scheduledEmailUpdater.save(scheduledEmail as IAutomationMetadataObject);
+            const sanitizedAutomation = sanitizeAutomation(scheduledEmail, intl);
+            scheduledEmailUpdater.save(sanitizedAutomation as IAutomationMetadataObject);
         },
-        [scheduledEmailUpdater],
+        [scheduledEmailUpdater, intl],
     );
 
     const handleSaveScheduledEmail = (): void => {
@@ -95,9 +106,13 @@ export function useSaveScheduledEmailToBackend(
 }
 
 function sanitizeAutomation(
-    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
+    automationToSave: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
     intl: IntlShape,
 ) {
+    const automation = {
+        ...automationToSave,
+    };
+
     if (!automation.title) {
         automation.title = intl.formatMessage({ id: "dialogs.schedule.email.title.placeholder" });
     }
@@ -108,5 +123,52 @@ function sanitizeAutomation(
         automation.schedule = omit(automation.schedule, ["cronDescription"]);
     }
 
+    /**
+     * Remove all-time date filters from export definitions.
+     * They are not required for the execution and not event valid as AFM date granularity.
+     * They are added ad-hoc to be visible in the UI in useAutomationFiltersSelect hook,
+     * depending on whether they are ignored or not.
+     */
+    if (automation.exportDefinitions) {
+        automation.exportDefinitions = removeAllTimeDateFiltersFromExportDefinitions(
+            automation.exportDefinitions,
+        );
+    }
+
     return automation;
+}
+
+function removeAllTimeDateFiltersFromExportDefinitions(
+    exportDefinitions: (IExportDefinitionMetadataObject | IExportDefinitionMetadataObjectDefinition)[],
+) {
+    return exportDefinitions.map((exportDefinition) => {
+        if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
+            return {
+                ...exportDefinition,
+                requestPayload: {
+                    ...exportDefinition.requestPayload,
+                    content: {
+                        ...exportDefinition.requestPayload.content,
+                        filters: exportDefinition.requestPayload.content.filters?.filter(
+                            (f) => !isAllTimeDateFilter(f),
+                        ),
+                    },
+                },
+            };
+        } else if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
+            return {
+                ...exportDefinition,
+                requestPayload: {
+                    ...exportDefinition.requestPayload,
+                    content: {
+                        ...exportDefinition.requestPayload.content,
+                        filters: exportDefinition.requestPayload.content.filters?.filter(
+                            (f) => !isAllTimeDashboardDateFilter(f),
+                        ),
+                    },
+                },
+            };
+        }
+        return exportDefinition;
+    });
 }
