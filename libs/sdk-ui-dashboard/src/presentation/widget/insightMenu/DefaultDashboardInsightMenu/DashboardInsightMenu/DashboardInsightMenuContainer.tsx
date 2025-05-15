@@ -1,9 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
-import { Button, ItemsWrapper } from "@gooddata/sdk-ui-kit";
+import { ItemsWrapper } from "@gooddata/sdk-ui-kit";
 
-import { DashboardInsightMenuTitle } from "../../DashboardInsightMenuTitle.js";
 import { RenderMode } from "../../../../../types.js";
 
 interface IDashboardInsightMenuContainerProps {
@@ -12,6 +11,8 @@ interface IDashboardInsightMenuContainerProps {
     insight?: IInsight;
     onClose: () => void;
     renderMode: RenderMode;
+    titleId: string;
+    isSubmenu: boolean;
 }
 
 const itemsWrapperStyle: React.CSSProperties = { width: "100%" };
@@ -19,17 +20,6 @@ const itemsWrapperStyle: React.CSSProperties = { width: "100%" };
 export const DashboardInsightMenuContainer: React.FC<IDashboardInsightMenuContainerProps> = (props) => {
     return (
         <div className="insight-configuration">
-            <div className="insight-configuration-panel-header">
-                <DashboardInsightMenuTitle
-                    widget={props.widget}
-                    insight={props.insight}
-                    renderMode={props.renderMode}
-                />
-                <Button
-                    className="gd-button-link gd-button-icon-only gd-icon-cross configuration-panel-header-close-button s-configuration-panel-header-close-button"
-                    onClick={props.onClose}
-                />
-            </div>
             <ItemsWrapper smallItemsSpacing style={itemsWrapperStyle}>
                 {props.children}
             </ItemsWrapper>

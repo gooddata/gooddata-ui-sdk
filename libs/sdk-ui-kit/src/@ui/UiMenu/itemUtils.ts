@@ -1,7 +1,17 @@
 // (C) 2025 GoodData Corporation
 
-import { IUiMenuInteractiveItem, IUiMenuItem, IUiMenuItemData } from "./types.js";
+import {
+    IUiMenuContentItem,
+    IUiMenuFocusableItem,
+    IUiMenuInteractiveItem,
+    IUiMenuItem,
+    IUiMenuItemData,
+} from "./types.js";
 
+/**
+ * Recursively finds an item in the menu tree that matches the predicate.
+ * @internal
+ */
 export const findItem = <T extends IUiMenuItemData = object>(
     items: IUiMenuItem<T>[],
     predicate: (item: IUiMenuItem<T>) => boolean,
@@ -22,6 +32,10 @@ export const findItem = <T extends IUiMenuItemData = object>(
     return undefined;
 };
 
+/**
+ * Gets a menu item by its ID.
+ * @internal
+ */
 export const getItem = <T extends IUiMenuItemData = object>(
     items: IUiMenuItem<T>[],
     itemId: string,
@@ -29,6 +43,10 @@ export const getItem = <T extends IUiMenuItemData = object>(
     return findItem(items, (item) => item.id === itemId);
 };
 
+/**
+ * Finds an interactive menu item that matches the predicate.
+ * @internal
+ */
 export const findInteractiveItem = <T extends IUiMenuItemData = object>(
     items: IUiMenuItem<T>[],
     predicate: (item: IUiMenuInteractiveItem<T>) => boolean,
@@ -38,6 +56,19 @@ export const findInteractiveItem = <T extends IUiMenuItemData = object>(
     return foundItem?.type === "interactive" ? foundItem : undefined;
 };
 
+export const findContentItem = <T extends IUiMenuItemData = object>(
+    items: IUiMenuItem<T>[],
+    predicate: (item: IUiMenuContentItem<T>) => boolean,
+): IUiMenuContentItem<T> | undefined => {
+    const foundItem = findItem(items, (item) => item.type === "content" && predicate(item));
+
+    return foundItem?.type === "content" ? foundItem : undefined;
+};
+
+/**
+ * Gets an interactive menu item by its ID.
+ * @internal
+ */
 export const getInteractiveItem = <T extends IUiMenuItemData = object>(
     items: IUiMenuItem<T>[],
     itemId: string,
@@ -45,6 +76,24 @@ export const getInteractiveItem = <T extends IUiMenuItemData = object>(
     return findInteractiveItem(items, (item) => item.id === itemId);
 };
 
+export const getContentItem = <T extends IUiMenuItemData = object>(
+    items: IUiMenuItem<T>[],
+    itemId: string,
+): IUiMenuContentItem<T> | undefined => {
+    return findContentItem(items, (item) => item.id === itemId);
+};
+
+export const getFocusedItem = <T extends IUiMenuItemData = object>(
+    items: IUiMenuItem<T>[],
+    itemId: string,
+): IUiMenuFocusableItem | undefined => {
+    return getContentItem(items, itemId) || getInteractiveItem(items, itemId);
+};
+
+/**
+ * Gets all items under a specific interactive parent item.
+ * @internal
+ */
 export const getItemsByInteractiveParent = <T extends IUiMenuItemData = object>(
     items: IUiMenuItem<T>[],
     parentId?: string,
@@ -54,12 +103,20 @@ export const getItemsByInteractiveParent = <T extends IUiMenuItemData = object>(
     return isRootLevel ? items : findInteractiveItem(items, (item) => item.id === parentId)?.subItems;
 };
 
+/**
+ * Gets the interactive parent of a menu item.
+ * @internal
+ */
 export const getItemInteractiveParent = <T extends IUiMenuItemData = object>(
     items: IUiMenuItem<T>[],
     itemId: string,
 ): IUiMenuInteractiveItem<T> | undefined => {
     const parent = findItem(items, (item) => {
-        if (item.type === "static" || item.subItems === undefined) {
+        if (
+            item.type === "static" ||
+            (item.type === "interactive" && item.subItems === undefined) ||
+            item.type === "content"
+        ) {
             return false;
         }
 
@@ -77,6 +134,10 @@ export const getItemInteractiveParent = <T extends IUiMenuItemData = object>(
     return undefined;
 };
 
+/**
+ * Gets all sibling items of a menu item.
+ * @internal
+ */
 export const getSiblingItems = <T extends IUiMenuItemData = object>(
     items: IUiMenuItem<T>[],
     itemId: string,
@@ -89,6 +150,10 @@ export const getSiblingItems = <T extends IUiMenuItemData = object>(
     return getItemsByInteractiveParent(items, getItemInteractiveParent(items, itemId)?.id);
 };
 
+/**
+ * Gets all next sibling items of a menu item with wraparound.
+ * @internal
+ */
 export const getNextSiblings = <T extends IUiMenuItemData = object>(
     items: IUiMenuItem<T>[],
     itemId: string,
@@ -104,6 +169,10 @@ export const getNextSiblings = <T extends IUiMenuItemData = object>(
     return [...siblingItems.slice(itemIndex + 1), ...siblingItems.slice(0, itemIndex)];
 };
 
+/**
+ * Gets all previous sibling items of a menu item with wraparound.
+ * @internal
+ */
 export const getPreviousSiblings = <T extends IUiMenuItemData = object>(
     items: IUiMenuItem<T>[],
     itemId: string,
@@ -119,6 +188,10 @@ export const getPreviousSiblings = <T extends IUiMenuItemData = object>(
     return [...siblingItems.slice(0, itemIndex).reverse(), ...siblingItems.slice(itemIndex + 1).reverse()];
 };
 
+/**
+ * Gets the closest focusable sibling item in the specified direction.
+ * @internal
+ */
 export const getClosestFocusableSibling = <T extends IUiMenuItemData = object>(args: {
     items: IUiMenuItem<T>[];
     isItemFocusable: (item: IUiMenuItem<T>) => boolean;
@@ -143,6 +216,10 @@ export const getClosestFocusableSibling = <T extends IUiMenuItemData = object>(a
     }
 };
 
+/**
+ * Unwraps items from group containers into a flat array.
+ * @internal
+ */
 export function unwrapGroupItems<T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[]) {
     const result: IUiMenuItem<T>[] = [];
 

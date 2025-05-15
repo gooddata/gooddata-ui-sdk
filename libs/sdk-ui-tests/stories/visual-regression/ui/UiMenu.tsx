@@ -61,6 +61,61 @@ const itemsWithGroup: IUiMenuItem[] = [
     { type: "interactive", id: "item3", stringTitle: "Item 3", data: "data3" },
 ];
 
+// Define the custom menu item data type
+type CustomMenuData = {
+    interactive: string;
+    static: string;
+    group: string;
+    content: { formTitle: string };
+};
+
+// Example custom content component
+const CustomForm: React.FC<{
+    onBack?: () => void;
+    onClose?: () => void;
+    menuCtxData?: CustomMenuData["content"];
+}> = ({ onBack, onClose, menuCtxData }) => {
+    const [value, setValue] = React.useState("");
+
+    return (
+        <div style={{ padding: "1rem" }}>
+            <h3>{menuCtxData?.formTitle || "Custom Form"}</h3>
+            <div style={{ marginBottom: "1rem" }}>
+                <label htmlFor="example-input" style={{ display: "block", marginBottom: "0.5rem" }}>
+                    Example Input
+                </label>
+                <input
+                    id="example-input"
+                    type="text"
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                    style={{ width: "100%", padding: "0.5rem" }}
+                />
+            </div>
+            <div style={{ display: "flex", gap: "0.5rem", justifyContent: "flex-end" }}>
+                <button onClick={onBack} style={{ padding: "0.5rem 1rem" }}>
+                    Back
+                </button>
+                <button onClick={onClose} style={{ padding: "0.5rem 1rem" }}>
+                    Close
+                </button>
+            </div>
+        </div>
+    );
+};
+
+const itemsWithContent: IUiMenuItem<CustomMenuData>[] = [
+    { type: "interactive", id: "item1", stringTitle: "Regular Item", data: "data1" },
+    {
+        type: "content",
+        id: "custom-form",
+        stringTitle: "Open Form",
+        data: { formTitle: "Example Form" },
+        component: CustomForm,
+    },
+    { type: "interactive", id: "item3", stringTitle: "Another Item", data: "data3" },
+];
+
 const Example = ({ title, children }: { title: string; children: React.ReactNode }) => (
     <>
         <h4>{title}</h4>
@@ -116,6 +171,15 @@ const UiMenuExamples = () => (
 
             <Example title="Menu with Group Items">
                 <UiMenu items={itemsWithGroup} onSelect={noop} ariaAttributes={defaultAriaAttributes} />
+            </Example>
+
+            <Example title="Menu with Custom Content">
+                <UiMenu
+                    items={itemsWithContent}
+                    onSelect={noop}
+                    ariaAttributes={defaultAriaAttributes}
+                    menuCtxData={{ formTitle: "Custom Form Title" }}
+                />
             </Example>
         </div>
     </IntlProvider>

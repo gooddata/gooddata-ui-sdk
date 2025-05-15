@@ -197,6 +197,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                             isRelativeDateFilterForm(selectedFilterOption),
                     })}
                     style={wrapperStyle}
+                    role="listbox"
                 >
                     {isEditMode && !isMobile && showHeaderMessage ? <EditModeMessage /> : null}
                     {isMobile ? (

@@ -3296,5 +3296,10 @@
         "value": "Export",
         "comment": "Export to file with XLSX extension.",
         "limit": 0
+    },
+    "menu.close": {
+        "value": "Close menu",
+        "comment": "",
+        "limit": 0
     }
 }

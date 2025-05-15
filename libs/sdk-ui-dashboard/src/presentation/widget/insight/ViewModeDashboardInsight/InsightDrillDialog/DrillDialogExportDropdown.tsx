@@ -6,7 +6,7 @@ import {
     Bubble,
     BubbleHoverTrigger,
     Button,
-    DefaultUiMenuInteractiveItemComponent,
+    DefaultUiMenuInteractiveItem,
     Dropdown,
     IAlignPoint,
     IDropdownButtonRenderProps,
@@ -133,13 +133,13 @@ const DrillModalExportMenuItem: React.FC<UiMenuInteractiveItemProps<IMenuItemDat
 
     return item.isDisabled && tooltip !== undefined ? (
         <BubbleHoverTrigger>
-            <DefaultUiMenuInteractiveItemComponent {...props} />
+            <DefaultUiMenuInteractiveItem {...props} />
             <Bubble className="bubble-primary" alignPoints={itemBubbleAlignPoints}>
                 {tooltip}
             </Bubble>
         </BubbleHoverTrigger>
     ) : (
-        <DefaultUiMenuInteractiveItemComponent {...props} />
+        <DefaultUiMenuInteractiveItem {...props} />
     );
 };
 

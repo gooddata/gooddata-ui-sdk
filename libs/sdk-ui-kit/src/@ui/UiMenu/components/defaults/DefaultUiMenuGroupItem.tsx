@@ -1,15 +1,15 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { e } from "../menuBem.js";
-import { ShortenedText } from "../../../ShortenedText/index.js";
-import { IUiMenuItemData, UiMenuGroupItemProps } from "../types.js";
-import { typedUiMenuContextStore } from "../context.js";
-
+import { e } from "../../menuBem.js";
+import { ShortenedText } from "../../../../ShortenedText/index.js";
+import { IUiMenuItemData, UiMenuGroupItemProps } from "../../types.js";
+import { typedUiMenuContextStore } from "../../context.js";
+import { SeparatorLine } from "../../../../SeparatorLine/SeparatorLine.js";
 /**
  * @internal
  */
-export function DefaultUiMenuGroupItemComponent<T extends IUiMenuItemData = object>({
+export function DefaultUiMenuGroupItem<T extends IUiMenuItemData = object>({
     item,
 }: UiMenuGroupItemProps<T>): React.ReactNode {
     const { createSelector, useContextStore } = typedUiMenuContextStore<T>();
@@ -28,6 +28,9 @@ export function DefaultUiMenuGroupItemComponent<T extends IUiMenuItemData = obje
                 <ShortenedText className={e("group-title")} ellipsisPosition={"end"}>
                     {item.stringTitle}
                 </ShortenedText>
+                <div className={e("group-separator")} role={"presentation"}>
+                    <SeparatorLine mL={10} />
+                </div>
             </li>
 
             {item.subItems.map((groupItem, index) => (

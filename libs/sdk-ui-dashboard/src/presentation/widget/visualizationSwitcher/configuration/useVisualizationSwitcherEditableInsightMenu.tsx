@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
@@ -27,9 +27,12 @@ export const useVisualizationSwitcherEditableInsightMenu = (
         if (item.itemId === "ConfigurationPanelSubmenu" && isIInsightMenuSubmenu(item)) {
             return {
                 ...item,
-                SubmenuComponent: (props: IInsightMenuSubmenuComponentProps) => (
-                    <item.SubmenuComponent {...props} enableTitleConfig={false} />
-                ),
+                SubmenuComponent: item.SubmenuComponent
+                    ? (props: IInsightMenuSubmenuComponentProps) => {
+                          const Component = item.SubmenuComponent!;
+                          return <Component {...props} enableTitleConfig={false} />;
+                      }
+                    : undefined,
             };
         }
         if (item.itemId === "InteractionPanelRemove") {

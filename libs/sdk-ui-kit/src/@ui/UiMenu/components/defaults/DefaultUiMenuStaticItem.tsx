@@ -1,14 +1,14 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { IUiMenuItemData, UiMenuStaticItemProps } from "../types.js";
-import { typedUiMenuContextStore } from "../context.js";
+import { IUiMenuItemData, UiMenuStaticItemProps } from "../../types.js";
+import { typedUiMenuContextStore } from "../../context.js";
 
 /**
  * By default just renders the data.
  * @internal
  */
-export const DefaultUiMenuStaticItemComponent = React.memo(function DefaultUiMenuStaticItemComponent<
+export const DefaultUiMenuStaticItem = React.memo(function DefaultUiMenuStaticItem<
     T extends IUiMenuItemData = object,
 >({ item }: UiMenuStaticItemProps<T>): React.ReactElement {
     const { itemClassName } = typedUiMenuContextStore<T>().useContextStore((ctx) => ({

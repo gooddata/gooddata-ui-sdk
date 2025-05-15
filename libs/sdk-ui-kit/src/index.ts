@@ -75,7 +75,7 @@ export { ComponentTable, propCombinationsFor } from "./@ui/@dev/ComponentTable.j
 export type { IComponentTableProps, IPropCombination } from "./@ui/@dev/ComponentTable.js";
 export type { StyleProps } from "./@ui/@utils/bem.js";
 export { bem, bemFactory } from "./@ui/@utils/bem.js";
-export type { SizeSmall, SizeMedium, SizeLarge } from "./@ui/@types/size.js";
+export type { SizeXSmall, SizeSmall, SizeMedium, SizeLarge } from "./@ui/@types/size.js";
 export type {
     VariantPrimary,
     VariantSecondary,
@@ -124,13 +124,39 @@ export type {
     IUiListboxInteractiveItem,
     UiListboxInteractiveItemProps,
 } from "./@ui/UiListbox/types.js";
+
 export { UiMenu } from "./@ui/UiMenu/UiMenu.js";
-export { DefaultUiMenuInteractiveItemComponent } from "./@ui/UiMenu/defaults/DefaultUiMenuInteractiveItemComponent.js";
-export { DefaultUiMenuStaticItemComponent } from "./@ui/UiMenu/defaults/DefaultUiMenuStaticItemComponent.js";
+export {
+    DefaultUiMenuInteractiveItem,
+    DefaultUiMenuInteractiveItemWrapper,
+} from "./@ui/UiMenu/components/defaults/DefaultUiMenuInteractiveItem.js";
+export { DefaultUiMenuStaticItem } from "./@ui/UiMenu/components/defaults/DefaultUiMenuStaticItem.js";
+export { DefaultUiMenuHeader } from "./@ui/UiMenu/components/defaults/DefaultUiMenuHeader.js";
+export { DefaultUiMenuContent } from "./@ui/UiMenu/components/defaults/DefaultUiMenuContent.js";
+export {
+    DefaultUiMenuContentItem,
+    DefaultUiMenuContentItemWrapper,
+} from "./@ui/UiMenu/components/defaults/DefaultUiMenuContentItem.js";
+export { DefaultUiMenuGroupItem } from "./@ui/UiMenu/components/defaults/DefaultUiMenuGroupItem.js";
+export { typedUiMenuContextStore } from "./@ui/UiMenu/context.js";
+export {
+    getItemInteractiveParent,
+    getSiblingItems,
+    getNextSiblings,
+    getPreviousSiblings,
+    getClosestFocusableSibling,
+    unwrapGroupItems,
+    findItem,
+    getItem,
+    findInteractiveItem,
+    getInteractiveItem,
+    getItemsByInteractiveParent,
+} from "./@ui/UiMenu/itemUtils.js";
 export type {
     UiMenuProps,
     IUiMenuContext,
     IUiMenuItem,
+    IUiMenuFocusableItem,
     IUiMenuStaticItem,
     UiMenuStaticItemProps,
     IUiMenuInteractiveItem,
@@ -138,6 +164,10 @@ export type {
     IUiMenuGroupItem,
     UiMenuGroupItemProps,
     UiMenuInteractiveItemWrapperProps,
+    IUiMenuContentItem,
+    UiMenuContentItemWrapperProps,
+    UiMenuContentItemProps,
+    UiMenuContentProps,
     UiMenuItemProps,
     IUiMenuControlType,
     IUiMenuPluggableComponents,

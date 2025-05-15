@@ -23,10 +23,10 @@ export const ItemsWrapper: React.FC<IItemsWrapperProps> = ({
     className,
     children,
     style,
-    accessibilityConfig,
     wrapperRef,
 }) => (
     <div
+        ref={wrapperRef}
         className={classnames(
             {
                 "gd-menu-wrapper": true,
@@ -35,10 +35,6 @@ export const ItemsWrapper: React.FC<IItemsWrapperProps> = ({
             className,
         )}
         style={style}
-        role={accessibilityConfig?.role}
-        id={accessibilityConfig?.id}
-        aria-labelledby={accessibilityConfig?.ariaLabelledBy}
-        ref={wrapperRef}
     >
         {children}
     </div>

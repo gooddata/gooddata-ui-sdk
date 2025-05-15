@@ -1,4 +1,10 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
+
+/**
+ * @internal
+ */
+export type SizeXSmall = "xsmall";
+
 /**
  * @internal
  */

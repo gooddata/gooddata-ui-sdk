@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 export * from "./DefaultDashboardInsightMenu/index.js";
 export { DashboardInsightMenuButton } from "./DashboardInsightMenuButton.js";
 export { DashboardInsightMenu } from "./DashboardInsightMenu.js";
@@ -12,6 +12,7 @@ export type {
     IDashboardInsightMenuTitleProps,
     IInsightMenuItem,
     IInsightMenuSubmenu,
+    IInsightMenuGroup,
     IInsightMenuItemButton,
     IInsightMenuItemSeparator,
     IInsightMenuSubmenuComponentProps,

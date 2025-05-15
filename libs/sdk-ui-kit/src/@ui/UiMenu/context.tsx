@@ -10,5 +10,5 @@ export const UiMenuContextStore = createContextStore<IUiMenuContext>("UiMenu");
 /**
  * @internal
  */
-export const typedUiMenuContextStore = <T extends IUiMenuItemData = object>() =>
-    UiMenuContextStore as unknown as IContextStore<IUiMenuContext<T>>;
+export const typedUiMenuContextStore = <T extends IUiMenuItemData = object, M = object>() =>
+    UiMenuContextStore as unknown as IContextStore<IUiMenuContext<T, M>>;

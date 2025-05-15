@@ -1,22 +1,22 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { e } from "../menuBem.js";
-import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
+import { e } from "../../menuBem.js";
+import { UiIconButton } from "../../../UiIconButton/UiIconButton.js";
 import { useIntl } from "react-intl";
-import { ShortenedText } from "../../../ShortenedText/index.js";
-import { typedUiMenuContextStore } from "../context.js";
-import { getItemInteractiveParent } from "../itemUtils.js";
-import { IUiMenuItemData } from "../types.js";
+import { ShortenedText } from "../../../../ShortenedText/index.js";
+import { typedUiMenuContextStore } from "../../context.js";
+import { getItemInteractiveParent } from "../../itemUtils.js";
+import { IUiMenuItemData } from "../../types.js";
 
 /**
  * Renders the submenu header when in a submenu.
  * If not in a submenu, returns null.
  * @internal
  */
-export const DefaultUiMenuHeaderComponent = React.memo(function DefaultUiMenuHeaderComponent<
+export const DefaultUiMenuHeader: React.FC = React.memo(function DefaultUiMenuHeader<
     T extends IUiMenuItemData = object,
->(): React.ReactNode {
+>(): React.ReactElement | null {
     const { formatMessage } = useIntl();
 
     const { useContextStore, createSelector } = typedUiMenuContextStore<T>();
@@ -59,7 +59,7 @@ export const DefaultUiMenuHeaderComponent = React.memo(function DefaultUiMenuHea
                 </ShortenedText>
             </button>
             <UiIconButton
-                size={"small"}
+                size={"xsmall"}
                 variant={"tertiary"}
                 icon={"close"}
                 label={formatMessage({ id: "menu.close" })}
