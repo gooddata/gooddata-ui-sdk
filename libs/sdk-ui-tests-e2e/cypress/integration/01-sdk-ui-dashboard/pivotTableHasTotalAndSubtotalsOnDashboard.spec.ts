@@ -43,7 +43,7 @@ describe(
     () => {
         it("should render insight with multi format metrics correctly", () => {
             Navigation.visit("dashboard/dashboard-pivot-table-scenario");
-            const table = new Widget(1).waitTableLoaded().getTable();
+            const table = new Widget(0, 1).waitTableLoaded().getTable();
             table.waitLoaded();
             table.hasCellValue(6, 1, "Closed Won");
             table.hasCellValue(6, 2, "██████████");

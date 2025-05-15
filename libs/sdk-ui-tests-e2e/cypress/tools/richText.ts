@@ -73,7 +73,7 @@ export class RichText {
     }
 
     confirmChanges() {
-        this.getConfirmButtonElement().click();
+        this.getConfirmButtonElement().click({ force: true });
         this.isView();
         return this;
     }
