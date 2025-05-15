@@ -47,13 +47,13 @@ export const useAutomationFilters = ({
     );
 
     const attributes = useMemo(
-        () => getCatalogAttributesByFilters(nonSelectedFilters, allAttributes),
-        [nonSelectedFilters, allAttributes],
+        () => getCatalogAttributesByFilters(nonSelectedFilters, allAttributes, attributeConfigs),
+        [nonSelectedFilters, allAttributes, attributeConfigs],
     );
 
     const dateDatasets = useMemo(
-        () => getCatalogDateDatasetsByFilters(nonSelectedFilters, allDateDatasets),
-        [nonSelectedFilters, allDateDatasets],
+        () => getCatalogDateDatasetsByFilters(nonSelectedFilters, allDateDatasets, dateConfigs),
+        [nonSelectedFilters, allDateDatasets, dateConfigs],
     );
 
     const handleChangeFilter = useCallback(
