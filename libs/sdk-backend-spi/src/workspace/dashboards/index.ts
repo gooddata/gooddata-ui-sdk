@@ -220,6 +220,18 @@ export interface IRawExportCustomOverrides {
 }
 
 /**
+ * Options for exporting dashboard to tabular format
+ *
+ * @alpha
+ */
+export interface IDashboardExportTabularOptions {
+    /**
+     * Title for the export. If not provided, the dashboard title will be fetched.
+     */
+    title?: string;
+}
+
+/**
  * Service to list, create and update analytical dashboards
  *
  * @alpha
@@ -359,12 +371,13 @@ export interface IWorkspaceDashboardsService {
      * Export dashboard to tabular.
      *
      * Tabular file is downloaded and attached as Blob data to the current window instance.
+     * If title is not provided, the dashboard title will be fetched.
      *
      * @param ref - dashboard reference
-     * @param options - options
+     * @param options - export options
      * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
      */
-    exportDashboardToTabular(ref: ObjRef, options?: { title?: string }): Promise<IExportResult>;
+    exportDashboardToTabular(ref: ObjRef, options?: IDashboardExportTabularOptions): Promise<IExportResult>;
 
     /**
      * Export dashboard to CSV raw.

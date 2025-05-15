@@ -13,6 +13,7 @@ import {
     IGetDashboardPluginOptions,
     IDashboardsQuery,
     IRawExportCustomOverrides,
+    IDashboardExportTabularOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
     IFilter,
@@ -111,7 +112,7 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         return this.decorated.exportDashboardToPresentation(ref, format, filters, options);
     }
 
-    exportDashboardToTabular(ref: ObjRef, options?: { title?: string }): Promise<IExportResult> {
+    exportDashboardToTabular(ref: ObjRef, options?: IDashboardExportTabularOptions): Promise<IExportResult> {
         return this.decorated.exportDashboardToTabular(ref, options);
     }
 

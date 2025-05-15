@@ -34,6 +34,7 @@ import {
     IDashboardsQuery,
     IRawExportCustomOverrides,
     walkLayout,
+    IDashboardExportTabularOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -538,7 +539,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     public exportDashboardToTabular = async (
         dashboardRef: ObjRef,
-        options?: { title?: string },
+        options?: IDashboardExportTabularOptions,
     ): Promise<IExportResult> => {
         const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
 
