@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps, IntlShape } from "react-intl";
 import moment from "moment";
@@ -40,6 +40,9 @@ const InputDescription: React.FC<{
 };
 
 function formatDate(date: Date, dateFormat: string): string {
+    if (date === undefined) {
+        return undefined;
+    }
     return format(date, dateFormat);
 }
 
@@ -98,83 +101,71 @@ type DateTimePickerComponentProps = IDateTimePickerOwnProps & WrappedComponentPr
 
 const buildAriaDescribedByValue = (values: string[]) => values.filter((value) => !!value).join(" ");
 
-const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePickerComponentProps>(
-    (props: DateTimePickerComponentProps, ref) => {
-        const {
-            dateInputLabel,
-            timeInputLabel,
-            placeholderDate,
-            value,
-            onChange,
-            onInputMarkedValid,
-            dateFormat,
-            handleDayClick,
-            isMobile,
-            isTimeEnabled,
-            onKeyDown,
-            className,
-            accessibilityConfig,
-            errors,
-            intl,
-        } = props;
+// make sure it contains appropriate time if enabled
+const adjustTime = (parsedDate: Date, previousDate: Date, isTimeEnabled: boolean) => {
+    if (isTimeEnabled && parsedDate) {
+        parsedDate.setHours(previousDate.getHours());
+        parsedDate.setMinutes(previousDate.getMinutes());
+    }
+    return parsedDate;
+};
 
-        const { dateAriaLabel, timeAriaLabel, dateInputHintId, timeInputHintId } = accessibilityConfig ?? {};
+const useDateTimePicker = ({
+    value,
+    onChange,
+    onInputMarkedValid,
+    dateFormat,
+    isTimeEnabled,
+    errors,
+}: DateTimePickerComponentProps) => {
+    // keeping local copy to enable time update onBlur
+    const [pickerTime, setPickerTime] = useState<string>(getTimeStringFromDate(value));
 
-        const dateInputLabelId = useId();
-        const dateInputErrorId = useId();
-        const timeInputLabelId = useId();
-        const timeInputErrorId = useId();
+    const [inputValue, setInputValue] = useState<string>(formatDate(value, dateFormat));
 
-        // keeping local copy to enable time update onBlur
-        const [pickerTime, setPickerTime] = useState<string>(getTimeStringFromDate(value));
+    useEffect(() => {
+        setInputValue(formatDate(value, dateFormat));
+    }, [value, dateFormat]);
 
-        const [inputValue, setInputValue] = useState<string>(
-            value === undefined ? undefined : formatDate(value, dateFormat),
-        );
+    const previousDate = useMemo(
+        () => value ?? moment(pickerTime, TIME_FORMAT).toDate(),
+        [value, pickerTime],
+    );
 
-        useEffect(() => {
-            setInputValue(value === undefined ? undefined : formatDate(value, dateFormat));
-        }, [value, dateFormat]);
-
-        // make sure it contains appropriate time if enabled
-        const adjustDate = (selectedDate: Date) => {
-            if (isTimeEnabled && selectedDate) {
-                const previousDate = value ?? moment(pickerTime, TIME_FORMAT).toDate();
-
-                selectedDate.setHours(previousDate.getHours());
-                selectedDate.setMinutes(previousDate.getMinutes());
-            }
-
-            return selectedDate;
-        };
-
-        const onMobileDateChange = (value: string) => {
+    const onMobileDateChange = useCallback(
+        (value: string) => {
             const selectedDate = convertPlatformDateStringToDate(value);
-            onChange(adjustDate(selectedDate));
-        };
+            onChange(adjustTime(selectedDate, previousDate, isTimeEnabled));
+        },
+        [isTimeEnabled, onChange, previousDate],
+    );
 
-        const onDateInputChange = (value: string) => {
+    const onDateInputChange = useCallback(
+        (value: string) => {
             setInputValue(value);
             const date = parseDate(value, dateFormat);
             if (date) {
-                onInputMarkedValid(adjustDate(date));
+                onInputMarkedValid(adjustTime(date, previousDate, isTimeEnabled));
             }
-        };
+        },
+        [dateFormat, isTimeEnabled, onInputMarkedValid, previousDate],
+    );
 
-        const onDateInputBlur = () => {
-            if (isEmpty(inputValue)) {
-                onChange(undefined, "empty");
-                return;
-            }
-            const date = parseDate(inputValue, dateFormat);
-            if (date === undefined) {
-                onChange(undefined, "invalid");
-                return;
-            }
-            onChange(adjustDate(date));
-        };
+    const onDateInputBlur = useCallback(() => {
+        if (isEmpty(inputValue)) {
+            onChange(undefined, "empty");
+            return;
+        }
+        const date = parseDate(inputValue, dateFormat);
+        if (date === undefined) {
+            onChange(undefined, "invalid");
+            return;
+        }
+        onChange(adjustTime(date, previousDate, isTimeEnabled));
+    }, [dateFormat, inputValue, isTimeEnabled, onChange, previousDate]);
 
-        const onTimeInputChange = (input: string) => {
+    const onTimeInputChange = useCallback(
+        (input: string) => {
             const date = value ?? new Date(); // set today in case of invalid date
             const time = moment(input, TIME_FORMAT);
             if (time.isValid()) {
@@ -183,23 +174,76 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
                 setPickerTime(input);
                 onInputMarkedValid(date);
             }
-        };
+        },
+        [onInputMarkedValid, value],
+    );
 
-        const onTimeInputBlur = () => {
-            const date = value ?? new Date(); // set today in case of invalid date
-            const time = moment(pickerTime, TIME_FORMAT);
-            if (time.isValid()) {
-                date.setHours(time.hours());
-                date.setMinutes(time.minutes());
-            }
-            onChange(date);
-        };
+    const onTimeInputBlur = useCallback(() => {
+        const date = value ?? new Date(); // set today in case of invalid date
+        const time = moment(pickerTime, TIME_FORMAT);
+        if (time.isValid()) {
+            date.setHours(time.hours());
+            date.setMinutes(time.minutes());
+        }
+        onChange(date);
+    }, [onChange, pickerTime, value]);
 
-        const { dateError, timeError } = errors ?? {};
+    const { dateError, timeError } = errors ?? {};
 
-        // mobile view still renders errors below inputs, unlike accessible version that has errors split
-        // below the input that triggered the error
-        const hasSomeError = !!dateError || !!timeError;
+    // mobile view still renders errors below inputs, unlike accessible version that has errors split
+    // below the input that triggered the error
+    const hasSomeError = !!dateError || !!timeError;
+
+    return {
+        inputValue,
+        pickerTime,
+        onMobileDateChange,
+        onDateInputChange,
+        onDateInputBlur,
+        onTimeInputChange,
+        onTimeInputBlur,
+        hasSomeError,
+        dateError,
+        timeError,
+    };
+};
+
+const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePickerComponentProps>(
+    (props: DateTimePickerComponentProps, ref) => {
+        const {
+            dateInputLabel,
+            timeInputLabel,
+            placeholderDate,
+            value,
+            dateFormat,
+            handleDayClick,
+            isMobile,
+            isTimeEnabled,
+            onKeyDown,
+            className,
+            accessibilityConfig,
+            intl,
+        } = props;
+
+        const dateInputLabelId = useId();
+        const dateInputErrorId = useId();
+        const timeInputLabelId = useId();
+        const timeInputErrorId = useId();
+        const { dateAriaLabel, timeAriaLabel, dateInputHintId, timeInputHintId } = accessibilityConfig ?? {};
+
+        const {
+            inputValue,
+            pickerTime,
+            onMobileDateChange,
+            onDateInputChange,
+            onDateInputBlur,
+            onTimeInputChange,
+            onTimeInputBlur,
+            hasSomeError,
+            dateError,
+            timeError,
+        } = useDateTimePicker(props);
+
         return (
             <div className={cx(className, isTimeEnabled && "gd-date-range-row")}>
                 <fieldset>

@@ -28,6 +28,7 @@ import fi from "date-fns/locale/fi/index.js";
 
 import { mergeDayPickerProps } from "./utils.js";
 import { IDateRange } from "./types.js";
+import { DateRangePosition } from "../interfaces/index.js";
 
 const convertedLocales: Record<string, Locale> = {
     "en-US": enUS,
@@ -68,7 +69,7 @@ function convertWeekStart(weekStart: WeekStart): DayPickerProps["weekStartsOn"] 
 export const DayPicker = forwardRef<
     HTMLDivElement,
     {
-        mode: "from" | "to";
+        mode: DateRangePosition;
         originalDateRange: IDateRange;
         selectedDateRange: IDateRange;
         alignTo: string;

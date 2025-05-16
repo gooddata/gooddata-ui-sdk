@@ -15,7 +15,7 @@ import { StartDateInputField } from "./StartDateInputField.js";
 import { EndDateInputField } from "./EndDateInputField.js";
 import { DateRangeHint } from "./DateRangeHint.js";
 import { DayPicker } from "./DatePicker.js";
-import { IDateRange } from "./types.js";
+import { IDateRange, DATE_INPUT_HINT_ID, TIME_INPUT_HINT_ID } from "./types.js";
 
 export interface IDateRangePickerProps {
     range: IDateRange;
@@ -45,6 +45,13 @@ const isClickOutsideOfCalendar = (
         inputTo &&
         !inputTo.contains(event.target as Node)
     );
+};
+
+const setTimeForDate = (date: Date, time: Date): Date => {
+    const result = new Date(date);
+    result.setHours(time.getHours());
+    result.setMinutes(time.getMinutes());
+    return result;
 };
 
 const DateRangePickerComponent: React.FC<DateRangePickerProps> = ({
@@ -78,61 +85,69 @@ const DateRangePickerComponent: React.FC<DateRangePickerProps> = ({
         setInputToValue(range.to);
     }, [range]);
 
-    const handleRangeSelect: SelectRangeEventHandler = (
-        _range: DateRange | undefined,
-        selectedDate: Date,
-    ) => {
-        let calculatedFrom: Date;
-        let calculatedTo: Date;
+    const handleRangeSelect: SelectRangeEventHandler = useCallback(
+        (_range: DateRange | undefined, selectedDate: Date) => {
+            let calculatedFrom: Date;
+            let calculatedTo: Date;
 
-        if (selectedInput === "from") {
-            calculatedFrom =
-                inputFromValue === undefined ? selectedDate : setTimeForDate(selectedDate, inputFromValue);
-            calculatedTo = inputToValue;
-        } else {
-            calculatedFrom = inputFromValue;
-            calculatedTo =
-                inputToValue === undefined ? selectedDate : setTimeForDate(selectedDate, inputToValue);
-        }
-        setInputFromValue(calculatedFrom);
-        setInputToValue(calculatedTo);
-        setSelectedRange({ from: calculatedFrom, to: calculatedTo });
-        setIsOpen(false);
+            if (selectedInput === "from") {
+                calculatedFrom =
+                    inputFromValue === undefined
+                        ? selectedDate
+                        : setTimeForDate(selectedDate, inputFromValue);
+                calculatedTo = inputToValue;
+            } else {
+                calculatedFrom = inputFromValue;
+                calculatedTo =
+                    inputToValue === undefined ? selectedDate : setTimeForDate(selectedDate, inputToValue);
+            }
+            setInputFromValue(calculatedFrom);
+            setInputToValue(calculatedTo);
+            setSelectedRange({ from: calculatedFrom, to: calculatedTo });
+            setIsOpen(false);
 
-        onRangeChange({ from: calculatedFrom, to: calculatedTo }, { rangePosition: selectedInput });
-    };
+            onRangeChange({ from: calculatedFrom, to: calculatedTo }, { rangePosition: selectedInput });
+        },
+        [inputFromValue, inputToValue, onRangeChange, selectedInput],
+    );
 
-    const handleFromChange = (date: Date, parseError?: DateParseError) => {
-        if (date) {
-            setInputFromValue(date);
-        }
-        setSelectedRange((prevRange) => ({ from: date, to: prevRange.to }));
-        onRangeChange({ from: date, to: selectedRange.to }, { rangePosition: "from", parseError });
-    };
+    const handleFromChange = useCallback(
+        (date: Date, parseError?: DateParseError) => {
+            if (date) {
+                setInputFromValue(date);
+            }
+            setSelectedRange((prevRange) => ({ from: date, to: prevRange.to }));
+            onRangeChange({ from: date, to: selectedRange.to }, { rangePosition: "from", parseError });
+        },
+        [onRangeChange, selectedRange.to],
+    );
 
-    const handleToChange = (date: Date, parseError?: DateParseError) => {
-        if (date) {
-            setInputToValue(date);
-        }
-        setSelectedRange((prevRange) => ({ from: prevRange.from, to: date }));
-        onRangeChange({ from: selectedRange.from, to: date }, { rangePosition: "to", parseError });
-    };
+    const handleToChange = useCallback(
+        (date: Date, parseError?: DateParseError) => {
+            if (date) {
+                setInputToValue(date);
+            }
+            setSelectedRange((prevRange) => ({ from: prevRange.from, to: date }));
+            onRangeChange({ from: selectedRange.from, to: date }, { rangePosition: "to", parseError });
+        },
+        [onRangeChange, selectedRange.from],
+    );
 
-    const handleFromDayClick = () => {
+    const handleFromDayClick = useCallback(() => {
         setSelectedInput("from");
         setIsOpen(true);
-    };
+    }, []);
 
-    const handleToDayClick = () => {
+    const handleToDayClick = useCallback(() => {
         setSelectedInput("to");
         setIsOpen(true);
-    };
+    }, []);
 
-    const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const onKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Escape" || e.key === "Tab") {
             setIsOpen(false);
         }
-    };
+    }, []);
 
     const handleClickOutside = useCallback((event: MouseEvent) => {
         if (
@@ -152,20 +167,19 @@ const DateRangePickerComponent: React.FC<DateRangePickerProps> = ({
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [handleClickOutside]);
 
-    const setTimeForDate = (date: Date, time: Date): Date => {
-        const result = new Date(date);
-        result.setHours(time.getHours());
-        result.setMinutes(time.getMinutes());
-        return result;
-    };
+    const onFromInputMarkedValid = useCallback(
+        (newStartDate: Date, previousEndDate: Date) => {
+            onRangeChange({ from: newStartDate, to: previousEndDate }, { rangePosition: "from" });
+        },
+        [onRangeChange],
+    );
 
-    const onFromInputMarkedValid = (newStartDate: Date, previousEndDate: Date) => {
-        onRangeChange({ from: newStartDate, to: previousEndDate }, { rangePosition: "from" });
-    };
-
-    const onToInputMarkedValid = (previousStartDate: Date, newEndDate: Date) => {
-        onRangeChange({ from: previousStartDate, to: newEndDate }, { rangePosition: "to" });
-    };
+    const onToInputMarkedValid = useCallback(
+        (previousStartDate: Date, newEndDate: Date) => {
+            onRangeChange({ from: previousStartDate, to: newEndDate }, { rangePosition: "to" });
+        },
+        [onRangeChange],
+    );
 
     const StartDateField = (
         <StartDateInputField
@@ -237,7 +251,13 @@ const DateRangePickerComponent: React.FC<DateRangePickerProps> = ({
                 </>
             )}
             {isMobile ? null : (
-                <DateRangeHint dateFormat={dateFormat} isTimeEnabled={isTimeEnabled} intl={intl} />
+                <DateRangeHint
+                    dateFormat={dateFormat}
+                    isTimeEnabled={isTimeEnabled}
+                    dateHintId={DATE_INPUT_HINT_ID}
+                    timeHintId={TIME_INPUT_HINT_ID}
+                    intl={intl}
+                />
             )}
         </>
     );
