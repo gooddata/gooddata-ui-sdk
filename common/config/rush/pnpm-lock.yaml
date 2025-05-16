@@ -3172,6 +3172,9 @@ importers:
 
   ../../libs/sdk-ui-gen-ai:
     dependencies:
+      '@codemirror/view':
+        specifier: ~6.36.4
+        version: 6.36.5
       '@gooddata/api-client-tiger':
         specifier: workspace:*
         version: link:../api-client-tiger
@@ -3555,6 +3558,9 @@ importers:
       '@aaronhayes/react-use-hubspot-form':
         specifier: ^2.0.1
         version: 2.1.1(react-dom@18.2.0)(react@18.2.0)
+      '@codemirror/autocomplete':
+        specifier: ^6.18.6
+        version: 6.18.6
       '@codemirror/commands':
         specifier: ~6.8.1
         version: 6.8.1

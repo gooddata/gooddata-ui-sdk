@@ -55,6 +55,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@codemirror/autocomplete",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@codemirror/commands",
       "allowedCategories": [ "production" ]
     },

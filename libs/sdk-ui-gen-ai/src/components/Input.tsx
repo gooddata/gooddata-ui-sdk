@@ -1,7 +1,5 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
-import DefaultTextArea from "react-textarea-autosize";
-import { defaultImport } from "default-import";
 import cx from "classnames";
 import { SendIcon } from "./SendIcon.js";
 import { connect } from "react-redux";
@@ -9,11 +7,8 @@ import { makeTextContents, makeUserMessage } from "../model.js";
 import { asyncProcessSelector, newMessageAction, RootState } from "../store/index.js";
 import { defineMessages, injectIntl } from "react-intl";
 import { WrappedComponentProps } from "react-intl/src/components/injectIntl.js";
-
-// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
-// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
-// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
-const TextareaAutosize = defaultImport(DefaultTextArea);
+import { SyntaxHighlightingInput, Button } from "@gooddata/sdk-ui-kit";
+import { EditorView } from "@codemirror/view";
 
 type InputStateProps = {
     isBusy: boolean;
@@ -45,7 +40,7 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
     intl,
 }) => {
     const [value, setValue] = React.useState("");
-    const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+    const [editorApi, setApi] = React.useState<EditorView | null>(null);
 
     // Force focus when autofocus is enables on the first mount, right after the initial state is loaded
     const forceFocusOnce = React.useRef<boolean>(autofocus);
@@ -53,26 +48,24 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
         // Autofocus the textarea when the chat is not disabled and the user is not focusing on another element
         // Important, given the disabled states changes depending on the agent's loading state
         // And it's loosing focus after the loading state changes
-        if (!isBusy && (forceFocusOnce.current || document.activeElement === document.body)) {
-            textareaRef.current?.focus();
+        if (!isBusy && (forceFocusOnce.current || document.activeElement === document.body) && editorApi) {
+            editorApi.focus();
             forceFocusOnce.current = false;
         }
-    }, [isBusy]);
+    }, [isBusy, editorApi]);
 
     const handleSubmit = () => {
         newMessage(makeUserMessage([makeTextContents(value)]));
         setValue("");
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
         if (e.key === "Enter" && !e.shiftKey && !isBusy && value) {
             e.preventDefault();
             handleSubmit();
+            return true;
         }
-    };
-
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setValue(e.target.value);
+        return false;
     };
 
     const buttonDisabled = !value || isBusy || isEvaluating;
@@ -82,23 +75,31 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
 
     return (
         <div className="gd-gen-ai-chat__input">
-            <TextareaAutosize
-                ref={textareaRef}
-                className="gd-gen-ai-chat__input__textarea"
+            <SyntaxHighlightingInput
+                className="gd-gen-ai-chat__input__mc"
                 placeholder={intl.formatMessage(messages.placeholder)}
+                label={intl.formatMessage(messages.label)}
                 value={value}
-                onChange={handleChange}
+                onApi={setApi}
+                onChange={setValue}
                 onKeyDown={handleKeyDown}
                 disabled={isBusy}
-                aria-label={intl.formatMessage(messages.label)}
             />
-            <div
-                role="button"
+            <Button
+                disabled={buttonDisabled}
+                className={buttonClasses}
                 aria-label={intl.formatMessage(messages.send)}
                 onClick={!buttonDisabled ? handleSubmit : undefined}
             >
-                <SendIcon className={buttonClasses} />
-            </div>
+                <SendIcon />
+            </Button>
+            {/*<div*/}
+            {/*    role="button"*/}
+            {/*    aria-label={intl.formatMessage(messages.send)}*/}
+            {/*    onClick={!buttonDisabled ? handleSubmit : undefined}*/}
+            {/*>*/}
+            {/*    <SendIcon className={buttonClasses} />*/}
+            {/*</div>*/}
         </div>
     );
 };

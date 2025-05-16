@@ -10,54 +10,14 @@
     position: relative;
     margin: 0 variables.$x-spacing;
 
-    &__textarea {
-        @include form-mixins.gd-input-base;
-        @include kit-mixins.border-radius(3px);
-        @include kit-mixins.box-shadow(
-            inset 0 1px 1px 0 color.adjust(kit-variables.$gd-input-text-box-shadow-color, $alpha: -0.85)
-        );
-
-        @include kit-mixins.placeholder {
-            color: var(
-                --gd-palette-complementary-6-from-theme,
-                color.adjust(kit-variables.$default-gd-color-link, $alpha: -0.25)
-            );
-
-            @include kit-mixins.transition(color, 0.25s, ease-in-out);
+    &__mc {
+        .cm-editor {
+            height: auto;
+            padding: 3px 30px 3px 5px;
         }
-
-        resize: none;
-        box-sizing: border-box;
-        width: 100%;
-        overflow: hidden;
-        padding-right: 30px; // Make space for the send button
-
-        &:hover {
-            @include kit-mixins.placeholder {
-                color: kit-variables.$gd-color-link;
-            }
-
-            border-color: kit-variables.$gd-input-text-hover-border;
-        }
-
-        &:focus {
-            @include kit-mixins.box-shadow(
-                inset 0 1px 1px 0 color.adjust(kit-variables.$gd-input-text-box-shadow-color, $alpha: -0.8)
-            );
-
-            border-color: kit-variables.$gd-palette-primary-base;
-        }
-
-        &:disabled,
-        &.disabled {
-            &,
-            &:hover {
-                @include kit-mixins.box-shadow(none);
-
-                color: kit-variables.$gd-color-disabled;
-                border-color: kit-variables.$gd-input-text-border;
-                background-color: kit-variables.$gd-color-light;
-            }
+        .cm-scroller {
+            // stylelint-disable-next-line declaration-no-important
+            font-family: kit-variables.$gd-font-primary !important;
         }
     }
 
@@ -65,10 +25,19 @@
         @include kit-mixins.transition(all, 0.25s, ease-in-out);
 
         position: absolute;
-        top: 8.5px; // (line-height - own-height) / 2
-        height: 15px;
-        right: 10px;
+        top: 1px;
+        right: 1px;
+        bottom: 1px;
+        width: 40px;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         cursor: pointer;
+        background: none;
+        border: none;
+        border-radius: 3px;
 
         & path,
         & rect {
@@ -80,14 +49,20 @@
             fill: kit-variables.$gd-palette-primary-base;
         }
 
-        &--disabled,
-        &--disabled:hover {
+        &:disabled:hover {
             cursor: default;
 
             path,
             rect {
                 fill: kit-variables.$gd-color-disabled;
             }
+        }
+
+        &:focus,
+        &:focus-within,
+        &:focus-visible,
+        &:active {
+            outline: 1px solid kit-variables.$gd-palette-primary-base;
         }
     }
 

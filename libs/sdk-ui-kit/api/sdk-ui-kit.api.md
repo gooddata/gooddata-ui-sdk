@@ -12,6 +12,7 @@ import { ColorFormats } from 'tinycolor2';
 import { Component } from 'react';
 import { CSSProperties } from 'react';
 import { DebouncedFunc } from 'lodash';
+import { EditorView } from '@codemirror/view';
 import { Extension } from '@codemirror/state';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAccessControlAware } from '@gooddata/sdk-model';
@@ -4377,11 +4378,19 @@ export interface ISyntaxHighlightingInputProps {
     // (undocumented)
     className?: string;
     // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
     extensions?: Extension[];
+    // (undocumented)
+    label?: string;
+    // (undocumented)
+    onApi?: (view: EditorView | null) => void;
     // (undocumented)
     onChange: (value: string) => void;
     // (undocumented)
     onCursor?: (from: number, to: number) => void;
+    // (undocumented)
+    onKeyDown?: (event: KeyboardEvent, view: EditorView) => boolean;
     // (undocumented)
     placeholder?: string;
     // (undocumented)
