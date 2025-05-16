@@ -2707,7 +2707,8 @@
                                 "from": "0",
                                 "granularity": "GDC.time.month",
                                 "to": "0",
-                                "type": "relative"
+                                "type": "relative",
+                                "localIdentifier": "0_dateFilter"
                             }
                         }
                     ],
@@ -2874,7 +2875,8 @@
                                 "from": "2011-01-01",
                                 "granularity": "GDC.time.date",
                                 "to": "2011-12-31",
-                                "type": "absolute"
+                                "type": "absolute",
+                                "localIdentifier": "0_dateFilter"
                             }
                         },
                         {
@@ -2982,7 +2984,8 @@
                                 "from": 0,
                                 "granularity": "GDC.time.month",
                                 "to": 0,
-                                "type": "relative"
+                                "type": "relative",
+                                "localIdentifier": "0_dateFilter"
                             }
                         }
                     ],
@@ -3009,7 +3012,8 @@
                                 "from": 0,
                                 "granularity": "GDC.time.month",
                                 "to": 0,
-                                "type": "relative"
+                                "type": "relative",
+                                "localIdentifier": "0_dateFilter"
                             }
                         },
                         {
@@ -3099,7 +3103,8 @@
                                 "from": "2010-02-23 00:00",
                                 "granularity": "GDC.time.date",
                                 "to": "2022-03-23 23:59",
-                                "type": "absolute"
+                                "type": "absolute",
+                                "localIdentifier": "0_dateFilter"
                             }
                         },
                         {
@@ -3437,7 +3442,8 @@
                                 "from": 0,
                                 "granularity": "GDC.time.month",
                                 "to": 0,
-                                "type": "relative"
+                                "type": "relative",
+                                "localIdentifier": "0_dateFilter"
                             }
                         }
                     ],
@@ -3612,7 +3618,8 @@
                                 "from": 0,
                                 "granularity": "GDC.time.month",
                                 "to": 0,
-                                "type": "relative"
+                                "type": "relative",
+                                "localIdentifier": "0_dateFilter"
                             }
                         }
                     ],
@@ -3648,7 +3655,8 @@
                                 "from": 0,
                                 "granularity": "GDC.time.month",
                                 "to": 0,
-                                "type": "relative"
+                                "type": "relative",
+                                "localIdentifier": "0_dateFilter"
                             }
                         }
                     ],
@@ -3753,7 +3761,8 @@
                                 "from": "0",
                                 "granularity": "GDC.time.month",
                                 "to": "0",
-                                "type": "relative"
+                                "type": "relative",
+                                "localIdentifier": "0_dateFilter"
                             }
                         },
                         {
@@ -3874,7 +3883,8 @@
                                 "from": 0,
                                 "granularity": "GDC.time.month",
                                 "to": 0,
-                                "type": "relative"
+                                "type": "relative",
+                                "localIdentifier": "0_dateFilter"
                             }
                         }
                     ],
@@ -3936,7 +3946,8 @@
                                 "from": "0",
                                 "granularity": "GDC.time.month",
                                 "to": "0",
-                                "type": "relative"
+                                "type": "relative",
+                                "localIdentifier": "0_dateFilter"
                             }
                         }
                     ],
@@ -4094,7 +4105,8 @@
                                     }
                                 },
                                 "granularity": "GDC.time.date",
-                                "type": "relative"
+                                "type": "relative",
+                                "localIdentifier": "dt_activity_timestamp_1_dateFilter"
                             }
                         },
                         {
@@ -4106,7 +4118,8 @@
                                     }
                                 },
                                 "granularity": "GDC.time.date",
-                                "type": "relative"
+                                "type": "relative",
+                                "localIdentifier": "dt_oppcreated_timestamp_2_dateFilter"
                             }
                         }
                     ],
@@ -4426,7 +4439,8 @@
                                 "from": "0",
                                 "granularity": "GDC.time.month",
                                 "to": "0",
-                                "type": "relative"
+                                "type": "relative",
+                                "localIdentifier": "0_dateFilter"
                             }
                         }
                     ],
@@ -4593,7 +4607,8 @@
                                 "from": "2011-01-01",
                                 "granularity": "GDC.time.date",
                                 "to": "2011-12-31",
-                                "type": "absolute"
+                                "type": "absolute",
+                                "localIdentifier": "0_dateFilter"
                             }
                         },
                         {
