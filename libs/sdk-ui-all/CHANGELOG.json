@@ -2,6 +2,18 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.27.0",
+            "tag": "@gooddata/sdk-ui-all_v10.27.0",
+            "date": "Fri, 16 May 2025 08:01:14 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Fix irrelevant values info in attribute filter when apply all at once is on"
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.26.0",
             "tag": "@gooddata/sdk-ui-all_v10.26.0",
             "date": "Mon, 05 May 2025 06:30:05 GMT",
