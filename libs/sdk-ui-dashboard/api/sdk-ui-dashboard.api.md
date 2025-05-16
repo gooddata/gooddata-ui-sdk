@@ -5215,6 +5215,9 @@ export interface IDrillDownDefinition {
     type: "drillDown";
 }
 
+// @internal (undocumented)
+export type IDrillSelectCloseBehavior = "closeOnSelect" | "preventClose";
+
 // @alpha
 export interface IDrillTargets {
     availableDrillTargets?: IAvailableDrillTargets;
@@ -11031,7 +11034,7 @@ export interface WidthResizerDragItem {
 }
 
 // @internal (undocumented)
-export function WithDrillSelect({ widgetRef, children, insight, onDrillDownSuccess, onDrillToInsightSuccess, onDrillToDashboardSuccess, onDrillToAttributeUrlSuccess, onDrillToCustomUrlSuccess, onError, }: WithDrillSelectProps): JSX.Element;
+export function WithDrillSelect({ widgetRef, children, insight, closeBehavior, onDrillDownSuccess, onDrillToInsightSuccess, onDrillToDashboardSuccess, onDrillToAttributeUrlSuccess, onDrillToCustomUrlSuccess, onError, }: WithDrillSelectProps): JSX.Element;
 
 // @internal (undocumented)
 export interface WithDrillSelectProps {
@@ -11039,6 +11042,8 @@ export interface WithDrillSelectProps {
     children: (props: {
         onDrill: OnWidgetDrill;
     }) => JSX.Element;
+    // (undocumented)
+    closeBehavior?: IDrillSelectCloseBehavior;
     // (undocumented)
     insight: IInsight;
     // (undocumented)

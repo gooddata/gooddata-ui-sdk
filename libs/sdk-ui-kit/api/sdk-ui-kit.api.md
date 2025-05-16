@@ -1710,6 +1710,7 @@ export interface IDropdownButtonRenderProps {
     // (undocumented)
     ariaAttributes: {
         role: "button" | string;
+        "data-popupId": string;
     } & Pick<React_2.AriaAttributes, "aria-haspopup" | "aria-expanded" | "aria-controls">;
     // (undocumented)
     buttonRef: React_2.MutableRefObject<HTMLElement | null>;

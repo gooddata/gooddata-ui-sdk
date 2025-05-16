@@ -84,6 +84,7 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
             accessibilityConfig={{ isModal: true, titleElementId }}
             initialFocus={initialFocus}
             returnFocusTo={returnFocusTo}
+            returnFocusAfterClose
             shouldCloseOnEscape={true}
         >
             <div

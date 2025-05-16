@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 export type { UseDrillProps } from "./hooks/useDrill.js";
 export { useDrill } from "./hooks/useDrill.js";
 export type { UseDrillDownProps } from "./hooks/useDrillDown.js";
@@ -15,6 +15,7 @@ export type { UseDrillToLegacyDashboardProps } from "./hooks/useDrillToLegacyDas
 export { useDrillToLegacyDashboard } from "./hooks/useDrillToLegacyDashboard.js";
 export type { WithDrillSelectProps } from "./DrillSelect/WithDrillSelect.js";
 export { WithDrillSelect } from "./DrillSelect/WithDrillSelect.js";
+export type { IDrillSelectCloseBehavior } from "./DrillSelect/types.js";
 export type {
     OnWidgetDrill,
     OnDashboardDrill,
