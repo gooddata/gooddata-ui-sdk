@@ -1,6 +1,14 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Mon, 05 May 2025 06:30:05 GMT and should not be manually modified.
+This log was last generated on Fri, 16 May 2025 08:01:14 GMT and should not be manually modified.
+
+## 10.27.0
+
+Fri, 16 May 2025 08:01:14 GMT
+
+### Updates
+
+-   Fix irrelevant values info in attribute filter when apply all at once is on
 
 ## 10.26.0
 
