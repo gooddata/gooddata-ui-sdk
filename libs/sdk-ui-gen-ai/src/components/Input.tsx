@@ -93,13 +93,6 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
             >
                 <SendIcon />
             </Button>
-            {/*<div*/}
-            {/*    role="button"*/}
-            {/*    aria-label={intl.formatMessage(messages.send)}*/}
-            {/*    onClick={!buttonDisabled ? handleSubmit : undefined}*/}
-            {/*>*/}
-            {/*    <SendIcon className={buttonClasses} />*/}
-            {/*</div>*/}
         </div>
     );
 };
