@@ -9,7 +9,7 @@ The following 3rd-party software packages may be used by or distributed with goo
 
 Date generated: 2025-5-16
 
-Revision ID: 74e031347713efb24eb70796f24398543ac34440
+Revision ID: 7d7cfb972facc43e61db5b2af4b9a96537c5379b
 
 ================================================================================
 ================================================================================
@@ -6177,7 +6177,7 @@ Package Title: @codemirror/autocomplete (6.18.6)
 
 Package Locator: npm+@codemirror/autocomplete$6.18.6
 
-Package Depth: Transitive
+Package Depth: Direct
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
