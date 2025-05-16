@@ -1,10 +1,15 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { DayPickerRangeProps } from "react-day-picker";
 import { IAbsoluteDateFilterForm, WeekStart } from "@gooddata/sdk-model";
 
-import { DateRangePicker, IDateRange } from "../DateRangePicker/DateRangePicker.js";
-import { IExtendedDateFilterErrors, DateFilterOption } from "../interfaces/index.js";
+import { DateRangePicker } from "../DateRangePicker/DateRangePicker.js";
+import {
+    IExtendedDateFilterErrors,
+    DateFilterOption,
+    IDateFilterOptionChangedDetails,
+} from "../interfaces/index.js";
+import { IDateRange } from "../DateRangePicker/types.js";
 
 import { dateFilterValueToDateRange, dateRangeToDateFilterValue } from "./conversions.js";
 
@@ -16,7 +21,10 @@ export interface IAbsoluteDateFilterFormProps {
     selectedFilterOption: IAbsoluteDateFilterForm;
     isMobile: boolean;
     errors: IExtendedDateFilterErrors["absoluteForm"];
-    onSelectedFilterOptionChange: (option: DateFilterOption) => void;
+    onSelectedFilterOptionChange: (
+        option: DateFilterOption,
+        changeDetails?: IDateFilterOptionChangedDetails,
+    ) => void;
     isTimeEnabled: boolean;
     weekStart?: WeekStart;
     shouldOverlayDatePicker?: boolean;
@@ -56,10 +64,14 @@ export class AbsoluteDateFilterForm extends React.Component<IAbsoluteDateFilterF
         );
     }
 
-    private handleRangeChange = (range: IDateRange): void => {
-        const { selectedFilterOption, isTimeEnabled } = this.props;
-        this.props.onSelectedFilterOptionChange(
+    private handleRangeChange = (
+        range: IDateRange,
+        changeDetails?: IDateFilterOptionChangedDetails,
+    ): void => {
+        const { onSelectedFilterOptionChange, selectedFilterOption, isTimeEnabled } = this.props;
+        onSelectedFilterOptionChange(
             dateRangeToDateFilterValue(range, selectedFilterOption.localIdentifier, isTimeEnabled),
+            changeDetails,
         );
     };
 }
