@@ -1,31 +1,19 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    absoluteDateFilterValues,
     areObjRefsEqual,
-    DateFilterGranularity,
-    filterAttributeElements,
     FilterContextItem,
-    filterLocalIdentifier,
     IAutomationMetadataObject,
     IAutomationVisibleFilter,
     ICatalogAttribute,
     ICatalogDateDataset,
     IDashboardAttributeFilterConfig,
     IDashboardDateFilterConfigItem,
-    IFilter,
-    isAbsoluteDateFilter,
-    isAllTimeDateFilter,
+    isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
+    isDashboardCommonDateFilter,
     isDashboardDateFilter,
-    isNegativeAttributeFilter,
-    isPositiveAttributeFilter,
-    isRelativeDateFilter,
-    newAbsoluteDashboardDateFilter,
-    newAllTimeDashboardDateFilter,
-    newRelativeDashboardDateFilter,
     ObjRef,
-    relativeDateFilterValues,
 } from "@gooddata/sdk-model";
 import compact from "lodash/compact.js";
 
@@ -132,13 +120,22 @@ export const getVisibleFiltersByFilters = (
     visibleFiltersMetadata: IAutomationVisibleFilter[] | undefined,
 ): IAutomationVisibleFilter[] => {
     const filters = (selectedFilters ?? []).map((selectedFilter) => {
-        return (visibleFiltersMetadata ?? []).find((visibleFilter) => {
+        const targetFilter = (visibleFiltersMetadata ?? []).find((visibleFilter) => {
             if (isDashboardAttributeFilter(selectedFilter)) {
                 return selectedFilter.attributeFilter.localIdentifier === visibleFilter.localIdentifier;
             } else {
                 return selectedFilter.dateFilter.localIdentifier === visibleFilter.localIdentifier;
             }
         });
+
+        if (targetFilter && isDashboardDateFilter(selectedFilter)) {
+            return {
+                ...targetFilter,
+                isAllTimeDateFilter: isAllTimeDashboardDateFilter(selectedFilter),
+            };
+        }
+
+        return targetFilter;
     });
 
     return compact(filters);
@@ -148,6 +145,7 @@ export const getNonHiddenFilters = (
     filters: FilterContextItem[] | undefined,
     attributeConfigs: IDashboardAttributeFilterConfig[],
     dateConfigs: IDashboardDateFilterConfigItem[],
+    isCommonDateFilterHidden: boolean,
 ): FilterContextItem[] => {
     return (filters ?? []).filter((filter) => {
         if (isDashboardAttributeFilter(filter)) {
@@ -155,6 +153,8 @@ export const getNonHiddenFilters = (
                 (attribute) => attribute.localIdentifier === filter.attributeFilter.localIdentifier,
             );
             return config?.mode !== "hidden";
+        } else if ((isDashboardCommonDateFilter as (filter: FilterContextItem) => boolean)(filter)) {
+            return !isCommonDateFilterHidden;
         } else {
             const config = dateConfigs.find((date) =>
                 areObjRefsEqual(date.dateDataSet, filter.dateFilter.dataSet),
@@ -176,73 +176,6 @@ export const getFilterByLocalIdentifier = (
         const filterLocalIdentifier = getFilterLocalIdentifier(filter);
         return filterLocalIdentifier === localIdentifier;
     });
-};
-
-/**
- * When working with widget execution filters, we find the filters in dashboard filters
- * and update their values to match the execution filter values.
- */
-export const updateFiltersByExecutionFilterValues = (
-    executionFilters: IFilter[] | undefined,
-    allFilters: FilterContextItem[],
-): FilterContextItem[] | undefined => {
-    if (!executionFilters) {
-        return undefined;
-    }
-
-    const updatedFilters = executionFilters.map((executionFilter) => {
-        const executionFilterLocalIdentifier = filterLocalIdentifier(executionFilter);
-        const dashboardFilter = getFilterByLocalIdentifier(executionFilterLocalIdentifier, allFilters);
-
-        if (!dashboardFilter) {
-            return undefined;
-        }
-
-        if (
-            (isPositiveAttributeFilter(executionFilter) || isNegativeAttributeFilter(executionFilter)) &&
-            isDashboardAttributeFilter(dashboardFilter)
-        ) {
-            return {
-                ...dashboardFilter,
-                attributeFilter: {
-                    ...dashboardFilter.attributeFilter,
-                    negativeSelection: isNegativeAttributeFilter(executionFilter),
-                    attributeElements: filterAttributeElements(executionFilter),
-                },
-            };
-        } else if (isAllTimeDateFilter(executionFilter) && isDashboardDateFilter(dashboardFilter)) {
-            return newAllTimeDashboardDateFilter(
-                // This is important to omit, as common date filter check is done based on missing date dataset
-                undefined,
-                dashboardFilter.dateFilter.localIdentifier,
-            );
-        } else if (isAbsoluteDateFilter(executionFilter) && isDashboardDateFilter(dashboardFilter)) {
-            const values = absoluteDateFilterValues(executionFilter, true);
-
-            return newAbsoluteDashboardDateFilter(
-                values.from,
-                values.to,
-                values.dataSet || dashboardFilter.dateFilter.dataSet,
-                dashboardFilter.dateFilter.localIdentifier,
-            );
-        } else if (isRelativeDateFilter(executionFilter) && isDashboardDateFilter(dashboardFilter)) {
-            const values = relativeDateFilterValues(executionFilter, true);
-
-            return newRelativeDashboardDateFilter(
-                // This conversion happens from stored filters which were originally
-                // shown as dashboard filters, so the type cast here is safe.
-                values.granularity as DateFilterGranularity,
-                values.from,
-                values.to,
-                values.dataSet || dashboardFilter.dateFilter.dataSet,
-                dashboardFilter.dateFilter.localIdentifier,
-            );
-        } else {
-            return undefined;
-        }
-    });
-
-    return compact(updatedFilters);
 };
 
 /**

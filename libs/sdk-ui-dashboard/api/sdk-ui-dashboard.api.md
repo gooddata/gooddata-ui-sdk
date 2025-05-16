@@ -4330,7 +4330,6 @@ export interface IAlertingDialogOldProps {
 // @alpha (undocumented)
 export interface IAlertingDialogProps {
     alertToEdit?: IAutomationMetadataObject;
-    dashboardFilters?: FilterContextItem[];
     insight?: IInsight;
     isLoading?: boolean;
     notificationChannels: INotificationChannelMetadataObject[];
@@ -6562,6 +6561,16 @@ export interface ITopBarProps {
     titleProps: ITitleProps;
 }
 
+// @alpha (undocumented)
+export interface IUseAlertFiltersProps {
+    // (undocumented)
+    alertToEdit?: IAutomationMetadataObject;
+    // (undocumented)
+    insight?: IInsight;
+    // (undocumented)
+    widget?: FilterableDashboardWidget;
+}
+
 // @internal (undocumented)
 export interface IUseAttributeElements {
     // (undocumented)
@@ -6584,18 +6593,13 @@ export interface IUseCustomWidgetInsightDataViewConfig {
     widget: ICustomWidget;
 }
 
-// @alpha (undocumented)
-export interface IUseDashboardAlertFiltersProps {
-    // (undocumented)
-    alertToEdit?: IAutomationMetadataObject;
-    // (undocumented)
-    insight?: IInsight;
-    // (undocumented)
-    widget?: FilterableDashboardWidget;
+// @public
+export interface IUseInsightWidgetDataView {
+    insightWidget?: IInsightWidget;
 }
 
 // @alpha (undocumented)
-export interface IUseDashboardScheduledEmailsFiltersProps {
+export interface IUseScheduledExportFiltersProps {
     // (undocumented)
     insight?: IInsight;
     // (undocumented)
@@ -6605,27 +6609,17 @@ export interface IUseDashboardScheduledEmailsFiltersProps {
 }
 
 // @alpha (undocumented)
-export interface IUseFiltersForDashboardScheduledExportProps {
-    scheduledExportToEdit?: IAutomationMetadataObject;
-}
-
-// @alpha (undocumented)
-export interface IUseFiltersForWidgetAlertProps {
+export interface IUseWidgetAlertFiltersProps {
     alertToEdit?: IAutomationMetadataObjectDefinition;
     insight?: IInsightDefinition;
     widget?: FilterableDashboardWidget;
 }
 
 // @alpha (undocumented)
-export interface IUseFiltersForWidgetScheduledExportProps {
+export interface IUseWidgetScheduledExportFiltersProps {
     insight?: IInsightDefinition;
     scheduledExportToEdit?: IAutomationMetadataObjectDefinition;
     widget?: FilterableDashboardWidget;
-}
-
-// @public
-export interface IUseInsightWidgetDataView {
-    insightWidget?: IInsightWidget;
 }
 
 // @internal (undocumented)
@@ -9183,6 +9177,9 @@ export const selectPermissions: DashboardSelector<IWorkspacePermissions>;
 // @internal
 export const selectPersistedDashboard: DashboardSelector<IDashboard | undefined>;
 
+// @internal (undocumented)
+export const selectPersistedDashboardFilterContextDateFilterConfig: DashboardSelector<IDashboardDateFilterConfig_2 | undefined>;
+
 // @public
 export const selectPlatformEdition: DashboardSelector<PlatformEdition>;
 
@@ -10059,6 +10056,16 @@ export interface UpsertExecutionResult extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT";
 }
 
+// @alpha
+export const useAlertFilters: ({ alertToEdit, widget, insight }: IUseAlertFiltersProps) => {
+    widgetFilters: IFilter[] | undefined;
+    widgetFiltersLoading: boolean;
+    widgetFiltersError: GoodDataSdkError | undefined;
+};
+
+// @alpha
+export function useAutomationAvailableDashboardFilters(): FilterContextItem[] | undefined;
+
 // @internal (undocumented)
 export function useCancelButtonProps(): ICancelButtonProps;
 
@@ -10082,14 +10089,6 @@ export function useCustomWidgetInsightDataView({ widget, insight, enableExecutio
 
 // @public
 export type UseCustomWidgetInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
-
-// @alpha (undocumented)
-export const useDashboardAlertFilters: ({ alertToEdit, widget, insight, }: IUseDashboardAlertFiltersProps) => {
-    widgetFilters: IFilter[] | undefined;
-    widgetFiltersLoading: boolean;
-    widgetFiltersError: GoodDataSdkError | undefined;
-    dashboardFilters: FilterContextItem[] | undefined;
-};
 
 // @alpha
 export const useDashboardAlerts: () => {
@@ -10640,14 +10639,6 @@ export const useDashboardScheduledEmails: () => {
     onScheduleEmailingManagementDeleteError: () => void;
 };
 
-// @alpha (undocumented)
-export const useDashboardScheduledEmailsFilters: ({ scheduledExportToEdit, widget, insight, }: IUseDashboardScheduledEmailsFiltersProps) => {
-    widgetFilters: IFilter[] | undefined;
-    widgetFiltersLoading: boolean;
-    widgetFiltersError: GoodDataSdkError | undefined;
-    dashboardFilters: FilterContextItem[] | undefined;
-};
-
 // @public
 export const useDashboardSelector: TypedUseSelectorHook<DashboardState>;
 
@@ -10797,15 +10788,6 @@ export const useEnableAlertingAutomationFilterContext: () => boolean;
 // @alpha (undocumented)
 export const useFilterBarProps: () => IFilterBarProps;
 
-// @alpha
-export const useFiltersForDashboardScheduledExport: ({ scheduledExportToEdit, }: IUseFiltersForDashboardScheduledExportProps) => FilterContextItem[] | undefined;
-
-// @alpha
-export function useFiltersForWidgetAlert({ alertToEdit, widget, insight, }: IUseFiltersForWidgetAlertProps): QueryProcessingState<IFilter[]>;
-
-// @alpha
-export function useFiltersForWidgetScheduledExport({ scheduledExportToEdit, widget, insight, }: IUseFiltersForWidgetScheduledExportProps): QueryProcessingState<IFilter[]>;
-
 // @public
 export function useInsightWidgetDataView(config: IUseInsightWidgetDataView & UseInsightWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
@@ -10885,6 +10867,14 @@ export function useSaveAsNewButtonProps(): ISaveAsNewButtonProps;
 // @internal (undocumented)
 export function useSaveButtonProps(): ISaveButtonProps;
 
+// @alpha
+export const useScheduledExportFilters: ({ scheduledExportToEdit, widget, insight, }: IUseScheduledExportFiltersProps) => {
+    widgetFilters: IFilter[] | undefined;
+    widgetFiltersLoading: boolean;
+    widgetFiltersError: GoodDataSdkError | undefined;
+    dashboardFilters: FilterContextItem[] | undefined;
+};
+
 // @alpha (undocumented)
 export const useSectionDescriptionExportData: (exportData: SectionExportData | undefined, loading: boolean, error: boolean) => SectionExportData | undefined;
 
@@ -10903,6 +10893,9 @@ export const useTopBarProps: () => ITopBarProps;
 // @alpha (undocumented)
 export const useVisualizationExportData: (widget: WidgetExportDataAttributes | undefined, loading: boolean, error: boolean) => Partial<WidgetExportDataAttributes> | undefined;
 
+// @alpha
+export function useWidgetAlertFilters({ alertToEdit, widget, insight, }: IUseWidgetAlertFiltersProps): QueryProcessingState<IFilter[]>;
+
 // @internal (undocumented)
 export function useWidgetDragEndHandler(): () => void;
 
@@ -10919,6 +10912,9 @@ export const useWidgetExportData: (widget: ExtendedDashboardWidget) => WidgetExp
 
 // @public
 export function useWidgetFilters(widget: FilterableDashboardWidget | undefined | null, insight?: IInsightDefinition): QueryProcessingState<IFilter[]>;
+
+// @alpha
+export function useWidgetScheduledExportFilters({ scheduledExportToEdit, widget, insight, }: IUseWidgetScheduledExportFiltersProps): QueryProcessingState<IFilter[]>;
 
 // @internal (undocumented)
 export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResult;

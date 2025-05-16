@@ -84,14 +84,8 @@ export interface IUseEditAlertProps {
     insight?: IInsight;
     widgetFilters?: IFilter[];
 
-    // Dashboard filters at all times
-    allDashboardFilters?: FilterContextItem[];
-
     // New automation filters
     automationFilters?: FilterContextItem[];
-
-    // In case we are editing dashboard scheduled export
-    dashboardFilters?: FilterContextItem[];
 
     setAutomationFilters: (filters: FilterContextItem[]) => void;
 
@@ -105,16 +99,12 @@ export function useEditAlert(props: IUseEditAlertProps) {
         notificationChannels,
         insight,
         widget,
-        allDashboardFilters,
         automationFilters,
-        dashboardFilters,
         widgetFilters,
         maxAutomationsRecipients,
         setAutomationFilters,
         allVisibleFiltersMetadata,
     } = props;
-
-    //
     const intl = useIntl();
 
     // Selectors
@@ -134,7 +124,6 @@ export function useEditAlert(props: IUseEditAlertProps) {
 
     // Computed values
     const isNewAlert = !alertToEdit;
-    const areDashboardFiltersChanged = !!dashboardFilters;
 
     const measureFormatMap = useMemo(() => {
         return getMeasureFormatsFromExecution(execResult?.executionResult);
@@ -164,13 +153,15 @@ export function useEditAlert(props: IUseEditAlertProps) {
     const defaultRecipient = convertCurrentUserToAutomationRecipient(users ?? [], currentUser);
     const defaultNotificationChannelId = notificationChannels[0]?.id;
 
-    const { insightExecutionFilters, visibleWidgetFilters } = useAutomationWidgetFilters({
-        widget,
-        allDashboardFilters,
-        automationFilters,
-        widgetFilters,
-        allVisibleFiltersMetadata,
-    });
+    const { insightExecutionFilters, dashboardExecutionFilters, visibleWidgetFilters } =
+        useAutomationWidgetFilters({
+            widget,
+            automationFilters,
+            widgetFilters,
+            allVisibleFiltersMetadata,
+        });
+
+    const sanitizedWidgetFilters = [...dashboardExecutionFilters, ...insightExecutionFilters];
 
     // Local state
     const [warningMessage, setWarningMessage] = useState<string | undefined>(undefined);
@@ -179,7 +170,7 @@ export function useEditAlert(props: IUseEditAlertProps) {
     const [editedAutomation, setEditedAutomation] = useState<IAutomationMetadataObjectDefinition>(
         alertToEdit ??
             createDefaultAlert(
-                widgetFilters!,
+                sanitizedWidgetFilters!,
                 supportedMeasures,
                 defaultMeasure,
                 defaultNotificationChannelId,
@@ -509,10 +500,8 @@ export function useEditAlert(props: IUseEditAlertProps) {
         separators,
         warningMessage,
         defaultUser,
-        areDashboardFiltersChanged,
         originalAutomation,
         editedAutomation,
-        notificationChannels,
         allowOnlyLoggedUserRecipients,
         allowExternalRecipients,
         validationErrorMessage,

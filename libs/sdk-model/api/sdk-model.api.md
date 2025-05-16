@@ -1065,6 +1065,8 @@ export interface IAutomationUserRecipient extends IAutomationRecipientBase {
 // @alpha (undocumented)
 export interface IAutomationVisibleFilter {
     // (undocumented)
+    isAllTimeDateFilter?: boolean;
+    // (undocumented)
     localIdentifier?: string;
     // (undocumented)
     title?: string;

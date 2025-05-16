@@ -11,7 +11,7 @@ import {
 import compact from "lodash/compact.js";
 import { filterContextItemsToAutomationDashboardFiltersByWidget } from "../../converters/index.js";
 import { getFilterLocalIdentifier, getVisibleFiltersByFilters } from "./utils.js";
-import { ExtendedDashboardWidget } from "../../model/index.js";
+import { ExtendedDashboardWidget, useAutomationAvailableDashboardFilters } from "../../model/index.js";
 
 interface IUseAutomationWidgetFilters {
     insightExecutionFilters: IFilter[];
@@ -24,27 +24,30 @@ interface IUseAutomationWidgetFilters {
  */
 export const useAutomationWidgetFilters = ({
     widget,
-    allDashboardFilters = [],
     automationFilters = [],
     widgetFilters,
     allVisibleFiltersMetadata,
 }: {
     widget: ExtendedDashboardWidget | undefined;
-    allDashboardFilters?: FilterContextItem[];
     automationFilters?: FilterContextItem[];
     widgetFilters?: IFilter[] | undefined;
     allVisibleFiltersMetadata?: IAutomationVisibleFilter[] | undefined;
 }): IUseAutomationWidgetFilters => {
+    const availableDashboardFilters = useAutomationAvailableDashboardFilters();
+
+    // Pair visible filters metadata with the filters that are currently selected
     const visibleFilters = useMemo(
         () => getVisibleFiltersByFilters(automationFilters, allVisibleFiltersMetadata),
         [automationFilters, allVisibleFiltersMetadata],
     );
 
+    // Get local identifiers of all selectable dashboard filters
     const dashboardFiltersLocalIdentifiers = useMemo(
-        () => compact(allDashboardFilters.map(getFilterLocalIdentifier)),
-        [allDashboardFilters],
+        () => compact((availableDashboardFilters ?? []).map(getFilterLocalIdentifier)),
+        [availableDashboardFilters],
     );
 
+    // Widget automation filters, that are originated from the widget filters (not present on the dashboard)
     const insightExecutionFilters = useMemo(
         () =>
             (widgetFilters ?? []).filter((filter) => {
@@ -54,6 +57,7 @@ export const useAutomationWidgetFilters = ({
         [dashboardFiltersLocalIdentifiers, widgetFilters],
     );
 
+    // Widget automation filters, that are originated from the dashboard filters
     const dashboardExecutionFilters = isInsightWidget(widget)
         ? filterContextItemsToAutomationDashboardFiltersByWidget(automationFilters, widget)
         : [];

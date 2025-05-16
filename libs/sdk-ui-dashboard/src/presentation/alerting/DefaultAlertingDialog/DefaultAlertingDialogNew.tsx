@@ -22,10 +22,9 @@ import {
     selectLocale,
     useDashboardSelector,
     useEnableAlertingAutomationFilterContext,
-    useFiltersForDashboardScheduledExport,
 } from "../../../model/index.js";
 import { AutomationFiltersSelect } from "../../automationFilters/components/AutomationFiltersSelect.js";
-import { useAutomationFiltersData } from "../../automationFilters/useAutomationFiltersData.js";
+import { useAutomationFiltersSelect } from "../../automationFilters/useAutomationFiltersSelect.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 import { IntlWrapper } from "../../localization/index.js";
 import { IAlertingDialogProps } from "../types.js";
@@ -66,7 +65,6 @@ export function AlertingDialogRenderer({
     notificationChannels,
     insight,
     widget,
-    dashboardFilters,
     widgetFilters,
     onCancel,
     onDeleteSuccess,
@@ -89,8 +87,6 @@ export function AlertingDialogRenderer({
         setAlertToDelete(null);
     };
 
-    const allDashboardFilters = useFiltersForDashboardScheduledExport({});
-
     const { maxAutomationsRecipients, isExecutionTimestampMode, enableAutomationFilterContext } =
         useDefaultAlertingDialogData();
 
@@ -100,36 +96,25 @@ export function AlertingDialogRenderer({
         setAutomationFilters,
         allVisibleFiltersMetadata,
         areVisibleFiltersMissingOnDashboard,
-    } = useAutomationFiltersData({
-        allFilters: allDashboardFilters,
-        storedDashboardFilters: dashboardFilters,
-        storedWidgetFilters: widgetFilters,
-        metadataVisibleFilters: alertToEdit?.metadata?.visibleFilters,
-        isEditing: !!alertToEdit,
+    } = useAutomationFiltersSelect({
+        automationToEdit: alertToEdit,
         widget,
     });
 
     const {
-        onRecipientsChange,
         onTitleChange,
+        onRecipientsChange,
         onFiltersChange,
         onMeasureChange,
-        onAttributeChange,
         getAttributeValues,
+        onAttributeChange,
         onComparisonOperatorChange,
         onRelativeOperatorChange,
+        onChange,
+        onBlur,
         onComparisonTypeChange,
         onDestinationChange,
         onTriggerModeChange,
-        onChange,
-        onBlur,
-        defaultUser,
-        editedAutomation,
-        originalAutomation,
-        isSubmitDisabled,
-        allowExternalRecipients,
-        allowOnlyLoggedUserRecipients,
-        validationErrorMessage,
         selectedMeasure,
         supportedMeasures,
         canManageAttributes,
@@ -145,17 +130,24 @@ export function AlertingDialogRenderer({
         selectedComparator,
         canManageComparison,
         separators,
+        defaultUser,
+        originalAutomation,
+        editedAutomation,
+        allowOnlyLoggedUserRecipients,
+        allowExternalRecipients,
+        warningMessage,
+        validationErrorMessage,
+        isSubmitDisabled,
     } = useEditAlert({
-        notificationChannels,
         insight,
         widget,
         alertToEdit,
-        allDashboardFilters,
         automationFilters,
         widgetFilters,
         maxAutomationsRecipients,
         allVisibleFiltersMetadata,
         setAutomationFilters,
+        notificationChannels,
     });
 
     const isLatestVersionOfAutomation = useMemo(() => {
@@ -429,6 +421,11 @@ export function AlertingDialogRenderer({
                                     />
                                 </FormField>
                             </FormFieldGroup>
+                            {warningMessage ? (
+                                <Message type="warning" className="gd-notifications-channels-dialog-error">
+                                    {warningMessage}
+                                </Message>
+                            ) : null}
                             {errorMessage ? (
                                 <Message
                                     type="error"

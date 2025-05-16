@@ -66,9 +66,6 @@ export interface IUseEditScheduledEmailProps {
     insight?: IInsight;
     widgetFilters?: IFilter[];
 
-    // Dashboard filters at all times
-    allDashboardFilters?: FilterContextItem[];
-
     // New automation filters
     automationFilters?: FilterContextItem[];
 
@@ -91,7 +88,6 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         notificationChannels,
         insight,
         widget,
-        allDashboardFilters,
         automationFilters,
         dashboardFilters,
         widgetFilters,
@@ -127,7 +123,6 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     const { insightExecutionFilters, dashboardExecutionFilters, visibleWidgetFilters } =
         useAutomationWidgetFilters({
             widget,
-            allDashboardFilters,
             automationFilters,
             widgetFilters,
             allVisibleFiltersMetadata,

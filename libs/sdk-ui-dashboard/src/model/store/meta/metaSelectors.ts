@@ -88,6 +88,9 @@ export const selectPersistedDashboardFilterContext: DashboardSelector<
     return state.persistedDashboard?.filterContext ?? undefined;
 });
 
+/**
+ * @internal
+ */
 export const selectPersistedDashboardFilterContextDateFilterConfig: DashboardSelector<
     IDashboardDateFilterConfig | undefined
 > = createSelector(selectSelf, (state) => {

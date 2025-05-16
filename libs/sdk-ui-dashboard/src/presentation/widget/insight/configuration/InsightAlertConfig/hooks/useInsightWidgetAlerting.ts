@@ -23,7 +23,6 @@ import {
     selectLocale,
     selectCanCreateAutomation,
     selectCurrentUser,
-    useFiltersForWidgetScheduledExport,
     selectNotificationChannels,
     useDashboardUserInteraction,
     selectCanManageWorkspace,
@@ -38,6 +37,7 @@ import {
     selectExecutionTimestamp,
     selectSettings,
     selectDashboardDescriptor,
+    useWidgetAlertFilters,
 } from "../../../../../../model/index.js";
 import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
 import { DEFAULT_MAX_RECIPIENTS } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
@@ -143,7 +143,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             },
         });
 
-    const { result: widgetFilters, status: widgetFiltersStatus } = useFiltersForWidgetScheduledExport({
+    const { result: widgetFilters, status: widgetFiltersStatus } = useWidgetAlertFilters({
         widget,
         insight,
     });

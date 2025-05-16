@@ -22,7 +22,7 @@ import { AttributesDropdown } from "../../filterBar/index.js";
 import { useAutomationFilters } from "../useAutomationFilters.js";
 import { AutomationAttributeFilter } from "./AutomationAttributeFilter.js";
 import { AutomationDateFilter } from "./AutomationDateFilter.js";
-import { useAutomationCommonDateFilterId } from "../useAutomationFiltersData.js";
+import { useAutomationCommonDateFilterId } from "../useAutomationCommonDateFilterId.js";
 
 const COLLAPSED_FILTERS_COUNT = 2;
 
@@ -35,7 +35,11 @@ export interface IAutomationFiltersProps {
     dateDatasets: ICatalogDateDataset[];
     handleChangeFilter: (filter: FilterContextItem | undefined) => void;
     handleDeleteFilter: (filter: FilterContextItem) => void;
-    handleAddFilter: (displayForm: ObjRef) => void;
+    handleAddFilter: (
+        displayForm: ObjRef,
+        attributes: ICatalogAttribute[],
+        dateDatasets: ICatalogDateDataset[],
+    ) => void;
     storeFilters: boolean;
     handleStoreFiltersChange: (value: boolean) => void;
     isDashboardAutomation?: boolean;
@@ -142,7 +146,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                         <AttributesDropdown
                             onClose={noop}
                             onSelect={(value) => {
-                                handleAddFilter(value, attributes);
+                                handleAddFilter(value, attributes, dateDatasets);
                                 setIsExpanded(true);
                             }}
                             attributes={attributes}

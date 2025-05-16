@@ -6,6 +6,7 @@ import {
     selectCatalogAttributes,
     selectCatalogDateDatasets,
     selectDateFilterConfigsOverrides,
+    selectPersistedDashboardFilterContextDateFilterConfig,
     useDashboardSelector,
 } from "../../model/index.js";
 import {
@@ -16,7 +17,13 @@ import {
     getNonHiddenFilters,
     getNonSelectedFilters,
 } from "./utils.js";
-import { areObjRefsEqual, FilterContextItem, ICatalogAttribute, ObjRef } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    FilterContextItem,
+    ICatalogAttribute,
+    ICatalogDateDataset,
+    ObjRef,
+} from "@gooddata/sdk-model";
 
 /**
  * Logic for handling inner filters component logic.
@@ -36,9 +43,11 @@ export const useAutomationFilters = ({
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     const attributeConfigs = useDashboardSelector(selectAttributeFilterConfigsOverrides);
     const dateConfigs = useDashboardSelector(selectDateFilterConfigsOverrides);
+    const dateFilterConfig = useDashboardSelector(selectPersistedDashboardFilterContextDateFilterConfig);
+    const isCommonDateFilterHidden = dateFilterConfig?.mode === "hidden";
 
     const visibleFilters = useMemo(() => {
-        return getNonHiddenFilters(selectedFilters, attributeConfigs, dateConfigs);
+        return getNonHiddenFilters(selectedFilters, attributeConfigs, dateConfigs, isCommonDateFilterHidden);
     }, [attributeConfigs, dateConfigs, selectedFilters]);
 
     const nonSelectedFilters = useMemo(
@@ -84,7 +93,7 @@ export const useAutomationFilters = ({
     );
 
     const handleAddFilter = useCallback(
-        (catalogItemRef: ObjRef, attributes: ICatalogAttribute[]) => {
+        (catalogItemRef: ObjRef, attributes: ICatalogAttribute[], dateDatasets: ICatalogDateDataset[]) => {
             // We need to go through all display forms of the attribute in case
             // the filter is using different display form.
             const selectedAttributeDisplayForms =
@@ -94,10 +103,22 @@ export const useAutomationFilters = ({
                     )
                     ?.displayForms?.map((df) => df.ref) ?? [];
 
-            const filter = selectedAttributeDisplayForms.reduce<FilterContextItem | undefined>(
+            const selectedDateDataSets = dateDatasets.filter((ds) =>
+                areObjRefsEqual(ds.dataSet.ref, catalogItemRef),
+            );
+
+            const attributeFilter = selectedAttributeDisplayForms.reduce<FilterContextItem | undefined>(
                 (acc, displayFormRef) => acc || getFilterByCatalogItemRef(displayFormRef, nonSelectedFilters),
                 undefined,
             );
+
+            const dateFilter = selectedDateDataSets.reduce<FilterContextItem | undefined>(
+                (acc, dateDataSet) =>
+                    acc || getFilterByCatalogItemRef(dateDataSet.dataSet.ref, nonSelectedFilters),
+                undefined,
+            );
+
+            const filter = attributeFilter || dateFilter;
 
             if (filter) {
                 const updatedFilters = [...selectedFilters, filter];

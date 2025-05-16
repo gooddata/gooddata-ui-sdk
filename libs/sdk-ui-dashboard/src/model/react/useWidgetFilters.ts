@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { useEffect, useMemo, useState } from "react";
 import {
     areObjRefsEqual,
@@ -29,6 +29,7 @@ import {
 } from "./useDashboardQueryProcessing.js";
 import { queryWidgetFilters, QueryWidgetFilters } from "../queries/widgets.js";
 import { useDashboardSelector } from "./DashboardStoreProvider.js";
+import { usePrevious } from "@gooddata/sdk-ui";
 
 /**
  * Hook for obtaining the effective filters for a widget.
@@ -43,7 +44,7 @@ import { useDashboardSelector } from "./DashboardStoreProvider.js";
  *
  * @public
  */
-export function useWidgetFilters(
+function useWidgetFiltersImpl(
     widget: FilterableDashboardWidget | undefined | null,
     insight?: IInsightDefinition,
 ): QueryProcessingState<IFilter[]> {
@@ -232,6 +233,46 @@ function useNonIgnoredFilters(widget: FilterableDashboardWidget | undefined | nu
         status: nonIgnoredFilterState.nonIgnoredFilterStatus,
         result: nonIgnoredFilters,
     };
+}
+
+/**
+ * Hook for obtaining the effective filters for a widget.
+ *
+ * @remarks
+ * The filters returned should be used with {@link @gooddata/sdk-model#insightSetFilters} to obtain
+ * insight that is ready for execution.
+ *
+ * @param widget - widget to get effective filters for
+ * @param insight - insight to evaluate the filters for in context of the widget
+ * @returns set of filters that should be used to execute the given widget
+ *
+ * @public
+ */
+export function useWidgetFilters(
+    widget: FilterableDashboardWidget | undefined | null,
+    insight?: IInsightDefinition,
+): QueryProcessingState<IFilter[]> {
+    const previousWidgetRef = usePrevious(widget?.ref);
+    const widgetFiltersQuery = useWidgetFiltersImpl(widget, insight);
+
+    /**
+     * The useWidgetFiltersImpl hook has a limitation where it doesn't return a pending/running state when the widget changes or becomes unavailable.
+     * Instead, it returns filters for the previously loaded widget.
+     * This adjustment ensures we return a pending state when the widget is not yet loaded or has changed,
+     * addressing the issue without modifying useWidgetFilters implementation 🚜.
+     * This temporary workaround should be replaced by fixing useWidgetFiltersImpl in a future update.
+     */
+    return useMemo(() => {
+        if (!widget || !insight || previousWidgetRef !== widget?.ref) {
+            return {
+                result: undefined,
+                status: "pending",
+                error: undefined,
+            } as QueryProcessingState<IFilter[]>;
+        }
+
+        return widgetFiltersQuery;
+    }, [widgetFiltersQuery, previousWidgetRef, widget, insight]);
 }
 
 /**
