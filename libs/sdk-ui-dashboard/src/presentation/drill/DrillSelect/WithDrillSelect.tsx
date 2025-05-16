@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useState, useCallback, useRef } from "react";
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
@@ -39,6 +39,7 @@ import {
 } from "../../../types.js";
 import { filterDrillFromAttributeByPriority } from "../utils/drillDownUtils.js";
 import { useDrills } from "../hooks/useDrills.js";
+import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
 /**
  * @internal
@@ -46,6 +47,7 @@ import { useDrills } from "../hooks/useDrills.js";
 export interface WithDrillSelectProps {
     widgetRef: ObjRef;
     insight: IInsight;
+    isDrilling: boolean;
     onDrillDownSuccess?: OnDrillDownSuccess;
     onDrillToInsightSuccess?: OnDrillToInsightSuccess;
     onDrillToDashboardSuccess?: OnDrillToDashboardSuccess;
@@ -62,6 +64,7 @@ export function WithDrillSelect({
     widgetRef,
     children,
     insight,
+    isDrilling,
     onDrillDownSuccess,
     onDrillToInsightSuccess,
     onDrillToDashboardSuccess,
@@ -110,6 +113,11 @@ export function WithDrillSelect({
         onError: (e: DashboardCommandFailed<DashboardDrillCommand>) => onError?.(e.payload.error),
     });
 
+    const onSelectDepsRef = useAutoupdateRef({
+        drills,
+        dropdownProps: { correlationId: dropdownProps?.correlationId, drillEvent: dropdownProps?.drillEvent },
+        insight,
+    });
     const onSelect = useCallback(
         (
             drillDefinition: DashboardDrillDefinition,
@@ -117,6 +125,8 @@ export function WithDrillSelect({
             correlationId?: string,
             drillContext?: DashboardDrillContext,
         ) => {
+            const { drills, dropdownProps, insight } = onSelectDepsRef.current;
+
             const effectiveDrillEvent = drillEvent ?? dropdownProps?.drillEvent;
             const effectiveCorrelationId = correlationId ?? dropdownProps?.correlationId;
             const effectiveInsight = drillContext?.insight ?? insight;
@@ -149,14 +159,15 @@ export function WithDrillSelect({
                         effectiveCorrelationId,
                     );
                 }
-                setDropdownProps(null);
-                setIsOpen(false);
             }
         },
-        [dropdownProps, insight],
+        [onSelectDepsRef],
     );
 
-    const onClose = () => {
+    const handleClose = () => {
+        if (isDrilling) {
+            return;
+        }
         setIsOpen(false);
     };
 
@@ -168,7 +179,7 @@ export function WithDrillSelect({
                 {...dropdownProps}
                 dropDownAnchorClass={dropDownAnchorClass}
                 isOpen={isOpen}
-                onClose={onClose}
+                onClose={handleClose}
                 onSelect={onSelect}
             />
         </IntlWrapper>
