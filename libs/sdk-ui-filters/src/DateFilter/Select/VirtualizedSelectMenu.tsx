@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { VariableSizeList as List, ListChildComponentProps } from "react-window";
 import cx from "classnames";
@@ -23,6 +23,7 @@ export interface ISelectMenuProps<V> extends IOptionGetterProps<V> {
     className?: string;
     inputValue: string;
     setHighlightedIndex: (index: number) => void;
+    selectMenuWrapperId?: string;
 }
 
 export const defaultVisibleItemsRange = 3;
@@ -107,6 +108,7 @@ export class VirtualizedSelectMenu<V> extends React.Component<ISelectMenuProps<V
             className,
             optionClassName,
             visibleItemsRange,
+            selectMenuWrapperId,
         } = this.props;
 
         const Option = optionGetter<V>({
@@ -129,7 +131,11 @@ export class VirtualizedSelectMenu<V> extends React.Component<ISelectMenuProps<V
         );
 
         return (
-            <div {...getMenuProps({ className: cx("gd-select-menu-wrapper", className) })}>
+            // NESTOR
+            <div
+                {...getMenuProps({ className: cx("gd-select-menu-wrapper", className) })}
+                id={selectMenuWrapperId}
+            >
                 <div className="gd-select-menu s-select-menu">
                     <List
                         className="List"

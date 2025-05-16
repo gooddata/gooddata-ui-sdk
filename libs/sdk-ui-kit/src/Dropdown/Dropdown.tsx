@@ -114,6 +114,8 @@ export interface IDropdownProps {
 
     autofocusOnOpen?: boolean;
 
+    initialFocus?: React.RefObject<HTMLElement> | string;
+
     accessibilityConfig?: {
         popupRole?: "listbox" | "tree" | "grid" | "dialog";
     };
@@ -153,6 +155,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
         enableEventPropagation = false,
         closeOnEscape = false,
         autofocusOnOpen = false,
+        initialFocus,
 
         accessibilityConfig,
     } = props;
@@ -274,6 +277,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                 <UiFocusTrap
                     returnFocusTo={buttonRef.current ? buttonRef : buttonWrapperRef}
                     autofocusOnOpen={autofocusOnOpen}
+                    initialFocus={initialFocus}
                 >
                     <div className="overlay dropdown-body">
                         {renderBody({

@@ -707,6 +707,8 @@ export interface IDateFilterAbsoluteFormErrors {
 // @alpha (undocumented)
 export interface IDateFilterButtonProps {
     // (undocumented)
+    buttonRef?: React_2.MutableRefObject<HTMLElement | null>;
+    // (undocumented)
     children?: React_2.ReactNode;
     // (undocumented)
     customFilterName?: string;
@@ -714,6 +716,8 @@ export interface IDateFilterButtonProps {
     customIcon?: IFilterButtonCustomIcon;
     // (undocumented)
     disabled?: boolean;
+    // (undocumented)
+    dropdownId?: string;
     // (undocumented)
     isMobile: boolean;
     // (undocumented)

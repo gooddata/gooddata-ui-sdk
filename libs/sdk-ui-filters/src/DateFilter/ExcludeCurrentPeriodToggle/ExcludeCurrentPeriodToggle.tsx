@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -6,6 +6,7 @@ import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
 
 import { ExcludeCurrentPeriodToggleLabel } from "./ExcludeCurrentPeriodToggleLabel.js";
+import { DATE_FILTER_INPUT_HECKBOX_ID } from "../utils/accessibility/elementId.js";
 
 interface IExcludeCurrentPeriodToggleProps {
     value: boolean;
@@ -31,6 +32,7 @@ export const ExcludeCurrentPeriodToggle: React.FC<IExcludeCurrentPeriodTogglePro
                 })}
             >
                 <input
+                    id={DATE_FILTER_INPUT_HECKBOX_ID}
                     type="checkbox"
                     className="input-checkbox"
                     checked={value}

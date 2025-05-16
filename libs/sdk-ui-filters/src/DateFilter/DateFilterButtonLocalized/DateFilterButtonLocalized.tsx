@@ -24,6 +24,8 @@ export interface IDateFilterButtonLocalizedProps {
     customFilterName?: string;
     disabled?: boolean;
     customIcon?: IFilterButtonCustomIcon;
+    buttonRef?: React.MutableRefObject<HTMLElement | null>;
+    dropdownId?: string;
     onClick?: () => void;
     ButtonComponent?: ComponentType<IDateFilterButtonProps>;
 }
@@ -36,6 +38,8 @@ export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps
     customFilterName,
     disabled,
     customIcon,
+    buttonRef,
+    dropdownId,
     onClick,
     ButtonComponent,
 }) => {
@@ -62,6 +66,8 @@ export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps
             onClick={onClick}
             textTitle={textTitle}
             textSubtitle={textSubtitle}
+            buttonRef={buttonRef}
+            dropdownId={dropdownId}
         >
             <span className="s-button-text">
                 <DateFilterTextLocalized filter={dateFilterOption} dateFormat={dateFormat} />

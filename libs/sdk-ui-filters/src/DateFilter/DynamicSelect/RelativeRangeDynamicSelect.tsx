@@ -32,6 +32,7 @@ export interface IRelativeRangeDynamicSelectProps {
     style?: React.CSSProperties;
     optionClassName?: string;
     visibleItemsRange?: number;
+    selectMenuWrapperId?: string;
 
     accessibilityConfig?: {
         labelId?: string;
@@ -52,6 +53,7 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
         visibleItemsRange = defaultVisibleItemsRange,
         accessibilityConfig,
         inputValue,
+        selectMenuWrapperId,
         onChange = noop,
         onInputValueChange,
         onBlur,
@@ -229,7 +231,9 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
                                 })}
                             />
                         </div>
-                        {isOpen && items.length > 0 ? <VirtualizedSelectMenu {...menuProps} /> : null}
+                        {isOpen && items.length > 0 ? (
+                            <VirtualizedSelectMenu selectMenuWrapperId={selectMenuWrapperId} {...menuProps} />
+                        ) : null}
                     </div>
                 );
             }}
