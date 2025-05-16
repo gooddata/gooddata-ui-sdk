@@ -121,10 +121,13 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
         LoadingComponent: ThemedLoadingEqualizer,
     });
 
-    const handleLoadingChanged = useCallback<OnLoadingChanged>(({ isLoading }) => {
-        setIsLoading(isLoading);
-        executionsHandler.onLoadingChanged({ isLoading });
-    }, []);
+    const handleLoadingChanged = useCallback<OnLoadingChanged>(
+        ({ isLoading }) => {
+            setIsLoading(isLoading);
+            executionsHandler.onLoadingChanged.call(null, { isLoading });
+        },
+        [executionsHandler.onLoadingChanged],
+    );
 
     const [widgetFilters, setWidgetFilters] = useState<IFilter[] | undefined>(undefined);
     const handleFiltersReady = useCallback((filters: IFilter[] | undefined) => {
@@ -265,7 +268,7 @@ function InsightDrillDialogDescriptionButton({
             accessibilityConfig={{
                 ariaLabel: accessibilityAriaLabel,
             }}
-            value={<UiIcon type="question" size={18} />}
+            value={<UiIcon type="question" size={18} ariaHidden />}
         />
     );
 }

@@ -55,6 +55,7 @@ export interface IDropdownButtonRenderProps {
     toggleDropdown: (desiredState?: boolean | unknown) => void;
     ariaAttributes: {
         role: "button" | string;
+        "data-popupId": string;
     } & Pick<React.AriaAttributes, "aria-haspopup" | "aria-expanded" | "aria-controls">;
 }
 
@@ -218,6 +219,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
             "aria-controls": isOpen ? dropdownId : undefined,
             "aria-expanded": isOpen,
             "aria-haspopup": accessibilityConfig?.popupRole,
+            "data-popupId": dropdownId,
         },
     };
 
