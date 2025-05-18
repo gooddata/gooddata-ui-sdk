@@ -560,12 +560,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 title = convertDashboard(dashboardResponse.data).title;
             }
 
-            const sanitizedTitle = title.replace(/[^a-z0-9]/gi, "_").toLowerCase();
-            const fileName = `${sanitizedTitle}_export`;
-
             const slideshowExport = await client.export.createDashboardExportRequest({
                 dashboardTabularExportRequest: {
-                    fileName,
+                    fileName: title || "export",
                     format: "XLSX",
                 },
                 workspaceId: this.workspace,
