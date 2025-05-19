@@ -49,7 +49,16 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
     const weekStart = useDashboardSelector(selectWeekStart);
     const filtersApplyMode = useDashboardSelector(selectDashboardFiltersApplyMode);
     const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
-    const { filter, workingFilter, onFilterChanged, config, readonly, autoOpen, ButtonComponent } = props;
+    const {
+        filter,
+        workingFilter,
+        onFilterChanged,
+        config,
+        readonly,
+        autoOpen,
+        ButtonComponent,
+        overlayPositionType,
+    } = props;
 
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     let defaultDateFilterName: string;
@@ -180,6 +189,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             withoutApply={filtersApplyMode.mode === "ALL_AT_ONCE" && enableDashboardFiltersApplyModes}
             enableDashboardFiltersApplyModes={enableDashboardFiltersApplyModes}
             ButtonComponent={ButtonComponent}
+            overlayPositionType={overlayPositionType}
         />
     );
 };

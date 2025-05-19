@@ -288,6 +288,7 @@ import { OnError } from '@gooddata/sdk-ui';
 import { OnExportReady } from '@gooddata/sdk-ui';
 import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
 import { OnLoadingChanged } from '@gooddata/sdk-ui';
+import { OverlayPositionType } from '@gooddata/sdk-ui-kit';
 import { Patch } from 'immer';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { PlatformEdition } from '@gooddata/sdk-model';
@@ -590,7 +591,7 @@ export interface AttributeHierarchyModified extends IDashboardCommand {
 export function attributeHierarchyModified(correlationId?: string): AttributeHierarchyModified;
 
 // @internal (undocumented)
-export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, }: IDashboardAttributeFilterPlaceholderProps): React_2.JSX.Element;
+export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, }: IDashboardAttributeFilterPlaceholderProps): React_2.JSX.Element;
 
 // @alpha (undocumented)
 export type AutomationInteractionData = {
@@ -4540,6 +4541,8 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     // (undocumented)
     openOnInit?: boolean;
     // (undocumented)
+    overlayPositionType?: OverlayPositionType;
+    // (undocumented)
     renderNoData?: (props: IDropdownListNoDataRenderProps) => React.ReactNode;
 }
 
@@ -4553,6 +4556,7 @@ export interface IDashboardAttributeFilterProps {
     isDraggable?: boolean;
     onClose?: () => void;
     onFilterChanged: (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef, isWorkingSelectionChange?: boolean, isResultOfMigration?: boolean) => void;
+    overlayPositionType?: OverlayPositionType;
     // @alpha
     readonly?: boolean;
     workingFilter?: IDashboardAttributeFilter;
@@ -4705,6 +4709,7 @@ export interface IDashboardDateFilterProps {
     filter: IDashboardDateFilter | undefined;
     isDraggable?: boolean;
     onFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string, isWorkingSelectionChange?: boolean) => void;
+    overlayPositionType?: OverlayPositionType;
     readonly?: boolean;
     workingFilter: IDashboardDateFilter | undefined;
 }

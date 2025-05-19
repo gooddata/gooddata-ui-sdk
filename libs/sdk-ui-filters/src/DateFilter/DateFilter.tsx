@@ -19,6 +19,7 @@ import { IFilterButtonCustomIcon, VisibilityMode } from "../shared/index.js";
 import { IFilterConfigurationProps } from "./DateFilterBody/types.js";
 import isEmpty from "lodash/isEmpty.js";
 import { IDateFilterButtonProps } from "./DateFilterButton/DateFilterButton.js";
+import { OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 /**
  * Props of the {@link DateFilter} component that are reflected in the state.
@@ -99,6 +100,11 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
      * @alpha
      */
     ButtonComponent?: ComponentType<IDateFilterButtonProps>;
+
+    /**
+     * Specifies the overlay position type for the date filter dropdown.
+     */
+    overlayPositionType?: OverlayPositionType;
 }
 
 /**
@@ -263,6 +269,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             withoutApply,
             enableDashboardFiltersApplyModes,
             ButtonComponent,
+            overlayPositionType,
         } = this.props;
         const { excludeCurrentPeriod, selectedFilterOption, isExcludeCurrentPeriodEnabled } = this.state;
         return dateFilterMode === "hidden" ? null : (
@@ -293,6 +300,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
                 FilterConfigurationComponent={FilterConfigurationComponent}
                 withoutApply={enableDashboardFiltersApplyModes ? withoutApply : undefined}
                 ButtonComponent={ButtonComponent}
+                overlayPositionType={overlayPositionType}
             />
         );
     }

@@ -45,6 +45,7 @@ import { IRelativeDateFilterPresetOfGranularity } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
+import { OverlayPositionType } from '@gooddata/sdk-ui-kit';
 import { default as React_2 } from 'react';
 import { ReactNode } from 'react';
 import { RelativeDateFilterGranularityOffset } from '@gooddata/sdk-model';
@@ -389,7 +390,7 @@ export interface IAttributeFilterConfigurationButtonProps {
 }
 
 // @beta
-export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon" | "withoutApply" | "workingFilter">;
+export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon" | "withoutApply" | "workingFilter" | "overlayPositionType">;
 
 // @public (undocumented)
 export interface IAttributeFilterCoreProps {
@@ -413,6 +414,7 @@ export interface IAttributeFilterCoreProps {
     onApply?: OnApplyCallbackType;
     onError?: (error: GoodDataSdkError) => void;
     onSelect?: OnSelectCallbackType;
+    overlayPositionType?: OverlayPositionType;
     parentFilterOverAttribute?: ParentFilterOverAttributeType;
     parentFilters?: AttributeFiltersOrPlaceholders;
     // @internal (undocumented)
@@ -778,6 +780,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     locale?: string;
     // (undocumented)
     openOnInit?: boolean;
+    overlayPositionType?: OverlayPositionType;
     // (undocumented)
     showDropDownHeaderMessage?: boolean;
     // (undocumented)

@@ -97,6 +97,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
         autoOpen,
         onClose,
         displayAsLabel,
+        overlayPositionType,
     } = props;
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const { dependentDateFilters } = useDependentDateFilters(filter);
@@ -446,6 +447,7 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
                 filter={attributeFilter}
                 workingFilter={enableDashboardFiltersApplyModes ? workingAttributeFilter : undefined}
                 displayAsLabel={displayAsLabel}
+                overlayPositionType={overlayPositionType}
                 onApply={(
                     newFilter,
                     _isInverted,

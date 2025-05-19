@@ -26,6 +26,7 @@ import { IAttributeFilterElementsSelectErrorProps } from "./Components/ElementsS
 import { IAttributeFilterEmptyResultProps } from "./Components/ElementsSelect/EmptyResult/AttributeFilterEmptyResult.js";
 import { IFilterButtonCustomIcon } from "../shared/index.js";
 import { IAttributeFilterStatusBarProps } from "./Components/ElementsSelect/StatusBar/types.js";
+import { OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 /**
  * @public
@@ -304,6 +305,11 @@ export interface IAttributeFilterCoreProps {
      * Enables the new apply all filters at once mode
      */
     enableDashboardFiltersApplyModes?: boolean;
+
+    /**
+     * Specifies the overlay position type for the attribute filter dropdown.
+     */
+    overlayPositionType?: OverlayPositionType;
 }
 
 /**

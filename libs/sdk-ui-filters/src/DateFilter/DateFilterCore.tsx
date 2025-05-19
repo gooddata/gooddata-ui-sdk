@@ -6,7 +6,7 @@ import DefaultMediaQuery from "react-responsive";
 import { defaultImport } from "default-import";
 import format from "date-fns/format/index.js";
 import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
-import { Dropdown } from "@gooddata/sdk-ui-kit";
+import { Dropdown, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 import { IExtendedDateFilterErrors, IDateFilterOptionsByType, DateFilterOption } from "./interfaces/index.js";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { MediaQueries } from "../constants/index.js";
@@ -66,6 +66,11 @@ export interface IDateFilterCoreProps {
 
     withoutApply?: boolean;
     ButtonComponent?: ComponentType<IDateFilterButtonProps>;
+
+    /**
+     * Specifies the overlay position type for the date filter dropdown.
+     */
+    overlayPositionType?: OverlayPositionType;
 }
 
 export const verifyDateFormat = (dateFormat: string): string => {
@@ -106,6 +111,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     showDropDownHeaderMessage,
     withoutApply,
     ButtonComponent,
+    overlayPositionType,
     ...dropdownBodyProps
 }) => {
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
@@ -184,6 +190,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                                 { align: "tr tl", offset: { x: 0, y: -50 } },
                             ]}
                             onOpenStateChanged={handleOpenStateChanged}
+                            overlayPositionType={overlayPositionType}
                             renderButton={({ isOpen, toggleDropdown }) => (
                                 <span onClick={disabled ? noop : toggleDropdown}>
                                     {dateFilterButton(isOpen, toggleDropdown)}

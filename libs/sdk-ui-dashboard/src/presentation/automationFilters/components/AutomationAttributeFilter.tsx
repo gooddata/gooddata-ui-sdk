@@ -50,6 +50,7 @@ export const AutomationAttributeFilter: React.FC<{
                 onFilterChanged={noop}
                 displayAsLabel={displayAsLabel}
                 AttributeFilterComponent={AttributeFilter}
+                overlayPositionType={"sameAsTarget"}
             />
         </AutomationAttributeFilterProvider>
     );

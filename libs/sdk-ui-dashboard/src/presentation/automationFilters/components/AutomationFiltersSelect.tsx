@@ -152,6 +152,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                             attributes={attributes}
                             dateDatasets={dateDatasets}
                             openOnInit={false}
+                            overlayPositionType={"sameAsTarget"}
                             className="gd-automation-filters__dropdown s-automation-filters-add-filter-dropdown"
                             DropdownButtonComponent={({ onClick }) => (
                                 <UiIconButton

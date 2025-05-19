@@ -83,6 +83,7 @@ export const AttachmentWidgets: React.FC<{
             <Dropdown
                 alignPoints={DROPDOWN_ALIGN_POINTS}
                 autofocusOnOpen={true}
+                overlayPositionType={"sameAsTarget"}
                 renderButton={({ toggleDropdown }) => (
                     <Button
                         className="gd-attachment-item-configuration gd-icon-settings"

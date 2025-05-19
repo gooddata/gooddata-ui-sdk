@@ -116,6 +116,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     }
                     withoutApply={props.withoutApply}
                     enableDashboardFiltersApplyModes={props.enableDashboardFiltersApplyModes}
+                    overlayPositionType={props.overlayPositionType}
                 >
                     {children}
                 </AttributeFilterContextProvider>
