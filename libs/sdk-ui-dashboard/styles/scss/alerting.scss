@@ -160,10 +160,9 @@
 }
 
 .gd-edit-alert__measure-info {
-    margin-bottom: 10px;
     display: flex;
     gap: 5px;
-    line-height: 21px;
+    line-height: 1.8rem;
     color: kit-variables.$gd-color-link;
 
     .inlineBubbleHelp {
@@ -172,8 +171,6 @@
 }
 
 .gd-edit-alert__value-input {
-    margin-bottom: 10px;
-
     /* Removes number input arrows for Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {

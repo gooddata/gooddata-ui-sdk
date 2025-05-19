@@ -620,7 +620,6 @@
     "insightAlert.config.noAlertMeasures.description": "Por favor, agregue una métrica para activar la alerta.",
     "insightAlert.config.filters": "usando {n} {n, plural, one {filtro} other {filtros}}",
     "insightAlert.config.filters.info": "Las alertas respetan los filtros del cuadro de mandos establecidos en el momento de su creación.{spacer}Para modificar el periodo de tiempo utilizado para la comparación, ajuste el filtro de fecha.",
-    "insightAlert.config.compare_with": "en comparación con",
     "insightAlert.config.compare_with_sp": "Mismo periodo el año anterior",
     "insightAlert.config.compare_with_pp": "Periodo previo",
     "widget.error.missing_insight.message": "No hay visualización disponible",

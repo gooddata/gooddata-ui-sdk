@@ -620,7 +620,6 @@
     "insightAlert.config.noAlertMeasures.description": "Bitte fügen Sie eine Metrik hinzu, um die Benachrichtigung zu aktivieren.",
     "insightAlert.config.filters": "verwendung von {n} {n, plural, one { Filter } other {Filtern}} ",
     "insightAlert.config.filters.info": "Warnungen berücksichtigen die Dashboard-Filter, die zum Zeitpunkt ihrer Erstellung festgelegt wurden.{spacer}Um den für den Vergleich verwendeten Periode zu ändern, passen Sie den Datumsfilter an.",
-    "insightAlert.config.compare_with": "Vergleichen mit",
     "insightAlert.config.compare_with_sp": "Derselbe Periode im vorherigen Jahr",
     "insightAlert.config.compare_with_pp": "Vorherige Zeitraum",
     "widget.error.missing_insight.message": "Keine Visualisierung verfügbar",

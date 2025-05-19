@@ -620,7 +620,6 @@
     "insightAlert.config.noAlertMeasures.description": "请添加指标以启用警报。",
     "insightAlert.config.filters": "使用{n} {n, plural, one {筛选} other {过滤器}}",
     "insightAlert.config.filters.info": "警报遵守其创建时设置的仪表板过滤器。{spacer}要修改用于比较的时间段，请调整日期过滤器。",
-    "insightAlert.config.compare_with": "相比",
     "insightAlert.config.compare_with_sp": "上年同期",
     "insightAlert.config.compare_with_pp": "上一时间段",
     "widget.error.missing_insight.message": "没有可用的可视化",

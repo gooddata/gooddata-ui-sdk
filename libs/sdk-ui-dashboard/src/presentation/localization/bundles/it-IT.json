@@ -620,7 +620,6 @@
     "insightAlert.config.noAlertMeasures.description": "Aggiungere una metrica per abilitare gli avvisi.",
     "insightAlert.config.filters": "utilizzando {n} {n, plural, one {filtro} other {filtri}}",
     "insightAlert.config.filters.info": "Gli avvisi rispettano i filtri del dashboard impostati al momento della loro creazione.{spacer} Per modificare il periodo di tempo utilizzato per il confronto, regolare il filtro della data.",
-    "insightAlert.config.compare_with": "rispetto a",
     "insightAlert.config.compare_with_sp": "Stesso periodo dell'anno precedente",
     "insightAlert.config.compare_with_pp": "Periodo precedente",
     "widget.error.missing_insight.message": "Nessuna visualizzazione disponibile",

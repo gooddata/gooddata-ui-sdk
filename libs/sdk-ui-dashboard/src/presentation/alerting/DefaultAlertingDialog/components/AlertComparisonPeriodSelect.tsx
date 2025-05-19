@@ -151,7 +151,6 @@ const DropdownButtonLabel = (props: DropdownButtonLabelProps) => {
     if (selectedOperator?.comparator === AlertMetricComparatorType.SamePeriodPreviousYear) {
         return (
             <div className="gd-edit-alert__measure-info">
-                <FormattedMessage id="insightAlert.config.compare_with" />{" "}
                 {selectedOperator.granularity && selectedOperator.granularity !== DateGranularity.year ? (
                     <FormattedMessage
                         id="insightAlert.config.compare_with_sp_granularity"
@@ -169,7 +168,6 @@ const DropdownButtonLabel = (props: DropdownButtonLabelProps) => {
     if (selectedOperator?.comparator === AlertMetricComparatorType.PreviousPeriod) {
         return (
             <div className="gd-edit-alert__measure-info">
-                <FormattedMessage id="insightAlert.config.compare_with" />{" "}
                 {selectedOperator.granularity ? (
                     <FormattedMessage
                         id="insightAlert.config.compare_with_pp_granularity"

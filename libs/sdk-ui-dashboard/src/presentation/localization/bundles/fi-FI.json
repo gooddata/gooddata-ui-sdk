@@ -620,7 +620,6 @@
     "insightAlert.config.noAlertMeasures.description": "Lisää mittari ottaaksesi hälytyksen käyttöön.",
     "insightAlert.config.filters": "käyttämällä {n} {n, plural, one {suodattaa} other {suodattimet}}",
     "insightAlert.config.filters.info": "Hälytykset noudattavat niiden luontihetkellä asetettuja ohjauspaneelin suodattimia.{spacer}Muokkaa vertailussa käytettyä ajanjaksoa säätämällä päivämääräsuodatinta.",
-    "insightAlert.config.compare_with": "verrattuna",
     "insightAlert.config.compare_with_sp": "Sama jakso edellisenä vuonna",
     "insightAlert.config.compare_with_pp": "Edellinen jakso",
     "widget.error.missing_insight.message": "Visualisointia ei ole saatavilla",
