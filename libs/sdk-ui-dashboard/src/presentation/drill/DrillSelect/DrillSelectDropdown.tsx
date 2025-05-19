@@ -80,10 +80,6 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = ({
         }
     }, [isOpen]);
 
-    const handleClose = () => {
-        onClose();
-    };
-
     const removeHighchartsFocusBorders = useCallback(() => {
         const focusBorders = document.getElementsByClassName("highcharts-focus-border");
         Array.from(focusBorders).forEach((el) => el.remove());
@@ -178,7 +174,7 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = ({
                 closeOnOutsideClick={true}
                 closeOnEscape={true}
                 alignTo={`.${dropDownAnchorClass}`}
-                onClose={handleClose}
+                onClose={onClose}
             >
                 <UiFocusTrap autofocusOnOpen={true}>
                     <div
@@ -188,7 +184,8 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = ({
                         <UiMenu
                             items={menuItems}
                             onSelect={(item) => onSelect(item.data.drillDefinition!)}
-                            onClose={handleClose}
+                            shouldCloseOnSelect={false}
+                            onClose={onClose}
                             onUnhandledKeyDown={handleKeyDown}
                             className="gd-drill-modal-picker-body"
                             ariaAttributes={{

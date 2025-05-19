@@ -157,7 +157,11 @@ const DropdownTriggerButton: React.FC<IDropdownButtonRenderProps & { isDisabled?
         disabled={isDisabled}
         type="button"
         buttonRef={buttonRef as React.MutableRefObject<HTMLButtonElement>}
-        {...ariaAttributes}
+        accessibilityConfig={{
+            role: ariaAttributes.role,
+            popupId: ariaAttributes["data-popupId"],
+            isExpanded: !!ariaAttributes["aria-expanded"],
+        }}
     >
         <FormattedMessage id="dialogs.export.submit" />
     </Button>

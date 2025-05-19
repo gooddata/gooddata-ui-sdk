@@ -73,6 +73,7 @@ export const DashboardInsightWithDrillDialog = (props: IDashboardInsightProps): 
                 {...props}
                 onDrillDown={onDrillDown}
                 onDrillToInsight={onDrillToInsight}
+                drillStep={activeDrillStep}
             />
             {activeDrillStep ? (
                 <InsightDrillDialog

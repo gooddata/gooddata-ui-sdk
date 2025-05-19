@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { DashboardDrillDefinition, DashboardDrillContext, IDashboardDrillEvent } from "../../../types.js";
 import { IAvailableDrillTargetAttribute, IAvailableDrillTargetMeasure } from "@gooddata/sdk-ui";
 
@@ -29,3 +29,8 @@ export interface DrillSelectContext {
 }
 
 export type IAvailableDrillTargetItem = IAvailableDrillTargetAttribute | IAvailableDrillTargetMeasure;
+
+/**
+ * @internal
+ */
+export type IDrillSelectCloseBehavior = "closeOnSelect" | "preventClose";
