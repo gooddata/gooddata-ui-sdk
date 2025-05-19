@@ -47,7 +47,7 @@ const FocusableItemComponent: React.FC<{
     onClick: (event: React.MouseEvent) => void;
 }> = ({ item, isFocused, onClick }) => {
     const { id, isDisabled, stringTitle } = item;
-    const { icon, className, subMenu } = item.data ?? {};
+    const { icon, className, subMenu, tooltip } = item.data ?? {};
 
     const itemClassName = cx("gd-menu-item", className, {
         "is-focused": isFocused,
@@ -65,6 +65,7 @@ const FocusableItemComponent: React.FC<{
             icon={icon}
             className={itemClassName}
             onClick={isDisabled ? undefined : onClick}
+            tooltip={tooltip}
         />
     );
 };

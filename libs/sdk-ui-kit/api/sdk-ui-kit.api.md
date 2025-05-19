@@ -684,6 +684,9 @@ export const getPreviousSiblings: <T extends IUiMenuItemData = object>(items: IU
 // @internal (undocumented)
 export function getRecommendedDateDataset<T extends IDateDataset>(items: T[]): T;
 
+// @internal (undocumented)
+export const getSelectedMenuId: <T extends IUiMenuItemData = object, M = object>(context: IUiMenuContext<T, M>) => string | undefined;
+
 // @internal
 export const getSiblingItems: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], itemId: string) => IUiMenuItem<T>[];
 
@@ -5693,7 +5696,7 @@ export interface UiMenuProps<T extends IUiMenuItemData = object, M = object> ext
     // (undocumented)
     ariaAttributes: Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
     // (undocumented)
-    className?: string;
+    className?: ((context: IUiMenuContext<T>) => string | undefined) | string;
     // (undocumented)
     isDisabledFocusable?: boolean;
     // (undocumented)

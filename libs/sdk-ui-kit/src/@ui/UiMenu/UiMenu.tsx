@@ -1,11 +1,26 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+import React, { FC } from "react";
 import cx from "classnames";
 import { b, e } from "./menuBem.js";
 import { IUiMenuItemData, UiMenuProps } from "./types.js";
 import { getContentItem, getSiblingItems } from "./itemUtils.js";
 import { useCustomContentKeyNavigation, useKeyNavigation, useUiMenuContextValue } from "./hooks.js";
 import { typedUiMenuContextStore } from "./context.js";
+import { useAutofocusOnMount } from "../../utils/useAutofocusOnMount.js";
+
+const ContentWrapper: FC<{
+    keyboardNavigationHandler: (event: React.KeyboardEvent) => void;
+    children?: React.ReactNode;
+}> = (props) => {
+    // autofocus always first element in the custom content for now
+    const autofocusRef = useAutofocusOnMount();
+
+    return (
+        <div onKeyDown={props.keyboardNavigationHandler} ref={autofocusRef}>
+            {props.children}
+        </div>
+    );
+};
 
 /**
  * An accessible menu component that can be navigated by keyboard.
@@ -71,18 +86,20 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
         }
     }, [shownCustomContentItemId, menuComponentRef]);
 
+    const menuClassName = typeof className === "function" ? className(contextStoreValue) : className;
+
     return (
         <UiMenuContextStore value={contextStoreValue}>
             <div
-                className={cx(b(), b({ controlType }), className)}
+                className={cx(b(), b({ controlType }), menuClassName)}
                 style={{ maxWidth }}
                 onKeyDownCapture={() => setControlType("keyboard")}
                 onMouseMoveCapture={() => setControlType("mouse")}
             >
                 {shownCustomContentItemId ? (
-                    <div onKeyDown={handleKeyDownInCustomContent}>
+                    <ContentWrapper keyboardNavigationHandler={handleKeyDownInCustomContent}>
                         <Content item={getContentItem(items, shownCustomContentItemId)} />
-                    </div>
+                    </ContentWrapper>
                 ) : (
                     <>
                         <MenuHeader />

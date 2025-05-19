@@ -1,7 +1,7 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { useState, useMemo } from "react";
-import { UiMenu, IUiMenuItem, UiFocusTrap } from "@gooddata/sdk-ui-kit";
-
+import { UiMenu, IUiMenuItem, UiFocusTrap, IUiMenuContext, getSelectedMenuId } from "@gooddata/sdk-ui-kit";
+import cx from "classnames";
 import {
     IDashboardInsightMenuProps,
     IInsightMenuSubmenu,
@@ -127,11 +127,15 @@ export const DashboardInsightMenuBody: React.FC<
     const menuId = `insight-menu-${widgetRefAsString}`;
     const menuLabelId = `${menuId}-label`;
 
+    const menuClassName = (context: IUiMenuContext<IMenuItemData, unknown>) => {
+        return cx("insight-configuration-menu", getSelectedMenuId(context));
+    };
+
     return (
         <UiFocusTrap autofocusOnOpen={true} initialFocus={menuId}>
             <DashboardInsightMenuContainer>
                 <UiMenu<IMenuItemData, IMenuData>
-                    className="insight-configuration-menu"
+                    className={menuClassName}
                     items={uiMenuItems}
                     onClose={onClose}
                     InteractiveItem={CustomUiMenuInteractiveItemComponent}

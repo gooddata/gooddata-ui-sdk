@@ -138,7 +138,7 @@ export {
     DefaultUiMenuContentItemWrapper,
 } from "./@ui/UiMenu/components/defaults/DefaultUiMenuContentItem.js";
 export { DefaultUiMenuGroupItem } from "./@ui/UiMenu/components/defaults/DefaultUiMenuGroupItem.js";
-export { typedUiMenuContextStore } from "./@ui/UiMenu/context.js";
+export { typedUiMenuContextStore, getSelectedMenuId } from "./@ui/UiMenu/context.js";
 export {
     getItemInteractiveParent,
     getSiblingItems,

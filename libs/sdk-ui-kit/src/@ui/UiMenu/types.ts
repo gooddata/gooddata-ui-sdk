@@ -184,7 +184,8 @@ export interface UiMenuProps<T extends IUiMenuItemData = object, M = object>
     extends Partial<IUiMenuPluggableComponents<T>> {
     items: IUiMenuItem<T>[];
 
-    className?: string;
+    className?: ((context: IUiMenuContext<T>) => string | undefined) | string;
+
     itemClassName?: ((item: IUiMenuItem<T>) => string | undefined) | string;
     maxWidth?: number;
 
