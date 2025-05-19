@@ -42,8 +42,9 @@ import {
     IExportDefinitionDashboardRequestPayload,
     IExportDefinitionVisualizationObjectRequestPayload,
     isExportDefinitionDashboardRequestPayload,
-    isDashboardAttributeFilter,
     isExportDefinitionVisualizationObjectRequestPayload,
+    FilterContextItem,
+    dashboardFilterLocalIdentifier,
 } from "@gooddata/sdk-model";
 import { changeFilterContextSelectionHandler } from "../filterContext/changeFilterContextSelectionHandler.js";
 import { changeFilterContextSelection } from "../../commands/filters.js";
@@ -52,10 +53,8 @@ import { selectInsightByWidgetRef } from "../../store/insights/insightsSelectors
 import { selectWidgetByRef } from "../../store/layout/layoutSelectors.js";
 import { selectFilterContextDateFilter } from "../../store/filterContext/filterContextSelectors.js";
 import omit from "lodash/omit.js";
-import {
-    dashboardAttributeFilterToAttributeFilter,
-    dashboardDateFilterToDateFilterByWidget,
-} from "../../../converters/index.js";
+import compact from "lodash/compact.js";
+import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 
 export function* initializeAutomationsHandler(
     ctx: DashboardContext,
@@ -145,7 +144,7 @@ export function* initializeAutomationsHandler(
                     targetExportDefinitionFilters?.filter((filter) => {
                         if (targetExportVisibleFilters) {
                             return targetExportVisibleFilters.some(
-                                (f) => f.localIdentifier === filterLocalIdentifier(filter),
+                                (f) => f.localIdentifier === dashboardFilterLocalIdentifier(filter),
                             );
                         }
                         return true;
@@ -206,18 +205,16 @@ function extractRelevantFilters(automations: IAutomationMetadataObject[], automa
 
 function extractExportDefinitionFilters(
     content?: IExportDefinitionVisualizationObjectRequestPayload | IExportDefinitionDashboardRequestPayload,
-) {
+): FilterContextItem[] {
     if (isExportDefinitionDashboardRequestPayload(content)) {
-        return content.content.filters?.map((filter) => {
-            if (isDashboardAttributeFilter(filter)) {
-                return dashboardAttributeFilterToAttributeFilter(filter);
-            } else {
-                return dashboardDateFilterToDateFilterByWidget(filter);
-            }
-        });
+        return compact(content.content.filters);
     }
     if (isExportDefinitionVisualizationObjectRequestPayload(content)) {
-        return content.content.filters?.filter(isDashboardFilter);
+        return compact(
+            content.content.filters?.filter(isDashboardFilter).map((filter) => {
+                return dashboardFilterToFilterContextItem(filter, true);
+            }),
+        );
     }
     return [];
 }
