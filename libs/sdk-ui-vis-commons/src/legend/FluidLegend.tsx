@@ -1,10 +1,11 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import noop from "lodash/noop.js";
 import { LegendList } from "./LegendList.js";
 import { calculateFluidLegend } from "./helpers.js";
 import { IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "./types.js";
+import { LegendSeries } from "./LegendSeries.js";
 
 /**
  * @internal
@@ -37,14 +38,14 @@ export class FluidLegend extends React.PureComponent<IFluidLegendProps> {
         const pagedSeries = series.slice(0, limit);
 
         return (
-            <div className="series">
+            <LegendSeries onToggleItem={onItemClick} series={pagedSeries}>
                 <LegendList
                     enableBorderRadius={enableBorderRadius}
                     series={pagedSeries}
                     onItemClick={onItemClick}
                     width={itemWidth}
                 />
-            </div>
+            </LegendSeries>
         );
     };
 

@@ -455,6 +455,9 @@ export const Dialog: React_2.NamedExoticComponent<IDialogProps>;
 export const DialogBase: React_2.NamedExoticComponent<IDialogBaseProps>;
 
 // @internal (undocumented)
+export const DialogCloseButton: React_2.FC<IDialogCloseButtonProps>;
+
+// @internal (undocumented)
 export const DialogList: React_2.VFC<IDialogListProps>;
 
 // @internal (undocumented)
@@ -625,7 +628,7 @@ export function getDateTimeConfig(date: string, options?: IDateTimeConfigOptions
 export const getDefaultEmbedTypeOptions: (embedType: EmbedType) => EmbedOptionsType;
 
 // @internal
-export const getFocusableElements: (element?: HTMLElement) => {
+export const getFocusableElements: (element?: HTMLElement | null) => {
     focusableElements: NodeListOf<HTMLElement>;
     firstElement: HTMLElement;
     lastElement: HTMLElement;
@@ -1598,7 +1601,9 @@ export interface IDialogBaseProps {
 }
 
 // @internal (undocumented)
-export type IDialogCloseButtonProps = Pick<IDialogBaseProps, "onClose" | "accessibilityConfig">;
+export type IDialogCloseButtonProps = Pick<IDialogBaseProps, "onClose" | "accessibilityConfig"> & {
+    className?: string;
+};
 
 // @internal (undocumented)
 export interface IDialogListHeaderProps {
@@ -2218,6 +2223,14 @@ export interface IGranularGranteeUser extends IGranteeBase {
     status: GranteeStatus;
     // (undocumented)
     type: "granularUser";
+}
+
+// @internal (undocumented)
+export interface IHandleActionOptions {
+    // (undocumented)
+    shouldPreventDefault?: boolean;
+    // (undocumented)
+    shouldStopPropagation?: boolean;
 }
 
 // @internal (undocumented)
@@ -3244,6 +3257,9 @@ export interface IMetadataListProps {
 }
 
 // @internal (undocumented)
+export type IModifier = React_2.ModifierKey | `${typeof modifierNegator}${React_2.ModifierKey}`;
+
+// @internal (undocumented)
 export interface IMultiSelectListItemProps {
     // (undocumented)
     isSelected?: boolean;
@@ -3985,6 +4001,9 @@ export interface IScrollGradientProps {
 
 // @internal (undocumented)
 export const isDateDatasetHeader: (obj: unknown) => obj is IDateDatasetHeader;
+
+// @internal (undocumented)
+export const isElementFocusable: (element?: HTMLElement | null) => boolean;
 
 // @internal (undocumented)
 export type isElementInvisibleType = (element: HTMLElement, container: HTMLElement) => boolean;
@@ -4997,19 +5016,36 @@ export const LoadingSpinner: React_2.FC<ILoadingSpinner>;
 export const LocaleSetting: React_2.VFC<ILocaleSettingProps>;
 
 // @internal (undocumented)
-export const makeMenuKeyboardNavigation: <T extends KeyboardEvent | KeyboardEvent_2<Element> = KeyboardEvent_2<Element>>({ onFocusPrevious, onFocusNext, onFocusFirst, onFocusLast, onEnterLevel, onLeaveLevel, onSelect, onClose, onUnhandledKeyDown, shouldPreventDefault, shouldStopPropagation, }: {
-    onFocusNext?: (event: T) => void;
+export const makeKeyboardNavigation: <ActionKeysMap extends {
+    [action: string]: {
+        code: string | string[];
+        modifiers?: IModifier[];
+    }[];
+}>(actionKeysMap: ActionKeysMap) => <T extends KeyboardEvent | React_2.KeyboardEvent<Element> = React_2.KeyboardEvent<Element>>(handlers: { [action in keyof ActionKeysMap | "onUnhandledKeyDown"]?: (event: T) => void; }, options?: IHandleActionOptions) => (event: T) => void;
+
+// @internal (undocumented)
+export const makeLinearKeyboardNavigation: <T extends KeyboardEvent | React_2.KeyboardEvent<Element> = React_2.KeyboardEvent<Element>>(handlers: {
+    onSelect?: (event: T) => void;
+    onClose?: (event: T) => void;
     onFocusPrevious?: (event: T) => void;
+    onFocusNext?: (event: T) => void;
+    onFocusFirst?: (event: T) => void;
+    onFocusLast?: (event: T) => void;
+    onUnhandledKeyDown?: (event: T) => void;
+}, options?: IHandleActionOptions) => (event: T) => void;
+
+// @internal (undocumented)
+export const makeMenuKeyboardNavigation: <T extends KeyboardEvent | React_2.KeyboardEvent<Element> = React_2.KeyboardEvent<Element>>(handlers: {
+    onSelect?: (event: T) => void;
+    onClose?: (event: T) => void;
+    onFocusPrevious?: (event: T) => void;
+    onFocusNext?: (event: T) => void;
     onFocusFirst?: (event: T) => void;
     onFocusLast?: (event: T) => void;
     onEnterLevel?: (event: T) => void;
     onLeaveLevel?: (event: T) => void;
-    onSelect?: (event: T) => void;
-    onClose?: (event: T) => void;
     onUnhandledKeyDown?: (event: T) => void;
-    shouldPreventDefault?: boolean;
-    shouldStopPropagation?: boolean;
-}) => (event: T) => void;
+}, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
 export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFormatOwnProps> {
@@ -5045,6 +5081,9 @@ export const META_DATA_TIMEZONE = "Europe/Prague";
 
 // @internal (undocumented)
 export const MetadataList: React_2.FC<IMetadataListProps>;
+
+// @internal (undocumented)
+export const modifierNegator: "!";
 
 // @internal (undocumented)
 export const MultiSelectList: React_2.FC<WithIntlProps<IMultiSelectListProps<unknown>>> & {
@@ -5789,6 +5828,9 @@ export const unrelatedHeader: IDateDatasetHeader;
 
 // @internal
 export function unwrapGroupItems<T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[]): IUiMenuItem<T>[];
+
+// @internal
+export const useAutofocusOnMount: (timeout?: number) => (node: HTMLElement | null) => void;
 
 // @internal
 export const useDebouncedState: <T>(initialValue: T, delay: number) => UseDebouncedStateOutput<T>;

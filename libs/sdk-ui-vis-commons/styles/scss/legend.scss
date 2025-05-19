@@ -449,20 +449,14 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
     justify-content: flex-end;
 }
 
-.legend-popup-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 30px;
-    height: 30px;
-}
-
 .legend-popup-icon {
     display: flex;
     justify-content: center;
     align-items: center;
     min-width: 22px;
     height: 22px;
+    margin: 4px;
+    border: none;
     border-radius: 50%;
     background-color: kit-variables.$is-focused-background;
     cursor: pointer;
@@ -835,5 +829,12 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
         &::after {
             left: 75%;
         }
+    }
+}
+
+.legend-series-wrapper:focus-visible {
+    outline: none;
+    .series-item--isFocused {
+        @include mixins.focus-ring;
     }
 }

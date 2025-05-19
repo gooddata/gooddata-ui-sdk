@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 /**
  * This package provides functions commonly used when building visualizations.
@@ -70,6 +70,7 @@ export type {
     LegendOptionsItemType,
     ItemBorderRadiusPredicate,
     IColorLegendSize,
+    ISeriesItem,
 } from "./legend/types.js";
 export { DEFAULT_LEGEND_CONFIG, LegendPosition, SupportedLegendPositions } from "./legend/types.js";
 

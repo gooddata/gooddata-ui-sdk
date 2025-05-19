@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import ReactMeasure, { Rect } from "react-measure";
 import cx from "classnames";
@@ -10,7 +10,7 @@ import { FluidLegend } from "./FluidLegend.js";
 import { StaticLegend, IStaticLegendProps } from "./StaticLegend.js";
 import { HeatmapLegend } from "./HeatmapLegend.js";
 import { IntlWrapper, IntlTranslationsProvider, ITranslationsComponentProps } from "@gooddata/sdk-ui";
-import { IColorLegendSize, IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "./types.js";
+import { IColorLegendSize, ISeriesItem, ItemBorderRadiusPredicate } from "./types.js";
 import { PopUpLegend } from "./PopUpLegend/PopUpLegend.js";
 import { TOP, BOTTOM } from "./PositionTypes.js";
 import { ButtonsOrientationType } from "./Paging.js";
@@ -33,13 +33,13 @@ export interface ILegendProps {
     height?: number;
     position: string;
     heatmapLegend?: boolean;
-    series: any;
+    series: ISeriesItem[];
     seriesMapper?: (visibleSeries: any) => any;
     format?: string;
     locale?: string;
     showFluidLegend?: boolean;
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
-    onItemClick(item: any): void;
+    onItemClick(item: ISeriesItem): void;
     validateOverHeight(legendClient: Rect): void;
     contentDimensions: { width: number; height: number };
     containerId?: string;
@@ -58,7 +58,7 @@ export class Legend extends React.PureComponent<ILegendProps> {
         enableBorderRadius: false,
     };
 
-    public onItemClick = (item: IPushpinCategoryLegendItem): void => {
+    public onItemClick = (item: ISeriesItem): void => {
         this.props.onItemClick(item);
     };
 

@@ -3,6 +3,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import { messages } from "../locales.js";
+import { Button } from "@gooddata/sdk-ui-kit";
 
 /**
  * @internal
@@ -62,7 +63,14 @@ const PagingButton: React.FC<IPagingButtonProps> = ({ type, buttonsOrientation, 
     const buttonLabel =
         type === "prev" ? intl.formatMessage(messages.previous) : intl.formatMessage(messages.next);
 
-    return <button className={classes} onClick={handler} disabled={disabled} aria-label={buttonLabel} />;
+    return (
+        <Button
+            className={classes}
+            onClick={handler}
+            disabled={disabled}
+            accessibilityConfig={{ ariaLabel: buttonLabel }}
+        />
+    );
 };
 
 /**

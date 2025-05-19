@@ -4,7 +4,10 @@ import { IDialogCloseButtonProps } from "./typings.js";
 import { Button } from "../Button/index.js";
 import { useIntl } from "react-intl";
 import { IntlWrapper } from "@gooddata/sdk-ui";
+import cx from "classnames";
+
 const DialogCloseButtonCore = React.memo<IDialogCloseButtonProps>(function DialogCloseButton({
+    className,
     accessibilityConfig,
     onClose,
 }) {
@@ -17,8 +20,10 @@ const DialogCloseButtonCore = React.memo<IDialogCloseButtonProps>(function Dialo
     return (
         <div className="gd-dialog-close">
             <Button
-                className="gd-button-link gd-button-icon-only gd-icon-cross s-dialog-close-button"
-                value=""
+                className={cx(
+                    "gd-button-link gd-button-icon-only gd-icon-cross s-dialog-close-button",
+                    className,
+                )}
                 onClick={onClose}
                 accessibilityConfig={closeButtonAccessibilityConfig}
             />
@@ -26,6 +31,9 @@ const DialogCloseButtonCore = React.memo<IDialogCloseButtonProps>(function Dialo
     );
 });
 
+/**
+ * @internal
+ */
 export const DialogCloseButton: React.FC<IDialogCloseButtonProps> = (props) => (
     <IntlWrapper>
         <DialogCloseButtonCore {...props} />

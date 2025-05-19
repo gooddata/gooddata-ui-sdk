@@ -18,7 +18,7 @@ import {
     unwrapGroupItems,
 } from "./itemUtils.js";
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
-import React, { useEffect } from "react";
+import React from "react";
 import {
     DefaultUiMenuInteractiveItem,
     DefaultUiMenuInteractiveItemWrapper,
@@ -60,6 +60,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         ContentItem: ContentItemComponent = DefaultUiMenuContentItem,
         ContentItemWrapper: ContentItemWrapperComponent = DefaultUiMenuContentItemWrapper,
         Content: ContentComponent = DefaultUiMenuContent,
+
         shouldCloseOnSelect = true,
         isDisabledFocusable = true,
 
@@ -112,7 +113,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         return undefined;
     }, [focusedItem, items, shownCustomContentItemId]);
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (parentItemId) {
             const item = getFocusableItem(items, parentItemId);
             onLevelChange?.(1, item);
@@ -230,95 +231,98 @@ export function useKeyNavigation<T extends IUiMenuItemData = object, M extends o
 }) {
     const menuContextRef = useAutoupdateRef(menuContextValue);
 
-    return makeMenuKeyboardNavigation({
-        shouldPreventDefault: shouldKeyboardActionPreventDefault,
-        shouldStopPropagation: shouldKeyboardActionStopPropagation,
+    return makeMenuKeyboardNavigation(
+        {
+            onFocusPrevious: () => {
+                const { setFocusedId, items, isItemFocusable } = menuContextRef.current;
 
-        onFocusPrevious: () => {
-            const { setFocusedId, items, isItemFocusable } = menuContextRef.current;
+                setFocusedId(
+                    (prevId) =>
+                        getClosestFocusableSibling({
+                            direction: "backward",
+                            itemId: prevId,
+                            items,
+                            isItemFocusable,
+                        })?.id ?? prevId,
+                );
+            },
+            onFocusNext: () => {
+                const { setFocusedId, items, isItemFocusable } = menuContextRef.current;
 
-            setFocusedId(
-                (prevId) =>
-                    getClosestFocusableSibling({
-                        direction: "backward",
-                        itemId: prevId,
-                        items,
-                        isItemFocusable,
-                    })?.id ?? prevId,
-            );
-        },
-        onFocusNext: () => {
-            const { setFocusedId, items, isItemFocusable } = menuContextRef.current;
+                setFocusedId(
+                    (prevId) =>
+                        getClosestFocusableSibling({
+                            direction: "forward",
+                            itemId: prevId,
+                            items,
+                            isItemFocusable,
+                        })?.id ?? prevId,
+                );
+            },
+            onFocusFirst: () => {
+                const { items, isItemFocusable, setFocusedId } = menuContextRef.current;
 
-            setFocusedId(
-                (prevId) =>
-                    getClosestFocusableSibling({
-                        direction: "forward",
-                        itemId: prevId,
-                        items,
-                        isItemFocusable,
-                    })?.id ?? prevId,
-            );
-        },
-        onFocusFirst: () => {
-            const { items, isItemFocusable, setFocusedId } = menuContextRef.current;
+                setFocusedId((prevId) => {
+                    if (prevId === undefined) {
+                        return unwrapGroupItems(items).find(isItemFocusable)?.id;
+                    }
 
-            setFocusedId((prevId) => {
-                if (prevId === undefined) {
-                    return unwrapGroupItems(items).find(isItemFocusable)?.id;
+                    return unwrapGroupItems(getSiblingItems(items, prevId) ?? []).find(isItemFocusable)?.id;
+                });
+            },
+            onFocusLast: () => {
+                const { items, isItemFocusable, setFocusedId } = menuContextRef.current;
+
+                setFocusedId((prevId) => {
+                    if (prevId === undefined) {
+                        return [...unwrapGroupItems(items)].reverse().find(isItemFocusable)?.id;
+                    }
+
+                    return [...unwrapGroupItems(getSiblingItems(items, prevId) ?? [])]
+                        .reverse()
+                        .find(isItemFocusable)?.id;
+                });
+            },
+            onSelect: () => {
+                const { onSelect, focusedItem } = menuContextRef.current;
+                onSelect(focusedItem);
+            },
+            onEnterLevel: () => {
+                const { onSelect, focusedItem } = menuContextRef.current;
+
+                if (
+                    (focusedItem?.type !== "interactive" && focusedItem?.type !== "content") ||
+                    (focusedItem?.type === "interactive" && !focusedItem.subItems) ||
+                    (focusedItem?.type === "content" && !focusedItem.Component)
+                ) {
+                    return;
                 }
 
-                return unwrapGroupItems(getSiblingItems(items, prevId) ?? []).find(isItemFocusable)?.id;
-            });
-        },
-        onFocusLast: () => {
-            const { items, isItemFocusable, setFocusedId } = menuContextRef.current;
+                onSelect(focusedItem);
+            },
+            onLeaveLevel: () => {
+                const { setFocusedId, items } = menuContextRef.current;
 
-            setFocusedId((prevId) => {
-                if (prevId === undefined) {
-                    return [...unwrapGroupItems(items)].reverse().find(isItemFocusable)?.id;
-                }
+                setFocusedId((prevId) => {
+                    if (prevId === undefined) {
+                        return prevId;
+                    }
 
-                return [...unwrapGroupItems(getSiblingItems(items, prevId) ?? [])]
-                    .reverse()
-                    .find(isItemFocusable)?.id;
-            });
+                    return getItemInteractiveParent(items, prevId)?.id ?? prevId;
+                });
+            },
+            onClose: () => {
+                menuContextRef.current.onClose?.();
+            },
+            onUnhandledKeyDown: (event) => {
+                onUnhandledKeyDown?.(event, menuContextRef.current);
+            },
         },
-        onSelect: () => {
-            const { onSelect, focusedItem } = menuContextRef.current;
-            onSelect(focusedItem);
+        {
+            shouldPreventDefault: shouldKeyboardActionPreventDefault,
+            shouldStopPropagation: shouldKeyboardActionStopPropagation,
         },
-        onEnterLevel: () => {
-            const { onSelect, focusedItem } = menuContextRef.current;
-
-            if (
-                (focusedItem?.type !== "interactive" && focusedItem?.type !== "content") ||
-                (focusedItem?.type === "interactive" && !focusedItem.subItems) ||
-                (focusedItem?.type === "content" && !focusedItem.Component)
-            ) {
-                return;
-            }
-
-            onSelect(focusedItem);
-        },
-        onLeaveLevel: () => {
-            const { setFocusedId, items } = menuContextRef.current;
-
-            setFocusedId((prevId) => {
-                if (prevId === undefined) {
-                    return prevId;
-                }
-
-                return getItemInteractiveParent(items, prevId)?.id ?? prevId;
-            });
-        },
-        onClose: () => {
-            menuContextRef.current.onClose?.();
-        },
-        onUnhandledKeyDown: (event) => {
-            onUnhandledKeyDown?.(event, menuContextRef.current);
-        },
-    });
+    );
 }
 
 export function useCustomContentKeyNavigation<T extends IUiMenuItemData = object, M extends object = object>({
@@ -334,32 +338,35 @@ export function useCustomContentKeyNavigation<T extends IUiMenuItemData = object
 }) {
     const menuContextRef = useAutoupdateRef(menuContextValue);
 
-    return makeMenuKeyboardNavigation({
-        shouldPreventDefault: shouldKeyboardActionPreventDefault,
-        shouldStopPropagation: shouldKeyboardActionStopPropagation,
+    return makeMenuKeyboardNavigation(
+        {
+            onLeaveLevel: () => {
+                const isInputFocused = isElementTextInput(document.activeElement);
 
-        onLeaveLevel: () => {
-            const isInputFocused = isElementTextInput(document.activeElement);
+                if (isInputFocused) {
+                    return;
+                }
 
-            if (isInputFocused) {
-                return;
-            }
+                const { setShownCustomContentItemId } = menuContextRef.current;
 
-            const { setShownCustomContentItemId } = menuContextRef.current;
+                setShownCustomContentItemId(undefined);
+            },
+            onClose: () => {
+                const isInputFocused = isElementTextInput(document.activeElement);
 
-            setShownCustomContentItemId(undefined);
+                if (isInputFocused) {
+                    return;
+                }
+
+                menuContextRef.current.onClose?.();
+            },
+            onUnhandledKeyDown: (event) => {
+                onUnhandledKeyDown?.(event, menuContextRef.current);
+            },
         },
-        onClose: () => {
-            const isInputFocused = isElementTextInput(document.activeElement);
-
-            if (isInputFocused) {
-                return;
-            }
-
-            menuContextRef.current.onClose?.();
+        {
+            shouldPreventDefault: shouldKeyboardActionPreventDefault,
+            shouldStopPropagation: shouldKeyboardActionStopPropagation,
         },
-        onUnhandledKeyDown: (event) => {
-            onUnhandledKeyDown?.(event, menuContextRef.current);
-        },
-    });
+    );
 }

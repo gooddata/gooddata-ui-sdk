@@ -1,5 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
+import React from "react";
 import { CONFIRM_DIALOG_BASE_ID } from "../Dialog/elementId.js";
 import { IRegion } from "../typings/domUtilities.js";
 
@@ -179,7 +180,7 @@ const focusableElementsSelector = [
  * @param element - the element to get the focusable elements from
  * @returns an object containing the focusable elements, the first focusable element, and the last focusable element
  */
-export const getFocusableElements = (element?: HTMLElement) => {
+export const getFocusableElements = (element?: HTMLElement | null) => {
     const focusableElements = element?.querySelectorAll<HTMLElement>(focusableElementsSelector);
     const firstElement = focusableElements?.[0];
     const lastElement = focusableElements?.[focusableElements.length - 1];

@@ -339,13 +339,13 @@ export interface ILegendProps {
     // (undocumented)
     maximumRows?: number;
     // (undocumented)
-    onItemClick(item: any): void;
+    onItemClick(item: ISeriesItem): void;
     // (undocumented)
     position: string;
     // (undocumented)
     responsive?: boolean | "autoPositionWithPopup";
     // (undocumented)
-    series: any;
+    series: ISeriesItem[];
     // (undocumented)
     seriesMapper?: (visibleSeries: any) => any;
     // (undocumented)
@@ -383,9 +383,9 @@ export interface IPopUpLegendProps {
     // (undocumented)
     name?: string;
     // (undocumented)
-    onLegendItemClick: (item: IPushpinCategoryLegendItem) => void;
+    onLegendItemClick: (item: ISeriesItem) => void;
     // (undocumented)
-    series: IPushpinCategoryLegendItem[];
+    series: ISeriesItem[];
 }
 
 // @internal (undocumented)
@@ -413,6 +413,16 @@ export interface IRange {
 // @internal (undocumented)
 export function isCustomPalette(palette: IColorPalette): boolean;
 
+// @internal
+export type ISeriesItem = {
+    isVisible?: boolean;
+    name?: string;
+    color?: string;
+    type?: string;
+    labelKey?: string;
+    data?: string[];
+};
+
 // @internal (undocumented)
 export interface IStaticLegendProps {
     // (undocumented)
@@ -424,9 +434,11 @@ export interface IStaticLegendProps {
     // (undocumented)
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     // (undocumented)
+    isLabelVisible?: boolean;
+    // (undocumented)
     label?: string;
     // (undocumented)
-    onItemClick?(item: IPushpinCategoryLegendItem): void;
+    onItemClick?(item: ISeriesItem): void;
     // (undocumented)
     onPageChanged?: (page: number) => void;
     // (undocumented)
@@ -434,7 +446,7 @@ export interface IStaticLegendProps {
     // (undocumented)
     position: string;
     // (undocumented)
-    series: IPushpinCategoryLegendItem[];
+    series: ISeriesItem[];
     // (undocumented)
     shouldFillAvailableSpace?: boolean;
 }
@@ -459,7 +471,7 @@ export class Legend extends React_2.PureComponent<ILegendProps> {
     // (undocumented)
     getSeries: () => any;
     // (undocumented)
-    onItemClick: (item: IPushpinCategoryLegendItem) => void;
+    onItemClick: (item: ISeriesItem) => void;
     // (undocumented)
     render(): React_2.ReactNode;
     // (undocumented)
@@ -507,22 +519,7 @@ export const shouldRenderPagination: (enableCompactSize: boolean, width: number,
 export function shouldShowFluid(documentObj: Document): boolean;
 
 // @internal (undocumented)
-export class StaticLegend extends React_2.PureComponent<IStaticLegendProps> {
-    // (undocumented)
-    static defaultProps: Pick<IStaticLegendProps, "buttonOrientation" | "paginationHeight" | "onPageChanged">;
-    // (undocumented)
-    render(): React_2.JSX.Element;
-    // (undocumented)
-    renderPaging: (pagesCount: number) => React_2.ReactNode;
-    // (undocumented)
-    showNextPage: () => void;
-    // (undocumented)
-    showPrevPage: () => void;
-    // (undocumented)
-    state: {
-        page: number;
-    };
-}
+export const StaticLegend: React_2.NamedExoticComponent<IStaticLegendProps>;
 
 // @internal (undocumented)
 export const SupportedLegendPositions: PositionType[];

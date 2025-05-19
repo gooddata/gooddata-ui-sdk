@@ -1557,6 +1557,26 @@
         "comment": "",
         "limit": 0
     },
+    "properties.legend.series.item.description": {
+        "value": "Press Space or Enter to toggle visibility",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.legend.more.button": {
+        "value": "Show all legend items in a dialog",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.legend.series.named": {
+        "value": "Legend: {name}",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.legend.series.unnamed": {
+        "value": "Visualization legend",
+        "comment": "",
+        "limit": 0
+    },
     "attrf.all": {
         "value": "All",
         "comment": "",
