@@ -140,7 +140,8 @@ class DenormalizingExecutionResult extends DecoratedExecutionResult {
     };
 
     public export = async (options: IExportConfig): Promise<IExportResult> => {
-        const originalResult = await this.originalExecution.execute();
+        // Avoid abort signal to be out of sync
+        const originalResult = await this.originalExecution.withSignal(this.signal).execute();
 
         return originalResult.export(options);
     };

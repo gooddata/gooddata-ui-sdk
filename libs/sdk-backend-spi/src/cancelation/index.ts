@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 /**
  * Options that is used for propagation cancellation signal / abort signal
@@ -18,5 +18,5 @@ export interface ICancelable<T> {
      * @param signal - Abort signal used for canceling requests
      * @returns Instance of object with interface
      */
-    withSignal(signal: AbortSignal): T;
+    withSignal(signal: AbortSignal | undefined): T;
 }
