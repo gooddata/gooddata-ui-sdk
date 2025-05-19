@@ -21,36 +21,9 @@ export interface IUiSettings {
  */
 export function generateHeaderAccountMenuItems(
     workspacePermissions: IWorkspacePermissions,
-    uiSettings: IUiSettings,
     workspaceId?: string,
-    showOnlyLogoutItem?: boolean,
-    featureFlags?: ISettings,
-): IHeaderMenuItem[];
-/**
- * @internal
- */
-export function generateHeaderAccountMenuItems(
-    workspacePermissions: IWorkspacePermissions,
-    workspaceId?: string,
-    featureFlags?: ISettings,
-): IHeaderMenuItem[];
-/**
- * @internal
- */
-export function generateHeaderAccountMenuItems(
-    workspacePermissions: IWorkspacePermissions,
-    uiSettingsOrWorkspaceId?: IUiSettings | string,
-    workspaceIdOrFeatureFlags?: string | ISettings,
-    _showOnlyLogoutItem?: boolean,
     featureFlags?: ISettings,
 ): IHeaderMenuItem[] {
-    const workspaceId =
-        typeof uiSettingsOrWorkspaceId === "string"
-            ? uiSettingsOrWorkspaceId
-            : (workspaceIdOrFeatureFlags as string);
-    const featureFlagsFinal =
-        typeof workspaceIdOrFeatureFlags === "string" ? featureFlags : workspaceIdOrFeatureFlags;
-
     const { canManageProject } = workspacePermissions;
     const accountMenuItems: IHeaderMenuItem[] = [];
 
@@ -64,7 +37,7 @@ export function generateHeaderAccountMenuItems(
         className: "s-logout",
     };
 
-    if (canManageProject && featureFlagsFinal?.enableWorkspaceSettingsAppHeaderMenuItem) {
+    if (canManageProject && featureFlags?.enableWorkspaceSettingsAppHeaderMenuItem) {
         accountMenuItems.push(workspaceSettingsItem);
     }
     accountMenuItems.push(logoutItem);
