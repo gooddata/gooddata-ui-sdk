@@ -348,10 +348,8 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
 }
 a.gd-list-help-menu-item.gd-list-item {
     &:focus-visible {
-        // TODO LX-769
-        // disable outline and use box-shadow instead.
-        // outline highlights both element and ::after content added as divider
-        // needs to be rewritten in https://gooddata.atlassian.net/browse/LX-769
+        // Disable outline and use box-shadow instead.
+        // Outline highlights both element and ::after content added as divider.
         outline: none;
         box-shadow: 0 0 0 2px black;
         text-decoration: none;
