@@ -161,10 +161,11 @@ export const DashboardInsightMenuBody: React.FC<
                 <UiMenu<IMenuItemData, IMenuData>
                     items={uiMenuItems}
                     onClose={onClose}
-                    InteractiveItemComponent={CustomUiMenuInteractiveItemComponent}
-                    ContentItemComponent={CustomUiMenuContentItemComponent}
-                    StaticItemComponent={CustomUiMenuStaticItemComponent}
-                    MenuHeaderComponent={CustomUiMenuHeaderComponent}
+                    InteractiveItem={CustomUiMenuInteractiveItemComponent}
+                    ContentItem={CustomUiMenuContentItemComponent}
+                    Content={CustomUiMenuContentComponent}
+                    StaticItem={CustomUiMenuStaticItemComponent}
+                    MenuHeader={CustomUiMenuHeaderComponent}
                     shouldCloseOnSelect={true}
                     ariaAttributes={{
                         id: menuId,

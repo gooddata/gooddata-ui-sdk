@@ -4,13 +4,13 @@ import cx from "classnames";
 import {
     //Button,
     Separator,
-    UiMenuInteractiveItemProps,
-    UiMenuStaticItemProps,
+    IUiMenuInteractiveItemProps,
+    IUiMenuStaticItemProps,
     DefaultUiMenuHeader,
     typedUiMenuContextStore,
     getItemInteractiveParent,
     UiIconButton,
-    UiMenuContentItemProps,
+    IUiMenuContentItemProps,
 } from "@gooddata/sdk-ui-kit";
 import { DashboardInsightMenuItemButton } from "./DashboardInsightMenuItemButton.js";
 import { DashboardInsightMenuTitle } from "../../DashboardInsightMenuTitle.js";
@@ -68,7 +68,7 @@ const FocusableItemComponent: React.FC<{
     );
 };
 
-export const CustomUiMenuInteractiveItemComponent: React.FC<UiMenuInteractiveItemProps<IMenuItemData>> = ({
+export const CustomUiMenuInteractiveItemComponent: React.FC<IUiMenuInteractiveItemProps<IMenuItemData>> = ({
     item,
     isFocused,
     onSelect,
@@ -88,7 +88,7 @@ export const CustomUiMenuInteractiveItemComponent: React.FC<UiMenuInteractiveIte
     );
 };
 
-export const CustomUiMenuContentItemComponent: React.FC<UiMenuContentItemProps<IMenuItemData>> = ({
+export const CustomUiMenuContentItemComponent: React.FC<IUiMenuContentItemProps<IMenuItemData>> = ({
     item,
     isFocused,
     onSelect,

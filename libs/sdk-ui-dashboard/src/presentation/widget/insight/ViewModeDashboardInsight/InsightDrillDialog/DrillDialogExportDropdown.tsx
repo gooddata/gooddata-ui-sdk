@@ -11,7 +11,7 @@ import {
     IAlignPoint,
     IDropdownButtonRenderProps,
     UiMenu,
-    UiMenuInteractiveItemProps,
+    IUiMenuInteractiveItemProps,
 } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -101,7 +101,7 @@ export const DrillDialogExportDropdown: React.FC<IDrillDialogShareDropdownProps>
                         items={items}
                         className={"s-drill-modal-export-options"}
                         itemClassName={itemClassName}
-                        InteractiveItemComponent={DrillModalExportMenuItem}
+                        InteractiveItem={DrillModalExportMenuItem}
                     />
                 )}
                 renderButton={(buttonRenderProps) => {
@@ -126,7 +126,7 @@ export const DrillDialogExportDropdown: React.FC<IDrillDialogShareDropdownProps>
     );
 };
 
-const DrillModalExportMenuItem: React.FC<UiMenuInteractiveItemProps<IMenuItemData>> = (props) => {
+const DrillModalExportMenuItem: React.FC<IUiMenuInteractiveItemProps<IMenuItemData>> = (props) => {
     const { item } = props;
 
     const tooltip = item.data.disabledTooltip;

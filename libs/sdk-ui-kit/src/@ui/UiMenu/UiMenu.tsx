@@ -52,7 +52,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
         items,
         controlType,
         setControlType,
-        MenuHeaderComponent,
+        MenuHeader,
         ItemComponent,
         makeItemId,
         shownCustomContentItemId,
@@ -78,7 +78,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
                     </div>
                 ) : (
                     <>
-                        <MenuHeaderComponent />
+                        <MenuHeader />
                         <div
                             className={e("items-container")}
                             ref={itemsContainerRef as React.MutableRefObject<HTMLDivElement>}

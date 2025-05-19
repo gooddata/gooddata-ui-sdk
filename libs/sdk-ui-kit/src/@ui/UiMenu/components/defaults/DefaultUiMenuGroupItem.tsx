@@ -3,7 +3,7 @@
 import React from "react";
 import { e } from "../../menuBem.js";
 import { ShortenedText } from "../../../../ShortenedText/index.js";
-import { IUiMenuItemData, UiMenuGroupItemProps } from "../../types.js";
+import { IUiMenuItemData, IUiMenuGroupItemProps } from "../../types.js";
 import { typedUiMenuContextStore } from "../../context.js";
 import { SeparatorLine } from "../../../../SeparatorLine/SeparatorLine.js";
 /**
@@ -11,7 +11,7 @@ import { SeparatorLine } from "../../../../SeparatorLine/SeparatorLine.js";
  */
 export function DefaultUiMenuGroupItem<T extends IUiMenuItemData = object>({
     item,
-}: UiMenuGroupItemProps<T>): React.ReactNode {
+}: IUiMenuGroupItemProps<T>): React.ReactNode {
     const { createSelector, useContextStore } = typedUiMenuContextStore<T>();
     const selector = createSelector((ctx) => ({
         makeItemId: ctx.makeItemId,

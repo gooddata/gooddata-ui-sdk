@@ -1,22 +1,22 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
 import { typedUiMenuContextStore } from "../context.js";
-import { UiMenuItemProps, IUiMenuItemData } from "../types.js";
+import { IUiMenuItemProps, IUiMenuItemData } from "../types.js";
 
 export const ItemComponent = React.memo(function ItemComponent<T extends IUiMenuItemData = object>({
     item,
-}: UiMenuItemProps<T>) {
+}: IUiMenuItemProps<T>) {
     const {
         InteractiveItemWrapperComponent,
         StaticItemComponent,
         GroupItemComponent,
         ContentItemWrapperComponent,
     } = typedUiMenuContextStore<T>().useContextStore((ctx) => ({
-        InteractiveItemWrapperComponent: ctx.InteractiveItemWrapperComponent,
-        StaticItemComponent: ctx.StaticItemComponent,
-        GroupItemComponent: ctx.GroupItemComponent,
-        ContentItemComponent: ctx.ContentItemComponent,
-        ContentItemWrapperComponent: ctx.ContentItemWrapperComponent,
+        InteractiveItemWrapperComponent: ctx.InteractiveItemWrapper,
+        StaticItemComponent: ctx.StaticItem,
+        GroupItemComponent: ctx.GroupItem,
+        ContentItemComponent: ctx.ContentItem,
+        ContentItemWrapperComponent: ctx.ContentItemWrapper,
     }));
 
     if (item.type === "interactive") {

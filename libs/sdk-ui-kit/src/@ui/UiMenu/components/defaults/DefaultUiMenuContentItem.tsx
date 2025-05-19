@@ -3,7 +3,7 @@
 import React from "react";
 import cx from "classnames";
 import { e } from "../../menuBem.js";
-import { UiMenuContentItemProps, UiMenuContentItemWrapperProps, IUiMenuItemData } from "../../types.js";
+import { IUiMenuContentItemProps, IUiMenuContentItemWrapperProps, IUiMenuItemData } from "../../types.js";
 import { typedUiMenuContextStore } from "../../context.js";
 import { ShortenedText } from "../../../../ShortenedText/index.js";
 /**
@@ -12,7 +12,7 @@ import { ShortenedText } from "../../../../ShortenedText/index.js";
  */
 export const DefaultUiMenuContentItemWrapper = React.memo(function DefaultUiMenuContentItemWrapper<
     T extends IUiMenuItemData = object,
->({ item }: UiMenuContentItemWrapperProps<T>): React.ReactElement {
+>({ item }: IUiMenuContentItemWrapperProps<T>): React.ReactElement {
     const { useContextStore, createSelector } = typedUiMenuContextStore<T>();
     const selector = createSelector((ctx) => ({
         onSelect: ctx.onSelect,
@@ -21,7 +21,7 @@ export const DefaultUiMenuContentItemWrapper = React.memo(function DefaultUiMenu
         setFocusedId: ctx.setFocusedId,
         makeItemId: ctx.makeItemId,
         itemClassName: ctx.itemClassName,
-        ContentItemComponent: ctx.ContentItemComponent,
+        ContentItemComponent: ctx.ContentItem,
         isFocused: ctx.focusedItem?.id === item.id,
     }));
 
@@ -72,7 +72,7 @@ export const DefaultUiMenuContentItemWrapper = React.memo(function DefaultUiMenu
             role="menuitem"
             aria-haspopup="dialog" // TODO INE: make popup type configurable
             className={classNames}
-            onClick={handleSelect}
+            tabIndex={-1}
             aria-disabled={item.isDisabled}
             id={makeItemId(item)}
             onMouseMove={handleMouseFocus}
@@ -89,7 +89,7 @@ export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>({
     item,
     isFocused,
     onSelect,
-}: UiMenuContentItemProps<T>): React.ReactNode {
+}: IUiMenuContentItemProps<T>): React.ReactNode {
     return (
         <div
             className={e("item", {

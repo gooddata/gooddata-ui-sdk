@@ -53,7 +53,6 @@ export type IUiMenuContentItem<T extends IUiMenuItemData = object> = {
     component: React.ComponentType<{
         onBack?: () => void;
         onClose?: () => void;
-        menuCtxData?: T["content"];
     }>;
 };
 
@@ -76,28 +75,28 @@ export type IUiMenuFocusableItem<T extends IUiMenuItemData = object> =
 /**
  * @internal
  */
-export interface UiMenuItemProps<T extends IUiMenuItemData = object> {
+export interface IUiMenuItemProps<T extends IUiMenuItemData = object> {
     item: IUiMenuItem<T>;
 }
 
 /**
  * @internal
  */
-export interface UiMenuInteractiveItemWrapperProps<T extends IUiMenuItemData = object> {
+export interface IUiMenuInteractiveItemWrapperProps<T extends IUiMenuItemData = object> {
     item: IUiMenuInteractiveItem<T>;
 }
 
 /**
  * @internal
  */
-export interface UiMenuContentItemWrapperProps<T extends IUiMenuItemData = object> {
+export interface IUiMenuContentItemWrapperProps<T extends IUiMenuItemData = object> {
     item: IUiMenuContentItem<T>;
 }
 
 /**
  * @internal
  */
-export interface UiMenuInteractiveItemProps<T extends IUiMenuItemData = object> {
+export interface IUiMenuInteractiveItemProps<T extends IUiMenuItemData = object> {
     item: IUiMenuInteractiveItem<T>;
 
     isFocused: boolean;
@@ -108,21 +107,21 @@ export interface UiMenuInteractiveItemProps<T extends IUiMenuItemData = object> 
 /**
  * @internal
  */
-export interface UiMenuGroupItemProps<T extends IUiMenuItemData = object> {
+export interface IUiMenuGroupItemProps<T extends IUiMenuItemData = object> {
     item: IUiMenuGroupItem<T>;
 }
 
 /**
  * @internal
  */
-export interface UiMenuStaticItemProps<T extends IUiMenuItemData = object> {
+export interface IUiMenuStaticItemProps<T extends IUiMenuItemData = object> {
     item: IUiMenuStaticItem<T>;
 }
 
 /**
  * @internal
  */
-export interface UiMenuContentItemProps<T extends IUiMenuItemData = object> {
+export interface IUiMenuContentItemProps<T extends IUiMenuItemData = object> {
     item: IUiMenuContentItem<T>;
     isFocused: boolean;
     onSelect: () => void;
@@ -131,7 +130,7 @@ export interface UiMenuContentItemProps<T extends IUiMenuItemData = object> {
 /**
  * @internal
  */
-export interface UiMenuContentProps<T extends IUiMenuItemData = object> {
+export interface IUiMenuContentProps<T extends IUiMenuItemData = object> {
     item: IUiMenuContentItem<T>;
 }
 
@@ -144,14 +143,14 @@ export type IUiMenuControlType = "keyboard" | "mouse" | "unknown";
  * @internal
  */
 export interface IUiMenuPluggableComponents<T extends IUiMenuItemData = object> {
-    InteractiveItemComponent: React.ComponentType<UiMenuInteractiveItemProps<T>>;
-    InteractiveItemWrapperComponent: React.ComponentType<UiMenuInteractiveItemWrapperProps<T>>;
-    GroupItemComponent: React.ComponentType<UiMenuGroupItemProps<T>>;
-    StaticItemComponent: React.ComponentType<UiMenuStaticItemProps<T>>;
-    ContentItemWrapperComponent: React.ComponentType<UiMenuContentItemWrapperProps<T>>;
-    ContentItemComponent: React.ComponentType<UiMenuContentItemProps<T>>;
-    ContentComponent: React.ComponentType<UiMenuContentProps<T>>;
-    MenuHeaderComponent: React.ComponentType;
+    InteractiveItem: React.ComponentType<IUiMenuInteractiveItemProps<T>>;
+    InteractiveItemWrapper: React.ComponentType<IUiMenuInteractiveItemWrapperProps<T>>;
+    GroupItem: React.ComponentType<IUiMenuGroupItemProps<T>>;
+    StaticItem: React.ComponentType<IUiMenuStaticItemProps<T>>;
+    ContentItemWrapper: React.ComponentType<IUiMenuContentItemWrapperProps<T>>;
+    ContentItem: React.ComponentType<IUiMenuContentItemProps<T>>;
+    Content: React.ComponentType<IUiMenuContentProps<T>>;
+    MenuHeader: React.ComponentType;
 }
 
 /**
@@ -172,7 +171,7 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object>
     scrollToView: (element: HTMLElement | null) => void;
     makeItemId: (item: IUiMenuItem<T>) => string;
     itemClassName?: ((item: IUiMenuItem<T>) => string | undefined) | string;
-    ItemComponent: React.ComponentType<UiMenuItemProps<T>>;
+    ItemComponent: React.ComponentType<IUiMenuItemProps<T>>;
     menuComponentRef: React.RefObject<HTMLElement>;
     itemsContainerRef: React.RefObject<HTMLElement>;
     menuCtxData?: M;

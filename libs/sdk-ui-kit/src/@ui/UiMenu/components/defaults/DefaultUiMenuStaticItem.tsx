@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { IUiMenuItemData, UiMenuStaticItemProps } from "../../types.js";
+import { IUiMenuItemData, IUiMenuStaticItemProps } from "../../types.js";
 import { typedUiMenuContextStore } from "../../context.js";
 
 /**
@@ -10,7 +10,7 @@ import { typedUiMenuContextStore } from "../../context.js";
  */
 export const DefaultUiMenuStaticItem = React.memo(function DefaultUiMenuStaticItem<
     T extends IUiMenuItemData = object,
->({ item }: UiMenuStaticItemProps<T>): React.ReactElement {
+>({ item }: IUiMenuStaticItemProps<T>): React.ReactElement {
     const { itemClassName } = typedUiMenuContextStore<T>().useContextStore((ctx) => ({
         itemClassName: ctx.itemClassName,
     }));
