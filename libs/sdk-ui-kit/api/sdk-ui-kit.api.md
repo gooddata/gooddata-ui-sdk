@@ -1143,6 +1143,8 @@ export interface IButtonProps {
     // (undocumented)
     className?: string;
     // (undocumented)
+    dataId?: string;
+    // (undocumented)
     disabled?: boolean;
     // (undocumented)
     iconLeft?: string;

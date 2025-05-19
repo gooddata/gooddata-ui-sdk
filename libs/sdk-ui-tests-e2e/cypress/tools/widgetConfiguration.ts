@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { getTestClassByTitle } from "../support/commands/tools/classes";
 
@@ -32,7 +32,7 @@ export class WidgetConfiguration {
     }
 
     close() {
-        this.getElement().find(".s-configuration-panel-header-close-button").click();
+        this.getElement().find("[data-id='s-configuration-panel-header-close-button']").click();
         this.getElement().should("not.exist");
         return this;
     }

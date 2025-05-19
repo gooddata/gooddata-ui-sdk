@@ -22,6 +22,7 @@ export interface IButtonAccessibilityConfig
  */
 export interface IButtonProps {
     id?: string;
+    dataId?: string;
     className?: string;
     disabled?: boolean;
     tabIndex?: number;

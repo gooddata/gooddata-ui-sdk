@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import { Typography, Button } from "@gooddata/sdk-ui-kit";
@@ -23,6 +23,7 @@ export const PopupHeader: React.FC<IPopupHeaderProps> = ({ title, onGoBack, onCl
             <Button
                 className="gd-button-link gd-button-icon-only gd-icon-cross configuration-panel-header-close-button s-configuration-panel-header-close-button"
                 onClick={onClose}
+                dataId="s-configuration-panel-header-close-button"
             />
         </div>
     );

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 
@@ -21,6 +21,7 @@ export const DashboardInsightSubmenuContainer: React.FC<IDashboardInsightSubmenu
                 <Button
                     className="gd-button-link gd-button-icon-only gd-icon-cross configuration-panel-header-close-button s-configuration-panel-header-close-button"
                     onClick={props.onClose}
+                    dataId="s-configuration-panel-header-close-button"
                 />
             </div>
             <div className="configuration-panel-screen" style={screenWrapperStyle}>

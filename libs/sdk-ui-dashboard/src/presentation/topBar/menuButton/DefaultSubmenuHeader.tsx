@@ -47,6 +47,7 @@ export const DefaultSubmenuHeader: React.FC<IDefaultSubmenuHeaderProps> = ({
                 accessibilityConfig={{
                     ariaLabel: closeLabel,
                 }}
+                dataId="s-configuration-panel-header-close-button"
             />
         </div>
     );
