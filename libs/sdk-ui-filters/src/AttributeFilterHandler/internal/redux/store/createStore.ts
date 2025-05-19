@@ -1,5 +1,8 @@
 // (C) 2022-2025 GoodData Corporation
-import { Action, AnyAction, configureStore, Middleware } from "@reduxjs/toolkit";
+// in current version of @reduxjs/toolkit esm export are not defined
+// we need direct import from esm module otherwise import ar not node compatible
+// https://github.com/reduxjs/redux-toolkit/issues/1960
+import { Action, AnyAction, configureStore, Middleware } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import defaultReduxSaga from "redux-saga";
 import { actions, sliceReducer } from "./slice.js";
 import { rootSaga } from "./rootSaga.js";

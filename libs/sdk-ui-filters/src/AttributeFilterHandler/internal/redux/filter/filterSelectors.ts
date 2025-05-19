@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     IAttributeElements,
     IAttributeFilter,
@@ -8,7 +8,10 @@ import {
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
-import { createSelector } from "@reduxjs/toolkit";
+// in current version of @reduxjs/toolkit esm export are not defined
+// we need direct import from esm module otherwise import ar not node compatible
+// https://github.com/reduxjs/redux-toolkit/issues/1960
+import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import difference from "lodash/difference.js";
 import union from "lodash/union.js";
 import uniq from "lodash/uniq.js";
@@ -103,7 +106,9 @@ export const selectAttributeFilterElementsWithHiddenElementsResolved: FilterSele
                 ? union(selection, hiddenElements)
                 : difference(selection, hiddenElements);
 
-            return elementsForm === "uris" ? { uris: updatedSelection } : { values: updatedSelection };
+            return elementsForm === "uris"
+                ? { uris: updatedSelection as string[] }
+                : { values: updatedSelection as string[] };
         },
     );
 
@@ -127,7 +132,9 @@ export const selectAttributeFilterElementsToDisplayWithHiddenElementsResolved: F
                 .filter((element) => updatedSelection.find((selectionItem) => selectionItem === element.uri))
                 .map((element) => element.title);
             const uniqueTitles = uniq(selectedTitles);
-            return elementsForm === "uris" ? { uris: uniqueTitles } : { values: uniqueTitles };
+            return elementsForm === "uris"
+                ? { uris: uniqueTitles as string[] }
+                : { values: uniqueTitles as string[] };
         },
     );
 

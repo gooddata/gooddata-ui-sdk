@@ -1,5 +1,8 @@
-// (C) 2021-2023 GoodData Corporation
-import { createSelector } from "@reduxjs/toolkit";
+// (C) 2021-2025 GoodData Corporation
+// in current version of @reduxjs/toolkit esm export are not defined
+// we need direct import from esm module otherwise import ar not node compatible
+// https://github.com/reduxjs/redux-toolkit/issues/1960
+import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
 
