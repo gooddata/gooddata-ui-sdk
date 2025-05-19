@@ -683,8 +683,8 @@
         "comment": "Subject of the schedule email.",
         "limit": 0
     },
-    "dialogs.schedule.email.to.label": {
-        "value": "To",
+    "dialogs.schedule.email.recipients.label": {
+        "value": "Recipients",
         "comment": "Emails of the schedule email.",
         "limit": 0
     },
@@ -1295,17 +1295,17 @@
         "limit": 0
     },
     "widget.options.menu.XLSX": {
-        "value": "Formatted (XLSX)",
+        "value": "Formatted (.xlsx)",
         "comment": "Export to file with XLSX extension.",
         "limit": 0
     },
     "widget.options.menu.exportToCSV.formatted": {
-        "value": "Formatted (CSV)",
+        "value": "Formatted (.csv)",
         "comment": "Export to file with CSV extension.",
         "limit": 0
     },
     "widget.options.menu.exportToCSV.raw": {
-        "value": "Raw (CSV)",
+        "value": "Raw (.csv)",
         "comment": "Export to file with CSV extension.",
         "limit": 0
     },

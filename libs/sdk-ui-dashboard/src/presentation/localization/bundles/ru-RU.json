@@ -99,7 +99,7 @@
     "dialogs.schedule.email.repeats.types.weekly": "Еженедельно в: {day}",
     "dialogs.schedule.email.subject.label": "Тема:",
     "dialogs.schedule.email.time.label": "Первый раз:",
-    "dialogs.schedule.email.to.label": "Кому:",
+    "dialogs.schedule.email.recipients.label": "Получателей",
     "dialogs.schedule.email.message.placeholder": "Здравствуйте,\n\nВы получили запланированное электронное письмо. Вы можете посмотреть дашборд во вложении.",
     "dialogs.schedule.email.submit": "Запланировать",
     "dialogs.schedule.email.save": "Сохранить",

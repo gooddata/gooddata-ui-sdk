@@ -286,7 +286,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             >
                 {this.props.showLabel ? (
                     <label htmlFor="form.destination" className="gd-label">
-                        <FormattedMessage id="dialogs.schedule.email.to.label" />
+                        <FormattedMessage id="dialogs.schedule.email.recipients.label" />
                     </label>
                 ) : null}
                 <div ref={this.recipientRef} className="gd-input s-gd-recipients-value">
