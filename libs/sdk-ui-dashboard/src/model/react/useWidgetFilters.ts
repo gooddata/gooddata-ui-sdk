@@ -263,7 +263,7 @@ export function useWidgetFilters(
      * This temporary workaround should be replaced by fixing useWidgetFiltersImpl in a future update.
      */
     return useMemo(() => {
-        if (!widget || !insight || previousWidgetRef !== widget?.ref) {
+        if (!(widget || insight) || !areObjRefsEqual(previousWidgetRef, widget?.ref)) {
             return {
                 result: undefined,
                 status: "pending",

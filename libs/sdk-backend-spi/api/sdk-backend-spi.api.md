@@ -419,7 +419,7 @@ export interface IBracketExpressionToken {
 // @beta
 export interface ICancelable<T> {
     // (undocumented)
-    withSignal(signal: AbortSignal): T;
+    withSignal(signal: AbortSignal | undefined): T;
 }
 
 // @beta
