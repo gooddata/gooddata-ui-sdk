@@ -34,6 +34,7 @@ interface ICreateAlertProps {
     catalogAttributes: ICatalogAttribute[];
     catalogDateDatasets: ICatalogDateDataset[];
     separators?: ISeparators;
+    isExecutionTimestampMode?: boolean;
 }
 
 export const CreateAlert: React.FC<ICreateAlertProps> = ({
@@ -55,6 +56,7 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
     catalogAttributes,
     catalogDateDatasets,
     separators,
+    isExecutionTimestampMode,
 }) => {
     return (
         <EditAlert
@@ -77,6 +79,7 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
             catalogAttributes={catalogAttributes}
             catalogDateDatasets={catalogDateDatasets}
             separators={separators}
+            isExecutionTimestampMode={isExecutionTimestampMode}
         />
     );
 };
