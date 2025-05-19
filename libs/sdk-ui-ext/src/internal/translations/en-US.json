@@ -2093,6 +2093,11 @@
         "comment": "",
         "limit": 0
     },
+    "notifications.panel.triggers.dialog.truncatedValues": {
+        "value": "…and {count} more",
+        "comment": "",
+        "limit": 0
+    },
     "close": {
         "value": "Close",
         "comment": "Label of a button for closing a dialog window",
