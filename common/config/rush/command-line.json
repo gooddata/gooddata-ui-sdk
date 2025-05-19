@@ -195,6 +195,15 @@
       "summary": "Publish SDK to local files",
       "shellCommand": "node common/scripts/publish-local.js",
       "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "bulk",
+      "name": "validate-esm",
+      "summary": "This command will validate ESM compatibility of all projects",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true,
+      "ignoreMissingScript": true,
+      "ignoreDependencyOrder": true
     }
     // {
     //   /**
