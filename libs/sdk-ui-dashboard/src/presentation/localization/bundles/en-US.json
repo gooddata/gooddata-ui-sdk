@@ -3117,11 +3117,6 @@
         "comment": "",
         "limit": 0
     },
-    "insightAlert.config.compare_with": {
-        "value": "compared with",
-        "comment": "This is a part of the sentence 'When {metric} {comparisonOperator} {value} compared with {comparisonType}'",
-        "limit": 0
-    },
     "insightAlert.config.compare_with_sp": {
         "value": "same period previous year",
         "comment": "",

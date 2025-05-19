@@ -620,7 +620,6 @@
     "insightAlert.config.noAlertMeasures.description": "アラートを有効化するには基準を追加してください。",
     "insightAlert.config.filters": "{n}個の{n, plural, one {フィルター} other {フィルター}}を使用中",
     "insightAlert.config.filters.info": "アラートはダッシュボードのフィルターを作成時に設定されたものとして尊重します。{spacer}比較のために使用する期間を変更するには、日付フィルタを調整してください。",
-    "insightAlert.config.compare_with": "比較対象：",
     "insightAlert.config.compare_with_sp": "前年同時期",
     "insightAlert.config.compare_with_pp": "前期",
     "widget.error.missing_insight.message": "利用可能なビジュュアライゼーションがありません",

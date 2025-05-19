@@ -49,6 +49,7 @@ import {
     IMeasureFormatMap,
 } from "../../../../alerting/DefaultAlertingDialog/utils/getters.js";
 import { translateGranularity } from "../../../../alerting/DefaultAlertingDialog/utils/granularity.js";
+import { isChangeOrDifferenceOperator } from "../../../../alerting/DefaultAlertingDialog/utils/guards.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
 
@@ -295,23 +296,30 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                                 }),
                             }}
                         />
-                        <AlertComparisonPeriodSelect
-                            id="alert.comparison"
-                            measure={selectedMeasure}
-                            alert={updatedAlert}
-                            selectedComparison={selectedComparator?.comparator}
-                            onComparisonChange={(comparisonType) => {
-                                changeComparisonType(
-                                    selectedMeasure,
-                                    selectedRelativeOperator,
-                                    comparisonType,
-                                );
-                            }}
-                            overlayPositionType={overlayPositionType}
-                            canManageComparison={canManageComparison}
-                        />
+                        {!updatedAlert || !isChangeOrDifferenceOperator(updatedAlert.alert) ? null : (
+                            <div style={{ marginTop: "1rem" }}>
+                                <label htmlFor="alert.comparison">
+                                    <FormattedMessage id="insightAlert.config.comparison" />
+                                </label>
+                                <AlertComparisonPeriodSelect
+                                    id="alert.comparison"
+                                    measure={selectedMeasure}
+                                    alert={updatedAlert}
+                                    selectedComparison={selectedComparator?.comparator}
+                                    onComparisonChange={(comparisonType) => {
+                                        changeComparisonType(
+                                            selectedMeasure,
+                                            selectedRelativeOperator,
+                                            comparisonType,
+                                        );
+                                    }}
+                                    overlayPositionType={overlayPositionType}
+                                    canManageComparison={canManageComparison}
+                                />
+                            </div>
+                        )}
                         {destinations.length > 1 && (
-                            <>
+                            <div style={{ marginTop: "1rem" }}>
                                 <label
                                     htmlFor="alert.destination"
                                     className="gd-edit-alert__destination-label"
@@ -325,7 +333,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                                     destinations={destinations}
                                     overlayPositionType={overlayPositionType}
                                 />
-                            </>
+                            </div>
                         )}
                         <RecipientsSelect
                             id="alert.recipients"

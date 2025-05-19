@@ -620,7 +620,6 @@
     "insightAlert.config.noAlertMeasures.description": "請添加指標以啟用警報。",
     "insightAlert.config.filters": "使用{n}{n, plural, one {過濾器} other {過濾器}}",
     "insightAlert.config.filters.info": "警報遵循喺創建時設置嘅控制面板篩選器。{spacer}要修改用于比較嘅時間段，請調整日期篩選條件。",
-    "insightAlert.config.compare_with": "相比",
     "insightAlert.config.compare_with_sp": "上年同期",
     "insightAlert.config.compare_with_pp": "上一期",
     "widget.error.missing_insight.message": "無可用的可視化",

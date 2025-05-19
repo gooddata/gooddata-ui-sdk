@@ -620,7 +620,6 @@
     "insightAlert.config.noAlertMeasures.description": "Please add a metric to enable alerting.",
     "insightAlert.config.filters": "using {n} {n, plural, one {filter} other {filters}}",
     "insightAlert.config.filters.info": "Alerts respect the dashboard filters as set at the time of their creation.{spacer}To modify the time period used for comparison, adjust the date filter.",
-    "insightAlert.config.compare_with": "compared to",
     "insightAlert.config.compare_with_sp": "Same period previous year",
     "insightAlert.config.compare_with_pp": "Previous period",
     "widget.error.missing_insight.message": "No visualisation available",
