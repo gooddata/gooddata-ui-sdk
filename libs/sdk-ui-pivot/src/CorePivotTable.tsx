@@ -252,7 +252,9 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
     private refreshAbortController = (): void => {
         if (this.props.config?.enableExecutionCancelling) {
-            this.abortController?.abort();
+            if (this.state.isLoading || !this.state.readyToRender) {
+                this.abortController?.abort();
+            }
             this.abortController = new AbortController();
         }
     };
@@ -461,7 +463,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             }
         }
 
-        return !this.internal.table.isMatchingExecution(this.props.execution);
+        return prevProps.execution.fingerprint() !== this.props.execution.fingerprint();
     }
 
     /**

@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 import isEqual from "lodash/isEqual.js";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import {
     useDashboardSelector,
     useDashboardDispatch,
@@ -46,6 +46,7 @@ export const useDashboardInsightDrills = ({
     const disableDrillDownOnWidget = insight.insight.properties.controls?.disableDrillDown;
     const catalogIsLoaded = useDashboardSelector(selectCatalogIsLoaded);
     const accessibleDashboardsLoaded = useDashboardSelector(selectAccessibleDashboardsLoaded);
+    const [isLoadingDrillTargets, setIsLoadingDrillTargets] = useState(true);
 
     const onPushData = useCallback(
         (data: IPushData): void => {
@@ -56,6 +57,10 @@ export const useDashboardInsightDrills = ({
 
             if (targets && !isEqual(drillTargets?.availableDrillTargets, targets)) {
                 dispatch(addDrillTargets(widget.ref, targets));
+            }
+
+            if ("availableDrillTargets" in data) {
+                setIsLoadingDrillTargets(false);
             }
         },
         [drillTargets, widget.ref, isDrillFromAttributeEnabled, dispatch],
@@ -102,7 +107,7 @@ export const useDashboardInsightDrills = ({
         : undefined;
 
     // disable all drills until necessary items are loaded
-    const drillActive = catalogIsLoaded && accessibleDashboardsLoaded;
+    const drillActive = catalogIsLoaded && accessibleDashboardsLoaded && !isLoadingDrillTargets;
     return {
         drillableItems: drillActive ? drillableItems : [],
         onPushData,
