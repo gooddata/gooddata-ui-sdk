@@ -4,7 +4,7 @@ import { Provider as StoreProvider } from "react-redux";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BackendProvider, useBackendStrict, useWorkspaceStrict, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { OverlayController, OverlayControllerProvider, useOverlayController } from "@gooddata/sdk-ui-kit";
-import { IColorPalette } from "@gooddata/sdk-model";
+import { CatalogItem, IColorPalette } from "@gooddata/sdk-model";
 
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
@@ -22,6 +22,7 @@ export type GenAIChatDialogProps = {
     onClose: () => void;
     eventHandlers?: ChatEventHandler[];
     colorPalette?: IColorPalette;
+    catalogItems?: CatalogItem[];
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
 };
 
@@ -37,6 +38,7 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
     isOpen,
     onClose,
     eventHandlers,
+    catalogItems,
     colorPalette,
     onLinkClick,
 }) => {
@@ -75,6 +77,7 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
                                 allowCreateVisualization={true}
                                 allowNativeLinks={true}
                                 linkHandler={onLinkClick}
+                                catalogItems={catalogItems}
                             >
                                 <GenAIChatOverlay onClose={onClose} />
                             </ConfigProvider>

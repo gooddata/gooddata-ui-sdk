@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IWorkspaceCatalog,
     IWorkspaceCatalogAvailableItemsFactory,
@@ -60,6 +60,10 @@ export abstract class DecoratedWorkspaceCatalogFactory implements IWorkspaceCata
 
     public withGroups(loadGroups: boolean): IWorkspaceCatalogFactory {
         return this.createNew(this.decorated.withGroups(loadGroups));
+    }
+
+    public withSignal(signal: AbortSignal): IWorkspaceCatalogFactory {
+        return this.createNew(this.decorated.withSignal(signal));
     }
 
     public async load(): Promise<IWorkspaceCatalog> {

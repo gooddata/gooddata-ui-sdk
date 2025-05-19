@@ -8,6 +8,7 @@ import { AxiosInstance } from 'axios';
 import { AxiosPromise } from 'axios';
 import { AxiosRequestConfig } from 'axios';
 import { AxiosResponse } from 'axios';
+import { GenericAbortSignal } from 'axios';
 import { IAttributeFilterConfigs } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
@@ -16841,6 +16842,7 @@ export type MetadataGetEntitiesFn<T extends MetadataGetEntitiesResult, P extends
 // @internal
 export type MetadataGetEntitiesOptions = {
     headers?: object;
+    signal?: GenericAbortSignal;
     params?: {
         page?: number;
         size?: number;

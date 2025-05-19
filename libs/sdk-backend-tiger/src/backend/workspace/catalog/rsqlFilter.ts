@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { isUriRef, ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 import { MetadataGetEntitiesWorkspaceParams } from "@gooddata/api-client-tiger";
@@ -30,7 +30,15 @@ export function tagsToRsqlFilter({
         rsqlFilterParts.push(`tags=out=(${excludeParsedTagsIdentifiers.join(",")})`);
     }
 
-    return rsqlFilterParts.join(";");
+    return rsqlAnd(...rsqlFilterParts);
+}
+
+export function searchToRsqlFilter({ search }: { search?: string }): string | undefined {
+    if (search) {
+        const escapedSearch = search.replace(/"/g, '\\"');
+        return rsqlOr(`title=containsic="${escapedSearch}"`, `id=containsic="${escapedSearch}"`);
+    }
+    return undefined;
 }
 
 export function addRsqlFilterToParams<T extends MetadataGetEntitiesWorkspaceParams>(
@@ -45,6 +53,14 @@ export function addRsqlFilterToParams<T extends MetadataGetEntitiesWorkspacePara
         ...params,
         filter,
     };
+}
+
+export function rsqlAnd(...args: (string | undefined)[]) {
+    return args.filter(Boolean).join(";");
+}
+
+export function rsqlOr(...args: (string | undefined)[]) {
+    return args.filter(Boolean).join(",");
 }
 
 function tagsToIdentifiers(tags: ObjRef[]): string[] {

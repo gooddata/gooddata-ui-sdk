@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IWorkspaceCatalogFactoryOptions,
     IWorkspaceCatalog,
@@ -44,6 +44,7 @@ export class RecordedCatalogFactory implements IWorkspaceCatalogFactory {
             includeTags: [],
             loadGroups: true,
         },
+        private readonly signal?: AbortSignal,
     ) {}
 
     public forDataset = (dataset: ObjRef): IWorkspaceCatalogFactory => {
@@ -76,13 +77,23 @@ export class RecordedCatalogFactory implements IWorkspaceCatalogFactory {
             ...this.options,
             ...options,
         };
-        return new RecordedCatalogFactory(this.workspace, this.recordings, this.config, newOptions);
+        return new RecordedCatalogFactory(
+            this.workspace,
+            this.recordings,
+            this.config,
+            newOptions,
+            this.signal,
+        );
     };
 
     public withGroups(loadGroups: boolean): IWorkspaceCatalogFactory {
         return this.withOptions({
             loadGroups,
         });
+    }
+
+    public withSignal(signal: AbortSignal): IWorkspaceCatalogFactory {
+        return new RecordedCatalogFactory(this.workspace, this.recordings, this.config, this.options, signal);
     }
 
     public load = async (): Promise<IWorkspaceCatalog> => {
@@ -176,6 +187,7 @@ class RecordedAvailableCatalogFactory implements IWorkspaceCatalogAvailableItems
             includeTags: [],
             loadGroups: true,
         },
+        public signal?: AbortSignal,
     ) {}
 
     // eslint-disable-next-line sonarjs/no-identical-functions
@@ -220,6 +232,18 @@ class RecordedAvailableCatalogFactory implements IWorkspaceCatalogAvailableItems
             this.groups,
             this.items,
             newOptions,
+            this.signal,
+        );
+    };
+
+    public withSignal = (signal: AbortSignal): IWorkspaceCatalogAvailableItemsFactory => {
+        return new RecordedAvailableCatalogFactory(
+            this.workspace,
+            this.config,
+            this.groups,
+            this.items,
+            this.options,
+            signal,
         );
     };
 

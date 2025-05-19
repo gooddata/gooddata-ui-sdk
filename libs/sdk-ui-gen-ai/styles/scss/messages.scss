@@ -226,11 +226,11 @@
         width: 40px;
 
         svg path {
-            fill: color-mix(in sRGB, kit-variables.$gd-palette-primary-base, transparent 20%);
+            fill: color-mix(in sRGB, kit-variables.$gd-color-white, transparent 20%);
         }
 
         &:hover svg path {
-            fill: kit-variables.$gd-palette-primary-base;
+            fill: kit-variables.$gd-color-white;
         }
     }
 

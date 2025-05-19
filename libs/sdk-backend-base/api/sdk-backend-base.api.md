@@ -537,6 +537,8 @@ export abstract class DecoratedWorkspaceCatalogFactory implements IWorkspaceCata
     // (undocumented)
     withOptions(options: IWorkspaceCatalogFactoryOptions): IWorkspaceCatalogFactory;
     // (undocumented)
+    withSignal(signal: AbortSignal): IWorkspaceCatalogFactory;
+    // (undocumented)
     workspace: string;
     // (undocumented)
     protected readonly wrapper: WorkspaceCatalogWrapper;

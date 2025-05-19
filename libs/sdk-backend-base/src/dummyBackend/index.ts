@@ -541,6 +541,7 @@ class DummyWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             includeTags: [],
             loadGroups: true,
         },
+        public signal?: AbortSignal,
     ) {}
 
     public withOptions(options: Partial<IWorkspaceCatalogFactoryOptions>): IWorkspaceCatalogFactory {
@@ -548,7 +549,7 @@ class DummyWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             ...this.options,
             ...options,
         };
-        return new DummyWorkspaceCatalogFactory(this.workspace, newOptions);
+        return new DummyWorkspaceCatalogFactory(this.workspace, newOptions, this.signal);
     }
 
     public forDataset(dataset: ObjRef): IWorkspaceCatalogFactory {
@@ -579,6 +580,10 @@ class DummyWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         return this.withOptions({
             loadGroups,
         });
+    }
+
+    public withSignal(signal: AbortSignal): IWorkspaceCatalogFactory {
+        return new DummyWorkspaceCatalogFactory(this.workspace, this.options, signal);
     }
 
     public load(): Promise<IWorkspaceCatalog> {
@@ -636,6 +641,7 @@ class DummyWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCatalogAva
             loadGroups: false,
             types: [],
         },
+        public signal?: AbortSignal,
     ) {}
 
     public excludeTags(excludeTags: ObjRef[]): IWorkspaceCatalogAvailableItemsFactory {
@@ -694,7 +700,11 @@ class DummyWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCatalogAva
             ...this.options,
             ...options,
         };
-        return new DummyWorkspaceCatalogAvailableItemsFactory(this.workspace, newOptions);
+        return new DummyWorkspaceCatalogAvailableItemsFactory(this.workspace, newOptions, this.signal);
+    }
+
+    public withSignal(signal: AbortSignal): IWorkspaceCatalogAvailableItemsFactory {
+        return new DummyWorkspaceCatalogAvailableItemsFactory(this.workspace, this.options, signal);
     }
 }
 

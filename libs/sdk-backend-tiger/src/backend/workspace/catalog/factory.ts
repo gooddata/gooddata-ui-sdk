@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IWorkspaceCatalog,
     IWorkspaceCatalogFactory,
@@ -17,16 +17,18 @@ import {
     isCatalogMeasure,
     IGroupableCatalogItemBase,
 } from "@gooddata/sdk-model";
-import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { convertFact, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter.js";
-import { TigerWorkspaceCatalog } from "./catalog.js";
-import { loadAttributesAndDateDatasetsAndHierarchies } from "./datasetLoader.js";
+import { MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
 import flatten from "lodash/flatten.js";
 import flatMap from "lodash/flatMap.js";
 import uniqBy from "lodash/uniqBy.js";
 import sortBy from "lodash/sortBy.js";
-import { MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
-import { addRsqlFilterToParams, tagsToRsqlFilter } from "./rsqlFilter.js";
+
+import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { convertFact, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter.js";
+
+import { loadAttributesAndDateDatasetsAndHierarchies } from "./datasetLoader.js";
+import { addRsqlFilterToParams, rsqlAnd, searchToRsqlFilter, tagsToRsqlFilter } from "./rsqlFilter.js";
+import { TigerWorkspaceCatalog } from "./catalog.js";
 
 export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(
@@ -38,14 +40,19 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             includeTags: [],
             loadGroups: true,
         },
+        private readonly signal?: AbortSignal,
     ) {}
+
+    public withSignal(signal: AbortSignal): IWorkspaceCatalogFactory {
+        return new TigerWorkspaceCatalogFactory(this.authCall, this.workspace, this.options, signal);
+    }
 
     public withOptions = (options: Partial<IWorkspaceCatalogFactoryOptions>): IWorkspaceCatalogFactory => {
         const newOptions = {
             ...this.options,
             ...options,
         };
-        return new TigerWorkspaceCatalogFactory(this.authCall, this.workspace, newOptions);
+        return new TigerWorkspaceCatalogFactory(this.authCall, this.workspace, newOptions, this.signal);
     };
 
     public forDataset = (dataset: ObjRef): IWorkspaceCatalogFactory => {
@@ -131,26 +138,33 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         loadAttributeHierarchies: boolean,
     ): Promise<CatalogItem[]> => {
         const rsqlTagFilter = tagsToRsqlFilter(this.options);
+        const rsqlSearchFilter = searchToRsqlFilter(this.options);
 
         return this.authCall((client) =>
             loadAttributesAndDateDatasetsAndHierarchies(
                 client,
                 this.workspace,
-                rsqlTagFilter,
+                rsqlAnd(rsqlTagFilter, rsqlSearchFilter),
                 loadAttributes,
                 loadDateDataSets,
                 loadAttributeHierarchies,
+                this.signal,
             ),
         );
     };
 
     private loadMeasures = async (): Promise<ICatalogMeasure[]> => {
         const rsqlTagFilter = tagsToRsqlFilter(this.options);
-        const params = addRsqlFilterToParams({ workspaceId: this.workspace }, rsqlTagFilter);
+        const rsqlSearchFilter = searchToRsqlFilter(this.options);
+        const params = addRsqlFilterToParams(
+            { workspaceId: this.workspace },
+            rsqlAnd(rsqlTagFilter, rsqlSearchFilter),
+        );
 
         const measures = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesMetrics, params, {
                 headers: ValidateRelationsHeader,
+                signal: this.signal,
             })
                 .then(MetadataUtilities.mergeEntitiesResults)
                 .then(MetadataUtilities.filterValidEntities);
@@ -161,12 +175,16 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
     private loadFacts = async (): Promise<ICatalogFact[]> => {
         const rsqlTagFilter = tagsToRsqlFilter(this.options);
-        const params = addRsqlFilterToParams({ workspaceId: this.workspace }, rsqlTagFilter);
+        const rsqlSearchFilter = searchToRsqlFilter(this.options);
+        const params = addRsqlFilterToParams(
+            { workspaceId: this.workspace },
+            rsqlAnd(rsqlTagFilter, rsqlSearchFilter),
+        );
 
         const facts = await this.authCall((client) => {
-            return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesFacts, params).then(
-                MetadataUtilities.mergeEntitiesResults,
-            );
+            return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesFacts, params, {
+                signal: this.signal,
+            }).then(MetadataUtilities.mergeEntitiesResults);
         });
 
         return facts.data.map(convertFact);

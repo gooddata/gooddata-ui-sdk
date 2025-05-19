@@ -161,6 +161,7 @@ export async function loadAttributesAndDateDatasetsAndHierarchies(
     loadAttributes?: boolean,
     loadDateDatasets?: boolean,
     loadAttributeHierarchies?: boolean,
+    signal?: AbortSignal,
 ): Promise<CatalogItem[]> {
     const includeObjects: EntitiesApiGetAllEntitiesAttributesRequest["include"] = ["labels", "defaultView"];
     if (loadDateDatasets) {
@@ -178,6 +179,9 @@ export async function loadAttributesAndDateDatasetsAndHierarchies(
         client,
         client.entities.getAllEntitiesAttributes,
         params,
+        {
+            signal,
+        },
     ).then(MetadataUtilities.mergeEntitiesResults);
 
     const catalogItems: CatalogItem[] = [];

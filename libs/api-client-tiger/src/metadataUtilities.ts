@@ -1,6 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 
-import { AxiosPromise } from "axios";
+import { AxiosPromise, GenericAbortSignal } from "axios";
 import flatMap from "lodash/flatMap.js";
 import merge from "lodash/merge.js";
 import uniqBy from "lodash/uniqBy.js";
@@ -96,6 +96,7 @@ export type MetadataGetEntitiesParams =
  */
 export type MetadataGetEntitiesOptions = {
     headers?: object;
+    signal?: GenericAbortSignal;
     params?: {
         page?: number;
         size?: number;

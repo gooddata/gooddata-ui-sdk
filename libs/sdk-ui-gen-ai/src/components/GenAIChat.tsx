@@ -2,7 +2,7 @@
 import React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BackendProvider, useBackendStrict, useWorkspaceStrict, WorkspaceProvider } from "@gooddata/sdk-ui";
-import { IColorPalette } from "@gooddata/sdk-model";
+import { CatalogItem, IColorPalette } from "@gooddata/sdk-model";
 import { Provider as StoreProvider } from "react-redux";
 
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
@@ -34,6 +34,10 @@ export interface GenAIChatProps {
      */
     colorPalette?: IColorPalette;
     /**
+     * Catalog items to use for the chat UI.
+     */
+    catalogItems?: CatalogItem[];
+    /**
      * Event handlers to subscribe to chat events.
      */
     eventHandlers?: ChatEventHandler[];
@@ -53,6 +57,7 @@ export const GenAIChat: React.FC<GenAIChatProps> = ({
     workspace,
     locale,
     colorPalette,
+    catalogItems,
     eventHandlers,
     onLinkClick,
 }) => {
@@ -72,6 +77,7 @@ export const GenAIChat: React.FC<GenAIChatProps> = ({
                             allowCreateVisualization={false}
                             allowNativeLinks={false}
                             linkHandler={onLinkClick}
+                            catalogItems={catalogItems}
                         >
                             <GenAIChatWrapper />
                         </ConfigProvider>

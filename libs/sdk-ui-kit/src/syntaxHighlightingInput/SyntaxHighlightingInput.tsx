@@ -3,6 +3,8 @@ import React from "react";
 import cx from "classnames";
 import { EditorView } from "@codemirror/view";
 import { Extension } from "@codemirror/state";
+import { CompletionSource } from "@codemirror/autocomplete";
+
 import { useCodemirror } from "./hooks/useCodemirror.js";
 
 /**
@@ -10,15 +12,16 @@ import { useCodemirror } from "./hooks/useCodemirror.js";
  */
 export interface ISyntaxHighlightingInputProps {
     value: string;
+    label?: string;
+    disabled?: boolean;
+    className?: string;
+    placeholder?: string;
+    extensions?: Extension[];
     onChange: (value: string) => void;
     onApi?: (view: EditorView | null) => void;
     onCursor?: (from: number, to: number) => void;
     onKeyDown?: (event: KeyboardEvent, view: EditorView) => boolean;
-    placeholder?: string;
-    label?: string;
-    extensions?: Extension[];
-    className?: string;
-    disabled?: boolean;
+    onCompletion?: CompletionSource;
 }
 
 /**
@@ -33,6 +36,7 @@ export const SyntaxHighlightingInput: React.FC<ISyntaxHighlightingInputProps> = 
         onChange,
         onCursor,
         onKeyDown,
+        onCompletion,
         className,
         extensions = [],
         disabled,
@@ -48,6 +52,7 @@ export const SyntaxHighlightingInput: React.FC<ISyntaxHighlightingInputProps> = 
         onApi,
         onChange,
         onKeyDown,
+        onCompletion,
     });
 
     return <div className={cx(className, "gd-input-syntax-highlighting-input")} ref={editorRef} />;

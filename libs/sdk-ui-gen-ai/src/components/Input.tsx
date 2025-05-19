@@ -1,19 +1,24 @@
 // (C) 2024-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { SendIcon } from "./SendIcon.js";
 import { connect } from "react-redux";
-import { makeTextContents, makeUserMessage } from "../model.js";
-import { asyncProcessSelector, newMessageAction, RootState } from "../store/index.js";
 import { defineMessages, injectIntl } from "react-intl";
 import { WrappedComponentProps } from "react-intl/src/components/injectIntl.js";
 import { SyntaxHighlightingInput, Button } from "@gooddata/sdk-ui-kit";
+import { CatalogItem } from "@gooddata/sdk-model";
 import { EditorView } from "@codemirror/view";
+
+import { asyncProcessSelector, newMessageAction, RootState } from "../store/index.js";
+import { makeTextContents, makeUserMessage } from "../model.js";
+
+import { useCompletion } from "./completion/index.js";
+import { SendIcon } from "./SendIcon.js";
 
 type InputStateProps = {
     isBusy: boolean;
     isEvaluating: boolean;
     autofocus?: boolean;
+    catalogItems?: CatalogItem[];
 };
 
 type InputDispatchProps = {
@@ -38,9 +43,12 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
     newMessage,
     autofocus = false,
     intl,
+    catalogItems,
 }) => {
     const [value, setValue] = React.useState("");
     const [editorApi, setApi] = React.useState<EditorView | null>(null);
+
+    const { onCompletion } = useCompletion(catalogItems);
 
     // Force focus when autofocus is enables on the first mount, right after the initial state is loaded
     const forceFocusOnce = React.useRef<boolean>(autofocus);
@@ -83,6 +91,7 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
                 onApi={setApi}
                 onChange={setValue}
                 onKeyDown={handleKeyDown}
+                onCompletion={onCompletion}
                 disabled={isBusy}
             />
             <Button

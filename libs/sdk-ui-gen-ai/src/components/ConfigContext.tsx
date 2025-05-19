@@ -1,10 +1,12 @@
 // (C) 2024-2025 GoodData Corporation
 import * as React from "react";
+import { CatalogItem } from "@gooddata/sdk-model";
 
 export type ConfigContext = {
     allowCreateVisualization: boolean;
     allowNativeLinks: boolean;
     linkHandler?: (linkClickEvent: LinkHandlerEvent) => void;
+    catalogItems?: CatalogItem[];
 };
 
 /**
@@ -29,14 +31,16 @@ export const ConfigProvider: React.FC<React.PropsWithChildren<ConfigContext>> = 
     allowCreateVisualization,
     allowNativeLinks,
     linkHandler,
+    catalogItems,
 }) => {
     const value = React.useMemo(
         () => ({
             allowCreateVisualization,
             allowNativeLinks,
             linkHandler,
+            catalogItems,
         }),
-        [allowCreateVisualization, allowNativeLinks, linkHandler],
+        [allowCreateVisualization, allowNativeLinks, linkHandler, catalogItems],
     );
 
     return <configContext.Provider value={value}>{children}</configContext.Provider>;

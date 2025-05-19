@@ -3172,6 +3172,9 @@ importers:
 
   ../../libs/sdk-ui-gen-ai:
     dependencies:
+      '@codemirror/autocomplete':
+        specifier: ^6.18.6
+        version: 6.18.6
       '@codemirror/view':
         specifier: ~6.36.4
         version: 6.36.5

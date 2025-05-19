@@ -4,6 +4,7 @@ import { Compartment, EditorSelection, EditorState, Extension, Transaction } fro
 import { EditorView, keymap, placeholder, ViewUpdate } from "@codemirror/view";
 import { bracketMatching, HighlightStyle, syntaxHighlighting } from "@codemirror/language";
 import { defaultKeymap, historyKeymap } from "@codemirror/commands";
+import { autocompletion, CompletionSource, completionStatus } from "@codemirror/autocomplete";
 import { tags as t } from "@lezer/highlight";
 
 // Custom syntax highlighting
@@ -26,6 +27,7 @@ export interface IUseCodemirrorProps {
     onChange: (value: string) => void;
     onApi?: (view: EditorView | null) => void;
     onCursor?: (from: number, to: number) => void;
+    onCompletion?: CompletionSource;
     onKeyDown?: (event: KeyboardEvent, view: EditorView) => boolean;
 }
 
@@ -35,6 +37,7 @@ export function useCodemirror({
     disabled,
     placeholderText,
     extensions,
+    onCompletion,
     onApi,
     onKeyDown,
     onCursor,
@@ -51,6 +54,9 @@ export function useCodemirror({
 
     const handleCursorRef = useRef(onCursor);
     handleCursorRef.current = onCursor;
+
+    const handleCompletionRef = useRef(onCompletion);
+    handleCompletionRef.current = onCompletion;
 
     // Create an extension for handling changes
     const changeHandler = useMemo(() => {
@@ -91,6 +97,17 @@ export function useCodemirror({
         ]);
     }, []);
 
+    const domEvents = EditorView.domEventHandlers({
+        keydown(event, view) {
+            if (event.key === "Escape") {
+                const open = completionStatus(view.state);
+                if (open) {
+                    event.stopPropagation();
+                }
+            }
+        },
+    });
+
     // Editable compartment
     const { editableCompartmentExtension } = useCodemirrorEditable(viewRef, disabled);
 
@@ -105,6 +122,7 @@ export function useCodemirror({
                 doc: value,
                 extensions: [
                     bracketMatching(),
+                    domEvents,
                     keymapExtension,
                     syntaxHighlighting(customHighlightStyle),
                     EditorView.lineWrapping,
@@ -113,6 +131,16 @@ export function useCodemirror({
                     placeholderExtension,
                     editableCompartmentExtension,
                     ariaExtension,
+                    autocompletion({
+                        override: handleCompletionRef.current
+                            ? [
+                                  (context) => {
+                                      return handleCompletionRef.current(context);
+                                  },
+                              ]
+                            : [],
+                        activateOnTyping: Boolean(handleCompletionRef.current),
+                    }),
                     ...extensions,
                 ],
             }),
