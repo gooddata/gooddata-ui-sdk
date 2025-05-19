@@ -22,6 +22,9 @@ const messages = defineMessages({
     newValue: {
         id: "notifications.panel.triggers.dialog.newValue",
     },
+    truncatedValues: {
+        id: "notifications.panel.triggers.dialog.truncatedValues",
+    },
 });
 
 /**
@@ -32,6 +35,9 @@ export function NotificationTriggersDetailDialog({
     onClose,
 }: INotificationTriggersDetailDialogProps) {
     const intl = useIntl();
+    const values = notification.details.data.alert.currentValues;
+    const hiddenValuesCount = notification.details.data.alert.triggeredCount - values.length;
+
     return (
         <DetailsDialog
             title={intl.formatMessage(messages.triggersTitle)}
@@ -43,20 +49,27 @@ export function NotificationTriggersDetailDialog({
                     </div>
                     <div className={e("table")}>
                         <div className={e("values-labels")}>
-                            {notification.details.data.alert.currentValues?.map((item, i) => (
+                            {values?.map((item, i) => (
                                 <div key={i} className={e("values-label")}>
                                     {item.labelValue}
                                 </div>
                             ))}
                         </div>
                         <div className={e("values")}>
-                            {notification.details.data.alert.currentValues?.map((item, i) => (
+                            {values?.map((item, i) => (
                                 <div key={i} className={e("values-value")}>
                                     {item.primaryMetric!.formattedValue}
                                 </div>
                             ))}
                         </div>
                     </div>
+                    {hiddenValuesCount > 0 && (
+                        <div className={e("values-truncated")}>
+                            {intl.formatMessage(messages.truncatedValues, {
+                                count: hiddenValuesCount,
+                            })}
+                        </div>
+                    )}
                 </div>
             }
             onClose={onClose}
