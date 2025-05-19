@@ -2,6 +2,7 @@
 import { ComponentType } from "react";
 import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-model";
 import { IDateFilterOptionsByType, IDateFilterButtonProps } from "@gooddata/sdk-ui-filters";
+import { OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 /**
  * Defines the configuration of the DateFilter component.
@@ -81,6 +82,11 @@ export interface IDashboardDateFilterProps {
      * @alpha
      */
     ButtonComponent?: ComponentType<IDateFilterButtonProps>;
+
+    /**
+     * Specifies the overlay position type for the date filter dropdown.
+     */
+    overlayPositionType?: OverlayPositionType;
 }
 
 /**

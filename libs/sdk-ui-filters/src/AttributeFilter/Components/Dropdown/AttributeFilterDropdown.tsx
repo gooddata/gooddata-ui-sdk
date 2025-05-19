@@ -48,6 +48,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
         customIcon,
         withoutApply,
         isSelectionInvalid,
+        overlayPositionType,
     } = useAttributeFilterContext();
 
     const isMobile = useMediaQuery("mobileDevice");
@@ -74,6 +75,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
             enableEventPropagation={true}
             alignPoints={ALIGN_POINTS}
             fullscreenOnMobile={fullscreenOnMobile}
+            overlayPositionType={overlayPositionType}
             renderButton={({ toggleDropdown, isOpen }) => {
                 const handleClickAction = disabled ? noop : toggleDropdown;
                 return (

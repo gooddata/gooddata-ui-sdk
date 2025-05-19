@@ -19,6 +19,7 @@ export type IAttributeFilterContext = AttributeFilterController &
         | "customIcon"
         | "withoutApply"
         | "workingFilter"
+        | "overlayPositionType"
     >;
 
 export const AttributeFilterContext = React.createContext<IAttributeFilterContext>(null);
@@ -48,6 +49,7 @@ export const AttributeFilterContextProvider: React.FC<
         enableDuplicatedLabelValuesInAttributeFilter = true,
         withoutApply,
         workingFilter,
+        overlayPositionType,
     } = props;
 
     const controller = useAttributeFilterController(props);
@@ -66,6 +68,7 @@ export const AttributeFilterContextProvider: React.FC<
                 enableDuplicatedLabelValuesInAttributeFilter,
                 withoutApply,
                 workingFilter,
+                overlayPositionType,
             }}
         >
             {children}

@@ -78,6 +78,7 @@ export function AttributesDropdown({
     DropdownButtonComponent = AddAttributeFilterButton,
     DropdownTitleComponent,
     renderNoData,
+    overlayPositionType,
 }: IDashboardAttributeFilterPlaceholderProps) {
     const intl = useIntl();
     const [searchQuery, setSearchQuery] = useState("");
@@ -199,6 +200,7 @@ export function AttributesDropdown({
             closeOnOutsideClick
             alignPoints={dropdownAlignPoints}
             openOnInit={openOnInit}
+            overlayPositionType={overlayPositionType}
             renderButton={({ isOpen, openDropdown }) => (
                 <DropdownButtonComponent
                     className="attribute-filter-button mobile-dropdown-button"

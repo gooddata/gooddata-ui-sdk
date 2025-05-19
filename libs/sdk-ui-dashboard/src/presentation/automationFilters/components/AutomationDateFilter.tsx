@@ -49,6 +49,7 @@ export const AutomationDateFilter: React.FC<{
             workingFilter={filter}
             onFilterChanged={onChange}
             config={filterConfig}
+            overlayPositionType={"sameAsTarget"}
             ButtonComponent={(props) => {
                 const label = `${props.textTitle}: ${props.textSubtitle}`;
                 return (

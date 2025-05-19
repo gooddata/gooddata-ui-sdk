@@ -10,7 +10,7 @@ import {
 import { IDashboardAttributeFilterParentItem, IDashboardDependentDateFilter } from "../../../model/index.js";
 import type { IAttributeFilterButtonProps } from "@gooddata/sdk-ui-filters";
 import { IAddAttributeFilterButtonProps } from "./addAttributeFilter/AddAttributeFilterButton.js";
-import { IDropdownListNoDataRenderProps } from "@gooddata/sdk-ui-kit";
+import { IDropdownListNoDataRenderProps, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 /**
  * @public
@@ -83,6 +83,11 @@ export interface IDashboardAttributeFilterProps {
      * @alpha use at your own risk
      */
     AttributeFilterComponent?: ComponentType<IAttributeFilterButtonProps>;
+
+    /**
+     * Specifies the overlay position type for the attribute filter dropdown.
+     */
+    overlayPositionType?: OverlayPositionType;
 }
 
 /**
@@ -104,6 +109,7 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     DropdownButtonComponent?: ComponentType<IAddAttributeFilterButtonProps>;
     DropdownTitleComponent?: ComponentType;
     renderNoData?: (props: IDropdownListNoDataRenderProps) => React.ReactNode;
+    overlayPositionType?: OverlayPositionType;
 }
 
 /**
