@@ -127,6 +127,7 @@ export const InsightAlertsOld: React.FC<IInsightMenuSubmenuComponentProps> = ({
                 measureFormatMap={measureFormatMap}
                 catalogAttributes={catalogAttributes}
                 catalogDateDatasets={catalogDateDatasets}
+                isExecutionTimestampMode={isExecutionTimestampMode}
             />
         );
     } else {
