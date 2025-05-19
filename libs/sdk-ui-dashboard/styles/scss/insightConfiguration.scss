@@ -86,6 +86,8 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
 
         .insight-configuration .insight-configuration-panel-header {
             display: flex;
+            justify-content: space-between;
+
             .insight-menu-title-wrapper {
                 flex: 1;
             }
@@ -108,9 +110,9 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
     }
 
     .configuration-panel-header-close-button[class*="gd-icon-"] {
-        position: absolute;
-        top: 5px;
-        right: 10px;
+        // position: absolute;
+        // top: 5px;
+        // right: 10px;
 
         &::before {
             font-size: 14px;
@@ -126,7 +128,7 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
     }
     .insight-configuration .gd-menu-wrapper-small-spacing.gd-menu-wrapper {
         box-shadow: inherit;
-        padding: 0 0 8px 0;
+        padding: 0;
     }
     .insight-configuration .gd-menu-wrapper.gd-menu-wrapper-small-spacing .gd-list-item {
         &.gd-menu-item {
@@ -184,6 +186,18 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
     }
     .insight-configuration .gd-menu-wrapper {
         border-radius: 0 0 3px 3px;
+
+        .insight-configuration-menu {
+            max-height: 350px;
+
+            .gd-ui-kit-menu__content-container {
+                width: 100%;
+                display: flex;
+            }
+            .gd-ui-kit-menu__items-container {
+                padding-bottom: 8px;
+            }
+        }
     }
 }
 

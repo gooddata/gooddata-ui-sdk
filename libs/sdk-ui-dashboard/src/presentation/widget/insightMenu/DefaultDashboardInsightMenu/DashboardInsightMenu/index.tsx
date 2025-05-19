@@ -9,7 +9,6 @@ import {
     isIInsightMenuSubmenu,
 } from "../../types.js";
 import { DashboardInsightMenuContainer } from "./DashboardInsightMenuContainer.js";
-import { DashboardInsightSubmenuContainer } from "./DashboardInsightSubmenuContainer.js";
 import { selectRenderMode, useDashboardSelector } from "../../../../../model/index.js";
 import { DashboardInsightMenuBubble } from "./DashboardInsightMenuBubble.js";
 import { DashboardInsightEditMenuBubble } from "./DashboardInsightEditMenuBubble.js";
@@ -19,6 +18,7 @@ import {
     CustomUiMenuHeaderComponent,
     CustomUiMenuInteractiveItemComponent,
     CustomUiMenuStaticItemComponent,
+    CustomUiMenuContentComponent,
     IMenuData,
     IMenuItemData,
 } from "./CustomUiMenuComponents.js";
@@ -26,7 +26,6 @@ import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 
 const convertToUiMenuItems = (
     items: IInsightMenuItem[],
-    setSubmenu: React.Dispatch<React.SetStateAction<IInsightMenuSubmenu | null>>,
     widget: IDashboardInsightMenuProps["widget"],
 ): Array<IUiMenuItem<IMenuItemData>> => {
     return items.map((item): IUiMenuItem<IMenuItemData> => {
@@ -44,7 +43,7 @@ const convertToUiMenuItems = (
                 id: item.itemId,
                 data: null,
                 stringTitle: item.itemName,
-                subItems: item.items ? convertToUiMenuItems(item.items, setSubmenu, widget) : [],
+                subItems: item.items ? convertToUiMenuItems(item.items, widget) : [],
             };
         }
         const baseFocusableItem = {
@@ -64,7 +63,7 @@ const convertToUiMenuItems = (
                 return {
                     ...baseFocusableItem,
                     type: "interactive" as const,
-                    subItems: convertToUiMenuItems(item.items, setSubmenu, widget),
+                    subItems: convertToUiMenuItems(item.items, widget),
                     data: {
                         ...baseFocusableItem.data,
                         subMenu: true,
@@ -112,19 +111,11 @@ export const DashboardInsightMenuBody: React.FC<
         renderMode: RenderMode;
     }
 > = (props) => {
-    const { items, widget, insight, submenu, setSubmenu, onClose, renderMode } = props;
+    const { items, widget, insight, onClose, renderMode } = props;
 
-    const uiMenuItems = useMemo(
-        () => convertToUiMenuItems(items, setSubmenu, widget),
-        [items, setSubmenu, widget],
-    );
+    const uiMenuItems = useMemo(() => convertToUiMenuItems(items, widget), [items, widget]);
 
     const widgetRefAsString = objRefToString(widgetRef(widget));
-
-    const renderSubmenuComponent =
-        !!submenu && !!submenu.SubmenuComponent ? (
-            <submenu.SubmenuComponent widget={widget} onClose={onClose} onGoBack={() => setSubmenu(null)} />
-        ) : null;
 
     const handleSelect = (item: IUiMenuItem<IMenuItemData>) => {
         if (item.type === "interactive" && item.data?.onClick) {
@@ -136,29 +127,11 @@ export const DashboardInsightMenuBody: React.FC<
     const menuId = `insight-menu-${widgetRefAsString}`;
     const menuLabelId = `${menuId}-label`;
 
-    return submenu ? (
-        submenu.renderSubmenuComponentOnly ? (
-            renderSubmenuComponent
-        ) : (
-            <DashboardInsightSubmenuContainer
-                onClose={onClose}
-                title={submenu.itemName}
-                onBack={() => setSubmenu(null)}
-            >
-                {renderSubmenuComponent}
-            </DashboardInsightSubmenuContainer>
-        )
-    ) : (
+    return (
         <UiFocusTrap autofocusOnOpen={true} initialFocus={menuId}>
-            <DashboardInsightMenuContainer
-                onClose={onClose}
-                widget={widget}
-                insight={insight}
-                renderMode={renderMode}
-                titleId={menuLabelId}
-                isSubmenu={!!submenu}
-            >
+            <DashboardInsightMenuContainer>
                 <UiMenu<IMenuItemData, IMenuData>
+                    className="insight-configuration-menu"
                     items={uiMenuItems}
                     onClose={onClose}
                     InteractiveItem={CustomUiMenuInteractiveItemComponent}

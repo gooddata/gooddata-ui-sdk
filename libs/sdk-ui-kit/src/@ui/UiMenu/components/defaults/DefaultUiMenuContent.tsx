@@ -16,13 +16,12 @@ export const DefaultUiMenuContent = React.memo(function DefaultUiMenuContent<
     const { useContextStore, createSelector } = typedUiMenuContextStore<T>();
     const selector = createSelector((ctx) => ({
         onClose: ctx.onClose,
-        menuCtxData: ctx.menuCtxData,
         setShownCustomContentItemId: ctx.setShownCustomContentItemId,
         setFocusedId: ctx.setFocusedId,
         shownCustomContentItemId: ctx.shownCustomContentItemId,
     }));
 
-    const { onClose, menuCtxData, setShownCustomContentItemId, setFocusedId, shownCustomContentItemId } =
+    const { onClose, setShownCustomContentItemId, setFocusedId, shownCustomContentItemId } =
         useContextStore(selector);
 
     const handleBack = React.useCallback(() => {
@@ -34,9 +33,9 @@ export const DefaultUiMenuContent = React.memo(function DefaultUiMenuContent<
 
     return (
         <>
-            {!item.showComponentOnly && <DefaultUiMenuHeader />}
+            {item.showComponentOnly !== true && <DefaultUiMenuHeader />}
             <div className={e("content-container")}>
-                <ContentComponent onBack={handleBack} onClose={onClose} menuCtxData={menuCtxData} />
+                <ContentComponent onBack={handleBack} onClose={onClose} />
             </div>
         </>
     );

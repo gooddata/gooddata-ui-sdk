@@ -4174,33 +4174,7 @@ export function getAuthor(capabilities: IBackendCapabilities, user: IUser): stri
 export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch, eventDispatch, includeInteractions, includeConfigurations, useWidgetDeleteDialog, }: InsightMenuItemDependencies): IInsightMenuItem[];
 
 // @internal (undocumented)
-export function getDefaultInsightMenuItems(intl: IntlShape, config: {
-    exportXLSXDisabled: boolean;
-    exportCSVDisabled: boolean;
-    exportCSVRawDisabled: boolean;
-    isExporting: boolean;
-    scheduleExportDisabled: boolean;
-    scheduleExportDisabledReason?: SchedulingDisabledReason;
-    scheduleExportManagementDisabled: boolean;
-    exportPdfPresentationDisabled: boolean;
-    exportPowerPointPresentationDisabled: boolean;
-    onExportXLSX: () => void;
-    onExportCSV: () => void;
-    onExportRawCSV: () => void;
-    onScheduleExport: () => void;
-    onScheduleManagementExport: () => void;
-    onExportPowerPointPresentation: () => void;
-    onExportPdfPresentation: () => void;
-    isExportRawVisible: boolean;
-    isExportVisible: boolean;
-    isScheduleExportVisible: boolean;
-    isScheduleExportManagementVisible: boolean;
-    isDataError: boolean;
-    isAlertingVisible: boolean;
-    alertingDisabled: boolean;
-    alertingDisabledReason?: AlertingDisabledReason;
-    canCreateAutomation: boolean;
-}): IInsightMenuItem[];
+export function getDefaultInsightMenuItems(intl: IntlShape, config: IUseInsightMenuConfig, execution?: IExecutionResultEnvelope, settings?: ISettings): IInsightMenuItem[];
 
 // @internal (undocumented)
 export function getDefaultRichTextEditMode(widget: IRichTextWidget, { intl, dispatch, useWidgetDeleteDialog }: RichTextMenuItemDependencies): IRichTextMenuItem[];
@@ -4839,6 +4813,8 @@ export interface IDashboardInsightMenuTitleProps {
     // (undocumented)
     renderMode: RenderMode;
     // (undocumented)
+    titleId?: string;
+    // (undocumented)
     widget: IInsightWidget;
 }
 
@@ -5400,7 +5376,19 @@ export interface IInsightListProps {
 }
 
 // @beta (undocumented)
-export type IInsightMenuItem = IInsightMenuItemButton | IInsightMenuItemSeparator | IInsightMenuSubmenu;
+export interface IInsightMenuGroup {
+    // (undocumented)
+    itemId: string;
+    // (undocumented)
+    itemName: string;
+    // (undocumented)
+    items: IInsightMenuItem[];
+    // (undocumented)
+    type: "group";
+}
+
+// @beta (undocumented)
+export type IInsightMenuItem = IInsightMenuItemButton | IInsightMenuItemSeparator | IInsightMenuSubmenu | IInsightMenuGroup;
 
 // @beta (undocumented)
 export interface IInsightMenuItemButton {
@@ -5439,12 +5427,12 @@ export interface IInsightMenuSubmenu {
     itemId: string;
     // (undocumented)
     itemName: string;
+    items?: IInsightMenuItem[];
     // (undocumented)
     onClick?: (e: MouseEvent_2) => void;
     // @alpha
     renderSubmenuComponentOnly?: boolean;
-    // @alpha (undocumented)
-    SubmenuComponent: ComponentType<IInsightMenuSubmenuComponentProps>;
+    SubmenuComponent?: ComponentType<IInsightMenuSubmenuComponentProps>;
     tooltip?: string | ReactNode;
     // (undocumented)
     type: "submenu";
@@ -6599,6 +6587,60 @@ export interface IUseCustomWidgetInsightDataViewConfig {
     enableExecutionCancelling?: boolean;
     insight?: IInsightDefinition | ObjRef;
     widget: ICustomWidget;
+}
+
+// @internal (undocumented)
+export interface IUseInsightMenuConfig {
+    // (undocumented)
+    alertingDisabled: boolean;
+    // (undocumented)
+    alertingDisabledReason?: AlertingDisabledReason;
+    // (undocumented)
+    canCreateAutomation: boolean;
+    // (undocumented)
+    exportCSVDisabled: boolean;
+    // (undocumented)
+    exportCSVRawDisabled: boolean;
+    // (undocumented)
+    exportPdfPresentationDisabled: boolean;
+    // (undocumented)
+    exportPowerPointPresentationDisabled: boolean;
+    // (undocumented)
+    exportXLSXDisabled: boolean;
+    // (undocumented)
+    isAlertingVisible: boolean;
+    // (undocumented)
+    isDataError: boolean;
+    // (undocumented)
+    isExporting: boolean;
+    // (undocumented)
+    isExportRawVisible: boolean;
+    // (undocumented)
+    isExportVisible: boolean;
+    // (undocumented)
+    isScheduleExportManagementVisible: boolean;
+    // (undocumented)
+    isScheduleExportVisible: boolean;
+    // (undocumented)
+    onExportCSV: () => void;
+    // (undocumented)
+    onExportPdfPresentation: () => void;
+    // (undocumented)
+    onExportPowerPointPresentation: () => void;
+    // (undocumented)
+    onExportRawCSV: () => void;
+    // (undocumented)
+    onExportXLSX: () => void;
+    // (undocumented)
+    onScheduleExport: () => void;
+    // (undocumented)
+    onScheduleManagementExport: () => void;
+    // (undocumented)
+    scheduleExportDisabled: boolean;
+    // (undocumented)
+    scheduleExportDisabledReason?: SchedulingDisabledReason;
+    // (undocumented)
+    scheduleExportManagementDisabled: boolean;
 }
 
 // @public

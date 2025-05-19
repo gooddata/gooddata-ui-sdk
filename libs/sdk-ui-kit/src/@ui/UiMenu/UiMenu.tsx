@@ -6,7 +6,6 @@ import { IUiMenuItemData, UiMenuProps } from "./types.js";
 import { getContentItem, getSiblingItems } from "./itemUtils.js";
 import { useCustomContentKeyNavigation, useKeyNavigation, useUiMenuContextValue } from "./hooks.js";
 import { typedUiMenuContextStore } from "./context.js";
-import { DefaultUiMenuContent } from "./components/defaults/DefaultUiMenuContent.js";
 
 /**
  * An accessible menu component that can be navigated by keyboard.
@@ -54,6 +53,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
         setControlType,
         MenuHeader,
         ItemComponent,
+        Content,
         makeItemId,
         shownCustomContentItemId,
     } = contextStoreValue;
@@ -63,6 +63,13 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
         () => (focusedId === undefined ? [] : getSiblingItems(items, focusedId) ?? []),
         [items, focusedId],
     );
+
+    React.useEffect(() => {
+        // Only focus when shownCustomContentItemId becomes undefined (was previously set)
+        if (shownCustomContentItemId === undefined && menuComponentRef.current) {
+            menuComponentRef.current.focus();
+        }
+    }, [shownCustomContentItemId, menuComponentRef]);
 
     return (
         <UiMenuContextStore value={contextStoreValue}>
@@ -74,7 +81,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
             >
                 {shownCustomContentItemId ? (
                     <div onKeyDown={handleKeyDownInCustomContent}>
-                        <DefaultUiMenuContent item={getContentItem(items, shownCustomContentItemId)} />
+                        <Content item={getContentItem(items, shownCustomContentItemId)} />
                     </div>
                 ) : (
                     <>

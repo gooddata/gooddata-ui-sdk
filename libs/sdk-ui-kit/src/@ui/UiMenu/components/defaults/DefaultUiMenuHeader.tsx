@@ -24,9 +24,10 @@ export const DefaultUiMenuHeader: React.FC = React.memo(function DefaultUiMenuHe
         setFocusedId: ctx.setFocusedId,
         onClose: ctx.onClose,
         parentItem: ctx.focusedItem ? getItemInteractiveParent(ctx.items, ctx.focusedItem.id) : undefined,
+        focusedItem: ctx.focusedItem,
     }));
 
-    const { setFocusedId, onClose, parentItem } = useContextStore(selector);
+    const { setFocusedId, onClose, parentItem, focusedItem } = useContextStore(selector);
 
     const parentItemId = parentItem?.id;
 
@@ -38,9 +39,11 @@ export const DefaultUiMenuHeader: React.FC = React.memo(function DefaultUiMenuHe
         setFocusedId(parentItemId);
     }, [setFocusedId, parentItemId]);
 
-    if (!parentItem) {
+    if (!parentItem && focusedItem?.type !== "content") {
         return null;
     }
+
+    const title = parentItem?.stringTitle ?? focusedItem?.stringTitle;
 
     return (
         <div role={"presentation"} className={e("menu-header")}>
@@ -55,7 +58,7 @@ export const DefaultUiMenuHeader: React.FC = React.memo(function DefaultUiMenuHe
                     ellipsisPosition={"end"}
                     className={e("menu-header-title-text")}
                 >
-                    {parentItem.stringTitle}
+                    {title}
                 </ShortenedText>
             </button>
             <UiIconButton

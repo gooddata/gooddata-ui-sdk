@@ -106,7 +106,9 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
             }
 
             if (item.type === "content") {
-                item.component && setShownCustomContentItemId(item.id);
+                if (item.component) {
+                    setShownCustomContentItemId(item.id);
+                }
                 return;
             }
 
@@ -131,7 +133,10 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
     );
 
     const makeItemId = React.useCallback<IUiMenuContext<T>["makeItemId"]>(
-        (item) => (item && item.type === "interactive" ? `item-${ariaAttributes.id}-${item.id}` : uuid()),
+        (item) =>
+            item && (item.type === "interactive" || item.type === "content")
+                ? `item-${ariaAttributes.id}-${item.id}`
+                : uuid(),
         [ariaAttributes.id],
     );
 

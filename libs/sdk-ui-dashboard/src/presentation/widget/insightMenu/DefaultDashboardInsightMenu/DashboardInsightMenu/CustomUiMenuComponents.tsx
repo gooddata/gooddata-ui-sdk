@@ -11,11 +11,14 @@ import {
     getItemInteractiveParent,
     UiIconButton,
     IUiMenuContentItemProps,
+    DefaultUiMenuContent,
+    IUiMenuContentProps,
 } from "@gooddata/sdk-ui-kit";
 import { DashboardInsightMenuItemButton } from "./DashboardInsightMenuItemButton.js";
 import { DashboardInsightMenuTitle } from "../../DashboardInsightMenuTitle.js";
 import { IDashboardInsightMenuTitleProps, IInsightMenuSubmenuComponentProps } from "../../types.js";
 import { useIntl } from "react-intl";
+import { DashboardInsightSubmenuContainer } from "./DashboardInsightSubmenuContainer.js";
 
 export type FocusableItemData = {
     icon?: JSX.Element | string;
@@ -39,15 +42,13 @@ export interface ISubmenuComponentData {
 }
 
 const FocusableItemComponent: React.FC<{
-    id: string;
-    title: string;
+    item: IUiMenuInteractiveItemProps<IMenuItemData>["item"] | IUiMenuContentItemProps<IMenuItemData>["item"];
     isFocused: boolean;
-    isDisabled?: boolean;
-    className?: string;
-    icon?: JSX.Element | string;
-    subMenu?: boolean;
-    onClick?: (event: React.MouseEvent) => void;
-}> = ({ id, title, isDisabled, isFocused, className, icon, subMenu, onClick }) => {
+    onClick: (event: React.MouseEvent) => void;
+}> = ({ item, isFocused, onClick }) => {
+    const { id, isDisabled, stringTitle } = item;
+    const { icon, className, subMenu } = item.data ?? {};
+
     const itemClassName = cx("gd-menu-item", className, {
         "is-focused": isFocused,
         "gd-ui-kit-menu__item--isFocused": isFocused,
@@ -58,7 +59,7 @@ const FocusableItemComponent: React.FC<{
         <DashboardInsightMenuItemButton
             key={id}
             itemId={id}
-            itemName={title}
+            itemName={stringTitle}
             disabled={isDisabled}
             submenu={subMenu}
             icon={icon}
@@ -73,19 +74,7 @@ export const CustomUiMenuInteractiveItemComponent: React.FC<IUiMenuInteractiveIt
     isFocused,
     onSelect,
 }) => {
-    const { icon, className, subMenu } = item.data ?? {};
-    return (
-        <FocusableItemComponent
-            id={item.id}
-            title={item.stringTitle}
-            isDisabled={item.isDisabled}
-            isFocused={isFocused}
-            className={className}
-            icon={icon}
-            subMenu={subMenu}
-            onClick={onSelect}
-        />
-    );
+    return <FocusableItemComponent item={item} isFocused={isFocused} onClick={onSelect} />;
 };
 
 export const CustomUiMenuContentItemComponent: React.FC<IUiMenuContentItemProps<IMenuItemData>> = ({
@@ -93,23 +82,39 @@ export const CustomUiMenuContentItemComponent: React.FC<IUiMenuContentItemProps<
     isFocused,
     onSelect,
 }) => {
-    const { icon, className, subMenu } = item.data ?? {};
+    return <FocusableItemComponent item={item} isFocused={isFocused} onClick={onSelect} />;
+};
+
+export const CustomUiMenuContentComponent: React.FC<IUiMenuContentProps<IMenuItemData>> = ({ item }) => {
+    const { useContextStore, createSelector } = typedUiMenuContextStore<IMenuItemData>();
+    const selector = createSelector((ctx) => ({
+        onClose: ctx.onClose,
+        setShownCustomContentItemId: ctx.setShownCustomContentItemId,
+    }));
+
+    const { onClose, setShownCustomContentItemId } = useContextStore(selector);
+
+    const handleBack = React.useCallback(() => {
+        setShownCustomContentItemId(undefined);
+    }, [setShownCustomContentItemId]);
+
+    if (item.showComponentOnly === true) {
+        return <DefaultUiMenuContent item={item} />;
+    }
+
+    const itemWithoutDefaultHeader = {
+        ...item,
+        showComponentOnly: true,
+    };
 
     return (
-        <FocusableItemComponent
-            id={item.id}
-            title={item.stringTitle}
-            isDisabled={item.isDisabled}
-            isFocused={isFocused}
-            className={className}
-            icon={icon}
-            subMenu={subMenu}
-            onClick={onSelect}
-        />
+        <DashboardInsightSubmenuContainer title={item.stringTitle} onClose={onClose!} onBack={handleBack}>
+            <DefaultUiMenuContent item={itemWithoutDefaultHeader} />
+        </DashboardInsightSubmenuContainer>
     );
 };
 
-export const CustomUiMenuStaticItemComponent: React.FC<UiMenuStaticItemProps<IMenuItemData>> = () => {
+export const CustomUiMenuStaticItemComponent: React.FC<IUiMenuStaticItemProps<IMenuItemData>> = () => {
     return <Separator />;
 };
 

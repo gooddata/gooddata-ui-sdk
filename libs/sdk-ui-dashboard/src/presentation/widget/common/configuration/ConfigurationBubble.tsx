@@ -7,7 +7,6 @@ import {
     Bubble,
     IAlignPoint,
     OverlayPositionType,
-    UiFocusTrap,
 } from "@gooddata/sdk-ui-kit";
 
 import { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "../../../constants/index.js";
@@ -89,7 +88,7 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
             overlayPositionType={overlayPositionType}
             ensureVisibility={true}
         >
-            <UiFocusTrap>{children}</UiFocusTrap>
+            {children}
         </Bubble>
     );
 };

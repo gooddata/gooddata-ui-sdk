@@ -398,25 +398,25 @@ export const DefaultUiMenuContent: React_2.MemoExoticComponent<(<T extends IUiMe
 }) => React_2.ReactElement)>;
 
 // @internal (undocumented)
-export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>({ item, isFocused, onSelect, }: UiMenuContentItemProps<T>): React_2.ReactNode;
+export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>({ item, isFocused, onSelect, }: IUiMenuContentItemProps<T>): React_2.ReactNode;
 
 // @internal
-export const DefaultUiMenuContentItemWrapper: React_2.MemoExoticComponent<(<T extends IUiMenuItemData = object>({ item }: UiMenuContentItemWrapperProps<T>) => React_2.ReactElement)>;
+export const DefaultUiMenuContentItemWrapper: React_2.MemoExoticComponent<(<T extends IUiMenuItemData = object>({ item }: IUiMenuContentItemWrapperProps<T>) => React_2.ReactElement)>;
 
 // @internal (undocumented)
-export function DefaultUiMenuGroupItem<T extends IUiMenuItemData = object>({ item, }: UiMenuGroupItemProps<T>): React_2.ReactNode;
+export function DefaultUiMenuGroupItem<T extends IUiMenuItemData = object>({ item, }: IUiMenuGroupItemProps<T>): React_2.ReactNode;
 
 // @internal
 export const DefaultUiMenuHeader: React_2.FC;
 
 // @internal (undocumented)
-export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>({ item, isFocused, onSelect, }: UiMenuInteractiveItemProps<T>): React_2.ReactNode;
+export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>({ item, isFocused, onSelect, }: IUiMenuInteractiveItemProps<T>): React_2.ReactNode;
 
 // @internal (undocumented)
-export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = object>({ item, }: UiMenuInteractiveItemWrapperProps<T>): React_2.ReactNode;
+export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = object>({ item, }: IUiMenuInteractiveItemWrapperProps<T>): React_2.ReactNode;
 
 // @internal
-export const DefaultUiMenuStaticItem: React_2.MemoExoticComponent<(<T extends IUiMenuItemData = object>({ item }: UiMenuStaticItemProps<T>) => React_2.ReactElement)>;
+export const DefaultUiMenuStaticItem: React_2.MemoExoticComponent<(<T extends IUiMenuItemData = object>({ item }: IUiMenuStaticItemProps<T>) => React_2.ReactElement)>;
 
 // @internal (undocumented)
 export const DESCRIPTION_PANEL_ALIGN_POINTS: {
@@ -4646,9 +4646,30 @@ export type IUiMenuContentItem<T extends IUiMenuItemData = object> = {
     component: React_2.ComponentType<{
         onBack?: () => void;
         onClose?: () => void;
-        menuCtxData?: T["content"];
     }>;
 };
+
+// @internal (undocumented)
+export interface IUiMenuContentItemProps<T extends IUiMenuItemData = object> {
+    // (undocumented)
+    isFocused: boolean;
+    // (undocumented)
+    item: IUiMenuContentItem<T>;
+    // (undocumented)
+    onSelect: () => void;
+}
+
+// @internal (undocumented)
+export interface IUiMenuContentItemWrapperProps<T extends IUiMenuItemData = object> {
+    // (undocumented)
+    item: IUiMenuContentItem<T>;
+}
+
+// @internal (undocumented)
+export interface IUiMenuContentProps<T extends IUiMenuItemData = object> {
+    // (undocumented)
+    item: IUiMenuContentItem<T>;
+}
 
 // @internal (undocumented)
 export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object> extends IUiMenuPluggableComponents<T> {
@@ -4661,7 +4682,7 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object> 
     // (undocumented)
     itemClassName?: ((item: IUiMenuItem<T>) => string | undefined) | string;
     // (undocumented)
-    ItemComponent: React_2.ComponentType<UiMenuItemProps<T>>;
+    ItemComponent: React_2.ComponentType<IUiMenuItemProps<T>>;
     // (undocumented)
     items: IUiMenuItem<T>[];
     // (undocumented)
@@ -4704,6 +4725,12 @@ export type IUiMenuGroupItem<T extends IUiMenuItemData = object> = {
 };
 
 // @internal (undocumented)
+export interface IUiMenuGroupItemProps<T extends IUiMenuItemData = object> {
+    // (undocumented)
+    item: IUiMenuGroupItem<T>;
+}
+
+// @internal (undocumented)
 export type IUiMenuInteractiveItem<T extends IUiMenuItemData = object> = {
     type: "interactive";
     id: string;
@@ -4714,6 +4741,22 @@ export type IUiMenuInteractiveItem<T extends IUiMenuItemData = object> = {
 };
 
 // @internal (undocumented)
+export interface IUiMenuInteractiveItemProps<T extends IUiMenuItemData = object> {
+    // (undocumented)
+    isFocused: boolean;
+    // (undocumented)
+    item: IUiMenuInteractiveItem<T>;
+    // (undocumented)
+    onSelect: () => void;
+}
+
+// @internal (undocumented)
+export interface IUiMenuInteractiveItemWrapperProps<T extends IUiMenuItemData = object> {
+    // (undocumented)
+    item: IUiMenuInteractiveItem<T>;
+}
+
+// @internal (undocumented)
 export type IUiMenuItem<T extends IUiMenuItemData = object> = IUiMenuStaticItem<T> | IUiMenuInteractiveItem<T> | IUiMenuGroupItem<T> | IUiMenuContentItem<T>;
 
 // @internal (undocumented)
@@ -4722,23 +4765,29 @@ export type IUiMenuItemData = {
 };
 
 // @internal (undocumented)
+export interface IUiMenuItemProps<T extends IUiMenuItemData = object> {
+    // (undocumented)
+    item: IUiMenuItem<T>;
+}
+
+// @internal (undocumented)
 export interface IUiMenuPluggableComponents<T extends IUiMenuItemData = object> {
     // (undocumented)
-    ContentComponent: React_2.ComponentType<UiMenuContentProps<T>>;
+    Content: React_2.ComponentType<IUiMenuContentProps<T>>;
     // (undocumented)
-    ContentItemComponent: React_2.ComponentType<UiMenuContentItemProps<T>>;
+    ContentItem: React_2.ComponentType<IUiMenuContentItemProps<T>>;
     // (undocumented)
-    ContentItemWrapperComponent: React_2.ComponentType<UiMenuContentItemWrapperProps<T>>;
+    ContentItemWrapper: React_2.ComponentType<IUiMenuContentItemWrapperProps<T>>;
     // (undocumented)
-    GroupItemComponent: React_2.ComponentType<UiMenuGroupItemProps<T>>;
+    GroupItem: React_2.ComponentType<IUiMenuGroupItemProps<T>>;
     // (undocumented)
-    InteractiveItemComponent: React_2.ComponentType<UiMenuInteractiveItemProps<T>>;
+    InteractiveItem: React_2.ComponentType<IUiMenuInteractiveItemProps<T>>;
     // (undocumented)
-    InteractiveItemWrapperComponent: React_2.ComponentType<UiMenuInteractiveItemWrapperProps<T>>;
+    InteractiveItemWrapper: React_2.ComponentType<IUiMenuInteractiveItemWrapperProps<T>>;
     // (undocumented)
-    MenuHeaderComponent: React_2.ComponentType;
+    MenuHeader: React_2.ComponentType;
     // (undocumented)
-    StaticItemComponent: React_2.ComponentType<UiMenuStaticItemProps<T>>;
+    StaticItem: React_2.ComponentType<IUiMenuStaticItemProps<T>>;
 }
 
 // @internal (undocumented)
@@ -4747,6 +4796,12 @@ export type IUiMenuStaticItem<T extends IUiMenuItemData = object> = {
     id?: string;
     data: T["static"];
 };
+
+// @internal (undocumented)
+export interface IUiMenuStaticItemProps<T extends IUiMenuItemData = object> {
+    // (undocumented)
+    item: IUiMenuStaticItem<T>;
+}
 
 // @internal (undocumented)
 export interface IUiSettings {
@@ -5634,56 +5689,6 @@ export interface UiListboxStaticItemProps<T> {
 export function UiMenu<T extends IUiMenuItemData = object, M extends object = object>(props: UiMenuProps<T, M>): React_2.ReactNode;
 
 // @internal (undocumented)
-export interface UiMenuContentItemProps<T extends IUiMenuItemData = object> {
-    // (undocumented)
-    isFocused: boolean;
-    // (undocumented)
-    item: IUiMenuContentItem<T>;
-    // (undocumented)
-    onSelect: () => void;
-}
-
-// @internal (undocumented)
-export interface UiMenuContentItemWrapperProps<T extends IUiMenuItemData = object> {
-    // (undocumented)
-    item: IUiMenuContentItem<T>;
-}
-
-// @internal (undocumented)
-export interface UiMenuContentProps<T extends IUiMenuItemData = object> {
-    // (undocumented)
-    item: IUiMenuContentItem<T>;
-}
-
-// @internal (undocumented)
-export interface UiMenuGroupItemProps<T extends IUiMenuItemData = object> {
-    // (undocumented)
-    item: IUiMenuGroupItem<T>;
-}
-
-// @internal (undocumented)
-export interface UiMenuInteractiveItemProps<T extends IUiMenuItemData = object> {
-    // (undocumented)
-    isFocused: boolean;
-    // (undocumented)
-    item: IUiMenuInteractiveItem<T>;
-    // (undocumented)
-    onSelect: () => void;
-}
-
-// @internal (undocumented)
-export interface UiMenuInteractiveItemWrapperProps<T extends IUiMenuItemData = object> {
-    // (undocumented)
-    item: IUiMenuInteractiveItem<T>;
-}
-
-// @internal (undocumented)
-export interface UiMenuItemProps<T extends IUiMenuItemData = object> {
-    // (undocumented)
-    item: IUiMenuItem<T>;
-}
-
-// @internal (undocumented)
 export interface UiMenuProps<T extends IUiMenuItemData = object, M = object> extends Partial<IUiMenuPluggableComponents<T>> {
     // (undocumented)
     ariaAttributes: Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
@@ -5711,12 +5716,6 @@ export interface UiMenuProps<T extends IUiMenuItemData = object, M = object> ext
     shouldKeyboardActionPreventDefault?: boolean;
     // (undocumented)
     shouldKeyboardActionStopPropagation?: boolean;
-}
-
-// @internal (undocumented)
-export interface UiMenuStaticItemProps<T extends IUiMenuItemData = object> {
-    // (undocumented)
-    item: IUiMenuStaticItem<T>;
 }
 
 // @internal (undocumented)
