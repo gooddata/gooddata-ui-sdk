@@ -177,7 +177,9 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
 
         private refreshAbortController() {
             if (this.props.enableExecutionCancelling) {
-                this.abortController.abort();
+                if (this.state.isLoading) {
+                    this.abortController.abort();
+                }
                 this.abortController = new AbortController();
             }
         }
