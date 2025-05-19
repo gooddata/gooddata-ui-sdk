@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { MessageDescriptor, defineMessages } from "react-intl";
 
 //NOTE: Follow up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
@@ -129,6 +129,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     areaContinent_eu: { id: "properties.viewport.area.continent_eu" },
     rotation0: { id: "properties.rotation.0" },
     rotation30: { id: "properties.rotation.30" },
+    rotation45: { id: "properties.rotation.45" },
     rotation60: { id: "properties.rotation.60" },
     rotation90: { id: "properties.rotation.90" },
     formatInherit: { id: "properties.axis.format.inherit" },

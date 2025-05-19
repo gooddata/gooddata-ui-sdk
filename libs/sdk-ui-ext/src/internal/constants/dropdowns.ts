@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { CalculateAs, ComparisonPositionValues } from "@gooddata/sdk-ui-charts";
 
 import { IDropdownItem } from "../interfaces/Dropdown.js";
@@ -31,6 +31,7 @@ export const rotationDropdownItems: IDropdownItem[] = [
     { type: "separator" },
     { title: messages.rotation0.id, value: "0" },
     { title: messages.rotation30.id, value: "30" },
+    { title: messages.rotation45.id, value: "45" },
     { title: messages.rotation60.id, value: "60" },
     { title: messages.rotation90.id, value: "90" },
 ];
