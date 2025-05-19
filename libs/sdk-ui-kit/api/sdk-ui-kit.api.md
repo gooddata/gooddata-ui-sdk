@@ -563,9 +563,6 @@ export const GD_COLOR_STATE_HOVER = "#94a1ad";
 export const GD_COLOR_WHITE = "#fff";
 
 // @internal (undocumented)
-export function generateHeaderAccountMenuItems(workspacePermissions: IWorkspacePermissions, uiSettings: IUiSettings, workspaceId?: string, showOnlyLogoutItem?: boolean, featureFlags?: ISettings): IHeaderMenuItem[];
-
-// @internal (undocumented)
 export function generateHeaderAccountMenuItems(workspacePermissions: IWorkspacePermissions, workspaceId?: string, featureFlags?: ISettings): IHeaderMenuItem[];
 
 // @internal (undocumented)
