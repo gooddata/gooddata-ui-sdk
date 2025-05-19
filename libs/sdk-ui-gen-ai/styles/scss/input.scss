@@ -1,10 +1,32 @@
 // (C) 2024-2025 GoodData Corporation
+// stylelint-disable max-nesting-depth
 
 @use "sass:color";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
 @use "@gooddata/sdk-ui-kit/styles/scss/Form/mixins" as form-mixins;
 @use "variables" as variables;
+
+$base_path: "~@gooddata/sdk-ui-kit/styles";
+
+@mixin gd-svg-icon-base {
+    &::before {
+        content: "";
+        display: block;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@mixin gd-svg-icon($filename) {
+    @include gd-svg-icon-base;
+
+    &::before {
+        background-image: url($base_path + "/icons/" + $filename + ".svg");
+    }
+}
 
 .gd-gen-ai-chat__input {
     position: relative;
@@ -79,6 +101,127 @@
             path,
             rect {
                 fill: kit-variables.$gd-color-disabled;
+            }
+        }
+    }
+
+    //CodeMirror autocomplete restyle
+    .cm-tooltip.cm-tooltip-autocomplete {
+        background: kit-variables.$gd-color-white;
+        border: 1px solid kit-variables.$gd-border-color;
+        border-radius: 3px;
+
+        & > ul {
+            padding: 6px 0;
+            min-width: 240px;
+            max-height: 234px;
+
+            & > li {
+                display: flex;
+                padding: 5px 10px;
+                align-items: center;
+                gap: 7px;
+                align-self: stretch;
+
+                &[aria-selected="true"],
+                &:hover {
+                    background: kit-variables.$is-focused-background;
+                }
+
+                .cm-completionIcon {
+                    width: 17px;
+                    aspect-ratio: 1 / 1;
+
+                    &-metric {
+                        @include gd-svg-icon("metric");
+                    }
+                    &-attribute {
+                        @include gd-svg-icon("attribute");
+                    }
+                    &-fact {
+                        @include gd-svg-icon("measure");
+                    }
+                }
+
+                .cm-completionLabel {
+                    font-family: kit-variables.$gd-font-primary;
+                    color: kit-variables.$gd-color-text;
+                    flex: 1 0 0;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 18px;
+                }
+            }
+        }
+    }
+    //CodeMirror completion info restyle
+    .cm-tooltip.cm-completionInfo {
+        min-width: 220px;
+        background: kit-variables.$gd-color-white;
+        border: 1px solid kit-variables.$gd-border-color;
+        border-radius: 3px;
+        padding: 0;
+
+        .gd-gen-ai-chat__autocomplete__info {
+            display: flex;
+            min-width: 220px;
+            max-width: 220px;
+            padding: 15px;
+            gap: 10px;
+            flex-direction: column;
+            align-items: flex-start;
+            font-family: kit-variables.$gd-font-primary;
+
+            h3 {
+                align-self: stretch;
+                padding: 0;
+                margin: 0;
+                color: kit-variables.$gd-color-text;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 23px;
+            }
+
+            p {
+                margin: 0;
+                padding: 0;
+                line-clamp: 4;
+                align-self: stretch;
+                overflow: hidden;
+                color: kit-variables.$gd-color-link;
+                text-overflow: ellipsis;
+                font-size: 13px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 18px;
+            }
+
+            .type {
+                display: flex;
+                gap: 3px;
+                padding-top: 5px;
+                flex-direction: column;
+                align-items: flex-start;
+                align-self: stretch;
+
+                .type-title {
+                    color: kit-variables.$gd-color-state-blank;
+                    align-self: stretch;
+                    font-size: 10px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                    text-transform: uppercase;
+                }
+                .type-value {
+                    color: kit-variables.$gd-color-text;
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 19px;
+                }
             }
         }
     }

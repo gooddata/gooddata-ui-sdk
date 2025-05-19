@@ -9,6 +9,7 @@
 
 import { AccessGranularPermission } from '@gooddata/sdk-model';
 import { ColorFormats } from 'tinycolor2';
+import { CompletionSource } from '@codemirror/autocomplete';
 import { Component } from 'react';
 import { CSSProperties } from 'react';
 import { DebouncedFunc } from 'lodash';
@@ -4388,6 +4389,8 @@ export interface ISyntaxHighlightingInputProps {
     onApi?: (view: EditorView | null) => void;
     // (undocumented)
     onChange: (value: string) => void;
+    // (undocumented)
+    onCompletion?: CompletionSource;
     // (undocumented)
     onCursor?: (from: number, to: number) => void;
     // (undocumented)

@@ -4,6 +4,7 @@
 
 ```ts
 
+import { CatalogItem } from '@gooddata/sdk-model';
 import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -113,6 +114,7 @@ export const GenAIChat: React_2.FC<GenAIChatProps>;
 // @alpha
 export interface GenAIChatProps {
     backend?: IAnalyticalBackend;
+    catalogItems?: CatalogItem[];
     colorPalette?: IColorPalette;
     eventHandlers?: ChatEventHandler[];
     locale?: string;

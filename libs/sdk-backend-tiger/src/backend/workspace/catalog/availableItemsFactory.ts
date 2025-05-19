@@ -90,6 +90,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
             includeTags: [],
             loadGroups: true,
         },
+        private readonly signal?: AbortSignal,
     ) {}
 
     public withOptions(
@@ -105,6 +106,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
             this.groups,
             this.items,
             newOptions,
+            this.signal,
         );
     }
 
@@ -136,6 +138,17 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         return this.withOptions({
             loadGroups,
         });
+    }
+
+    public withSignal(signal: AbortSignal): IWorkspaceCatalogAvailableItemsFactory {
+        return new TigerWorkspaceCatalogAvailableItemsFactory(
+            this.authCall,
+            this.workspace,
+            this.groups,
+            this.items,
+            this.options,
+            signal,
+        );
     }
 
     public async load(): Promise<TigerWorkspaceCatalogWithAvailableItems> {

@@ -1367,6 +1367,7 @@ export interface IWorkspaceCatalogFactoryMethods<TFactory, TOptions> {
     includeTags(tags: ObjRef[]): TFactory;
     withGroups(loadGroups: boolean): TFactory;
     withOptions(options: Partial<TOptions>): TFactory;
+    withSignal(signal: AbortSignal): TFactory;
 }
 
 // @public
@@ -1377,6 +1378,7 @@ export interface IWorkspaceCatalogFactoryOptions {
     includeTags: ObjRef[];
     loadGroups?: boolean;
     production?: boolean;
+    search?: string;
     types: CatalogItemType[];
 }
 

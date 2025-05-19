@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
 import { Input } from "./Input.js";
 import { Messages } from "./Messages.js";
@@ -7,6 +7,7 @@ import { ErrorBoundary } from "./ErrorBoundary.js";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { loadThreadAction, cancelAsyncAction } from "../store/index.js";
+import { useConfig } from "./ConfigContext.js";
 
 type GenAIChatWrapperProps = {
     loadThread: typeof loadThreadAction;
@@ -23,6 +24,8 @@ const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
     cancelLoading,
     autofocus,
 }) => {
+    const { catalogItems } = useConfig();
+
     React.useEffect(() => {
         loadThread();
 
@@ -35,7 +38,7 @@ const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
         <ErrorBoundary>
             <div className="gd-gen-ai-chat">
                 <Messages />
-                <Input autofocus={autofocus} />
+                <Input autofocus={autofocus} catalogItems={catalogItems} />
                 <Typography tagName="p" className="gd-gen-ai-chat__disclaimer">
                     <FormattedMessage id="gd.gen-ai.disclaimer" />
                 </Typography>

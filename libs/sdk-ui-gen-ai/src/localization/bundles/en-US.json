@@ -143,5 +143,25 @@
         "value": "Give your new visualization a new descriptive name, so it's easier to find it later on.",
         "comment": "",
         "limit": 0
+    },
+    "gd.gen-ai.autocomplete.type": {
+        "value": "Type",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.autocomplete.attribute": {
+        "value": "Attribute",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.autocomplete.metric": {
+        "value": "Metric",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.autocomplete.fact": {
+        "value": "Fact",
+        "comment": "",
+        "limit": 0
     }
 }

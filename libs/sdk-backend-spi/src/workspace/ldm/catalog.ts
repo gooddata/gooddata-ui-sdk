@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IAttributeOrMeasure,
     IInsightDefinition,
@@ -62,6 +62,11 @@ export interface IWorkspaceCatalogFactoryOptions {
      * Default: true
      */
     loadGroups?: boolean;
+
+    /**
+     * Search for catalog items by title or identifier.
+     */
+    search?: string;
 }
 
 /**
@@ -264,6 +269,14 @@ export interface IWorkspaceCatalogFactoryMethods<TFactory, TOptions> {
      * @returns catalog factory
      */
     withOptions(options: Partial<TOptions>): TFactory;
+
+    /**
+     * Setup to use abort signal
+     *
+     * @param signal - abort signal
+     * @returns catalog factory
+     */
+    withSignal(signal: AbortSignal): TFactory;
 }
 
 /**

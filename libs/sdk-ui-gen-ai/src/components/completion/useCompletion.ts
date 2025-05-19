@@ -1,0 +1,228 @@
+// (C) 2025 GoodData Corporation
+import { useCallback, useRef, useState } from "react";
+import { IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
+import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { Completion, CompletionContext, CompletionResult, CompletionSource } from "@codemirror/autocomplete";
+import { CatalogItem, isCatalogAttribute, isCatalogFact, isCatalogMeasure } from "@gooddata/sdk-model";
+import { IntlShape, useIntl } from "react-intl";
+
+import { getInfo } from "./InfoComponent.js";
+
+export interface IUseCompletion {
+    onCompletion: CompletionSource;
+}
+
+export function useCompletion(items?: CatalogItem[]): IUseCompletion {
+    const [catalogItems, setCatalogItems] = useState<CatalogItem[] | undefined>(items);
+    const backend = useBackendStrict();
+    const workspace = useWorkspaceStrict();
+    const intl = useIntl();
+
+    const searchRef = useRef<string>("");
+    const promiseSearchRef = useRef<{
+        promise: Promise<IWorkspaceCatalog>;
+        abort: AbortController;
+    } | null>(null);
+    const promiseAllRef = useRef<{
+        promise: Promise<IWorkspaceCatalog>;
+    } | null>(null);
+
+    const loadItemsBySearch = useCallback(
+        async (search: string) => {
+            // If catalog items are provided, do not do any call
+            if (catalogItems) {
+                return catalogItems;
+            }
+
+            // If catalog items are not provided, do a call and all caching stuff
+            const starts = search.startsWith(searchRef.current) && searchRef.current.length > 0;
+
+            // If the search term starts with the previous search term, do not trigger a new search, we can do in on client side
+            if (starts && promiseSearchRef.current) {
+                const catalog = await promiseSearchRef.current.promise;
+                return catalog.allItems();
+            }
+
+            // If the search term is different, reset the promise
+            if (!starts) {
+                promiseSearchRef.current?.abort.abort();
+                promiseSearchRef.current = null;
+            }
+
+            // Create a new search call
+            if (!promiseSearchRef.current) {
+                searchRef.current = search;
+                const abort = new AbortController();
+                promiseSearchRef.current = {
+                    abort,
+                    promise: backend
+                        .workspace(workspace)
+                        .catalog()
+                        .withOptions({
+                            search,
+                        })
+                        .withSignal(abort.signal)
+                        .load(),
+                };
+            }
+
+            const catalog = await promiseSearchRef.current.promise;
+            return catalog.allItems();
+        },
+        [backend, workspace, catalogItems],
+    );
+
+    const loadItemsByExplicit = useCallback(async () => {
+        // If catalog items are provided, do not do any call
+        if (catalogItems) {
+            return catalogItems;
+        }
+
+        // If catalog is already loading, do not trigger a new call
+        if (promiseAllRef.current) {
+            const catalog = await promiseAllRef.current.promise;
+            return catalog.allItems();
+        }
+
+        const promise = backend.workspace(workspace).catalog().load();
+        promiseAllRef.current = {
+            promise,
+        };
+
+        const catalog = await promise;
+        const items = catalog.allItems();
+        setCatalogItems(items);
+        return items;
+    }, [backend, workspace, catalogItems]);
+
+    const onWordCompletion = useCallback(
+        async (context: CompletionContext): Promise<CompletionResult | null> => {
+            // Match the word before the cursor
+            const word = context.matchBefore(/\w+/);
+            const search = word?.text ?? "";
+            const length = search.length >= 3;
+
+            // Word and min length
+            const isValidAutocomplete = word && length;
+            if (!isValidAutocomplete) {
+                return null;
+            }
+
+            const items = await loadItemsBySearch(search);
+            // If no items are found, do not show the completion
+            if (items.length === 0) {
+                return null;
+            }
+
+            const options = getOptions(intl, items, search);
+            // No options were found at all
+            if (options.length === 0) {
+                return null;
+            }
+
+            return {
+                options,
+                from: word?.from ?? context.pos,
+                validFor: (text) => {
+                    return !!options.find((opt) => opt.label.includes(text));
+                },
+            };
+        },
+        [loadItemsBySearch, intl],
+    );
+
+    const onExplicitCompletion = useCallback(
+        async (context: CompletionContext): Promise<CompletionResult | null> => {
+            const items = await loadItemsByExplicit();
+            // If no items are found, do not show the completion
+            if (!items) {
+                return null;
+            }
+
+            const options = getOptions(intl, items);
+            // No options were found at all
+            if (options.length === 0) {
+                return null;
+            }
+
+            return {
+                options,
+                from: context.pos,
+                validFor: (text) => {
+                    return !!options.find((opt) => opt.label.includes(text));
+                },
+            };
+        },
+        [loadItemsByExplicit, intl],
+    );
+
+    const onCompletion = useCallback(
+        async (context: CompletionContext): Promise<CompletionResult | null> => {
+            if (context.explicit) {
+                return onExplicitCompletion(context);
+            } else {
+                return onWordCompletion(context);
+            }
+        },
+        [onWordCompletion, onExplicitCompletion],
+    );
+
+    return {
+        onCompletion,
+    };
+}
+
+function getOptions(intl: IntlShape, items: CatalogItem[], search?: string) {
+    const options = items
+        .map((item): Completion | null => {
+            if (isCatalogAttribute(item)) {
+                return getItem(
+                    item.attribute.title,
+                    item.attribute.title,
+                    "attribute",
+                    getInfo(intl, item.attribute.id, item.attribute),
+                );
+            }
+            if (isCatalogFact(item)) {
+                return getItem(
+                    item.fact.title,
+                    item.fact.title,
+                    "fact",
+                    getInfo(intl, item.fact.id, item.fact),
+                );
+            }
+            if (isCatalogMeasure(item)) {
+                return getItem(
+                    item.measure.title,
+                    item.measure.title,
+                    "metric",
+                    getInfo(intl, item.measure.id, item.measure),
+                );
+            }
+            return null;
+        })
+        .filter((opt) => opt !== null) as Completion[];
+
+    return options.filter((opt) => {
+        const label = opt.label.toLowerCase();
+        const apply = String(opt.apply ?? "").toLowerCase();
+        return search ? label.includes(search.toLowerCase()) || apply.includes(search.toLowerCase()) : true;
+    });
+}
+
+function getItem(
+    label: string,
+    apply: string,
+    type: "fact" | "metric" | "attribute",
+    info: () => Node,
+): Completion {
+    return {
+        type,
+        label,
+        apply,
+        info,
+    };
+}
+
+//TODO:
+// - Highlight in ask input only items that are added through completion, not all (perf issue)
