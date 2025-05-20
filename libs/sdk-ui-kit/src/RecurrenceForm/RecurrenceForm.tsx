@@ -45,6 +45,7 @@ export interface IRecurrenceFormProps {
     showInheritValue?: boolean;
     isWhiteLabeled?: boolean;
     onRecurrenceDropdownOpen?: () => void;
+    closeDropdownsOnParentScroll?: boolean;
 }
 
 const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
@@ -68,6 +69,7 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
         showInheritValue,
         isWhiteLabeled,
         onRecurrenceDropdownOpen,
+        closeDropdownsOnParentScroll,
     } = props;
     const intl = useIntl();
 
@@ -140,6 +142,7 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
                     timezone={timezone}
                     weekStart={weekStart}
                     timeFormat={timeFormat}
+                    closeOnParentScroll={closeDropdownsOnParentScroll}
                 />
             )}
             <Recurrence
@@ -160,6 +163,7 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
                 showTimezoneInOccurrence={showTimezoneInOccurrence}
                 onRecurrenceDropdownOpen={onRecurrenceDropdownOpen}
                 isWhiteLabeled={isWhiteLabeled}
+                closeOnParentScroll={closeDropdownsOnParentScroll}
             />
         </div>
     );

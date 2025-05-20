@@ -12,6 +12,7 @@ export interface IAlertDestinationSelectProps {
     onDestinationChange: (destinationId: string) => void;
     destinations: INotificationChannelMetadataObject[];
     overlayPositionType?: OverlayPositionType;
+    closeOnParentScroll?: boolean;
 }
 
 export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
@@ -20,6 +21,7 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
     onDestinationChange,
     destinations,
     overlayPositionType,
+    closeOnParentScroll,
 }: IAlertDestinationSelectProps) => {
     const intl = useIntl();
     const selectedOption = destinations.find((o) => o.id === selectedDestination);
@@ -27,6 +29,7 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
     const accessibilityAriaLabel = intl.formatMessage({ id: "alert.accessibility.destination.label" });
     return (
         <Dropdown
+            closeOnParentScroll={closeOnParentScroll}
             overlayPositionType={overlayPositionType}
             renderButton={({ isOpen, toggleDropdown }) => {
                 return (

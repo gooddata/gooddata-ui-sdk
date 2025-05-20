@@ -3685,6 +3685,8 @@ export interface IRecurrenceFormProps {
     // (undocumented)
     className?: string;
     // (undocumented)
+    closeDropdownsOnParentScroll?: boolean;
+    // (undocumented)
     cronDescription?: string;
     // (undocumented)
     cronExpression?: string;
@@ -3724,6 +3726,8 @@ export interface IRecurrenceFormProps {
 export interface IRecurrenceProps {
     // (undocumented)
     allowHourlyRecurrence?: boolean;
+    // (undocumented)
+    closeOnParentScroll?: boolean;
     // (undocumented)
     cronDescription?: string;
     // (undocumented)
@@ -4476,6 +4480,8 @@ export interface ITimepickerOwnProps {
     ariaLabelledBy?: string;
     // (undocumented)
     className?: string;
+    // (undocumented)
+    closeOnParentScroll?: boolean;
     // (undocumented)
     locale?: string;
     // (undocumented)

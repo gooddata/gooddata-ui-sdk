@@ -117,6 +117,7 @@ export interface IRepeatTypeSelectProps {
     onChange: (repeatType: string) => void;
     allowHourlyRecurrence?: boolean;
     onRepeatDropdownOpen?: () => void;
+    closeOnParentScroll?: boolean;
 }
 
 export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
@@ -127,6 +128,7 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
         allowHourlyRecurrence,
         showInheritValue,
         onRepeatDropdownOpen,
+        closeOnParentScroll,
     } = props;
     const intl = useIntl();
     const repeatItems = getRepeatItems(intl, startDate, allowHourlyRecurrence, showInheritValue);
@@ -136,6 +138,7 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
 
     return (
         <Dropdown
+            closeOnParentScroll={closeOnParentScroll}
             alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
             className="gd-recurrence-form-type s-recurrence-form-type"
             renderButton={({ toggleDropdown, isOpen, dropdownId }) => (

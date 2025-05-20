@@ -13,7 +13,7 @@ import {
     IAttributeFilterButtonProps,
     IAttributeFilterDropdownButtonProps,
 } from "@gooddata/sdk-ui-filters";
-import { Bubble, BubbleHoverTrigger, UiChip, UiSkeleton } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, OverlayPositionType, UiChip, UiSkeleton } from "@gooddata/sdk-ui-kit";
 import noop from "lodash/noop.js";
 import { DefaultDashboardAttributeFilter } from "../../../presentation/filterBar/index.js";
 import { attributeFilterToDashboardAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
@@ -34,7 +34,8 @@ export const AutomationAttributeFilter: React.FC<{
     onDelete: (filter: FilterContextItem) => void;
     isLocked?: boolean;
     displayAsLabel?: ObjRef;
-}> = ({ filter, onChange, onDelete, isLocked, displayAsLabel }) => {
+    overlayPositionType?: OverlayPositionType;
+}> = ({ filter, onChange, onDelete, isLocked, displayAsLabel, overlayPositionType }) => {
     const intl = useIntl();
     const deleteAriaLabel = intl.formatMessage({ id: "delete" });
     return (
@@ -50,7 +51,7 @@ export const AutomationAttributeFilter: React.FC<{
                 onFilterChanged={noop}
                 displayAsLabel={displayAsLabel}
                 AttributeFilterComponent={AttributeFilter}
-                overlayPositionType={"sameAsTarget"}
+                overlayPositionType={overlayPositionType}
             />
         </AutomationAttributeFilterProvider>
     );

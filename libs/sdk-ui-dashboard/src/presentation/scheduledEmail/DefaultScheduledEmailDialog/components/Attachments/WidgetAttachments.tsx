@@ -6,7 +6,7 @@ import {
     IExportDefinitionVisualizationObjectSettings,
     IFilter,
 } from "@gooddata/sdk-model";
-import { Message } from "@gooddata/sdk-ui-kit";
+import { Message, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 import { AttachmentWidgets } from "./AttachmentItems.js";
 import { WidgetAttachmentType } from "../../types.js";
 import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
@@ -26,6 +26,8 @@ export interface IWidgetAttachmentsProps {
     ) => void;
     onWidgetAttachmentsSettingsChange: (obj: IExportDefinitionVisualizationObjectSettings) => void;
     enableAutomationFilterContext?: boolean;
+    closeOnParentScroll?: boolean;
+    overlayPositionType?: OverlayPositionType;
 }
 
 export const WidgetAttachments = (props: IWidgetAttachmentsProps) => {
@@ -40,6 +42,8 @@ export const WidgetAttachments = (props: IWidgetAttachmentsProps) => {
         onWidgetAttachmentsSelectionChange,
         onWidgetAttachmentsSettingsChange,
         enableAutomationFilterContext,
+        closeOnParentScroll,
+        overlayPositionType,
     } = props;
 
     const renderFiltersMessage = !enableAutomationFilterContext;
@@ -62,6 +66,8 @@ export const WidgetAttachments = (props: IWidgetAttachmentsProps) => {
                     settings={settings}
                     onSelectionChange={handleWidgetAttachmentSelectionChange}
                     onSettingsChange={onWidgetAttachmentsSettingsChange}
+                    closeOnParentScroll={closeOnParentScroll}
+                    overlayPositionType={overlayPositionType}
                 />
                 {renderFiltersMessage &&
                 (isEditing || areDashboardFiltersChanged) &&

@@ -263,6 +263,10 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     const onWidgetAttachmentsChange = (
         selected: boolean,
         format: WidgetAttachmentType,
+        /**
+         * This prop may be removed in the future, once all automations are using new
+         * automation filter context. (enableAutomationFilterContext)
+         */
         widgetFilters?: IFilter[],
     ): void => {
         const automationTypeGuard =
@@ -279,7 +283,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                 dashboardId: dashboardId!,
                 format,
                 scheduledExportToEdit,
-                widgetFilters,
+                widgetFilters: enableAutomationFilterContext ? effectiveWidgetFilters : widgetFilters,
             });
 
             const exportDefinitionExists = automationTypeGuard(editedAutomation);

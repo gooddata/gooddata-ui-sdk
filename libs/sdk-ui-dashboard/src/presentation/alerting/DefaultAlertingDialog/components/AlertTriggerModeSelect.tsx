@@ -26,6 +26,7 @@ export interface IAlertTriggerModeSelectProps {
     selectedTriggerMode: IAlertTriggerMode;
     onTriggerModeChange: (triggerMode: IAlertTriggerMode) => void;
     overlayPositionType?: OverlayPositionType;
+    closeOnParentScroll?: boolean;
 }
 
 export const AlertTriggerModeSelect = ({
@@ -33,6 +34,7 @@ export const AlertTriggerModeSelect = ({
     selectedTriggerMode,
     onTriggerModeChange,
     overlayPositionType,
+    closeOnParentScroll,
 }: IAlertTriggerModeSelectProps) => {
     const selectedOption = options.find((o) => o.id === selectedTriggerMode);
     const intl = useIntl();
@@ -40,6 +42,7 @@ export const AlertTriggerModeSelect = ({
     return (
         <div className="gd-alert-trigger-mode-select">
             <Dropdown
+                closeOnParentScroll={closeOnParentScroll}
                 overlayPositionType={overlayPositionType}
                 renderButton={({ isOpen, toggleDropdown }) => {
                     return (

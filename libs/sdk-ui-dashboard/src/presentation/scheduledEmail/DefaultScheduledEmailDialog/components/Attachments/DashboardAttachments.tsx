@@ -2,7 +2,7 @@
 import React, { ReactNode, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { FilterContextItem, IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { Message } from "@gooddata/sdk-ui-kit";
+import { Message, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 import { AttachmentFilters, AttachmentFilterType } from "./AttachmentFilters.js";
 import { getAutomationDashboardFilters } from "../../../../../_staging/automation/index.js";
 import { AttachmentDashboard } from "./AttachmentItems.js";
@@ -21,6 +21,7 @@ export interface IDashboardAttachmentsProps {
         filters?: FilterContextItem[],
     ) => void;
     enableAutomationFilterContext?: boolean;
+    overlayPositionType?: OverlayPositionType;
 }
 
 export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
@@ -33,6 +34,7 @@ export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
         filtersToDisplayInfo,
         onDashboardAttachmentsSelectionChange,
         enableAutomationFilterContext,
+        overlayPositionType,
     } = props;
 
     /**
@@ -90,6 +92,7 @@ export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
                     hidden={!showAttachmentFilters}
                     disabled={isEditing}
                     filters={filtersToDisplayInfo}
+                    overlayPositionType={overlayPositionType}
                 />
                 {isCrossFiltering && dashboardSelected ? (
                     <Message type="progress" className="gd-attachment-list-message">

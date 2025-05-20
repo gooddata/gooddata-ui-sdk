@@ -12,7 +12,15 @@ import {
     isDashboardDateFilter,
     ObjRef,
 } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, Icon, Typography, UiButton, UiIconButton } from "@gooddata/sdk-ui-kit";
+import {
+    Bubble,
+    BubbleHoverTrigger,
+    Icon,
+    OverlayPositionType,
+    Typography,
+    UiButton,
+    UiIconButton,
+} from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import noop from "lodash/noop.js";
 import React, { useState } from "react";
@@ -54,6 +62,7 @@ export interface IAutomationFiltersSelectProps {
     onStoreFiltersChange: (value: boolean, filters: FilterContextItem[]) => void;
     isDashboardAutomation?: boolean;
     areFiltersMissing?: boolean;
+    overlayPositionType?: OverlayPositionType;
 }
 
 export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = ({
@@ -64,6 +73,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
     storeFilters,
     onStoreFiltersChange,
     areFiltersMissing,
+    overlayPositionType,
 }) => {
     const {
         visibleFilters: filters,
@@ -139,6 +149,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                                 onChange={handleChangeFilter}
                                 onDelete={handleDeleteFilter}
                                 isCommonDateFilter={isCommonDateFilter}
+                                overlayPositionType={overlayPositionType}
                             />
                         );
                     })}
@@ -152,7 +163,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                             attributes={attributes}
                             dateDatasets={dateDatasets}
                             openOnInit={false}
-                            overlayPositionType={"sameAsTarget"}
+                            overlayPositionType={overlayPositionType}
                             className="gd-automation-filters__dropdown s-automation-filters-add-filter-dropdown"
                             DropdownButtonComponent={({ onClick }) => (
                                 <UiIconButton
@@ -246,6 +257,7 @@ interface IAutomationFilterProps {
     onChange: (filter: FilterContextItem | undefined) => void;
     onDelete: (filter: FilterContextItem) => void;
     isCommonDateFilter?: boolean;
+    overlayPositionType?: OverlayPositionType;
 }
 
 const AutomationFilter: React.FC<IAutomationFilterProps> = ({
@@ -255,6 +267,7 @@ const AutomationFilter: React.FC<IAutomationFilterProps> = ({
     onChange,
     onDelete,
     isCommonDateFilter,
+    overlayPositionType,
 }) => {
     if (isDashboardAttributeFilter(filter)) {
         const config = attributeConfigs.find(
@@ -271,6 +284,7 @@ const AutomationFilter: React.FC<IAutomationFilterProps> = ({
                 onDelete={onDelete}
                 isLocked={isLocked}
                 displayAsLabel={displayAsLabel}
+                overlayPositionType={overlayPositionType}
             />
         );
     } else {
@@ -287,6 +301,7 @@ const AutomationFilter: React.FC<IAutomationFilterProps> = ({
                 onDelete={onDelete}
                 isLocked={isLocked}
                 isCommonDateFilter={isCommonDateFilter}
+                overlayPositionType={overlayPositionType}
             />
         );
     }

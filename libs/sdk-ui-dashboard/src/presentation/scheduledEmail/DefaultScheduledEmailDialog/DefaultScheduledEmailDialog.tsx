@@ -14,6 +14,7 @@ import {
     OverlayController,
     OverlayControllerProvider,
     RecurrenceForm,
+    ScrollablePanel,
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
@@ -60,6 +61,9 @@ import { MessageForm } from "./components/MessageForm/MessageForm.js";
 import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
 
 const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
+
+const OVERLAY_POSITION_TYPE = "sameAsTarget";
+const CLOSE_ON_PARENT_SCROLL = true;
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
@@ -239,7 +243,9 @@ export function ScheduledMailDialogRenderer({
                         }
                         accessibilityConfig={{
                             closeButton: {
-                                ariaLabel: intl.formatMessage({ id: "dialogs.schedule.email.closeLabel" }),
+                                ariaLabel: intl.formatMessage({
+                                    id: "dialogs.schedule.email.closeLabel",
+                                }),
                             },
                             titleElementId,
                         }}
@@ -283,7 +289,7 @@ export function ScheduledMailDialogRenderer({
                         <h2 className={"sr-only"} id={titleElementId}>
                             {intl.formatMessage({ id: "dialogs.schedule.email.accessibilityTitle" })}
                         </h2>
-                        <div
+                        <ScrollablePanel
                             className={cx("gd-notifications-channel-dialog-content-wrapper", {
                                 "gd-notification-channel-dialog-with-automation-filters":
                                     enableAutomationFilterContext,
@@ -300,6 +306,7 @@ export function ScheduledMailDialogRenderer({
                                         onStoreFiltersChange={onStoreFiltersChange}
                                         isDashboardAutomation={isDashboardExportSelected}
                                         areFiltersMissing={areVisibleFiltersMissingOnDashboard}
+                                        overlayPositionType={OVERLAY_POSITION_TYPE}
                                     />
                                     <ContentDivider className="gd-divider-with-margin" />
                                 </>
@@ -317,12 +324,15 @@ export function ScheduledMailDialogRenderer({
                                 onChange={onRecurrenceChange}
                                 allowHourlyRecurrence={allowHourlyRecurrence}
                                 isWhiteLabeled={isWhiteLabeled}
+                                closeDropdownsOnParentScroll={CLOSE_ON_PARENT_SCROLL}
                             />
                             <ContentDivider className="gd-divider-with-margin" />
                             <DestinationSelect
                                 notificationChannels={notificationChannels}
                                 selectedItemId={editedAutomation.notificationChannel}
                                 onChange={onDestinationChange}
+                                closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
+                                overlayPositionType={OVERLAY_POSITION_TYPE}
                             />
                             <ContentDivider className="gd-divider-with-margin" />
                             <RecipientsSelect
@@ -361,6 +371,8 @@ export function ScheduledMailDialogRenderer({
                                     onWidgetAttachmentsSelectionChange={onWidgetAttachmentsChange}
                                     onWidgetAttachmentsSettingsChange={onWidgetAttachmentsSettingsChange}
                                     enableAutomationFilterContext={enableAutomationFilterContext}
+                                    closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
+                                    overlayPositionType={OVERLAY_POSITION_TYPE}
                                 />
                             ) : (
                                 <DashboardAttachments
@@ -385,7 +397,7 @@ export function ScheduledMailDialogRenderer({
                                     {errorMessage}
                                 </Message>
                             ) : null}
-                        </div>
+                        </ScrollablePanel>
                     </ConfirmDialogBase>
                 </OverlayControllerProvider>
             </Overlay>

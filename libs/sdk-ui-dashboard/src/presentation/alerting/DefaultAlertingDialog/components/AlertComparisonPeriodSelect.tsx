@@ -19,6 +19,7 @@ export interface IAlertComparisonPeriodSelectProps {
     onComparisonChange: (comparison: AlertMetricComparatorType) => void;
     canManageComparison: boolean;
     id: string;
+    closeOnParentScroll?: boolean;
 }
 
 export const AlertComparisonPeriodSelect = (props: IAlertComparisonPeriodSelectProps) => {
@@ -30,6 +31,7 @@ export const AlertComparisonPeriodSelect = (props: IAlertComparisonPeriodSelectP
         canManageComparison,
         onComparisonChange,
         id,
+        closeOnParentScroll,
     } = props;
     const intl = useIntl();
 
@@ -91,6 +93,7 @@ export const AlertComparisonPeriodSelect = (props: IAlertComparisonPeriodSelectP
 
     return (
         <Dropdown
+            closeOnParentScroll={closeOnParentScroll}
             overlayPositionType={overlayPositionType}
             renderButton={({ isOpen, toggleDropdown }) => {
                 return (

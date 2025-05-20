@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import cx from "classnames";
-import { Button, ContentDivider, Dropdown, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { Button, ContentDivider, Dropdown, IAlignPoint, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 import { AttachmentType, WidgetAttachmentType } from "../../types.js";
 import { FormattedMessage, useIntl } from "react-intl";
 import { IExportDefinitionVisualizationObjectSettings } from "@gooddata/sdk-model";
@@ -66,8 +66,18 @@ export const AttachmentWidgets: React.FC<{
     settings: IExportDefinitionVisualizationObjectSettings;
     onSelectionChange: (format: WidgetAttachmentType) => void;
     onSettingsChange: (obj: IExportDefinitionVisualizationObjectSettings) => void;
+    closeOnParentScroll?: boolean;
+    overlayPositionType?: OverlayPositionType;
 }> = (props) => {
-    const { csvSelected, xlsxSelected, settings, onSelectionChange, onSettingsChange } = props;
+    const {
+        csvSelected,
+        xlsxSelected,
+        settings,
+        onSelectionChange,
+        onSettingsChange,
+        closeOnParentScroll,
+        overlayPositionType,
+    } = props;
     const intl = useIntl();
     const [mergeHeaders, setMergeHeaders] = useState(settings.mergeHeaders);
 
@@ -81,9 +91,10 @@ export const AttachmentWidgets: React.FC<{
                 className="gd-attachment-item-format-with-configuration"
             />
             <Dropdown
+                closeOnParentScroll={closeOnParentScroll}
+                overlayPositionType={overlayPositionType}
                 alignPoints={DROPDOWN_ALIGN_POINTS}
                 autofocusOnOpen={true}
-                overlayPositionType={"sameAsTarget"}
                 renderButton={({ toggleDropdown }) => (
                     <Button
                         className="gd-attachment-item-configuration gd-icon-settings"

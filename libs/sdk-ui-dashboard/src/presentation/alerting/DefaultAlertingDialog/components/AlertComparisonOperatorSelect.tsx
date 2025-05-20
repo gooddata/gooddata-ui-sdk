@@ -26,6 +26,7 @@ export interface IAlertComparisonOperatorSelectProps {
     ) => void;
     overlayPositionType?: OverlayPositionType;
     id: string;
+    closeOnParentScroll?: boolean;
 }
 
 export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSelectProps) => {
@@ -37,6 +38,7 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
         onRelativeOperatorChange,
         overlayPositionType,
         id,
+        closeOnParentScroll,
     } = props;
     const selectedComparisonItem = selectedComparisonOperator
         ? OPERATORS.find((option) => option.id === selectedComparisonOperator)!
@@ -62,6 +64,7 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
 
     return (
         <Dropdown
+            closeOnParentScroll={closeOnParentScroll}
             overlayPositionType={overlayPositionType}
             renderButton={({ isOpen, toggleDropdown }) => {
                 return (

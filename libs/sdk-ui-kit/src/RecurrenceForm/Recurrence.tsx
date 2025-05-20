@@ -33,6 +33,7 @@ export interface IRecurrenceProps {
     showTimezoneInOccurrence?: boolean;
     isWhiteLabeled?: boolean;
     onRecurrenceDropdownOpen?: () => void;
+    closeOnParentScroll?: boolean;
 }
 
 /**
@@ -60,6 +61,7 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
         isWhiteLabeled,
         weekStart = "Sunday",
         onRecurrenceDropdownOpen,
+        closeOnParentScroll,
     } = props;
 
     const { cronError, handleChange, handleOnBlur } = useCronValidation({
@@ -98,6 +100,7 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
                         allowHourlyRecurrence={allowHourlyRecurrence}
                         showInheritValue={showInheritValue}
                         onRepeatDropdownOpen={onRecurrenceDropdownOpen}
+                        closeOnParentScroll={closeOnParentScroll}
                     />
                     {isSpecified && showRepeatTypeDescription ? (
                         <RepeatTypeDescription

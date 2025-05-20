@@ -19,6 +19,7 @@ interface IDateTimeProps {
     dateFormat?: string;
     timeFormat?: string;
     onDateChange: (date: Date | null, valid: boolean) => void;
+    closeOnParentScroll?: boolean;
 }
 
 const errorMessages = defineMessages({
@@ -27,7 +28,17 @@ const errorMessages = defineMessages({
 });
 
 export const DateTime: React.FC<IDateTimeProps> = (props) => {
-    const { label, date, dateFormat, locale, timezone, onDateChange, weekStart, timeFormat } = props;
+    const {
+        label,
+        date,
+        dateFormat,
+        locale,
+        timezone,
+        onDateChange,
+        weekStart,
+        timeFormat,
+        closeOnParentScroll,
+    } = props;
 
     const [errorDate, setErrorDate] = useState<string | null>(null);
 
@@ -122,6 +133,7 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
                     overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
                     timeAnchor={TIME_ANCHOR}
                     timeFormat={timeFormat}
+                    closeOnParentScroll={closeOnParentScroll}
                 />
             </div>
             {timezone ? (
