@@ -68,14 +68,17 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         exportCSVRawEnabled,
         isExportRawVisible,
         isExportVisible,
+        isExportPngImageVisible,
         isExporting,
         onExportRawCSV,
         onExportCSV,
         onExportXLSX,
         onExportPdfPresentation,
         onExportPowerPointPresentation,
+        onExportPngImage,
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
+        exportPngImageDisabled,
     } = useInsightExport({
         widgetRef,
         title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
@@ -112,6 +115,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         exportCSVRawEnabled,
         isExportRawVisible,
         isExportVisible,
+        isExportPngImageVisible,
         isExporting,
         onExportCSV,
         onExportXLSX,
@@ -120,6 +124,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         onScheduleManagementExport,
         onExportPdfPresentation,
         onExportPowerPointPresentation,
+        onExportPngImage,
         isScheduleExportVisible: isScheduledEmailingVisible,
         isScheduleExportManagementVisible: isScheduledManagementEmailingVisible,
         isAlertingVisible,
@@ -130,6 +135,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         scheduleExportDisabledReason,
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
+        exportPngImageDisabled,
     });
     const toggleMenu = useCallback(() => {
         if (isMenuOpen) {
