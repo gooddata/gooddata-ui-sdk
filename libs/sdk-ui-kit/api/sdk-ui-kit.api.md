@@ -4693,8 +4693,6 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object> 
     // (undocumented)
     itemsContainerRef: React_2.RefObject<HTMLElement>;
     // (undocumented)
-    level: number;
-    // (undocumented)
     makeItemId: (item: IUiMenuItem<T>) => string | undefined;
     // (undocumented)
     menuComponentRef: React_2.RefObject<HTMLElement>;
@@ -4702,8 +4700,6 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object> 
     menuCtxData?: M;
     // (undocumented)
     onClose?: () => void;
-    // (undocumented)
-    onLevelChange: (level: number, item: IUiMenuContentItem<T> | IUiMenuInteractiveItem<T> | undefined) => void;
     // (undocumented)
     onSelect: (item: IUiMenuFocusableItem<T> | undefined) => void;
     // (undocumented)

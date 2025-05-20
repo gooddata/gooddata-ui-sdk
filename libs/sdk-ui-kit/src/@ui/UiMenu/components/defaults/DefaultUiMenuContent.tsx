@@ -19,24 +19,15 @@ export const DefaultUiMenuContent = React.memo(function DefaultUiMenuContent<
         setShownCustomContentItemId: ctx.setShownCustomContentItemId,
         setFocusedId: ctx.setFocusedId,
         shownCustomContentItemId: ctx.shownCustomContentItemId,
-        onLevelChange: ctx.onLevelChange,
-        level: ctx.level,
     }));
 
-    const {
-        onClose,
-        setShownCustomContentItemId,
-        setFocusedId,
-        shownCustomContentItemId,
-        onLevelChange,
-        level,
-    } = useContextStore(selector);
+    const { onClose, setShownCustomContentItemId, setFocusedId, shownCustomContentItemId } =
+        useContextStore(selector);
 
     const handleBack = React.useCallback(() => {
         setFocusedId(shownCustomContentItemId);
         setShownCustomContentItemId(undefined);
-        onLevelChange?.(level - 1, undefined);
-    }, [setShownCustomContentItemId, shownCustomContentItemId, setFocusedId, onLevelChange, level]);
+    }, [setShownCustomContentItemId, shownCustomContentItemId, setFocusedId]);
 
     const ContentComponent = item.Component;
 

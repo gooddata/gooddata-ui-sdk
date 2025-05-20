@@ -27,24 +27,19 @@ export const DefaultUiMenuHeader: React.FC = React.memo(function DefaultUiMenuHe
         onClose: ctx.onClose,
         parentItem: ctx.focusedItem ? getItemInteractiveParent(ctx.items, ctx.focusedItem.id) : undefined,
         focusedItem: ctx.focusedItem,
-        level: ctx.level,
-        onLevelChange: ctx.onLevelChange,
     }));
 
-    const { setFocusedId, onClose, parentItem, focusedItem, level, onLevelChange } =
-        useContextStore(selector);
+    const { setFocusedId, onClose, parentItem, focusedItem } = useContextStore(selector);
 
     const parentItemId = parentItem?.id;
 
     const handleBack = React.useCallback(() => {
         if (parentItemId === undefined) {
-            onLevelChange?.(0, undefined);
             return;
         }
-        onLevelChange?.(level - 1, parentItem);
 
         setFocusedId(parentItemId);
-    }, [setFocusedId, parentItemId, onLevelChange, level, parentItem]);
+    }, [setFocusedId, parentItemId]);
 
     if (!parentItem && focusedItem?.type !== "content") {
         return null;

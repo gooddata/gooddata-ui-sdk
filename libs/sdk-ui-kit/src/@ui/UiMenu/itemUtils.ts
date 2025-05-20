@@ -56,6 +56,10 @@ export const findInteractiveItem = <T extends IUiMenuItemData = object>(
     return foundItem?.type === "interactive" ? foundItem : undefined;
 };
 
+/**
+ * Finds a content menu item that matches the predicate.
+ * @internal
+ */
 export const findContentItem = <T extends IUiMenuItemData = object>(
     items: IUiMenuItem<T>[],
     predicate: (item: IUiMenuContentItem<T>) => boolean,

@@ -83,16 +83,13 @@ export const CustomUiMenuContentComponent: React.FC<IUiMenuContentProps<IMenuIte
     const selector = createSelector((ctx) => ({
         onClose: ctx.onClose,
         setShownCustomContentItemId: ctx.setShownCustomContentItemId,
-        level: ctx.level,
-        onLevelChange: ctx.onLevelChange,
     }));
 
-    const { onClose, setShownCustomContentItemId, level, onLevelChange } = useContextStore(selector);
+    const { onClose, setShownCustomContentItemId } = useContextStore(selector);
 
     const handleBack = React.useCallback(() => {
         setShownCustomContentItemId(undefined);
-        onLevelChange?.(level - 1, undefined);
-    }, [setShownCustomContentItemId, level, onLevelChange]);
+    }, [setShownCustomContentItemId]);
 
     if (item.showComponentOnly === true) {
         return <DefaultUiMenuContent item={item} />;

@@ -175,11 +175,6 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object>
     menuComponentRef: React.RefObject<HTMLElement>;
     itemsContainerRef: React.RefObject<HTMLElement>;
     menuCtxData?: M;
-    level: number;
-    onLevelChange: (
-        level: number,
-        item: IUiMenuContentItem<T> | IUiMenuInteractiveItem<T> | undefined,
-    ) => void;
 }
 
 /**
