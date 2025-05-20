@@ -463,7 +463,11 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             }
         }
 
-        return prevProps.execution.fingerprint() !== this.props.execution.fingerprint();
+        return this.props.config?.enableExecutionCancelling
+            ? prevProps.execution.fingerprint() !== this.props.execution.fingerprint()
+            : // this is triggering execution multiple times in some cases which is not good together with enabled execution cancelling
+              // on the other hand, without execution cancelling, fingerprint comparison only may lead to race conditions
+              !this.internal.table.isMatchingExecution(this.props.execution);
     }
 
     /**
