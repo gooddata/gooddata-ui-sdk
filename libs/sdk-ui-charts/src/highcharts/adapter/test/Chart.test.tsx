@@ -19,43 +19,43 @@ vi.mock("highcharts", () => {
     };
 });
 
-vi.mock("highcharts/modules/drilldown", () => {
+vi.mock("highcharts/esm/modules/drilldown", () => {
     return { default: vi.fn() };
 });
 
-vi.mock("highcharts/modules/treemap", () => {
+vi.mock("highcharts/esm/modules/treemap", () => {
     return { default: vi.fn() };
 });
 
-vi.mock("highcharts/modules/bullet", () => {
+vi.mock("highcharts/esm/modules/bullet", () => {
     return { default: vi.fn() };
 });
 
-vi.mock("highcharts/modules/heatmap", () => {
+vi.mock("highcharts/esm/modules/heatmap", () => {
     return { default: vi.fn() };
 });
 
-vi.mock("highcharts/modules/funnel", () => {
+vi.mock("highcharts/esm/modules/funnel", () => {
     return { default: vi.fn() };
 });
 
-vi.mock("highcharts/modules/sankey", () => {
+vi.mock("highcharts/esm/modules/sankey", () => {
     return { default: vi.fn() };
 });
 
-vi.mock("highcharts/modules/dependency-wheel", () => {
+vi.mock("highcharts/esm/modules/dependency-wheel", () => {
     return { default: vi.fn() };
 });
 
-vi.mock("highcharts/highcharts-more", () => {
+vi.mock("highcharts/esm/highcharts-more", () => {
     return { default: vi.fn() };
 });
 
-vi.mock("highcharts/modules/pattern-fill", () => {
+vi.mock("highcharts/esm/modules/pattern-fill", () => {
     return { default: vi.fn() };
 });
 
-vi.mock("highcharts/modules/accessibility", () => {
+vi.mock("highcharts/esm/modules/accessibility", () => {
     return { default: vi.fn() };
 });
 
