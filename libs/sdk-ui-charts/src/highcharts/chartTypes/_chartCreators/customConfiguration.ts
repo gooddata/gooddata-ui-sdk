@@ -1351,7 +1351,7 @@ const getXAxisConfiguration = (
                     font: '12px gdcustomfont, Avenir, "Helvetica Neue", Arial, sans-serif',
                     textOverflow: isInvertedChart ? "unset" : "ellipsis", // We need disable ellipsis Y axis to backward compatibility with 9.6.0
                 },
-                autoRotation: [-90],
+                autoRotation: [-45],
                 ...formatter,
                 ...rotationProp,
                 // Due to a bug in Highcharts & grouped-categories the autoRotation is working only with useHtml

@@ -1263,6 +1263,11 @@
         "comment": "",
         "limit": 0
     },
+    "properties.rotation.45": {
+        "value": "45°",
+        "comment": "",
+        "limit": 0
+    },
     "properties.rotation.60": {
         "value": "60°",
         "comment": "",
