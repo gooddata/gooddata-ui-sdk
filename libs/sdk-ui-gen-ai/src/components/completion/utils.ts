@@ -90,6 +90,7 @@ export function getItem(
             onCompletion(completion);
             view.dispatch({
                 changes: { from, to, insert: completion.label },
+                selection: { anchor: from + completion.label.length },
             });
         },
     };

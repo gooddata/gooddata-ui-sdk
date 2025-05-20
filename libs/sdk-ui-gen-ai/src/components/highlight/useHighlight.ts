@@ -1,12 +1,13 @@
 // (C) 2025 GoodData Corporation
 import { MutableRefObject, useMemo } from "react";
-import { Decoration, DecorationSet, EditorView, ViewPlugin } from "@codemirror/view";
+import { Decoration, DecorationSet, EditorView, ViewPlugin, WidgetType } from "@codemirror/view";
 import { Completion } from "@codemirror/autocomplete";
 import { Range } from "@codemirror/state";
 
 import { escapeRegex } from "../completion/utils.js";
 
 const HIGHLIGHT_CLASS = "cm-highlight-phrase";
+const WIDGET_CLASS = "cm-icon-widget";
 
 export function useHighlight(itemsRef: MutableRefObject<Completion[]>) {
     return useMemo(() => {
@@ -76,6 +77,14 @@ function addMatch(
             ...(item.type === "attribute" ? ["attribute"] : []),
             ...(item.type === "fact" ? ["fact"] : []),
         ];
+        // Widget before the matched text
+        builder.push(
+            Decoration.widget({
+                widget: new IconWidget(item),
+                side: -1, // side -1 means "before" the mark
+            }).range(start),
+        );
+        // Highlight the matched text
         builder.push(Decoration.mark({ class: className.join(" ") }).range(start, end));
     }
 }
@@ -91,4 +100,29 @@ function createRegex(items: Completion[]): RegExp | undefined {
               "gi",
           )
         : undefined;
+}
+
+class IconWidget extends WidgetType {
+    item: Completion;
+
+    constructor(item: Completion) {
+        super();
+        this.item = item;
+    }
+
+    toDOM() {
+        const item = this.item;
+        const span = document.createElement("span");
+        span.className = [
+            WIDGET_CLASS,
+            ...(item.type === "metric" ? ["metric"] : []),
+            ...(item.type === "attribute" ? ["attribute"] : []),
+            ...(item.type === "fact" ? ["fact"] : []),
+        ].join(" ");
+        return span;
+    }
+
+    ignoreEvent() {
+        return true;
+    }
 }
