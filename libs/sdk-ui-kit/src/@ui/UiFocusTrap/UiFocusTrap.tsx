@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useCallback } from "react";
 import { makeDialogKeyboardNavigation } from "../@utils/keyboardNavigation.js";
-import { getFocusableElements } from "../../utils/domUtilities.js";
+import { getFocusableElements, isElementTextInput } from "../../utils/domUtilities.js";
 
 type NavigationDirection = "forward" | "backward";
 
@@ -183,6 +183,10 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
 
             if (trapRef.current?.contains(document.activeElement)) {
                 // Do not change focus, if the focused element is already inside the trap
+                return;
+            }
+
+            if (isElementTextInput(document.activeElement)) {
                 return;
             }
 

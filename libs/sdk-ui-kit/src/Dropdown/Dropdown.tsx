@@ -234,9 +234,8 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
 
     const isMobileDevice = useMediaQuery("mobileDevice");
 
-    const renderDropdown =
-        isOpen &&
-        (fullscreenOnMobile && isMobileDevice ? (
+    const renderDropdown = isOpen ? (
+        fullscreenOnMobile && isMobileDevice ? (
             <FullScreenOverlay alignTo="body" alignPoints={MOBILE_DROPDOWN_ALIGN_POINTS}>
                 <div className="gd-mobile-dropdown-overlay overlay gd-flex-row-container">
                     <div className="gd-mobile-dropdown-header gd-flex-item">
@@ -285,7 +284,8 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                     </div>
                 </UiFocusTrap>
             </Overlay>
-        ));
+        )
+    ) : null;
 
     return (
         <div className={className}>

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import DefaultMediaQuery from "react-responsive";
@@ -19,6 +19,7 @@ export const ListItem: React.FC<{ isSelected?: boolean } & React.HTMLProps<HTMLB
 }) => (
     <>
         <button
+            role="option"
             className={cx(
                 "gd-list-item",
                 "gd-filter-list-item",

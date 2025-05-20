@@ -1,8 +1,9 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
-import { Button } from "@gooddata/sdk-ui-kit";
+import { UiIconButton } from "@gooddata/sdk-ui-kit";
 
 import { DashboardInsightSubmenuHeader } from "./DashboardInsightSubmenuHeader.js";
+import { useIntl } from "react-intl";
 
 interface IDashboardInsightSubmenuContainerProps {
     children: React.ReactNode;
@@ -14,13 +15,20 @@ interface IDashboardInsightSubmenuContainerProps {
 const screenWrapperStyle: React.CSSProperties = { width: "100%" };
 
 export const DashboardInsightSubmenuContainer: React.FC<IDashboardInsightSubmenuContainerProps> = (props) => {
+    const { formatMessage } = useIntl();
+    const closeLabel = formatMessage({ id: "menu.close" });
+
     return (
         <div className="configuration-panel">
             <div className="configuration-panel-header">
                 <DashboardInsightSubmenuHeader title={props.title} onHeaderClick={props.onBack} />
-                <Button
-                    className="gd-button-link gd-button-icon-only gd-icon-cross configuration-panel-header-close-button s-configuration-panel-header-close-button"
+                <UiIconButton
+                    size={"xsmall"}
+                    variant={"tertiary"}
+                    icon={"close"}
+                    label={closeLabel}
                     onClick={props.onClose}
+                    dataId="s-configuration-panel-header-close-button"
                 />
             </div>
             <div className="configuration-panel-screen" style={screenWrapperStyle}>

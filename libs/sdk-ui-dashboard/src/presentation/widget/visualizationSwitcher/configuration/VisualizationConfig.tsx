@@ -1,11 +1,10 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import React, { useState } from "react";
+import React from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import noop from "lodash/noop.js";
 import { DashboardInsightMenuBody } from "../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/index.js";
 import { selectInsightsMap, selectRenderMode, useDashboardSelector } from "../../../../model/index.js";
-import { IInsightMenuSubmenu } from "../../insightMenu/index.js";
 import { useVisualizationSwitcherEditableInsightMenu } from "./useVisualizationSwitcherEditableInsightMenu.js";
 
 interface IVisualizationConfigProps {
@@ -55,7 +54,6 @@ const VisualizationConfigContent: React.FC<IVisualizationConfigContentProps> = (
     );
 
     const renderMode = useDashboardSelector(selectRenderMode);
-    const [submenu, setSubmenu] = useState<IInsightMenuSubmenu | null>(null);
 
     return (
         <DashboardInsightMenuBody
@@ -63,8 +61,6 @@ const VisualizationConfigContent: React.FC<IVisualizationConfigContentProps> = (
             widget={widget}
             insight={insight}
             items={menuItems}
-            submenu={submenu}
-            setSubmenu={setSubmenu}
             renderMode={renderMode}
             isOpen={true}
             onClose={noop}

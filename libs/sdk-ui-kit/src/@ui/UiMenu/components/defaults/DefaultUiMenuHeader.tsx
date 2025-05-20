@@ -1,22 +1,24 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { e } from "../menuBem.js";
-import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
+import cx from "classnames";
+import { e } from "../../menuBem.js";
+import { UiIconButton } from "../../../UiIconButton/UiIconButton.js";
 import { useIntl } from "react-intl";
-import { ShortenedText } from "../../../ShortenedText/index.js";
-import { typedUiMenuContextStore } from "../context.js";
-import { getItemInteractiveParent } from "../itemUtils.js";
-import { IUiMenuItemData } from "../types.js";
+import { ShortenedText } from "../../../../ShortenedText/index.js";
+import { Button } from "../../../../Button/index.js";
+import { typedUiMenuContextStore } from "../../context.js";
+import { getItemInteractiveParent } from "../../itemUtils.js";
+import { IUiMenuItemData } from "../../types.js";
 
 /**
  * Renders the submenu header when in a submenu.
  * If not in a submenu, returns null.
  * @internal
  */
-export const DefaultUiMenuHeaderComponent = React.memo(function DefaultUiMenuHeaderComponent<
+export const DefaultUiMenuHeader: React.FC = React.memo(function DefaultUiMenuHeader<
     T extends IUiMenuItemData = object,
->(): React.ReactNode {
+>(): React.ReactElement | null {
     const { formatMessage } = useIntl();
 
     const { useContextStore, createSelector } = typedUiMenuContextStore<T>();
@@ -24,9 +26,10 @@ export const DefaultUiMenuHeaderComponent = React.memo(function DefaultUiMenuHea
         setFocusedId: ctx.setFocusedId,
         onClose: ctx.onClose,
         parentItem: ctx.focusedItem ? getItemInteractiveParent(ctx.items, ctx.focusedItem.id) : undefined,
+        focusedItem: ctx.focusedItem,
     }));
 
-    const { setFocusedId, onClose, parentItem } = useContextStore(selector);
+    const { setFocusedId, onClose, parentItem, focusedItem } = useContextStore(selector);
 
     const parentItemId = parentItem?.id;
 
@@ -38,28 +41,31 @@ export const DefaultUiMenuHeaderComponent = React.memo(function DefaultUiMenuHea
         setFocusedId(parentItemId);
     }, [setFocusedId, parentItemId]);
 
-    if (!parentItem) {
+    if (!parentItem && focusedItem?.type !== "content") {
         return null;
     }
 
+    const title = parentItem?.stringTitle ?? focusedItem?.stringTitle;
+
     return (
         <div role={"presentation"} className={e("menu-header")}>
-            <button
+            <Button
                 onClick={handleBack}
-                className={e("menu-header-title")}
-                aria-label={formatMessage({ id: "menu.back" })}
+                className={cx(e("menu-header-title"), "gd-icon-navigateleft")}
+                accessibilityConfig={{
+                    ariaLabel: formatMessage({ id: "menu.back" }),
+                }}
             >
-                <i className="gd-icon-navigateleft" />
                 <ShortenedText
                     tagName={"h3"}
                     ellipsisPosition={"end"}
                     className={e("menu-header-title-text")}
                 >
-                    {parentItem.stringTitle}
+                    {title}
                 </ShortenedText>
-            </button>
+            </Button>
             <UiIconButton
-                size={"small"}
+                size={"xsmall"}
                 variant={"tertiary"}
                 icon={"close"}
                 label={formatMessage({ id: "menu.close" })}

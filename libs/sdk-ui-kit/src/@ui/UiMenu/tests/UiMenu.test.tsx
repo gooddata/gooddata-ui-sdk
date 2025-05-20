@@ -8,12 +8,7 @@ import { pickCorrectWording, messagesMap } from "@gooddata/sdk-ui";
 import { UiMenu } from "../UiMenu.js";
 import { describe, it, expect, vi } from "vitest";
 import { e, b } from "../menuBem.js";
-import {
-    IUiMenuItem,
-    UiMenuInteractiveItemProps,
-    UiMenuStaticItemProps,
-    UiMenuGroupItemProps,
-} from "../types.js";
+import { IUiMenuItem, IUiMenuInteractiveItemProps, IUiMenuStaticItemProps, IUiMenuProps } from "../types.js";
 import { typedUiMenuContextStore } from "../context.js";
 
 describe("UiMenu", () => {
@@ -52,7 +47,7 @@ describe("UiMenu", () => {
         enableRenamingMeasureToMetric: true,
     });
 
-    const renderMenu = (props = {}) => {
+    const renderMenu = (props: Partial<IUiMenuProps> = {}) => {
         const defaultAriaAttributes = {
             id: "test-dropdown-menu",
             "aria-labelledby": "test-dropdown-button",
@@ -237,7 +232,7 @@ describe("UiMenu", () => {
             item,
             isFocused,
             onSelect,
-        }: UiMenuInteractiveItemProps<{ interactive: string }>) => (
+        }: IUiMenuInteractiveItemProps<{ interactive: string }>) => (
             <div
                 className={cx("custom-item", {
                     "custom-focused": isFocused,
@@ -251,7 +246,7 @@ describe("UiMenu", () => {
         );
 
         renderMenu({
-            InteractiveItemComponent: CustomInteractiveItemComponent,
+            InteractiveItem: CustomInteractiveItemComponent,
         });
 
         // Check that custom component is rendered
@@ -263,14 +258,14 @@ describe("UiMenu", () => {
     });
 
     it("should render with custom StaticItemComponent", () => {
-        const CustomStaticItemComponent = ({ item }: UiMenuStaticItemProps<{ static: string }>) => (
+        const CustomStaticItemComponent = ({ item }: IUiMenuStaticItemProps<{ static: string }>) => (
             <div className="custom-static-item" data-testid="custom-static-item">
                 Static: {item.data}
             </div>
         );
 
         renderMenu({
-            StaticItemComponent: CustomStaticItemComponent,
+            StaticItem: CustomStaticItemComponent,
         });
 
         // Check that custom static component is rendered
@@ -417,7 +412,7 @@ describe("UiMenu", () => {
         };
 
         renderMenu({
-            GroupItemComponent: CustomGroupItemComponent,
+            GroupItem: CustomGroupItemComponent,
         });
 
         // Check that custom component is rendered

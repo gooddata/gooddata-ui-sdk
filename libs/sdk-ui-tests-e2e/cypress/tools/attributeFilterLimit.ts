@@ -40,7 +40,7 @@ export class AttributeFilterLimit {
 
     getNodata(exists = true) {
         cy.get(".attribute-filter__limit__popup__no-data").should(exists ? "exist" : "not.exist");
-        cy.get(".s-configuration-panel-header-close-button").click();
+        cy.get("[data-id='s-configuration-panel-header-close-button']").click();
         return this;
     }
 }

@@ -1,11 +1,26 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+import React, { FC } from "react";
 import cx from "classnames";
 import { b, e } from "./menuBem.js";
 import { IUiMenuItemData, UiMenuProps } from "./types.js";
-import { getSiblingItems } from "./itemUtils.js";
-import { useKeyNavigation, useUiMenuContextValue } from "./hooks.js";
+import { getContentItem, getSiblingItems } from "./itemUtils.js";
+import { useCustomContentKeyNavigation, useKeyNavigation, useUiMenuContextValue } from "./hooks.js";
 import { typedUiMenuContextStore } from "./context.js";
+import { useAutofocusOnMount } from "../../utils/useAutofocusOnMount.js";
+
+const ContentWrapper: FC<{
+    keyboardNavigationHandler: (event: React.KeyboardEvent) => void;
+    children?: React.ReactNode;
+}> = (props) => {
+    // autofocus always first element in the custom content for now
+    const autofocusRef = useAutofocusOnMount();
+
+    return (
+        <div onKeyDown={props.keyboardNavigationHandler} ref={autofocusRef}>
+            {props.children}
+        </div>
+    );
+};
 
 /**
  * An accessible menu component that can be navigated by keyboard.
@@ -14,7 +29,9 @@ import { typedUiMenuContextStore } from "./context.js";
  *
  * @internal
  */
-export function UiMenu<T extends IUiMenuItemData = object>(props: UiMenuProps<T>): React.ReactNode {
+export function UiMenu<T extends IUiMenuItemData = object, M extends object = object>(
+    props: UiMenuProps<T, M>,
+): React.ReactNode {
     const {
         className,
         maxWidth,
@@ -27,10 +44,17 @@ export function UiMenu<T extends IUiMenuItemData = object>(props: UiMenuProps<T>
     const menuComponentRef = React.useRef<HTMLMenuElement>(null);
     const itemsContainerRef = React.useRef<HTMLDivElement>(null);
 
-    const UiMenuContextStore = typedUiMenuContextStore<T>();
+    const UiMenuContextStore = typedUiMenuContextStore<T, M>();
     const contextStoreValue = useUiMenuContextValue(props, menuComponentRef, itemsContainerRef);
 
-    const handleKeyDown = useKeyNavigation<T>({
+    const handleKeyDown = useKeyNavigation<T, M>({
+        menuContextValue: contextStoreValue,
+        onUnhandledKeyDown,
+        shouldKeyboardActionPreventDefault,
+        shouldKeyboardActionStopPropagation,
+    });
+
+    const handleKeyDownInCustomContent = useCustomContentKeyNavigation<T, M>({
         menuContextValue: contextStoreValue,
         onUnhandledKeyDown,
         shouldKeyboardActionPreventDefault,
@@ -42,9 +66,11 @@ export function UiMenu<T extends IUiMenuItemData = object>(props: UiMenuProps<T>
         items,
         controlType,
         setControlType,
-        MenuHeaderComponent,
+        MenuHeader,
         ItemComponent,
+        Content,
         makeItemId,
+        shownCustomContentItemId,
     } = contextStoreValue;
     const focusedId = focusedItem?.id;
 
@@ -53,34 +79,50 @@ export function UiMenu<T extends IUiMenuItemData = object>(props: UiMenuProps<T>
         [items, focusedId],
     );
 
+    React.useEffect(() => {
+        // Only focus when shownCustomContentItemId becomes undefined (was previously set)
+        if (shownCustomContentItemId === undefined && menuComponentRef.current) {
+            menuComponentRef.current.focus();
+        }
+    }, [shownCustomContentItemId, menuComponentRef]);
+
+    const menuClassName = typeof className === "function" ? className(contextStoreValue) : className;
+
     return (
         <UiMenuContextStore value={contextStoreValue}>
             <div
-                className={cx(b(), b({ controlType }), className)}
+                className={cx(b(), b({ controlType }), menuClassName)}
                 style={{ maxWidth }}
                 onKeyDownCapture={() => setControlType("keyboard")}
                 onMouseMoveCapture={() => setControlType("mouse")}
             >
-                <MenuHeaderComponent />
-
-                <div
-                    className={e("items-container")}
-                    ref={itemsContainerRef as React.MutableRefObject<HTMLDivElement>}
-                >
-                    <menu
-                        className={e("items")}
-                        tabIndex={0}
-                        onKeyDown={handleKeyDown}
-                        aria-activedescendant={focusedItem ? makeItemId(focusedItem) : undefined}
-                        {...ariaAttributes}
-                        role="menu"
-                        ref={menuComponentRef}
-                    >
-                        {currentMenuLevelItems.map((item, index) => (
-                            <ItemComponent key={"id" in item ? item.id : index} item={item} />
-                        ))}
-                    </menu>
-                </div>
+                {shownCustomContentItemId ? (
+                    <ContentWrapper keyboardNavigationHandler={handleKeyDownInCustomContent}>
+                        <Content item={getContentItem(items, shownCustomContentItemId)} />
+                    </ContentWrapper>
+                ) : (
+                    <>
+                        <MenuHeader />
+                        <div
+                            className={e("items-container")}
+                            ref={itemsContainerRef as React.MutableRefObject<HTMLDivElement>}
+                        >
+                            <menu
+                                className={e("items")}
+                                tabIndex={0}
+                                onKeyDown={handleKeyDown}
+                                aria-activedescendant={makeItemId(focusedItem)}
+                                {...ariaAttributes}
+                                role="menu"
+                                ref={menuComponentRef}
+                            >
+                                {currentMenuLevelItems.map((item, index) => (
+                                    <ItemComponent key={"id" in item ? item.id : index} item={item} />
+                                ))}
+                            </menu>
+                        </div>
+                    </>
+                )}
             </div>
         </UiMenuContextStore>
     );

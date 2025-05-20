@@ -30,7 +30,10 @@ const exportMessages = defineMessages({
     csvRaw: { id: "widget.options.menu.exportToCSV.raw" },
 });
 
-const getExportTooltip = (execution?: IExecutionResultEnvelope, enableRawExports?: boolean): string => {
+export const getExportTooltip = (
+    execution?: IExecutionResultEnvelope,
+    enableRawExports?: boolean,
+): string => {
     if (isDataErrorTooLarge(execution?.error)) {
         return "options.menu.data.too.large";
     } else if (isDataError(execution?.error)) {

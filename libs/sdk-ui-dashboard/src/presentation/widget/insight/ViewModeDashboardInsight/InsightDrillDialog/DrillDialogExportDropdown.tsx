@@ -6,12 +6,12 @@ import {
     Bubble,
     BubbleHoverTrigger,
     Button,
-    DefaultUiMenuInteractiveItemComponent,
+    DefaultUiMenuInteractiveItem,
     Dropdown,
     IAlignPoint,
     IDropdownButtonRenderProps,
     UiMenu,
-    UiMenuInteractiveItemProps,
+    IUiMenuInteractiveItemProps,
 } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -101,7 +101,7 @@ export const DrillDialogExportDropdown: React.FC<IDrillDialogShareDropdownProps>
                         items={items}
                         className={"s-drill-modal-export-options"}
                         itemClassName={itemClassName}
-                        InteractiveItemComponent={DrillModalExportMenuItem}
+                        InteractiveItem={DrillModalExportMenuItem}
                     />
                 )}
                 renderButton={(buttonRenderProps) => {
@@ -126,20 +126,20 @@ export const DrillDialogExportDropdown: React.FC<IDrillDialogShareDropdownProps>
     );
 };
 
-const DrillModalExportMenuItem: React.FC<UiMenuInteractiveItemProps<IMenuItemData>> = (props) => {
+const DrillModalExportMenuItem: React.FC<IUiMenuInteractiveItemProps<IMenuItemData>> = (props) => {
     const { item } = props;
 
     const tooltip = item.data.disabledTooltip;
 
     return item.isDisabled && tooltip !== undefined ? (
         <BubbleHoverTrigger>
-            <DefaultUiMenuInteractiveItemComponent {...props} />
+            <DefaultUiMenuInteractiveItem {...props} />
             <Bubble className="bubble-primary" alignPoints={itemBubbleAlignPoints}>
                 {tooltip}
             </Bubble>
         </BubbleHoverTrigger>
     ) : (
-        <DefaultUiMenuInteractiveItemComponent {...props} />
+        <DefaultUiMenuInteractiveItem {...props} />
     );
 };
 

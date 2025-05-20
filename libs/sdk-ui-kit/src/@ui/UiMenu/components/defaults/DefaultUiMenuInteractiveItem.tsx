@@ -1,18 +1,22 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { e } from "../menuBem.js";
-import { ShortenedText } from "../../../ShortenedText/index.js";
-import { IUiMenuItemData, UiMenuInteractiveItemProps, UiMenuInteractiveItemWrapperProps } from "../types.js";
-import { typedUiMenuContextStore } from "../context.js";
+import { e } from "../../menuBem.js";
+import { ShortenedText } from "../../../../ShortenedText/index.js";
+import {
+    IUiMenuItemData,
+    IUiMenuInteractiveItemProps,
+    IUiMenuInteractiveItemWrapperProps,
+} from "../../types.js";
+import { typedUiMenuContextStore } from "../../context.js";
 import cx from "classnames";
 
 /**
  * @internal
  */
-export function DefaultUiMenuInteractiveItemWrapperComponent<T extends IUiMenuItemData = object>({
+export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = object>({
     item,
-}: UiMenuInteractiveItemWrapperProps<T>): React.ReactNode {
+}: IUiMenuInteractiveItemWrapperProps<T>): React.ReactNode {
     const { useContextStore, createSelector } = typedUiMenuContextStore<T>();
     const selector = createSelector((ctx) => ({
         onSelect: ctx.onSelect,
@@ -21,7 +25,7 @@ export function DefaultUiMenuInteractiveItemWrapperComponent<T extends IUiMenuIt
         setFocusedId: ctx.setFocusedId,
         makeItemId: ctx.makeItemId,
         itemClassName: ctx.itemClassName,
-        InteractiveItemComponent: ctx.InteractiveItemComponent,
+        InteractiveItemComponent: ctx.InteractiveItem,
         isFocused: ctx.focusedItem?.id === item.id,
     }));
 
@@ -86,11 +90,11 @@ export function DefaultUiMenuInteractiveItemWrapperComponent<T extends IUiMenuIt
 /**
  * @internal
  */
-export function DefaultUiMenuInteractiveItemComponent<T extends IUiMenuItemData = object>({
+export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>({
     item,
     isFocused,
     onSelect,
-}: UiMenuInteractiveItemProps<T>): React.ReactNode {
+}: IUiMenuInteractiveItemProps<T>): React.ReactNode {
     return (
         <div
             className={e("item", {

@@ -3,7 +3,7 @@
 import React, { SyntheticEvent } from "react";
 import cx from "classnames";
 import compact from "lodash/compact.js";
-import { Icon, UiMenuInteractiveItemProps } from "@gooddata/sdk-ui-kit";
+import { Icon, IUiMenuInteractiveItemProps } from "@gooddata/sdk-ui-kit";
 
 import { DrillType } from "./types.js";
 import { IDrillSelectDropdownMenuItemData } from "../hooks/useDrillSelectDropdownMenuItems.js";
@@ -17,7 +17,7 @@ const DRILL_ICON_NAME: Record<DrillType, string> = {
 };
 
 export const DrillSelectDropdownMenuItem: React.FC<
-    UiMenuInteractiveItemProps<IDrillSelectDropdownMenuItemData>
+    IUiMenuInteractiveItemProps<IDrillSelectDropdownMenuItemData>
 > = (props) => {
     const {
         item: {

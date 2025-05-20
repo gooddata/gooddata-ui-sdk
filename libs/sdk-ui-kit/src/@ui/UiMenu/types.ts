@@ -43,29 +43,60 @@ export type IUiMenuGroupItem<T extends IUiMenuItemData = object> = {
 /**
  * @internal
  */
-export type IUiMenuItem<T extends IUiMenuItemData = object> =
-    | IUiMenuStaticItem<T>
-    | IUiMenuInteractiveItem<T>
-    | IUiMenuGroupItem<T>;
+export type IUiMenuContentItem<T extends IUiMenuItemData = object> = {
+    type: "content";
+    id: string;
+    stringTitle: string;
+    isDisabled?: boolean;
+    showComponentOnly?: boolean;
+    data: T["content"];
+    Component: React.ComponentType<{
+        onBack: () => void;
+        onClose: () => void;
+    }>;
+};
 
 /**
  * @internal
  */
-export interface UiMenuItemProps<T extends IUiMenuItemData = object> {
+export type IUiMenuItem<T extends IUiMenuItemData = object> =
+    | IUiMenuStaticItem<T>
+    | IUiMenuInteractiveItem<T>
+    | IUiMenuGroupItem<T>
+    | IUiMenuContentItem<T>;
+
+/**
+ * @internal
+ */
+export type IUiMenuFocusableItem<T extends IUiMenuItemData = object> =
+    | IUiMenuInteractiveItem<T>
+    | IUiMenuContentItem<T>;
+
+/**
+ * @internal
+ */
+export interface IUiMenuItemProps<T extends IUiMenuItemData = object> {
     item: IUiMenuItem<T>;
 }
 
 /**
  * @internal
  */
-export interface UiMenuInteractiveItemWrapperProps<T extends IUiMenuItemData = object> {
+export interface IUiMenuInteractiveItemWrapperProps<T extends IUiMenuItemData = object> {
     item: IUiMenuInteractiveItem<T>;
 }
 
 /**
  * @internal
  */
-export interface UiMenuInteractiveItemProps<T extends IUiMenuItemData = object> {
+export interface IUiMenuContentItemWrapperProps<T extends IUiMenuItemData = object> {
+    item: IUiMenuContentItem<T>;
+}
+
+/**
+ * @internal
+ */
+export interface IUiMenuInteractiveItemProps<T extends IUiMenuItemData = object> {
     item: IUiMenuInteractiveItem<T>;
 
     isFocused: boolean;
@@ -76,15 +107,31 @@ export interface UiMenuInteractiveItemProps<T extends IUiMenuItemData = object> 
 /**
  * @internal
  */
-export interface UiMenuGroupItemProps<T extends IUiMenuItemData = object> {
+export interface IUiMenuGroupItemProps<T extends IUiMenuItemData = object> {
     item: IUiMenuGroupItem<T>;
 }
 
 /**
  * @internal
  */
-export interface UiMenuStaticItemProps<T extends IUiMenuItemData = object> {
+export interface IUiMenuStaticItemProps<T extends IUiMenuItemData = object> {
     item: IUiMenuStaticItem<T>;
+}
+
+/**
+ * @internal
+ */
+export interface IUiMenuContentItemProps<T extends IUiMenuItemData = object> {
+    item: IUiMenuContentItem<T>;
+    isFocused: boolean;
+    onSelect: () => void;
+}
+
+/**
+ * @internal
+ */
+export interface IUiMenuContentProps<T extends IUiMenuItemData = object> {
+    item: IUiMenuContentItem<T>;
 }
 
 /**
@@ -96,45 +143,54 @@ export type IUiMenuControlType = "keyboard" | "mouse" | "unknown";
  * @internal
  */
 export interface IUiMenuPluggableComponents<T extends IUiMenuItemData = object> {
-    InteractiveItemComponent: React.ComponentType<UiMenuInteractiveItemProps<T>>;
-    InteractiveItemWrapperComponent: React.ComponentType<UiMenuInteractiveItemWrapperProps<T>>;
-    GroupItemComponent: React.ComponentType<UiMenuGroupItemProps<T>>;
-    StaticItemComponent: React.ComponentType<UiMenuStaticItemProps<T>>;
-    MenuHeaderComponent: React.ComponentType;
+    InteractiveItem: React.ComponentType<IUiMenuInteractiveItemProps<T>>;
+    InteractiveItemWrapper: React.ComponentType<IUiMenuInteractiveItemWrapperProps<T>>;
+    GroupItem: React.ComponentType<IUiMenuGroupItemProps<T>>;
+    StaticItem: React.ComponentType<IUiMenuStaticItemProps<T>>;
+    ContentItemWrapper: React.ComponentType<IUiMenuContentItemWrapperProps<T>>;
+    ContentItem: React.ComponentType<IUiMenuContentItemProps<T>>;
+    Content: React.ComponentType<IUiMenuContentProps<T>>;
+    MenuHeader: React.ComponentType;
 }
 
 /**
  * @internal
  */
-export interface IUiMenuContext<T extends IUiMenuItemData = object> extends IUiMenuPluggableComponents<T> {
+export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object>
+    extends IUiMenuPluggableComponents<T> {
     items: IUiMenuItem<T>[];
-    focusedItem: IUiMenuInteractiveItem<T> | undefined;
-    onSelect: (item: IUiMenuInteractiveItem<T> | undefined) => void;
+    focusedItem: IUiMenuFocusableItem<T> | undefined;
+    shownCustomContentItemId?: string;
+    setShownCustomContentItemId: React.Dispatch<React.SetStateAction<string | undefined>>;
+    onSelect: (item: IUiMenuFocusableItem<T> | undefined) => void;
     onClose?: () => void;
     setFocusedId: React.Dispatch<React.SetStateAction<string | undefined>>;
     isItemFocusable: (item: IUiMenuItem<T>) => boolean;
     controlType: IUiMenuControlType;
     setControlType: React.Dispatch<React.SetStateAction<IUiMenuControlType>>;
     scrollToView: (element: HTMLElement | null) => void;
-    makeItemId: (item: IUiMenuItem<T>) => string;
+    makeItemId: (item: IUiMenuItem<T>) => string | undefined;
     itemClassName?: ((item: IUiMenuItem<T>) => string | undefined) | string;
-    ItemComponent: React.ComponentType<UiMenuItemProps<T>>;
+    ItemComponent: React.ComponentType<IUiMenuItemProps<T>>;
     menuComponentRef: React.RefObject<HTMLElement>;
     itemsContainerRef: React.RefObject<HTMLElement>;
+    menuCtxData?: M;
 }
 
 /**
  * @internal
  */
-export interface UiMenuProps<T extends IUiMenuItemData = object>
+export interface UiMenuProps<T extends IUiMenuItemData = object, M = object>
     extends Partial<IUiMenuPluggableComponents<T>> {
     items: IUiMenuItem<T>[];
 
-    className?: string;
+    className?: ((context: IUiMenuContext<T>) => string | undefined) | string;
+
     itemClassName?: ((item: IUiMenuItem<T>) => string | undefined) | string;
     maxWidth?: number;
 
     onSelect?: (item: IUiMenuInteractiveItem<T>) => void;
+    onLevelChange?: (level: number, item?: IUiMenuContentItem<T> | IUiMenuInteractiveItem<T>) => void;
     onClose?: () => void;
     onUnhandledKeyDown?: (event: React.KeyboardEvent, context: IUiMenuContext<T>) => void;
 
@@ -144,4 +200,6 @@ export interface UiMenuProps<T extends IUiMenuItemData = object>
     isDisabledFocusable?: boolean;
 
     ariaAttributes: Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
+    // shared data for whole menu component
+    menuCtxData?: M;
 }

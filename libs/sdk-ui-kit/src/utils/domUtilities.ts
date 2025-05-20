@@ -185,3 +185,12 @@ export const getFocusableElements = (element?: HTMLElement) => {
     const lastElement = focusableElements?.[focusableElements.length - 1];
     return { focusableElements, firstElement, lastElement };
 };
+
+/**
+ * @internal
+ * @param element - the element to test for focusability
+ * @returns whether or not the supplied element is focusable
+ */
+export const isElementFocusable = (element?: HTMLElement | null) => {
+    return element?.matches(focusableElementsSelector);
+};

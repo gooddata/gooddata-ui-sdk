@@ -3,66 +3,76 @@
 import {
     IUiMenuControlType,
     IUiMenuContext,
-    IUiMenuInteractiveItem,
     IUiMenuItem,
-    UiMenuItemProps,
     UiMenuProps,
     IUiMenuItemData,
+    IUiMenuFocusableItem,
 } from "./types.js";
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import {
     getClosestFocusableSibling,
-    getInteractiveItem,
+    getFocusableItem,
     getItemInteractiveParent,
     getItemsByInteractiveParent,
     getSiblingItems,
     unwrapGroupItems,
 } from "./itemUtils.js";
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
-import React from "react";
+import React, { useEffect } from "react";
 import {
-    DefaultUiMenuInteractiveItemComponent,
-    DefaultUiMenuInteractiveItemWrapperComponent,
-} from "./defaults/DefaultUiMenuInteractiveItemComponent.js";
-import { DefaultUiMenuStaticItemComponent } from "./defaults/DefaultUiMenuStaticItemComponent.js";
-import { DefaultUiMenuGroupItemComponent } from "./defaults/DefaultUiMenuGroupItemComponent.js";
-import { DefaultUiMenuHeaderComponent } from "./defaults/DefaultUiMenuHeaderComponent.js";
+    DefaultUiMenuInteractiveItem,
+    DefaultUiMenuInteractiveItemWrapper,
+} from "./components/defaults/DefaultUiMenuInteractiveItem.js";
+import { DefaultUiMenuStaticItem } from "./components/defaults/DefaultUiMenuStaticItem.js";
+import { DefaultUiMenuGroupItem } from "./components/defaults/DefaultUiMenuGroupItem.js";
+import { DefaultUiMenuHeader } from "./components/defaults/DefaultUiMenuHeader.js";
 import { v4 as uuid } from "uuid";
-import { typedUiMenuContextStore } from "./context.js";
+import {
+    DefaultUiMenuContentItem,
+    DefaultUiMenuContentItemWrapper,
+} from "./components/defaults/DefaultUiMenuContentItem.js";
+import { DefaultUiMenuContent } from "./components/defaults/DefaultUiMenuContent.js";
+import { Item } from "./components/Item.js";
+import { isElementTextInput } from "../../utils/domUtilities.js";
 
 /**
  * @internal
  */
-export function useUiMenuContextValue<T extends IUiMenuItemData = object>(
-    props: UiMenuProps<T>,
+export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = object>(
+    props: UiMenuProps<T, M>,
     menuComponentRef: React.RefObject<HTMLElement>,
     itemsContainerRef: React.RefObject<HTMLElement>,
-): IUiMenuContext<T> {
+): IUiMenuContext<T, M> {
     const {
         items,
 
         itemClassName,
 
         onSelect,
+        onLevelChange,
         onClose,
 
-        InteractiveItemComponent = DefaultUiMenuInteractiveItemComponent,
-        InteractiveItemWrapperComponent = DefaultUiMenuInteractiveItemWrapperComponent,
-        StaticItemComponent = DefaultUiMenuStaticItemComponent,
-        GroupItemComponent = DefaultUiMenuGroupItemComponent,
-        MenuHeaderComponent = DefaultUiMenuHeaderComponent,
-
+        InteractiveItem: InteractiveItemComponent = DefaultUiMenuInteractiveItem,
+        InteractiveItemWrapper: InteractiveItemWrapperComponent = DefaultUiMenuInteractiveItemWrapper,
+        StaticItem: StaticItemComponent = DefaultUiMenuStaticItem,
+        GroupItem: GroupItemComponent = DefaultUiMenuGroupItem,
+        MenuHeader: MenuHeaderComponent = DefaultUiMenuHeader,
+        ContentItem: ContentItemComponent = DefaultUiMenuContentItem,
+        ContentItemWrapper: ContentItemWrapperComponent = DefaultUiMenuContentItemWrapper,
+        Content: ContentComponent = DefaultUiMenuContent,
         shouldCloseOnSelect = true,
         isDisabledFocusable = true,
 
         ariaAttributes,
+
+        menuCtxData,
     } = props;
 
     const [controlType, setControlType] = React.useState<IUiMenuControlType>("unknown");
 
     const isItemFocusable = React.useCallback(
         (item?: IUiMenuItem<T>) => {
-            if (!item || item.type !== "interactive") {
+            if (!item || (item.type !== "interactive" && item.type !== "content")) {
                 return false;
             }
 
@@ -74,6 +84,11 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object>(
     const [focusedId, setFocusedId_internal] = React.useState<string | undefined>(
         () => unwrapGroupItems(items).find(isItemFocusable)?.id,
     );
+
+    const [shownCustomContentItemId, setShownCustomContentItemId] = React.useState<string | undefined>(
+        undefined,
+    );
+
     const setFocusedId = React.useCallback<typeof setFocusedId_internal>(
         (...args) => {
             setFocusedId_internal(...args);
@@ -83,11 +98,39 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object>(
         [menuComponentRef],
     );
 
-    const focusedItem = focusedId === undefined ? undefined : getInteractiveItem(items, focusedId);
+    const focusedItem = focusedId !== undefined ? getFocusableItem(items, focusedId) : undefined;
+
+    const parentItemId = React.useMemo(() => {
+        if (shownCustomContentItemId) {
+            return shownCustomContentItemId;
+        }
+
+        if (focusedItem) {
+            return getItemInteractiveParent(items, focusedItem.id)?.id;
+        }
+
+        return undefined;
+    }, [focusedItem, items, shownCustomContentItemId]);
+
+    useEffect(() => {
+        if (parentItemId) {
+            const item = getFocusableItem(items, parentItemId);
+            onLevelChange?.(1, item);
+        } else {
+            onLevelChange?.(0, undefined);
+        }
+    }, [parentItemId, onLevelChange, items]);
 
     const handleSelectItem = React.useCallback(
-        (item?: IUiMenuInteractiveItem<T>) => {
+        (item?: IUiMenuFocusableItem<T>) => {
             if (!item || item.isDisabled) {
+                return;
+            }
+
+            if (item.type === "content") {
+                if (item.Component) {
+                    setShownCustomContentItemId(item.id);
+                }
                 return;
             }
 
@@ -112,7 +155,14 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object>(
     );
 
     const makeItemId = React.useCallback<IUiMenuContext<T>["makeItemId"]>(
-        (item) => (item && item.type === "interactive" ? `item-${ariaAttributes.id}-${item.id}` : uuid()),
+        (item) => {
+            if (!item) {
+                return undefined;
+            }
+            return item && (item.type === "interactive" || item.type === "content")
+                ? `item-${ariaAttributes.id}-${item.id}`
+                : uuid();
+        },
         [ariaAttributes.id],
     );
 
@@ -138,6 +188,8 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object>(
         setControlType,
         setFocusedId,
         focusedItem,
+        setShownCustomContentItemId,
+        shownCustomContentItemId,
         onClose,
         items,
         onSelect: handleSelectItem,
@@ -148,48 +200,31 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object>(
         menuComponentRef,
         itemsContainerRef,
 
-        InteractiveItemWrapperComponent,
-        InteractiveItemComponent,
-        StaticItemComponent,
-        GroupItemComponent,
-        MenuHeaderComponent,
-        ItemComponent,
+        InteractiveItemWrapper: InteractiveItemWrapperComponent,
+        InteractiveItem: InteractiveItemComponent,
+
+        StaticItem: StaticItemComponent,
+        GroupItem: GroupItemComponent,
+        MenuHeader: MenuHeaderComponent,
+        ContentItemWrapper: ContentItemWrapperComponent,
+        ContentItem: ContentItemComponent,
+        Content: ContentComponent,
+        ItemComponent: Item,
+        menuCtxData,
     };
 }
-
-const ItemComponent = React.memo(function ItemComponent<T extends IUiMenuItemData = object>({
-    item,
-}: UiMenuItemProps<T>) {
-    const { InteractiveItemWrapperComponent, StaticItemComponent, GroupItemComponent } =
-        typedUiMenuContextStore<T>().useContextStore((ctx) => ({
-            InteractiveItemWrapperComponent: ctx.InteractiveItemWrapperComponent,
-            StaticItemComponent: ctx.StaticItemComponent,
-            GroupItemComponent: ctx.GroupItemComponent,
-        }));
-
-    if (item.type === "interactive") {
-        return <InteractiveItemWrapperComponent item={item} />;
-    }
-    if (item.type === "static") {
-        return <StaticItemComponent item={item} />;
-    }
-    if (item.type === "group") {
-        return <GroupItemComponent item={item} />;
-    }
-    return null;
-});
 
 /**
  * @internal
  */
-export function useKeyNavigation<T extends IUiMenuItemData = object>({
+export function useKeyNavigation<T extends IUiMenuItemData = object, M extends object = object>({
     menuContextValue,
     shouldKeyboardActionPreventDefault,
     shouldKeyboardActionStopPropagation,
     onUnhandledKeyDown,
 }: {
-    menuContextValue: IUiMenuContext<T>;
-    onUnhandledKeyDown: UiMenuProps<T>["onUnhandledKeyDown"];
+    menuContextValue: IUiMenuContext<T, M>;
+    onUnhandledKeyDown: UiMenuProps<T, M>["onUnhandledKeyDown"];
     shouldKeyboardActionPreventDefault?: boolean;
     shouldKeyboardActionStopPropagation?: boolean;
 }) {
@@ -256,7 +291,11 @@ export function useKeyNavigation<T extends IUiMenuItemData = object>({
         onEnterLevel: () => {
             const { onSelect, focusedItem } = menuContextRef.current;
 
-            if (focusedItem?.type !== "interactive" || !focusedItem.subItems) {
+            if (
+                (focusedItem?.type !== "interactive" && focusedItem?.type !== "content") ||
+                (focusedItem?.type === "interactive" && !focusedItem.subItems) ||
+                (focusedItem?.type === "content" && !focusedItem.Component)
+            ) {
                 return;
             }
 
@@ -274,6 +313,49 @@ export function useKeyNavigation<T extends IUiMenuItemData = object>({
             });
         },
         onClose: () => {
+            menuContextRef.current.onClose?.();
+        },
+        onUnhandledKeyDown: (event) => {
+            onUnhandledKeyDown?.(event, menuContextRef.current);
+        },
+    });
+}
+
+export function useCustomContentKeyNavigation<T extends IUiMenuItemData = object, M extends object = object>({
+    menuContextValue,
+    shouldKeyboardActionPreventDefault,
+    shouldKeyboardActionStopPropagation,
+    onUnhandledKeyDown,
+}: {
+    menuContextValue: IUiMenuContext<T, M>;
+    onUnhandledKeyDown: UiMenuProps<T, M>["onUnhandledKeyDown"];
+    shouldKeyboardActionPreventDefault?: boolean;
+    shouldKeyboardActionStopPropagation?: boolean;
+}) {
+    const menuContextRef = useAutoupdateRef(menuContextValue);
+
+    return makeMenuKeyboardNavigation({
+        shouldPreventDefault: shouldKeyboardActionPreventDefault,
+        shouldStopPropagation: shouldKeyboardActionStopPropagation,
+
+        onLeaveLevel: () => {
+            const isInputFocused = isElementTextInput(document.activeElement);
+
+            if (isInputFocused) {
+                return;
+            }
+
+            const { setShownCustomContentItemId } = menuContextRef.current;
+
+            setShownCustomContentItemId(undefined);
+        },
+        onClose: () => {
+            const isInputFocused = isElementTextInput(document.activeElement);
+
+            if (isInputFocused) {
+                return;
+            }
+
             menuContextRef.current.onClose?.();
         },
         onUnhandledKeyDown: (event) => {

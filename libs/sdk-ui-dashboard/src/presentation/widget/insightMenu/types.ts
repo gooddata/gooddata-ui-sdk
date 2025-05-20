@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { ComponentType, MouseEvent, ReactNode } from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import { RenderMode } from "../../../types.js";
@@ -66,7 +66,15 @@ export interface IInsightMenuSubmenu {
     itemId: string;
     itemName: string;
     /** @alpha */
-    SubmenuComponent: ComponentType<IInsightMenuSubmenuComponentProps>;
+    /**
+     * Define either the component to render for the submenu or the items to render by default submenu.
+     * If not provided, the default submenu component will be used.
+     */
+    SubmenuComponent?: ComponentType<IInsightMenuSubmenuComponentProps>;
+    /**
+     * The items to render for the submenu.
+     */
+    items?: IInsightMenuItem[];
     /**
      * Should the submenu component be rendered only?
      * If so, it won't be wrapped inside the default container
@@ -94,7 +102,21 @@ export function isIInsightMenuSubmenu(obj: IInsightMenuItem): obj is IInsightMen
 /**
  * @beta
  */
-export type IInsightMenuItem = IInsightMenuItemButton | IInsightMenuItemSeparator | IInsightMenuSubmenu;
+export type IInsightMenuItem =
+    | IInsightMenuItemButton
+    | IInsightMenuItemSeparator
+    | IInsightMenuSubmenu
+    | IInsightMenuGroup;
+
+/**
+ * @beta
+ */
+export interface IInsightMenuGroup {
+    type: "group";
+    itemId: string;
+    itemName: string;
+    items: IInsightMenuItem[];
+}
 
 /**
  * @alpha
@@ -125,6 +147,7 @@ export interface IDashboardInsightMenuTitleProps {
     widget: IInsightWidget;
     insight?: IInsight;
     renderMode: RenderMode;
+    titleId?: string;
 }
 
 ///

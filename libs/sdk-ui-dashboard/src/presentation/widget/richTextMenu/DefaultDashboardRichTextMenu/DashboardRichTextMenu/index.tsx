@@ -1,7 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { useState } from "react";
 import { Separator } from "@gooddata/sdk-ui-kit";
-
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 import { DashboardInsightMenuItemButton } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightMenuItemButton.js";
 import { DashboardInsightEditMenuBubble } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightEditMenuBubble.js";
@@ -21,7 +20,6 @@ export const DashboardRichTextMenuBody: React.FC<
     }
 > = (props) => {
     const { items, widget, submenu, setSubmenu, onClose, renderMode } = props;
-
     const renderSubmenuComponent = submenu ? (
         <submenu.SubmenuComponent widget={widget} onClose={onClose} onGoBack={() => setSubmenu(null)} />
     ) : null;

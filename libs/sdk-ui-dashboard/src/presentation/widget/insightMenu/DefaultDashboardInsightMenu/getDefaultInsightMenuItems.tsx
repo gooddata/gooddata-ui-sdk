@@ -3,9 +3,11 @@ import React from "react";
 import { IntlShape } from "react-intl";
 import compact from "lodash/compact.js";
 
-import { IInsightMenuItem, IInsightMenuSubmenuComponentProps } from "../types.js";
+import { IInsightMenuItem } from "../types.js";
 import { InsightAlerts } from "../../insight/configuration/InsightAlerts.js";
-import { ExportOptions } from "../../insight/configuration/ExportOptions.js";
+import { getExportTooltip } from "../../insight/configuration/ExportOptions.js";
+import { ISettings } from "@gooddata/sdk-model";
+import { IExecutionResultEnvelope } from "../../../../model/index.js";
 
 /**
  * @internal
@@ -17,56 +19,157 @@ export type SchedulingDisabledReason = "incompatibleWidget" | "oldWidget" | "dis
  */
 export type AlertingDisabledReason = "noDestinations" | "oldWidget" | "disabledOnInsight";
 
+const getExportMenuItems = (
+    intl: IntlShape,
+    config: IUseInsightMenuConfig,
+    execution?: IExecutionResultEnvelope,
+    settings?: ISettings,
+): IInsightMenuItem[] => {
+    const {
+        isExportVisible,
+        isExportRawVisible,
+        exportPdfPresentationDisabled,
+        exportPowerPointPresentationDisabled,
+        exportXLSXDisabled,
+        exportCSVDisabled,
+        exportCSVRawDisabled,
+        onExportPdfPresentation,
+        onExportPowerPointPresentation,
+        onExportXLSX,
+        onExportCSV,
+        onExportRawCSV,
+    } = config;
+    const tooltip = getExportTooltip(execution, settings?.enableRawExports);
+    const presentationTooltip = intl.formatMessage({
+        id: "options.menu.export.presentation.unsupported.oldWidget",
+    });
+
+    return [
+        // Presentation exports section - only shown if isExportVisible is true
+        ...(isExportVisible
+            ? [
+                  {
+                      type: "button" as const,
+                      itemId: "ExportPdfPresentation",
+                      itemName: intl.formatMessage({ id: "options.menu.export.presentation.PDF" }),
+                      icon: "gd-icon-type-pdf",
+                      className: "gd-export-options-pdf-presentation",
+                      disabled: exportPdfPresentationDisabled,
+                      tooltip: exportPdfPresentationDisabled ? presentationTooltip : undefined,
+                      onClick: onExportPdfPresentation,
+                  },
+                  {
+                      type: "button" as const,
+                      itemId: "ExportPptxPresentation",
+                      itemName: intl.formatMessage({ id: "options.menu.export.presentation.PPTX" }),
+                      icon: "gd-icon-type-slides",
+                      className: "gd-export-options-pptx-presentation",
+                      disabled: exportPowerPointPresentationDisabled,
+                      tooltip: exportPowerPointPresentationDisabled ? presentationTooltip : undefined,
+                      onClick: onExportPowerPointPresentation,
+                  },
+              ]
+            : []),
+
+        // Data exports section - only shown if isExportRawVisible is true
+        ...(isExportRawVisible
+            ? [
+                  {
+                      type: "group" as const,
+                      itemId: "ExportGroup",
+                      itemName: intl.formatMessage({ id: "options.menu.export.header.data" }),
+                      items: [
+                          {
+                              type: "button" as const,
+                              itemId: "ExportXLSX",
+                              itemName: intl.formatMessage({ id: "widget.options.menu.XLSX" }),
+                              icon: "gd-icon-type-sheet",
+                              className: "gd-export-options-xlsx",
+                              disabled: exportXLSXDisabled,
+                              tooltip: exportXLSXDisabled ? tooltip : undefined,
+                              onClick: onExportXLSX,
+                          },
+                          {
+                              type: "button" as const,
+                              itemId: "ExportCSVFormatted",
+                              itemName: intl.formatMessage({
+                                  id: "widget.options.menu.exportToCSV.formatted",
+                              }),
+                              icon: "gd-icon-type-csv-formatted",
+                              className: "gd-export-options-csv",
+                              disabled: exportCSVDisabled,
+                              tooltip: exportCSVDisabled ? tooltip : undefined,
+                              onClick: onExportCSV,
+                          },
+                          {
+                              type: "button" as const,
+                              itemId: "ExportCSVRaw",
+                              itemName: intl.formatMessage({ id: "widget.options.menu.exportToCSV.raw" }),
+                              icon: "gd-icon-type-csv-raw",
+                              className: "gd-export-options-csv-raw",
+                              disabled: exportCSVRawDisabled,
+                              tooltip: exportCSVRawDisabled ? tooltip : undefined,
+                              onClick: onExportRawCSV,
+                          },
+                      ],
+                  },
+              ]
+            : []),
+    ];
+};
+
+/**
+ * @internal
+ */
+export interface IUseInsightMenuConfig {
+    exportXLSXDisabled: boolean;
+    exportCSVDisabled: boolean;
+    exportCSVRawDisabled: boolean;
+    isExporting: boolean;
+    scheduleExportDisabled: boolean;
+    scheduleExportDisabledReason?: SchedulingDisabledReason;
+    scheduleExportManagementDisabled: boolean;
+    exportPdfPresentationDisabled: boolean;
+    exportPowerPointPresentationDisabled: boolean;
+    onExportXLSX: () => void;
+    onExportCSV: () => void;
+    onExportRawCSV: () => void;
+    onScheduleExport: () => void;
+    onScheduleManagementExport: () => void;
+    onExportPowerPointPresentation: () => void;
+    onExportPdfPresentation: () => void;
+    isExportRawVisible: boolean;
+    isExportVisible: boolean;
+    isScheduleExportVisible: boolean;
+    isScheduleExportManagementVisible: boolean;
+    isDataError: boolean;
+    isAlertingVisible: boolean;
+    alertingDisabled: boolean;
+    alertingDisabledReason?: AlertingDisabledReason;
+    canCreateAutomation: boolean;
+}
+
 /**
  * @internal
  */
 export function getDefaultInsightMenuItems(
     intl: IntlShape,
-    config: {
-        exportXLSXDisabled: boolean;
-        exportCSVDisabled: boolean;
-        exportCSVRawDisabled: boolean;
-        isExporting: boolean;
-        scheduleExportDisabled: boolean;
-        scheduleExportDisabledReason?: SchedulingDisabledReason;
-        scheduleExportManagementDisabled: boolean;
-        exportPdfPresentationDisabled: boolean;
-        exportPowerPointPresentationDisabled: boolean;
-        onExportXLSX: () => void;
-        onExportCSV: () => void;
-        onExportRawCSV: () => void;
-        onScheduleExport: () => void;
-        onScheduleManagementExport: () => void;
-        onExportPowerPointPresentation: () => void;
-        onExportPdfPresentation: () => void;
-        isExportRawVisible: boolean;
-        isExportVisible: boolean;
-        isScheduleExportVisible: boolean;
-        isScheduleExportManagementVisible: boolean;
-        isDataError: boolean;
-        isAlertingVisible: boolean;
-        alertingDisabled: boolean;
-        alertingDisabledReason?: AlertingDisabledReason;
-        canCreateAutomation: boolean;
-    },
+    config: IUseInsightMenuConfig,
+    execution?: IExecutionResultEnvelope,
+    settings?: ISettings,
 ): IInsightMenuItem[] {
     const {
         exportCSVDisabled,
         exportXLSXDisabled,
-        exportCSVRawDisabled,
+
         isExporting,
         scheduleExportDisabled,
         scheduleExportDisabledReason,
         scheduleExportManagementDisabled,
-        exportPdfPresentationDisabled,
-        exportPowerPointPresentationDisabled,
         onExportCSV,
-        onExportRawCSV,
         onExportXLSX,
         onScheduleExport,
         onScheduleManagementExport,
-        onExportPowerPointPresentation,
-        onExportPdfPresentation,
         isScheduleExportVisible,
         isScheduleExportManagementVisible,
         isDataError,
@@ -110,25 +213,7 @@ export function getDefaultInsightMenuItems(
         id: "options.menu.export.in.progress",
     });
 
-    const WrappedExportOptions = (props: IInsightMenuSubmenuComponentProps) => {
-        return (
-            <ExportOptions
-                {...props}
-                exportCsvDisabled={exportCSVDisabled}
-                exportXLSVDisabled={exportXLSXDisabled}
-                exportCSVRawDisabled={exportCSVRawDisabled}
-                isExportVisible={isExportVisible}
-                isExportRawVisible={isExportRawVisible}
-                onExportCSV={onExportCSV}
-                onExportRawCSV={onExportRawCSV}
-                onExportXLSX={onExportXLSX}
-                onExportPowerPointPresentation={onExportPowerPointPresentation}
-                onExportPdfPresentation={onExportPdfPresentation}
-                exportPdfPresentationDisabled={exportPdfPresentationDisabled}
-                exportPowerPointPresentationDisabled={exportPowerPointPresentationDisabled}
-            />
-        );
-    };
+    const exportMenuItems = getExportMenuItems(intl, config, execution, settings);
 
     const isSomeScheduleVisible =
         (isScheduleExportVisible && !scheduleExportDisabled) ||
@@ -141,9 +226,9 @@ export function getDefaultInsightMenuItems(
             itemName: intl.formatMessage({ id: "widget.options.menu.export" }),
             icon: "gd-icon-download",
             className: "s-options-menu-exports",
-            SubmenuComponent: WrappedExportOptions,
             disabled: isExporting,
             tooltip: exportDisabledTooltip,
+            items: exportMenuItems,
         },
         !isExportRawVisible && {
             type: "button",

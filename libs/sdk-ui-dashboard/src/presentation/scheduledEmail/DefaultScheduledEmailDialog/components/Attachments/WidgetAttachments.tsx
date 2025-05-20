@@ -72,7 +72,7 @@ export const WidgetAttachments = (props: IWidgetAttachmentsProps) => {
                 {renderFiltersMessage &&
                 (isEditing || areDashboardFiltersChanged) &&
                 (csvSelected || xlsxSelected) ? (
-                    <div>
+                    <div className="s-scheduled-email-attachments-filters-message">
                         <FormattedMessage id="dialogs.schedule.management.attachments.filters.using" />{" "}
                         <FormattedMessage id="dialogs.schedule.management.attachments.filters.edited" />
                     </div>

@@ -34,6 +34,7 @@ export class Button extends React.Component<IButtonProps> {
             iconRight,
             accessibilityConfig,
             buttonRef,
+            dataId,
         } = this.props;
         const {
             isExpanded,
@@ -55,6 +56,7 @@ export class Button extends React.Component<IButtonProps> {
         return (
             <TagName
                 id={id}
+                data-id={dataId}
                 ref={(ref: HTMLElement) => {
                     this.buttonNode = ref;
                     if (buttonRef) {

@@ -192,7 +192,7 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = ({
                                 id: "drill-select-menu",
                                 "aria-label": intl.formatMessage({ id: "drill_modal_picker.label" }),
                             }}
-                            InteractiveItemComponent={DrillSelectDropdownMenuItem}
+                            InteractiveItem={DrillSelectDropdownMenuItem}
                         />
                     </div>
                 </UiFocusTrap>
