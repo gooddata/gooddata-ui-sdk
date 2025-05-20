@@ -97,6 +97,7 @@ export function useCodemirror({
         ]);
     }, []);
 
+    // Dom events handlers
     const domEvents = EditorView.domEventHandlers({
         keydown(event, view) {
             if (event.key === "Escape") {
