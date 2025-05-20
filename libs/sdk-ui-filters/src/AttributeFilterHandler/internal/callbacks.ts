@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import {
     actions,
     selectInvertableCommittedSelection,
@@ -42,6 +42,7 @@ import {
     OnLoadIrrelevantElementsCancelCallbackPayload,
 } from "../types/index.js";
 import { GoodDataSdkError, isGoodDataSdkError } from "@gooddata/sdk-ui";
+import { AnyAction } from "@reduxjs/toolkit";
 
 const newCallbackRegistrations = () => {
     return {
@@ -143,7 +144,7 @@ export const newAttributeFilterCallbacks = () => {
     const { registerCallback, registrations, unsubscribeAll } =
         newCallbackRegistrationsWithGlobalUnsubscribe();
 
-    const eventListener: AttributeFilterHandlerEventListener = (action, select) => {
+    const eventListener: AttributeFilterHandlerEventListener = (action: AnyAction, select) => {
         // Init
         if (actions.initStart.match(action)) {
             registrations.initStart.invoke(action.payload);

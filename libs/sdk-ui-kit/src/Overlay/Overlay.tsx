@@ -20,11 +20,15 @@ import { Alignment, OverlayPositionType, SameAsTargetPosition } from "../typings
 import { OverlayContext } from "./OverlayContext.js";
 
 const events = [
-    { name: "click", handler: "closeOnOutsideClick", target: document },
+    {
+        name: "click",
+        handler: "closeOnOutsideClick",
+        target: typeof document !== "undefined" ? document : null,
+    },
     {
         name: "mousedown",
         handler: "onDocumentMouseDown",
-        target: document,
+        target: typeof document !== "undefined" ? document : null,
         requiredProp: "closeOnOutsideClick",
     },
     { name: "goodstrap.scrolled", handler: "closeOnParentScroll" },

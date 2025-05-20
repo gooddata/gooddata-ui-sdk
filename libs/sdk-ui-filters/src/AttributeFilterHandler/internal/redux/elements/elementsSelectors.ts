@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     IAttributeElement,
     IAttributeMetadataObject,
@@ -9,7 +9,10 @@ import {
     ObjRef,
     IAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
-import { createSelector } from "@reduxjs/toolkit";
+// in current version of @reduxjs/toolkit esm export are not defined
+// we need direct import from esm module otherwise import ar not node compatible
+// https://github.com/reduxjs/redux-toolkit/issues/1960
+import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import compact from "lodash/compact.js";
 
 import { AsyncOperationStatus, ILoadElementsOptions } from "../../../types/index.js";
