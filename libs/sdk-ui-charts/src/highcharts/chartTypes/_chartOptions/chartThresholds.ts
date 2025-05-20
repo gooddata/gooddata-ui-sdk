@@ -100,8 +100,11 @@ const findThresholdMeasureIndex = (dv: DataViewFacade, thresholdMeasures: string
 
 const isStackedChart = (dv: DataViewFacade) => dv.meta().attributeDescriptors().length === 2;
 
-const isThresholdMeasureIndexValid = (thresholdMeasureIndex: number, series: ISeriesItem[]) =>
-    thresholdMeasureIndex > -1 && thresholdMeasureIndex < series.length;
+const isThresholdMeasureIndexValid = (
+    thresholdMeasureIndex: number,
+    series: ISeriesItem[],
+    dv: DataViewFacade,
+) => thresholdMeasureIndex > -1 && (isStackedChart(dv) || thresholdMeasureIndex < series.length);
 
 export function setupThresholdZones(
     type: VisType,
@@ -117,7 +120,7 @@ export function setupThresholdZones(
 
     const thresholdMeasureIndex = findThresholdMeasureIndex(dv, thresholdMeasures);
 
-    if (!isThresholdMeasureIndexValid(thresholdMeasureIndex, series)) {
+    if (!isThresholdMeasureIndexValid(thresholdMeasureIndex, series, dv)) {
         return { series };
     }
     return isStackedChart(dv)
@@ -225,7 +228,7 @@ export const filterThresholdZonesCategories = (
     }
 
     const thresholdMeasureIndex = findThresholdMeasureIndex(dv, thresholdMeasures);
-    if (!isThresholdMeasureIndexValid(thresholdMeasureIndex, series)) {
+    if (!isThresholdMeasureIndexValid(thresholdMeasureIndex, series, dv)) {
         return categories;
     }
     // threshold chart series are split: odd numbers go to data series, even to threshold series,
