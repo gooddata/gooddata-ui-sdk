@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
-import { Typography } from "@gooddata/sdk-ui-kit";
+import { Button, Typography } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
 interface IDashboardInsightSubmenuHeaderProps {
@@ -19,13 +19,13 @@ export const DashboardInsightSubmenuHeader: React.FC<IDashboardInsightSubmenuHea
     });
     return onHeaderClick ? (
         <>
-            <button
-                className="configuration-panel-header-back-button "
+            <Button
+                className="configuration-panel-header-back-button gd-icon-navigateleft"
                 onClick={onHeaderClick}
-                aria-label={backLabel}
-            >
-                <i className="gd-icon-navigateleft" role="img" aria-hidden="true" />
-            </button>
+                accessibilityConfig={{
+                    ariaLabel: backLabel,
+                }}
+            />
             <Typography tagName="h3" className={headerClassNames} onClick={onHeaderClick}>
                 {title}
             </Typography>

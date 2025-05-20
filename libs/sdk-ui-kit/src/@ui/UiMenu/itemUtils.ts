@@ -76,6 +76,10 @@ export const getInteractiveItem = <T extends IUiMenuItemData = object>(
     return findInteractiveItem(items, (item) => item.id === itemId);
 };
 
+/**
+ * Gets a content menu item by its ID.
+ * @internal
+ */
 export const getContentItem = <T extends IUiMenuItemData = object>(
     items: IUiMenuItem<T>[],
     itemId: string,
@@ -83,7 +87,11 @@ export const getContentItem = <T extends IUiMenuItemData = object>(
     return findContentItem(items, (item) => item.id === itemId);
 };
 
-export const getFocusedItem = <T extends IUiMenuItemData = object>(
+/**
+ * Gets a focusable (either interactive or content) menu item by its ID.
+ * @internal
+ */
+export const getFocusableItem = <T extends IUiMenuItemData = object>(
     items: IUiMenuItem<T>[],
     itemId: string,
 ): IUiMenuFocusableItem | undefined => {

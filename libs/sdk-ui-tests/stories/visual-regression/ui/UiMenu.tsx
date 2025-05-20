@@ -71,8 +71,8 @@ type CustomMenuData = {
 
 // Example custom content component
 const CustomForm: React.FC<{
-    onBack?: () => void;
-    onClose?: () => void;
+    onBack: () => void;
+    onClose: () => void;
     menuCtxData?: CustomMenuData["content"];
 }> = ({ onBack, onClose, menuCtxData }) => {
     const [value, setValue] = React.useState("");
@@ -111,7 +111,7 @@ const itemsWithContent: IUiMenuItem<CustomMenuData>[] = [
         id: "custom-form",
         stringTitle: "Open Form",
         data: { formTitle: "Example Form" },
-        component: CustomForm,
+        Component: CustomForm,
     },
     { type: "interactive", id: "item3", stringTitle: "Another Item", data: "data3" },
 ];

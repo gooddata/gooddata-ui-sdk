@@ -110,10 +110,6 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
     }
 
     .configuration-panel-header-close-button[class*="gd-icon-"] {
-        // position: absolute;
-        // top: 5px;
-        // right: 10px;
-
         &::before {
             font-size: 14px;
         }
@@ -230,7 +226,7 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
 .gd-configuration-bubble-wrapper.overlay-wrapper.sdk-edit-mode-on {
     .edit-insight-config-arrow-submenu-color {
         .bubble-content .configuration-panel-header {
-            padding: variables.$item-inner-padding variables.$gd-configuration-bubble-margin;
+            padding: variables.$item-outer-padding;
         }
     }
 

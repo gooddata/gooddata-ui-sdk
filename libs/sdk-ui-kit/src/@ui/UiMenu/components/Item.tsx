@@ -3,33 +3,29 @@ import React from "react";
 import { typedUiMenuContextStore } from "../context.js";
 import { IUiMenuItemProps, IUiMenuItemData } from "../types.js";
 
-export const ItemComponent = React.memo(function ItemComponent<T extends IUiMenuItemData = object>({
+export const Item = React.memo(function Item<T extends IUiMenuItemData = object>({
     item,
 }: IUiMenuItemProps<T>) {
-    const {
-        InteractiveItemWrapperComponent,
-        StaticItemComponent,
-        GroupItemComponent,
-        ContentItemWrapperComponent,
-    } = typedUiMenuContextStore<T>().useContextStore((ctx) => ({
-        InteractiveItemWrapperComponent: ctx.InteractiveItemWrapper,
-        StaticItemComponent: ctx.StaticItem,
-        GroupItemComponent: ctx.GroupItem,
-        ContentItemComponent: ctx.ContentItem,
-        ContentItemWrapperComponent: ctx.ContentItemWrapper,
-    }));
+    const { InteractiveItemWrapper, StaticItem, GroupItem, ContentItemWrapper } =
+        typedUiMenuContextStore<T>().useContextStore((ctx) => ({
+            InteractiveItemWrapper: ctx.InteractiveItemWrapper,
+            StaticItem: ctx.StaticItem,
+            GroupItem: ctx.GroupItem,
+            ContentItem: ctx.ContentItem,
+            ContentItemWrapper: ctx.ContentItemWrapper,
+        }));
 
     if (item.type === "interactive") {
-        return <InteractiveItemWrapperComponent item={item} />;
+        return <InteractiveItemWrapper item={item} />;
     }
     if (item.type === "static") {
-        return <StaticItemComponent item={item} />;
+        return <StaticItem item={item} />;
     }
     if (item.type === "group") {
-        return <GroupItemComponent item={item} />;
+        return <GroupItem item={item} />;
     }
     if (item.type === "content") {
-        return <ContentItemWrapperComponent item={item} />;
+        return <ContentItemWrapper item={item} />;
     }
     return null;
 });

@@ -111,7 +111,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
                                 className={e("items")}
                                 tabIndex={0}
                                 onKeyDown={handleKeyDown}
-                                aria-activedescendant={focusedItem ? makeItemId(focusedItem) : undefined}
+                                aria-activedescendant={makeItemId(focusedItem)}
                                 {...ariaAttributes}
                                 role="menu"
                                 ref={menuComponentRef}

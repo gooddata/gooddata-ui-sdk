@@ -19,21 +19,30 @@ export const DefaultUiMenuContent = React.memo(function DefaultUiMenuContent<
         setShownCustomContentItemId: ctx.setShownCustomContentItemId,
         setFocusedId: ctx.setFocusedId,
         shownCustomContentItemId: ctx.shownCustomContentItemId,
+        onLevelChange: ctx.onLevelChange,
+        level: ctx.level,
     }));
 
-    const { onClose, setShownCustomContentItemId, setFocusedId, shownCustomContentItemId } =
-        useContextStore(selector);
+    const {
+        onClose,
+        setShownCustomContentItemId,
+        setFocusedId,
+        shownCustomContentItemId,
+        onLevelChange,
+        level,
+    } = useContextStore(selector);
 
     const handleBack = React.useCallback(() => {
         setFocusedId(shownCustomContentItemId);
         setShownCustomContentItemId(undefined);
-    }, [setShownCustomContentItemId, shownCustomContentItemId, setFocusedId]);
+        onLevelChange?.(level - 1, undefined);
+    }, [setShownCustomContentItemId, shownCustomContentItemId, setFocusedId, onLevelChange, level]);
 
-    const ContentComponent = item.component;
+    const ContentComponent = item.Component;
 
     return (
         <>
-            {item.showComponentOnly !== true && <DefaultUiMenuHeader />}
+            {item.showComponentOnly ? null : <DefaultUiMenuHeader />}
             <div className={e("content-container")}>
                 <ContentComponent onBack={handleBack} onClose={onClose} />
             </div>

@@ -285,9 +285,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                 </UiFocusTrap>
             </Overlay>
         )
-    ) : (
-        <div id={dropdownId} className="sr-only" />
-    );
+    ) : null;
 
     return (
         <div className={className}>

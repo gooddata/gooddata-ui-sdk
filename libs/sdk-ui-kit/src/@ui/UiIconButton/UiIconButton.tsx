@@ -29,10 +29,18 @@ export interface UiIconButtonProps {
 const { b } = bem("gd-ui-kit-icon-button");
 
 const getSize = (size: SizeXSmall | SizeSmall | SizeMedium | SizeLarge) => {
-    if (size === "xsmall") {
-        return 12;
+    switch (size) {
+        case "xsmall":
+            return 12;
+        case "small":
+            return 16;
+        case "medium":
+            return 18;
+        case "large":
+            return 20;
+        default:
+            return 18;
     }
-    return size === "small" ? 16 : 18;
 };
 
 /**

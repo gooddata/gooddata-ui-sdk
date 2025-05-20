@@ -50,9 +50,9 @@ export type IUiMenuContentItem<T extends IUiMenuItemData = object> = {
     isDisabled?: boolean;
     showComponentOnly?: boolean;
     data: T["content"];
-    component: React.ComponentType<{
-        onBack?: () => void;
-        onClose?: () => void;
+    Component: React.ComponentType<{
+        onBack: () => void;
+        onClose: () => void;
     }>;
 };
 
@@ -169,12 +169,17 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object>
     controlType: IUiMenuControlType;
     setControlType: React.Dispatch<React.SetStateAction<IUiMenuControlType>>;
     scrollToView: (element: HTMLElement | null) => void;
-    makeItemId: (item: IUiMenuItem<T>) => string;
+    makeItemId: (item: IUiMenuItem<T>) => string | undefined;
     itemClassName?: ((item: IUiMenuItem<T>) => string | undefined) | string;
     ItemComponent: React.ComponentType<IUiMenuItemProps<T>>;
     menuComponentRef: React.RefObject<HTMLElement>;
     itemsContainerRef: React.RefObject<HTMLElement>;
     menuCtxData?: M;
+    level: number;
+    onLevelChange: (
+        level: number,
+        item: IUiMenuContentItem<T> | IUiMenuInteractiveItem<T> | undefined,
+    ) => void;
 }
 
 /**
@@ -190,6 +195,7 @@ export interface UiMenuProps<T extends IUiMenuItemData = object, M = object>
     maxWidth?: number;
 
     onSelect?: (item: IUiMenuInteractiveItem<T>) => void;
+    onLevelChange?: (level: number, item?: IUiMenuContentItem<T> | IUiMenuInteractiveItem<T>) => void;
     onClose?: () => void;
     onUnhandledKeyDown?: (event: React.KeyboardEvent, context: IUiMenuContext<T>) => void;
 

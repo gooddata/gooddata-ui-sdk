@@ -1,11 +1,8 @@
 // (C) 2025 GoodData Corporation
-import React, { ComponentType } from "react";
+import React from "react";
 import cx from "classnames";
 import {
-    //Button,
-    Separator,
     IUiMenuInteractiveItemProps,
-    IUiMenuStaticItemProps,
     DefaultUiMenuHeader,
     typedUiMenuContextStore,
     getItemInteractiveParent,
@@ -16,7 +13,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { DashboardInsightMenuItemButton } from "./DashboardInsightMenuItemButton.js";
 import { DashboardInsightMenuTitle } from "../../DashboardInsightMenuTitle.js";
-import { IDashboardInsightMenuTitleProps, IInsightMenuSubmenuComponentProps } from "../../types.js";
+import { IDashboardInsightMenuTitleProps } from "../../types.js";
 import { useIntl } from "react-intl";
 import { DashboardInsightSubmenuContainer } from "./DashboardInsightSubmenuContainer.js";
 
@@ -32,14 +29,9 @@ export type FocusableItemData = {
 export type IMenuItemData = {
     interactive: FocusableItemData;
     content: FocusableItemData;
-    static: ISubmenuComponentData | null;
 };
 
 export type IMenuData = IDashboardInsightMenuTitleProps;
-
-export interface ISubmenuComponentData {
-    subMenuComponent: ComponentType<IInsightMenuSubmenuComponentProps>;
-}
 
 const FocusableItemComponent: React.FC<{
     item: IUiMenuInteractiveItemProps<IMenuItemData>["item"] | IUiMenuContentItemProps<IMenuItemData>["item"];
@@ -91,13 +83,16 @@ export const CustomUiMenuContentComponent: React.FC<IUiMenuContentProps<IMenuIte
     const selector = createSelector((ctx) => ({
         onClose: ctx.onClose,
         setShownCustomContentItemId: ctx.setShownCustomContentItemId,
+        level: ctx.level,
+        onLevelChange: ctx.onLevelChange,
     }));
 
-    const { onClose, setShownCustomContentItemId } = useContextStore(selector);
+    const { onClose, setShownCustomContentItemId, level, onLevelChange } = useContextStore(selector);
 
     const handleBack = React.useCallback(() => {
         setShownCustomContentItemId(undefined);
-    }, [setShownCustomContentItemId]);
+        onLevelChange?.(level - 1, undefined);
+    }, [setShownCustomContentItemId, level, onLevelChange]);
 
     if (item.showComponentOnly === true) {
         return <DefaultUiMenuContent item={item} />;
@@ -113,10 +108,6 @@ export const CustomUiMenuContentComponent: React.FC<IUiMenuContentProps<IMenuIte
             <DefaultUiMenuContent item={itemWithoutDefaultHeader} />
         </DashboardInsightSubmenuContainer>
     );
-};
-
-export const CustomUiMenuStaticItemComponent: React.FC<IUiMenuStaticItemProps<IMenuItemData>> = () => {
-    return <Separator />;
 };
 
 export const CustomUiMenuHeaderComponent: React.FC = () => {

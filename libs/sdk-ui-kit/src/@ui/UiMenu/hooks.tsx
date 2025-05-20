@@ -11,7 +11,7 @@ import {
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import {
     getClosestFocusableSibling,
-    getFocusedItem,
+    getFocusableItem,
     getItemInteractiveParent,
     getItemsByInteractiveParent,
     getSiblingItems,
@@ -32,7 +32,7 @@ import {
     DefaultUiMenuContentItemWrapper,
 } from "./components/defaults/DefaultUiMenuContentItem.js";
 import { DefaultUiMenuContent } from "./components/defaults/DefaultUiMenuContent.js";
-import { ItemComponent } from "./components/Item.js";
+import { Item } from "./components/Item.js";
 import { isElementTextInput } from "../../utils/domUtilities.js";
 
 /**
@@ -49,6 +49,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         itemClassName,
 
         onSelect,
+        onLevelChange: onLevelChangeProp,
         onClose,
 
         InteractiveItem: InteractiveItemComponent = DefaultUiMenuInteractiveItem,
@@ -88,6 +89,16 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         undefined,
     );
 
+    const [level, setLevel] = React.useState<number>(0);
+
+    const onLevelChange = React.useCallback(
+        (level, item) => {
+            setLevel(level);
+            onLevelChangeProp?.(level, item);
+        },
+        [onLevelChangeProp],
+    );
+
     const setFocusedId = React.useCallback<typeof setFocusedId_internal>(
         (...args) => {
             setFocusedId_internal(...args);
@@ -97,7 +108,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         [menuComponentRef],
     );
 
-    const focusedItem = focusedId === undefined ? undefined : getFocusedItem(items, focusedId);
+    const focusedItem = focusedId !== undefined ? getFocusableItem(items, focusedId) : undefined;
 
     const handleSelectItem = React.useCallback(
         (item?: IUiMenuFocusableItem<T>) => {
@@ -106,8 +117,9 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
             }
 
             if (item.type === "content") {
-                if (item.component) {
+                if (item.Component) {
                     setShownCustomContentItemId(item.id);
+                    onLevelChange?.(level + 1, item);
                 }
                 return;
             }
@@ -119,6 +131,8 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
                 return;
             }
 
+            onLevelChange?.(level + 1, item);
+
             // Otherwise focus the first focusable child
             const itemToFocus = getItemsByInteractiveParent(items, item.id)?.filter(isItemFocusable)[0];
 
@@ -129,14 +143,28 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
             setFocusedId(itemToFocus.id);
             menuComponentRef.current?.focus();
         },
-        [isItemFocusable, items, menuComponentRef, onClose, onSelect, setFocusedId, shouldCloseOnSelect],
+        [
+            isItemFocusable,
+            items,
+            menuComponentRef,
+            onClose,
+            onSelect,
+            setFocusedId,
+            shouldCloseOnSelect,
+            level,
+            onLevelChange,
+        ],
     );
 
     const makeItemId = React.useCallback<IUiMenuContext<T>["makeItemId"]>(
-        (item) =>
-            item && (item.type === "interactive" || item.type === "content")
+        (item) => {
+            if (!item) {
+                return undefined;
+            }
+            return item && (item.type === "interactive" || item.type === "content")
                 ? `item-${ariaAttributes.id}-${item.id}`
-                : uuid(),
+                : uuid();
+        },
         [ariaAttributes.id],
     );
 
@@ -167,6 +195,8 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         onClose,
         items,
         onSelect: handleSelectItem,
+        onLevelChange,
+        level,
         itemClassName,
         isItemFocusable,
         makeItemId,
@@ -183,7 +213,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         ContentItemWrapper: ContentItemWrapperComponent,
         ContentItem: ContentItemComponent,
         Content: ContentComponent,
-        ItemComponent,
+        ItemComponent: Item,
         menuCtxData,
     };
 }
@@ -268,7 +298,7 @@ export function useKeyNavigation<T extends IUiMenuItemData = object, M extends o
             if (
                 (focusedItem?.type !== "interactive" && focusedItem?.type !== "content") ||
                 (focusedItem?.type === "interactive" && !focusedItem.subItems) ||
-                (focusedItem?.type === "content" && !focusedItem.component)
+                (focusedItem?.type === "content" && !focusedItem.Component)
             ) {
                 return;
             }
@@ -276,7 +306,7 @@ export function useKeyNavigation<T extends IUiMenuItemData = object, M extends o
             onSelect(focusedItem);
         },
         onLeaveLevel: () => {
-            const { setFocusedId, items } = menuContextRef.current;
+            const { setFocusedId, items, onLevelChange, level } = menuContextRef.current;
 
             setFocusedId((prevId) => {
                 if (prevId === undefined) {
@@ -285,6 +315,8 @@ export function useKeyNavigation<T extends IUiMenuItemData = object, M extends o
 
                 return getItemInteractiveParent(items, prevId)?.id ?? prevId;
             });
+
+            onLevelChange?.(level - 1, undefined);
         },
         onClose: () => {
             menuContextRef.current.onClose?.();
@@ -319,9 +351,10 @@ export function useCustomContentKeyNavigation<T extends IUiMenuItemData = object
                 return;
             }
 
-            const { setShownCustomContentItemId } = menuContextRef.current;
+            const { setShownCustomContentItemId, level, onLevelChange } = menuContextRef.current;
 
             setShownCustomContentItemId(undefined);
+            onLevelChange?.(level - 1, undefined);
         },
         onClose: () => {
             const isInputFocused = isElementTextInput(document.activeElement);

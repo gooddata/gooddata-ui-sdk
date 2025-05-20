@@ -1,10 +1,12 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
+import cx from "classnames";
 import { e } from "../../menuBem.js";
 import { UiIconButton } from "../../../UiIconButton/UiIconButton.js";
 import { useIntl } from "react-intl";
 import { ShortenedText } from "../../../../ShortenedText/index.js";
+import { Button } from "../../../../Button/index.js";
 import { typedUiMenuContextStore } from "../../context.js";
 import { getItemInteractiveParent } from "../../itemUtils.js";
 import { IUiMenuItemData } from "../../types.js";
@@ -25,19 +27,24 @@ export const DefaultUiMenuHeader: React.FC = React.memo(function DefaultUiMenuHe
         onClose: ctx.onClose,
         parentItem: ctx.focusedItem ? getItemInteractiveParent(ctx.items, ctx.focusedItem.id) : undefined,
         focusedItem: ctx.focusedItem,
+        level: ctx.level,
+        onLevelChange: ctx.onLevelChange,
     }));
 
-    const { setFocusedId, onClose, parentItem, focusedItem } = useContextStore(selector);
+    const { setFocusedId, onClose, parentItem, focusedItem, level, onLevelChange } =
+        useContextStore(selector);
 
     const parentItemId = parentItem?.id;
 
     const handleBack = React.useCallback(() => {
         if (parentItemId === undefined) {
+            onLevelChange?.(0, undefined);
             return;
         }
+        onLevelChange?.(level - 1, parentItem);
 
         setFocusedId(parentItemId);
-    }, [setFocusedId, parentItemId]);
+    }, [setFocusedId, parentItemId, onLevelChange, level, parentItem]);
 
     if (!parentItem && focusedItem?.type !== "content") {
         return null;
@@ -47,12 +54,13 @@ export const DefaultUiMenuHeader: React.FC = React.memo(function DefaultUiMenuHe
 
     return (
         <div role={"presentation"} className={e("menu-header")}>
-            <button
+            <Button
                 onClick={handleBack}
-                className={e("menu-header-title")}
-                aria-label={formatMessage({ id: "menu.back" })}
+                className={cx(e("menu-header-title"), "gd-icon-navigateleft")}
+                accessibilityConfig={{
+                    ariaLabel: formatMessage({ id: "menu.back" }),
+                }}
             >
-                <i className="gd-icon-navigateleft" />
                 <ShortenedText
                     tagName={"h3"}
                     ellipsisPosition={"end"}
@@ -60,7 +68,7 @@ export const DefaultUiMenuHeader: React.FC = React.memo(function DefaultUiMenuHe
                 >
                     {title}
                 </ShortenedText>
-            </button>
+            </Button>
             <UiIconButton
                 size={"xsmall"}
                 variant={"tertiary"}

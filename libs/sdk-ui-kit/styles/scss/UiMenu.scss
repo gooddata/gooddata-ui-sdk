@@ -1,9 +1,0 @@
-// (C) 2025 GoodData Corporation
-
-.gd-ui-menu {
-    &-content-container {
-        padding: var(--gd-spacing, 1rem);
-        overflow: auto;
-        max-height: calc(100vh - 200px); // Reasonable max height with some space for header
-    }
-}

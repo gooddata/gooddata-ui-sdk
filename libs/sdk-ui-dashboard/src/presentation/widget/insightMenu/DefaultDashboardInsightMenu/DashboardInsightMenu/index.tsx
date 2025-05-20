@@ -1,6 +1,13 @@
 // (C) 2021-2025 GoodData Corporation
 import React, { useState, useMemo } from "react";
-import { UiMenu, IUiMenuItem, UiFocusTrap, IUiMenuContext, getSelectedMenuId } from "@gooddata/sdk-ui-kit";
+import {
+    UiMenu,
+    IUiMenuItem,
+    UiFocusTrap,
+    IUiMenuContext,
+    getSelectedMenuId,
+    separatorStaticItem,
+} from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import {
     IDashboardInsightMenuProps,
@@ -17,7 +24,6 @@ import {
     CustomUiMenuContentItemComponent,
     CustomUiMenuHeaderComponent,
     CustomUiMenuInteractiveItemComponent,
-    CustomUiMenuStaticItemComponent,
     CustomUiMenuContentComponent,
     IMenuData,
     IMenuItemData,
@@ -30,11 +36,7 @@ const convertToUiMenuItems = (
 ): Array<IUiMenuItem<IMenuItemData>> => {
     return items.map((item): IUiMenuItem<IMenuItemData> => {
         if (item.type === "separator") {
-            return {
-                type: "static" as const,
-                id: item.itemId,
-                data: null,
-            };
+            return separatorStaticItem;
         }
 
         if (item.type === "group") {
@@ -71,23 +73,17 @@ const convertToUiMenuItems = (
                 };
             }
             if (item.SubmenuComponent) {
-                const WrappedSubmenuComponent: React.FC<{ onBack?: () => void; onClose?: () => void }> = ({
+                const WrappedSubmenuComponent: React.FC<{ onBack: () => void; onClose: () => void }> = ({
                     onBack,
                     onClose,
                 }) => {
                     const SubmenuComponent = item.SubmenuComponent!;
-                    return (
-                        <SubmenuComponent
-                            widget={widget}
-                            onClose={onClose ?? (() => {})}
-                            onGoBack={onBack ?? (() => {})}
-                        />
-                    );
+                    return <SubmenuComponent widget={widget} onClose={onClose} onGoBack={onBack} />;
                 };
                 return {
                     ...baseFocusableItem,
                     type: "content" as const,
-                    component: WrappedSubmenuComponent,
+                    Component: WrappedSubmenuComponent,
                     showComponentOnly: item.renderSubmenuComponentOnly,
                     data: {
                         ...baseFocusableItem.data,
@@ -106,12 +102,11 @@ const convertToUiMenuItems = (
 
 export const DashboardInsightMenuBody: React.FC<
     IDashboardInsightMenuProps & {
-        submenu: IInsightMenuSubmenu | null;
-        setSubmenu: React.Dispatch<React.SetStateAction<IInsightMenuSubmenu | null>>;
+        setSubmenu?: React.Dispatch<React.SetStateAction<IInsightMenuSubmenu | null>>;
         renderMode: RenderMode;
     }
 > = (props) => {
-    const { items, widget, insight, onClose, renderMode } = props;
+    const { items, widget, insight, onClose, renderMode, setSubmenu } = props;
 
     const uiMenuItems = useMemo(() => convertToUiMenuItems(items, widget), [items, widget]);
 
@@ -121,6 +116,17 @@ export const DashboardInsightMenuBody: React.FC<
         if (item.type === "interactive" && item.data?.onClick) {
             // Call onClick directly - the event properties are not used in the handlers
             item.data.onClick({} as React.MouseEvent);
+        }
+    };
+
+    const handleSubmenuOpen = (level: number, item?: IUiMenuItem<IMenuItemData>) => {
+        if (level > 0) {
+            const submenuItem = items.find((i) => i.itemId === item?.id);
+            if (submenuItem) {
+                setSubmenu?.(submenuItem as IInsightMenuSubmenu);
+            }
+        } else {
+            setSubmenu?.(null);
         }
     };
 
@@ -141,7 +147,6 @@ export const DashboardInsightMenuBody: React.FC<
                     InteractiveItem={CustomUiMenuInteractiveItemComponent}
                     ContentItem={CustomUiMenuContentItemComponent}
                     Content={CustomUiMenuContentComponent}
-                    StaticItem={CustomUiMenuStaticItemComponent}
                     MenuHeader={CustomUiMenuHeaderComponent}
                     shouldCloseOnSelect={true}
                     ariaAttributes={{
@@ -149,6 +154,7 @@ export const DashboardInsightMenuBody: React.FC<
                         "aria-labelledby": menuLabelId,
                     }}
                     onSelect={handleSelect}
+                    onLevelChange={handleSubmenuOpen}
                     menuCtxData={{
                         widget,
                         insight,
@@ -167,21 +173,11 @@ export const DashboardInsightMenu: React.FC<IDashboardInsightMenuProps> = (props
 
     return renderMode === "edit" ? (
         <DashboardInsightEditMenuBubble onClose={onClose} isSubmenu={!!submenu}>
-            <DashboardInsightMenuBody
-                {...props}
-                submenu={submenu}
-                setSubmenu={setSubmenu}
-                renderMode={renderMode}
-            />
+            <DashboardInsightMenuBody {...props} setSubmenu={setSubmenu} renderMode={renderMode} />
         </DashboardInsightEditMenuBubble>
     ) : (
         <DashboardInsightMenuBubble onClose={onClose} widget={widget} isSubmenu={!!submenu}>
-            <DashboardInsightMenuBody
-                {...props}
-                submenu={submenu}
-                setSubmenu={setSubmenu}
-                renderMode={renderMode}
-            />
+            <DashboardInsightMenuBody {...props} setSubmenu={setSubmenu} renderMode={renderMode} />
         </DashboardInsightMenuBubble>
     );
 };

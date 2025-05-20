@@ -56,9 +56,7 @@ const getExportMenuItems = (
                       className: "gd-export-options-pdf-presentation",
                       disabled: exportPdfPresentationDisabled,
                       tooltip: exportPdfPresentationDisabled ? presentationTooltip : undefined,
-                      onClick: () => {
-                          onExportPdfPresentation();
-                      },
+                      onClick: onExportPdfPresentation,
                   },
                   {
                       type: "button" as const,
@@ -68,9 +66,7 @@ const getExportMenuItems = (
                       className: "gd-export-options-pptx-presentation",
                       disabled: exportPowerPointPresentationDisabled,
                       tooltip: exportPowerPointPresentationDisabled ? presentationTooltip : undefined,
-                      onClick: () => {
-                          onExportPowerPointPresentation();
-                      },
+                      onClick: onExportPowerPointPresentation,
                   },
               ]
             : []),
@@ -91,9 +87,7 @@ const getExportMenuItems = (
                               className: "gd-export-options-xlsx",
                               disabled: exportXLSXDisabled,
                               tooltip: exportXLSXDisabled ? tooltip : undefined,
-                              onClick: () => {
-                                  onExportXLSX();
-                              },
+                              onClick: onExportXLSX,
                           },
                           {
                               type: "button" as const,
@@ -105,9 +99,7 @@ const getExportMenuItems = (
                               className: "gd-export-options-csv",
                               disabled: exportCSVDisabled,
                               tooltip: exportCSVDisabled ? tooltip : undefined,
-                              onClick: () => {
-                                  onExportCSV();
-                              },
+                              onClick: onExportCSV,
                           },
                           {
                               type: "button" as const,
@@ -117,9 +109,7 @@ const getExportMenuItems = (
                               className: "gd-export-options-csv-raw",
                               disabled: exportCSVRawDisabled,
                               tooltip: exportCSVRawDisabled ? tooltip : undefined,
-                              onClick: () => {
-                                  onExportRawCSV();
-                              },
+                              onClick: onExportRawCSV,
                           },
                       ],
                   },

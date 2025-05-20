@@ -30,7 +30,6 @@
     }
 
     &__menu-header {
-        //height: 35px;
         padding: 10px;
         display: flex;
         gap: 4px;
@@ -62,10 +61,6 @@
         }
         &-close-icon {
             flex-shrink: 0;
-        }
-
-        .gd-icon-navigateleft {
-            height: 13px;
         }
     }
 

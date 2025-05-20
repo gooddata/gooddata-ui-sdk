@@ -10,12 +10,7 @@ export const DashboardInsightMenuItemButton: React.FC<
     Omit<IInsightMenuItemButton, "type"> & { submenu?: boolean }
 > = (props) => {
     const { itemId, itemName, disabled, icon, onClick, tooltip, className, submenu = false } = props;
-    // const accessibilityConfig: IMenuAccessibilityConfig = {
-    //     role: "menuitem",
-    //     id: itemId,
-    //     ariaDisabled: disabled ? "true" : undefined,
-    //     ariaHasPopup: submenu ? "true" : undefined,
-    // };
+
     // for JSX icons we need an extra gd-icon-wrapper class to align the icon and the text vertically
     return renderButtonWithTooltip(
         <Item
@@ -23,7 +18,6 @@ export const DashboardInsightMenuItemButton: React.FC<
             onClick={disabled ? undefined : onClick}
             disabled={disabled}
             subMenu={submenu}
-            //accessibilityConfig={accessibilityConfig}
         >
             <span className={cx({ "gd-icon-wrapper": icon && typeof icon !== "string" })}>
                 {icon ? typeof icon === "string" ? <i aria-hidden={true} className={icon} /> : icon : null}

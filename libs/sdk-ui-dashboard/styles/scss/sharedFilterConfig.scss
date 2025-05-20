@@ -16,6 +16,7 @@
         color: var(--gd-palette-complementary-6, #94a1ad);
         font-size: 11px;
         font-weight: bold;
+        line-height: 15px;
         text-transform: uppercase;
         width: 100%;
     }
@@ -90,5 +91,8 @@
 
 .configuration-panel-header-back-button {
     border-color: transparent;
+    border-width: 0;
     background: transparent;
+    color: var(--gd-palette-complementary-6, #94a1ad);
+    padding: 0 4px 0 0;
 }

@@ -70,7 +70,7 @@ export const DefaultUiMenuContentItemWrapper = React.memo(function DefaultUiMenu
         <li
             ref={scrollToItem}
             role="menuitem"
-            aria-haspopup="dialog" // TODO INE: make popup type configurable
+            aria-haspopup="dialog"
             className={classNames}
             tabIndex={-1}
             aria-disabled={item.isDisabled}
@@ -102,7 +102,7 @@ export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>({
                 {item.stringTitle}
             </ShortenedText>
 
-            {!!item.component && <i className="gd-icon-navigateright" />}
+            {!!item.Component && <i className="gd-icon-navigateright" />}
         </div>
     );
 }

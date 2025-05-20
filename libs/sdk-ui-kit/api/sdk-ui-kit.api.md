@@ -4648,9 +4648,9 @@ export type IUiMenuContentItem<T extends IUiMenuItemData = object> = {
     isDisabled?: boolean;
     showComponentOnly?: boolean;
     data: T["content"];
-    component: React_2.ComponentType<{
-        onBack?: () => void;
-        onClose?: () => void;
+    Component: React_2.ComponentType<{
+        onBack: () => void;
+        onClose: () => void;
     }>;
 };
 
@@ -4693,13 +4693,17 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object> 
     // (undocumented)
     itemsContainerRef: React_2.RefObject<HTMLElement>;
     // (undocumented)
-    makeItemId: (item: IUiMenuItem<T>) => string;
+    level: number;
+    // (undocumented)
+    makeItemId: (item: IUiMenuItem<T>) => string | undefined;
     // (undocumented)
     menuComponentRef: React_2.RefObject<HTMLElement>;
     // (undocumented)
     menuCtxData?: M;
     // (undocumented)
     onClose?: () => void;
+    // (undocumented)
+    onLevelChange: (level: number, item: IUiMenuContentItem<T> | IUiMenuInteractiveItem<T> | undefined) => void;
     // (undocumented)
     onSelect: (item: IUiMenuFocusableItem<T> | undefined) => void;
     // (undocumented)
@@ -5711,6 +5715,8 @@ export interface UiMenuProps<T extends IUiMenuItemData = object, M = object> ext
     menuCtxData?: M;
     // (undocumented)
     onClose?: () => void;
+    // (undocumented)
+    onLevelChange?: (level: number, item?: IUiMenuContentItem<T> | IUiMenuInteractiveItem<T>) => void;
     // (undocumented)
     onSelect?: (item: IUiMenuInteractiveItem<T>) => void;
     // (undocumented)
