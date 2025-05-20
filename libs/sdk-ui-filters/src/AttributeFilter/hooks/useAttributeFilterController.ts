@@ -889,10 +889,7 @@ function useCallbacks(
 
         if (handler.getSearch().length > 0) {
             handler.setSearch("");
-            if (handler.getInitStatus() === "loading" || !enableDashboardFiltersApplyModes) {
-                // if status is loading, updateNonResettingFilter takes care of clearing search and reloading elements.
-                handler.loadInitialElementsPage(RESET_CORRELATION);
-            }
+            handler.loadInitialElementsPage(RESET_CORRELATION);
         }
 
         /**
