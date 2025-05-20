@@ -229,7 +229,7 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
 
     //CodeMirror highlight restyle
     .cm-editor .cm-highlight-phrase {
-        font-weight: bold;
+        font-weight: normal;
 
         &.metric {
             color: kit-variables.$gd-palette-success-base;
@@ -239,6 +239,23 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
         }
         &.attribute {
             color: kit-variables.$gd-palette-warning-base-text;
+        }
+    }
+    .cm-editor .cm-icon-widget {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        margin-bottom: -0.3em;
+        margin-right: 5px;
+
+        &.metric {
+            @include gd-svg-icon("metric");
+        }
+        &.attribute {
+            @include gd-svg-icon("attribute");
+        }
+        &.fact {
+            @include gd-svg-icon("measure");
         }
     }
 }
