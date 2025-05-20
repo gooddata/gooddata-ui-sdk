@@ -805,11 +805,11 @@ importers:
         specifier: 1.1.5
         version: 1.1.5
       highcharts:
-        specifier: 12.1.2
-        version: 12.1.2
+        specifier: 12.2.0
+        version: 12.2.0
       highcharts-react-official:
         specifier: 3.2.1
-        version: 3.2.1(highcharts@12.1.2)(react@18.2.0)
+        version: 3.2.1(highcharts@12.2.0)(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -2248,11 +2248,11 @@ importers:
         specifier: 1.1.5
         version: 1.1.5
       highcharts:
-        specifier: 12.1.2
-        version: 12.1.2
+        specifier: 12.2.0
+        version: 12.2.0
       highcharts-react-official:
         specifier: 3.2.1
-        version: 3.2.1(highcharts@12.1.2)(react@18.2.0)
+        version: 3.2.1(highcharts@12.2.0)(react@18.2.0)
       hoist-non-react-statics:
         specifier: ^3.3.0
         version: 3.3.2
@@ -4449,7 +4449,7 @@ importers:
         version: 5.62.0(eslint@8.55.0)(typescript@5.3.3)
       babel-loader:
         specifier: ^8.0.5
-        version: 8.3.0(@babel/core@7.26.10)(webpack@4.47.0)
+        version: 8.3.0(@babel/core@7.26.10)(webpack@5.89.0)
       babel-plugin-require-context-hook:
         specifier: ^1.0.0
         version: 1.0.0
@@ -17284,18 +17284,18 @@ packages:
     hasBin: true
     dev: true
 
-  /highcharts-react-official@3.2.1(highcharts@12.1.2)(react@18.2.0):
+  /highcharts-react-official@3.2.1(highcharts@12.2.0)(react@18.2.0):
     resolution: {integrity: sha512-hyQTX7ezCxl7JqumaWiGsroGWalzh24GedQIgO3vJbkGOZ6ySRAltIYjfxhrq4HszJOySZegotEF7v+haQ75UA==}
     peerDependencies:
       highcharts: '>=6.0.0'
       react: '>=16.8.0'
     dependencies:
-      highcharts: 12.1.2
+      highcharts: 12.2.0
       react: 18.2.0
     dev: false
 
-  /highcharts@12.1.2:
-    resolution: {integrity: sha512-paZ72q1um0zZT1sS+O/3JfXVSOLPmZ0zlo8SgRc0rEplPFPQUPc4VpkgQS8IUTueeOBgIWwVpAWyC9tBYbQ0kg==}
+  /highcharts@12.2.0:
+    resolution: {integrity: sha512-UUN+osTP3aeGc4KmoMuWAjzpKif8GYHFozzYI4O8h1ILGof25M/ZGBpXLvgqf1z0LVh7N9eG7i0HnzMfjcR4nA==}
     dev: false
 
   /history@4.10.1:
