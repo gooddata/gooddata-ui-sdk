@@ -7,7 +7,12 @@ import { defaultImport } from "default-import";
 import format from "date-fns/format/index.js";
 import { DateFilterGranularity, WeekStart } from "@gooddata/sdk-model";
 import { Dropdown, OverlayPositionType } from "@gooddata/sdk-ui-kit";
-import { IExtendedDateFilterErrors, IDateFilterOptionsByType, DateFilterOption } from "./interfaces/index.js";
+import {
+    IExtendedDateFilterErrors,
+    IDateFilterOptionsByType,
+    DateFilterOption,
+    IDateFilterOptionChangedDetails,
+} from "./interfaces/index.js";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { MediaQueries } from "../constants/index.js";
 import { DateFilterButtonLocalized } from "./DateFilterButtonLocalized/DateFilterButtonLocalized.js";
@@ -32,7 +37,10 @@ export interface IDateFilterCoreProps {
      * Filter option currently selected, it would be applied on Apply click.
      */
     selectedFilterOption: DateFilterOption;
-    onSelectedFilterOptionChange: (option: DateFilterOption) => void;
+    onSelectedFilterOptionChange: (
+        option: DateFilterOption,
+        changeDetails?: IDateFilterOptionChangedDetails,
+    ) => void;
     /**
      * Filter option selected before the filter dialog was opened.
      */

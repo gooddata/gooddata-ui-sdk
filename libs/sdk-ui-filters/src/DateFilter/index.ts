@@ -65,6 +65,12 @@ export type {
     RelativeDateFilterOption,
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
+    IDateFilterOptionChangedDetails,
+    IAbsoluteDateFilterOptionChangedDetails,
+    DateRangePosition,
+    DateParseError,
+    IDateFilterAbsoluteDateTimeFormErrors,
+    IDateTimePickerErrors,
 } from "./interfaces/index.js";
 export {
     isAbsoluteDateFilterOption,

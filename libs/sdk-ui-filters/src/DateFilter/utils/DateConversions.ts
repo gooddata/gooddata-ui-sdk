@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import moment from "moment";
 import isString from "lodash/isString.js";
 import isDate from "lodash/isDate.js";
@@ -7,7 +7,15 @@ import { platformDateFormat, platformDateTimeFormat } from "../constants/Platfor
 export const convertDateToPlatformDateString = (
     date: Date | undefined | null,
     dateFormat = platformDateFormat,
-): string | undefined | null => (isDate(date) ? moment(date).local().format(dateFormat) : date);
+): string | undefined | null => {
+    if (isDate(date) && isNaN(date.getTime())) {
+        return undefined;
+    }
+    if (isDate(date)) {
+        return moment(date).local().format(dateFormat);
+    }
+    return date;
+};
 
 export const convertPlatformDateStringToDate = (
     platformDate: string | Date | undefined | null,

@@ -1102,14 +1102,34 @@
         "comment": "",
         "limit": 0
     },
-    "filters.from": {
-        "value": "from",
-        "comment": "Displayed as placeholder in static period inputs where user enters date",
+    "filters.staticPeriod.dateFrom": {
+        "value": "Start date",
+        "comment": "Displayed as label of input where user enters a date that marks the start of date range.",
         "limit": 0
     },
-    "filters.to": {
-        "value": "to",
-        "comment": "Displayed as placeholder in static period inputs where user enters date",
+    "filters.staticPeriod.timeFrom": {
+        "value": "Start time",
+        "comment": "Displayed as label of input where user enters a time that marks the start of date range.",
+        "limit": 0
+    },
+    "filters.staticPeriod.dateTo": {
+        "value": "End date",
+        "comment": "Displayed as label of input where user enters a date that marks the end of date range.",
+        "limit": 0
+    },
+    "filters.staticPeriod.timeTo": {
+        "value": "End time",
+        "comment": "Displayed as label of input where user enters a time that marks the end of date range.",
+        "limit": 0
+    },
+    "filters.staticPeriod.dateFormatHint": {
+        "value": "Use date format {format}.",
+        "comment": "Displayed as a hint below input in which user enters a date. Do not translate {format} placeholder. It will be replaced in runtime with date format pattern.",
+        "limit": 0
+    },
+    "filters.staticPeriod.timeFormatHint": {
+        "value": "Use time format HH:MM; max value is 23:59.",
+        "comment": "Displayed as a hint below input in which user enters a time.",
         "limit": 0
     },
     "filters.date.accessibility.label.from": {
@@ -1382,14 +1402,44 @@
         "comment": "",
         "limit": 0
     },
-    "filters.staticPeriod.incorrectFormat": {
-        "value": "The date must be in the {format} format",
-        "comment": "Placeholder '{format}' is used for showing date format. Example 'The date must be in the MM/dd/yyyy format'. Don't translate placeholder '{format}'.",
+    "filters.staticPeriod.errors.emptyStartDate": {
+        "value": "Error: Start date is empty — enter a valid date to continue.",
+        "comment": "The error is displayed when user did not entered value that specifies start of the daterange.",
         "limit": 0
     },
-    "filters.staticPeriod.endDateBeforeStartDate": {
-        "value": "End time must be later than start time",
-        "comment": "This error is displayed once there is a datetime range and End time is before To time",
+    "filters.staticPeriod.errors.invalidStartDate": {
+        "value": "Error: Invalid start date — use {format} format.",
+        "comment": "Placeholder '{format}' is used for showing date format. Example 'Error: Start date is not in MM/dd/yyyy format'. Don't translate placeholder '{format}'.",
+        "limit": 0
+    },
+    "filters.staticPeriod.errors.startDateAfterEndDate": {
+        "value": "Error: Invalid start date — set a date before the end date.",
+        "comment": "This error is displayed once there is a datetime range and Start date is after End date.",
+        "limit": 0
+    },
+    "filters.staticPeriod.errors.startTimeAfterEndTime": {
+        "value": "Error: Invalid start time — set a time before the end time.",
+        "comment": "This error is displayed once there is a datetime range and Start time is after End time.",
+        "limit": 0
+    },
+    "filters.staticPeriod.errors.emptyEndDate": {
+        "value": "Error: End date is empty — enter a valid date to continue.",
+        "comment": "The error is displayed when user did not entered value that specifies end of the daterange.",
+        "limit": 0
+    },
+    "filters.staticPeriod.errors.invalidEndDate": {
+        "value": "Error: Invalid end date — use {format} format.",
+        "comment": "Placeholder '{format}' is used for showing date format. Example 'Error: End date is not in MM/dd/yyyy format'. Don't translate placeholder '{format}'.",
+        "limit": 0
+    },
+    "filters.staticPeriod.errors.endDateBeforeStartDate": {
+        "value": "Error: Invalid end date — set a date after the start date.",
+        "comment": "This error is displayed once there is a datetime range and End date is before Start date.",
+        "limit": 0
+    },
+    "filters.staticPeriod.errors.endTimeBeforeStartTime": {
+        "value": "Error: Invalid end time — set a time after the start time.",
+        "comment": "This error is displayed once there is a datetime range and End time is before Start time.",
         "limit": 0
     },
     "mvf.operator.all": {

@@ -11,6 +11,7 @@ import {
     DateFilterOption,
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
+    IDateFilterOptionChangedDetails,
 } from "../interfaces/index.js";
 import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle.js";
 import { VisibleScrollbar } from "../VisibleScrollbar/VisibleScrollbar.js";
@@ -44,7 +45,10 @@ export interface IDateFilterBodyProps {
     dateFormat: string;
     filterOptions: IDateFilterOptionsByType;
     selectedFilterOption: DateFilterOption;
-    onSelectedFilterOptionChange: (option: DateFilterOption) => void;
+    onSelectedFilterOptionChange: (
+        option: DateFilterOption,
+        changeDetails?: IDateFilterOptionChangedDetails,
+    ) => void;
 
     excludeCurrentPeriod: boolean;
     isExcludeCurrentPeriodEnabled: boolean;
