@@ -33,6 +33,7 @@ export interface IAlertAttributeSelectProps {
     getAttributeValues: (attr: IAttributeMetadataObject) => AttributeValue[];
     isResultLoading?: boolean;
     showLabel?: boolean;
+    closeOnParentScroll?: boolean;
 }
 
 export const AlertAttributeSelect = ({
@@ -46,6 +47,7 @@ export const AlertAttributeSelect = ({
     catalogAttributes,
     catalogDateDatasets,
     showLabel = true,
+    closeOnParentScroll,
 }: IAlertAttributeSelectProps) => {
     const intl = useIntl();
     const ref = useRef<HTMLElement | null>(null);
@@ -85,6 +87,7 @@ export const AlertAttributeSelect = ({
             ) : null}
             <div className="gd-alert-attribute-select">
                 <Menu
+                    closeOnScroll={closeOnParentScroll}
                     toggler={
                         <div
                             ref={(item) => {

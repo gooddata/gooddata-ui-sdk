@@ -15,6 +15,7 @@ export interface IAlertMetricSelectProps {
     onMeasureChange: (measure: AlertMetric) => void;
     measures: AlertMetric[];
     overlayPositionType?: OverlayPositionType;
+    closeOnParentScroll?: boolean;
 }
 
 const measureIcon = <div className="gd-alert-measure-select__icon gd-icon-metric" />;
@@ -25,6 +26,7 @@ export const AlertMeasureSelect = ({
     onMeasureChange,
     measures,
     overlayPositionType,
+    closeOnParentScroll,
 }: IAlertMetricSelectProps) => {
     const intl = useIntl();
     const ref = useRef<HTMLElement | null>(null);
@@ -34,6 +36,7 @@ export const AlertMeasureSelect = ({
 
     return (
         <Dropdown
+            closeOnParentScroll={closeOnParentScroll}
             overlayPositionType={overlayPositionType}
             renderButton={({ isOpen, toggleDropdown }) => {
                 return (

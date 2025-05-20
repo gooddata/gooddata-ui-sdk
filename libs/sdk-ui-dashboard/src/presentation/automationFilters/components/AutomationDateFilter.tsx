@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { Bubble, BubbleHoverTrigger, UiChip } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, OverlayPositionType, UiChip } from "@gooddata/sdk-ui-kit";
 import { areObjRefsEqual, FilterContextItem, IDashboardDateFilter } from "@gooddata/sdk-model";
 import { DefaultDashboardDateFilter, IDashboardDateFilterConfig } from "../../filterBar/index.js";
 import {
@@ -23,7 +23,8 @@ export const AutomationDateFilter: React.FC<{
     onDelete: (filter: FilterContextItem) => void;
     isLocked?: boolean;
     isCommonDateFilter?: boolean;
-}> = ({ filter, onChange, onDelete, isLocked, isCommonDateFilter }) => {
+    overlayPositionType?: OverlayPositionType;
+}> = ({ filter, onChange, onDelete, isLocked, isCommonDateFilter, overlayPositionType }) => {
     const intl = useIntl();
     const availableGranularities = useDashboardSelector(selectEffectiveDateFilterAvailableGranularities);
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
@@ -49,7 +50,7 @@ export const AutomationDateFilter: React.FC<{
             workingFilter={filter}
             onFilterChanged={onChange}
             config={filterConfig}
-            overlayPositionType={"sameAsTarget"}
+            overlayPositionType={overlayPositionType}
             ButtonComponent={(props) => {
                 const label = `${props.textTitle}: ${props.textSubtitle}`;
                 return (

@@ -11,6 +11,7 @@ import {
     OverlayController,
     OverlayControllerProvider,
     useId,
+    ScrollablePanel,
 } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import React, { useMemo, useRef, useState } from "react";
@@ -55,6 +56,7 @@ import { isChangeOrDifferenceOperator } from "./utils/guards.js";
 import { isLatestAutomationVersion } from "../../automationFilters/utils.js";
 
 const OVERLAY_POSITION_TYPE = "sameAsTarget";
+const CLOSE_ON_PARENT_SCROLL = true;
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
@@ -261,7 +263,7 @@ export function AlertingDialogRenderer({
                         <h2 className={"sr-only"} id={titleElementId}>
                             {intl.formatMessage({ id: "dialogs.alert.accessibility.label.title" })}
                         </h2>
-                        <div
+                        <ScrollablePanel
                             className={cx("gd-notifications-channel-dialog-content-wrapper", {
                                 "gd-notification-channel-dialog-with-automation-filters":
                                     enableAutomationFilterContext,
@@ -278,6 +280,7 @@ export function AlertingDialogRenderer({
                                         onStoreFiltersChange={() => {}}
                                         isDashboardAutomation={false}
                                         areFiltersMissing={areVisibleFiltersMissingOnDashboard}
+                                        overlayPositionType={OVERLAY_POSITION_TYPE}
                                     />
                                     <ContentDivider className="gd-divider-with-margin" />
                                 </>
@@ -290,6 +293,7 @@ export function AlertingDialogRenderer({
                                         measures={supportedMeasures}
                                         overlayPositionType={OVERLAY_POSITION_TYPE}
                                         id="alert.measure"
+                                        closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
                                     />
                                 </FormField>
                                 {Boolean(canManageAttributes) &&
@@ -309,6 +313,7 @@ export function AlertingDialogRenderer({
                                                 getAttributeValues={getAttributeValues}
                                                 isResultLoading={isResultLoading}
                                                 showLabel={false}
+                                                closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
                                             />
                                         </FormField>
                                     )}
@@ -324,6 +329,7 @@ export function AlertingDialogRenderer({
                                         onComparisonOperatorChange={onComparisonOperatorChange}
                                         onRelativeOperatorChange={onRelativeOperatorChange}
                                         overlayPositionType={OVERLAY_POSITION_TYPE}
+                                        closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
                                     />
                                 </FormField>
                                 <FormField
@@ -365,6 +371,7 @@ export function AlertingDialogRenderer({
                                             }}
                                             overlayPositionType={OVERLAY_POSITION_TYPE}
                                             canManageComparison={canManageComparison}
+                                            closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
                                         />
                                     </FormField>
                                 )}
@@ -382,6 +389,7 @@ export function AlertingDialogRenderer({
                                             onDestinationChange={onDestinationChange}
                                             destinations={notificationChannels}
                                             overlayPositionType={OVERLAY_POSITION_TYPE}
+                                            closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
                                         />
                                     </FormField>
                                 ) : null}
@@ -396,6 +404,7 @@ export function AlertingDialogRenderer({
                                         }
                                         onTriggerModeChange={onTriggerModeChange}
                                         overlayPositionType={OVERLAY_POSITION_TYPE}
+                                        closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
                                     />
                                 </FormField>
                                 <FormField
@@ -434,7 +443,7 @@ export function AlertingDialogRenderer({
                                     {errorMessage}
                                 </Message>
                             ) : null}
-                        </div>
+                        </ScrollablePanel>
                     </ConfirmDialogBase>
                 </OverlayControllerProvider>
             </Overlay>

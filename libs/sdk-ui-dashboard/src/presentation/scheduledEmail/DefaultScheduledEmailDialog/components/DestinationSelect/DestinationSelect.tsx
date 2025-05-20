@@ -8,6 +8,7 @@ import {
     DropdownButton,
     DropdownList,
     Hyperlink,
+    OverlayPositionType,
     SingleSelectListItem,
 } from "@gooddata/sdk-ui-kit";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS } from "../../constants.js";
@@ -24,12 +25,16 @@ interface IDestinationSelectProps {
     notificationChannels: INotificationChannelMetadataObject[];
     selectedItemId: string | undefined;
     onChange: (selectedItemId: string) => void;
+    closeOnParentScroll?: boolean;
+    overlayPositionType?: OverlayPositionType;
 }
 
 export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
     notificationChannels,
     selectedItemId,
     onChange,
+    closeOnParentScroll,
+    overlayPositionType,
 }) => {
     const intl = useIntl();
     const items = useMemo(() => {
@@ -67,6 +72,8 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
                 </div>
             ) : (
                 <Dropdown
+                    overlayPositionType={overlayPositionType}
+                    closeOnParentScroll={closeOnParentScroll}
                     alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
                     className="gd-notifications-channels-dialog-destination s-gd-notifications-channels-dialog-destination"
                     renderButton={({ toggleDropdown, dropdownId, isOpen }) => (
@@ -96,7 +103,6 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
                             )}
                         />
                     )}
-                    overlayPositionType="sameAsTarget"
                 />
             )}
         </div>

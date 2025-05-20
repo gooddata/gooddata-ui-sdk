@@ -34,6 +34,7 @@ export interface ITimepickerOwnProps {
     skipNormalizeTime?: boolean;
     timeAnchor?: number;
     timeFormat?: string;
+    closeOnParentScroll?: boolean;
 }
 
 export type TimePickerProps = ITimepickerOwnProps & WrappedComponentProps;
@@ -134,7 +135,14 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
     };
 
     public render() {
-        const { ariaLabelledBy, overlayPositionType, maxVisibleItemsCount, overlayZIndex, intl } = this.props;
+        const {
+            ariaLabelledBy,
+            overlayPositionType,
+            maxVisibleItemsCount,
+            overlayZIndex,
+            intl,
+            closeOnParentScroll,
+        } = this.props;
         const { dropdownWidth, selectedTime } = this.state;
         const time = {
             h: selectedTime.getHours(),
@@ -146,6 +154,7 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
         return (
             <div className={this.getComponentClasses()} ref={this.dropdownRef}>
                 <Dropdown
+                    closeOnParentScroll={closeOnParentScroll}
                     overlayPositionType={overlayPositionType}
                     alignPoints={[
                         {

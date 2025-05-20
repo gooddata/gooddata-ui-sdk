@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { useState } from "react";
 import {
@@ -8,6 +8,7 @@ import {
     ContentDivider,
     Dropdown,
     IAlignPoint,
+    OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 import { AttachmentFiltersList } from "./AttachmentFiltersList.js";
@@ -40,6 +41,10 @@ interface IAttachmentFiltersProps {
      * Information about attachment filters
      */
     filters?: IAttachmentFilterInfo[];
+    /**
+     * Position type of the dropdown
+     */
+    overlayPositionType?: OverlayPositionType;
 }
 
 /**
@@ -54,7 +59,7 @@ const buttonTitle = {
 };
 
 export const AttachmentFilters: React.FC<IAttachmentFiltersProps> = (props) => {
-    const { filterType, onChange, hidden = false, disabled = false, filters } = props;
+    const { filterType, onChange, hidden = false, disabled = false, filters, overlayPositionType } = props;
     const [selectedType, setSelectedType] = useState<AttachmentFilterType>(filterType);
     const intl = useIntl();
 
@@ -74,7 +79,7 @@ export const AttachmentFilters: React.FC<IAttachmentFiltersProps> = (props) => {
 
     return (
         <Dropdown
-            overlayPositionType="sameAsTarget"
+            overlayPositionType={overlayPositionType}
             alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
             renderButton={({ toggleDropdown }) => (
                 <div className="gd-attachment-filters-dropdown-button">
