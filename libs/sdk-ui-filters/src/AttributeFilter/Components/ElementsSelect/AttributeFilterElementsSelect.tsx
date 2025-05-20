@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 import { InvertableSelect, useMediaQuery } from "@gooddata/sdk-ui-kit";
@@ -55,6 +55,7 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
         onClearIrrelevantSelection,
 
         isFilteredByDependentDateFilters,
+        withoutApply,
     } = props;
 
     const intl = useIntl();
@@ -165,6 +166,7 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
                             onShowFilteredElements={onShowFilteredElements}
                             irrelevantSelection={irrelevantSelection}
                             onClearIrrelevantSelection={onClearIrrelevantSelection}
+                            withoutApply={withoutApply}
                         />
                     );
                 }}

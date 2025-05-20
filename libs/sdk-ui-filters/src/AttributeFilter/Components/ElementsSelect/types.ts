@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { IAttributeElement } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -153,6 +153,13 @@ export interface IAttributeFilterElementsSelectProps {
      * @remarks Used only when showing filtered elements is enabled.
      */
     onClearIrrelevantSelection?: () => void;
+
+    /**
+     * Whether the filter is rendered without apply button.
+     *
+     * @remarks Usually true (in case of dashboard) when filtersApplyMode.mode === "ALL_AT_ONCE"
+     */
+    withoutApply?: boolean;
 }
 
 /**

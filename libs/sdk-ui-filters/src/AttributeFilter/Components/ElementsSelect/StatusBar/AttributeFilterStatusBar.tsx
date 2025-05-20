@@ -5,7 +5,6 @@ import { AttributeFilterSelectionStatus } from "./AttributeFilterSelectionStatus
 import { AttributeFilterShowFilteredElements } from "./AttributeFilterShowFilteredElements.js";
 import { AttributeFilterIrrelevantSelectionStatus } from "./AttributeFilterIrrelevantSelectionStatus.js";
 import noop from "lodash/noop.js";
-import { useAttributeFilterContext } from "../../../Context/AttributeFilterContext.js";
 import type { IAttributeFilterStatusBarProps } from "./types.js";
 
 /**
@@ -14,7 +13,6 @@ import type { IAttributeFilterStatusBarProps } from "./types.js";
  * @beta
  */
 export const AttributeFilterStatusBar: React.FC<IAttributeFilterStatusBarProps> = (props) => {
-    const { withoutApply } = useAttributeFilterContext();
     const {
         attributeTitle,
         isFilteredByParentFilters,
@@ -30,6 +28,7 @@ export const AttributeFilterStatusBar: React.FC<IAttributeFilterStatusBarProps> 
         onClearIrrelevantSelection = noop,
         isFilteredByLimitingValidationItems,
         isFilteredByDependentDateFilters,
+        withoutApply = false,
     } = props;
 
     if (enableShowingFilteredElements) {

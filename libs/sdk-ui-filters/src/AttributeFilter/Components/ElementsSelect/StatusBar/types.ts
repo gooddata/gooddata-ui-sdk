@@ -97,4 +97,11 @@ export interface IAttributeFilterStatusBarProps {
      * @remarks Used only when showing filtered elements is enabled.
      */
     onClearIrrelevantSelection?: () => void;
+
+    /**
+     * Whether the filter is rendered without apply button.
+     *
+     * @remarks Usually true (in case of dashboard) when filtersApplyMode.mode === "ALL_AT_ONCE"
+     */
+    withoutApply?: boolean;
 }
