@@ -32,6 +32,7 @@ export function getDefaultInsightMenuItems(
         scheduleExportManagementDisabled: boolean;
         exportPdfPresentationDisabled: boolean;
         exportPowerPointPresentationDisabled: boolean;
+        exportPngImageDisabled: boolean;
         onExportXLSX: () => void;
         onExportCSV: () => void;
         onExportRawCSV: () => void;
@@ -39,6 +40,7 @@ export function getDefaultInsightMenuItems(
         onScheduleManagementExport: () => void;
         onExportPowerPointPresentation: () => void;
         onExportPdfPresentation: () => void;
+        onExportPngImage: () => void;
         isExportRawVisible: boolean;
         isExportVisible: boolean;
         isScheduleExportVisible: boolean;
@@ -60,6 +62,7 @@ export function getDefaultInsightMenuItems(
         scheduleExportManagementDisabled,
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
+        exportPngImageDisabled,
         onExportCSV,
         onExportRawCSV,
         onExportXLSX,
@@ -67,6 +70,7 @@ export function getDefaultInsightMenuItems(
         onScheduleManagementExport,
         onExportPowerPointPresentation,
         onExportPdfPresentation,
+        onExportPngImage,
         isScheduleExportVisible,
         isScheduleExportManagementVisible,
         isDataError,
@@ -124,8 +128,10 @@ export function getDefaultInsightMenuItems(
                 onExportXLSX={onExportXLSX}
                 onExportPowerPointPresentation={onExportPowerPointPresentation}
                 onExportPdfPresentation={onExportPdfPresentation}
+                onExportPngImage={onExportPngImage}
                 exportPdfPresentationDisabled={exportPdfPresentationDisabled}
                 exportPowerPointPresentationDisabled={exportPowerPointPresentationDisabled}
+                exportPngImageDisabled={exportPngImageDisabled}
             />
         );
     };

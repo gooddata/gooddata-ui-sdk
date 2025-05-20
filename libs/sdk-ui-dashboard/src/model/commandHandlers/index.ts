@@ -110,6 +110,8 @@ import { exportDashboardToPptPresentationHandler } from "./dashboard/exportDashb
 import { exportSlidesInsightWidgetHandler } from "./widgets/exportSlidesInsightWidgetHandler.js";
 import { changeRichTextWidgetFilterSettingsHandler } from "./widgets/changeRichTextWidgetFilterSettingsHandler.js";
 import { changeIgnoreExecutionTimestampHandler } from "./dashboard/changeIgnoreExecutionTimestampHandler.js";
+//import { exportDashboardToImageHandler } from "./dashboard/exportDashboardToImageHandler.js";
+import { exportImageInsightWidgetHandler } from "./widgets/exportImageInsightWidgetHandler.js";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -130,6 +132,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.EXPORT.EXCEL": exportDashboardToExcelHandler,
     "GDC.DASH/CMD.EXPORT.PDF_PRESENTATION": exportDashboardToPdfPresentationHandler,
     "GDC.DASH/CMD.EXPORT.PPT_PRESENTATION": exportDashboardToPptPresentationHandler,
+    //"GDC.DASH/CMD.EXPORT.IMAGE": exportDashboardToImageHandler,
     "GDC.DASH/CMD.EVENT.TRIGGER": triggerEventHandler,
     "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT": upsertExecutionResultHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION": changeFilterContextSelectionHandler,
@@ -179,6 +182,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.KPI_WIDGET.REFRESH": notImplementedCommand,
     "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW": exportRawInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_SLIDES": exportSlidesInsightWidgetHandler,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_IMAGE": exportImageInsightWidgetHandler,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_DESCRIPTION": changeKpiWidgetDescriptionHandler,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_CONFIGURATION": changeKpiWidgetConfigurationHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER": changeInsightWidgetHeaderHandler,

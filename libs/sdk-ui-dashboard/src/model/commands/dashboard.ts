@@ -851,3 +851,47 @@ export function changeIgnoreExecutionTimestamp(
         payload: { ignoreExecutionTimestamp },
     };
 }
+
+// /**
+//  * Command to export dashboard to image.
+//  *
+//  * @alpha
+//  */
+// export interface ExportDashboardToImage extends IDashboardCommand {
+//     readonly type: "GDC.DASH/CMD.EXPORT.IMAGE";
+//     readonly payload: {
+//         /**
+//          * Widgets to export. If not provided, all widgets will be exported.
+//          */
+//         widgetIds?: ObjRef[];
+//         /**
+//          * Filename for the export. If not provided, the dashboard title will be fetched.
+//          */
+//         filename?: string;
+//     };
+// }
+
+// /**
+//  * Creates the {@link ExportDashboardToImage} command. Dispatching this command will result in a request to export
+//  * the dashboard to a image file. If successful, an instance of {@link DashboardExportToImageResolved} will be emitted
+//  * with the URL of the resulting file.
+//  *
+//  * @param correlationId - specify correlation id to use for this command. this will be included in all
+//  *  events that will be emitted during the command processing
+//  *
+//  * @alpha
+//  */
+// export function exportDashboardToImage(
+//     widgetIds?: ObjRef[],
+//     filename?: string,
+//     correlationId?: string,
+// ): ExportDashboardToImage {
+//     return {
+//         type: "GDC.DASH/CMD.EXPORT.IMAGE",
+//         correlationId,
+//         payload: {
+//             widgetIds,
+//             filename,
+//         },
+//     };
+// }

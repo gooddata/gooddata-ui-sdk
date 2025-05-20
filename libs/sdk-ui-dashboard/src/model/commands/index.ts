@@ -19,6 +19,7 @@ import {
     ExportDashboardToPdfPresentation,
     ExportDashboardToPptPresentation,
     ChangeIgnoreExecutionTimestamp,
+    //ExportDashboardToImage,
 } from "./dashboard.js";
 import { TriggerEvent } from "./events.js";
 import { UpsertExecutionResult } from "./executionResults.js";
@@ -63,6 +64,7 @@ import {
     AttributeHierarchyModified,
     ChangeInsightWidgetIgnoreCrossFiltering,
     ExportSlidesInsightWidget,
+    ExportImageInsightWidget,
 } from "./insight.js";
 import {
     ChangeKpiWidgetComparison,
@@ -135,6 +137,7 @@ export type {
     ExportDashboardToPptPresentation,
     ExportDashboardToPdfPresentation,
     ExportDashboardToExcel,
+    //ExportDashboardToImage,
     DeleteDashboard,
     ChangeSharing,
     ChangeSharingPayload,
@@ -165,6 +168,7 @@ export {
     exportDashboardToExcel,
     exportDashboardToPdfPresentation,
     exportDashboardToPptPresentation,
+    //exportDashboardToImage,
     deleteDashboard,
     changeSharing,
     setDashboardDateFilterConfigMode,
@@ -456,6 +460,8 @@ export type {
     ExportRawInsightWidgetPayload,
     ExportSlidesInsightWidget,
     ExportSlidesInsightWidgetPayload,
+    ExportImageInsightWidget,
+    ExportImageInsightWidgetPayload,
 } from "./insight.js";
 export {
     changeInsightWidgetHeader,
@@ -482,6 +488,7 @@ export {
     exportRawInsightWidget,
     exportSlidesInsightWidget,
     attributeHierarchyModified,
+    exportImageInsightWidget,
 } from "./insight.js";
 export { loadAllWorkspaceUsers } from "./users.js";
 export type { LoadAllWorkspaceUsers } from "./users.js";
@@ -547,6 +554,7 @@ export type DashboardCommands =
     | ExportDashboardToExcel
     | ExportDashboardToPdfPresentation
     | ExportDashboardToPptPresentation
+    //| ExportDashboardToImage
     | DeleteDashboard
     | TriggerEvent
     | UpsertExecutionResult
@@ -639,4 +647,5 @@ export type DashboardCommands =
     | SetScreenSize
     | LoadAllWorkspaceUsers
     | ExportRawInsightWidget
-    | ExportSlidesInsightWidget;
+    | ExportSlidesInsightWidget
+    | ExportImageInsightWidget;

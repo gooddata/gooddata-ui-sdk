@@ -686,6 +686,11 @@ export interface ISettings {
      */
     enableSnapshotExportAccessibility?: boolean;
 
+    /**
+     * Enable widget export to PNG image.
+     */
+    enableWidgetExportPngImage?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

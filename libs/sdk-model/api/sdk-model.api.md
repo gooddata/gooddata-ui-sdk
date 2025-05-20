@@ -3496,6 +3496,7 @@ export interface ISettings {
     enableVisualizationFineTuning?: boolean;
     enableWaterfallChart?: boolean;
     enableWeekFilters?: boolean;
+    enableWidgetExportPngImage?: boolean;
     enableWidgetIdentifiersRollout?: boolean;
     enableWorkspaceSettingsAppHeaderMenuItem?: boolean;
     formatLocale?: string;

@@ -19,6 +19,7 @@ import {
 } from "../../../../model/index.js";
 import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 import { isDataError, isDataErrorTooLarge } from "../../../../_staging/errors/errorPredicates.js";
+import { selectEnableWidgetExportPngImage } from "../../../../model/store/config/configSelectors.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "tl bl", offset: { x: 20, y: 0 } }];
 
@@ -70,11 +71,13 @@ interface IExportOptionsProps extends IInsightMenuSubmenuComponentProps {
     exportCSVRawDisabled: boolean;
     exportPdfPresentationDisabled: boolean;
     exportPowerPointPresentationDisabled: boolean;
+    exportPngImageDisabled: boolean;
     onExportCSV: () => void;
     onExportRawCSV: () => void;
     onExportXLSX: () => void;
     onExportPowerPointPresentation: () => void;
     onExportPdfPresentation: () => void;
+    onExportPngImage: () => void;
 }
 
 export const ExportOptions: React.FC<IExportOptionsProps> = ({
@@ -85,6 +88,7 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
     exportCSVRawDisabled,
     exportPdfPresentationDisabled,
     exportPowerPointPresentationDisabled,
+    exportPngImageDisabled,
     isExportRawVisible,
     isExportVisible,
     onExportCSV,
@@ -92,13 +96,15 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
     onExportXLSX,
     onExportPowerPointPresentation,
     onExportPdfPresentation,
+    onExportPngImage,
 }) => {
     const intl = useIntl();
     const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));
     const settings = useDashboardSelector(selectSettings);
+    const enableWidgetExportPngImage = useDashboardSelector(selectEnableWidgetExportPngImage);
 
     const tooltip = getExportTooltip(execution, settings?.enableRawExports);
-    const presentationTooltip = intl.formatMessage({
+    const unsupportedExportTooltip = intl.formatMessage({
         id: "options.menu.export.presentation.unsupported.oldWidget",
     });
 
@@ -109,6 +115,28 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
                 <ItemsWrapper className="gd-configuration-export-options" smallItemsSpacing={true}>
                     {isExportVisible ? (
                         <>
+                            {enableWidgetExportPngImage && !exportPngImageDisabled ? (
+                                <MenuItem
+                                    onClick={() => {
+                                        onClose();
+                                        onExportPngImage();
+                                    }}
+                                    disabled={exportPngImageDisabled}
+                                    className="gd-export-options-png"
+                                    icon="gd-icon-type-image"
+                                    messageId="options.menu.export.image.PNG"
+                                />
+                            ) : enableWidgetExportPngImage ? (
+                                <MenuItemWithBubble
+                                    className="gd-export-options-png"
+                                    icon="gd-icon-type-image"
+                                    disabled={exportPngImageDisabled}
+                                    messageId="options.menu.export.image.PNG"
+                                    showBubble={true}
+                                    alignPoints={alignPoints}
+                                    bubbleTextId={unsupportedExportTooltip}
+                                />
+                            ) : null}
                             {!exportPdfPresentationDisabled ? (
                                 <MenuItem
                                     onClick={() => {
@@ -128,7 +156,7 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
                                     messageId="options.menu.export.presentation.PDF"
                                     showBubble={true}
                                     alignPoints={alignPoints}
-                                    bubbleTextId={presentationTooltip}
+                                    bubbleTextId={unsupportedExportTooltip}
                                 />
                             )}
                             {!exportPowerPointPresentationDisabled ? (
@@ -150,7 +178,7 @@ export const ExportOptions: React.FC<IExportOptionsProps> = ({
                                     messageId="options.menu.export.presentation.PPTX"
                                     showBubble={true}
                                     alignPoints={alignPoints}
-                                    bubbleTextId={presentationTooltip}
+                                    bubbleTextId={unsupportedExportTooltip}
                                 />
                             )}
                         </>
