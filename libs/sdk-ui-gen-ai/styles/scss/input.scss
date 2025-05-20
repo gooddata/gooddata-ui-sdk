@@ -155,6 +155,7 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
             }
         }
     }
+
     //CodeMirror completion info restyle
     .cm-tooltip.cm-completionInfo {
         min-width: 220px;
@@ -223,6 +224,21 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
                     line-height: 19px;
                 }
             }
+        }
+    }
+
+    //CodeMirror highlight restyle
+    .cm-editor .cm-highlight-phrase {
+        font-weight: bold;
+
+        &.metric {
+            color: kit-variables.$gd-palette-success-base;
+        }
+        &.fact {
+            color: kit-variables.$gd-palette-success-base;
+        }
+        &.attribute {
+            color: kit-variables.$gd-palette-warning-base-text;
         }
     }
 }

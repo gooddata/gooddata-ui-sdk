@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import React from "react";
+import React, { useMemo } from "react";
 import cx from "classnames";
 import { connect } from "react-redux";
 import { defineMessages, injectIntl } from "react-intl";
@@ -12,6 +12,7 @@ import { asyncProcessSelector, newMessageAction, RootState } from "../store/inde
 import { makeTextContents, makeUserMessage } from "../model.js";
 
 import { useCompletion } from "./completion/index.js";
+import { useHighlight } from "./highlight/index.js";
 import { SendIcon } from "./SendIcon.js";
 
 type InputStateProps = {
@@ -48,7 +49,10 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
     const [value, setValue] = React.useState("");
     const [editorApi, setApi] = React.useState<EditorView | null>(null);
 
-    const { onCompletion } = useCompletion(catalogItems);
+    const { onCompletion, selectedItems } = useCompletion(catalogItems);
+    const highlightExtension = useHighlight(selectedItems);
+
+    const extensions = useMemo(() => [highlightExtension], [highlightExtension]);
 
     // Force focus when autofocus is enables on the first mount, right after the initial state is loaded
     const forceFocusOnce = React.useRef<boolean>(autofocus);
@@ -88,6 +92,7 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
                 placeholder={intl.formatMessage(messages.placeholder)}
                 label={intl.formatMessage(messages.label)}
                 value={value}
+                extensions={extensions}
                 onApi={setApi}
                 onChange={setValue}
                 onKeyDown={handleKeyDown}
