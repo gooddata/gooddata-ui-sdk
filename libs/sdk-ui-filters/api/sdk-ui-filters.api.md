@@ -578,6 +578,7 @@ export interface IAttributeFilterElementsSelectProps {
     selectedItems: IAttributeElement[];
     totalItemsCount: number;
     totalItemsCountWithCurrentSettings: number;
+    withoutApply?: boolean;
 }
 
 // @beta
@@ -671,6 +672,7 @@ export interface IAttributeFilterStatusBarProps {
     selectedItems: IAttributeElement[];
     selectedItemsLimit: number;
     totalElementsCountWithCurrentSettings: number;
+    withoutApply?: boolean;
 }
 
 // @public

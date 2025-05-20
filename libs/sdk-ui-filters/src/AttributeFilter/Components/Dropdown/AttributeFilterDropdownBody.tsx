@@ -92,6 +92,7 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
                 onShowFilteredElements={onShowFilteredElements}
                 irrelevantSelection={irrelevantSelection}
                 onClearIrrelevantSelection={onClearIrrelevantSelection}
+                withoutApply={withoutApply}
             />
             <DropdownActionsComponent
                 onApplyButtonClick={onApplyButtonClick}

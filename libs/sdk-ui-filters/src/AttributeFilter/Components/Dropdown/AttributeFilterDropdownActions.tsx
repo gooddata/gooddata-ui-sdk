@@ -30,7 +30,7 @@ export interface IAttributeFilterDropdownActionsProps {
     isApplyDisabled?: boolean;
 
     /**
-     * If true, the Apply button is not rendered and Cancel button is renamed to Close.
+     * If true, the Apply button is not rendered, Cancel button is renamed to Close and status bar is not rendered.
      *
      * @alpha
      */
