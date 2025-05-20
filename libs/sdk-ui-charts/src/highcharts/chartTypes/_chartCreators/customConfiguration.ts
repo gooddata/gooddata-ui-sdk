@@ -1326,7 +1326,7 @@ const getXAxisConfiguration = (
                       plotLines: axis.plotLines.map((value) => ({
                           value,
                           color: plotLineColor,
-                          width: 1,
+                          width: 2,
                           zIndex: 1,
                       })),
                   }
@@ -1390,7 +1390,7 @@ function getAxesConfiguration(
     const axisLabelColor =
         theme?.chart?.axisLabelColor ?? theme?.palette?.complementary?.c7 ?? styleVariables.gdColorLink;
     const plotLineColor =
-        theme?.chart?.gridColor ?? theme?.palette?.complementary?.c3 ?? styleVariables.gdColorGrid;
+        theme?.chart?.plotLineColor ?? theme?.palette?.complementary?.c5 ?? styleVariables.gdColorPlotLine;
     return {
         plotOptions: {
             series: {
