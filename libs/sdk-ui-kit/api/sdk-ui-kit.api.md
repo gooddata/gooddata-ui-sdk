@@ -5562,7 +5562,7 @@ export interface UiButtonProps {
 }
 
 // @internal (undocumented)
-export const UiChip: ({ label, tag, isDeletable, isActive, isLocked, iconBefore, onClick, onDelete, accessibilityConfig, }: UiChipProps) => React_2.JSX.Element;
+export const UiChip: ({ label, tag, isDeletable, isActive, isLocked, iconBefore, onClick, onDelete, onDeleteKeyDown, accessibilityConfig, }: UiChipProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiChipProps {
@@ -5582,6 +5582,8 @@ export interface UiChipProps {
     onClick?: () => void;
     // (undocumented)
     onDelete?: () => void;
+    // (undocumented)
+    onDeleteKeyDown?: (event: React_2.KeyboardEvent<HTMLButtonElement>) => void;
     // (undocumented)
     tag?: string;
 }

@@ -62,6 +62,10 @@ export const AutomationDateFilter: React.FC<{
                             isLocked={isLocked}
                             isDeletable={!isLocked && !isCommonDateFilter}
                             onDelete={() => onDelete(filter)}
+                            onDeleteKeyDown={(event) => {
+                                // Do not propagate event to parent as date filter would always open
+                                event.stopPropagation();
+                            }}
                             accessibilityConfig={{
                                 isExpanded: props.isOpen,
                                 deleteAriaLabel: intl.formatMessage({ id: "delete" }),
