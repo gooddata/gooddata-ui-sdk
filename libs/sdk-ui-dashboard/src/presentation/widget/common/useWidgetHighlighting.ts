@@ -11,6 +11,7 @@ import {
 } from "../../../model/index.js";
 import { createSelector } from "@reduxjs/toolkit";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { isVisualisationAutomation } from "../../../_staging/automation/index.js";
 
 const selectIsWidgetHighlighted = (widget: IWidget) =>
     createSelector(
@@ -27,7 +28,11 @@ const selectIsWidgetHighlighted = (widget: IWidget) =>
             const { automationId, widgetId, visualizationId } = dashboardFocusObject;
 
             const matchedAutomation = automations?.find((a) => a.id === automationId);
-            const isAutomationWidget = matchedAutomation?.metadata?.widget === widget.identifier;
+            const isAutomationWidget =
+                // alert widget
+                matchedAutomation?.metadata?.widget === widget.identifier ||
+                // schedule widget
+                isVisualisationAutomation(matchedAutomation);
             const isAutomationVisualizationSwitcher =
                 isVisualizationSwitcherWidget(widget) &&
                 widget.visualizations.some((v) => v.identifier === matchedAutomation?.metadata?.widget);
