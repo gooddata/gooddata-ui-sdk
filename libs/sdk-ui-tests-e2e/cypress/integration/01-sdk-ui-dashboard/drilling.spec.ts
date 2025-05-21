@@ -23,8 +23,8 @@ describe("Interaction", () => {
             Navigation.visitCopyOf("dashboard/drill-to-insight");
             editMode.edit();
             widget.waitChartLoaded().focus();
-            widgetConfig.openInteractions().getDrillConfigItem("Sum of Velocity").remove();
-            widgetConfig.getDrillConfigItem("Created - Year").remove();
+            widgetConfig.openInteractions().getDrillConfigItem("Created - Year").remove();
+            widgetConfig.getDrillConfigItem("Sum of Velocity").remove();
             editMode.save(true).edit();
             widget.waitChartLoaded().focus();
             widgetConfig.openInteractions().hasInteractionItems(false);
