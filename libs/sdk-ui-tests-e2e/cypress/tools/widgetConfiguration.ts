@@ -148,7 +148,11 @@ export class WidgetConfiguration {
     }
 
     clickLoadedDateDatasetButton() {
-        this.getElement().find(".s-date-dataset-button").should("not.contain.text", "Loading").click();
+        this.getElement()
+            .find(".s-date-dataset-button")
+            .should("not.contain.text", "Loading")
+            .scrollIntoView()
+            .click();
         return this;
     }
 
@@ -215,7 +219,7 @@ export class WidgetConfiguration {
     }
 
     selectFilterCheckbox(text: string) {
-        this.getElement().find(`${text} .input-checkbox`).check();
+        this.getElement().find(`${text} .input-checkbox`).check({ force: true });
         return this;
     }
 }
@@ -232,7 +236,7 @@ class DrillConfigItem {
     }
 
     chooseAction(drillType: DrillType) {
-        this.getElement().find(".s-drill-config-panel-target-button").click();
+        this.getElement().find(".s-drill-config-panel-target-button").click({ force: true });
         cy.get(".s-drill-config-panel-target-type-open").contains(drillType).click();
         return this;
     }
@@ -265,18 +269,18 @@ class DrillConfigItem {
     }
 
     remove() {
-        this.getElement().find(".s-drill-config-item-delete").click();
+        this.getElement().find(".s-drill-config-item-delete").click({ force: true });
         return this;
     }
 
     clickTargetUrlButton() {
-        this.getElement().find(".s-drill-to-url-button").click();
+        this.getElement().find(".s-drill-to-url-button").invoke("show").click({ force: true });
         return this;
     }
 
     openCustomUrlEditor() {
         this.clickTargetUrlButton();
-        cy.get(".s-drill-to-custom-url-button").click();
+        cy.get(".s-drill-to-custom-url-button").click({ force: true });
         return this;
     }
 
