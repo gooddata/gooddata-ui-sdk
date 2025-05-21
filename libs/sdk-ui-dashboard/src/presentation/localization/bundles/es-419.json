@@ -102,7 +102,7 @@
     "dialogs.schedule.email.repeats.types.weekly": "Semanalmente el {day}",
     "dialogs.schedule.email.subject.label": "Asunto",
     "dialogs.schedule.email.time.label": "Primer evento:",
-    "dialogs.schedule.email.recipients.label": "Destinatarios",
+    "dialogs.schedule.email.to.label": "Hasta",
     "dialogs.schedule.email.message.placeholder": "Hola:\n\nEl correo programado está listo. Puede descargar el panel en los adjuntos.",
     "dialogs.schedule.email.submit": "Programar",
     "dialogs.schedule.email.save": "Guardar",
@@ -436,8 +436,6 @@
     "controlButtons.options.tooltip": "Más acciones",
     "controlButtons.edit.tooltip": "Editar panel",
     "options.menu.schedule.email.tooltip": "No hay ningún destino disponible. Para programar una exportación, <a>crear destino</a>.",
-    "options.menu.data.too.large": "Exportación no disponible debido a demasiados puntos de datos en el resultado.",
-    "options.menu.unsupported.raw.error": "Exportación no disponible debido a demasiados puntos de datos o error en el resultado",
     "filters.configurationPanel.crossFiltering.toggle.tooltip": "Permitir a los usuarios filtrar el cuadro de mando haciendo clic en los puntos de datos de las visualizaciones.",
     "filters.configurationPanel.userFilterReset.toggle": "Restablecer",
     "filters.configurationPanel.userFilterReset.toggle.tooltip": "Permitir a los usuarios restablecer todos los filtros por defecto.",
@@ -751,5 +749,11 @@
     "insightAlert.config.threshold": "Umbral",
     "insightAlert.config.comparison": "Comparación",
     "insightAlert.config.recipients": "Destinatarios",
-    "insightAlert.config.do": "Visite"
+    "insightAlert.config.do": "Visite",
+    "options.menu.data.too.large": "Exportación no disponible debido a demasiados puntos de datos en el resultado.",
+    "options.menu.unsupported.raw.error": "Exportación no disponible debido a demasiados puntos de datos o error en el resultado",
+    "drill_modal_picker.label": "Elija la acción de perforación",
+    "dialogs.schedule.email.recipients.label": "Destinatarios",
+    "controlButtons.options.closeMenu": "Cerrar menú",
+    "menu.close": "Cerrar menú"
 }

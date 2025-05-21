@@ -22,8 +22,6 @@
     "options.menu.export.PDF": "Momentopname (.pdf)",
     "options.menu.schedule.email": "Planning export",
     "options.menu.delete": "Verwijderen",
-    "options.menu.data.too.large": "Export niet beschikbaar vanwege te veel datapunten in het resultaat.",
-    "options.menu.unsupported.raw.error": "Export niet beschikbaar vanwege te veel datapunten of fout in het resultaat",
     "dialogs.export.cells": "CELLEN",
     "dialogs.export.filters": "VISUALISATIECONTEXT",
     "dialogs.export.includeFilters": "Inclusief toegepaste filters",
@@ -104,7 +102,7 @@
     "dialogs.schedule.email.repeats.types.weekly": "Wekelijks op {day}",
     "dialogs.schedule.email.subject.label": "Onderwerp",
     "dialogs.schedule.email.time.label": "Eerste keer:",
-    "dialogs.schedule.email.recipients.label": "Ontvangers",
+    "dialogs.schedule.email.to.label": "Naar",
     "dialogs.schedule.email.message.placeholder": "Hallo,\n\nUw geplande e-mail is klaar. U kunt het dashboard in bijlagen downloaden.",
     "dialogs.schedule.email.submit": "Plan",
     "dialogs.schedule.email.save": "Opslaan",
@@ -751,5 +749,11 @@
     "insightAlert.config.threshold": "Drempel",
     "insightAlert.config.comparison": "Vergelijking",
     "insightAlert.config.recipients": "Ontvangers",
-    "insightAlert.config.do": "Doe"
+    "insightAlert.config.do": "Doe",
+    "options.menu.data.too.large": "Export niet beschikbaar vanwege te veel datapunten in het resultaat.",
+    "options.menu.unsupported.raw.error": "Export niet beschikbaar vanwege te veel datapunten of fout in het resultaat",
+    "drill_modal_picker.label": "Booractie kiezen",
+    "dialogs.schedule.email.recipients.label": "Ontvangers",
+    "controlButtons.options.closeMenu": "Menu sluiten",
+    "menu.close": "Menu sluiten"
 }

@@ -29,5 +29,9 @@
     "gd.gen-ai.save-dialog.label": "名称",
     "gd.gen-ai.save-dialog.title": "命名您的可视化",
     "gd.gen-ai.save-dialog.description": "为新的可视化指定新的描述性名称，以便以后方便查找。",
-    "gd.gen-ai.state.generating": "正在生成您的回复…"
+    "gd.gen-ai.state.generating": "正在生成您的回复…",
+    "gd.gen-ai.autocomplete.type": "类型",
+    "gd.gen-ai.autocomplete.attribute": "属性",
+    "gd.gen-ai.autocomplete.metric": "指标",
+    "gd.gen-ai.autocomplete.fact": "事实"
 }

@@ -393,5 +393,7 @@
     "notifications.panel.error.message": "Non è stato possibile elaborare l'avviso.",
     "notifications.panel.button.label": "Notifiche",
     "notifications.panel.notifications.list.label": "Notifiche",
-    "notifications.panel.alert.notification.type.label": "Notifica di allarme"
+    "notifications.panel.alert.notification.type.label": "Notifica di allarme",
+    "properties.rotation.45": "45°",
+    "notifications.panel.triggers.dialog.truncatedValues": "…e altri {count}"
 }

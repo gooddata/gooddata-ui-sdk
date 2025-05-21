@@ -22,8 +22,6 @@
     "options.menu.export.PDF": "Tilannekuva (.pdf)",
     "options.menu.schedule.email": "Aikatauluta vienti",
     "options.menu.delete": "Poista",
-    "options.menu.data.too.large": "Vienti ei ole käytettävissä, koska tuloksessa on liian monta datapistettä.",
-    "options.menu.unsupported.raw.error": "Vienti ei ole käytettävissä liian monien tietopisteiden tai tuloksen virheen vuoksi",
     "dialogs.export.cells": "SOLUT",
     "dialogs.export.filters": "VISUALISOINNIN KONTEKSTI",
     "dialogs.export.includeFilters": "Sisällytä käytetyt suodattimet",
@@ -104,7 +102,7 @@
     "dialogs.schedule.email.repeats.types.weekly": "Viikoittain {day}",
     "dialogs.schedule.email.subject.label": "Aihe",
     "dialogs.schedule.email.time.label": "Ensimmäinen esiintyminen:",
-    "dialogs.schedule.email.recipients.label": "Vastaanottajat",
+    "dialogs.schedule.email.to.label": "Vastaanottaja",
     "dialogs.schedule.email.message.placeholder": "Hei,\n\nSähköpostisi on valmis. Voit ladata kojelaudan liitteistä.",
     "dialogs.schedule.email.submit": "Aikataulu",
     "dialogs.schedule.email.save": "Tallenna",
@@ -751,5 +749,11 @@
     "insightAlert.config.threshold": "Kynnysarvo",
     "insightAlert.config.comparison": "Vertailu",
     "insightAlert.config.recipients": "Vastaanottajat",
-    "insightAlert.config.do": "Tee näin"
+    "insightAlert.config.do": "Tee näin",
+    "options.menu.data.too.large": "Vienti ei ole käytettävissä, koska tuloksessa on liian monta datapistettä.",
+    "options.menu.unsupported.raw.error": "Vienti ei ole käytettävissä liian monien tietopisteiden tai tuloksen virheen vuoksi",
+    "drill_modal_picker.label": "Valitse poraustoiminto",
+    "dialogs.schedule.email.recipients.label": "Vastaanottajat",
+    "controlButtons.options.closeMenu": "Sulje valikko",
+    "menu.close": "Sulje valikko"
 }

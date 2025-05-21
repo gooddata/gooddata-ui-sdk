@@ -22,8 +22,6 @@
     "options.menu.export.PDF": "Instantâneo (.pdf)",
     "options.menu.schedule.email": "Agendar exportação",
     "options.menu.delete": "Excluir",
-    "options.menu.data.too.large": "Exportação indisponível devido a muitos pontos de dados no resultado.",
-    "options.menu.unsupported.raw.error": "Exportação indisponível devido a muitos pontos de dados ou erro no resultado",
     "dialogs.export.cells": "CÉLULAS",
     "dialogs.export.filters": "CONTEXTO DE VISUALIZAÇÃO",
     "dialogs.export.includeFilters": "Incluir filtros aplicados",
@@ -104,7 +102,7 @@
     "dialogs.schedule.email.repeats.types.weekly": "Semanalmente às {day}",
     "dialogs.schedule.email.subject.label": "Assunto",
     "dialogs.schedule.email.time.label": "Primeira ocorrência:",
-    "dialogs.schedule.email.recipients.label": "Destinatários",
+    "dialogs.schedule.email.to.label": "A",
     "dialogs.schedule.email.message.placeholder": "Olá,\n\nSeu e-mail agendado está pronto. Você pode baixar o dashboard nos anexos.",
     "dialogs.schedule.email.submit": "Agendar",
     "dialogs.schedule.email.save": "Salvar",
@@ -751,5 +749,11 @@
     "insightAlert.config.threshold": "Limiar",
     "insightAlert.config.comparison": "Comparação",
     "insightAlert.config.recipients": "Destinatários",
-    "insightAlert.config.do": "Fazer"
+    "insightAlert.config.do": "Fazer",
+    "options.menu.data.too.large": "Exportação indisponível devido a muitos pontos de dados no resultado.",
+    "options.menu.unsupported.raw.error": "Exportação indisponível devido a muitos pontos de dados ou erro no resultado",
+    "drill_modal_picker.label": "Escolher ação de perfuração",
+    "dialogs.schedule.email.recipients.label": "Destinatários",
+    "controlButtons.options.closeMenu": "Fechar menu",
+    "menu.close": "Fechar menu"
 }

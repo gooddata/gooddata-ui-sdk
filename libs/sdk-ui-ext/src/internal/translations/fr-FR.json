@@ -393,5 +393,7 @@
     "notifications.panel.error.message": "L'alerte n'a pas pu être traitée.",
     "notifications.panel.button.label": "Notifications",
     "notifications.panel.notifications.list.label": "Notifications",
-    "notifications.panel.alert.notification.type.label": "Notification d'alerte"
+    "notifications.panel.alert.notification.type.label": "Notification d'alerte",
+    "properties.rotation.45": "45°",
+    "notifications.panel.triggers.dialog.truncatedValues": "…et {count} de plus"
 }

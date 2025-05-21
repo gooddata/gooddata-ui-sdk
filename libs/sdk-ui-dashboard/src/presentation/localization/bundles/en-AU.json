@@ -22,8 +22,6 @@
     "options.menu.export.PDF": "Snapshot (.pdf)",
     "options.menu.schedule.email": "Schedule export",
     "options.menu.delete": "Delete",
-    "options.menu.data.too.large": "Export unavailable due to too many data points in the result.",
-    "options.menu.unsupported.raw.error": "Export unavailable due to too many data points or error in the result.",
     "dialogs.export.cells": "CELLS",
     "dialogs.export.filters": "VISUALISATION CONTEXT",
     "dialogs.export.includeFilters": "Include applied filters",
@@ -104,7 +102,7 @@
     "dialogs.schedule.email.repeats.types.weekly": "Weekly on {day}",
     "dialogs.schedule.email.subject.label": "Subject",
     "dialogs.schedule.email.time.label": "First occurrence:",
-    "dialogs.schedule.email.recipients.label": "Recipients",
+    "dialogs.schedule.email.to.label": "To",
     "dialogs.schedule.email.message.placeholder": "Hello,\n\nYour scheduled email is ready. You can download the dashboard in attachments.",
     "dialogs.schedule.email.submit": "Schedule",
     "dialogs.schedule.email.save": "Save",
@@ -751,5 +749,11 @@
     "insightAlert.config.threshold": "Threshold",
     "insightAlert.config.comparison": "Comparison",
     "insightAlert.config.recipients": "Recipients",
-    "insightAlert.config.do": "Do"
+    "insightAlert.config.do": "Do",
+    "options.menu.data.too.large": "Export unavailable due to too many data points in the result.",
+    "options.menu.unsupported.raw.error": "Export unavailable due to too many data points or error in the result.",
+    "drill_modal_picker.label": "Select drill action",
+    "dialogs.schedule.email.recipients.label": "Recipients",
+    "controlButtons.options.closeMenu": "Close menu",
+    "menu.close": "Close menu"
 }

@@ -29,5 +29,9 @@
     "gd.gen-ai.save-dialog.label": "Nimi",
     "gd.gen-ai.save-dialog.title": "Nimeä visualisointisi",
     "gd.gen-ai.save-dialog.description": "Anna uudelle visualisoinnille kuvaava nimi, jotta se on helpompi löytää myöhemmin.",
-    "gd.gen-ai.state.generating": "Luodaan vastaustasi…"
+    "gd.gen-ai.state.generating": "Luodaan vastaustasi…",
+    "gd.gen-ai.autocomplete.type": "tyyppi",
+    "gd.gen-ai.autocomplete.attribute": "Attribuutti",
+    "gd.gen-ai.autocomplete.metric": "Metriikka",
+    "gd.gen-ai.autocomplete.fact": "Tosiasia"
 }
