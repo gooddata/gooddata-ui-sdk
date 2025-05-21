@@ -22,8 +22,6 @@
     "options.menu.export.PDF": "Istantanea (.pdf)",
     "options.menu.schedule.email": "Programma esportazione",
     "options.menu.delete": "Elimina",
-    "options.menu.data.too.large": "L'esportazione non è disponibile a causa di un numero eccessivo di punti dati nel risultato.",
-    "options.menu.unsupported.raw.error": "L'esportazione non è disponibile a causa di un numero eccessivo di punti dati o di un errore nel risultato",
     "dialogs.export.cells": "CELLE",
     "dialogs.export.filters": "CONTESTO DI VISUALIZZAZIONE",
     "dialogs.export.includeFilters": "Includi filtri applicati",
@@ -104,7 +102,7 @@
     "dialogs.schedule.email.repeats.types.weekly": "Ogni settimana il {day}",
     "dialogs.schedule.email.subject.label": "Oggetto",
     "dialogs.schedule.email.time.label": "Prima occorrenza:",
-    "dialogs.schedule.email.recipients.label": "Destinatari",
+    "dialogs.schedule.email.to.label": "A",
     "dialogs.schedule.email.message.placeholder": "Ciao,\n\nL'e-mail programmata è pronta. È possibile scaricare il cruscotto in allegato.",
     "dialogs.schedule.email.submit": "Programma",
     "dialogs.schedule.email.save": "Salva",
@@ -751,5 +749,11 @@
     "insightAlert.config.threshold": "Soglia",
     "insightAlert.config.comparison": "Confronto",
     "insightAlert.config.recipients": "Destinatari",
-    "insightAlert.config.do": "Fare"
+    "insightAlert.config.do": "Fare",
+    "options.menu.data.too.large": "L'esportazione non è disponibile a causa di un numero eccessivo di punti dati nel risultato.",
+    "options.menu.unsupported.raw.error": "L'esportazione non è disponibile a causa di un numero eccessivo di punti dati o di un errore nel risultato",
+    "drill_modal_picker.label": "Scegliere l'azione di perforazione",
+    "dialogs.schedule.email.recipients.label": "Destinatari",
+    "controlButtons.options.closeMenu": "Chiudere il menu",
+    "menu.close": "Chiudere il menu"
 }

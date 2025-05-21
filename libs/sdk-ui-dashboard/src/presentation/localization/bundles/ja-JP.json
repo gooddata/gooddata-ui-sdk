@@ -22,8 +22,6 @@
     "options.menu.export.PDF": "スナップショット (.pdf)",
     "options.menu.schedule.email": "エクスポート予定",
     "options.menu.delete": "削除",
-    "options.menu.data.too.large": "結果のデータポイントが多すぎるため、エクスポートできません。",
-    "options.menu.unsupported.raw.error": "データポイントが多すぎるか、結果にエラーがあるため、エクスポートできません",
     "dialogs.export.cells": "セル",
     "dialogs.export.filters": "ビジュアライゼーションコンテキスト",
     "dialogs.export.includeFilters": "適用済みフィルターを含める",
@@ -104,7 +102,7 @@
     "dialogs.schedule.email.repeats.types.weekly": "毎週 {day}",
     "dialogs.schedule.email.subject.label": "テーマ",
     "dialogs.schedule.email.time.label": "最初：",
-    "dialogs.schedule.email.recipients.label": "受信者",
+    "dialogs.schedule.email.to.label": "終了",
     "dialogs.schedule.email.message.placeholder": "スケジュールされたメールの準備ができました。ダッシュボードを添付ファイルとしてダウンロードできます。",
     "dialogs.schedule.email.submit": "スケジュール",
     "dialogs.schedule.email.save": "保存",
@@ -751,5 +749,11 @@
     "insightAlert.config.threshold": "しきい値",
     "insightAlert.config.comparison": "比較",
     "insightAlert.config.recipients": "受信者",
-    "insightAlert.config.do": "を行う。"
+    "insightAlert.config.do": "を行う。",
+    "options.menu.data.too.large": "結果のデータポイントが多すぎるため、エクスポートできません。",
+    "options.menu.unsupported.raw.error": "データポイントが多すぎるか、結果にエラーがあるため、エクスポートできません",
+    "drill_modal_picker.label": "ドリルアクションの選択",
+    "dialogs.schedule.email.recipients.label": "受信者",
+    "controlButtons.options.closeMenu": "メニューを閉じる",
+    "menu.close": "メニューを閉じる"
 }

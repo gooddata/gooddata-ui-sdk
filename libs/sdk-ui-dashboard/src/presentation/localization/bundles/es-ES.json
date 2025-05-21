@@ -22,8 +22,6 @@
     "options.menu.export.PDF": "Instantánea (.pdf)",
     "options.menu.schedule.email": "Programe la exportación",
     "options.menu.delete": "Eliminar",
-    "options.menu.data.too.large": "Exportación no disponible debido a demasiados puntos de datos en el resultado.",
-    "options.menu.unsupported.raw.error": "Exportación no disponible debido a demasiados puntos de datos o error en el resultado",
     "dialogs.export.cells": "CELDAS",
     "dialogs.export.filters": "CONTEXTO DE VISUALIZACIÓN",
     "dialogs.export.includeFilters": "Incluir filtros aplicados",
@@ -104,7 +102,7 @@
     "dialogs.schedule.email.repeats.types.weekly": "Semanalmente el {day}",
     "dialogs.schedule.email.subject.label": "Asunto",
     "dialogs.schedule.email.time.label": "Primer evento:",
-    "dialogs.schedule.email.recipients.label": "Destinatarios",
+    "dialogs.schedule.email.to.label": "Hasta",
     "dialogs.schedule.email.message.placeholder": "Hola:\n\nEl correo programado está listo. Puede descargar el panel en los adjuntos.",
     "dialogs.schedule.email.submit": "Programar",
     "dialogs.schedule.email.save": "Guardar",
@@ -751,5 +749,11 @@
     "insightAlert.config.threshold": "Umbral",
     "insightAlert.config.comparison": "Comparación",
     "insightAlert.config.recipients": "Destinatarios",
-    "insightAlert.config.do": "Visite"
+    "insightAlert.config.do": "Visite",
+    "options.menu.data.too.large": "Exportación no disponible debido a demasiados puntos de datos en el resultado.",
+    "options.menu.unsupported.raw.error": "Exportación no disponible debido a demasiados puntos de datos o error en el resultado",
+    "drill_modal_picker.label": "Elija la acción de perforación",
+    "dialogs.schedule.email.recipients.label": "Destinatarios",
+    "controlButtons.options.closeMenu": "Cerrar menú",
+    "menu.close": "Cerrar menú"
 }

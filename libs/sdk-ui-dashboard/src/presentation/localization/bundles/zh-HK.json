@@ -22,8 +22,6 @@
     "options.menu.export.PDF": "快照（.pdf）",
     "options.menu.schedule.email": "排程匯出",
     "options.menu.delete": "刪除",
-    "options.menu.data.too.large": "由於結果中的數據點過多，無法導出。",
-    "options.menu.unsupported.raw.error": "由於數據點過多或結果錯誤，無法匯出",
     "dialogs.export.cells": "細胞",
     "dialogs.export.filters": "可視化上下文",
     "dialogs.export.includeFilters": "包括應用嘅過濾器",
@@ -104,7 +102,7 @@
     "dialogs.schedule.email.repeats.types.weekly": "每周 {day}",
     "dialogs.schedule.email.subject.label": "主題",
     "dialogs.schedule.email.time.label": "首次出現：",
-    "dialogs.schedule.email.recipients.label": "收件人",
+    "dialogs.schedule.email.to.label": "自",
     "dialogs.schedule.email.message.placeholder": "你好\n\n你已安排嘅電子郵件已準備就緒。 你可以在附件中下載儀表板。",
     "dialogs.schedule.email.submit": "附表",
     "dialogs.schedule.email.save": "救",
@@ -751,5 +749,11 @@
     "insightAlert.config.threshold": "門檻",
     "insightAlert.config.comparison": "比較",
     "insightAlert.config.recipients": "收件人",
-    "insightAlert.config.do": "做"
+    "insightAlert.config.do": "做",
+    "options.menu.data.too.large": "由於結果中的數據點過多，無法導出。",
+    "options.menu.unsupported.raw.error": "由於數據點過多或結果錯誤，無法匯出",
+    "drill_modal_picker.label": "選擇drill action",
+    "dialogs.schedule.email.recipients.label": "收件人",
+    "controlButtons.options.closeMenu": "關閉餐牌",
+    "menu.close": "關閉餐牌"
 }

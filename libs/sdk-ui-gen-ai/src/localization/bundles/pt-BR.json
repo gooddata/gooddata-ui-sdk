@@ -29,5 +29,9 @@
     "gd.gen-ai.save-dialog.label": "Nome",
     "gd.gen-ai.save-dialog.title": "Nomeie sua visualização",
     "gd.gen-ai.save-dialog.description": "Dê à sua nova visualização um novo nome descritivo, para que seja mais fácil encontrá-la mais tarde.",
-    "gd.gen-ai.state.generating": "A gerar a sua resposta…"
+    "gd.gen-ai.state.generating": "A gerar a sua resposta…",
+    "gd.gen-ai.autocomplete.type": "Tipo",
+    "gd.gen-ai.autocomplete.attribute": "Atributo",
+    "gd.gen-ai.autocomplete.metric": "Métrica",
+    "gd.gen-ai.autocomplete.fact": "Fato"
 }
