@@ -219,7 +219,14 @@ export class WidgetConfiguration {
     }
 
     selectFilterCheckbox(text: string) {
-        this.getElement().find(`${text} .input-checkbox`).check({ force: true });
+        this.getElement().scrollIntoView();
+
+        cy.get(`.s-attribute-filter-configuration ${text}`)
+            .should("exist")
+            .scrollIntoView()
+            .find('input[type="checkbox"]')
+            .check();
+
         return this;
     }
 }
@@ -236,7 +243,7 @@ class DrillConfigItem {
     }
 
     chooseAction(drillType: DrillType) {
-        this.getElement().find(".s-drill-config-panel-target-button").click({ force: true });
+        this.getElement().find(".s-drill-config-panel-target-button").click();
         cy.get(".s-drill-config-panel-target-type-open").contains(drillType).click();
         return this;
     }
@@ -269,18 +276,18 @@ class DrillConfigItem {
     }
 
     remove() {
-        this.getElement().find(".s-drill-config-item-delete").click({ force: true });
+        this.getElement().find(".s-drill-config-item-delete").click();
         return this;
     }
 
     clickTargetUrlButton() {
-        this.getElement().find(".s-drill-to-url-button").invoke("show").click({ force: true });
+        this.getElement().find(".s-drill-to-url-button").invoke("show").click();
         return this;
     }
 
     openCustomUrlEditor() {
         this.clickTargetUrlButton();
-        cy.get(".s-drill-to-custom-url-button").click({ force: true });
+        cy.get(".s-drill-to-custom-url-button").click();
         return this;
     }
 
