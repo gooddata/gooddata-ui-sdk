@@ -45,7 +45,7 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
                 <MessageContents
                     useMarkdown
                     content={message.content}
-                    isComplete={Boolean(message.complete || message.cancelled)}
+                    isComplete={Boolean(message.content.length > 0 || message.complete || message.cancelled)}
                     isCancelled={message.cancelled}
                     isLastMessage={isLast}
                     messageId={message.localId}
