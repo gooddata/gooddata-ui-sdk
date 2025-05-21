@@ -7,7 +7,7 @@ import { IInsightMenuItem } from "../types.js";
 import { InsightAlerts } from "../../insight/configuration/InsightAlerts.js";
 import { ISettings } from "@gooddata/sdk-model";
 import { IExecutionResultEnvelope } from "../../../../model/index.js";
-import { isDataErrorTooLarge, isDataError } from "../../../../_staging/errors/errorPredicates.js";
+import { getExportTooltip } from "./getExportTooltips.js";
 
 /**
  * @internal
@@ -18,19 +18,6 @@ export type SchedulingDisabledReason = "incompatibleWidget" | "oldWidget" | "dis
  * @internal
  */
 export type AlertingDisabledReason = "noDestinations" | "oldWidget" | "disabledOnInsight";
-
-const getExportTooltip = (execution?: IExecutionResultEnvelope, enableRawExports?: boolean): string => {
-    if (isDataErrorTooLarge(execution?.error)) {
-        return "options.menu.data.too.large";
-    } else if (isDataError(execution?.error)) {
-        if (enableRawExports) {
-            return "options.menu.unsupported.raw.error";
-        } else {
-            return "options.menu.unsupported.error";
-        }
-    }
-    return "options.menu.unsupported.loading";
-};
 
 const getExportMenuItems = (
     intl: IntlShape,
@@ -54,13 +41,17 @@ const getExportMenuItems = (
         onExportCSV,
         onExportRawCSV,
         onExportPngImage,
+        isExporting,
     } = config;
-    const tooltip = getExportTooltip(execution, settings?.enableRawExports);
+    const tooltip = getExportTooltip({
+        isRawExportsEnabled: settings?.enableRawExports,
+        isExporting,
+        execution,
+    });
     const presentationTooltip = intl.formatMessage({
         id: "options.menu.export.presentation.unsupported.oldWidget",
     });
 
-    console.log("isExportPngImageVisible", isExportPngImageVisible);
     return [
         // Presentation exports section - only shown if isExportVisible is true
         ...(isExportVisible

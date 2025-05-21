@@ -25,12 +25,12 @@ import {
     selectIsExportableToXLSX,
     ExportImageInsightWidget,
     selectIsExportableToPngImage,
+    exportImageInsightWidget,
 } from "../../../model/index.js";
 import { useExportHandler } from "./useExportHandler.js";
 import { useExportDialogContext } from "../../dashboardContexts/index.js";
 import { useRawExportHandler } from "./useRawExportHandler.js";
 import { useSlidesExportHandler } from "./useSlidesExportHandler.js";
-import { exportImageInsightWidget } from "../../../model/commands/insight.js";
 import { useImageExportHandler } from "./useImageExportHandler.js";
 
 export const useInsightExport = (config: {
