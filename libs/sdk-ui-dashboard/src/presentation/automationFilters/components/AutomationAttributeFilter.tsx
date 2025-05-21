@@ -116,6 +116,10 @@ function AutomationAttributeFilterDropdownButtonComponent(props: IAttributeFilte
                 isDeletable={!isLocked}
                 onClick={props.onClick}
                 onDelete={() => onDelete?.(filter!)}
+                onDeleteKeyDown={(event) => {
+                    // Do not propagate event to parent as attribute filter would always open
+                    event.stopPropagation();
+                }}
                 accessibilityConfig={{
                     isExpanded: props.isOpen,
                     deleteAriaLabel,

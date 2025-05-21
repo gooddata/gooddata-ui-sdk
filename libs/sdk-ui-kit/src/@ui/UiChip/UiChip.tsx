@@ -28,6 +28,7 @@ export interface UiChipProps {
     iconBefore?: IconType;
     onClick?: () => void;
     onDelete?: () => void;
+    onDeleteKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
     accessibilityConfig?: IUiChipAccessibilityConfig;
 }
 
@@ -45,6 +46,7 @@ export const UiChip = ({
     iconBefore,
     onClick,
     onDelete,
+    onDeleteKeyDown,
     accessibilityConfig,
 }: UiChipProps) => {
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -103,7 +105,12 @@ export const UiChip = ({
                 )}
             </button>
             {isDeletable ? (
-                <button aria-label={deleteAriaLabel} className={e("delete")} onClick={onDelete}>
+                <button
+                    aria-label={deleteAriaLabel}
+                    className={e("delete")}
+                    onClick={onDelete}
+                    onKeyDown={onDeleteKeyDown}
+                >
                     <span className={e("icon-delete")}>
                         <UiIcon type="cross" color="complementary-6" size={14} ariaHidden={true} />
                     </span>
