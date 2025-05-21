@@ -45,6 +45,8 @@ import {
     isExportDefinitionVisualizationObjectRequestPayload,
     FilterContextItem,
     dashboardFilterLocalIdentifier,
+    isDashboardDateFilter,
+    newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import { changeFilterContextSelectionHandler } from "../filterContext/changeFilterContextSelectionHandler.js";
 import { changeFilterContextSelection } from "../../commands/filters.js";
@@ -55,6 +57,7 @@ import { selectFilterContextDateFilter } from "../../store/filterContext/filterC
 import omit from "lodash/omit.js";
 import compact from "lodash/compact.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
+import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 
 export function* initializeAutomationsHandler(
     ctx: DashboardContext,
@@ -140,6 +143,9 @@ export function* initializeAutomationsHandler(
 
             // Set filters to the dashboard based on export definition filters
             if (targetExportDefinition && targetExportDefinitionFilters) {
+                const dashboardCommonDateFilter: ReturnType<typeof selectFilterContextDateFilter> =
+                    yield select(selectFilterContextDateFilter);
+
                 const filtersToSet =
                     targetExportDefinitionFilters?.filter((filter) => {
                         if (targetExportVisibleFilters) {
@@ -150,11 +156,17 @@ export function* initializeAutomationsHandler(
                         return true;
                     }) ?? [];
 
+                const sanitizedFiltersToSet = sanitizeDateFilters(
+                    filtersToSet,
+                    dashboardCommonDateFilter ??
+                        newAllTimeDashboardDateFilter(undefined, generateDateFilterLocalIdentifier(0)),
+                );
+
                 // Empty schedule execution filters = reset all filters (set them to all).
                 // Empty sanitized filters = keep filters as they are, do not reset them (all schedule execution filters are ignored).
                 // Non-empty sanitized filters = set them (some schedule export definition filters are originating from the dashboard).
-                if (targetExportDefinitionFilters.length === 0 || filtersToSet.length > 0) {
-                    const cmd = changeFilterContextSelection(filtersToSet, true, automationId);
+                if (targetExportDefinitionFilters.length === 0 || sanitizedFiltersToSet.length > 0) {
+                    const cmd = changeFilterContextSelection(sanitizedFiltersToSet, true, automationId);
                     yield call(changeFilterContextSelectionHandler, ctx, cmd);
                 }
             }
@@ -217,6 +229,34 @@ function extractExportDefinitionFilters(
         );
     }
     return [];
+}
+
+/**
+ * Sanitizes date filters by removing dataset information when needed.
+ *
+ * Automation filters may contain date filters with dataset information. However,
+ * when applying these filters to the dashboard, the dataset needs to be removed
+ * to properly match the dashboard's common date filter.
+ *
+ * This function removes the dataset from any date filter that matches the
+ * dashboard's common date filter local identifier.
+ */
+function sanitizeDateFilters(filters: FilterContextItem[], dashboardCommonDateFilter: IDashboardDateFilter) {
+    return filters.map((filter) => {
+        if (
+            isDashboardDateFilter(filter) &&
+            filter.dateFilter.localIdentifier === dashboardCommonDateFilter.dateFilter.localIdentifier
+        ) {
+            return {
+                ...filter,
+                dateFilter: {
+                    ...omit(filter.dateFilter, "dataSet"),
+                },
+            };
+        }
+
+        return filter;
+    });
 }
 
 /**
