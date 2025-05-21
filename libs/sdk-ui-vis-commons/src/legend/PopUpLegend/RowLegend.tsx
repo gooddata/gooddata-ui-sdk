@@ -1,10 +1,12 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useState } from "react";
-import { Icon } from "@gooddata/sdk-ui-kit";
+import { Button, Icon } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { LegendLabelItem } from "../LegendLabelItem.js";
 import { LegendList } from "../LegendList.js";
-import { IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "../types.js";
+import { ISeriesItem, ItemBorderRadiusPredicate } from "../types.js";
+import { LegendSeries } from "../LegendSeries.js";
+import { useIntl } from "react-intl";
 
 const LEGEND_ROW_HEIGHT = 20;
 const LEGEND_TOP_BOTTOM_PADDING = 10;
@@ -33,29 +35,52 @@ export interface IRowLegendIcoButton {
     isVisible: boolean;
     isActive: boolean;
     onIconClick: () => void;
+    dialogId: string;
+    triggerId: string;
 }
 
-export const RowLegendIcoButton: React.FC<IRowLegendIcoButton> = (props) => {
-    const { isVisible, isActive, onIconClick } = props;
+export const RowLegendIcoButton: React.FC<IRowLegendIcoButton> = ({
+    isVisible,
+    isActive,
+    onIconClick,
+    dialogId,
+    triggerId,
+}) => {
+    const { formatMessage } = useIntl();
+
+    const handleClick = React.useCallback<React.MouseEventHandler>(
+        (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            onIconClick();
+        },
+        [onIconClick],
+    );
 
     if (!isVisible) {
         return null;
     }
 
-    const handleOnClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        e.stopPropagation();
-        e.preventDefault();
-        onIconClick();
-    };
-
-    const iconClasses = cx("legend-popup-icon s-legend-popup-icon", {
+    const iconClasses = cx("legend-popup-button legend-popup-icon s-legend-popup-icon", {
         "legend-popup-icon-active": isActive,
     });
     return (
         <div className="legend-popup-button">
-            <div onClick={handleOnClick} className={iconClasses}>
-                <Icon.LegendMenu />
-            </div>
+            <Button
+                onClick={handleClick}
+                className={iconClasses}
+                tabIndex={0}
+                accessibilityConfig={{
+                    isExpanded: isActive,
+                    popupId: dialogId,
+                    ariaLabel: formatMessage({ id: "properties.legend.more.button" }),
+                }}
+                id={triggerId}
+            >
+                <div role={"presentation"}>
+                    <Icon.LegendMenu />
+                </div>
+            </Button>
         </div>
     );
 };
@@ -63,11 +88,13 @@ export const RowLegendIcoButton: React.FC<IRowLegendIcoButton> = (props) => {
 export interface IRowLegendProps {
     legendLabel?: string;
     maxRowsCount?: number;
-    series: IPushpinCategoryLegendItem[];
+    series: ISeriesItem[];
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     onDialogIconClick: () => void;
-    onLegendItemClick: (item: IPushpinCategoryLegendItem) => void;
+    onLegendItemClick: (item: ISeriesItem) => void;
     isActive?: boolean;
+    dialogId: string;
+    triggerId: string;
 }
 
 export const RowLegend: React.FC<IRowLegendProps> = (props) => {
@@ -78,6 +105,8 @@ export const RowLegend: React.FC<IRowLegendProps> = (props) => {
         enableBorderRadius,
         onDialogIconClick,
         onLegendItemClick,
+        dialogId,
+        triggerId,
         isActive = false,
     } = props;
     const [isOverflow, numOfUsedRow, checkOverFlow] = useCheckOverflow();
@@ -88,25 +117,30 @@ export const RowLegend: React.FC<IRowLegendProps> = (props) => {
 
     return (
         <div className="legend-popup-row" style={{ maxHeight: LEGEND_HEIGHT }}>
-            <div className="viz-legend static position-row">
-                <div
-                    className="series"
-                    style={{
-                        justifyContent: itemsAlign,
-                    }}
-                    ref={(element) => {
-                        checkOverFlow(element);
-                    }}
-                >
-                    <LegendLabelItem label={legendLabel} />
-                    <LegendList
-                        enableBorderRadius={enableBorderRadius}
-                        series={series}
-                        onItemClick={onLegendItemClick}
-                    />
-                </div>
-            </div>
-            <RowLegendIcoButton isActive={isActive} isVisible={isOverflow} onIconClick={onDialogIconClick} />
+            <LegendSeries
+                onToggleItem={onLegendItemClick}
+                series={series}
+                ref={checkOverFlow}
+                style={{
+                    justifyContent: itemsAlign,
+                }}
+                label={legendLabel}
+                className={"viz-legend static position-row"}
+            >
+                <LegendLabelItem label={legendLabel} />
+                <LegendList
+                    enableBorderRadius={enableBorderRadius}
+                    series={series}
+                    onItemClick={onLegendItemClick}
+                />
+            </LegendSeries>
+            <RowLegendIcoButton
+                isActive={isActive}
+                isVisible={isOverflow}
+                onIconClick={onDialogIconClick}
+                dialogId={dialogId}
+                triggerId={triggerId}
+            />
         </div>
     );
 };

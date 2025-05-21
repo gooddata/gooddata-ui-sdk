@@ -104,55 +104,56 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     });
     const handleKeyDown = React.useMemo(
         () =>
-            makeMenuKeyboardNavigation({
-                shouldPreventDefault: shouldKeyboardActionPreventDefault,
-                shouldStopPropagation: shouldKeyboardActionStopPropagation,
-
-                onFocusPrevious: () => {
-                    setFocusedIndex((prevIndex) => {
-                        let newIndex = (prevIndex ?? 0) - 1;
-                        // Skip non-focusable items
-                        while (newIndex >= 0 && !isItemFocusable(items[newIndex])) {
-                            newIndex--;
+            makeMenuKeyboardNavigation(
+                {
+                    onFocusPrevious: () => {
+                        setFocusedIndex((prevIndex) => {
+                            let newIndex = (prevIndex ?? 0) - 1;
+                            // Skip non-focusable items
+                            while (newIndex >= 0 && !isItemFocusable(items[newIndex])) {
+                                newIndex--;
+                            }
+                            return newIndex >= 0 ? newIndex : prevIndex;
+                        });
+                    },
+                    onFocusNext: () => {
+                        setFocusedIndex((prevIndex) => {
+                            let newIndex = (prevIndex ?? 0) + 1;
+                            // Skip non-focusable items
+                            while (newIndex < items.length && !isItemFocusable(items[newIndex])) {
+                                newIndex++;
+                            }
+                            return newIndex < items.length ? newIndex : prevIndex;
+                        });
+                    },
+                    onFocusFirst: () => {
+                        // Find the first focusable item
+                        const firstFocusableIndex = items.findIndex(isItemFocusable);
+                        setFocusedIndex(firstFocusableIndex >= 0 ? firstFocusableIndex : undefined);
+                    },
+                    onFocusLast: () => {
+                        // Find the last focusable item
+                        for (let i = items.length - 1; i >= 0; i--) {
+                            if (isItemFocusable(items[i])) {
+                                setFocusedIndex(i);
+                                return;
+                            }
                         }
-                        return newIndex >= 0 ? newIndex : prevIndex;
-                    });
+                        setFocusedIndex(undefined);
+                    },
+                    onSelect: () => {
+                        focusedItem && focusedItem.type === "interactive" && handleSelectItem(focusedItem);
+                    },
+                    onClose,
+                    onUnhandledKeyDown: (event) => {
+                        onUnhandledKeyDown(event, contextRef.current);
+                    },
                 },
-                onFocusNext: () => {
-                    setFocusedIndex((prevIndex) => {
-                        let newIndex = (prevIndex ?? 0) + 1;
-                        // Skip non-focusable items
-                        while (newIndex < items.length && !isItemFocusable(items[newIndex])) {
-                            newIndex++;
-                        }
-                        return newIndex < items.length ? newIndex : prevIndex;
-                    });
+                {
+                    shouldPreventDefault: shouldKeyboardActionPreventDefault,
+                    shouldStopPropagation: shouldKeyboardActionStopPropagation,
                 },
-                onFocusFirst: () => {
-                    // Find the first focusable item
-                    const firstFocusableIndex = items.findIndex(isItemFocusable);
-                    setFocusedIndex(firstFocusableIndex >= 0 ? firstFocusableIndex : undefined);
-                },
-                onFocusLast: () => {
-                    // Find the last focusable item
-                    for (let i = items.length - 1; i >= 0; i--) {
-                        if (isItemFocusable(items[i])) {
-                            setFocusedIndex(i);
-                            return;
-                        }
-                    }
-                    setFocusedIndex(undefined);
-                },
-                onSelect: () => {
-                    focusedItem && focusedItem.type === "interactive" && handleSelectItem(focusedItem);
-                },
-                onClose: () => {
-                    onClose?.();
-                },
-                onUnhandledKeyDown: (event) => {
-                    onUnhandledKeyDown(event, contextRef.current);
-                },
-            }),
+            ),
         [
             contextRef,
             focusedItem,

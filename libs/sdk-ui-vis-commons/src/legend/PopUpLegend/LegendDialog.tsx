@@ -1,7 +1,15 @@
 // (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { ZoomAwareOverlay, useMediaQuery, useIsZoomed, ZOOM_THRESHOLD } from "@gooddata/sdk-ui-kit";
+import {
+    ZoomAwareOverlay,
+    useMediaQuery,
+    useIsZoomed,
+    ZOOM_THRESHOLD,
+    useIdPrefixed,
+    useAutofocusOnMount,
+    DialogCloseButton,
+} from "@gooddata/sdk-ui-kit";
 import { legendDialogAlignPoints, legendMobileDialogAlignPoints } from "./alignPoints.js";
 
 const LegendDialogWrapper: React.FC<{ children: (isMobile: boolean) => JSX.Element }> = ({ children }) => {
@@ -13,32 +21,63 @@ interface ILegendDialogContent {
     title: string;
     onCloseDialog: () => void;
     children?: React.ReactNode;
+    id: string;
 }
 
-const LegendDialogContent: React.FC<ILegendDialogContent> = (props) => {
-    const { title, onCloseDialog, children } = props;
-
+const LegendDialogContent: React.FC<ILegendDialogContent> = ({ title, onCloseDialog, children, id }) => {
     const isZoomed = useIsZoomed(ZOOM_THRESHOLD);
 
-    const onClose = (e: React.MouseEvent) => {
-        e.preventDefault();
-        onCloseDialog();
-    };
+    const autofocusRef = useAutofocusOnMount(100); // We need the timeout to wait until the dialog is positioned.
+    const dialogRef = React.useRef<HTMLDivElement>(null);
+
+    const handleClose = React.useCallback<React.MouseEventHandler>(
+        (e) => {
+            e.preventDefault();
+            onCloseDialog();
+        },
+        [onCloseDialog],
+    );
+
+    const handleBlur = React.useCallback<React.FocusEventHandler>(
+        (e) => {
+            // e.relatedTarget is the element receiving focus after the blur
+            if (!dialogRef.current || dialogRef.current.contains(e.relatedTarget)) {
+                return;
+            }
+
+            onCloseDialog();
+        },
+        [onCloseDialog],
+    );
 
     const className = cx("legend-popup-dialog", "legend-popup-dialog-content", {
         zoomed: isZoomed,
     });
 
+    const titleId = useIdPrefixed("legendDialogContentTitle");
+
     return (
-        <div className={className}>
+        <div
+            className={className}
+            id={id}
+            role={"dialog"}
+            aria-modal={false}
+            aria-labelledby={titleId}
+            onBlur={handleBlur}
+            ref={dialogRef}
+        >
             <div className="legend-header">
-                <div className="legend-header-title">{title}</div>
-                <div
-                    className="s-legend-close legend-close gd-icon-cross gd-button-link gd-button-icon-only"
-                    onClick={onClose}
+                <div className="legend-header-title" id={titleId}>
+                    {title}
+                </div>
+                <DialogCloseButton
+                    className={"s-legend-close legend-close gd-icon-cross gd-button-link gd-button-icon-only"}
+                    onClose={handleClose}
                 />
             </div>
-            <div className="legend-content">{children}</div>
+            <div className="legend-content" ref={autofocusRef}>
+                {children}
+            </div>
         </div>
     );
 };
@@ -49,11 +88,17 @@ export interface ILegendDialogProps {
     alignTo: string;
     onCloseDialog: () => void;
     children?: React.ReactNode;
+    id: string;
 }
 
-export const LegendDialog: React.FC<ILegendDialogProps> = (props) => {
-    const { name, children, isOpen, alignTo, onCloseDialog } = props;
-
+export const LegendDialog: React.FC<ILegendDialogProps> = ({
+    name,
+    children,
+    isOpen,
+    alignTo,
+    onCloseDialog,
+    id,
+}) => {
     if (!isOpen) {
         return null;
     }
@@ -69,8 +114,9 @@ export const LegendDialog: React.FC<ILegendDialogProps> = (props) => {
                         onClose={onCloseDialog}
                         className="kpi-alert-dialog-overlay"
                         ensureVisibility={true}
+                        closeOnEscape
                     >
-                        <LegendDialogContent title={name} onCloseDialog={onCloseDialog}>
+                        <LegendDialogContent title={name} onCloseDialog={onCloseDialog} id={id}>
                             {children}
                         </LegendDialogContent>
                     </ZoomAwareOverlay>

@@ -1,47 +1,48 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import LegendItem from "./LegendItem.js";
 import { LegendAxisIndicator } from "./LegendAxisIndicator.js";
 import { LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from "./helpers.js";
-import { ItemBorderRadiusPredicate } from "./types.js";
+import { ISeriesItem, ItemBorderRadiusPredicate } from "./types.js";
 
 export interface ILegendListProps {
-    series: any;
+    series: ISeriesItem[];
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     width?: number;
-    onItemClick: (item: any) => void;
+    onItemClick: (item: ISeriesItem) => void;
 }
 
 export const LegendSeparator = (): JSX.Element => (
     <div className="legend-separator" aria-label="Legend separator" />
 );
 
-export class LegendList extends React.PureComponent<ILegendListProps> {
-    public render() {
-        const { series, enableBorderRadius, onItemClick, width } = this.props;
+export const LegendList = React.memo(function LegendList({
+    series,
+    enableBorderRadius,
+    onItemClick,
+    width,
+}: ILegendListProps) {
+    return series.map((item, index) => {
+        const { type, labelKey, data } = item;
+        const borderRadius = shouldItemHaveBorderRadius(item, enableBorderRadius);
 
-        return series.map((item: any, index: number) => {
-            const { type, labelKey, data } = item;
-            const borderRadius = shouldItemHaveBorderRadius(item, enableBorderRadius);
-
-            if (type === LEGEND_AXIS_INDICATOR) {
-                return <LegendAxisIndicator key={index} labelKey={labelKey} data={data} width={width} />;
-            } else if (type === LEGEND_SEPARATOR) {
-                return <LegendSeparator key={index} />;
-            } else {
-                return (
-                    <LegendItem
-                        enableBorderRadius={borderRadius}
-                        key={index}
-                        item={item}
-                        width={width}
-                        onItemClick={onItemClick}
-                    />
-                );
-            }
-        });
-    }
-}
+        if (type === LEGEND_AXIS_INDICATOR) {
+            return <LegendAxisIndicator key={index} labelKey={labelKey} data={data} width={width} />;
+        } else if (type === LEGEND_SEPARATOR) {
+            return <LegendSeparator key={index} />;
+        } else {
+            return (
+                <LegendItem
+                    key={index}
+                    enableBorderRadius={borderRadius}
+                    item={item}
+                    width={width}
+                    onItemClick={onItemClick}
+                />
+            );
+        }
+    });
+});
 
 function shouldItemHaveBorderRadius(
     item: any,

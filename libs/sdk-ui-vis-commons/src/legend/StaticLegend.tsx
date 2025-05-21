@@ -1,14 +1,14 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import noop from "lodash/noop.js";
-import isNil from "lodash/isNil.js";
 import { LegendList } from "./LegendList.js";
 import { ButtonsOrientationType, Paging } from "./Paging.js";
 import { BOTTOM, TOP } from "./PositionTypes.js";
 import { calculateStaticLegend, ITEM_HEIGHT, STATIC_PAGING_HEIGHT } from "./helpers.js";
-import { IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "./types.js";
+import { ISeriesItem, ItemBorderRadiusPredicate } from "./types.js";
 import { LegendLabelItem } from "./LegendLabelItem.js";
+import { LegendSeries } from "./LegendSeries.js";
 
 /**
  * @internal
@@ -16,167 +16,142 @@ import { LegendLabelItem } from "./LegendLabelItem.js";
 export interface IStaticLegendProps {
     containerHeight: number;
     position: string;
-    series: IPushpinCategoryLegendItem[];
+    series: ISeriesItem[];
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     shouldFillAvailableSpace?: boolean;
     label?: string;
     buttonOrientation?: ButtonsOrientationType;
-    onItemClick?(item: IPushpinCategoryLegendItem): void;
     paginationHeight?: number;
     customComponent?: JSX.Element | null;
+    isLabelVisible?: boolean;
+    onItemClick?(item: ISeriesItem): void;
     onPageChanged?: (page: number) => void;
 }
 
 /**
  * @internal
  */
-export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
-    public static defaultProps: Pick<
-        IStaticLegendProps,
-        "buttonOrientation" | "paginationHeight" | "onPageChanged"
-    > = {
-        buttonOrientation: "upDown",
-        paginationHeight: STATIC_PAGING_HEIGHT,
-        onPageChanged: noop,
-    };
+export const StaticLegend = React.memo(function StaticLegend({
+    buttonOrientation = "upDown",
+    paginationHeight = STATIC_PAGING_HEIGHT,
+    containerHeight,
+    position,
+    series,
+    enableBorderRadius,
+    shouldFillAvailableSpace,
+    label,
+    customComponent,
+    isLabelVisible = true,
 
-    public state = {
-        page: 1,
-    };
+    onItemClick,
+    onPageChanged,
+}: IStaticLegendProps): React.ReactNode {
+    const [page, setPage] = React.useState(1);
 
-    public showNextPage = (): void => {
-        const updatedPage = this.state.page + 1;
-        this.props.onPageChanged!(updatedPage);
-        this.setState({ page: updatedPage });
-    };
-
-    public showPrevPage = (): void => {
-        const updatedPage = this.state.page - 1;
-        this.props.onPageChanged!(updatedPage);
-        this.setState({ page: updatedPage });
-    };
-
-    public renderPaging = (pagesCount: number): React.ReactNode => {
-        const { page } = this.state;
-        const { buttonOrientation } = this.props;
-
-        return (
-            <Paging
-                page={page}
-                pagesCount={pagesCount}
-                showNextPage={this.showNextPage}
-                showPrevPage={this.showPrevPage}
-                buttonsOrientation={buttonOrientation}
-            />
-        );
-    };
-
-    public render() {
-        const {
-            enableBorderRadius,
-            containerHeight,
-            onItemClick = noop,
-            position,
-            series,
-            shouldFillAvailableSpace = true,
-            label,
-            paginationHeight,
-            customComponent,
-        } = this.props;
-        const { page } = this.state;
-
-        const classNames = cx("viz-legend", "static", `position-${position}`);
-
-        // Without paging
-        if (position === TOP || position === BOTTOM) {
-            return (
-                <div className={classNames}>
-                    <div className="series">
-                        <LegendList
-                            enableBorderRadius={enableBorderRadius}
-                            series={series}
-                            onItemClick={onItemClick}
-                        />
-                    </div>
-                </div>
-            );
-        }
-
-        const columnNum = position === "dialog" ? 2 : 1;
-
-        const labelHeight = label ? ITEM_HEIGHT : 0;
-        const labelComponent = label ? <LegendLabelItem label={label} /> : null;
-        const contentHeight = containerHeight - labelHeight;
-
-        const seriesCount = series.length;
-        const { hasPaging, visibleItemsCount } = calculateStaticLegend(
-            seriesCount,
-            contentHeight,
-            columnNum,
-            paginationHeight,
-        );
-        const usePaging = hasPaging || customComponent;
-
-        const heightOfAvailableSpace = (visibleItemsCount / columnNum) * ITEM_HEIGHT;
-        const heightOfVisibleItems = Math.min(visibleItemsCount / columnNum, seriesCount) * ITEM_HEIGHT;
-        const seriesHeight =
-            (shouldFillAvailableSpace ? heightOfAvailableSpace : heightOfVisibleItems) + labelHeight;
-        const shouldDisplayCustomComponent = page === 1 && this.hasCustomComponent();
-        const pagesCount = this.getPagesCount(series.length, visibleItemsCount);
-
-        if (shouldDisplayCustomComponent) {
-            return (
-                <div className={classNames}>
-                    <div className="series" style={{ height: seriesHeight }}>
-                        {labelComponent}
-                        {customComponent}
-                    </div>
-                    {usePaging ? this.renderPaging(pagesCount) : null}
-                </div>
-            );
-        }
-
-        const [start, end] = getPagingValues(
-            page,
-            visibleItemsCount,
-            series.length,
-            this.hasCustomComponent(),
-        );
-        const pagedSeries = series.slice(start, end);
-        const visibleItemsFitOneColumn = shouldItemsFitOneColumn(
-            visibleItemsCount,
-            columnNum,
-            pagedSeries.length,
-        );
-
-        const fullClassNames = cx(classNames, {
-            "no-width": visibleItemsFitOneColumn,
+    const handleNextPage = React.useCallback(() => {
+        setPage((currentPage) => {
+            const newPage = currentPage + 1;
+            onPageChanged?.(newPage);
+            return newPage;
         });
+    }, [onPageChanged]);
 
+    const handlePreviousPage = React.useCallback(() => {
+        setPage((currentPage) => {
+            const newPage = currentPage - 1;
+            onPageChanged?.(newPage);
+            return newPage;
+        });
+    }, [onPageChanged]);
+
+    const hasCustomComponent = customComponent != null;
+    const shouldDisplayCustomComponent = page === 1 && hasCustomComponent;
+
+    const columnNum = position === "dialog" ? 2 : 1;
+
+    const labelHeight = label ? ITEM_HEIGHT : 0;
+    const labelNode = label ? <LegendLabelItem label={label} /> : null;
+    const contentHeight = containerHeight - labelHeight;
+
+    const seriesCount = series.length;
+    const { hasPaging, visibleItemsCount } = calculateStaticLegend(
+        seriesCount,
+        contentHeight,
+        columnNum,
+        paginationHeight,
+    );
+
+    const usePaging = hasPaging || hasCustomComponent;
+    const pagesCount = getPagesCount(series.length, visibleItemsCount, hasCustomComponent);
+
+    const heightOfAvailableSpace = (visibleItemsCount / columnNum) * ITEM_HEIGHT;
+    const heightOfVisibleItems = Math.min(visibleItemsCount / columnNum, seriesCount) * ITEM_HEIGHT;
+    const seriesHeight =
+        (shouldFillAvailableSpace ? heightOfAvailableSpace : heightOfVisibleItems) + labelHeight;
+
+    const [start, end] = getPagingValues(page, visibleItemsCount, series.length, hasCustomComponent);
+    const pagedSeries = series.slice(start, end);
+    const visibleItemsFitOneColumn = shouldItemsFitOneColumn(
+        visibleItemsCount,
+        columnNum,
+        pagedSeries.length,
+    );
+
+    const classNames = cx("viz-legend", "static", `position-${position}`, {
+        "no-width": !shouldDisplayCustomComponent && visibleItemsFitOneColumn,
+    });
+
+    // Without paging
+    if (position === TOP || position === BOTTOM) {
         return (
-            <div className={fullClassNames}>
-                <div className="series" style={{ height: seriesHeight }}>
-                    {labelComponent}
+            <div className={classNames}>
+                <LegendSeries series={series} label={label} onToggleItem={onItemClick ?? noop}>
                     <LegendList
                         enableBorderRadius={enableBorderRadius}
-                        series={pagedSeries}
-                        onItemClick={onItemClick}
+                        series={series}
+                        onItemClick={onItemClick ?? noop}
                     />
-                </div>
-                {usePaging ? this.renderPaging(pagesCount) : null}
+                </LegendSeries>
             </div>
         );
     }
 
-    private getPagesCount(seriesLength: number, visibleItemsCount: number) {
-        const defaultPagesCount = Math.ceil(seriesLength / visibleItemsCount);
-        return this.hasCustomComponent() ? defaultPagesCount + 1 : defaultPagesCount;
-    }
+    return (
+        <div className={classNames}>
+            <LegendSeries
+                series={pagedSeries}
+                label={label}
+                style={{ height: seriesHeight }}
+                onToggleItem={onItemClick ?? noop}
+            >
+                {isLabelVisible ? labelNode : null}
+                {shouldDisplayCustomComponent ? (
+                    customComponent
+                ) : (
+                    <LegendList
+                        enableBorderRadius={enableBorderRadius}
+                        series={pagedSeries}
+                        onItemClick={onItemClick ?? noop}
+                    />
+                )}
+            </LegendSeries>
+            {usePaging ? (
+                <Paging
+                    page={page}
+                    pagesCount={pagesCount}
+                    showNextPage={handleNextPage}
+                    showPrevPage={handlePreviousPage}
+                    buttonsOrientation={buttonOrientation}
+                />
+            ) : null}
+        </div>
+    );
+});
 
-    private hasCustomComponent() {
-        return !isNil(this.props.customComponent);
-    }
-}
+const getPagesCount = (seriesLength: number, visibleItemsCount: number, hasCustomComponent?: boolean) => {
+    const defaultPagesCount = Math.ceil(seriesLength / visibleItemsCount);
+    return hasCustomComponent ? defaultPagesCount + 1 : defaultPagesCount;
+};
 
 export const getPagingValues = (
     page: number,

@@ -653,6 +653,7 @@ export interface IComposedPlaceholder<TReturn, TValue extends any[], TContext> {
 // @internal (undocumented)
 export type IContextStore<T> = IContextStoreProvider<T> & {
     useContextStore: IUseContextStore<T>;
+    useContextStoreOptional: IUseContextStore<T, true>;
     createSelector: <SelectorResult>(selector: IContextStoreSelector<T, SelectorResult>) => IContextStoreSelector<T, SelectorResult>;
 };
 
@@ -1369,7 +1370,7 @@ export type ITranslationsProviderProps = ITranslationsProviderOwnProps & Wrapped
 export type IUseComposedPlaceholderHook<T extends IComposedPlaceholder<any, any, any>> = (resolutionContext: ComposedPlaceholderResolutionContext<T>) => PlaceholderResolvedValue<T>;
 
 // @internal (undocumented)
-export type IUseContextStore<T> = <SelectorResult>(selector?: IContextStoreSelector<T, SelectorResult>, equalityFn?: (a: SelectorResult, b: SelectorResult) => boolean) => SelectorResult;
+export type IUseContextStore<T, IsOptional = false> = <SelectorResult>(selector?: IContextStoreSelector<T, SelectorResult>, equalityFn?: (a: SelectorResult, b: SelectorResult) => boolean) => IsOptional extends false ? SelectorResult : SelectorResult | undefined;
 
 // @public
 export interface IUseExecutionDataViewConfig {

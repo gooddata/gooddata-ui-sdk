@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { StaticLegend } from "../StaticLegend.js";
-import { IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "../types.js";
+import { ISeriesItem, ItemBorderRadiusPredicate } from "../types.js";
 
 import { LegendDialog } from "./LegendDialog.js";
 import { RowLegend } from "./RowLegend.js";
+import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 const PAGINATION_HEIGHT = 34;
 
@@ -14,8 +15,8 @@ const PAGINATION_HEIGHT = 34;
  * @internal
  */
 export interface IPopUpLegendProps {
-    series: IPushpinCategoryLegendItem[];
-    onLegendItemClick: (item: IPushpinCategoryLegendItem) => void;
+    series: ISeriesItem[];
+    onLegendItemClick: (item: ISeriesItem) => void;
     name?: string;
     maxRows?: number;
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
@@ -46,10 +47,15 @@ export const PopUpLegend: React.FC<IPopUpLegendProps> = (props) => {
     const dialogTitle =
         (page === 1 && customComponentName) || name || intl.formatMessage({ id: "properties.legend.title" });
 
-    const onCloseDialog = () => {
+    const id = useIdPrefixed("popUpLegend");
+    const dialogId = `${id}-dialog`;
+    const triggerId = `${id}-trigger`;
+
+    const onCloseDialog = React.useCallback(() => {
         setDialogOpen(false);
         setPage(1);
-    };
+        document.getElementById(triggerId)?.focus();
+    }, [triggerId]);
 
     return (
         <div data-testid="pop-up-legend">
@@ -63,6 +69,8 @@ export const PopUpLegend: React.FC<IPopUpLegendProps> = (props) => {
                 onLegendItemClick={onLegendItemClick}
                 enableBorderRadius={enableBorderRadius}
                 isActive={isDialogOpen}
+                dialogId={dialogId}
+                triggerId={triggerId}
             />
 
             <LegendDialog
@@ -70,10 +78,13 @@ export const PopUpLegend: React.FC<IPopUpLegendProps> = (props) => {
                 alignTo={`.${containerId}`}
                 isOpen={isDialogOpen}
                 onCloseDialog={onCloseDialog}
+                id={dialogId}
             >
                 <StaticLegend
                     containerHeight={260}
                     series={[...series]}
+                    label={name}
+                    isLabelVisible={false}
                     position={"dialog"}
                     buttonOrientation={"leftRight"}
                     onItemClick={onLegendItemClick}

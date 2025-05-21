@@ -120,7 +120,9 @@ export interface IExportDialogBaseProps
 /**
  * @internal
  */
-export type IDialogCloseButtonProps = Pick<IDialogBaseProps, "onClose" | "accessibilityConfig">;
+export type IDialogCloseButtonProps = Pick<IDialogBaseProps, "onClose" | "accessibilityConfig"> & {
+    className?: string;
+};
 
 /**
  * @internal

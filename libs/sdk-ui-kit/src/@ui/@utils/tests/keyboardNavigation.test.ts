@@ -149,10 +149,14 @@ describe("makeMenuKeyboardNavigation", () => {
 
     it("should respect shouldPreventDefault=false option", () => {
         const onFocusNext = vi.fn();
-        const handler = makeMenuKeyboardNavigation({
-            onFocusNext,
-            shouldPreventDefault: false,
-        });
+        const handler = makeMenuKeyboardNavigation(
+            {
+                onFocusNext,
+            },
+            {
+                shouldPreventDefault: false,
+            },
+        );
         const event = createKeyboardEvent("ArrowDown");
 
         handler(event);
@@ -164,10 +168,12 @@ describe("makeMenuKeyboardNavigation", () => {
 
     it("should respect shouldStopPropagation=false option", () => {
         const onFocusNext = vi.fn();
-        const handler = makeMenuKeyboardNavigation({
-            onFocusNext,
-            shouldStopPropagation: false,
-        });
+        const handler = makeMenuKeyboardNavigation(
+            {
+                onFocusNext,
+            },
+            { shouldStopPropagation: false },
+        );
         const event = createKeyboardEvent("ArrowDown");
 
         handler(event);

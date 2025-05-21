@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 export * from "./typings.js";
 export type { IBackButtonProps } from "./BackButton.js";
 export { BackButton } from "./BackButton.js";
@@ -24,3 +24,5 @@ export * from "./EmbedInsightDialog/index.js";
 export * from "./DialogList/index.js";
 
 export * from "./StylingEditorDialog/index.js";
+
+export { DialogCloseButton } from "./DialogCloseButton.js";

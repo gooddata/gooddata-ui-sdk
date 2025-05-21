@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 /**
  * @internal
@@ -113,3 +113,19 @@ export type ItemBorderRadiusPredicate = (item: any) => boolean;
  * @internal
  */
 export type IColorLegendSize = "large" | "medium" | "small";
+
+/**
+ * The items can have many different properties, the data can come from many different sources.
+ * The components like to use a lot of `any` for the item types, which poisons the type checking further down.
+ * These are the keys that are definitely used in different cases, but the whole type situation here could use a lot of work.
+ *
+ * @internal
+ */
+export type ISeriesItem = {
+    isVisible?: boolean;
+    name?: string;
+    color?: string;
+    type?: string;
+    labelKey?: string;
+    data?: string[];
+};

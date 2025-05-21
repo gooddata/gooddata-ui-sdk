@@ -21,7 +21,8 @@ export * from "./utils/debounce.js";
 export * from "./utils/dateTimeConfig.js";
 export * from "./utils/events.js";
 export * from "./utils/useId.js";
-export { getFocusableElements } from "./utils/domUtilities.js";
+export * from "./utils/useAutofocusOnMount.js";
+export { getFocusableElements, isElementFocusable } from "./utils/domUtilities.js";
 export * from "./measureNumberFormat/index.js";
 export * from "./syntaxHighlightingInput/index.js";
 export * from "./Button/index.js";
@@ -174,4 +175,10 @@ export type {
     IUiMenuItemData,
 } from "./@ui/UiMenu/types.js";
 
-export { makeMenuKeyboardNavigation } from "./@ui/@utils/keyboardNavigation.js";
+export {
+    makeMenuKeyboardNavigation,
+    makeLinearKeyboardNavigation,
+    makeKeyboardNavigation,
+    modifierNegator,
+} from "./@ui/@utils/keyboardNavigation.js";
+export type { IHandleActionOptions, IModifier } from "./@ui/@utils/keyboardNavigation.js";

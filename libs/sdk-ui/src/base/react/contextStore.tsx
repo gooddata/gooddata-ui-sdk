@@ -49,16 +49,17 @@ export type IContextStoreSelector<T, SelectorResult> = (state: T) => SelectorRes
 /**
  * @internal
  */
-export type IUseContextStore<T> = <SelectorResult>(
+export type IUseContextStore<T, IsOptional = false> = <SelectorResult>(
     selector?: IContextStoreSelector<T, SelectorResult>,
     equalityFn?: (a: SelectorResult, b: SelectorResult) => boolean,
-) => SelectorResult;
+) => IsOptional extends false ? SelectorResult : SelectorResult | undefined;
 
 /**
  * @internal
  */
 export type IContextStore<T> = IContextStoreProvider<T> & {
     useContextStore: IUseContextStore<T>;
+    useContextStoreOptional: IUseContextStore<T, true>;
     createSelector: <SelectorResult>(
         selector: IContextStoreSelector<T, SelectorResult>,
     ) => IContextStoreSelector<T, SelectorResult>;
@@ -85,20 +86,21 @@ export const createContextStore = <T,>(name: string): IContextStore<T> => {
         return <Context.Provider value={store}>{children}</Context.Provider>;
     };
 
-    const useContextStore = <SelectorResult,>(
+    const useContextStoreOptional = <SelectorResult,>(
         selector: (state: T) => SelectorResult = (state) => state as unknown as SelectorResult,
         equalityFn: (a: SelectorResult, b: SelectorResult) => boolean = isEqual,
     ) => {
         const store = React.useContext(Context);
-        if (store === null) {
-            throw new Error(`Context store '${name}' must be used within a Provider`);
-        }
 
-        const [selectedState, setSelectedState] = React.useState<SelectorResult>(() =>
-            selector(store.getState()),
+        const [selectedState, setSelectedState] = React.useState<SelectorResult | undefined>(() =>
+            store ? selector(store.getState()) : undefined,
         );
 
         React.useEffect(() => {
+            if (!store) {
+                return undefined;
+            }
+
             return store.subscribe((newState, prevState) => {
                 const newSelectedState = selector(newState);
                 const prevSelectedState = selector(prevState);
@@ -112,10 +114,23 @@ export const createContextStore = <T,>(name: string): IContextStore<T> => {
         return selectedState;
     };
 
+    const useContextStore = <SelectorResult,>(
+        selector: (state: T) => SelectorResult = (state) => state as unknown as SelectorResult,
+        equalityFn: (a: SelectorResult, b: SelectorResult) => boolean = isEqual,
+    ) => {
+        const store = React.useContext(Context);
+        if (store === null) {
+            throw new Error(`Context store '${name}' must be used within a Provider`);
+        }
+
+        return useContextStoreOptional(selector, equalityFn)!;
+    };
+
     const createSelector: IContextStore<T>["createSelector"] = (selector) => selector;
 
     return Object.assign(Provider, {
         useContextStore,
+        useContextStoreOptional,
         createSelector,
     });
 };

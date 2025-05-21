@@ -4,8 +4,8 @@ import { WrappedComponentProps, injectIntl } from "react-intl";
 import { messages } from "../locales.js";
 
 export interface ILegendAxisIndicatorProps {
-    labelKey: string;
-    data: string[];
+    labelKey?: string;
+    data?: string[];
     width?: number;
 }
 
@@ -24,7 +24,12 @@ export class LegendAxisIndicatorClass extends React.PureComponent<
         );
 
         return (
-            <div style={style} className="series-axis-indicator" aria-label="Legend axis indicator">
+            <div
+                style={style}
+                className="series-axis-indicator"
+                aria-label="Legend axis indicator"
+                data-testid={"legend-axis-indicator"}
+            >
                 <div className="series-text">
                     {intl.formatMessage(messages[labelKey as keyof typeof messages], values)}
                     {intl.formatMessage(messages["colon"])}

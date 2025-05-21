@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import range from "lodash/range.js";
 import head from "lodash/head.js";
 import last from "lodash/last.js";
