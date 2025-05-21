@@ -41,6 +41,7 @@ describe("Interaction", () => {
             widget.waitChartLoaded().focus();
 
             widgetConfig.openInteractions().getDrillConfigItem("Created - Year").remove();
+            widgetConfig.getDrillConfigItem("Sum of Velocity").remove();
 
             widgetConfig.addInteraction("Sum of Probability", "measure");
             widgetConfig
