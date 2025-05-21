@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React, { ReactNode, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -37,6 +37,11 @@ export const AttributeFilterShowFilteredElements: React.FC<IAttributeFilterShowF
         return parentFilterTitles ? parentFilterTitles.join(", ") : "";
     }, [parentFilterTitles]);
 
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+        onClick();
+    };
+
     return (
         <div
             className={cx(
@@ -60,9 +65,9 @@ export const AttributeFilterShowFilteredElements: React.FC<IAttributeFilterShowF
                     })}
                 </Bubble>
             </BubbleHoverTrigger>
-            <span className="gd-action-show-all s-action-show-all" onClick={onClick}>
+            <button className="gd-action-show-all s-action-show-all" onClick={handleClick}>
                 <FormattedMessage id="attributesDropdown.showAll" />
-            </span>
+            </button>
         </div>
     );
 };

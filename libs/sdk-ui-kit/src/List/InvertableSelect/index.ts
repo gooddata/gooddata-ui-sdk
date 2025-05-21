@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 export type {
     IInvertableSelectProps,
     IInvertableSelectRenderItemProps,
@@ -25,3 +25,10 @@ export {
     InvertableSelectStatus,
     useInvertableSelectionStatusText,
 } from "./InvertableSelectSelectionStatus.js";
+
+export type {
+    IInvertableSelectVirtualisedProps,
+    IInvertableSelectVirtualisedRenderItemProps,
+    IInvertableSelectVirtualisedRenderActionsProps,
+} from "./InvertableSelectVirtualised.js";
+export { InvertableSelectVirtualised } from "./InvertableSelectVirtualised.js";

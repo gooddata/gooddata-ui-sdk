@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { InvertableSelectAllCheckbox } from "@gooddata/sdk-ui-kit";
 
@@ -49,6 +49,16 @@ export interface IAttributeFilterElementsActionsProps {
      * @beta
      */
     isVisible: boolean;
+
+    /**
+     * @beta
+     */
+    isApplyDisabled?: boolean;
+
+    /**
+     * @beta
+     */
+    onApplyButtonClick?: () => void;
 }
 
 /**
@@ -58,10 +68,22 @@ export interface IAttributeFilterElementsActionsProps {
  * @beta
  */
 export const AttributeFilterElementsActions: React.VFC<IAttributeFilterElementsActionsProps> = (props) => {
-    const { checked, isVisible, onChange, onToggle, isFiltered, totalItemsCount, isPartialSelection } = props;
+    const {
+        checked,
+        isVisible,
+        onChange,
+        onToggle,
+        onApplyButtonClick,
+        isApplyDisabled,
+        isFiltered,
+        totalItemsCount,
+        isPartialSelection,
+    } = props;
 
     return (
         <InvertableSelectAllCheckbox
+            onApplyButtonClick={onApplyButtonClick}
+            isApplyDisabled={isApplyDisabled}
             isVisible={isVisible}
             checked={checked}
             onChange={onChange}

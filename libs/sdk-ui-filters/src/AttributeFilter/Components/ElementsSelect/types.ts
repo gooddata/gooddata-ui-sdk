@@ -160,6 +160,16 @@ export interface IAttributeFilterElementsSelectProps {
      * @remarks Usually true (in case of dashboard) when filtersApplyMode.mode === "ALL_AT_ONCE"
      */
     withoutApply?: boolean;
+
+    /**
+     * @beta
+     */
+    onApplyButtonClick?: () => void;
+
+    /**
+     * @beta
+     */
+    isApplyDisabled?: boolean;
 }
 
 /**
@@ -218,4 +228,18 @@ export interface IAttributeFilterElementsSelectItemProps {
      * @beta
      */
     primaryLabelTitle?: string;
+
+    /**
+     * Indicates which item on the list is focused by keyboard.
+     *
+     * @beta
+     */
+    focused?: boolean;
+
+    /**
+     * Indicates which element of the list item is focused by keyboard.
+     *
+     * @beta
+     */
+    focusedAction?: string;
 }

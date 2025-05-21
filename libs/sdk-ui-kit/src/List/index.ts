@@ -34,6 +34,9 @@ export type {
     IInvertableSelectRenderActionsProps,
     IInvertableSelectStatusProps,
     IInvertableSelectItemRenderOnlyProps,
+    IInvertableSelectVirtualisedProps,
+    IInvertableSelectVirtualisedRenderItemProps,
+    IInvertableSelectVirtualisedRenderActionsProps,
 } from "./InvertableSelect/index.js";
 export {
     InvertableSelect,
@@ -44,6 +47,7 @@ export {
     InvertableSelectAllCheckbox,
     InvertableSelectStatus,
     useInvertableSelectionStatusText,
+    InvertableSelectVirtualised,
 } from "./InvertableSelect/index.js";
 export type { ISingleSelectListItemProps, SingleSelectListItemType } from "./ListItem.js";
 export { SingleSelectListItem } from "./ListItem.js";

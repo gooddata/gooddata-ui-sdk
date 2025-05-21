@@ -14,7 +14,12 @@ interface IKeyboardNavigationDeps<Item, Action extends string> {
     focusedAction: Action | typeof SELECT_ITEM_ACTION;
     focusedItemAdditionalActions: Action[];
     focusedItem: Item | undefined;
-    actionHandlers: { [key in Action | typeof SELECT_ITEM_ACTION]: (item: Item) => (() => void) | undefined };
+    actionHandlers: {
+        [key in Action | typeof SELECT_ITEM_ACTION]: (
+            item: Item,
+            e?: React.KeyboardEvent,
+        ) => (() => void) | undefined;
+    };
     setFocusedIndex: React.Dispatch<React.SetStateAction<number | undefined>>;
     setFocusedAction: React.Dispatch<React.SetStateAction<Action | typeof SELECT_ITEM_ACTION>>;
 }
@@ -27,18 +32,31 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
     actionHandlers,
     getItemAdditionalActions,
     isNestedList = false,
+    focusedIndex: focusedIndexProp,
 }: {
     items: Item[];
-    actionHandlers: { [key in Action | typeof SELECT_ITEM_ACTION]: (item: Item) => (() => void) | undefined };
+    actionHandlers: {
+        [key in Action | typeof SELECT_ITEM_ACTION]: (
+            item: Item,
+            e?: React.KeyboardEvent,
+        ) => (() => void) | undefined;
+    };
     getItemAdditionalActions: (item: Item) => Action[];
     isNestedList?: boolean;
+    focusedIndex?: number;
 }) {
-    const [focusedIndex, setFocusedIndex] = React.useState<number | undefined>(0);
+    const [focusedIndex, setFocusedIndex] = React.useState<number | undefined>(focusedIndexProp ?? 0);
     const focusedItem = focusedIndex === undefined ? undefined : items[focusedIndex];
 
     const [focusedAction, setFocusedAction] = React.useState<Action | typeof SELECT_ITEM_ACTION>(
         SELECT_ITEM_ACTION,
     );
+
+    React.useEffect(() => {
+        if (focusedIndexProp !== undefined) {
+            setFocusedIndex(focusedIndexProp);
+        }
+    }, [focusedIndexProp]);
 
     const focusedItemAdditionalActions = React.useMemo(
         () => (focusedItem ? getItemAdditionalActions(focusedItem) : []),
@@ -117,14 +135,14 @@ function makeItemSelectionNavigation<Item, Action extends string>(
 
             setFocusedIndex(items.length - 1);
         },
-        onSelect: () => {
+        onSelect: (e) => {
             const { actionHandlers, focusedItem } = depsRef.current;
 
             if (!focusedItem) {
                 return;
             }
 
-            actionHandlers.selectItem(focusedItem)?.();
+            actionHandlers.selectItem(focusedItem, e)?.();
         },
         onEnterLevel: () => {
             const { focusedItemAdditionalActions, setFocusedAction } = depsRef.current;

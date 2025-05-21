@@ -1,9 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
-import { ShortenedText, isActionKey } from "@gooddata/sdk-ui-kit";
+import { ShortenedText } from "@gooddata/sdk-ui-kit";
 import { AttributeFilterButtonTooltip } from "./AttributeFilterButtonTooltip.js";
 import { FilterButtonCustomIcon, IFilterButtonCustomIcon } from "../../../shared/index.js";
 
@@ -146,6 +146,13 @@ export interface IAttributeFilterDropdownButtonProps {
      * @beta
      */
     buttonRef?: React.MutableRefObject<HTMLElement>;
+
+    /**
+     * Id of the Attribute filter dropdown body.
+     *
+     * @beta
+     */
+    dropdownId?: string;
 }
 
 /**
@@ -180,6 +187,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
         onClick,
         className,
         buttonRef,
+        dropdownId,
     } = props;
 
     const intl = useIntl();
@@ -208,17 +216,6 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
         buttonSubtitle = intl.formatMessage({ id: "filtering" });
     }
 
-    const onKeyDown = useCallback(
-        (event) => {
-            // This enables keyboard interaction events after focus
-            if (isActionKey(event)) {
-                event.preventDefault();
-                onClick();
-            }
-        },
-        [onClick],
-    );
-
     return (
         <div
             className={cx(
@@ -235,8 +232,10 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
                 },
                 className,
             )}
+            aria-haspopup="dialog"
+            aria-expanded={isOpen}
             onClick={onClick}
-            onKeyDown={onKeyDown}
+            aria-controls={isOpen ? dropdownId : undefined}
             role="button"
             tabIndex={0}
             ref={buttonRef as React.RefObject<HTMLDivElement>}

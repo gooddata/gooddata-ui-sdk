@@ -2,7 +2,7 @@
 import React, { useCallback, useRef } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import { isSpaceKey } from "../../utils/events.js";
+import { isEnterKey, isSpaceKey } from "../../utils/events.js";
 
 /**
  * @internal
@@ -15,13 +15,24 @@ export interface IInvertableSelectAllCheckboxProps {
     totalItemsCount: number;
     isPartialSelection: boolean;
     isVisible: boolean;
+    onApplyButtonClick?: () => void;
+    isApplyDisabled?: boolean;
 }
 
 /**
  * @internal
  */
 export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxProps) {
-    const { isVisible, checked, onToggle, isFiltered, totalItemsCount, isPartialSelection } = props;
+    const {
+        isVisible,
+        checked,
+        onToggle,
+        onApplyButtonClick,
+        isApplyDisabled,
+        isFiltered,
+        totalItemsCount,
+        isPartialSelection,
+    } = props;
 
     const intl = useIntl();
     const itemRef = useRef<HTMLDivElement>(null);
@@ -42,9 +53,12 @@ export function InvertableSelectAllCheckbox(props: IInvertableSelectAllCheckboxP
     };
 
     const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        event.preventDefault(); // Prevent scrolling
         if (isSpaceKey(event)) {
-            event.preventDefault(); // Prevent scrolling on Space
             onToggle();
+        }
+        if (isEnterKey(event) && !isApplyDisabled) {
+            onApplyButtonClick();
         }
     };
 

@@ -75,8 +75,9 @@ export const AttributeFilterDropdown: React.VFC = () => {
             enableEventPropagation={true}
             alignPoints={ALIGN_POINTS}
             fullscreenOnMobile={fullscreenOnMobile}
+            autofocusOnOpen
             overlayPositionType={overlayPositionType}
-            renderButton={({ toggleDropdown, isOpen, buttonRef }) => {
+            renderButton={({ toggleDropdown, isOpen, buttonRef, dropdownId }) => {
                 const handleClickAction = disabled ? noop : toggleDropdown;
                 return (
                     <div className={cx({ "gd-is-mobile": fullscreenOnMobile && isMobile && isOpen })}>
@@ -100,6 +101,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
                                     onClick={handleClickAction}
                                     isError={!!initError}
                                     buttonRef={buttonRef}
+                                    dropdownId={dropdownId}
                                 />
                             </AttributeFilterButtonErrorTooltip>
                         )}
@@ -113,8 +115,10 @@ export const AttributeFilterDropdown: React.VFC = () => {
                     onOpen();
                 }
             }}
-            renderBody={({ closeDropdown }) => (
+            renderBody={({ closeDropdown, ariaAttributes }) => (
                 <div
+                    role="dialog"
+                    id={ariaAttributes.id}
                     className={cx({ "gd-is-mobile": fullscreenOnMobile && isMobile })}
                     style={{ height: fullscreenOnMobile && isMobile ? "100%" : "auto" }}
                 >

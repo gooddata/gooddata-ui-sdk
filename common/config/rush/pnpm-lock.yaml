@@ -4452,7 +4452,7 @@ importers:
         version: 5.62.0(eslint@8.55.0)(typescript@5.3.3)
       babel-loader:
         specifier: ^8.0.5
-        version: 8.3.0(@babel/core@7.26.10)(webpack@5.89.0)
+        version: 8.3.0(@babel/core@7.26.10)(webpack@4.47.0)
       babel-plugin-require-context-hook:
         specifier: ^1.0.0
         version: 1.0.0

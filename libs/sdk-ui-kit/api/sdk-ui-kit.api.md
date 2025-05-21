@@ -2516,11 +2516,15 @@ export interface IInvertableSelectAllCheckboxProps {
     // (undocumented)
     checked: boolean;
     // (undocumented)
+    isApplyDisabled?: boolean;
+    // (undocumented)
     isFiltered: boolean;
     // (undocumented)
     isPartialSelection: boolean;
     // (undocumented)
     isVisible: boolean;
+    // (undocumented)
+    onApplyButtonClick?: () => void;
     // (undocumented)
     onChange: (value: boolean) => void;
     // (undocumented)
@@ -2739,6 +2743,110 @@ export interface IInvertableSelectStatusProps<T> {
     isInverted: boolean;
     // (undocumented)
     selectedItems: T[];
+}
+
+// @internal (undocumented)
+export interface IInvertableSelectVirtualisedProps<T> {
+    // (undocumented)
+    adaptiveHeight?: boolean;
+    // (undocumented)
+    adaptiveWidth?: boolean;
+    // (undocumented)
+    canSubmitOnKeyDown?: boolean;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    error?: any;
+    // (undocumented)
+    getItemKey: (item: T) => string;
+    // (undocumented)
+    getItemTitle: (item: T) => string;
+    // (undocumented)
+    height?: number;
+    // (undocumented)
+    isInverted: boolean;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    isLoadingNextPage?: boolean;
+    // (undocumented)
+    isSingleSelect?: boolean;
+    // (undocumented)
+    itemHeight?: number;
+    // (undocumented)
+    items: T[];
+    // (undocumented)
+    nextPageItemPlaceholdersCount?: number;
+    // (undocumented)
+    numberOfHiddenSelectedItems?: number;
+    // (undocumented)
+    onApplyButtonClick?: () => void;
+    // (undocumented)
+    onLoadNextPage?: () => void;
+    // (undocumented)
+    onSearch?: (search: string) => void;
+    // (undocumented)
+    onSelect?: (items: T[], isInverted: boolean) => void;
+    // (undocumented)
+    renderActions?: (props: IInvertableSelectVirtualisedRenderActionsProps) => JSX.Element;
+    // (undocumented)
+    renderError?: (props: IInvertableSelectRenderErrorProps) => JSX.Element;
+    // (undocumented)
+    renderItem?: (props: IInvertableSelectVirtualisedRenderItemProps<T>) => JSX.Element;
+    // (undocumented)
+    renderLoading?: (props: IInvertableSelectRenderLoadingProps) => JSX.Element;
+    // (undocumented)
+    renderNoData?: (props: IInvertableSelectRenderNoDataProps) => JSX.Element;
+    // (undocumented)
+    renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => JSX.Element;
+    // (undocumented)
+    renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => JSX.Element;
+    // (undocumented)
+    searchPlaceholder?: string;
+    // (undocumented)
+    searchString?: string;
+    // (undocumented)
+    selectedItems: T[];
+    // (undocumented)
+    selectedItemsLimit?: number;
+    // (undocumented)
+    totalItemsCount?: number;
+    // (undocumented)
+    width?: number;
+}
+
+// @internal (undocumented)
+export interface IInvertableSelectVirtualisedRenderActionsProps {
+    // (undocumented)
+    checked: boolean;
+    // (undocumented)
+    isFiltered: boolean;
+    // (undocumented)
+    isPartialSelection: boolean;
+    // (undocumented)
+    isVisible: boolean;
+    // (undocumented)
+    onApplyButtonClick?: () => void;
+    // (undocumented)
+    onChange: (value: boolean) => void;
+    // (undocumented)
+    onToggle: () => void;
+    // (undocumented)
+    totalItemsCount: number;
+}
+
+// @internal
+export interface IInvertableSelectVirtualisedRenderItemProps<T> {
+    // (undocumented)
+    focused: boolean;
+    // (undocumented)
+    focusedAction?: string;
+    isSelected: boolean;
+    item: T;
+    onDeselect: () => void;
+    onSelect: () => void;
+    onSelectOnly: () => void;
+    title: string;
 }
 
 // @internal (undocumented)
@@ -3631,6 +3739,9 @@ export function InvertableSelectStatus<T>(props: IInvertableSelectStatusProps<T>
 
 // @internal (undocumented)
 export function InvertableSelectStatusBar<T>(props: IInvertableSelectStatusBarProps<T>): React_2.JSX.Element;
+
+// @internal (undocumented)
+export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualisedProps<T>): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface IOffset {
@@ -5851,6 +5962,8 @@ export interface UiPagedVirtualListProps<T> {
     loadNextPage?: () => void;
     // (undocumented)
     maxHeight: number;
+    scrollToItem?: T;
+    scrollToItemKeyExtractor?: (item: T) => string | number;
     // (undocumented)
     SkeletonItem?: React_2.ComponentType<UiPagedVirtualListSkeletonItemProps>;
     // (undocumented)
@@ -5931,13 +6044,14 @@ export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInvert
 export const useIsZoomed: (baseZoomLevel?: number) => boolean;
 
 // @internal (undocumented)
-export function useListWithActionsKeyboardNavigation<Item, Action extends string>({ items, actionHandlers, getItemAdditionalActions, isNestedList, }: {
+export function useListWithActionsKeyboardNavigation<Item, Action extends string>({ items, actionHandlers, getItemAdditionalActions, isNestedList, focusedIndex: focusedIndexProp, }: {
     items: Item[];
     actionHandlers: {
-        [key in Action | typeof SELECT_ITEM_ACTION]: (item: Item) => (() => void) | undefined;
+        [key in Action | typeof SELECT_ITEM_ACTION]: (item: Item, e?: React_2.KeyboardEvent) => (() => void) | undefined;
     };
     getItemAdditionalActions: (item: Item) => Action[];
     isNestedList?: boolean;
+    focusedIndex?: number;
 }): {
     onKeyboardNavigation: (event: React_2.KeyboardEvent<Element>) => void;
     onBlur: React_2.FocusEventHandler<Element>;

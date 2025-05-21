@@ -21,7 +21,7 @@ const ALIGN_POINTS: IAlignPoint[] = [{ align: "bl tc", offset: { x: 7, y: 0 } }]
 export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElementsSelectItemProps> = (
     props,
 ) => {
-    const { item, isSelected, onSelect, onSelectOnly, onDeselect, primaryLabelTitle } = props;
+    const { item, isSelected, focusedAction, onSelect, onSelectOnly, onDeselect, primaryLabelTitle } = props;
     const intl = useIntl();
     const itemRef = useRef<HTMLDivElement>(null);
 
@@ -49,13 +49,6 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
         }
     };
 
-    const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (isSpaceKey(event)) {
-            event.preventDefault(); // Prevent scrolling on Space
-            onItemClick();
-        }
-    };
-
     const classes = cx(
         "gd-attribute-filter-elements-select-item__next",
         "gd-list-item",
@@ -70,6 +63,10 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
         {
             "gd-attribute-filter-list-empty-item": !item.title,
         },
+        {
+            "gd-attribute-filter-list-item--isFocused": !!focusedAction,
+            "gd-attribute-filter-list-item--isFocusedSelectItem": focusedAction === "selectItem",
+        },
     );
 
     const labelClasses = cx("input-checkbox-label", {
@@ -79,10 +76,16 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
     const itemTitle = getElementTitle(item, intl);
     const itemPrimaryTitle = getElementPrimaryTitle(item);
 
+    const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (isSpaceKey(event)) {
+            event.preventDefault(); // Prevent scrolling on Space
+            onItemClick();
+        }
+    };
+
     return (
         <div
             ref={itemRef}
-            tabIndex={0}
             className={classes}
             onClick={onItemClick}
             onFocus={onFocus}
@@ -91,7 +94,13 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
             aria-selected={isSelected}
         >
             <label className={labelClasses}>
-                <input type="checkbox" className="input-checkbox" readOnly checked={isSelected} />
+                <input
+                    tabIndex={-1}
+                    type="checkbox"
+                    className="input-checkbox"
+                    readOnly
+                    checked={isSelected}
+                />
                 <span className="input-label-text">{itemTitle}</span>
             </label>
             {!item.title && (
@@ -108,13 +117,19 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
                     </BubbleHoverTrigger>
                 </div>
             )}
-            <span className="gd-list-item-only" onClick={onOnlyItemClick}>
+            <span
+                className={cx("gd-list-item-only", {
+                    "gd-list-item-only--isFocusedSelectItem": focusedAction === "only",
+                })}
+                onClick={onOnlyItemClick}
+            >
                 <FormattedMessage id="gs.list.only" />
             </span>
             <AttributeFilterElementsSelectItemTooltip
                 itemTitle={itemTitle}
                 primaryLabelTitle={primaryLabelTitle}
                 itemPrimaryTitle={itemPrimaryTitle}
+                isFocused={focusedAction === "questionMark"}
             />
         </div>
     );
