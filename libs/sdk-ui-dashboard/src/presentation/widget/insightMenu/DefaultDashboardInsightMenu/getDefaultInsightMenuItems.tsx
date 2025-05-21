@@ -5,9 +5,9 @@ import compact from "lodash/compact.js";
 
 import { IInsightMenuItem } from "../types.js";
 import { InsightAlerts } from "../../insight/configuration/InsightAlerts.js";
-import { getExportTooltip } from "../../insight/configuration/ExportOptions.js";
 import { ISettings } from "@gooddata/sdk-model";
 import { IExecutionResultEnvelope } from "../../../../model/index.js";
+import { getExportTooltip } from "./getExportTooltips.js";
 
 /**
  * @internal
@@ -28,18 +28,26 @@ const getExportMenuItems = (
     const {
         isExportVisible,
         isExportRawVisible,
+        isExportPngImageVisible,
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
         exportXLSXDisabled,
         exportCSVDisabled,
         exportCSVRawDisabled,
+        exportPngImageDisabled,
         onExportPdfPresentation,
         onExportPowerPointPresentation,
         onExportXLSX,
         onExportCSV,
         onExportRawCSV,
+        onExportPngImage,
+        isExporting,
     } = config;
-    const tooltip = getExportTooltip(execution, settings?.enableRawExports);
+    const tooltip = getExportTooltip({
+        isRawExportsEnabled: settings?.enableRawExports,
+        isExporting,
+        execution,
+    });
     const presentationTooltip = intl.formatMessage({
         id: "options.menu.export.presentation.unsupported.oldWidget",
     });
@@ -48,6 +56,20 @@ const getExportMenuItems = (
         // Presentation exports section - only shown if isExportVisible is true
         ...(isExportVisible
             ? [
+                  ...(isExportPngImageVisible
+                      ? [
+                            {
+                                type: "button" as const,
+                                itemId: "ExportPngImage",
+                                itemName: intl.formatMessage({ id: "options.menu.export.image.PNG" }),
+                                icon: "gd-icon-type-image",
+                                className: "gd-export-options-png",
+                                disabled: exportPngImageDisabled,
+                                tooltip: exportPngImageDisabled ? presentationTooltip : undefined,
+                                onClick: onExportPngImage,
+                            },
+                        ]
+                      : []),
                   {
                       type: "button" as const,
                       itemId: "ExportPdfPresentation",
@@ -131,6 +153,7 @@ export interface IUseInsightMenuConfig {
     scheduleExportManagementDisabled: boolean;
     exportPdfPresentationDisabled: boolean;
     exportPowerPointPresentationDisabled: boolean;
+    exportPngImageDisabled: boolean;
     onExportXLSX: () => void;
     onExportCSV: () => void;
     onExportRawCSV: () => void;
@@ -138,8 +161,10 @@ export interface IUseInsightMenuConfig {
     onScheduleManagementExport: () => void;
     onExportPowerPointPresentation: () => void;
     onExportPdfPresentation: () => void;
+    onExportPngImage: () => void;
     isExportRawVisible: boolean;
     isExportVisible: boolean;
+    isExportPngImageVisible: boolean;
     isScheduleExportVisible: boolean;
     isScheduleExportManagementVisible: boolean;
     isDataError: boolean;

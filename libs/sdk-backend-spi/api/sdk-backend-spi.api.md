@@ -476,6 +476,12 @@ export interface ICommentExpressionToken {
 }
 
 // @alpha
+export interface IDashboardExportImageOptions {
+    filename?: string;
+    widgetIds?: ObjRef[];
+}
+
+// @alpha
 export interface IDashboardExportTabularOptions {
     title?: string;
 }
@@ -1423,6 +1429,7 @@ export interface IWorkspaceDashboardsService {
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string, customOverrides?: IRawExportCustomOverrides): Promise<IExportResult>;
+    exportDashboardToImage(ref: ObjRef, options?: IDashboardExportImageOptions): Promise<IExportResult>;
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
     exportDashboardToPresentation(ref: ObjRef, format: "PDF" | "PPTX", filters?: FilterContextItem[], options?: {
         widgetIds?: ObjRef[];

@@ -16,6 +16,8 @@ import {
     DashboardExportToPdfPresentationResolved,
     DashboardExportToPptPresentationRequested,
     DashboardExportToPptPresentationResolved,
+    DashboardExportToImageRequested,
+    DashboardExportToImageResolved,
     DashboardIgnoreExecutionTimestampChanged,
 } from "./dashboard.js";
 import {
@@ -167,6 +169,9 @@ export type {
     DashboardExportToPptPresentationResolvedPayload,
     DashboardIgnoreExecutionTimestampChanged,
     DashboardIgnoreExecutionTimestampChangedPayload,
+    DashboardExportToImageRequested,
+    DashboardExportToImageResolved,
+    DashboardExportToImageResolvedPayload,
 } from "./dashboard.js";
 export {
     isDashboardSaved,
@@ -186,6 +191,8 @@ export {
     isDashboardExportToPdfPresentationResolved,
     isDashboardExportToPptPresentationResolved,
     isDashboardExportToPptPresentationRequested,
+    isDashboardExportToImageRequested,
+    isDashboardExportToImageResolved,
     isDashboardIgnoreExecutionTimestampChanged,
 } from "./dashboard.js";
 
@@ -582,6 +589,8 @@ export type DashboardEvents =
     | DashboardExportToPdfPresentationResolved
     | DashboardExportToPptPresentationResolved
     | DashboardExportToPptPresentationRequested
+    | DashboardExportToImageRequested
+    | DashboardExportToImageResolved
     | DashboardUserInteractionTriggered
     | DashboardDateFilterSelectionChanged
     | DashboardAttributeFilterAdded

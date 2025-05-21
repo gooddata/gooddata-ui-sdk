@@ -2,8 +2,12 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardSelector } from "../types.js";
-import { selectCanExecuteRaw, selectCanExportTabular } from "../permissions/permissionsSelectors.js";
-import { selectSettings } from "../config/configSelectors.js";
+import {
+    selectCanExecuteRaw,
+    selectCanExportPdf,
+    selectCanExportTabular,
+} from "../permissions/permissionsSelectors.js";
+import { selectEnableWidgetExportPngImage } from "../config/configSelectors.js";
 import {
     selectSupportsExportToCsv,
     selectSupportsExportToXlsx,
@@ -16,11 +20,8 @@ export const selectIsExportableToCSV: DashboardSelector<boolean> = createSelecto
     selectSupportsExportToCsv,
     selectCanExportTabular,
     selectCanExecuteRaw,
-    selectSettings,
-    (supportsCapabilityCsv, canExportTabular, canExecuteRaw, settings): boolean => {
-        const isExportEnabled = Boolean(settings.enableKPIDashboardExport && canExportTabular);
-        const isRawExportEnabled = Boolean(isExportEnabled && canExecuteRaw);
-        return supportsCapabilityCsv && isRawExportEnabled;
+    (supportsCapabilityCsv, canExportTabular, canExecuteRaw): boolean => {
+        return supportsCapabilityCsv && canExportTabular && canExecuteRaw;
     },
 );
 
@@ -30,9 +31,18 @@ export const selectIsExportableToCSV: DashboardSelector<boolean> = createSelecto
 export const selectIsExportableToXLSX: DashboardSelector<boolean> = createSelector(
     selectSupportsExportToXlsx,
     selectCanExportTabular,
-    selectSettings,
-    (supportCapabilityXlsx, canExportTabular, settings): boolean => {
-        const isExportEnabled = Boolean(settings.enableKPIDashboardExport && canExportTabular);
-        return supportCapabilityXlsx && isExportEnabled;
+    (supportCapabilityXlsx, canExportTabular): boolean => {
+        return supportCapabilityXlsx && canExportTabular;
+    },
+);
+
+/**
+ * @internal
+ */
+export const selectIsExportableToPngImage: DashboardSelector<boolean> = createSelector(
+    selectEnableWidgetExportPngImage,
+    selectCanExportPdf,
+    (enableWidgetExportPngImage, canExportVisual): boolean => {
+        return enableWidgetExportPngImage && canExportVisual;
     },
 );
