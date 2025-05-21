@@ -63,6 +63,7 @@ export const UiIconButton = forwardRef<HTMLButtonElement, UiIconButtonProps>(
                 ref={ref}
                 aria-label={label}
                 className={b({ size, variant })}
+                disabled={isDisabled}
                 aria-disabled={isDisabled}
                 onClick={onClickHandler}
                 data-id={dataId}

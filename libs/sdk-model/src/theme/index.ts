@@ -250,6 +250,11 @@ export interface IThemeChart {
     gridColor?: ThemeColor;
 
     /**
+     * Grid plot line color
+     */
+    plotLineColor?: ThemeColor;
+
+    /**
      * Axis line color
      */
     axisColor?: ThemeColor;

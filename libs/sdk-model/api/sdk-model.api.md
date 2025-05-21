@@ -3882,6 +3882,7 @@ export interface IThemeChart {
     backgroundColor?: ThemeColor;
     gridColor?: ThemeColor;
     legendValueColor?: ThemeColor;
+    plotLineColor?: ThemeColor;
     tooltipBackgroundColor?: ThemeColor;
     tooltipBorderColor?: ThemeColor;
     tooltipLabelColor?: ThemeColor;
