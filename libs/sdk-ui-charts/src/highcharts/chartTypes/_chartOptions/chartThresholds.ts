@@ -59,7 +59,7 @@ export const getStackedTrendDividerPlotLines = (
     thresholdSeries: ISeriesDataItem[],
 ) =>
     thresholdSeries.reduce<number[]>((indexes, dataPoint, index, arr) => {
-        if (index > 0) {
+        if (index > 0 && index < dataSeries.length) {
             const currentThresholdIsEmpty = isEmptyDataPoint(dataPoint.y);
             const previousThresholdIsEmpty = isEmptyDataPoint(arr[index - 1].y);
             const currentDataIsEmpty = isEmptyDataPoint(dataSeries[index].y);
