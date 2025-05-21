@@ -43,7 +43,7 @@ cleanup() {
 }
 
 trap cleanup EXIT
-
+  
 pushd $E2E_TEST_DIR
 
 # Use Dockerfile_local as scenarios have been build in previous steps
@@ -55,6 +55,6 @@ if [[ "$GITHUB_ACTIONS" != "true" ]]; then
 fi
 
 PROJECT_NAME=tiger-sdk-ui-tests-e2e-${EXECUTOR_NUMBER:-default}
-NO_COLOR=1 docker compose -f docker-compose-integrated.yaml -p "$PROJECT_NAME" up \
+docker compose -f docker-compose-integrated.yaml -p "$PROJECT_NAME" up \
   --abort-on-container-exit --exit-code-from integrated-tests \
-  --force-recreate --always-recreate-deps --renew-anon-volumes --no-color
+  --force-recreate --always-recreate-deps --renew-anon-volumes
