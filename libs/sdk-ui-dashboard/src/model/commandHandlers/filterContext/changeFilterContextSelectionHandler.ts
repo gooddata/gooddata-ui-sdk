@@ -385,7 +385,7 @@ function* getDateFiltersUpdateActions(
             (filter) => !handledDataSets.has(serializeObjRef(filter.dateFilter.dataSet!)),
         );
         if (unhandledFilters.length > 0) {
-            for (const dateFilter of dateFilters) {
+            for (const dateFilter of unhandledFilters) {
                 const localIdentifierObj = dateFilter.dateFilter.localIdentifier
                     ? { localIdentifier: dateFilter.dateFilter.localIdentifier }
                     : {};
