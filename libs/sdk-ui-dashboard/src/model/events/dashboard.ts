@@ -814,7 +814,6 @@ export function dashboardExportToPptPresentationResolved(
 export const isDashboardExportToPptPresentationResolved =
     eventGuard<DashboardExportToPptPresentationResolved>("GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.RESOLVED");
 
-//FIXME: maybe move to insights and rename and change event names, BUT maybe other insights exports are using function here as well
 /**
  * Tests whether the provided object is an instance of {@link DashboardExportToPptPresentationResolved}.
  *
