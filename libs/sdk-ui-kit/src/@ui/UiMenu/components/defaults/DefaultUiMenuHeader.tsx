@@ -70,6 +70,7 @@ export const DefaultUiMenuHeader: React.FC = React.memo(function DefaultUiMenuHe
                 icon={"close"}
                 label={formatMessage({ id: "menu.close" })}
                 onClick={onClose}
+                dataId={"s-menu-close-button"}
             />
         </div>
     );
