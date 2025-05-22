@@ -94,6 +94,7 @@ function createRegex(items: Completion[]): RegExp | undefined {
         ? new RegExp(
               items
                   .map((i) => i.label)
+                  .sort((a, b) => b.length - a.length) // Sort by length descending
                   .filter(Boolean)
                   .map((p) => `(?<!\\w)${escapeRegex(p as string)}(?!\\w)`)
                   .join("|"),

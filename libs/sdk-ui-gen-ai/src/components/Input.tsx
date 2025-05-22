@@ -92,12 +92,16 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
                 placeholder={intl.formatMessage(messages.placeholder)}
                 label={intl.formatMessage(messages.label)}
                 value={value}
+                disabled={isBusy}
+                autocompletion={{
+                    aboveCursor: true,
+                    whenTyping: true,
+                }}
                 extensions={extensions}
                 onApi={setApi}
                 onChange={setValue}
                 onKeyDown={handleKeyDown}
                 onCompletion={onCompletion}
-                disabled={isBusy}
             />
             <Button
                 disabled={buttonDisabled}

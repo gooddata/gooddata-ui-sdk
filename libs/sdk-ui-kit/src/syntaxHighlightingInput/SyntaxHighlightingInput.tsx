@@ -21,6 +21,10 @@ export interface ISyntaxHighlightingInputProps {
     onApi?: (view: EditorView | null) => void;
     onCursor?: (from: number, to: number) => void;
     onKeyDown?: (event: KeyboardEvent, view: EditorView) => boolean;
+    autocompletion?: {
+        whenTyping?: boolean;
+        aboveCursor?: boolean;
+    };
     onCompletion?: CompletionSource;
 }
 
@@ -32,6 +36,7 @@ export const SyntaxHighlightingInput: React.FC<ISyntaxHighlightingInputProps> = 
         value,
         label,
         placeholder,
+        autocompletion,
         onApi,
         onChange,
         onCursor,
@@ -44,6 +49,7 @@ export const SyntaxHighlightingInput: React.FC<ISyntaxHighlightingInputProps> = 
 
     const { editorRef } = useCodemirror({
         placeholderText: placeholder,
+        autocompletion,
         label,
         extensions,
         disabled,

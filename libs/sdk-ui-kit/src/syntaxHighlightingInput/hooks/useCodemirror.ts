@@ -1,11 +1,18 @@
 // (C) 2025 GoodData Corporation
-import { MutableRefObject, useEffect, useMemo, useRef } from "react";
-import { Compartment, EditorSelection, EditorState, Extension, Transaction } from "@codemirror/state";
-import { EditorView, keymap, placeholder, ViewUpdate } from "@codemirror/view";
+import { useEffect, useRef } from "react";
+import { EditorView } from "@codemirror/view";
+import { EditorState, Extension } from "@codemirror/state";
 import { bracketMatching, HighlightStyle, syntaxHighlighting } from "@codemirror/language";
-import { defaultKeymap, historyKeymap } from "@codemirror/commands";
-import { autocompletion, CompletionSource, completionStatus } from "@codemirror/autocomplete";
 import { tags as t } from "@lezer/highlight";
+
+import { IUseEventHandlersProps, useEventHandlers } from "./useEventHandlers.js";
+import { useCodemirrorEditable } from "./useCodemirrorEditable.js";
+import { useCodemirrorChange } from "./useCodemirrorChange.js";
+import { useChangeHandler } from "./useChangeHandler.js";
+import { useCodemirrorOptions } from "./useCodemirrorOptions.js";
+import { useCodemirrorKeymap } from "./useCodemirrorKeymap.js";
+import { useCodemirrorEvents } from "./useCodemirrorEvents.js";
+import { useAutocompletion } from "./useAutocompletion.js";
 
 // Custom syntax highlighting
 const customHighlightStyle = HighlightStyle.define([
@@ -18,23 +25,24 @@ const customHighlightStyle = HighlightStyle.define([
     { tag: t.keyword, color: "#ab55a3", fontWeight: "bold" },
 ]);
 
-export interface IUseCodemirrorProps {
+export interface IUseCodemirrorProps extends IUseEventHandlersProps {
     value?: string;
     label?: string;
     placeholderText?: string;
     disabled?: boolean;
+    autocompletion?: {
+        aboveCursor?: boolean;
+        whenTyping?: boolean;
+    };
     extensions?: Extension[];
-    onChange: (value: string) => void;
     onApi?: (view: EditorView | null) => void;
-    onCursor?: (from: number, to: number) => void;
-    onCompletion?: CompletionSource;
-    onKeyDown?: (event: KeyboardEvent, view: EditorView) => boolean;
 }
 
 export function useCodemirror({
     value = "",
     label,
     disabled,
+    autocompletion,
     placeholderText,
     extensions,
     onCompletion,
@@ -46,71 +54,32 @@ export function useCodemirror({
     const editorRef = useRef<HTMLDivElement>(null);
     const viewRef = useRef<EditorView>();
 
-    const handleKeyDownRef = useRef(onKeyDown);
-    handleKeyDownRef.current = onKeyDown;
-
-    const handleChangeRef = useRef(onChange);
-    handleChangeRef.current = onChange;
-
-    const handleCursorRef = useRef(onCursor);
-    handleCursorRef.current = onCursor;
-
-    const handleCompletionRef = useRef(onCompletion);
-    handleCompletionRef.current = onCompletion;
+    const { handleCompletion, handleChange, handleKeyDown, handleCursor } = useEventHandlers({
+        onChange,
+        onKeyDown,
+        onCursor,
+        onCompletion,
+    });
 
     // Create an extension for handling changes
-    const changeHandler = useMemo(() => {
-        return EditorView.updateListener.of((update: ViewUpdate) => {
-            if (update.docChanged) {
-                handleChangeRef.current?.(update.state.doc.toString());
-            }
-            if (handleCursorRef.current && update.selectionSet) {
-                const range = update.state.selection.main;
-                handleCursorRef.current(range.from, range.to);
-            }
-        });
-    }, []);
-
-    // Disable autofocus
-    const disableAutofocus = useMemo(() => EditorView.contentAttributes.of({ autofocus: "false" }), []);
-
-    // Placeholder
-    const placeholderExtension = useMemo(() => {
-        return placeholderText ? placeholder(placeholderText) : [];
-    }, [placeholderText]);
-
-    //ARIA
-    const ariaExtension = EditorView.contentAttributes.of({
-        "aria-label": label || placeholderText,
+    const { changeHandlerExtension } = useChangeHandler({ handleChange, handleCursor });
+    // Create settings for the editor
+    const { placeholderExtension, ariaExtension, disableAutofocusExtension } = useCodemirrorOptions({
+        placeholderText,
+        labelText: label,
     });
-
-    // Keymap extension
-    const keymapExtension = useMemo(() => {
-        return keymap.of([
-            {
-                any(view, event) {
-                    return handleKeyDownRef.current?.(event, view) ?? false;
-                },
-            },
-            ...defaultKeymap,
-            ...historyKeymap,
-        ]);
-    }, []);
-
-    // Dom events handlers
-    const domEvents = EditorView.domEventHandlers({
-        keydown(event, view) {
-            if (event.key === "Escape") {
-                const open = completionStatus(view.state);
-                if (open) {
-                    event.stopPropagation();
-                }
-            }
-        },
-    });
-
-    // Editable compartment
+    // Create keymap extension
+    const { keymapExtension } = useCodemirrorKeymap({ handleKeyDown });
+    // Create dom events extension
+    const { domEventsExtension } = useCodemirrorEvents();
+    // Create editable compartment extension
     const { editableCompartmentExtension } = useCodemirrorEditable(viewRef, disabled);
+    // Create autocompletion extension
+    const { autocompletionExtension, autocompleteHoverExtension } = useAutocompletion({
+        handleCompletion,
+        aboveCursor: autocompletion?.aboveCursor ?? false,
+        whenTyping: autocompletion?.whenTyping ?? true,
+    });
 
     // Create the editor only once
     useEffect(() => {
@@ -123,25 +92,17 @@ export function useCodemirror({
                 doc: value,
                 extensions: [
                     bracketMatching(),
-                    domEvents,
+                    domEventsExtension,
                     keymapExtension,
                     syntaxHighlighting(customHighlightStyle),
                     EditorView.lineWrapping,
-                    disableAutofocus,
-                    changeHandler,
+                    disableAutofocusExtension,
+                    changeHandlerExtension,
                     placeholderExtension,
                     editableCompartmentExtension,
                     ariaExtension,
-                    autocompletion({
-                        override: handleCompletionRef.current
-                            ? [
-                                  (context) => {
-                                      return handleCompletionRef.current(context);
-                                  },
-                              ]
-                            : [],
-                        activateOnTyping: Boolean(handleCompletionRef.current),
-                    }),
+                    autocompletionExtension,
+                    autocompleteHoverExtension,
                     ...extensions,
                 ],
             }),
@@ -165,65 +126,4 @@ export function useCodemirror({
         editorRef,
         viewRef,
     };
-}
-
-function useCodemirrorEditable(viewRef: MutableRefObject<EditorView>, disabled?: boolean) {
-    // Editable compartment
-    const editableCompartmentRef = useRef(new Compartment());
-    const editableCompartmentExtension = editableCompartmentRef.current.of(EditorView.editable.of(!disabled));
-
-    // Handle disabled state changes
-    useEffect(() => {
-        const view = viewRef.current;
-        if (!view) {
-            return;
-        }
-
-        // Update the editable compartment based on the disabled prop
-        view.dispatch({
-            effects: editableCompartmentRef.current.reconfigure(EditorView.editable.of(!disabled)),
-        });
-    }, [disabled, viewRef]);
-
-    return {
-        editableCompartmentExtension,
-    };
-}
-
-function useCodemirrorChange(viewRef: MutableRefObject<EditorView>, value: string) {
-    // Handle external value changes
-    useEffect(() => {
-        const view = viewRef.current;
-        if (!view) return;
-
-        const currentValue = view.state.doc.toString();
-        if (currentValue !== value) {
-            const selection = view.state.selection;
-            const hasFocus = view.hasFocus;
-            const newLength = value.length;
-
-            // Adjust selection to stay within bounds of new content
-            const adjustedSelection = EditorSelection.create(
-                selection.ranges.map((range) => {
-                    const from = Math.min(range.from, newLength);
-                    const to = Math.min(range.to, newLength);
-                    return EditorSelection.range(from, to);
-                }),
-                selection.mainIndex,
-            );
-
-            view.dispatch({
-                changes: { from: 0, to: currentValue.length, insert: value },
-                selection: adjustedSelection,
-                annotations: [
-                    // Mark this as a remote change to avoid triggering the change handler
-                    Transaction.remote.of(true),
-                ],
-            });
-
-            if (hasFocus) {
-                view.focus();
-            }
-        }
-    }, [value, viewRef]);
 }
