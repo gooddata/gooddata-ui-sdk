@@ -520,4 +520,69 @@ describe("UiMenu", () => {
         fireEvent.keyDown(menu, { code: "Enter" });
         expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: "group1item2" }));
     });
+
+    it("should open submenu with a group inside when top-level interactive item is clicked", () => {
+        const menuWithInteractiveAndGroup: IUiMenuItem[] = [
+            { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
+            {
+                type: "interactive",
+                id: "item2",
+                stringTitle: "Item with submenu",
+                data: "data2",
+                subItems: [
+                    {
+                        type: "group",
+                        id: "group1",
+                        stringTitle: "Group 1",
+                        data: "Group title",
+                        subItems: [
+                            {
+                                type: "interactive",
+                                id: "groupitem1",
+                                stringTitle: "Group Item 1",
+                                data: "groupdata1",
+                            },
+                            {
+                                type: "interactive",
+                                id: "groupitem2",
+                                stringTitle: "Group Item 2",
+                                data: "groupdata2",
+                            },
+                        ],
+                    },
+                ],
+            },
+            { type: "interactive", id: "item3", stringTitle: "Item 3", data: "data3" },
+        ];
+
+        render(
+            <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>
+                <UiMenu
+                    items={menuWithInteractiveAndGroup}
+                    onSelect={vi.fn()}
+                    onClose={vi.fn()}
+                    ariaAttributes={{
+                        id: "test-interactive-with-group",
+                        "aria-labelledby": "test-interactive-with-group-button",
+                    }}
+                />
+            </IntlProvider>,
+        );
+
+        // Check that top-level items are rendered
+        expect(screen.getByText("Item 1")).toBeInTheDocument();
+        expect(screen.getByText("Item with submenu")).toBeInTheDocument();
+        expect(screen.getByText("Item 3")).toBeInTheDocument();
+
+        // Click on the item with submenu
+        fireEvent.click(screen.getByText("Item with submenu"));
+
+        // Verify that group items are now focused
+        const menu = screen.getByRole("menu");
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("groupitem1"));
+
+        // Verify that we can interact with the group items
+        fireEvent.keyDown(menu, { code: "ArrowDown" });
+        expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("groupitem2"));
+    });
 });
