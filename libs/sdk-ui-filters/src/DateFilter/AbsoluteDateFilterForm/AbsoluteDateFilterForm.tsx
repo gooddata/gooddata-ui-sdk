@@ -28,7 +28,7 @@ export interface IAbsoluteDateFilterFormProps {
     isTimeEnabled: boolean;
     weekStart?: WeekStart;
     shouldOverlayDatePicker?: boolean;
-    onKeyDown: (event: React.KeyboardEvent) => void;
+    onKeyDown?: (event: React.KeyboardEvent) => void;
 }
 
 const dayPickerProps: DayPickerRangeProps = {
