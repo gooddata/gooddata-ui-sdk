@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardSelector, DashboardState } from "../types.js";
 import { invariant } from "ts-invariant";
@@ -90,7 +90,7 @@ export const selectCanExportReport: DashboardSelector<boolean> = createSelector(
 );
 
 /**
- * Returns whether the current user has permissions necessary to export insights in tabular form (csv, xlsx)
+ * Returns whether the current user has permissions necessary to export insights to CSV, XLSX
  *
  * @public
  */
@@ -102,7 +102,7 @@ export const selectCanExportTabular: DashboardSelector<boolean> = createSelector
 );
 
 /**
- * Returns whether the current user has permissions necessary to export insights in visual form (pdf, pptx, png)
+ * Returns whether the current user has permissions necessary to export insights to PDF
  *
  * @public
  */

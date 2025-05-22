@@ -1023,7 +1023,7 @@ export function exportRawInsightWidget(
 }
 
 /**
- * Payload of the {@link ExportSlidesInsightWidget} command.
+ * Payload of the {@link ExportRawInsightWidget} command.
  * @alpha
  */
 export interface ExportSlidesInsightWidgetPayload {
@@ -1074,54 +1074,6 @@ export function exportSlidesInsightWidget(
             ref,
             filename,
             exportType,
-        },
-    };
-}
-
-/**
- * Payload of the {@link ExportImageInsightWidget} command.
- * @alpha
- */
-export interface ExportImageInsightWidgetPayload {
-    /**
-     * Reference to Insight to export.
-     */
-    readonly ref: ObjRef;
-
-    /**
-     * Reference to Insight title to export.
-     */
-    readonly filename: string;
-}
-
-/**
- * @alpha
- */
-export interface ExportImageInsightWidget extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_IMAGE";
-    readonly payload: ExportImageInsightWidgetPayload;
-}
-/**
- * Creates the ExportImageInsightWidget command. Dispatching this command will result in exporting of the widget to a image.
- *
- * @param ref - reference to the Insight to export
- * @param filename - filename of the exported file
- * @param correlationId - specify correlation id to use for this command. this will be included in all
- *  events that will be emitted during the command processing
- *
- * @alpha
- */
-export function exportImageInsightWidget(
-    ref: ObjRef,
-    filename: string,
-    correlationId?: string,
-): ExportImageInsightWidget {
-    return {
-        type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_IMAGE",
-        correlationId,
-        payload: {
-            ref,
-            filename,
         },
     };
 }
