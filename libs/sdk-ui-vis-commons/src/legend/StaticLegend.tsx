@@ -69,8 +69,8 @@ export const StaticLegend = React.memo(function StaticLegend({
 
     const columnNum = position === "dialog" ? 2 : 1;
 
-    const labelHeight = label ? ITEM_HEIGHT : 0;
-    const labelNode = label ? <LegendLabelItem label={label} /> : null;
+    const labelHeight = label && isLabelVisible ? ITEM_HEIGHT : 0;
+    const labelNode = label && isLabelVisible ? <LegendLabelItem label={label} /> : null;
     const contentHeight = containerHeight - labelHeight;
 
     const seriesCount = series.length;
@@ -124,7 +124,7 @@ export const StaticLegend = React.memo(function StaticLegend({
                 style={{ height: seriesHeight }}
                 onToggleItem={onItemClick ?? noop}
             >
-                {isLabelVisible ? labelNode : null}
+                {labelNode}
                 {shouldDisplayCustomComponent ? (
                     customComponent
                 ) : (
