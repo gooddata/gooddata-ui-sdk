@@ -104,7 +104,7 @@ export class HighChartsRenderer extends React.PureComponent<
         chartRenderer: renderChart,
         legendRenderer: renderLegend,
         onLegendReady: noop,
-        documentObj: document,
+        documentObj: typeof window !== "undefined" ? window.document : undefined,
     };
 
     private highchartsRendererRef = React.createRef<HTMLDivElement>(); // whole component = legend + chart
@@ -133,7 +133,7 @@ export class HighChartsRenderer extends React.PureComponent<
     public shouldShowFluid(): boolean {
         const { documentObj, legend } = this.props;
         return (
-            documentObj.documentElement.clientWidth < FLUID_LEGEND_THRESHOLD &&
+            documentObj?.documentElement?.clientWidth < FLUID_LEGEND_THRESHOLD &&
             legend?.responsive !== "autoPositionWithPopup"
         );
     }

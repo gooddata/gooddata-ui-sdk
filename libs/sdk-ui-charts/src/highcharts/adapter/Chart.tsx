@@ -7,16 +7,17 @@ import React from "react";
 import { initChartPlugins } from "./chartPlugins.js";
 import Highcharts, { HighchartsOptions } from "../lib/index.js";
 
-import "highcharts/highcharts-more.js";
-import "highcharts/modules/drilldown.js";
-import "highcharts/modules/treemap.js";
-import "highcharts/modules/bullet.js";
-import "highcharts/modules/funnel.js";
-import "highcharts/modules/heatmap.js";
-import "highcharts/modules/pattern-fill.js";
-import "highcharts/modules/sankey.js";
-import "highcharts/modules/dependency-wheel.js";
-import "highcharts/modules/accessibility.js";
+import "highcharts/esm/highcharts-more.js";
+
+import "highcharts/esm/modules/drilldown.js";
+import "highcharts/esm/modules/treemap.js";
+import "highcharts/esm/modules/bullet.js";
+import "highcharts/esm/modules/funnel.js";
+import "highcharts/esm/modules/heatmap.js";
+import "highcharts/esm/modules/pattern-fill.js";
+import "highcharts/esm/modules/sankey.js";
+import "highcharts/esm/modules/dependency-wheel.js";
+import "highcharts/esm/modules/accessibility.js";
 
 initChartPlugins(Highcharts);
 

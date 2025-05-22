@@ -1,6 +1,6 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { cleanup } from "@testing-library/react";
-import { expect, afterEach } from "vitest";
+import { expect, afterEach, vi } from "vitest";
 
 /**
  * In order to be able to use extended matchers like "toBeInDocument", we use vitest-dom instead of testing-library/jest-dom.
@@ -26,4 +26,8 @@ expect.extend(matchers);
 
 afterEach(() => {
     cleanup();
+});
+
+Object.defineProperty(global.CSS, "supports", {
+    value: () => vi.fn(),
 });

@@ -15,7 +15,8 @@ import { ITheme } from "@gooddata/sdk-model";
 import { DEFAULT_CATEGORIES_LIMIT } from "../../constants/limits.js";
 import { IChartConfig } from "../../../interfaces/index.js";
 
-const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+const isTouchDevice =
+    typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);
 const HIGHCHART_PLOT_LIMITED_RANGE = 1e5;
 
 export const MAX_POINT_WIDTH = 100;

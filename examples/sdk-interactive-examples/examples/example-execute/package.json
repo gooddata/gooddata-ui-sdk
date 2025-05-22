@@ -46,7 +46,7 @@
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
         "default-import": "1.1.5",
-        "highcharts": "12.1.2",
+        "highcharts": "12.2.0",
         "highcharts-react-official": "3.2.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
