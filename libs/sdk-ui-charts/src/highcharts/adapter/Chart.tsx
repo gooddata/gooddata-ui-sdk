@@ -7,16 +7,29 @@ import React from "react";
 import { initChartPlugins } from "./chartPlugins.js";
 import Highcharts, { HighchartsOptions } from "../lib/index.js";
 
-import "highcharts/highcharts-more.js";
-import "highcharts/modules/drilldown.js";
-import "highcharts/modules/treemap.js";
-import "highcharts/modules/bullet.js";
-import "highcharts/modules/funnel.js";
-import "highcharts/modules/heatmap.js";
-import "highcharts/modules/pattern-fill.js";
-import "highcharts/modules/sankey.js";
-import "highcharts/modules/dependency-wheel.js";
-import "highcharts/modules/accessibility.js";
+// we need to import the modules only once
+let imported = false;
+
+// we need to import module async at first to made this package ESM compatible
+// once this issue will be resolved https://github.com/highcharts/highcharts-react/issues/521
+export async function importHighchartsModules() {
+    if (imported) {
+        return;
+    }
+
+    await import("highcharts/highcharts-more.js");
+    await import("highcharts/modules/drilldown.js");
+    await import("highcharts/modules/treemap.js");
+    await import("highcharts/modules/bullet.js");
+    await import("highcharts/modules/funnel.js");
+    await import("highcharts/modules/heatmap.js");
+    await import("highcharts/modules/pattern-fill.js");
+    await import("highcharts/modules/sankey.js");
+    await import("highcharts/modules/dependency-wheel.js");
+    await import("highcharts/modules/accessibility.js");
+
+    imported = true;
+}
 
 initChartPlugins(Highcharts);
 

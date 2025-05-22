@@ -70,7 +70,8 @@
         "validate-locales": "cd ../sdk-ui && npm run validate-locales",
         "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci",
         "validate-theming": "npm run scss && node scripts/validateCss.js",
-        "scss": "sass --load-path=node_modules styles/scss:styles/css"
+        "scss": "sass --load-path=node_modules styles/scss:styles/css",
+        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-charts\"'"
     },
     "dependencies": {
         "ag-grid-community": "33.1.0",

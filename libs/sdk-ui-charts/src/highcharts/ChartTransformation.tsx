@@ -2,7 +2,7 @@
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { ITheme } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import { ContentRect } from "react-measure";
 
 import {
@@ -39,6 +39,18 @@ import {
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import Highcharts from "./lib/index.js";
 import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common.js";
+import { importHighchartsModules } from "./adapter/Chart.js";
+
+// Lazy load the ChartTransformationImpl with module initialization
+const LazyChartTransformationImpl = React.lazy(async () => {
+    // Ensure Highcharts modules are imported before rendering the component
+    await importHighchartsModules();
+
+    // Return a Promise that resolves to the component
+    return {
+        default: ChartTransformationImpl,
+    };
+});
 
 export function renderHighCharts(props: IHighChartsRendererProps): JSX.Element {
     const childrenRenderer = (contentRect: ContentRect) => (
@@ -92,6 +104,7 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         onNegativeValues = null,
         pushData = noop,
     } = props;
+
     const visType = config.type;
     const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
     const chartOptions: IChartOptions = getChartOptions(
@@ -186,10 +199,17 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
     });
 };
 
+// Wrap the lazy-loaded component with Suspense for proper loading behavior
+const ChartTransformationWithSuspense = (props: IChartTransformationProps) => (
+    <Suspense>
+        <LazyChartTransformationImpl {...props} />
+    </Suspense>
+);
+
 /**
  * @internal
  */
-const ChartTransformationWithInjectedProps = injectIntl(withTheme(ChartTransformationImpl));
+const ChartTransformationWithInjectedProps = injectIntl(withTheme(ChartTransformationWithSuspense));
 export const ChartTransformation = React.memo(ChartTransformationWithInjectedProps, (props, nextProps) => {
     return isEqual(omitBy(props, isFunction), omitBy(nextProps, isFunction));
 });
