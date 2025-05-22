@@ -28,6 +28,7 @@ type UseInsightMenuConfig = {
     isExporting: boolean;
     isExportRawVisible: boolean;
     isExportVisible: boolean;
+    isExportPngImageVisible: boolean;
     onExportCSV: () => void;
     onExportXLSX: () => void;
     onExportRawCSV: () => void;
@@ -35,6 +36,7 @@ type UseInsightMenuConfig = {
     onScheduleManagementExport: () => void;
     onExportPowerPointPresentation: () => void;
     onExportPdfPresentation: () => void;
+    onExportPngImage: () => void;
     isScheduleExportVisible: boolean;
     isScheduleExportManagementVisible: boolean;
     isAlertingVisible: boolean;
@@ -45,6 +47,7 @@ type UseInsightMenuConfig = {
     alertingDisabledReason?: AlertingDisabledReason;
     exportPdfPresentationDisabled: boolean;
     exportPowerPointPresentationDisabled: boolean;
+    exportPngImageDisabled: boolean;
 };
 
 export const useInsightMenu = (
@@ -81,6 +84,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         onScheduleManagementExport,
         onExportPdfPresentation,
         onExportPowerPointPresentation,
+        onExportPngImage,
         isScheduleExportVisible,
         isScheduleExportManagementVisible,
         isAlertingVisible,
@@ -92,8 +96,10 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         widget,
         isExportRawVisible,
         isExportVisible,
+        isExportPngImageVisible,
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
+        exportPngImageDisabled,
     } = config;
 
     const intl = useIntl();
@@ -113,6 +119,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
                 scheduleExportDisabledReason,
                 isExportRawVisible,
                 isExportVisible,
+                isExportPngImageVisible,
                 onExportCSV: () => {
                     setIsMenuOpen(false);
                     onExportCSV();
@@ -141,6 +148,10 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
                     setIsMenuOpen(false);
                     onExportPowerPointPresentation();
                 },
+                onExportPngImage: () => {
+                    setIsMenuOpen(false);
+                    onExportPngImage();
+                },
                 isScheduleExportVisible,
                 isScheduleExportManagementVisible,
                 isDataError: isDataError(execution?.error),
@@ -150,6 +161,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
                 canCreateAutomation,
                 exportPdfPresentationDisabled,
                 exportPowerPointPresentationDisabled,
+                exportPngImageDisabled,
             },
             execution,
         );
@@ -173,13 +185,16 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         onScheduleManagementExport,
         onExportPdfPresentation,
         onExportPowerPointPresentation,
+        onExportPngImage,
         scheduleExportDisabledReason,
         alertingDisabledReason,
         canCreateAutomation,
         isExportRawVisible,
+        isExportPngImageVisible,
         isExporting,
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
         execution,
+        exportPngImageDisabled,
     ]);
 }

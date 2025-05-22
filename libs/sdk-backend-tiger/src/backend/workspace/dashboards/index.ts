@@ -19,22 +19,25 @@ import {
     ActionsApiGetRawExportRequest,
     ActionsApiGetSlidesExportRequest,
     ActionsApiGetTabularExportRequest,
+    ActionsApiGetImageExportRequest,
+    ImageExportRequest,
 } from "@gooddata/api-client-tiger";
 import {
-    IDashboardReferences,
-    IDashboardWithReferences,
-    IGetDashboardOptions,
+    IExportResult,
     IWorkspaceDashboardsService,
+    IGetDashboardOptions,
     NotSupported,
     SupportedDashboardReferenceTypes,
     UnexpectedError,
     TimeoutError,
-    IExportResult,
     IGetDashboardPluginOptions,
     IDashboardsQuery,
     IRawExportCustomOverrides,
     walkLayout,
     IDashboardExportTabularOptions,
+    IDashboardWithReferences,
+    IDashboardReferences,
+    IDashboardExportImageOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -723,6 +726,65 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             `Export timeout for export id "${payload.exportId}" in workspace "${payload.workspaceId}"`,
         );
     }
+
+    private async handleExportImageResultPolling(
+        client: ITigerClient,
+        type: "image/png",
+        payload: ActionsApiGetImageExportRequest,
+    ): Promise<IExportResult> {
+        for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
+            const result = await client.export.getImageExport(payload, {
+                transformResponse: (x) => x,
+                responseType: "blob",
+            });
+
+            if (result?.status === 200) {
+                const blob = new Blob([result?.data as any], { type });
+                return {
+                    uri: result?.config?.url || "",
+                    objectUrl: URL.createObjectURL(blob),
+                    fileName: parseNameFromContentDisposition(result),
+                };
+            }
+
+            await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
+        }
+
+        throw new TimeoutError(
+            `Export timeout for export id "${payload.exportId}" in workspace "${payload.workspaceId}"`,
+        );
+    }
+
+    public exportDashboardToImage = async (
+        dashboardRef: ObjRef,
+        options?: IDashboardExportImageOptions,
+    ): Promise<IExportResult> => {
+        return this.authCall(async (client) => {
+            const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
+
+            const imageExportRequest: ImageExportRequest = {
+                format: "PNG",
+                fileName: options?.filename || "export",
+                dashboardId,
+                widgetIds: options?.widgetIds?.map((ref) => {
+                    if ("identifier" in ref) {
+                        return ref.identifier;
+                    }
+                    throw new Error("Only identifier references are supported for widget IDs");
+                }),
+            };
+
+            const imageExport = await client.export.createImageExport({
+                workspaceId: this.workspace,
+                imageExportRequest,
+            });
+
+            return await this.handleExportImageResultPolling(client, "image/png", {
+                workspaceId: this.workspace,
+                exportId: imageExport?.data?.exportResult,
+            });
+        });
+    };
 
     public createScheduledMail = async () => {
         throw new NotSupported("Tiger backend does not support scheduled emails.");

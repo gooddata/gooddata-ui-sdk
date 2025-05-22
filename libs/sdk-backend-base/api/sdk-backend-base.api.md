@@ -44,6 +44,7 @@ import { IClusteringResult } from '@gooddata/sdk-backend-spi';
 import { IDashboard } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
+import { IDashboardExportImageOptions } from '@gooddata/sdk-backend-spi';
 import { IDashboardExportTabularOptions } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardFilterView } from '@gooddata/sdk-model';
@@ -573,6 +574,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     // (undocumented)
     exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string, customOverrides?: IRawExportCustomOverrides): Promise<IExportResult>;
+    // (undocumented)
+    exportDashboardToImage(ref: ObjRef, options?: IDashboardExportImageOptions): Promise<IExportResult>;
     // (undocumented)
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
     // (undocumented)

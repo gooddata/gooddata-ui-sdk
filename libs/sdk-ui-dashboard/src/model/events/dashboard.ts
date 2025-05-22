@@ -814,6 +814,88 @@ export function dashboardExportToPptPresentationResolved(
 export const isDashboardExportToPptPresentationResolved =
     eventGuard<DashboardExportToPptPresentationResolved>("GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.RESOLVED");
 
+/**
+ * Tests whether the provided object is an instance of {@link DashboardExportToPptPresentationResolved}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardExportToImageResolved = eventGuard<DashboardExportToImageResolved>(
+    "GDC.DASH/EVT.EXPORT.IMAGE.RESOLVED",
+);
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardExportToPptPresentationRequested}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardExportToImageRequested = eventGuard<DashboardExportToImageRequested>(
+    "GDC.DASH/EVT.EXPORT.IMAGE.REQUESTED",
+);
+
+/**
+ * Payload of the {@link DashboardExportToPptPresentationResolved} event.
+ * @beta
+ */
+export interface DashboardExportToImageResolvedPayload {
+    /**
+     * URI of the resulting file that can be used to download it.
+     */
+    readonly resultUri: string;
+    /**
+     * Collection of information used to download the resulting file.
+     */
+    readonly result: IExportResult;
+}
+
+/**
+ * This event is emitted at the start of the 'dashboard export to image' command processing.
+ *
+ * @beta
+ */
+export interface DashboardExportToImageRequested extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.EXPORT.IMAGE.REQUESTED";
+}
+
+export function dashboardExportToImageRequested(
+    ctx: DashboardContext,
+    correlationId?: string,
+): DashboardExportToImageRequested {
+    return {
+        type: "GDC.DASH/EVT.EXPORT.IMAGE.REQUESTED",
+        ctx,
+        correlationId,
+    };
+}
+
+/**
+ * This event is emitted at the end of successful 'dashboard export to image' command processing.
+ * In its payload, there is an uri of the resulting image file.
+ *
+ * @beta
+ */
+export interface DashboardExportToImageResolved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.EXPORT.IMAGE.RESOLVED";
+    readonly payload: DashboardExportToImageResolvedPayload;
+}
+
+export function dashboardExportToImageResolved(
+    ctx: DashboardContext,
+    result: IExportResult,
+    correlationId?: string,
+): DashboardExportToImageResolved {
+    return {
+        type: "GDC.DASH/EVT.EXPORT.IMAGE.RESOLVED",
+        ctx,
+        correlationId,
+        payload: {
+            resultUri: result.uri,
+            result,
+        },
+    };
+}
+
 //
 //
 //
