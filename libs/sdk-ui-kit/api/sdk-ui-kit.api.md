@@ -4463,6 +4463,11 @@ export interface ISubMenuProps extends IMenuStateConfig, Partial<IMenuPositionCo
 // @internal (undocumented)
 export interface ISyntaxHighlightingInputProps {
     // (undocumented)
+    autocompletion?: {
+        whenTyping?: boolean;
+        aboveCursor?: boolean;
+    };
+    // (undocumented)
     className?: string;
     // (undocumented)
     disabled?: boolean;
