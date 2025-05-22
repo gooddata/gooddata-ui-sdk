@@ -92,7 +92,7 @@ const { b } = bem("gd-ui-kit-button");
         &-primary {
             // styles for primary variant
         }
-    
+
         &-secondary {
             // styles for secondary variant
         }
@@ -127,7 +127,7 @@ const { b } = bem("gd-ui-kit-button");
                 // combined styles for primary and isSelected
             }
         }
-    
+
         &-secondary {
             // styles for secondary variant
 
@@ -152,7 +152,7 @@ const { b, e } = bem("gd-ui-kit-button");
 ```scss
 .gd-ui-kit-button {
     // component styles
-    
+
     &__icon {
         // styles for nested element
     }
@@ -189,7 +189,7 @@ const { b, e } = bem("gd-ui-kit-button");
             &-primary {
                 // styles for primary variant
             }
-        
+
             &-secondary {
                 // styles for secondary variant
             }
@@ -233,7 +233,7 @@ const { b, e } = bem("gd-ui-kit-button");
             // style overrides for icon when active
         }
     }
-    
+
 }
 ```
 
@@ -262,6 +262,8 @@ Once you complete it, you should also prepare screenshot tests in `sdk-ui-tests`
 Please include accessibility props (such as `ariaHidden`) in the stories as well, even when they do not change the visuals.
 
 See [UiButton](../sdk-ui-tests/stories/visual-regression/ui/UiButton.tsx) test for inspiration - used approach can help you with both development and testing.
+
+To support testability of interactive components add data-testid to native elements so they are easily addressable by test selectors.
 
 ## Accessibility
 

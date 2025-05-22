@@ -135,6 +135,7 @@ export const CustomUiMenuHeaderComponent: React.FC = () => {
                 label={formatMessage({ id: "menu.close" })}
                 onClick={onClose}
                 dataId="s-configuration-panel-header-close-button"
+                dataTestId="s-configuration-panel-header-close-button"
             />
         </div>
     ) : (

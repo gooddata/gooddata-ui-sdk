@@ -128,6 +128,8 @@ interface IProps {
 2. Create screenshot tests in sdk-ui-tests
 3. Include accessibility props in tests (even when not visually impactful)
 4. Reference UiButton tests as an example pattern
+5. Support testability of interactive components by adding data-testid
+ to native elements so they are easily addressable by test selectors
 
 ## Accessibility Requirements
 

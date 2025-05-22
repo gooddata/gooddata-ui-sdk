@@ -12,6 +12,7 @@ import {
 } from "../@types/variant.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
+import { stringUtils } from "@gooddata/util";
 
 /**
  * @internal
@@ -24,6 +25,7 @@ export interface UiIconButtonProps {
     isDisabled?: boolean;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     dataId?: string;
+    dataTestId?: string;
 }
 
 const { b } = bem("gd-ui-kit-icon-button");
@@ -47,7 +49,10 @@ const getSize = (size: SizeXSmall | SizeSmall | SizeMedium | SizeLarge) => {
  * @internal
  */
 export const UiIconButton = forwardRef<HTMLButtonElement, UiIconButtonProps>(
-    ({ icon, label, size = "medium", variant = "secondary", isDisabled, onClick, dataId }, ref) => {
+    (
+        { icon, label, size = "medium", variant = "secondary", isDisabled, onClick, dataId, dataTestId },
+        ref,
+    ) => {
         const iconSize = getSize(size);
 
         const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -58,6 +63,8 @@ export const UiIconButton = forwardRef<HTMLButtonElement, UiIconButtonProps>(
             onClick?.(e);
         };
 
+        const testId = dataTestId ? dataTestId : `${stringUtils.simplifyText(label)}`;
+
         return (
             <button
                 ref={ref}
@@ -67,6 +74,7 @@ export const UiIconButton = forwardRef<HTMLButtonElement, UiIconButtonProps>(
                 aria-disabled={isDisabled}
                 onClick={onClickHandler}
                 data-id={dataId}
+                data-testid={testId}
             >
                 <UiIcon type={icon} size={iconSize} ariaHidden />
             </button>

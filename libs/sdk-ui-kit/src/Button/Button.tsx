@@ -5,6 +5,13 @@ import { stringUtils } from "@gooddata/util";
 import noop from "lodash/noop.js";
 import { IButtonProps } from "./typings.js";
 
+const getGeneratedTestId = (effectiveValue: React.ReactNode, title: string, ariaLabel: string) => {
+    if (effectiveValue && typeof effectiveValue === "string") {
+        return `${stringUtils.simplifyText(effectiveValue)}`;
+    }
+    return ariaLabel ? `${stringUtils.simplifyText(ariaLabel)}` : `${stringUtils.simplifyText(title)}`;
+};
+
 /**
  * @internal
  */
@@ -35,6 +42,7 @@ export class Button extends React.Component<IButtonProps> {
             accessibilityConfig,
             buttonRef,
             dataId,
+            dataTestId,
         } = this.props;
         const {
             isExpanded,
@@ -52,6 +60,8 @@ export class Button extends React.Component<IButtonProps> {
             ...(popupId ? { "aria-haspopup": !!popupId } : {}),
             ...(isExpanded !== undefined ? { "aria-expanded": isExpanded } : {}),
         };
+
+        const testId = dataTestId ? dataTestId : getGeneratedTestId(effectiveValue, title, ariaLabel);
 
         return (
             <TagName
@@ -74,6 +84,7 @@ export class Button extends React.Component<IButtonProps> {
                 aria-describedby={ariaDescribedBy}
                 {...ariaDropdownProps}
                 role={role}
+                data-testid={testId}
             >
                 {this.renderIcon(iconLeft)}
                 {effectiveValue ? <span className="gd-button-text">{effectiveValue}</span> : null}
