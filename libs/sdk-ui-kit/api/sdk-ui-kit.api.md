@@ -4478,11 +4478,15 @@ export interface ISyntaxHighlightingInputProps {
     // (undocumented)
     onApi?: (view: EditorView | null) => void;
     // (undocumented)
+    onBlur?: (event: FocusEvent, view: EditorView) => void;
+    // (undocumented)
     onChange: (value: string) => void;
     // (undocumented)
     onCompletion?: CompletionSource;
     // (undocumented)
     onCursor?: (from: number, to: number) => void;
+    // (undocumented)
+    onFocus?: (event: FocusEvent, view: EditorView) => void;
     // (undocumented)
     onKeyDown?: (event: KeyboardEvent, view: EditorView) => boolean;
     // (undocumented)

@@ -18,6 +18,8 @@ export interface ISyntaxHighlightingInputProps {
     placeholder?: string;
     extensions?: Extension[];
     onChange: (value: string) => void;
+    onFocus?: (event: FocusEvent, view: EditorView) => void;
+    onBlur?: (event: FocusEvent, view: EditorView) => void;
     onApi?: (view: EditorView | null) => void;
     onCursor?: (from: number, to: number) => void;
     onKeyDown?: (event: KeyboardEvent, view: EditorView) => boolean;
@@ -42,6 +44,8 @@ export const SyntaxHighlightingInput: React.FC<ISyntaxHighlightingInputProps> = 
         onCursor,
         onKeyDown,
         onCompletion,
+        onFocus,
+        onBlur,
         className,
         extensions = [],
         disabled,
@@ -59,6 +63,8 @@ export const SyntaxHighlightingInput: React.FC<ISyntaxHighlightingInputProps> = 
         onChange,
         onKeyDown,
         onCompletion,
+        onFocus,
+        onBlur,
     });
 
     return <div className={cx(className, "gd-input-syntax-highlighting-input")} ref={editorRef} />;

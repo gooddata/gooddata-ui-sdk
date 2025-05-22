@@ -30,7 +30,13 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
 
 .gd-gen-ai-chat__input {
     position: relative;
+    transition: margin-top 0.2s ease-in-out;
     margin: 0 variables.$x-spacing;
+    margin-top: 0;
+
+    &.focused {
+        margin-top: variables.$info-height;
+    }
 
     &__mc {
         .cm-editor {
@@ -85,6 +91,46 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
         &:focus-visible,
         &:active {
             outline: 1px solid kit-variables.$gd-palette-primary-base;
+        }
+    }
+
+    &__info {
+        position: absolute;
+        width: calc(100% + #{variables.$x-spacing * 2});
+        margin-left: -#{variables.$x-spacing};
+        margin-right: -#{variables.$x-spacing};
+        padding: variables.$y-spacing variables.$x-spacing;
+        background: kit-variables.$gd-color-light;
+
+        color: kit-variables.$gd-color-state-blank;
+        text-align: left;
+        font-size: 12px;
+        font-weight: 400;
+        font-style: normal;
+        line-height: normal;
+
+        top: -#{variables.$info-height};
+        opacity: 1;
+        transition: top 0.2s ease-in-out, opacity 0.2s ease-in-out;
+
+        &.hidden {
+            top: 0;
+            opacity: 0;
+        }
+
+        code {
+            display: inline-flex;
+            padding: 1px 5px;
+            justify-content: center;
+            align-items: center;
+            gap: 2px;
+            border-radius: 3px;
+            background: kit-variables.$is-focused-background;
+            color: kit-variables.$gd-color-link;
+            font-weight: 400;
+            font-size: 11px;
+            font-style: normal;
+            line-height: normal;
         }
     }
 

@@ -163,5 +163,15 @@
         "value": "Fact",
         "comment": "",
         "limit": 0
+    },
+    "gd.gen-ai.autocomplete.input-info.mac": {
+        "value": "<code>^+Space</code> or <code>⌘+I</code> for suggestions",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.autocomplete.input-info.win": {
+        "value": "<code>Ctrl+Space</code> or <code>Win+I</code> for suggestions",
+        "comment": "",
+        "limit": 0
     }
 }
