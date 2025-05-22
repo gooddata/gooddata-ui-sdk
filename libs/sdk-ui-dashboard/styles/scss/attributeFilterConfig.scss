@@ -281,8 +281,8 @@
     margin: 0;
 }
 
-.attribute-filter__limit__popup__item {
-    span.attribute-filter__limit__item__title {
+.attribute-filter__limit__popup__item.gd-list-item {
+    span {
         display: flex; // override leaking style from gd-list-item
     }
 
