@@ -18,7 +18,6 @@ import {
     IGetDashboardPluginOptions,
     IDashboardsQuery,
     IRawExportCustomOverrides,
-    IDashboardExportImageOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -357,13 +356,6 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
             widgetIds?: ObjRef[];
             filename?: string;
         },
-    ): Promise<IExportResult> {
-        throw new NotSupported("recorded backend does not support this call");
-    }
-
-    public exportDashboardToImage(
-        _ref: ObjRef,
-        _options?: IDashboardExportImageOptions,
     ): Promise<IExportResult> {
         throw new NotSupported("recorded backend does not support this call");
     }
