@@ -1,5 +1,5 @@
 // (C) 2025 GoodData Corporation
-import { getFocusableElements, isActionKey, makeLinearKeyboardNavigation } from "@gooddata/sdk-ui-kit";
+import { getFocusableElements, makeLinearKeyboardNavigation } from "@gooddata/sdk-ui-kit";
 
 /**
  * @internal
@@ -236,7 +236,7 @@ export const submitAbsoluteAndRelativeDateFilterForm = (
     closeDropdown: () => void,
     onApply: () => void,
 ) => {
-    if (isActionKey(event)) {
+    if (event.key === "Enter") {
         const canSubmitForm = isApplyEnabled && document.activeElement instanceof HTMLInputElement;
 
         if (canSubmitForm) {
