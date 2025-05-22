@@ -717,6 +717,16 @@
         "comment": "Configuration button label in date filter dropdown",
         "limit": 0
     },
+    "dateFilterDropdown.label": {
+        "value": "Select a date range",
+        "comment": "",
+        "limit": 0
+    },
+    "dateFilterDropdown.relativeForm.label": {
+        "value": "Granularity",
+        "comment": "",
+        "limit": 0
+    },
     "filters.thisMinute.title": {
         "value": "This minute",
         "comment": "",

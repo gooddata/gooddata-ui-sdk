@@ -15,7 +15,7 @@ import { injectIntl, IntlShape, WrappedComponentProps } from "react-intl";
 
 import { defaultVisibleItemsRange } from "../Select/VirtualizedSelectMenu.js";
 import { IUiRelativeDateFilterForm, DateFilterOption } from "../interfaces/index.js";
-import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { IAccessibilityConfigBase, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { DynamicSelectItem } from "../DynamicSelect/types.js";
 import { itemToString } from "../Select/utils.js";
 import { DateFilterGranularity } from "@gooddata/sdk-model";
@@ -62,6 +62,8 @@ interface IRelativeRangePickerProps {
     selectedFilterOption: IUiRelativeDateFilterForm;
     onSelectedFilterOptionChange: (dateFilterOption: DateFilterOption) => void;
     isMobile: boolean;
+    accessibilityConfig?: IAccessibilityConfigBase;
+    id?: string;
 }
 
 const getItemsFactory = (
@@ -149,7 +151,8 @@ const RelativeRangePickerSelect = React.memo((props: IRelativeRangePickerSelectP
 const mobileVisibleItemsRange = 5;
 
 const RelativeRangePickerComponent: React.FC<IRelativeRangePickerProps & WrappedComponentProps> = (props) => {
-    const { selectedFilterOption, intl, isMobile, onSelectedFilterOptionChange } = props;
+    const { selectedFilterOption, intl, isMobile, accessibilityConfig, id, onSelectedFilterOptionChange } =
+        props;
 
     const getItems = useMemo(
         () => getItemsFactory(selectedFilterOption.granularity, isMobile, intl),
@@ -294,7 +297,12 @@ const RelativeRangePickerComponent: React.FC<IRelativeRangePickerProps & Wrapped
     }, [validator, toInputValue, intl, handleToChange]);
 
     return (
-        <div className="gd-relative-range-picker s-relative-range-picker">
+        <div
+            id={id}
+            className="gd-relative-range-picker s-relative-range-picker"
+            role={accessibilityConfig?.role}
+            aria-labelledby={accessibilityConfig?.ariaLabelledBy}
+        >
             <RelativeRangePickerSelect
                 className="s-relative-range-picker-from"
                 wrapperClassName="s-relative-range-picker-from-wrapper"

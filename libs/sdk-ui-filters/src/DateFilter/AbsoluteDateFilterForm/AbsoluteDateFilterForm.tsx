@@ -28,6 +28,7 @@ export interface IAbsoluteDateFilterFormProps {
     isTimeEnabled: boolean;
     weekStart?: WeekStart;
     shouldOverlayDatePicker?: boolean;
+    onKeyDown: (event: React.KeyboardEvent) => void;
 }
 
 const dayPickerProps: DayPickerRangeProps = {
@@ -38,21 +39,29 @@ const dayPickerProps: DayPickerRangeProps = {
 /**
  * @internal
  */
-export class AbsoluteDateFilterForm extends React.Component<IAbsoluteDateFilterFormProps> {
-    public render() {
-        const {
-            dateFormat,
-            isMobile,
-            selectedFilterOption,
-            errors,
-            isTimeEnabled,
-            weekStart,
-            shouldOverlayDatePicker,
-        } = this.props;
-        return (
+export const AbsoluteDateFilterForm: React.FC<IAbsoluteDateFilterFormProps> = ({
+    dateFormat,
+    isMobile,
+    selectedFilterOption,
+    errors,
+    isTimeEnabled,
+    weekStart,
+    shouldOverlayDatePicker,
+    onSelectedFilterOptionChange,
+    onKeyDown,
+}) => {
+    const handleRangeChange = (range: IDateRange, changeDetails?: IDateFilterOptionChangedDetails): void => {
+        onSelectedFilterOptionChange(
+            dateRangeToDateFilterValue(range, selectedFilterOption.localIdentifier, isTimeEnabled),
+            changeDetails,
+        );
+    };
+
+    return (
+        <div onKeyDown={onKeyDown}>
             <DateRangePicker
                 dateFormat={dateFormat}
-                onRangeChange={this.handleRangeChange}
+                onRangeChange={handleRangeChange}
                 range={dateFilterValueToDateRange(selectedFilterOption, isTimeEnabled)}
                 errors={errors}
                 isMobile={isMobile}
@@ -61,17 +70,6 @@ export class AbsoluteDateFilterForm extends React.Component<IAbsoluteDateFilterF
                 weekStart={weekStart}
                 shouldOverlayDatePicker={shouldOverlayDatePicker}
             />
-        );
-    }
-
-    private handleRangeChange = (
-        range: IDateRange,
-        changeDetails?: IDateFilterOptionChangedDetails,
-    ): void => {
-        const { onSelectedFilterOptionChange, selectedFilterOption, isTimeEnabled } = this.props;
-        onSelectedFilterOptionChange(
-            dateRangeToDateFilterValue(range, selectedFilterOption.localIdentifier, isTimeEnabled),
-            changeDetails,
-        );
-    };
-}
+        </div>
+    );
+};

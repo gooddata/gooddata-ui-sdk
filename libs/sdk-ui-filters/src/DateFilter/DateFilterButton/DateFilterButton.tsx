@@ -1,8 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import React from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
-import { isActionKey } from "@gooddata/sdk-ui-kit";
 import { FilterButtonCustomIcon, IFilterButtonCustomIcon } from "../../shared/index.js";
 
 /**
@@ -16,6 +15,8 @@ export interface IDateFilterButtonProps {
     customIcon?: IFilterButtonCustomIcon;
     children?: React.ReactNode;
     customFilterName?: string;
+    buttonRef?: React.MutableRefObject<HTMLElement | null>;
+    dropdownId?: string;
     onClick?: () => void;
     textTitle?: string;
     textSubtitle?: string;
@@ -29,21 +30,12 @@ export const DateFilterButton: React.FC<IDateFilterButtonProps> = ({
     disabled,
     customIcon,
     customFilterName,
-    onClick,
+    buttonRef,
+    dropdownId,
 }) => {
-    const onKeyDown = useCallback(
-        (event) => {
-            // This enables keyboard interaction events after focus
-            if (isActionKey(event)) {
-                event.preventDefault();
-                onClick();
-            }
-        },
-        [onClick],
-    );
-
     return (
         <div
+            ref={buttonRef as React.MutableRefObject<HTMLDivElement>}
             className={cx(
                 "s-date-filter-button",
                 "gd-date-filter-button",
@@ -53,8 +45,10 @@ export const DateFilterButton: React.FC<IDateFilterButtonProps> = ({
                 isOpen && "is-active",
                 disabled && "disabled",
             )}
-            onKeyDown={onKeyDown}
             role="button"
+            aria-haspopup="dialog"
+            aria-expanded={isOpen}
+            aria-controls={isOpen ? dropdownId : undefined}
             tabIndex={0}
         >
             <div className="button-content">

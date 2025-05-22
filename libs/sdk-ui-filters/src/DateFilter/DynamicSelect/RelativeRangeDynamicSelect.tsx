@@ -202,6 +202,11 @@ export const RelativeRangeDynamicSelect: React.FC<IRelativeRangeDynamicSelectPro
                         style={style}
                         aria-labelledby={undefined}
                         aria-describedby={accessibilityConfig?.descriptionId}
+                        onKeyDown={(e) => {
+                            if (isOpen) {
+                                e.stopPropagation();
+                            }
+                        }}
                     >
                         <div className="gd-dynamic-select-input-wrapper">
                             <input
