@@ -50,16 +50,21 @@ export function useCodemirror({
     onKeyDown,
     onCursor,
     onChange,
+    onBlur,
+    onFocus,
 }: IUseCodemirrorProps) {
     const editorRef = useRef<HTMLDivElement>(null);
     const viewRef = useRef<EditorView>();
 
-    const { handleCompletion, handleChange, handleKeyDown, handleCursor } = useEventHandlers({
-        onChange,
-        onKeyDown,
-        onCursor,
-        onCompletion,
-    });
+    const { handleCompletion, handleChange, handleKeyDown, handleCursor, handleFocus, handleBlur } =
+        useEventHandlers({
+            onChange,
+            onKeyDown,
+            onCursor,
+            onCompletion,
+            onFocus,
+            onBlur,
+        });
 
     // Create an extension for handling changes
     const { changeHandlerExtension } = useChangeHandler({ handleChange, handleCursor });
@@ -71,7 +76,7 @@ export function useCodemirror({
     // Create keymap extension
     const { keymapExtension } = useCodemirrorKeymap({ handleKeyDown });
     // Create dom events extension
-    const { domEventsExtension } = useCodemirrorEvents();
+    const { domEventsExtension } = useCodemirrorEvents({ handleFocus, handleBlur });
     // Create editable compartment extension
     const { editableCompartmentExtension } = useCodemirrorEditable(viewRef, disabled);
     // Create autocompletion extension

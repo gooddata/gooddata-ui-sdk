@@ -1,8 +1,8 @@
 // (C) 2024-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { ReactNode, useMemo } from "react";
 import cx from "classnames";
 import { connect } from "react-redux";
-import { defineMessages, injectIntl } from "react-intl";
+import { defineMessages, FormattedMessage, injectIntl } from "react-intl";
 import { WrappedComponentProps } from "react-intl/src/components/injectIntl.js";
 import { SyntaxHighlightingInput, Button } from "@gooddata/sdk-ui-kit";
 import { CatalogItem } from "@gooddata/sdk-model";
@@ -38,6 +38,10 @@ const messages = defineMessages({
     },
 });
 
+const isMac =
+    typeof navigator !== "undefined" &&
+    (navigator.platform.toUpperCase().indexOf("MAC") >= 0 || navigator.userAgent.includes("Macintosh"));
+
 const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedComponentProps> = ({
     isBusy,
     isEvaluating,
@@ -48,6 +52,7 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
 }) => {
     const [value, setValue] = React.useState("");
     const [editorApi, setApi] = React.useState<EditorView | null>(null);
+    const [focused, setFocused] = React.useState(false);
 
     const { onCompletion, selectedItems } = useCompletion(catalogItems);
     const highlightExtension = useHighlight(selectedItems);
@@ -86,7 +91,32 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
     });
 
     return (
-        <div className="gd-gen-ai-chat__input">
+        <div
+            className={cx("gd-gen-ai-chat__input", {
+                focused,
+            })}
+        >
+            <div
+                className={cx("gd-gen-ai-chat__input__info", {
+                    hidden: !focused,
+                })}
+            >
+                {isMac ? (
+                    <FormattedMessage
+                        id="gd.gen-ai.autocomplete.input-info.mac"
+                        values={{
+                            code: (chunks: ReactNode) => <code>{chunks}</code>,
+                        }}
+                    />
+                ) : (
+                    <FormattedMessage
+                        id="gd.gen-ai.autocomplete.input-info.win"
+                        values={{
+                            code: (chunks: ReactNode) => <code>{chunks}</code>,
+                        }}
+                    />
+                )}
+            </div>
             <SyntaxHighlightingInput
                 className="gd-gen-ai-chat__input__mc"
                 placeholder={intl.formatMessage(messages.placeholder)}
@@ -100,6 +130,12 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
                 extensions={extensions}
                 onApi={setApi}
                 onChange={setValue}
+                onFocus={() => {
+                    setFocused(true);
+                }}
+                onBlur={() => {
+                    setFocused(false);
+                }}
                 onKeyDown={handleKeyDown}
                 onCompletion={onCompletion}
             />

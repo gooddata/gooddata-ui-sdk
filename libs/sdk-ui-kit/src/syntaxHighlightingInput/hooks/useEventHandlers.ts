@@ -8,9 +8,18 @@ export interface IUseEventHandlersProps {
     onCursor?: (from: number, to: number) => void;
     onCompletion?: CompletionSource;
     onKeyDown?: (event: KeyboardEvent, view: EditorView) => boolean;
+    onFocus?: (event: FocusEvent, view: EditorView) => void;
+    onBlur?: (event: FocusEvent, view: EditorView) => void;
 }
 
-export function useEventHandlers({ onChange, onKeyDown, onCursor, onCompletion }: IUseEventHandlersProps) {
+export function useEventHandlers({
+    onChange,
+    onKeyDown,
+    onCursor,
+    onCompletion,
+    onFocus,
+    onBlur,
+}: IUseEventHandlersProps) {
     const handleKeyDown = useRef(onKeyDown);
     handleKeyDown.current = onKeyDown;
 
@@ -23,10 +32,18 @@ export function useEventHandlers({ onChange, onKeyDown, onCursor, onCompletion }
     const handleCompletion = useRef(onCompletion);
     handleCompletion.current = onCompletion;
 
+    const handleFocus = useRef(onFocus);
+    handleFocus.current = onFocus;
+
+    const handleBlur = useRef(onBlur);
+    handleBlur.current = onBlur;
+
     return {
         handleChange,
         handleCursor,
         handleKeyDown,
         handleCompletion,
+        handleFocus,
+        handleBlur,
     };
 }
