@@ -282,7 +282,7 @@
 }
 
 .attribute-filter__limit__popup__item {
-    span {
+    span.attribute-filter__limit__item__title {
         display: flex; // override leaking style from gd-list-item
     }
 
