@@ -4,7 +4,6 @@ import { isAbsoluteDateFilterForm, WeekStart } from "@gooddata/sdk-model";
 import cx from "classnames";
 import {
     DateFilterOption,
-    IDateFilterOptionChangedDetails,
     IDateFilterOptionsByType,
     IExtendedDateFilterErrors,
     IUiAbsoluteDateFilterForm,
@@ -28,10 +27,7 @@ interface IAbsoluteDateFilterFormSection {
     errors: IExtendedDateFilterErrors;
     isTimeForAbsoluteRangeEnabled: boolean;
     weekStart: WeekStart;
-    onSelectedFilterOptionChange: (
-        option: DateFilterOption,
-        changeDetails?: IDateFilterOptionChangedDetails,
-    ) => void;
+    onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     closeDropdown: () => void;
     onApplyClick: () => void;
     changeRoute: (newRoute?: DateFilterRoute) => void;
@@ -86,7 +82,6 @@ export const AbsoluteDateFilterFormSection: React.FC<IAbsoluteDateFilterFormSect
                 <DateFilterFormWrapper isMobile={isMobile}>
                     <AbsoluteDateFilterForm
                         dateFormat={dateFormat}
-                        errors={errors?.absoluteForm || undefined}
                         onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                         selectedFilterOption={selectedFilterOption as IUiAbsoluteDateFilterForm}
                         isMobile={isMobile}

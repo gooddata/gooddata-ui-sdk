@@ -1,10 +1,11 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import groupBy from "lodash/groupBy.js";
 import isEmpty from "lodash/isEmpty.js";
 import min from "lodash/min.js";
 import max from "lodash/max.js";
 import format from "date-fns/format/index.js";
 import startOfDay from "date-fns/startOfDay/index.js";
+import endOfDay from "date-fns/endOfDay/index.js";
 import subMonths from "date-fns/subMonths/index.js";
 import {
     IAbsoluteDateFilterPreset,
@@ -24,7 +25,7 @@ import {
 } from "@gooddata/sdk-ui-filters";
 
 // TODO: this import was coming from internal/esm and was wrecking tests
-const PLATFORM_DATE_FORMAT = "yyyy-MM-dd";
+const PLATFORM_DATE_FORMAT = "yyyy-MM-dd HH:mm";
 
 /**
  * Converts date filter config - as stored on the backend - into the date filter options that are aimed for
@@ -66,7 +67,7 @@ function convertAbsoluteForm(
         filter && {
             ...filter,
             from: format(startOfDay(subMonths(new Date(), 1)), PLATFORM_DATE_FORMAT),
-            to: format(startOfDay(new Date()), PLATFORM_DATE_FORMAT),
+            to: format(endOfDay(new Date()), PLATFORM_DATE_FORMAT),
             type: "absoluteForm",
         }
     );

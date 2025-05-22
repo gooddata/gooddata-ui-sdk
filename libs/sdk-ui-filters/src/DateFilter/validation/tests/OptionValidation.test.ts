@@ -1,4 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
+import { describe, it, expect } from "vitest";
+
 import { validateFilterOption } from "../OptionValidation.js";
 import {
     IExtendedDateFilterErrors,
@@ -6,7 +8,6 @@ import {
     IUiRelativeDateFilterForm,
     DateFilterOption,
 } from "../../interfaces/index.js";
-import { describe, it, expect } from "vitest";
 
 describe("validateFilterOption", () => {
     describe("absoluteForm validation", () => {
@@ -35,9 +36,7 @@ describe("validateFilterOption", () => {
         it("should not validate semantically incorrect from (with message)", () => {
             const expected: IExtendedDateFilterErrors = {
                 absoluteForm: {
-                    from: {
-                        dateError: "filters.staticPeriod.errors.emptyStartDate",
-                    },
+                    invalidStartDate: true,
                 },
             };
             const actual = validateFilterOption(emptyFromFilter);
@@ -47,30 +46,20 @@ describe("validateFilterOption", () => {
         it("should not validate semantically incorrect from (with empty message)", () => {
             const expected: IExtendedDateFilterErrors = {
                 absoluteForm: {
-                    from: {
-                        dateError: "filters.staticPeriod.errors.emptyStartDate",
-                    },
+                    invalidStartDate: true,
                 },
             };
-            const actual = validateFilterOption(emptyFromFilter, {
-                rangePosition: "from",
-                parseError: "empty",
-            });
+            const actual = validateFilterOption(emptyFromFilter);
             expect(actual).toEqual(expected);
         });
 
         it("should not validate semantically incorrect from (with invalid message)", () => {
             const expected: IExtendedDateFilterErrors = {
                 absoluteForm: {
-                    from: {
-                        dateError: "filters.staticPeriod.errors.invalidStartDate",
-                    },
+                    invalidStartDate: true,
                 },
             };
-            const actual = validateFilterOption(emptyFromFilter, {
-                rangePosition: "from",
-                parseError: "invalid",
-            });
+            const actual = validateFilterOption(emptyFromFilter);
             expect(actual).toEqual(expected);
         });
 
@@ -86,9 +75,7 @@ describe("validateFilterOption", () => {
         it("should not validate semantically incorrect to (with message)", () => {
             const expected: IExtendedDateFilterErrors = {
                 absoluteForm: {
-                    to: {
-                        dateError: "filters.staticPeriod.errors.emptyEndDate",
-                    },
+                    invalidEndDate: true,
                 },
             };
             const actual = validateFilterOption(emptyToFilter);
@@ -98,27 +85,20 @@ describe("validateFilterOption", () => {
         it("should not validate semantically incorrect to (with empty message)", () => {
             const expected: IExtendedDateFilterErrors = {
                 absoluteForm: {
-                    to: {
-                        dateError: "filters.staticPeriod.errors.emptyEndDate",
-                    },
+                    invalidEndDate: true,
                 },
             };
-            const actual = validateFilterOption(emptyToFilter, { rangePosition: "to", parseError: "empty" });
+            const actual = validateFilterOption(emptyToFilter);
             expect(actual).toEqual(expected);
         });
 
         it("should not validate semantically incorrect to (with invalid message)", () => {
             const expected: IExtendedDateFilterErrors = {
                 absoluteForm: {
-                    to: {
-                        dateError: "filters.staticPeriod.errors.invalidEndDate",
-                    },
+                    invalidEndDate: true,
                 },
             };
-            const actual = validateFilterOption(emptyToFilter, {
-                rangePosition: "to",
-                parseError: "invalid",
-            });
+            const actual = validateFilterOption(emptyToFilter);
             expect(actual).toEqual(expected);
         });
 
@@ -133,12 +113,8 @@ describe("validateFilterOption", () => {
             };
             const expected: IExtendedDateFilterErrors = {
                 absoluteForm: {
-                    from: {
-                        dateError: "filters.staticPeriod.errors.emptyStartDate",
-                    },
-                    to: {
-                        dateError: "filters.staticPeriod.errors.emptyEndDate",
-                    },
+                    invalidStartDate: true,
+                    invalidEndDate: true,
                 },
             };
             const actual = validateFilterOption(filter);
@@ -173,24 +149,20 @@ describe("validateFilterOption", () => {
         it("should not validate date starting after end when 'from' is edited", () => {
             const expected: IExtendedDateFilterErrors = {
                 absoluteForm: {
-                    from: {
-                        dateError: "filters.staticPeriod.errors.startDateAfterEndDate",
-                    },
+                    startDateAfterEndDate: true,
                 },
             };
-            const actual = validateFilterOption(startAfterEndFilter, { rangePosition: "from" });
+            const actual = validateFilterOption(startAfterEndFilter);
             expect(actual).toEqual(expected);
         });
 
         it("should not validate date starting after end when 'to' is edited", () => {
             const expected: IExtendedDateFilterErrors = {
                 absoluteForm: {
-                    to: {
-                        dateError: "filters.staticPeriod.errors.endDateBeforeStartDate",
-                    },
+                    startDateAfterEndDate: true,
                 },
             };
-            const actual = validateFilterOption(startAfterEndFilter, { rangePosition: "to" });
+            const actual = validateFilterOption(startAfterEndFilter);
             expect(actual).toEqual(expected);
         });
 
@@ -206,24 +178,20 @@ describe("validateFilterOption", () => {
         it("should not validate time starting after end when 'from' is edited", () => {
             const expected: IExtendedDateFilterErrors = {
                 absoluteForm: {
-                    from: {
-                        timeError: "filters.staticPeriod.errors.startTimeAfterEndTime",
-                    },
+                    startDateAfterEndDate: true,
                 },
             };
-            const actual = validateFilterOption(startTimeAfterEndTimeFilter, { rangePosition: "from" });
+            const actual = validateFilterOption(startTimeAfterEndTimeFilter);
             expect(actual).toEqual(expected);
         });
 
         it("should not validate time starting after end when 'to' is edited", () => {
             const expected: IExtendedDateFilterErrors = {
                 absoluteForm: {
-                    to: {
-                        timeError: "filters.staticPeriod.errors.endTimeBeforeStartTime",
-                    },
+                    startDateAfterEndDate: true,
                 },
             };
-            const actual = validateFilterOption(startTimeAfterEndTimeFilter, { rangePosition: "to" });
+            const actual = validateFilterOption(startTimeAfterEndTimeFilter);
             expect(actual).toEqual(expected);
         });
     });

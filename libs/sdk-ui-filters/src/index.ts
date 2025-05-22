@@ -20,7 +20,6 @@ export type {
     DateFilterRelativeOptionGroup,
     IDateFilterOptionsByType,
     IExtendedDateFilterErrors,
-    IDateFilterAbsoluteFormErrors,
     IDateFilterRelativeFormErrors,
     RelativeDateFilterOption,
     IUiAbsoluteDateFilterForm,
@@ -30,12 +29,8 @@ export type {
     IDateTranslator,
     IMessageTranslator,
     IFilterConfigurationProps,
-    IDateTimePickerErrors,
     IDateFilterAbsoluteDateTimeFormErrors,
-    IDateFilterOptionChangedDetails,
-    IAbsoluteDateFilterOptionChangedDetails,
     DateRangePosition,
-    DateParseError,
 } from "./DateFilter/index.js";
 export {
     DateFilter,

@@ -2,10 +2,11 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import noop from "lodash/noop.js";
 
 import { DateRangePicker, IDateRange, IDateRangePickerProps } from "../DateRangePicker.js";
+
 import { IntlDecorator } from "./IntlDecorators.js";
-import noop from "lodash/noop.js";
 
 const defaultDateFormat = "MM/dd/yyyy";
 const getDefaultRange = (): IDateRange => ({
@@ -19,6 +20,7 @@ const writeToInput = (value: string, element: Element) => {
             value,
         },
     });
+    fireEvent.blur(element);
 };
 
 const getInput = (value: string) => {
@@ -50,20 +52,14 @@ describe("DateRangePicker", () => {
             const onRangeChange = vi.fn();
             renderComponent({ onRangeChange });
             writeToInput("05/01/2019", getInput("05/05/2019"));
-            expect(onRangeChange).toHaveBeenCalledWith(
-                { ...getDefaultRange(), from: new Date(2019, 4, 1) },
-                { rangePosition: "from" },
-            );
+            expect(onRangeChange).toHaveBeenCalledWith({ ...getDefaultRange(), from: new Date(2019, 4, 1) });
         });
 
         it("should call the appropriate callback when to input changes", () => {
             const onRangeChange = vi.fn();
             renderComponent({ onRangeChange });
             writeToInput("06/01/2019", getInput("05/15/2019"));
-            expect(onRangeChange).toHaveBeenCalledWith(
-                { ...getDefaultRange(), to: new Date(2019, 5, 1) },
-                { rangePosition: "to" },
-            );
+            expect(onRangeChange).toHaveBeenCalledWith({ ...getDefaultRange(), to: new Date(2019, 5, 1) });
         });
 
         it("should call the appropriate callback when from picker is clicked", () => {
@@ -111,13 +107,10 @@ describe("DateRangePicker", () => {
             const input = screen.getAllByDisplayValue("00:00")[0];
             writeToInput("11:00", input);
 
-            expect(onRangeChange).toHaveBeenCalledWith(
-                {
-                    ...getDefaultRange(),
-                    from: new Date(2019, 4, 5, 11, 0),
-                },
-                { rangePosition: "from" },
-            );
+            expect(onRangeChange).toHaveBeenCalledWith({
+                ...getDefaultRange(),
+                from: new Date(2019, 4, 5, 11, 0),
+            });
         });
 
         const toScenarios: Array<[string, string, Date]> = [
@@ -134,10 +127,7 @@ describe("DateRangePicker", () => {
                 const input = screen.getAllByDisplayValue("00:00")[1];
                 writeToInput(value, input);
 
-                expect(onRangeChange).toHaveBeenCalledWith(
-                    { ...getDefaultRange(), to: expectedResult },
-                    { rangePosition: "to" },
-                );
+                expect(onRangeChange).toHaveBeenCalledWith({ ...getDefaultRange(), to: expectedResult });
             },
         );
     });

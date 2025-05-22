@@ -7,7 +7,6 @@ import { AbsoluteDateFilterFormSection } from "../AbsoluteDateFilterForm/Absolut
 import { RelativeDateFilterFormSection } from "../RelativeDateFilterForm/RelativeDateFilterFormSection.js";
 import {
     DateFilterOption,
-    IDateFilterOptionChangedDetails,
     IDateFilterOptionsByType,
     IExtendedDateFilterErrors,
     IUiAbsoluteDateFilterForm,
@@ -29,10 +28,7 @@ interface IDateFilterBodyMobileContentProps {
     weekStart: WeekStart;
     availableGranularities: DateFilterGranularity[];
     errors?: IExtendedDateFilterErrors;
-    onSelectedFilterOptionChange: (
-        option: DateFilterOption,
-        changeDetails?: IDateFilterOptionChangedDetails,
-    ) => void;
+    onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     closeDropdown: () => void;
     changeRoute: (newRoute?: DateFilterRoute) => void;
     onApplyClick: () => void;

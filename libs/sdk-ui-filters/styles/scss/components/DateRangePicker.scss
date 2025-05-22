@@ -36,10 +36,8 @@ $gd-day-picker-input-width: 126px;
     flex-direction: column;
 }
 
-@media #{kit-variables.$small-only} {
-    .gd-date-range-column:first-child {
-        flex-grow: 1;
-    }
+.gd-date-range-column--with-time {
+    width: 50%;
 }
 
 .gd-date-range-picker {
@@ -127,14 +125,6 @@ $gd-day-picker-input-width: 126px;
             font-size: 16px;
             color: kit-variables.$gd-palette-primary-base;
             pointer-events: none;
-        }
-
-        &-error input {
-            &,
-            &:hover,
-            &:focus {
-                border-color: kit-variables.$gd-input-text-border-warning;
-            }
         }
 
         &__description {

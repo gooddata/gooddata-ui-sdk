@@ -8,7 +8,6 @@ import {
     IExtendedDateFilterErrors,
     IDateFilterOptionsByType,
     DateFilterOption,
-    IDateFilterOptionChangedDetails,
 } from "../interfaces/index.js";
 import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle.js";
 import { VisibleScrollbar } from "../VisibleScrollbar/VisibleScrollbar.js";
@@ -38,10 +37,7 @@ export interface IDateFilterBodyProps {
     dateFormat: string;
     filterOptions: IDateFilterOptionsByType;
     selectedFilterOption: DateFilterOption;
-    onSelectedFilterOptionChange: (
-        option: DateFilterOption,
-        changeDetails?: IDateFilterOptionChangedDetails,
-    ) => void;
+    onSelectedFilterOptionChange: (option: DateFilterOption) => void;
 
     excludeCurrentPeriod: boolean;
     isExcludeCurrentPeriodEnabled: boolean;
