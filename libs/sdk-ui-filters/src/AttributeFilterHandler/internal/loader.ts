@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { v4 as uuid } from "uuid";
 import { invariant } from "ts-invariant";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
@@ -189,14 +189,15 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
     // Initial elements page
 
     loadInitialElementsPage = (correlation: Correlation = uuid()): void => {
-        if (this.bridge.getInitStatus() === "error") {
+        const initStatus = this.bridge.getInitStatus();
+        if (initStatus === "error") {
             // do not try to fetch any elements when filter is in error state as we would end up with
             // "blank page" error in production. This can happen when user sets limiting metric that
             // is not LDM compatible (cannot be sliced) with the attribute filter's attribute.
             return;
         }
         invariant(
-            this.bridge.getInitStatus() === "success",
+            initStatus === "success",
             "Cannot call loadInitialElementsPage() before successful initialization.",
         );
         this.validateStaticElementsLoad();
