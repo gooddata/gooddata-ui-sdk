@@ -27,9 +27,18 @@ export const DefaultUiMenuHeader: React.FC = React.memo(function DefaultUiMenuHe
         onClose: ctx.onClose,
         parentItem: ctx.focusedItem ? getItemInteractiveParent(ctx.items, ctx.focusedItem.id) : undefined,
         focusedItem: ctx.focusedItem,
+        shownCustomContentItemId: ctx.shownCustomContentItemId,
+        setShownCustomContentItemId: ctx.setShownCustomContentItemId,
     }));
 
-    const { setFocusedId, onClose, parentItem, focusedItem } = useContextStore(selector);
+    const {
+        setFocusedId,
+        onClose,
+        parentItem,
+        focusedItem,
+        shownCustomContentItemId,
+        setShownCustomContentItemId,
+    } = useContextStore(selector);
 
     const parentItemId = parentItem?.id;
 
@@ -39,9 +48,12 @@ export const DefaultUiMenuHeader: React.FC = React.memo(function DefaultUiMenuHe
         }
 
         setFocusedId(parentItemId);
-    }, [setFocusedId, parentItemId]);
+        if (shownCustomContentItemId) {
+            setShownCustomContentItemId(undefined);
+        }
+    }, [setFocusedId, parentItemId, shownCustomContentItemId, setShownCustomContentItemId]);
 
-    if (!parentItem && focusedItem?.type !== "content") {
+    if (!parentItem && !shownCustomContentItemId) {
         return null;
     }
 
