@@ -143,7 +143,9 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
             }
 
             // Otherwise focus the first focusable child
-            const itemToFocus = getItemsByInteractiveParent(items, item.id)?.filter(isItemFocusable)[0];
+            const itemToFocus = unwrapGroupItems(getItemsByInteractiveParent(items, item.id) ?? []).filter(
+                isItemFocusable,
+            )[0];
 
             if (!itemToFocus) {
                 return;
