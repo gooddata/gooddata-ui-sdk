@@ -108,17 +108,14 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
         exportCSVRawEnabled,
         isExportRawVisible,
         isExportVisible,
-        isExportPngImageVisible,
         isExporting,
         onExportRawCSV,
         onExportCSV,
         onExportXLSX,
         onExportPdfPresentation,
-        onExportPngImage,
         onExportPowerPointPresentation,
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
-        exportPngImageDisabled,
     } = useInsightExport({
         widgetRef,
         title: widgetTitle(activeVisualization) || intl.formatMessage({ id: "export.defaultTitle" }),
@@ -161,7 +158,6 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
         exportCSVRawEnabled,
         isExportRawVisible,
         isExportVisible,
-        isExportPngImageVisible,
         isExporting,
         onExportCSV,
         onExportXLSX,
@@ -170,7 +166,6 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
         onScheduleManagementExport,
         onExportPdfPresentation,
         onExportPowerPointPresentation,
-        onExportPngImage,
         isScheduleExportVisible: isScheduledEmailingVisible,
         isScheduleExportManagementVisible: isScheduledManagementEmailingVisible,
         isAlertingVisible,
@@ -181,7 +176,6 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
         scheduleExportDisabledReason,
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
-        exportPngImageDisabled,
     });
     const toggleMenu = useCallback(() => {
         if (isMenuOpen) {

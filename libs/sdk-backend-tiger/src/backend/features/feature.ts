@@ -758,13 +758,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableSnapshotExportAccessibility,
         ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableWidgetExportPngImage,
-            "enableWidgetExportPngImage",
-            "BOOLEAN",
-            FeatureFlagsValues.enableWidgetExportPngImage,
-        ),
     };
 }
 

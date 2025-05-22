@@ -147,7 +147,6 @@ export enum TigerFeaturesNames {
     EnableKDRespectLegendPosition = "enableKDRespectLegendPosition",
     EnableWorkspaceSettingsAppHeaderMenuItem = "enableWorkspaceSettingsAppHeaderMenuItem",
     EnableSnapshotExportAccessibility = "enableSnapshotExportAccessibility",
-    EnableWidgetExportPngImage = "enableWidgetExportPngImage",
 }
 
 export type ITigerFeatureFlags = {
@@ -257,7 +256,6 @@ export type ITigerFeatureFlags = {
     enableKDRespectLegendPosition: typeof FeatureFlagsValues["enableKDRespectLegendPosition"][number];
     enableWorkspaceSettingsAppHeaderMenuItem: typeof FeatureFlagsValues["enableWorkspaceSettingsAppHeaderMenuItem"][number];
     enableSnapshotExportAccessibility: typeof FeatureFlagsValues["enableSnapshotExportAccessibility"][number];
-    enableWidgetExportPngImage: typeof FeatureFlagsValues["enableWidgetExportPngImage"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -367,7 +365,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKDRespectLegendPosition: false,
     enableWorkspaceSettingsAppHeaderMenuItem: false,
     enableSnapshotExportAccessibility: false,
-    enableWidgetExportPngImage: false,
 };
 
 export const FeatureFlagsValues = {
@@ -481,5 +478,4 @@ export const FeatureFlagsValues = {
     enableKDRespectLegendPosition: [true, false] as const,
     enableWorkspaceSettingsAppHeaderMenuItem: [true, false] as const,
     enableSnapshotExportAccessibility: [true, false] as const,
-    enableWidgetExportPngImage: [true, false] as const,
 };
