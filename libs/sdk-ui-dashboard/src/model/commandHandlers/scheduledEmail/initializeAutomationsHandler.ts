@@ -108,21 +108,24 @@ export function* initializeAutomationsHandler(
 
         // Set filters according to provided automationId
         if (automationId) {
+            const targetAutomation = automations.find((a) => a.id === automationId);
+            const targetWidget = targetAutomation?.metadata?.widget;
+
+            const insight: ReturnType<ReturnType<typeof selectInsightByWidgetRef>> = yield select(
+                selectInsightByWidgetRef(targetWidget ? idRef(targetWidget) : undefined),
+            );
+
             const {
-                targetWidget,
                 targetAlertFilters,
                 targetExportDefinition,
                 targetExportDefinitionFilters,
                 targetExportVisibleFilters,
-            } = extractRelevantFilters(automations, automationId);
+            } = extractRelevantFilters(targetAutomation, insight);
 
             // Set filters to the dashboard based on alert execution filters
             if (targetWidget && targetAlertFilters) {
                 const widget: ReturnType<ReturnType<typeof selectWidgetByRef>> = yield select(
                     selectWidgetByRef(idRef(targetWidget)),
-                );
-                const insight: ReturnType<ReturnType<typeof selectInsightByWidgetRef>> = yield select(
-                    selectInsightByWidgetRef(idRef(targetWidget)),
                 );
                 const commonFilter: ReturnType<typeof selectFilterContextDateFilter> = yield select(
                     selectFilterContextDateFilter,
@@ -192,12 +195,17 @@ export function* initializeAutomationsHandler(
     }
 }
 
-function extractRelevantFilters(automations: IAutomationMetadataObject[], automationId: string) {
-    const targetAutomation = automations.find((a) => a.id === automationId);
-
+function extractRelevantFilters(
+    targetAutomation: IAutomationMetadataObject | undefined,
+    insight: IInsight | undefined,
+) {
     //alert, widget
-    const targetWidget = targetAutomation?.metadata?.widget;
-    const targetAlertFilters = targetAutomation?.alert?.execution?.filters.filter(isDashboardFilter);
+    const targetAlertFilters = targetAutomation?.alert?.execution?.filters;
+    const sanitizedTargetAlertFilters =
+        // Remove filters that are applied in the insight
+        targetAlertFilters && insight
+            ? removeInsightAttributeFilters(targetAlertFilters, insight).filter(isDashboardFilter)
+            : undefined;
 
     //export definition
     const targetExportDefinition = targetAutomation?.exportDefinitions?.[0];
@@ -207,8 +215,7 @@ function extractRelevantFilters(automations: IAutomationMetadataObject[], automa
     const targetExportVisibleFilters = targetAutomation?.metadata?.visibleFilters;
 
     return {
-        targetWidget,
-        targetAlertFilters,
+        targetAlertFilters: sanitizedTargetAlertFilters,
         targetExportDefinition,
         targetExportDefinitionFilters,
         targetExportVisibleFilters,
@@ -282,15 +289,14 @@ function getDashboardFiltersOnly(
         widget,
     );
 
-    // Find common date filter by local id, or use the first date filter in the list if no local ids match.
+    // Find common date filter by local id
     const dateFilters = withoutInsightDateFilters.filter(isDateFilter);
-    const foundCommonFilter =
-        dateFilters.find((f) => {
-            if (isRelativeDateFilter(f)) {
-                return f.relativeDateFilter.localIdentifier === common?.dateFilter.localIdentifier;
-            }
-            return f.absoluteDateFilter.localIdentifier === common?.dateFilter.localIdentifier;
-        }) ?? dateFilters[0];
+    const foundCommonFilter = dateFilters.find((f) => {
+        if (isRelativeDateFilter(f)) {
+            return f.relativeDateFilter.localIdentifier === common?.dateFilter.localIdentifier;
+        }
+        return f.absoluteDateFilter.localIdentifier === common?.dateFilter.localIdentifier;
+    });
 
     // Remove dataSet from date filters, as it's not relevant for the dashboard date filter.
     return withoutInsightDateFilters.map((f) => {
