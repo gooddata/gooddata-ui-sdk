@@ -1,6 +1,12 @@
 // (C) 2025 GoodData Corporation
 
-import { isInsightWidget, isVisualizationSwitcherWidget, IWidget, objRefToString } from "@gooddata/sdk-model";
+import {
+    isExportDefinitionVisualizationObjectRequestPayload,
+    isInsightWidget,
+    isVisualizationSwitcherWidget,
+    IWidget,
+    objRefToString,
+} from "@gooddata/sdk-model";
 import {
     selectDashboardUserAutomations,
     selectFocusObject,
@@ -11,7 +17,6 @@ import {
 } from "../../../model/index.js";
 import { createSelector } from "@reduxjs/toolkit";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { isVisualisationAutomation } from "../../../_staging/automation/index.js";
 
 const selectIsWidgetHighlighted = (widget: IWidget) =>
     createSelector(
@@ -32,7 +37,12 @@ const selectIsWidgetHighlighted = (widget: IWidget) =>
                 // alert widget
                 matchedAutomation?.metadata?.widget === widget.identifier ||
                 // schedule widget
-                isVisualisationAutomation(matchedAutomation);
+                matchedAutomation?.exportDefinitions?.some(
+                    (ed) =>
+                        isExportDefinitionVisualizationObjectRequestPayload(ed.requestPayload) &&
+                        isInsightWidget(widget) &&
+                        ed.requestPayload.content.visualizationObject === objRefToString(widget.insight),
+                );
             const isAutomationVisualizationSwitcher =
                 isVisualizationSwitcherWidget(widget) &&
                 widget.visualizations.some((v) => v.identifier === matchedAutomation?.metadata?.widget);
