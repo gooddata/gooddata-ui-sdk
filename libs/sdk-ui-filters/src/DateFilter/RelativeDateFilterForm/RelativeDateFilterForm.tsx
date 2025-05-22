@@ -11,12 +11,12 @@ import { DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID } from "../accessibility/elemen
  * @internal
  */
 export interface IRelativeDateFilterFormProps {
-    relativeDateFilterId: string;
+    relativeDateFilterId?: string;
     availableGranularities: DateFilterGranularity[];
     selectedFilterOption: IUiRelativeDateFilterForm;
     onSelectedFilterOptionChange: (dateFilterOption: DateFilterOption) => void;
     isMobile: boolean;
-    onKeyDown: (event: React.KeyboardEvent) => void;
+    onKeyDown?: (event: React.KeyboardEvent) => void;
 }
 
 /**
