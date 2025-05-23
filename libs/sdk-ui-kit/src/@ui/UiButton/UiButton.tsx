@@ -17,6 +17,13 @@ import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
 /**
  * @internal
  */
+export interface IUiButtonAccessibilityConfig extends IAccessibilityConfigBase {
+    iconAriaHidden?: boolean;
+}
+
+/**
+ * @internal
+ */
 export interface UiButtonProps {
     size?: SizeSmall | SizeMedium | SizeLarge;
     variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger;
@@ -28,7 +35,7 @@ export interface UiButtonProps {
     tooltip?: React.ReactNode;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     dataId?: string;
-    accessibilityConfig?: IAccessibilityConfigBase;
+    accessibilityConfig?: IUiButtonAccessibilityConfig;
 }
 
 const { b, e } = bem("gd-ui-kit-button");
@@ -66,11 +73,24 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
                 aria-label={accessibilityConfig?.ariaLabel}
                 aria-labelledby={accessibilityConfig?.ariaLabelledBy}
                 aria-describedby={accessibilityConfig?.ariaDescribedBy}
+                aria-expanded={accessibilityConfig?.ariaExpanded}
                 role={accessibilityConfig?.role}
             >
-                {iconBefore ? <UiIcon type={iconBefore} size={iconSize} /> : null}
+                {iconBefore ? (
+                    <UiIcon
+                        type={iconBefore}
+                        size={iconSize}
+                        ariaHidden={accessibilityConfig?.iconAriaHidden}
+                    />
+                ) : null}
                 <span className={e("text")}>{label}</span>
-                {iconAfter ? <UiIcon type={iconAfter} size={iconSize} /> : null}
+                {iconAfter ? (
+                    <UiIcon
+                        type={iconAfter}
+                        size={iconSize}
+                        ariaHidden={accessibilityConfig?.iconAriaHidden}
+                    />
+                ) : null}
             </button>
         );
     },

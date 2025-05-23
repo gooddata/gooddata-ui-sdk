@@ -88,7 +88,7 @@ export type { ThemeColor } from "./@ui/@types/themeColors.js";
 export { useElementSize } from "./@ui/hooks/useElementSize.js";
 export type { IconType } from "./@ui/@types/icon.js";
 export { UiButton } from "./@ui/UiButton/UiButton.js";
-export type { UiButtonProps } from "./@ui/UiButton/UiButton.js";
+export type { UiButtonProps, IUiButtonAccessibilityConfig } from "./@ui/UiButton/UiButton.js";
 export { UiIconButton } from "./@ui/UiIconButton/UiIconButton.js";
 export type { UiIconButtonProps } from "./@ui/UiIconButton/UiIconButton.js";
 export { UiChip } from "./@ui/UiChip/UiChip.js";

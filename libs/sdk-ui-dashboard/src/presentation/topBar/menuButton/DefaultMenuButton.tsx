@@ -363,8 +363,8 @@ const MenuItem = ({
                 accessibilityConfig={{
                     role: "menuitem",
                     ariaHasPopup: "menu",
-                    ariaExpanded: selectedMenuItem?.itemId === menuItem.itemId ? "true" : "false",
-                    ariaDisabled: menuItem.disabled ? "true" : undefined,
+                    ariaExpanded: selectedMenuItem?.itemId === menuItem.itemId,
+                    ariaDisabled: menuItem.disabled,
                 }}
             />
         ));
@@ -392,7 +392,7 @@ const MenuItem = ({
             elementType="button"
             accessibilityConfig={{
                 role: "menuitem",
-                ariaDisabled: menuItem.disabled ? "true" : undefined,
+                ariaDisabled: menuItem.disabled,
                 ariaHasPopup: menuItem.opensDialog ? "dialog" : undefined,
             }}
         />

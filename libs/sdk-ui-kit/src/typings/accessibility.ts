@@ -8,7 +8,7 @@ export interface IAccessibilityConfigBase {
     ariaLabelledBy?: React.AriaAttributes["aria-labelledby"];
     ariaDescribedBy?: React.AriaAttributes["aria-describedby"];
     role?: React.HTMLAttributes<HTMLElement>["role"];
-    ariaExpanded?: "true" | "false";
+    ariaExpanded?: React.AriaAttributes["aria-expanded"];
     ariaControls?: string;
 }
 
@@ -18,7 +18,7 @@ export interface IAccessibilityConfigBase {
 export interface IMenuAccessibilityConfig extends IAccessibilityConfigBase {
     id?: string;
     role?: "menu" | "menuitem" | "separator" | "presentation";
-    ariaDisabled?: "true" | "false";
+    ariaDisabled?: React.AriaAttributes["aria-disabled"];
     // to support submenu
     ariaHasPopup?: "true" | "false" | "menu" | "listbox" | "tree" | "grid" | "dialog";
     ariaControls?: string;
