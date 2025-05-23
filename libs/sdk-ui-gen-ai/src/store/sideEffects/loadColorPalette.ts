@@ -2,15 +2,19 @@
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { call, getContext, put } from "redux-saga/effects";
-import { IColorPalette } from "@gooddata/sdk-model";
 import { setColorPaletteAction } from "../chatWindow/chatWindowSlice.js";
+import { OptionsDispatcher } from "../options.js";
 
 /**
  * Load color palette from the backend.
  * @internal
  */
-export function* loadColorPalette(colorPalette?: IColorPalette) {
+export function* loadColorPalette() {
+    const options: OptionsDispatcher = yield getContext("optionsDispatcher");
+
     try {
+        const colorPalette = options.getColorPalette();
+
         if (colorPalette) {
             // If color palette is already provided, just set it to the store
             yield put(
@@ -29,6 +33,7 @@ export function* loadColorPalette(colorPalette?: IColorPalette) {
 
         const results: Awaited<ReturnType<typeof colorPaletteCall>> = yield call(colorPaletteCall);
 
+        options.setColorPalette(results);
         yield put(
             setColorPaletteAction({
                 colorPalette: results,
@@ -36,6 +41,7 @@ export function* loadColorPalette(colorPalette?: IColorPalette) {
         );
     } catch (e) {
         //TODO: handle error somehow? Default color palette will be used in this case
+        options.setColorPalette(undefined);
         yield put(
             setColorPaletteAction({
                 colorPalette: undefined,
