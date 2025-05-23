@@ -778,9 +778,19 @@
         "comment": "Show full list of all filters",
         "limit": 0
     },
+    "dialogs.automation.filters.showAll.ariaLabel": {
+        "value": "Expand to show all applied filters",
+        "comment": "Show full list of all filters - aria label",
+        "limit": 0
+    },
     "dialogs.automation.filters.showLess": {
         "value": "Show less",
         "comment": "Show shortened list of all filters",
+        "limit": 0
+    },
+    "dialogs.automation.filters.showLess.ariaLabel": {
+        "value": "Collapse to show less applied filters",
+        "comment": "Show shortened list of all filters - aria label",
         "limit": 0
     },
     "dialogs.automation.filters.add": {

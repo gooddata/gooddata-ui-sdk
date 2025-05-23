@@ -788,7 +788,7 @@ export interface IAccessibilityConfigBase {
     // (undocumented)
     ariaDescribedBy?: React.AriaAttributes["aria-describedby"];
     // (undocumented)
-    ariaExpanded?: "true" | "false";
+    ariaExpanded?: React.AriaAttributes["aria-expanded"];
     // (undocumented)
     ariaLabel?: React.AriaAttributes["aria-label"];
     // (undocumented)
@@ -3135,7 +3135,7 @@ export interface IMenuAccessibilityConfig extends IAccessibilityConfigBase {
     // (undocumented)
     ariaControls?: string;
     // (undocumented)
-    ariaDisabled?: "true" | "false";
+    ariaDisabled?: React.AriaAttributes["aria-disabled"];
     // (undocumented)
     ariaHasPopup?: "true" | "false" | "menu" | "listbox" | "tree" | "grid" | "dialog";
     // (undocumented)
@@ -4626,6 +4626,12 @@ export interface ITypographyProps {
 }
 
 // @internal (undocumented)
+export interface IUiButtonAccessibilityConfig extends IAccessibilityConfigBase {
+    // (undocumented)
+    iconAriaHidden?: boolean;
+}
+
+// @internal (undocumented)
 export interface IUiChipAccessibilityConfig extends IAccessibilityConfigBase, IDropdownButtonAccessibilityConfig {
     // (undocumented)
     deleteAriaLabel?: string;
@@ -5590,7 +5596,7 @@ export const UiButton: React_2.ForwardRefExoticComponent<UiButtonProps & React_2
 // @internal (undocumented)
 export interface UiButtonProps {
     // (undocumented)
-    accessibilityConfig?: IAccessibilityConfigBase;
+    accessibilityConfig?: IUiButtonAccessibilityConfig;
     // (undocumented)
     dataId?: string;
     // (undocumented)

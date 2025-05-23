@@ -111,7 +111,17 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                             variant="tertiary"
                             onClick={() => setIsExpanded(!isExpanded)}
                             iconAfter={isExpanded ? "navigateUp" : "navigateDown"}
-                            accessibilityConfig={{ ariaExpanded: isExpanded ? "true" : "false" }}
+                            accessibilityConfig={{
+                                ariaExpanded: isExpanded,
+                                ariaLabel: isExpanded
+                                    ? intl.formatMessage({
+                                          id: "dialogs.automation.filters.showLess.ariaLabel",
+                                      })
+                                    : intl.formatMessage({
+                                          id: "dialogs.automation.filters.showAll.ariaLabel",
+                                      }),
+                                iconAriaHidden: true,
+                            }}
                         />
                         <Bubble className="bubble-primary" alignPoints={[{ align: "bc tc" }]}>
                             {isExpanded ? (
