@@ -139,14 +139,14 @@ const DoNotRenderConfigPanel = "this-classname-should-not-exist-in-the-document"
 /*
  * This ready resolver returns true when both are true:
  *
- * -  4 visualizations are rendered
+ * -  3 visualizations are rendered
  * -  the config panel expander is rendered
  *
  * It is important that the story is ready for screenshot when both are true. Otherwise backstop can make
  * the screenshot before the expander is rendered.
  */
 const ReportReadyResolver = andResolver(
-    createElementCountResolver(4),
+    createElementCountResolver(3),
     createElementCountResolver(1, [ConfigurationPanelWrapper.DefaultExpandAllClassName]),
 );
 
@@ -222,27 +222,6 @@ function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
                             environment="dashboards"
                             insight={insight}
                             width={665}
-                            height={362}
-                            visualizationClass={visClass}
-                            visualizationCatalog={FullVisualizationCatalog}
-                            onError={action("onError")}
-                            pushData={action("pushData")}
-                            onLoadingChanged={action("onLoadingChanged")}
-                            configPanelClassName={DoNotRenderConfigPanel}
-                            featureFlags={settings}
-                            config={gdcConfig}
-                            theme={effectiveTheme}
-                        />
-                    </div>
-
-                    <div className="dashboard-like-4">
-                        KD third size
-                        <BaseVisualization
-                            backend={backend}
-                            projectId={testScenario.workspaceType}
-                            environment="dashboards"
-                            insight={insight}
-                            width={400}
                             height={362}
                             visualizationClass={visClass}
                             visualizationCatalog={FullVisualizationCatalog}
