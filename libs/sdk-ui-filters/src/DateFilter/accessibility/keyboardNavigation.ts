@@ -236,6 +236,8 @@ export const submitAbsoluteAndRelativeDateFilterForm = (
     closeDropdown: () => void,
     onApply: () => void,
 ) => {
+    event.stopPropagation();
+
     if (event.key === "Enter") {
         const canSubmitForm = isApplyEnabled && document.activeElement instanceof HTMLInputElement;
 
