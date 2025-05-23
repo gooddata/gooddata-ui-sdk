@@ -13,6 +13,7 @@ import {
     getFocusableElements,
     useId,
     makeMenuKeyboardNavigation,
+    isActionKey,
 } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
 
@@ -126,6 +127,11 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
             }
         },
         onUnhandledKeyDown(event) {
+            if (isActionKey(event as unknown as React.KeyboardEvent)) {
+                //onSelect by keyboard is handled by the menu item itself
+                return;
+            }
+
             event.stopPropagation();
             event.preventDefault();
             if (!selectedMenuItem || event.key !== "Tab" || !menuWrapperRef.current) {
