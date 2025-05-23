@@ -11,6 +11,7 @@ export const DateFilterHeader: React.FC<{
 
     return (
         <button
+            tabIndex={0}
             ref={autofocusRef}
             className="gd-extended-date-filter-header s-do-not-close-dropdown-on-click"
             onClick={(e) => {

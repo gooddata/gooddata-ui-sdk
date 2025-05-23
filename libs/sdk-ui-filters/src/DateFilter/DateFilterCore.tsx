@@ -245,6 +245,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                                     // https://stackoverflow.com/questions/32370994/how-to-pass-props-to-this-props-children
                                     <div
                                         role="dialog"
+                                        className="gd-extended-date-filter-container"
                                         id={ariaAttributes.id}
                                         ref={dateFilterContainerRef}
                                         onKeyDown={(e) => handleKeyDown(e, closeDropdown)}

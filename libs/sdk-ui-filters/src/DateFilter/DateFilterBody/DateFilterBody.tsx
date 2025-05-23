@@ -140,37 +140,53 @@ export const DateFilterBody = React.forwardRef<HTMLDivElement, IDateFilterBodyPr
     }
 
     return (
-        <div className="gd-extended-date-filter-container">
-            <div
-                className={cx(
-                    "gd-extended-date-filter-body",
-                    "s-extended-date-filters-body",
-                    isMobile && "gd-extended-date-filter-body-mobile",
-                )}
-            >
-                {route === null && isMobile ? (
-                    <div
-                        onClick={() => {
-                            onCancelClick();
-                            closeDropdown();
-                        }}
-                    >
-                        {dateFilterButton}
-                    </div>
-                ) : null}
+        <div
+            className={cx(
+                "gd-extended-date-filter-body",
+                "s-extended-date-filters-body",
+                isMobile && "gd-extended-date-filter-body-mobile",
+            )}
+        >
+            {route === null && isMobile ? (
                 <div
-                    ref={ref}
-                    role="listbox"
-                    aria-label={intl.formatMessage({ id: "dateFilterDropdown.label" })}
-                    className={cx("gd-extended-date-filter-body-wrapper", {
-                        "gd-extended-date-filter-body-wrapper-wide":
-                            isRelativeDateFilterForm(selectedFilterOption),
-                    })}
-                    style={wrapperStyle}
+                    onClick={() => {
+                        onCancelClick();
+                        closeDropdown();
+                    }}
                 >
-                    {isEditMode && !isMobile && showHeaderMessage ? <EditModeMessage /> : null}
-                    {isMobile ? (
-                        <DateFilterBodyMobileContent
+                    {dateFilterButton}
+                </div>
+            ) : null}
+            <div
+                ref={ref}
+                role="listbox"
+                aria-label={intl.formatMessage({ id: "dateFilterDropdown.label" })}
+                className={cx("gd-extended-date-filter-body-wrapper", {
+                    "gd-extended-date-filter-body-wrapper-wide":
+                        isRelativeDateFilterForm(selectedFilterOption),
+                })}
+                style={wrapperStyle}
+            >
+                {isEditMode && !isMobile && showHeaderMessage ? <EditModeMessage /> : null}
+                {isMobile ? (
+                    <DateFilterBodyMobileContent
+                        filterOptions={filterOptions}
+                        selectedFilterOption={selectedFilterOption}
+                        onSelectedFilterOptionChange={onSelectedFilterOptionChange}
+                        isMobile={isMobile}
+                        route={route}
+                        closeDropdown={closeDropdown}
+                        onApplyClick={onApplyClick}
+                        changeRoute={changeRoute}
+                        dateFormat={dateFormat}
+                        errors={errors || undefined}
+                        isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
+                        weekStart={weekStart}
+                        availableGranularities={availableGranularities}
+                    />
+                ) : (
+                    <VisibleScrollbar className={visibleScrollbarClassName} style={scrollerStyle}>
+                        <DateFilterBodyContent
                             filterOptions={filterOptions}
                             selectedFilterOption={selectedFilterOption}
                             onSelectedFilterOptionChange={onSelectedFilterOptionChange}
@@ -185,62 +201,44 @@ export const DateFilterBody = React.forwardRef<HTMLDivElement, IDateFilterBodyPr
                             weekStart={weekStart}
                             availableGranularities={availableGranularities}
                         />
-                    ) : (
-                        <VisibleScrollbar className={visibleScrollbarClassName} style={scrollerStyle}>
-                            <DateFilterBodyContent
-                                filterOptions={filterOptions}
-                                selectedFilterOption={selectedFilterOption}
-                                onSelectedFilterOptionChange={onSelectedFilterOptionChange}
-                                isMobile={isMobile}
-                                route={route}
-                                closeDropdown={closeDropdown}
-                                onApplyClick={onApplyClick}
-                                changeRoute={changeRoute}
-                                dateFormat={dateFormat}
-                                errors={errors || undefined}
-                                isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
-                                weekStart={weekStart}
-                                availableGranularities={availableGranularities}
-                            />
-                        </VisibleScrollbar>
-                    )}
-                </div>
-                {showExcludeCurrent ? (
-                    <ExcludeCurrentPeriodToggle
-                        value={excludeCurrentPeriod}
-                        onChange={onExcludeCurrentPeriodChange}
-                        disabled={!isExcludeCurrentPeriodEnabled}
-                        granularity={getDateFilterOptionGranularity(selectedFilterOption)}
-                    />
-                ) : null}
+                    </VisibleScrollbar>
+                )}
+            </div>
+            {showExcludeCurrent ? (
+                <ExcludeCurrentPeriodToggle
+                    value={excludeCurrentPeriod}
+                    onChange={onExcludeCurrentPeriodChange}
+                    disabled={!isExcludeCurrentPeriodEnabled}
+                    granularity={getDateFilterOptionGranularity(selectedFilterOption)}
+                />
+            ) : null}
 
-                <div className={cx("gd-extended-date-filter-actions")}>
-                    <div className="gd-extended-date-filter-actions-left-content">
-                        {isConfigurationEnabled ? (
-                            <DateFilterConfigurationButton onConfiguration={onConfigurationClick} />
-                        ) : null}
-                    </div>
-                    <div className="gd-extended-date-filter-actions-buttons">
+            <div className={cx("gd-extended-date-filter-actions")}>
+                <div className="gd-extended-date-filter-actions-left-content">
+                    {isConfigurationEnabled ? (
+                        <DateFilterConfigurationButton onConfiguration={onConfigurationClick} />
+                    ) : null}
+                </div>
+                <div className="gd-extended-date-filter-actions-buttons">
+                    <DateFilterBodyButton
+                        messageId={withoutApply ? "close" : "cancel"}
+                        className="gd-button-secondary gd-button-small s-date-filter-cancel"
+                        onClick={() => {
+                            onCancelClick();
+                            closeDropdown();
+                        }}
+                    />
+                    {!withoutApply && (
                         <DateFilterBodyButton
-                            messageId={withoutApply ? "close" : "cancel"}
-                            className="gd-button-secondary gd-button-small s-date-filter-cancel"
+                            messageId="apply"
+                            className="gd-button-action gd-button-small s-date-filter-apply"
+                            disabled={!isEmpty(errors)}
                             onClick={() => {
-                                onCancelClick();
+                                onApplyClick();
                                 closeDropdown();
                             }}
                         />
-                        {!withoutApply && (
-                            <DateFilterBodyButton
-                                messageId="apply"
-                                className="gd-button-action gd-button-small s-date-filter-apply"
-                                disabled={!isEmpty(errors)}
-                                onClick={() => {
-                                    onApplyClick();
-                                    closeDropdown();
-                                }}
-                            />
-                        )}
-                    </div>
+                    )}
                 </div>
             </div>
         </div>
