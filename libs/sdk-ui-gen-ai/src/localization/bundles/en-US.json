@@ -149,6 +149,16 @@
         "comment": "",
         "limit": 0
     },
+    "gd.gen-ai.autocomplete.dataset": {
+        "value": "Dataset",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.autocomplete.id": {
+        "value": "Id",
+        "comment": "",
+        "limit": 0
+    },
     "gd.gen-ai.autocomplete.attribute": {
         "value": "Attribute",
         "comment": "",

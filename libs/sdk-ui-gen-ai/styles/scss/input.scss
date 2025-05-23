@@ -245,7 +245,7 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
                 line-height: 18px;
             }
 
-            .type {
+            &__item {
                 display: flex;
                 gap: 3px;
                 padding-top: 5px;
@@ -253,7 +253,7 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
                 align-items: flex-start;
                 align-self: stretch;
 
-                .type-title {
+                &__title {
                     color: kit-variables.$gd-color-state-blank;
                     align-self: stretch;
                     font-size: 10px;
@@ -262,7 +262,7 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
                     line-height: normal;
                     text-transform: uppercase;
                 }
-                .type-value {
+                &__value {
                     color: kit-variables.$gd-color-text;
                     font-size: 12px;
                     font-style: normal;

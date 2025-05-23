@@ -13,7 +13,7 @@ export interface IUseCompletion {
     selectedItems: MutableRefObject<Completion[]>;
 }
 
-export function useCompletion(items?: CatalogItem[]): IUseCompletion {
+export function useCompletion(items?: CatalogItem[], canManage?: boolean): IUseCompletion {
     const [catalogItems, setCatalogItems] = useState<CatalogItem[] | undefined>(items);
     const selectedItems = useRef<Completion[]>([]);
     const backend = useBackendStrict();
@@ -123,7 +123,7 @@ export function useCompletion(items?: CatalogItem[]): IUseCompletion {
                 return null;
             }
 
-            const options = getOptions(intl, { items, search, onCompletionSelected });
+            const options = getOptions(intl, { items, search, onCompletionSelected, canManage });
             // No options were found at all
             if (options.length === 0) {
                 return null;
@@ -137,7 +137,7 @@ export function useCompletion(items?: CatalogItem[]): IUseCompletion {
                 },
             };
         },
-        [loadItemsBySearch, intl, onCompletionSelected],
+        [loadItemsBySearch, intl, onCompletionSelected, canManage],
     );
 
     const onExplicitCompletion = useCallback(
@@ -148,7 +148,7 @@ export function useCompletion(items?: CatalogItem[]): IUseCompletion {
                 return null;
             }
 
-            const options = getOptions(intl, { items, onCompletionSelected });
+            const options = getOptions(intl, { items, onCompletionSelected, canManage });
             // No options were found at all
             if (options.length === 0) {
                 return null;
@@ -162,7 +162,7 @@ export function useCompletion(items?: CatalogItem[]): IUseCompletion {
                 },
             };
         },
-        [loadItemsByExplicit, intl, onCompletionSelected],
+        [loadItemsByExplicit, intl, onCompletionSelected, canManage],
     );
 
     const onCompletion = useCallback(
