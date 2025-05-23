@@ -346,9 +346,7 @@ export function AlertingDialogRenderer({
                                         type="number"
                                         suffix={getValueSuffix(editedAutomation?.alert)}
                                         accessibilityConfig={{
-                                            ariaLabel: intl.formatMessage({
-                                                id: "insightAlert.config.accessbility.input",
-                                            }),
+                                            ariaDescribedBy: "alert.value",
                                         }}
                                     />
                                 </FormField>

@@ -285,7 +285,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                 )}
             >
                 {this.props.showLabel ? (
-                    <label htmlFor="form.destination" className="gd-label">
+                    <label htmlFor={id} className="gd-label">
                         <FormattedMessage id="dialogs.schedule.email.recipients.label" />
                     </label>
                 ) : null}
@@ -723,7 +723,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
 
         const props: InputProps<IAutomationRecipient> = {
             ...inputProps,
-            id: "form.destination",
+            id: this.props.id,
             "aria-controls": MENU_LIST_ID,
             onBlur: this.onBlur,
         };
