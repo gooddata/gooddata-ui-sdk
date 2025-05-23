@@ -702,8 +702,13 @@ function refreshByType(
             // be used by re-execution widgets, which is correct, but will not be set to filter's button
             // value, confusing the users.
             if (shouldReloadElements.current) {
-                handler.loadInitialElementsPage(PARENT_FILTERS_CORRELATION);
-                handler.loadIrrelevantElements(IRRELEVANT_SELECTION);
+                if (handler.getInitStatus() === "success") {
+                    handler.loadInitialElementsPage(PARENT_FILTERS_CORRELATION);
+                    handler.loadIrrelevantElements(IRRELEVANT_SELECTION);
+                } else {
+                    // if filter resets by its parent but it is not fully loaded yet, we need to re-init it fully again
+                    handler.init(PARENT_FILTERS_CORRELATION);
+                }
                 setShouldReloadElements(false);
             }
             return;
