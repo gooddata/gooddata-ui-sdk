@@ -46,7 +46,6 @@ import {
     FilterContextItem,
     dashboardFilterLocalIdentifier,
     isDashboardDateFilter,
-    newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import { changeFilterContextSelectionHandler } from "../filterContext/changeFilterContextSelectionHandler.js";
 import { changeFilterContextSelection } from "../../commands/filters.js";
@@ -57,7 +56,6 @@ import { selectFilterContextDateFilter } from "../../store/filterContext/filterC
 import omit from "lodash/omit.js";
 import compact from "lodash/compact.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
-import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 
 export function* initializeAutomationsHandler(
     ctx: DashboardContext,
@@ -159,11 +157,7 @@ export function* initializeAutomationsHandler(
                         return true;
                     }) ?? [];
 
-                const sanitizedFiltersToSet = sanitizeDateFilters(
-                    filtersToSet,
-                    dashboardCommonDateFilter ??
-                        newAllTimeDashboardDateFilter(undefined, generateDateFilterLocalIdentifier(0)),
-                );
+                const sanitizedFiltersToSet = sanitizeDateFilters(filtersToSet, dashboardCommonDateFilter);
 
                 // Empty schedule execution filters = reset all filters (set them to all).
                 // Empty sanitized filters = keep filters as they are, do not reset them (all schedule execution filters are ignored).
@@ -248,12 +242,19 @@ function extractExportDefinitionFilters(
  * This function removes the dataset from any date filter that matches the
  * dashboard's common date filter local identifier.
  */
-function sanitizeDateFilters(filters: FilterContextItem[], dashboardCommonDateFilter: IDashboardDateFilter) {
+function sanitizeDateFilters(
+    filters: FilterContextItem[],
+    dashboardCommonDateFilter: IDashboardDateFilter | undefined,
+) {
+    const dateFilters = filters.filter(isDashboardDateFilter);
+    const foundCommonDateFilter =
+        dateFilters.find(
+            (filter) =>
+                filter.dateFilter.localIdentifier === dashboardCommonDateFilter?.dateFilter.localIdentifier,
+        ) ?? dateFilters[0];
+
     return filters.map((filter) => {
-        if (
-            isDashboardDateFilter(filter) &&
-            filter.dateFilter.localIdentifier === dashboardCommonDateFilter.dateFilter.localIdentifier
-        ) {
+        if (isDashboardDateFilter(filter) && filter === foundCommonDateFilter) {
             return {
                 ...filter,
                 dateFilter: {
