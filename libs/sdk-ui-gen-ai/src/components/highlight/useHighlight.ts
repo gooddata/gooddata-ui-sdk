@@ -76,6 +76,7 @@ function addMatch(
             ...(item.type === "metric" ? ["metric"] : []),
             ...(item.type === "attribute" ? ["attribute"] : []),
             ...(item.type === "fact" ? ["fact"] : []),
+            ...(item.type === "date" ? ["date"] : []),
         ];
         // Widget before the matched text
         builder.push(
@@ -119,6 +120,7 @@ class IconWidget extends WidgetType {
             ...(item.type === "metric" ? ["metric"] : []),
             ...(item.type === "attribute" ? ["attribute"] : []),
             ...(item.type === "fact" ? ["fact"] : []),
+            ...(item.type === "date" ? ["date"] : []),
         ].join(" ");
         return span;
     }
