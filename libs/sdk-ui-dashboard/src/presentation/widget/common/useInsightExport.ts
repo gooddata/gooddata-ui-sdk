@@ -56,7 +56,7 @@ export const useInsightExport = (config: {
                     uuid(),
                 ),
             ).then((result) => result.payload.result),
-        [dispatch, widgetRef],
+        [widgetRef],
     );
 
     const exportRawFunction = useCallback(
@@ -65,7 +65,7 @@ export const useInsightExport = (config: {
                 dispatch,
                 exportRawInsightWidget(widgetRef, widget!, insight!, title, uuid()),
             ).then((result) => result.payload.result),
-        [dispatch, widgetRef, widget, insight],
+        [widgetRef, widget, insight],
     );
 
     const exportSlidesFunction = useCallback(
@@ -74,7 +74,7 @@ export const useInsightExport = (config: {
                 dispatch,
                 exportSlidesInsightWidget(widgetRef!, title, exportType, uuid()),
             ).then((result) => result.payload.result),
-        [dispatch, widgetRef],
+        [widgetRef],
     );
 
     const exportImageFunction = useCallback(
@@ -83,7 +83,7 @@ export const useInsightExport = (config: {
                 dispatch,
                 exportImageInsightWidget(widgetRef!, title, uuid()),
             ).then((result) => result.payload.result),
-        [dispatch, widgetRef],
+        [widgetRef],
     );
     const settings = useDashboardSelector(selectSettings);
     const isInsightExportable = insight
@@ -107,35 +107,35 @@ export const useInsightExport = (config: {
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportFunction);
         exportHandler(exportFunction, exportConfig).then(() => setIsExporting(false));
-    }, [exportFunction, setIsExporting, title, exportHandler]);
+    }, [exportFunction, setIsExporting, title]);
 
     const onExportRawCSV = useCallback(() => {
         setIsExporting(true);
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportRawFunction);
         exportRawHandler(exportRawFunction, title).then(() => setIsExporting(false));
-    }, [exportRawFunction, title, exportRawHandler]);
+    }, [exportRawFunction, title]);
 
     const onExportPowerPointPresentation = useCallback(() => {
         setIsExporting(true);
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportSlidesFunction);
         exportSlidesHandler(exportSlidesFunction, title, "pptx").then(() => setIsExporting(false));
-    }, [exportSlidesFunction, title, exportSlidesHandler]);
+    }, [exportSlidesFunction, title]);
 
     const onExportPdfPresentation = useCallback(() => {
         setIsExporting(true);
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportSlidesFunction);
         exportSlidesHandler(exportSlidesFunction, title, "pdf").then(() => setIsExporting(false));
-    }, [exportSlidesFunction, title, exportSlidesHandler]);
+    }, [exportSlidesFunction, title]);
 
     const onExportPngImage = useCallback(() => {
         setIsExporting(true);
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportImageFunction);
         exportImageHandler(exportImageFunction, title).then(() => setIsExporting(false));
-    }, [exportImageFunction, title, exportImageHandler]);
+    }, [exportImageFunction, title]);
 
     const onExportXLSX = useCallback(() => {
         openDialog({
