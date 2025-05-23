@@ -31,10 +31,12 @@ export function getOptions(
     {
         items,
         search,
+        canManage,
         onCompletionSelected = () => {},
     }: {
         items: CatalogItem[];
         search?: string;
+        canManage?: boolean;
         onCompletionSelected?: (completion: Completion) => void;
     },
 ) {
@@ -44,7 +46,10 @@ export function getOptions(
                 return getItem(
                     item.attribute.title,
                     "attribute",
-                    getInfo(intl, item.attribute.id, item.attribute),
+                    getInfo(intl, item.attribute.id, item.attribute, {
+                        dataset: item.dataSet,
+                        canManage,
+                    }),
                     onCompletionSelected,
                 );
             }
@@ -52,7 +57,9 @@ export function getOptions(
                 return getItem(
                     item.fact.title,
                     "fact",
-                    getInfo(intl, item.fact.id, item.fact),
+                    getInfo(intl, item.fact.id, item.fact, {
+                        canManage,
+                    }),
                     onCompletionSelected,
                 );
             }
@@ -60,7 +67,9 @@ export function getOptions(
                 return getItem(
                     item.measure.title,
                     "metric",
-                    getInfo(intl, item.measure.id, item.measure),
+                    getInfo(intl, item.measure.id, item.measure, {
+                        canManage,
+                    }),
                     onCompletionSelected,
                 );
             }

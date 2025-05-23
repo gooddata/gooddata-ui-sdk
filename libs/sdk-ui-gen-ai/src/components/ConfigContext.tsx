@@ -7,6 +7,7 @@ export type ConfigContext = {
     allowNativeLinks: boolean;
     linkHandler?: (linkClickEvent: LinkHandlerEvent) => void;
     catalogItems?: CatalogItem[];
+    canManage?: boolean;
 };
 
 /**
@@ -32,6 +33,7 @@ export const ConfigProvider: React.FC<React.PropsWithChildren<ConfigContext>> = 
     allowNativeLinks,
     linkHandler,
     catalogItems,
+    canManage,
 }) => {
     const value = React.useMemo(
         () => ({
@@ -39,8 +41,9 @@ export const ConfigProvider: React.FC<React.PropsWithChildren<ConfigContext>> = 
             allowNativeLinks,
             linkHandler,
             catalogItems,
+            canManage,
         }),
-        [allowCreateVisualization, allowNativeLinks, linkHandler, catalogItems],
+        [allowCreateVisualization, allowNativeLinks, linkHandler, catalogItems, canManage],
     );
 
     return <configContext.Provider value={value}>{children}</configContext.Provider>;

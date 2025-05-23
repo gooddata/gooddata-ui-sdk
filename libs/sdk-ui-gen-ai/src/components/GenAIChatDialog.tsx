@@ -19,6 +19,7 @@ export type GenAIChatDialogProps = {
     workspace?: string;
     isOpen: boolean;
     locale?: string;
+    canManage?: boolean;
     onClose: () => void;
     eventHandlers?: ChatEventHandler[];
     colorPalette?: IColorPalette;
@@ -37,6 +38,7 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
     locale,
     isOpen,
     onClose,
+    canManage,
     eventHandlers,
     catalogItems,
     colorPalette,
@@ -78,6 +80,7 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
                                 allowNativeLinks={true}
                                 linkHandler={onLinkClick}
                                 catalogItems={catalogItems}
+                                canManage={canManage}
                             >
                                 <GenAIChatOverlay onClose={onClose} />
                             </ConfigProvider>

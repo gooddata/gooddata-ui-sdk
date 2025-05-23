@@ -30,6 +30,10 @@ export interface GenAIChatProps {
      */
     locale?: string;
     /**
+     * Whether the user can manage objects in the workspace.
+     */
+    canManage?: boolean;
+    /**
      * Color palette to use for the chat UI.
      */
     colorPalette?: IColorPalette;
@@ -59,6 +63,7 @@ export const GenAIChat: React.FC<GenAIChatProps> = ({
     colorPalette,
     catalogItems,
     eventHandlers,
+    canManage,
     onLinkClick,
 }) => {
     const effectiveBackend = useBackendStrict(backend);
@@ -78,6 +83,7 @@ export const GenAIChat: React.FC<GenAIChatProps> = ({
                             allowNativeLinks={false}
                             linkHandler={onLinkClick}
                             catalogItems={catalogItems}
+                            canManage={canManage}
                         >
                             <GenAIChatWrapper />
                         </ConfigProvider>

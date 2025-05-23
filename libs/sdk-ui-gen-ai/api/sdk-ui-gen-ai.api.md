@@ -114,6 +114,7 @@ export const GenAIChat: React_2.FC<GenAIChatProps>;
 // @alpha
 export interface GenAIChatProps {
     backend?: IAnalyticalBackend;
+    canManage?: boolean;
     catalogItems?: CatalogItem[];
     colorPalette?: IColorPalette;
     eventHandlers?: ChatEventHandler[];

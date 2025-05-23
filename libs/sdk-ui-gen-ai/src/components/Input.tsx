@@ -20,6 +20,7 @@ type InputStateProps = {
     isEvaluating: boolean;
     autofocus?: boolean;
     catalogItems?: CatalogItem[];
+    canManage?: boolean;
 };
 
 type InputDispatchProps = {
@@ -49,12 +50,13 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
     autofocus = false,
     intl,
     catalogItems,
+    canManage,
 }) => {
     const [value, setValue] = React.useState("");
     const [editorApi, setApi] = React.useState<EditorView | null>(null);
     const [focused, setFocused] = React.useState(false);
 
-    const { onCompletion, selectedItems } = useCompletion(catalogItems);
+    const { onCompletion, selectedItems } = useCompletion(catalogItems, canManage);
     const highlightExtension = useHighlight(selectedItems);
 
     const extensions = useMemo(() => [highlightExtension], [highlightExtension]);
