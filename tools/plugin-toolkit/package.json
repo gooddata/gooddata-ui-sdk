@@ -64,7 +64,7 @@
         "lodash": "^4.17.21",
         "ora": "^5.3.0",
         "strip-ansi": "^6.0.0",
-        "tar": "^6.1.11",
+        "tar": "^6.2.1",
         "tslib": "^2.5.0",
         "validate-npm-package-name": "^5.0.0"
     },
