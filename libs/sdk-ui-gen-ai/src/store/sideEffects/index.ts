@@ -1,7 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { call, fork, takeEvery, takeLatest } from "redux-saga/effects";
-import { IColorPalette } from "@gooddata/sdk-model";
 import {
     setVerboseAction,
     loadThreadAction,
@@ -23,7 +22,7 @@ import { loadColorPalette } from "./loadColorPalette.js";
  * One saga to rule them all.
  * @internal
  */
-export function* rootSaga(opts: { colorPalette?: IColorPalette }) {
+export function* rootSaga() {
     yield takeEvery(setVerboseAction.type, onVerboseStore);
     yield takeLatest(loadThreadAction.type, onThreadLoad);
     yield takeLatest(clearThreadAction.type, onThreadClear);
@@ -31,5 +30,5 @@ export function* rootSaga(opts: { colorPalette?: IColorPalette }) {
     yield takeEvery(setUserFeedback.type, onUserFeedback);
     yield takeEvery(saveVisualizationAction.type, onVisualizationSave);
     yield fork(onEvent);
-    yield call(loadColorPalette, opts.colorPalette);
+    yield call(loadColorPalette);
 }
