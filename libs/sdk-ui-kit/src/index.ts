@@ -182,3 +182,8 @@ export {
     modifierNegator,
 } from "./@ui/@utils/keyboardNavigation.js";
 export type { IHandleActionOptions, IModifier } from "./@ui/@utils/keyboardNavigation.js";
+
+export {
+    useListWithActionsKeyboardNavigation,
+    SELECT_ITEM_ACTION,
+} from "./@ui/hooks/useListWithActionsKeyboardNavigation.js";

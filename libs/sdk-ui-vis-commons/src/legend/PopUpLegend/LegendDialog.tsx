@@ -27,7 +27,7 @@ interface ILegendDialogContent {
 const LegendDialogContent: React.FC<ILegendDialogContent> = ({ title, onCloseDialog, children, id }) => {
     const isZoomed = useIsZoomed(ZOOM_THRESHOLD);
 
-    const autofocusRef = useAutofocusOnMount(100); // We need the timeout to wait until the dialog is positioned.
+    const autofocusRef = useAutofocusOnMount();
     const dialogRef = React.useRef<HTMLDivElement>(null);
 
     const handleClose = React.useCallback<React.MouseEventHandler>(

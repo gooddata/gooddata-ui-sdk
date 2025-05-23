@@ -4,6 +4,7 @@
 @use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as mixins;
 
 $attribute-filter-drag-handle-left: 10px;
 
@@ -594,6 +595,21 @@ $attribute-filter-drag-handle-left: 10px;
         .configuration-panel__filter-view__list .configuration-category {
             margin: 10px 0 0;
             overflow: auto;
+        }
+
+        .gd-filter-view__list {
+            &:focus-visible {
+                outline: none;
+
+                .gd-filter-view__item--isFocused .gd-filter-view__item__button {
+                    display: block;
+                }
+
+                .gd-filter-view__item--isFocusedSelectItem,
+                .gd-filter-view__item__button--isFocused {
+                    @include mixins.focus-ring;
+                }
+            }
         }
     }
 }
