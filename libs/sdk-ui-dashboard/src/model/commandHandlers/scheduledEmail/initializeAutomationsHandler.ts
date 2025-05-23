@@ -291,12 +291,13 @@ function getDashboardFiltersOnly(
 
     // Find common date filter by local id
     const dateFilters = withoutInsightDateFilters.filter(isDateFilter);
-    const foundCommonFilter = dateFilters.find((f) => {
-        if (isRelativeDateFilter(f)) {
-            return f.relativeDateFilter.localIdentifier === common?.dateFilter.localIdentifier;
-        }
-        return f.absoluteDateFilter.localIdentifier === common?.dateFilter.localIdentifier;
-    });
+    const foundCommonFilter =
+        dateFilters.find((f) => {
+            if (isRelativeDateFilter(f)) {
+                return f.relativeDateFilter.localIdentifier === common?.dateFilter.localIdentifier;
+            }
+            return f.absoluteDateFilter.localIdentifier === common?.dateFilter.localIdentifier;
+        }) ?? dateFilters[0];
 
     // Remove dataSet from date filters, as it's not relevant for the dashboard date filter.
     return withoutInsightDateFilters.map((f) => {
