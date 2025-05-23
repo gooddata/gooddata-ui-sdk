@@ -187,6 +187,9 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
                     &-fact {
                         @include gd-svg-icon("measure");
                     }
+                    &-date {
+                        @include gd-svg-icon("date");
+                    }
                 }
 
                 .cm-completionLabel {
@@ -286,6 +289,9 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
         &.attribute {
             color: kit-variables.$gd-palette-warning-base-text;
         }
+        &.date {
+            color: kit-variables.$gd-palette-primary-base;
+        }
     }
     .cm-editor .cm-icon-widget {
         display: inline-block;
@@ -302,6 +308,9 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
         }
         &.fact {
             @include gd-svg-icon("measure");
+        }
+        &.date {
+            @include gd-svg-icon("date");
         }
     }
 }

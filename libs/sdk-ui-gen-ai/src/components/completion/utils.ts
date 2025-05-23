@@ -2,7 +2,13 @@
 
 import { IntlShape } from "react-intl";
 import { Completion } from "@codemirror/autocomplete";
-import { CatalogItem, isCatalogAttribute, isCatalogFact, isCatalogMeasure } from "@gooddata/sdk-model";
+import {
+    CatalogItem,
+    isCatalogAttribute,
+    isCatalogDateDataset,
+    isCatalogFact,
+    isCatalogMeasure,
+} from "@gooddata/sdk-model";
 
 import { getInfo } from "./InfoComponent.js";
 
@@ -41,7 +47,7 @@ export function getOptions(
     },
 ) {
     const options = items
-        .map((item): Completion | null => {
+        .map((item): Completion | Completion[] | null => {
             if (isCatalogAttribute(item)) {
                 return getItem(
                     item.attribute.title,
@@ -73,8 +79,33 @@ export function getOptions(
                     onCompletionSelected,
                 );
             }
+            if (isCatalogDateDataset(item)) {
+                return [
+                    getItem(
+                        item.dataSet.title,
+                        "date",
+                        getInfo(intl, item.dataSet.id, item.dataSet, {
+                            dataset: item.dataSet,
+                            canManage,
+                        }),
+                        onCompletionSelected,
+                    ),
+                    ...item.dateAttributes.map((attr) => {
+                        return getItem(
+                            attr.attribute.title,
+                            "date",
+                            getInfo(intl, attr.attribute.id, attr.attribute, {
+                                dataset: item.dataSet,
+                                canManage,
+                            }),
+                            onCompletionSelected,
+                        );
+                    }),
+                ];
+            }
             return null;
         })
+        .flat()
         .filter((opt) => opt !== null) as Completion[];
 
     return options.filter((opt) => {
@@ -87,7 +118,7 @@ export function getOptions(
 // Utility: Get item for completion
 export function getItem(
     label: string,
-    type: "fact" | "metric" | "attribute",
+    type: "fact" | "metric" | "attribute" | "date",
     info: () => Node,
     onCompletion: (completion: Completion) => void,
 ): Completion {

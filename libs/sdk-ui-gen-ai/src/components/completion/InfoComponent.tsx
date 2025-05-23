@@ -29,6 +29,9 @@ function InfoComponent({ item, intl, canManage, dataset, id }: IInfoComponentPro
                     {item.type === "measure"
                         ? intl.formatMessage({ id: "gd.gen-ai.autocomplete.metric" })
                         : null}
+                    {item.type === "dataSet"
+                        ? intl.formatMessage({ id: "gd.gen-ai.autocomplete.date" })
+                        : null}
                 </div>
             </div>
             {dataset ? (
