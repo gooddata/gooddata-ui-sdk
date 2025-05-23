@@ -143,19 +143,6 @@ export class HighChartsRenderer extends React.PureComponent<
     }
 
     public componentDidMount(): void {
-        // http://stackoverflow.com/questions/18240254/highcharts-width-exceeds-container-div-on-first-load
-        setTimeout(() => {
-            if (this.chartRef) {
-                const chart = this.chartRef.getChart();
-
-                if (chart.container?.style) {
-                    chart.container.style.height = (this.props.height && String(this.props.height)) || "100%";
-                    chart.container.style.position = this.props.height ? "relative" : "absolute";
-                    chart.reflow();
-                }
-            }
-        }, 0);
-
         this.props.onLegendReady({
             legendItems: this.getItems(this.props.legend.items),
         });
