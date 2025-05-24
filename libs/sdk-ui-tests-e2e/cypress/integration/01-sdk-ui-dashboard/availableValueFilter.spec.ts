@@ -79,15 +79,15 @@ describe("Available value filter", () => {
                 .hasFilterListSize(1);
         },
     );
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip(
+
+    it(
         "should extend attribute filter by date filter",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
             Navigation.visit("dashboard/multiple-date-filters", featureFlags);
             cy.intercept("GET", "**/attributes**").as("attributes");
 
-            cy.wait("@attributes").then(() => {
+            cy.wait("@attributes", { timeout: 30000 }).then(() => {
                 const dateFilter = new DateFilter();
                 const dateFilterActivity = new DateFilter("Activity");
                 const dateFilterAbsoluteForm = new DateFilterAbsoluteForm();
@@ -138,7 +138,7 @@ describe("Available value filter", () => {
                 .selectAttribute(["Cory Owens"])
                 .apply();
 
-            cy.wait(1000);
+            cy.wait(2000);
 
             widget.waitChartLoaded().getChart().getDataLabelValues().should("deep.equal", ["$2,376,100.41"]);
 
