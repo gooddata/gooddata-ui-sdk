@@ -79,15 +79,15 @@ describe("Available value filter", () => {
                 .hasFilterListSize(1);
         },
     );
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip(
+
+    it(
         "should extend attribute filter by date filter",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
             Navigation.visit("dashboard/multiple-date-filters", featureFlags);
             cy.intercept("GET", "**/attributes**").as("attributes");
 
-            cy.wait("@attributes").then(() => {
+            cy.wait("@attributes", { timeout: 30000 }).then(() => {
                 const dateFilter = new DateFilter();
                 const dateFilterActivity = new DateFilter("Activity");
                 const dateFilterAbsoluteForm = new DateFilterAbsoluteForm();
@@ -95,16 +95,14 @@ describe("Available value filter", () => {
                 new InsightsCatalog().waitForCatalogLoad();
 
                 dateFilter.openAndSelectOption(".s-absolute-form");
-                dateFilterAbsoluteForm
-                    .typeIntoFromRangePickerInput("4/3/2010")
-                    .typeIntoToRangePickerInput("4/3/2018");
-                dateFilter.pressButton("apply");
+                dateFilterAbsoluteForm.typeIntoFromRangePickerInput("4/3/2010");
+                dateFilter.openAndSelectOption(".s-absolute-form");
+                dateFilterAbsoluteForm.typeIntoToRangePickerInput("4/3/2018");
 
                 dateFilterActivity.openAndSelectOption(".s-absolute-form");
-                dateFilterAbsoluteForm
-                    .typeIntoFromRangePickerInput("4/3/2010")
-                    .typeIntoToRangePickerInput("4/3/2018");
-                dateFilterActivity.pressButton("apply");
+                dateFilterAbsoluteForm.typeIntoFromRangePickerInput("4/3/2010");
+                dateFilterActivity.openAndSelectOption(".s-absolute-form");
+                dateFilterAbsoluteForm.typeIntoToRangePickerInput("4/3/2018");
             });
 
             widget
@@ -138,9 +136,9 @@ describe("Available value filter", () => {
                 .selectAttribute(["Cory Owens"])
                 .apply();
 
-            cy.wait(1000);
-
-            widget.waitChartLoaded().getChart().getDataLabelValues().should("deep.equal", ["$2,376,100.41"]);
+            cy.intercept("GET", "**/afm/execute/result/**").as("chartRender");
+            cy.wait("@chartRender", { timeout: 30000 });
+            widget.getChart().getDataLabelValues().should("deep.equal", ["$2,376,100.41"]);
 
             salesRepFilter.open().elementsAreLoaded().deleteFiltervaluesBy("Activity").hasFilterListSize(22);
         },
