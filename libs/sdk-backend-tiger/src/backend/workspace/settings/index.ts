@@ -109,7 +109,7 @@ export class TigerWorkspaceSettings
     }
 
     public async setActiveLlmEndpoint(endpoint: string): Promise<void> {
-        return this.setSetting("ACTIVE_LLM_ENDPOINT", endpoint);
+        return this.setSetting("ACTIVE_LLM_ENDPOINT", { value: endpoint });
     }
 
     public async setTimezone(timezone: string): Promise<void> {
