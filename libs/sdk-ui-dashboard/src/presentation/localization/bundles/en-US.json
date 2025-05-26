@@ -524,7 +524,7 @@
         "limit": 0
     },
     "filters.configurationPanel.header": {
-        "value": "Filters Configuration",
+        "value": "Filters",
         "comment": "Filtering configuration panel - header.",
         "limit": 0
     },
@@ -3249,11 +3249,6 @@
     },
     "insightAlert.config.accessbility.input": {
         "value": "Condition value",
-        "comment": "",
-        "limit": 0
-    },
-    "insightAlert.config.accessbility.dropdown": {
-        "value": "Condition type",
         "comment": "",
         "limit": 0
     },
