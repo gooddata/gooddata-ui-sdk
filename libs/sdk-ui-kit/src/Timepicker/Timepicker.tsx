@@ -7,7 +7,9 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import noop from "lodash/noop.js";
 
 import { OverlayPositionType } from "../typings/overlay.js";
-import { Dropdown, DropdownButton, DropdownList } from "../Dropdown/index.js";
+import { Dropdown, DropdownButton } from "../Dropdown/index.js";
+import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
+import type { IUiListboxInteractiveItem } from "../@ui/UiListbox/types.js";
 
 import { formatTime, normalizeTime, updateTime, HOURS_IN_DAY, TIME_ANCHOR } from "./utils/timeUtilities.js";
 import { SelectedTime } from "./typings.js";
@@ -16,6 +18,7 @@ import { SingleSelectListItem } from "../List/index.js";
 const DEFAULT_WIDTH = 199;
 const MINUTES_IN_HOUR = 60;
 const MAX_VISIBLE_ITEMS_COUNT = 10;
+const MAX_HEIGHT = 140;
 
 export { normalizeTime, formatTime };
 
@@ -42,6 +45,12 @@ export type TimePickerProps = ITimepickerOwnProps & WrappedComponentProps;
 interface ITimePickerState {
     dropdownWidth: number;
     selectedTime: Date;
+}
+
+interface ITimeItem {
+    h: number;
+    m: number;
+    title: string;
 }
 
 export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITimePickerState> {
@@ -135,14 +144,7 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
     };
 
     public render() {
-        const {
-            ariaLabelledBy,
-            overlayPositionType,
-            maxVisibleItemsCount,
-            overlayZIndex,
-            intl,
-            closeOnParentScroll,
-        } = this.props;
+        const { ariaLabelledBy, overlayPositionType, overlayZIndex, intl, closeOnParentScroll } = this.props;
         const { dropdownWidth, selectedTime } = this.state;
         const time = {
             h: selectedTime.getHours(),
@@ -164,7 +166,8 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
                             align: "tl bl",
                         },
                     ]}
-                    renderButton={({ openDropdown, isOpen, dropdownId }) => (
+                    autofocusOnOpen={true}
+                    renderButton={({ openDropdown, isOpen, dropdownId, buttonRef }) => (
                         <DropdownButton
                             accessibilityConfig={{
                                 ariaLabelledBy,
@@ -175,26 +178,45 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
                             dropdownId={dropdownId}
                             onClick={openDropdown}
                             iconLeft="gd-icon-timer"
+                            buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
                         />
                     )}
-                    renderBody={({ closeDropdown, isMobile }) => (
-                        <DropdownList
-                            isMobile={isMobile}
-                            width={dropdownWidth}
-                            items={items}
-                            renderItem={({ item }) => (
-                                <SingleSelectListItem
-                                    title={item.title}
-                                    isSelected={item === currentItem}
-                                    onClick={() => {
-                                        this.handleTimeChanged(item);
-                                        closeDropdown();
-                                    }}
-                                />
-                            )}
-                            maxVisibleItemsCount={maxVisibleItemsCount}
-                        />
-                    )}
+                    renderBody={({ closeDropdown, ariaAttributes }) => {
+                        const listboxItems: IUiListboxInteractiveItem<ITimeItem>[] = items.map((item) => ({
+                            type: "interactive",
+                            id: `${item.h}-${item.m}`,
+                            stringTitle: item.title,
+                            data: item,
+                        }));
+
+                        return (
+                            <UiListbox
+                                shouldKeyboardActionStopPropagation={true}
+                                shouldKeyboardActionPreventDefault={true}
+                                className="gd-timepicker-list s-timepicker-list"
+                                items={listboxItems}
+                                maxWidth={dropdownWidth}
+                                maxHeight={MAX_HEIGHT}
+                                selectedItemId={currentItem ? `${currentItem.h}-${currentItem.m}` : undefined}
+                                onSelect={(item) => {
+                                    this.handleTimeChanged(item.data);
+                                }}
+                                onClose={closeDropdown}
+                                ariaAttributes={ariaAttributes}
+                                InteractiveItemComponent={({ item, isSelected, onSelect, isFocused }) => {
+                                    return (
+                                        <SingleSelectListItem
+                                            title={item.stringTitle}
+                                            isSelected={isSelected}
+                                            isFocused={isFocused}
+                                            onClick={onSelect}
+                                            className="gd-timepicker-list-item"
+                                        />
+                                    );
+                                }}
+                            />
+                        );
+                    }}
                     overlayZIndex={overlayZIndex}
                 />
             </div>

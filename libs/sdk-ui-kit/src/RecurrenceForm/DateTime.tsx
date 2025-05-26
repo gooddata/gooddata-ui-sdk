@@ -5,7 +5,7 @@ import cx from "classnames";
 import { WeekStart } from "@gooddata/sdk-model";
 import { Datepicker } from "../Datepicker/index.js";
 import { Timepicker, normalizeTime } from "../Timepicker/index.js";
-import { DEFAULT_DROPDOWN_ZINDEX, MAX_VISIBLE_TIME_ITEMS_COUNT, TIME_ANCHOR } from "./constants.js";
+import { DEFAULT_DROPDOWN_ZINDEX, TIME_ANCHOR } from "./constants.js";
 import { defineMessages, FormattedMessage } from "react-intl";
 import { parseDate } from "../Datepicker/Datepicker.js";
 import { useIdPrefixed } from "../utils/useId.js";
@@ -126,7 +126,6 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
                 </div>
                 <Timepicker
                     className="gd-recurrence-form-datetime-time s-recurrence-form-datetime-time"
-                    maxVisibleItemsCount={MAX_VISIBLE_TIME_ITEMS_COUNT}
                     time={date}
                     onChange={handleTimeChange}
                     overlayPositionType="sameAsTarget"
