@@ -3,7 +3,7 @@ import { IAlertComparisonOperator } from "@gooddata/sdk-model";
 import { SingleSelectListItemType } from "@gooddata/sdk-ui-kit";
 import { messages } from "./messages.js";
 
-type OperatorItemType<T = IAlertComparisonOperator> = {
+export type OperatorItemType<T = IAlertComparisonOperator> = {
     title: string;
     icon: string;
     id: T;

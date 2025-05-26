@@ -4,15 +4,35 @@ import {
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
 } from "@gooddata/sdk-model";
-import { Button, Dropdown, List, OverlayPositionType, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
+import {
+    Button,
+    Dropdown,
+    OverlayPositionType,
+    SingleSelectListItem,
+    UiListbox,
+    IUiListboxInteractiveItem,
+    IUiListboxStaticItem,
+} from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import React, { useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { AlertMetric } from "../../types.js";
 
-import { DROPDOWN_ITEM_HEIGHT, DROPDOWN_SEPARATOR_ITEM_HEIGHT, OPERATORS } from "../constants.js";
+import { OPERATORS, OperatorItemType } from "../constants.js";
 import { useOperators } from "../hooks/useOperators.js";
+
+type SeparatorItem = {
+    type: "separator";
+};
+
+type HeaderItem = {
+    type: "header";
+    title?: string;
+    info?: string;
+};
+
+type StaticItemData = SeparatorItem | HeaderItem;
 
 export interface IAlertComparisonOperatorSelectProps {
     measure: AlertMetric | undefined;
@@ -62,7 +82,8 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
         <Dropdown
             closeOnParentScroll={closeOnParentScroll}
             overlayPositionType={overlayPositionType}
-            renderButton={({ isOpen, toggleDropdown }) => {
+            autofocusOnOpen={true}
+            renderButton={({ isOpen, toggleDropdown, buttonRef, dropdownId }) => {
                 return (
                     <div
                         ref={(item) => {
@@ -82,6 +103,12 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                             iconLeft={selectedComparisonItem?.icon ?? selectedRelativeItem?.icon}
                             iconRight={`gd-icon-navigate${isOpen ? "up" : "down"}`}
                             onClick={toggleDropdown}
+                            accessibilityConfig={{
+                                role: "button",
+                                popupId: dropdownId,
+                                isExpanded: isOpen,
+                            }}
+                            buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
                         >
                             {intl.formatMessage({
                                 id: selectedComparisonItem?.title ?? selectedRelativeItem?.title,
@@ -90,41 +117,80 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                     </div>
                 );
             }}
-            renderBody={({ closeDropdown }) => {
+            renderBody={({ closeDropdown, ariaAttributes }) => {
+                const listboxItems: Array<
+                    | IUiListboxInteractiveItem<OperatorItemType<string | IAlertComparisonOperator>>
+                    | IUiListboxStaticItem<StaticItemData>
+                > = operators.map((item: OperatorItemType<string | IAlertComparisonOperator>) => {
+                    if (item.type === "separator") {
+                        return {
+                            type: "static",
+                            data: { type: "separator" } as SeparatorItem,
+                        };
+                    } else if (item.type === "header") {
+                        return {
+                            type: "static",
+                            data: {
+                                type: "header",
+                                title: item.title,
+                                info: item.info,
+                            } as HeaderItem,
+                        };
+                    } else {
+                        return {
+                            type: "interactive",
+                            id: item.id.toString(),
+                            stringTitle: item.title ? intl.formatMessage({ id: item.title }) : "",
+                            data: item,
+                        };
+                    }
+                });
+
+                const selectedItemId = (selectedComparisonItem?.id ?? selectedRelativeItem?.id)?.toString();
+
                 return (
-                    <List
-                        width={ref.current?.offsetWidth}
+                    <UiListbox
+                        shouldKeyboardActionStopPropagation={true}
+                        shouldKeyboardActionPreventDefault={true}
                         className="gd-alert-comparison-operator-select__list s-alert-operator-select-list"
-                        items={operators}
-                        itemHeightGetter={(idx) =>
-                            operators[idx].type === "separator"
-                                ? DROPDOWN_SEPARATOR_ITEM_HEIGHT
-                                : DROPDOWN_ITEM_HEIGHT
-                        }
-                        renderItem={(prop) => {
+                        items={listboxItems}
+                        maxWidth={ref.current?.offsetWidth}
+                        selectedItemId={selectedItemId}
+                        onSelect={(item) => {
+                            const operatorItem = item.data;
+                            const [first, second] = operatorItem.id.toString().split(".");
+                            if (first && !second) {
+                                onComparisonOperatorChange(measure, first as IAlertComparisonOperator);
+                            }
+                            if (first && second) {
+                                onRelativeOperatorChange(
+                                    measure,
+                                    second as IAlertRelativeOperator,
+                                    first as IAlertRelativeArithmeticOperator,
+                                );
+                            }
+                        }}
+                        onClose={closeDropdown}
+                        ariaAttributes={ariaAttributes}
+                        InteractiveItemComponent={({ item, isSelected, onSelect, isFocused }) => {
                             return (
                                 <SingleSelectListItem
-                                    key={prop.rowIndex}
-                                    type={prop.item.type}
+                                    type={item.data.type}
                                     icon={
-                                        prop.item.icon ? (
+                                        item.data.icon ? (
                                             <div
                                                 className={cx(
                                                     "gd-alert-comparison-operator-select__icon",
-                                                    prop.item.icon,
+                                                    item.data.icon,
                                                 )}
                                             />
                                         ) : undefined
                                     }
-                                    title={
-                                        prop.item.title
-                                            ? intl.formatMessage({ id: prop.item.title })
-                                            : undefined
-                                    }
+                                    title={item.stringTitle}
                                     info={
-                                        prop.item.info ? (
+                                        item.data.info ? (
                                             <FormattedMessage
-                                                id={prop.item.info}
+                                                id={item.data.info}
                                                 values={{
                                                     spacer: (
                                                         <div className="gd-alert-comparison-operator-tooltip-spacer" />
@@ -133,24 +199,37 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                                             />
                                         ) : undefined
                                     }
-                                    isSelected={
-                                        prop.item === selectedComparisonItem ||
-                                        prop.item === selectedRelativeItem
+                                    isSelected={isSelected}
+                                    isFocused={isFocused}
+                                    onClick={onSelect}
+                                    className="gd-alert-comparison-operator-select__list-item"
+                                />
+                            );
+                        }}
+                        StaticItemComponent={({ item }) => {
+                            const headerItem = item.data.type === "header" ? item.data : undefined;
+
+                            return (
+                                <SingleSelectListItem
+                                    type={item.data.type}
+                                    title={
+                                        headerItem?.title
+                                            ? intl.formatMessage({ id: headerItem.title })
+                                            : undefined
                                     }
-                                    onClick={() => {
-                                        const [first, second] = prop.item.id.split(".");
-                                        if (first && !second) {
-                                            onComparisonOperatorChange(measure, first);
-                                        }
-                                        if (first && second) {
-                                            onRelativeOperatorChange(
-                                                measure,
-                                                second as IAlertRelativeOperator,
-                                                first as IAlertRelativeArithmeticOperator,
-                                            );
-                                        }
-                                        closeDropdown();
-                                    }}
+                                    info={
+                                        headerItem?.info ? (
+                                            <FormattedMessage
+                                                id={headerItem.info}
+                                                values={{
+                                                    spacer: (
+                                                        <div className="gd-alert-comparison-operator-tooltip-spacer" />
+                                                    ),
+                                                }}
+                                            />
+                                        ) : undefined
+                                    }
+                                    className="gd-alert-comparison-operator-select__list-item"
                                 />
                             );
                         }}
