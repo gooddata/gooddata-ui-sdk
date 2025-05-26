@@ -12,10 +12,12 @@ export function useAutocompletion({
     handleCompletion,
     aboveCursor,
     whenTyping,
+    activateOnTypingDelay,
 }: {
     handleCompletion: MutableRefObject<(context: any) => any>;
     aboveCursor?: boolean;
     whenTyping?: boolean;
+    activateOnTypingDelay?: number;
 }) {
     const autocompletionExtension = useMemo(() => {
         return autocompletion({
@@ -27,9 +29,10 @@ export function useAutocompletion({
                   ]
                 : [],
             activateOnTyping: whenTyping && Boolean(handleCompletion.current),
+            activateOnTypingDelay,
             aboveCursor,
         });
-    }, [handleCompletion, aboveCursor, whenTyping]);
+    }, [handleCompletion, aboveCursor, whenTyping, activateOnTypingDelay]);
 
     const autocompleteHoverExtension = useMemo(() => {
         return ViewPlugin.fromClass(

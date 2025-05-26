@@ -4465,6 +4465,7 @@ export interface ISyntaxHighlightingInputProps {
     // (undocumented)
     autocompletion?: {
         whenTyping?: boolean;
+        whenTypingDelay?: number;
         aboveCursor?: boolean;
     };
     // (undocumented)
