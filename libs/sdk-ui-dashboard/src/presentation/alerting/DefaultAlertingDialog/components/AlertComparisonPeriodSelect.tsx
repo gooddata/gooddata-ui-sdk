@@ -1,13 +1,12 @@
 // (C) 2022-2025 GoodData Corporation
 import { DateGranularity, IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { Button, Dropdown, List, OverlayPositionType, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
+import { Button, Dropdown, SingleSelectListItem, OverlayPositionType, UiListbox } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import React, { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { AlertMetric, AlertMetricComparator, AlertMetricComparatorType } from "../../types.js";
 
-import { DROPDOWN_ITEM_HEIGHT } from "../constants.js";
 import { translateGranularity } from "../utils/granularity.js";
 import { isChangeOrDifferenceOperator } from "../utils/guards.js";
 
@@ -95,7 +94,8 @@ export const AlertComparisonPeriodSelect = (props: IAlertComparisonPeriodSelectP
         <Dropdown
             closeOnParentScroll={closeOnParentScroll}
             overlayPositionType={overlayPositionType}
-            renderButton={({ isOpen, toggleDropdown }) => {
+            autofocusOnOpen={true}
+            renderButton={({ isOpen, toggleDropdown, buttonRef, dropdownId }) => {
                 return (
                     <Button
                         id={id}
@@ -112,30 +112,50 @@ export const AlertComparisonPeriodSelect = (props: IAlertComparisonPeriodSelectP
                                 "is-active": isOpen,
                             },
                         )}
+                        accessibilityConfig={{
+                            role: "button",
+                            popupId: dropdownId,
+                            isExpanded: isOpen,
+                        }}
+                        buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
                     >
                         <DropdownButtonLabel selectedOperator={selectedOperator} />
                     </Button>
                 );
             }}
-            renderBody={({ closeDropdown }) => {
+            renderBody={({ closeDropdown, ariaAttributes }) => {
+                const listboxItems = comparisons.map((comparison) => ({
+                    type: "interactive" as const,
+                    id: comparison.type.toString(),
+                    stringTitle: comparison.title,
+                    data: comparison,
+                }));
+
                 return (
-                    <List
+                    <UiListbox
+                        shouldKeyboardActionStopPropagation={true}
+                        shouldKeyboardActionPreventDefault={true}
                         className="gd-alert-comparison-select__list s-alert-comparison-select-list"
-                        items={comparisons}
-                        itemHeight={DROPDOWN_ITEM_HEIGHT}
-                        renderItem={(i) => (
-                            <SingleSelectListItem
-                                key={i.rowIndex}
-                                title={i.item.title}
-                                isSelected={i.item.type === selectedComparison}
-                                onClick={() => {
-                                    if (i.item.type !== selectedComparison) {
-                                        onComparisonChange(i.item.type);
-                                    }
-                                    closeDropdown();
-                                }}
-                            />
-                        )}
+                        items={listboxItems}
+                        selectedItemId={selectedComparison?.toString()}
+                        onSelect={(item) => {
+                            if (item.data.type !== selectedComparison) {
+                                onComparisonChange(item.data.type);
+                            }
+                        }}
+                        onClose={closeDropdown}
+                        ariaAttributes={ariaAttributes}
+                        InteractiveItemComponent={({ item, isSelected, onSelect, isFocused }) => {
+                            return (
+                                <SingleSelectListItem
+                                    title={item.stringTitle}
+                                    isSelected={isSelected}
+                                    isFocused={isFocused}
+                                    onClick={onSelect}
+                                    className="gd-alert-comparison-select__list-item"
+                                />
+                            );
+                        }}
                     />
                 );
             }}

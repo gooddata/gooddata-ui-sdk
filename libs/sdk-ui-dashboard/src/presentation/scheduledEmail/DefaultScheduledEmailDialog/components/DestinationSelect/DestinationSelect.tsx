@@ -6,10 +6,11 @@ import { FormattedMessage, useIntl } from "react-intl";
 import {
     Dropdown,
     DropdownButton,
-    DropdownList,
-    Hyperlink,
-    OverlayPositionType,
     SingleSelectListItem,
+    OverlayPositionType,
+    UiListbox,
+    IUiListboxInteractiveItem,
+    Hyperlink,
 } from "@gooddata/sdk-ui-kit";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS } from "../../constants.js";
 import { INotificationChannelMetadataObject } from "@gooddata/sdk-model";
@@ -76,33 +77,55 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
                     closeOnParentScroll={closeOnParentScroll}
                     alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
                     className="gd-notifications-channels-dialog-destination s-gd-notifications-channels-dialog-destination"
-                    renderButton={({ toggleDropdown, dropdownId, isOpen }) => (
+                    autofocusOnOpen={true}
+                    renderButton={({ toggleDropdown, dropdownId, isOpen, buttonRef }) => (
                         <DropdownButton
                             id={accessibilityValue}
                             value={selectedItem?.title}
                             onClick={toggleDropdown}
                             className="gd-notifications-channels-dialog-destination-button"
+                            buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
                             dropdownId={dropdownId}
                             isOpen={isOpen}
                         />
                     )}
-                    renderBody={({ closeDropdown, isMobile }) => (
-                        <DropdownList
-                            width={DROPDOWN_WIDTH}
-                            items={items}
-                            isMobile={isMobile}
-                            renderItem={({ item }) => (
-                                <SingleSelectListItem
-                                    title={item.title}
-                                    onClick={() => {
-                                        onChange(item.id);
-                                        closeDropdown();
-                                    }}
-                                    isSelected={selectedItem?.id === item.id}
-                                />
-                            )}
-                        />
-                    )}
+                    renderBody={({ closeDropdown, ariaAttributes }) => {
+                        const listboxItems: IUiListboxInteractiveItem<IDestinationItem>[] = items.map(
+                            (item) => ({
+                                type: "interactive",
+                                id: item.id,
+                                stringTitle: item.title,
+                                data: item,
+                            }),
+                        );
+
+                        return (
+                            <UiListbox
+                                shouldKeyboardActionStopPropagation={true}
+                                shouldKeyboardActionPreventDefault={true}
+                                className="gd-notifications-channels-dialog-destination-list s-gd-notifications-channels-dialog-destination-list"
+                                items={listboxItems}
+                                maxWidth={DROPDOWN_WIDTH}
+                                selectedItemId={selectedItemId}
+                                onSelect={(item) => {
+                                    onChange(item.id);
+                                }}
+                                onClose={closeDropdown}
+                                ariaAttributes={ariaAttributes}
+                                InteractiveItemComponent={({ item, isSelected, onSelect, isFocused }) => {
+                                    return (
+                                        <SingleSelectListItem
+                                            title={item.stringTitle}
+                                            isSelected={isSelected}
+                                            isFocused={isFocused}
+                                            onClick={onSelect}
+                                            className="gd-notifications-channels-dialog-destination-list-item"
+                                        />
+                                    );
+                                }}
+                            />
+                        );
+                    }}
                 />
             )}
         </div>

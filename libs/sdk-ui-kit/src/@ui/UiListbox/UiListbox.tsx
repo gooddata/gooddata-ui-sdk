@@ -22,7 +22,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     className,
     itemClassName,
     maxWidth,
-
+    maxHeight,
     onSelect,
     onClose,
     onUnhandledKeyDown = firstCharacterSearch,
@@ -168,7 +168,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     );
 
     return (
-        <div className={cx(b(), className)} style={{ maxWidth }}>
+        <div className={cx(b(), className)} style={{ maxWidth, maxHeight }}>
             <ul
                 className={e("items")}
                 tabIndex={0}

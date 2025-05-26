@@ -415,3 +415,12 @@
         background-color: kit-variables.$gd-palette-error-dimmed;
     }
 }
+
+// Common styles for UiListbox items
+.gd-alert-destination-select__list-item.gd-list-item,
+.gd-alert-trigger-mode-select__list-item.gd-list-item,
+.gd-alert-measure-select__list-item.gd-list-item,
+.gd-alert-comparison-operator-select__list-item.gd-list-item,
+.gd-alert-comparison-select__list-item.gd-list-item {
+    height: 28px;
+}

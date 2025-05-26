@@ -4306,6 +4306,8 @@ export interface ISingleSelectListItemProps {
     // (undocumented)
     infoRenderer?: (info: string | ReactNode | React_2.FC) => ReactNode;
     // (undocumented)
+    isFocused?: boolean;
+    // (undocumented)
     isMenu?: boolean;
     // (undocumented)
     isSelected?: boolean;
@@ -5703,7 +5705,7 @@ export interface UiIconProps {
 }
 
 // @internal
-export function UiListbox<InteractiveItemData, StaticItemData>({ items, className, itemClassName, maxWidth, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, ariaAttributes, }: UiListboxProps<InteractiveItemData, StaticItemData>): React_2.ReactNode;
+export function UiListbox<InteractiveItemData, StaticItemData>({ items, className, itemClassName, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, ariaAttributes, }: UiListboxProps<InteractiveItemData, StaticItemData>): React_2.ReactNode;
 
 // @internal (undocumented)
 export interface UiListboxInteractiveItemProps<T> {
@@ -5731,6 +5733,8 @@ export interface UiListboxProps<InteractiveItemData, StaticItemData = React_2.Re
     itemClassName?: string;
     // (undocumented)
     items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
+    // (undocumented)
+    maxHeight?: number;
     // (undocumented)
     maxWidth?: number;
     // (undocumented)

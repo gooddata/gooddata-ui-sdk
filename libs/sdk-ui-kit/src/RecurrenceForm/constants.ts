@@ -1,7 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
 export const TIME_ANCHOR = 60; // 1 hour granularity for time picker
-export const MAX_VISIBLE_TIME_ITEMS_COUNT = 5;
 
 export const DEFAULT_LOCALE = "en-US";
 export const DEFAULT_DATE_FORMAT = "yyyy-MM-dd";

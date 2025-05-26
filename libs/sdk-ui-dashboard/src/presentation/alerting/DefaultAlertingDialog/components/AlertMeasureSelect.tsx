@@ -1,13 +1,12 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { useRef } from "react";
-import { Dropdown, Button, List, SingleSelectListItem, OverlayPositionType } from "@gooddata/sdk-ui-kit";
+import { Dropdown, Button, SingleSelectListItem, OverlayPositionType, UiListbox } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { AlertMetric } from "../../types.js";
 
 import { getMeasureTitle } from "../utils/getters.js";
-import { DROPDOWN_ITEM_HEIGHT } from "../constants.js";
 
 export interface IAlertMetricSelectProps {
     id?: string;
@@ -38,7 +37,8 @@ export const AlertMeasureSelect = ({
         <Dropdown
             closeOnParentScroll={closeOnParentScroll}
             overlayPositionType={overlayPositionType}
-            renderButton={({ isOpen, toggleDropdown }) => {
+            autofocusOnOpen={true}
+            renderButton={({ isOpen, toggleDropdown, buttonRef, dropdownId }) => {
                 return (
                     <div
                         ref={(item) => {
@@ -55,31 +55,56 @@ export const AlertMeasureSelect = ({
                             iconLeft={selectedMeasure ? "gd-icon-metric" : undefined}
                             iconRight={`gd-icon-navigate${isOpen ? "up" : "down"}`}
                             onClick={toggleDropdown}
+                            accessibilityConfig={{
+                                role: "button",
+                                popupId: dropdownId,
+                                isExpanded: isOpen,
+                            }}
+                            buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
                         >
                             {selectedMeasureTitle}
                         </Button>
                     </div>
                 );
             }}
-            renderBody={({ closeDropdown }) => {
+            renderBody={({ closeDropdown, ariaAttributes }) => {
+                const listboxItems = measures.map((measure, index) => ({
+                    type: "interactive" as const,
+                    id: `measure-${index}`,
+                    stringTitle: getMeasureTitle(measure.measure) ?? "",
+                    data: measure,
+                }));
+
+                const selectedIndex = measures.findIndex(
+                    (m) => selectedMeasure && m.measure === selectedMeasure.measure,
+                );
+                const selectedId = selectedIndex !== -1 ? `measure-${selectedIndex}` : undefined;
+
                 return (
-                    <List
-                        width={ref.current?.offsetWidth}
+                    <UiListbox
+                        shouldKeyboardActionStopPropagation={true}
+                        shouldKeyboardActionPreventDefault={true}
                         className="gd-alert-measure-select__list s-alert-measure-select-list"
-                        items={measures}
-                        itemHeight={DROPDOWN_ITEM_HEIGHT}
-                        renderItem={(i) => (
-                            <SingleSelectListItem
-                                key={i.rowIndex}
-                                icon={measureIcon}
-                                title={getMeasureTitle(i.item.measure)}
-                                isSelected={i.item.measure === selectedMeasure?.measure}
-                                onClick={() => {
-                                    onMeasureChange(i.item);
-                                    closeDropdown();
-                                }}
-                            />
-                        )}
+                        items={listboxItems}
+                        maxWidth={ref.current?.offsetWidth}
+                        selectedItemId={selectedId}
+                        onSelect={(item) => {
+                            onMeasureChange(item.data);
+                        }}
+                        onClose={closeDropdown}
+                        ariaAttributes={ariaAttributes}
+                        InteractiveItemComponent={({ item, isSelected, onSelect, isFocused }) => {
+                            return (
+                                <SingleSelectListItem
+                                    icon={measureIcon}
+                                    title={item.stringTitle}
+                                    isSelected={isSelected}
+                                    isFocused={isFocused}
+                                    onClick={onSelect}
+                                    className="gd-alert-measure-select__list-item"
+                                />
+                            );
+                        }}
                     />
                 );
             }}

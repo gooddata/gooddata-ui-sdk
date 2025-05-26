@@ -1,8 +1,14 @@
 // (C) 2024-2025 GoodData Corporation
 import React from "react";
-import { Dropdown, Button, List, SingleSelectListItem, OverlayPositionType } from "@gooddata/sdk-ui-kit";
+import {
+    Dropdown,
+    Button,
+    SingleSelectListItem,
+    OverlayPositionType,
+    UiListbox,
+    IUiListboxItem,
+} from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import { DROPDOWN_ITEM_HEIGHT } from "../constants.js";
 import { IAlertTriggerMode } from "@gooddata/sdk-model";
 import { useIntl } from "react-intl";
 import { messages } from "../messages.js";
@@ -44,7 +50,8 @@ export const AlertTriggerModeSelect = ({
             <Dropdown
                 closeOnParentScroll={closeOnParentScroll}
                 overlayPositionType={overlayPositionType}
-                renderButton={({ isOpen, toggleDropdown }) => {
+                autofocusOnOpen={true}
+                renderButton={({ isOpen, toggleDropdown, buttonRef, dropdownId }) => {
                     return (
                         <Button
                             id={id}
@@ -58,30 +65,51 @@ export const AlertTriggerModeSelect = ({
                                     "is-active": isOpen,
                                 },
                             )}
+                            accessibilityConfig={{
+                                role: "button",
+                                popupId: dropdownId,
+                                isExpanded: isOpen,
+                            }}
+                            buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
                         >
                             {selectedOption ? intl.formatMessage({ id: selectedOption.title }) : ""}
                         </Button>
                     );
                 }}
-                renderBody={({ closeDropdown }) => {
+                renderBody={({ closeDropdown, ariaAttributes }) => {
+                    const listboxItems: IUiListboxItem<{ title: string; id: IAlertTriggerMode }>[] =
+                        options.map((option) => ({
+                            type: "interactive",
+                            id: option.id,
+                            stringTitle: intl.formatMessage({ id: option.title }),
+                            data: option,
+                        }));
+
                     return (
-                        <List
+                        <UiListbox
+                            shouldKeyboardActionStopPropagation={true}
+                            shouldKeyboardActionPreventDefault={true}
                             className="gd-alert-trigger-mode-select__list s-alert-trigger-mode-select-list"
-                            items={options}
-                            itemHeight={DROPDOWN_ITEM_HEIGHT}
-                            renderItem={(i) => (
-                                <SingleSelectListItem
-                                    key={i.rowIndex}
-                                    title={intl.formatMessage({ id: i.item.title })}
-                                    isSelected={i.item === selectedOption}
-                                    onClick={() => {
-                                        if (selectedTriggerMode !== i.item.id) {
-                                            onTriggerModeChange(i.item.id);
-                                        }
-                                        closeDropdown();
-                                    }}
-                                />
-                            )}
+                            items={listboxItems}
+                            selectedItemId={selectedTriggerMode}
+                            onSelect={(item) => {
+                                if (selectedTriggerMode !== item.id) {
+                                    onTriggerModeChange(item.id as IAlertTriggerMode);
+                                }
+                            }}
+                            onClose={closeDropdown}
+                            ariaAttributes={ariaAttributes}
+                            InteractiveItemComponent={({ item, isSelected, onSelect, isFocused }) => {
+                                return (
+                                    <SingleSelectListItem
+                                        title={item.stringTitle}
+                                        isSelected={isSelected}
+                                        isFocused={isFocused}
+                                        onClick={onSelect}
+                                        className="gd-alert-trigger-mode-select__list-item"
+                                    />
+                                );
+                            }}
                         />
                     );
                 }}
