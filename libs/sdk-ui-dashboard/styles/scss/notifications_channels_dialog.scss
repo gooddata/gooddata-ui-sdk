@@ -869,3 +869,8 @@ $min-content-height: 110px;
 .gd-notifications-channels-dialog-destination-list-item.gd-list-item {
     height: 28px;
 }
+
+// Fix label width for recurrence form
+.gd-recurrence-form .gd-input-component .gd-label {
+    min-width: unset;
+}
