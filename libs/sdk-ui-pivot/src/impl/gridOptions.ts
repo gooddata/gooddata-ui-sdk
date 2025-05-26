@@ -12,6 +12,7 @@ import { MIN_WIDTH } from "./resizing/columnSizing.js";
 import { headerClassFactory } from "./structure/colDefHeaderClass.js";
 import ColumnGroupHeader from "./structure/headers/ColumnGroupHeader.js";
 import { onCellClickedFactory } from "./cell/onCellClick.js";
+import { onCellKeyDownFactory } from "./cell/onCellKeyDown.js";
 import {
     COLUMN_ATTRIBUTE_COLUMN,
     DEFAULT_AUTOSIZE_PADDING,
@@ -64,6 +65,7 @@ export function createGridOptions(
     const effectivePageSize = Math.min(pageSize!, totalRowCount + extraTotalsBuffer);
 
     const commonHeaderComponentParams: ICommonHeaderParams = {
+        getLastSortedColId: tableMethods.getLastSortedColId,
         onMenuAggregationClick: tableMethods.onMenuAggregationClick,
         getTableDescriptor: () => table.tableDescriptor,
         getExecutionDefinition: tableMethods.getExecutionDefinition,
@@ -101,6 +103,7 @@ export function createGridOptions(
             },
         },
         onCellClicked: onCellClickedFactory(table, props),
+        onCellKeyDown: onCellKeyDownFactory(table, props),
         onSortChanged: tableMethods.onSortChanged,
         onColumnResized: tableMethods.onGridColumnResized,
         onGridColumnsChanged: tableMethods.onGridColumnsChanged,
@@ -109,7 +112,8 @@ export function createGridOptions(
 
         // Basic options
         suppressMovableColumns: true,
-        suppressCellFocus: true,
+        suppressCellFocus: false,
+        suppressHeaderFocus: false,
         suppressAutoSize: tableMethods.hasColumnWidths,
 
         // infinite scrolling model

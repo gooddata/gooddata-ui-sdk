@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { IExecutionDefinition, ITotal, TotalType, ISeparators } from "@gooddata/sdk-model";
 import { ColumnWidthItem } from "../columnWidths.js";
 import {
@@ -57,6 +58,10 @@ export type TableDataCallbacks = {
  * Accessors for static and dynamic table configuration.
  */
 export type TableConfigAccessors = {
+    /**
+     * Returns the last sorted column id (for focus/restore)
+     */
+    getLastSortedColId?: () => string | null;
     hasColumnWidths: boolean;
 
     getExecutionDefinition: () => IExecutionDefinition;

@@ -1,8 +1,10 @@
 // (C) 2007-2025 GoodData Corporation
-import { IHeaderParams } from "ag-grid-community";
+import { IHeaderParams, HeaderFocusedEvent, ColumnEvent } from "ag-grid-community";
+
 import React, { useEffect, useState } from "react";
 import cx from "classnames";
 import { IMenu } from "../../../publicTypes.js";
+import { SortDirection } from "@gooddata/sdk-model";
 
 import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT, ICommonHeaderParams } from "./HeaderCell.js";
 import {
@@ -12,7 +14,6 @@ import {
     isMixedHeadersCol,
     isMixedValuesCol,
 } from "../tableDescriptorTypes.js";
-import { SortDirection } from "@gooddata/sdk-model";
 
 export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {
     className?: string;
@@ -24,38 +25,60 @@ export interface IColumnHeaderState {
 }
 
 const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
-    const [sorting, setSorting] = useState<SortDirection | undefined>(
-        props.column.getSort() as SortDirection,
-    );
+    const {
+        className,
+        column,
+        api,
+        getTableDescriptor,
+        displayName,
+        enableSorting,
+        menu,
+        getLastSortedColId,
+        progressSort,
+    } = props;
 
+    const [sorting, setSorting] = useState<SortDirection | undefined>(column.getSort() as SortDirection);
+
+    // Only sync sort state locally; sorted column id is tracked at table level.
     useEffect(() => {
-        const getCurrentSortDirection = () => {
-            const currentSort: SortDirection = props.column.getSort() as SortDirection;
+        const syncSortState = (_event: ColumnEvent<"sortChanged", any, any>) => {
+            const currentSort: SortDirection = column.getSort() as SortDirection;
             setSorting(currentSort);
         };
-
-        props.column.addEventListener("sortChanged", getCurrentSortDirection);
+        column.addEventListener("sortChanged", syncSortState);
         return () => {
-            props.column.removeEventListener("sortChanged", getCurrentSortDirection);
+            column.removeEventListener("sortChanged", syncSortState);
         };
-    }, [props.column]);
+    }, [column]);
 
-    const getDefaultSortDirection = (): SortDirection => {
-        return isSliceCol(getColDescriptor()) ? "asc" : "desc";
-    };
-
-    const onSortRequested = (sortDir: SortDirection): void => {
+    const onSortRequested = (): void => {
         const multiSort = false;
-
-        props.setSort(sortDir, multiSort);
-        props.api.refreshHeader();
+        progressSort(multiSort);
+        api.refreshHeader();
     };
+
+    useEffect(() => {
+        if (!api) {
+            return;
+        }
+        const handleDataReloaded = () => {
+            const lastSortedColId = getLastSortedColId?.();
+            // Restore focus to the header cell
+            if (lastSortedColId) {
+                const colId = getLastSortedColId?.();
+                if (colId) {
+                    api.setFocusedHeader(colId);
+                }
+            }
+        };
+        api.addEventListener("modelUpdated", handleDataReloaded);
+        return () => api.removeEventListener("modelUpdated", handleDataReloaded);
+    }, [api, getLastSortedColId]);
 
     const getColDescriptor = () => {
         return props.getTableDescriptor().getCol(props.column);
     };
 
-    const { className, getTableDescriptor, displayName, enableSorting, menu, column } = props;
     const col = getColDescriptor();
     const textAlign =
         isSliceCol(col) ||
@@ -78,6 +101,29 @@ const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
         ? (isSliceMeasureCol(col) && displayName) || isMixedHeadersCol(col)
         : true;
 
+    const [isFocused, setIsFocused] = useState(false);
+
+    useEffect(() => {
+        if (!api) {
+            return;
+        }
+        const handleFocusChange = (event: HeaderFocusedEvent) => {
+            const focusedColId = event.column.isColumn ? event.column.getColId() : event.column.getGroupId();
+            const myColId = column.getColId();
+            setIsFocused(focusedColId === myColId);
+        };
+        const handleCellFocused = () => {
+            setIsFocused(false);
+        };
+        api.addEventListener("headerFocused", handleFocusChange);
+        api.addEventListener("cellFocused", handleCellFocused);
+
+        return () => {
+            api.removeEventListener("headerFocused", handleFocusChange);
+            api.removeEventListener("cellFocused", handleCellFocused);
+        };
+    }, [api, column]);
+
     return (
         <HeaderCell
             className={cx("s-pivot-table-column-header", className)}
@@ -85,7 +131,7 @@ const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
             displayText={displayName}
             enableSorting={isSortingEnabled}
             sortDirection={sorting}
-            defaultSortDirection={getDefaultSortDirection()}
+            defaultSortDirection={column.getColDef().sortingOrder?.[0] ?? undefined}
             onSortClick={onSortRequested}
             onMenuAggregationClick={props.onMenuAggregationClick}
             menu={showMenu ? menu?.() : undefined}
@@ -95,6 +141,7 @@ const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
             getColumnTotals={props.getColumnTotals}
             getRowTotals={props.getRowTotals}
             intl={props.intl}
+            isFocused={isFocused}
         />
     );
 };

@@ -712,6 +712,11 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             return;
         }
 
+        // Find the sorted column id (first column with a sort direction)
+        // This will not work once multi-column sorting is supported
+        const sortedCol = event.columns?.find((col) => col.getSort() !== undefined);
+        this.setLastSortedColId(sortedCol ? sortedCol.getColId() : null);
+
         const sortItems = this.internal.table.createSortItems(event.api.getAllGridColumns()!);
 
         // Changing sort may cause subtotals to no longer be reasonably placed - remove them if that is the case
@@ -836,6 +841,10 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     };
 
     private onLoadingChanged = (loadingState: ILoadingState): void => {
+        if (this.state.isLoading && !loadingState.isLoading) {
+            this.setLastSortedColId(null);
+        }
+
         const { onLoadingChanged } = this.props;
 
         if (onLoadingChanged) {
@@ -1045,6 +1054,14 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     // Table configuration accessors
     //
 
+    private getLastSortedColId = (): string | null => {
+        return this.internal.lastSortedColId;
+    };
+
+    private setLastSortedColId = (colId: string | null): void => {
+        this.internal.lastSortedColId = colId;
+    };
+
     private getColumnTotals = () => {
         return this.state.columnTotals;
     };
@@ -1183,7 +1200,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             getColumnHeadersPosition: this.getColumnHeadersPosition,
             getMeasureGroupDimension: this.getMeasureGroupDimension,
             getResizingConfig: this.getResizingConfig,
-
+            getLastSortedColId: this.getLastSortedColId,
             onLoadingChanged: this.onLoadingChanged,
             onError: this.onError,
             onExportReady: this.props.onExportReady ?? noop,

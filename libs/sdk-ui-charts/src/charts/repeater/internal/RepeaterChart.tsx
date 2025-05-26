@@ -179,7 +179,8 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
                 datasource={dataSource}
                 rowModelType="infinite"
                 rowHeight={rowHeight}
-                suppressCellFocus={true}
+                suppressCellFocus={false}
+                suppressHeaderFocus={false}
                 suppressMovableColumns={true}
                 onCellClicked={onCellClicked}
                 onGridReady={(e) => {

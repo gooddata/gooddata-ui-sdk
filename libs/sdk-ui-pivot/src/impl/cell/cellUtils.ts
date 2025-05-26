@@ -1,8 +1,12 @@
 // (C) 2007-2025 GoodData Corporation
 import cx from "classnames";
-import { DataValue, ISeparators } from "@gooddata/sdk-model";
-import { CellStyle } from "ag-grid-community";
+import { DataValue, ISeparators, isResultTotalHeader } from "@gooddata/sdk-model";
+import { CellStyle, ColDef } from "ag-grid-community";
 import { ClientFormatterFacade, IFormattedResult } from "@gooddata/number-formatter";
+import { AnyCol, isMixedValuesCol, isScopeCol } from "../structure/tableDescriptorTypes.js";
+import { IGridRow } from "../data/resultTypes.js";
+import { ColumnHeadersPosition } from "src/publicTypes.js";
+import { COLUMN_TOTAL, COLUMN_SUBTOTAL } from "../base/constants.js";
 
 export interface ITableCellStyle {
     backgroundColor?: string;
@@ -70,4 +74,42 @@ export function getMeasureCellStyle(
         ...(color && { color }),
         ...(backgroundColor && { backgroundColor }),
     };
+}
+
+export function getColumnTotalOrSubTotalInfo(
+    colDef: ColDef,
+    col: AnyCol,
+    row: IGridRow,
+    isTransposed: boolean,
+    columnHeadersPosition: ColumnHeadersPosition,
+) {
+    if (columnHeadersPosition === "left" && isTransposed) {
+        if (Object.keys(row.headerItemMap).length > 0) {
+            return {
+                isColumnTotal:
+                    isMixedValuesCol(col) &&
+                    isResultTotalHeader(row.headerItemMap[col.id]) &&
+                    col.isTotal === true,
+                isColumnSubtotal:
+                    isMixedValuesCol(col) &&
+                    isResultTotalHeader(row.headerItemMap[col.id]) &&
+                    col.isSubtotal === true,
+            };
+        } else {
+            return {
+                isColumnTotal: isMixedValuesCol(col) && col.isTotal === true,
+                isColumnSubtotal: isMixedValuesCol(col) && col.isSubtotal === true,
+            };
+        }
+    } else if (isTransposed) {
+        return {
+            isColumnTotal: isScopeCol(col) && col.isTotal === true,
+            isColumnSubtotal: isScopeCol(col) && col.isSubtotal === true,
+        };
+    } else {
+        return {
+            isColumnTotal: colDef.type === COLUMN_TOTAL,
+            isColumnSubtotal: colDef.type === COLUMN_SUBTOTAL,
+        };
+    }
 }

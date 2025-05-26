@@ -1,5 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
-import { ColDef, ColGroupDef } from "ag-grid-community";
+import { ColDef, ColGroupDef, SortDirection } from "ag-grid-community";
 import findIndex from "lodash/findIndex.js";
 import { IntlShape } from "react-intl";
 import {
@@ -58,6 +58,9 @@ function getSortProp(
         : {};
 }
 
+const DESC_FIRST = ["desc", "asc"] as SortDirection[];
+const ASC_FIRST = ["asc", "desc"] as SortDirection[];
+
 function createAndAddSliceColDefs(rows: SliceCol[], measureCols: SliceMeasureCol[], state: TransformState) {
     for (const row of rows) {
         const sortProp = getSortProp(state.initialSorts, (s) => attributeSortMatcher(row, s));
@@ -70,6 +73,7 @@ function createAndAddSliceColDefs(rows: SliceCol[], measureCols: SliceMeasureCol
             headerName,
             headerTooltip: headerName,
             ...sortProp,
+            sortingOrder: sortProp.sort === "desc" ? DESC_FIRST : ASC_FIRST,
         };
 
         state.rowColDefs.push(colDef);
@@ -231,6 +235,7 @@ function createColumnHeadersFromDescriptors(
                     headerName,
                     headerTooltip: headerName,
                     ...sortProp,
+                    sortingOrder: sortProp.sort === "asc" ? ASC_FIRST : DESC_FIRST,
                 };
 
                 colDefs.push(colDef);

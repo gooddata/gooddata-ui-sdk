@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     AnyCol,
     ScopeCol,
@@ -70,9 +70,15 @@ export function createMixedValuesColHeaders(col: MixedValuesCol, row: IGridRow):
 export function createSliceColHeaders(col: SliceCol, row: IGridRow): IMappingHeader[] {
     const result: IMappingHeader[] = [];
 
-    const attributeElement = row.headerItemMap[col.id];
+    if (!row.headerItemMap) {
+        return [];
+    }
 
-    invariant(attributeElement, `unable to obtain attribute element for row of a slicing column ${col.id}`);
+    const attributeElement = row.headerItemMap[col.id];
+    if (!attributeElement) {
+        return [];
+    }
+
     invariant(isResultAttributeHeader(attributeElement), `bad header for row data ${col.id}`);
 
     result.push(attributeElement);
