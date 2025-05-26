@@ -1,5 +1,5 @@
-// (C) 2021 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit";
+// (C) 2021-2025 GoodData Corporation
+import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import { drillReducers } from "./drillReducers.js";
 import { drillInitialState } from "./drillState.js";
 

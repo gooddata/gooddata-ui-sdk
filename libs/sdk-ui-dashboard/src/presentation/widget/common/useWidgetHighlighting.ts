@@ -15,7 +15,7 @@ import {
     selectWidgets,
     useDashboardSelector,
 } from "../../../model/index.js";
-import { createSelector } from "@reduxjs/toolkit";
+import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const selectIsWidgetHighlighted = (widget: IWidget) =>

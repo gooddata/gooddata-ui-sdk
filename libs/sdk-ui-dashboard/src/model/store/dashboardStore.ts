@@ -1,5 +1,6 @@
 // (C) 2021-2025 GoodData Corporation
-import { combineReducers, configureStore, EnhancedStore, Middleware } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { EnhancedStore, Middleware } from "@reduxjs/toolkit";
 import defaultReduxSaga, { Saga, SagaIterator, Task } from "redux-saga";
 import { enableBatching } from "redux-batched-actions";
 import { v4 as uuidv4 } from "uuid";

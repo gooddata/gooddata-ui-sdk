@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 
 import { filterViewsInitialState } from "./filterViewsState.js";
 import { filterViewsReducers } from "./filterViewsReducers.js";

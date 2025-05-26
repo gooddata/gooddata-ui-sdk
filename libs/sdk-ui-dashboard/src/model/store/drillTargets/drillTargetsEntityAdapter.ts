@@ -1,5 +1,5 @@
-// (C) 2021-2023 GoodData Corporation
-import { createEntityAdapter } from "@reduxjs/toolkit";
+// (C) 2021-2025 GoodData Corporation
+import { createEntityAdapter } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
 import { objRef } from "../../utils/objRef.js";

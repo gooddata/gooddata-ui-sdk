@@ -1,5 +1,5 @@
-// (C) 2021-2024 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit";
+// (C) 2021-2025 GoodData Corporation
+import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import { layoutInitialState } from "./layoutState.js";
 import { layoutReducers } from "./layoutReducers.js";
 

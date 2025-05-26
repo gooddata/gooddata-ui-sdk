@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { IDashboardQueryService } from "./queryService.js";
 import { Saga, SagaIterator } from "redux-saga";
@@ -6,7 +6,8 @@ import { actionChannel, call, spawn, take } from "redux-saga/effects";
 import { IDashboardQuery } from "../../queries/index.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import keyBy from "lodash/keyBy.js";
-import { Action, CombinedState, combineReducers, Reducer } from "@reduxjs/toolkit";
+import { combineReducers } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import { Action, CombinedState, Reducer } from "@reduxjs/toolkit";
 import fromPairs from "lodash/fromPairs.js";
 import noop from "lodash/noop.js";
 import compact from "lodash/compact.js";

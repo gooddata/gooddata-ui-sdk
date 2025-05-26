@@ -1,5 +1,5 @@
-// (C) 2023-2024 GoodData Corporation
-import { createSelector } from "@reduxjs/toolkit";
+// (C) 2023-2025 GoodData Corporation
+import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 
 import { DashboardSelector, DashboardState } from "../types.js";
 import {
