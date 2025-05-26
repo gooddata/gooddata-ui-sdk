@@ -4,15 +4,7 @@ import {
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
 } from "@gooddata/sdk-model";
-import {
-    Button,
-    Dropdown,
-    OverlayPositionType,
-    SingleSelectListItem,
-    UiListbox,
-    IUiListboxInteractiveItem,
-    IUiListboxStaticItem,
-} from "@gooddata/sdk-ui-kit";
+import { Button, Dropdown, OverlayPositionType, SingleSelectListItem, UiListbox } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import React, { useRef } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -118,27 +110,24 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                 );
             }}
             renderBody={({ closeDropdown, ariaAttributes }) => {
-                const listboxItems: Array<
-                    | IUiListboxInteractiveItem<OperatorItemType<string | IAlertComparisonOperator>>
-                    | IUiListboxStaticItem<StaticItemData>
-                > = operators.map((item: OperatorItemType<string | IAlertComparisonOperator>) => {
+                const listboxItems = operators.map((item) => {
                     if (item.type === "separator") {
                         return {
-                            type: "static",
-                            data: { type: "separator" } as SeparatorItem,
+                            type: "static" as const,
+                            data: { type: "separator" as const },
                         };
                     } else if (item.type === "header") {
                         return {
-                            type: "static",
+                            type: "static" as const,
                             data: {
-                                type: "header",
+                                type: "header" as const,
                                 title: item.title,
                                 info: item.info,
-                            } as HeaderItem,
+                            },
                         };
                     } else {
                         return {
-                            type: "interactive",
+                            type: "interactive" as const,
                             id: item.id.toString(),
                             stringTitle: item.title ? intl.formatMessage({ id: item.title }) : "",
                             data: item,
@@ -149,7 +138,7 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                 const selectedItemId = (selectedComparisonItem?.id ?? selectedRelativeItem?.id)?.toString();
 
                 return (
-                    <UiListbox
+                    <UiListbox<OperatorItemType<string | IAlertComparisonOperator>, StaticItemData>
                         shouldKeyboardActionStopPropagation={true}
                         shouldKeyboardActionPreventDefault={true}
                         className="gd-alert-comparison-operator-select__list s-alert-operator-select-list"

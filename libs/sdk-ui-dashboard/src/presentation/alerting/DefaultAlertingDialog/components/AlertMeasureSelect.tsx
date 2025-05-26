@@ -1,14 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { useRef } from "react";
-import {
-    Dropdown,
-    Button,
-    SingleSelectListItem,
-    OverlayPositionType,
-    UiListbox,
-    IUiListboxItem,
-    IUiListboxInteractiveItem,
-} from "@gooddata/sdk-ui-kit";
+import { Dropdown, Button, SingleSelectListItem, OverlayPositionType, UiListbox } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
@@ -76,15 +68,12 @@ export const AlertMeasureSelect = ({
                 );
             }}
             renderBody={({ closeDropdown, ariaAttributes }) => {
-                const listboxItems: IUiListboxItem<AlertMetric>[] = measures.map(
-                    (measure, index) =>
-                        ({
-                            type: "interactive",
-                            id: `measure-${index}`,
-                            stringTitle: getMeasureTitle(measure.measure),
-                            data: measure,
-                        } as IUiListboxInteractiveItem<AlertMetric>),
-                );
+                const listboxItems = measures.map((measure, index) => ({
+                    type: "interactive" as const,
+                    id: `measure-${index}`,
+                    stringTitle: getMeasureTitle(measure.measure) ?? "",
+                    data: measure,
+                }));
 
                 const selectedIndex = measures.findIndex(
                     (m) => selectedMeasure && m.measure === selectedMeasure.measure,

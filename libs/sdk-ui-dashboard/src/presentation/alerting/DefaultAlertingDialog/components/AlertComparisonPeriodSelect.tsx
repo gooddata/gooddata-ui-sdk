@@ -1,13 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 import { DateGranularity, IAutomationMetadataObject } from "@gooddata/sdk-model";
-import {
-    Button,
-    Dropdown,
-    SingleSelectListItem,
-    OverlayPositionType,
-    UiListbox,
-    IUiListboxInteractiveItem,
-} from "@gooddata/sdk-ui-kit";
+import { Button, Dropdown, SingleSelectListItem, OverlayPositionType, UiListbox } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import React, { useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -16,11 +9,6 @@ import { AlertMetric, AlertMetricComparator, AlertMetricComparatorType } from ".
 
 import { translateGranularity } from "../utils/granularity.js";
 import { isChangeOrDifferenceOperator } from "../utils/guards.js";
-
-interface ComparisonItem {
-    title: string;
-    type: AlertMetricComparatorType;
-}
 
 export interface IAlertComparisonPeriodSelectProps {
     alert: IAutomationMetadataObject | undefined;
@@ -136,14 +124,12 @@ export const AlertComparisonPeriodSelect = (props: IAlertComparisonPeriodSelectP
                 );
             }}
             renderBody={({ closeDropdown, ariaAttributes }) => {
-                const listboxItems: IUiListboxInteractiveItem<ComparisonItem>[] = comparisons.map(
-                    (comparison) => ({
-                        type: "interactive",
-                        id: comparison.type.toString(),
-                        stringTitle: comparison.title,
-                        data: comparison,
-                    }),
-                );
+                const listboxItems = comparisons.map((comparison) => ({
+                    type: "interactive" as const,
+                    id: comparison.type.toString(),
+                    stringTitle: comparison.title,
+                    data: comparison,
+                }));
 
                 return (
                     <UiListbox

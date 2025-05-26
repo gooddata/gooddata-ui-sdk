@@ -1,14 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 import { INotificationChannelMetadataObject } from "@gooddata/sdk-model";
-import {
-    Button,
-    Dropdown,
-    UiListbox,
-    OverlayPositionType,
-    SingleSelectListItem,
-    IUiListboxInteractiveItem,
-    IUiListboxItem,
-} from "@gooddata/sdk-ui-kit";
+import { Button, Dropdown, UiListbox, OverlayPositionType, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -69,15 +61,12 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
                 );
             }}
             renderBody={({ closeDropdown, ariaAttributes }) => {
-                const listboxItems: IUiListboxItem<INotificationChannelMetadataObject>[] = destinations.map(
-                    (destination) =>
-                        ({
-                            type: "interactive",
-                            id: destination.id,
-                            stringTitle: destination.title,
-                            data: destination,
-                        } as IUiListboxInteractiveItem<INotificationChannelMetadataObject>),
-                );
+                const listboxItems = destinations.map((destination) => ({
+                    type: "interactive" as const,
+                    id: destination.id,
+                    stringTitle: destination.title ?? "",
+                    data: destination,
+                }));
 
                 return (
                     <UiListbox

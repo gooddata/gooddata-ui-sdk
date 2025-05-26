@@ -7,7 +7,6 @@ import {
     OverlayPositionType,
     UiListbox,
     IUiListboxItem,
-    IUiListboxInteractiveItem,
 } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { IAlertTriggerMode } from "@gooddata/sdk-model";
@@ -79,15 +78,12 @@ export const AlertTriggerModeSelect = ({
                 }}
                 renderBody={({ closeDropdown, ariaAttributes }) => {
                     const listboxItems: IUiListboxItem<{ title: string; id: IAlertTriggerMode }>[] =
-                        options.map(
-                            (option) =>
-                                ({
-                                    type: "interactive",
-                                    id: option.id,
-                                    stringTitle: intl.formatMessage({ id: option.title }),
-                                    data: option,
-                                } as IUiListboxInteractiveItem<{ title: string; id: IAlertTriggerMode }>),
-                        );
+                        options.map((option) => ({
+                            type: "interactive",
+                            id: option.id,
+                            stringTitle: intl.formatMessage({ id: option.title }),
+                            data: option,
+                        }));
 
                     return (
                         <UiListbox

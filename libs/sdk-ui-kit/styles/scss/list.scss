@@ -185,6 +185,11 @@ button.gd-list-item {
         opacity: 0.5;
     }
 
+    &.is-focused {
+        background-color: variables.$is-focused-background;
+        color: variables.$is-focused-color;
+    }
+
     &.is-selected {
         color: variables.$gd-palette-primary-base;
         font-weight: bold;
@@ -374,11 +379,6 @@ button.gd-list-item {
     .gd-list-item-bubble {
         padding-left: 3px;
         padding-bottom: 3px;
-    }
-
-    &.is-focused {
-        background-color: variables.$is-focused-background;
-        color: variables.$is-focused-color;
     }
 }
 

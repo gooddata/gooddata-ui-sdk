@@ -15,7 +15,6 @@ import { getWeekNumber, getIntlDayName, isLastOccurrenceOfWeekdayInMonth } from 
 import { messages } from "./locales.js";
 import { RecurrenceType } from "./types.js";
 import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
-import type { IUiListboxInteractiveItem } from "../@ui/UiListbox/types.js";
 
 interface IDropdownItem {
     id: RecurrenceType;
@@ -153,12 +152,12 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
                     }}
                     dropdownId={dropdownId}
                     isOpen={isOpen}
-                    buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
+                    buttonRef={buttonRef}
                 />
             )}
             renderBody={({ closeDropdown, ariaAttributes }) => {
-                const listboxItems: IUiListboxInteractiveItem<IDropdownItem>[] = repeatItems.map((item) => ({
-                    type: "interactive",
+                const listboxItems = repeatItems.map((item) => ({
+                    type: "interactive" as const,
                     id: item.id,
                     stringTitle: item.title,
                     data: item,

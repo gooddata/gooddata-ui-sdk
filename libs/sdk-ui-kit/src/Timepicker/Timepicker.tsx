@@ -9,7 +9,6 @@ import noop from "lodash/noop.js";
 import { OverlayPositionType } from "../typings/overlay.js";
 import { Dropdown, DropdownButton } from "../Dropdown/index.js";
 import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
-import type { IUiListboxInteractiveItem } from "../@ui/UiListbox/types.js";
 
 import { formatTime, normalizeTime, updateTime, HOURS_IN_DAY, TIME_ANCHOR } from "./utils/timeUtilities.js";
 import { SelectedTime } from "./typings.js";
@@ -45,12 +44,6 @@ export type TimePickerProps = ITimepickerOwnProps & WrappedComponentProps;
 interface ITimePickerState {
     dropdownWidth: number;
     selectedTime: Date;
-}
-
-interface ITimeItem {
-    h: number;
-    m: number;
-    title: string;
 }
 
 export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITimePickerState> {
@@ -178,12 +171,12 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
                             dropdownId={dropdownId}
                             onClick={openDropdown}
                             iconLeft="gd-icon-timer"
-                            buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
+                            buttonRef={buttonRef}
                         />
                     )}
                     renderBody={({ closeDropdown, ariaAttributes }) => {
-                        const listboxItems: IUiListboxInteractiveItem<ITimeItem>[] = items.map((item) => ({
-                            type: "interactive",
+                        const listboxItems = items.map((item) => ({
+                            type: "interactive" as const,
                             id: `${item.h}-${item.m}`,
                             stringTitle: item.title,
                             data: item,
