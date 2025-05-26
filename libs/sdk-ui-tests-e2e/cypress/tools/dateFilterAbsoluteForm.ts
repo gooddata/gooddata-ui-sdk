@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 export class DateFilterAbsoluteForm {
     openFromRangePicker(): this {
@@ -16,7 +16,7 @@ export class DateFilterAbsoluteForm {
             .find(".s-date-range-picker-input-field")
             .clear()
             .type(value)
-            .type("{esc}");
+            .type("{enter}");
         return this;
     }
 
@@ -25,7 +25,7 @@ export class DateFilterAbsoluteForm {
             .find(".s-date-range-picker-input-field")
             .clear()
             .type(value)
-            .type("{esc}");
+            .type("{enter}");
         return this;
     }
 
