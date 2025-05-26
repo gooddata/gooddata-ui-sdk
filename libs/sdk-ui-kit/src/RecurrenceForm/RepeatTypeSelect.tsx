@@ -3,7 +3,7 @@
 import React from "react";
 import { IntlShape, MessageDescriptor, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
-import { Dropdown, DropdownList, DropdownButton } from "../Dropdown/index.js";
+import { Dropdown, DropdownButton } from "../Dropdown/index.js";
 import { SingleSelectListItem } from "../List/index.js";
 import {
     DEFAULT_DROPDOWN_ALIGN_POINTS,
@@ -14,6 +14,8 @@ import {
 import { getWeekNumber, getIntlDayName, isLastOccurrenceOfWeekdayInMonth } from "./utils.js";
 import { messages } from "./locales.js";
 import { RecurrenceType } from "./types.js";
+import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
+import type { IUiListboxInteractiveItem } from "../@ui/UiListbox/types.js";
 
 interface IDropdownItem {
     id: RecurrenceType;
@@ -141,7 +143,8 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
             closeOnParentScroll={closeOnParentScroll}
             alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
             className="gd-recurrence-form-type s-recurrence-form-type"
-            renderButton={({ toggleDropdown, isOpen, dropdownId }) => (
+            autofocusOnOpen={true}
+            renderButton={({ toggleDropdown, isOpen, dropdownId, buttonRef }) => (
                 <DropdownButton
                     value={repeatTypeItem.title}
                     onClick={() => {
@@ -150,26 +153,45 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
                     }}
                     dropdownId={dropdownId}
                     isOpen={isOpen}
+                    buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
                 />
             )}
-            renderBody={({ closeDropdown, isMobile }) => (
-                <DropdownList
-                    width={DEFAULT_DROPDOWN_WIDTH}
-                    items={repeatItems}
-                    isMobile={isMobile}
-                    renderItem={({ item }) => (
-                        <SingleSelectListItem
-                            title={item.title}
-                            info={item.info}
-                            onClick={() => {
-                                onChange(item.id);
-                                closeDropdown();
-                            }}
-                            isSelected={repeatTypeItem.id === item.id}
-                        />
-                    )}
-                />
-            )}
+            renderBody={({ closeDropdown, ariaAttributes }) => {
+                const listboxItems: IUiListboxInteractiveItem<IDropdownItem>[] = repeatItems.map((item) => ({
+                    type: "interactive",
+                    id: item.id,
+                    stringTitle: item.title,
+                    data: item,
+                }));
+
+                return (
+                    <UiListbox
+                        shouldKeyboardActionStopPropagation={true}
+                        shouldKeyboardActionPreventDefault={true}
+                        className="gd-recurrence-form-type-list s-recurrence-form-type-list"
+                        items={listboxItems}
+                        maxWidth={DEFAULT_DROPDOWN_WIDTH}
+                        selectedItemId={repeatType}
+                        onSelect={(item) => {
+                            onChange(item.id);
+                        }}
+                        onClose={closeDropdown}
+                        ariaAttributes={ariaAttributes}
+                        InteractiveItemComponent={({ item, isSelected, onSelect, isFocused }) => {
+                            return (
+                                <SingleSelectListItem
+                                    title={item.stringTitle}
+                                    info={item.data.info}
+                                    isSelected={isSelected}
+                                    isFocused={isFocused}
+                                    onClick={onSelect}
+                                    className="gd-recurrence-form-list-item"
+                                />
+                            );
+                        }}
+                    />
+                );
+            }}
             overlayPositionType="sameAsTarget"
             overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
         />
