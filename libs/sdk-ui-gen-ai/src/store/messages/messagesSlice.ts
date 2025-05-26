@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import { GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
 import {
     AssistantMessage,
@@ -55,7 +55,7 @@ export const messagesSliceName = "messages";
  * but provide a fallback for Node.js when running unit tests.
  */
 const getInitialVerboseState = () => {
-    if (typeof window !== undefined) {
+    if (typeof window !== "undefined") {
         return window.localStorage.getItem(LS_VERBOSE_KEY) === "true";
     }
 

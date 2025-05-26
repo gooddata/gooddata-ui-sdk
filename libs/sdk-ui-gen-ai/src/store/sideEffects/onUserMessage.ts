@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { IAnalyticalBackend, IChatThreadQuery, IGenAIChatEvaluation } from "@gooddata/sdk-backend-spi";
 import { call, cancelled, getContext, put } from "redux-saga/effects";
@@ -9,7 +9,7 @@ import {
     evaluateMessageCompleteAction,
 } from "../messages/messagesSlice.js";
 import { extractError } from "./utils.js";
-import { PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import {
     AssistantMessage,
     isTextContents,
