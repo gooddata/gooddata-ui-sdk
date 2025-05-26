@@ -33,6 +33,7 @@ export interface IUseCodemirrorProps extends IUseEventHandlersProps {
     autocompletion?: {
         aboveCursor?: boolean;
         whenTyping?: boolean;
+        whenTypingDelay?: number;
     };
     extensions?: Extension[];
     onApi?: (view: EditorView | null) => void;
@@ -84,6 +85,7 @@ export function useCodemirror({
         handleCompletion,
         aboveCursor: autocompletion?.aboveCursor ?? false,
         whenTyping: autocompletion?.whenTyping ?? true,
+        activateOnTypingDelay: autocompletion?.whenTypingDelay,
     });
 
     // Create the editor only once

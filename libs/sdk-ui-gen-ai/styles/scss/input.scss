@@ -281,16 +281,16 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
         font-weight: normal;
 
         &.metric {
-            color: kit-variables.$gd-palette-success-base;
+            color: kit-variables.$gd-color-positive;
         }
         &.fact {
-            color: kit-variables.$gd-palette-success-base;
+            color: kit-variables.$gd-color-positive;
         }
         &.attribute {
-            color: kit-variables.$gd-palette-warning-base-text;
+            color: kit-variables.$gd-color-warning-text;
         }
         &.date {
-            color: kit-variables.$gd-palette-primary-base;
+            color: kit-variables.$gd-color-highlight;
         }
     }
     .cm-editor .cm-icon-widget {

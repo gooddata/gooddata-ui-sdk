@@ -128,6 +128,7 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
                 autocompletion={{
                     aboveCursor: true,
                     whenTyping: true,
+                    whenTypingDelay: 300,
                 }}
                 extensions={extensions}
                 onApi={setApi}

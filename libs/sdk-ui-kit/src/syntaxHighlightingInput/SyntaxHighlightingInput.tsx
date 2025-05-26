@@ -25,6 +25,7 @@ export interface ISyntaxHighlightingInputProps {
     onKeyDown?: (event: KeyboardEvent, view: EditorView) => boolean;
     autocompletion?: {
         whenTyping?: boolean;
+        whenTypingDelay?: number;
         aboveCursor?: boolean;
     };
     onCompletion?: CompletionSource;
