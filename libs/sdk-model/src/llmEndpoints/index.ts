@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 /**
  * Base endpoint interface
@@ -18,10 +18,6 @@ export interface ILlmEndpointBase {
      * Endpoint description
      */
     description?: string;
-    /**
-     * A list of workspace identifier this endpoint should be used for
-     */
-    workspaceIds: string[];
 }
 
 /**

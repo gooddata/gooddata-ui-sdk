@@ -185,7 +185,7 @@
         "limit": 0
     },
     "gd.gen-ai.autocomplete.input-info.win": {
-        "value": "<code>Ctrl+Space</code> or <code>Win+I</code> for suggestions",
+        "value": "<code>Ctrl+Space</code> or <code>Ctrl+I</code> for suggestions",
         "comment": "",
         "limit": 0
     }

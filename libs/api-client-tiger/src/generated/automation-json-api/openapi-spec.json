@@ -410,6 +410,13 @@
                             "$ref": "#/components/schemas/AutomationVisualExport"
                         }
                     },
+                    "imageExports": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AutomationImageExport"
+                        }
+                    },
                     "externalRecipients": {
                         "uniqueItems": true,
                         "type": "array",
@@ -772,6 +779,15 @@
                     }
                 }
             },
+            "AutomationImageExport": {
+                "required": ["requestPayload"],
+                "type": "object",
+                "properties": {
+                    "requestPayload": {
+                        "$ref": "#/components/schemas/ImageExportRequest"
+                    }
+                }
+            },
             "AutomationMetadata": {
                 "maxLength": 250000,
                 "type": "object",
@@ -1045,6 +1061,41 @@
                         "$ref": "#/components/schemas/AttributeFilter"
                     }
                 ]
+            },
+            "ImageExportRequest": {
+                "required": ["dashboardId", "fileName", "format"],
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "type": "string",
+                        "description": "Requested resulting file type.",
+                        "example": "PNG",
+                        "enum": ["PNG"]
+                    },
+                    "fileName": {
+                        "type": "string",
+                        "description": "File name to be used for retrieving the image document.",
+                        "example": "filename"
+                    },
+                    "dashboardId": {
+                        "type": "string",
+                        "description": "Dashboard identifier",
+                        "example": "761cd28b-3f57-4ac9-bbdc-1c552cc0d1d0"
+                    },
+                    "widgetIds": {
+                        "maxItems": 1,
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "List of widget identifiers to be exported. Note that only one widget is currently supported.",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "metadata": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    }
+                },
+                "description": "Export request object describing the export properties and metadata for image exports."
             },
             "InlineFilterDefinition": {
                 "required": ["inline"],
@@ -1739,6 +1790,11 @@
                     },
                     "title": {
                         "type": "string"
+                    },
+                    "isAllTimeDateFilter": {
+                        "type": "boolean",
+                        "description": "Indicates if the filter is an all-time date filter. Such a filter is not included in report computation, so there is no filter with the same 'localIdentifier' to be found. In such cases, this flag is used to inform the server to not search for the filter in the definitions and include it anyways.",
+                        "default": false
                     }
                 }
             },
@@ -2051,6 +2107,10 @@
                     "fileUri": {
                         "type": "string"
                     },
+                    "expiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
                     "errorMessage": {
                         "type": "string"
                     },
@@ -2200,6 +2260,9 @@
                     "title": {
                         "type": "string"
                     },
+                    "dashboardTitle": {
+                        "type": "string"
+                    },
                     "dashboardURL": {
                         "type": "string"
                     },
@@ -2254,6 +2317,12 @@
                         }
                     },
                     "visualExports": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ExportResult"
+                        }
+                    },
+                    "imageExports": {
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/ExportResult"

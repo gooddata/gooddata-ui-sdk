@@ -138,6 +138,12 @@ export interface AutomationAdHocAutomation {
      */
     visualExports?: Array<AutomationAutomationVisualExport>;
     /**
+     *
+     * @type {Array<AutomationAutomationImageExport>}
+     * @memberof AutomationAdHocAutomation
+     */
+    imageExports?: Array<AutomationAutomationImageExport>;
+    /**
      * External recipients of the automation action results.
      * @type {Array<AutomationAutomationExternalRecipient>}
      * @memberof AutomationAdHocAutomation
@@ -752,6 +758,19 @@ export interface AutomationAutomationExternalRecipient {
     email: string;
 }
 /**
+ *
+ * @export
+ * @interface AutomationAutomationImageExport
+ */
+export interface AutomationAutomationImageExport {
+    /**
+     *
+     * @type {AutomationImageExportRequest}
+     * @memberof AutomationAutomationImageExport
+     */
+    requestPayload: AutomationImageExportRequest;
+}
+/**
  * Additional information for the automation.
  * @export
  * @interface AutomationAutomationMetadata
@@ -1155,6 +1174,12 @@ export interface AutomationExportResult {
      * @type {string}
      * @memberof AutomationExportResult
      */
+    expiresAt?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationExportResult
+     */
     errorMessage?: string;
     /**
      *
@@ -1201,6 +1226,51 @@ export type AutomationFilterDefinition =
  * @export
  */
 export type AutomationFilterDefinitionForSimpleMeasure = AutomationAttributeFilter | AutomationDateFilter;
+
+/**
+ * Export request object describing the export properties and metadata for image exports.
+ * @export
+ * @interface AutomationImageExportRequest
+ */
+export interface AutomationImageExportRequest {
+    /**
+     * Requested resulting file type.
+     * @type {string}
+     * @memberof AutomationImageExportRequest
+     */
+    format: AutomationImageExportRequestFormatEnum;
+    /**
+     * File name to be used for retrieving the image document.
+     * @type {string}
+     * @memberof AutomationImageExportRequest
+     */
+    fileName: string;
+    /**
+     * Dashboard identifier
+     * @type {string}
+     * @memberof AutomationImageExportRequest
+     */
+    dashboardId: string;
+    /**
+     * List of widget identifiers to be exported. Note that only one widget is currently supported.
+     * @type {Array<string>}
+     * @memberof AutomationImageExportRequest
+     */
+    widgetIds?: Array<string>;
+    /**
+     * Metadata definition in free-form JSON format.
+     * @type {object}
+     * @memberof AutomationImageExportRequest
+     */
+    metadata?: object | null;
+}
+
+export const AutomationImageExportRequestFormatEnum = {
+    PNG: "PNG",
+} as const;
+
+export type AutomationImageExportRequestFormatEnum =
+    typeof AutomationImageExportRequestFormatEnum[keyof typeof AutomationImageExportRequestFormatEnum];
 
 /**
  * In-platform destination for notifications.
@@ -2409,6 +2479,12 @@ export interface AutomationVisibleFilter {
      * @memberof AutomationVisibleFilter
      */
     title?: string;
+    /**
+     * Indicates if the filter is an all-time date filter. Such a filter is not included in report computation, so there is no filter with the same \'localIdentifier\' to be found. In such cases, this flag is used to inform the server to not search for the filter in the definitions and include it anyways.
+     * @type {boolean}
+     * @memberof AutomationVisibleFilter
+     */
+    isAllTimeDateFilter?: boolean;
 }
 /**
  * Export request object describing the export properties and metadata for dashboard PDF exports.
@@ -2492,6 +2568,12 @@ export interface AutomationWebhookAutomationInfo {
      * @memberof AutomationWebhookAutomationInfo
      */
     title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationWebhookAutomationInfo
+     */
+    dashboardTitle?: string;
     /**
      *
      * @type {string}
@@ -2581,6 +2663,12 @@ export interface AutomationWebhookMessageData {
      * @memberof AutomationWebhookMessageData
      */
     visualExports?: Array<AutomationExportResult>;
+    /**
+     *
+     * @type {Array<AutomationExportResult>}
+     * @memberof AutomationWebhookMessageData
+     */
+    imageExports?: Array<AutomationExportResult>;
     /**
      *
      * @type {AutomationAlertDescription}
