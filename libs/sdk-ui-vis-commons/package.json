@@ -47,7 +47,8 @@
         "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check",
         "validate-ci": "export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check",
         "validate-locales": "cd ../sdk-ui && npm run validate-locales",
-        "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci"
+        "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci",
+        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-vis-commons\"'"
     },
     "dependencies": {
         "@gooddata/number-formatter": "^1.0.6",
