@@ -1,10 +1,17 @@
 // (C) 2024-2025 GoodData Corporation
 import { INotificationChannelMetadataObject } from "@gooddata/sdk-model";
-import { Button, Dropdown, List, OverlayPositionType, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
+import {
+    Button,
+    Dropdown,
+    UiListbox,
+    OverlayPositionType,
+    SingleSelectListItem,
+    IUiListboxInteractiveItem,
+    IUiListboxItem,
+} from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import React from "react";
 import { useIntl } from "react-intl";
-import { DROPDOWN_ITEM_HEIGHT } from "../constants.js";
 
 export interface IAlertDestinationSelectProps {
     id: string;
@@ -31,11 +38,15 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
         <Dropdown
             closeOnParentScroll={closeOnParentScroll}
             overlayPositionType={overlayPositionType}
-            renderButton={({ isOpen, toggleDropdown }) => {
+            autofocusOnOpen={true}
+            renderButton={({ isOpen, toggleDropdown, buttonRef, dropdownId }) => {
                 return (
                     <Button
                         id={id}
                         accessibilityConfig={{
+                            role: "button",
+                            popupId: dropdownId,
+                            isExpanded: isOpen,
                             ariaLabel: accessibilityAriaLabel,
                         }}
                         onClick={toggleDropdown}
@@ -51,30 +62,49 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
                                 "is-active": isOpen,
                             },
                         )}
+                        buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
                     >
                         {selectedOption?.title ?? " - "}
                     </Button>
                 );
             }}
-            renderBody={({ closeDropdown }) => {
+            renderBody={({ closeDropdown, ariaAttributes }) => {
+                const listboxItems: IUiListboxItem<INotificationChannelMetadataObject>[] = destinations.map(
+                    (destination) =>
+                        ({
+                            type: "interactive",
+                            id: destination.id,
+                            stringTitle: destination.title,
+                            data: destination,
+                        } as IUiListboxInteractiveItem<INotificationChannelMetadataObject>),
+                );
+
                 return (
-                    <List
+                    <UiListbox
+                        shouldKeyboardActionStopPropagation={true}
+                        shouldKeyboardActionPreventDefault={true}
                         className="gd-alert-destination-select__list s-alert-destination-select-list"
-                        items={destinations}
-                        itemHeight={DROPDOWN_ITEM_HEIGHT}
-                        renderItem={(i) => (
-                            <SingleSelectListItem
-                                key={i.rowIndex}
-                                title={i.item?.title}
-                                isSelected={i.item.id === selectedDestination}
-                                onClick={() => {
-                                    if (i.item.id !== selectedDestination) {
-                                        onDestinationChange(i.item.id);
-                                    }
-                                    closeDropdown();
-                                }}
-                            />
-                        )}
+                        items={listboxItems}
+                        selectedItemId={selectedDestination}
+                        shouldCloseOnSelect={true}
+                        onSelect={(item) => {
+                            if (item.id !== selectedDestination) {
+                                onDestinationChange(item.id);
+                            }
+                        }}
+                        onClose={closeDropdown}
+                        ariaAttributes={ariaAttributes}
+                        InteractiveItemComponent={({ item, isSelected, onSelect, isFocused }) => {
+                            return (
+                                <SingleSelectListItem
+                                    title={item.data.title}
+                                    isSelected={isSelected}
+                                    isFocused={isFocused}
+                                    onClick={onSelect}
+                                    className="gd-alert-destination-select__list-item"
+                                />
+                            );
+                        }}
                     />
                 );
             }}

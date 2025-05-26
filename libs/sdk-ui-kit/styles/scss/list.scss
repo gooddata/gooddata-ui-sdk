@@ -375,6 +375,17 @@ button.gd-list-item {
         padding-left: 3px;
         padding-bottom: 3px;
     }
+
+    &.is-focused {
+        background-color: variables.$is-focused-background;
+        color: variables.$is-focused-color;
+    }
+}
+
+.gd-ui-kit-listbox__items:focus-visible {
+    .gd-list-item.is-focused {
+        @include mixins.focus-ring;
+    }
 }
 
 .gd-list-icon {

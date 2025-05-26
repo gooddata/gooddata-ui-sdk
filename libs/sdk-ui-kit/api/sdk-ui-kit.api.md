@@ -4306,6 +4306,8 @@ export interface ISingleSelectListItemProps {
     // (undocumented)
     infoRenderer?: (info: string | ReactNode | React_2.FC) => ReactNode;
     // (undocumented)
+    isFocused?: boolean;
+    // (undocumented)
     isMenu?: boolean;
     // (undocumented)
     isSelected?: boolean;

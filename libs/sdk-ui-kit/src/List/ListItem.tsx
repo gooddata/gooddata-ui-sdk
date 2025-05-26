@@ -24,6 +24,7 @@ export interface ISingleSelectListItemProps {
     eventsOnBubble?: boolean;
     hideDelayBubble?: number;
     isSelected?: boolean;
+    isFocused?: boolean;
     isMenu?: boolean;
     accessibilityConfig?: IMenuAccessibilityConfig;
     tabIndex?: number;
@@ -110,6 +111,7 @@ export const SingleSelectListItem = forwardRef<
         eventsOnBubble = false,
         hideDelayBubble,
         isSelected,
+        isFocused,
         isMenu,
         elementType = "div",
         iconRenderer,
@@ -150,6 +152,7 @@ export const SingleSelectListItem = forwardRef<
         return cx("gd-list-item", className, testClassName, {
             "is-selected": isSelected,
             "is-submenu": isMenu,
+            "is-focused": isFocused,
         });
     };
 
