@@ -1025,3 +1025,15 @@ export const selectEnableSnapshotExportAccessibility: DashboardSelector<boolean>
         return Boolean(state.settings?.enableSnapshotExportAccessibility) ?? false;
     },
 );
+
+/**
+ * Selector for the widget export to PNG image feature flag
+ *
+ * @internal
+ */
+export const selectEnableWidgetExportPngImage: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return Boolean(state.settings?.enableWidgetExportPngImage) ?? false;
+    },
+);

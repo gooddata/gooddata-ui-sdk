@@ -177,6 +177,11 @@
         "comment": "Export whole KPI dashboard to PowerPoint",
         "limit": 0
     },
+    "options.menu.export.image.PNG": {
+        "value": "Snapshot (.png)",
+        "comment": "Export to image in png format",
+        "limit": 0
+    },
     "options.menu.export.presentation.unsupported.oldWidget": {
         "value": "Unable to export. Please resave the dashboard or contact your administrator.",
         "comment": "Message that explains that old widget cannot be exported without resaving the dashboard",

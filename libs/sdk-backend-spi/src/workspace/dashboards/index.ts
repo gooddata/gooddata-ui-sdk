@@ -232,6 +232,23 @@ export interface IDashboardExportTabularOptions {
 }
 
 /**
+ * Options for exporting dashboard to png format
+ *
+ * @alpha
+ */
+export interface IDashboardExportImageOptions {
+    /**
+     * Widgets to export. If not provided, all widgets will be exported.
+     */
+    widgetIds?: ObjRef[];
+
+    /**
+     * Filename for the export. If not provided, the dashboard title will be fetched.
+     */
+    filename?: string;
+}
+
+/**
  * Service to list, create and update analytical dashboards
  *
  * @alpha
@@ -366,6 +383,19 @@ export interface IWorkspaceDashboardsService {
             filename?: string;
         },
     ): Promise<IExportResult>;
+
+    /**
+     * Export dashboard to png.
+     *
+     * PNG file is downloaded and attached as Blob data to the current window instance.
+     * If title is not provided, the dashboard title will be fetched.
+     *
+     * @param ref - dashboard reference
+     * @param options - export options
+     * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
+     */
+
+    exportDashboardToImage(ref: ObjRef, options?: IDashboardExportImageOptions): Promise<IExportResult>;
 
     /**
      * Export dashboard to tabular.

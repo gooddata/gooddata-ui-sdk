@@ -23,11 +23,15 @@ import {
     selectSlideShowExportVisible,
     selectIsExportableToCSV,
     selectIsExportableToXLSX,
+    ExportImageInsightWidget,
+    selectIsExportableToPngImage,
+    exportImageInsightWidget,
 } from "../../../model/index.js";
 import { useExportHandler } from "./useExportHandler.js";
 import { useExportDialogContext } from "../../dashboardContexts/index.js";
 import { useRawExportHandler } from "./useRawExportHandler.js";
 import { useSlidesExportHandler } from "./useSlidesExportHandler.js";
+import { useImageExportHandler } from "./useImageExportHandler.js";
 
 export const useInsightExport = (config: {
     title: string;
@@ -73,6 +77,14 @@ export const useInsightExport = (config: {
         [widgetRef],
     );
 
+    const exportImageFunction = useCallback(
+        (title: string) =>
+            dispatchAndWaitFor<ExportImageInsightWidget, DashboardInsightWidgetExportResolved>(
+                dispatch,
+                exportImageInsightWidget(widgetRef!, title, uuid()),
+            ).then((result) => result.payload.result),
+        [widgetRef],
+    );
     const settings = useDashboardSelector(selectSettings);
     const isInsightExportable = insight
         ? getInsightVisualizationMeta(insight, settings).supportsExport
@@ -83,6 +95,7 @@ export const useInsightExport = (config: {
     const exportHandler = useExportHandler();
     const exportRawHandler = useRawExportHandler();
     const exportSlidesHandler = useSlidesExportHandler();
+    const exportImageHandler = useImageExportHandler();
     const { openDialog, closeDialog } = useExportDialogContext();
 
     const onExportCSV = useCallback(() => {
@@ -117,6 +130,13 @@ export const useInsightExport = (config: {
         exportSlidesHandler(exportSlidesFunction, title, "pdf").then(() => setIsExporting(false));
     }, [exportSlidesFunction, title]);
 
+    const onExportPngImage = useCallback(() => {
+        setIsExporting(true);
+        // if this bombs there is an issue with the logic enabling the buttons
+        invariant(exportImageFunction);
+        exportImageHandler(exportImageFunction, title).then(() => setIsExporting(false));
+    }, [exportImageFunction, title]);
+
     const onExportXLSX = useCallback(() => {
         openDialog({
             onSubmit: ({ includeFilterContext, mergeHeaders }) => {
@@ -147,10 +167,14 @@ export const useInsightExport = (config: {
     const canExportCSV = useDashboardSelector(selectIsExportableToCSV);
     const canExportXLSX = useDashboardSelector(selectIsExportableToXLSX);
     const canExportCSVAndXLSX = isInsightExportable && canExportCSV && canExportXLSX;
+
     const isExportRawVisible = settings.enableRawExports === true && canExportCSVAndXLSX;
+
+    const isExportPngImageVisible = useDashboardSelector(selectIsExportableToPngImage);
 
     const exportPdfPresentationDisabled = !!widget && !widget.localIdentifier;
     const exportPowerPointPresentationDisabled = !!widget && !widget.localIdentifier;
+    const exportPngImageDisabled = !!widget && !widget.localIdentifier;
 
     return {
         exportCSVEnabled,
@@ -159,12 +183,15 @@ export const useInsightExport = (config: {
         isExporting,
         isExportRawVisible,
         isExportVisible,
+        isExportPngImageVisible,
         onExportCSV,
         onExportXLSX,
         onExportRawCSV,
         onExportPdfPresentation,
         onExportPowerPointPresentation,
+        onExportPngImage,
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
+        exportPngImageDisabled,
     };
 };
