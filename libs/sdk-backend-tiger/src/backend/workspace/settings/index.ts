@@ -108,6 +108,10 @@ export class TigerWorkspaceSettings
         return this.setSetting("SEPARATORS", separators);
     }
 
+    public async setActiveLlmEndpoint(endpoint: string): Promise<void> {
+        return this.setSetting("ACTIVE_LLM_ENDPOINT", endpoint);
+    }
+
     public async setTimezone(timezone: string): Promise<void> {
         return this.setSetting("TIMEZONE", { value: timezone });
     }

@@ -655,6 +655,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
     // (undocumented)
+    setActiveLlmEndpoint(endpoint: string): Promise<void>;
+    // (undocumented)
     setAlertDefault(value: IAlertDefault): Promise<void>;
     // (undocumented)
     setColorPalette(colorPaletteId: string): Promise<void>;

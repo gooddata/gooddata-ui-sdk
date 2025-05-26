@@ -33,6 +33,10 @@ export class OrganizationSettingsService
         return this.setSetting("SEPARATORS", separators);
     }
 
+    public async setActiveLlmEndpoint(endpoint: string): Promise<void> {
+        return this.setSetting("ACTIVE_LLM_ENDPOINT", endpoint);
+    }
+
     public async setDateFormat(dateFormat: string): Promise<void> {
         return this.setSetting("FORMAT_LOCALE", { value: dateFormat });
     }

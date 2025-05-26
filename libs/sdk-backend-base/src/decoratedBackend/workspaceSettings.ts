@@ -32,6 +32,10 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
         return this.decorated.setSeparators(separators);
     }
 
+    async setActiveLlmEndpoint(endpoint: string): Promise<void> {
+        return this.decorated.setActiveLlmEndpoint(endpoint);
+    }
+
     async setTimezone(timezone: string): Promise<void> {
         return this.decorated.setTimezone(timezone);
     }

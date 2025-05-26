@@ -391,17 +391,36 @@ export type ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum =
     typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum[keyof typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
 
 /**
+ * @type AttributeElements
+ * @export
+ */
+export type AttributeElements = AttributeElementsByRef | AttributeElementsByValue;
+
+/**
  *
  * @export
- * @interface AttributeElements
+ * @interface AttributeElementsByRef
  */
-export interface AttributeElements {
+export interface AttributeElementsByRef {
     /**
-     *
-     * @type {boolean}
-     * @memberof AttributeElements
+     * List of attribute elements by reference
+     * @type {Array<string>}
+     * @memberof AttributeElementsByRef
      */
-    isEmpty: boolean;
+    uris: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface AttributeElementsByValue
+ */
+export interface AttributeElementsByValue {
+    /**
+     * List of attribute elements by value
+     * @type {Array<string>}
+     * @memberof AttributeElementsByValue
+     */
+    values: Array<string>;
 }
 /**
  * @type AttributeFilter
@@ -620,11 +639,81 @@ export interface CustomOverride {
 export interface DashboardAttributeFilter {
     /**
      *
-     * @type {DashboardFilter & object}
+     * @type {DashboardAttributeFilterAttributeFilter}
      * @memberof DashboardAttributeFilter
      */
-    attributeFilter: DashboardFilter & object;
+    attributeFilter: DashboardAttributeFilterAttributeFilter;
 }
+/**
+ *
+ * @export
+ * @interface DashboardAttributeFilterAttributeFilter
+ */
+export interface DashboardAttributeFilterAttributeFilter {
+    /**
+     *
+     * @type {IdentifierRef}
+     * @memberof DashboardAttributeFilterAttributeFilter
+     */
+    displayForm: IdentifierRef;
+    /**
+     *
+     * @type {boolean}
+     * @memberof DashboardAttributeFilterAttributeFilter
+     */
+    negativeSelection: boolean;
+    /**
+     *
+     * @type {AttributeElements}
+     * @memberof DashboardAttributeFilterAttributeFilter
+     */
+    attributeElements: AttributeElements;
+    /**
+     *
+     * @type {Array<AttributeFilterParent>}
+     * @memberof DashboardAttributeFilterAttributeFilter
+     */
+    filterElementsBy?: Array<AttributeFilterParent>;
+    /**
+     *
+     * @type {Array<AttributeFilterByDate>}
+     * @memberof DashboardAttributeFilterAttributeFilter
+     */
+    filterElementsByDate?: Array<AttributeFilterByDate>;
+    /**
+     *
+     * @type {Array<IdentifierRef>}
+     * @memberof DashboardAttributeFilterAttributeFilter
+     */
+    validateElementsBy?: Array<IdentifierRef>;
+    /**
+     *
+     * @type {string}
+     * @memberof DashboardAttributeFilterAttributeFilter
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DashboardAttributeFilterAttributeFilter
+     */
+    selectionMode?: DashboardAttributeFilterAttributeFilterSelectionModeEnum;
+    /**
+     *
+     * @type {string}
+     * @memberof DashboardAttributeFilterAttributeFilter
+     */
+    localIdentifier?: string;
+}
+
+export const DashboardAttributeFilterAttributeFilterSelectionModeEnum = {
+    SINGLE: "single",
+    MULTI: "multi",
+} as const;
+
+export type DashboardAttributeFilterAttributeFilterSelectionModeEnum =
+    typeof DashboardAttributeFilterAttributeFilterSelectionModeEnum[keyof typeof DashboardAttributeFilterAttributeFilterSelectionModeEnum];
+
 /**
  *
  * @export
@@ -633,17 +722,109 @@ export interface DashboardAttributeFilter {
 export interface DashboardDateFilter {
     /**
      *
-     * @type {DashboardFilter & object}
+     * @type {DashboardDateFilterDateFilter}
      * @memberof DashboardDateFilter
      */
-    dateFilter: DashboardFilter & object;
+    dateFilter: DashboardDateFilterDateFilter;
 }
+/**
+ *
+ * @export
+ * @interface DashboardDateFilterDateFilter
+ */
+export interface DashboardDateFilterDateFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof DashboardDateFilterDateFilter
+     */
+    type: DashboardDateFilterDateFilterTypeEnum;
+    /**
+     *
+     * @type {string}
+     * @memberof DashboardDateFilterDateFilter
+     */
+    granularity: DashboardDateFilterDateFilterGranularityEnum;
+    /**
+     *
+     * @type {string | number}
+     * @memberof DashboardDateFilterDateFilter
+     */
+    from?: string | number;
+    /**
+     *
+     * @type {string | number}
+     * @memberof DashboardDateFilterDateFilter
+     */
+    to?: string | number;
+    /**
+     *
+     * @type {IdentifierRef}
+     * @memberof DashboardDateFilterDateFilter
+     */
+    dataSet?: IdentifierRef;
+    /**
+     *
+     * @type {IdentifierRef}
+     * @memberof DashboardDateFilterDateFilter
+     */
+    attribute?: IdentifierRef;
+    /**
+     *
+     * @type {string}
+     * @memberof DashboardDateFilterDateFilter
+     */
+    localIdentifier?: string;
+}
+
+export const DashboardDateFilterDateFilterTypeEnum = {
+    RELATIVE: "relative",
+    ABSOLUTE: "absolute",
+} as const;
+
+export type DashboardDateFilterDateFilterTypeEnum =
+    typeof DashboardDateFilterDateFilterTypeEnum[keyof typeof DashboardDateFilterDateFilterTypeEnum];
+export const DashboardDateFilterDateFilterGranularityEnum = {
+    ALL_TIME_GRANULARITY: "ALL_TIME_GRANULARITY",
+    GDC_TIME_YEAR: "GDC.time.year",
+    GDC_TIME_WEEK_US: "GDC.time.week_us",
+    GDC_TIME_WEEK_IN_YEAR: "GDC.time.week_in_year",
+    GDC_TIME_WEEK_IN_QUARTER: "GDC.time.week_in_quarter",
+    GDC_TIME_WEEK: "GDC.time.week",
+    GDC_TIME_EUWEEK_IN_YEAR: "GDC.time.euweek_in_year",
+    GDC_TIME_EUWEEK_IN_QUARTER: "GDC.time.euweek_in_quarter",
+    GDC_TIME_QUARTER: "GDC.time.quarter",
+    GDC_TIME_QUARTER_IN_YEAR: "GDC.time.quarter_in_year",
+    GDC_TIME_MONTH: "GDC.time.month",
+    GDC_TIME_MONTH_IN_QUARTER: "GDC.time.month_in_quarter",
+    GDC_TIME_MONTH_IN_YEAR: "GDC.time.month_in_year",
+    GDC_TIME_DAY_IN_YEAR: "GDC.time.day_in_year",
+    GDC_TIME_DAY_IN_QUARTER: "GDC.time.day_in_quarter",
+    GDC_TIME_DAY_IN_MONTH: "GDC.time.day_in_month",
+    GDC_TIME_DAY_IN_WEEK: "GDC.time.day_in_week",
+    GDC_TIME_DAY_IN_EUWEEK: "GDC.time.day_in_euweek",
+    GDC_TIME_DATE: "GDC.time.date",
+    GDC_TIME_HOUR: "GDC.time.hour",
+    GDC_TIME_HOUR_IN_DAY: "GDC.time.hour_in_day",
+    GDC_TIME_MINUTE: "GDC.time.minute",
+    GDC_TIME_MINUTE_IN_HOUR: "GDC.time.minute_in_hour",
+} as const;
+
+export type DashboardDateFilterDateFilterGranularityEnum =
+    typeof DashboardDateFilterDateFilterGranularityEnum[keyof typeof DashboardDateFilterDateFilterGranularityEnum];
+
 /**
  * Additional settings.
  * @export
  * @interface DashboardExportSettings
  */
 export interface DashboardExportSettings {
+    /**
+     * If true, the export will contain the information about the exported date and dashboard filters.
+     * @type {boolean}
+     * @memberof DashboardExportSettings
+     */
+    exportInfo?: boolean;
     /**
      * Merge equal headers in neighbouring cells. Used for [XLSX] format only.
      * @type {boolean}
@@ -652,18 +833,11 @@ export interface DashboardExportSettings {
     mergeHeaders?: boolean;
 }
 /**
- *
+ * @type DashboardFilter
  * @export
- * @interface DashboardFilter
  */
-export interface DashboardFilter {
-    /**
-     *
-     * @type {string}
-     * @memberof DashboardFilter
-     */
-    localIdentifier?: string;
-}
+export type DashboardFilter = DashboardAttributeFilter | DashboardDateFilter;
+
 /**
  * Export request object describing the export properties for dashboard tabular exports.
  * @export
@@ -684,16 +858,10 @@ export interface DashboardTabularExportRequest {
     fileName: string;
     /**
      * List of filters that will be used instead of the default dashboard filters.
-     * @type {Array<DashboardAttributeFilter | DashboardDateFilter>}
+     * @type {Array<DashboardFilter>}
      * @memberof DashboardTabularExportRequest
      */
-    dashboardFiltersOverride?: Array<DashboardAttributeFilter | DashboardDateFilter>;
-    /**
-     * If true, the export will contain the information about the exported date and dashboard filters.
-     * @type {boolean}
-     * @memberof DashboardTabularExportRequest
-     */
-    exportInfo?: boolean;
+    dashboardFiltersOverride?: Array<DashboardFilter>;
     /**
      * List of widget identifiers to be exported. Note that only one widget is currently supported.
      * @type {Array<string>}
@@ -722,6 +890,19 @@ export type DashboardTabularExportRequestFormatEnum =
  */
 export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
 
+/**
+ *
+ * @export
+ * @interface DateValue
+ */
+export interface DateValue {
+    /**
+     *
+     * @type {string}
+     * @memberof DateValue
+     */
+    value: string;
+}
 /**
  * Various settings affecting the process of AFM execution or its result
  * @export
@@ -775,6 +956,64 @@ export type FilterDefinition =
  * @export
  */
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
+
+/**
+ *
+ * @export
+ * @interface IdentifierRef
+ */
+export interface IdentifierRef {
+    /**
+     *
+     * @type {IdentifierRefIdentifier}
+     * @memberof IdentifierRef
+     */
+    identifier?: IdentifierRefIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface IdentifierRefIdentifier
+ */
+export interface IdentifierRefIdentifier {
+    /**
+     *
+     * @type {string}
+     * @memberof IdentifierRefIdentifier
+     */
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof IdentifierRefIdentifier
+     */
+    type: IdentifierRefIdentifierTypeEnum;
+}
+
+export const IdentifierRefIdentifierTypeEnum = {
+    ANALYTICAL_DASHBOARD: "analyticalDashboard",
+    ATTRIBUTE: "attribute",
+    ATTRIBUTE_HIERARCHY: "attributeHierarchy",
+    DASHBOARD_PLUGIN: "dashboardPlugin",
+    DATASET: "dataset",
+    FACT: "fact",
+    LABEL: "label",
+    METRIC: "metric",
+    USER_DATA_FILTER: "userDataFilter",
+    EXPORT_DEFINITION: "exportDefinition",
+    AUTOMATION: "automation",
+    PROMPT: "prompt",
+    VISUALIZATION_OBJECT: "visualizationObject",
+    FILTER_CONTEXT: "filterContext",
+    WORKSPACE_SETTINGS: "workspaceSettings",
+    CUSTOM_APPLICATION_SETTING: "customApplicationSetting",
+    WORKSPACE_DATA_FILTER: "workspaceDataFilter",
+    WORKSPACE_DATA_FILTER_SETTING: "workspaceDataFilterSetting",
+    FILTER_VIEW: "filterView",
+} as const;
+
+export type IdentifierRefIdentifierTypeEnum =
+    typeof IdentifierRefIdentifierTypeEnum[keyof typeof IdentifierRefIdentifierTypeEnum];
 
 /**
  * Export request object describing the export properties and metadata for image exports.
@@ -1029,10 +1268,10 @@ export interface NegativeAttributeFilterNegativeAttributeFilter {
 export interface Over {
     /**
      *
-     * @type {Array<string>}
+     * @type {Array<IdentifierRef>}
      * @memberof Over
      */
-    attributes: Array<string>;
+    attributes: Array<IdentifierRef>;
 }
 /**
  * Custom CSS styles for the table. (PDF, HTML)

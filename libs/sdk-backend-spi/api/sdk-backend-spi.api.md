@@ -1034,6 +1034,7 @@ export interface IOrganizationSettingsService {
     deleteColorPalette(): Promise<void>;
     deleteTheme(): Promise<void>;
     getSettings(): Promise<ISettings>;
+    setActiveLlmEndpoint(endpoint: string): Promise<void>;
     setAlertDefault(value: IAlertDefault): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
     // @alpha
@@ -1578,6 +1579,7 @@ export interface IWorkspaceSettingsService {
     deleteTheme(): Promise<void>;
     getSettings(): Promise<IWorkspaceSettings>;
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
+    setActiveLlmEndpoint(endpoint: string): Promise<void>;
     setAlertDefault(value: IAlertDefault): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
     // @alpha
