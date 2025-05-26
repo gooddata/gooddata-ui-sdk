@@ -864,3 +864,8 @@ $min-content-height: 110px;
         }
     }
 }
+
+// Common styles for UiListbox items
+.gd-notifications-channels-dialog-destination-list-item.gd-list-item {
+    height: 28px;
+}
