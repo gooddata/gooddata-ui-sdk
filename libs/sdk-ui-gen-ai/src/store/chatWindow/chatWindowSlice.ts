@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import { IColorPalette } from "@gooddata/sdk-model";
 
 type ChatWindowSliceState = {

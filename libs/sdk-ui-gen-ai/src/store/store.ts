@@ -1,5 +1,5 @@
 // (C) 2024-2025 GoodData Corporation
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import defaultReduxSaga from "redux-saga";
 import { defaultImport } from "default-import";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
