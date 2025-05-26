@@ -2064,7 +2064,13 @@
                 "description": "Export request object describing the export properties and metadata for image exports."
             },
             "AttributeElements": {
-                "type": "object"
+                "required": ["isEmpty"],
+                "type": "object",
+                "properties": {
+                    "isEmpty": {
+                        "type": "boolean"
+                    }
+                }
             },
             "AttributeFilterByDate": {
                 "required": ["filterLocalIdentifier", "isCommonDate"],
@@ -2208,6 +2214,18 @@
                     }
                 }
             },
+            "DashboardExportSettings": {
+                "type": "object",
+                "properties": {
+                    "mergeHeaders": {
+                        "type": "boolean",
+                        "description": "Merge equal headers in neighbouring cells. Used for [XLSX] format only.",
+                        "example": true,
+                        "default": false
+                    }
+                },
+                "description": "Additional settings."
+            },
             "DashboardFilter": {
                 "type": "object",
                 "properties": {
@@ -2244,6 +2262,24 @@
                                 }
                             ]
                         }
+                    },
+                    "exportInfo": {
+                        "type": "boolean",
+                        "description": "If true, the export will contain the information about the exported date and dashboard filters.",
+                        "example": true,
+                        "default": false
+                    },
+                    "widgetIds": {
+                        "maxItems": 1,
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "List of widget identifiers to be exported. Note that only one widget is currently supported.",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "settings": {
+                        "$ref": "#/components/schemas/DashboardExportSettings"
                     }
                 },
                 "description": "Export request object describing the export properties for dashboard tabular exports."

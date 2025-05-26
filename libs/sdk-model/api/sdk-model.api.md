@@ -2298,7 +2298,6 @@ export interface ILlmEndpointBase {
     description?: string;
     id: string;
     title: string;
-    workspaceIds: string[];
 }
 
 // @alpha
@@ -3353,6 +3352,7 @@ export interface ISettings {
     [key: string]: number | boolean | string | object | undefined;
     ADCatalogGroupsExpanded?: boolean;
     ADMeasureValueFilterNullAsZeroOption?: string;
+    aiRateLimit?: number;
     alertDefault?: IAlertDefault;
     // @alpha
     dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
@@ -3502,6 +3502,7 @@ export interface ISettings {
     hideKpiDrillInEmbedded?: boolean;
     // (undocumented)
     hidePixelPerfectExperience?: boolean;
+    llmEndpoint?: string;
     metadataTimeZone?: string;
     // @alpha
     openAiConfig?: IOpenAiConfig;

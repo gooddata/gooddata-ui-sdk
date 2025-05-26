@@ -38,6 +38,10 @@ export function mapTypeToKey(
             return "organizationSetting";
         case "DATE_FILTER_CONFIG":
             return "dateFilterConfig";
+        case "AI_RATE_LIMIT":
+            return "aiRateLimit";
+        case "LLM_ENDPOINT":
+            return "llmEndpoint";
         // These cases are intentionally not mapped to maintain an exhaustive check.
         // This ensures we're notified when new properties are added, allowing us to decide if they need mapping.
         case "METADATA_LOCALE":

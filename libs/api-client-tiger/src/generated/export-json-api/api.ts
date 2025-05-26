@@ -391,6 +391,19 @@ export type ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum =
     typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum[keyof typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
 
 /**
+ *
+ * @export
+ * @interface AttributeElements
+ */
+export interface AttributeElements {
+    /**
+     *
+     * @type {boolean}
+     * @memberof AttributeElements
+     */
+    isEmpty: boolean;
+}
+/**
  * @type AttributeFilter
  * Abstract filter definition type attributes
  * @export
@@ -626,6 +639,19 @@ export interface DashboardDateFilter {
     dateFilter: DashboardFilter & object;
 }
 /**
+ * Additional settings.
+ * @export
+ * @interface DashboardExportSettings
+ */
+export interface DashboardExportSettings {
+    /**
+     * Merge equal headers in neighbouring cells. Used for [XLSX] format only.
+     * @type {boolean}
+     * @memberof DashboardExportSettings
+     */
+    mergeHeaders?: boolean;
+}
+/**
  *
  * @export
  * @interface DashboardFilter
@@ -662,6 +688,24 @@ export interface DashboardTabularExportRequest {
      * @memberof DashboardTabularExportRequest
      */
     dashboardFiltersOverride?: Array<DashboardAttributeFilter | DashboardDateFilter>;
+    /**
+     * If true, the export will contain the information about the exported date and dashboard filters.
+     * @type {boolean}
+     * @memberof DashboardTabularExportRequest
+     */
+    exportInfo?: boolean;
+    /**
+     * List of widget identifiers to be exported. Note that only one widget is currently supported.
+     * @type {Array<string>}
+     * @memberof DashboardTabularExportRequest
+     */
+    widgetIds?: Array<string>;
+    /**
+     *
+     * @type {DashboardExportSettings}
+     * @memberof DashboardTabularExportRequest
+     */
+    settings?: DashboardExportSettings;
 }
 
 export const DashboardTabularExportRequestFormatEnum = {

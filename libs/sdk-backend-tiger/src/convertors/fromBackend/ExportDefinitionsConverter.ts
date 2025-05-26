@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import {
-    JsonApiAutomationPatchAttributesTabularExports,
-    JsonApiAutomationPatchAttributesVisualExports,
+    JsonApiAutomationInAttributesTabularExports,
+    JsonApiAutomationInAttributesVisualExports,
     JsonApiExportDefinitionOutIncludes,
     JsonApiExportDefinitionOutWithLinks,
     TabularExportRequest,
@@ -67,8 +67,8 @@ export const convertExportDefinitionMdObject = (
 
 export const convertInlineExportDefinitionMdObject = (
     exportDefinitionOut:
-        | JsonApiAutomationPatchAttributesTabularExports
-        | JsonApiAutomationPatchAttributesVisualExports,
+        | JsonApiAutomationInAttributesTabularExports
+        | JsonApiAutomationInAttributesVisualExports,
     enableAutomationFilterContext: boolean,
 ): IExportDefinitionMetadataObject => {
     const id = uuid();

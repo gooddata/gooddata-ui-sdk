@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { IOrganizationLlmEndpointsService } from "@gooddata/sdk-backend-spi";
 import { ILlmEndpointOpenAI, LlmEndpointOpenAIPatch } from "@gooddata/sdk-model";
@@ -53,7 +53,6 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
                             description: endpoint.description,
                             llmModel: endpoint.model,
                             llmOrganization: endpoint.organization,
-                            workspaceIds: endpoint.workspaceIds ?? [],
                             provider: "OPENAI",
                             token,
                         },
@@ -84,7 +83,6 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
                             description: endpoint.description,
                             llmModel: endpoint.model,
                             llmOrganization: endpoint.organization,
-                            workspaceIds: endpoint.workspaceIds ?? [],
                             provider: "OPENAI",
                             token,
                         },
@@ -117,7 +115,6 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
                                 llmModel: endpoint.model,
                                 llmOrganization: endpoint.organization,
                                 provider: endpoint.provider,
-                                workspaceIds: endpoint.workspaceIds,
                                 token,
                             }).filter(([_, value]) => !!value),
                         ),

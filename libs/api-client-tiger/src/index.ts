@@ -192,7 +192,9 @@ export type {
     Suggestion as ChatSuggestion,
     ActionsApiAiChatRequest,
     ActionsApiAiChatStreamRequest,
+    ActionsApiAiChatUsageRequest,
     ActionsApiAiChatHistoryRequest,
+    ChatUsageResponse,
     ChatResult,
     ChatHistoryResult,
     FoundObjects,
@@ -346,9 +348,10 @@ export type {
     DashboardTabularExportRequestFormatEnum,
     DashboardAttributeFilter,
     DashboardDateFilter,
-    ImageExportRequest,
+    ImageExportRequest as AfmExportImageExportRequest,
+    ImageExportRequestFormatEnum as AfmExportImageExportRequestFormatEnum,
     DashboardFilter,
-    ImageExportRequestFormatEnum,
+    DashboardExportSettings,
 } from "./generated/export-json-api/api.js";
 
 export type {

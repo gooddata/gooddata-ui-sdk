@@ -79,6 +79,16 @@ export interface ISettings {
      */
     timezone?: string;
 
+    /**
+     * Ai rate limit in requests per minute.
+     */
+    aiRateLimit?: number;
+
+    /**
+     * LLM endpoint id as default for the platform.
+     */
+    llmEndpoint?: string;
+
     //
     // Feature Flags
     //

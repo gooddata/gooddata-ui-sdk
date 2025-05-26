@@ -1101,6 +1101,25 @@ export interface ChatResult {
 /**
  *
  * @export
+ * @interface ChatUsageResponse
+ */
+export interface ChatUsageResponse {
+    /**
+     * Number of interactions in the time window
+     * @type {number}
+     * @memberof ChatUsageResponse
+     */
+    interactionCount: number;
+    /**
+     * Time window in hours
+     * @type {number}
+     * @memberof ChatUsageResponse
+     */
+    timeWindowHours: number;
+}
+/**
+ *
+ * @export
  * @interface ClusteringRequest
  */
 export interface ClusteringRequest {
@@ -3839,6 +3858,43 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Returns usage statistics of chat for a user in a workspace.
+         * @summary Get Chat Usage
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatUsage: async (workspaceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiChatUsage", "workspaceId", workspaceId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatUsage`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
          * @summary (BETA) Semantic Search in Metadata
          * @param {string} workspaceId Workspace identifier
@@ -4909,6 +4965,20 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Returns usage statistics of chat for a user in a workspace.
+         * @summary Get Chat Usage
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiChatUsage(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatUsageResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChatUsage(workspaceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
          * @summary (BETA) Semantic Search in Metadata
          * @param {string} workspaceId Workspace identifier
@@ -5393,6 +5463,21 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Returns usage statistics of chat for a user in a workspace.
+         * @summary Get Chat Usage
+         * @param {ActionsApiAiChatUsageRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatUsage(
+            requestParameters: ActionsApiAiChatUsageRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ChatUsageResponse> {
+            return localVarFp
+                .aiChatUsage(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
          * @summary (BETA) Semantic Search in Metadata
          * @param {ActionsApiAiSearchRequest} requestParameters Request parameters.
@@ -5777,6 +5862,19 @@ export interface ActionsApiInterface {
     ): AxiosPromise<Array<object>>;
 
     /**
+     * Returns usage statistics of chat for a user in a workspace.
+     * @summary Get Chat Usage
+     * @param {ActionsApiAiChatUsageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    aiChatUsage(
+        requestParameters: ActionsApiAiChatUsageRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ChatUsageResponse>;
+
+    /**
      * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
      * @summary (BETA) Semantic Search in Metadata
      * @param {ActionsApiAiSearchRequest} requestParameters Request parameters.
@@ -6059,6 +6157,20 @@ export interface ActionsApiAiChatStreamRequest {
      * @memberof ActionsApiAiChatStream
      */
     readonly chatRequest: ChatRequest;
+}
+
+/**
+ * Request parameters for aiChatUsage operation in ActionsApi.
+ * @export
+ * @interface ActionsApiAiChatUsageRequest
+ */
+export interface ActionsApiAiChatUsageRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiAiChatUsage
+     */
+    readonly workspaceId: string;
 }
 
 /**
@@ -6649,6 +6761,20 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     public aiChatStream(requestParameters: ActionsApiAiChatStreamRequest, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration)
             .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns usage statistics of chat for a user in a workspace.
+     * @summary Get Chat Usage
+     * @param {ActionsApiAiChatUsageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public aiChatUsage(requestParameters: ActionsApiAiChatUsageRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .aiChatUsage(requestParameters.workspaceId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -8766,6 +8892,43 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
+         * Returns usage statistics of chat for a user in a workspace.
+         * @summary Get Chat Usage
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatUsage: async (workspaceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiChatUsage", "workspaceId", workspaceId);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatUsage`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
          * @summary (BETA) Semantic Search in Metadata
          * @param {string} workspaceId Workspace identifier
@@ -9242,6 +9405,20 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Returns usage statistics of chat for a user in a workspace.
+         * @summary Get Chat Usage
+         * @param {string} workspaceId Workspace identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiChatUsage(
+            workspaceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatUsageResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChatUsage(workspaceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
          * @summary (BETA) Semantic Search in Metadata
          * @param {string} workspaceId Workspace identifier
@@ -9477,6 +9654,21 @@ export const SmartFunctionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Returns usage statistics of chat for a user in a workspace.
+         * @summary Get Chat Usage
+         * @param {SmartFunctionsApiAiChatUsageRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatUsage(
+            requestParameters: SmartFunctionsApiAiChatUsageRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ChatUsageResponse> {
+            return localVarFp
+                .aiChatUsage(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
          * @summary (BETA) Semantic Search in Metadata
          * @param {SmartFunctionsApiAiSearchRequest} requestParameters Request parameters.
@@ -9666,6 +9858,19 @@ export interface SmartFunctionsApiInterface {
     ): AxiosPromise<Array<object>>;
 
     /**
+     * Returns usage statistics of chat for a user in a workspace.
+     * @summary Get Chat Usage
+     * @param {SmartFunctionsApiAiChatUsageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    aiChatUsage(
+        requestParameters: SmartFunctionsApiAiChatUsageRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ChatUsageResponse>;
+
+    /**
      * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
      * @summary (BETA) Semantic Search in Metadata
      * @param {SmartFunctionsApiAiSearchRequest} requestParameters Request parameters.
@@ -9818,6 +10023,20 @@ export interface SmartFunctionsApiAiChatStreamRequest {
      * @memberof SmartFunctionsApiAiChatStream
      */
     readonly chatRequest: ChatRequest;
+}
+
+/**
+ * Request parameters for aiChatUsage operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiAiChatUsageRequest
+ */
+export interface SmartFunctionsApiAiChatUsageRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiAiChatUsage
+     */
+    readonly workspaceId: string;
 }
 
 /**
@@ -10103,6 +10322,20 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     ) {
         return SmartFunctionsApiFp(this.configuration)
             .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns usage statistics of chat for a user in a workspace.
+     * @summary Get Chat Usage
+     * @param {SmartFunctionsApiAiChatUsageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public aiChatUsage(requestParameters: SmartFunctionsApiAiChatUsageRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsApiFp(this.configuration)
+            .aiChatUsage(requestParameters.workspaceId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 

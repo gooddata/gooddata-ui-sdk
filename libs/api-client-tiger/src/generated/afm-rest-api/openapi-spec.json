@@ -1184,6 +1184,38 @@
                     "description": "Permissions required to view a report or label elements."
                 }
             }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/chatUsage": {
+            "get": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "Get Chat Usage",
+                "description": "Returns usage statistics of chat for a user in a workspace.",
+                "operationId": "aiChatUsage",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChatUsageResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -4054,6 +4086,22 @@
                     }
                 },
                 "description": "Header containing the information related to a subtotal."
+            },
+            "ChatUsageResponse": {
+                "required": ["interactionCount", "timeWindowHours"],
+                "type": "object",
+                "properties": {
+                    "interactionCount": {
+                        "type": "integer",
+                        "description": "Number of interactions in the time window",
+                        "format": "int32"
+                    },
+                    "timeWindowHours": {
+                        "type": "integer",
+                        "description": "Time window in hours",
+                        "format": "int32"
+                    }
+                }
             }
         }
     }

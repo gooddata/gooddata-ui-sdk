@@ -23,6 +23,11 @@ export function useCodemirrorKeymap({
                 key: "Mod-i",
                 run: startCompletion,
             },
+            // Ctrl on Windows
+            {
+                key: "Ctrl-i",
+                run: startCompletion,
+            },
             ...defaultKeymap,
             ...historyKeymap,
         ]);
