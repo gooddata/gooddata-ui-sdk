@@ -9314,6 +9314,9 @@ export const selectSaveAsVisible: DashboardSelector<boolean>;
 // @alpha (undocumented)
 export const selectScheduleEmailDialogDefaultAttachment: DashboardSelector<ObjRef | undefined>;
 
+// @alpha (undocumented)
+export const selectScheduleEmailDialogOpenedFrom: DashboardSelector<string | undefined>;
+
 // @public
 export const selectScreen: DashboardSelector<ScreenSize | undefined>;
 
@@ -9839,7 +9842,9 @@ export const uiActions: CaseReducerActions<    {
 openSettingsDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 closeSettingsDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 openScheduleEmailDialog: (state: WritableDraft<UiState_2>, action: {
-payload: IScheduleEmailContext_2;
+payload: IScheduleEmailContext_2 & {
+openedFrom?: string | undefined;
+};
 type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
 closeScheduleEmailDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
@@ -9849,7 +9854,9 @@ type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
 resetScheduleEmailDialogDefaultAttachment: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 openScheduleEmailManagementDialog: (state: WritableDraft<UiState_2>, action: {
-payload: IScheduleEmailContext_2;
+payload: IScheduleEmailContext_2 & {
+openedFrom?: string | undefined;
+};
 type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
 closeScheduleEmailManagementDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
@@ -10071,11 +10078,13 @@ export interface UiState {
     scheduleEmailDialog: {
         open: boolean;
         defaultAttachmentRef: ObjRef | undefined;
+        openedFrom?: string;
         context?: IScheduleEmailContext;
     };
     // (undocumented)
     scheduleEmailManagementDialog: {
         open: boolean;
+        openedFrom?: string;
         context?: IScheduleEmailContext;
     };
     // (undocumented)

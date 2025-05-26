@@ -33,11 +33,13 @@ export type FilterViewDialogMode = "list" | "add";
 export interface UiState {
     scheduleEmailManagementDialog: {
         open: boolean;
+        openedFrom?: string;
         context?: IScheduleEmailContext;
     };
     scheduleEmailDialog: {
         open: boolean;
         defaultAttachmentRef: ObjRef | undefined;
+        openedFrom?: string;
         context?: IScheduleEmailContext;
     };
     alertsManagementDialog: {

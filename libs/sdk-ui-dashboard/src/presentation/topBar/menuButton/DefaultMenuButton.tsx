@@ -19,6 +19,7 @@ import { useIntl } from "react-intl";
 
 import { IMenuButtonItem, IMenuButtonItemButton, IMenuButtonItemMenu, IMenuButtonProps } from "./types.js";
 import { DefaultSubmenuHeader } from "./DefaultSubmenuHeader.js";
+import { DEFAULT_MENU_BUTTON_ID } from "../../../_staging/accessibility/elementId.js";
 const ALIGN_POINTS_TOOLTIP = [{ align: "bc tr" }, { align: "cl cr" }];
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cl tr" }];
@@ -51,7 +52,6 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
 
     // generate unique IDs for accessibility and dropdown positioning
     const id = useId();
-    const buttonId = `menu-button-${id}`;
     const menuId = `menu-${id}`;
     const dropdownAnchorClassName = `dash-header-options-anchor-${id}`;
 
@@ -216,7 +216,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                                 }}
                             />
                         ) : null}
-                        <div role={"menu"} id={menuId} aria-labelledby={buttonId}>
+                        <div role={"menu"} id={menuId} aria-labelledby={DEFAULT_MENU_BUTTON_ID}>
                             {visibleMenuItems.map((menuItem) => {
                                 return (
                                     <MenuItem
@@ -244,7 +244,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                 <Button
                     onClick={onMenuButtonClick}
                     value="&#8943;"
-                    id={buttonId}
+                    id={DEFAULT_MENU_BUTTON_ID}
                     className={cx(
                         "gd-button-primary dash-header-options-button s-header-options-button gd-button",
                         dropdownAnchorClassName,

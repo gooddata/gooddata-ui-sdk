@@ -2,7 +2,7 @@
 
 import React, { useCallback, useState } from "react";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
-import { AddButton, Button, Dialog, Hyperlink, Typography, useId } from "@gooddata/sdk-ui-kit";
+import { AddButton, Button, Dialog, Hyperlink, Typography, useId, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { ScheduledEmails } from "./components/ScheduledEmailsList.js";
@@ -18,9 +18,31 @@ import {
     selectCanCreateAutomation,
     selectIsWhiteLabeled,
     selectExecutionTimestamp,
+    selectScheduleEmailDialogOpenedFrom,
 } from "../../../model/index.js";
 import { messages } from "../../../locales.js";
 import { isMobileView } from "../utils/responsive.js";
+
+import {
+    DASHBOARD_INSIGHT_MENU_BUTTON_ID,
+    DEFAULT_MENU_BUTTON_ID,
+} from "../../../_staging/accessibility/elementId.js";
+
+const useScheduleEmailManagementDialogAccessibility = () => {
+    const scheduleEmailId = useIdPrefixed("ScheduleEmail");
+    const scheduleEmailingDialogOpenedFrom = useDashboardSelector(selectScheduleEmailDialogOpenedFrom);
+    const isOpenedFromWidget = scheduleEmailingDialogOpenedFrom === "widget";
+
+    const returnFocusTo = React.useMemo(
+        () => (isOpenedFromWidget ? DASHBOARD_INSIGHT_MENU_BUTTON_ID : DEFAULT_MENU_BUTTON_ID),
+        [isOpenedFromWidget],
+    );
+
+    return {
+        scheduleEmailId,
+        returnFocusTo,
+    } as const;
+};
 
 /**
  * @alpha
@@ -47,6 +69,8 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
     const intl = useIntl();
     const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
+
+    const { scheduleEmailId, returnFocusTo } = useScheduleEmailManagementDialogAccessibility();
 
     const handleScheduleDelete = useCallback((scheduledEmail: IAutomationMetadataObject) => {
         setScheduledEmailToDelete(scheduledEmail);
@@ -79,6 +103,8 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                 onCancel={onClose}
                 className="gd-notifications-channels-management-dialog s-scheduled-email-management-dialog"
                 accessibilityConfig={{ titleElementId, isModal: true }}
+                returnFocusAfterClose={true}
+                returnFocusTo={returnFocusTo}
             >
                 <div className="gd-notifications-channels-management-dialog-title">
                     <Typography tagName="h3" className="gd-dialog-header" id={titleElementId}>
@@ -92,6 +118,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                         </Typography>
                         {canCreateAutomation ? (
                             <AddButton
+                                id={scheduleEmailId}
                                 onClick={onAdd}
                                 isDisabled={
                                     isLoadingScheduleData || maxAutomationsReached || isExecutionTimestampMode
@@ -134,15 +161,16 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                         value={intl.formatMessage({ id: "close" })}
                     />
                 </div>
+                {scheduledEmailToDelete ? (
+                    <DeleteScheduleConfirmDialog
+                        scheduledEmail={scheduledEmailToDelete}
+                        onCancel={() => setScheduledEmailToDelete(null)}
+                        onSuccess={handleScheduleDeleteSuccess}
+                        onError={onDeleteError}
+                        returnFocusTo={scheduleEmailId}
+                    />
+                ) : null}
             </Dialog>
-            {scheduledEmailToDelete ? (
-                <DeleteScheduleConfirmDialog
-                    scheduledEmail={scheduledEmailToDelete}
-                    onCancel={() => setScheduledEmailToDelete(null)}
-                    onSuccess={handleScheduleDeleteSuccess}
-                    onError={onDeleteError}
-                />
-            ) : null}
         </>
     );
 };

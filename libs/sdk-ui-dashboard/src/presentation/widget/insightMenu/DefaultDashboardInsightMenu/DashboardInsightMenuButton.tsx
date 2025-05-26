@@ -6,6 +6,7 @@ import { useIntl } from "react-intl";
 import { isActionKey } from "@gooddata/sdk-ui-kit";
 import { IDashboardInsightMenuButtonProps } from "../types.js";
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
+import { DASHBOARD_INSIGHT_MENU_BUTTON_ID } from "../../../../_staging/accessibility/elementId.js";
 
 export const DashboardInsightMenuButton = (props: IDashboardInsightMenuButtonProps): JSX.Element | null => {
     const { isOpen, items, widget, onClick } = props;
@@ -45,6 +46,7 @@ export const DashboardInsightMenuButton = (props: IDashboardInsightMenuButtonPro
 
     return (
         <div
+            id={DASHBOARD_INSIGHT_MENU_BUTTON_ID}
             className="dash-item-action-placeholder s-dash-item-action-placeholder"
             onClick={onMenuButtonClick}
             onKeyDown={onKeyDown}

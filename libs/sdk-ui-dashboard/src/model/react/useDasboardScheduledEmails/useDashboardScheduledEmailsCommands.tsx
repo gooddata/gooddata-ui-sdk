@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
 import { areObjRefsEqual, isInsightWidget, IWidget } from "@gooddata/sdk-model";
 import { selectEnableScheduling, selectInsights, selectWidgets, uiActions } from "../../store/index.js";
@@ -19,11 +19,11 @@ export const useDashboardScheduledEmailsCommands = () => {
 
     // Single Schedule Dialog
     const openScheduleEmailingDialog = useCallback(
-        (widget?: IWidget) => {
+        (widget?: IWidget, openedFrom?: string) => {
             if (isScheduledEmailingEnabled) {
                 dispatch(
                     uiActions.openScheduleEmailDialog({
-                        ...(widget?.ref ? { widgetRef: widget.ref } : {}),
+                        ...(widget?.ref ? { widgetRef: widget.ref, openedFrom } : { openedFrom }),
                     }),
                 );
 
@@ -39,6 +39,7 @@ export const useDashboardScheduledEmailsCommands = () => {
         },
         [automationInteraction, dispatch, insights, isScheduledEmailingEnabled, widgets],
     );
+
     const closeScheduleEmailingDialog = useCallback(
         () => isScheduledEmailingEnabled && dispatch(uiActions.closeScheduleEmailDialog()),
         [dispatch, isScheduledEmailingEnabled],
@@ -46,15 +47,16 @@ export const useDashboardScheduledEmailsCommands = () => {
 
     // List / Management Dialog
     const openScheduleEmailingManagementDialog = useCallback(
-        (widget?: IWidget) =>
+        (widget?: IWidget, openedFrom?: string) =>
             isScheduledEmailingEnabled &&
             dispatch(
                 uiActions.openScheduleEmailManagementDialog({
-                    ...(widget?.ref ? { widgetRef: widget.ref } : {}),
+                    ...(widget?.ref ? { widgetRef: widget.ref, openedFrom } : { openedFrom }),
                 }),
             ),
         [dispatch, isScheduledEmailingEnabled],
     );
+
     const closeScheduleEmailingManagementDialog = useCallback(
         () => isScheduledEmailingEnabled && dispatch(uiActions.closeScheduleEmailManagementDialog()),
         [dispatch, isScheduledEmailingEnabled],

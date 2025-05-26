@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import moment from "moment";

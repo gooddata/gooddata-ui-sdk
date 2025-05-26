@@ -2,7 +2,14 @@
 
 import React, { useState } from "react";
 import cx from "classnames";
-import { Button, ContentDivider, Dropdown, IAlignPoint, OverlayPositionType } from "@gooddata/sdk-ui-kit";
+import {
+    Button,
+    ContentDivider,
+    Dropdown,
+    IAlignPoint,
+    isActionKey,
+    OverlayPositionType,
+} from "@gooddata/sdk-ui-kit";
 import { AttachmentType, WidgetAttachmentType } from "../../types.js";
 import { FormattedMessage, useIntl } from "react-intl";
 import { IExportDefinitionVisualizationObjectSettings } from "@gooddata/sdk-model";
@@ -27,6 +34,16 @@ const AttachmentItem: React.FC<{
     className?: string;
 }> = ({ format, checked, onChange, className, disabled }) => {
     const intl = useIntl();
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (disabled) {
+            return;
+        }
+
+        if (isActionKey(e)) {
+            e.preventDefault();
+            onChange();
+        }
+    };
     return (
         <label className="gd-notifications-channels-attachment-checkbox input-checkbox-label">
             <input
@@ -35,6 +52,7 @@ const AttachmentItem: React.FC<{
                 disabled={disabled}
                 checked={checked}
                 onChange={onChange}
+                onKeyDown={handleKeyDown}
                 aria-label={intl.formatMessage(
                     { id: "dialogs.schedule.management.attachments.attachment" },
                     { format: format },

@@ -46,7 +46,7 @@ export const useDashboardScheduledEmailsManagementDialog = ({
                 return;
             }
 
-            openScheduleEmailingManagementDialog(widget);
+            openScheduleEmailingManagementDialog(widget, "dashboard");
         },
         [dashboardRef, openScheduleEmailingManagementDialog],
     );
@@ -54,7 +54,7 @@ export const useDashboardScheduledEmailsManagementDialog = ({
     // Open / Close
     const onScheduleEmailingManagementOpen = useCallback(
         (widget?: IWidget) => {
-            openScheduleEmailingManagementDialog(widget);
+            openScheduleEmailingManagementDialog(widget, "widget");
         },
         [openScheduleEmailingManagementDialog],
     );

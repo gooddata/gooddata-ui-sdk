@@ -182,6 +182,14 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
                             data: item,
                         }));
 
+                        const handleKeyDown = (e: React.KeyboardEvent) => {
+                            if (e.key !== "Tab") {
+                                return;
+                            }
+
+                            closeDropdown();
+                        };
+
                         return (
                             <UiListbox
                                 shouldKeyboardActionStopPropagation={true}
@@ -195,6 +203,7 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
                                     this.handleTimeChanged(item.data);
                                 }}
                                 onClose={closeDropdown}
+                                onUnhandledKeyDown={handleKeyDown}
                                 ariaAttributes={ariaAttributes}
                                 InteractiveItemComponent={({ item, isSelected, onSelect, isFocused }) => {
                                     return (

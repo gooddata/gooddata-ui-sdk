@@ -24,11 +24,20 @@ import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drilling
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
 
-const openScheduleEmailDialog: UiReducer<PayloadAction<IScheduleEmailContext>> = (state, action) => {
+const openScheduleEmailDialog: UiReducer<PayloadAction<IScheduleEmailContext & { openedFrom?: string }>> = (
+    state,
+    action,
+) => {
+    const { widgetRef, openedFrom } = action.payload;
+
     state.scheduleEmailDialog.open = true;
-    if (action.payload.widgetRef) {
+
+    if (openedFrom) {
+        state.scheduleEmailDialog.openedFrom = openedFrom;
+    }
+    if (widgetRef) {
         state.scheduleEmailDialog.context = {
-            widgetRef: action.payload.widgetRef,
+            widgetRef,
         };
     }
 };
@@ -46,14 +55,23 @@ const resetScheduleEmailDialogDefaultAttachment: UiReducer = (state) => {
     state.scheduleEmailDialog.defaultAttachmentRef = undefined;
 };
 
-const openScheduleEmailManagementDialog: UiReducer<PayloadAction<IScheduleEmailContext>> = (
-    state,
-    action,
-) => {
+/**
+ * Opens the schedule email management dialog with the provided context
+ * @internal
+ */
+const openScheduleEmailManagementDialog: UiReducer<
+    PayloadAction<IScheduleEmailContext & { openedFrom?: string }>
+> = (state, action) => {
+    const { widgetRef, openedFrom } = action.payload;
+
     state.scheduleEmailManagementDialog.open = true;
-    if (action.payload.widgetRef) {
+
+    if (openedFrom) {
+        state.scheduleEmailDialog.openedFrom = openedFrom;
+    }
+    if (widgetRef) {
         state.scheduleEmailManagementDialog.context = {
-            widgetRef: action.payload.widgetRef,
+            widgetRef,
         };
     }
 };

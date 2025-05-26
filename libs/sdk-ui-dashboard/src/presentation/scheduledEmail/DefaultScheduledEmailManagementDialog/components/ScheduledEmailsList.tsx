@@ -1,8 +1,8 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { IAutomationMetadataObject, INotificationChannelMetadataObject } from "@gooddata/sdk-model";
-import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
+import { AutofocusOnMount, LoadingSpinner, useListWithActionsKeyboardNavigation } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { ScheduledEmail } from "./ScheduledEmail.js";
@@ -21,6 +21,32 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
     const { isLoading, scheduledEmails, onDelete, onEdit, noSchedulesMessageId, notificationChannels } =
         props;
     const theme = useTheme();
+
+    const handleEdit = React.useCallback(
+        (scheduledEmail: IAutomationMetadataObject) => () => {
+            onEdit(scheduledEmail);
+        },
+        [onEdit],
+    );
+
+    const handleDelete = React.useCallback(
+        (scheduledEmail: IAutomationMetadataObject) => () => {
+            onDelete(scheduledEmail);
+        },
+        [onDelete],
+    );
+
+    const { onKeyboardNavigation, onBlur, focusedItem, focusedAction } = useListWithActionsKeyboardNavigation(
+        {
+            items: scheduledEmails,
+            getItemAdditionalActions: () => ["scheduleEmail", "delete"],
+            actionHandlers: {
+                selectItem: handleEdit,
+                delete: handleDelete,
+                scheduleEmail: handleEdit,
+            },
+        },
+    );
 
     if (isLoading) {
         return (
@@ -44,16 +70,24 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
     }
 
     return (
-        <>
-            {scheduledEmails.map((scheduledEmail) => (
-                <ScheduledEmail
-                    key={scheduledEmail.id}
-                    scheduledEmail={scheduledEmail}
-                    onDelete={onDelete}
-                    onEdit={onEdit}
-                    notificationChannels={notificationChannels}
-                />
-            ))}
-        </>
+        <AutofocusOnMount>
+            <div
+                className="configuration-category gd-schedule-email__list"
+                onKeyDown={onKeyboardNavigation}
+                onBlur={onBlur}
+                tabIndex={scheduledEmails.length > 0 ? 0 : -1}
+            >
+                {scheduledEmails.map((scheduledEmail) => (
+                    <ScheduledEmail
+                        key={scheduledEmail.id}
+                        scheduledEmail={scheduledEmail}
+                        focusedAction={scheduledEmail === focusedItem ? focusedAction : undefined}
+                        onDelete={onDelete}
+                        onEdit={handleEdit(scheduledEmail)}
+                        notificationChannels={notificationChannels}
+                    />
+                ))}
+            </div>
+        </AutofocusOnMount>
     );
 };

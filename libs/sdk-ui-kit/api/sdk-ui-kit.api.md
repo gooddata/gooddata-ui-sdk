@@ -805,6 +805,8 @@ export interface IAddButtonProps {
     // (undocumented)
     className?: string;
     // (undocumented)
+    id?: string;
+    // (undocumented)
     isDisabled?: boolean;
     // (undocumented)
     onClick?: () => void;

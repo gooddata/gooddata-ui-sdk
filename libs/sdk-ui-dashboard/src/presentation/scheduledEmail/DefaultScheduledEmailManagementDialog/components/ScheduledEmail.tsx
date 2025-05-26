@@ -1,10 +1,10 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import { IAutomationMetadataObject, INotificationChannelMetadataObject } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Icon, SELECT_ITEM_ACTION, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
 import { isVisualisationAutomation } from "../../../../_staging/automation/index.js";
@@ -15,11 +15,14 @@ import {
     useDashboardSelector,
 } from "../../../../model/index.js";
 
+type IAction = "scheduleEmail" | "delete" | typeof SELECT_ITEM_ACTION;
+
 interface IScheduledEmailProps {
     onDelete: (scheduledEmail: IAutomationMetadataObject) => void;
     onEdit: (scheduledEmail: IAutomationMetadataObject) => void;
     scheduledEmail: IAutomationMetadataObject;
     notificationChannels: INotificationChannelMetadataObject[];
+    focusedAction?: IAction;
 }
 
 const ICON_TOOLTIP_ALIGN_POINTS = [
@@ -34,7 +37,7 @@ const TEXT_TOOLTIP_ALIGN_POINTS = [
 export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const theme = useTheme();
 
-    const { scheduledEmail, onDelete, onEdit, notificationChannels } = props;
+    const { scheduledEmail, onDelete, onEdit, notificationChannels, focusedAction } = props;
 
     const currentUser = useDashboardSelector(selectCurrentUser);
     const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
@@ -64,14 +67,22 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
 
     const handleClick = useCallback(() => {
         onEdit(scheduledEmail);
-    }, [scheduledEmail, onEdit]);
+    }, [scheduledEmail]);
 
     return (
-        <div className={cx("gd-notifications-channel", "s-scheduled-email", { editable: canEdit })}>
+        <div
+            className={cx("gd-notifications-channel", "s-scheduled-email", {
+                editable: canEdit,
+                "gd-schedule-email__item--isFocused": !!focusedAction,
+                "gd-schedule-email__item--isFocusedSelectItem": focusedAction === SELECT_ITEM_ACTION,
+            })}
+        >
             <div className="gd-notifications-channel-delete">
                 <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                     <span
-                        className="gd-notifications-channel-delete-icon s-scheduled-email-delete-icon"
+                        className={cx("gd-notifications-channel-delete-icon s-scheduled-email-delete-icon", {
+                            "gd-schedule-email__item__button--isFocused": focusedAction === "delete",
+                        })}
                         onClick={() => onDelete(scheduledEmail)}
                     />
                     <Bubble className="bubble-primary" alignPoints={ICON_TOOLTIP_ALIGN_POINTS}>
@@ -87,7 +98,11 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
                 >
                     {iconComponent}
                 </div>
-                <div className="gd-notifications-channel-text-content">
+                <div
+                    className={cx("gd-notifications-channel-text-content", {
+                        "gd-schedule-email__item--isFocusedSelectItem": focusedAction === "scheduleEmail",
+                    })}
+                >
                     <div className="gd-notifications-channel-title">
                         <strong>
                             <ShortenedText

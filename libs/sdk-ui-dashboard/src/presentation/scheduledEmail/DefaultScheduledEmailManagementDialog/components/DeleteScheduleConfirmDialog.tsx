@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import React, { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -13,13 +13,14 @@ import {
 
 interface IDeleteScheduleConfirmDialogProps {
     scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition;
+    returnFocusTo?: React.RefObject<HTMLElement> | string;
     onCancel: () => void;
     onSuccess?: () => void;
     onError?: (error: GoodDataSdkError) => void;
 }
 
 export const DeleteScheduleConfirmDialog: React.FC<IDeleteScheduleConfirmDialogProps> = (props) => {
-    const { scheduledEmail, onCancel, onSuccess, onError } = props;
+    const { scheduledEmail, returnFocusTo, onCancel, onSuccess, onError } = props;
 
     const effectiveBackend = useBackendStrict();
     const effectiveWorkspace = useWorkspaceStrict();
@@ -58,6 +59,7 @@ export const DeleteScheduleConfirmDialog: React.FC<IDeleteScheduleConfirmDialogP
             onSubmit={handleDeleteScheduledMail}
             onClose={onCancel}
             onCancel={onCancel}
+            returnFocusTo={returnFocusTo}
             className="gd-notifications-channel-delete-dialog s-scheduled-email-delete-dialog"
             containerClassName="gd-notifications-channel-delete-dialog-overlay"
         >
