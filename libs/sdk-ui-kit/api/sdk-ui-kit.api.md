@@ -106,6 +106,9 @@ export type ArrowOffsets = Record<string, ArrowOffset>;
 export function AsyncList<T>(props: IAsyncListProps<T>): React_2.JSX.Element;
 
 // @internal (undocumented)
+export const AutofocusOnMount: React_2.FC<React_2.HTMLProps<HTMLDivElement>>;
+
+// @internal (undocumented)
 export class AutoSize extends Component<IAutoSizeProps> {
     // (undocumented)
     componentDidMount(): void;
@@ -5274,6 +5277,9 @@ export const scrollContextDefault: {
 export const ScrollGradient: React_2.FC<IScrollGradientProps>;
 
 // @internal (undocumented)
+export const SELECT_ITEM_ACTION = "selectItem";
+
+// @internal (undocumented)
 export type SelectedTime = {
     h: number;
     m: number;
@@ -5854,7 +5860,7 @@ export const unrelatedHeader: IDateDatasetHeader;
 export function unwrapGroupItems<T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[]): IUiMenuItem<T>[];
 
 // @internal
-export const useAutofocusOnMount: (timeout?: number) => (node: HTMLElement | null) => void;
+export const useAutofocusOnMount: () => (node: HTMLElement | null) => void;
 
 // @internal
 export const useDebouncedState: <T>(initialValue: T, delay: number) => UseDebouncedStateOutput<T>;
@@ -5894,6 +5900,20 @@ export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInvert
 
 // @internal
 export const useIsZoomed: (baseZoomLevel?: number) => boolean;
+
+// @internal (undocumented)
+export function useListWithActionsKeyboardNavigation<Item, Action extends string>({ items, actionHandlers, getItemAdditionalActions, }: {
+    items: Item[];
+    actionHandlers: {
+        [key in Action | typeof SELECT_ITEM_ACTION]: (item: Item) => (() => void) | undefined;
+    };
+    getItemAdditionalActions: (item: Item) => Action[];
+}): {
+    onKeyboardNavigation: (event: React_2.KeyboardEvent<Element>) => void;
+    onBlur: React_2.FocusEventHandler<Element>;
+    focusedAction: "selectItem" | Action;
+    focusedItem: Item;
+};
 
 // @internal
 export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;

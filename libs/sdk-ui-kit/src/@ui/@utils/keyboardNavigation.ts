@@ -94,7 +94,7 @@ export const makeMenuKeyboardNavigation = makeKeyboardNavigation({
     onFocusNext: [{ code: "ArrowDown" }],
     onFocusFirst: [{ code: "Home" }],
     onFocusLast: [{ code: "End" }],
-    onEnterLevel: [{ code: "ArrowRight" }],
+    onEnterLevel: [{ code: ["ArrowRight", "F2"] }],
     onLeaveLevel: [{ code: "ArrowLeft" }],
     onSelect: [{ code: ["Enter", "Space"] }],
     onClose: [{ code: "Escape" }],

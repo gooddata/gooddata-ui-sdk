@@ -1,10 +1,17 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { useCallback, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
-import { IAlignPoint, DropdownButton, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import {
+    DropdownButton,
+    useMediaQuery,
+    IAlignPoint,
+    UiFocusTrap,
+    useIdPrefixed,
+    AutofocusOnMount,
+} from "@gooddata/sdk-ui-kit";
 import { IDashboardFilterView } from "@gooddata/sdk-model";
 
 import { ConfigurationBubble } from "../../../widget/common/configuration/ConfigurationBubble.js";
@@ -128,6 +135,8 @@ export const FilterViews: React.FC = () => {
         "gd-filter-views-button--open": isDialogOpen,
     });
 
+    const triggerId = useIdPrefixed("FilterViewsTrigger");
+
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
     if (isReadOnly) {
         return null;
@@ -137,10 +146,17 @@ export const FilterViews: React.FC = () => {
         <div className="gd-filter-views">
             {showDropdownButton ? (
                 <>
-                    <DropdownButton onClick={toggleDialog} className={buttonClassNames} isOpen={isDialogOpen}>
+                    <DropdownButton
+                        id={triggerId}
+                        onClick={toggleDialog}
+                        className={buttonClassNames}
+                        isOpen={isDialogOpen}
+                    >
                         <DropdownButtonLabel filterViews={filterViews} />
                     </DropdownButton>
-                    {isDashboardEditMode ? <div className="gd-filters-views__panel__divider" /> : null}
+                    {isDashboardEditMode ? (
+                        <div id={triggerId} className="gd-filters-views__panel__divider" />
+                    ) : null}
                 </>
             ) : (
                 <div className={dropdownAnchorClassName} />
@@ -152,15 +168,19 @@ export const FilterViews: React.FC = () => {
                     alignTo={`.${dropdownAnchorClassName}`}
                     alignPoints={BUBBLE_ALIGN_POINTS}
                 >
-                    {dialogMode === "add" ? (
-                        <AddFilterView onClose={openListDialog} />
-                    ) : (
-                        <FilterViewsList
-                            filterViews={filterViews}
-                            onAddNew={openAddDialog}
-                            onClose={closeDialog}
-                        />
-                    )}
+                    <UiFocusTrap returnFocusTo={triggerId} returnFocusOnUnmount onDeactivate={closeDialog}>
+                        <AutofocusOnMount key={dialogMode}>
+                            {dialogMode === "add" ? (
+                                <AddFilterView onClose={openListDialog} />
+                            ) : (
+                                <FilterViewsList
+                                    filterViews={filterViews}
+                                    onAddNew={openAddDialog}
+                                    onClose={closeDialog}
+                                />
+                            )}
+                        </AutofocusOnMount>
+                    </UiFocusTrap>
                 </ConfigurationBubble>
             ) : null}
         </div>
