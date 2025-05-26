@@ -249,6 +249,9 @@ function recordedWorkspace(
                 async setSeparators(): Promise<void> {
                     return Promise.resolve();
                 },
+                async setActiveLlmEndpoint(): Promise<void> {
+                    return Promise.resolve();
+                },
                 async setTimezone(): Promise<void> {
                     return Promise.resolve();
                 },
@@ -456,6 +459,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setWhiteLabeling: () => Promise.resolve(),
                 setLocale: () => Promise.resolve(),
                 setSeparators: () => Promise.resolve(),
+                setActiveLlmEndpoint: () => Promise.resolve(),
                 setTimezone: () => Promise.resolve(),
                 setDateFormat: () => Promise.resolve(),
                 setWeekStart: () => Promise.resolve(),

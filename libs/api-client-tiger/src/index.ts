@@ -352,6 +352,20 @@ export type {
     ImageExportRequestFormatEnum as AfmExportImageExportRequestFormatEnum,
     DashboardFilter,
     DashboardExportSettings,
+    DashboardAttributeFilterAttributeFilter,
+    DashboardDateFilterDateFilter,
+    IdentifierRef,
+    AttributeElements,
+    AttributeFilterParent,
+    AttributeFilterByDate,
+    DashboardAttributeFilterAttributeFilterSelectionModeEnum,
+    DashboardDateFilterDateFilterTypeEnum,
+    DashboardDateFilterDateFilterGranularityEnum,
+    AttributeElementsByRef,
+    AttributeElementsByValue,
+    Over,
+    IdentifierRefIdentifier,
+    IdentifierRefIdentifierTypeEnum,
 } from "./generated/export-json-api/api.js";
 
 export type {

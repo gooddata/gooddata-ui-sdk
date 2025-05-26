@@ -849,6 +849,7 @@ class DummyOrganization implements IOrganization {
             setWhiteLabeling: () => Promise.resolve(),
             setLocale: () => Promise.resolve(),
             setSeparators: () => Promise.resolve(),
+            setActiveLlmEndpoint: () => Promise.resolve(),
             setTimezone: () => Promise.resolve(),
             setDateFormat: () => Promise.resolve(),
             setWeekStart: () => Promise.resolve(),
@@ -995,6 +996,10 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     setSeparators(_separators: ISeparators): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setActiveLlmEndpoint(_endpoint: string): Promise<void> {
         return Promise.resolve();
     }
 

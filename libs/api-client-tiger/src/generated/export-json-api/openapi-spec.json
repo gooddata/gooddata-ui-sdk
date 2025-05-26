@@ -2064,11 +2064,39 @@
                 "description": "Export request object describing the export properties and metadata for image exports."
             },
             "AttributeElements": {
-                "required": ["isEmpty"],
+                "type": "object",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AttributeElementsByRef"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AttributeElementsByValue"
+                    }
+                ]
+            },
+            "AttributeElementsByRef": {
+                "required": ["uris"],
                 "type": "object",
                 "properties": {
-                    "isEmpty": {
-                        "type": "boolean"
+                    "uris": {
+                        "type": "array",
+                        "description": "List of attribute elements by reference",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "AttributeElementsByValue": {
+                "required": ["values"],
+                "type": "object",
+                "properties": {
+                    "values": {
+                        "type": "array",
+                        "description": "List of attribute elements by value",
+                        "items": {
+                            "type": "string"
+                        }
                     }
                 }
             },
@@ -2103,50 +2131,45 @@
                     "attributeFilter": {
                         "required": ["attributeElements", "displayForm", "negativeSelection"],
                         "type": "object",
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/DashboardFilter"
+                        "properties": {
+                            "displayForm": {
+                                "$ref": "#/components/schemas/IdentifierRef"
                             },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "displayForm": {
-                                        "type": "string"
-                                    },
-                                    "negativeSelection": {
-                                        "type": "boolean"
-                                    },
-                                    "attributeElements": {
-                                        "$ref": "#/components/schemas/AttributeElements"
-                                    },
-                                    "filterElementsBy": {
-                                        "type": "array",
-                                        "items": {
-                                            "$ref": "#/components/schemas/AttributeFilterParent"
-                                        }
-                                    },
-                                    "filterElementsByDate": {
-                                        "type": "array",
-                                        "items": {
-                                            "$ref": "#/components/schemas/AttributeFilterByDate"
-                                        }
-                                    },
-                                    "validateElementsBy": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "title": {
-                                        "type": "string"
-                                    },
-                                    "selectionMode": {
-                                        "type": "string",
-                                        "enum": ["single", "multi"]
-                                    }
+                            "negativeSelection": {
+                                "type": "boolean"
+                            },
+                            "attributeElements": {
+                                "$ref": "#/components/schemas/AttributeElements"
+                            },
+                            "filterElementsBy": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/AttributeFilterParent"
                                 }
+                            },
+                            "filterElementsByDate": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/AttributeFilterByDate"
+                                }
+                            },
+                            "validateElementsBy": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/IdentifierRef"
+                                }
+                            },
+                            "title": {
+                                "type": "string"
+                            },
+                            "selectionMode": {
+                                "type": "string",
+                                "enum": ["single", "multi"]
+                            },
+                            "localIdentifier": {
+                                "type": "string"
                             }
-                        ]
+                        }
                     }
                 }
             },
@@ -2157,66 +2180,83 @@
                     "dateFilter": {
                         "required": ["granularity", "type"],
                         "type": "object",
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/DashboardFilter"
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": ["relative", "absolute"]
                             },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "type": {
-                                        "type": "string",
-                                        "enum": ["relative", "absolute"]
-                                    },
-                                    "granularity": {
-                                        "type": "string",
-                                        "enum": [
-                                            "ALL_TIME_GRANULARITY",
-                                            "GDC.time.year",
-                                            "GDC.time.week_us",
-                                            "GDC.time.week_in_year",
-                                            "GDC.time.week_in_quarter",
-                                            "GDC.time.week",
-                                            "GDC.time.euweek_in_year",
-                                            "GDC.time.euweek_in_quarter",
-                                            "GDC.time.quarter",
-                                            "GDC.time.quarter_in_year",
-                                            "GDC.time.month",
-                                            "GDC.time.month_in_quarter",
-                                            "GDC.time.month_in_year",
-                                            "GDC.time.day_in_year",
-                                            "GDC.time.day_in_quarter",
-                                            "GDC.time.day_in_month",
-                                            "GDC.time.day_in_week",
-                                            "GDC.time.day_in_euweek",
-                                            "GDC.time.date",
-                                            "GDC.time.hour",
-                                            "GDC.time.hour_in_day",
-                                            "GDC.time.minute",
-                                            "GDC.time.minute_in_hour"
-                                        ]
-                                    },
-                                    "from": {
+                            "granularity": {
+                                "type": "string",
+                                "enum": [
+                                    "ALL_TIME_GRANULARITY",
+                                    "GDC.time.year",
+                                    "GDC.time.week_us",
+                                    "GDC.time.week_in_year",
+                                    "GDC.time.week_in_quarter",
+                                    "GDC.time.week",
+                                    "GDC.time.euweek_in_year",
+                                    "GDC.time.euweek_in_quarter",
+                                    "GDC.time.quarter",
+                                    "GDC.time.quarter_in_year",
+                                    "GDC.time.month",
+                                    "GDC.time.month_in_quarter",
+                                    "GDC.time.month_in_year",
+                                    "GDC.time.day_in_year",
+                                    "GDC.time.day_in_quarter",
+                                    "GDC.time.day_in_month",
+                                    "GDC.time.day_in_week",
+                                    "GDC.time.day_in_euweek",
+                                    "GDC.time.date",
+                                    "GDC.time.hour",
+                                    "GDC.time.hour_in_day",
+                                    "GDC.time.minute",
+                                    "GDC.time.minute_in_hour"
+                                ]
+                            },
+                            "from": {
+                                "oneOf": [
+                                    {
                                         "type": "string"
                                     },
-                                    "to": {
-                                        "type": "string"
-                                    },
-                                    "dataSet": {
-                                        "type": "string"
-                                    },
-                                    "attribute": {
-                                        "type": "string"
+                                    {
+                                        "type": "integer",
+                                        "format": "int32"
                                     }
-                                }
+                                ]
+                            },
+                            "to": {
+                                "oneOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    }
+                                ]
+                            },
+                            "dataSet": {
+                                "$ref": "#/components/schemas/IdentifierRef"
+                            },
+                            "attribute": {
+                                "$ref": "#/components/schemas/IdentifierRef"
+                            },
+                            "localIdentifier": {
+                                "type": "string"
                             }
-                        ]
+                        }
                     }
                 }
             },
             "DashboardExportSettings": {
                 "type": "object",
                 "properties": {
+                    "exportInfo": {
+                        "type": "boolean",
+                        "description": "If true, the export will contain the information about the exported date and dashboard filters.",
+                        "example": true,
+                        "default": false
+                    },
                     "mergeHeaders": {
                         "type": "boolean",
                         "description": "Merge equal headers in neighbouring cells. Used for [XLSX] format only.",
@@ -2228,11 +2268,14 @@
             },
             "DashboardFilter": {
                 "type": "object",
-                "properties": {
-                    "localIdentifier": {
-                        "type": "string"
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/DashboardAttributeFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DashboardDateFilter"
                     }
-                }
+                ]
             },
             "DashboardTabularExportRequest": {
                 "required": ["fileName", "format"],
@@ -2253,21 +2296,8 @@
                         "type": "array",
                         "description": "List of filters that will be used instead of the default dashboard filters.",
                         "items": {
-                            "oneOf": [
-                                {
-                                    "$ref": "#/components/schemas/DashboardAttributeFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/DashboardDateFilter"
-                                }
-                            ]
+                            "$ref": "#/components/schemas/DashboardFilter"
                         }
-                    },
-                    "exportInfo": {
-                        "type": "boolean",
-                        "description": "If true, the export will contain the information about the exported date and dashboard filters.",
-                        "example": true,
-                        "default": false
                     },
                     "widgetIds": {
                         "maxItems": 1,
@@ -2284,6 +2314,53 @@
                 },
                 "description": "Export request object describing the export properties for dashboard tabular exports."
             },
+            "DateValue": {
+                "required": ["value"],
+                "type": "object",
+                "properties": {
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            },
+            "IdentifierRef": {
+                "type": "object",
+                "properties": {
+                    "identifier": {
+                        "required": ["id", "type"],
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "analyticalDashboard",
+                                    "attribute",
+                                    "attributeHierarchy",
+                                    "dashboardPlugin",
+                                    "dataset",
+                                    "fact",
+                                    "label",
+                                    "metric",
+                                    "userDataFilter",
+                                    "exportDefinition",
+                                    "automation",
+                                    "prompt",
+                                    "visualizationObject",
+                                    "filterContext",
+                                    "workspaceSettings",
+                                    "customApplicationSetting",
+                                    "workspaceDataFilter",
+                                    "workspaceDataFilterSetting",
+                                    "filterView"
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
             "Over": {
                 "required": ["attributes"],
                 "type": "object",
@@ -2291,7 +2368,7 @@
                     "attributes": {
                         "type": "array",
                         "items": {
-                            "type": "string"
+                            "$ref": "#/components/schemas/IdentifierRef"
                         }
                     }
                 }

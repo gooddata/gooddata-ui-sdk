@@ -43,6 +43,15 @@ export interface IOrganizationSettingsService {
     setSeparators(separators: ISeparators): Promise<void>;
 
     /**
+     * Set active LLM endpoint for the organization.
+     *
+     * @param endpoint - id of the LLM endpoint to set as active for the organization.
+     *
+     * @returns promise
+     */
+    setActiveLlmEndpoint(endpoint: string): Promise<void>;
+
+    /**
      * Sets timezone for organization.
      *
      * @param timezone - the value based on IANA time zone database naming convention.
