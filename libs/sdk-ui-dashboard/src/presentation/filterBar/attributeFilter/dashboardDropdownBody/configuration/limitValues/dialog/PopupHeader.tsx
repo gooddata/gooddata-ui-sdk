@@ -23,7 +23,9 @@ export const PopupHeader: React.FC<IPopupHeaderProps> = ({ title, onGoBack, onCl
             <Button
                 className="gd-button-link gd-button-icon-only gd-icon-cross configuration-panel-header-close-button s-configuration-panel-header-close-button"
                 onClick={onClose}
+                // TODO INE remove dataId once selectors in KD are rewritten to use dataTestId
                 dataId="s-configuration-panel-header-close-button"
+                dataTestId="s-configuration-panel-header-close-button"
             />
         </div>
     );

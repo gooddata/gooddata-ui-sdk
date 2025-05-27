@@ -30,6 +30,7 @@ export interface UiChipProps {
     onDelete?: () => void;
     onDeleteKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
     accessibilityConfig?: IUiChipAccessibilityConfig;
+    dataTestId?: string;
 }
 
 const { b, e } = bem("gd-ui-kit-chip");
@@ -48,6 +49,7 @@ export const UiChip = ({
     onDelete,
     onDeleteKeyDown,
     accessibilityConfig,
+    dataTestId,
 }: UiChipProps) => {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const [styleObj, setStyleObj] = useState<CSSProperties>();
@@ -71,6 +73,7 @@ export const UiChip = ({
     return (
         <div className={b()}>
             <button
+                data-testid={dataTestId}
                 aria-expanded={isActive}
                 className={e("trigger", { isDeletable, isActive, isLocked })}
                 disabled={isLocked}
@@ -106,6 +109,7 @@ export const UiChip = ({
             </button>
             {isDeletable ? (
                 <button
+                    data-testid={dataTestId ? `${dataTestId}-delete-button` : undefined}
                     aria-label={deleteAriaLabel}
                     className={e("delete")}
                     onClick={onDelete}

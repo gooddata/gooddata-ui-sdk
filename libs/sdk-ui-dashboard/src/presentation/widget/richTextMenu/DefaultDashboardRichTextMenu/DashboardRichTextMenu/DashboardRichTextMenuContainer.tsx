@@ -24,6 +24,7 @@ export const DashboardRichTextMenuContainer: React.FC<IDashboardRichTextMenuCont
                     className="gd-button-link gd-button-icon-only gd-icon-cross configuration-panel-header-close-button s-configuration-panel-header-close-button"
                     onClick={props.onClose}
                     dataId="s-configuration-panel-header-close-button"
+                    dataTestId="s-configuration-panel-header-close-button"
                 />
             </div>
             <ItemsWrapper smallItemsSpacing style={itemsWrapperStyle}>

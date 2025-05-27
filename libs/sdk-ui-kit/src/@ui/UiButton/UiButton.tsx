@@ -13,6 +13,7 @@ import {
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
 import { IAccessibilityConfigBase } from "../../typings/accessibility.js";
+import { stringUtils } from "@gooddata/util";
 
 /**
  * @internal
@@ -35,10 +36,15 @@ export interface UiButtonProps {
     tooltip?: React.ReactNode;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
     dataId?: string;
+    dataTestId?: string;
     accessibilityConfig?: IUiButtonAccessibilityConfig;
 }
 
 const { b, e } = bem("gd-ui-kit-button");
+
+const getGeneratedTestId = (label: string, ariaLabel: string) => {
+    return ariaLabel ? `${stringUtils.simplifyText(ariaLabel)}` : `${stringUtils.simplifyText(label)}`;
+};
 
 /**
  * @internal
@@ -55,6 +61,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
             iconAfter,
             onClick,
             dataId,
+            dataTestId,
             accessibilityConfig,
         },
         ref,
@@ -62,6 +69,9 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
         const iconSize = size === "small" ? 16 : 18;
         const hasIconBefore = !!iconBefore;
         const hasIconAfter = !!iconAfter;
+
+        const testId = dataTestId ? dataTestId : getGeneratedTestId(label, accessibilityConfig?.ariaLabel);
+
         return (
             <button
                 ref={ref}
@@ -70,6 +80,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
                 tabIndex={0}
                 onClick={onClick}
                 data-id={dataId}
+                data-testid={testId}
                 aria-label={accessibilityConfig?.ariaLabel}
                 aria-labelledby={accessibilityConfig?.ariaLabelledBy}
                 aria-describedby={accessibilityConfig?.ariaDescribedBy}

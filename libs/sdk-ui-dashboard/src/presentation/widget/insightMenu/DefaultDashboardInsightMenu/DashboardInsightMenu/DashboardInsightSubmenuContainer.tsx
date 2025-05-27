@@ -29,6 +29,7 @@ export const DashboardInsightSubmenuContainer: React.FC<IDashboardInsightSubmenu
                     label={closeLabel}
                     onClick={props.onClose}
                     dataId="s-configuration-panel-header-close-button"
+                    dataTestId="s-configuration-panel-header-close-button"
                 />
             </div>
             <div className="configuration-panel-screen" style={screenWrapperStyle}>

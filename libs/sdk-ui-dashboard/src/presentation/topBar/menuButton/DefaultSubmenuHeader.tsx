@@ -48,6 +48,7 @@ export const DefaultSubmenuHeader: React.FC<IDefaultSubmenuHeaderProps> = ({
                     ariaLabel: closeLabel,
                 }}
                 dataId="s-configuration-panel-header-close-button"
+                dataTestId="s-configuration-panel-header-close-button"
             />
         </div>
     );

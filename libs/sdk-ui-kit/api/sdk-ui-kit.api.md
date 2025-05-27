@@ -1153,6 +1153,8 @@ export interface IButtonProps {
     // (undocumented)
     dataId?: string;
     // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
     disabled?: boolean;
     // (undocumented)
     iconLeft?: string;
@@ -5611,6 +5613,8 @@ export interface UiButtonProps {
     // (undocumented)
     dataId?: string;
     // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
     iconAfter?: IconType;
     // (undocumented)
     iconBefore?: IconType;
@@ -5631,12 +5635,14 @@ export interface UiButtonProps {
 }
 
 // @internal (undocumented)
-export const UiChip: ({ label, tag, isDeletable, isActive, isLocked, iconBefore, onClick, onDelete, onDeleteKeyDown, accessibilityConfig, }: UiChipProps) => React_2.JSX.Element;
+export const UiChip: ({ label, tag, isDeletable, isActive, isLocked, iconBefore, onClick, onDelete, onDeleteKeyDown, accessibilityConfig, dataTestId, }: UiChipProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiChipProps {
     // (undocumented)
     accessibilityConfig?: IUiChipAccessibilityConfig;
+    // (undocumented)
+    dataTestId?: string;
     // (undocumented)
     iconBefore?: IconType;
     // (undocumented)
@@ -5684,6 +5690,8 @@ export const UiIconButton: React_2.ForwardRefExoticComponent<UiIconButtonProps &
 export interface UiIconButtonProps {
     // (undocumented)
     dataId?: string;
+    // (undocumented)
+    dataTestId?: string;
     // (undocumented)
     icon: IconType;
     // (undocumented)
