@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-semantic-search",
-    "version": "10.28.0-alpha.85",
+    "version": "10.28.0-alpha.86",
     "description": "GoodData SDK TypeScript & React skeleton",
     "repository": {
         "type": "git",
