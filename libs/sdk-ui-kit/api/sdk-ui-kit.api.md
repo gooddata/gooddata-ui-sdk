@@ -2030,7 +2030,7 @@ export interface IExportDialogBaseProps extends Pick<IConfirmDialogBaseProps, "c
     // (undocumented)
     filterContextText?: string;
     // (undocumented)
-    filterContextTitle?: string;
+    filterContextTitle?: string | null;
     // (undocumented)
     filterContextVisible?: boolean;
     // (undocumented)
@@ -2042,7 +2042,7 @@ export interface IExportDialogBaseProps extends Pick<IConfirmDialogBaseProps, "c
     // (undocumented)
     mergeHeadersText?: string;
     // (undocumented)
-    mergeHeadersTitle?: string;
+    mergeHeadersTitle?: string | null;
     // (undocumented)
     onSubmit?: (data: IExportDialogData) => void;
 }

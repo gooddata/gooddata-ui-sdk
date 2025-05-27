@@ -3921,11 +3921,21 @@ export const EXPORT_VIS_WARNING_MINIMAL_FONT_SIZE = 0.8;
 // @beta (undocumented)
 export interface ExportDashboardToExcel extends IDashboardCommand {
     // (undocumented)
+    readonly payload: ExportDashboardToExcelPayload;
+    // (undocumented)
     readonly type: "GDC.DASH/CMD.EXPORT.EXCEL";
 }
 
 // @beta
-export function exportDashboardToExcel(correlationId?: string): ExportDashboardToExcel;
+export function exportDashboardToExcel(mergeHeaders: boolean, exportInfo: boolean, correlationId?: string): ExportDashboardToExcel;
+
+// @beta (undocumented)
+export interface ExportDashboardToExcelPayload {
+    // (undocumented)
+    exportInfo: boolean;
+    // (undocumented)
+    mergeHeaders: boolean;
+}
 
 // @beta (undocumented)
 export interface ExportDashboardToPdf extends IDashboardCommand {

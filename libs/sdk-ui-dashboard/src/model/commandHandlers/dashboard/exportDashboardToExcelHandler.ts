@@ -1,32 +1,45 @@
 // (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { call, put, select } from "redux-saga/effects";
+import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { IExportResult } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { FilterContextItem, ObjRef } from "@gooddata/sdk-model";
 
 import { DashboardContext } from "../../types/commonTypes.js";
-import { ExportDashboardToPdf } from "../../commands/index.js";
+import { ExportDashboardToExcel } from "../../commands/index.js";
 import {
     DashboardExportToExcelResolved,
     dashboardExportToExcelRequested,
     dashboardExportToExcelResolved,
 } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { selectDashboardRef, selectDashboardTitle } from "../../store/meta/metaSelectors.js";
+import {
+    selectDashboardRef,
+    selectDashboardTitle,
+    selectIsFiltersChanged,
+} from "../../store/meta/metaSelectors.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
+import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors.js";
 
 function exportDashboardToTabular(
     ctx: DashboardContext,
     dashboardRef: ObjRef,
     title?: string,
+    mergeHeaders?: boolean,
+    exportInfo?: boolean,
+    dashboardFiltersOverride?: FilterContextItem[],
 ): Promise<IExportResult> {
     const { backend, workspace } = ctx;
-    return backend.workspace(workspace).dashboards().exportDashboardToTabular(dashboardRef, { title });
+    return backend.workspace(workspace).dashboards().exportDashboardToTabular(dashboardRef, {
+        title,
+        mergeHeaders,
+        exportInfo,
+        dashboardFiltersOverride,
+    });
 }
 
 export function* exportDashboardToExcelHandler(
     ctx: DashboardContext,
-    cmd: ExportDashboardToPdf,
+    cmd: ExportDashboardToExcel,
 ): SagaIterator<DashboardExportToExcelResolved> {
     yield put(dashboardExportToExcelRequested(ctx, cmd.correlationId));
 
@@ -35,12 +48,22 @@ export function* exportDashboardToExcelHandler(
         throw invalidArgumentsProvided(ctx, cmd, "Dashboard to export to EXCEL must have an ObjRef.");
     }
 
+    const { mergeHeaders, exportInfo } = cmd.payload;
     const title = yield select(selectDashboardTitle);
+    const isFilterContextChanged: SagaReturnType<typeof selectIsFiltersChanged> = yield select(
+        selectIsFiltersChanged,
+    );
+    const filterContext: SagaReturnType<typeof selectFilterContextFilters> = yield select(
+        selectFilterContextFilters,
+    );
     const result: PromiseFnReturnType<typeof exportDashboardToTabular> = yield call(
         exportDashboardToTabular,
         ctx,
         dashboardRef,
         title,
+        mergeHeaders,
+        exportInfo,
+        isFilterContextChanged ? filterContext : undefined,
     );
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

@@ -22,6 +22,7 @@ import {
     selectSaveAsVisible,
     selectSlideShowExportVisible,
     selectSettingsVisible,
+    selectSettings,
 } from "../../../model/index.js";
 import { IMenuButtonItem } from "../types.js";
 
@@ -29,6 +30,7 @@ import { useExportDashboardToPdf } from "./useExportDashboardToPdf.js";
 import { useExportDashboardToExcel } from "./useExportDashboardToExcel.js";
 import { useExportDashboardToPdfPresentation } from "./useExportDashboardToPdfPresentation.js";
 import { useExportDashboardToPowerPointPresentation } from "./useExportDashboardToPowerPointPresentation.js";
+import { useExportDialogContext } from "../../dashboardContexts/ExportDialogContext.js";
 
 // inject separator to each visible section, flat map the sections into a list of menu items
 const buildMenuItemList = (menuSections: IMenuButtonItem[][]): IMenuButtonItem[] =>
@@ -58,6 +60,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isSmall = useMediaQuery("<=md");
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const isEmptyLayout = !useDashboardSelector(selectLayoutHasAnalyticalWidgets); // we need at least one non-custom widget there
+    const settings = useDashboardSelector(selectSettings);
 
     const {
         isScheduledEmailingVisible,
@@ -118,12 +121,25 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     }, [exportDashboardToPdf, isNewDashboard]);
 
     const { exportDashboardToExcel, exportDashboardToExcelStatus } = useExportDashboardToExcel();
+    const { openDialog, closeDialog } = useExportDialogContext();
     const defaultOnExportToExcel = useCallback(() => {
         if (isNewDashboard) {
             return;
         }
-        exportDashboardToExcel();
-    }, [exportDashboardToExcel, isNewDashboard]);
+        openDialog({
+            onSubmit: (data) => {
+                closeDialog();
+                exportDashboardToExcel(data.mergeHeaders ?? true, data.includeFilterContext ?? true);
+            },
+            headline: intl.formatMessage({ id: "options.menu.export.dialog.EXCEL" }),
+            mergeHeaders: Boolean(settings?.cellMergedByDefault ?? true),
+            mergeHeadersTitle: null,
+            includeFilterContext: Boolean(settings?.activeFiltersByDefault ?? true),
+            filterContextVisible: true,
+            filterContextTitle: null,
+            filterContextText: intl.formatMessage({ id: "options.menu.export.dialog.includeExportInfo" }),
+        });
+    }, [exportDashboardToExcel, isNewDashboard, settings]);
 
     const { exportDashboardToPdfPresentation, exportDashboardToPdfPresentationStatus } =
         useExportDashboardToPdfPresentation();

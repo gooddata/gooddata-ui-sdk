@@ -136,6 +136,7 @@ export type {
     ExportDashboardToPptPresentation,
     ExportDashboardToPdfPresentation,
     ExportDashboardToExcel,
+    ExportDashboardToExcelPayload,
     DeleteDashboard,
     ChangeSharing,
     ChangeSharingPayload,

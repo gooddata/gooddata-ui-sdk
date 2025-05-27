@@ -13,7 +13,6 @@ export const ExportDialogProvider: React.FC = () => {
 
     return isOpen ? (
         <ExportDialog
-            {...dialogConfig}
             headline={intl.formatMessage({ id: "dialogs.export.headline" })}
             cancelButtonText={intl.formatMessage({ id: "cancel" })}
             submitButtonText={intl.formatMessage({ id: "dialogs.export.submit" })}
@@ -22,6 +21,7 @@ export const ExportDialogProvider: React.FC = () => {
             mergeHeadersText={intl.formatMessage({ id: "dialogs.export.mergeHeaders" })}
             mergeHeadersTitle={intl.formatMessage({ id: "dialogs.export.cells" })}
             onCancel={closeDialog}
+            {...dialogConfig}
         />
     ) : null;
 };
