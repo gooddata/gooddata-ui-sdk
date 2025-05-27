@@ -24,7 +24,7 @@ const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
     cancelLoading,
     autofocus,
 }) => {
-    const { catalogItems, canManage } = useConfig();
+    const { catalogItems, canManage, canAnalyze } = useConfig();
 
     React.useEffect(() => {
         loadThread();
@@ -38,7 +38,12 @@ const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
         <ErrorBoundary>
             <div className="gd-gen-ai-chat">
                 <Messages />
-                <Input autofocus={autofocus} catalogItems={catalogItems} canManage={canManage} />
+                <Input
+                    autofocus={autofocus}
+                    catalogItems={catalogItems}
+                    canManage={canManage}
+                    canAnalyze={canAnalyze}
+                />
                 <Typography tagName="p" className="gd-gen-ai-chat__disclaimer">
                     <FormattedMessage id="gd.gen-ai.disclaimer" />
                 </Typography>

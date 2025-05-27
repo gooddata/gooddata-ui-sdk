@@ -13,7 +13,10 @@ export interface IUseCompletion {
     selectedItems: MutableRefObject<Completion[]>;
 }
 
-export function useCompletion(items?: CatalogItem[], canManage?: boolean): IUseCompletion {
+export function useCompletion(
+    items: CatalogItem[],
+    { canManage, canAnalyze }: { canManage?: boolean; canAnalyze?: boolean },
+): IUseCompletion {
     const [catalogItems, setCatalogItems] = useState<CatalogItem[] | undefined>(items);
     const selectedItems = useRef<Completion[]>([]);
     const backend = useBackendStrict();
@@ -123,7 +126,7 @@ export function useCompletion(items?: CatalogItem[], canManage?: boolean): IUseC
                 return null;
             }
 
-            const options = getOptions(intl, { items, search, onCompletionSelected, canManage });
+            const options = getOptions(intl, { items, search, onCompletionSelected, canManage, canAnalyze });
             // No options were found at all
             if (options.length === 0) {
                 return null;
@@ -137,7 +140,7 @@ export function useCompletion(items?: CatalogItem[], canManage?: boolean): IUseC
                 },
             };
         },
-        [loadItemsBySearch, intl, onCompletionSelected, canManage],
+        [loadItemsBySearch, intl, onCompletionSelected, canManage, canAnalyze],
     );
 
     const onExplicitCompletion = useCallback(
@@ -148,7 +151,7 @@ export function useCompletion(items?: CatalogItem[], canManage?: boolean): IUseC
                 return null;
             }
 
-            const options = getOptions(intl, { items, onCompletionSelected, canManage });
+            const options = getOptions(intl, { items, onCompletionSelected, canManage, canAnalyze });
             // No options were found at all
             if (options.length === 0) {
                 return null;
@@ -162,7 +165,7 @@ export function useCompletion(items?: CatalogItem[], canManage?: boolean): IUseC
                 },
             };
         },
-        [loadItemsByExplicit, intl, onCompletionSelected, canManage],
+        [loadItemsByExplicit, intl, onCompletionSelected, canManage, canAnalyze],
     );
 
     const onCompletion = useCallback(

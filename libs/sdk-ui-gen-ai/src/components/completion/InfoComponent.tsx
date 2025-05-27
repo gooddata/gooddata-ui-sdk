@@ -10,9 +10,10 @@ interface IInfoComponentProps {
     intl: IntlShape;
     dataset?: IDataSetMetadataObject;
     canManage?: boolean;
+    canAnalyze?: boolean;
 }
 
-function InfoComponent({ item, intl, canManage, dataset, id }: IInfoComponentProps) {
+function InfoComponent({ item, intl, canManage, canAnalyze, dataset, id }: IInfoComponentProps) {
     return (
         <div className="gd-gen-ai-chat__autocomplete__info">
             <h3>{item.title}</h3>
@@ -42,7 +43,7 @@ function InfoComponent({ item, intl, canManage, dataset, id }: IInfoComponentPro
                     <div className="gd-gen-ai-chat__autocomplete__info__item__value">{dataset?.title}</div>
                 </div>
             ) : null}
-            {canManage ? (
+            {canManage || canAnalyze ? (
                 <div className="gd-gen-ai-chat__autocomplete__info__item">
                     <div className="gd-gen-ai-chat__autocomplete__info__item__title">
                         {intl.formatMessage({ id: "gd.gen-ai.autocomplete.id" })}
@@ -61,16 +62,25 @@ export function getInfo(
     {
         dataset,
         canManage,
+        canAnalyze,
     }: {
         dataset?: IDataSetMetadataObject;
         canManage?: boolean;
+        canAnalyze?: boolean;
     },
 ): () => Node {
     return () => {
         const container = document.createElement("div");
         const root = createRoot(container);
         root.render(
-            <InfoComponent intl={intl} id={id} item={item} dataset={dataset} canManage={canManage} />,
+            <InfoComponent
+                intl={intl}
+                id={id}
+                item={item}
+                dataset={dataset}
+                canManage={canManage}
+                canAnalyze={canAnalyze}
+            />,
         );
         return container;
     };

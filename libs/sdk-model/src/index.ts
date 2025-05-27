@@ -838,6 +838,7 @@ export type {
     IAlertDefault,
     WeekStart,
     IOpenAiConfig,
+    ILlmEndpoint,
     DashboardFiltersApplyMode,
     EarlyAccessFeatureContext,
     EarlyAccessFeatureStatus,
