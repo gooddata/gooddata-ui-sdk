@@ -1,8 +1,8 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 /**
  * Type of the object.
- * @beta
+ * @internal
  */
 export type GenAIObjectType =
     | "dataset"

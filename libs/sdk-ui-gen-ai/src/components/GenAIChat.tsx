@@ -14,7 +14,7 @@ import { ConfigProvider, LinkHandlerEvent } from "./ConfigContext.js";
 
 /**
  * Properties for the GenAIChat component.
- * @alpha
+ * @public
  */
 export interface GenAIChatProps {
     /**
@@ -50,7 +50,7 @@ export interface GenAIChatProps {
 
 /**
  * UI component that renders the Gen AI chat.
- * @alpha
+ * @public
  */
 export const GenAIChat: React.FC<GenAIChatProps> = ({
     backend,

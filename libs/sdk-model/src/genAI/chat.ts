@@ -5,19 +5,19 @@ import { ISemanticSearchResultItem } from "./semanticSearch.js";
 
 /**
  * Role of the chat interaction.
- * @alpha
+ * @internal
  */
 export type GenAIChatRole = "USER" | "AI";
 
 /**
  * User feedback for the chat interaction.
- * @alpha
+ * @public
  */
 export type GenAIChatInteractionUserFeedback = "POSITIVE" | "NEGATIVE" | "NONE";
 
 /**
  * A route that was detected by the assistant based on the user question.
- * @alpha
+ * @internal
  */
 export type GenAIChatRoutingUseCase =
     | "SEARCH_ALL"
@@ -30,7 +30,7 @@ export type GenAIChatRoutingUseCase =
 
 /**
  * Routing for the chat interaction.
- * @alpha
+ * @internal
  */
 export interface IGenAIChatRouting {
     /**
@@ -45,7 +45,7 @@ export interface IGenAIChatRouting {
 
 /**
  * User context for GenAI.
- * @alpha
+ * @internal
  */
 export interface IGenAIUserContext {
     /**
@@ -56,7 +56,7 @@ export interface IGenAIUserContext {
 
 /**
  * Active object the user is interacting with.
- * @alpha
+ * @internal
  */
 export interface IGenAIActiveObject {
     /**
@@ -75,7 +75,7 @@ export interface IGenAIActiveObject {
 
 /**
  * Visualization definition created by the assistant.
- * @alpha
+ * @internal
  */
 export interface IGenAIVisualization {
     /**
@@ -118,7 +118,7 @@ export interface IGenAIVisualization {
 
 /**
  * Positive attribute filter definition for the visualization.
- * @alpha
+ * @internal
  */
 export type GenAIPositiveAttributeFilter = {
     using: string;
@@ -127,7 +127,7 @@ export type GenAIPositiveAttributeFilter = {
 
 /**
  * Negative attribute filter definition for the visualization.
- * @alpha
+ * @internal
  */
 export type GenAINegativeAttributeFilter = {
     using: string;
@@ -136,7 +136,7 @@ export type GenAINegativeAttributeFilter = {
 
 /**
  * Absolute date filter definition for the visualization.
- * @alpha
+ * @internal
  */
 export type GenAIAbsoluteDateFilter = {
     using: string;
@@ -146,7 +146,7 @@ export type GenAIAbsoluteDateFilter = {
 
 /**
  * Relative date filter definition for the visualization.
- * @alpha
+ * @internal
  */
 export type GenAIRelativeDateFilter = {
     using: string;
@@ -157,7 +157,7 @@ export type GenAIRelativeDateFilter = {
 
 /**
  * Date granularity for the relative date filter.
- * @alpha
+ * @internal
  */
 export type GenAIDateGranularity =
     | "MINUTE"
@@ -178,7 +178,7 @@ export type GenAIDateGranularity =
 
 /**
  * Filter definition for the visualization.
- * @alpha
+ * @internal
  */
 export type GenAIFilter =
     | GenAIPositiveAttributeFilter
@@ -188,7 +188,7 @@ export type GenAIFilter =
 
 /**
  * Suggestion for the visualization.
- * @alpha
+ * @internal
  */
 export type IGenAISuggestion = {
     /**
@@ -203,13 +203,13 @@ export type IGenAISuggestion = {
 
 /**
  * Type of the visualization.
- * @alpha
+ * @internal
  */
 export type GenAIVisualizationType = "TABLE" | "HEADLINE" | "BAR" | "LINE" | "PIE" | "COLUMN";
 
 /**
  * Metric definition for the visualization.
- * @alpha
+ * @internal
  */
 export interface IGenAIVisualizationMetric {
     /**
@@ -232,19 +232,19 @@ export interface IGenAIVisualizationMetric {
 
 /**
  * Type of the metric.
- * @alpha
+ * @internal
  */
 export type GenAIMetricType = "metric" | "fact" | "attribute";
 
 /**
  * Aggregation function for the metric.
- * @alpha
+ * @internal
  */
 export type GenAIMetricAggregation = "COUNT" | "SUM" | "MIN" | "MAX" | "AVG" | "MEDIAN";
 
 /**
  * Dimension definition for the visualization.
- * @alpha
+ * @internal
  */
 export interface IGenAIVisualizationDimension {
     /**
@@ -259,7 +259,7 @@ export interface IGenAIVisualizationDimension {
 
 /**
  * A singe user - assistant chat interaction.
- * @alpha
+ * @internal
  */
 export interface IGenAIChatInteraction {
     /**
@@ -302,7 +302,7 @@ export interface IGenAIChatInteraction {
 
 /**
  * A list of found objects for a given interaction
- * @alpha
+ * @internal
  */
 export interface IGenAIFoundObjects {
     /**
@@ -317,7 +317,7 @@ export interface IGenAIFoundObjects {
 
 /**
  * A list of created visualizations for a given interaction
- * @alpha
+ * @internal
  */
 export interface IGenAICreatedVisualizations {
     /**

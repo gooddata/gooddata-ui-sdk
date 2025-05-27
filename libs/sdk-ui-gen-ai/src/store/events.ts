@@ -4,7 +4,7 @@ import { SdkErrorType } from "@gooddata/sdk-ui";
 
 /**
  * A common event definition for the Chat component.
- * @alpha
+ * @public
  */
 export type BaseEvent = {
     threadId?: string;
@@ -12,7 +12,7 @@ export type BaseEvent = {
 
 /**
  * A chat window opened event.
- * @alpha
+ * @public
  */
 export type ChatOpenedEvent = BaseEvent & {
     type: "chatOpened";
@@ -20,7 +20,7 @@ export type ChatOpenedEvent = BaseEvent & {
 
 /**
  * Type guard for the ChatOpenedEvent.
- * @alpha
+ * @public
  */
 export const isChatOpenedEvent = (event: ChatEvent): event is ChatOpenedEvent => {
     return event.type === "chatOpened";
@@ -28,7 +28,7 @@ export const isChatOpenedEvent = (event: ChatEvent): event is ChatOpenedEvent =>
 
 /**
  * A chat window closed event.
- * @alpha
+ * @public
  */
 export type ChatClosedEvent = BaseEvent & {
     type: "chatClosed";
@@ -36,7 +36,7 @@ export type ChatClosedEvent = BaseEvent & {
 
 /**
  * Type guard for the ChatClosedEvent.
- * @alpha
+ * @public
  */
 export const isChatClosedEvent = (event: ChatEvent): event is ChatClosedEvent => {
     return event.type === "chatClosed";
@@ -44,7 +44,7 @@ export const isChatClosedEvent = (event: ChatEvent): event is ChatClosedEvent =>
 
 /**
  * A chat conversation clearing event.
- * @alpha
+ * @public
  */
 export type ChatResetEvent = BaseEvent & {
     type: "chatReset";
@@ -52,7 +52,7 @@ export type ChatResetEvent = BaseEvent & {
 
 /**
  * Type guard for the ChatResetEvent.
- * @alpha
+ * @public
  */
 export const isChatResetEvent = (event: ChatEvent): event is ChatResetEvent => {
     return event.type === "chatReset";
@@ -60,7 +60,7 @@ export const isChatResetEvent = (event: ChatEvent): event is ChatResetEvent => {
 
 /**
  * A chat user message event.
- * @alpha
+ * @public
  */
 export type ChatUserMessageEvent = BaseEvent & {
     type: "chatUserMessage";
@@ -69,7 +69,7 @@ export type ChatUserMessageEvent = BaseEvent & {
 
 /**
  * Type guard for the ChatUserMessageEvent.
- * @alpha
+ * @public
  */
 export const isChatUserMessageEvent = (event: ChatEvent): event is ChatUserMessageEvent => {
     return event.type === "chatUserMessage";
@@ -77,7 +77,7 @@ export const isChatUserMessageEvent = (event: ChatEvent): event is ChatUserMessa
 
 /**
  * A chat assistant message event.
- * @alpha
+ * @public
  */
 export type ChatAssistantMessageEvent = BaseEvent & {
     type: "chatAssistantMessage";
@@ -87,7 +87,7 @@ export type ChatAssistantMessageEvent = BaseEvent & {
 
 /**
  * Type guard for the ChatAssistantMessageEvent.
- * @alpha
+ * @public
  */
 export const isChatAssistantMessageEvent = (event: ChatEvent): event is ChatAssistantMessageEvent => {
     return event.type === "chatAssistantMessage";
@@ -95,7 +95,7 @@ export const isChatAssistantMessageEvent = (event: ChatEvent): event is ChatAssi
 
 /**
  * A chat feedback event.
- * @alpha
+ * @public
  */
 export type ChatFeedbackEvent = BaseEvent & {
     type: "chatFeedback";
@@ -105,7 +105,7 @@ export type ChatFeedbackEvent = BaseEvent & {
 
 /**
  * Type guard for the ChatFeedbackEvent.
- * @alpha
+ * @public
  */
 export const isChatFeedbackEvent = (event: ChatEvent): event is ChatFeedbackEvent => {
     return event.type === "chatFeedback";
@@ -113,7 +113,7 @@ export const isChatFeedbackEvent = (event: ChatEvent): event is ChatFeedbackEven
 
 /**
  * A chat visualization error event.
- * @alpha
+ * @public
  */
 export type ChatVisualizationErrorEvent = BaseEvent & {
     type: "chatVisualizationError";
@@ -123,7 +123,7 @@ export type ChatVisualizationErrorEvent = BaseEvent & {
 
 /**
  * Type guard for the ChatVisualizationErrorEvent.
- * @alpha
+ * @public
  */
 export const isChatVisualizationErrorEvent = (event: ChatEvent): event is ChatVisualizationErrorEvent => {
     return event.type === "chatVisualizationError";
@@ -131,7 +131,7 @@ export const isChatVisualizationErrorEvent = (event: ChatEvent): event is ChatVi
 
 /**
  * A chat save visualization error event.
- * @alpha
+ * @public
  */
 export type ChatSaveVisualizationErrorEvent = BaseEvent & {
     type: "chatSaveVisualizationError";
@@ -141,7 +141,7 @@ export type ChatSaveVisualizationErrorEvent = BaseEvent & {
 
 /**
  * Type guard for the ChatVisualizationErrorEvent.
- * @alpha
+ * @public
  */
 export const isChatSaveVisualizationErrorEvent = (
     event: ChatEvent,
@@ -151,7 +151,7 @@ export const isChatSaveVisualizationErrorEvent = (
 
 /**
  * A chat save visualization success event.
- * @alpha
+ * @public
  */
 export type ChatSaveVisualizationSuccessEvent = BaseEvent & {
     type: "chatSaveVisualizationSuccess";
@@ -160,7 +160,7 @@ export type ChatSaveVisualizationSuccessEvent = BaseEvent & {
 
 /**
  * Type guard for the isChatSaveVisualizationSuccessEvent.
- * @alpha
+ * @public
  */
 export const isChatSaveVisualizationSuccessEvent = (
     event: ChatEvent,
@@ -170,7 +170,7 @@ export const isChatSaveVisualizationSuccessEvent = (
 
 /**
  * A union type for all chat events.
- * @alpha
+ * @public
  */
 export type ChatEvent =
     | ChatOpenedEvent
@@ -185,7 +185,7 @@ export type ChatEvent =
 
 /**
  * An event handler for the Chat component.
- * @alpha
+ * @public
  */
 export interface ChatEventHandler<TEvent extends ChatEvent = any> {
     /**
@@ -200,7 +200,7 @@ export interface ChatEventHandler<TEvent extends ChatEvent = any> {
 
 /**
  * A dispatcher for chat events.
- * @alpha
+ * @internal
  */
 export class EventDispatcher {
     private handlers: ChatEventHandler[] = [];
