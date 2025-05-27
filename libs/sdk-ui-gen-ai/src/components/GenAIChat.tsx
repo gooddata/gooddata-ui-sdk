@@ -30,19 +30,11 @@ export interface GenAIChatProps {
      */
     locale?: string;
     /**
-     * Whether the user can manage objects in the workspace.
-     */
-    canManage?: boolean;
-    /**
-     * Whether the user can analyze data in the workspace.
-     */
-    canAnalyze?: boolean;
-    /**
      * Color palette to use for the chat UI.
      */
     colorPalette?: IColorPalette;
     /**
-     * Catalog items to use for the chat UI.
+     * Catalog items for autocomplete.
      */
     catalogItems?: CatalogItem[];
     /**
@@ -67,8 +59,6 @@ export const GenAIChat: React.FC<GenAIChatProps> = ({
     colorPalette,
     catalogItems,
     eventHandlers,
-    canManage,
-    canAnalyze,
     onLinkClick,
 }) => {
     const effectiveBackend = useBackendStrict(backend);
@@ -84,12 +74,12 @@ export const GenAIChat: React.FC<GenAIChatProps> = ({
                 <BackendProvider backend={effectiveBackend}>
                     <WorkspaceProvider workspace={effectiveWorkspace}>
                         <ConfigProvider
-                            allowCreateVisualization={canManage ?? false}
+                            allowCreateVisualization={false}
                             allowNativeLinks={false}
                             linkHandler={onLinkClick}
                             catalogItems={catalogItems}
-                            canManage={canManage}
-                            canAnalyze={canAnalyze}
+                            canManage={false}
+                            canAnalyze={false}
                         >
                             <GenAIChatWrapper />
                         </ConfigProvider>
