@@ -12,7 +12,7 @@ export type ConfigContext = {
 };
 
 /**
- * @alpha
+ * @public
  */
 export type LinkHandlerEvent = {
     type: string;

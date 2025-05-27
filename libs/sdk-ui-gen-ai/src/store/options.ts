@@ -3,7 +3,7 @@ import { IColorPalette } from "@gooddata/sdk-model";
 
 /**
  * A dispatcher for chat events.
- * @alpha
+ * @internal
  */
 export class OptionsDispatcher {
     private colorPalette: IColorPalette | undefined = undefined;

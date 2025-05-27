@@ -1,10 +1,10 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { GenAIObjectType } from "./common.js";
 
 /**
  * A single search result returned by semantic search.
- * @beta
+ * @internal
  */
 export interface ISemanticSearchResultItem {
     /**
@@ -64,7 +64,7 @@ export interface ISemanticSearchResultItem {
 
 /**
  * Reference between two metadata objects.
- * @beta
+ * @internal
  */
 export interface ISemanticSearchRelationship {
     /**

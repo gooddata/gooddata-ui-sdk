@@ -14,18 +14,18 @@ import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 import { SdkErrorType } from '@gooddata/sdk-ui';
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type AssistantMessage = BaseMessage & {
     role: "assistant";
     feedback: GenAIChatInteractionUserFeedback;
 };
 
-// @alpha
+// @public
 export type BaseEvent = {
     threadId?: string;
 };
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type BaseMessage = {
     id?: string;
     localId: string;
@@ -35,83 +35,83 @@ export type BaseMessage = {
     content: Contents[];
 };
 
-// @alpha
+// @public
 export type ChatAssistantMessageEvent = BaseEvent & {
     type: "chatAssistantMessage";
     interactionId?: string;
     useCase: string;
 };
 
-// @alpha
+// @public
 export type ChatClosedEvent = BaseEvent & {
     type: "chatClosed";
 };
 
-// @alpha
+// @public
 export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent;
 
-// @alpha
+// @public
 export interface ChatEventHandler<TEvent extends ChatEvent = any> {
     eval: (event: ChatEvent) => event is TEvent;
     handler: (event: TEvent) => void;
 }
 
-// @alpha
+// @public
 export type ChatFeedbackEvent = BaseEvent & {
     type: "chatFeedback";
     interactionId?: string;
     feedback: "POSITIVE" | "NEGATIVE" | "NONE";
 };
 
-// @alpha
+// @public
 export type ChatOpenedEvent = BaseEvent & {
     type: "chatOpened";
 };
 
-// @alpha
+// @public
 export type ChatResetEvent = BaseEvent & {
     type: "chatReset";
 };
 
-// @alpha
+// @public
 export type ChatSaveVisualizationErrorEvent = BaseEvent & {
     type: "chatSaveVisualizationError";
     errorType: string;
     errorMessage?: string;
 };
 
-// @alpha
+// @public
 export type ChatSaveVisualizationSuccessEvent = BaseEvent & {
     type: "chatSaveVisualizationSuccess";
     savedVisualizationId: string;
 };
 
-// @alpha
+// @public
 export type ChatUserMessageEvent = BaseEvent & {
     type: "chatUserMessage";
     question: string;
 };
 
-// @alpha
+// @public
 export type ChatVisualizationErrorEvent = BaseEvent & {
     type: "chatVisualizationError";
     errorType: SdkErrorType;
     errorMessage?: string;
 };
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type Contents = TextContents | RoutingContents | SearchContents | VisualizationContents | ErrorContents;
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type ErrorContents = {
     type: "error";
     text: string;
 };
 
-// @alpha
+// @public
 export const GenAIChat: React_2.FC<GenAIChatProps>;
 
-// @alpha
+// @public
 export interface GenAIChatProps {
     backend?: IAnalyticalBackend;
     catalogItems?: CatalogItem[];
@@ -122,34 +122,34 @@ export interface GenAIChatProps {
     workspace?: string;
 }
 
-// @alpha
+// @public
 export const isChatAssistantMessageEvent: (event: ChatEvent) => event is ChatAssistantMessageEvent;
 
-// @alpha
+// @public
 export const isChatClosedEvent: (event: ChatEvent) => event is ChatClosedEvent;
 
-// @alpha
+// @public
 export const isChatFeedbackEvent: (event: ChatEvent) => event is ChatFeedbackEvent;
 
-// @alpha
+// @public
 export const isChatOpenedEvent: (event: ChatEvent) => event is ChatOpenedEvent;
 
-// @alpha
+// @public
 export const isChatResetEvent: (event: ChatEvent) => event is ChatResetEvent;
 
-// @alpha
+// @public
 export const isChatSaveVisualizationErrorEvent: (event: ChatEvent) => event is ChatSaveVisualizationErrorEvent;
 
-// @alpha
+// @public
 export const isChatSaveVisualizationSuccessEvent: (event: ChatEvent) => event is ChatSaveVisualizationSuccessEvent;
 
-// @alpha
+// @public
 export const isChatUserMessageEvent: (event: ChatEvent) => event is ChatUserMessageEvent;
 
-// @alpha
+// @public
 export const isChatVisualizationErrorEvent: (event: ChatEvent) => event is ChatVisualizationErrorEvent;
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type LinkHandlerEvent = {
     type: string;
     id: string;
@@ -159,35 +159,35 @@ export type LinkHandlerEvent = {
     preventDefault: () => void;
 };
 
-// @alpha
+// @public
 export type Message = UserMessage | AssistantMessage;
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type RoutingContents = {
     type: "routing";
     text: string;
     useCase: GenAIChatRoutingUseCase;
 };
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type SearchContents = {
     type: "search";
     text: string;
     searchResults: ISemanticSearchResultItem[];
 };
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type TextContents = {
     type: "text";
     text: string;
 };
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type UserMessage = BaseMessage & {
     role: "user";
 };
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type VisualizationContents = {
     type: "visualization";
     text: string;

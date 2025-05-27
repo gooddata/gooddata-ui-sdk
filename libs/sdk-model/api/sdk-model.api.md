@@ -538,50 +538,50 @@ export type ForecastDataValue = {
     loading: boolean;
 };
 
-// @alpha
+// @internal
 export type GenAIAbsoluteDateFilter = {
     using: string;
     from: string;
     to: string;
 };
 
-// @alpha
+// @public
 export type GenAIChatInteractionUserFeedback = "POSITIVE" | "NEGATIVE" | "NONE";
 
-// @alpha
+// @internal
 export type GenAIChatRole = "USER" | "AI";
 
-// @alpha
+// @internal
 export type GenAIChatRoutingUseCase = "SEARCH_ALL" | "SEARCH_VISUALIZATIONS" | "SEARCH_DASHBOARDS" | "CREATE_VISUALIZATION" | "EXTEND_VISUALIZATION" | "GENERAL" | "INVALID";
 
-// @alpha
+// @internal
 export type GenAIDateGranularity = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR";
 
-// @alpha
+// @internal
 export type GenAIFilter = GenAIPositiveAttributeFilter | GenAINegativeAttributeFilter | GenAIAbsoluteDateFilter | GenAIRelativeDateFilter;
 
-// @alpha
+// @internal
 export type GenAIMetricAggregation = "COUNT" | "SUM" | "MIN" | "MAX" | "AVG" | "MEDIAN";
 
-// @alpha
+// @internal
 export type GenAIMetricType = "metric" | "fact" | "attribute";
 
-// @alpha
+// @internal
 export type GenAINegativeAttributeFilter = {
     using: string;
     exclude: Array<string | null>;
 };
 
-// @beta
+// @internal
 export type GenAIObjectType = "dataset" | "attribute" | "label" | "fact" | "date" | "metric" | "visualization" | "dashboard";
 
-// @alpha
+// @internal
 export type GenAIPositiveAttributeFilter = {
     using: string;
     include: Array<string | null>;
 };
 
-// @alpha
+// @internal
 export type GenAIRelativeDateFilter = {
     using: string;
     granularity: GenAIDateGranularity;
@@ -589,7 +589,7 @@ export type GenAIRelativeDateFilter = {
     to: number;
 };
 
-// @alpha
+// @internal
 export type GenAIVisualizationType = "TABLE" | "HEADLINE" | "BAR" | "LINE" | "PIE" | "COLUMN";
 
 // @internal
@@ -2002,14 +2002,14 @@ export interface IFilterContextBase {
 export interface IFilterContextDefinition extends IFilterContextBase, Partial<IDashboardObjectIdentity> {
 }
 
-// @alpha
+// @internal
 export interface IGenAIActiveObject {
     id: string;
     type: GenAIObjectType;
     workspaceId: string;
 }
 
-// @alpha
+// @internal
 export interface IGenAIChatInteraction {
     chatHistoryInteractionId: string;
     createdVisualizations?: IGenAICreatedVisualizations;
@@ -2022,36 +2022,36 @@ export interface IGenAIChatInteraction {
     userFeedback?: GenAIChatInteractionUserFeedback;
 }
 
-// @alpha
+// @internal
 export interface IGenAIChatRouting {
     reasoning: string;
     useCase: GenAIChatRoutingUseCase;
 }
 
-// @alpha
+// @internal
 export interface IGenAICreatedVisualizations {
     objects: IGenAIVisualization[];
     reasoning: string;
 }
 
-// @alpha
+// @internal
 export interface IGenAIFoundObjects {
     objects: ISemanticSearchResultItem[];
     reasoning: string;
 }
 
-// @alpha
+// @internal
 export type IGenAISuggestion = {
     query: string;
     label: string;
 };
 
-// @alpha
+// @internal
 export interface IGenAIUserContext {
     activeObject: IGenAIActiveObject;
 }
 
-// @alpha
+// @internal
 export interface IGenAIVisualization {
     dimensionality: IGenAIVisualizationDimension[];
     filters?: GenAIFilter[];
@@ -2064,13 +2064,13 @@ export interface IGenAIVisualization {
     visualizationType: GenAIVisualizationType;
 }
 
-// @alpha
+// @internal
 export interface IGenAIVisualizationDimension {
     id: string;
     type: "attribute";
 }
 
-// @alpha
+// @internal
 export interface IGenAIVisualizationMetric {
     aggFunction?: GenAIMetricAggregation;
     id: string;
@@ -3317,7 +3317,7 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 // @alpha
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
 
-// @beta
+// @internal
 export interface ISemanticSearchRelationship {
     sourceObjectId: string;
     sourceObjectTitle: string;
@@ -3329,7 +3329,7 @@ export interface ISemanticSearchRelationship {
     targetWorkspaceId: string;
 }
 
-// @beta
+// @internal
 export interface ISemanticSearchResultItem {
     createdAt?: string;
     description?: string;

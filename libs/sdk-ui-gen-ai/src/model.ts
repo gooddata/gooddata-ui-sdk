@@ -8,7 +8,7 @@ import {
 } from "@gooddata/sdk-model";
 
 /**
- * @alpha
+ * @public
  */
 export type TextContents = {
     type: "text";
@@ -16,12 +16,12 @@ export type TextContents = {
 };
 
 /**
- * @alpha
+ * @internal
  */
 export const isTextContents = (contents: Contents): contents is TextContents => contents.type === "text";
 
 /**
- * @alpha
+ * @internal
  */
 export const makeTextContents = (text: string): TextContents => ({
     type: "text",
@@ -29,7 +29,7 @@ export const makeTextContents = (text: string): TextContents => ({
 });
 
 /**
- * @alpha
+ * @public
  */
 export type RoutingContents = {
     type: "routing";
@@ -38,13 +38,13 @@ export type RoutingContents = {
 };
 
 /**
- * @alpha
+ * @internal
  */
 export const isRoutingContents = (contents: Contents): contents is RoutingContents =>
     contents.type === "routing";
 
 /**
- * @alpha
+ * @internal
  */
 export const makeRoutingContents = (text: string, useCase: GenAIChatRoutingUseCase): RoutingContents => ({
     type: "routing",
@@ -53,7 +53,7 @@ export const makeRoutingContents = (text: string, useCase: GenAIChatRoutingUseCa
 });
 
 /**
- * @alpha
+ * @public
  */
 export type SearchContents = {
     type: "search";
@@ -62,13 +62,13 @@ export type SearchContents = {
 };
 
 /**
- * @alpha
+ * @internal
  */
 export const isSearchContents = (contents: Contents): contents is SearchContents =>
     contents.type === "search";
 
 /**
- * @alpha
+ * @internal
  */
 export const makeSearchContents = (
     text: string,
@@ -80,7 +80,7 @@ export const makeSearchContents = (
 });
 
 /**
- * @alpha
+ * @public
  */
 export type VisualizationContents = {
     type: "visualization";
@@ -89,13 +89,13 @@ export type VisualizationContents = {
 };
 
 /**
- * @alpha
+ * @internal
  */
 export const isVisualizationContents = (contents: Contents): contents is VisualizationContents =>
     contents.type === "visualization";
 
 /**
- * @alpha
+ * @internal
  */
 export const makeVisualizationContents = (
     text: string,
@@ -107,7 +107,7 @@ export const makeVisualizationContents = (
 });
 
 /**
- * @alpha
+ * @public
  */
 export type ErrorContents = {
     type: "error";
@@ -115,12 +115,12 @@ export type ErrorContents = {
 };
 
 /**
- * @alpha
+ * @internal
  */
 export const isErrorContents = (contents: Contents): contents is ErrorContents => contents.type === "error";
 
 /**
- * @alpha
+ * @internal
  */
 export const makeErrorContents = (text: string): ErrorContents => ({
     type: "error",
@@ -128,7 +128,7 @@ export const makeErrorContents = (text: string): ErrorContents => ({
 });
 
 /**
- * @alpha
+ * @public
  */
 export type Contents =
     | TextContents
@@ -138,7 +138,7 @@ export type Contents =
     | ErrorContents;
 
 /**
- * @alpha
+ * @public
  */
 export type BaseMessage = {
     /**
@@ -168,19 +168,19 @@ export type BaseMessage = {
 };
 
 /**
- * @alpha
+ * @public
  */
 export type UserMessage = BaseMessage & {
     role: "user";
 };
 
 /**
- * @alpha
+ * @internal
  */
 export const isUserMessage = (message?: Message): message is UserMessage => message?.role === "user";
 
 /**
- * @alpha
+ * @internal
  */
 export const makeUserMessage = (content: Contents[]): UserMessage => ({
     localId: uuidv4(),
@@ -192,7 +192,7 @@ export const makeUserMessage = (content: Contents[]): UserMessage => ({
 });
 
 /**
- * @alpha
+ * @public
  */
 export type AssistantMessage = BaseMessage & {
     role: "assistant";
@@ -200,14 +200,14 @@ export type AssistantMessage = BaseMessage & {
 };
 
 /**
- * @alpha
+ * @internal
  */
 export const isAssistantMessage = (message?: Message): message is AssistantMessage =>
     message?.role === "assistant";
 
 /**
  * Create a new Assistant message. By default, mark it as incomplete.
- * @alpha
+ * @internal
  */
 export const makeAssistantMessage = (
     content: Contents[],
@@ -227,6 +227,6 @@ export const makeAssistantMessage = (
 
 /**
  * All messages that can be stored in history.
- * @alpha
+ * @public
  */
 export type Message = UserMessage | AssistantMessage;
