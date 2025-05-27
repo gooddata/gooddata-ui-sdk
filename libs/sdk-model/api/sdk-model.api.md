@@ -2293,6 +2293,12 @@ export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, R
     readonly uri: string;
 }
 
+// @public (undocumented)
+export interface ILlmEndpoint {
+    id: string;
+    type: "llmEndpoint";
+}
+
 // @alpha
 export interface ILlmEndpointBase {
     description?: string;
@@ -3504,7 +3510,7 @@ export interface ISettings {
     hideKpiDrillInEmbedded?: boolean;
     // (undocumented)
     hidePixelPerfectExperience?: boolean;
-    llmEndpoint?: string;
+    llmEndpoint?: ILlmEndpoint;
     metadataTimeZone?: string;
     // @alpha
     openAiConfig?: IOpenAiConfig;

@@ -87,7 +87,7 @@ export interface ISettings {
     /**
      * LLM endpoint id as default for the platform.
      */
-    llmEndpoint?: string;
+    llmEndpoint?: ILlmEndpoint;
 
     //
     // Feature Flags
@@ -731,6 +731,20 @@ export interface ISeparators {
      * Decimal separator (e.g. "," or ".")
      */
     decimal: string;
+}
+
+/**
+ * @public
+ */
+export interface ILlmEndpoint {
+    /**
+     * Unique identifier of the LLM endpoint.
+     */
+    id: string;
+    /**
+     * Type of the LLM endpoint.
+     */
+    type: "llmEndpoint";
 }
 
 /**

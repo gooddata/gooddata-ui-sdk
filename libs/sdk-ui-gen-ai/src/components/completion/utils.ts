@@ -38,11 +38,13 @@ export function getOptions(
         items,
         search,
         canManage,
+        canAnalyze,
         onCompletionSelected = () => {},
     }: {
         items: CatalogItem[];
         search?: string;
         canManage?: boolean;
+        canAnalyze?: boolean;
         onCompletionSelected?: (completion: Completion) => void;
     },
 ) {
@@ -55,6 +57,7 @@ export function getOptions(
                     getInfo(intl, item.attribute.id, item.attribute, {
                         dataset: item.dataSet,
                         canManage,
+                        canAnalyze,
                     }),
                     onCompletionSelected,
                 );
@@ -65,6 +68,7 @@ export function getOptions(
                     "fact",
                     getInfo(intl, item.fact.id, item.fact, {
                         canManage,
+                        canAnalyze,
                     }),
                     onCompletionSelected,
                 );
@@ -75,6 +79,7 @@ export function getOptions(
                     "metric",
                     getInfo(intl, item.measure.id, item.measure, {
                         canManage,
+                        canAnalyze,
                     }),
                     onCompletionSelected,
                 );
@@ -87,6 +92,7 @@ export function getOptions(
                         getInfo(intl, item.dataSet.id, item.dataSet, {
                             dataset: item.dataSet,
                             canManage,
+                            canAnalyze,
                         }),
                         onCompletionSelected,
                     ),
@@ -97,6 +103,7 @@ export function getOptions(
                             getInfo(intl, attr.attribute.id, attr.attribute, {
                                 dataset: item.dataSet,
                                 canManage,
+                                canAnalyze,
                             }),
                             onCompletionSelected,
                         );
