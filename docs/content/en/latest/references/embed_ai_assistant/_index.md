@@ -16,7 +16,7 @@ GoodData.UI provides a React component for embedding of the chat interface for [
 -   Embed UI for the AI Assistant chat.
 -   Subscribe to chat events.
 -   Handle links in chat messages.
--   Theming is supported out of box through [Theme Provider].
+-   Theming is supported out of the box through [Theme Provider].
 
 ## Basic integration example
 
