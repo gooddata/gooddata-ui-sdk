@@ -1,7 +1,7 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { createSelector } from "@reduxjs/toolkit";
+import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 
 import {
     selectEnableCompanyLogoInEmbeddedUI,

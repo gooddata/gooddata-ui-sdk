@@ -1,5 +1,5 @@
-// (C) 2022-2023 GoodData Corporation
-import { createSelector } from "@reduxjs/toolkit";
+// (C) 2022-2025 GoodData Corporation
+import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import { IDashboardPermissions } from "@gooddata/sdk-model";
 import { DashboardSelector, DashboardState } from "../types.js";
 import { invariant } from "ts-invariant";

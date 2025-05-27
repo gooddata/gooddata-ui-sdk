@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import { metaReducers } from "./metaReducers.js";
 import { metaInitialState } from "./metaState.js";
 

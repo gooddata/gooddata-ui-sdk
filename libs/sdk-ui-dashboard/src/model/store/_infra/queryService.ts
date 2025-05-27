@@ -1,18 +1,16 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { DashboardContext } from "../../types/commonTypes.js";
 import { SagaIterator } from "redux-saga";
+import { createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import {
-    CaseReducer,
-    CaseReducerActions,
-    createEntityAdapter,
-    createSelector,
-    createSlice,
     EntityId,
     EntityState,
     IdSelector,
     Selector,
     PayloadAction,
     Reducer,
+    CaseReducer,
+    CaseReducerActions,
 } from "@reduxjs/toolkit";
 import { DashboardQueryType, IDashboardQuery } from "../../queries/base.js";
 import { DashboardState } from "../types.js";

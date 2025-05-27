@@ -1,7 +1,7 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { CSSProperties, useRef, useCallback, useEffect, useMemo, useState } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { createSelector } from "@reduxjs/toolkit";
+import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import {
     IExecutionConfig,
