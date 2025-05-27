@@ -1,10 +1,6 @@
 // (C) 2025 GoodData Corporation
 import React from "react";
-import {
-    DateFilterOption,
-    IDateFilterOptionChangedDetails,
-    IDateFilterOptionsByType,
-} from "../interfaces/index.js";
+import { DateFilterOption, IDateFilterOptionsByType } from "../interfaces/index.js";
 import { AllTimeFilterItem } from "./AllTimeFilterItem.js";
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
@@ -13,10 +9,7 @@ interface IAllTimeFilterSectionProps {
     filterOptions: IDateFilterOptionsByType;
     selectedFilterOption: DateFilterOption;
     isMobile: boolean;
-    onSelectedFilterOptionChange: (
-        option: DateFilterOption,
-        changeDetails?: IDateFilterOptionChangedDetails,
-    ) => void;
+    onSelectedFilterOptionChange: (option: DateFilterOption) => void;
 }
 
 export const AllTimeFilterSection: React.FC<IAllTimeFilterSectionProps> = ({

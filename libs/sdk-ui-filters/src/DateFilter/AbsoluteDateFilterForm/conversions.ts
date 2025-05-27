@@ -44,6 +44,5 @@ export const dateFilterValueToDateRange = (
         to.setHours(23);
         to.setMinutes(59);
     }
-
     return { from, to };
 };

@@ -10,7 +10,6 @@ import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems.js";
 import { RelativePresetFilterItems } from "./RelativePresetFilterItems.js";
 import {
     DateFilterOption,
-    IDateFilterOptionChangedDetails,
     IDateFilterOptionsByType,
     IExtendedDateFilterErrors,
     IUiAbsoluteDateFilterForm,
@@ -31,10 +30,7 @@ interface IDateFilterBodyContentProps {
     weekStart: WeekStart;
     availableGranularities: DateFilterGranularity[];
     errors?: IExtendedDateFilterErrors;
-    onSelectedFilterOptionChange: (
-        option: DateFilterOption,
-        changeDetails?: IDateFilterOptionChangedDetails,
-    ) => void;
+    onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     closeDropdown: () => void;
     changeRoute: (newRoute?: DateFilterRoute) => void;
     onApplyClick: () => void;

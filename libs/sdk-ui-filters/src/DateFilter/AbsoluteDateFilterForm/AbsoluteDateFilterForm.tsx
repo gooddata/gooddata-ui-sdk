@@ -4,11 +4,7 @@ import { DayPickerRangeProps } from "react-day-picker";
 import { IAbsoluteDateFilterForm, WeekStart } from "@gooddata/sdk-model";
 
 import { DateRangePicker } from "../DateRangePicker/DateRangePicker.js";
-import {
-    IExtendedDateFilterErrors,
-    DateFilterOption,
-    IDateFilterOptionChangedDetails,
-} from "../interfaces/index.js";
+import { DateFilterOption } from "../interfaces/index.js";
 import { IDateRange } from "../DateRangePicker/types.js";
 
 import { dateFilterValueToDateRange, dateRangeToDateFilterValue } from "./conversions.js";
@@ -20,11 +16,7 @@ export interface IAbsoluteDateFilterFormProps {
     dateFormat: string;
     selectedFilterOption: IAbsoluteDateFilterForm;
     isMobile: boolean;
-    errors: IExtendedDateFilterErrors["absoluteForm"];
-    onSelectedFilterOptionChange: (
-        option: DateFilterOption,
-        changeDetails?: IDateFilterOptionChangedDetails,
-    ) => void;
+    onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     isTimeEnabled: boolean;
     weekStart?: WeekStart;
     shouldOverlayDatePicker?: boolean;
@@ -43,17 +35,15 @@ export const AbsoluteDateFilterForm: React.FC<IAbsoluteDateFilterFormProps> = ({
     dateFormat,
     isMobile,
     selectedFilterOption,
-    errors,
     isTimeEnabled,
     weekStart,
     shouldOverlayDatePicker,
     onSelectedFilterOptionChange,
     onKeyDown,
 }) => {
-    const handleRangeChange = (range: IDateRange, changeDetails?: IDateFilterOptionChangedDetails): void => {
+    const handleRangeChange = (range: IDateRange): void => {
         onSelectedFilterOptionChange(
             dateRangeToDateFilterValue(range, selectedFilterOption.localIdentifier, isTimeEnabled),
-            changeDetails,
         );
     };
 
@@ -63,7 +53,6 @@ export const AbsoluteDateFilterForm: React.FC<IAbsoluteDateFilterFormProps> = ({
                 dateFormat={dateFormat}
                 onRangeChange={handleRangeChange}
                 range={dateFilterValueToDateRange(selectedFilterOption, isTimeEnabled)}
-                errors={errors}
                 isMobile={isMobile}
                 dayPickerProps={dayPickerProps}
                 isTimeEnabled={isTimeEnabled}

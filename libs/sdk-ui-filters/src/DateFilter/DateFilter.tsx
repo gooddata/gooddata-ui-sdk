@@ -12,8 +12,6 @@ import {
     DateFilterOption,
     IDateFilterOptionsByType,
     isUiRelativeDateFilterForm,
-    IDateFilterOptionChangedDetails,
-    IExtendedDateFilterErrors,
 } from "./interfaces/index.js";
 import { DEFAULT_DATE_FORMAT } from "./constants/Platform.js";
 import { normalizeSelectedFilterOption } from "./utils/FilterOptionNormalization.js";
@@ -140,7 +138,6 @@ export interface IDateFilterState extends IDateFilterStatePropsIntersection {
     initWorkingExcludeCurrentPeriod: boolean;
     initWorkingSelectedFilterOption: DateFilterOption;
     isExcludeCurrentPeriodEnabled: boolean;
-    errors: IExtendedDateFilterErrors;
 }
 
 /**
@@ -194,7 +191,6 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             isExcludeCurrentPeriodEnabled: canExcludeCurrent,
             initWorkingSelectedFilterOption: props.workingSelectedFilterOption ?? props.selectedFilterOption,
             initWorkingExcludeCurrentPeriod: props.workingExcludeCurrentPeriod ?? props.excludeCurrentPeriod,
-            errors: validateFilterOption(props.selectedFilterOption),
         };
     }
 
@@ -211,21 +207,18 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             initWorkingSelectedFilterOption: selectedFilterOption,
             initExcludeCurrentPeriod: props.excludeCurrentPeriod,
             isExcludeCurrentPeriodEnabled: canExcludeCurrent,
-            errors: validateFilterOption(selectedFilterOption),
         };
     }
 
     private static getStateFromSelectedOption = (
         selectedFilterOption: DateFilterOption,
         excludeCurrentPeriod: boolean,
-        changeDetails?: IDateFilterOptionChangedDetails,
     ) => {
         const canExcludeCurrent = canExcludeCurrentPeriod(selectedFilterOption);
         return {
             selectedFilterOption,
             excludeCurrentPeriod: canExcludeCurrent ? excludeCurrentPeriod : false,
             isExcludeCurrentPeriodEnabled: canExcludeCurrent,
-            errors: validateFilterOption(selectedFilterOption, changeDetails),
         };
     };
 
@@ -300,7 +293,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
                 onDropdownOpenChanged={this.onDropdownOpenChanged}
                 onExcludeCurrentPeriodChange={this.handleExcludeCurrentPeriodChange}
                 onSelectedFilterOptionChange={this.handleSelectedFilterOptionChange}
-                errors={this.state.errors}
+                errors={validateFilterOption(selectedFilterOption)}
                 weekStart={weekStart}
                 customIcon={customIcon}
                 FilterConfigurationComponent={FilterConfigurationComponent}
@@ -345,17 +338,10 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
         this.setState({ excludeCurrentPeriod }, this.handleSelectChange);
     };
 
-    private handleSelectedFilterOptionChange = (
-        selectedFilterOption: DateFilterOption,
-        changeDetails?: IDateFilterOptionChangedDetails,
-    ) => {
+    private handleSelectedFilterOptionChange = (selectedFilterOption: DateFilterOption) => {
         this.setState(
             (state) =>
-                DateFilter.getStateFromSelectedOption(
-                    selectedFilterOption,
-                    state.excludeCurrentPeriod,
-                    changeDetails,
-                ),
+                DateFilter.getStateFromSelectedOption(selectedFilterOption, state.excludeCurrentPeriod),
             this.handleSelectChange,
         );
     };

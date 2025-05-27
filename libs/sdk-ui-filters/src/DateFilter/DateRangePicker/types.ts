@@ -3,25 +3,53 @@
 import React from "react";
 import { IntlShape } from "react-intl";
 
-import { IDateTimePickerErrors } from "../interfaces/index.js";
-
 export const DATE_INPUT_HINT_ID = "date-range-picker-date-input-hint";
 export const TIME_INPUT_HINT_ID = "date-range-picker-time-input-hint";
 
+export interface ITime {
+    hours: number | undefined;
+    minutes: number | undefined;
+}
+
 export interface IDateRangeInputFieldProps {
-    value: Date;
+    date: Date;
+    time: ITime;
     onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-    onChange: (date: Date) => void;
-    onInputMarkedValid: (date: Date) => void;
+    onDateChange: (date: Date | undefined) => void;
+    onTimeChange: (time: ITime | undefined) => void;
     onInputClick: () => void;
-    errors?: IDateTimePickerErrors;
     dateFormat: string;
     isMobile: boolean;
     isTimeEnabled: boolean;
+    errors?: IDateTimePickerErrors;
     intl: IntlShape;
 }
 
 export interface IDateRange {
     from: Date;
     to: Date;
+}
+
+export interface IInputAccessibilityConfig {
+    ariaLabel?: React.AriaAttributes["aria-label"];
+    inputHintId?: string;
+}
+
+export interface IDateInputErrorMessageTexts {
+    emptyDate: string;
+    invalidDate: string;
+    startDateAfterEndDate: string;
+}
+export interface ITimeInputErrorMessageTexts {
+    startTimeAfterEndTime: string;
+}
+
+export interface InputErrorMessageTexts {
+    dateInput: IDateInputErrorMessageTexts;
+    timeInput: ITimeInputErrorMessageTexts;
+}
+
+export interface IDateTimePickerErrors {
+    isDateOrderError: boolean;
+    isTimeOrderError: boolean;
 }

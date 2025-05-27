@@ -3,7 +3,6 @@ import React, { useCallback, useRef } from "react";
 import cx from "classnames";
 import {
     DateFilterOption,
-    IDateFilterOptionChangedDetails,
     IDateFilterOptionsByType,
     IExtendedDateFilterErrors,
     IUiRelativeDateFilterForm,
@@ -31,10 +30,7 @@ interface IAllTimeFilterSectionProps {
     route: string;
     availableGranularities: DateFilterGranularity[];
     errors: IExtendedDateFilterErrors;
-    onSelectedFilterOptionChange: (
-        option: DateFilterOption,
-        changeDetails?: IDateFilterOptionChangedDetails,
-    ) => void;
+    onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     changeRoute: (newRoute?: DateFilterRoute) => void;
     closeDropdown: () => void;
     onApplyClick: () => void;
