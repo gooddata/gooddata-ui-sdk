@@ -399,7 +399,7 @@ export function DefaultUiMenuGroupItem<T extends IUiMenuItemData = object>({ ite
 export const DefaultUiMenuHeader: React_2.FC;
 
 // @internal (undocumented)
-export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>({ item, isFocused, onSelect, }: IUiMenuInteractiveItemProps<T>): React_2.ReactNode;
+export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>({ item, isFocused, onSelect, size, }: IUiMenuInteractiveItemProps<T>): React_2.ReactNode;
 
 // @internal (undocumented)
 export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = object>({ item, }: IUiMenuInteractiveItemWrapperProps<T>): React_2.ReactNode;
@@ -4808,6 +4808,7 @@ export type IUiMenuInteractiveItem<T extends IUiMenuItemData = object> = {
     id: string;
     stringTitle: string;
     isDisabled?: boolean;
+    isSelected?: boolean;
     data: T["interactive"];
     subItems?: IUiMenuItem<T>[];
 };
@@ -4820,6 +4821,8 @@ export interface IUiMenuInteractiveItemProps<T extends IUiMenuItemData = object>
     item: IUiMenuInteractiveItem<T>;
     // (undocumented)
     onSelect: () => void;
+    // (undocumented)
+    size?: SizeSmall | SizeMedium;
 }
 
 // @internal (undocumented)

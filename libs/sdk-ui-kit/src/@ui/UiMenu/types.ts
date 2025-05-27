@@ -2,6 +2,7 @@
 
 import React from "react";
 import { IDropdownBodyRenderProps } from "../../Dropdown/index.js";
+import { SizeMedium, SizeSmall } from "../@types/size.js";
 
 /**
  * @internal
@@ -25,6 +26,7 @@ export type IUiMenuInteractiveItem<T extends IUiMenuItemData = object> = {
     id: string;
     stringTitle: string;
     isDisabled?: boolean;
+    isSelected?: boolean;
     data: T["interactive"];
     subItems?: IUiMenuItem<T>[];
 };
@@ -102,6 +104,8 @@ export interface IUiMenuInteractiveItemProps<T extends IUiMenuItemData = object>
     isFocused: boolean;
 
     onSelect: () => void;
+
+    size?: SizeSmall | SizeMedium;
 }
 
 /**
