@@ -79,6 +79,7 @@ export function AttributesDropdown({
     DropdownTitleComponent,
     renderNoData,
     overlayPositionType,
+    getCustomItemTitle,
 }: IDashboardAttributeFilterPlaceholderProps) {
     const intl = useIntl();
     const [searchQuery, setSearchQuery] = useState("");
@@ -230,10 +231,12 @@ export function AttributesDropdown({
                             })}
                             renderNoData={renderNoData}
                             renderItem={({ item }) => {
+                                const title = getCustomItemTitle?.(item);
                                 if (isCatalogAttribute(item)) {
                                     return (
                                         <AttributeListItem
                                             item={item}
+                                            title={title}
                                             isLocationIconEnabled={shouldDisplayLocationIcon}
                                             onClick={() => {
                                                 onSelect(item.defaultDisplayForm.ref);
@@ -244,6 +247,7 @@ export function AttributesDropdown({
                                 }
                                 return (
                                     <DateAttributeListItem
+                                        title={title}
                                         item={item}
                                         onClick={() => {
                                             onSelect(item.dataSet.ref);

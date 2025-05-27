@@ -1,12 +1,16 @@
 // (C) 2025 GoodData Corporation
 
 import {
+    areObjRefsEqual,
     dashboardFilterLocalIdentifier,
     FilterContextItem,
     ICatalogAttribute,
     ICatalogDateDataset,
+    IDashboardAttributeFilter,
     IDashboardAttributeFilterConfig,
     IDashboardDateFilterConfigItem,
+    isCatalogAttribute,
+    isCatalogDateDataset,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
@@ -81,6 +85,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
         attributes,
         dateDatasets,
         attributeConfigs,
+        dateConfigs,
         handleAddFilter,
         handleDeleteFilter,
         handleChangeFilter,
@@ -174,6 +179,9 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                             openOnInit={false}
                             overlayPositionType={overlayPositionType}
                             className="gd-automation-filters__dropdown s-automation-filters-add-filter-dropdown"
+                            getCustomItemTitle={(item) =>
+                                getCatalogItemCustomTitle(item, availableFilters, dateConfigs)
+                            }
                             DropdownButtonComponent={({ onClick }) => (
                                 <UiIconButton
                                     icon="plus"
@@ -316,3 +324,29 @@ const AutomationFilter: React.FC<IAutomationFilterProps> = ({
         );
     }
 };
+
+/**
+ * Get custom dashboard filter title for relevant catalog item,
+ * so we can show it in the catalog items dropdown.
+ */
+function getCatalogItemCustomTitle(
+    item: ICatalogAttribute | ICatalogDateDataset,
+    availableFilters: FilterContextItem[],
+    dateConfigs: IDashboardDateFilterConfigItem[],
+) {
+    if (isCatalogAttribute(item)) {
+        const availableFilter = availableFilters?.find(
+            (filter): filter is IDashboardAttributeFilter =>
+                isDashboardAttributeFilter(filter) &&
+                areObjRefsEqual(filter.attributeFilter.displayForm, item.defaultDisplayForm.ref),
+        );
+        return availableFilter?.attributeFilter.title;
+    } else if (isCatalogDateDataset(item)) {
+        const selectedConfig = dateConfigs?.find((config) =>
+            areObjRefsEqual(config.dateDataSet, item.dataSet.ref),
+        );
+        return selectedConfig?.config.filterName;
+    }
+
+    return undefined;
+}
