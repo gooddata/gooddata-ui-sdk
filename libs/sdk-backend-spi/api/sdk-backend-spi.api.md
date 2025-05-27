@@ -1031,6 +1031,7 @@ export interface IOrganizations {
 
 // @public
 export interface IOrganizationSettingsService {
+    deleteActiveLlmEndpoint(): Promise<void>;
     deleteColorPalette(): Promise<void>;
     deleteTheme(): Promise<void>;
     getSettings(): Promise<ISettings>;
