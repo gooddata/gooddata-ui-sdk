@@ -50,7 +50,7 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
     newMessage,
     autofocus = false,
     intl,
-    catalogItems = [],
+    catalogItems,
     canManage,
     canAnalyze,
 }) => {
