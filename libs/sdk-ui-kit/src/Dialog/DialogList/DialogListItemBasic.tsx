@@ -50,7 +50,10 @@ export const DialogListItemBasic: React.VFC<IDialogListItemComponentProps> = (pr
             ),
         [id, isClickable, isDisabled, className],
     );
-    const showDeleteButton = useMemo(() => !isDisabled && isDeletable, [isDisabled, isDeletable]);
+    const showDeleteButton = useMemo(
+        () => (!isDisabled || !!action) && isDeletable,
+        [isDisabled, isDeletable, action],
+    );
 
     const handleItemClick = useCallback(() => {
         !isDisabled && isClickable && onClick?.(item);
@@ -67,7 +70,9 @@ export const DialogListItemBasic: React.VFC<IDialogListItemComponentProps> = (pr
                     <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                         <span
                             role="icon-delete"
-                            className="gd-dialog-list-item-delete-icon s-dialog-list-item-delete-icon"
+                            className={cx("gd-dialog-list-item-delete-icon s-dialog-list-item-delete-icon", {
+                                disabled: isDisabled,
+                            })}
                             onClick={handleItemDelete}
                         />
                         {deleteTooltipText ? (

@@ -167,6 +167,10 @@
             font-weight: 400;
             top: 1px;
         }
+
+        &.disabled {
+            display: none;
+        }
     }
 
     .gd-dialog-list-item-delete:hover {
@@ -193,6 +197,10 @@
 
         .gd-dialog-list-item-delete-icon {
             display: block;
+
+            &.disabled {
+                display: none;
+            }
         }
     }
 
