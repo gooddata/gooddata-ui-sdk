@@ -1,7 +1,7 @@
 // (C) 2025 GoodData Corporation
 
 import {
-    areObjRefsEqual,
+    dashboardFilterLocalIdentifier,
     FilterContextItem,
     ICatalogAttribute,
     ICatalogDateDataset,
@@ -30,7 +30,6 @@ import { AttributesDropdown } from "../../filterBar/index.js";
 import { useAutomationFilters } from "../useAutomationFilters.js";
 import { AutomationAttributeFilter } from "./AutomationAttributeFilter.js";
 import { AutomationDateFilter } from "./AutomationDateFilter.js";
-import { useAutomationCommonDateFilterId } from "../useAutomationCommonDateFilterId.js";
 
 const COLLAPSED_FILTERS_COUNT = 2;
 
@@ -76,11 +75,12 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
     overlayPositionType,
 }) => {
     const {
+        commonDateFilterId,
+        lockedFilters,
         visibleFilters: filters,
         attributes,
         dateDatasets,
         attributeConfigs,
-        dateConfigs,
         handleAddFilter,
         handleDeleteFilter,
         handleChangeFilter,
@@ -91,7 +91,6 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
         onFiltersChange,
         onStoreFiltersChange,
     });
-    const commonDateFilterId = useAutomationCommonDateFilterId();
 
     const theme = useTheme();
     const intl = useIntl();
@@ -155,11 +154,11 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                                 }
                                 filter={filter}
                                 attributeConfigs={attributeConfigs}
-                                dateConfigs={dateConfigs}
                                 onChange={handleChangeFilter}
                                 onDelete={handleDeleteFilter}
                                 isCommonDateFilter={isCommonDateFilter}
                                 overlayPositionType={overlayPositionType}
+                                lockedFilters={lockedFilters}
                             />
                         );
                     })}
@@ -263,28 +262,30 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
 interface IAutomationFilterProps {
     filter: FilterContextItem;
     attributeConfigs: IDashboardAttributeFilterConfig[];
-    dateConfigs: IDashboardDateFilterConfigItem[];
     onChange: (filter: FilterContextItem | undefined) => void;
     onDelete: (filter: FilterContextItem) => void;
     isCommonDateFilter?: boolean;
     overlayPositionType?: OverlayPositionType;
+    lockedFilters: FilterContextItem[];
 }
 
 const AutomationFilter: React.FC<IAutomationFilterProps> = ({
     filter,
     attributeConfigs,
-    dateConfigs,
     onChange,
     onDelete,
     isCommonDateFilter,
     overlayPositionType,
+    lockedFilters,
 }) => {
     if (isDashboardAttributeFilter(filter)) {
         const config = attributeConfigs.find(
             (attribute) => attribute.localIdentifier === filter.attributeFilter.localIdentifier,
         );
         const displayAsLabel = config?.displayAsLabel;
-        const isLocked = config?.mode === "readonly";
+        const isLocked = lockedFilters.some(
+            (f) => dashboardFilterLocalIdentifier(f) === dashboardFilterLocalIdentifier(filter),
+        );
 
         return (
             <AutomationAttributeFilter
@@ -298,10 +299,9 @@ const AutomationFilter: React.FC<IAutomationFilterProps> = ({
             />
         );
     } else {
-        const config = dateConfigs.find((date) =>
-            areObjRefsEqual(date.dateDataSet, filter.dateFilter.dataSet),
+        const isLocked = lockedFilters.some(
+            (f) => dashboardFilterLocalIdentifier(f) === dashboardFilterLocalIdentifier(filter),
         );
-        const isLocked = config?.config.mode === "readonly";
 
         return (
             <AutomationDateFilter

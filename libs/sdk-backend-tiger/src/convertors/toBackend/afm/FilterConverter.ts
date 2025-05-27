@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     AbsoluteDateFilter,
     AttributeFilter,
@@ -123,8 +123,9 @@ function convertNegativeFilter(
 function convertAttributeFilter(
     filter: IAttributeFilter,
     applyOnResultProp: ApplyOnResultProp,
+    keepEmptyAttributeFilters: boolean = false,
 ): AttributeFilter | null {
-    if (isNegativeAttributeFilter(filter) && filterIsEmpty(filter)) {
+    if (isNegativeAttributeFilter(filter) && filterIsEmpty(filter) && !keepEmptyAttributeFilters) {
         return null;
     }
 
@@ -243,13 +244,16 @@ function convertRankingFilter(filter: IRankingFilter, applyOnResultProp: ApplyOn
     };
 }
 
-export function convertFilter(filter0: IFilter | IFilterWithApplyOnResult): FilterDefinition | null {
+export function convertFilter(
+    filter0: IFilter | IFilterWithApplyOnResult,
+    keepEmptyAttributeFilters: boolean = false,
+): FilterDefinition | null {
     const [filter, applyOnResult] = isFilter(filter0)
         ? [filter0, undefined]
         : [filter0.filter, filter0.applyOnResult];
     const applyOnResultProp: ApplyOnResultProp = applyOnResult === undefined ? {} : { applyOnResult };
     if (isAttributeFilter(filter)) {
-        return convertAttributeFilter(filter, applyOnResultProp);
+        return convertAttributeFilter(filter, applyOnResultProp, keepEmptyAttributeFilters);
     } else if (isAbsoluteDateFilter(filter)) {
         return convertAbsoluteDateFilter(filter, applyOnResultProp);
     } else if (isRelativeDateFilter(filter)) {

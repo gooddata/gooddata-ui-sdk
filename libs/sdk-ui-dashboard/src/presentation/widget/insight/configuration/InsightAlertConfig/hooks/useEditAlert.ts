@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 import {
     IAlertComparisonOperator,
@@ -249,20 +249,13 @@ export const useEditAlert = ({
         : !updatedAlert.recipients?.some(isAutomationExternalUserRecipient);
     const hasNoUnknownRecipients = !updatedAlert.recipients?.some(isAutomationUnknownUserRecipient);
     const isAlertChanged = !isEqual(updatedAlert, alert);
+
     const areEmailsValid =
         selectedDestination?.destinationType === "smtp"
             ? updatedAlert.recipients?.every((v) =>
                   isAutomationUserRecipient(v) ? isEmail(v.email ?? "") : true,
               )
             : true;
-
-    useEffect(() => {
-        const genTitle = getDescription(intl, metrics, updatedAlert, separators);
-        const setTitle = updatedAlert.title;
-        if (genTitle === setTitle) {
-            changeTitle("");
-        }
-    }, [changeTitle, intl, metrics, separators, updatedAlert]);
 
     const canSubmit =
         isValueDefined &&

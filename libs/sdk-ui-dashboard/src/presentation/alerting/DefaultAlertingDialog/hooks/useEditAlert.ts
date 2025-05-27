@@ -6,13 +6,11 @@ import {
     FilterContextItem,
     IInsight,
     IAutomationMetadataObject,
-    IFilter,
     INotificationChannelMetadataObject,
     isAutomationUserRecipient,
     isAutomationExternalUserRecipient,
     isAutomationUnknownUserRecipient,
     IAutomationVisibleFilter,
-    isInsightWidget,
     IAlertComparisonOperator,
     IAlertRelativeOperator,
     IAlertRelativeArithmeticOperator,
@@ -35,16 +33,14 @@ import {
     selectSettings,
     selectDashboardId,
     selectSeparators,
+    selectDashboardHiddenFilters,
 } from "../../../../model/index.js";
 import {
-    areAutomationsEqual,
     convertCurrentUserToAutomationRecipient,
     convertCurrentUserToWorkspaceUser,
 } from "../../../../_staging/automation/index.js";
 import { useIntl } from "react-intl";
-import { getVisibleFiltersByFilters } from "../../../automationFilters/utils.js";
-import { filterContextItemsToAutomationDashboardFiltersByWidget } from "../../../../converters/index.js";
-import { useAutomationWidgetFilters } from "../../../automationFilters/useAutomationWidgetFilters.js";
+import { getAppliedWidgetFilters, getVisibleFiltersByFilters } from "../../../automationFilters/utils.js";
 import { useAlertValidation } from "./useAlertValidation.js";
 
 import {
@@ -73,24 +69,19 @@ import {
     transformAlertByRelativeOperator,
     transformAlertByValue,
 } from "../utils/transformation.js";
+import isEqual from "lodash/isEqual.js";
 
 export interface IUseEditAlertProps {
     alertToEdit?: IAutomationMetadataObject;
     notificationChannels: INotificationChannelMetadataObject[];
     maxAutomationsRecipients: number;
-
-    // In case we are editing widget scheduled export
     widget?: ExtendedDashboardWidget;
     insight?: IInsight;
-    widgetFilters?: IFilter[];
+    editedAutomationFilters?: FilterContextItem[];
 
-    // New automation filters
-    automationFilters?: FilterContextItem[];
-
-    setAutomationFilters: (filters: FilterContextItem[]) => void;
-
-    // Metadata for identifying visible filters shown on dashboards
-    allVisibleFiltersMetadata?: IAutomationVisibleFilter[] | undefined;
+    setEditedAutomationFilters: (filters: FilterContextItem[]) => void;
+    availableFiltersAsVisibleFilters?: IAutomationVisibleFilter[] | undefined;
+    filtersForNewAutomation: FilterContextItem[];
 }
 
 export function useEditAlert(props: IUseEditAlertProps) {
@@ -99,11 +90,11 @@ export function useEditAlert(props: IUseEditAlertProps) {
         notificationChannels,
         insight,
         widget,
-        automationFilters,
-        widgetFilters,
+        editedAutomationFilters,
         maxAutomationsRecipients,
-        setAutomationFilters,
-        allVisibleFiltersMetadata,
+        setEditedAutomationFilters,
+        availableFiltersAsVisibleFilters,
+        filtersForNewAutomation,
     } = props;
     const intl = useIntl();
 
@@ -121,7 +112,7 @@ export function useEditAlert(props: IUseEditAlertProps) {
     const canManageAttributes = useDashboardSelector(selectEnableAlertAttributes);
     const dashboardId = useDashboardSelector(selectDashboardId);
     const separators = useDashboardSelector(selectSeparators);
-
+    const dashboardHiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
     // Computed values
     const isNewAlert = !alertToEdit;
 
@@ -153,16 +144,6 @@ export function useEditAlert(props: IUseEditAlertProps) {
     const defaultRecipient = convertCurrentUserToAutomationRecipient(users ?? [], currentUser);
     const defaultNotificationChannelId = notificationChannels[0]?.id;
 
-    const { insightExecutionFilters, dashboardExecutionFilters, visibleWidgetFilters } =
-        useAutomationWidgetFilters({
-            widget,
-            automationFilters,
-            widgetFilters,
-            allVisibleFiltersMetadata,
-        });
-
-    const sanitizedWidgetFilters = [...dashboardExecutionFilters, ...insightExecutionFilters];
-
     // Local state
     const [warningMessage, setWarningMessage] = useState<string | undefined>(undefined);
     const [isTitleValid, setIsTitleValid] = useState(true);
@@ -170,7 +151,12 @@ export function useEditAlert(props: IUseEditAlertProps) {
     const [editedAutomation, setEditedAutomation] = useState<IAutomationMetadataObjectDefinition>(
         alertToEdit ??
             createDefaultAlert(
-                sanitizedWidgetFilters!,
+                getAppliedWidgetFilters(
+                    editedAutomationFilters ?? [],
+                    dashboardHiddenFilters,
+                    widget!,
+                    insight!,
+                ),
                 supportedMeasures,
                 defaultMeasure,
                 defaultNotificationChannelId,
@@ -183,7 +169,7 @@ export function useEditAlert(props: IUseEditAlertProps) {
                           timezone: settings.alertDefault?.defaultTimezone,
                       }
                     : undefined,
-                visibleWidgetFilters,
+                getVisibleFiltersByFilters(editedAutomationFilters, availableFiltersAsVisibleFilters, true),
                 widget?.localIdentifier,
                 dashboardId,
                 (widget as IInsightWidget)?.title,
@@ -356,41 +342,49 @@ export function useEditAlert(props: IUseEditAlertProps) {
 
     const onFiltersChange = useCallback(
         (filters: FilterContextItem[]) => {
-            setAutomationFilters(filters);
+            setEditedAutomationFilters(filters);
+            setEditedAutomation((s) => {
+                const appliedFilters = getAppliedWidgetFilters(
+                    filters,
+                    dashboardHiddenFilters,
+                    widget,
+                    insight,
+                );
+                const visibleFilters = getVisibleFiltersByFilters(
+                    filters,
+                    availableFiltersAsVisibleFilters,
+                    true,
+                );
 
-            const visibleFilters = getVisibleFiltersByFilters(filters, allVisibleFiltersMetadata);
-
-            if (!isInsightWidget(widget)) {
-                return;
-            }
-
-            const convertedFilters = filterContextItemsToAutomationDashboardFiltersByWidget(filters, widget);
-
-            const updatedFilters = [...convertedFilters, ...insightExecutionFilters];
-
-            setEditedAutomation((s) => ({
-                ...s,
-                alert: {
-                    ...s.alert!,
-                    execution: {
-                        ...s.alert!.execution,
-                        filters: updatedFilters,
+                return {
+                    ...s,
+                    alert: {
+                        ...s.alert!,
+                        execution: {
+                            ...s.alert!.execution,
+                            filters: appliedFilters,
+                        },
                     },
-                },
-                metadata: {
-                    ...s.metadata,
-                    visibleFilters,
-                },
-            }));
+                    metadata: {
+                        ...s.metadata,
+                        visibleFilters,
+                    },
+                };
+            });
         },
         [
-            insightExecutionFilters,
-            allVisibleFiltersMetadata,
-            setAutomationFilters,
-            widget,
+            setEditedAutomationFilters,
             setEditedAutomation,
+            availableFiltersAsVisibleFilters,
+            widget,
+            insight,
+            dashboardHiddenFilters,
         ],
     );
+
+    const onApplyCurrentFilters = useCallback(() => {
+        onFiltersChange(filtersForNewAutomation);
+    }, [filtersForNewAutomation, onFiltersChange]);
 
     //
     // Selected values
@@ -466,13 +460,13 @@ export function useEditAlert(props: IUseEditAlertProps) {
         hasFilledEmails &&
         isTitleValid;
 
-    const isSubmitDisabled =
-        !isValid || (alertToEdit && areAutomationsEqual(originalAutomation, editedAutomation));
+    const isSubmitDisabled = !isValid || (alertToEdit && isEqual(originalAutomation, editedAutomation));
 
     return {
         onTitleChange,
         onRecipientsChange,
         onFiltersChange,
+        onApplyCurrentFilters,
         onMeasureChange,
         getAttributeValues,
         onAttributeChange,

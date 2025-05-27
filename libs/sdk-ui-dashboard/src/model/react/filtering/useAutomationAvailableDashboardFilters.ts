@@ -26,6 +26,7 @@ import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
  * - If default dashboard filters has overrides, use them instead of the current dashboard filter context
  * - If common date filter is not present in the dashboard filter context, add it
  *
+ * @deprecated - can be removed, once `enableAutomationFilterContext` is removed
  * @alpha
  */
 export function useAutomationAvailableDashboardFilters() {

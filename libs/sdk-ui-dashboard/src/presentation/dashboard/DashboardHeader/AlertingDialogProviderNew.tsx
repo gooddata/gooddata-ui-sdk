@@ -3,7 +3,7 @@
 import React from "react";
 
 import { AlertingDialog, AlertingManagementDialog, IAlertingDialogProps } from "../../alerting/index.js";
-import { useDashboardAlerts, useAlertFilters, useWorkspaceUsers } from "../../../model/index.js";
+import { useDashboardAlerts, useWorkspaceUsers } from "../../../model/index.js";
 
 export const AlertingDialogProviderNew = () => {
     const {
@@ -35,15 +35,6 @@ export const AlertingDialogProviderNew = () => {
         onAlertingManagementPauseError,
     } = useDashboardAlerts();
 
-    const { widgetFilters, widgetFiltersError, widgetFiltersLoading } = useAlertFilters({
-        alertToEdit,
-        widget,
-        insight,
-    });
-
-    const isLoading = [widgetFiltersLoading, automationsLoading].some(Boolean);
-    const loadingError = [widgetFiltersError, automationsError].find(Boolean);
-
     if (!isInitialized) {
         return null;
     }
@@ -54,8 +45,8 @@ export const AlertingDialogProviderNew = () => {
                 <AlertingManagementDialog
                     automations={automations}
                     notificationChannels={notificationChannels}
-                    alertDataError={loadingError}
-                    isLoadingAlertingData={isLoading}
+                    alertDataError={automationsError}
+                    isLoadingAlertingData={automationsLoading}
                     onAdd={onAlertingManagementAdd}
                     onEdit={onAlertingManagementEdit}
                     onClose={onAlertingManagementClose}
@@ -71,8 +62,7 @@ export const AlertingDialogProviderNew = () => {
                     notificationChannels={notificationChannels}
                     widget={widget}
                     insight={insight}
-                    widgetFilters={widgetFilters}
-                    isLoading={isLoading}
+                    isLoading={automationsLoading}
                     onCancel={onAlertingCancel}
                     onError={onAlertingCreateError}
                     onSuccess={onAlertingCreateSuccess}

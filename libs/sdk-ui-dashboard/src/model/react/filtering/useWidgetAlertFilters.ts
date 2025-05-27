@@ -5,7 +5,6 @@ import { FilterableDashboardWidget } from "../../types/layoutTypes.js";
 import { QueryProcessingState } from "../useDashboardQueryProcessing.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { selectCrossFilteringItems } from "../../store/drill/drillSelectors.js";
-import { useEnableAlertingAutomationFilterContext } from "../useDashboardAlerting/useEnableAutomationFilterContext.js";
 import { sanitizeWidgetFilters } from "./shared.js";
 
 /**
@@ -35,11 +34,10 @@ export interface IUseWidgetAlertFiltersProps {
  * - In case of existing widget alert, it returns the saved filters from the widget alert.
  * - Otherwise, it returns the filters ready to be saved in new widget alert, sanitized according to the following rules:
  *     - Cross-filtering filters are excluded as they are typically not desired in the widget alert.
- *     - The widget's ignored filters configuration is honored (ignored filters are not overridden by dashboard filters and remain as is).
- *     - If the resulting filters include all-time date filter, it is excluded as it has no effect on the widget alert execution.
- *     - If the resulting filters include empty attribute filters, they are excluded as they have no effect on the widget alert execution.
+ *     - The widget's ignored filters configuration is honored.
  *
  * @alpha
+ * @deprecated - can be removed, once `enableAutomationFilterContext` is removed
  */
 export function useWidgetAlertFilters({
     alertToEdit,
@@ -70,11 +68,10 @@ function useFiltersForNewWidgetAlert(
     const widgetFiltersQuery = useWidgetFilters(widget, insight);
     const { result: widgetFilters, status: widgetFiltersStatus } = widgetFiltersQuery;
 
-    const enableAutomationFilterContext = useEnableAlertingAutomationFilterContext();
     const crossFilteringItems = useDashboardSelector(selectCrossFilteringItems);
 
     const sanitizedWidgetFilters = widgetFilters
-        ? sanitizeWidgetFilters(widgetFilters, crossFilteringItems, enableAutomationFilterContext)
+        ? sanitizeWidgetFilters(widgetFilters, crossFilteringItems)
         : undefined;
 
     if (widgetFiltersStatus === "success" && sanitizedWidgetFilters) {

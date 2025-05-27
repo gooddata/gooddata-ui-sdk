@@ -39,6 +39,8 @@ import {
     validateAllFilterLocalIdentifiers,
 } from "../../automationFilters/utils.js";
 import { useAutomationFiltersSelect } from "../../automationFilters/useAutomationFiltersSelect.js";
+import { useValidateExistingAutomationFilters } from "../../automationFilters/hooks/useValidateExistingAutomationFilters.js";
+import { ApplyCurrentFiltersConfirmDialog } from "../../automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 import { IntlWrapper } from "../../localization/index.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
@@ -140,11 +142,13 @@ export function ScheduledMailDialogRenderer({
     };
 
     const {
+        editedAutomationFilters,
+        setEditedAutomationFilters,
+        storeFilters,
+        setStoreFilters,
         availableFilters,
-        automationFilters,
-        setAutomationFilters,
-        allVisibleFiltersMetadata,
-        areVisibleFiltersMissingOnDashboard,
+        availableFiltersAsVisibleFilters,
+        filtersForNewAutomation,
     } = useAutomationFiltersSelect({
         automationToEdit: scheduledExportToEdit,
         widget,
@@ -176,7 +180,6 @@ export function ScheduledMailDialogRenderer({
         isXlsxExportSelected,
         areDashboardFiltersChanged,
         validationErrorMessage,
-        storeFilters,
         onDashboardAttachmentsChange,
         onWidgetAttachmentsChange,
         onWidgetAttachmentsSettingsChange,
@@ -187,20 +190,32 @@ export function ScheduledMailDialogRenderer({
         onSubjectChange,
         onTitleChange,
         onFiltersChange,
+        onApplyCurrentFilters,
         onStoreFiltersChange,
     } = useEditScheduledEmail({
         notificationChannels,
         insight,
         widget,
         scheduledExportToEdit,
-        automationFilters,
+        storeFilters,
+        editedAutomationFilters,
         dashboardFilters,
         widgetFilters,
         maxAutomationsRecipients,
-        setAutomationFilters,
-        allVisibleFiltersMetadata,
+        setEditedAutomationFilters,
+        setStoreFilters,
+        availableFiltersAsVisibleFilters,
+        enableAutomationFilterContext,
+        filtersForNewAutomation,
+    });
+
+    const { isValid } = useValidateExistingAutomationFilters({
+        automationToEdit: scheduledExportToEdit!,
+        widget,
+        insight,
         enableAutomationFilterContext,
     });
+    const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] = useState(!isValid);
 
     const { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage } =
         useSaveScheduledEmailToBackend(editedAutomation, {
@@ -222,6 +237,20 @@ export function ScheduledMailDialogRenderer({
         : defineMessage({ id: "dialogs.schedule.email.footer.title" }).id;
 
     const titleElementId = useIdPrefixed("title");
+
+    // This should be visible only when enableAutomationFilterContext is true
+    if (isApplyCurrentFiltersDialogOpen && enableAutomationFilterContext) {
+        return (
+            <ApplyCurrentFiltersConfirmDialog
+                automationType="schedule"
+                onCancel={() => onCancel?.()}
+                onEdit={() => {
+                    onApplyCurrentFilters();
+                    setIsApplyCurrentFiltersDialogOpen(false);
+                }}
+            />
+        );
+    }
 
     return (
         <>
@@ -300,12 +329,11 @@ export function ScheduledMailDialogRenderer({
                                 <>
                                     <AutomationFiltersSelect
                                         availableFilters={availableFilters}
-                                        selectedFilters={automationFilters}
+                                        selectedFilters={editedAutomationFilters}
                                         onFiltersChange={onFiltersChange}
                                         storeFilters={storeFilters}
                                         onStoreFiltersChange={onStoreFiltersChange}
                                         isDashboardAutomation={isDashboardExportSelected}
-                                        areFiltersMissing={areVisibleFiltersMissingOnDashboard}
                                         overlayPositionType={OVERLAY_POSITION_TYPE}
                                     />
                                     <ContentDivider className="gd-divider-with-margin" />

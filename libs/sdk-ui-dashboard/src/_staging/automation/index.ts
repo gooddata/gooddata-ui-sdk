@@ -20,8 +20,6 @@ import {
 import omit from "lodash/omit.js";
 import isEqual from "lodash/isEqual.js";
 import pick from "lodash/pick.js";
-import { dashboardFilterToFilterContextItem } from "../dashboard/dashboardFilterContext.js";
-import { isDashboardFilter } from "../../types.js";
 
 export const isDashboardAutomation = (
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
@@ -123,14 +121,12 @@ export const getAutomationVisualizationFilters = (
 
 export const getAutomationAlertFilters = (
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
-): FilterContextItem[] | undefined => {
+): IFilter[] | undefined => {
     if (!automation) {
         return undefined;
     }
 
-    return automation.alert?.execution?.filters
-        ?.filter(isDashboardFilter)
-        .map((f) => dashboardFilterToFilterContextItem(f, true));
+    return automation.alert?.execution?.filters?.filter(isFilter);
 };
 
 type ExportDefinitionSubset = Pick<IExportDefinitionMetadataObjectDefinition, "requestPayload" | "title">;

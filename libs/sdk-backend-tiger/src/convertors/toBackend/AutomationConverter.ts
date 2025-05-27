@@ -74,7 +74,7 @@ export function convertAutomation(
     const scheduleObj = schedule ? { schedule } : {};
     const alertObj = alert
         ? {
-              alert: convertAlert(alert),
+              alert: convertAlert(alert, enableAutomationFilterContext),
           }
         : {};
     const state = alert ? alert.trigger.state : undefined;
@@ -132,10 +132,17 @@ export function convertAutomation(
     };
 }
 
-const convertAlert = (alert: IAutomationAlert): JsonApiAutomationOutAttributesAlert => {
+const convertAlert = (
+    alert: IAutomationAlert,
+    enableAutomationFilterContext: boolean,
+): JsonApiAutomationOutAttributesAlert => {
     const { condition, execution } = alert;
 
-    const { filters: convertedFilters } = convertAfmFilters(execution.measures, execution.filters);
+    const { filters: convertedFilters } = convertAfmFilters(
+        execution.measures,
+        execution.filters,
+        enableAutomationFilterContext,
+    );
     const base = {
         execution: {
             filters: convertedFilters,

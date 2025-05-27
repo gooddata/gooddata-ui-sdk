@@ -28,6 +28,7 @@ import {
     selectTimezone,
     selectUsers,
     selectEnableExternalRecipients,
+    selectDashboardHiddenFilters,
 } from "../../../../model/index.js";
 import { WidgetAttachmentType } from "../types.js";
 import {
@@ -51,35 +52,29 @@ import {
 } from "../../utils/date.js";
 import { isEmail } from "../../utils/validate.js";
 import { getUserTimezone } from "../../utils/timezone.js";
-import { getVisibleFiltersByFilters } from "../../../automationFilters/utils.js";
-import { filterContextItemsToAutomationDashboardFiltersByWidget } from "../../../../converters/index.js";
-import { useAutomationWidgetFilters } from "../../../automationFilters/useAutomationWidgetFilters.js";
-import { useAutomationDashboardFilters } from "../../../automationFilters/useAutomationDashboardFilters.js";
+import {
+    getAppliedDashboardFilters,
+    getAppliedWidgetFilters,
+    getVisibleFiltersByFilters,
+} from "../../../automationFilters/utils.js";
 
 export interface IUseEditScheduledEmailProps {
     scheduledExportToEdit?: IAutomationMetadataObject;
     notificationChannels: INotificationChannelMetadataObject[];
     maxAutomationsRecipients: number;
-
-    // In case we are editing widget scheduled export
     widget?: ExtendedDashboardWidget;
     insight?: IInsight;
     widgetFilters?: IFilter[];
-
-    // New automation filters
-    automationFilters?: FilterContextItem[];
-
-    // In case we are editing dashboard scheduled export
+    editedAutomationFilters?: FilterContextItem[];
     dashboardFilters?: FilterContextItem[];
-
-    setAutomationFilters: (filters: FilterContextItem[]) => void;
-
-    // Metadata for identifying visible filters shown on dashboards
-    allVisibleFiltersMetadata?: IAutomationVisibleFilter[] | undefined;
+    setEditedAutomationFilters: (filters: FilterContextItem[]) => void;
+    availableFiltersAsVisibleFilters?: IAutomationVisibleFilter[] | undefined;
 
     // Option to opt out of storing filters
     storeFilters?: boolean;
+    setStoreFilters: (storeFilters: boolean) => void;
     enableAutomationFilterContext?: boolean;
+    filtersForNewAutomation: FilterContextItem[];
 }
 
 export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
@@ -88,13 +83,16 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         notificationChannels,
         insight,
         widget,
-        automationFilters,
+        editedAutomationFilters,
         dashboardFilters,
         widgetFilters,
         maxAutomationsRecipients,
-        setAutomationFilters,
-        allVisibleFiltersMetadata,
+        setEditedAutomationFilters,
+        availableFiltersAsVisibleFilters,
+        storeFilters,
+        setStoreFilters,
         enableAutomationFilterContext,
+        filtersForNewAutomation,
     } = props;
 
     const intl = useIntl();
@@ -120,29 +118,26 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
 
     const firstChannel = notificationChannels[0]?.id;
 
-    const { insightExecutionFilters, dashboardExecutionFilters, visibleWidgetFilters } =
-        useAutomationWidgetFilters({
-            widget,
-            automationFilters,
-            widgetFilters,
-            allVisibleFiltersMetadata,
-        });
-    const { storeFilters, setStoreFilters, automationDashboardFilters, visibleDashboardFilters } =
-        useAutomationDashboardFilters({
-            editAutomation: scheduledExportToEdit,
-            automationFilters,
-            allVisibleFiltersMetadata,
-        });
+    const dashboardHiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
 
     const effectiveWidgetFilters = enableAutomationFilterContext
-        ? [...dashboardExecutionFilters, ...insightExecutionFilters]
+        ? getAppliedWidgetFilters(editedAutomationFilters ?? [], dashboardHiddenFilters, widget, insight)
         : widgetFilters;
-    const effectiveVisibleWidgetFilters = enableAutomationFilterContext ? visibleWidgetFilters : undefined;
+
+    const effectiveVisibleWidgetFilters = enableAutomationFilterContext
+        ? getVisibleFiltersByFilters(editedAutomationFilters, availableFiltersAsVisibleFilters, true)
+        : undefined;
+
     const effectiveDashboardFilters = enableAutomationFilterContext
-        ? automationDashboardFilters
+        ? getAppliedDashboardFilters(editedAutomationFilters ?? [], dashboardHiddenFilters, storeFilters)
         : dashboardFilters;
+
     const effectiveVisibleDashboardFilters = enableAutomationFilterContext
-        ? visibleDashboardFilters
+        ? getVisibleFiltersByFilters(
+              editedAutomationFilters ?? [],
+              availableFiltersAsVisibleFilters,
+              storeFilters,
+          )
         : undefined;
 
     const [editedAutomation, setEditedAutomation] = useState<IAutomationMetadataObjectDefinition>(
@@ -336,122 +331,114 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
 
     const onFiltersChange = useCallback(
         (filters: FilterContextItem[], storeFiltersParam?: boolean) => {
-            setAutomationFilters(filters);
-
+            setEditedAutomationFilters(filters);
             const shouldStoreFilters = storeFiltersParam ?? storeFilters;
 
-            // If storeFilters is not toggled, we don't want to store them in the automation
-            if (!isWidget && !shouldStoreFilters) {
-                return;
-            }
-
-            const visibleFilters = getVisibleFiltersByFilters(filters, allVisibleFiltersMetadata);
-
             if (!isWidget) {
-                setEditedAutomation((s) => ({
-                    ...s,
-                    exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                        if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
-                            return {
-                                ...exportDefinition,
-                                requestPayload: {
-                                    ...exportDefinition.requestPayload,
-                                    content: {
-                                        ...exportDefinition.requestPayload.content,
-                                        filters,
+                setEditedAutomation((s) => {
+                    const appliedFilters = getAppliedDashboardFilters(
+                        filters,
+                        dashboardHiddenFilters,
+                        shouldStoreFilters,
+                    );
+                    const visibleFilters = getVisibleFiltersByFilters(
+                        filters,
+                        availableFiltersAsVisibleFilters,
+                        shouldStoreFilters,
+                    );
+
+                    return {
+                        ...s,
+                        exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                            if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
+                                return {
+                                    ...exportDefinition,
+                                    requestPayload: {
+                                        ...exportDefinition.requestPayload,
+                                        content: {
+                                            ...exportDefinition.requestPayload.content,
+                                            filters: appliedFilters,
+                                        },
                                     },
-                                },
-                            };
-                        } else {
-                            return exportDefinition;
-                        }
-                    }),
-                    metadata: {
-                        ...s.metadata,
-                        visibleFilters,
-                    },
-                }));
+                                };
+                            } else {
+                                return exportDefinition;
+                            }
+                        }),
+                        metadata: {
+                            ...s.metadata,
+                            visibleFilters,
+                        },
+                    };
+                });
             } else {
                 if (!isInsightWidget(widget)) {
                     return;
                 }
 
-                const convertedFilters = filterContextItemsToAutomationDashboardFiltersByWidget(
-                    filters,
-                    widget,
-                );
+                setEditedAutomation((s) => {
+                    const appliedFilters = getAppliedWidgetFilters(
+                        filters,
+                        dashboardHiddenFilters,
+                        widget,
+                        insight,
+                    );
+                    const visibleFilters = getVisibleFiltersByFilters(
+                        filters,
+                        availableFiltersAsVisibleFilters,
+                        true,
+                    );
 
-                setEditedAutomation((s) => ({
-                    ...s,
-                    exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                        if (
-                            isExportDefinitionVisualizationObjectRequestPayload(
-                                exportDefinition.requestPayload,
-                            )
-                        ) {
-                            return {
-                                ...exportDefinition,
-                                requestPayload: {
-                                    ...exportDefinition.requestPayload,
-                                    content: {
-                                        ...exportDefinition.requestPayload.content,
-                                        filters: [...convertedFilters, ...insightExecutionFilters],
+                    return {
+                        ...s,
+                        exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                            if (
+                                isExportDefinitionVisualizationObjectRequestPayload(
+                                    exportDefinition.requestPayload,
+                                )
+                            ) {
+                                return {
+                                    ...exportDefinition,
+                                    requestPayload: {
+                                        ...exportDefinition.requestPayload,
+                                        content: {
+                                            ...exportDefinition.requestPayload.content,
+                                            filters: appliedFilters,
+                                        },
                                     },
-                                },
-                            };
-                        } else {
-                            return exportDefinition;
-                        }
-                    }),
-                    metadata: {
-                        ...s.metadata,
-                        visibleFilters,
-                    },
-                }));
+                                };
+                            } else {
+                                return exportDefinition;
+                            }
+                        }),
+                        metadata: {
+                            ...s.metadata,
+                            visibleFilters,
+                        },
+                    };
+                });
             }
         },
         [
-            insightExecutionFilters,
-            allVisibleFiltersMetadata,
-            setAutomationFilters,
+            setEditedAutomationFilters,
+            setEditedAutomation,
+            dashboardHiddenFilters,
+            availableFiltersAsVisibleFilters,
             storeFilters,
             widget,
+            insight,
             isWidget,
-            setEditedAutomation,
         ],
     );
+
+    const onApplyCurrentFilters = useCallback(() => {
+        onFiltersChange(filtersForNewAutomation ?? [], widget ? true : storeFilters);
+    }, [filtersForNewAutomation, storeFilters, onFiltersChange, widget]);
 
     const onStoreFiltersChange = useCallback(
         (value: boolean, filters: FilterContextItem[]) => {
             setStoreFilters(value);
             onFiltersChange(filters, value);
-
-            if (!value) {
-                setEditedAutomation((s) => ({
-                    ...s,
-                    exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                        // Use filters flag is only relevant for dashboard automation
-                        if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
-                            return {
-                                ...exportDefinition,
-                                requestPayload: {
-                                    ...exportDefinition.requestPayload,
-                                    content: {
-                                        ...exportDefinition.requestPayload.content,
-                                        filters: undefined,
-                                    },
-                                },
-                            };
-                        } else {
-                            return exportDefinition;
-                        }
-                    }),
-                    metadata: {
-                        ...s.metadata,
-                        visibleFilters: undefined,
-                    },
-                }));
-            }
         },
         [onFiltersChange, setStoreFilters],
     );
@@ -570,6 +557,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         onWidgetAttachmentsChange,
         onWidgetAttachmentsSettingsChange,
         onFiltersChange,
+        onApplyCurrentFilters,
         onStoreFiltersChange,
     };
 }

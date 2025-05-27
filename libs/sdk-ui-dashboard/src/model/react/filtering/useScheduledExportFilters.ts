@@ -5,6 +5,7 @@ import { FilterableDashboardWidget } from "../../types/layoutTypes.js";
 import { useDashboardScheduledExportFilters } from "./useDashboardScheduledExportFilters.js";
 
 /**
+ * @deprecated - can be removed, once `enableAutomationFilterContext` is removed
  * @alpha
  */
 export interface IUseScheduledExportFiltersProps {
@@ -19,6 +20,7 @@ export interface IUseScheduledExportFiltersProps {
  * If scheduledExportToEdit is provided, it returns its saved filters as is.
  * If scheduledExportToEdit is not provided, it returns sanitized filters ready to be saved in new scheduled export.
  *
+ * @deprecated - can be removed, once `enableAutomationFilterContext` is removed
  * @alpha
  */
 export const useScheduledExportFilters = ({

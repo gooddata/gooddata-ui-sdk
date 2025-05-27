@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import {
     ArithmeticMeasureDefinition,
     ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum,
@@ -109,7 +109,9 @@ function convertSimpleMeasureDefinition(definition: IMeasureDefinition): SimpleM
     const { measureDefinition } = definition;
 
     const filters: FilterDefinitionForSimpleMeasure[] = measureDefinition.filters
-        ? (compact(measureDefinition.filters.map(convertFilter)) as FilterDefinitionForSimpleMeasure[]) // measureDefinition.filters is IMeasureFilter, it contains only date and attribute filter, equally result contains this subset, it corresponds to type FilterDefinitionForSimpleMeasure
+        ? (compact(
+              measureDefinition.filters.map((filter) => convertFilter(filter)),
+          ) as FilterDefinitionForSimpleMeasure[]) // measureDefinition.filters is IMeasureFilter, it contains only date and attribute filter, equally result contains this subset, it corresponds to type FilterDefinitionForSimpleMeasure
         : [];
     const filtersProp = filters.length ? { filters } : {};
 

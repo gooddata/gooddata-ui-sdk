@@ -38,11 +38,16 @@ export { DEFAULT_MAX_AUTOMATIONS } from "./useDashboardAutomations/constants.js"
 export { useWorkspaceUsers } from "./useWorkspaceUsers.js";
 export { useWidgetAlertFilters } from "./filtering/useWidgetAlertFilters.js";
 export type { IUseWidgetAlertFiltersProps } from "./filtering/useWidgetAlertFilters.js";
-export { useAlertFilters } from "./filtering/useAlertFilters.js";
-export type { IUseAlertFiltersProps } from "./filtering/useAlertFilters.js";
 export { useEnableAlertingAutomationFilterContext } from "./useDashboardAlerting/useEnableAutomationFilterContext.js";
 export { useScheduledExportFilters } from "./filtering/useScheduledExportFilters.js";
 export type { IUseScheduledExportFiltersProps } from "./filtering/useScheduledExportFilters.js";
 export { useWidgetScheduledExportFilters } from "./filtering/useWidgetScheduledExportFilters.js";
 export type { IUseWidgetScheduledExportFiltersProps } from "./filtering/useWidgetScheduledExportFilters.js";
 export { useAutomationAvailableDashboardFilters } from "./filtering/useAutomationAvailableDashboardFilters.js";
+export {
+    selectAutomationCommonDateFilterId,
+    selectAutomationAvailableDashboardFilters,
+    selectDashboardFiltersWithoutCrossFiltering,
+    selectDashboardHiddenFilters,
+    selectDashboardLockedFilters,
+} from "./filtering/selectors.js";

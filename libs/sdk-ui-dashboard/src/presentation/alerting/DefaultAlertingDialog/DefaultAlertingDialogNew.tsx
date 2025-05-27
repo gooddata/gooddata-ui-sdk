@@ -54,6 +54,8 @@ import { convertError } from "@gooddata/sdk-ui";
 import { getDescription, getValueSuffix } from "./utils/getters.js";
 import { isChangeOrDifferenceOperator } from "./utils/guards.js";
 import { isLatestAutomationVersion } from "../../automationFilters/utils.js";
+import { useValidateExistingAutomationFilters } from "../../automationFilters/hooks/useValidateExistingAutomationFilters.js";
+import { ApplyCurrentFiltersConfirmDialog } from "../../automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 
 const OVERLAY_POSITION_TYPE = "sameAsTarget";
 const CLOSE_ON_PARENT_SCROLL = true;
@@ -67,7 +69,6 @@ export function AlertingDialogRenderer({
     notificationChannels,
     insight,
     widget,
-    widgetFilters,
     onCancel,
     onDeleteSuccess,
     onDeleteError,
@@ -93,11 +94,11 @@ export function AlertingDialogRenderer({
         useDefaultAlertingDialogData();
 
     const {
+        editedAutomationFilters,
+        setEditedAutomationFilters,
         availableFilters,
-        automationFilters,
-        setAutomationFilters,
-        allVisibleFiltersMetadata,
-        areVisibleFiltersMissingOnDashboard,
+        availableFiltersAsVisibleFilters,
+        filtersForNewAutomation,
     } = useAutomationFiltersSelect({
         automationToEdit: alertToEdit,
         widget,
@@ -107,6 +108,7 @@ export function AlertingDialogRenderer({
         onTitleChange,
         onRecipientsChange,
         onFiltersChange,
+        onApplyCurrentFilters,
         onMeasureChange,
         getAttributeValues,
         onAttributeChange,
@@ -144,13 +146,21 @@ export function AlertingDialogRenderer({
         insight,
         widget,
         alertToEdit,
-        automationFilters,
-        widgetFilters,
+        editedAutomationFilters,
         maxAutomationsRecipients,
-        allVisibleFiltersMetadata,
-        setAutomationFilters,
+        availableFiltersAsVisibleFilters,
+        setEditedAutomationFilters,
         notificationChannels,
+        filtersForNewAutomation,
     });
+
+    const { isValid } = useValidateExistingAutomationFilters({
+        automationToEdit: alertToEdit,
+        widget,
+        insight,
+        enableAutomationFilterContext,
+    });
+    const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] = useState(!isValid);
 
     const isLatestVersionOfAutomation = useMemo(() => {
         return isLatestAutomationVersion(alertToEdit);
@@ -198,6 +208,19 @@ export function AlertingDialogRenderer({
         : defineMessage({ id: "dialogs.alerting.footer.title" }).id;
 
     const titleElementId = useId();
+
+    if (isApplyCurrentFiltersDialogOpen && enableAutomationFilterContext) {
+        return (
+            <ApplyCurrentFiltersConfirmDialog
+                automationType="alert"
+                onCancel={() => onCancel?.()}
+                onEdit={() => {
+                    onApplyCurrentFilters();
+                    setIsApplyCurrentFiltersDialogOpen(false);
+                }}
+            />
+        );
+    }
 
     return (
         <>
@@ -274,12 +297,11 @@ export function AlertingDialogRenderer({
                                 <>
                                     <AutomationFiltersSelect
                                         availableFilters={availableFilters}
-                                        selectedFilters={automationFilters}
+                                        selectedFilters={editedAutomationFilters}
                                         onFiltersChange={onFiltersChange}
                                         storeFilters={true}
                                         onStoreFiltersChange={() => {}}
                                         isDashboardAutomation={false}
-                                        areFiltersMissing={areVisibleFiltersMissingOnDashboard}
                                         overlayPositionType={OVERLAY_POSITION_TYPE}
                                     />
                                     <ContentDivider className="gd-divider-with-margin" />
