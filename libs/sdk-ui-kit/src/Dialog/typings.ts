@@ -107,13 +107,13 @@ export interface IExportDialogBaseProps
         | "onCancel"
     > {
     filterContextText?: string;
-    filterContextTitle?: string;
+    filterContextTitle?: string | null;
     filterContextVisible?: boolean;
     includeFilterContext?: boolean;
     mergeHeaders?: boolean;
     mergeHeadersDisabled?: boolean;
     mergeHeadersText?: string;
-    mergeHeadersTitle?: string;
+    mergeHeadersTitle?: string | null;
     onSubmit?: (data: IExportDialogData) => void;
 }
 

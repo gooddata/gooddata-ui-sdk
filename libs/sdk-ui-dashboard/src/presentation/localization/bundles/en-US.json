@@ -162,6 +162,16 @@
         "comment": "Export whole KPI dashboard to PDF",
         "limit": 0
     },
+    "options.menu.export.dialog.EXCEL": {
+        "value": "Export Data (.xlsx)",
+        "comment": "Dialog title to export whole KPI dashboard to EXCEL",
+        "limit": 0
+    },
+    "options.menu.export.dialog.includeExportInfo": {
+        "value": "Include sheet with export info",
+        "comment": "Dialog checkbox to include sheet with export info",
+        "limit": 0
+    },
     "options.menu.export.EXCEL": {
         "value": "Data (.xlsx)",
         "comment": "Export whole KPI dashboard to EXCEL",

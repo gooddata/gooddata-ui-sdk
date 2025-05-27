@@ -214,7 +214,7 @@ options = {
         depCruiser.moduleWithDependencies("topBar", "src/presentation/topBar", [
             "src/_staging/*",
             "src/model",
-            "src/presentation/dashboardContexts",
+            "src/presentation/dashboardContexts/*",
             "src/presentation/localization",
             "src/presentation/constants/*",
             "src/presentation/componentDefinition",

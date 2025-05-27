@@ -60,7 +60,7 @@ export const ExportDialogBase = React.memo<IExportDialogBaseProps>(function Expo
             onSubmit={handleSubmit}
             initialFocus={mergeHeadersId}
         >
-            <h4>{mergeHeadersTitle}</h4>
+            {mergeHeadersTitle ? <h4>{mergeHeadersTitle}</h4> : null}
             <Checkbox
                 id={mergeHeadersId}
                 disabled={mergeHeadersDisabled}
@@ -70,15 +70,15 @@ export const ExportDialogBase = React.memo<IExportDialogBaseProps>(function Expo
                 onChange={setShouldMergeHeaders}
             />
             {filterContextVisible ? (
-                <>
-                    <h4>{filterContextTitle}</h4>
+                <div>
+                    {filterContextTitle ? <h4>{filterContextTitle}</h4> : null}
                     <Checkbox
                         name="gs.dialog.export.checkbox.includeFilterContext"
                         text={filterContextText}
                         value={isFilterContextIncluded}
                         onChange={setIsFilterContextIncluded}
                     />
-                </>
+                </div>
             ) : null}
         </ConfirmDialogBase>
     );

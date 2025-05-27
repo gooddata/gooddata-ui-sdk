@@ -432,6 +432,15 @@ export function exportDashboardToPdf(correlationId?: string): ExportDashboardToP
  */
 export interface ExportDashboardToExcel extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EXPORT.EXCEL";
+    readonly payload: ExportDashboardToExcelPayload;
+}
+
+/**
+ * @beta
+ */
+export interface ExportDashboardToExcelPayload {
+    mergeHeaders: boolean;
+    exportInfo: boolean;
 }
 
 /**
@@ -439,15 +448,25 @@ export interface ExportDashboardToExcel extends IDashboardCommand {
  * the dashboard to a EXCEL file. If successful, an instance of {@link DashboardExportToExcelResolved} will be emitted
  * with the URL of the resulting file.
  *
+ * @param mergeHeaders - if true, the headers will be merged into a single row
+ * @param exportInfo - if true, the export info will be included in the EXCEL file
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @beta
  */
-export function exportDashboardToExcel(correlationId?: string): ExportDashboardToExcel {
+export function exportDashboardToExcel(
+    mergeHeaders: boolean,
+    exportInfo: boolean,
+    correlationId?: string,
+): ExportDashboardToExcel {
     return {
         type: "GDC.DASH/CMD.EXPORT.EXCEL",
         correlationId,
+        payload: {
+            mergeHeaders,
+            exportInfo,
+        },
     };
 }
 

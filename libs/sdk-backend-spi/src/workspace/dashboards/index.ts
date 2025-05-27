@@ -229,6 +229,21 @@ export interface IDashboardExportTabularOptions {
      * Title for the export. If not provided, the dashboard title will be fetched.
      */
     title?: string;
+
+    /**
+     * If true, the headers will be merged into a single row
+     */
+    mergeHeaders?: boolean;
+
+    /**
+     * If true, the export info will be included in the EXCEL file
+     */
+    exportInfo?: boolean;
+
+    /**
+     * If true, the dashboard filters will be applied to the exported dashboard
+     */
+    dashboardFiltersOverride?: FilterContextItem[];
 }
 
 /**

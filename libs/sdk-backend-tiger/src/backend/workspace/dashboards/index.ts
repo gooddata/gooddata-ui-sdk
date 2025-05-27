@@ -102,6 +102,7 @@ import { convertApiError } from "../../../utils/errorHandling.js";
 import { convertDataSetItem } from "../../../convertors/fromBackend/DataSetConverter.js";
 import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec.js";
 import { addFilterLocalIdentifier } from "../../../utils/filterLocalidentifier.js";
+import { cloneWithSanitizedIds } from "../../../convertors/toBackend/IdSanitization.js";
 
 const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;
@@ -563,10 +564,19 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 title = convertDashboard(dashboardResponse.data).title;
             }
 
+            const dashboardFiltersOverrideObj = options?.dashboardFiltersOverride
+                ? { dashboardFiltersOverride: cloneWithSanitizedIds(options?.dashboardFiltersOverride) }
+                : {};
+
             const slideshowExport = await client.export.createDashboardExportRequest({
                 dashboardTabularExportRequest: {
                     fileName: title || "export",
                     format: "XLSX",
+                    settings: {
+                        mergeHeaders: options?.mergeHeaders,
+                        exportInfo: options?.exportInfo,
+                    },
+                    ...dashboardFiltersOverrideObj,
                 },
                 workspaceId: this.workspace,
                 dashboardId,

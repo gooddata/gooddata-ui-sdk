@@ -483,6 +483,9 @@ export interface IDashboardExportImageOptions {
 
 // @alpha
 export interface IDashboardExportTabularOptions {
+    dashboardFiltersOverride?: FilterContextItem[];
+    exportInfo?: boolean;
+    mergeHeaders?: boolean;
     title?: string;
 }
 
