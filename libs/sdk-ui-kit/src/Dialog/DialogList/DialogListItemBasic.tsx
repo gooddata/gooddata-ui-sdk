@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import React, { useCallback, useMemo } from "react";
 import cx from "classnames";
@@ -32,6 +32,7 @@ export const DialogListItemBasic: React.VFC<IDialogListItemComponentProps> = (pr
         isClickable = true,
         isDeletable = true,
         icon,
+        action,
         deleteTooltipText,
     } = item;
 
@@ -77,6 +78,7 @@ export const DialogListItemBasic: React.VFC<IDialogListItemComponentProps> = (pr
                     </BubbleHoverTrigger>
                 </div>
             ) : null}
+            {action ? <div className="gd-dialog-list-item-action">{action}</div> : null}
             <div
                 role="dialog-list-item-content"
                 className="gd-dialog-list-item-content s-dialog-list-item-content"

@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 @use "variables";
 
@@ -131,6 +131,15 @@
         }
     }
 
+    .gd-dialog-list-item-action {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+
     .gd-dialog-list-item-delete {
         display: flex;
         justify-content: center;
@@ -164,6 +173,9 @@
         background-color: var(--gd-palette-error-lightest, #fff2f1);
 
         ~ .gd-dialog-list-item-content {
+            background-color: var(--gd-palette-error-lightest, #fff2f1);
+        }
+        ~ .gd-dialog-list-item-action {
             background-color: var(--gd-palette-error-lightest, #fff2f1);
         }
 

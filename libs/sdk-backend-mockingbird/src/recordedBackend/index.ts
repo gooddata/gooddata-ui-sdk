@@ -460,6 +460,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setLocale: () => Promise.resolve(),
                 setSeparators: () => Promise.resolve(),
                 setActiveLlmEndpoint: () => Promise.resolve(),
+                deleteActiveLlmEndpoint: () => Promise.resolve(),
                 setTimezone: () => Promise.resolve(),
                 setDateFormat: () => Promise.resolve(),
                 setWeekStart: () => Promise.resolve(),

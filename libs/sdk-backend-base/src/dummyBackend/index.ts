@@ -850,6 +850,7 @@ class DummyOrganization implements IOrganization {
             setLocale: () => Promise.resolve(),
             setSeparators: () => Promise.resolve(),
             setActiveLlmEndpoint: () => Promise.resolve(),
+            deleteActiveLlmEndpoint: () => Promise.resolve(),
             setTimezone: () => Promise.resolve(),
             setDateFormat: () => Promise.resolve(),
             setWeekStart: () => Promise.resolve(),

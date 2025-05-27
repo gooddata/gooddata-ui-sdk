@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 /**
  * @internal
@@ -18,6 +18,7 @@ export interface IDialogListItem extends IDialogListItemBase {
     isClickable?: boolean;
     isDeletable?: boolean;
     deleteTooltipText?: string;
+    action?: JSX.Element;
 }
 
 /**

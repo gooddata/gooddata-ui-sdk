@@ -1631,6 +1631,8 @@ export interface IDialogListHeaderProps {
 // @internal (undocumented)
 export interface IDialogListItem extends IDialogListItemBase {
     // (undocumented)
+    action?: JSX.Element;
+    // (undocumented)
     deleteTooltipText?: string;
     // (undocumented)
     icon?: JSX.Element;

@@ -37,6 +37,10 @@ export class OrganizationSettingsService
         return this.setSetting("ACTIVE_LLM_ENDPOINT", { id: endpoint, type: "llmEndpoint" });
     }
 
+    public async deleteActiveLlmEndpoint(): Promise<void> {
+        return this.deleteSettingByType("ACTIVE_LLM_ENDPOINT");
+    }
+
     public async setDateFormat(dateFormat: string): Promise<void> {
         return this.setSetting("FORMAT_LOCALE", { value: dateFormat });
     }
