@@ -146,6 +146,7 @@ export const useAutomationFilters = ({
         attributes,
         dateDatasets,
         attributeConfigs,
+        dateConfigs,
         handleChangeFilter,
         handleDeleteFilter,
         handleAddFilter,

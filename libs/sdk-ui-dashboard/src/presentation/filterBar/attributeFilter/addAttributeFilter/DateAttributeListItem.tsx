@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { useMemo } from "react";
 import { ICatalogDateDataset } from "@gooddata/sdk-model";
 import cx from "classnames";
@@ -7,6 +7,7 @@ import { ShortenedText } from "@gooddata/sdk-ui-kit";
 
 interface IAttributeListItemProps {
     item: ICatalogDateDataset;
+    title?: string;
     onClick: () => void;
 }
 
@@ -15,7 +16,7 @@ const TOOLTIP_ALIGN_POINT = [
     { align: "cl cr", offset: { x: -10, y: 0 } },
 ];
 
-const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({ item, onClick }) => {
+const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({ item, title, onClick }) => {
     const classNames = useMemo(() => {
         return cx(`s-${stringUtils.simplifyText(item.dataSet.title)}`, "gd-attribute-list-item", {
             "gd-list-item": true,
@@ -26,7 +27,9 @@ const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({ item, onClic
 
     return (
         <div key={item.dataSet.id} className={classNames} onClick={onClick}>
-            <ShortenedText tooltipAlignPoints={TOOLTIP_ALIGN_POINT}>{item.dataSet.title}</ShortenedText>
+            <ShortenedText tooltipAlignPoints={TOOLTIP_ALIGN_POINT}>
+                {title ?? item.dataSet.title}
+            </ShortenedText>
         </div>
     );
 };

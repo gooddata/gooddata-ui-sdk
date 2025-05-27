@@ -6,6 +6,8 @@ import {
     isDashboardDateFilter,
     IAutomationVisibleFilter,
     newAllTimeDashboardDateFilter,
+    filterLocalIdentifier,
+    isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 import { useMemo } from "react";
 import {
@@ -20,11 +22,12 @@ import {
     getAutomationVisualizationFilters,
 } from "../../../_staging/automation/index.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
-import { isDashboardFilter } from "../../../types.js";
+import { IDashboardFilter, isDashboardFilter } from "../../../types.js";
 import { removeIgnoredWidgetFilters } from "../utils.js";
 
 export function useDefaultSelectedFiltersForExistingAutomation(
     automationToEdit?: IAutomationMetadataObject,
+    availableVisibleFilters?: IAutomationVisibleFilter[],
     widget?: ExtendedDashboardWidget,
 ) {
     const availableDashboardFilters = useDashboardSelector(selectAutomationAvailableDashboardFilters);
@@ -34,15 +37,20 @@ export function useDefaultSelectedFiltersForExistingAutomation(
     const savedWidgetScheduleFilters = getAutomationVisualizationFilters(automationToEdit);
     const savedDashboardScheduleFilters = getAutomationDashboardFilters(automationToEdit);
 
-    // Convert saved filters to FilterContextItem[]
+    // Convert saved filters to FilterContextItem[] with correct titles
     const savedFilterContextItems = useMemo(() => {
         const savedAutomationWidgetFilters = savedWidgetAlertFilters ?? savedWidgetScheduleFilters;
         const convertedSavedWidgetFilters = savedAutomationWidgetFilters
             ?.filter(isDashboardFilter)
-            .map((f) => dashboardFilterToFilterContextItem(f, true));
+            .map((filter) => convertAndSanitizeFilter(filter, availableVisibleFilters));
 
         return savedDashboardScheduleFilters ?? convertedSavedWidgetFilters;
-    }, [savedWidgetAlertFilters, savedWidgetScheduleFilters, savedDashboardScheduleFilters]);
+    }, [
+        savedWidgetAlertFilters,
+        savedWidgetScheduleFilters,
+        savedDashboardScheduleFilters,
+        availableVisibleFilters,
+    ]);
 
     const availableWidgetFilters = removeIgnoredWidgetFilters(availableDashboardFilters, widget);
 
@@ -124,4 +132,33 @@ function getDefaultSelectedFiltersByVisibleFilters(
             ) ?? []
         );
     });
+}
+
+function convertAndSanitizeFilter(
+    filter: IDashboardFilter,
+    availableVisibleFilters?: IAutomationVisibleFilter[],
+) {
+    const convertedItem = dashboardFilterToFilterContextItem(filter, true);
+
+    // Because execution filters do not include titles, and they cannot be saved there,
+    // get them from the current available visible filters.
+    const titleToUse = availableVisibleFilters?.find(
+        (visibleFilter) => visibleFilter.localIdentifier === filterLocalIdentifier(filter),
+    );
+
+    return isDashboardAttributeFilter(convertedItem)
+        ? {
+              ...convertedItem,
+              attributeFilter: {
+                  ...convertedItem.attributeFilter,
+                  title: titleToUse?.title,
+              },
+          }
+        : {
+              ...convertedItem,
+              dateFilter: {
+                  ...convertedItem.dateFilter,
+                  title: titleToUse?.title,
+              },
+          };
 }

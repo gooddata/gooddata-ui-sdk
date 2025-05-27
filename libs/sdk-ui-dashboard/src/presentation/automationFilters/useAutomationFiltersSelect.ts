@@ -49,6 +49,7 @@ export const useAutomationFiltersSelect = ({
     const filtersForNewAutomation = useDefaultSelectedFiltersForNewAutomation(widget);
     const filtersForExistingAutomation = useDefaultSelectedFiltersForExistingAutomation(
         automationToEdit,
+        availableFiltersAsVisibleFilters,
         widget,
     );
 

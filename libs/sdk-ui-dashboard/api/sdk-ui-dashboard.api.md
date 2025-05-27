@@ -593,7 +593,7 @@ export interface AttributeHierarchyModified extends IDashboardCommand {
 export function attributeHierarchyModified(correlationId?: string): AttributeHierarchyModified;
 
 // @internal (undocumented)
-export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, }: IDashboardAttributeFilterPlaceholderProps): React_2.JSX.Element;
+export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, getCustomItemTitle, }: IDashboardAttributeFilterPlaceholderProps): React_2.JSX.Element;
 
 // @alpha (undocumented)
 export type AutomationInteractionData = {
@@ -4550,6 +4550,8 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     DropdownButtonComponent?: ComponentType<IAddAttributeFilterButtonProps>;
     // (undocumented)
     DropdownTitleComponent?: ComponentType;
+    // (undocumented)
+    getCustomItemTitle?: (item: ICatalogAttribute | ICatalogDateDataset) => string | undefined;
     // (undocumented)
     onClose: () => void;
     // (undocumented)

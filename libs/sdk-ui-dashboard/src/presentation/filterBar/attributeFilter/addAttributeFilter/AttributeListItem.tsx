@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React, { useMemo } from "react";
 import isEmpty from "lodash/isEmpty.js";
 import { ICatalogAttribute } from "@gooddata/sdk-model";
@@ -9,6 +9,7 @@ import { ShortenedText } from "@gooddata/sdk-ui-kit";
 
 interface IAttributeListItemProps {
     item: ICatalogAttribute;
+    title?: string;
     isLocationIconEnabled: boolean;
     onClick: () => void;
 }
@@ -18,7 +19,12 @@ const TOOLTIP_ALIGN_POINT = [
     { align: "cl cr", offset: { x: -10, y: 0 } },
 ];
 
-const AttributeListItem: React.FC<IAttributeListItemProps> = ({ item, isLocationIconEnabled, onClick }) => {
+const AttributeListItem: React.FC<IAttributeListItemProps> = ({
+    item,
+    title,
+    isLocationIconEnabled,
+    onClick,
+}) => {
     const classNames = useMemo(() => {
         const isDisplayLocationIcon = isLocationIconEnabled && !isEmpty(item?.geoPinDisplayForms);
         return cx(`s-${stringUtils.simplifyText(item.attribute.title)}`, "gd-attribute-list-item", {
@@ -31,7 +37,9 @@ const AttributeListItem: React.FC<IAttributeListItemProps> = ({ item, isLocation
 
     return (
         <div key={item.attribute.id} className={classNames} onClick={onClick}>
-            <ShortenedText tooltipAlignPoints={TOOLTIP_ALIGN_POINT}>{item.attribute.title}</ShortenedText>
+            <ShortenedText tooltipAlignPoints={TOOLTIP_ALIGN_POINT}>
+                {title ?? item.attribute.title}
+            </ShortenedText>
             <AttributeListItemTooltip item={item} />
         </div>
     );
