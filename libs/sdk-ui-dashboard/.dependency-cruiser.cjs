@@ -172,6 +172,17 @@ options = {
             "src/widgets",
             "src/model/store/meta/index.ts",
         ]),
+        depCruiser.moduleWithDependencies("automationFilters", "src/presentation/automationFilters", [
+            "src/_staging/*",
+            "src/model",
+            "src/presentation/dashboardContexts",
+            "src/presentation/localization",
+            "src/presentation/constants/*",
+            "src/presentation/automationFilters/*",
+            "src/presentation/filterBar",
+            "src/converters",
+            "src/types.ts",
+        ]),
         depCruiser.moduleWithDependencies("scheduledEmail", "src/presentation/scheduledEmail", [
             "src/_staging/*",
             "src/model",

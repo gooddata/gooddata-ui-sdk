@@ -1,15 +1,6 @@
 // (C) 2019-2025 GoodData Corporation
 import { useCallback, useState } from "react";
-import {
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    IExportDefinitionMetadataObject,
-    IExportDefinitionMetadataObjectDefinition,
-    isAllTimeDateFilter,
-    isExportDefinitionVisualizationObjectRequestPayload,
-    isExportDefinitionDashboardRequestPayload,
-    isAllTimeDashboardDateFilter,
-} from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail.js";
 import { useUpdateScheduledEmail } from "./useUpdateScheduledEmail.js";
@@ -123,52 +114,5 @@ function sanitizeAutomation(
         automation.schedule = omit(automation.schedule, ["cronDescription"]);
     }
 
-    /**
-     * Remove all-time date filters from export definitions.
-     * They are not required for the execution and not event valid as AFM date granularity.
-     * They are added ad-hoc to be visible in the UI in useAutomationFiltersSelect hook,
-     * depending on whether they are ignored or not.
-     */
-    if (automation.exportDefinitions) {
-        automation.exportDefinitions = removeAllTimeDateFiltersFromExportDefinitions(
-            automation.exportDefinitions,
-        );
-    }
-
     return automation;
-}
-
-function removeAllTimeDateFiltersFromExportDefinitions(
-    exportDefinitions: (IExportDefinitionMetadataObject | IExportDefinitionMetadataObjectDefinition)[],
-) {
-    return exportDefinitions.map((exportDefinition) => {
-        if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
-            return {
-                ...exportDefinition,
-                requestPayload: {
-                    ...exportDefinition.requestPayload,
-                    content: {
-                        ...exportDefinition.requestPayload.content,
-                        filters: exportDefinition.requestPayload.content.filters?.filter(
-                            (f) => !isAllTimeDateFilter(f),
-                        ),
-                    },
-                },
-            };
-        } else if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
-            return {
-                ...exportDefinition,
-                requestPayload: {
-                    ...exportDefinition.requestPayload,
-                    content: {
-                        ...exportDefinition.requestPayload.content,
-                        filters: exportDefinition.requestPayload.content.filters?.filter(
-                            (f) => !isAllTimeDashboardDateFilter(f),
-                        ),
-                    },
-                },
-            };
-        }
-        return exportDefinition;
-    });
 }

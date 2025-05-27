@@ -4,7 +4,7 @@ import { getAutomationDashboardFilters } from "../../../_staging/automation/inde
 import { useAutomationAvailableDashboardFilters } from "./useAutomationAvailableDashboardFilters.js";
 
 /**
- * @alpha
+ * @deprecated - can be removed, once `enableAutomationFilterContext` is removed
  */
 export interface IUseDashboardScheduledExportFiltersProps {
     /**
@@ -19,7 +19,7 @@ export interface IUseDashboardScheduledExportFiltersProps {
  * If scheduledExportToEdit is provided, it returns its saved filters as is.
  * If scheduledExportToEdit is not provided, it returns sanitized filters ready to be saved in new scheduled export.
  *
- * @alpha
+ * @deprecated - can be removed, once `enableAutomationFilterContext` is removed
  */
 export const useDashboardScheduledExportFilters = ({
     scheduledExportToEdit,

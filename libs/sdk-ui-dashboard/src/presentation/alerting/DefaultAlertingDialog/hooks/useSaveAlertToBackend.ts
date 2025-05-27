@@ -1,12 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import { useCallback } from "react";
 import omit from "lodash/omit.js";
-import {
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    IFilter,
-    isAllTimeDateFilter,
-} from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 
 import { useCreateAlert } from "./useCreateAlert.js";
 import { useUpdateAlert } from "./useUpdateAlert.js";
@@ -110,16 +105,5 @@ function sanitizeAutomation(automationToSave: IAutomationMetadataObject): IAutom
         automation.schedule = omit(automation.schedule, ["cronDescription"]);
     }
 
-    if (automation.alert?.execution?.filters) {
-        automation.alert.execution = {
-            ...automation.alert.execution,
-            filters: removeAllTimeDateFiltersFromAlertFilters(automation.alert.execution.filters),
-        };
-    }
-
     return automation;
-}
-
-function removeAllTimeDateFiltersFromAlertFilters(filters: IFilter[]) {
-    return filters.filter((filter) => !isAllTimeDateFilter(filter));
 }

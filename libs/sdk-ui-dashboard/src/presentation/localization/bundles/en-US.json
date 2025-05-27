@@ -838,6 +838,26 @@
         "comment": "",
         "limit": 0
     },
+    "dialogs.automation.applyCurrentFilters.confirm.title": {
+        "value": "Edit with current filters?",
+        "comment": "Title of the dialog, that confirms that the user wants to edit the automation with the current dashboard filters.",
+        "limit": 0
+    },
+    "dialogs.automation.applyCurrentFilters.confirm.submit": {
+        "value": "Edit",
+        "comment": "Label of the submit button in the dialog, that confirms that the user wants to edit the automation with the current dashboard filters.",
+        "limit": 0
+    },
+    "dialogs.automation.applyCurrentFilters.alert.confirm": {
+        "value": "<b>Warning</b>: Some filters used when this alert was created are no longer available or valid. Editing will apply the current dashboard filters.",
+        "comment": "Do not translate html tags <b>, </b>. Message of the dialog, that confirms that the user wants to edit the alert with the current dashboard filters.",
+        "limit": 0
+    },
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": {
+        "value": "<b>Warning</b>: Some filters used when this schedule was created are no longer available or valid. Editing will apply the current dashboard filters.",
+        "comment": "Do not translate html tags <b>, </b>. Message of the dialog, that confirms that the user wants to edit the schedule with the current dashboard filters.",
+        "limit": 0
+    },
     "dialogs.schedule.management.title": {
         "value": "Scheduled exports",
         "comment": "",

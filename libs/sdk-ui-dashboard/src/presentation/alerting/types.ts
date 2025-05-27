@@ -5,7 +5,6 @@ import {
     IAttribute,
     IAutomationMetadataObject,
     IDataSetMetadataObject,
-    IFilter,
     IInsight,
     IInsightWidget,
     IMeasure,
@@ -56,19 +55,6 @@ export interface IAlertingDialogProps {
      * Note: this is available only when alerting for widget, not dashboard.
      */
     insight?: IInsight;
-
-    /**
-     * Widget filters to be used for alert.
-     *
-     * Note:
-     * - Provided filters are a combination of insight and dashboard filters, following these rules:
-     *     - Cross-filtering filters are excluded as they are typically not desired in the alert.
-     *     - The widget's ignored filters configuration is honored (ignored filters are not overridden by dashboard filters and remain as is).
-     *     - If the resulting filters include all-time date filter, it is excluded as it has no effect on the alert execution.
-     *
-     * - If we are editing an existing alert, this will contain its filters, as changing saved filters is currently not allowed.
-     */
-    widgetFilters?: IFilter[];
 
     /**
      * Is alert dialog loading initial data, before it can be rendered?

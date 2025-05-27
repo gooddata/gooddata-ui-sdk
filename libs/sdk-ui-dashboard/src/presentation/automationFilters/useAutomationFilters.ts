@@ -3,8 +3,10 @@
 import { useCallback, useMemo } from "react";
 import {
     selectAttributeFilterConfigsOverrides,
+    selectAutomationCommonDateFilterId,
     selectCatalogAttributes,
     selectCatalogDateDatasets,
+    selectDashboardLockedFilters,
     selectDateFilterConfigsOverrides,
     selectPersistedDashboardFilterContextDateFilterConfig,
     useDashboardSelector,
@@ -44,11 +46,13 @@ export const useAutomationFilters = ({
     const attributeConfigs = useDashboardSelector(selectAttributeFilterConfigsOverrides);
     const dateConfigs = useDashboardSelector(selectDateFilterConfigsOverrides);
     const dateFilterConfig = useDashboardSelector(selectPersistedDashboardFilterContextDateFilterConfig);
+    const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
+    const lockedFilters = useDashboardSelector(selectDashboardLockedFilters);
     const isCommonDateFilterHidden = dateFilterConfig?.mode === "hidden";
 
     const visibleFilters = useMemo(() => {
         return getNonHiddenFilters(selectedFilters, attributeConfigs, dateConfigs, isCommonDateFilterHidden);
-    }, [attributeConfigs, dateConfigs, selectedFilters]);
+    }, [attributeConfigs, dateConfigs, selectedFilters, isCommonDateFilterHidden]);
 
     const nonSelectedFilters = useMemo(
         () => getNonSelectedFilters(availableFilters, selectedFilters),
@@ -136,11 +140,12 @@ export const useAutomationFilters = ({
     );
 
     return {
+        commonDateFilterId,
+        lockedFilters,
         visibleFilters,
         attributes,
         dateDatasets,
         attributeConfigs,
-        dateConfigs,
         handleChangeFilter,
         handleDeleteFilter,
         handleAddFilter,

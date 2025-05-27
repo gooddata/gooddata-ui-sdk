@@ -1782,9 +1782,6 @@ export interface DashboardDateFilterSelectionChangedPayload {
     readonly filter: IDashboardDateFilter | undefined;
 }
 
-// @alpha
-export function dashboardDateFilterToAutomationDateFilterByWidget(filter: IDashboardDateFilter, widget?: Partial<IFilterableWidget>): IDateFilter;
-
 // @public
 export function dashboardDateFilterToDateFilterByDateDataSet(filter: IDashboardDateFilter, dateDataSet: ObjRef): IDateFilter;
 
@@ -4084,9 +4081,6 @@ export type FilterBarComponentProvider = (props: IFilterBarProps) => CustomFilte
 // @public
 export type FilterBarRenderingMode = "default" | "hidden";
 
-// @alpha
-export function filterContextItemsToAutomationDashboardFiltersByWidget(filterContextItems: FilterContextItem[], widget: Partial<IFilterableWidget>): IDashboardFilter[];
-
 // @public
 export function filterContextItemsToDashboardFiltersByDateDataSet(filterContextItems: FilterContextItem[], dateDataSet: ObjRef): IDashboardFilter[];
 
@@ -4094,7 +4088,7 @@ export function filterContextItemsToDashboardFiltersByDateDataSet(filterContextI
 export function filterContextItemsToDashboardFiltersByRichTextWidget(filterContextItems: FilterContextItem[], widget?: Partial<IFilterableWidget>): IDashboardFilter[];
 
 // @public
-export function filterContextItemsToDashboardFiltersByWidget(filterContextItems: FilterContextItem[], widget: Partial<IFilterableWidget>): IDashboardFilter[];
+export function filterContextItemsToDashboardFiltersByWidget(filterContextItems: FilterContextItem[], widget?: Partial<IFilterableWidget>): IDashboardFilter[];
 
 // @public (undocumented)
 export interface FilterContextState {
@@ -4357,7 +4351,6 @@ export interface IAlertingDialogProps {
     users: IWorkspaceUser[];
     usersError?: GoodDataSdkError;
     widget?: ExtendedDashboardWidget;
-    widgetFilters?: IFilter[];
 }
 
 // @alpha (undocumented)
@@ -6602,16 +6595,6 @@ export interface ITopBarProps {
     titleProps: ITitleProps;
 }
 
-// @alpha (undocumented)
-export interface IUseAlertFiltersProps {
-    // (undocumented)
-    alertToEdit?: IAutomationMetadataObject;
-    // (undocumented)
-    insight?: IInsight;
-    // (undocumented)
-    widget?: FilterableDashboardWidget;
-}
-
 // @internal (undocumented)
 export interface IUseAttributeElements {
     // (undocumented)
@@ -6699,7 +6682,7 @@ export interface IUseInsightWidgetDataView {
     insightWidget?: IInsightWidget;
 }
 
-// @alpha (undocumented)
+// @alpha @deprecated (undocumented)
 export interface IUseScheduledExportFiltersProps {
     // (undocumented)
     insight?: IInsight;
@@ -6716,7 +6699,7 @@ export interface IUseWidgetAlertFiltersProps {
     widget?: FilterableDashboardWidget;
 }
 
-// @alpha (undocumented)
+// @alpha @deprecated (undocumented)
 export interface IUseWidgetScheduledExportFiltersProps {
     insight?: IInsightDefinition;
     scheduledExportToEdit?: IAutomationMetadataObjectDefinition;
@@ -8369,6 +8352,12 @@ export const selectAttributeFilterDisplayFormsMap: DashboardSelector<ObjRefMap<I
 // @alpha (undocumented)
 export const selectAttributesWithDrillDown: DashboardSelector<(ICatalogAttribute | ICatalogDateAttribute)[]>;
 
+// @alpha (undocumented)
+export const selectAutomationAvailableDashboardFilters: DashboardSelector<FilterContextItem[]>;
+
+// @alpha (undocumented)
+export const selectAutomationCommonDateFilterId: DashboardSelector<string | undefined>;
+
 // @alpha
 export const selectAutomationsError: DashboardSelector<GoodDataSdkError | undefined>;
 
@@ -8552,6 +8541,12 @@ export const selectDashboardDescriptor: DashboardSelector<DashboardDescriptor>;
 // @alpha
 export const selectDashboardFiltersApplyMode: DashboardSelector<DashboardFiltersApplyMode>;
 
+// @alpha (undocumented)
+export const selectDashboardFiltersWithoutCrossFiltering: DashboardSelector<FilterContextItem[]>;
+
+// @alpha (undocumented)
+export const selectDashboardHiddenFilters: DashboardSelector<FilterContextItem[]>;
+
 // @public
 export const selectDashboardId: DashboardSelector<string | undefined>;
 
@@ -8560,6 +8555,9 @@ export const selectDashboardIdRef: DashboardSelector<IdentifierRef | undefined>;
 
 // @internal (undocumented)
 export const selectDashboardLoading: DashboardSelector<LoadingState>;
+
+// @alpha (undocumented)
+export const selectDashboardLockedFilters: DashboardSelector<FilterContextItem[]>;
 
 // @alpha
 export const selectDashboardLockStatus: DashboardSelector<boolean>;
@@ -10160,14 +10158,7 @@ export interface UpsertExecutionResult extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT";
 }
 
-// @alpha
-export const useAlertFilters: ({ alertToEdit, widget, insight }: IUseAlertFiltersProps) => {
-    widgetFilters: IFilter[] | undefined;
-    widgetFiltersLoading: boolean;
-    widgetFiltersError: GoodDataSdkError | undefined;
-};
-
-// @alpha
+// @alpha @deprecated
 export function useAutomationAvailableDashboardFilters(): FilterContextItem[] | undefined;
 
 // @internal (undocumented)
@@ -10979,7 +10970,7 @@ export function useSaveAsNewButtonProps(): ISaveAsNewButtonProps;
 // @internal (undocumented)
 export function useSaveButtonProps(): ISaveButtonProps;
 
-// @alpha
+// @alpha @deprecated
 export const useScheduledExportFilters: ({ scheduledExportToEdit, widget, insight, }: IUseScheduledExportFiltersProps) => {
     widgetFilters: IFilter[] | undefined;
     widgetFiltersLoading: boolean;
@@ -11005,7 +10996,7 @@ export const useTopBarProps: () => ITopBarProps;
 // @alpha (undocumented)
 export const useVisualizationExportData: (widget: WidgetExportDataAttributes | undefined, loading: boolean, error: boolean) => Partial<WidgetExportDataAttributes> | undefined;
 
-// @alpha
+// @alpha @deprecated
 export function useWidgetAlertFilters({ alertToEdit, widget, insight, }: IUseWidgetAlertFiltersProps): QueryProcessingState<IFilter[]>;
 
 // @internal (undocumented)
@@ -11025,7 +11016,7 @@ export const useWidgetExportData: (widget: ExtendedDashboardWidget) => WidgetExp
 // @public
 export function useWidgetFilters(widget: FilterableDashboardWidget | undefined | null, insight?: IInsightDefinition): QueryProcessingState<IFilter[]>;
 
-// @alpha
+// @alpha @deprecated
 export function useWidgetScheduledExportFilters({ scheduledExportToEdit, widget, insight, }: IUseWidgetScheduledExportFiltersProps): QueryProcessingState<IFilter[]>;
 
 // @internal (undocumented)
