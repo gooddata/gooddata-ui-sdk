@@ -1,6 +1,6 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { ReactNode } from "react";
+import React from "react";
 import { IAccessibilityConfigBase } from "../typings/accessibility.js";
 /**
  * @internal
@@ -30,8 +30,8 @@ export interface IButtonProps {
     tagName?: string;
     title?: string;
     type?: HTMLButtonElement["type"];
-    value?: ReactNode;
-    children?: ReactNode;
+    value?: React.ReactNode;
+    children?: React.ReactNode;
     iconLeft?: string;
     iconRight?: string;
     onClick?(e: React.MouseEvent): void;
@@ -39,5 +39,4 @@ export interface IButtonProps {
     intent?: "action" | "positive" | "negative";
     size?: "small" | "medium" | "large";
     accessibilityConfig?: IButtonAccessibilityConfig;
-    buttonRef?: React.MutableRefObject<HTMLElement>;
 }

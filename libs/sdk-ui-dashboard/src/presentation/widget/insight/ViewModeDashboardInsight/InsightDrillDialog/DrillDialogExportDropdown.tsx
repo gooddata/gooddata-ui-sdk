@@ -146,7 +146,7 @@ const DrillModalExportMenuItem: React.FC<IUiMenuInteractiveItemProps<IMenuItemDa
 const DropdownTriggerButton: React.FC<IDropdownButtonRenderProps & { isDisabled?: boolean }> = ({
     toggleDropdown,
     buttonRef,
-    ariaAttributes,
+    accessibilityConfig,
     isDisabled,
 }) => (
     <Button
@@ -156,12 +156,8 @@ const DropdownTriggerButton: React.FC<IDropdownButtonRenderProps & { isDisabled?
         })}
         disabled={isDisabled}
         type="button"
-        buttonRef={buttonRef as React.MutableRefObject<HTMLButtonElement>}
-        accessibilityConfig={{
-            role: ariaAttributes.role,
-            popupId: ariaAttributes["data-popupId"],
-            isExpanded: !!ariaAttributes["aria-expanded"],
-        }}
+        ref={buttonRef}
+        accessibilityConfig={accessibilityConfig}
     >
         <FormattedMessage id="dialogs.export.submit" />
     </Button>

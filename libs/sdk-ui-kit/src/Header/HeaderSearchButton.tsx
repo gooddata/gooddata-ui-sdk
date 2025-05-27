@@ -53,7 +53,7 @@ export const HeaderSearchButton: React.FC<HeaderSearchProps> = ({ children, titl
                 isExpanded: isOpen,
                 popupId: dropdownId,
             }}
-            buttonRef={buttonRef}
+            ref={buttonRef}
         >
             <span className="gd-icon-header-search-button"></span>
             <span className="gd-header-search-label">{title}</span>

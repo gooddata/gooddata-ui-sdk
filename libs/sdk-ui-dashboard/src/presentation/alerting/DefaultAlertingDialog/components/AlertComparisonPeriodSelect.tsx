@@ -117,7 +117,7 @@ export const AlertComparisonPeriodSelect = (props: IAlertComparisonPeriodSelectP
                             popupId: dropdownId,
                             isExpanded: isOpen,
                         }}
-                        buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
+                        ref={buttonRef}
                     >
                         <DropdownButtonLabel selectedOperator={selectedOperator} />
                     </Button>

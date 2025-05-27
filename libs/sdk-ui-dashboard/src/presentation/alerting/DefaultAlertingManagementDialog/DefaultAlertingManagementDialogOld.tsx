@@ -12,7 +12,7 @@ import {
 import { IAlertingManagementDialogOldProps } from "../types.js";
 import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
 import { messages } from "../../../locales.js";
-import { Alerts } from "./components/AlertsList.js";
+import { AlertsOld } from "./components/AlertsListOld.js";
 import { DeleteAlertConfirmDialog } from "./components/DeleteAlertConfirmDialog.js";
 import { PauseAlertRunner } from "./components/PauseAlertRunner.js";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -103,7 +103,7 @@ export const DefaultAlertingManagementDialogOld: React.FC<IAlertingManagementDia
                             <FormattedMessage id={messages.alertingManagementListTitle.id!} />
                         </Typography>
                     </div>
-                    <Alerts
+                    <AlertsOld
                         onDelete={handleAlertDelete}
                         onEdit={handleAlertEdit}
                         onPause={handleAlertPause}

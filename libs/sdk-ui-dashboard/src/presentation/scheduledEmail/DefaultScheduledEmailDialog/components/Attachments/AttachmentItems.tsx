@@ -133,7 +133,7 @@ export const AttachmentWidgets: React.FC<{
                                 id: "dialogs.schedule.management.attachments.xlsx.settings",
                             }),
                         }}
-                        buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
+                        ref={buttonRef}
                     />
                 )}
                 renderBody={({ closeDropdown }) => (

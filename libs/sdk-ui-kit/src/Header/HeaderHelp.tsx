@@ -43,7 +43,6 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
     intl,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const helpMenuRef = useRef<Button>(null);
     const helpMenuButtonRef = useRef<HTMLButtonElement>(null);
 
     const dropdownId = useIdPrefixed("help-dropdown");
@@ -101,12 +100,11 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
                 align: "br tr",
             },
         ];
-        const helpMenuCurrentRef = helpMenuRef?.current.buttonNode;
         if (
-            !helpMenuCurrentRef ||
+            !helpMenuButtonRef.current ||
             !helpMenuDropdownAlignPoints ||
             helpMenuDropdownAlignPoints === "br tr" ||
-            window.innerWidth - helpMenuCurrentRef.offsetLeft < 240
+            window.innerWidth - helpMenuButtonRef.current.offsetLeft < 240
         ) {
             return defaultAlignPoints;
         }
@@ -157,12 +155,11 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
         <Button
             className={cx(classNames, "gd-header-button")}
             onClick={() => toggleHelpMenu()}
-            ref={helpMenuRef}
             accessibilityConfig={{
                 isExpanded: isOpen,
                 popupId: dropdownId,
             }}
-            buttonRef={helpMenuButtonRef}
+            ref={helpMenuButtonRef}
         >
             <FormattedMessage id="gs.header.help" />
             {renderHelpMenu()}
