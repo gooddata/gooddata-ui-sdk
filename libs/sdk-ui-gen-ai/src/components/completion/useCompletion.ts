@@ -14,7 +14,7 @@ export interface IUseCompletion {
 }
 
 export function useCompletion(
-    items: CatalogItem[],
+    items: CatalogItem[] | undefined,
     { canManage, canAnalyze }: { canManage?: boolean; canAnalyze?: boolean },
 ): IUseCompletion {
     const [catalogItems, setCatalogItems] = useState<CatalogItem[] | undefined>(items);

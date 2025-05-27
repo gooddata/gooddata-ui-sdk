@@ -2,6 +2,7 @@
 import { MutableRefObject, useMemo } from "react";
 import {
     autocompletion,
+    CompletionSource,
     completionStatus,
     selectedCompletionIndex,
     setSelectedCompletion,
@@ -14,7 +15,7 @@ export function useAutocompletion({
     whenTyping,
     activateOnTypingDelay,
 }: {
-    handleCompletion: MutableRefObject<(context: any) => any>;
+    handleCompletion: MutableRefObject<CompletionSource>;
     aboveCursor?: boolean;
     whenTyping?: boolean;
     activateOnTypingDelay?: number;
