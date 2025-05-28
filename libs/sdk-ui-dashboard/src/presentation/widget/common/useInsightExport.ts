@@ -26,12 +26,15 @@ import {
     ExportImageInsightWidget,
     selectIsExportableToPngImage,
     exportImageInsightWidget,
+    selectEnableDashboardTabularExport,
 } from "../../../model/index.js";
 import { useExportHandler } from "./useExportHandler.js";
 import { useExportDialogContext } from "../../dashboardContexts/index.js";
 import { useRawExportHandler } from "./useRawExportHandler.js";
 import { useSlidesExportHandler } from "./useSlidesExportHandler.js";
 import { useImageExportHandler } from "./useImageExportHandler.js";
+import { useIntl } from "react-intl";
+import { useExportDashboardToExcel } from "../../topBar/menuButton/useExportDashboardToExcel.js";
 
 export const useInsightExport = (config: {
     title: string;
@@ -41,6 +44,7 @@ export const useInsightExport = (config: {
 }) => {
     const { title, widgetRef, insight, widget } = config;
     const [isExporting, setIsExporting] = useState(false);
+    const intl = useIntl();
 
     const dispatch = useDashboardDispatch();
     const exportFunction = useCallback(
@@ -91,6 +95,7 @@ export const useInsightExport = (config: {
         : false;
     const isExportableToCsv = useDashboardSelector(selectIsExecutionResultExportableToCsvByRef(widgetRef));
     const isExportableToXlsx = useDashboardSelector(selectIsExecutionResultExportableToXlsxByRef(widgetRef));
+    const dashboardTabularExportEnabled = useDashboardSelector(selectEnableDashboardTabularExport);
 
     const exportHandler = useExportHandler();
     const exportRawHandler = useRawExportHandler();
@@ -137,26 +142,46 @@ export const useInsightExport = (config: {
         exportImageHandler(exportImageFunction, title).then(() => setIsExporting(false));
     }, [exportImageFunction, title]);
 
+    const { exportDashboardToExcel } = useExportDashboardToExcel(() => setIsExporting(false));
     const onExportXLSX = useCallback(() => {
-        openDialog({
-            onSubmit: ({ includeFilterContext, mergeHeaders }) => {
-                setIsExporting(true);
-                // if this bombs there is an issue with the logic enabling the buttons
-                invariant(exportFunction);
-                closeDialog();
-                exportHandler(exportFunction, {
-                    format: "xlsx",
-                    mergeHeaders,
-                    includeFilterContext,
-                    showFilters: includeFilterContext,
-                    title,
-                }).then(() => setIsExporting(false));
-            },
-            includeFilterContext: Boolean(settings?.activeFiltersByDefault ?? true),
-            mergeHeaders: Boolean(settings?.cellMergedByDefault ?? true),
-            filterContextVisible: Boolean(settings?.enableActiveFilterContext ?? true),
-        });
-    }, [settings, title, exportFunction, closeDialog]);
+        if (dashboardTabularExportEnabled) {
+            openDialog({
+                onSubmit: ({ includeFilterContext, mergeHeaders }) => {
+                    setIsExporting(true);
+                    closeDialog();
+                    exportDashboardToExcel(mergeHeaders ?? true, includeFilterContext ?? true, [
+                        widget!.identifier,
+                    ]);
+                },
+                headline: intl.formatMessage({ id: "options.menu.export.dialog.widget.EXCEL" }),
+                mergeHeaders: Boolean(settings?.cellMergedByDefault ?? true),
+                mergeHeadersTitle: null,
+                includeFilterContext: Boolean(settings?.activeFiltersByDefault ?? true),
+                filterContextVisible: true,
+                filterContextTitle: null,
+                filterContextText: intl.formatMessage({ id: "options.menu.export.dialog.includeExportInfo" }),
+            });
+        } else {
+            openDialog({
+                onSubmit: ({ includeFilterContext, mergeHeaders }) => {
+                    setIsExporting(true);
+                    // if this bombs there is an issue with the logic enabling the buttons
+                    invariant(exportFunction);
+                    closeDialog();
+                    exportHandler(exportFunction, {
+                        format: "xlsx",
+                        mergeHeaders,
+                        includeFilterContext,
+                        showFilters: includeFilterContext,
+                        title,
+                    }).then(() => setIsExporting(false));
+                },
+                includeFilterContext: Boolean(settings?.activeFiltersByDefault ?? true),
+                mergeHeaders: Boolean(settings?.cellMergedByDefault ?? true),
+                filterContextVisible: Boolean(settings?.enableActiveFilterContext ?? true),
+            });
+        }
+    }, [settings, title, exportFunction, closeDialog, dashboardTabularExportEnabled]);
 
     const exportCSVEnabled = !isExporting && isInsightExportable && isExportableToCsv;
     const exportXLSXEnabled = !isExporting && isInsightExportable && isExportableToXlsx;

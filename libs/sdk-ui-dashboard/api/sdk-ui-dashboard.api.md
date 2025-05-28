@@ -3927,7 +3927,7 @@ export interface ExportDashboardToExcel extends IDashboardCommand {
 }
 
 // @beta
-export function exportDashboardToExcel(mergeHeaders: boolean, exportInfo: boolean, correlationId?: string): ExportDashboardToExcel;
+export function exportDashboardToExcel(mergeHeaders: boolean, exportInfo: boolean, widgetIds?: string[], correlationId?: string): ExportDashboardToExcel;
 
 // @beta (undocumented)
 export interface ExportDashboardToExcelPayload {
@@ -3935,6 +3935,8 @@ export interface ExportDashboardToExcelPayload {
     exportInfo: boolean;
     // (undocumented)
     mergeHeaders: boolean;
+    // (undocumented)
+    widgetIds?: string[];
 }
 
 // @beta (undocumented)

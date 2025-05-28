@@ -26,6 +26,7 @@ function exportDashboardToTabular(
     title?: string,
     mergeHeaders?: boolean,
     exportInfo?: boolean,
+    widgetIds?: string[],
     dashboardFiltersOverride?: FilterContextItem[],
 ): Promise<IExportResult> {
     const { backend, workspace } = ctx;
@@ -34,6 +35,7 @@ function exportDashboardToTabular(
         mergeHeaders,
         exportInfo,
         dashboardFiltersOverride,
+        widgetIds,
     });
 }
 
@@ -48,7 +50,7 @@ export function* exportDashboardToExcelHandler(
         throw invalidArgumentsProvided(ctx, cmd, "Dashboard to export to EXCEL must have an ObjRef.");
     }
 
-    const { mergeHeaders, exportInfo } = cmd.payload;
+    const { mergeHeaders, exportInfo, widgetIds } = cmd.payload;
     const title = yield select(selectDashboardTitle);
     const isFilterContextChanged: SagaReturnType<typeof selectIsFiltersChanged> = yield select(
         selectIsFiltersChanged,
@@ -63,6 +65,7 @@ export function* exportDashboardToExcelHandler(
         title,
         mergeHeaders,
         exportInfo,
+        widgetIds,
         isFilterContextChanged ? filterContext : undefined,
     );
 

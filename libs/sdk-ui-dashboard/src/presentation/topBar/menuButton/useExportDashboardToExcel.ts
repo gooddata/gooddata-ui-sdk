@@ -8,7 +8,7 @@ import { exportDashboardToExcel, useDashboardCommandProcessing } from "../../../
 import { messages } from "../../../locales.js";
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile.js";
 
-export const useExportDashboardToExcel = () => {
+export const useExportDashboardToExcel = (onSuccess?: () => void) => {
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
     const lastExportMessageId = useRef("");
     const { run: exportDashboard, status } = useDashboardCommandProcessing({
@@ -26,6 +26,7 @@ export const useExportDashboardToExcel = () => {
             if (lastExportMessageId.current) {
                 removeMessage(lastExportMessageId.current);
             }
+            onSuccess?.();
             addSuccess(messages.messagesExportResultSuccess);
             downloadFile(event.payload.result);
         },

@@ -487,6 +487,7 @@ export interface IDashboardExportTabularOptions {
     exportInfo?: boolean;
     mergeHeaders?: boolean;
     title?: string;
+    widgetIds?: string[];
 }
 
 // @alpha

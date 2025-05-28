@@ -441,6 +441,7 @@ export interface ExportDashboardToExcel extends IDashboardCommand {
 export interface ExportDashboardToExcelPayload {
     mergeHeaders: boolean;
     exportInfo: boolean;
+    widgetIds?: string[];
 }
 
 /**
@@ -450,6 +451,7 @@ export interface ExportDashboardToExcelPayload {
  *
  * @param mergeHeaders - if true, the headers will be merged into a single row
  * @param exportInfo - if true, the export info will be included in the EXCEL file
+ * @param widgetIds - if provided, the widgets with the given ids will be exported
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -458,6 +460,7 @@ export interface ExportDashboardToExcelPayload {
 export function exportDashboardToExcel(
     mergeHeaders: boolean,
     exportInfo: boolean,
+    widgetIds?: string[],
     correlationId?: string,
 ): ExportDashboardToExcel {
     return {
@@ -466,6 +469,7 @@ export function exportDashboardToExcel(
         payload: {
             mergeHeaders,
             exportInfo,
+            widgetIds,
         },
     };
 }
