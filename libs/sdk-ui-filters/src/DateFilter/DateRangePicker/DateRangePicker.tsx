@@ -47,11 +47,15 @@ const useCalendarPopup = () => {
         setIsOpen(true);
     }, []);
 
-    const onInputKeyDown = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Escape" || e.key === "Tab") {
-            setIsOpen(false);
-        }
-    }, []);
+    const onDateInputKeyDown = useCallback(
+        (e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (isOpen && (e.key === "Escape" || e.key === "Tab")) {
+                setIsOpen(false);
+                e.stopPropagation(); // prevent closing of the dropdown when just the calendar should close
+            }
+        },
+        [isOpen],
+    );
 
     const closeCalendarPopup = useCallback(() => setIsOpen(false), []);
 
@@ -76,7 +80,7 @@ const useCalendarPopup = () => {
     return {
         selectedInput,
         isCalendarPopupOpen: isOpen,
-        onInputKeyDown,
+        onDateInputKeyDown,
         onStartDateClick,
         onEndDateClick,
         calendarPopupRef,
@@ -97,23 +101,27 @@ const isSameDay = (d1: Date, d2: Date): boolean => {
 };
 
 const setStartAfterEndDateError = (
-    fieldErrorSetter: (errors: IDateTimePickerErrors | undefined) => void,
-    otherFieldSetter: (errors: IDateTimePickerErrors | undefined) => void,
+    fieldDateOrderErrorSetter: (errors: IDateTimePickerErrors | undefined) => void,
+    otherDateOrderFieldSetter: (errors: IDateTimePickerErrors | undefined) => void,
     start: Date | undefined,
     end: Date | undefined,
 ) => {
-    if (!isValidDate(start) || !isValidDate(end) || start <= end) {
-        fieldErrorSetter(undefined);
-        otherFieldSetter(undefined);
-        return;
+    const isValidStartDate = isValidDate(start);
+    const isValidEndDate = isValidDate(end);
+    const isStartBeforeEnd = start <= end;
+    if (!isValidStartDate || !isValidEndDate || isStartBeforeEnd) {
+        fieldDateOrderErrorSetter(undefined);
+        otherDateOrderFieldSetter(undefined);
+        return isValidStartDate && isValidEndDate; // form is valid, both dates defined, in correct order
     }
 
     const isCausedByTime = isSameDay(start, end);
-    fieldErrorSetter({
+    fieldDateOrderErrorSetter({
         isDateOrderError: !isCausedByTime,
         isTimeOrderError: isCausedByTime,
     });
-    otherFieldSetter(undefined);
+    otherDateOrderFieldSetter(undefined);
+    return false; // form is invalid at this point
 };
 
 interface INewRangeState {
@@ -138,6 +146,7 @@ const useRangeState = (
     onRangeChange: (range: IDateRange) => void,
     closeCalendarPopup: () => void,
     selectedInput: DateRangePosition | undefined,
+    submitForm: () => void,
 ) => {
     const [startDate, setStartDate] = useState<Date | undefined>(range.from);
     const [startTime, setStartTime] = useState<ITime>(getTimeFromDate(range.from));
@@ -161,7 +170,11 @@ const useRangeState = (
     );
 
     const updateRangeState = useCallback(
-        (newState: INewRangeState, dateValidator: (startDate: Date, endDate: Date) => void) => {
+        (
+            newState: INewRangeState,
+            dateValidator: (startDate: Date, endDate: Date) => boolean,
+            shouldSubmitForm?: boolean,
+        ) => {
             const adjustedStartDate = setTimeToDate(
                 getValueOrDefault(newState, "startDate", startDate),
                 getValueOrDefault(newState, "startTime", startTime),
@@ -171,39 +184,45 @@ const useRangeState = (
                 getValueOrDefault(newState, "endTime", endTime),
             );
             onRangeChange({ from: adjustedStartDate, to: adjustedEndDate });
-            dateValidator(adjustedStartDate, adjustedEndDate);
+            const isFormValid = dateValidator(adjustedStartDate, adjustedEndDate);
+
+            // submit form when user pressed Enter and form is valid
+            if (isFormValid && !!shouldSubmitForm) {
+                // deffer submit to the next render loop, newest values are not propagated to state yet
+                setTimeout(submitForm, 0);
+            }
         },
-        [onRangeChange, startDate, startTime, endDate, endTime],
+        [onRangeChange, startDate, startTime, endDate, endTime, submitForm],
     );
 
     const onStartDateChange = useCallback(
-        (date: Date) => {
+        (date: Date, shouldSubmitForm?: boolean) => {
             setStartDate(date);
-            updateRangeState({ startDate: date }, validateStartDate);
+            updateRangeState({ startDate: date }, validateStartDate, shouldSubmitForm);
         },
         [updateRangeState, validateStartDate],
     );
 
     const onEndDateChange = useCallback(
-        (date: Date) => {
+        (date: Date, shouldSubmitForm?: boolean) => {
             setEndDate(date);
-            updateRangeState({ endDate: date }, validateEndDate);
+            updateRangeState({ endDate: date }, validateEndDate, shouldSubmitForm);
         },
         [updateRangeState, validateEndDate],
     );
 
     const onStartTimeChange = useCallback(
-        (time: ITime) => {
+        (time: ITime, shouldSubmitForm?: boolean) => {
             setStartTime(time);
-            updateRangeState({ startTime: time }, validateStartDate);
+            updateRangeState({ startTime: time }, validateStartDate, shouldSubmitForm);
         },
         [updateRangeState, validateStartDate],
     );
 
     const onEndTimeChange = useCallback(
-        (time: ITime) => {
+        (time: ITime, shouldSubmitForm?: boolean) => {
             setEndTime(time);
-            updateRangeState({ endTime: time }, validateEndDate);
+            updateRangeState({ endTime: time }, validateEndDate, shouldSubmitForm);
         },
         [updateRangeState, validateEndDate],
     );
@@ -244,6 +263,7 @@ export interface IDateRangePickerProps {
     isTimeEnabled: boolean;
     weekStart?: WeekStart;
     shouldOverlayDatePicker?: boolean;
+    submitForm: () => void;
 }
 
 type DateRangePickerProps = IDateRangePickerProps & WrappedComponentProps;
@@ -258,11 +278,12 @@ const DateRangePickerComponent: React.FC<DateRangePickerProps> = ({
     isTimeEnabled,
     weekStart = "Sunday",
     shouldOverlayDatePicker = false,
+    submitForm,
 }) => {
     const {
         selectedInput,
         isCalendarPopupOpen,
-        onInputKeyDown,
+        onDateInputKeyDown,
         onStartDateClick,
         onEndDateClick,
         calendarPopupRef,
@@ -283,17 +304,17 @@ const DateRangePickerComponent: React.FC<DateRangePickerProps> = ({
         onStartTimeChange,
         onEndDateChange,
         onEndTimeChange,
-    } = useRangeState(range, onRangeChange, closeCalendarPopup, selectedInput);
+    } = useRangeState(range, onRangeChange, closeCalendarPopup, selectedInput, submitForm);
 
     const StartDateField = (
         <StartDateInputField
             ref={startDateInputRef}
             date={startDate}
             time={startTime}
-            onKeyDown={onInputKeyDown}
             onDateChange={onStartDateChange}
             onTimeChange={onStartTimeChange}
             onInputClick={onStartDateClick}
+            onDateInputKeyDown={onDateInputKeyDown}
             dateFormat={dateFormat}
             isMobile={isMobile}
             isTimeEnabled={isTimeEnabled}
@@ -307,10 +328,10 @@ const DateRangePickerComponent: React.FC<DateRangePickerProps> = ({
             ref={endDateInputRef}
             date={endDate}
             time={endTime}
-            onKeyDown={onInputKeyDown}
             onDateChange={onEndDateChange}
             onTimeChange={onEndTimeChange}
             onInputClick={onEndDateClick}
+            onDateInputKeyDown={onDateInputKeyDown}
             dateFormat={dateFormat}
             isMobile={isMobile}
             isTimeEnabled={isTimeEnabled}

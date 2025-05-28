@@ -3961,6 +3961,9 @@ export interface IRowsIconProps extends IIconProps {
 // @internal
 export const isActionKey: (event: KeyboardEvent_2) => boolean;
 
+// @internal
+export const isArrowKey: (event: KeyboardEvent_2) => boolean;
+
 // @internal (undocumented)
 export interface IScrollableItemProps {
     // (undocumented)
@@ -4011,6 +4014,9 @@ export const isElementFocusable: (element?: HTMLElement | null) => boolean;
 
 // @internal (undocumented)
 export type isElementInvisibleType = (element: HTMLElement, container: HTMLElement) => boolean;
+
+// @internal
+export const isEnterKey: (event: KeyboardEvent_2) => boolean;
 
 // @internal (undocumented)
 export interface ISeparatorLineProps {

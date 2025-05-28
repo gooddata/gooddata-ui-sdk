@@ -20,7 +20,7 @@ export interface IAbsoluteDateFilterFormProps {
     isTimeEnabled: boolean;
     weekStart?: WeekStart;
     shouldOverlayDatePicker?: boolean;
-    onKeyDown?: (event: React.KeyboardEvent) => void;
+    submitForm: () => void;
 }
 
 const dayPickerProps: DayPickerRangeProps = {
@@ -39,7 +39,7 @@ export const AbsoluteDateFilterForm: React.FC<IAbsoluteDateFilterFormProps> = ({
     weekStart,
     shouldOverlayDatePicker,
     onSelectedFilterOptionChange,
-    onKeyDown,
+    submitForm,
 }) => {
     const handleRangeChange = (range: IDateRange): void => {
         onSelectedFilterOptionChange(
@@ -48,17 +48,16 @@ export const AbsoluteDateFilterForm: React.FC<IAbsoluteDateFilterFormProps> = ({
     };
 
     return (
-        <div onKeyDown={onKeyDown}>
-            <DateRangePicker
-                dateFormat={dateFormat}
-                onRangeChange={handleRangeChange}
-                range={dateFilterValueToDateRange(selectedFilterOption, isTimeEnabled)}
-                isMobile={isMobile}
-                dayPickerProps={dayPickerProps}
-                isTimeEnabled={isTimeEnabled}
-                weekStart={weekStart}
-                shouldOverlayDatePicker={shouldOverlayDatePicker}
-            />
-        </div>
+        <DateRangePicker
+            dateFormat={dateFormat}
+            onRangeChange={handleRangeChange}
+            range={dateFilterValueToDateRange(selectedFilterOption, isTimeEnabled)}
+            isMobile={isMobile}
+            dayPickerProps={dayPickerProps}
+            isTimeEnabled={isTimeEnabled}
+            weekStart={weekStart}
+            shouldOverlayDatePicker={shouldOverlayDatePicker}
+            submitForm={submitForm}
+        />
     );
 };

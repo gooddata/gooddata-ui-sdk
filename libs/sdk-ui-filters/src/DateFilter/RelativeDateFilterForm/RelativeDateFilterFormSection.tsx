@@ -15,7 +15,7 @@ import { ListItemTooltip } from "../ListItemTooltip/ListItemTooltip.js";
 import { DateFilterFormWrapper } from "../DateFilterFormWrapper/DateFilterFormWrapper.js";
 import {
     createDateFilterRelativeFormKeyboardHandler,
-    submitAbsoluteAndRelativeDateFilterForm,
+    submitRelativeDateFilterForm,
 } from "../accessibility/keyboardNavigation.js";
 import { RelativeDateFilterForm } from "./RelativeDateFilterForm.js";
 import { useId } from "@gooddata/sdk-ui-kit";
@@ -115,7 +115,7 @@ export const RelativeDateFilterFormSection: React.FC<IAllTimeFilterSectionProps>
                             ref={tabGranularityRef}
                             relativeDateFilterId={relativeDateFilterId}
                             onKeyDown={(event) =>
-                                submitAbsoluteAndRelativeDateFilterForm(
+                                submitRelativeDateFilterForm(
                                     event,
                                     isEmpty(errors),
                                     closeDropdown,

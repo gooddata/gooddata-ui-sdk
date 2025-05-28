@@ -62,7 +62,6 @@ export const DateFilterBodyMobileContent: React.FC<IDateFilterBodyMobileContentP
                     onApplyClick={onApplyClick}
                     changeRoute={changeRoute}
                     dateFormat={dateFormat}
-                    errors={errors || undefined}
                     onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                     selectedFilterOption={selectedFilterOption as IUiAbsoluteDateFilterForm}
                     isMobile={isMobile}

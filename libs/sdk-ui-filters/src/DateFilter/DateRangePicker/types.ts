@@ -14,10 +14,10 @@ export interface ITime {
 export interface IDateRangeInputFieldProps {
     date: Date;
     time: ITime;
-    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-    onDateChange: (date: Date | undefined) => void;
-    onTimeChange: (time: ITime | undefined) => void;
+    onDateChange: (date: Date | undefined, shouldSubmitForm?: boolean) => void;
+    onTimeChange: (time: ITime | undefined, shouldSubmitForm?: boolean) => void;
     onInputClick: () => void;
+    onDateInputKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     dateFormat: string;
     isMobile: boolean;
     isTimeEnabled: boolean;

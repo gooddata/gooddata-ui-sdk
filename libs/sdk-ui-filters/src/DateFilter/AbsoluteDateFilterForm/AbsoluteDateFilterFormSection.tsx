@@ -1,43 +1,40 @@
 // (C) 2025 GoodData Corporation
-import React from "react";
+import React, { useCallback } from "react";
 import { isAbsoluteDateFilterForm, WeekStart } from "@gooddata/sdk-model";
 import cx from "classnames";
+import { FormattedMessage } from "react-intl";
+
 import {
     DateFilterOption,
     IDateFilterOptionsByType,
-    IExtendedDateFilterErrors,
     IUiAbsoluteDateFilterForm,
 } from "../interfaces/index.js";
 import { DateFilterRoute } from "../DateFilterBody/types.js";
 import { ListItem } from "../ListItem/ListItem.js";
-import { FormattedMessage } from "react-intl";
 import { DateFilterFormWrapper } from "../DateFilterFormWrapper/DateFilterFormWrapper.js";
+
 import { AbsoluteDateFilterForm } from "./AbsoluteDateFilterForm.js";
-import { submitAbsoluteAndRelativeDateFilterForm } from "../accessibility/keyboardNavigation.js";
-import isEmpty from "lodash/isEmpty.js";
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
 
 interface IAbsoluteDateFilterFormSection {
     filterOptions: IDateFilterOptionsByType;
     selectedFilterOption: DateFilterOption;
+    dateFormat: string;
+    weekStart: WeekStart;
+    isTimeForAbsoluteRangeEnabled: boolean;
     isMobile: boolean;
     route: DateFilterRoute;
-    dateFormat: string;
-    errors: IExtendedDateFilterErrors;
-    isTimeForAbsoluteRangeEnabled: boolean;
-    weekStart: WeekStart;
+    changeRoute: (newRoute?: DateFilterRoute) => void;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     closeDropdown: () => void;
     onApplyClick: () => void;
-    changeRoute: (newRoute?: DateFilterRoute) => void;
 }
 
 export const AbsoluteDateFilterFormSection: React.FC<IAbsoluteDateFilterFormSection> = ({
     filterOptions,
     selectedFilterOption,
     dateFormat,
-    errors,
     weekStart,
     isTimeForAbsoluteRangeEnabled,
     isMobile,
@@ -47,6 +44,11 @@ export const AbsoluteDateFilterFormSection: React.FC<IAbsoluteDateFilterFormSect
     closeDropdown,
     onApplyClick,
 }) => {
+    const submitForm = useCallback(() => {
+        onApplyClick();
+        closeDropdown();
+    }, [closeDropdown, onApplyClick]);
+
     if (!filterOptions.absoluteForm) {
         return null;
     }
@@ -87,14 +89,7 @@ export const AbsoluteDateFilterFormSection: React.FC<IAbsoluteDateFilterFormSect
                         isMobile={isMobile}
                         isTimeEnabled={isTimeForAbsoluteRangeEnabled}
                         weekStart={weekStart}
-                        onKeyDown={(event) =>
-                            submitAbsoluteAndRelativeDateFilterForm(
-                                event,
-                                isEmpty(errors),
-                                closeDropdown,
-                                onApplyClick,
-                            )
-                        }
+                        submitForm={submitForm}
                     />
                 </DateFilterFormWrapper>
             ) : null}

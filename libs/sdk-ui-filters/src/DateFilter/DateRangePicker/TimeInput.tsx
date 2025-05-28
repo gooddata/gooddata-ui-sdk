@@ -3,7 +3,7 @@
 import React, { useCallback, useState, ChangeEvent } from "react";
 import cx from "classnames";
 import moment, { Moment } from "moment/moment.js";
-import { useId } from "@gooddata/sdk-ui-kit";
+import { useId, isEnterKey, isArrowKey } from "@gooddata/sdk-ui-kit";
 
 import { TIME_FORMAT } from "../constants/Platform.js";
 
@@ -14,7 +14,7 @@ import { IInputAccessibilityConfig, ITime } from "./types.js";
 export interface ITimeInputProps {
     value: ITime;
     inputLabel: string;
-    onChange: (time: ITime) => void;
+    onChange: (time: ITime, shouldSubmitForm?: boolean) => void;
     accessibilityConfig: IInputAccessibilityConfig;
     errorText?: string;
     isMobile: boolean;
@@ -59,11 +59,27 @@ export const TimeInput: React.FC<ITimeInputProps> = ({
         [onChange, hasError, isMobile],
     );
 
+    const onSubmit = useCallback(
+        (shouldSubmitForm: boolean) => {
+            const time = moment(stringValue, TIME_FORMAT);
+            onChange(asTime(time), shouldSubmitForm);
+        },
+        [onChange, stringValue],
+    );
+
     // report changed value when focus is removed from the field
-    const onTimeInputBlur = useCallback(() => {
-        const time = moment(stringValue, TIME_FORMAT);
-        onChange(asTime(time));
-    }, [onChange, stringValue]);
+    const onTimeInputBlur = useCallback(() => onSubmit(false), [onSubmit]);
+
+    const onTimeInputKeyDown = useCallback(
+        (e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (isEnterKey(e)) {
+                onSubmit(true);
+            } else if (isArrowKey(e)) {
+                e.stopPropagation(); // allow navigation in the input
+            }
+        },
+        [onSubmit],
+    );
 
     return (
         <div className="gd-date-range-column gd-date-range-column--with-time">
@@ -86,6 +102,7 @@ export const TimeInput: React.FC<ITimeInputProps> = ({
                     aria-label={accessibilityConfig.ariaLabel}
                     onChange={onInputChange}
                     onBlur={onTimeInputBlur}
+                    onKeyDown={onTimeInputKeyDown}
                     value={stringValue}
                     aria-labelledby={inputLabelId}
                     aria-describedby={buildAriaDescribedByValue([

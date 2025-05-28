@@ -19,7 +19,7 @@ export const StartDateInputField = forwardRef<HTMLInputElement, IDateRangeInputF
         {
             date,
             time,
-            onKeyDown,
+            onDateInputKeyDown,
             onDateChange,
             onTimeChange,
             onInputClick,
@@ -67,7 +67,7 @@ export const StartDateInputField = forwardRef<HTMLInputElement, IDateRangeInputF
                 time={time}
                 onDateChange={onDateChange}
                 onTimeChange={onTimeChange}
-                onKeyDown={onKeyDown}
+                onDateInputKeyDown={onDateInputKeyDown}
                 dateInputLabel={intl.formatMessage({ id: "filters.staticPeriod.dateFrom" })}
                 timeInputLabel={intl.formatMessage({ id: "filters.staticPeriod.timeFrom" })}
                 accessibilityConfig={accessibilityConfig}
