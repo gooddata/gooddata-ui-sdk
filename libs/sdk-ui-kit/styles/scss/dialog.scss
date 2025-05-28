@@ -198,14 +198,16 @@
         padding: 0;
     }
 
-    h4 {
-        margin: 0;
-        padding: 12px 0 0;
-        font-size: 11px;
-    }
+    .gd-export-dialog-item {
+        margin-top: 10px;
 
-    h4:first-child {
-        padding-top: 0;
+        h4 {
+            margin: 0;
+        }
+
+        &:first-of-type {
+            margin-top: 0;
+        }
     }
 
     .input-label-text {
