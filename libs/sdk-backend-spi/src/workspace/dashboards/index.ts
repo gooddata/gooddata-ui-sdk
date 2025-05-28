@@ -241,6 +241,11 @@ export interface IDashboardExportTabularOptions {
     exportInfo?: boolean;
 
     /**
+     * Widgets to export. If not provided, all widgets will be exported.
+     */
+    widgetIds?: string[];
+
+    /**
      * If true, the dashboard filters will be applied to the exported dashboard
      */
     dashboardFiltersOverride?: FilterContextItem[];

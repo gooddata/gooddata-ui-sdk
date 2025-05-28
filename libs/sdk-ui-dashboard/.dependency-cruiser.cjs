@@ -241,6 +241,7 @@ options = {
             "src/presentation/export",
             "src/presentation/scheduledEmail/*",
             "src/presentation/alerting/*",
+            "src/presentation/topBar/*",
             "src/types.ts",
             "src/widgets",
             "src/presentation/dashboard/components/DashboardScreenSizeContext.tsx",

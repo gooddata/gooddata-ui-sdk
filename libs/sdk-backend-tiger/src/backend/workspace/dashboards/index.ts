@@ -576,6 +576,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                         mergeHeaders: options?.mergeHeaders,
                         exportInfo: options?.exportInfo,
                     },
+                    widgetIds: options?.widgetIds,
                     ...dashboardFiltersOverrideObj,
                 },
                 workspaceId: this.workspace,
