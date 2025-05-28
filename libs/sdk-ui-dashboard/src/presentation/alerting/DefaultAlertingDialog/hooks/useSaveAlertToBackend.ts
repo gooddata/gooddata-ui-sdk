@@ -1,10 +1,16 @@
 // (C) 2019-2025 GoodData Corporation
 import { useCallback } from "react";
 import omit from "lodash/omit.js";
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import {
+    IAutomationMetadataObject,
+    IAutomationMetadataObjectDefinition,
+    IFilter,
+    isAllTimeDateFilter,
+} from "@gooddata/sdk-model";
 
 import { useCreateAlert } from "./useCreateAlert.js";
 import { useUpdateAlert } from "./useUpdateAlert.js";
+import { selectEnableAutomationFilterContext, useDashboardSelector } from "../../../../model/index.js";
 
 /**
  * @internal
@@ -36,6 +42,7 @@ export function useSaveAlertToBackend({
     onResumeSuccess?: (alert: IAutomationMetadataObject) => void;
     onResumeError?: (error: Error) => void;
 }) {
+    const enableAutomationFilterContext = useDashboardSelector(selectEnableAutomationFilterContext);
     const alertCreator = useCreateAlert({
         onSuccess: (alert: IAutomationMetadataObject) => onCreateSuccess?.(alert),
         onError: onCreateError,
@@ -43,10 +50,13 @@ export function useSaveAlertToBackend({
 
     const handleCreateAlert = useCallback(
         (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            const sanitizedAlert = sanitizeAutomation(alert as IAutomationMetadataObject);
+            const sanitizedAlert = sanitizeAutomation(
+                alert as IAutomationMetadataObject,
+                enableAutomationFilterContext,
+            );
             alertCreator.create(sanitizedAlert);
         },
-        [alertCreator],
+        [alertCreator, enableAutomationFilterContext],
     );
 
     const alertUpdater = useUpdateAlert({
@@ -56,10 +66,13 @@ export function useSaveAlertToBackend({
 
     const handleUpdateAlert = useCallback(
         (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            const sanitizedAlert = sanitizeAutomation(alert as IAutomationMetadataObject);
+            const sanitizedAlert = sanitizeAutomation(
+                alert as IAutomationMetadataObject,
+                enableAutomationFilterContext,
+            );
             alertUpdater.save(sanitizedAlert);
         },
-        [alertUpdater],
+        [alertUpdater, enableAutomationFilterContext],
     );
 
     const alertPauser = useUpdateAlert({
@@ -69,9 +82,11 @@ export function useSaveAlertToBackend({
 
     const handlePauseAlert = useCallback(
         (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            alertPauser.save(sanitizeAutomation(alert as IAutomationMetadataObject));
+            alertPauser.save(
+                sanitizeAutomation(alert as IAutomationMetadataObject, enableAutomationFilterContext),
+            );
         },
-        [alertPauser],
+        [alertPauser, enableAutomationFilterContext],
     );
 
     const alertResumer = useUpdateAlert({
@@ -81,9 +96,11 @@ export function useSaveAlertToBackend({
 
     const handleResumeAlert = useCallback(
         (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            alertResumer.save(sanitizeAutomation(alert as IAutomationMetadataObject));
+            alertResumer.save(
+                sanitizeAutomation(alert as IAutomationMetadataObject, enableAutomationFilterContext),
+            );
         },
-        [alertResumer],
+        [alertResumer, enableAutomationFilterContext],
     );
 
     const isSavingAlert =
@@ -95,8 +112,11 @@ export function useSaveAlertToBackend({
     return { handleCreateAlert, handleUpdateAlert, handlePauseAlert, handleResumeAlert, isSavingAlert };
 }
 
-function sanitizeAutomation(automationToSave: IAutomationMetadataObject): IAutomationMetadataObject {
-    const automation = {
+function sanitizeAutomation(
+    automationToSave: IAutomationMetadataObject,
+    enableAutomationFilterContext: boolean,
+): IAutomationMetadataObject {
+    let automation = {
         ...automationToSave,
     };
     // We want to omit the cronDescription as it is a variable created on backend that cannot
@@ -105,5 +125,24 @@ function sanitizeAutomation(automationToSave: IAutomationMetadataObject): IAutom
         automation.schedule = omit(automation.schedule, ["cronDescription"]);
     }
 
+    if (automation.alert?.execution?.filters) {
+        automation = {
+            ...automation,
+            alert: {
+                ...automation.alert,
+                execution: {
+                    ...automation.alert.execution,
+                    filters: !enableAutomationFilterContext
+                        ? removeAllTimeDateFiltersFromAlertFilters(automation.alert.execution.filters)
+                        : automation.alert.execution.filters,
+                },
+            },
+        };
+    }
+
     return automation;
+}
+
+function removeAllTimeDateFiltersFromAlertFilters(filters: IFilter[]) {
+    return filters.filter((filter) => !isAllTimeDateFilter(filter));
 }
