@@ -8,15 +8,15 @@ import {
     WeekStart,
     type DashboardFiltersApplyMode,
 } from "@gooddata/sdk-model";
-import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
 import { DashboardSelector, DashboardState } from "../types.js";
+import { ILocale } from "@gooddata/sdk-ui";
+import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 import {
     DashboardFocusObject,
     ObjectAvailabilityConfig,
     ResolvedDashboardConfig,
 } from "../../types/commonTypes.js";
-import { ILocale } from "@gooddata/sdk-ui";
 import { selectSupportsAttributeHierarchies } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 
 const selectSelf = createSelector(
@@ -1035,5 +1035,17 @@ export const selectEnableWidgetExportPngImage: DashboardSelector<boolean> = crea
     selectConfig,
     (state) => {
         return Boolean(state.settings?.enableWidgetExportPngImage) ?? false;
+    },
+);
+
+/**
+ * Selector for the export to document storage and send scheduled exports to notification channels feature flag
+ *
+ * @internal
+ */
+export const selectEnableExportToDocumentStorage: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return Boolean(!state.settings?.enableExportToDocumentStorage) ?? false;
     },
 );

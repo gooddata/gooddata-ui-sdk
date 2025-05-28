@@ -765,6 +765,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableWidgetExportPngImage,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableExportToDocumentStorage,
+            "enableExportToDocumentStorage",
+            "BOOLEAN",
+            FeatureFlagsValues.enableExportToDocumentStorage,
+        ),
     };
 }
 
