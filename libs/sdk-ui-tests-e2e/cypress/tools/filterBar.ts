@@ -15,7 +15,7 @@ export const FILTER_BAR_SELECTOR = ".dash-filters-visible";
 export const FILTER_BAR_SHOW_ALL_BUTTON = ".button-filter-bar-show-all";
 export const NO_RELEVANT_VALUES_SELECTOR = ".gd-attribute-filter-empty-filtered-result__next";
 export const DATE_FILTERS_SELECTOR = ".dash-filters-date";
-
+export const FILTER_BAR_RESET_FILTER = ".dash-filters-reset";
 export type FilterByType = "normal" | "aggregated";
 
 export class AttributeFilter {
@@ -736,5 +736,10 @@ export class FilterBar {
     getDateSubTitleViewMode(name: string) {
         const testClass = getTestClassByTitle(name, "date-filter-button-");
         return cy.get(`.dash-filters-all .s-date-filter-button${testClass} .s-button-text`);
+    }
+
+    resetAllFilters() {
+        cy.get(FILTER_BAR_RESET_FILTER).click();
+        return this;
     }
 }

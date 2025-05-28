@@ -1,6 +1,6 @@
 // (C) 2023-2025 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
-import { AttributeFilter } from "../../tools/filterBar";
+import { AttributeFilter, FilterBar } from "../../tools/filterBar";
 import { TopBar, Dashboard } from "../../tools/dashboards";
 import { Table } from "../../tools/table";
 import { InsightsCatalog } from "../../tools/insightsCatalog";
@@ -13,6 +13,7 @@ const product = new AttributeFilter("Product");
 const stageName = new AttributeFilter("Stage Name");
 const table = new Table(".s-dash-item-0");
 const topBar = new TopBar();
+const filterBar = new FilterBar();
 
 describe("Dependent filter", () => {
     beforeEach(() => {
@@ -348,6 +349,43 @@ describe("Dependent filter", () => {
 
             stateFilter.open().showAllElementValuesIsVisible(true);
             table.waitLoaded().getColumnValues(1).should("deep.equal", ["Massachusetts"]);
+        },
+    );
+
+    //This test script cover the bug LX-1123
+    it(
+        "should not appear blank page after resetting dependent filter",
+        { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
+        () => {
+            stateFilter.isLoaded().open().elementsAreLoaded().selectAttribute(["Connecticut"]).apply();
+            table
+                .waitLoadStarted()
+                .waitLoaded()
+                .getColumnValues(2)
+                .should("deep.equal", ["Bridgeport", "Hartford"]);
+            cityFilter
+                .isLoaded()
+                .open()
+                .elementsAreLoaded()
+                .hasValueList(["Bridgeport", "Danbury", "Hartford", "New Haven", "Norwich", "Waterbury"])
+                .showAllElementValuesIsVisible(true)
+                .showAllElementValues();
+            filterBar.resetAllFilters();
+            cityFilter.isLoaded().open().elementsAreLoaded().hasFilterListSize(300);
+            table
+                .waitLoaded()
+                .getColumnValues(2)
+                .should("deep.equal", [
+                    "Bridgeport",
+                    "Hartford",
+                    "Boston",
+                    "Nashua",
+                    "New York",
+                    "Poughkeepsie",
+                    "Portland",
+                    "Philadelphia",
+                    "Providence",
+                ]);
         },
     );
 });
