@@ -175,6 +175,7 @@ export const getAppliedWidgetFilters = (
     dashboardHiddenFilters: FilterContextItem[],
     widget: ExtendedDashboardWidget | undefined,
     insight: IInsight | undefined,
+    commonDateFilterId: string | undefined,
 ) => {
     // Hidden filters are never included in selectedAutomationFilters,
     // but we need them to construct proper execution filters, so merge them.
@@ -193,7 +194,11 @@ export const getAppliedWidgetFilters = (
 
     // Merge the selected filters with the insight filters.
     // This will construct proper filters that should be applied to alert/scheduled export execution.
-    const mergedFilters = mergeFilters(insight?.insight?.filters ?? [], selectedExecutionFilters);
+    const mergedFilters = mergeFilters(
+        insight?.insight?.filters ?? [],
+        selectedExecutionFilters,
+        commonDateFilterId,
+    );
 
     // And finally, strip all-time date filters - we don't want to save them, they have no effect on execution.
     return mergedFilters.filter((f) => {

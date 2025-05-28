@@ -318,7 +318,9 @@ function validateLockedFilters(
             continue;
         }
 
-        const storedLockedFilter = savedAutomationFilters.find((f) => isFilterMatch(f, lockedFilter));
+        const storedLockedFilter = savedAutomationFilters.find(
+            (f) => filterLocalIdentifier(f) === filterLocalIdentifier(lockedFilter),
+        );
 
         if (storedLockedFilter && !lockedFilterHasDifferentValueInSavedFilter) {
             lockedFilterHasDifferentValueInSavedFilter = !areFiltersEqual(storedLockedFilter, lockedFilter);

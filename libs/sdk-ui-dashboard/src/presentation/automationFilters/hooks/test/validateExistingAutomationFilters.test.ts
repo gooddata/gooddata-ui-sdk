@@ -91,6 +91,13 @@ const changedNonAllTimeDateFilterContextItem: FilterContextItem = newRelativeDas
     nonCommonDataSetRef,
     nonCommonDateFilterLocalIdentifier,
 );
+const nonCommonFilterContextItemWithCommonDataSet: FilterContextItem = newRelativeDashboardDateFilter(
+    "GDC.time.date",
+    1,
+    2,
+    commonDataSetRef,
+    nonCommonDateFilterLocalIdentifier,
+);
 
 const attributeFilterContextItem: FilterContextItem = {
     attributeFilter: {
@@ -169,6 +176,7 @@ const [
     changedCommonDateFilter,
     nonAllTimeDateFilter,
     changedNonAllTimeDateFilter,
+    nonCommonFilterWithCommonDataSet,
     attributeFilter,
     unchangedAttributeFilter,
     changedAttributeFilter,
@@ -180,6 +188,7 @@ const [
         // non-common date filters
         nonAllTimeDateFilterContextItem,
         changedNonAllTimeDateFilterContextItem,
+        nonCommonFilterContextItemWithCommonDataSet,
         // attribute filters
         attributeFilterContextItem,
         unchangedAttributeFilterContextItem,
@@ -195,6 +204,7 @@ const [
     // non-common date filters
     allTimeDateVisibleFilter,
     nonAllTimeDateVisibleFilter,
+    nonCommonFilterWithCommonDataSetVisibleFilter,
     // attribute filters
     attributeVisibleFilter,
 ] = [
@@ -204,6 +214,7 @@ const [
     // non-common date filters
     allTimeDateFilterContextItem,
     nonAllTimeDateFilterContextItem,
+    nonCommonFilterContextItemWithCommonDataSet,
     // attribute filters
     attributeFilterContextItem,
 ].map((filterContexItem): IAutomationVisibleFilter => {
@@ -1325,6 +1336,33 @@ describe("validateExistingAutomationFilters", () => {
             expect(isValid).toBe(false);
             expect(commonDateFilterIsMissingInSavedVisibleFilters).toBe(true);
             expect(visibleFilterIsMissingInSavedFilters).toBe(false);
+        });
+
+        //
+        // Multiple date filters
+        //
+
+        describe("multiple date filters", () => {
+            // This is possible when you have additional date filter in the dashboard filter context,
+            // which has the same date dataset as the common date filter.
+            it("should be valid with 2 date filters with the common date dataset", () => {
+                const result = validateExistingAutomationFilters({
+                    savedAutomationFilters: [nonAllTimeCommonDateFilter, nonCommonFilterWithCommonDataSet],
+                    savedAutomationVisibleFilters: [
+                        nonAllTimeCommonDateVisibleFilter,
+                        nonCommonFilterWithCommonDataSetVisibleFilter,
+                    ],
+                    hiddenFilters: [],
+                    lockedFilters: [],
+                    ignoredFilters: [],
+                    dashboardFilters: [
+                        nonAllTimeCommonDateFilterContextItem,
+                        nonCommonFilterContextItemWithCommonDataSet,
+                    ],
+                });
+
+                expect(result.isValid).toBe(true);
+            });
         });
     });
 });

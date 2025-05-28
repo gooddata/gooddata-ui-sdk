@@ -4602,7 +4602,7 @@ export function measureValueFilterMeasure(filter: IMeasureValueFilter): ObjRefIn
 export function measureValueFilterOperator(filter: IMeasureValueFilter): ComparisonConditionOperator | RangeConditionOperator | undefined;
 
 // @internal
-export function mergeFilters(originalFilters: IFilter[], addedFilters: INullableFilter[] | undefined): IFilter[];
+export function mergeFilters(originalFilters: IFilter[], addedFilters: INullableFilter[] | undefined, commonDateFilterId?: string): IFilter[];
 
 // @public
 export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject | IVariableMetadataObject | IDashboardMetadataObject | IAttributeHierarchyMetadataObject;
