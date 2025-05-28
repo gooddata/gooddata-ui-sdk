@@ -71,7 +71,7 @@
     "filters.config.warning.conflictingIdentifiers": "A configuração do filtro de data do dashboard foi ignorada porque contém opções de filtro de data com identificadores idênticos.",
     "filters.config.warning.notAvailable": "A configuração do filtro de data do projeto não foi definida ou você não tem as permissões para acessá-la.",
     "filters.config.warning.workspace.notAvailable": "A configuração do filtro de data do espaço de trabalho  não foi definida ou você não tem as permissões para acessá-la.",
-    "filters.configurationPanel.header": "Configuração de filtros",
+    "filters.configurationPanel.header": "Filtros",
     "filters.configurationPanel.sectionHeader.interactions": "Interações",
     "filters.configurationPanel.crossFiltering.toggle": "Entre filtros",
     "kpi.noData": "Sem dados para configurações atuais do filtro. Tente alterar os filtros.",
@@ -755,5 +755,15 @@
     "drill_modal_picker.label": "Escolher ação de perfuração",
     "dialogs.schedule.email.recipients.label": "Destinatários",
     "controlButtons.options.closeMenu": "Fechar menu",
-    "menu.close": "Fechar menu"
+    "menu.close": "Fechar menu",
+    "options.menu.export.dialog.EXCEL": "Exportar dados (.xlsx)",
+    "options.menu.export.dialog.widget.EXCEL": "Exportar dados formatados (.xlsx)",
+    "options.menu.export.dialog.includeExportInfo": "Incluir planilha com informações de exportação",
+    "options.menu.export.image.PNG": "Instantâneo (.png)",
+    "dialogs.automation.filters.showAll.ariaLabel": "Expanda para mostrar todos os filtros aplicados",
+    "dialogs.automation.filters.showLess.ariaLabel": "Recolher para mostrar menos filtros aplicados",
+    "dialogs.automation.applyCurrentFilters.confirm.title": "Editar com filtros atuais?",
+    "dialogs.automation.applyCurrentFilters.confirm.submit": "Editar",
+    "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Aviso</b>: Alguns filtros usados quando esse alerta foi criado não estão mais disponíveis ou são válidos. A edição aplicará os filtros atuais do painel.",
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Aviso</b>: Alguns filtros usados quando essa programação foi criada não estão mais disponíveis ou não são mais válidos. A edição aplicará os filtros atuais do painel."
 }

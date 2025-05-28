@@ -71,7 +71,7 @@
     "filters.config.warning.conflictingIdentifiers": "De filterconfiguratie voor het dashboard werd genegeerd omdat deze datumfilteropties met identieke identificators bevat.",
     "filters.config.warning.notAvailable": "De filterconfiguratie voor de projectdatum is niet gedefinieerd of u hebt niet de machtigingen om deze te laden.",
     "filters.config.warning.workspace.notAvailable": "De filterconfiguratie voor de werkruimtedatum is niet gedefinieerd of u hebt niet de machtigingen om deze te laden.",
-    "filters.configurationPanel.header": "Filterconfiguratie",
+    "filters.configurationPanel.header": "Filters",
     "filters.configurationPanel.sectionHeader.interactions": "Interacties",
     "filters.configurationPanel.crossFiltering.toggle": "Cross-filters",
     "kpi.noData": "Geen data voor de huidige filterinstellingen. Probeer om de filters te wijzigen.",
@@ -755,5 +755,15 @@
     "drill_modal_picker.label": "Booractie kiezen",
     "dialogs.schedule.email.recipients.label": "Ontvangers",
     "controlButtons.options.closeMenu": "Menu sluiten",
-    "menu.close": "Menu sluiten"
+    "menu.close": "Menu sluiten",
+    "options.menu.export.dialog.EXCEL": "Gegevens exporteren (.xlsx)",
+    "options.menu.export.dialog.widget.EXCEL": "Opgemaakte gegevens exporteren (.xlsx)",
+    "options.menu.export.dialog.includeExportInfo": "Blad met exportinformatie opnemen",
+    "options.menu.export.image.PNG": "Momentopname (.png)",
+    "dialogs.automation.filters.showAll.ariaLabel": "Uitvouwen om alle toegepaste filters te tonen",
+    "dialogs.automation.filters.showLess.ariaLabel": "Samenvouwen om minder toegepaste filters te tonen",
+    "dialogs.automation.applyCurrentFilters.confirm.title": "Bewerken met huidige filters?",
+    "dialogs.automation.applyCurrentFilters.confirm.submit": "Bewerken",
+    "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Waarschuwing</b>: Sommige filters die werden gebruikt toen deze waarschuwing werd aangemaakt, zijn niet langer beschikbaar of geldig. Bewerken zal de huidige dashboard filters toepassen.",
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Waarschuwing</b>: Sommige filters die werden gebruikt toen deze agenda werd gemaakt, zijn niet langer beschikbaar of geldig. Bewerken zal de huidige dashboard filters toepassen."
 }

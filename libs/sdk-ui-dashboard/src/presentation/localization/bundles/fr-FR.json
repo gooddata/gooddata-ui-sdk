@@ -71,7 +71,7 @@
     "filters.config.warning.conflictingIdentifiers": "La configuration de filtre de date de tableau de bord a été ignorée, car elle contient des options de filtre de date avec des identifiants identiques.",
     "filters.config.warning.notAvailable": "La configuration de filtre de date de projet est non définie ou vous n'avez pas les autorisations nécessaires pour y accéder.",
     "filters.config.warning.workspace.notAvailable": "La configuration de filtre de date d'espace de travail n'est pas définie ou vous n'avez pas les autorisations nécessaires pour y accéder.",
-    "filters.configurationPanel.header": "Configuration des filtres",
+    "filters.configurationPanel.header": "Filtres",
     "filters.configurationPanel.sectionHeader.interactions": "Interactions",
     "filters.configurationPanel.crossFiltering.toggle": "Filtres croisés",
     "kpi.noData": "Aucune donnée pour les paramètres de filtre actuels. Essayez de modifier les filtres.",
@@ -755,5 +755,15 @@
     "drill_modal_picker.label": "Choisir l'action de forage",
     "dialogs.schedule.email.recipients.label": "Destinataires",
     "controlButtons.options.closeMenu": "Fermer le menu",
-    "menu.close": "Fermer le menu"
+    "menu.close": "Fermer le menu",
+    "options.menu.export.dialog.EXCEL": "Exporter des données (.xlsx)",
+    "options.menu.export.dialog.widget.EXCEL": "Exporter des données formatées (.xlsx)",
+    "options.menu.export.dialog.includeExportInfo": "Inclure une feuille avec des informations sur l'exportation",
+    "options.menu.export.image.PNG": "Instantané (.png)",
+    "dialogs.automation.filters.showAll.ariaLabel": "Développer pour afficher tous les filtres appliqués",
+    "dialogs.automation.filters.showLess.ariaLabel": "Réduire pour afficher moins de filtres appliqués",
+    "dialogs.automation.applyCurrentFilters.confirm.title": "Modifier avec les filtres actuels ?",
+    "dialogs.automation.applyCurrentFilters.confirm.submit": "Modifier",
+    "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Avertissement</b>: Certains filtres utilisés lors de la création de cette alerte ne sont plus disponibles ou valides. La modification appliquera les filtres du tableau de bord actuel.",
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Avertissement</b>: Certains filtres utilisés lors de la création de cette programmation ne sont plus disponibles ou valides. La modification appliquera les filtres du tableau de bord actuel."
 }

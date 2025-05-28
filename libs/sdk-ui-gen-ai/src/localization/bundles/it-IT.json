@@ -33,5 +33,10 @@
     "gd.gen-ai.autocomplete.type": "Tipo",
     "gd.gen-ai.autocomplete.attribute": "Attributo",
     "gd.gen-ai.autocomplete.metric": "Metrica",
-    "gd.gen-ai.autocomplete.fact": "Dato concreto"
+    "gd.gen-ai.autocomplete.fact": "Dato concreto",
+    "gd.gen-ai.autocomplete.dataset": "Set di dati",
+    "gd.gen-ai.autocomplete.id": "Id",
+    "gd.gen-ai.autocomplete.date": "Data",
+    "gd.gen-ai.autocomplete.input-info.mac": "<code>^+Spazio</code> o <code>⌘+I</code> per suggerimenti",
+    "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Spazio</code> o <code>Ctrl+I</code> per suggerimenti"
 }

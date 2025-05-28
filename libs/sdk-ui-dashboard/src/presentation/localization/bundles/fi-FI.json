@@ -71,7 +71,7 @@
     "filters.config.warning.conflictingIdentifiers": "Kojelaudan päivämääräsuodattimen määritys jätettiin huomiotta, koska siinä on identtiset tunnisteet päivämääräsuodattimissa.",
     "filters.config.warning.notAvailable": "Projektin päivämääräsuodattimen määritys ei ole määritelty tai sinulla ei ole oikeuksia päästä siihen.",
     "filters.config.warning.workspace.notAvailable": "Työtilan päivämääräsuodattimen määritys ei ole määritelty tai sinulla ei ole oikeuksia päästä siihen.",
-    "filters.configurationPanel.header": "Suodattimien määritys",
+    "filters.configurationPanel.header": "Suodattimet",
     "filters.configurationPanel.sectionHeader.interactions": "Vuorovaikutukset",
     "filters.configurationPanel.crossFiltering.toggle": "Ristiinsuodatus",
     "kpi.noData": "Nykyisillä suodatinasetuksilla ei ole dataa. Yritä muuttaa suodattimia.",
@@ -755,5 +755,15 @@
     "drill_modal_picker.label": "Valitse poraustoiminto",
     "dialogs.schedule.email.recipients.label": "Vastaanottajat",
     "controlButtons.options.closeMenu": "Sulje valikko",
-    "menu.close": "Sulje valikko"
+    "menu.close": "Sulje valikko",
+    "options.menu.export.dialog.EXCEL": "Vie tiedot (.xlsx)",
+    "options.menu.export.dialog.widget.EXCEL": "Vie alustetut tiedot (.xlsx)",
+    "options.menu.export.dialog.includeExportInfo": "Sisällytä taulukko vientitietoihin",
+    "options.menu.export.image.PNG": "Tilannekuva (.png)",
+    "dialogs.automation.filters.showAll.ariaLabel": "Laajenna näyttääksesi kaikki käytetyt suodattimet",
+    "dialogs.automation.filters.showLess.ariaLabel": "Pienennä näyttääksesi vähemmän käytetyt suodattimet",
+    "dialogs.automation.applyCurrentFilters.confirm.title": "Muokataanko nykyisillä suodattimilla?",
+    "dialogs.automation.applyCurrentFilters.confirm.submit": "Muokkaa",
+    "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Varoitus</b>: Jotkin tämän hälytyksen luontihetkellä käytetyt suodattimet eivät ole enää käytettävissä tai voimassa. Muokkauksessa käytetään nykyisiä koontinäytön suodattimia.",
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Varoitus</b>: Jotkin tämän aikataulun luomisen aikana käytetyt suodattimet eivät ole enää käytettävissä tai kelvollisia. Muokkauksessa käytetään nykyisiä koontinäytön suodattimia."
 }

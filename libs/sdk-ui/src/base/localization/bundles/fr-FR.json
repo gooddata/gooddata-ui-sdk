@@ -721,5 +721,11 @@
     "filters.staticPeriod.errors.endDateBeforeStartDate": "Erreur : Date de fin non valide - fixer une date postérieure à la date de début.",
     "filters.staticPeriod.errors.endTimeBeforeStartTime": "Erreur : Heure de fin non valide - fixer une heure après l'heure de début.",
     "menu.close": "Fermer le menu",
-    "menu.back": "Retour au menu parent"
+    "menu.back": "Retour au menu parent",
+    "dateFilterDropdown.label": "Sélectionner une plage de dates",
+    "dateFilterDropdown.relativeForm.label": "Granularité",
+    "properties.legend.series.item.description": "Appuyer sur Espace ou Entrée pour alterner la visibilité",
+    "properties.legend.more.button": "Afficher tous les éléments de la légende dans une boîte de dialogue",
+    "properties.legend.series.named": "Légende : {name}",
+    "properties.legend.series.unnamed": "Légende de la visualisation"
 }

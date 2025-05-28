@@ -71,7 +71,7 @@
     "filters.config.warning.conflictingIdentifiers": "La configuración del filtro de fechas del panel se ha ignorado porque contiene opciones de filtro de fechas con identificadores idénticos.",
     "filters.config.warning.notAvailable": "La configuración del filtro de fechas del proyecto no está definida o no tiene permiso para acceder a ella.",
     "filters.config.warning.workspace.notAvailable": "La configuración del filtro de fechas del espacio de trabajo no está definida o no tiene permiso para acceder a ella.",
-    "filters.configurationPanel.header": "Configuración de filtros",
+    "filters.configurationPanel.header": "Filtros",
     "filters.configurationPanel.sectionHeader.interactions": "Interacciones",
     "filters.configurationPanel.crossFiltering.toggle": "Filtrado cruzado",
     "kpi.noData": "No hay datos para la configuración actual de filtro. Intente cambiar los filtros.",
@@ -755,5 +755,15 @@
     "drill_modal_picker.label": "Elija la acción de perforación",
     "dialogs.schedule.email.recipients.label": "Destinatarios",
     "controlButtons.options.closeMenu": "Cerrar menú",
-    "menu.close": "Cerrar menú"
+    "menu.close": "Cerrar menú",
+    "options.menu.export.dialog.EXCEL": "Exportar datos (.xlsx)",
+    "options.menu.export.dialog.widget.EXCEL": "Exportar datos formateados (.xlsx)",
+    "options.menu.export.dialog.includeExportInfo": "Incluir hoja con información de exportación",
+    "options.menu.export.image.PNG": "Instantánea (.png)",
+    "dialogs.automation.filters.showAll.ariaLabel": "Ampliar para mostrar todos los filtros aplicados",
+    "dialogs.automation.filters.showLess.ariaLabel": "Contraer para mostrar menos filtros aplicados",
+    "dialogs.automation.applyCurrentFilters.confirm.title": "¿Editar con los filtros actuales?",
+    "dialogs.automation.applyCurrentFilters.confirm.submit": "Editar",
+    "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Advertencia</b>: Algunos filtros utilizados cuando se creó esta alerta ya no están disponibles o no son válidos. La edición aplicará los filtros actuales del cuadro de mandos.",
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Advertencia</b>: Algunos filtros utilizados cuando se creó este horario ya no están disponibles o no son válidos. La edición aplicará los filtros actuales del cuadro de mandos."
 }

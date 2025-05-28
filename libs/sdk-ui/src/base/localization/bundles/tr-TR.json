@@ -730,5 +730,11 @@
     "filters.staticPeriod.errors.endDateBeforeStartDate": "Hata: Geçersiz bitiş tarihi — başlangıç tarihinden sonraki bir tarihi ayarlayın.",
     "filters.staticPeriod.errors.endTimeBeforeStartTime": "Hata: Geçersiz bitiş zamanı — başlangıç zamanından sonraki bir zamanı ayarlayın.",
     "menu.close": "Menüyü kapat",
-    "menu.back": "Ana menüye geri dön"
+    "menu.back": "Ana menüye geri dön",
+    "dateFilterDropdown.label": "Bir tarih aralığı seçin",
+    "dateFilterDropdown.relativeForm.label": "Granülerlik",
+    "properties.legend.series.item.description": "Görünürlüğü değiştirmek için Boşluk veya Enter tuşuna basın",
+    "properties.legend.more.button": "Tüm gösterge öğelerini bir diyalogda göster",
+    "properties.legend.series.named": "Açıklama: {name}",
+    "properties.legend.series.unnamed": "Görselleştirme efsanesi"
 }

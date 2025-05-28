@@ -71,7 +71,7 @@
     "filters.config.warning.conflictingIdentifiers": "儀表板日期過濾器配置被忽略，因為它包含具有相同識別碼的日期過濾器選項。",
     "filters.config.warning.notAvailable": "項目日期過濾器配置未定義，或您無權存取。",
     "filters.config.warning.workspace.notAvailable": "工作區日期過濾器配置未定義，或您沒有存取其的權限。",
-    "filters.configurationPanel.header": "過濾器配置",
+    "filters.configurationPanel.header": "過濾器",
     "filters.configurationPanel.sectionHeader.interactions": "互動",
     "filters.configurationPanel.crossFiltering.toggle": "交叉過濾",
     "kpi.noData": "目前過濾器設定沒有資料。嘗試更換過濾器。",
@@ -755,5 +755,15 @@
     "drill_modal_picker.label": "選擇練習動作",
     "dialogs.schedule.email.recipients.label": "收件者",
     "controlButtons.options.closeMenu": "關閉選單",
-    "menu.close": "關閉選單"
+    "menu.close": "關閉選單",
+    "options.menu.export.dialog.EXCEL": "匯出資料（.xlsx）",
+    "options.menu.export.dialog.widget.EXCEL": "匯出格式化資料（.xlsx）",
+    "options.menu.export.dialog.includeExportInfo": "包含匯出資訊表",
+    "options.menu.export.image.PNG": "快照 (.png)",
+    "dialogs.automation.filters.showAll.ariaLabel": "展開以顯示所有應用的過濾器",
+    "dialogs.automation.filters.showLess.ariaLabel": "折疊以顯示較少應用的過濾器",
+    "dialogs.automation.applyCurrentFilters.confirm.title": "使用目前過濾器進行編輯？",
+    "dialogs.automation.applyCurrentFilters.confirm.submit": "編輯",
+    "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>警告</b>：建立此警報時使用的某些過濾器不再可用或有效。編輯將套用目前儀表板過濾器。",
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>警告</b>：建立此計劃時使用的某些過濾器不再可用或有效。編輯將套用目前儀表板過濾器。"
 }

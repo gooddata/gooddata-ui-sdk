@@ -71,7 +71,7 @@
     "filters.config.warning.conflictingIdentifiers": "The dashboard date filter configuration was disregarded because it contains date filter options with identical identifiers.",
     "filters.config.warning.notAvailable": "The project date filter configuration is either not defined or you don't have the permissions to access it.",
     "filters.config.warning.workspace.notAvailable": "The workspace date filter configuration is either not defined or you don't have the permissions to access it.",
-    "filters.configurationPanel.header": "Filters Configuration",
+    "filters.configurationPanel.header": "Filters",
     "filters.configurationPanel.sectionHeader.interactions": "Interactions",
     "filters.configurationPanel.crossFiltering.toggle": "Cross-filtering",
     "kpi.noData": "No data for current filter settings. Try changing the filters.",
@@ -755,5 +755,15 @@
     "drill_modal_picker.label": "Select drill action",
     "dialogs.schedule.email.recipients.label": "Recipients",
     "controlButtons.options.closeMenu": "Close menu",
-    "menu.close": "Close menu"
+    "menu.close": "Close menu",
+    "options.menu.export.dialog.EXCEL": "Export Data (.xlsx)",
+    "options.menu.export.dialog.widget.EXCEL": "Export Formatted Data (.xlsx)",
+    "options.menu.export.dialog.includeExportInfo": "Include sheet with export information",
+    "options.menu.export.image.PNG": "Snapshot (.png)",
+    "dialogs.automation.filters.showAll.ariaLabel": "Expand to display all applied filters",
+    "dialogs.automation.filters.showLess.ariaLabel": "Collapse to display fewer applied filters",
+    "dialogs.automation.applyCurrentFilters.confirm.title": "Edit with current filters",
+    "dialogs.automation.applyCurrentFilters.confirm.submit": "Edit",
+    "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Warning</b>: Some filters used when this alert was created are no longer available or valid. Editing will apply the current dashboard filters",
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Warning</b>: Some filters used when this schedule was created are no longer available or valid. Editing will apply the current dashboard filters"
 }

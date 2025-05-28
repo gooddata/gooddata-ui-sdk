@@ -721,5 +721,11 @@
     "filters.staticPeriod.errors.endDateBeforeStartDate": "錯誤：結束日期無效-設置開始日期之後嘅日期。",
     "filters.staticPeriod.errors.endTimeBeforeStartTime": "錯誤：結束時間無效-設置開始時間之後嘅時間。",
     "menu.close": "關閉餐牌",
-    "menu.back": "返回父餐牌"
+    "menu.back": "返回父餐牌",
+    "dateFilterDropdown.label": "選擇日期範圍",
+    "dateFilterDropdown.relativeForm.label": "粒度",
+    "properties.legend.series.item.description": "按空格鍵或Enter鍵切換可見性",
+    "properties.legend.more.button": "在對話框中顯示所有圖例項",
+    "properties.legend.series.named": "傳說： {name}",
+    "properties.legend.series.unnamed": "可視化圖例"
 }

@@ -71,7 +71,7 @@
     "filters.config.warning.conflictingIdentifiers": "Gösterge paneli tarih filtresi yapılandırması, aynı tanımlayıcılara sahip tarih filtresi seçenekleri içerdiği için göz ardı edildi.",
     "filters.config.warning.notAvailable": "Proje tarih filtresi yapılandırması ya tanımlanmamış ya da erişim izniniz yok.",
     "filters.config.warning.workspace.notAvailable": "Çalışma alanı tarih filtresi yapılandırması ya tanımlanmamış ya da erişim izniniz yok.",
-    "filters.configurationPanel.header": "Filtreler Yapılandırması",
+    "filters.configurationPanel.header": "Filtreler",
     "filters.configurationPanel.sectionHeader.interactions": "Etkileşimler",
     "filters.configurationPanel.crossFiltering.toggle": "Çapraz filtreleme",
     "kpi.noData": "Mevcut filtre ayarları için veri yok. Filtreleri değiştirmeyi deneyin.",
@@ -756,5 +756,15 @@
     "drill_modal_picker.label": "Detaylandırma eylemini seç",
     "dialogs.schedule.email.recipients.label": "Alıcılar",
     "controlButtons.options.closeMenu": "Menüyü kapat",
-    "menu.close": "Menüyü kapat"
+    "menu.close": "Menüyü kapat",
+    "options.menu.export.dialog.EXCEL": "Verileri Dışa Aktar (.xlsx)",
+    "options.menu.export.dialog.widget.EXCEL": "Biçimlendirilmiş veriyi dışa aktar (.xlsx)",
+    "options.menu.export.dialog.includeExportInfo": "Dışa aktarma bilgileriyle sayfayı dahil et",
+    "options.menu.export.image.PNG": "Anlık Görüntü (.png)",
+    "dialogs.automation.filters.showAll.ariaLabel": "Tüm uygulanan filtreleri göstermek için genişlet",
+    "dialogs.automation.filters.showLess.ariaLabel": "Daha az uygulanan filtreyi göstermek için daralt",
+    "dialogs.automation.applyCurrentFilters.confirm.title": "Mevcut filtrelerle düzenle?",
+    "dialogs.automation.applyCurrentFilters.confirm.submit": "Düzenle",
+    "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Uyarı</b>: Bu uyarı oluşturulduğunda kullanılan bazı filtreler artık mevcut değil veya geçerli değil. Düzenleme, mevcut gösterge paneli filtrelerini uygulayacaktır.",
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Uyarı</b>: Bu program oluşturulurken kullanılan bazı filtreler artık mevcut değil veya geçerli değil. Düzenleme, mevcut gösterge paneli filtrelerini uygulayacaktır."
 }

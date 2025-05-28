@@ -721,5 +721,11 @@
     "filters.staticPeriod.errors.endDateBeforeStartDate": "エラー無効な終了日 - 開始日以降の日付を設定してください。",
     "filters.staticPeriod.errors.endTimeBeforeStartTime": "エラー無効な終了時間 - 開始時間より後の時間を設定してください。",
     "menu.close": "メニューを閉じる",
-    "menu.back": "親メニューに戻る"
+    "menu.back": "親メニューに戻る",
+    "dateFilterDropdown.label": "日付範囲を選択",
+    "dateFilterDropdown.relativeForm.label": "細分性",
+    "properties.legend.series.item.description": "スペースキーまたはEnterキーを押して表示を切り替える",
+    "properties.legend.more.button": "すべての凡例項目をダイアログに表示する",
+    "properties.legend.series.named": "凡例だ：{name}",
+    "properties.legend.series.unnamed": "視覚化の凡例"
 }

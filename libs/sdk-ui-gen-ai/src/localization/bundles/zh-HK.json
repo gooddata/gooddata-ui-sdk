@@ -33,5 +33,10 @@
     "gd.gen-ai.autocomplete.type": "類型",
     "gd.gen-ai.autocomplete.attribute": "屬性",
     "gd.gen-ai.autocomplete.metric": "計量",
-    "gd.gen-ai.autocomplete.fact": "事實"
+    "gd.gen-ai.autocomplete.fact": "事實",
+    "gd.gen-ai.autocomplete.dataset": "數據",
+    "gd.gen-ai.autocomplete.id": "ID",
+    "gd.gen-ai.autocomplete.date": "日期",
+    "gd.gen-ai.autocomplete.input-info.mac": "<code>^+Space</code>或<code>⌘+I</code>提供建議",
+    "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Space</code>或<code>Ctrl+I</code>提供建議"
 }

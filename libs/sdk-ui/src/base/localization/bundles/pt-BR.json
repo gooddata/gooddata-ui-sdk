@@ -721,5 +721,11 @@
     "filters.staticPeriod.errors.endDateBeforeStartDate": "Erro: Data de término inválida — defina uma data após a data de início.",
     "filters.staticPeriod.errors.endTimeBeforeStartTime": "Erro: Hora de término inválida — defina uma hora após a hora de início.",
     "menu.close": "Fechar menu",
-    "menu.back": "Voltar ao menu pai"
+    "menu.back": "Voltar ao menu pai",
+    "dateFilterDropdown.label": "Selecione um intervalo de datas",
+    "dateFilterDropdown.relativeForm.label": "Granularidade",
+    "properties.legend.series.item.description": "Pressione Espaço ou Enter para alternar a visibilidade",
+    "properties.legend.more.button": "Mostrar todos os itens de legenda em uma caixa de diálogo",
+    "properties.legend.series.named": "Lenda: {name}",
+    "properties.legend.series.unnamed": "Legenda de visualização"
 }
