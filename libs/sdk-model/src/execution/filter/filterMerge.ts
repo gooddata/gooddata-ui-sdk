@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { objRefToString } from "../../objRef/index.js";
 import {
     IAttributeFilter,
@@ -13,6 +13,7 @@ import {
     isMeasureValueFilter,
     isRankingFilter,
     INullableFilter,
+    filterLocalIdentifier,
 } from "./index.js";
 import compact from "lodash/compact.js";
 import groupBy from "lodash/groupBy.js";
@@ -81,6 +82,7 @@ function separateFiltersByType(filters: IFilter[]): FilterByType {
 export function mergeFilters(
     originalFilters: IFilter[],
     addedFilters: INullableFilter[] | undefined,
+    commonDateFilterId?: string,
 ): IFilter[] {
     invariant(originalFilters, "original filters must be specified");
 
@@ -101,7 +103,7 @@ export function mergeFilters(
     const attributeFilters = [...original.attribute, ...added.attribute];
 
     // merge date filters by date dataset qualifier
-    const dateFilters = mergeDateFilters(original.date, added.date);
+    const dateFilters = mergeDateFilters(original.date, added.date, commonDateFilterId);
 
     // merge measure value filters by measure
     const measureValueFilters = mergeMeasureValueFilters(original.measureValue, added.measureValue);
@@ -112,7 +114,11 @@ export function mergeFilters(
     return [...attributeFilters, ...dateFilters, ...measureValueFilters, ...rankingFilters];
 }
 
-function mergeDateFilters(originalFilters: IDateFilter[], addedFilters: IDateFilter[]): IDateFilter[] {
+function mergeDateFilters(
+    originalFilters: IDateFilter[],
+    addedFilters: IDateFilter[],
+    commonDateFilterId?: string,
+): IDateFilter[] {
     const allFilters = [...originalFilters, ...addedFilters];
     const grouped = groupBy(allFilters, (f) => objRefToString(filterObjRef(f)));
     const mergedFilters: IDateFilter[] = [];
@@ -121,6 +127,21 @@ function mergeDateFilters(originalFilters: IDateFilter[], addedFilters: IDateFil
         // use the last filter for the dimension specified.
         // this makes sure that the added filter wins if it is specified
         const lastFilterForDimension = last(filtersForDimension)!;
+
+        const commonDateFilter = commonDateFilterId
+            ? filtersForDimension.find((f) => filterLocalIdentifier(f) === commonDateFilterId)
+            : undefined;
+
+        const lastFilterIsCommon = commonDateFilterId
+            ? filterLocalIdentifier(lastFilterForDimension) === commonDateFilterId
+            : false;
+
+        // Handle case, when there are 2 date filters with the same date dataset,
+        // and when one of them is common date filter.
+        // In this case, we want to use both filters.
+        if (!lastFilterIsCommon && commonDateFilter && !isAllTimeDateFilter(commonDateFilter)) {
+            mergedFilters.push(commonDateFilter);
+        }
 
         // if the last filter is all time, clear filters for this dimension, otherwise use the last filter
         if (!isAllTimeDateFilter(lastFilterForDimension)) {

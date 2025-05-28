@@ -29,6 +29,7 @@ import {
     selectUsers,
     selectEnableExternalRecipients,
     selectDashboardHiddenFilters,
+    selectAutomationCommonDateFilterId,
 } from "../../../../model/index.js";
 import { WidgetAttachmentType } from "../types.js";
 import {
@@ -119,9 +120,16 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     const firstChannel = notificationChannels[0]?.id;
 
     const dashboardHiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
+    const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
 
     const effectiveWidgetFilters = enableAutomationFilterContext
-        ? getAppliedWidgetFilters(editedAutomationFilters ?? [], dashboardHiddenFilters, widget, insight)
+        ? getAppliedWidgetFilters(
+              editedAutomationFilters ?? [],
+              dashboardHiddenFilters,
+              widget,
+              insight,
+              commonDateFilterId,
+          )
         : widgetFilters;
 
     const effectiveVisibleWidgetFilters = enableAutomationFilterContext
@@ -382,6 +390,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                         dashboardHiddenFilters,
                         widget,
                         insight,
+                        commonDateFilterId,
                     );
                     const visibleFilters = getVisibleFiltersByFilters(
                         filters,
@@ -428,6 +437,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
             widget,
             insight,
             isWidget,
+            commonDateFilterId,
         ],
     );
 

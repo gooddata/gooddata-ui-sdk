@@ -34,6 +34,7 @@ import {
     selectDashboardId,
     selectSeparators,
     selectDashboardHiddenFilters,
+    selectAutomationCommonDateFilterId,
 } from "../../../../model/index.js";
 import {
     convertCurrentUserToAutomationRecipient,
@@ -113,6 +114,8 @@ export function useEditAlert(props: IUseEditAlertProps) {
     const dashboardId = useDashboardSelector(selectDashboardId);
     const separators = useDashboardSelector(selectSeparators);
     const dashboardHiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
+    const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
+
     // Computed values
     const isNewAlert = !alertToEdit;
 
@@ -156,6 +159,7 @@ export function useEditAlert(props: IUseEditAlertProps) {
                     dashboardHiddenFilters,
                     widget!,
                     insight!,
+                    commonDateFilterId,
                 ),
                 supportedMeasures,
                 defaultMeasure,
@@ -349,6 +353,7 @@ export function useEditAlert(props: IUseEditAlertProps) {
                     dashboardHiddenFilters,
                     widget,
                     insight,
+                    commonDateFilterId,
                 );
                 const visibleFilters = getVisibleFiltersByFilters(
                     filters,
@@ -379,6 +384,7 @@ export function useEditAlert(props: IUseEditAlertProps) {
             widget,
             insight,
             dashboardHiddenFilters,
+            commonDateFilterId,
         ],
     );
 
