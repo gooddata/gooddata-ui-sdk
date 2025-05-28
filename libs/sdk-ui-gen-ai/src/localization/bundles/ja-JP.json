@@ -33,5 +33,10 @@
     "gd.gen-ai.autocomplete.type": "タイプ",
     "gd.gen-ai.autocomplete.attribute": "アトリビュート",
     "gd.gen-ai.autocomplete.metric": "基準",
-    "gd.gen-ai.autocomplete.fact": "ファクト"
+    "gd.gen-ai.autocomplete.fact": "ファクト",
+    "gd.gen-ai.autocomplete.dataset": "データセット",
+    "gd.gen-ai.autocomplete.id": "アイド",
+    "gd.gen-ai.autocomplete.date": "日付",
+    "gd.gen-ai.autocomplete.input-info.mac": "<code>^+Space</code> または<code>⌘+I</code> 提案のために",
+    "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Space</code> または<code>Ctrl+I</code> 提案のために"
 }

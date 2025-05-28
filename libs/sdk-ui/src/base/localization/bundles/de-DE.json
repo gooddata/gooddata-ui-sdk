@@ -721,5 +721,11 @@
     "filters.staticPeriod.errors.endDateBeforeStartDate": "Fehler: Ungültiges Enddatum — legen Sie ein Datum nach dem Startdatum fest.",
     "filters.staticPeriod.errors.endTimeBeforeStartTime": "Fehler: Ungültige Endzeit — Legen Sie eine Zeit nach der Startzeit fest.",
     "menu.close": "Menü schließen",
-    "menu.back": "Zurück zum übergeordneten Menü"
+    "menu.back": "Zurück zum übergeordneten Menü",
+    "dateFilterDropdown.label": "Wählen Sie einen Datumsbereich",
+    "dateFilterDropdown.relativeForm.label": "Granularität",
+    "properties.legend.series.item.description": "Drücken Sie die Leertaste oder die Eingabetaste, um die Sichtbarkeit zu",
+    "properties.legend.more.button": "Alle Legendenelemente in einem Dialog anzeigen",
+    "properties.legend.series.named": "Legende: {name}",
+    "properties.legend.series.unnamed": "Visualisierungslegende"
 }

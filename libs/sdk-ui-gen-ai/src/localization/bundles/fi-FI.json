@@ -33,5 +33,10 @@
     "gd.gen-ai.autocomplete.type": "tyyppi",
     "gd.gen-ai.autocomplete.attribute": "Attribuutti",
     "gd.gen-ai.autocomplete.metric": "Metriikka",
-    "gd.gen-ai.autocomplete.fact": "Tosiasia"
+    "gd.gen-ai.autocomplete.fact": "Tosiasia",
+    "gd.gen-ai.autocomplete.dataset": "Tietojoukko",
+    "gd.gen-ai.autocomplete.id": "Tunnus",
+    "gd.gen-ai.autocomplete.date": "Päivämäärä",
+    "gd.gen-ai.autocomplete.input-info.mac": "<code>^+Välilyönti</code> <code>tai+I ehdotuksia</code> varten",
+    "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+välilyönti</code> tai <code>Ctrl+I ehdotuksia</code> varten"
 }

@@ -71,7 +71,7 @@
     "filters.config.warning.conflictingIdentifiers": "La configurazione del filtro data del cruscotto è stata ignorata, perché contiene opzioni di filtro data con identificatori identici.",
     "filters.config.warning.notAvailable": "La configurazione del filtro data del progetto non è definita o non si dispone delle autorizzazioni per accedervi.",
     "filters.config.warning.workspace.notAvailable": "La configurazione del filtro data dell'area di lavoro non è definita o non si dispone delle autorizzazioni per accedervi.",
-    "filters.configurationPanel.header": "Configurazione dei filtri",
+    "filters.configurationPanel.header": "Filtri",
     "filters.configurationPanel.sectionHeader.interactions": "Interazioni",
     "filters.configurationPanel.crossFiltering.toggle": "Filtri incrociati",
     "kpi.noData": "Non ci sono dati per le impostazioni attuali dei filtri. Provare a modificare i filtri.",
@@ -755,5 +755,15 @@
     "drill_modal_picker.label": "Scegliere l'azione di perforazione",
     "dialogs.schedule.email.recipients.label": "Destinatari",
     "controlButtons.options.closeMenu": "Chiudere il menu",
-    "menu.close": "Chiudere il menu"
+    "menu.close": "Chiudere il menu",
+    "options.menu.export.dialog.EXCEL": "Esportazione dei dati (.xlsx)",
+    "options.menu.export.dialog.widget.EXCEL": "Esportazione di dati formattati (.xlsx)",
+    "options.menu.export.dialog.includeExportInfo": "Includere il foglio con le informazioni sull'esportazione",
+    "options.menu.export.image.PNG": "Istantanea (.png)",
+    "dialogs.automation.filters.showAll.ariaLabel": "Espandere per mostrare tutti i filtri applicati",
+    "dialogs.automation.filters.showLess.ariaLabel": "Chiudere per mostrare meno filtri applicati",
+    "dialogs.automation.applyCurrentFilters.confirm.title": "Modificare con i filtri attuali?",
+    "dialogs.automation.applyCurrentFilters.confirm.submit": "Modifica",
+    "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Avviso</b>: Alcuni filtri utilizzati quando è stato creato questo avviso non sono più disponibili o validi. La modifica applicherà i filtri del cruscotto corrente.",
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Avviso</b>: Alcuni filtri utilizzati quando è stata creata questa pianificazione non sono più disponibili o validi. La modifica applicherà i filtri del cruscotto corrente."
 }

@@ -721,5 +721,11 @@
     "filters.staticPeriod.errors.endDateBeforeStartDate": "Errore: Data di fine non valida - impostare una data successiva a quella di inizio.",
     "filters.staticPeriod.errors.endTimeBeforeStartTime": "Errore: Orario di fine non valido - impostare un orario successivo a quello di inizio.",
     "menu.close": "Chiudere il menu",
-    "menu.back": "Torna al menu principale"
+    "menu.back": "Torna al menu principale",
+    "dateFilterDropdown.label": "Selezionare un intervallo di date",
+    "dateFilterDropdown.relativeForm.label": "Granularità",
+    "properties.legend.series.item.description": "Premere Spazio o Invio per alternare la visibilità",
+    "properties.legend.more.button": "Mostra tutti gli elementi della legenda in una finestra di dialogo",
+    "properties.legend.series.named": "Leggenda: {name}",
+    "properties.legend.series.unnamed": "Legenda di visualizzazione"
 }

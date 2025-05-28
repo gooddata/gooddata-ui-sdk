@@ -723,5 +723,11 @@
     "filters.staticPeriod.errors.endDateBeforeStartDate": "Error: Fecha final no válida - fije una fecha posterior a la fecha de inicio.",
     "filters.staticPeriod.errors.endTimeBeforeStartTime": "Error: Hora de finalización no válida - establezca una hora posterior a la hora de inicio.",
     "menu.close": "Cerrar menú",
-    "menu.back": "Volver al menú principal"
+    "menu.back": "Volver al menú principal",
+    "dateFilterDropdown.label": "Seleccione un intervalo de fechas",
+    "dateFilterDropdown.relativeForm.label": "Granularidad",
+    "properties.legend.series.item.description": "Pulse la barra espaciadora o Intro para cambiar la visibilidad",
+    "properties.legend.more.button": "Mostrar todos los elementos de la leyenda en un cuadro de diálogo",
+    "properties.legend.series.named": "Leyenda: {name}",
+    "properties.legend.series.unnamed": "Leyenda de visualización"
 }

@@ -71,7 +71,7 @@
     "filters.config.warning.conflictingIdentifiers": "Die Dashboard-Datumsfiltereinstellung wurde ignoriert, weil sie Datenfilteroptionen mit identischen Identifikatoren enthält.",
     "filters.config.warning.notAvailable": "Die Konfiguration des Projektdatumsfilters wurde entweder noch nicht definiert oder Sie haben keine Zugriffsberechtigung dafür.",
     "filters.config.warning.workspace.notAvailable": "Die Datumsfilterkonfiguration der Arbeitsbereiche ist entweder nicht definiert oder Sie verfügen nicht über die nötigen Zugriffsrechte.",
-    "filters.configurationPanel.header": "Filterkonfiguration",
+    "filters.configurationPanel.header": "Filter",
     "filters.configurationPanel.sectionHeader.interactions": "Interaktionen",
     "filters.configurationPanel.crossFiltering.toggle": "Querfilterung:",
     "kpi.noData": "Keine Daten für die aktuellen Filtereinstellungen. Versuchen Sie, die Filter zu ändern.",
@@ -755,5 +755,15 @@
     "drill_modal_picker.label": "Bohraktion wählen",
     "dialogs.schedule.email.recipients.label": "Empfänger",
     "controlButtons.options.closeMenu": "Menü schließen",
-    "menu.close": "Menü schließen"
+    "menu.close": "Menü schließen",
+    "options.menu.export.dialog.EXCEL": "Daten exportieren (.xlsx)",
+    "options.menu.export.dialog.widget.EXCEL": "Formatierte Daten exportieren (.xlsx)",
+    "options.menu.export.dialog.includeExportInfo": "Blatt mit Exportinformationen einfügen",
+    "options.menu.export.image.PNG": "Schnappschuss (.png)",
+    "dialogs.automation.filters.showAll.ariaLabel": "Erweitern, um alle angewendeten Filter anzuzeigen",
+    "dialogs.automation.filters.showLess.ariaLabel": "Reduzieren, um weniger angewendete Filter anzuzeigen",
+    "dialogs.automation.applyCurrentFilters.confirm.title": "Mit aktuellen Filtern bearbeiten?",
+    "dialogs.automation.applyCurrentFilters.confirm.submit": "Bearbeiten",
+    "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Warnung</b>: Einige Filter, die bei der Erstellung dieser Warnung verwendet wurden, sind nicht mehr verfügbar oder gültig. Beim Bearbeiten werden die aktuellen Dashboard-Filter angewendet.",
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Warnung</b>: Einige Filter, die bei der Erstellung dieses Zeitplans verwendet wurden, sind nicht mehr verfügbar oder gültig. Beim Bearbeiten werden die aktuellen Dashboard-Filter angewendet."
 }

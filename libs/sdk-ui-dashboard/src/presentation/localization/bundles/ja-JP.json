@@ -71,7 +71,7 @@
     "filters.config.warning.conflictingIdentifiers": "同一の識別子を持つ日付フィルターオプションを含むため、ダッシュボード用日付フィルター設定は無視されました。",
     "filters.config.warning.notAvailable": "プロジェクト用日付フィルター設定が定義されていないか、アクセスが許可されていません。",
     "filters.config.warning.workspace.notAvailable": "ワークスペース日付フィルター設定が定義されていないか、アクセス権限がありません。",
-    "filters.configurationPanel.header": "フィルター設定",
+    "filters.configurationPanel.header": "フィルター",
     "filters.configurationPanel.sectionHeader.interactions": "操作",
     "filters.configurationPanel.crossFiltering.toggle": "クロスフィルタリング",
     "kpi.noData": "現在のフィルター設定に対するデータがありません。フィルターを変更してみてください。",
@@ -755,5 +755,15 @@
     "drill_modal_picker.label": "ドリルアクションの選択",
     "dialogs.schedule.email.recipients.label": "受信者",
     "controlButtons.options.closeMenu": "メニューを閉じる",
-    "menu.close": "メニューを閉じる"
+    "menu.close": "メニューを閉じる",
+    "options.menu.export.dialog.EXCEL": "データのエクスポート (.xlsx)",
+    "options.menu.export.dialog.widget.EXCEL": "書式付きデータ（.xlsx）のエクスポート",
+    "options.menu.export.dialog.includeExportInfo": "輸出情報シートを含む",
+    "options.menu.export.image.PNG": "スナップショット (.png)",
+    "dialogs.automation.filters.showAll.ariaLabel": "適用されたフィルターをすべて表示する",
+    "dialogs.automation.filters.showLess.ariaLabel": "折りたたむとフィルターが少なく表示される",
+    "dialogs.automation.applyCurrentFilters.confirm.title": "現在のフィルターで編集しますか？",
+    "dialogs.automation.applyCurrentFilters.confirm.submit": "編集",
+    "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>警告</b> ：このアラートが作成されたときに使用された一部のフィルターは、現在使用できないか、有効ではありません。編集すると、現在のダッシュボードのフィルタが適用されます。",
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>警告</b> ：このスケジュールが作成されたときに使用されたいくつかのフィルターは、もはや利用できないか、有効ではありません。編集すると現在のダッシュボードフィルターが適用されます。"
 }

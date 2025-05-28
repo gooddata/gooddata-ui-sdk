@@ -730,5 +730,11 @@
     "filters.staticPeriod.errors.endDateBeforeStartDate": "Error: Invalid end date — please set a date after the start date.",
     "filters.staticPeriod.errors.endTimeBeforeStartTime": "Error: Invalid end time — please set a time after the start time.",
     "menu.close": "Close menu",
-    "menu.back": "Return to the parent menu"
+    "menu.back": "Return to the parent menu",
+    "dateFilterDropdown.label": "Select a date range",
+    "dateFilterDropdown.relativeForm.label": "Granularity",
+    "properties.legend.series.item.description": "Press Space or Enter to toggle visibility",
+    "properties.legend.more.button": "Display all legend items in a dialogue box",
+    "properties.legend.series.named": "Legend: {name}",
+    "properties.legend.series.unnamed": "Visualisation legend"
 }

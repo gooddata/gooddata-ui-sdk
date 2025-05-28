@@ -71,7 +71,7 @@
     "filters.config.warning.conflictingIdentifiers": "대시보드 날짜 필터 구성은 동일한 식별자를 가진 날짜 필터 옵션이 포함되어 있어 무시되었습니다.",
     "filters.config.warning.notAvailable": "프로젝트 날짜 필터 구성이 정의되지 않았거나 해당 접근 권한이 없습니다.",
     "filters.config.warning.workspace.notAvailable": "작업 공간 날짜 필터 구성이 정의되지 않았거나 액세스 권한이 없습니다.",
-    "filters.configurationPanel.header": "필터 구성",
+    "filters.configurationPanel.header": "필터",
     "filters.configurationPanel.sectionHeader.interactions": "상호작용",
     "filters.configurationPanel.crossFiltering.toggle": "교차 필터링",
     "kpi.noData": "현재 필터 설정에 대한 데이터가 없습니다. 필터를 변경해 보세요.",
@@ -756,5 +756,15 @@
     "drill_modal_picker.label": "드릴 작업 선택",
     "dialogs.schedule.email.recipients.label": "수신자",
     "controlButtons.options.closeMenu": "메뉴 닫기",
-    "menu.close": "메뉴 닫기"
+    "menu.close": "메뉴 닫기",
+    "options.menu.export.dialog.EXCEL": "데이터 내보내기 (.xlsx)",
+    "options.menu.export.dialog.widget.EXCEL": "서식 있는 데이터 내보내기 (.xlsx)",
+    "options.menu.export.dialog.includeExportInfo": "내보내기 정보 포함 시트",
+    "options.menu.export.image.PNG": "스냅샷 (.png)",
+    "dialogs.automation.filters.showAll.ariaLabel": "모든 적용된 필터 표시로 확장",
+    "dialogs.automation.filters.showLess.ariaLabel": "적용된 필터 축소하여 적게 보기",
+    "dialogs.automation.applyCurrentFilters.confirm.title": "현재 필터로 편집하시겠습니까?",
+    "dialogs.automation.applyCurrentFilters.confirm.submit": "편집",
+    "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>경고</b> : 이 알림이 생성될 때 사용된 일부 필터는 더 이상 사용할 수 없거나 유효하지 않습니다. 수정하면 현재 대시보드 필터가 적용됩니다.",
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>경고</b>: 이 일정이 생성될 때 사용된 일부 필터가 더 이상 사용 가능하거나 유효하지 않습니다. 편집 시 현재 대시보드 필터가 적용됩니다."
 }

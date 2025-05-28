@@ -71,7 +71,7 @@
     "filters.config.warning.conflictingIdentifiers": "Konfiguracja filtra daty na pulpicie została zignorowana, ponieważ zawiera opcje filtra daty z identycznymi identyfikatorami.",
     "filters.config.warning.notAvailable": "Konfiguracja filtra daty projektu nie jest zdefiniowana lub nie masz uprawnień do jej dostępu.",
     "filters.config.warning.workspace.notAvailable": "Konfiguracja filtra daty obszaru roboczego nie jest zdefiniowana lub nie masz uprawnień do jej dostępu.",
-    "filters.configurationPanel.header": "Konfiguracja filtrów",
+    "filters.configurationPanel.header": "Filtry",
     "filters.configurationPanel.sectionHeader.interactions": "Interakcje",
     "filters.configurationPanel.crossFiltering.toggle": "Filtrowanie krzyżowe",
     "kpi.noData": "Brak danych dla bieżących ustawień filtrów. Spróbuj zmienić filtry.",
@@ -756,5 +756,15 @@
     "drill_modal_picker.label": "Wybierz akcję drążenia",
     "dialogs.schedule.email.recipients.label": "Odbiorcy",
     "controlButtons.options.closeMenu": "Zamknij menu",
-    "menu.close": "Zamknij menu"
+    "menu.close": "Zamknij menu",
+    "options.menu.export.dialog.EXCEL": "Eksportuj dane (.xlsx)",
+    "options.menu.export.dialog.widget.EXCEL": "Eksportuj sformatowane dane (.xlsx)",
+    "options.menu.export.dialog.includeExportInfo": "Dołącz arkusz z informacjami o eksporcie",
+    "options.menu.export.image.PNG": "Zrzut ekranu (.png)",
+    "dialogs.automation.filters.showAll.ariaLabel": "Rozwiń, aby pokazać wszystkie zastosowane filtry",
+    "dialogs.automation.filters.showLess.ariaLabel": "Zwiń, aby pokazać mniej zastosowanych filtrów",
+    "dialogs.automation.applyCurrentFilters.confirm.title": "Edytować z bieżącymi filtrami?",
+    "dialogs.automation.applyCurrentFilters.confirm.submit": "Edytuj",
+    "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Ostrzeżenie</b>: Niektóre filtry użyte podczas tworzenia tego alertu nie są już dostępne lub ważne. Edytowanie zastosuje bieżące filtry pulpitu nawigacyjnego.",
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Ostrzeżenie</b>: Niektóre filtry użyte podczas tworzenia tego harmonogramu nie są już dostępne lub ważne. Edytowanie zastosuje bieżące filtry pulpitu nawigacyjnego."
 }

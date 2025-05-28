@@ -721,5 +721,11 @@
     "filters.staticPeriod.errors.endDateBeforeStartDate": "Virhe: Virheellinen päättymispäivä — aseta päivämäärä alkamispäivän jälkeen.",
     "filters.staticPeriod.errors.endTimeBeforeStartTime": "Virhe: Virheellinen päättymisaika — aseta aika alkamisajan jälkeen.",
     "menu.close": "Sulje valikko",
-    "menu.back": "Takaisin päävalikkoon"
+    "menu.back": "Takaisin päävalikkoon",
+    "dateFilterDropdown.label": "Valitse ajanjakso",
+    "dateFilterDropdown.relativeForm.label": "Rakeisuus",
+    "properties.legend.series.item.description": "Vaihda näkyvyyttä painamalla välilyöntiä tai Enter",
+    "properties.legend.more.button": "Näytä kaikki legendaariset kohteet valintaikkunassa",
+    "properties.legend.series.named": "Selite: {name}",
+    "properties.legend.series.unnamed": "Visualisointilegenda"
 }

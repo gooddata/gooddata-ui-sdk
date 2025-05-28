@@ -721,5 +721,11 @@
     "filters.staticPeriod.errors.endDateBeforeStartDate": "Fout: Ongeldige einddatum - stel een datum in na de begindatum.",
     "filters.staticPeriod.errors.endTimeBeforeStartTime": "Fout: Ongeldige eindtijd - stel een tijd in na de starttijd.",
     "menu.close": "Menu sluiten",
-    "menu.back": "Terug naar het hoofdmenu"
+    "menu.back": "Terug naar het hoofdmenu",
+    "dateFilterDropdown.label": "Selecteer een datumbereik",
+    "dateFilterDropdown.relativeForm.label": "Uitsplitsing",
+    "properties.legend.series.item.description": "Druk op Spatie of Enter om de zichtbaarheid te wijzigen",
+    "properties.legend.more.button": "Toon alle legenda-items in een dialoogvenster",
+    "properties.legend.series.named": "Legende: {name}",
+    "properties.legend.series.unnamed": "Legende visualisatie"
 }

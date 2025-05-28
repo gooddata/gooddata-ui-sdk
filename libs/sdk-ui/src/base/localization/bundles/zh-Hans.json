@@ -721,5 +721,11 @@
     "filters.staticPeriod.errors.endDateBeforeStartDate": "错误：结束日期无效——设置开始日期之后的日期。",
     "filters.staticPeriod.errors.endTimeBeforeStartTime": "错误：结束时间无效——请设置开始时间之后的时间。",
     "menu.close": "关闭菜单",
-    "menu.back": "返回父菜单"
+    "menu.back": "返回父菜单",
+    "dateFilterDropdown.label": "选择日期范围",
+    "dateFilterDropdown.relativeForm.label": "精细度",
+    "properties.legend.series.item.description": "按 Space 或 Enter 键切换可见性",
+    "properties.legend.more.button": "在对话框中显示所有图例项",
+    "properties.legend.series.named": "传奇：{name}",
+    "properties.legend.series.unnamed": "可视化图例"
 }

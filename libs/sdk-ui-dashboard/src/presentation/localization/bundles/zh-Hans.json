@@ -71,7 +71,7 @@
     "filters.config.warning.conflictingIdentifiers": "已忽略控制面板日期筛选器配置，因为它包含具有相同标识符的日期筛选器选项。",
     "filters.config.warning.notAvailable": "项目的日期筛选器配置未定义，或者您没有其访问权限。",
     "filters.config.warning.workspace.notAvailable": "工作区日期筛选器配置未定义，或者您没有其访问权限。",
-    "filters.configurationPanel.header": "过滤器配置",
+    "filters.configurationPanel.header": "筛选器",
     "filters.configurationPanel.sectionHeader.interactions": "交互",
     "filters.configurationPanel.crossFiltering.toggle": "交叉筛选",
     "kpi.noData": "当前筛选器设置无数据。请更改筛选器。",
@@ -755,5 +755,15 @@
     "drill_modal_picker.label": "选择练习动作",
     "dialogs.schedule.email.recipients.label": "收件人",
     "controlButtons.options.closeMenu": "关闭菜单",
-    "menu.close": "关闭菜单"
+    "menu.close": "关闭菜单",
+    "options.menu.export.dialog.EXCEL": "导出数据（.xlsx）",
+    "options.menu.export.dialog.widget.EXCEL": "导出格式化数据（.xlsx）",
+    "options.menu.export.dialog.includeExportInfo": "包含导出信息表",
+    "options.menu.export.image.PNG": "快照 (.png)",
+    "dialogs.automation.filters.showAll.ariaLabel": "展开以显示所有应用的过滤器",
+    "dialogs.automation.filters.showLess.ariaLabel": "折叠以显示较少应用的过滤器",
+    "dialogs.automation.applyCurrentFilters.confirm.title": "使用当前过滤器进行编辑？",
+    "dialogs.automation.applyCurrentFilters.confirm.submit": "编辑",
+    "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>警告</b>：创建此警报时使用的某些筛选器不再可用或有效。编辑操作将应用当前的仪表板筛选器。",
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>警告</b>：创建此计划时使用的某些筛选器不再可用或有效。编辑将应用当前的仪表板筛选器。"
 }

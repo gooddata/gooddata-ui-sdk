@@ -730,5 +730,11 @@
     "filters.staticPeriod.errors.endDateBeforeStartDate": "Błąd: Nieprawidłowa data końcowa — ustaw datę po dacie początkowej.",
     "filters.staticPeriod.errors.endTimeBeforeStartTime": "Błąd: Nieprawidłowy czas zakończenia — ustaw czas po czasie rozpoczęcia.",
     "menu.close": "Zamknij menu",
-    "menu.back": "Powrót do menu nadrzędnego"
+    "menu.back": "Powrót do menu nadrzędnego",
+    "dateFilterDropdown.label": "Wybierz zakres dat",
+    "dateFilterDropdown.relativeForm.label": "Granularność",
+    "properties.legend.series.item.description": "Naciśnij Spację lub Enter, aby przełączyć widoczność",
+    "properties.legend.more.button": "Pokaż wszystkie elementy legendy w oknie dialogowym",
+    "properties.legend.series.named": "Legenda: {name}",
+    "properties.legend.series.unnamed": "Legenda wizualizacji"
 }

@@ -71,7 +71,7 @@
     "filters.config.warning.conflictingIdentifiers": "儀表板日期篩選器配置被忽略，因為它包含具有相同標識符嘅日期篩選器選項。",
     "filters.config.warning.notAvailable": "項目日期篩選器配置未定義，抑或你冇訪問權限。",
     "filters.config.warning.workspace.notAvailable": "工作區日期篩選器配置未定義，抑或你冇訪問權限。",
-    "filters.configurationPanel.header": "過濾器配置",
+    "filters.configurationPanel.header": "篩選器",
     "filters.configurationPanel.sectionHeader.interactions": "相互作用",
     "filters.configurationPanel.crossFiltering.toggle": "交叉過濾",
     "kpi.noData": "冇當前過濾器設置嘅數據。 嘗試更換過濾器。",
@@ -755,5 +755,15 @@
     "drill_modal_picker.label": "選擇drill action",
     "dialogs.schedule.email.recipients.label": "收件人",
     "controlButtons.options.closeMenu": "關閉餐牌",
-    "menu.close": "關閉餐牌"
+    "menu.close": "關閉餐牌",
+    "options.menu.export.dialog.EXCEL": "導出數據（.xlsx）",
+    "options.menu.export.dialog.widget.EXCEL": "導出格式化數據（.xlsx）",
+    "options.menu.export.dialog.includeExportInfo": "包含包含導出信息嘅工作表",
+    "options.menu.export.image.PNG": "快照（.png）",
+    "dialogs.automation.filters.showAll.ariaLabel": "展開以顯示所有應用嘅篩選器",
+    "dialogs.automation.filters.showLess.ariaLabel": "摺疊以顯示應用較少的過濾器",
+    "dialogs.automation.applyCurrentFilters.confirm.title": "使用當前過濾器進行編輯？",
+    "dialogs.automation.applyCurrentFilters.confirm.submit": "編輯",
+    "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>警告</b>：創建此警報時使用的某些篩選器不再可用或無效。 編輯將應用當前嘅控制面板過濾器。",
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>警告</b>：創建此計劃時使用的某些篩選器不再可用或無效。 編輯將應用當前嘅控制面板過濾器。"
 }
