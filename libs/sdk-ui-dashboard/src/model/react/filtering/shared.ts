@@ -1,6 +1,12 @@
 // (C) 2020-2025 GoodData Corporation
 
-import { filterLocalIdentifier, IFilter } from "@gooddata/sdk-model";
+import {
+    filterIsEmpty,
+    filterLocalIdentifier,
+    IFilter,
+    isAllTimeDateFilter,
+    isAttributeFilter,
+} from "@gooddata/sdk-model";
 import { ICrossFilteringItem } from "../../store/index.js";
 
 /**
@@ -24,5 +30,27 @@ export function sanitizeWidgetFilters(
     filters: IFilter[],
     crossFilteringItems: ICrossFilteringItem[],
 ): IFilter[] {
-    return removeCrossFilteringFilters(filters, crossFilteringItems);
+    const withoutCrossFiltering = removeCrossFilteringFilters(filters, crossFilteringItems);
+    const withoutAllTimeDateFilters = removeAllTimeDateFilters(withoutCrossFiltering);
+    return removeEmptyAttributeFilters(withoutAllTimeDateFilters);
+}
+
+/**
+ * @internal
+ */
+function removeEmptyAttributeFilters(filters: IFilter[]): IFilter[] {
+    return filters.filter((f) => {
+        if (isAttributeFilter(f)) {
+            return !filterIsEmpty(f);
+        }
+        return true;
+    });
+}
+
+/**
+ * @internal
+ * @returns
+ */
+function removeAllTimeDateFilters(filters: IFilter[]): IFilter[] {
+    return filters.filter((f) => !isAllTimeDateFilter(f));
 }
