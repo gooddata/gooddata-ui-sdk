@@ -24,14 +24,7 @@ export const getImplicitGranularPermissions = (
         case "ANALYZE":
             return ["CREATE_FILTER_VIEW"];
         case "MANAGE":
-            return [
-                "EXPORT",
-                "EXPORT_PDF",
-                "EXPORT_TABULAR",
-                "CREATE_AUTOMATION",
-                "CREATE_FILTER_VIEW",
-                "USE_AI_ASSISTANT",
-            ];
+            return ["EXPORT", "EXPORT_PDF", "EXPORT_TABULAR", "CREATE_AUTOMATION", "CREATE_FILTER_VIEW"];
         default:
             return [];
     }
@@ -132,13 +125,13 @@ export const isPermissionDisabled = (
     selectedWorkspacePermission: WorkspacePermission,
     selectedGranularPermissions: WorkspacePermissions,
 ) => {
-    const isManagePermission = selectedWorkspacePermission === "MANAGE";
+    const isManageWithNoAi = selectedWorkspacePermission === "MANAGE" && permission !== "USE_AI_ASSISTANT";
     const isAnalyzeWithCreateFilterView =
         selectedWorkspacePermission === "ANALYZE" && permission === "CREATE_FILTER_VIEW";
     const isExportSubPermission =
         selectedGranularPermissions.includes("EXPORT") && exportSubPermissions.includes(permission);
 
-    return isManagePermission || isAnalyzeWithCreateFilterView || isExportSubPermission;
+    return isManageWithNoAi || isAnalyzeWithCreateFilterView || isExportSubPermission;
 };
 
 /**
@@ -147,11 +140,17 @@ export const isPermissionDisabled = (
  * Returns the list of permissions without implicit ones.
  */
 export const removeRedundantPermissions = (permissions: WorkspacePermissions): WorkspacePermissions => {
+    let sanitizedPermissions: WorkspacePermission[];
+
     if (permissions.includes("MANAGE")) {
-        return ["MANAGE"];
+        sanitizedPermissions = ["MANAGE"];
+        if (permissions.includes("USE_AI_ASSISTANT")) {
+            sanitizedPermissions.push("USE_AI_ASSISTANT");
+        }
+        return sanitizedPermissions;
     }
 
-    let sanitizedPermissions = [...permissions];
+    sanitizedPermissions = [...permissions];
     if (permissions.includes("ANALYZE")) {
         sanitizedPermissions = sanitizedPermissions.filter((p) => p !== "VIEW");
         sanitizedPermissions = sanitizedPermissions.filter((p) => p !== "CREATE_FILTER_VIEW");
