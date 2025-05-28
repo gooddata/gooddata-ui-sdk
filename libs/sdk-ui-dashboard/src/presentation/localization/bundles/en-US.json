@@ -163,12 +163,12 @@
         "limit": 0
     },
     "options.menu.export.dialog.EXCEL": {
-        "value": "Export Data (.xlsx)",
+        "value": "Export data (.xlsx)",
         "comment": "Dialog title to export whole KPI dashboard to EXCEL",
         "limit": 0
     },
     "options.menu.export.dialog.widget.EXCEL": {
-        "value": "Export Formatted data (.xlsx)",
+        "value": "Export formatted data (.xlsx)",
         "comment": "Dialog title to export widget to EXCEL",
         "limit": 0
     },
