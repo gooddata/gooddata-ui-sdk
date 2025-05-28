@@ -551,6 +551,7 @@ export interface INotificationsPanelHeaderComponentProps {
 // @public (undocumented)
 export interface INotificationsPanelProps extends INotificationsPanelCustomComponentsProps {
     backend?: IAnalyticalBackend;
+    enableScheduleNotifications?: boolean;
     itemHeight?: number;
     itemPadding?: number;
     itemsGap?: number;

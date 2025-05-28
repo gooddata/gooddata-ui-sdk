@@ -3,7 +3,7 @@ import React from "react";
 import { INotification } from "@gooddata/sdk-model";
 import { bem } from "../bem.js";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
-import { AlertNotification } from "./AlertNotification.js";
+import { Notification } from "./Notification.js";
 
 /**
  * Props for the Notification component.
@@ -39,12 +39,12 @@ export function DefaultNotification({
     markNotificationAsRead,
     onNotificationClick,
 }: INotificationComponentProps) {
-    if (notification.notificationType !== "alertNotification") {
+    if (notification.notificationType === "testNotification") {
         return <UnsupportedNotificationType />;
     }
 
     return (
-        <AlertNotification
+        <Notification
             notification={notification}
             markNotificationAsRead={markNotificationAsRead}
             onNotificationClick={onNotificationClick}
