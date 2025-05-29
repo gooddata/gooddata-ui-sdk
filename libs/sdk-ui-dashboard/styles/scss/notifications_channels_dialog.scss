@@ -3,6 +3,7 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "_variables" as variables;
 @use "zIndexes";
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as mixins;
 
 $horizontal-space: 10px;
 $vertical-space: 20px;
@@ -470,6 +471,21 @@ $min-content-height: 110px;
         height: 40px;
         margin: auto;
         white-space: nowrap;
+    }
+
+    .gd-schedule-email__list {
+        &:focus-visible {
+            outline: none;
+
+            .gd-schedule-email__item--isFocused .gd-notifications-channel-delete-icon {
+                display: block;
+            }
+
+            .gd-schedule-email__item--isFocusedSelectItem,
+            .gd-schedule-email__item__button--isFocused {
+                @include mixins.focus-ring;
+            }
+        }
     }
 
     .gd-notifications-channel-title {

@@ -98,6 +98,13 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
                                 data: item,
                             }),
                         );
+                        const handleKeyDown = (e: React.KeyboardEvent) => {
+                            if (e.key !== "Tab") {
+                                return;
+                            }
+
+                            closeDropdown();
+                        };
 
                         return (
                             <UiListbox
@@ -110,6 +117,7 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
                                 onSelect={(item) => {
                                     onChange(item.id);
                                 }}
+                                onUnhandledKeyDown={handleKeyDown}
                                 onClose={closeDropdown}
                                 ariaAttributes={ariaAttributes}
                                 InteractiveItemComponent={({ item, isSelected, onSelect, isFocused }) => {

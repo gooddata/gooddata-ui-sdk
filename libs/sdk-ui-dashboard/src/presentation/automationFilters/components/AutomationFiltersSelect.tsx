@@ -20,6 +20,7 @@ import {
     Bubble,
     BubbleHoverTrigger,
     Icon,
+    isActionKey,
     OverlayPositionType,
     Typography,
     UiButton,
@@ -101,6 +102,13 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
     const intl = useIntl();
     const [isExpanded, setIsExpanded] = useState(false);
     const isExpandable = filters.length > COLLAPSED_FILTERS_COUNT;
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (isActionKey(e)) {
+            e.preventDefault();
+            handleStoreFiltersChange(!storeFilters);
+        }
+    };
 
     return (
         <div className="gd-input-component gd-notification-channels-automation-filters s-gd-notifications-channels-dialog-automation-filters">
@@ -214,6 +222,7 @@ export const AutomationFiltersSelect: React.FC<IAutomationFiltersSelectProps> = 
                             className="input-checkbox s-checkbox"
                             checked={storeFilters}
                             onChange={(e) => handleStoreFiltersChange(e.target.checked)}
+                            onKeyDown={handleKeyDown}
                             aria-label={intl.formatMessage({
                                 id: "dialogs.automation.filters.attachment",
                             })}

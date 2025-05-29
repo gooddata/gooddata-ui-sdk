@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { useCallback } from "react";
 import cx from "classnames";
@@ -14,6 +14,7 @@ const defaultTooltipAlignPoints = [{ align: "cl cr" }, { align: "cr cl" }];
  */
 export interface IAddButtonProps {
     title: JSX.Element;
+    id?: string;
     isDisabled?: boolean;
     onClick?: () => void;
     tooltip?: JSX.Element;
@@ -27,6 +28,7 @@ export interface IAddButtonProps {
 export const AddButton: React.FC<IAddButtonProps> = (props) => {
     const {
         title,
+        id,
         isDisabled,
         onClick,
         tooltip,
@@ -57,7 +59,7 @@ export const AddButton: React.FC<IAddButtonProps> = (props) => {
 
     if (!tooltip) {
         return (
-            <Button className={buttonClassNames} onClick={handleClick}>
+            <Button id={id} className={buttonClassNames} onClick={handleClick}>
                 {title}
             </Button>
         );
@@ -65,7 +67,7 @@ export const AddButton: React.FC<IAddButtonProps> = (props) => {
 
     return (
         <BubbleHoverTrigger showDelay={0} hideDelay={0}>
-            <Button className={buttonClassNames} onClick={handleClick}>
+            <Button id={id} className={buttonClassNames} onClick={handleClick}>
                 {title}
             </Button>
             <Bubble className="bubble-primary" alignPoints={tooltipAlignPoints}>

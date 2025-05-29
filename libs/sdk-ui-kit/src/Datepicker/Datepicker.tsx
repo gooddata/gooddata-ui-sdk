@@ -414,7 +414,6 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
                     onKeyDown={this.onKeyDown}
                     tabIndex={tabIndex}
                     onClick={() => this.setState({ isOpen: true })}
-                    onFocus={() => this.setState({ isOpen: true })}
                     ref={this.inputRef}
                     value={inputValue}
                     className={this.getInputClasses()}

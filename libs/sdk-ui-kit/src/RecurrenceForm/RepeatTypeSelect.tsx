@@ -163,6 +163,14 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
                     data: item,
                 }));
 
+                const handleKeyDown = (e: React.KeyboardEvent) => {
+                    if (e.key !== "Tab") {
+                        return;
+                    }
+
+                    closeDropdown();
+                };
+
                 return (
                     <UiListbox
                         shouldKeyboardActionStopPropagation={true}
@@ -174,6 +182,7 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
                         onSelect={(item) => {
                             onChange(item.id);
                         }}
+                        onUnhandledKeyDown={handleKeyDown}
                         onClose={closeDropdown}
                         ariaAttributes={ariaAttributes}
                         InteractiveItemComponent={({ item, isSelected, onSelect, isFocused }) => {
