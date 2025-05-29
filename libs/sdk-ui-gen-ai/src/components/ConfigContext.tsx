@@ -3,12 +3,11 @@ import * as React from "react";
 import { CatalogItem } from "@gooddata/sdk-model";
 
 export type ConfigContext = {
-    allowCreateVisualization: boolean;
     allowNativeLinks: boolean;
+    canManage: boolean;
+    canAnalyze: boolean;
     linkHandler?: (linkClickEvent: LinkHandlerEvent) => void;
     catalogItems?: CatalogItem[];
-    canManage?: boolean;
-    canAnalyze?: boolean;
 };
 
 /**
@@ -24,13 +23,13 @@ export type LinkHandlerEvent = {
 };
 
 const configContext = React.createContext<ConfigContext>({
-    allowCreateVisualization: false,
     allowNativeLinks: false,
+    canManage: false,
+    canAnalyze: false,
 });
 
 export const ConfigProvider: React.FC<React.PropsWithChildren<ConfigContext>> = ({
     children,
-    allowCreateVisualization,
     allowNativeLinks,
     linkHandler,
     catalogItems,
@@ -39,14 +38,13 @@ export const ConfigProvider: React.FC<React.PropsWithChildren<ConfigContext>> = 
 }) => {
     const value = React.useMemo(
         () => ({
-            allowCreateVisualization,
             allowNativeLinks,
             linkHandler,
             catalogItems,
             canManage,
             canAnalyze,
         }),
-        [allowCreateVisualization, allowNativeLinks, linkHandler, catalogItems, canManage, canAnalyze],
+        [allowNativeLinks, linkHandler, catalogItems, canManage, canAnalyze],
     );
 
     return <configContext.Provider value={value}>{children}</configContext.Provider>;

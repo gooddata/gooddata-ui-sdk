@@ -39,8 +39,8 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
     locale,
     isOpen,
     onClose,
-    canManage,
-    canAnalyze,
+    canManage = false,
+    canAnalyze = false,
     eventHandlers,
     catalogItems,
     colorPalette,
@@ -78,7 +78,6 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
                     <WorkspaceProvider workspace={effectiveWorkspace}>
                         <OverlayControllerProvider overlayController={chatOverlayController}>
                             <ConfigProvider
-                                allowCreateVisualization={canManage ?? false}
                                 allowNativeLinks={true}
                                 linkHandler={onLinkClick}
                                 catalogItems={catalogItems}

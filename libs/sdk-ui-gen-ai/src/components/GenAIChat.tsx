@@ -74,7 +74,6 @@ export const GenAIChat: React.FC<GenAIChatProps> = ({
                 <BackendProvider backend={effectiveBackend}>
                     <WorkspaceProvider workspace={effectiveWorkspace}>
                         <ConfigProvider
-                            allowCreateVisualization={false}
                             allowNativeLinks={false}
                             linkHandler={onLinkClick}
                             catalogItems={catalogItems}
