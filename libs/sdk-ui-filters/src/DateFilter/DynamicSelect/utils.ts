@@ -102,7 +102,10 @@ const getOption = (
     return {
         type: "option",
         value: offset,
-        label: intl.formatMessage(messages[`${dateCode}_${offsetCode}`], { offset, n: Math.abs(offset) }),
+        label:
+            dateCode === undefined
+                ? granularity
+                : intl.formatMessage(messages[`${dateCode}_${offsetCode}`], { offset, n: Math.abs(offset) }),
     };
 };
 

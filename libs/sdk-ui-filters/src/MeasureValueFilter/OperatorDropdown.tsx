@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
@@ -47,7 +47,12 @@ export class OperatorDropdown extends React.PureComponent<IOperatorDropdownProps
         const { intl, operator, isDisabled } = this.props;
         const { opened } = this.state;
 
-        const title = capitalize(intl.formatMessage({ id: getOperatorTranslationKey(operator) }));
+        const operatorTranslationKey = getOperatorTranslationKey(operator);
+        const title = capitalize(
+            operatorTranslationKey === undefined
+                ? operator
+                : intl.formatMessage({ id: operatorTranslationKey }),
+        );
 
         const buttonClasses = cx(
             "gd-mvf-operator-dropdown-button",
