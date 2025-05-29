@@ -1,4 +1,5 @@
 // (C) 2025 GoodData Corporation
+import React from "react";
 import { getFocusableElements, makeLinearKeyboardNavigation } from "@gooddata/sdk-ui-kit";
 
 /**
@@ -39,6 +40,7 @@ interface IDateFilterRelativeFormKeyboardNavigationConfig {
  * Checks if keyboard navigation should be handled for the given element
  * @param ref - Reference to the container element
  * @param activeElement - Currently active HTML element
+ * @param role - Role of the active HTML element
  * @returns boolean indicating if keyboard navigation should be handled
  * @internal
  */
@@ -80,57 +82,55 @@ const findNextFocusableElement = (
     return nextElement;
 };
 
+// Iterates through dropdown list, exclude period input, cancel and apply button.
+const handleTabNavigation = (
+    event: React.KeyboardEvent,
+    dateFilterContainerRef: React.MutableRefObject<HTMLDivElement>,
+): void => {
+    if (event.key !== "Tab") {
+        return;
+    }
+
+    event.stopPropagation();
+    event.preventDefault();
+
+    const focusableElementsSelector = [
+        '[tabindex]:not([tabindex="-1"]):not(:disabled):not([aria-disabled="true"])',
+        'input:not(:disabled):not([aria-disabled="true"])',
+    ].join(",");
+
+    const focusableElements = Array.from(
+        dateFilterContainerRef.current?.querySelectorAll<HTMLElement>(focusableElementsSelector) ?? [],
+    );
+
+    const active = document.activeElement as HTMLElement;
+    const currentIndex = focusableElements.indexOf(active);
+
+    if (currentIndex !== -1) {
+        const direction = event.shiftKey ? -1 : 1;
+        const nextIndex = (currentIndex + direction + focusableElements.length) % focusableElements.length;
+        focusableElements[nextIndex]?.focus();
+    } else {
+        const direction = event.shiftKey ? focusableElements.length - 1 : 1;
+        focusableElements[direction]?.focus();
+    }
+};
+
 /**
  * Creates a keyboard event handler for the date filter component
  * @param config - Configuration object containing ref and optional close handler
  * @returns Keyboard event handler function
  * @internal
  */
-export const createDateFilterKeyboardHandler = ({
-    dateFilterContainerRef,
-    dateFilterBodyRef,
-    closeDropdown,
-}: IDateFilterKeyboardNavigationConfig) => {
-    return (event: React.KeyboardEvent): void => {
+export const createDateFilterKeyboardHandler =
+    ({ dateFilterContainerRef, dateFilterBodyRef, closeDropdown }: IDateFilterKeyboardNavigationConfig) =>
+    (event: React.KeyboardEvent): void => {
         if (!dateFilterBodyRef.current || !dateFilterContainerRef.current) {
             return;
         }
 
         const items = Array.from(dateFilterBodyRef.current.querySelectorAll("[tabindex]"));
         const activeElement = document.activeElement as HTMLElement;
-
-        // Iterates through dropdown list, exclude period input, cancel and apply button.
-        const handleTabNavigation = (event: React.KeyboardEvent): void => {
-            if (event.key !== "Tab") {
-                return;
-            }
-
-            event.stopPropagation();
-            event.preventDefault();
-
-            const focusableElementsSelector = [
-                '[tabindex]:not([tabindex="-1"]):not(:disabled):not([aria-disabled="true"])',
-                'input:not(:disabled):not([aria-disabled="true"])',
-            ].join(",");
-
-            const focusableElements = Array.from(
-                dateFilterContainerRef.current?.querySelectorAll<HTMLElement>(focusableElementsSelector) ??
-                    [],
-            );
-
-            const active = document.activeElement as HTMLElement;
-            const currentIndex = focusableElements.indexOf(active);
-
-            if (currentIndex !== -1) {
-                const direction = event.shiftKey ? -1 : 1;
-                const nextIndex =
-                    (currentIndex + direction + focusableElements.length) % focusableElements.length;
-                focusableElements[nextIndex]?.focus();
-            } else {
-                const direction = event.shiftKey ? focusableElements.length - 1 : 1;
-                focusableElements[direction]?.focus();
-            }
-        };
 
         const keyboardHandler = makeLinearKeyboardNavigation({
             onFocusPrevious: () => {
@@ -170,14 +170,13 @@ export const createDateFilterKeyboardHandler = ({
             onClose: closeDropdown,
             onUnhandledKeyDown: (event) => {
                 if (event.key === "Tab") {
-                    handleTabNavigation(event);
+                    handleTabNavigation(event, dateFilterContainerRef);
                 }
             },
         });
 
         keyboardHandler(event);
     };
-};
 
 /**
  * Creates a keyboard event handler for the date filter component
@@ -190,7 +189,9 @@ export const createDateFilterRelativeFormKeyboardHandler = ({
     closeDropdown,
 }: IDateFilterRelativeFormKeyboardNavigationConfig) => {
     return (event: React.KeyboardEvent): void => {
-        if (!tabGranularityRef.current) return;
+        if (!tabGranularityRef.current) {
+            return;
+        }
 
         const items = Array.from(tabGranularityRef.current.querySelectorAll("[tabindex]"));
         const activeElement = document.activeElement as HTMLElement;
@@ -230,18 +231,17 @@ export const createDateFilterRelativeFormKeyboardHandler = ({
     };
 };
 
-export const submitAbsoluteAndRelativeDateFilterForm = (
+export const submitRelativeDateFilterForm = (
     event: React.KeyboardEvent,
-    isApplyEnabled: boolean,
-    closeDropdown: () => void,
-    onApply: () => void,
+    canSubmit: boolean,
+    onSubmit: () => void,
+    submit: () => void,
 ) => {
     if (event.key === "Enter") {
-        const canSubmitForm = isApplyEnabled && document.activeElement instanceof HTMLInputElement;
-
+        const canSubmitForm = canSubmit && document.activeElement instanceof HTMLInputElement;
         if (canSubmitForm) {
-            onApply();
-            closeDropdown();
+            submit();
+            onSubmit();
         }
     }
 

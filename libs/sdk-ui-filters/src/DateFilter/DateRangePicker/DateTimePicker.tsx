@@ -19,10 +19,10 @@ interface IDateTimePickerOwnProps {
     time: ITime;
     dateInputLabel: string;
     timeInputLabel: string;
-    onDateChange: (date: Date | undefined) => void;
-    onTimeChange: (time: ITime | undefined) => void;
+    onDateChange: (date: Date | undefined, shouldSubmitForm?: boolean) => void;
+    onTimeChange: (time: ITime | undefined, shouldSubmitForm?: boolean) => void;
     onDayClick: () => void;
-    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    onDateInputKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     dateFormat: string;
     isMobile: boolean;
     isTimeEnabled: boolean;
@@ -45,7 +45,7 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
             onDateChange,
             onTimeChange,
             onDayClick,
-            onKeyDown,
+            onDateInputKeyDown,
             dateFormat,
             isMobile,
             isTimeEnabled,
@@ -83,7 +83,7 @@ const DateTimePickerComponent = React.forwardRef<HTMLInputElement, DateTimePicke
                         value={date}
                         inputLabel={dateInputLabel}
                         onChange={onDateChange}
-                        onKeyDown={onKeyDown}
+                        onKeyDown={onDateInputKeyDown}
                         onClick={onDayClick}
                         dateFormat={dateFormat}
                         accessibilityConfig={dateInputAccessibilityConfig}

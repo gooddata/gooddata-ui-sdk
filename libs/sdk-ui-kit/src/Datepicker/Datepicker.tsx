@@ -345,7 +345,9 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         const { alignPoints } = this.props;
         const container = this.datePickerContainerRef.current?.parentElement;
 
-        if (!alignPoints || !container) return;
+        if (!alignPoints || !container) {
+            return;
+        }
 
         const optimalAlignment = getOptimalAlignment({
             targetRegion: elementRegion(this.rootRef),
