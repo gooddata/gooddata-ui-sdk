@@ -139,6 +139,17 @@
             }
         }
 
+        .configuration-panel-header-title-button {
+            border: none;
+            padding: 0;
+            background: transparent;
+            cursor: pointer;
+
+            &:hover {
+                background: transparent;
+            }
+        }
+
         .configuration-panel-header-title {
             flex-grow: 1;
             color: kit-variables.$gd-color-state-blank;

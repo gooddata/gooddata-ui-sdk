@@ -6,19 +6,17 @@ import { IUiMenuItemData, UiMenuProps } from "./types.js";
 import { getContentItem, getSiblingItems } from "./itemUtils.js";
 import { useCustomContentKeyNavigation, useKeyNavigation, useUiMenuContextValue } from "./hooks.js";
 import { typedUiMenuContextStore } from "./context.js";
-import { useAutofocusOnMount } from "../../utils/useAutofocusOnMount.js";
+import { AutofocusOnMount } from "../../utils/useAutofocusOnMount.js";
 
 const ContentWrapper: FC<{
     keyboardNavigationHandler: (event: React.KeyboardEvent) => void;
     children?: React.ReactNode;
 }> = (props) => {
-    // autofocus always first element in the custom content for now
-    const autofocusRef = useAutofocusOnMount();
-
     return (
-        <div onKeyDown={props.keyboardNavigationHandler} ref={autofocusRef}>
-            {props.children}
-        </div>
+        // autofocus always first element in the custom content for now
+        <AutofocusOnMount>
+            <div onKeyDown={props.keyboardNavigationHandler}>{props.children}</div>
+        </AutofocusOnMount>
     );
 };
 

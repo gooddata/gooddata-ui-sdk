@@ -183,6 +183,7 @@ export { resolveLCMWorkspaceIdentifiers } from "./react/ClientWorkspaceContext/r
 export { usePrevious } from "./react/usePrevious.js";
 export { usePropState } from "./react/usePropState.js";
 export { useAutoupdateRef } from "./react/useAutoupdateRef.js";
+export { useCombineRefs } from "./react/useCombineRefs.js";
 export { useLocalStorage } from "./react/useLocalStorage.js";
 /*
  * Localization exports
