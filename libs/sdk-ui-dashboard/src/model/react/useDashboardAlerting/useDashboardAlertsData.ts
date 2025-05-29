@@ -81,7 +81,7 @@ export const useDashboardAlertsData = ({ alertToEdit }: IUseDashboardAlertsDataP
     const alertDialogContext = useDashboardSelector(selectAlertingDialogContext);
 
     // List / Management Dialog
-    const isAlertManagementVisible = isAlertingAvailable;
+    const isAlertManagementVisible = isAlertingAvailable && (canCreateAutomation || automations.length > 0);
     const isAlertManagementDialogOpen = useDashboardSelector(selectIsAlertsManagementDialogOpen) || false;
 
     // Widget and Insight
