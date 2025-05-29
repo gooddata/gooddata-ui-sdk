@@ -34,7 +34,6 @@ jobs:
             fi
         env:
           VERSION: ${{ inputs.version }}
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:

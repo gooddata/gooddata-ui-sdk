@@ -14,19 +14,8 @@ jobs:
             skip-bump: true
             source-branch: 'release'
 
-    update-apidocs-next:
-        uses: ./.github/workflows/rw-doc-release-apidocs.yml
-        permissions:
-            contents: write
-            id-token: write
-        secrets: inherit
-        with:
-            source-branch: "master"
-            version: "Next"
-            is-new-latest: false
-
     update-apidocs-version:
-        needs: [get-version, update-apidocs-next]
+        needs: [get-version]
         uses: ./.github/workflows/rw-doc-release-apidocs.yml
         permissions:
             contents: write
