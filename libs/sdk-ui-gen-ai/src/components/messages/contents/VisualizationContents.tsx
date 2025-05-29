@@ -182,7 +182,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                             {visualization.title}
                         </MarkdownComponent>
                     </div>
-                    {config.allowCreateVisualization && !hasVisError && !visLoading
+                    {config.canAnalyze && !hasVisError && !visLoading
                         ? (() => {
                               const trigger = (
                                   <BubbleHoverTrigger
