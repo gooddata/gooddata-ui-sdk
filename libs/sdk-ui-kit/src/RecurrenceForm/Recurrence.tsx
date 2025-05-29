@@ -88,12 +88,13 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
         <>
             <div className={recurrenceFormClasses}>
                 {label ? (
-                    <label id={labelId} className="gd-label">
+                    <label htmlFor={labelId} className="gd-label">
                         {label}
                     </label>
                 ) : null}
                 <div className="gd-recurrence-form-repeat-inner">
                     <RepeatTypeSelect
+                        id={labelId}
                         repeatType={recurrenceType}
                         startDate={startDate}
                         onChange={onRepeatTypeChange}

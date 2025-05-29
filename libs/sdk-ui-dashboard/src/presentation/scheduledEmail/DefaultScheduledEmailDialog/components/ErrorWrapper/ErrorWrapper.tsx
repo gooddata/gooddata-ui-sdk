@@ -25,7 +25,7 @@ export const ErrorWrapper: React.FC<IErrorWrapperProps> = ({
 }) => {
     return (
         <div className={className}>
-            <label id={labelId} className="gd-label">
+            <label htmlFor={labelId} className="gd-label">
                 {label}
             </label>
             <div className={labelWrapperClassName}>
