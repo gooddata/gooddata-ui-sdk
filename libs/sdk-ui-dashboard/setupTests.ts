@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { cleanup } from "@testing-library/react";
 import { afterEach, expect, vi } from "vitest";
 
@@ -32,6 +32,22 @@ global.ResizeObserver = class ResizeObserver {
     disconnect() {
         return null;
     }
+};
+
+global.IntersectionObserver = class IntersectionObserver {
+    observe() {
+        return null;
+    }
+    unobserve() {
+        return null;
+    }
+    disconnect() {
+        return null;
+    }
+    root = null;
+    rootMargin = "";
+    thresholds = [];
+    takeRecords: null;
 };
 
 expect.extend(matchers);

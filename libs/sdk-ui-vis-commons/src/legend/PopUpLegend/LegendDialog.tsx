@@ -7,8 +7,8 @@ import {
     useIsZoomed,
     ZOOM_THRESHOLD,
     useIdPrefixed,
-    useAutofocusOnMount,
     DialogCloseButton,
+    AutofocusOnMount,
 } from "@gooddata/sdk-ui-kit";
 import { legendDialogAlignPoints, legendMobileDialogAlignPoints } from "./alignPoints.js";
 
@@ -27,7 +27,6 @@ interface ILegendDialogContent {
 const LegendDialogContent: React.FC<ILegendDialogContent> = ({ title, onCloseDialog, children, id }) => {
     const isZoomed = useIsZoomed(ZOOM_THRESHOLD);
 
-    const autofocusRef = useAutofocusOnMount();
     const dialogRef = React.useRef<HTMLDivElement>(null);
 
     const handleClose = React.useCallback<React.MouseEventHandler>(
@@ -75,9 +74,9 @@ const LegendDialogContent: React.FC<ILegendDialogContent> = ({ title, onCloseDia
                     onClose={handleClose}
                 />
             </div>
-            <div className="legend-content" ref={autofocusRef}>
-                {children}
-            </div>
+            <AutofocusOnMount>
+                <div className="legend-content">{children}</div>
+            </AutofocusOnMount>
         </div>
     );
 };

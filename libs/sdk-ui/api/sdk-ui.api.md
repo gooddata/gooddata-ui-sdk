@@ -1770,6 +1770,9 @@ export const useClientWorkspaceInitialized: () => boolean;
 // @alpha
 export const useClientWorkspaceStatus: () => UseCancelablePromiseStatus;
 
+// @internal (undocumented)
+export const useCombineRefs: <T>(...refs: (React_2.MutableRefObject<T> | ((instance: T) => void) | null | undefined)[]) => (instance: T) => void;
+
 // @public
 export function useComposedPlaceholder<TContext, TPlaceholder extends IComposedPlaceholder<any, any, TContext>>(placeholder: TPlaceholder, resolutionContext?: TContext): PlaceholderResolvedValue<TPlaceholder>;
 
