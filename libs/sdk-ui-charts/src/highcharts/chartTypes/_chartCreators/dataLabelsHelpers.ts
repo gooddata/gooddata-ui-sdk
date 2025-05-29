@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import flatMap from "lodash/flatMap.js";
 import isNil from "lodash/isNil.js";
 import isArray from "lodash/isArray.js";
@@ -74,15 +74,37 @@ export const minimizeDataLabel = (point: any): void => {
 export const hideDataLabel = (point: any): void => {
     const { dataLabel } = point;
     if (dataLabel) {
+        // after migration to highcharts 10.2.0, the dataLabel.hide() is not working for treemap charts
+        // we let it here for backward compatibility and also try to hide it directly in style
         dataLabel.hide();
+    }
+
+    if (dataLabel?.element) {
+        dataLabel.attr({ visibility: "hidden" });
+        // Optionally, also set style:
+        if (dataLabel.element.style) {
+            dataLabel.element.style.visibility = "hidden";
+            dataLabel.element.style.display = "none";
+        }
     }
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const showDataLabel = (point: any): void => {
     const { dataLabel } = point;
+
     if (dataLabel) {
+        // after migration to highcharts 10.2.0, the dataLabel.show() is not working for treemap charts
+        // we let it here for backward compatibility and also try to show it directly in style
         dataLabel.show();
+    }
+
+    if (dataLabel?.element) {
+        dataLabel.attr({ visibility: "visible" });
+        if (dataLabel.element.style) {
+            dataLabel.element.style.visibility = "visible";
+            dataLabel.element.style.display = "";
+        }
     }
 };
 
