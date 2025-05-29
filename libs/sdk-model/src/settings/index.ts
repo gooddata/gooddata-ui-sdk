@@ -697,7 +697,7 @@ export interface ISettings {
     enableSnapshotExportAccessibility?: boolean;
 
     /**
-     * Enable widget export to PDF.
+     * Enable widget export to PNG image.
      */
     enableWidgetExportPdf?: boolean;
 
@@ -705,11 +705,6 @@ export interface ISettings {
      * Enable widget export to PNG image.
      */
     enableWidgetExportPngImage?: boolean;
-
-    /**
-     * Enable export to document storage and send scheduled exports to notification channels.
-     */
-    enableExportToDocumentStorage?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }

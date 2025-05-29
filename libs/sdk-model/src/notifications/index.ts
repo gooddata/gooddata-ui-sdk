@@ -241,12 +241,6 @@ export interface IWebhookAutomationInfo {
      * URL of the dashboard, or custom dashboard URL (if configured on automation).
      */
     dashboardURL: string;
-
-    /**
-     * Title of the dashboard.
-     */
-    dashboardTitle?: string;
-
     /**
      * Indicates whether the dashboard URL is custom.
      */
