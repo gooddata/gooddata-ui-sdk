@@ -2,6 +2,27 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.28.0",
+            "tag": "@gooddata/sdk-ui-all_v10.28.0",
+            "date": "Thu, 29 May 2025 06:57:15 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Introduced embeddable AI Assistant as part of public API"
+                    },
+                    {
+                        "comment": "fix attribute filter not reloading values after dropdown close when some search query is not empty"
+                    },
+                    {
+                        "comment": "fix failing storybook test for AttributeFilterStatusBar"
+                    },
+                    {
+                        "comment": "Change chart's X axis label autorotation value from -90° to -45°"
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.27.0",
             "tag": "@gooddata/sdk-ui-all_v10.27.0",
             "date": "Fri, 16 May 2025 08:01:14 GMT",
