@@ -1,6 +1,17 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Fri, 16 May 2025 08:01:14 GMT and should not be manually modified.
+This log was last generated on Thu, 29 May 2025 06:57:15 GMT and should not be manually modified.
+
+## 10.28.0
+
+Thu, 29 May 2025 06:57:15 GMT
+
+### Updates
+
+-   Introduced embeddable AI Assistant as part of public API
+-   fix attribute filter not reloading values after dropdown close when some search query is not empty
+-   fix failing storybook test for AttributeFilterStatusBar
+-   Change chart's X axis label autorotation value from -90° to -45°
 
 ## 10.27.0
 
