@@ -223,11 +223,6 @@ export interface IExportResult {
      * Trace ID.
      */
     traceId?: string;
-
-    /**
-     * Export expiration date.
-     */
-    expiresAt?: string;
 }
 
 /**

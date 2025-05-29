@@ -83,7 +83,6 @@ function convertWebhookMessageData(
             id: data.automation.id,
             title: data.automation.title,
             dashboardURL: data.automation.dashboardURL,
-            dashboardTitle: data.automation.dashboardTitle,
             isCustomDashboardURL: data.automation.isCustomDashboardURL,
         },
         recipients: data.recipients,

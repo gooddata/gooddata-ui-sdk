@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import { BubbleTrigger, IBubbleTriggerProps } from "./BubbleTrigger.js";
 
 export const SHOW_DELAY = 425;
@@ -11,7 +11,6 @@ export interface IBubbleHoverTriggerProps extends IBubbleTriggerProps {
     showDelay?: number;
     hideDelay?: number;
     hoverHideDelay?: number;
-    enabled?: boolean;
 }
 /**
  * @internal
@@ -23,7 +22,6 @@ export class BubbleHoverTrigger extends BubbleTrigger<IBubbleHoverTriggerProps> 
         hoverHideDelay: 0,
         eventsOnBubble: false,
         tagName: "span",
-        enabled: true,
     };
 
     scheduleId: number;
@@ -39,10 +37,6 @@ export class BubbleHoverTrigger extends BubbleTrigger<IBubbleHoverTriggerProps> 
     }
 
     private scheduleBubbleVisibilityChange(visible: boolean, delay: number = 0): void {
-        if (!this.props.enabled) {
-            return;
-        }
-
         this.cancelBubbleVisibilityChange();
 
         this.scheduleId = window.setTimeout(() => {

@@ -252,11 +252,6 @@ export function ScheduledMailDialogRenderer({
         );
     }
 
-    const selectedChannel = notificationChannels.find(
-        (channel) => channel.id === editedAutomation.notificationChannel,
-    );
-    const isInPlatformChannel = selectedChannel?.destinationType === "inPlatform";
-
     return (
         <>
             <Overlay
@@ -383,19 +378,15 @@ export function ScheduledMailDialogRenderer({
                                 notificationChannels={notificationChannels}
                                 notificationChannelId={editedAutomation.notificationChannel}
                             />
-                            {!isInPlatformChannel ? (
-                                <>
-                                    <SubjectForm
-                                        dashboardTitle={dashboardTitle}
-                                        editedAutomation={editedAutomation}
-                                        onChange={onSubjectChange}
-                                    />
-                                    <MessageForm
-                                        onChange={onMessageChange}
-                                        value={editedAutomation.details?.message ?? ""}
-                                    />
-                                </>
-                            ) : null}
+                            <SubjectForm
+                                dashboardTitle={dashboardTitle}
+                                editedAutomation={editedAutomation}
+                                onChange={onSubjectChange}
+                            />
+                            <MessageForm
+                                onChange={onMessageChange}
+                                value={editedAutomation.details?.message ?? ""}
+                            />
                             {widget ? (
                                 <WidgetAttachments
                                     widgetFilters={widgetFilters}

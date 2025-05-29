@@ -2,8 +2,8 @@
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { UnexpectedSdkError, useWorkspace } from "@gooddata/sdk-ui";
-
 import { isAlertNotification } from "@gooddata/sdk-model";
+
 import { useCallback, useMemo, useState } from "react";
 import { useOrganization } from "../@staging/OrganizationContext/OrganizationContext.js";
 import { useFetchNotifications } from "./useFetchNotifications.js";
@@ -36,22 +36,12 @@ export interface IUseNotificationsProps {
      * Number of items per page.
      */
     itemsPerPage: number;
-
-    /**
-     * Whether export to document storage is enabled.
-     */
-    enableScheduleNotifications: boolean;
 }
 
 /**
  * @internal
  */
-export function useNotifications({
-    workspace,
-    refreshInterval,
-    itemsPerPage,
-    enableScheduleNotifications,
-}: IUseNotificationsProps) {
+export function useNotifications({ workspace, refreshInterval, itemsPerPage }: IUseNotificationsProps) {
     const effectiveWorkspace = useWorkspace(workspace);
 
     const {
@@ -135,28 +125,21 @@ export function useNotifications({
             return notifications;
         }
 
-        const filteredNotifications = enableScheduleNotifications
-            ? notifications
-            : notifications.filter(isAlertNotification);
-
-        return filteredNotifications.map((notification) => {
+        return notifications.filter(isAlertNotification).map((notification) => {
             if (markedAsReadNotifications.includes(notification.id)) {
                 return { ...notification, isRead: true };
             }
             return notification;
         });
-    }, [notifications, markedAsReadNotifications, enableScheduleNotifications]);
+    }, [notifications, markedAsReadNotifications]);
 
     const effectiveUnreadNotifications = useMemo(() => {
         if (!unreadNotifications) {
             return unreadNotifications;
         }
 
-        const filteredUnreadNotifications = enableScheduleNotifications
-            ? unreadNotifications
-            : unreadNotifications.filter(isAlertNotification);
-
-        return filteredUnreadNotifications
+        return unreadNotifications
+            .filter(isAlertNotification)
             .map((notification) => {
                 if (markedAsReadNotifications.includes(notification.id)) {
                     return { ...notification, isRead: true };
@@ -164,17 +147,15 @@ export function useNotifications({
                 return notification;
             })
             .filter((x) => !x.isRead);
-    }, [unreadNotifications, markedAsReadNotifications, enableScheduleNotifications]);
+    }, [unreadNotifications, markedAsReadNotifications]);
 
     /**
      * Generally, we filter out notifications that are not of type alert and here we prepare
      * the correction of the total count of unread notifications retrieved from the server.
      */
     const numberOfInvalidUnreadNotifications = useMemo(() => {
-        return enableScheduleNotifications
-            ? unreadNotifications.length
-            : unreadNotifications.filter((notification) => !isAlertNotification(notification)).length;
-    }, [unreadNotifications, enableScheduleNotifications]);
+        return unreadNotifications.filter((notification) => !isAlertNotification(notification)).length;
+    }, [unreadNotifications]);
 
     return {
         notifications: effectiveNotifications,

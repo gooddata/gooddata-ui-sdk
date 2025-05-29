@@ -23,11 +23,8 @@ import {
     selectInsightByWidgetRef,
     selectAutomationsIsInitialized,
     selectFilterableWidgetByRef,
-    selectNotificationChannelsWithoutInPlatform,
-    selectNotificationChannelsCountWithoutInPlatform,
-    selectNotificationChannels,
-    selectNotificationChannelsCount,
-    selectEnableExportToDocumentStorage,
+    selectNotificationChannelsForScheduledExports,
+    selectNotificationChannelsCountForScheduledExports,
 } from "../../store/index.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { DEFAULT_MAX_AUTOMATIONS } from "../useDashboardAutomations/constants.js";
@@ -67,25 +64,10 @@ export const useDashboardScheduledEmailsData = ({
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
 
-    const enableExportToDocumentStorage = useDashboardSelector(selectEnableExportToDocumentStorage);
-
-    const notificationChannelsWithoutInPlatform = useDashboardSelector(
-        selectNotificationChannelsWithoutInPlatform,
+    const notificationChannels = useDashboardSelector(selectNotificationChannelsForScheduledExports);
+    const numberOfAvailableDestinations = useDashboardSelector(
+        selectNotificationChannelsCountForScheduledExports,
     );
-    const numberOfAvailableDestinationsWithoutInPlatform = useDashboardSelector(
-        selectNotificationChannelsCountWithoutInPlatform,
-    );
-
-    const notificationChannelsAll = useDashboardSelector(selectNotificationChannels);
-    const numberOfAvailableDestinationsAll = useDashboardSelector(selectNotificationChannelsCount);
-
-    const notificationChannels = enableExportToDocumentStorage
-        ? notificationChannelsAll
-        : notificationChannelsWithoutInPlatform;
-    const numberOfAvailableDestinations = enableExportToDocumentStorage
-        ? numberOfAvailableDestinationsAll
-        : numberOfAvailableDestinationsWithoutInPlatform;
-
     const maxAutomationsReached = automationsCount >= maxAutomations && !unlimitedAutomationsEntitlement;
 
     /**

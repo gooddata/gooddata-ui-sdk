@@ -1037,15 +1037,3 @@ export const selectEnableWidgetExportPngImage: DashboardSelector<boolean> = crea
         return Boolean(state.settings?.enableWidgetExportPngImage) ?? false;
     },
 );
-
-/**
- * Selector for the export to document storage and send scheduled exports to notification channels feature flag
- *
- * @internal
- */
-export const selectEnableExportToDocumentStorage: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return Boolean(!state.settings?.enableExportToDocumentStorage) ?? false;
-    },
-);
