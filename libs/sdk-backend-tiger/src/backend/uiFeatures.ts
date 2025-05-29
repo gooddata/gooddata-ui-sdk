@@ -363,7 +363,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDateFilterIdentifiersRollout: true,
     enableAlertsEvaluationFrequencySetup: true,
     enableRichTooManyDatapointsErrors: false,
-    enableLineChartTrendThreshold: false,
+    enableLineChartTrendThreshold: true,
     enableKDRespectLegendPosition: false,
     enableWorkspaceSettingsAppHeaderMenuItem: false,
     enableSnapshotExportAccessibility: false,
