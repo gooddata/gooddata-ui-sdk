@@ -154,6 +154,6 @@ jobs:
           uses: slackapi/slack-github-action@v1.25.0
           with:
               channel-id: ${{ matrix.channels }}
-              slack-message: "The release of *gooddata-ui-sdk@${{ needs.publish-version.outputs.version }}*, has been successful. :tada:"
+              slack-message: "The release of *gooddata-ui-sdk@${{ needs.publish-release.outputs.version }}*, has been successful. :tada:"
           env:
             SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
