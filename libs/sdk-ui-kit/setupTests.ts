@@ -70,8 +70,10 @@ global.IntersectionObserver = class IntersectionObserver {
     disconnect() {
         return null;
     }
+    takeRecords() {
+        return null;
+    }
     root = null;
     rootMargin = "";
     thresholds = [];
-    takeRecords: null;
 };
