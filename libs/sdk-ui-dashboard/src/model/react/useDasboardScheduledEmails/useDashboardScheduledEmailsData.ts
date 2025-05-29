@@ -106,7 +106,8 @@ export const useDashboardScheduledEmailsData = ({
     const scheduleEmailingDialogContext = useDashboardSelector(selectIsScheduleEmailDialogContext);
 
     // List / Management Dialog
-    const isScheduledManagementEmailingVisible = isSchedulingAvailable;
+    const isScheduledManagementEmailingVisible =
+        isSchedulingAvailable && (canCreateAutomation || automations.length > 0);
     const isScheduleEmailingManagementDialogOpen =
         useDashboardSelector(selectIsScheduleEmailManagementDialogOpen) || false;
 
