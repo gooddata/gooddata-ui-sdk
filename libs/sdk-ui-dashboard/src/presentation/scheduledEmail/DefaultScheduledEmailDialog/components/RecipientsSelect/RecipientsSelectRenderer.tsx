@@ -26,6 +26,8 @@ import {
     Bubble,
     BubbleHoverTrigger,
     IAlignPoint,
+    isEnterKey,
+    isEscapeKey,
     LoadingMask,
     Message,
     Overlay,
@@ -151,6 +153,11 @@ export interface IRecipientsSelectRendererProps {
      * Id
      */
     id: string;
+
+    /**
+     * Handle keyboard submit
+     */
+    onKeyDownSubmit?: (e: React.KeyboardEvent) => void;
 }
 
 interface IRecipientsSelectRendererState {
@@ -310,7 +317,9 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                         }
                         onInputChange={this.onSearch}
                         onMenuOpen={this.onMenuOpen}
+                        onKeyDown={this.handleKeyDown}
                         options={options}
+                        onBlur={this.onBlur}
                         value={value}
                         getOptionValue={(o) => o.id}
                         getOptionLabel={(o) => o.name ?? o.id}
@@ -725,7 +734,6 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             ...inputProps,
             id: this.props.id,
             "aria-controls": MENU_LIST_ID,
-            onBlur: this.onBlur,
         };
 
         return (
@@ -733,6 +741,17 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                 <Input {...props} />
             </div>
         );
+    };
+
+    private handleKeyDown = (e: React.KeyboardEvent) => {
+        const { onKeyDownSubmit } = this.props;
+        if (isEscapeKey(e)) {
+            e.stopPropagation();
+        }
+
+        if (isEnterKey(e)) {
+            onKeyDownSubmit?.(e);
+        }
     };
 
     private handleOnChange = (

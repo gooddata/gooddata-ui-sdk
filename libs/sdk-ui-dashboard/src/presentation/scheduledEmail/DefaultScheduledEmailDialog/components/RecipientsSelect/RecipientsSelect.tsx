@@ -89,6 +89,11 @@ interface IRecipientsSelectProps {
      * Id
      */
     id: string;
+
+    /**
+     * Handle keyboard submit
+     */
+    onKeyDownSubmit?: (e: React.KeyboardEvent) => void;
 }
 
 export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
@@ -108,6 +113,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
         notificationChannels,
         notificationChannelId,
         showLabel = true,
+        onKeyDownSubmit,
     } = props;
 
     const [search, setSearch] = useState<string>();
@@ -153,6 +159,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
             notificationChannel={notificationChannel}
             usersError={usersError}
             showLabel={showLabel}
+            onKeyDownSubmit={onKeyDownSubmit}
         />
     );
 };

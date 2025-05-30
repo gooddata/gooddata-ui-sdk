@@ -9,6 +9,7 @@ import {
     ConfirmDialogBase,
     ContentDivider,
     Hyperlink,
+    isEnterKey,
     Message,
     Overlay,
     OverlayController,
@@ -18,7 +19,7 @@ import {
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { defineMessage, useIntl } from "react-intl";
 import {
     selectDashboardTitle,
@@ -238,6 +239,17 @@ export function ScheduledMailDialogRenderer({
 
     const titleElementId = useIdPrefixed("title");
 
+    const submitDisabled = isSubmitDisabled || isSavingScheduledEmail || isExecutionTimestampMode;
+
+    const handleSubmitForm = useCallback(
+        (e: React.KeyboardEvent) => {
+            if (isEnterKey(e) && !submitDisabled) {
+                handleSaveScheduledEmail();
+            }
+        },
+        [submitDisabled, handleSaveScheduledEmail],
+    );
+
     // This should be visible only when enableAutomationFilterContext is true
     if (isApplyCurrentFiltersDialogOpen && enableAutomationFilterContext) {
         return (
@@ -288,9 +300,7 @@ export function ScheduledMailDialogRenderer({
                                 onDeleteClick={() => setScheduledEmailToDelete(editedAutomation)}
                             />
                         )}
-                        isSubmitDisabled={
-                            isSubmitDisabled || isSavingScheduledEmail || isExecutionTimestampMode
-                        }
+                        isSubmitDisabled={submitDisabled}
                         submitButtonTooltipText={
                             isExecutionTimestampMode
                                 ? intl.formatMessage({
@@ -312,6 +322,7 @@ export function ScheduledMailDialogRenderer({
                                     id: "dialogs.schedule.email.title.placeholder",
                                 })}
                                 ref={dialogTitleRef}
+                                onKeyDownSubmit={handleSubmitForm}
                             />
                         )}
                     >
@@ -353,6 +364,7 @@ export function ScheduledMailDialogRenderer({
                                 allowHourlyRecurrence={allowHourlyRecurrence}
                                 isWhiteLabeled={isWhiteLabeled}
                                 closeDropdownsOnParentScroll={CLOSE_ON_PARENT_SCROLL}
+                                onKeyDownSubmit={handleSubmitForm}
                             />
                             <ContentDivider className="gd-divider-with-margin" />
                             <DestinationSelect
@@ -377,11 +389,14 @@ export function ScheduledMailDialogRenderer({
                                 maxRecipients={maxAutomationsRecipients}
                                 notificationChannels={notificationChannels}
                                 notificationChannelId={editedAutomation.notificationChannel}
+                                onKeyDownSubmit={handleSubmitForm}
                             />
                             <SubjectForm
                                 dashboardTitle={dashboardTitle}
                                 editedAutomation={editedAutomation}
                                 onChange={onSubjectChange}
+                                onKeyDownSubmit={handleSaveScheduledEmail}
+                                isSubmitDisabled={isSubmitDisabled}
                             />
                             <MessageForm
                                 onChange={onMessageChange}

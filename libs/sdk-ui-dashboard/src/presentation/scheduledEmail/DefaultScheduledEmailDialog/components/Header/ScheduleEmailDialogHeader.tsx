@@ -12,14 +12,15 @@ enum ScheduleEmailTitleErrorType {
 
 interface IScheduledEmailDialogHeaderProps {
     title: string;
-    onChange: (value: string, isValid: boolean) => void;
-    onCancel?: () => void;
     placeholder: string;
+    onChange: (value: string, isValid: boolean) => void;
+    onKeyDownSubmit: (e: React.KeyboardEvent) => void;
+    onCancel?: () => void;
 }
 
 export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, IScheduledEmailDialogHeaderProps>(
     (props, ref) => {
-        const { title, onChange, onCancel, placeholder } = props;
+        const { title, placeholder, onChange, onCancel, onKeyDownSubmit } = props;
 
         const intl = useIntl();
         const [titleError, setTitleError] = useState<string | null>(null);
@@ -103,6 +104,7 @@ export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, ISchedule
                             value={title}
                             placeholder={placeholder}
                             onChange={handleOnChange}
+                            onKeyDown={onKeyDownSubmit}
                             autoComplete="off"
                             aria-describedby={titleError ? errorId : undefined}
                             aria-label={intl.formatMessage({

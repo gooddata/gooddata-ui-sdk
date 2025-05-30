@@ -48,3 +48,15 @@ export const isEnterKey = (event: KeyboardEvent): boolean => {
 export const isArrowKey = (event: KeyboardEvent): boolean => {
     return event.key.startsWith("Arrow");
 };
+
+/**
+ * Checks if the given keyboard event is triggered by an Escape key.
+ *
+ * @param event - The keyboard event to check.
+ * @returns `true` if the event has been triggered by an Escape key, `false` otherwise.
+ *
+ * @internal
+ */
+export const isEscapeKey = (event: KeyboardEvent): boolean => {
+    return event.key === "Escape";
+};

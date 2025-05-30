@@ -20,6 +20,7 @@ interface IDateTimeProps {
     timeFormat?: string;
     onDateChange: (date: Date | null, valid: boolean) => void;
     closeOnParentScroll?: boolean;
+    onKeyDownSubmit?: (e: React.KeyboardEvent) => void;
 }
 
 const errorMessages = defineMessages({
@@ -38,6 +39,7 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
         weekStart,
         timeFormat,
         closeOnParentScroll,
+        onKeyDownSubmit,
     } = props;
 
     const [errorDate, setErrorDate] = useState<string | null>(null);
@@ -99,7 +101,7 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
         <div className="gd-recurrence-form-datetime s-recurrence-form-datetime gd-input-component">
             <div className="gd-label">{label}</div>
             <div className="gd-recurrence-form-datetime-inner">
-                <div className="gd-recurrence-form-date">
+                <div className="gd-recurrence-form-date" onKeyDown={onKeyDownSubmit}>
                     <Datepicker
                         className={datePickerClassNames}
                         date={date}
