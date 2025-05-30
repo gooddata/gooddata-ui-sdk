@@ -3799,6 +3799,8 @@ export interface IRecurrenceFormProps {
     // (undocumented)
     onChange: (cronExpression: string, startDate: Date | null, isValid: boolean) => void;
     // (undocumented)
+    onKeyDownSubmit?: (e: React_2.KeyboardEvent) => void;
+    // (undocumented)
     onRecurrenceDropdownOpen?: () => void;
     // (undocumented)
     placeholder?: string;
@@ -4051,6 +4053,9 @@ export interface ISeparatorLineProps {
     pR?: number;
     pT?: number;
 }
+
+// @internal
+export const isEscapeKey: (event: KeyboardEvent_2) => boolean;
 
 // @internal (undocumented)
 export interface ISettingItem {

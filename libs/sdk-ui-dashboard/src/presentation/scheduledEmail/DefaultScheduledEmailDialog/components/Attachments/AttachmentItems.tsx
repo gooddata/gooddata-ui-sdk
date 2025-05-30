@@ -1,6 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import cx from "classnames";
 import {
     Button,
@@ -8,6 +8,7 @@ import {
     Dropdown,
     IAlignPoint,
     isActionKey,
+    isEscapeKey,
     OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
 import { AttachmentType, WidgetAttachmentType } from "../../types.js";
@@ -99,6 +100,15 @@ export const AttachmentWidgets: React.FC<{
     const intl = useIntl();
     const [mergeHeaders, setMergeHeaders] = useState(settings.mergeHeaders);
 
+    const handleInputKeyDown = useCallback(
+        (e: React.KeyboardEvent) => {
+            if (isActionKey(e)) {
+                setMergeHeaders(!mergeHeaders);
+            }
+        },
+        [setMergeHeaders, mergeHeaders],
+    );
+
     return (
         <>
             <AttachmentItem format="CSV" checked={csvSelected} onChange={() => onSelectionChange("CSV")} />
@@ -113,7 +123,7 @@ export const AttachmentWidgets: React.FC<{
                 overlayPositionType={overlayPositionType}
                 alignPoints={DROPDOWN_ALIGN_POINTS}
                 autofocusOnOpen={true}
-                renderButton={({ toggleDropdown }) => (
+                renderButton={({ toggleDropdown, buttonRef }) => (
                     <Button
                         className="gd-attachment-item-configuration gd-icon-settings"
                         onClick={toggleDropdown}
@@ -122,10 +132,19 @@ export const AttachmentWidgets: React.FC<{
                                 id: "dialogs.schedule.management.attachments.xlsx.settings",
                             }),
                         }}
+                        buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
                     />
                 )}
                 renderBody={({ closeDropdown }) => (
-                    <div className="gd-attachment-settings-dropdown">
+                    <div
+                        className="gd-attachment-settings-dropdown"
+                        onKeyDown={(e) => {
+                            if (isEscapeKey(e)) {
+                                e.stopPropagation();
+                                closeDropdown();
+                            }
+                        }}
+                    >
                         <div className="gd-list-title">
                             <FormattedMessage id="dialogs.schedule.management.attachments.xlsx.settings" />
                             <div className="gd-close-button">
@@ -145,6 +164,7 @@ export const AttachmentWidgets: React.FC<{
                                     type="checkbox"
                                     className="input-checkbox"
                                     onChange={() => setMergeHeaders(!mergeHeaders)}
+                                    onKeyDown={handleInputKeyDown}
                                     checked={mergeHeaders}
                                 />
                                 <span className="input-label-text">

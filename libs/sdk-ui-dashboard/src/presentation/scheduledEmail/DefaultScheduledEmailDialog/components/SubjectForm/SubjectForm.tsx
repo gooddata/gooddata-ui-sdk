@@ -15,10 +15,18 @@ enum ScheduleEmailSubjectErrorType {
 interface ISubjectFormProps {
     dashboardTitle: string;
     editedAutomation: IAutomationMetadataObjectDefinition;
+    isSubmitDisabled?: boolean;
     onChange: (value: string, isValid: boolean) => void;
+    onKeyDownSubmit: () => void;
 }
 
-export const SubjectForm: React.FC<ISubjectFormProps> = ({ dashboardTitle, editedAutomation, onChange }) => {
+export const SubjectForm: React.FC<ISubjectFormProps> = ({
+    dashboardTitle,
+    editedAutomation,
+    isSubmitDisabled,
+    onChange,
+    onKeyDownSubmit,
+}) => {
     const intl = useIntl();
     const [subjectError, setSubjectError] = useState<string | null>(null);
 
@@ -91,6 +99,11 @@ export const SubjectForm: React.FC<ISubjectFormProps> = ({ dashboardTitle, edite
                     // TODO improve typings of Input in ui-kit to have properly typed the onChange related to the input type
                     handleOnChange as any
                 }
+                onEnterKeyPress={() => {
+                    if (!isSubmitDisabled) {
+                        onKeyDownSubmit();
+                    }
+                }}
                 autocomplete="off"
                 onBlur={handleOnBlur}
                 accessibilityConfig={{

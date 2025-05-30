@@ -46,6 +46,7 @@ export interface IRecurrenceFormProps {
     isWhiteLabeled?: boolean;
     onRecurrenceDropdownOpen?: () => void;
     closeDropdownsOnParentScroll?: boolean;
+    onKeyDownSubmit?: (e: React.KeyboardEvent) => void;
 }
 
 const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
@@ -70,6 +71,7 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
         isWhiteLabeled,
         onRecurrenceDropdownOpen,
         closeDropdownsOnParentScroll,
+        onKeyDownSubmit,
     } = props;
     const intl = useIntl();
 
@@ -143,6 +145,7 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
                     weekStart={weekStart}
                     timeFormat={timeFormat}
                     closeOnParentScroll={closeDropdownsOnParentScroll}
+                    onKeyDownSubmit={onKeyDownSubmit}
                 />
             )}
             <Recurrence
