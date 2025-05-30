@@ -31,17 +31,17 @@ jobs:
               env:
                   VERSION: ${{ inputs.version }}
 
-    gate-approval:
-        needs: check-input-version-param
-        runs-on: ubuntu-latest
-        environment:
-            name: production
-        steps:
-            - run: echo "Initiating approval"
+                    #    gate-approval:
+                    #        needs: check-input-version-param
+                    #        runs-on: ubuntu-latest
+                    #        environment:
+                    #            name: production
+                    #        steps:
+                    #            - run: echo "Initiating approval"
 
 
     publish-release-npm:
-      needs: [gate-approval, check-input-version-param]
+      needs: [check-input-version-param]
       uses: ./.github/workflows/rw-perform-release-patch.yml
       permissions:
         pull-requests: write

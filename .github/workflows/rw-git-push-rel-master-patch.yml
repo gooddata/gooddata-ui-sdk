@@ -28,7 +28,7 @@ jobs:
       - name: Add rel chages to master
         uses: nick-fields/retry@v3
         env:
-          TARGET_BRANCH: master
+          TARGET_BRANCH: master2
           SOURCE_BRANCH: ${{ inputs.source-branch }}
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
         with:

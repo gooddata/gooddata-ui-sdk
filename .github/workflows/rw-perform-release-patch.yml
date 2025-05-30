@@ -45,18 +45,18 @@ jobs:
               env:
                   VERSION: ${{ needs.publish-release.outputs.version }}
 
-    add-release-tag:
-        needs: [publish-release,prepare-variables]
-        uses: ./.github/workflows/rw-git-create-tag.yml
-        permissions:
-          contents: write
-        with:
-          source-branch: ${{ inputs.source-branch }}
-          version: ${{ needs.prepare-variables.outputs.version }}
-          is-latest: ${{ needs.publish-release.outputs.is-latest}}
+                    #    add-release-tag:
+                    #        needs: [publish-release,prepare-variables]
+                    #        uses: ./.github/workflows/rw-git-create-tag.yml
+                    #        permissions:
+                    #          contents: write
+                    #        with:
+                    #          source-branch: ${{ inputs.source-branch }}
+                    #          version: ${{ needs.prepare-variables.outputs.version }}
+                    #          is-latest: ${{ needs.publish-release.outputs.is-latest}}
 
     backport-rel-to-master:
-      needs: [add-release-tag, prepare-variables]
+      needs: [prepare-variables]
       uses: ./.github/workflows/rw-git-push-rel-master-patch.yml
       permissions:
         contents: write
@@ -65,21 +65,21 @@ jobs:
       with:
         source-branch: ${{ inputs.source-branch }}
 
-    slack-notification:
-      runs-on: [ubuntu-latest]
-      needs: [backport-rel-to-master]
-      steps:
-        - name: Set up message
-          id: set-up-message
-          run: |
-            echo "RELEASE_MESSAGE=The changelog from the ${SOURCE_BRANCH} was ported to master branch" >> $GITHUB_ENV
-          env:
-            SOURCE_BRANCH: ${{ inputs.source-branch }}
-
-        - name: Notify to slack
-          uses: slackapi/slack-github-action@v1.25.0
-          with:
-            channel-id: "#javascript-notifications"
-            slack-message: ${{ env.RELEASE_MESSAGE }}
-          env:
-            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          #    slack-notification:
+          #      runs-on: [ubuntu-latest]
+          #      needs: [backport-rel-to-master]
+          #      steps:
+          #        - name: Set up message
+          #          id: set-up-message
+          #          run: |
+          #            echo "RELEASE_MESSAGE=The changelog from the ${SOURCE_BRANCH} was ported to master branch" >> $GITHUB_ENV
+          #          env:
+          #            SOURCE_BRANCH: ${{ inputs.source-branch }}
+          #
+          #        - name: Notify to slack
+          #          uses: slackapi/slack-github-action@v1.25.0
+          #          with:
+          #            channel-id: "#javascript-notifications"
+          #            slack-message: ${{ env.RELEASE_MESSAGE }}
+          #          env:
+          #            SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

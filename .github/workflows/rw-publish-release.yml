@@ -105,53 +105,53 @@ jobs:
           IS_LATEST: ${{ steps.check-release-is-latest.outputs.is-latest }}
           BUMP: ${{ inputs.bump }}
 
-  publish-release:
-    needs: [bump-version,prape-release-releasde-tag]
-    uses: ./.github/workflows/rw-publish-version.yml
-    permissions:
-      contents: read
-      id-token: write
-    secrets: inherit
-    with:
-      source-branch: ${{ inputs.source-branch }}
-      release-tag: ${{ needs.prape-release-releasde-tag.outputs.release_tag }}
-
-  check-npm-package:
-    outputs:
-      verified: ${{ steps.check-npm-package.outputs.exists }}
-    runs-on: [ubuntu-latest]
-    needs: [bump-version,publish-release]
-    steps:
-      - name: Check NPM package
-        id: check-npm-package
-        uses: gooddata/gooddata-ui-sdk/.github/actions/check-npm-version@master
-        with:
-          package: "@gooddata/sdk-ui"
-          version: ${{ needs.bump-version.outputs.version }}
-
-  slack-notification:
-    runs-on: [ubuntu-latest]
-    needs: [bump-version, check-npm-package]
-    steps:
-      - name: Set up message
-        id: set-up-message
-        run: |
-            if [[ "$NPM_PACKAGE_VERIFIED" == "true" ]]; then
-              echo "RELEASE_MESSAGE=The latest *${BUMP}* version, *gooddata-ui-sdk@${RELEASE_VERSION}*, has been successfully published on NPM by the user *${GITHUB_USER}*. :tada:" >> $GITHUB_ENV
-            else
-              NPM_PACKAGE_LINK="https://www.npmjs.com/package/@gooddata/sdk-ui/v/${RELEASE_VERSION}"
-              SLACK_LINK="<$NPM_PACKAGE_LINK|link>"
-              echo "RELEASE_MESSAGE=The latest *${BUMP}* version, *gooddata-ui-sdk@${RELEASE_VERSION}*, has been published on NPM by the user *${GITHUB_USER}*, but the NPM package verification failed. Check it on NPM manually at $SLACK_LINK. :warning:" >> $GITHUB_ENV
-            fi
-        env:
-          RELEASE_VERSION: ${{ needs.bump-version.outputs.version }}
-          BUMP: ${{ inputs.bump }}
-          GITHUB_USER: ${{ github.actor }}
-          NPM_PACKAGE_VERIFIED: ${{ needs.check-npm-package.outputs.verified }}
-      - name: Notify to slack
-        uses: slackapi/slack-github-action@v1.25.0
-        with:
-          channel-id: "#javascript-notifications"
-          slack-message: ${{ env.RELEASE_MESSAGE }}
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+            #  publish-release:
+            #    needs: [bump-version,prape-release-releasde-tag]
+            #    uses: ./.github/workflows/rw-publish-version.yml
+            #    permissions:
+            #      contents: read
+            #      id-token: write
+            #    secrets: inherit
+            #    with:
+            #      source-branch: ${{ inputs.source-branch }}
+            #      release-tag: ${{ needs.prape-release-releasde-tag.outputs.release_tag }}
+            #
+            #  check-npm-package:
+            #    outputs:
+            #      verified: ${{ steps.check-npm-package.outputs.exists }}
+            #    runs-on: [ubuntu-latest]
+            #    needs: [bump-version,publish-release]
+            #    steps:
+            #      - name: Check NPM package
+            #        id: check-npm-package
+            #        uses: gooddata/gooddata-ui-sdk/.github/actions/check-npm-version@master
+            #        with:
+            #          package: "@gooddata/sdk-ui"
+            #          version: ${{ needs.bump-version.outputs.version }}
+            #
+            #  slack-notification:
+            #    runs-on: [ubuntu-latest]
+            #    needs: [bump-version, check-npm-package]
+            #    steps:
+            #      - name: Set up message
+            #        id: set-up-message
+            #        run: |
+            #            if [[ "$NPM_PACKAGE_VERIFIED" == "true" ]]; then
+            #              echo "RELEASE_MESSAGE=The latest *${BUMP}* version, *gooddata-ui-sdk@${RELEASE_VERSION}*, has been successfully published on NPM by the user *${GITHUB_USER}*. :tada:" >> $GITHUB_ENV
+            #            else
+            #              NPM_PACKAGE_LINK="https://www.npmjs.com/package/@gooddata/sdk-ui/v/${RELEASE_VERSION}"
+            #              SLACK_LINK="<$NPM_PACKAGE_LINK|link>"
+            #              echo "RELEASE_MESSAGE=The latest *${BUMP}* version, *gooddata-ui-sdk@${RELEASE_VERSION}*, has been published on NPM by the user *${GITHUB_USER}*, but the NPM package verification failed. Check it on NPM manually at $SLACK_LINK. :warning:" >> $GITHUB_ENV
+            #            fi
+            #        env:
+            #          RELEASE_VERSION: ${{ needs.bump-version.outputs.version }}
+            #          BUMP: ${{ inputs.bump }}
+            #          GITHUB_USER: ${{ github.actor }}
+            #          NPM_PACKAGE_VERIFIED: ${{ needs.check-npm-package.outputs.verified }}
+            #      - name: Notify to slack
+            #        uses: slackapi/slack-github-action@v1.25.0
+            #        with:
+            #          channel-id: "#javascript-notifications"
+            #          slack-message: ${{ env.RELEASE_MESSAGE }}
+            #        env:
+            #          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
