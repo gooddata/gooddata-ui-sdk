@@ -164,7 +164,7 @@ const focusableElementsSelector = [
     "area[href]",
 
     // Custom elements with tabindex
-    '[tabindex]:not(:disabled):not([aria-disabled="true"])',
+    '[tabindex]:not([tabindex="-1"]):not(:disabled):not([aria-disabled="true"])',
 
     // Media with controls
     "audio[controls]",
@@ -174,8 +174,6 @@ const focusableElementsSelector = [
     '[contenteditable]:not([contenteditable="false"])',
 ].join(",");
 
-const isNotNegativeTabIndex = (element: HTMLElement) => !element.tabIndex || element.tabIndex >= 0;
-
 /**
  * @internal
  * Returns the focusable elements of the given element
@@ -183,9 +181,7 @@ const isNotNegativeTabIndex = (element: HTMLElement) => !element.tabIndex || ele
  * @returns an object containing the focusable elements, the first focusable element, and the last focusable element
  */
 export const getFocusableElements = (element?: HTMLElement | null) => {
-    const focusableElements = Array.from(
-        element?.querySelectorAll<HTMLElement>(focusableElementsSelector) ?? [],
-    ).filter(isNotNegativeTabIndex);
+    const focusableElements = element?.querySelectorAll<HTMLElement>(focusableElementsSelector);
     const firstElement = focusableElements?.[0];
     const lastElement = focusableElements?.[focusableElements.length - 1];
     return { focusableElements, firstElement, lastElement };
@@ -197,5 +193,5 @@ export const getFocusableElements = (element?: HTMLElement | null) => {
  * @returns whether or not the supplied element is focusable
  */
 export const isElementFocusable = (element?: HTMLElement | null) => {
-    return element?.matches(focusableElementsSelector) && isNotNegativeTabIndex(element);
+    return element?.matches(focusableElementsSelector);
 };

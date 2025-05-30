@@ -4,7 +4,14 @@ import React, { useCallback, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
-import { DropdownButton, useMediaQuery, IAlignPoint, UiFocusTrap, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import {
+    DropdownButton,
+    useMediaQuery,
+    IAlignPoint,
+    UiFocusTrap,
+    useIdPrefixed,
+    AutofocusOnMount,
+} from "@gooddata/sdk-ui-kit";
 import { IDashboardFilterView } from "@gooddata/sdk-model";
 
 import { ConfigurationBubble } from "../../../widget/common/configuration/ConfigurationBubble.js";
@@ -161,22 +168,18 @@ export const FilterViews: React.FC = () => {
                     alignTo={`.${dropdownAnchorClassName}`}
                     alignPoints={BUBBLE_ALIGN_POINTS}
                 >
-                    <UiFocusTrap
-                        returnFocusTo={triggerId}
-                        returnFocusOnUnmount
-                        onDeactivate={closeDialog}
-                        autofocusOnOpen
-                        refocusKey={dialogMode}
-                    >
-                        {dialogMode === "add" ? (
-                            <AddFilterView onClose={openListDialog} />
-                        ) : (
-                            <FilterViewsList
-                                filterViews={filterViews}
-                                onAddNew={openAddDialog}
-                                onClose={closeDialog}
-                            />
-                        )}
+                    <UiFocusTrap returnFocusTo={triggerId} returnFocusOnUnmount onDeactivate={closeDialog}>
+                        <AutofocusOnMount key={dialogMode}>
+                            {dialogMode === "add" ? (
+                                <AddFilterView onClose={openListDialog} />
+                            ) : (
+                                <FilterViewsList
+                                    filterViews={filterViews}
+                                    onAddNew={openAddDialog}
+                                    onClose={closeDialog}
+                                />
+                            )}
+                        </AutofocusOnMount>
                     </UiFocusTrap>
                 </ConfigurationBubble>
             ) : null}
