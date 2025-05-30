@@ -55,19 +55,9 @@ jobs:
           version: ${{ needs.prepare-variables.outputs.version }}
           is-latest: ${{ needs.publish-release.outputs.is-latest}}
 
-    backport-rel-to-master:
-      needs: [add-release-tag, prepare-variables]
-      uses: ./.github/workflows/rw-git-push-rel-master-patch.yml
-      permissions:
-        contents: write
-        pull-requests: write
-      secrets: inherit
-      with:
-        source-branch: ${{ inputs.source-branch }}
-
     slack-notification:
       runs-on: [ubuntu-latest]
-      needs: [backport-rel-to-master]
+      needs: [add-release-tag, prepare-variables]
       steps:
         - name: Set up message
           id: set-up-message

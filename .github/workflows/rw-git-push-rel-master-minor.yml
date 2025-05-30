@@ -53,9 +53,11 @@ jobs:
 
                 CHANGELOG_HASH=$(git log -n 2 --pretty=format:"%H" origin/$SOURCE_BRANCH  | tail -n 1)
                 FILES_TO_REMOVE=$(git diff-tree --no-commit-id --name-only -r $CHANGELOG_HASH -- common/changes/@gooddata/sdk-ui-all/)
-                echo "$FILES_TO_REMOVE" | while read -r file; do
-                    git rm "$file"
-                done
+                if [ -n "$FILES_TO_REMOVE" ]; then
+                  echo "$FILES_TO_REMOVE" | while read -r file; do
+                      git rm "$file"
+                  done
+                fi
 
                 git commit -m "feat: add changelog changes" -m 'risk: nonprod'
 
