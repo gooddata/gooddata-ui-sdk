@@ -1782,6 +1782,12 @@ export type RelativeDateFilterRelativeDateFilterGranularityEnum =
  */
 export interface Settings {
     /**
+     * Include export info sheet in the exported file. (XLSX)
+     * @type {boolean}
+     * @memberof Settings
+     */
+    exportInfo?: boolean;
+    /**
      * Merge equal headers in neighbouring cells. (XLSX)
      * @type {boolean}
      * @memberof Settings

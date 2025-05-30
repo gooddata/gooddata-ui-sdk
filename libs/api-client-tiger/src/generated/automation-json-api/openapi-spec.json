@@ -314,6 +314,51 @@
     },
     "components": {
         "schemas": {
+            "AFM": {
+                "required": ["attributes", "filters", "measures"],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "array",
+                        "description": "Attributes to be used in the computation.",
+                        "items": {
+                            "$ref": "#/components/schemas/AttributeItem"
+                        }
+                    },
+                    "filters": {
+                        "type": "array",
+                        "description": "Various filter types to filter the execution result.",
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/AbstractMeasureValueFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/FilterDefinitionForSimpleMeasure"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/InlineFilterDefinition"
+                                }
+                            ]
+                        }
+                    },
+                    "measures": {
+                        "type": "array",
+                        "description": "Metrics to be computed.",
+                        "items": {
+                            "$ref": "#/components/schemas/MeasureItem"
+                        }
+                    },
+                    "auxMeasures": {
+                        "type": "array",
+                        "description": "Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.",
+                        "items": {
+                            "$ref": "#/components/schemas/MeasureItem"
+                        }
+                    }
+                },
+                "description": "Top level executable entity. Combination of [A]ttributes, [F]ilters & [M]etrics."
+            },
             "AbsoluteDateFilter": {
                 "required": ["absoluteDateFilter"],
                 "type": "object",
@@ -415,6 +460,13 @@
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/AutomationImageExport"
+                        }
+                    },
+                    "rawExports": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AutomationRawExport"
                         }
                     },
                     "externalRecipients": {
@@ -805,6 +857,15 @@
                 "description": "Additional information for the automation.",
                 "nullable": true
             },
+            "AutomationRawExport": {
+                "required": ["requestPayload"],
+                "type": "object",
+                "properties": {
+                    "requestPayload": {
+                        "$ref": "#/components/schemas/RawExportRequest"
+                    }
+                }
+            },
             "AutomationTabularExport": {
                 "required": ["requestPayload"],
                 "type": "object",
@@ -1019,6 +1080,26 @@
                     }
                 },
                 "description": "A user identifier."
+            },
+            "ExecutionSettings": {
+                "type": "object",
+                "properties": {
+                    "dataSamplingPercentage": {
+                        "maximum": 100,
+                        "exclusiveMaximum": true,
+                        "minimum": 0,
+                        "exclusiveMinimum": true,
+                        "type": "number",
+                        "description": "Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.",
+                        "format": "float"
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "description": "Specifies the timestamp of the execution from which relative filters are resolved. If not set, the current time is used.",
+                        "format": "date-time"
+                    }
+                },
+                "description": "Various settings affecting the process of AFM execution or its result"
             },
             "FilterDefinition": {
                 "type": "object",
@@ -1537,6 +1618,75 @@
                 },
                 "description": "Filter the result on top/bottom N values according to given metric(s)."
             },
+            "RawCustomLabel": {
+                "required": ["title"],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Override value."
+                    }
+                },
+                "description": "Custom label object override."
+            },
+            "RawCustomMetric": {
+                "required": ["title"],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Metric title override."
+                    }
+                },
+                "description": "Custom metric object override."
+            },
+            "RawCustomOverride": {
+                "type": "object",
+                "properties": {
+                    "labels": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/RawCustomLabel"
+                        },
+                        "description": "Map of CustomLabels with keys used as placeholders in export result."
+                    },
+                    "metrics": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/RawCustomMetric"
+                        },
+                        "description": "Map of CustomMetrics with keys used as placeholders in export result."
+                    }
+                },
+                "description": "Custom cell value overrides (IDs will be replaced with specified values)."
+            },
+            "RawExportRequest": {
+                "required": ["execution", "fileName", "format"],
+                "type": "object",
+                "properties": {
+                    "format": {
+                        "type": "string",
+                        "description": "Requested resulting file type.",
+                        "example": "CSV",
+                        "enum": ["ARROW_FILE", "ARROW_STREAM", "CSV"]
+                    },
+                    "execution": {
+                        "$ref": "#/components/schemas/AFM"
+                    },
+                    "fileName": {
+                        "type": "string",
+                        "description": "Filename of downloaded file without extension.",
+                        "example": "result"
+                    },
+                    "customOverride": {
+                        "$ref": "#/components/schemas/RawCustomOverride"
+                    },
+                    "executionSettings": {
+                        "$ref": "#/components/schemas/ExecutionSettings"
+                    }
+                },
+                "description": "Export request object describing the export properties and overrides for raw exports."
+            },
             "Relative": {
                 "required": ["measure", "operator", "threshold"],
                 "type": "object",
@@ -1622,6 +1772,12 @@
             "Settings": {
                 "type": "object",
                 "properties": {
+                    "exportInfo": {
+                        "type": "boolean",
+                        "description": "Include export info sheet in the exported file. (XLSX)",
+                        "example": true,
+                        "default": false
+                    },
                     "mergeHeaders": {
                         "type": "boolean",
                         "description": "Merge equal headers in neighbouring cells. (XLSX)",
@@ -2323,6 +2479,12 @@
                         }
                     },
                     "imageExports": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ExportResult"
+                        }
+                    },
+                    "rawExports": {
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/ExportResult"
