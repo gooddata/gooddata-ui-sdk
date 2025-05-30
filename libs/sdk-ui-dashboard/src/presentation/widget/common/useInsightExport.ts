@@ -41,8 +41,9 @@ export const useInsightExport = (config: {
     widgetRef: ObjRef;
     insight?: IInsight;
     widget?: IInsightWidget;
+    useNewTabularExport?: boolean;
 }) => {
-    const { title, widgetRef, insight, widget } = config;
+    const { title, widgetRef, insight, widget, useNewTabularExport } = config;
     const [isExporting, setIsExporting] = useState(false);
     const intl = useIntl();
 
@@ -144,7 +145,7 @@ export const useInsightExport = (config: {
 
     const { exportDashboardToExcel } = useExportDashboardToExcel(() => setIsExporting(false));
     const onExportXLSX = useCallback(() => {
-        if (dashboardTabularExportEnabled) {
+        if (dashboardTabularExportEnabled && useNewTabularExport) {
             openDialog({
                 onSubmit: ({ includeFilterContext, mergeHeaders }) => {
                     setIsExporting(true);
