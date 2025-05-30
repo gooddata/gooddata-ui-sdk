@@ -973,6 +973,12 @@
             "Settings": {
                 "type": "object",
                 "properties": {
+                    "exportInfo": {
+                        "type": "boolean",
+                        "description": "Include export info sheet in the exported file. (XLSX)",
+                        "example": true,
+                        "default": false
+                    },
                     "mergeHeaders": {
                         "type": "boolean",
                         "description": "Merge equal headers in neighbouring cells. (XLSX)",

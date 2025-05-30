@@ -50,6 +50,9 @@ export function mapTypeToKey(
         case "ENABLE_FILE_ANALYTICS":
         case "JIT_PROVISIONING":
         case "ENABLE_SLIDES_EXPORT":
+        case "JWT_JIT_PROVISIONING":
+        case "ATTACHMENT_SIZE_LIMIT":
+        case "ATTACHMENT_LINK_TTL":
         case undefined:
             return fallback;
         default:

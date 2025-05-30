@@ -78,6 +78,15 @@ export interface IOrganizationSettingsService {
     setDateFormat(dateFormat: string): Promise<void>;
 
     /**
+     * Sets attachment size limit sent to email for organization.
+     *
+     * @param size - the size in MB or other unit, for example: "10MB".
+     *
+     * @returns promise
+     */
+    setAttachmentSizeLimit(size: string): Promise<void>;
+
+    /**
      * Sets first day of week for organization.
      *
      * @param weekStart - "Sunday | "Monday"
