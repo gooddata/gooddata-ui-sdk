@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -11,10 +11,14 @@ interface IExcludeCurrentPeriodToggleLabelProps {
     granularity?: DateFilterGranularity;
 }
 
-export const ExcludeCurrentPeriodToggleLabel: React.FC<IExcludeCurrentPeriodToggleLabelProps> = (props) => {
+export const ExcludeCurrentPeriodToggleLabel: React.FC<IExcludeCurrentPeriodToggleLabelProps> = ({
+    disabled,
+    granularity,
+}) => {
+    const granularityIntlCode = granularityIntlCodes[granularity];
     const id =
-        !props.disabled && props.granularity
-            ? messages[`${granularityIntlCodes[props.granularity]}Excluded`].id
+        !disabled && granularity !== undefined && granularityIntlCode !== undefined
+            ? messages[`${granularityIntlCode}Excluded`].id
             : messages.allTimeExcluded.id;
     return (
         <FormattedMessage id={id}>

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import format from "date-fns/format/index.js";
 import isString from "lodash/isString.js";
 import capitalize from "lodash/capitalize.js";
@@ -184,6 +184,9 @@ export const formatRelativeDateRange = (
     translator: IDateAndMessageTranslator,
 ): string => {
     const intlGranularity = granularityIntlCodes[granularity];
+    if (intlGranularity === undefined) {
+        return granularity; // in the case when invalid granularity was found in metadata
+    }
     const { formatter } = relativeDateRangeFormatters.find((f) => f.predicate(from, to));
     return formatter(from, to, intlGranularity, translator);
 };

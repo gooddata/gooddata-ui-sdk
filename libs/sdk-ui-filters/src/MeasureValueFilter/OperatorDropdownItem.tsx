@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
@@ -38,7 +38,11 @@ export class OperatorDropdownItem extends React.PureComponent<IOperatorDropdownI
             },
         );
 
-        const title = intl.formatMessage({ id: getOperatorTranslationKey(operator) });
+        const operatorTranslationKey = getOperatorTranslationKey(operator);
+        const title =
+            operatorTranslationKey === undefined
+                ? operator
+                : intl.formatMessage({ id: operatorTranslationKey });
 
         return (
             <div className={className} onClick={this.handleOnClick}>
