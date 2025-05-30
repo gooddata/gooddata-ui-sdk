@@ -42,12 +42,11 @@ jobs:
 
     publish-release-npm:
       needs: [gate-approval, check-input-version-param]
-      uses: ./.github/workflows/rw-perform-release.yml
+      uses: ./.github/workflows/rw-perform-release-patch.yml
       permissions:
         pull-requests: write
         contents: write
         id-token: write
       secrets: inherit
       with:
-        bump: "patch"
         source-branch: ${{needs.check-input-version-param.outputs.branch}}

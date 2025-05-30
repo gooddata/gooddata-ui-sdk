@@ -115,7 +115,7 @@ jobs:
 
   port-rel-branch-to-master:
     needs: [add-release-tag, update-hugo-version, get-version]
-    uses: ./.github/workflows/rw-git-push.yml
+    uses: ./.github/workflows/rw-git-push-rel-master-minor.yml
     permissions:
       contents: write
       pull-requests: write
