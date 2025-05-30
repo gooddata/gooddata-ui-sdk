@@ -494,6 +494,7 @@ export interface IAttributeFilterDropdownBodyProps {
 
 // @beta
 export interface IAttributeFilterDropdownButtonProps {
+    buttonRef?: React_2.MutableRefObject<HTMLElement>;
     className?: string;
     // @alpha
     customIcon?: IFilterButtonCustomIcon;

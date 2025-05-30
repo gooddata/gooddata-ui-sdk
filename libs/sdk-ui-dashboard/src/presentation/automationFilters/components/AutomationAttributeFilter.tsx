@@ -124,6 +124,7 @@ function AutomationAttributeFilterDropdownButtonComponent(props: IAttributeFilte
                     isExpanded: props.isOpen,
                     deleteAriaLabel,
                 }}
+                buttonRef={props.buttonRef as React.MutableRefObject<HTMLButtonElement>}
             />
             <Bubble alignPoints={tooltipAlignPoints}>
                 {label}
