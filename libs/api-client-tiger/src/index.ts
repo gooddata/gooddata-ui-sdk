@@ -40,7 +40,7 @@ export {
 export { newAxios, setAxiosAuthorizationToken, setGlobalAuthorizationToken };
 
 export type {
-    AFM,
+    AFM as AfmModel,
     AfmIdentifier as AfmModelIdentifier,
     AfmLocalIdentifier as AfmModelLocalIdentifier,
     AfmObjectIdentifierAttributeIdentifier as AfmModelObjectIdentifierAttributeIdentifier,
@@ -88,7 +88,7 @@ export type {
     ExecutionResultHeader,
     ExecutionResultMetadata,
     ExecutionResultPaging,
-    ExecutionSettings,
+    ExecutionSettings as AfmExecutionSettings,
     FilterDefinition as AfmFilterDefinition,
     FilterDefinitionForSimpleMeasure as AfmFilterDefinitionForSimpleMeasure,
     HeaderGroup,
@@ -337,9 +337,9 @@ export type {
     ActionsApiGetSlidesExportRequest,
     ActionsApiGetSlidesExportMetadataRequest,
     SlidesExportRequest,
-    RawCustomOverride,
-    RawCustomLabel,
-    RawCustomMetric,
+    RawCustomOverride as AfmExportRawCustomOverride,
+    RawCustomLabel as AfmExportRawCustomLabel,
+    RawCustomMetric as AfmExportRawCustomMetric,
     SlidesExportRequestFormatEnum,
     ActionsApiCreateImageExportRequest,
     ActionsApiGetImageExportRequest,

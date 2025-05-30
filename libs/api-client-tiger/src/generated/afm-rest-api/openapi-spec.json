@@ -4088,12 +4088,17 @@
                 "description": "Header containing the information related to a subtotal."
             },
             "ChatUsageResponse": {
-                "required": ["interactionCount", "timeWindowHours"],
+                "required": ["interactionCount", "interactionLimit", "timeWindowHours"],
                 "type": "object",
                 "properties": {
                     "interactionCount": {
                         "type": "integer",
                         "description": "Number of interactions in the time window",
+                        "format": "int32"
+                    },
+                    "interactionLimit": {
+                        "type": "integer",
+                        "description": "Maximum number of interactions in the time window any user can do in the workspace",
                         "format": "int32"
                     },
                     "timeWindowHours": {

@@ -472,6 +472,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setAlertDefault: () => Promise.resolve(),
                 deleteTheme: () => Promise.resolve(),
                 deleteColorPalette: () => Promise.resolve(),
+                setAttachmentSizeLimit: () => Promise.resolve(),
             };
         },
         notificationChannels(): IOrganizationNotificationChannelService {

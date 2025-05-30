@@ -1111,6 +1111,12 @@ export interface ChatUsageResponse {
      */
     interactionCount: number;
     /**
+     * Maximum number of interactions in the time window any user can do in the workspace
+     * @type {number}
+     * @memberof ChatUsageResponse
+     */
+    interactionLimit: number;
+    /**
      * Time window in hours
      * @type {number}
      * @memberof ChatUsageResponse

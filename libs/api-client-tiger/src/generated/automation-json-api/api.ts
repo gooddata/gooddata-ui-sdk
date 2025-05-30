@@ -25,6 +25,41 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base.js';
 
 /**
+ * Top level executable entity. Combination of [A]ttributes, [F]ilters & [M]etrics.
+ * @export
+ * @interface AutomationAFM
+ */
+export interface AutomationAFM {
+    /**
+     * Attributes to be used in the computation.
+     * @type {Array<AutomationAttributeItem>}
+     * @memberof AutomationAFM
+     */
+    attributes: Array<AutomationAttributeItem>;
+    /**
+     * Various filter types to filter the execution result.
+     * @type {Array<AutomationAbstractMeasureValueFilter | AutomationFilterDefinitionForSimpleMeasure | AutomationInlineFilterDefinition>}
+     * @memberof AutomationAFM
+     */
+    filters: Array<
+        | AutomationAbstractMeasureValueFilter
+        | AutomationFilterDefinitionForSimpleMeasure
+        | AutomationInlineFilterDefinition
+    >;
+    /**
+     * Metrics to be computed.
+     * @type {Array<AutomationMeasureItem>}
+     * @memberof AutomationAFM
+     */
+    measures: Array<AutomationMeasureItem>;
+    /**
+     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
+     * @type {Array<AutomationMeasureItem>}
+     * @memberof AutomationAFM
+     */
+    auxMeasures?: Array<AutomationMeasureItem>;
+}
+/**
  * A datetime filter specifying exact from and to values.
  * @export
  * @interface AutomationAbsoluteDateFilter
@@ -143,6 +178,12 @@ export interface AutomationAdHocAutomation {
      * @memberof AutomationAdHocAutomation
      */
     imageExports?: Array<AutomationAutomationImageExport>;
+    /**
+     *
+     * @type {Array<AutomationAutomationRawExport>}
+     * @memberof AutomationAdHocAutomation
+     */
+    rawExports?: Array<AutomationAutomationRawExport>;
     /**
      * External recipients of the automation action results.
      * @type {Array<AutomationAutomationExternalRecipient>}
@@ -818,6 +859,19 @@ export interface AutomationAutomationNotificationAllOf {
 /**
  *
  * @export
+ * @interface AutomationAutomationRawExport
+ */
+export interface AutomationAutomationRawExport {
+    /**
+     *
+     * @type {AutomationRawExportRequest}
+     * @memberof AutomationAutomationRawExport
+     */
+    requestPayload: AutomationRawExportRequest;
+}
+/**
+ *
+ * @export
  * @interface AutomationAutomationTabularExport
  */
 export interface AutomationAutomationTabularExport {
@@ -1139,6 +1193,25 @@ export const AutomationDefaultSmtpTypeEnum = {
 export type AutomationDefaultSmtpTypeEnum =
     typeof AutomationDefaultSmtpTypeEnum[keyof typeof AutomationDefaultSmtpTypeEnum];
 
+/**
+ * Various settings affecting the process of AFM execution or its result
+ * @export
+ * @interface AutomationExecutionSettings
+ */
+export interface AutomationExecutionSettings {
+    /**
+     * Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.
+     * @type {number}
+     * @memberof AutomationExecutionSettings
+     */
+    dataSamplingPercentage?: number;
+    /**
+     * Specifies the timestamp of the execution from which relative filters are resolved. If not set, the current time is used.
+     * @type {string}
+     * @memberof AutomationExecutionSettings
+     */
+    timestamp?: string;
+}
 /**
  *
  * @export
@@ -2014,6 +2087,98 @@ export type AutomationRankingFilterRankingFilterOperatorEnum =
     typeof AutomationRankingFilterRankingFilterOperatorEnum[keyof typeof AutomationRankingFilterRankingFilterOperatorEnum];
 
 /**
+ * Custom label object override.
+ * @export
+ * @interface AutomationRawCustomLabel
+ */
+export interface AutomationRawCustomLabel {
+    /**
+     * Override value.
+     * @type {string}
+     * @memberof AutomationRawCustomLabel
+     */
+    title: string;
+}
+/**
+ * Custom metric object override.
+ * @export
+ * @interface AutomationRawCustomMetric
+ */
+export interface AutomationRawCustomMetric {
+    /**
+     * Metric title override.
+     * @type {string}
+     * @memberof AutomationRawCustomMetric
+     */
+    title: string;
+}
+/**
+ * Custom cell value overrides (IDs will be replaced with specified values).
+ * @export
+ * @interface AutomationRawCustomOverride
+ */
+export interface AutomationRawCustomOverride {
+    /**
+     * Map of CustomLabels with keys used as placeholders in export result.
+     * @type {{ [key: string]: AutomationRawCustomLabel; }}
+     * @memberof AutomationRawCustomOverride
+     */
+    labels?: { [key: string]: AutomationRawCustomLabel };
+    /**
+     * Map of CustomMetrics with keys used as placeholders in export result.
+     * @type {{ [key: string]: AutomationRawCustomMetric; }}
+     * @memberof AutomationRawCustomOverride
+     */
+    metrics?: { [key: string]: AutomationRawCustomMetric };
+}
+/**
+ * Export request object describing the export properties and overrides for raw exports.
+ * @export
+ * @interface AutomationRawExportRequest
+ */
+export interface AutomationRawExportRequest {
+    /**
+     * Requested resulting file type.
+     * @type {string}
+     * @memberof AutomationRawExportRequest
+     */
+    format: AutomationRawExportRequestFormatEnum;
+    /**
+     *
+     * @type {AutomationAFM}
+     * @memberof AutomationRawExportRequest
+     */
+    execution: AutomationAFM;
+    /**
+     * Filename of downloaded file without extension.
+     * @type {string}
+     * @memberof AutomationRawExportRequest
+     */
+    fileName: string;
+    /**
+     *
+     * @type {AutomationRawCustomOverride}
+     * @memberof AutomationRawExportRequest
+     */
+    customOverride?: AutomationRawCustomOverride;
+    /**
+     *
+     * @type {AutomationExecutionSettings}
+     * @memberof AutomationRawExportRequest
+     */
+    executionSettings?: AutomationExecutionSettings;
+}
+
+export const AutomationRawExportRequestFormatEnum = {
+    ARROW_FILE: "ARROW_FILE",
+    ARROW_STREAM: "ARROW_STREAM",
+    CSV: "CSV",
+} as const;
+
+export type AutomationRawExportRequestFormatEnum =
+    typeof AutomationRawExportRequestFormatEnum[keyof typeof AutomationRawExportRequestFormatEnum];
+
+/**
  *
  * @export
  * @interface AutomationRelative
@@ -2145,6 +2310,12 @@ export interface AutomationRelativeWrapper {
  * @interface AutomationSettings
  */
 export interface AutomationSettings {
+    /**
+     * Include export info sheet in the exported file. (XLSX)
+     * @type {boolean}
+     * @memberof AutomationSettings
+     */
+    exportInfo?: boolean;
     /**
      * Merge equal headers in neighbouring cells. (XLSX)
      * @type {boolean}
@@ -2669,6 +2840,12 @@ export interface AutomationWebhookMessageData {
      * @memberof AutomationWebhookMessageData
      */
     imageExports?: Array<AutomationExportResult>;
+    /**
+     *
+     * @type {Array<AutomationExportResult>}
+     * @memberof AutomationWebhookMessageData
+     */
+    rawExports?: Array<AutomationExportResult>;
     /**
      *
      * @type {AutomationAlertDescription}

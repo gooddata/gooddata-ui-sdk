@@ -862,6 +862,7 @@ class DummyOrganization implements IOrganization {
             deleteColorPalette: () => Promise.resolve(),
             getSettings: () => Promise.resolve({}),
             setAlertDefault: () => Promise.resolve(),
+            setAttachmentSizeLimit: () => Promise.resolve(),
         };
     }
 

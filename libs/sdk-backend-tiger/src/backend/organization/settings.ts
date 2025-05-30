@@ -45,6 +45,10 @@ export class OrganizationSettingsService
         return this.setSetting("FORMAT_LOCALE", { value: dateFormat });
     }
 
+    public async setAttachmentSizeLimit(size: string): Promise<void> {
+        return this.setSetting("ATTACHMENT_SIZE_LIMIT", { value: size });
+    }
+
     public async setWeekStart(weekStart: string): Promise<void> {
         return this.setSetting("WEEK_START", { value: weekStart });
     }

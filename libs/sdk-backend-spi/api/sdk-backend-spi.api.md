@@ -1041,6 +1041,7 @@ export interface IOrganizationSettingsService {
     getSettings(): Promise<ISettings>;
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
     setAlertDefault(value: IAlertDefault): Promise<void>;
+    setAttachmentSizeLimit(size: string): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
     // @alpha
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
