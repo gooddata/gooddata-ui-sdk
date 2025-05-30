@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { selectEnableAutomationFilterContext } from "../../store/index.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { FilterContextItem, isDashboardAttributeFilter, isDashboardDateFilter } from "@gooddata/sdk-model";
-import { selectAutomationAvailableDashboardFilters } from "../filtering/selectors.js";
+import { selectDashboardFiltersWithoutCrossFiltering } from "../filtering/selectors.js";
 
 export const getFilterLocalIdentifier = (filter: FilterContextItem): string | undefined => {
     if (isDashboardAttributeFilter(filter)) {
@@ -22,7 +22,7 @@ export const validateAllFilterLocalIdentifiers = (filters: FilterContextItem[]):
  * @internal
  */
 export const useEnableAlertingAutomationFilterContext = () => {
-    const filters = useDashboardSelector(selectAutomationAvailableDashboardFilters);
+    const filters = useDashboardSelector(selectDashboardFiltersWithoutCrossFiltering);
     const enableAutomationFilterContextFlag = useDashboardSelector(selectEnableAutomationFilterContext);
 
     return useMemo(() => {
