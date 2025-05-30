@@ -109,6 +109,11 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
             <MarkdownComponent allowMarkdown={useMarkdown}>{content.text}</MarkdownComponent>
             {visualization ? (
                 <div className="gd-gen-ai-chat__visualization">
+                    <div className="gd-gen-ai-chat__visualization__title">
+                        <MarkdownComponent allowMarkdown={useMarkdown}>
+                            {visualization.title}
+                        </MarkdownComponent>
+                    </div>
                     <div
                         className={cx(
                             "gd-gen-ai-chat__visualization__wrapper",
@@ -176,11 +181,6 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                                 }
                             })()}
                         </VisualizationErrorBoundary>
-                    </div>
-                    <div className="gd-gen-ai-chat__visualization__title">
-                        <MarkdownComponent allowMarkdown={useMarkdown}>
-                            {visualization.title}
-                        </MarkdownComponent>
                     </div>
                     {config.canAnalyze && !hasVisError && !visLoading
                         ? (() => {
