@@ -367,9 +367,6 @@ export function AlertingDialogRenderer({
                                         onBlur={onBlur}
                                         type="number"
                                         suffix={getValueSuffix(editedAutomation?.alert)}
-                                        accessibilityConfig={{
-                                            ariaDescribedBy: "alert.value",
-                                        }}
                                     />
                                 </FormField>
                                 {isChangeOrDifferenceOperator(editedAutomation?.alert) && (

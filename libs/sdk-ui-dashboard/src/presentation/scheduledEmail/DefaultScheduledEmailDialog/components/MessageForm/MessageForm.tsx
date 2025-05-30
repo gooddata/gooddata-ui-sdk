@@ -78,6 +78,7 @@ export const MessageForm: React.FC<IMessageFormProps> = ({ value, onChange }) =>
             errorClassName="gd-notifications-channels-dialog-message-error"
         >
             <Textarea
+                id={labelId}
                 ref={textareaRef}
                 autocomplete="off"
                 placeholder={intl.formatMessage({
@@ -91,7 +92,6 @@ export const MessageForm: React.FC<IMessageFormProps> = ({ value, onChange }) =>
                 validationError={messageError}
                 hasError={!!messageError}
                 accessibilityConfig={{
-                    ariaLabelledBy: labelId,
                     ariaDescribedBy: messageError ? errorId : undefined,
                 }}
             />

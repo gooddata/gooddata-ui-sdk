@@ -76,7 +76,7 @@ export const SubjectForm: React.FC<ISubjectFormProps> = ({ dashboardTitle, edite
             errorClassName="gd-notifications-channels-dialog-subject-error"
         >
             <Input
-                id="schedule.subject"
+                id={labelId}
                 hasError={!!subjectError}
                 maxlength={300}
                 type="text"
@@ -94,7 +94,6 @@ export const SubjectForm: React.FC<ISubjectFormProps> = ({ dashboardTitle, edite
                 autocomplete="off"
                 onBlur={handleOnBlur}
                 accessibilityConfig={{
-                    ariaLabelledBy: labelId,
                     ariaDescribedBy: subjectError ? errorId : undefined,
                 }}
             />
