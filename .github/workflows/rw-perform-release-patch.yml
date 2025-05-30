@@ -62,7 +62,7 @@ jobs:
         - name: Set up message
           id: set-up-message
           run: |
-            echo "RELEASE_MESSAGE=The changelog from the ${SOURCE_BRANCH} was ported to master branch" >> $GITHUB_ENV
+            echo "RELEASE_MESSAGE=Please add changelog entries from the ${SOURCE_BRANCH} to master branch manually" >> $GITHUB_ENV
           env:
             SOURCE_BRANCH: ${{ inputs.source-branch }}
 
