@@ -227,8 +227,8 @@ export const getAppliedDashboardFilters = (
 
     // And finally, strip all-time date filters - we don't want to save them, they have no effect on execution.
     return selectedFiltersWithHiddenFilters.filter((f) => {
-        if (isDateFilter(f)) {
-            return !isAllTimeDateFilterFixed(f);
+        if (isDashboardDateFilter(f)) {
+            return !isAllTimeDashboardDateFilter(f);
         }
 
         return true;

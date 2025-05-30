@@ -1,6 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 import {
     areObjRefsEqual,
+    dashboardFilterLocalIdentifier,
     FilterContextItem,
     IDashboardAttributeFilterConfig,
     IDashboardDateFilterConfig,
@@ -113,15 +114,24 @@ export const selectAutomationAvailableDashboardFilters: DashboardSelector<Filter
                 ? [commonDateFilter, ...dashboardFiltersWithoutCrossFiltering]
                 : dashboardFiltersWithoutCrossFiltering;
 
-            const withoutHiddenFilters = removeHiddenFilters(withCommonDateFilter, {
+            return removeHiddenFilters(withCommonDateFilter, {
                 commonDateFilterConfig,
                 dateFilterWithDimensionConfigs,
                 attributeFilterConfigs,
             });
-
-            return removeEmptyDashboardAttributeFilters(withoutHiddenFilters);
         },
     );
+
+/**
+ * @alpha
+ */
+export const selectAutomationDefaultSelectedFilters: DashboardSelector<FilterContextItem[]> = createSelector(
+    selectAutomationAvailableDashboardFilters,
+    selectDashboardLockedFilters,
+    (availableDashboardFilters, lockedFilters) => {
+        return removeNonLockedEmptyDashboardAttributeFilters(availableDashboardFilters, lockedFilters);
+    },
+);
 
 /**
  * @alpha
@@ -155,10 +165,21 @@ const removeCrossFilteringFilters = (
     });
 };
 
-export function removeEmptyDashboardAttributeFilters(filters: FilterContextItem[] = []) {
+export function removeNonLockedEmptyDashboardAttributeFilters(
+    filters: FilterContextItem[] = [],
+    lockedFilters: FilterContextItem[] = [],
+) {
     return filters.filter((filter) => {
         if (isDashboardAttributeFilter(filter)) {
-            return !isAllValuesDashboardAttributeFilter(filter);
+            const isLocked = lockedFilters.some(
+                (lockedFilter) =>
+                    dashboardFilterLocalIdentifier(lockedFilter) === filter.attributeFilter.localIdentifier,
+            );
+            if (isLocked) {
+                return true;
+            }
+            const isAllFilter = isAllValuesDashboardAttributeFilter(filter);
+            return !isAllFilter;
         }
 
         return true;

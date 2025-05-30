@@ -19,11 +19,17 @@ $min-content-height: 110px;
 @media #{kit-variables.$small-only} {
     .gd-notifications-channels-dialog-overlay {
         overflow-y: auto;
+        overflow-x: hidden;
         max-height: 99vh;
     }
 }
 .gd-notifications-channels-dialog-overlay.truncated {
     overflow-y: auto;
+    overflow-x: hidden;
+
+    .gd-notification-channel-dialog-with-automation-filters {
+        overflow: hidden;
+    }
 }
 
 .gd-dialog:not(.gd-dropdown).gd-notifications-channels-dialog {

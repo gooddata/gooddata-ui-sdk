@@ -8372,6 +8372,9 @@ export const selectAutomationAvailableDashboardFilters: DashboardSelector<Filter
 // @alpha (undocumented)
 export const selectAutomationCommonDateFilterId: DashboardSelector<string | undefined>;
 
+// @alpha (undocumented)
+export const selectAutomationDefaultSelectedFilters: DashboardSelector<FilterContextItem[]>;
+
 // @alpha
 export const selectAutomationsError: DashboardSelector<GoodDataSdkError | undefined>;
 

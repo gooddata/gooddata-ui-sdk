@@ -47,6 +47,7 @@ export { useAutomationAvailableDashboardFilters } from "./filtering/useAutomatio
 export {
     selectAutomationCommonDateFilterId,
     selectAutomationAvailableDashboardFilters,
+    selectAutomationDefaultSelectedFilters,
     selectDashboardFiltersWithoutCrossFiltering,
     selectDashboardHiddenFilters,
     selectDashboardLockedFilters,
