@@ -7,17 +7,8 @@ import { IInsightMenuItem } from "../types.js";
 import { InsightAlerts } from "../../insight/configuration/InsightAlerts.js";
 import { ISettings } from "@gooddata/sdk-model";
 import { IExecutionResultEnvelope } from "../../../../model/index.js";
-import { getExportTooltip } from "./getExportTooltips.js";
-
-/**
- * @internal
- */
-export type SchedulingDisabledReason = "incompatibleWidget" | "oldWidget" | "disabledOnInsight";
-
-/**
- * @internal
- */
-export type AlertingDisabledReason = "noDestinations" | "oldWidget" | "disabledOnInsight";
+import { getExportTooltipId } from "./getExportTooltips.js";
+import { IUseInsightMenuConfig } from "./types.js";
 
 const getExportMenuItems = (
     intl: IntlShape,
@@ -42,12 +33,15 @@ const getExportMenuItems = (
         onExportRawCSV,
         onExportPngImage,
         isExporting,
+        xlsxDisabledReason,
     } = config;
-    const tooltip = getExportTooltip({
+    const tooltipId = getExportTooltipId({
         isRawExportsEnabled: settings?.enableRawExports,
         isExporting,
         execution,
+        xlsxDisabledReason,
     });
+    const tooltip = intl.formatMessage({ id: tooltipId });
     const presentationTooltip = intl.formatMessage({
         id: "options.menu.export.presentation.unsupported.oldWidget",
     });
@@ -139,40 +133,6 @@ const getExportMenuItems = (
             : []),
     ];
 };
-
-/**
- * @internal
- */
-export interface IUseInsightMenuConfig {
-    exportXLSXDisabled: boolean;
-    exportCSVDisabled: boolean;
-    exportCSVRawDisabled: boolean;
-    isExporting: boolean;
-    scheduleExportDisabled: boolean;
-    scheduleExportDisabledReason?: SchedulingDisabledReason;
-    scheduleExportManagementDisabled: boolean;
-    exportPdfPresentationDisabled: boolean;
-    exportPowerPointPresentationDisabled: boolean;
-    exportPngImageDisabled: boolean;
-    onExportXLSX: () => void;
-    onExportCSV: () => void;
-    onExportRawCSV: () => void;
-    onScheduleExport: () => void;
-    onScheduleManagementExport: () => void;
-    onExportPowerPointPresentation: () => void;
-    onExportPdfPresentation: () => void;
-    onExportPngImage: () => void;
-    isExportRawVisible: boolean;
-    isExportVisible: boolean;
-    isExportPngImageVisible: boolean;
-    isScheduleExportVisible: boolean;
-    isScheduleExportManagementVisible: boolean;
-    isDataError: boolean;
-    isAlertingVisible: boolean;
-    alertingDisabled: boolean;
-    alertingDisabledReason?: AlertingDisabledReason;
-    canCreateAutomation: boolean;
-}
 
 /**
  * @internal

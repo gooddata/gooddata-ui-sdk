@@ -184,7 +184,11 @@ export const useInsightExport = (config: {
     }, [settings, title, exportFunction, closeDialog, dashboardTabularExportEnabled]);
 
     const exportCSVEnabled = !isExporting && isInsightExportable && isExportableToCsv;
-    const exportXLSXEnabled = !isExporting && isInsightExportable && isExportableToXlsx;
+    const exportXLSXEnabled =
+        !isExporting &&
+        isInsightExportable &&
+        isExportableToXlsx &&
+        (dashboardTabularExportEnabled ? !!widget?.localIdentifier : true);
     const exportCSVRawEnabled = !isExporting;
 
     const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
@@ -200,6 +204,9 @@ export const useInsightExport = (config: {
     const exportPdfPresentationDisabled = !!widget && !widget.localIdentifier;
     const exportPowerPointPresentationDisabled = !!widget && !widget.localIdentifier;
     const exportPngImageDisabled = !!widget && !widget.localIdentifier;
+
+    const xlsxDisabledReason =
+        dashboardTabularExportEnabled && !widget?.localIdentifier ? ("oldWidget" as const) : undefined;
 
     return {
         exportCSVEnabled,
@@ -218,5 +225,6 @@ export const useInsightExport = (config: {
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
         exportPngImageDisabled,
+        xlsxDisabledReason,
     };
 };

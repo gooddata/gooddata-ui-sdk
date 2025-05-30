@@ -9,7 +9,7 @@ import {
 } from "../../../../../model/index.js";
 import { idRef } from "@gooddata/sdk-model";
 import React from "react";
-import { getExportTooltip } from "../../../insightMenu/DefaultDashboardInsightMenu/getExportTooltips.js";
+import { getExportTooltipId } from "../../../insightMenu/DefaultDashboardInsightMenu/getExportTooltips.js";
 
 export interface IMenuItemData {
     interactive: {
@@ -62,7 +62,7 @@ export const useDrillDialogExportItems = ({
     const execution = useDashboardSelector(selectExecutionResultByRef(DRILL_MODAL_EXECUTION_PSEUDO_REF));
     const settings = useDashboardSelector(selectSettings);
     const disabledTooltip = formatMessage({
-        id: getExportTooltip({ execution, isExporting, isRawExportsEnabled: settings?.enableRawExports }),
+        id: getExportTooltipId({ execution, isExporting, isRawExportsEnabled: settings?.enableRawExports }),
     });
 
     return React.useMemo<IMenuInteractiveItem[]>(() => {
