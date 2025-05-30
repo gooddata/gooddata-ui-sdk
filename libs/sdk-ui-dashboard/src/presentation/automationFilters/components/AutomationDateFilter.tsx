@@ -70,6 +70,7 @@ export const AutomationDateFilter: React.FC<{
                                 isExpanded: props.isOpen,
                                 deleteAriaLabel: intl.formatMessage({ id: "delete" }),
                             }}
+                            buttonRef={props.buttonRef as React.MutableRefObject<HTMLButtonElement>}
                         />
                         <Bubble alignPoints={tooltipAlignPoints}>{label}</Bubble>
                     </BubbleHoverTrigger>

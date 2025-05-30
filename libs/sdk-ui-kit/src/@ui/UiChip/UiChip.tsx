@@ -31,6 +31,7 @@ export interface UiChipProps {
     onDeleteKeyDown?: (event: React.KeyboardEvent<HTMLButtonElement>) => void;
     accessibilityConfig?: IUiChipAccessibilityConfig;
     dataTestId?: string;
+    buttonRef?: React.MutableRefObject<HTMLButtonElement>;
 }
 
 const { b, e } = bem("gd-ui-kit-chip");
@@ -50,18 +51,20 @@ export const UiChip = ({
     onDeleteKeyDown,
     accessibilityConfig,
     dataTestId,
+    buttonRef,
 }: UiChipProps) => {
-    const buttonRef = useRef<HTMLButtonElement>(null);
     const [styleObj, setStyleObj] = useState<CSSProperties>();
+    const defaultButtonRef = useRef<HTMLButtonElement>(null);
+    const effectiveButtonRef = buttonRef || defaultButtonRef;
 
     useLayoutEffect(() => {
-        if (buttonRef.current) {
+        if (effectiveButtonRef.current) {
             // Reset width to auto to calculate the width of the label and tag
-            buttonRef.current.style.width = "auto";
-            const width = buttonRef.current.getBoundingClientRect().width;
+            effectiveButtonRef.current.style.width = "auto";
+            const width = effectiveButtonRef.current.getBoundingClientRect().width;
             setStyleObj({ width });
         }
-    }, [label, tag]);
+    }, [label, tag, effectiveButtonRef]);
 
     const { isExpanded, popupId, ariaLabel, ariaLabelledBy, deleteAriaLabel } = accessibilityConfig ?? {};
     const ariaDropdownProps = {
@@ -79,7 +82,7 @@ export const UiChip = ({
                 disabled={isLocked}
                 onClick={onClick}
                 style={{ ...styleObj }}
-                ref={buttonRef}
+                ref={effectiveButtonRef}
                 aria-disabled={isLocked}
                 aria-label={ariaLabel}
                 aria-labelledby={ariaLabelledBy}

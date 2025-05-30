@@ -76,7 +76,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
             alignPoints={ALIGN_POINTS}
             fullscreenOnMobile={fullscreenOnMobile}
             overlayPositionType={overlayPositionType}
-            renderButton={({ toggleDropdown, isOpen }) => {
+            renderButton={({ toggleDropdown, isOpen, buttonRef }) => {
                 const handleClickAction = disabled ? noop : toggleDropdown;
                 return (
                     <div className={cx({ "gd-is-mobile": fullscreenOnMobile && isMobile && isOpen })}>
@@ -99,6 +99,7 @@ export const AttributeFilterDropdown: React.VFC = () => {
                                     customIcon={customIcon}
                                     onClick={handleClickAction}
                                     isError={!!initError}
+                                    buttonRef={buttonRef}
                                 />
                             </AttributeFilterButtonErrorTooltip>
                         )}

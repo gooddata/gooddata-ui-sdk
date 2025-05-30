@@ -139,6 +139,13 @@ export interface IAttributeFilterDropdownButtonProps {
      * @beta
      */
     className?: string;
+
+    /**
+     * Ref to the dropdown button component.
+     *
+     * @beta
+     */
+    buttonRef?: React.MutableRefObject<HTMLElement>;
 }
 
 /**
@@ -172,6 +179,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
         titleExtension,
         onClick,
         className,
+        buttonRef,
     } = props;
 
     const intl = useIntl();
@@ -231,6 +239,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
             onKeyDown={onKeyDown}
             role="button"
             tabIndex={0}
+            ref={buttonRef as React.RefObject<HTMLDivElement>}
         >
             {filterIcon ? (
                 <div className="gd-attribute-filter-dropdown-button-icon__next">{filterIcon}</div>
