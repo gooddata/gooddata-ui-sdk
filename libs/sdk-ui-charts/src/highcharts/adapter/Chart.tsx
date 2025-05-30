@@ -43,6 +43,15 @@ export class Chart extends React.Component<IChartProps> {
 
     public componentDidMount(): void {
         this.createChart(this.props.config);
+
+        // hacky fix for sankey chart https://github.com/highcharts/highcharts/issues/9818,
+        // should've be resolved in 12.2.0, but it's not https://github.com/highcharts/highcharts/commit/240c21fa7153a26dbed91d3f27a35fe1301b9647
+        const isSankey = this.props?.config?.chart?.type === "sankey";
+        if (this.chart && isSankey) {
+            const currentWidth = this.chart.chartWidth;
+            this.chart.setSize(currentWidth - 1, undefined, false);
+            this.chart.setSize(currentWidth, undefined, false);
+        }
     }
 
     public shouldComponentUpdate(nextProps: IChartProps): boolean {
