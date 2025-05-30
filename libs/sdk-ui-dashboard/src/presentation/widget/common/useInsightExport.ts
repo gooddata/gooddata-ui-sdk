@@ -149,9 +149,12 @@ export const useInsightExport = (config: {
                 onSubmit: ({ includeFilterContext, mergeHeaders }) => {
                     setIsExporting(true);
                     closeDialog();
-                    exportDashboardToExcel(mergeHeaders ?? true, includeFilterContext ?? true, [
-                        widget!.identifier,
-                    ]);
+                    exportDashboardToExcel(
+                        mergeHeaders ?? true,
+                        includeFilterContext ?? true,
+                        [widget!.identifier],
+                        title,
+                    );
                 },
                 headline: intl.formatMessage({ id: "options.menu.export.dialog.widget.EXCEL" }),
                 mergeHeaders: Boolean(settings?.cellMergedByDefault ?? true),
@@ -181,7 +184,19 @@ export const useInsightExport = (config: {
                 filterContextVisible: Boolean(settings?.enableActiveFilterContext ?? true),
             });
         }
-    }, [settings, title, exportFunction, closeDialog, dashboardTabularExportEnabled]);
+    }, [
+        dashboardTabularExportEnabled,
+        openDialog,
+        intl,
+        settings?.cellMergedByDefault,
+        settings?.activeFiltersByDefault,
+        settings?.enableActiveFilterContext,
+        closeDialog,
+        exportDashboardToExcel,
+        widget,
+        exportFunction,
+        title,
+    ]);
 
     const exportCSVEnabled = !isExporting && isInsightExportable && isExportableToCsv;
     const exportXLSXEnabled =

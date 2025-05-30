@@ -12,11 +12,7 @@ import {
     dashboardExportToExcelResolved,
 } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import {
-    selectDashboardRef,
-    selectDashboardTitle,
-    selectIsFiltersChanged,
-} from "../../store/meta/metaSelectors.js";
+import { selectDashboardRef, selectIsFiltersChanged } from "../../store/meta/metaSelectors.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors.js";
 
@@ -50,8 +46,7 @@ export function* exportDashboardToExcelHandler(
         throw invalidArgumentsProvided(ctx, cmd, "Dashboard to export to EXCEL must have an ObjRef.");
     }
 
-    const { mergeHeaders, exportInfo, widgetIds } = cmd.payload;
-    const title = yield select(selectDashboardTitle);
+    const { mergeHeaders, exportInfo, widgetIds, fileName } = cmd.payload;
     const isFilterContextChanged: SagaReturnType<typeof selectIsFiltersChanged> = yield select(
         selectIsFiltersChanged,
     );
@@ -62,7 +57,7 @@ export function* exportDashboardToExcelHandler(
         exportDashboardToTabular,
         ctx,
         dashboardRef,
-        title,
+        fileName,
         mergeHeaders,
         exportInfo,
         widgetIds,

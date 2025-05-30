@@ -25,6 +25,7 @@ import {
     selectSettings,
     selectCanExportTabular,
     selectCanExportPdf,
+    selectDashboardTitle,
 } from "../../../model/index.js";
 import { IMenuButtonItem } from "../types.js";
 
@@ -63,6 +64,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const isEmptyLayout = !useDashboardSelector(selectLayoutHasAnalyticalWidgets); // we need at least one non-custom widget there
     const settings = useDashboardSelector(selectSettings);
+    const dashboardTitle = useDashboardSelector(selectDashboardTitle);
 
     const {
         isScheduledEmailingVisible,
@@ -131,7 +133,12 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         openDialog({
             onSubmit: (data) => {
                 closeDialog();
-                exportDashboardToExcel(data.mergeHeaders ?? true, data.includeFilterContext ?? true);
+                exportDashboardToExcel(
+                    data.mergeHeaders ?? true,
+                    data.includeFilterContext ?? true,
+                    undefined,
+                    dashboardTitle,
+                );
             },
             headline: intl.formatMessage({ id: "options.menu.export.dialog.EXCEL" }),
             mergeHeaders: Boolean(settings?.cellMergedByDefault ?? true),
@@ -141,7 +148,16 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
             filterContextTitle: null,
             filterContextText: intl.formatMessage({ id: "options.menu.export.dialog.includeExportInfo" }),
         });
-    }, [exportDashboardToExcel, isNewDashboard, settings]);
+    }, [
+        isNewDashboard,
+        openDialog,
+        intl,
+        settings?.cellMergedByDefault,
+        settings?.activeFiltersByDefault,
+        closeDialog,
+        exportDashboardToExcel,
+        dashboardTitle,
+    ]);
 
     const { exportDashboardToPdfPresentation, exportDashboardToPdfPresentationStatus } =
         useExportDashboardToPdfPresentation();
@@ -397,8 +413,6 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
             ],
         ]);
     }, [
-        isEnableDashboardTabularExport,
-        isEnableOrchestratedTabularExports,
         defaultOnExportToPdf,
         defaultOnSaveAs,
         defaultOnScheduleEmailing,
@@ -423,14 +437,15 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         openFilterViewsAddDialog,
         openFilterViewsListDialog,
         isExportVisible,
-        menuButtonItemsVisibility.pdfExportButton,
-        menuButtonItemsVisibility.excelExportButton,
-        menuButtonItemsVisibility.powerPointExportButton,
         isInProgress,
         canCreateAutomation,
         isSettingsVisible,
         isSettingsDisabled,
         defaultOnSettings,
         isSmall,
+        isSnapshotPdfExportVisible,
+        isSlideshowPdfExportVisible,
+        isSlideshowPptxExportVisible,
+        isXlsxExportVisible,
     ]);
 }
