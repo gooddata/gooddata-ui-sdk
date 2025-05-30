@@ -80,8 +80,7 @@ describe("Available value filter", () => {
         },
     );
 
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip(
+    it(
         "should extend attribute filter by date filter",
         { tags: ["checklist_integrated_tiger", "checklist_integrated_tiger_releng"] },
         () => {
