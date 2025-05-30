@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024 GoodData Corporation
 
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -28,14 +28,16 @@ export const AddFilterView: React.FC<IAddFilterViewProps> = ({ onClose }) => {
     return (
         <div className="configuration-panel configuration-panel__filter-view__add">
             <div className="configuration-panel-header">
-                <Button onClick={onClose} className={"configuration-panel-header-title-button"}>
-                    <Typography tagName="h3" className="configuration-panel-header-title">
-                        <div className="gd-title-with-icon">
-                            <span className="gd-icon-navigateleft" />
-                            <FormattedMessage id="filters.filterViews.add.title" />
-                        </div>
-                    </Typography>
-                </Button>
+                <Typography
+                    tagName="h3"
+                    className="configuration-panel-header-title clickable"
+                    onClick={onClose}
+                >
+                    <div className="gd-title-with-icon">
+                        <span className="gd-icon-navigateleft" />
+                        <FormattedMessage id="filters.filterViews.add.title" />
+                    </div>
+                </Typography>
             </div>
             <div className="configuration-category">
                 <Input

@@ -2,9 +2,7 @@
 
 import React, { useEffect, useRef, useCallback } from "react";
 import { makeDialogKeyboardNavigation } from "../@utils/keyboardNavigation.js";
-import { getFocusableElements } from "../../utils/domUtilities.js";
-import { useAutofocusOnMount } from "../../utils/useAutofocusOnMount.js";
-import { useCombineRefs } from "@gooddata/sdk-ui";
+import { getFocusableElements, isElementTextInput } from "../../utils/domUtilities.js";
 
 type NavigationDirection = "forward" | "backward";
 
@@ -32,10 +30,6 @@ export interface UiFocusTrapProps {
      */
     initialFocus?: React.RefObject<HTMLElement> | string;
     /**
-     * You can retrigger focusing on `initialFocus` by changing the value of this key.
-     */
-    refocusKey?: unknown;
-    /**
      * Specify a custom keyboard navigation handler.
      * If not provided, the default keyboard navigation handler will be used.
      */
@@ -48,7 +42,7 @@ export interface UiFocusTrapProps {
  */
 const focusAndEnsureReachableElement = (
     initialElement: HTMLElement,
-    focusableElements: HTMLElement[],
+    focusableElements: NodeListOf<HTMLElement>,
     direction: NavigationDirection,
 ): void => {
     let nextElement = initialElement;
@@ -71,11 +65,11 @@ const focusAndEnsureReachableElement = (
 
 const useDialogKeyboardNavigation = (
     trapRef: React.RefObject<HTMLDivElement>,
-    returnFocus: () => void,
+    returnFocus,
     onDeactivate?: () => void,
 ) => {
     const handleFocusNavigation = useCallback(
-        (focusableElements: HTMLElement[], direction: NavigationDirection) => {
+        (focusableElements: NodeListOf<HTMLElement>, direction: NavigationDirection) => {
             const elements = Array.from(focusableElements);
             const currentIndex = elements.indexOf(document.activeElement as HTMLElement);
             const firstElement = elements[0];
@@ -144,11 +138,9 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
     autofocusOnOpen = false,
     returnFocusOnUnmount = true,
     initialFocus,
-    refocusKey,
     customKeyboardNavigationHandler,
 }) => {
-    const trapRef = useRef<HTMLDivElement | null>(null);
-    const [trapElement, setTrapElement] = React.useState<HTMLDivElement | null>(null);
+    const trapRef = useRef<HTMLDivElement>(null);
     const defaultReturnFocusToRef = useRef<HTMLElement | null>(document.activeElement as HTMLElement);
 
     const returnFocusTo = returnFocusToProp ?? defaultReturnFocusToRef;
@@ -183,14 +175,41 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
         };
     }, [returnFocusOnUnmount, returnFocus]);
 
-    const elementToFocus = React.useMemo(() => {
-        if (typeof initialFocus === "string") {
-            return document.getElementById(initialFocus);
-        }
-        return initialFocus?.current ?? trapElement;
-    }, [initialFocus, trapElement]);
+    useEffect(() => {
+        const focusTrapTimeout = setTimeout(() => {
+            if (!autofocusOnOpen) {
+                return;
+            }
 
-    useAutofocusOnMount(elementToFocus, { isDisabled: !autofocusOnOpen, refocusKey });
+            if (trapRef.current?.contains(document.activeElement)) {
+                // Do not change focus, if the focused element is already inside the trap
+                return;
+            }
+
+            if (isElementTextInput(document.activeElement)) {
+                return;
+            }
+
+            if (initialFocus) {
+                if (typeof initialFocus === "string") {
+                    const element = document.getElementById(initialFocus);
+                    element?.focus();
+                    return;
+                } else if (initialFocus.current) {
+                    initialFocus.current.focus();
+                    return;
+                }
+            }
+
+            // Move focus to the first element in the trap at start
+            const { firstElement } = getFocusableElements(trapRef.current);
+            firstElement?.focus();
+        }, 100);
+
+        return () => {
+            clearTimeout(focusTrapTimeout);
+        };
+    }, [autofocusOnOpen, initialFocus, returnFocus, keyboardHandler, returnFocusOnUnmount]);
 
     useEffect(() => {
         document.addEventListener("keydown", keyboardHandler);
@@ -201,7 +220,7 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
     }, [keyboardHandler]);
 
     return (
-        <div className="gd-focus-trap" ref={useCombineRefs(trapRef, setTrapElement)}>
+        <div className="gd-focus-trap" ref={trapRef}>
             {children}
         </div>
     );

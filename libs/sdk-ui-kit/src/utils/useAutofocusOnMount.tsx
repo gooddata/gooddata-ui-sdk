@@ -1,90 +1,64 @@
 // (C) 2025 GoodData Corporation
 
 import React from "react";
-import { getFocusableElements, isElementFocusable, isElementTextInput } from "./domUtilities.js";
+import { getFocusableElements, isElementFocusable } from "./domUtilities.js";
 
 /**
- * @internal
- */
-export interface IAutofocusOptions {
-    isDisabled?: boolean;
-    refocusKey?: unknown;
-}
-
-/**
- * Provides a ref that will autofocus the element when it is mounted, or when `refocusKey` changes.
+ * Focuses the element when it mounts.
  *
  * @internal
  */
-export const useAutofocusOnMountRef = ({ isDisabled, refocusKey }: IAutofocusOptions = {}) => {
+export const useAutofocusOnMount = () => {
     const [element, setElement] = React.useState<HTMLElement | null>(null);
 
-    useAutofocusOnMount(element, { isDisabled, refocusKey });
+    const hasFiredRef = React.useRef(false);
 
-    return React.useCallback((node: HTMLElement | null) => {
-        setElement(node);
-    }, []);
-};
-
-/**
- * Focuses the element on mount or when `refocusKey` changes.
- *
- * @internal
- */
-export const useAutofocusOnMount = (
-    element: HTMLElement | null | undefined,
-    { isDisabled, refocusKey }: IAutofocusOptions = {},
-) => {
     // If the element is outside of the viewport, calling focus() will not work.
     // This can happen for example with floating elements, that are repositioned after they mount
     React.useEffect(() => {
-        const elementToFocus = getElementToFocus(element);
-
-        if (isDisabled || !elementToFocus) {
+        if (!element || element.contains(document.activeElement)) {
             return undefined;
         }
 
-        const observer = new IntersectionObserver(([{ target }]) => {
-            if (target.contains(document.activeElement) || isElementTextInput(document.activeElement)) {
-                observer.disconnect();
+        const observer = new IntersectionObserver(() => {
+            if (!element) {
                 return;
             }
 
+            const elementToFocus = isElementFocusable(element)
+                ? element
+                : getFocusableElements(element).firstElement;
+
             // Focusing a newly created element sometimes fails if not done through requestAnimationFrame()
             window.requestAnimationFrame(() => {
-                (target as HTMLElement).focus();
+                elementToFocus.focus();
 
-                if (document.activeElement === target) {
+                if (document.activeElement === elementToFocus) {
                     observer.disconnect();
                 }
             });
         });
 
-        observer.observe(elementToFocus);
+        observer.observe(element);
 
         return () => observer.disconnect();
-    }, [refocusKey, isDisabled, element]);
+    }, [element]);
+
+    return React.useCallback((node: HTMLElement | null) => {
+        if (hasFiredRef.current || !node) {
+            return;
+        }
+        hasFiredRef.current = true;
+
+        setElement(node);
+    }, []);
 };
 
-function getElementToFocus(element: HTMLElement | null | undefined) {
-    return isElementFocusable(element) ? element : getFocusableElements(element).firstElement;
-}
-
 /**
- * Wrapper that focuses the first focusable child when it mounts, or when `refocusKey` changes.
- *
  * @internal
  */
-export const AutofocusOnMount: React.FC<
-    {
-        children: React.ReactNode;
-    } & IAutofocusOptions
-> = ({ isDisabled, refocusKey, children }) => {
-    const ref = useAutofocusOnMountRef({ isDisabled, refocusKey });
+export const AutofocusOnMount: React.FC<React.HTMLProps<HTMLDivElement>> = ({ ...props }) => {
+    const ref = useAutofocusOnMount();
 
-    return (
-        <div ref={ref} style={{ display: "contents" }}>
-            {children}
-        </div>
-    );
+    return <div ref={ref} {...props} />;
 };
