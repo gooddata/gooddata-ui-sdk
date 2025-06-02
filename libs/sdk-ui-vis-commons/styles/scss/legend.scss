@@ -447,6 +447,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
 .legend-popup-row {
     display: flex;
     justify-content: flex-end;
+    overflow: hidden;
 }
 
 .legend-popup-icon {
