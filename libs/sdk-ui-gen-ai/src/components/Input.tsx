@@ -147,8 +147,10 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
             <Button
                 disabled={buttonDisabled}
                 className={buttonClasses}
-                aria-label={intl.formatMessage(messages.send)}
                 onClick={!buttonDisabled ? handleSubmit : undefined}
+                accessibilityConfig={{
+                    ariaLabel: intl.formatMessage(messages.send),
+                }}
             >
                 <SendIcon />
             </Button>

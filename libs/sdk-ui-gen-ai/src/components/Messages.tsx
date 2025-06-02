@@ -19,7 +19,7 @@ const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading
 
     return (
         <div className="gd-gen-ai-chat__messages" ref={scrollerRef}>
-            <div className="gd-gen-ai-chat__messages__scroll">
+            <div className="gd-gen-ai-chat__messages__scroll" role="log" aria-relevant="additions">
                 {!messages.length && !loading ? <EmptyState /> : null}
                 {loading === "loading" || loading === "clearing" ? <Skeleton count={3} height="2em" /> : null}
                 {loading !== "loading" && loading !== "clearing"

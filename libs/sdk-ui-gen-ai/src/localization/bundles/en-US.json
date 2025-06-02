@@ -30,7 +30,7 @@
         "limit": 0
     },
     "gd.gen-ai.assistant-icon": {
-        "value": "chatbot",
+        "value": "Chatbot response",
         "comment": "",
         "limit": 0
     },
@@ -110,7 +110,7 @@
         "limit": 0
     },
     "gd.gen-ai.button.send": {
-        "value": "Send",
+        "value": "Send message",
         "comment": "",
         "limit": 0
     },
@@ -206,6 +206,11 @@
     },
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": {
         "value": "Open in analyze",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.message.label.user": {
+        "value": "User input",
         "comment": "",
         "limit": 0
     }

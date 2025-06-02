@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
 import { Button, Icon, Typography } from "@gooddata/sdk-ui-kit";
 import { connect } from "react-redux";
@@ -59,7 +59,9 @@ const EmptyStateComponent: React.FC<EmptyStateDispatchProps & WrappedComponentPr
                     }
                     variant="secondary"
                 >
-                    <option.Icon width={18} height={18} />
+                    <span role="presentation" className="gd-gen-ai-chat__messages__empty__icon">
+                        <option.Icon width={18} height={18} />
+                    </span>
                     <FormattedMessage tagName="span" id={option.title.id} />
                 </Button>
             ))}
