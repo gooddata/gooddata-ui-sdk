@@ -711,6 +711,11 @@ export interface ISettings {
      */
     enableWidgetExportPngImage?: boolean;
 
+    /**
+     * Enable export to document storage.
+     */
+    enableExportToDocumentStorage?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 

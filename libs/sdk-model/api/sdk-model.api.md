@@ -3422,6 +3422,7 @@ export interface ISettings {
     enableEmbedButtonInKD?: boolean;
     enableExecutionCancelling?: boolean;
     enableExecutionTimestamp?: boolean;
+    enableExportToDocumentStorage?: boolean;
     enableExternalRecipients?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
