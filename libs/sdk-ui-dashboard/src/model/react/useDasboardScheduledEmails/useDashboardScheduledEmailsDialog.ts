@@ -26,6 +26,7 @@ import { useDashboardUserInteraction } from "../useDashboardUserInteraction.js";
  * @internal
  */
 export interface IUseDashboardScheduledEmailsDialogProps {
+    scheduledExportToEdit?: IAutomationMetadataObject;
     setScheduledExportToEdit: (automation?: IAutomationMetadataObject) => void;
 }
 
@@ -33,6 +34,7 @@ export interface IUseDashboardScheduledEmailsDialogProps {
  * @internal
  */
 export const useDashboardScheduledEmailsDialog = ({
+    scheduledExportToEdit,
     setScheduledExportToEdit,
 }: IUseDashboardScheduledEmailsDialogProps) => {
     const { addSuccess, addError } = useToastMessage();
@@ -76,10 +78,17 @@ export const useDashboardScheduledEmailsDialog = ({
     const onScheduleEmailingCancel = useCallback(
         (widget?: IWidget) => {
             closeScheduleEmailingDialog();
+            if (scheduledExportToEdit) {
+                openScheduleEmailingManagementDialog(widget);
+            }
             setScheduledExportToEdit(undefined);
-            openScheduleEmailingManagementDialog(widget);
         },
-        [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog, setScheduledExportToEdit],
+        [
+            scheduledExportToEdit,
+            closeScheduleEmailingDialog,
+            openScheduleEmailingManagementDialog,
+            setScheduledExportToEdit,
+        ],
     );
 
     // Create

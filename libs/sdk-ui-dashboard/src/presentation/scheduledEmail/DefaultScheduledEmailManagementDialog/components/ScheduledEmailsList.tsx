@@ -45,6 +45,7 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
                 delete: handleDelete,
                 scheduleEmail: handleEdit,
             },
+            isNestedList: true,
         },
     );
 

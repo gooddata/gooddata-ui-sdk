@@ -43,7 +43,7 @@ export const useDashboardScheduledEmails = () => {
         onScheduleEmailingOpen,
         onScheduleEmailingSaveError,
         onScheduleEmailingSaveSuccess,
-    } = useDashboardScheduledEmailsDialog({ setScheduledExportToEdit });
+    } = useDashboardScheduledEmailsDialog({ scheduledExportToEdit, setScheduledExportToEdit });
 
     const {
         defaultOnScheduleEmailingManagement,

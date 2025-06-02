@@ -5927,12 +5927,13 @@ export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInvert
 export const useIsZoomed: (baseZoomLevel?: number) => boolean;
 
 // @internal (undocumented)
-export function useListWithActionsKeyboardNavigation<Item, Action extends string>({ items, actionHandlers, getItemAdditionalActions, }: {
+export function useListWithActionsKeyboardNavigation<Item, Action extends string>({ items, actionHandlers, getItemAdditionalActions, isNestedList, }: {
     items: Item[];
     actionHandlers: {
         [key in Action | typeof SELECT_ITEM_ACTION]: (item: Item) => (() => void) | undefined;
     };
     getItemAdditionalActions: (item: Item) => Action[];
+    isNestedList?: boolean;
 }): {
     onKeyboardNavigation: (event: React_2.KeyboardEvent<Element>) => void;
     onBlur: React_2.FocusEventHandler<Element>;

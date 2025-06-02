@@ -2,7 +2,7 @@
 
 import React, { useCallback, useState } from "react";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
-import { AddButton, Button, Dialog, Hyperlink, Typography, useId, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { AddButton, Button, Dialog, Hyperlink, Typography, useId } from "@gooddata/sdk-ui-kit";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { ScheduledEmails } from "./components/ScheduledEmailsList.js";
@@ -18,31 +18,10 @@ import {
     selectCanCreateAutomation,
     selectIsWhiteLabeled,
     selectExecutionTimestamp,
-    selectScheduleEmailDialogOpenedFrom,
 } from "../../../model/index.js";
 import { messages } from "../../../locales.js";
 import { isMobileView } from "../utils/responsive.js";
-
-import {
-    DASHBOARD_INSIGHT_MENU_BUTTON_ID,
-    DEFAULT_MENU_BUTTON_ID,
-} from "../../../_staging/accessibility/elementId.js";
-
-const useScheduleEmailManagementDialogAccessibility = () => {
-    const scheduleEmailId = useIdPrefixed("ScheduleEmail");
-    const scheduleEmailingDialogOpenedFrom = useDashboardSelector(selectScheduleEmailDialogOpenedFrom);
-    const isOpenedFromWidget = scheduleEmailingDialogOpenedFrom === "widget";
-
-    const returnFocusTo = React.useMemo(
-        () => (isOpenedFromWidget ? DASHBOARD_INSIGHT_MENU_BUTTON_ID : DEFAULT_MENU_BUTTON_ID),
-        [isOpenedFromWidget],
-    );
-
-    return {
-        scheduleEmailId,
-        returnFocusTo,
-    } as const;
-};
+import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
 
 /**
  * @alpha
@@ -70,7 +49,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
     const intl = useIntl();
     const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
 
-    const { scheduleEmailId, returnFocusTo } = useScheduleEmailManagementDialogAccessibility();
+    const { scheduleEmailId, returnFocusTo } = useScheduleEmailDialogAccessibility();
 
     const handleScheduleDelete = useCallback((scheduledEmail: IAutomationMetadataObject) => {
         setScheduledEmailToDelete(scheduledEmail);

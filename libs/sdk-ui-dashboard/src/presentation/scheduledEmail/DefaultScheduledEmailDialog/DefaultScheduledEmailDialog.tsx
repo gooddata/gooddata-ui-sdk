@@ -62,6 +62,7 @@ import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToB
 import { ScheduledEmailDialogHeader } from "./components/Header/ScheduleEmailDialogHeader.js";
 import { MessageForm } from "./components/MessageForm/MessageForm.js";
 import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
+import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
 
 const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 
@@ -228,6 +229,8 @@ export function ScheduledMailDialogRenderer({
             onSave,
         });
 
+    const { returnFocusTo } = useScheduleEmailDialogAccessibility();
+
     const errorMessage = savingErrorMessage ?? validationErrorMessage;
 
     const dashboardScheduledExportFiltersInfo = useFiltersForDashboardScheduledExportInfo({
@@ -291,6 +294,7 @@ export function ScheduledMailDialogRenderer({
                             titleElementId,
                         }}
                         showProgressIndicator={isSavingScheduledEmail}
+                        returnFocusTo={returnFocusTo}
                         footerLeftRenderer={() => (
                             <ScheduledEmailDialogFooter
                                 isWhiteLabeled={isWhiteLabeled}
