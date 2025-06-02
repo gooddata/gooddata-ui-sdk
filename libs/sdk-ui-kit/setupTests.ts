@@ -59,3 +59,21 @@ global.ResizeObserver = class ResizeObserver {
         return null;
     }
 };
+
+global.IntersectionObserver = class IntersectionObserver {
+    observe() {
+        return null;
+    }
+    unobserve() {
+        return null;
+    }
+    disconnect() {
+        return null;
+    }
+    takeRecords() {
+        return null;
+    }
+    root = null;
+    rootMargin = "";
+    thresholds = [];
+};
