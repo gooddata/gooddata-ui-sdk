@@ -1,8 +1,8 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import defaultUserEvent from "@testing-library/user-event";
-import { withIntl, ITranslations } from "@gooddata/sdk-ui";
+import { ITranslations, withIntlForTest } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
 import { defaultImport } from "default-import";
 
@@ -28,7 +28,7 @@ const mockTranslation: ITranslations = {
     logout: "Logout",
 };
 
-const Wrapped = withIntl(HeaderMenu, "en-US", mockTranslation);
+const Wrapped = withIntlForTest(HeaderMenu, "en-US", mockTranslation);
 
 describe("ReactHeaderMenu", () => {
     it("should render menu items", () => {

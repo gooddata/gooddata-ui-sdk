@@ -204,6 +204,7 @@ export { TranslationsProvider, IntlTranslationsProvider } from "./localization/T
 export {
     createIntlMock,
     withIntl,
+    withIntlForTest,
     resolveLocale,
     emptyHeaderTitleFromIntl,
     totalColumnTitleFromIntl,
