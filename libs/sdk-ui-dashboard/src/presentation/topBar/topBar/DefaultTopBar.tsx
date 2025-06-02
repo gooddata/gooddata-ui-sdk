@@ -5,6 +5,7 @@ import {
     renameDashboard,
     selectDashboardShareInfo,
     selectDashboardTitle,
+    selectEnableSnapshotExportAccessibility,
     selectIsExport,
     selectIsReadOnly,
     selectPersistedDashboard,
@@ -81,6 +82,19 @@ export const useTopBarProps = (): ITopBarProps => {
 
 const TopBarCore = (props: ITopBarProps): JSX.Element => {
     const { menuButtonProps, titleProps, buttonBarProps, shareStatusProps, lockedStatusProps } = props;
+    const snapshotExportAccessibilityEnabled = useDashboardSelector(selectEnableSnapshotExportAccessibility);
+    const isExport = useDashboardSelector(selectIsExport);
+
+    if (isExport && snapshotExportAccessibilityEnabled) {
+        return (
+            <div className={"dash-header s-top-bar"}>
+                <div className={"dash-header-inner"}>
+                    <Title {...titleProps} />
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className={"dash-header s-top-bar"}>
             <div className={"dash-header-inner"}>
@@ -101,8 +115,9 @@ const TopBarCore = (props: ITopBarProps): JSX.Element => {
  */
 export function DefaultTopBar(props: ITopBarProps): JSX.Element {
     const isExport = useDashboardSelector(selectIsExport);
+    const snapshotExportAccessibilityEnabled = useDashboardSelector(selectEnableSnapshotExportAccessibility);
 
-    if (isExport) {
+    if (isExport && !snapshotExportAccessibilityEnabled) {
         return <HiddenTopBar {...props} />;
     }
 
