@@ -124,7 +124,7 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
     }
 
     public getAttributesWithReferences(_refs: ObjRef[]): Promise<IAttributeWithReferences[]> {
-        throw new NotSupported("not supported");
+        return Promise.resolve([]);
     }
 
     private sanitizeAttribute(attribute: IAttributeMetadataObject): IAttributeMetadataObject {

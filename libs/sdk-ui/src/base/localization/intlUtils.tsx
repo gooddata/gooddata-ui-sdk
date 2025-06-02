@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { IntlProvider, createIntl, IntlShape } from "react-intl";
 import { ITranslations, messagesMap } from "./messagesMap.js";
@@ -15,7 +15,49 @@ export function createIntlMock(customMessages = {}, locale = "en-US"): IntlShape
             ...resolveLocaleDefaultMessages(locale, messagesMap),
             ...customMessages,
         },
+        // Suppress MISSING_TRANSLATION errors in test environments
+        onError: (error) => {
+            // Only log non-MISSING_TRANSLATION errors
+            if (!error.message?.includes("MISSING_TRANSLATION")) {
+                //console.warn("IntlMock error:", error);
+            }
+        },
     });
+}
+
+/**
+ * @internal
+ */
+export function withIntlForTest<P>(
+    WrappedComponent: React.FC<P> | React.ComponentClass<P>,
+    customLocale?: ILocale,
+    customMessages?: ITranslations,
+): React.ComponentType<P> {
+    class WithIntl extends React.Component<P> {
+        public render() {
+            const locale = customLocale ? customLocale : DefaultLocale;
+            const messages = customMessages
+                ? customMessages
+                : resolveLocaleDefaultMessages(locale, messagesMap);
+
+            return (
+                <IntlProvider
+                    locale={locale as string}
+                    messages={messages}
+                    onError={(error) => {
+                        // Suppress MISSING_TRANSLATION errors to improve test performance
+                        if (!error.message?.includes("MISSING_TRANSLATION")) {
+                            console.warn("IntlProviderForTest error:", error);
+                        }
+                    }}
+                >
+                    <WrappedComponent {...this.props} />
+                </IntlProvider>
+            );
+        }
+    }
+
+    return wrapDisplayName("withIntl", WrappedComponent)(WithIntl);
 }
 
 /**

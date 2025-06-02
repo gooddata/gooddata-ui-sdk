@@ -1911,6 +1911,9 @@ export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProp
 // @internal (undocumented)
 export function withIntl<P>(WrappedComponent: React_2.FC<P> | React_2.ComponentClass<P>, customLocale?: ILocale, customMessages?: ITranslations): React_2.ComponentType<P>;
 
+// @internal (undocumented)
+export function withIntlForTest<P>(WrappedComponent: React_2.FC<P> | React_2.ComponentClass<P>, customLocale?: ILocale, customMessages?: ITranslations): React_2.ComponentType<P>;
+
 // @public (undocumented)
 export type WithLoadingResult = {
     result: DataViewFacade | undefined;

@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { DefaultLocale, ILocale } from "../Locale.js";
 import { getIntl, getTranslation } from "../IntlStore.js";
 import { describe, expect, it } from "vitest";
@@ -51,17 +51,18 @@ describe("IntlStore", () => {
                 "zh-HK",
             ];
 
-            it("should return message in en-US", () => {
+            it("should return message for simple translation key", () => {
                 localizations.forEach((locale) => {
-                    const result = getTranslation("visualizations.of", locale);
+                    const result = getTranslation("gs.list.all", locale);
                     expect(result).toBeTruthy();
                 });
             });
 
-            it("should return message in en-US with replaced placeholders for values", () => {
+            it("should return message with replaced placeholders for values", () => {
                 localizations.forEach((locale) => {
-                    const result = getTranslation("gs.list.limitExceeded", locale, {
-                        limit: 42,
+                    const result = getTranslation("visualizations.of", locale, {
+                        page: 1,
+                        pagesCount: 5,
                     });
                     expect(result).toBeTruthy();
                     expect(result.includes("{")).toEqual(false);

@@ -1,7 +1,7 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { withIntl } from "@gooddata/sdk-ui";
+import { withIntlForTest } from "@gooddata/sdk-ui";
 import first from "lodash/first.js";
 import times from "lodash/times.js";
 import assign from "lodash/assign.js";
@@ -37,7 +37,7 @@ describe("LegacyInvertableList", () => {
             options,
         );
 
-        const Wrapped = withIntl<ILegacyInvertableListProps<IItem>>(
+        const Wrapped = withIntlForTest<ILegacyInvertableListProps<IItem>>(
             LegacyInvertableList,
             undefined,
             customMessages,

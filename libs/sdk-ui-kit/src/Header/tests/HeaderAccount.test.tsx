@@ -1,9 +1,9 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import defaultUserEvent from "@testing-library/user-event";
 import noop from "lodash/noop.js";
-import { withIntl, ITranslations } from "@gooddata/sdk-ui";
+import { withIntlForTest, ITranslations } from "@gooddata/sdk-ui";
 import { describe, it, expect, vi } from "vitest";
 import { defaultImport } from "default-import";
 
@@ -27,7 +27,7 @@ const mockTranslation: ITranslations = {
     "gs.header.logout": "Logout",
 };
 
-const Wrapper = withIntl(HeaderAccount, "en-US", mockTranslation);
+const Wrapper = withIntlForTest(HeaderAccount, "en-US", mockTranslation);
 
 describe("HeaderAccount", () => {
     it("should render username", () => {
