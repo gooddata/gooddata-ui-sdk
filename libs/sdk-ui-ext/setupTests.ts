@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { cleanup } from "@testing-library/react";
 import { afterEach, expect, vi } from "vitest";
 
@@ -39,3 +39,7 @@ expect.extend(matchers);
 afterEach(() => {
     cleanup();
 });
+
+global.CSS = {
+    supports: (property: string, value: string) => false,
+} as any;
