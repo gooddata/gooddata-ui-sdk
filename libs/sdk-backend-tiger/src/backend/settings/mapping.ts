@@ -42,6 +42,8 @@ export function mapTypeToKey(
             return "aiRateLimit";
         case "ACTIVE_LLM_ENDPOINT":
             return "llmEndpoint";
+        case "ATTACHMENT_SIZE_LIMIT":
+            return "attachmentSizeLimit";
         // These cases are intentionally not mapped to maintain an exhaustive check.
         // This ensures we're notified when new properties are added, allowing us to decide if they need mapping.
         case "METADATA_LOCALE":
@@ -51,7 +53,6 @@ export function mapTypeToKey(
         case "JIT_PROVISIONING":
         case "ENABLE_SLIDES_EXPORT":
         case "JWT_JIT_PROVISIONING":
-        case "ATTACHMENT_SIZE_LIMIT":
         case "ATTACHMENT_LINK_TTL":
         case undefined:
             return fallback;

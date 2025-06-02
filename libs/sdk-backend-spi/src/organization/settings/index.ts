@@ -80,11 +80,11 @@ export interface IOrganizationSettingsService {
     /**
      * Sets attachment size limit sent to email for organization.
      *
-     * @param size - the size in MB or other unit, for example: "10MB".
+     * @param size - the size in bytes.
      *
      * @returns promise
      */
-    setAttachmentSizeLimit(size: string): Promise<void>;
+    setAttachmentSizeLimit(size: number): Promise<void>;
 
     /**
      * Sets first day of week for organization.

@@ -1,9 +1,8 @@
-// (C) 2022-2024 GoodData Corporation
-export const isValueSetting = (obj: object | null | undefined): obj is { value: string } => {
-    if (!obj || Object.keys(obj).length !== 1) {
-        return false;
-    }
-    return ["string", "boolean"].includes(typeof (obj as { value: any }).value);
+// (C) 2022-2025 GoodData Corporation
+export const isValueSetting = (
+    obj: object | null | undefined,
+): obj is { value: string | number | boolean | object | null | undefined } => {
+    return !!obj && Object.prototype.hasOwnProperty.call(obj, "value");
 };
 
 export const unwrapSettingContent = (content: object | undefined | null) => {

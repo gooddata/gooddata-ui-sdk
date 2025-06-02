@@ -89,6 +89,11 @@ export interface ISettings {
      */
     llmEndpoint?: ILlmEndpoint;
 
+    /**
+     * Attachment size limit in bytes (null for no limit).
+     */
+    attachmentSizeLimit?: number | null;
+
     //
     // Feature Flags
     //
@@ -706,7 +711,12 @@ export interface ISettings {
      */
     enableWidgetExportPngImage?: boolean;
 
-    [key: string]: number | boolean | string | object | undefined;
+    /**
+     * Enable export to document storage.
+     */
+    enableExportToDocumentStorage?: boolean;
+
+    [key: string]: number | boolean | string | object | undefined | null;
 }
 
 /**

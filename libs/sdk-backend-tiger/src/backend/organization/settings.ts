@@ -45,7 +45,7 @@ export class OrganizationSettingsService
         return this.setSetting("FORMAT_LOCALE", { value: dateFormat });
     }
 
-    public async setAttachmentSizeLimit(size: string): Promise<void> {
+    public async setAttachmentSizeLimit(size: number): Promise<void> {
         return this.setSetting("ATTACHMENT_SIZE_LIMIT", { value: size });
     }
 

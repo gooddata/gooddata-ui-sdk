@@ -3355,11 +3355,12 @@ export interface ISeparators {
 // @public
 export interface ISettings {
     // (undocumented)
-    [key: string]: number | boolean | string | object | undefined;
+    [key: string]: number | boolean | string | object | undefined | null;
     ADCatalogGroupsExpanded?: boolean;
     ADMeasureValueFilterNullAsZeroOption?: string;
     aiRateLimit?: number;
     alertDefault?: IAlertDefault;
+    attachmentSizeLimit?: number | null;
     // @alpha
     dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
     // @alpha
@@ -3421,6 +3422,7 @@ export interface ISettings {
     enableEmbedButtonInKD?: boolean;
     enableExecutionCancelling?: boolean;
     enableExecutionTimestamp?: boolean;
+    enableExportToDocumentStorage?: boolean;
     enableExternalRecipients?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
