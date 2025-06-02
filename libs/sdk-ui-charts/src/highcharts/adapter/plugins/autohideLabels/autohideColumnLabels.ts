@@ -1,11 +1,11 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import map from "lodash/map.js";
 import zip from "lodash/zip.js";
 import values from "lodash/values.js";
 import flatten from "lodash/flatten.js";
 import identity from "lodash/identity.js";
 import isEmpty from "lodash/isEmpty.js";
-import Highcharts from "../../../lib/index.js";
+import { Point, Axis } from "../../../lib/index.js";
 
 import {
     getAxisRangeForAxes,
@@ -110,7 +110,7 @@ const getWaterfallAxisRangeForAxes = (axisRangeForAxes: IAxisRangeForAxes) => {
     };
 };
 
-const toggleStackedChartLabels = (visiblePoints: Highcharts.Point[], axisRangeForAxes: IAxisRangeForAxes) => {
+const toggleStackedChartLabels = (visiblePoints: Point[], axisRangeForAxes: IAxisRangeForAxes) => {
     const toggleLabel = (point: any) => {
         const {
             dataLabel,
@@ -137,7 +137,7 @@ const toggleStackedChartLabels = (visiblePoints: Highcharts.Point[], axisRangeFo
     }
 };
 
-export function isOverlappingWidth(visiblePoints: Highcharts.Point[]): boolean {
+export function isOverlappingWidth(visiblePoints: Point[]): boolean {
     return visiblePoints.filter(hasDataLabel).some((point: UnsafeInternals) => {
         const { dataLabel, shapeArgs } = point;
 
@@ -168,8 +168,8 @@ export function areNeighborsOverlapping(neighbors: IUnsafeDataLabels[][]): boole
 
 // Check if Total label overlapping other columns
 export function areLabelsOverlappingColumns(
-    labels: Highcharts.Point[],
-    visiblePoints: Highcharts.Point[],
+    labels: Point[],
+    visiblePoints: Point[],
     chartType?: string,
 ): boolean {
     return labels.some((label: UnsafeInternals) => {
@@ -222,7 +222,7 @@ function findColumnKey(key: string): boolean {
  * Secondary axis:  [pointS1, pointS2, pointS3]
  * @returns [pointP1, pointS1, pointP2, pointS2, pointP3, pointS3]
  */
-export function getStackLabelPointsForDualAxis(stacks: UnsafeInternals[]): Highcharts.Point[] {
+export function getStackLabelPointsForDualAxis(stacks: UnsafeInternals[]): Point[] {
     return flatten(
         // 'column0' is primary axis and 'column1' is secondary axis
         zip(
@@ -234,7 +234,7 @@ export function getStackLabelPointsForDualAxis(stacks: UnsafeInternals[]): Highc
     ).filter(identity);
 }
 
-export function getStackTotalGroups(yAxis: Highcharts.Axis[]): Highcharts.SVGAttributes[] {
+export function getStackTotalGroups(yAxis: Axis[]): Highcharts.SVGAttributes[] {
     return flatten(
         yAxis.map((axis: Highcharts.Axis) => {
             if (!isEmpty((axis as UnsafeInternals)?.stacking.stacks)) {

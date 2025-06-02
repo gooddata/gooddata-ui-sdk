@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     adjustTicks,
     ALIGNED,
@@ -15,7 +15,6 @@ import {
 } from "../adjustTickAmount.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { UnsafeInternals } from "../../../typings/unsafe.js";
-import Highcharts from "../../../lib/index.js";
 import { IHighchartsAxisExtend } from "../../../typings/extend.js";
 import { describe, it, expect, beforeAll } from "vitest";
 
@@ -489,7 +488,7 @@ describe("adjustTickAmount - detail", () => {
                         },
                     },
                 },
-            } as Highcharts.Axis;
+            } as any;
             expect(shouldBeHandledByHighcharts(yAxis)).toBeTruthy();
         });
 
@@ -531,7 +530,7 @@ describe("adjustTickAmount - detail", () => {
                         },
                     ],
                 },
-            } as Highcharts.Axis;
+            } as any;
             expect(shouldBeHandledByHighcharts(yAxis)).toBeTruthy();
         });
     });
@@ -557,7 +556,7 @@ describe("adjustTickAmount - detail", () => {
             ["right", {}, null],
         ])(
             "should return ALIGN when %s axis is null",
-            (_axisSide: string, primaryAxis: Highcharts.Axis, secondaryAxis: Highcharts.Axis) => {
+            (_axisSide: string, primaryAxis: any, secondaryAxis: any) => {
                 expect(getDirection(primaryAxis, secondaryAxis)).toBe(ALIGNED);
             },
         );

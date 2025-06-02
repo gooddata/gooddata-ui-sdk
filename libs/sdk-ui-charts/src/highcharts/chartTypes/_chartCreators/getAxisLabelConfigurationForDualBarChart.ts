@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IAxisConfig } from "../../../interfaces/index.js";
 import { isBarChart } from "../_util/common.js";
 import {
@@ -11,7 +11,7 @@ import {
     ROTATE_NEGATIVE_90_DEGREES,
 } from "../../constants/axisLabel.js";
 import { IChartOptions } from "../../typings/unsafe.js";
-import { XAxisOptions } from "highcharts";
+import { XAxisOptions } from "../../lib/index.js";
 
 function getLabelOptions(index: number, aligns: Highcharts.AlignValue[]): Highcharts.XAxisOptions {
     const isOppositeAxis: boolean = index === 1;
