@@ -79,11 +79,13 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
         exportPngImageDisabled,
+        xlsxDisabledReason,
     } = useInsightExport({
         widgetRef,
         title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
         insight,
         widget,
+        useNewTabularExport: true,
     });
 
     const onScheduleExport = useCallback(() => {
@@ -136,6 +138,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
         exportPngImageDisabled,
+        xlsxDisabledReason,
     });
     const toggleMenu = useCallback(() => {
         if (isMenuOpen) {

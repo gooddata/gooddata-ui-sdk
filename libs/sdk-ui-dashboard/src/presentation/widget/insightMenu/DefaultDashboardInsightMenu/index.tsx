@@ -6,7 +6,8 @@ export type {
     AlertingDisabledReason,
     SchedulingDisabledReason,
     IUseInsightMenuConfig,
-} from "./getDefaultInsightMenuItems.js";
+    XLSXDisabledReason,
+} from "./types.js";
 export { getDefaultInsightMenuItems } from "./getDefaultInsightMenuItems.js";
 export type { InsightMenuItemDependencies } from "./getDefaultInsightEditMenuItems.js";
 export { getDefaultInsightEditMenuItems } from "./getDefaultInsightEditMenuItems.js";

@@ -41,8 +41,9 @@ export const useInsightExport = (config: {
     widgetRef: ObjRef;
     insight?: IInsight;
     widget?: IInsightWidget;
+    useNewTabularExport?: boolean;
 }) => {
-    const { title, widgetRef, insight, widget } = config;
+    const { title, widgetRef, insight, widget, useNewTabularExport } = config;
     const [isExporting, setIsExporting] = useState(false);
     const intl = useIntl();
 
@@ -144,14 +145,17 @@ export const useInsightExport = (config: {
 
     const { exportDashboardToExcel } = useExportDashboardToExcel(() => setIsExporting(false));
     const onExportXLSX = useCallback(() => {
-        if (dashboardTabularExportEnabled) {
+        if (dashboardTabularExportEnabled && useNewTabularExport) {
             openDialog({
                 onSubmit: ({ includeFilterContext, mergeHeaders }) => {
                     setIsExporting(true);
                     closeDialog();
-                    exportDashboardToExcel(mergeHeaders ?? true, includeFilterContext ?? true, [
-                        widget!.identifier,
-                    ]);
+                    exportDashboardToExcel(
+                        mergeHeaders ?? true,
+                        includeFilterContext ?? true,
+                        [widget!.identifier],
+                        title,
+                    );
                 },
                 headline: intl.formatMessage({ id: "options.menu.export.dialog.widget.EXCEL" }),
                 mergeHeaders: Boolean(settings?.cellMergedByDefault ?? true),
@@ -181,10 +185,26 @@ export const useInsightExport = (config: {
                 filterContextVisible: Boolean(settings?.enableActiveFilterContext ?? true),
             });
         }
-    }, [settings, title, exportFunction, closeDialog, dashboardTabularExportEnabled]);
+    }, [
+        dashboardTabularExportEnabled,
+        openDialog,
+        intl,
+        settings?.cellMergedByDefault,
+        settings?.activeFiltersByDefault,
+        settings?.enableActiveFilterContext,
+        closeDialog,
+        exportDashboardToExcel,
+        widget,
+        exportFunction,
+        title,
+    ]);
 
     const exportCSVEnabled = !isExporting && isInsightExportable && isExportableToCsv;
-    const exportXLSXEnabled = !isExporting && isInsightExportable && isExportableToXlsx;
+    const exportXLSXEnabled =
+        !isExporting &&
+        isInsightExportable &&
+        isExportableToXlsx &&
+        (dashboardTabularExportEnabled ? !!widget?.localIdentifier : true);
     const exportCSVRawEnabled = !isExporting;
 
     const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
@@ -200,6 +220,9 @@ export const useInsightExport = (config: {
     const exportPdfPresentationDisabled = !!widget && !widget.localIdentifier;
     const exportPowerPointPresentationDisabled = !!widget && !widget.localIdentifier;
     const exportPngImageDisabled = !!widget && !widget.localIdentifier;
+
+    const xlsxDisabledReason =
+        dashboardTabularExportEnabled && !widget?.localIdentifier ? ("oldWidget" as const) : undefined;
 
     return {
         exportCSVEnabled,
@@ -218,5 +241,6 @@ export const useInsightExport = (config: {
         exportPdfPresentationDisabled,
         exportPowerPointPresentationDisabled,
         exportPngImageDisabled,
+        xlsxDisabledReason,
     };
 };

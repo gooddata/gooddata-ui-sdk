@@ -2,6 +2,7 @@
 import { IExecutionResultEnvelope } from "../../../../model/index.js";
 import { isDataError, isDataErrorTooLarge } from "../../../../_staging/errors/errorPredicates.js";
 import { defineMessages } from "react-intl";
+import { XLSXDisabledReason } from "./types.js";
 
 const tooltipMessages = defineMessages({
     tooLarge: { id: "options.menu.data.too.large" },
@@ -9,16 +10,19 @@ const tooltipMessages = defineMessages({
     dataError: { id: "options.menu.unsupported.error" },
     loading: { id: "options.menu.unsupported.loading" },
     exporting: { id: "options.menu.export.in.progress" },
+    xlsxOldWidget: { id: "options.menu.unsupported.xlsxOldWidget" },
 });
 
-export const getExportTooltip = ({
+export const getExportTooltipId = ({
     isRawExportsEnabled,
     isExporting,
     execution,
+    xlsxDisabledReason,
 }: {
     execution?: IExecutionResultEnvelope;
     isExporting: boolean;
     isRawExportsEnabled?: boolean;
+    xlsxDisabledReason?: XLSXDisabledReason;
 }): string => {
     if (isExporting) {
         return tooltipMessages.exporting.id;
@@ -32,6 +36,9 @@ export const getExportTooltip = ({
         } else {
             return tooltipMessages.dataError.id;
         }
+    }
+    if (xlsxDisabledReason === "oldWidget") {
+        return tooltipMessages.xlsxOldWidget.id;
     }
     return tooltipMessages.loading.id;
 };

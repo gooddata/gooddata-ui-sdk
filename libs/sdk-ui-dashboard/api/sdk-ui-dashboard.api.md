@@ -3927,12 +3927,14 @@ export interface ExportDashboardToExcel extends IDashboardCommand {
 }
 
 // @beta
-export function exportDashboardToExcel(mergeHeaders: boolean, exportInfo: boolean, widgetIds?: string[], correlationId?: string): ExportDashboardToExcel;
+export function exportDashboardToExcel(mergeHeaders: boolean, exportInfo: boolean, widgetIds?: string[], fileName?: string, correlationId?: string): ExportDashboardToExcel;
 
 // @beta (undocumented)
 export interface ExportDashboardToExcelPayload {
     // (undocumented)
     exportInfo: boolean;
+    // (undocumented)
+    fileName?: string;
     // (undocumented)
     mergeHeaders: boolean;
     // (undocumented)
@@ -6689,6 +6691,8 @@ export interface IUseInsightMenuConfig {
     scheduleExportDisabledReason?: SchedulingDisabledReason;
     // (undocumented)
     scheduleExportManagementDisabled: boolean;
+    // (undocumented)
+    xlsxDisabledReason?: XLSXDisabledReason;
 }
 
 // @public
@@ -11195,5 +11199,8 @@ export type WorkingDashboardAttributeFilter = {
 
 // @alpha
 export type WorkingFilterContextItem = WorkingDashboardAttributeFilter | IDashboardDateFilter;
+
+// @internal (undocumented)
+export type XLSXDisabledReason = "oldWidget";
 
 ```

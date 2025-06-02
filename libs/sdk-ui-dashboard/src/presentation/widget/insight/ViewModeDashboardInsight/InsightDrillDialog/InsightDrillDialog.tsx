@@ -150,6 +150,7 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
         widgetRef: DRILL_MODAL_EXECUTION_PSEUDO_REF,
         insight,
         widget,
+        useNewTabularExport: false,
     });
 
     const OverlayComponent = isMobileDevice ? FullScreenOverlay : Overlay;

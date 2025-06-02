@@ -1288,6 +1288,11 @@
         "comment": "",
         "limit": 0
     },
+    "options.menu.unsupported.xlsxOldWidget": {
+        "value": "Unable to export. Please resave the dashboard or contact your administrator.",
+        "comment": "",
+        "limit": 0
+    },
     "options.menu.unsupported.alertingOldWidget": {
         "value": "Unable to create an alert. Please resave the dashboard or contact your administrator.",
         "comment": "",
