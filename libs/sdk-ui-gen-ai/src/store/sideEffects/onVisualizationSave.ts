@@ -24,6 +24,7 @@ export function* onVisualizationSave({
     visualizationId: string;
     visualizationTitle: string;
     assistantMessageId: string;
+    explore: boolean;
 }>) {
     try {
         // Retrieve backend from context
@@ -54,6 +55,7 @@ export function* onVisualizationSave({
                 visualizationId: payload.visualizationId,
                 assistantMessageId: payload.assistantMessageId,
                 savedVisualizationId: savedVisualization.insight.identifier,
+                explore: payload.explore,
             }),
         );
     } catch (e) {

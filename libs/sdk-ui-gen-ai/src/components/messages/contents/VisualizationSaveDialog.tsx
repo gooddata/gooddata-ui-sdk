@@ -13,6 +13,7 @@ export type VisualizationSaveDialogProps = {
     onClose: () => void;
     visualization: IGenAIVisualization;
     messageId: string;
+    type: "save" | "explore";
 };
 
 export type VisualizationSaveDialogDispatchProps = {
@@ -21,7 +22,7 @@ export type VisualizationSaveDialogDispatchProps = {
 
 const VisualizationSaveDialogCore: React.FC<
     VisualizationSaveDialogProps & VisualizationSaveDialogDispatchProps & WrappedComponentProps
-> = ({ onClose, visualization, messageId, saveVisualizationAction, intl }) => {
+> = ({ onClose, visualization, messageId, saveVisualizationAction, intl, type }) => {
     const [value, setValue] = React.useState<string>(visualization.title);
     const { setSavingStarted } = useVisualisationSaving(visualization, onClose);
 
@@ -35,19 +36,26 @@ const VisualizationSaveDialogCore: React.FC<
                     visualizationId: visualization.id,
                     visualizationTitle: value || visualization.title,
                     assistantMessageId: messageId,
+                    explore: type === "explore",
                 });
             }}
             isPositive
             headline={intl.formatMessage({ id: "gd.gen-ai.save-dialog.title" })}
             cancelButtonText={intl.formatMessage({ id: "gd.gen-ai.button.cancel" })}
-            submitButtonText={intl.formatMessage({ id: "gd.gen-ai.button.save" })}
+            submitButtonText={
+                type === "save"
+                    ? intl.formatMessage({ id: "gd.gen-ai.button.save" })
+                    : intl.formatMessage({ id: "gd.gen-ai.button.save_and_explore" })
+            }
             showProgressIndicator={visualization.saving}
             isSubmitDisabled={visualization.saving}
             isCancelDisabled={visualization.saving}
             className="gd-gen-ai-chat__visualization__save-dialog"
         >
             <Typography tagName="p">
-                {intl.formatMessage({ id: "gd.gen-ai.save-dialog.description" })}
+                {type === "save"
+                    ? intl.formatMessage({ id: "gd.gen-ai.save-dialog.description" })
+                    : intl.formatMessage({ id: "gd.gen-ai.save-dialog.description.explore" })}
             </Typography>
             <Input
                 label={intl.formatMessage({ id: "gd.gen-ai.save-dialog.label" })}

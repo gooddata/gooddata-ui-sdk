@@ -119,13 +119,13 @@
         "comment": "",
         "limit": 0
     },
-    "gd.gen-ai.button.cancel": {
-        "value": "Cancel",
+    "gd.gen-ai.button.save_and_explore": {
+        "value": "Save & Open",
         "comment": "",
         "limit": 0
     },
-    "gd.gen-ai.button.edit": {
-        "value": "Edit",
+    "gd.gen-ai.button.cancel": {
+        "value": "Cancel",
         "comment": "",
         "limit": 0
     },
@@ -141,6 +141,11 @@
     },
     "gd.gen-ai.save-dialog.description": {
         "value": "Give your new visualization a new descriptive name, so it's easier to find it later on.",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.save-dialog.description.explore": {
+        "value": "To open this visualization, it needs to be saved first. You can give it a name below.",
         "comment": "",
         "limit": 0
     },
@@ -186,6 +191,21 @@
     },
     "gd.gen-ai.autocomplete.input-info.win": {
         "value": "<code>Ctrl+Space</code> or <code>Ctrl+I</code> for suggestions",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.visualisation.menu": {
+        "value": "Visualization menu",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.visualisation.menu.button.save_as_visualisation": {
+        "value": "Save as visualization",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze": {
+        "value": "Open in analyze",
         "comment": "",
         "limit": 0
     }
