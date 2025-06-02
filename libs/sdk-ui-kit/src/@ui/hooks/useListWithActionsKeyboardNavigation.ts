@@ -26,10 +26,12 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
     items,
     actionHandlers,
     getItemAdditionalActions,
+    isNestedList = false,
 }: {
     items: Item[];
     actionHandlers: { [key in Action | typeof SELECT_ITEM_ACTION]: (item: Item) => (() => void) | undefined };
     getItemAdditionalActions: (item: Item) => Action[];
+    isNestedList?: boolean;
 }) {
     const [focusedIndex, setFocusedIndex] = React.useState<number | undefined>(0);
     const focusedItem = focusedIndex === undefined ? undefined : items[focusedIndex];
@@ -71,14 +73,19 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
             ? // Selecting items
               makeItemSelectionNavigation(keyboardNavigationDepsRef)
             : // Selecting actions
-              makeActionSelectionNavigation(keyboardNavigationDepsRef);
-    }, [keyboardNavigationDepsRef, selectionMode]);
+              makeActionSelectionNavigation(keyboardNavigationDepsRef, isNestedList);
+    }, [keyboardNavigationDepsRef, selectionMode, isNestedList]);
 
     const handleBlur = React.useCallback<React.FocusEventHandler>(() => {
         setFocusedAction(SELECT_ITEM_ACTION);
     }, []);
 
-    return { onKeyboardNavigation: handleKeyboardNavigation, onBlur: handleBlur, focusedAction, focusedItem };
+    return {
+        onKeyboardNavigation: handleKeyboardNavigation,
+        onBlur: handleBlur,
+        focusedAction,
+        focusedItem,
+    };
 }
 
 function makeItemSelectionNavigation<Item, Action extends string>(
@@ -132,10 +139,20 @@ function makeItemSelectionNavigation<Item, Action extends string>(
 
 function makeActionSelectionNavigation<Item, Action extends string>(
     depsRef: React.MutableRefObject<IKeyboardNavigationDeps<Item, Action>>,
+    isNestedList: boolean,
 ) {
     return makeLinearKeyboardNavigation({
-        onFocusPrevious: () => {
-            const { focusedItemAdditionalActions, setFocusedAction } = depsRef.current;
+        onFocusPrevious: (e) => {
+            const { items, focusedItemAdditionalActions, setFocusedIndex, setFocusedAction } =
+                depsRef.current;
+            if (isNestedList && e.key === "ArrowUp") {
+                setFocusedIndex((currentIndex) =>
+                    currentIndex === undefined || currentIndex === 0 ? items.length - 1 : currentIndex - 1,
+                );
+                setFocusedAction(SELECT_ITEM_ACTION);
+
+                return;
+            }
 
             setFocusedAction((currentAction) => {
                 if (currentAction === SELECT_ITEM_ACTION) {
@@ -149,8 +166,18 @@ function makeActionSelectionNavigation<Item, Action extends string>(
                 );
             });
         },
-        onFocusNext: () => {
-            const { focusedItemAdditionalActions, setFocusedAction } = depsRef.current;
+        onFocusNext: (e) => {
+            const { items, focusedItemAdditionalActions, setFocusedIndex, setFocusedAction } =
+                depsRef.current;
+
+            if (isNestedList && e.key === "ArrowDown") {
+                setFocusedIndex((currentIndex) =>
+                    currentIndex === undefined || currentIndex === items.length - 1 ? 0 : currentIndex + 1,
+                );
+                setFocusedAction(SELECT_ITEM_ACTION);
+
+                return;
+            }
 
             setFocusedAction((currentAction) => {
                 if (currentAction === SELECT_ITEM_ACTION) {

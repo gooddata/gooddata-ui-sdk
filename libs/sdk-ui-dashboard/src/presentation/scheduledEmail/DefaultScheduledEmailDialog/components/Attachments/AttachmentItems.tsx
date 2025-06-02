@@ -7,8 +7,8 @@ import {
     ContentDivider,
     Dropdown,
     IAlignPoint,
-    isActionKey,
     isEscapeKey,
+    isSpaceKey,
     OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
 import { AttachmentType, WidgetAttachmentType } from "../../types.js";
@@ -40,7 +40,7 @@ const AttachmentItem: React.FC<{
             return;
         }
 
-        if (isActionKey(e)) {
+        if (isSpaceKey(e)) {
             e.preventDefault();
             onChange();
         }
@@ -102,7 +102,8 @@ export const AttachmentWidgets: React.FC<{
 
     const handleInputKeyDown = useCallback(
         (e: React.KeyboardEvent) => {
-            if (isActionKey(e)) {
+            if (isSpaceKey(e)) {
+                e.preventDefault();
                 setMergeHeaders(!mergeHeaders);
             }
         },

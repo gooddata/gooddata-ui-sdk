@@ -161,6 +161,7 @@ export interface IRecipientsSelectRendererProps {
 }
 
 interface IRecipientsSelectRendererState {
+    menuOpen: boolean;
     minRecipientsError: boolean;
 }
 
@@ -173,6 +174,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     constructor(props: IRecipientsSelectRendererProps) {
         super(props);
         this.state = {
+            menuOpen: false,
             minRecipientsError: false,
         };
     }
@@ -298,6 +300,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                 ) : null}
                 <div ref={this.recipientRef} className="gd-input s-gd-recipients-value">
                     <ReactSelect
+                        tabSelectsValue={false}
                         id={id}
                         className={cx("gd-recipients-container", {
                             "gd-input-component--invalid": showInputError,
@@ -317,6 +320,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                         }
                         onInputChange={this.onSearch}
                         onMenuOpen={this.onMenuOpen}
+                        onMenuClose={() => this.setState({ menuOpen: false })}
                         onKeyDown={this.handleKeyDown}
                         options={options}
                         onBlur={this.onBlur}
@@ -744,12 +748,13 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     };
 
     private handleKeyDown = (e: React.KeyboardEvent) => {
+        const { menuOpen } = this.state;
         const { onKeyDownSubmit } = this.props;
         if (isEscapeKey(e)) {
             e.stopPropagation();
         }
 
-        if (isEnterKey(e)) {
+        if (isEnterKey(e) && !menuOpen) {
             onKeyDownSubmit?.(e);
         }
     };
@@ -806,6 +811,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     private onMenuOpen = (): void => {
         const { onLoad, canListUsersInProject, options } = this.props;
         const userListCount = options.length;
+        this.setState({ menuOpen: true });
         if (!userListCount && canListUsersInProject) {
             onLoad?.();
         }
