@@ -1,13 +1,23 @@
 // (C) 2024-2025 GoodData Corporation
 
-import React from "react";
+import React, { ReactNode, useMemo } from "react";
 import cx from "classnames";
 import { IAttribute, IColorPalette, IFilter, IGenAIVisualization, IMeasure } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, Button, Icon } from "@gooddata/sdk-ui-kit";
+import {
+    Button,
+    IAlignPoint,
+    Icon,
+    ItemsWrapper,
+    makeMenuKeyboardNavigation,
+    Overlay,
+    SingleSelectListItem,
+    UiFocusTrap,
+    useId,
+} from "@gooddata/sdk-ui-kit";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { connect, useDispatch } from "react-redux";
 import { BarChart, ColumnChart, Headline, LineChart, PieChart } from "@gooddata/sdk-ui-charts";
-import { FormattedMessage } from "react-intl";
+import { useIntl } from "react-intl";
 import {
     GoodDataSdkError,
     isNoDataSdkError,
@@ -18,6 +28,7 @@ import {
 
 import { makeTextContents, makeUserMessage, VisualizationContents } from "../../../model.js";
 import { useConfig } from "../../ConfigContext.js";
+import { getVisualizationHref } from "../../../utils.js";
 import {
     RootState,
     newMessageAction,
@@ -31,10 +42,14 @@ import { useExecution } from "./useExecution.js";
 import { MarkdownComponent } from "./Markdown.js";
 
 const VIS_HEIGHT = 250;
+const MORE_MENU_BUTTON_ID = "gd-gen-ai-chat__visualization__save__more-menu-button";
+const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 
-const getVisualizationHref = (wsId: string, visId: string) => {
-    return `/analyze/#/${wsId}/${visId}/edit`;
-};
+interface IMenuButtonItem {
+    id: string;
+    title: string;
+    icon: ReactNode;
+}
 
 export type VisualizationContentsProps = {
     content: VisualizationContents;
@@ -59,10 +74,41 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
     const visualization = content.createdVisualizations?.[0];
     const { metrics, dimensions, filters } = useExecution(visualization);
     const config = useConfig();
-    const [saveDialogOpen, setSaveDialogOpen] = React.useState(false);
+    const [saveDialogOpen, setSaveDialogOpen] = React.useState<"save" | "explore" | null>(null);
     const [hasVisError, setHasVisError] = React.useState(false);
     const [visLoading, setVisLoading] = React.useState(true);
     const workspaceId = useWorkspaceStrict();
+    const [isMenuButtonOpen, setMenuButtonOpen] = React.useState(false);
+    const [isHovered, setHovered] = React.useState(false);
+
+    const intl = useIntl();
+    const tooltipText = intl.formatMessage({ id: "gd.gen-ai.visualisation.menu" });
+
+    // generate unique IDs for accessibility and dropdown positioning
+    const id = useId();
+    const menuId = `menu-${id}`;
+    const dropdownAnchorClassName = `${MORE_MENU_BUTTON_ID}-${id}`;
+
+    const menuItems = useMemo(
+        () =>
+            [
+                {
+                    id: "button-save",
+                    title: intl.formatMessage({
+                        id: "gd.gen-ai.visualisation.menu.button.save_as_visualisation",
+                    }),
+                    icon: <Icon.Save width={18} height={18} />,
+                },
+                {
+                    id: "button-open",
+                    title: intl.formatMessage({
+                        id: "gd.gen-ai.visualisation.menu.button.open_in_analyze",
+                    }),
+                    icon: <Icon.ExternalLink width={18} height={18} />,
+                },
+            ] as IMenuButtonItem[],
+        [intl],
+    );
 
     const handleOpen = (e: React.MouseEvent, vis: IGenAIVisualization) => {
         if (!vis?.savedVisualizationId) {
@@ -79,11 +125,30 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
         e.stopPropagation();
     };
 
-    const handleButtonClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLDivElement>) => {
-        if (visualization?.savedVisualizationId) {
-            handleOpen(e, visualization);
-        } else {
-            setSaveDialogOpen(true);
+    const handleButtonClick = (e: React.MouseEvent<HTMLElement>, item: IMenuButtonItem) => {
+        switch (item.id) {
+            case "button-save":
+                setSaveDialogOpen("save");
+                setMenuButtonOpen(false);
+                break;
+            case "button-open":
+                if (visualization?.savedVisualizationId) {
+                    if (config.allowNativeLinks) {
+                        window.location.href = getVisualizationHref(
+                            workspaceId,
+                            visualization.savedVisualizationId,
+                        );
+                    } else {
+                        handleOpen(e, visualization);
+                    }
+                } else {
+                    setSaveDialogOpen("explore");
+                }
+                setMenuButtonOpen(false);
+                break;
+            default:
+                // No action needed for other items
+                break;
         }
     };
 
@@ -104,11 +169,57 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
         setVisLoading(isLoading);
     };
 
+    const renderMenuItems = () => {
+        return (
+            <Overlay
+                key={"saveVisualisationMenuButton"}
+                alignTo={`.${dropdownAnchorClassName}`}
+                alignPoints={overlayAlignPoints}
+                className="gd-gen-ai-chat__visualization__menu_overlay"
+                closeOnMouseDrag={true}
+                closeOnOutsideClick={true}
+                onClose={() => setMenuButtonOpen(false)}
+            >
+                <UiFocusTrap
+                    autofocusOnOpen={true}
+                    customKeyboardNavigationHandler={makeMenuKeyboardNavigation<KeyboardEvent>({
+                        onClose: () => setMenuButtonOpen(false),
+                    })}
+                >
+                    <ItemsWrapper smallItemsSpacing className="gd-menu">
+                        <div role={"menu"} id={menuId} aria-labelledby={MORE_MENU_BUTTON_ID}>
+                            {menuItems.map((menuItem) => {
+                                return (
+                                    <SingleSelectListItem
+                                        className="gd-menu-item"
+                                        elementType="button"
+                                        key={menuItem.id}
+                                        title={menuItem.title}
+                                        icon={menuItem.icon}
+                                        onClick={(e) => {
+                                            handleButtonClick(e, menuItem);
+                                        }}
+                                    />
+                                );
+                            })}
+                        </div>
+                    </ItemsWrapper>
+                </UiFocusTrap>
+            </Overlay>
+        );
+    };
+
     return (
         <div className={className}>
             <MarkdownComponent allowMarkdown={useMarkdown}>{content.text}</MarkdownComponent>
             {visualization ? (
-                <div className="gd-gen-ai-chat__visualization">
+                <div
+                    className={cx("gd-gen-ai-chat__visualization", {
+                        active: isMenuButtonOpen || isHovered,
+                    })}
+                    onPointerEnter={() => setHovered(true)}
+                    onPointerLeave={() => setHovered(false)}
+                >
                     <div className="gd-gen-ai-chat__visualization__title">
                         <MarkdownComponent allowMarkdown={useMarkdown}>
                             {visualization.title}
@@ -184,51 +295,34 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                     </div>
                     {config.canAnalyze && !hasVisError && !visLoading
                         ? (() => {
-                              const trigger = (
-                                  <BubbleHoverTrigger
-                                      tagName="span"
-                                      className="gd-gen-ai-chat__visualization__save__bubble"
-                                  >
-                                      {visualization.savedVisualizationId ? (
-                                          <Icon.Edit width={18} height={18} color="#fff" />
-                                      ) : (
-                                          <Icon.Save width={18} height={18} color="#fff" />
-                                      )}
-                                      <Bubble alignPoints={[{ align: "bc tc", offset: { x: 0, y: 8 } }]}>
-                                          {visualization.savedVisualizationId ? (
-                                              <FormattedMessage id={"gd.gen-ai.button.edit"} />
-                                          ) : (
-                                              <FormattedMessage id={"gd.gen-ai.button.save"} />
+                              return (
+                                  <>
+                                      <Button
+                                          onClick={() => setMenuButtonOpen(!isMenuButtonOpen)}
+                                          value="&#8943;"
+                                          id={MORE_MENU_BUTTON_ID}
+                                          className={cx(
+                                              "gd-button-primary gd-button",
+                                              "gd-gen-ai-chat__visualization__save",
+                                              dropdownAnchorClassName,
                                           )}
-                                      </Bubble>
-                                  </BubbleHoverTrigger>
-                              );
-
-                              return visualization.savedVisualizationId && config.allowNativeLinks ? (
-                                  <a
-                                      href={getVisualizationHref(
-                                          workspaceId,
-                                          visualization.savedVisualizationId,
-                                      )}
-                                      onClick={handleButtonClick}
-                                      className="gd-gen-ai-chat__visualization__save"
-                                  >
-                                      {trigger}
-                                  </a>
-                              ) : (
-                                  <div
-                                      onClick={handleButtonClick}
-                                      className="gd-gen-ai-chat__visualization__save"
-                                  >
-                                      {trigger}
-                                  </div>
+                                          accessibilityConfig={{
+                                              ariaLabel: tooltipText,
+                                              role: "button",
+                                              isExpanded: isMenuButtonOpen,
+                                              popupId: menuId,
+                                          }}
+                                      />
+                                      {isMenuButtonOpen ? renderMenuItems() : null}
+                                  </>
                               );
                           })()
                         : null}
                     {saveDialogOpen ? (
                         <VisualizationSaveDialog
-                            onClose={() => setSaveDialogOpen(false)}
+                            onClose={() => setSaveDialogOpen(null)}
                             visualization={visualization}
+                            type={saveDialogOpen}
                             messageId={messageId}
                         />
                     ) : null}

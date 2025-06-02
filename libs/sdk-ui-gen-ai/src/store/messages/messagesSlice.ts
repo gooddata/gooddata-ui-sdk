@@ -235,6 +235,7 @@ const messagesSlice = createSlice({
                 visualizationId: string;
                 visualizationTitle: string;
                 assistantMessageId: string;
+                explore: boolean;
             }>,
         ) => {
             const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
@@ -280,6 +281,7 @@ const messagesSlice = createSlice({
                 visualizationId: string;
                 assistantMessageId: string;
                 savedVisualizationId: string;
+                explore: boolean;
             }>,
         ) => {
             const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
