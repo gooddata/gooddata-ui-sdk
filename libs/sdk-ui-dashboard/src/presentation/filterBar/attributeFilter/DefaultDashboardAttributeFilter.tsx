@@ -38,9 +38,7 @@ import {
     selectIsFilterFromCrossFilteringByLocalIdentifier,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
-    selectHasSomeExecutionResult,
     selectPreloadedAttributesWithReferences,
-    selectIsDashboardExecuted,
     selectDashboardFiltersApplyMode,
     selectEnableDashboardFiltersApplyModes,
 } from "../../../model/index.js";
@@ -71,14 +69,10 @@ import { useDependentDateFilters } from "./useDependentDateFilters.js";
 export const DefaultDashboardAttributeFilter = (
     props: IDashboardAttributeFilterProps,
 ): JSX.Element | null => {
-    // In case, dashboard contains lot of filters,
-    // these are spawning lot of requests (collectLabelElements), which are potentially blocking execution(s).
-    // Wait at least for one executed result until we start loading them, so they are not blocking execution(s).
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
-    const hasSomeExecutionResult = useDashboardSelector(selectHasSomeExecutionResult);
+    // Wait for batch preload of the required attribute filter data (labels and datasets), otherwise, each filter will spawn its own request.
     const filtersPreloaded = useDashboardSelector(selectPreloadedAttributesWithReferences);
-    const isDashboardExecuted = useDashboardSelector(selectIsDashboardExecuted);
-    const showFilter = isInEditMode || isDashboardExecuted || (hasSomeExecutionResult && filtersPreloaded);
+    const showFilter = isInEditMode || filtersPreloaded;
 
     if (!showFilter) {
         return <AttributeFilterLoading />;
