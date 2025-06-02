@@ -105,8 +105,10 @@ export type ArrowOffsets = Record<string, ArrowOffset>;
 // @internal (undocumented)
 export function AsyncList<T>(props: IAsyncListProps<T>): React_2.JSX.Element;
 
-// @internal (undocumented)
-export const AutofocusOnMount: React_2.FC<React_2.HTMLProps<HTMLDivElement>>;
+// @internal
+export const AutofocusOnMount: React_2.FC<{
+    children: React_2.ReactNode;
+} & IAutofocusOptions>;
 
 // @internal (undocumented)
 export class AutoSize extends Component<IAutoSizeProps> {
@@ -632,7 +634,7 @@ export const getDefaultEmbedTypeOptions: (embedType: EmbedType) => EmbedOptionsT
 
 // @internal
 export const getFocusableElements: (element?: HTMLElement | null) => {
-    focusableElements: NodeListOf<HTMLElement>;
+    focusableElements: HTMLElement[];
     firstElement: HTMLElement;
     lastElement: HTMLElement;
 };
@@ -989,6 +991,14 @@ export interface IAsyncListProps<T> {
     renderLoadingItem?: (props: IRenderListItemProps<T>) => JSX.Element;
     // (undocumented)
     width?: number;
+}
+
+// @internal (undocumented)
+export interface IAutofocusOptions {
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    refocusKey?: unknown;
 }
 
 // @internal (undocumented)
@@ -5691,6 +5701,7 @@ export interface UiFocusTrapProps {
     initialFocus?: React_2.RefObject<HTMLElement> | string;
     // (undocumented)
     onDeactivate?: () => void;
+    refocusKey?: unknown;
     returnFocusOnUnmount?: boolean;
     returnFocusTo?: React_2.RefObject<HTMLElement> | string;
 }
@@ -5885,7 +5896,10 @@ export const unrelatedHeader: IDateDatasetHeader;
 export function unwrapGroupItems<T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[]): IUiMenuItem<T>[];
 
 // @internal
-export const useAutofocusOnMount: () => (node: HTMLElement | null) => void;
+export const useAutofocusOnMount: (element: HTMLElement | null | undefined, { isDisabled, refocusKey }?: IAutofocusOptions) => void;
+
+// @internal
+export const useAutofocusOnMountRef: ({ isDisabled, refocusKey }?: IAutofocusOptions) => (node: HTMLElement | null) => void;
 
 // @internal
 export const useDebouncedState: <T>(initialValue: T, delay: number) => UseDebouncedStateOutput<T>;
