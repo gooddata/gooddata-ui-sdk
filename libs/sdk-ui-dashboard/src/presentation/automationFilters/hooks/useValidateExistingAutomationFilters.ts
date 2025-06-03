@@ -56,6 +56,7 @@ export interface IAutomationValidationResult {
     removedFilterIsAppliedInSavedFilters: boolean;
     commonDateFilterIsMissingInSavedVisibleFilters: boolean;
     visibleFilterIsMissingInSavedFilters: boolean;
+    visibleFiltersAreMissing: boolean;
 }
 
 const defaultValidState: IAutomationValidationResult = {
@@ -70,6 +71,7 @@ const defaultValidState: IAutomationValidationResult = {
     removedFilterIsAppliedInSavedFilters: false,
     commonDateFilterIsMissingInSavedVisibleFilters: false,
     visibleFilterIsMissingInSavedFilters: false,
+    visibleFiltersAreMissing: false,
 };
 
 export function useValidateExistingAutomationFilters({
@@ -88,7 +90,7 @@ export function useValidateExistingAutomationFilters({
     const dashboardFilters = useDashboardSelector(selectDashboardFiltersWithoutCrossFiltering);
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
 
-    const savedAutomationVisibleFilters = automationToEdit?.metadata?.visibleFilters ?? [];
+    const savedAutomationVisibleFilters = automationToEdit?.metadata?.visibleFilters;
 
     const ignoredFilters = widget ? dashboardFilters.filter((f) => isFilterIgnoredByWidget(f, widget)) : [];
 
@@ -163,7 +165,7 @@ export function validateExistingAutomationFilters({
     insight,
 }: {
     savedAutomationFilters: IFilter[];
-    savedAutomationVisibleFilters: IAutomationVisibleFilter[];
+    savedAutomationVisibleFilters: undefined | IAutomationVisibleFilter[];
     hiddenFilters: FilterContextItem[];
     lockedFilters: FilterContextItem[];
     ignoredFilters: FilterContextItem[];
@@ -203,13 +205,16 @@ export function validateExistingAutomationFilters({
         widget,
     );
 
-    const { commonDateFilterIsMissingInSavedVisibleFilters, visibleFilterIsMissingInSavedFilters } =
-        validateVisibleFilters(
-            savedAutomationFilters,
-            savedAutomationVisibleFilters,
-            dashboardFilters,
-            ignoredFilters,
-        );
+    const {
+        commonDateFilterIsMissingInSavedVisibleFilters,
+        visibleFilterIsMissingInSavedFilters,
+        visibleFiltersAreMissing,
+    } = validateVisibleFilters(
+        savedAutomationFilters,
+        savedAutomationVisibleFilters,
+        dashboardFilters,
+        ignoredFilters,
+    );
 
     const isValid = [
         hiddenFilterIsMissingInSavedFilters,
@@ -222,6 +227,7 @@ export function validateExistingAutomationFilters({
         removedFilterIsAppliedInSavedFilters,
         commonDateFilterIsMissingInSavedVisibleFilters,
         visibleFilterIsMissingInSavedFilters,
+        visibleFiltersAreMissing,
     ].every((validationError) => validationError === false);
 
     return {
@@ -236,6 +242,7 @@ export function validateExistingAutomationFilters({
         removedFilterIsAppliedInSavedFilters,
         commonDateFilterIsMissingInSavedVisibleFilters,
         visibleFilterIsMissingInSavedFilters,
+        visibleFiltersAreMissing,
     };
 }
 
@@ -468,13 +475,19 @@ function validateInsightFilters(
 
 function validateVisibleFilters(
     savedAutomationFilters: IFilter[],
-    savedVisibleFilters: IAutomationVisibleFilter[],
+    savedVisibleFilters: undefined | IAutomationVisibleFilter[],
     dashboardFilters: FilterContextItem[],
     ignoredFilters: FilterContextItem[],
 ) {
     let commonDateFilterIsMissingInSavedVisibleFilters = false;
     let visibleFilterIsMissingInSavedFilters = false;
-
+    if (!savedVisibleFilters) {
+        return {
+            commonDateFilterIsMissingInSavedVisibleFilters,
+            visibleFilterIsMissingInSavedFilters,
+            visibleFiltersAreMissing: true,
+        };
+    }
     for (const savedVisibleFilter of savedVisibleFilters) {
         // All-time date filters are not saved in automation visible filters, so we can skip them
         if (savedVisibleFilter.isAllTimeDateFilter) {
@@ -510,5 +523,6 @@ function validateVisibleFilters(
     return {
         commonDateFilterIsMissingInSavedVisibleFilters,
         visibleFilterIsMissingInSavedFilters,
+        visibleFiltersAreMissing: false,
     };
 }
