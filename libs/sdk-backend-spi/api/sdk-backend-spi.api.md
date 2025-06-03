@@ -481,6 +481,22 @@ export interface IDashboardExportImageOptions {
     widgetIds?: ObjRef[];
 }
 
+// @beta
+export interface IDashboardExportPresentationOptions {
+    // (undocumented)
+    filename?: string;
+    // (undocumented)
+    hideWidgetTitles?: boolean;
+    // (undocumented)
+    templateId?: string;
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    visualizationIds?: ObjRef[];
+    // (undocumented)
+    widgetIds?: ObjRef[];
+}
+
 // @alpha
 export interface IDashboardExportTabularOptions {
     dashboardFiltersOverride?: FilterContextItem[];
@@ -1438,10 +1454,7 @@ export interface IWorkspaceDashboardsService {
     exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string, customOverrides?: IRawExportCustomOverrides): Promise<IExportResult>;
     exportDashboardToImage(ref: ObjRef, options?: IDashboardExportImageOptions): Promise<IExportResult>;
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
-    exportDashboardToPresentation(ref: ObjRef, format: "PDF" | "PPTX", filters?: FilterContextItem[], options?: {
-        widgetIds?: ObjRef[];
-        filename?: string;
-    }): Promise<IExportResult>;
+    exportDashboardToPresentation(ref: ObjRef, format: "PDF" | "PPTX", filters?: FilterContextItem[], options?: IDashboardExportPresentationOptions): Promise<IExportResult>;
     exportDashboardToTabular(ref: ObjRef, options?: IDashboardExportTabularOptions): Promise<IExportResult>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions): Promise<IDashboard>;

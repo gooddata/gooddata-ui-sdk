@@ -269,6 +269,20 @@ export interface IDashboardExportImageOptions {
 }
 
 /**
+ * Options for exporting a dashboard to a presentation.
+ *
+ * @beta
+ */
+export interface IDashboardExportPresentationOptions {
+    widgetIds?: ObjRef[];
+    visualizationIds?: ObjRef[];
+    templateId?: string;
+    title?: string;
+    hideWidgetTitles?: boolean;
+    filename?: string;
+}
+
+/**
  * Service to list, create and update analytical dashboards
  *
  * @alpha
@@ -398,10 +412,7 @@ export interface IWorkspaceDashboardsService {
         ref: ObjRef,
         format: "PDF" | "PPTX",
         filters?: FilterContextItem[],
-        options?: {
-            widgetIds?: ObjRef[];
-            filename?: string;
-        },
+        options?: IDashboardExportPresentationOptions,
     ): Promise<IExportResult>;
 
     /**

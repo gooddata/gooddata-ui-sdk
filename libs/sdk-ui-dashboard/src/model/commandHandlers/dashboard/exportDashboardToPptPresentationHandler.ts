@@ -1,11 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
-import { IExportResult } from "@gooddata/sdk-backend-spi";
+import { IDashboardExportPresentationOptions, IExportResult } from "@gooddata/sdk-backend-spi";
 import { FilterContextItem, ObjRef } from "@gooddata/sdk-model";
 
 import { DashboardContext } from "../../types/commonTypes.js";
-import { ExportDashboardToPdf } from "../../commands/index.js";
+import { ExportDashboardToPptPresentation } from "../../commands/index.js";
 import {
     DashboardExportToPptPresentationResolved,
     dashboardExportToPptPresentationRequested,
@@ -21,17 +21,18 @@ function exportDashboardToPptPresentation(
     ctx: DashboardContext,
     dashboardRef: ObjRef,
     filters: FilterContextItem[] | undefined,
+    options: IDashboardExportPresentationOptions | undefined,
 ): Promise<IExportResult> {
     const { backend, workspace } = ctx;
     return backend
         .workspace(workspace)
         .dashboards()
-        .exportDashboardToPresentation(dashboardRef, "PPTX", filters);
+        .exportDashboardToPresentation(dashboardRef, "PPTX", filters, options);
 }
 
 export function* exportDashboardToPptPresentationHandler(
     ctx: DashboardContext,
-    cmd: ExportDashboardToPdf,
+    cmd: ExportDashboardToPptPresentation,
 ): SagaIterator<DashboardExportToPptPresentationResolved> {
     yield put(dashboardExportToPptPresentationRequested(ctx, cmd.correlationId));
 
@@ -44,13 +45,14 @@ export function* exportDashboardToPptPresentationHandler(
         selectFilterContextFilters,
     );
 
-    const effectiveFilters = ensureAllTimeFilterForExport(filterContextFilters);
+    const effectiveFilters = ensureAllTimeFilterForExport(cmd.payload?.filters ?? filterContextFilters);
 
     const result: PromiseFnReturnType<typeof exportDashboardToPptPresentation> = yield call(
         exportDashboardToPptPresentation,
         ctx,
         dashboardRef,
         effectiveFilters,
+        cmd.payload?.options,
     );
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted
