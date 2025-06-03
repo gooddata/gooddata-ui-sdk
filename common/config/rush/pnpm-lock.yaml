@@ -3214,6 +3214,9 @@ importers:
       classnames:
         specifier: ^2.3.1
         version: 2.3.2
+      copy-to-clipboard:
+        specifier: ^3.3.1
+        version: 3.3.3
       default-import:
         specifier: 1.1.5
         version: 1.1.5

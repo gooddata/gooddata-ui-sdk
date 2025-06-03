@@ -48,7 +48,13 @@ export type ChatClosedEvent = BaseEvent & {
 };
 
 // @public
-export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent;
+export type ChatCopyToClipboardEvent = BaseEvent & {
+    type: "chatCopyToClipboard";
+    content: string;
+};
+
+// @public
+export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent;
 
 // @public
 export interface ChatEventHandler<TEvent extends ChatEvent = any> {
@@ -127,6 +133,9 @@ export const isChatAssistantMessageEvent: (event: ChatEvent) => event is ChatAss
 
 // @public
 export const isChatClosedEvent: (event: ChatEvent) => event is ChatClosedEvent;
+
+// @public
+export const isChatCopyToClipboardEvent: (event: ChatEvent) => event is ChatCopyToClipboardEvent;
 
 // @public
 export const isChatFeedbackEvent: (event: ChatEvent) => event is ChatFeedbackEvent;

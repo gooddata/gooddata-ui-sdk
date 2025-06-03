@@ -200,12 +200,22 @@
         "limit": 0
     },
     "gd.gen-ai.visualisation.menu.button.save_as_visualisation": {
-        "value": "Save as visualization",
+        "value": "Save visualization",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": {
+        "value": "Save as new…",
         "comment": "",
         "limit": 0
     },
     "gd.gen-ai.visualisation.menu.button.open_in_analyze": {
-        "value": "Open in analyze",
+        "value": "Open in Analyze",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": {
+        "value": "Copy visualization link",
         "comment": "",
         "limit": 0
     },

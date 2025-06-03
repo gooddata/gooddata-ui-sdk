@@ -44,8 +44,10 @@ const chatWindowSlice = createSlice({
         ) => {
             state.colorPalette = colorPalette;
         },
+        copyToClipboardAction: (state, _action: PayloadAction<{ content: string }>) => state,
     },
 });
 
 export const chatWindowSliceReducer = chatWindowSlice.reducer;
-export const { setOpenAction, setFullscreenAction, setColorPaletteAction } = chatWindowSlice.actions;
+export const { setOpenAction, setFullscreenAction, setColorPaletteAction, copyToClipboardAction } =
+    chatWindowSlice.actions;

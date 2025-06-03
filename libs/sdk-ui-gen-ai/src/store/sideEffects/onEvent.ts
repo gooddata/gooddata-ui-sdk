@@ -1,7 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
 import { getContext, select, takeEvery } from "redux-saga/effects";
-import { setOpenAction } from "../chatWindow/chatWindowSlice.js";
+import { setOpenAction, copyToClipboardAction } from "../chatWindow/chatWindowSlice.js";
 import {
     clearThreadAction,
     newMessageAction,
@@ -26,6 +26,7 @@ export function* onEvent() {
     yield takeEvery(visualizationErrorAction.type, onVisualizationError);
     yield takeEvery(saveVisualizationErrorAction.type, onSaveVisualizationError);
     yield takeEvery(saveVisualizationSuccessAction.type, onSaveVisualizationSuccess);
+    yield takeEvery(copyToClipboardAction.type, onCopyToClipboard);
 }
 
 function* onSetOpen({ payload: { isOpen } }: ReturnType<typeof setOpenAction>) {
@@ -165,5 +166,16 @@ function* onSaveVisualizationSuccess({
         type: "chatSaveVisualizationSuccess",
         threadId,
         savedVisualizationId,
+    });
+}
+
+function* onCopyToClipboard({ payload: { content } }: ReturnType<typeof copyToClipboardAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatCopyToClipboard",
+        threadId,
+        content,
     });
 }

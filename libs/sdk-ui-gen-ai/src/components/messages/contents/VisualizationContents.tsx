@@ -2,6 +2,7 @@
 
 import React, { ReactNode, useMemo } from "react";
 import cx from "classnames";
+import copy from "copy-to-clipboard";
 import { IAttribute, IColorPalette, IFilter, IGenAIVisualization, IMeasure } from "@gooddata/sdk-model";
 import {
     Button,
@@ -33,6 +34,7 @@ import {
     RootState,
     newMessageAction,
     visualizationErrorAction,
+    copyToClipboardAction,
     colorPaletteSelector,
 } from "../../../store/index.js";
 
@@ -57,6 +59,7 @@ export type VisualizationContentsProps = {
     useMarkdown?: boolean;
     showSuggestions?: boolean;
     colorPalette?: IColorPalette;
+    onCopyToClipboard?: (data: { content: string }) => void;
 };
 
 const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> = ({
@@ -65,6 +68,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
     useMarkdown,
     colorPalette,
     showSuggestions = false,
+    onCopyToClipboard,
 }) => {
     const dispatch = useDispatch();
     const className = cx(
@@ -91,23 +95,47 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
 
     const menuItems = useMemo(
         () =>
-            [
-                {
-                    id: "button-save",
-                    title: intl.formatMessage({
-                        id: "gd.gen-ai.visualisation.menu.button.save_as_visualisation",
-                    }),
-                    icon: <Icon.Save width={18} height={18} />,
-                },
-                {
-                    id: "button-open",
-                    title: intl.formatMessage({
-                        id: "gd.gen-ai.visualisation.menu.button.open_in_analyze",
-                    }),
-                    icon: <Icon.ExternalLink width={18} height={18} />,
-                },
-            ] as IMenuButtonItem[],
-        [intl],
+            visualization?.savedVisualizationId
+                ? ([
+                      {
+                          id: "button-save",
+                          title: intl.formatMessage({
+                              id: "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation",
+                          }),
+                          icon: <Icon.Save width={16} height={16} />,
+                      },
+                      {
+                          id: "button-open",
+                          title: intl.formatMessage({
+                              id: "gd.gen-ai.visualisation.menu.button.open_in_analyze",
+                          }),
+                          icon: <Icon.ExternalLink width={16} height={16} />,
+                      },
+                      {
+                          id: "button-copy",
+                          title: intl.formatMessage({
+                              id: "gd.gen-ai.visualisation.menu.button.copy_visualisation_link",
+                          }),
+                          icon: <Icon.Copy width={16} height={16} />,
+                      },
+                  ] as IMenuButtonItem[])
+                : ([
+                      {
+                          id: "button-save",
+                          title: intl.formatMessage({
+                              id: "gd.gen-ai.visualisation.menu.button.save_as_visualisation",
+                          }),
+                          icon: <Icon.Save width={16} height={16} />,
+                      },
+                      {
+                          id: "button-open",
+                          title: intl.formatMessage({
+                              id: "gd.gen-ai.visualisation.menu.button.open_in_analyze",
+                          }),
+                          icon: <Icon.ExternalLink width={16} height={16} />,
+                      },
+                  ] as IMenuButtonItem[]),
+        [intl, visualization?.savedVisualizationId],
     );
 
     const handleOpen = (e: React.MouseEvent, vis: IGenAIVisualization) => {
@@ -143,6 +171,14 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                     }
                 } else {
                     setSaveDialogOpen("explore");
+                }
+                setMenuButtonOpen(false);
+                break;
+            case "button-copy":
+                if (visualization?.savedVisualizationId) {
+                    const link = getVisualizationHref(workspaceId, visualization.savedVisualizationId);
+                    copy(link);
+                    onCopyToClipboard?.({ content: link });
                 }
                 setMenuButtonOpen(false);
                 break;
@@ -501,11 +537,15 @@ const renderHeadline = (
     />
 );
 
+const mapDispatchToProps = {
+    onCopyToClipboard: copyToClipboardAction,
+};
+
 const mapStateToProps = (state: RootState): Pick<VisualizationContentsProps, "colorPalette"> => ({
     colorPalette: colorPaletteSelector(state),
 });
 
 export const VisualizationContentsComponent = connect(
     mapStateToProps,
-    undefined,
+    mapDispatchToProps,
 )(VisualizationContentsComponentCore);
