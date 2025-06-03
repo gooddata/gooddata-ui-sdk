@@ -35,10 +35,7 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 import { AutomationFiltersSelect } from "../../automationFilters/components/AutomationFiltersSelect.js";
-import {
-    isLatestAutomationVersion,
-    validateAllFilterLocalIdentifiers,
-} from "../../automationFilters/utils.js";
+import { validateAllFilterLocalIdentifiers } from "../../automationFilters/utils.js";
 import { useAutomationFiltersSelect } from "../../automationFilters/useAutomationFiltersSelect.js";
 import { useValidateExistingAutomationFilters } from "../../automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
@@ -166,7 +163,7 @@ export function ScheduledMailDialogRenderer({
         isCrossFiltering,
         isExecutionTimestampMode,
         enableAutomationFilterContext,
-    } = useDefaultScheduledEmailDialogData({ filters: availableFilters ?? [], scheduledExportToEdit });
+    } = useDefaultScheduledEmailDialogData({ filters: availableFilters ?? [] });
 
     const {
         defaultUser,
@@ -483,13 +480,7 @@ export const DefaultScheduledEmailDialog: React.FC<IScheduledEmailDialogProps> =
     );
 };
 
-function useDefaultScheduledEmailDialogData({
-    filters,
-    scheduledExportToEdit,
-}: {
-    filters: FilterContextItem[];
-    scheduledExportToEdit?: IAutomationMetadataObject;
-}) {
+function useDefaultScheduledEmailDialogData({ filters }: { filters: FilterContextItem[] }) {
     const locale = useDashboardSelector(selectLocale);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const dateFormat = useDashboardSelector(selectDateFormat);
@@ -510,17 +501,10 @@ function useDefaultScheduledEmailDialogData({
     const isCrossFiltering = useDashboardSelector(selectIsCrossFiltering);
     const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
     const enableAutomationFilterContextFlag = useDashboardSelector(selectEnableAutomationFilterContext);
-    const isLatestVersionOfAutomation = useMemo(() => {
-        return isLatestAutomationVersion(scheduledExportToEdit);
-    }, [scheduledExportToEdit]);
     const enableAutomationFilterContext = useMemo(() => {
         const doAllDashboardFiltersHaveLocalIdentifiers = validateAllFilterLocalIdentifiers(filters);
-        return (
-            enableAutomationFilterContextFlag &&
-            doAllDashboardFiltersHaveLocalIdentifiers &&
-            isLatestVersionOfAutomation
-        );
-    }, [filters, enableAutomationFilterContextFlag, isLatestVersionOfAutomation]);
+        return enableAutomationFilterContextFlag && doAllDashboardFiltersHaveLocalIdentifiers;
+    }, [filters, enableAutomationFilterContextFlag]);
 
     return {
         locale,

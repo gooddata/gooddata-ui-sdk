@@ -14,7 +14,7 @@ import {
     ScrollablePanel,
 } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { defineMessage, FormattedMessage, useIntl } from "react-intl";
 import {
     selectEntitlementMaxAutomationRecipients,
@@ -53,7 +53,6 @@ import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/com
 import { convertError } from "@gooddata/sdk-ui";
 import { getDescription, getValueSuffix } from "./utils/getters.js";
 import { isChangeOrDifferenceOperator } from "./utils/guards.js";
-import { isLatestAutomationVersion } from "../../automationFilters/utils.js";
 import { useValidateExistingAutomationFilters } from "../../automationFilters/hooks/useValidateExistingAutomationFilters.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 
@@ -161,10 +160,6 @@ export function AlertingDialogRenderer({
         enableAutomationFilterContext,
     });
     const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] = useState(!isValid);
-
-    const isLatestVersionOfAutomation = useMemo(() => {
-        return isLatestAutomationVersion(alertToEdit);
-    }, [alertToEdit]);
 
     const { isSavingAlert, handleCreateAlert, handleUpdateAlert } = useSaveAlertToBackend({
         onCreateSuccess: (alert) => {
@@ -293,7 +288,7 @@ export function AlertingDialogRenderer({
                             })}
                         >
                             <div className="gd-divider-with-margin" />
-                            {enableAutomationFilterContext && isLatestVersionOfAutomation ? (
+                            {enableAutomationFilterContext ? (
                                 <>
                                     <AutomationFiltersSelect
                                         availableFilters={availableFilters}

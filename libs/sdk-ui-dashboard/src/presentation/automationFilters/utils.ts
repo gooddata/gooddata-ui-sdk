@@ -8,7 +8,6 @@ import {
     filterLocalIdentifier,
     filterObjRef,
     getAttributeElementsItems,
-    IAutomationMetadataObject,
     IAutomationVisibleFilter,
     ICatalogAttribute,
     ICatalogDateDataset,
@@ -270,35 +269,6 @@ export const getFilterByLocalIdentifier = (
         const filterLocalIdentifier = getFilterLocalIdentifier(filter);
         return filterLocalIdentifier === localIdentifier;
     });
-};
-
-/**
- * Check if the automation is latest version. Latest version means that it has visible filters defined
- * in case there are some filters in automation. Sometimes there may be filters but visible
- * filters may be still empty. In this case we should not care about rendering filters
- * as only visible filters are used for rendering.
- *
- * @param automation - The automation to check.
- * @returns True if the automation is latest version, false otherwise.
- */
-export const isLatestAutomationVersion = (automation?: IAutomationMetadataObject) => {
-    if (!automation) {
-        return true;
-    }
-
-    if (!!automation.schedule && !automation.alert) {
-        // scheduling
-        const scheduleHasFilters = automation.exportDefinitions?.some((exportDef) => {
-            return !!exportDef.requestPayload.content.filters?.length;
-        });
-
-        return scheduleHasFilters ? !!automation?.metadata?.visibleFilters : true;
-    } else {
-        // alerting
-        const alertHasFilters = !!automation.alert?.execution.filters?.length;
-
-        return alertHasFilters ? !!automation?.metadata?.visibleFilters : true;
-    }
 };
 
 /**

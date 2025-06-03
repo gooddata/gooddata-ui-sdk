@@ -1169,7 +1169,7 @@ describe("validateExistingAutomationFilters", () => {
     // Visible filters
     //
 
-    describe("removed filters", () => {
+    describe("visible filters", () => {
         it("should be valid with empty filters", () => {
             const {
                 isValid,
@@ -1338,31 +1338,47 @@ describe("validateExistingAutomationFilters", () => {
             expect(visibleFilterIsMissingInSavedFilters).toBe(false);
         });
 
-        //
-        // Multiple date filters
-        //
-
-        describe("multiple date filters", () => {
-            // This is possible when you have additional date filter in the dashboard filter context,
-            // which has the same date dataset as the common date filter.
-            it("should be valid with 2 date filters with the common date dataset", () => {
-                const result = validateExistingAutomationFilters({
-                    savedAutomationFilters: [nonAllTimeCommonDateFilter, nonCommonFilterWithCommonDataSet],
-                    savedAutomationVisibleFilters: [
-                        nonAllTimeCommonDateVisibleFilter,
-                        nonCommonFilterWithCommonDataSetVisibleFilter,
-                    ],
-                    hiddenFilters: [],
-                    lockedFilters: [],
-                    ignoredFilters: [],
-                    dashboardFilters: [
-                        nonAllTimeCommonDateFilterContextItem,
-                        nonCommonFilterContextItemWithCommonDataSet,
-                    ],
-                });
-
-                expect(result.isValid).toBe(true);
+        it("should be invalid when visible filters are missing", () => {
+            const { isValid, visibleFiltersAreMissing } = validateExistingAutomationFilters({
+                savedAutomationFilters: [],
+                savedAutomationVisibleFilters: undefined,
+                hiddenFilters: [],
+                lockedFilters: [],
+                ignoredFilters: [],
+                dashboardFilters: [nonAllTimeCommonDateFilterContextItem],
+                widget: widget,
+                insight,
             });
+
+            expect(isValid).toBe(false);
+            expect(visibleFiltersAreMissing).toBe(true);
+        });
+    });
+
+    //
+    // Multiple date filters
+    //
+
+    describe("multiple date filters", () => {
+        // This is possible when you have additional date filter in the dashboard filter context,
+        // which has the same date dataset as the common date filter.
+        it("should be valid with 2 date filters with the common date dataset", () => {
+            const result = validateExistingAutomationFilters({
+                savedAutomationFilters: [nonAllTimeCommonDateFilter, nonCommonFilterWithCommonDataSet],
+                savedAutomationVisibleFilters: [
+                    nonAllTimeCommonDateVisibleFilter,
+                    nonCommonFilterWithCommonDataSetVisibleFilter,
+                ],
+                hiddenFilters: [],
+                lockedFilters: [],
+                ignoredFilters: [],
+                dashboardFilters: [
+                    nonAllTimeCommonDateFilterContextItem,
+                    nonCommonFilterContextItemWithCommonDataSet,
+                ],
+            });
+
+            expect(result.isValid).toBe(true);
         });
     });
 });
