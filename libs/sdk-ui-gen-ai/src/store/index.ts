@@ -35,7 +35,7 @@ export {
     globalErrorSelector,
 } from "./messages/messagesSelectors.js";
 
-export { setOpenAction, setFullscreenAction } from "./chatWindow/chatWindowSlice.js";
+export { setOpenAction, setFullscreenAction, copyToClipboardAction } from "./chatWindow/chatWindowSlice.js";
 
 export {
     isOpenSelector,

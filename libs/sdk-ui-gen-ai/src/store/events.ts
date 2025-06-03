@@ -159,13 +159,30 @@ export type ChatSaveVisualizationSuccessEvent = BaseEvent & {
 };
 
 /**
- * Type guard for the isChatSaveVisualizationSuccessEvent.
+ * Type guard for the ChatSaveVisualizationSuccessEvent.
  * @public
  */
 export const isChatSaveVisualizationSuccessEvent = (
     event: ChatEvent,
 ): event is ChatSaveVisualizationSuccessEvent => {
     return event.type === "chatSaveVisualizationSuccess";
+};
+
+/**
+ * A chat copy to clipboard event.
+ * @public
+ */
+export type ChatCopyToClipboardEvent = BaseEvent & {
+    type: "chatCopyToClipboard";
+    content: string;
+};
+
+/**
+ * Type guard for the ChatCopyToClipboardEvent.
+ * @public
+ */
+export const isChatCopyToClipboardEvent = (event: ChatEvent): event is ChatCopyToClipboardEvent => {
+    return event.type === "chatCopyToClipboard";
 };
 
 /**
@@ -179,6 +196,7 @@ export type ChatEvent =
     | ChatUserMessageEvent
     | ChatAssistantMessageEvent
     | ChatFeedbackEvent
+    | ChatCopyToClipboardEvent
     | ChatVisualizationErrorEvent
     | ChatSaveVisualizationErrorEvent
     | ChatSaveVisualizationSuccessEvent;

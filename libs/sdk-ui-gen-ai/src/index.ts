@@ -33,6 +33,7 @@ export {
     type ChatVisualizationErrorEvent,
     type ChatSaveVisualizationErrorEvent,
     type ChatSaveVisualizationSuccessEvent,
+    type ChatCopyToClipboardEvent,
     isChatAssistantMessageEvent,
     isChatUserMessageEvent,
     isChatClosedEvent,
@@ -42,6 +43,7 @@ export {
     isChatVisualizationErrorEvent,
     isChatSaveVisualizationErrorEvent,
     isChatSaveVisualizationSuccessEvent,
+    isChatCopyToClipboardEvent,
 } from "./store/events.js";
 
 export type { LinkHandlerEvent } from "./components/ConfigContext.js";
