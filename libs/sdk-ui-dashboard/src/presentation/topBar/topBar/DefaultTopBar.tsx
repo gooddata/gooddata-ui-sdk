@@ -87,7 +87,7 @@ const TopBarCore = (props: ITopBarProps): JSX.Element => {
 
     if (isExport && snapshotExportAccessibilityEnabled) {
         return (
-            <div className={"dash-header s-top-bar"}>
+            <div className={"dash-header dash-header-export s-top-bar"}>
                 <div className={"dash-header-inner"}>
                     <Title {...titleProps} />
                 </div>

@@ -5,6 +5,11 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
+$gd-dashboards-section-title-lineColor: var(
+    --gd-dashboards-section-title-lineColor,
+    kit-variables.$gd-border-color
+);
+
 .dash-header {
     @include mixins.clearfix();
 
@@ -30,6 +35,26 @@
         .setting-button {
             margin-left: 10px;
             height: 100%;
+        }
+    }
+
+    &.dash-header-export {
+        border-bottom: none;
+        display: flex;
+
+        .dash-header-inner {
+            flex: unset;
+        }
+
+        &::after {
+            content: "";
+            position: relative;
+            top: 1px;
+            flex: 1 1 auto;
+            height: 0;
+            border-top: 1px solid $gd-dashboards-section-title-lineColor;
+            visibility: visible;
+            margin-right: 20px;
         }
     }
 }
