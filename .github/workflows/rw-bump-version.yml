@@ -105,6 +105,18 @@ jobs:
                 git ls-files | grep '\.json' | xargs git add
 
                 git commit -a -m "chore: bump versions to $VERSION" -m "risk: nonprod"
-                git push origin ${{ inputs.source-branch }}
               env:
                 VERSION: ${{ steps.version.outputs.version }}
+            - name: git push
+              uses: nick-fields/retry@v3
+              with:
+                timeout_minutes: 5
+                max_attempts: 5
+                retry_on: error
+                retry_wait_seconds: 5
+                command: |
+                    git fetch origin ${{ inputs.source-branch }}
+                    git rebase origin/${{ inputs.source-branch }}
+                    git push origin ${{ inputs.source-branch }}
+
+
