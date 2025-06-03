@@ -48,6 +48,11 @@ import { AccessibleDashboardsState } from "./accessibleDashboards/index.js";
  * @public
  */
 export interface DashboardState {
+    /**
+     * List of widget IDs that should be shown as table view.
+     * @internal
+     */
+    widgetsToShowAsTable: import("./widgetsToShowAsTable/widgetsToShowAsTableState.js").WidgetsToShowAsTableState;
     /** @beta */
     loading: LoadingState;
     saving: SavingState;

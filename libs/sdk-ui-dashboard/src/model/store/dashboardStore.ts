@@ -5,6 +5,7 @@ import defaultReduxSaga, { Saga, SagaIterator, Task } from "redux-saga";
 import { enableBatching } from "redux-batched-actions";
 import { v4 as uuidv4 } from "uuid";
 import { filterContextSliceReducer } from "./filterContext/index.js";
+import { widgetsToShowAsTableReducer } from "./widgetsToShowAsTable/index.js";
 import { layoutSliceReducer } from "./layout/index.js";
 import { loadingSliceReducer } from "./loading/index.js";
 import { savingSliceReducer } from "./saving/index.js";
@@ -325,6 +326,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         renderMode: renderModeSliceReducer,
         ui: uiSliceReducer,
         dashboardPermissions: dashboardPermissionsSliceReducer,
+        widgetsToShowAsTable: widgetsToShowAsTableReducer,
         notificationChannels: notificationChannelsSliceReducer,
         automations: automationsSliceReducer,
         users: usersSliceReducer,

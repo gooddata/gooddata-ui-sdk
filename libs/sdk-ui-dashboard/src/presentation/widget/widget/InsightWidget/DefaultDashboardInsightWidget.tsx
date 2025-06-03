@@ -3,13 +3,14 @@ import React, { useMemo, useCallback } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 import { IInsight, widgetTitle, insightVisualizationType } from "@gooddata/sdk-model";
-import { VisType } from "@gooddata/sdk-ui";
-
+import { AsTableButton } from "../../asTableButton/AsTableButton.js";
 import {
     useDashboardSelector,
     selectSettings,
     useDashboardScheduledEmails,
 } from "../../../../model/index.js";
+import { VisType } from "@gooddata/sdk-ui";
+
 import {
     DashboardItem,
     DashboardItemHeadline,
@@ -27,6 +28,7 @@ import { useAlertingAndScheduling } from "./useAlertingAndScheduling.js";
 import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
 import { useInsightWidgetDescriptionComponent } from "../../description/InsightWidgetDescriptionComponentProvider.js";
 import { useId } from "@gooddata/sdk-ui-kit";
+import { useWidgetAsTable } from "../../asTableButton/useWidgetAsTable.js";
 
 export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsightWidgetProps, "insight">> = (
     props,
@@ -176,6 +178,8 @@ const DefaultDashboardInsightWidgetCore: React.FC<
 
     const titleId = useId();
 
+    const { isWidgetAsTable, toggleWidgetAsTable } = useWidgetAsTable(widget);
+
     return (
         <DashboardItem
             className={cx(
@@ -213,6 +217,25 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                                 exportData={exportData?.description}
                             />
                         ) : null}
+                        {/* AsTable button: show for all except table, headline, xirr, repeater */}
+                        {(() => {
+                            const visType = insight ? insightVisualizationType(insight) : undefined;
+                            if (
+                                visType !== "table" &&
+                                visType !== "headline" &&
+                                visType !== "xirr" &&
+                                visType !== "repeater"
+                            ) {
+                                return (
+                                    <AsTableButton
+                                        widget={widget}
+                                        isWidgetAsTable={isWidgetAsTable}
+                                        onClick={toggleWidgetAsTable}
+                                    />
+                                );
+                            }
+                            return null;
+                        })()}
                         <InsightMenuButtonComponent
                             insight={insight}
                             widget={widget}

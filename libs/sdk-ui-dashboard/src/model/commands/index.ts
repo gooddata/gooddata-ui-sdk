@@ -120,6 +120,7 @@ import { AddDrillTargets } from "./drillTargets.js";
 import { RequestAsyncRender, ResolveAsyncRender } from "./render.js";
 import { ChangeRenderMode } from "./renderMode.js";
 import { LoadAllWorkspaceUsers } from "./users.js";
+import { SetWidgetToShowAsTableCommand } from "./widgetsToShowAsTable.js";
 
 export type { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base.js";
 export type {
@@ -462,6 +463,8 @@ export type {
     ExportImageInsightWidget,
     ExportImageInsightWidgetPayload,
 } from "./insight.js";
+export type { SetWidgetToShowAsTableCommand } from "./widgetsToShowAsTable.js";
+
 export {
     changeInsightWidgetHeader,
     changeInsightWidgetDescription,
@@ -646,4 +649,5 @@ export type DashboardCommands =
     | LoadAllWorkspaceUsers
     | ExportRawInsightWidget
     | ExportSlidesInsightWidget
-    | ExportImageInsightWidget;
+    | ExportImageInsightWidget
+    | SetWidgetToShowAsTableCommand;
