@@ -1861,6 +1861,8 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     // (undocumented)
     renderNoData?: (props: IDropdownListNoDataRenderProps) => React_2.ReactNode;
     // (undocumented)
+    scrollDirection?: -1 | 1;
+    // (undocumented)
     scrollToItem?: T;
     // (undocumented)
     searchFieldSize?: "small" | "normal";
@@ -3055,6 +3057,8 @@ export interface IListProps<T> {
     onScrollStart?: ScrollCallback;
     // (undocumented)
     renderItem: (props: IRenderListItemProps<T>) => JSX.Element;
+    // (undocumented)
+    scrollDirection?: -1 | 1;
     // (undocumented)
     scrollToItem?: T;
     // (undocumented)

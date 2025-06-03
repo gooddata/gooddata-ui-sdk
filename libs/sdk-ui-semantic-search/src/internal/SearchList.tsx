@@ -1,8 +1,8 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
 import { List } from "@gooddata/sdk-ui-kit";
-import { useListSelector } from "../hooks/index.js";
+import { useListScroll, useListSelector } from "../hooks/index.js";
 import { ListItem, ListItemProps } from "../types.js";
 
 const ITEM_HEIGHT = 50;
@@ -36,13 +36,16 @@ export type SearchListProps<T> = {
  * @internal
  */
 export const SearchList = <T,>({ items, width, onSelect, ItemComponent }: SearchListProps<T>) => {
-    const [selected, setSelected] = useListSelector(items, onSelect);
+    const [selected, setSelected, direction] = useListSelector(items, onSelect);
+    const [scrollToItem, scrollDirection] = useListScroll(selected, direction);
 
     return (
         <List
             width={width}
             height={ITEM_HEIGHT * Math.min(items.length, MAX_ITEMS_UNSCROLLED)}
             itemHeight={ITEM_HEIGHT}
+            scrollToItem={scrollToItem}
+            scrollDirection={scrollDirection}
             renderItem={({ item }) => {
                 return (
                     <ItemComponent

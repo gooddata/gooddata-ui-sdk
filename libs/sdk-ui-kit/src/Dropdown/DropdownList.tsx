@@ -52,6 +52,7 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     closeDropdown?: () => void;
 
     scrollToItem?: T;
+    scrollDirection?: -1 | 1;
 }
 
 /**
@@ -116,6 +117,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
         renderNoData = defaultNoData,
 
         scrollToItem,
+        scrollDirection,
         ...listProps
     } = props;
 
@@ -210,6 +212,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
                                 itemsCount={itemsCount}
                                 itemHeight={isMobile ? Math.max(mobileItemHeight, itemHeight) : itemHeight}
                                 scrollToItem={scrollToItem}
+                                scrollDirection={scrollDirection}
                                 {...listProps}
                             />
                         );

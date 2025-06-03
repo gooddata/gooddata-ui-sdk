@@ -1,10 +1,10 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { DropdownList } from "@gooddata/sdk-ui-kit";
 import { ResultsItem } from "./ResultsItem.js";
-import { useListSelector } from "./hooks/index.js";
+import { useListScroll, useListSelector } from "./hooks/index.js";
 import { ListItem } from "./types.js";
 
 const ITEM_HEIGHT = 50;
@@ -49,7 +49,8 @@ export const SearchResultsDropdownList: React.FC<SearchResultsDropdownListProps>
     onSelect,
 }) => {
     const onListItemSelect = (item: ListItem<ISemanticSearchResultItem>) => onSelect(item.item);
-    const [active, setActive] = useListSelector(searchResults, onListItemSelect);
+    const [active, setActive, direction] = useListSelector(searchResults, onListItemSelect);
+    const [scrollToItem, scrollDirection] = useListScroll(active, direction);
 
     return (
         <DropdownList
@@ -58,6 +59,8 @@ export const SearchResultsDropdownList: React.FC<SearchResultsDropdownListProps>
             isMobile={isMobile}
             isLoading={searchLoading}
             itemHeight={ITEM_HEIGHT}
+            scrollToItem={scrollToItem}
+            scrollDirection={scrollDirection}
             renderItem={({ item }) => {
                 return (
                     <ResultsItem

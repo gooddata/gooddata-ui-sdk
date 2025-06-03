@@ -32,6 +32,7 @@ export interface IListProps<T> {
     renderItem: (props: IRenderListItemProps<T>) => JSX.Element;
 
     scrollToItem?: T;
+    scrollDirection?: -1 | 1;
     onScrollStart?: ScrollCallback;
     onScrollEnd?: ScrollCallback;
 }
@@ -76,6 +77,7 @@ export function List<T>(props: IListProps<T>): JSX.Element {
         onScrollEnd,
 
         scrollToItem,
+        scrollDirection,
     } = props;
 
     const currentItemsCount =
@@ -89,8 +91,8 @@ export function List<T>(props: IListProps<T>): JSX.Element {
             return undefined;
         }
 
-        return items.indexOf(scrollToItem) + 1;
-    }, [items, scrollToItem]);
+        return items.indexOf(scrollToItem) + (scrollDirection ?? 1);
+    }, [items, scrollToItem, scrollDirection]);
 
     const getVisibleScrollRange = useCallback(
         (scrollY: number): [number, number] => {

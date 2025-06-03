@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
 
@@ -12,6 +12,8 @@ export const useListSelector = <T>(
     onSelect: (item: T, e: MouseEvent | KeyboardEvent) => void,
 ) => {
     const [selected, setSelected] = React.useState<number>(0);
+    const [direction, setDirection] = React.useState<-1 | 1>(1);
+
     React.useEffect(() => {
         setSelected(0);
     }, [items]);
@@ -31,9 +33,11 @@ export const useListSelector = <T>(
             switch (event.key) {
                 case "ArrowDown":
                     setIndex(selected + 1);
+                    setDirection(1);
                     break;
                 case "ArrowUp":
                     setIndex(selected - 1);
+                    setDirection(-1);
                     break;
                 case "Enter":
                     onSelect(items[selected], event);
@@ -51,5 +55,5 @@ export const useListSelector = <T>(
         };
     }, [items, onSelect, selected]);
 
-    return [items[selected], setSelectedItem] as [T, (item: T) => void];
+    return [items[selected], setSelectedItem, direction] as [T, (item: T) => void, -1 | 1];
 };
