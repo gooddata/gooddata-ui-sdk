@@ -83,6 +83,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
         visualizationSwitcherWidgetComponentSet,
         visualizationSwitcherToolbarComponentProvider,
         dashboardLayoutWidgetComponentSet,
+        showAsTableButtonComponentProvider,
     } = useDashboard(props);
 
     const dashboardRender = (
@@ -184,6 +185,9 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         DashboardSettingsDialogComponent={
                                             props.DashboardSettingsDialogComponent ??
                                             DefaultDashboardSettingsDialog
+                                        }
+                                        ShowAsTableButtonComponentProvider={
+                                            showAsTableButtonComponentProvider
                                         }
                                     >
                                         <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>

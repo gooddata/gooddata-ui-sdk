@@ -14,6 +14,7 @@ import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomU
 import { isInsightWidget } from "@gooddata/sdk-model";
 import { loadInaccessibleDashboards } from "../dashboard/initializeDashboardHandler/loadInaccessibleDashboards.js";
 import { uiActions } from "../../store/ui/index.js";
+import { clearShowWidgetAsTable } from "../../store/showWidgetAsTable/index.js";
 
 export function* changeRenderModeHandler(
     ctx: DashboardContext,
@@ -37,6 +38,8 @@ export function* changeRenderModeHandler(
             batchActions([
                 data.batch,
                 uiActions.resetInvalidDrillWidgetRefs(),
+                // Clear all widgets set to show as table
+                clearShowWidgetAsTable(),
                 uiActions.resetAllInvalidCustomUrlDrillParameterWidgetsWarnings(),
                 renderModeActions.setRenderMode(renderMode),
             ]),
@@ -46,6 +49,7 @@ export function* changeRenderModeHandler(
         yield put(
             batchActions([
                 uiActions.resetInvalidDrillWidgetRefs(),
+                clearShowWidgetAsTable(),
                 uiActions.resetAllInvalidCustomUrlDrillParameterWidgetsWarnings(),
                 renderModeActions.setRenderMode(renderMode),
             ]),

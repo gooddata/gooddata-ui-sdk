@@ -379,6 +379,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    gap: variables.$item-action-gap;
 
     .dash-item-action,
     .dash-item-action-placeholder {
@@ -404,6 +405,20 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 
     &.disabled {
         cursor: auto;
+    }
+}
+
+.dash-item-action-as-table {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    path {
+        fill: variables.$gd-color-text;
+    }
+    &:hover {
+        path {
+            fill: kit-variables.$gd-color-white;
+        }
     }
 }
 
@@ -520,11 +535,10 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     transition: 0.2s;
     font-size: variables.$item-action-icon-width;
     line-height: variables.$item-action-icon-width;
-    margin-right: variables.$item-action-gap;
 
     .gd-icon-circle-question {
         margin-top: 2px;
-        color: kit-variables.$gd-medium-gray;
+        color: var(--gd-palette-complementary-7, #6d7680);
     }
 
     &:hover {
@@ -607,6 +621,10 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 
 .dash-item-content:not(.is-alert-dialog):hover .dash-item-action-options {
     display: block;
+}
+
+.dash-item-content:not(.is-alert-dialog):hover .dash-item-action-options.dash-item-action-as-table {
+    display: flex;
 }
 
 .dash-item-action-options-active,

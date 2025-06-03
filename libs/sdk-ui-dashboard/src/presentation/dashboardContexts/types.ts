@@ -17,6 +17,7 @@ import {
     CustomDashboardRichTextMenuComponent,
     IRichTextMenuItem,
     CustomDashboardRichTextMenuTitleComponent,
+    CustomShowAsTableButtonComponent,
 } from "../widget/types.js";
 import { DashboardConfig, ExtendedDashboardWidget } from "../../model/index.js";
 import { CustomTitleComponent, CustomTopBarComponent, ITitleProps, ITopBarProps } from "../topBar/types.js";
@@ -163,6 +164,16 @@ export type RichTextComponentProvider = (widget: IRichTextWidget) => CustomDashb
  * @public
  */
 export type OptionalRichTextComponentProvider = OptionalProvider<RichTextComponentProvider>;
+
+/**
+ * @alpha
+ */
+export type ShowAsTableButtonComponentProvider = (widget: IInsightWidget) => CustomShowAsTableButtonComponent;
+
+/**
+ * @alpha
+ */
+export type OptionalShowAsTableButtonComponentProvider = OptionalProvider<ShowAsTableButtonComponentProvider>;
 
 /**
  * @internal

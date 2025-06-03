@@ -1,17 +1,17 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import {
     Bubble,
     BubbleHoverTrigger,
-    Button,
     DefaultUiMenuInteractiveItem,
     Dropdown,
     IAlignPoint,
     IDropdownButtonRenderProps,
     UiMenu,
     IUiMenuInteractiveItemProps,
+    UiButton,
 } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -155,17 +155,17 @@ const DropdownTriggerButton: React.FC<IDropdownButtonRenderProps & { isDisabled?
     buttonRef,
     accessibilityConfig,
     isDisabled,
-}) => (
-    <Button
-        onClick={toggleDropdown}
-        className={cx("gd-button-link-dimmed gd-button gd-icon-download export-menu-toggle-button", {
-            disabled: isDisabled,
-        })}
-        disabled={isDisabled}
-        type="button"
-        ref={buttonRef}
-        accessibilityConfig={accessibilityConfig}
-    >
-        <FormattedMessage id="dialogs.export.submit" />
-    </Button>
-);
+}) => {
+    const { formatMessage } = useIntl();
+    return (
+        <UiButton
+            ref={(ref) => (buttonRef.current = ref)}
+            onClick={toggleDropdown}
+            iconBefore="download"
+            label={formatMessage({ id: "dialogs.export.submit" })}
+            variant="tertiary"
+            isDisabled={isDisabled}
+            accessibilityConfig={accessibilityConfig}
+        />
+    );
+};

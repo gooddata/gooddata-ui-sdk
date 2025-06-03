@@ -48,6 +48,7 @@ import {
     OptionalDashboardLayoutComponentProvider,
     OptionalRichTextMenuComponentProvider,
     OptionalRichTextMenuTitleComponentProvider,
+    OptionalShowAsTableButtonComponentProvider,
 } from "../dashboardContexts/index.js";
 import { CustomSidebarComponent } from "./DashboardSidebar/types.js";
 import { InsightComponentSetProvider } from "../componentDefinition/types.js";
@@ -464,6 +465,16 @@ export interface IDashboardCustomComponentProps {
      * @internal
      */
     DashboardSettingsDialogComponent?: CustomDashboardSettingsDialogComponent;
+
+    /**
+     * Specify the component rendered as show as table button.
+     *
+     * @remarks
+     * If not provided, the default implementation {@link DefaultShowAsTableButton} will be used.
+     *
+     * @alpha
+     */
+    ShowAsTableButtonComponentProvider?: OptionalShowAsTableButtonComponentProvider;
 }
 
 /**

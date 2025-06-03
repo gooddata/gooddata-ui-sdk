@@ -102,6 +102,20 @@ $description-width-mobile: 320px;
             }
         }
     }
+
+    .gd-show-as-table-button {
+        display: flex;
+        gap: 5px;
+        path {
+            fill: var(--gd-palette-complementary-5-from-theme, #b1c1d1);
+        }
+    }
+
+    .gd-show-as-table-button:hover {
+        path {
+            fill: var(--gd-palette-primary-base);
+        }
+    }
 }
 
 .gd-drill-modal-dialog-footer.gd-drill-modal-dialog-footer-with-border {

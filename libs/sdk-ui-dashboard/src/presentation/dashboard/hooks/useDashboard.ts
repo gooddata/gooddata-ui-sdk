@@ -26,6 +26,7 @@ import {
     DefaultDashboardLayoutComponentSetFactory,
     DefaultDashboardRichTextMenu,
     DefaultDashboardRichTextMenuTitle,
+    DefaultShowAsTableButton,
 } from "../../widget/index.js";
 import { IDashboardProps } from "../types.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -45,6 +46,7 @@ import {
     DashboardLayoutComponentProvider,
     RichTextMenuComponentProvider,
     RichTextMenuTitleComponentProvider,
+    ShowAsTableButtonComponentProvider,
 } from "../../dashboardContexts/index.js";
 import {
     AttributeFilterComponentSet,
@@ -82,6 +84,7 @@ interface IUseDashboardResult {
     visualizationSwitcherToolbarComponentProvider: VisualizationSwitcherToolbarComponentProvider;
     dashboardLayoutProvider: DashboardLayoutComponentProvider;
     dashboardLayoutWidgetComponentSet: DashboardLayoutWidgetComponentSet;
+    showAsTableButtonComponentProvider: ShowAsTableButtonComponentProvider;
 }
 
 export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
@@ -103,6 +106,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         VisualizationSwitcherComponentProvider,
         VisualizationSwitcherToolbarComponentProvider,
         DashboardLayoutComponentProvider,
+        ShowAsTableButtonComponentProvider,
     } = props;
 
     const backend = useBackendStrict(props.backend);
@@ -263,6 +267,14 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         return DefaultDashboardLayoutComponentSetFactory(dashboardLayoutProvider);
     }, [dashboardLayoutProvider]);
 
+    const showAsTableButtonComponentProvider = useCallback<ShowAsTableButtonComponentProvider>(
+        (widget) => {
+            const userSpecified = ShowAsTableButtonComponentProvider?.(widget);
+            return userSpecified ?? DefaultShowAsTableButton;
+        },
+        [ShowAsTableButtonComponentProvider],
+    );
+
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
 
@@ -292,5 +304,6 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         visualizationSwitcherToolbarComponentProvider,
         dashboardLayoutProvider,
         dashboardLayoutWidgetComponentSet,
+        showAsTableButtonComponentProvider,
     };
 };

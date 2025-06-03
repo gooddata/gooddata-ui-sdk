@@ -20,3 +20,4 @@ export * from "./richTextMenu/index.js";
 export * from "./visualizationSwitcher/index.js";
 export * from "./dashboardLayout/index.js";
 export * from "./widget/index.js";
+export * from "./showAsTableButton/index.js";

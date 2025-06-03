@@ -41,3 +41,4 @@ export type {
     CustomDashboardLayoutComponent as CustomDashboardNestedLayoutComponent,
     IDashboardLayoutProps as IDashboardNestedLayoutProps,
 } from "../widget/dashboardLayout/types.js";
+export type { CustomShowAsTableButtonComponent } from "./showAsTableButton/types.js";

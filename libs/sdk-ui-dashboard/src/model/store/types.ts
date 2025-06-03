@@ -28,6 +28,7 @@ import { UsersState } from "./users/usersState.js";
 import { FilterViewsState } from "./filterViews/filterViewsState.js";
 import { ExecutedState } from "./executed/executedState.js";
 import { AccessibleDashboardsState } from "./accessibleDashboards/index.js";
+import { ShowWidgetAsTableState } from "./showWidgetAsTable/showWidgetAsTableState.js";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -48,6 +49,11 @@ import { AccessibleDashboardsState } from "./accessibleDashboards/index.js";
  * @public
  */
 export interface DashboardState {
+    /**
+     * List of widget IDs that should be shown as table view.
+     * @internal
+     */
+    showWidgetAsTable: ShowWidgetAsTableState;
     /** @beta */
     loading: LoadingState;
     saving: SavingState;
