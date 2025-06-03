@@ -182,6 +182,13 @@ export interface INotificationsPanelProps extends INotificationsPanelCustomCompo
      * Callback for notification click.
      */
     onNotificationClick?: (notification: INotification) => void;
+
+    /**
+     * Enable export to document storage.
+     *
+     * - Default: false
+     */
+    enableScheduleNotifications?: boolean;
 }
 
 /**
@@ -193,7 +200,14 @@ const TEN_MINUTES = 1000 * 60 * 10;
  * @public
  */
 export function NotificationsPanel(props: INotificationsPanelProps) {
-    const { locale, refreshInterval = TEN_MINUTES, itemsPerPage = 50, backend, workspace } = props;
+    const {
+        locale,
+        refreshInterval = TEN_MINUTES,
+        itemsPerPage = 50,
+        backend,
+        workspace,
+        enableScheduleNotifications = false,
+    } = props;
 
     return (
         <OrganizationProvider>
@@ -202,6 +216,7 @@ export function NotificationsPanel(props: INotificationsPanelProps) {
                 workspace={workspace}
                 refreshInterval={refreshInterval}
                 itemsPerPage={itemsPerPage}
+                enableScheduleNotifications={enableScheduleNotifications}
             >
                 <IntlWrapper locale={locale}>
                     <NotificationsPanelController {...props} />
@@ -254,17 +269,6 @@ function NotificationsPanelController({
         hasNextPage,
     } = useNotificationsPanelController();
 
-    const handleNotificationClick = useCallback(
-        (notification: INotification) => {
-            if (!notification.isRead) {
-                markNotificationAsRead(notification.id);
-            }
-            closeNotificationsPanel();
-            onNotificationClick?.(notification);
-        },
-        [markNotificationAsRead, closeNotificationsPanel, onNotificationClick],
-    );
-
     const notificationsPanel = (
         <UiFocusTrap returnFocusTo={buttonRef} autofocusOnOpen={true}>
             <NotificationsPanel
@@ -284,7 +288,7 @@ function NotificationsPanelController({
                 unreadNotificationsCount={unreadNotificationsCount}
                 hasUnreadNotifications={hasUnreadNotifications}
                 activeNotifications={activeNotifications}
-                onNotificationClick={handleNotificationClick}
+                onNotificationClick={onNotificationClick}
                 status={status}
                 error={error}
                 loadNextPage={loadNextPage}

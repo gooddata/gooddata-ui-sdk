@@ -35,8 +35,8 @@ export function NotificationTriggersDetailDialog({
     onClose,
 }: INotificationTriggersDetailDialogProps) {
     const intl = useIntl();
-    const values = notification.details.data.alert.currentValues;
-    const hiddenValuesCount = notification.details.data.alert.triggeredCount - values.length;
+    const values = notification.details.data.alert?.currentValues;
+    const hiddenValuesCount = (notification.details.data.alert?.triggeredCount ?? 0) - (values?.length ?? 0);
 
     return (
         <DetailsDialog

@@ -1052,6 +1052,8 @@ export interface IBubbleHeaderSeparatorProps {
 // @internal (undocumented)
 export interface IBubbleHoverTriggerProps extends IBubbleTriggerProps {
     // (undocumented)
+    enabled?: boolean;
+    // (undocumented)
     hideDelay?: number;
     // (undocumented)
     hoverHideDelay?: number;

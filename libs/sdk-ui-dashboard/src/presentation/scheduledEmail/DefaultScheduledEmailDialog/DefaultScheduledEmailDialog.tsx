@@ -264,6 +264,11 @@ export function ScheduledMailDialogRenderer({
         );
     }
 
+    const selectedChannel = notificationChannels.find(
+        (channel) => channel.id === editedAutomation.notificationChannel,
+    );
+    const isInPlatformChannel = selectedChannel?.destinationType === "inPlatform";
+
     return (
         <>
             <Overlay
@@ -392,17 +397,21 @@ export function ScheduledMailDialogRenderer({
                                 notificationChannelId={editedAutomation.notificationChannel}
                                 onKeyDownSubmit={handleSubmitForm}
                             />
-                            <SubjectForm
-                                dashboardTitle={dashboardTitle}
-                                editedAutomation={editedAutomation}
-                                onChange={onSubjectChange}
-                                onKeyDownSubmit={handleSaveScheduledEmail}
-                                isSubmitDisabled={isSubmitDisabled}
-                            />
-                            <MessageForm
-                                onChange={onMessageChange}
-                                value={editedAutomation.details?.message ?? ""}
-                            />
+                            {!isInPlatformChannel ? (
+                                <>
+                                    <SubjectForm
+                                        dashboardTitle={dashboardTitle}
+                                        editedAutomation={editedAutomation}
+                                        onChange={onSubjectChange}
+                                        onKeyDownSubmit={handleSaveScheduledEmail}
+                                        isSubmitDisabled={isSubmitDisabled}
+                                    />
+                                    <MessageForm
+                                        onChange={onMessageChange}
+                                        value={editedAutomation.details?.message ?? ""}
+                                    />
+                                </>
+                            ) : null}
                             {widget ? (
                                 <WidgetAttachments
                                     widgetFilters={widgetFilters}

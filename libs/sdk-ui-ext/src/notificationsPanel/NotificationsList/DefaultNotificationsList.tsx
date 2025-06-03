@@ -67,7 +67,7 @@ export interface INotificationsListComponentProps {
     /**
      * Callback function to handle notification click.
      */
-    onNotificationClick: (notification: INotification) => void;
+    onNotificationClick?: (notification: INotification) => void;
 
     /**
      * Whether there is a next page of notifications.
@@ -103,6 +103,11 @@ export interface INotificationsListComponentProps {
      * Maximum height of the notifications list in pixels.
      */
     maxListHeight?: number;
+
+    /**
+     * Callback function to close the notifications panel.
+     */
+    closeNotificationsPanel: () => void;
 }
 
 /**
@@ -128,6 +133,7 @@ export function DefaultNotificationsList({
     itemPadding,
     skeletonItemsCount,
     maxListHeight = 0,
+    closeNotificationsPanel,
 }: INotificationsListComponentProps) {
     const isError = status === "error";
     const isEmpty = status === "success" && activeNotifications?.length === 0;
@@ -167,6 +173,7 @@ export function DefaultNotificationsList({
                             notification={notification}
                             markNotificationAsRead={markNotificationAsRead}
                             onNotificationClick={onNotificationClick}
+                            closeNotificationsPanel={closeNotificationsPanel}
                         />
                     )}
                 </UiPagedVirtualList>

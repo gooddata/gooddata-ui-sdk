@@ -2073,6 +2073,41 @@
         "comment": "",
         "limit": 0
     },
+    "notifications.panel.download": {
+        "value": "Download",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.expiresOn": {
+        "value": "Expires on {date}",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.linkHasExpired": {
+        "value": "Link has expired",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.toast.warning.filesExpired": {
+        "value": "<strong>Download link expired</strong> — wait for the next export or create one manually.",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.dashboardLinkHint": {
+        "value": "Open the dashboard used for this export",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.dashboardLink": {
+        "value": "From {dashboardTitle}",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.downloadFilesHint": {
+        "value": "Download the exported files",
+        "comment": "",
+        "limit": 0
+    },
     "notifications.filters.buttonLabel": {
         "value": "{count, plural, one {# filter} other {# filters}}",
         "comment": "Follow this guide for pluralization per locale https://formatjs.github.io/docs/core-concepts/icu-syntax#plural-format",

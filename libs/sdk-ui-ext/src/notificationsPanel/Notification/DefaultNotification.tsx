@@ -3,7 +3,7 @@ import React from "react";
 import { INotification } from "@gooddata/sdk-model";
 import { bem } from "../bem.js";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
-import { AlertNotification } from "./AlertNotification.js";
+import { Notification } from "./Notification.js";
 
 /**
  * Props for the Notification component.
@@ -24,7 +24,12 @@ export interface INotificationComponentProps {
     /**
      * Function to handle notification click.
      */
-    onNotificationClick: (notification: INotification) => void;
+    onNotificationClick?: (notification: INotification) => void;
+
+    /**
+     * Function to handle closing the overlay
+     */
+    closeNotificationsPanel: () => void;
 }
 
 const { b, e } = bem("gd-ui-ext-notification");
@@ -38,16 +43,18 @@ export function DefaultNotification({
     notification,
     markNotificationAsRead,
     onNotificationClick,
+    closeNotificationsPanel,
 }: INotificationComponentProps) {
-    if (notification.notificationType !== "alertNotification") {
+    if (notification.notificationType === "testNotification") {
         return <UnsupportedNotificationType />;
     }
 
     return (
-        <AlertNotification
+        <Notification
             notification={notification}
             markNotificationAsRead={markNotificationAsRead}
             onNotificationClick={onNotificationClick}
+            closeNotificationsPanel={closeNotificationsPanel}
         />
     );
 }

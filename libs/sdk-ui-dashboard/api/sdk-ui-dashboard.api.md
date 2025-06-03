@@ -8793,6 +8793,9 @@ export const selectEnableDuplicatedLabelValuesInAttributeFilter: DashboardSelect
 export const selectEnableExecutionCancelling: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableExportToDocumentStorage: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableExternalRecipients: DashboardSelector<boolean>;
 
 // @public
@@ -9285,10 +9288,10 @@ export const selectNotificationChannels: DashboardSelector<INotificationChannelM
 export const selectNotificationChannelsCount: DashboardSelector<number>;
 
 // @alpha
-export const selectNotificationChannelsCountForScheduledExports: DashboardSelector<number>;
+export const selectNotificationChannelsCountWithoutInPlatform: DashboardSelector<number>;
 
 // @alpha
-export const selectNotificationChannelsForScheduledExports: DashboardSelector<INotificationChannelMetadataObject[]>;
+export const selectNotificationChannelsWithoutInPlatform: DashboardSelector<INotificationChannelMetadataObject[]>;
 
 // @public
 export const selectObjectAvailabilityConfig: DashboardSelector<ObjectAvailabilityConfig>;
