@@ -154,6 +154,7 @@ export type {
     SetDashboardAttributeFilterConfigDisplayAsLabelPayload,
     ChangeIgnoreExecutionTimestamp,
     ChangeIgnoreExecutionTimestampPayload,
+    ExportDashboardToPresentationPayload,
 } from "./dashboard.js";
 export {
     InitialLoadCorrelationId,

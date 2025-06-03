@@ -38,6 +38,7 @@ import {
     IDashboardWithReferences,
     IDashboardReferences,
     IDashboardExportImageOptions,
+    IDashboardExportPresentationOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -481,14 +482,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         dashboardRef: ObjRef,
         format: "PDF" | "PPTX",
         filters?: FilterContextItem[],
-        options?: {
-            widgetIds?: ObjRef[];
-            visualizationIds?: ObjRef[];
-            templateId?: string;
-            filename?: string;
-            title?: string;
-            hideWidgetTitles?: boolean;
-        },
+        options?: IDashboardExportPresentationOptions,
     ): Promise<IExportResult> => {
         const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
 

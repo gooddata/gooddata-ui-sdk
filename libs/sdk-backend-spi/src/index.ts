@@ -184,6 +184,7 @@ export type {
     IRawExportCustomOverrides,
     IDashboardExportTabularOptions,
     IDashboardExportImageOptions,
+    IDashboardExportPresentationOptions,
 } from "./workspace/dashboards/index.js";
 export type { IWidgetWithLayoutPath, LayoutPath } from "./workspace/dashboards/utils.js";
 export {

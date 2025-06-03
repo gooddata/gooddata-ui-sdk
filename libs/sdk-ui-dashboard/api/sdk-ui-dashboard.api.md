@@ -181,6 +181,7 @@ import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@goo
 import { IDashboardDateFilterConfigItem } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardDrillEvent as IDashboardDrillEvent_2 } from '../../../types.js';
+import { IDashboardExportPresentationOptions } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardFilterView } from '@gooddata/sdk-model';
 import { IDashboardLayout } from '@gooddata/sdk-model';
@@ -3953,20 +3954,30 @@ export function exportDashboardToPdf(correlationId?: string): ExportDashboardToP
 // @beta (undocumented)
 export interface ExportDashboardToPdfPresentation extends IDashboardCommand {
     // (undocumented)
+    readonly payload?: ExportDashboardToPresentationPayload;
+    // (undocumented)
     readonly type: "GDC.DASH/CMD.EXPORT.PDF_PRESENTATION";
 }
 
 // @beta
-export function exportDashboardToPdfPresentation(correlationId?: string): ExportDashboardToPdfPresentation;
+export function exportDashboardToPdfPresentation(payload?: ExportDashboardToPresentationPayload, correlationId?: string): ExportDashboardToPdfPresentation;
 
 // @beta (undocumented)
 export interface ExportDashboardToPptPresentation extends IDashboardCommand {
+    // (undocumented)
+    readonly payload?: ExportDashboardToPresentationPayload;
     // (undocumented)
     readonly type: "GDC.DASH/CMD.EXPORT.PPT_PRESENTATION";
 }
 
 // @beta
-export function exportDashboardToPptPresentation(correlationId?: string): ExportDashboardToPptPresentation;
+export function exportDashboardToPptPresentation(payload?: ExportDashboardToPresentationPayload, correlationId?: string): ExportDashboardToPptPresentation;
+
+// @beta (undocumented)
+export interface ExportDashboardToPresentationPayload {
+    filters?: FilterContextItem[];
+    options?: IDashboardExportPresentationOptions;
+}
 
 // @alpha
 export type ExportElementType = "meta" | "dashboard" | "section" | "section-info" | "section-title" | "section-description" | "widget" | "widget-content" | "widget-title" | "widget-description";

@@ -1,9 +1,11 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { DashboardConfig } from "../types/commonTypes.js";
+import { IDashboardExportPresentationOptions } from "@gooddata/sdk-backend-spi";
 import {
     DashboardAttributeFilterConfigMode,
     DashboardDateFilterConfigMode,
+    FilterContextItem,
     IDashboard,
     IWorkspacePermissions,
     ObjRef,
@@ -481,8 +483,24 @@ export function exportDashboardToExcel(
 /**
  * @beta
  */
+export interface ExportDashboardToPresentationPayload {
+    /**
+     * Overrides current filter context filters with provided custom filters
+     */
+    filters?: FilterContextItem[];
+
+    /**
+     * Overrides export options with custom options.
+     */
+    options?: IDashboardExportPresentationOptions;
+}
+
+/**
+ * @beta
+ */
 export interface ExportDashboardToPdfPresentation extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EXPORT.PDF_PRESENTATION";
+    readonly payload?: ExportDashboardToPresentationPayload;
 }
 
 /**
@@ -490,15 +508,20 @@ export interface ExportDashboardToPdfPresentation extends IDashboardCommand {
  * the dashboard to a Pdf presentation file. If successful, an instance of {@link DashboardExportToPdfPresentationResolved} will be emitted
  * with the URL of the resulting file.
  *
+ * @param payload - payload to override the dashboard export options. If not provided, the dashboard will be exported with the current filter context and options.
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @beta
  */
-export function exportDashboardToPdfPresentation(correlationId?: string): ExportDashboardToPdfPresentation {
+export function exportDashboardToPdfPresentation(
+    payload?: ExportDashboardToPresentationPayload,
+    correlationId?: string,
+): ExportDashboardToPdfPresentation {
     return {
         type: "GDC.DASH/CMD.EXPORT.PDF_PRESENTATION",
         correlationId,
+        payload,
     };
 }
 
@@ -507,6 +530,7 @@ export function exportDashboardToPdfPresentation(correlationId?: string): Export
  */
 export interface ExportDashboardToPptPresentation extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EXPORT.PPT_PRESENTATION";
+    readonly payload?: ExportDashboardToPresentationPayload;
 }
 
 /**
@@ -514,15 +538,20 @@ export interface ExportDashboardToPptPresentation extends IDashboardCommand {
  * the dashboard to a Ppt presentation file. If successful, an instance of {@link DashboardExportToPptPresentationResolved} will be emitted
  * with the URL of the resulting file.
  *
+ * @param payload - payload to override the dashboard export options. If not provided, the dashboard will be exported with the current filter context and options.
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @beta
  */
-export function exportDashboardToPptPresentation(correlationId?: string): ExportDashboardToPptPresentation {
+export function exportDashboardToPptPresentation(
+    payload?: ExportDashboardToPresentationPayload,
+    correlationId?: string,
+): ExportDashboardToPptPresentation {
     return {
         type: "GDC.DASH/CMD.EXPORT.PPT_PRESENTATION",
         correlationId,
+        payload,
     };
 }
 
