@@ -39,6 +39,7 @@ import {
     useWidgetFilters,
     selectEnableExecutionCancelling,
     selectExecutionTimestamp,
+    selectEnableSnapshotExportAccessibility,
 } from "../../../../../model/index.js";
 
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
@@ -104,6 +105,9 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         minimalHeight,
     } = props;
 
+    const isSnapshotAccessibilityEnabled = useDashboardSelector(selectEnableSnapshotExportAccessibility);
+    const isExportMode = useDashboardSelector(selectIsExport);
+    const ariaHidden = isSnapshotAccessibilityEnabled && isExportMode ? true : undefined;
     const ref = widgetRef(widget);
 
     // register as early as possible
@@ -308,7 +312,11 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
                         </div>
                     ) : null}
                     {filtersStatus === "success" ? (
-                        <div className="insight-view-visualization" style={insightWrapperStyle}>
+                        <div
+                            className="insight-view-visualization"
+                            style={insightWrapperStyle}
+                            aria-hidden={ariaHidden}
+                        >
                             <InsightBody
                                 widget={widget}
                                 insight={insightWithAddedWidgetProperties}
