@@ -16,7 +16,14 @@ export const HeaderChatButton: React.FC<HeaderChatButtonProps> = ({ color, title
 
     // The text is not l18n-ed because it is not final
     return (
-        <Button title={title} className={classNames} onClick={onClick}>
+        <Button
+            title={title}
+            className={classNames}
+            onClick={onClick}
+            accessibilityConfig={{
+                ariaLabel: title,
+            }}
+        >
             <Icon.GenAI color={color} width={32} height={32} ariaHidden />
         </Button>
     );

@@ -34,7 +34,7 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
     const hasError = message.content.some(isErrorContents);
 
     return (
-        <div className={classNames}>
+        <section className={classNames}>
             <AgentIcon
                 loading={!message.complete}
                 error={hasError}
@@ -92,7 +92,7 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
                     </div>
                 ) : null}
             </div>
-        </div>
+        </section>
     );
 };
 

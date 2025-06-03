@@ -259,6 +259,11 @@
         line-height: 20px;
         gap: 10px;
     }
+
+    &__icon {
+        width: 18px;
+        height: 18px;
+    }
 }
 
 .gd-gen-ai-chat__messages__content .gd-hyperlink {

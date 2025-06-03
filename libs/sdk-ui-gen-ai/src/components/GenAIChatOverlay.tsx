@@ -57,7 +57,7 @@ const GenAIChatOverlayComponent: React.FC<GenAIChatOverlayProps & WrappedCompone
             closeOnMouseDrag={false}
             onClose={onClose}
         >
-            <div className={classNames}>
+            <div className={classNames} role="dialog" aria-modal={isFullscreen}>
                 <div className="gd-gen-ai-chat__window__header">
                     <HeaderIcon
                         Icon={Icon.Undo}
