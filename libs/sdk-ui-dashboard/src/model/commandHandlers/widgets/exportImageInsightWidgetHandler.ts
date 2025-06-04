@@ -8,6 +8,8 @@ import { PromiseFnReturnType } from "../../types/sagas.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import { ExportImageInsightWidget } from "../../commands/insight.js";
+import { selectFilterContextFilters } from "../../store/filterContext/filterContextSelectors.js";
+import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
 
 export function* exportImageInsightWidgetHandler(
     ctx: DashboardContext,
@@ -21,10 +23,14 @@ export function* exportImageInsightWidgetHandler(
         throw invalidArgumentsProvided(ctx, cmd, "Dashboard to export to image must have an ObjRef.");
     }
 
+    const filterContextFilters = yield select(selectFilterContextFilters);
+    const effectiveFilters = ensureAllTimeFilterForExport(filterContextFilters);
+
     const exportDashboardToImage = backend.workspace(workspace).dashboards().exportDashboardToImage;
     const result: PromiseFnReturnType<typeof exportDashboardToImage> = yield call(
         exportDashboardToImage,
         dashboardRef,
+        effectiveFilters,
         {
             widgetIds: [ref],
             filename,

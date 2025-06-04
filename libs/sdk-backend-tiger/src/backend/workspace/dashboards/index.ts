@@ -762,10 +762,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     public exportDashboardToImage = async (
         dashboardRef: ObjRef,
+        filters?: FilterContextItem[],
         options?: IDashboardExportImageOptions,
     ): Promise<IExportResult> => {
         return this.authCall(async (client) => {
             const dashboardId = await objRefToIdentifier(dashboardRef, this.authCall);
+
+            // skip all time date filter from stored filters, when missing, it's correctly
+            // restored to All time during the load later
+            const withoutAllTime = (filters || []).filter((f) => !isAllTimeDashboardDateFilter(f));
 
             const imageExportRequest: ImageExportRequest = {
                 format: "PNG",
@@ -776,6 +781,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                         return ref.identifier;
                     }
                     throw new Error("Only identifier references are supported for widget IDs");
+                }),
+                metadata: convertToBackendExportMetadata({
+                    filters: withoutAllTime,
+                    title: options?.filename,
                 }),
             };
 
