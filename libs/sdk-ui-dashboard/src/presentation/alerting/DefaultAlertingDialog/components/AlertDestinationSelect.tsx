@@ -54,7 +54,7 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
                                 "is-active": isOpen,
                             },
                         )}
-                        buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
+                        ref={buttonRef}
                     >
                         {selectedOption?.title ?? " - "}
                     </Button>

@@ -100,7 +100,7 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                                 popupId: dropdownId,
                                 isExpanded: isOpen,
                             }}
-                            buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
+                            ref={buttonRef}
                         >
                             {intl.formatMessage({
                                 id: selectedComparisonItem?.title ?? selectedRelativeItem?.title,

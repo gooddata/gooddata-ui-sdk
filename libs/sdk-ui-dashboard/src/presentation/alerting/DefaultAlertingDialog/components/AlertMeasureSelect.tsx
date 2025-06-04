@@ -60,7 +60,7 @@ export const AlertMeasureSelect = ({
                                 popupId: dropdownId,
                                 isExpanded: isOpen,
                             }}
-                            buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
+                            ref={buttonRef}
                         >
                             {selectedMeasureTitle}
                         </Button>

@@ -84,7 +84,7 @@ export const HeaderAccount: React.FC<IHeaderAccountProps> = ({
 
     return (
         <Button
-            buttonRef={buttonRef}
+            ref={buttonRef}
             className={classNames}
             onClick={toggleAccountMenuHandler}
             title={intl.formatMessage({ id: "gs.header.account.title" })}

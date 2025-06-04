@@ -28,7 +28,7 @@ export const HeaderWorkspacePickerButton: React.FC<IHeaderWorkspacePickerButtonP
 
     return (
         <Button
-            buttonRef={buttonRef}
+            ref={buttonRef}
             className="gd-header-button gd-workspace-picker-button"
             onClick={onClick}
             title={title}

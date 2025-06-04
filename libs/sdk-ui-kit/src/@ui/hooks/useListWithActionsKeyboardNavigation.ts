@@ -85,6 +85,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
         onBlur: handleBlur,
         focusedAction,
         focusedItem,
+        setFocusedAction,
     };
 }
 

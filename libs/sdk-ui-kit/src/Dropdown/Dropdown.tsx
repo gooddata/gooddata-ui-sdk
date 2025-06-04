@@ -10,6 +10,7 @@ import { useId } from "../utils/useId.js";
 import { UiFocusTrap } from "../@ui/UiFocusTrap/UiFocusTrap.js";
 import { usePropState } from "@gooddata/sdk-ui";
 import { DropdownButtonKeyboardWrapper } from "./DropdownButtonKeyboardWrapper.js";
+import { IButtonAccessibilityConfig } from "../Button/index.js";
 
 const SCROLLBAR_SELECTOR = ".fixedDataTableLayout_main .ScrollbarLayout_main";
 const MOBILE_DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
@@ -53,10 +54,16 @@ export interface IDropdownButtonRenderProps {
     openDropdown: () => void;
     closeDropdown: () => void;
     toggleDropdown: (desiredState?: boolean | unknown) => void;
+    /**
+     * Props supporting accessibility that can be just passed through to the rendered element
+     */
     ariaAttributes: {
-        role: "button" | string;
-        "data-popupId": string;
+        role: React.AriaRole;
     } & Pick<React.AriaAttributes, "aria-haspopup" | "aria-expanded" | "aria-controls">;
+    /**
+     * Props supporting accessibility that can be passed down to a <Button/>
+     */
+    accessibilityConfig: Pick<IButtonAccessibilityConfig, "role" | "isExpanded" | "popupId">;
 }
 
 /**
@@ -85,7 +92,7 @@ export interface IDropdownProps {
      * The `desiredState` argument's type includes `unknown` to facilitate ease of use as an event handler (`onClick={onToggle}`)
      * @param desiredState - The desired state. If not provided, the state will be toggled.
      */
-    onToggle?: (desiredState?: boolean | unknown) => void;
+    onToggle?: ((desiredState?: boolean) => void) | (() => void);
 
     openOnInit?: boolean;
 
@@ -115,8 +122,10 @@ export interface IDropdownProps {
 
     autofocusOnOpen?: boolean;
     initialFocus?: React.RefObject<HTMLElement> | string;
+    returnFocusTo?: React.RefObject<HTMLElement> | string;
 
     accessibilityConfig?: {
+        triggerRole?: "button" | "combobox";
         popupRole?: "listbox" | "tree" | "grid" | "dialog";
     };
 }
@@ -156,6 +165,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
         closeOnEscape = false,
         autofocusOnOpen = false,
         initialFocus,
+        returnFocusTo,
 
         accessibilityConfig,
     } = props;
@@ -165,7 +175,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
     const dropdownId = `dropdown-${id}`;
     const dropdownButtonId = `dropdown-button-${id}`;
 
-    const buttonWrapperRef = useRef<HTMLElement | null>(null);
+    const buttonWrapperRef = useRef<HTMLElement>(null);
     const _renderButton = (renderProps: IDropdownButtonRenderProps) => (
         <DropdownButtonKeyboardWrapper
             onToggle={renderProps.toggleDropdown}
@@ -209,28 +219,45 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen]);
+    const renderButtonProps = React.useMemo<
+        Omit<IDropdownButtonRenderProps, "isMobile" | "buttonRef">
+    >(() => {
+        const role = accessibilityConfig?.triggerRole ?? "button";
 
-    const renderButtonProps = {
-        isOpen: isOpen,
-        openDropdown: openDropdown,
-        closeDropdown: closeDropdown,
-        toggleDropdown: toggleDropdown,
+        return {
+            isOpen,
+            openDropdown,
+            closeDropdown,
+            toggleDropdown,
+            dropdownId,
+            ariaAttributes: {
+                role,
+                "aria-controls": isOpen ? dropdownId : undefined,
+                "aria-expanded": isOpen,
+                "aria-haspopup": accessibilityConfig?.popupRole ?? true,
+            },
+            accessibilityConfig: {
+                role,
+                popupId: dropdownId,
+                isExpanded: isOpen,
+            },
+        };
+    }, [
+        accessibilityConfig?.popupRole,
+        accessibilityConfig?.triggerRole,
+        closeDropdown,
         dropdownId,
-        ariaAttributes: {
-            role: "button",
-            "aria-controls": isOpen ? dropdownId : undefined,
-            "aria-expanded": isOpen,
-            "aria-haspopup": accessibilityConfig?.popupRole,
-            "data-popupId": dropdownId,
-        },
-    };
+        isOpen,
+        openDropdown,
+        toggleDropdown,
+    ]);
 
     const renderBodyProps = {
         closeDropdown,
         ariaAttributes: {
             id: dropdownId,
             "aria-labelledby": dropdownButtonId,
-            role: accessibilityConfig?.popupRole,
+            role: accessibilityConfig?.popupRole ?? "dialog",
         },
     };
 
@@ -275,7 +302,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                 zIndex={overlayZIndex}
             >
                 <UiFocusTrap
-                    returnFocusTo={buttonRef.current ? buttonRef : buttonWrapperRef}
+                    returnFocusTo={returnFocusTo ?? (buttonRef.current ? buttonRef : buttonWrapperRef)}
                     autofocusOnOpen={autofocusOnOpen}
                     initialFocus={initialFocus}
                 >

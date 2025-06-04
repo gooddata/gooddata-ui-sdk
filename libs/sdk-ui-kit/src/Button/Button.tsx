@@ -12,98 +12,74 @@ const getGeneratedTestId = (effectiveValue: React.ReactNode, title: string, aria
     return ariaLabel ? `${stringUtils.simplifyText(ariaLabel)}` : `${stringUtils.simplifyText(title)}`;
 };
 
+const Icon: React.FC<{ icon: string | undefined }> = ({ icon }) => {
+    if (!icon) {
+        return null;
+    }
+
+    return <span className={cx("gd-button-icon", icon)} data-testid="gd-button-icon" aria-hidden="true" />;
+};
+
 /**
  * @internal
  */
-export class Button extends React.Component<IButtonProps> {
-    public static defaultProps = {
-        className: "",
-        disabled: false,
-        onClick: noop,
-        tabIndex: 0,
-        tagName: "button",
-        type: "button",
-        iconLeft: null as string,
-        iconRight: null as string,
+export const Button = React.forwardRef<HTMLElement, IButtonProps>(function Button(
+    {
+        className,
+        disabled = false,
+        onClick = noop,
+        tabIndex = 0,
+        tagName = "button",
+        type = "button",
+        id,
+        title,
+        iconLeft,
+        iconRight,
+        accessibilityConfig,
+        dataId,
+        dataTestId,
+        intent,
+        size,
+        variant,
+        value,
+        children,
+    },
+    ref,
+) {
+    const {
+        isExpanded,
+        popupId,
+        ariaLabel,
+        ariaLabelledBy,
+        ariaDescribedBy,
+        role = "button",
+    } = accessibilityConfig ?? {};
+
+    const ariaDropdownProps = {
+        ...(popupId && isExpanded ? { "aria-controls": popupId } : {}),
+        ...(popupId ? { "aria-haspopup": !!popupId } : {}),
+        ...(isExpanded !== undefined ? { "aria-expanded": isExpanded } : {}),
     };
 
-    public buttonNode: HTMLElement;
+    const handleClick = React.useCallback<React.MouseEventHandler>(
+        (e) => {
+            if (disabled) {
+                return;
+            }
+            onClick(e);
+        },
+        [disabled, onClick],
+    );
 
-    public render() {
-        const {
-            id,
-            tagName,
-            title,
-            disabled,
-            tabIndex,
-            type,
-            iconLeft,
-            iconRight,
-            accessibilityConfig,
-            buttonRef,
-            dataId,
-            dataTestId,
-        } = this.props;
-        const {
-            isExpanded,
-            popupId,
-            ariaLabel,
-            ariaLabelledBy,
-            ariaDescribedBy,
-            role = "button",
-        } = accessibilityConfig ?? {};
-        const TagName = tagName as any;
-        const effectiveValue = this.getEffectiveValue();
+    const effectiveValue = React.useMemo(() => value ?? children, [children, value]);
+    const testId = dataTestId ? dataTestId : getGeneratedTestId(effectiveValue, title, ariaLabel);
 
-        const ariaDropdownProps = {
-            ...(popupId && isExpanded ? { "aria-controls": popupId } : {}),
-            ...(popupId ? { "aria-haspopup": !!popupId } : {}),
-            ...(isExpanded !== undefined ? { "aria-expanded": isExpanded } : {}),
-        };
-
-        const testId = dataTestId ? dataTestId : getGeneratedTestId(effectiveValue, title, ariaLabel);
-
-        return (
-            <TagName
-                id={id}
-                data-id={dataId}
-                ref={(ref: HTMLElement) => {
-                    this.buttonNode = ref;
-                    if (buttonRef) {
-                        buttonRef.current = ref;
-                    }
-                }}
-                title={title}
-                className={this.getClassnames()}
-                type={type}
-                onClick={this._onClick}
-                tabIndex={tabIndex}
-                aria-disabled={disabled}
-                aria-label={ariaLabel}
-                aria-labelledby={ariaLabelledBy}
-                aria-describedby={ariaDescribedBy}
-                {...ariaDropdownProps}
-                role={role}
-                data-testid={testId}
-            >
-                {this.renderIcon(iconLeft)}
-                {effectiveValue ? <span className="gd-button-text">{effectiveValue}</span> : null}
-                {this.renderIcon(iconRight)}
-            </TagName>
-        );
-    }
-
-    private getEffectiveValue() {
-        return this.props.value ?? this.props.children;
-    }
-
-    private getClassnames() {
-        const { className, variant, size, intent, disabled } = this.props;
-        const effectiveValue = this.getEffectiveValue();
+    const classNames = React.useMemo(() => {
         const generatedSeleniumClass =
             effectiveValue && typeof effectiveValue === "string"
                 ? `s-${stringUtils.simplifyText(effectiveValue)}`
                 : "";
+
         return cx([
             "gd-button",
             generatedSeleniumClass,
@@ -115,21 +91,32 @@ export class Button extends React.Component<IButtonProps> {
                 disabled: disabled,
             },
         ]);
-    }
+    }, [className, disabled, effectiveValue, intent, size, variant]);
 
-    private _onClick = (e: React.MouseEvent) => {
-        if (!this.props.disabled) {
-            this.props.onClick(e);
-        }
-    };
+    const TagName = tagName as any;
+    return (
+        <TagName
+            id={id}
+            data-id={dataId}
+            data-testid={testId}
+            ref={ref}
+            title={title}
+            className={classNames}
+            type={type}
+            onClick={handleClick}
+            tabIndex={tabIndex}
+            aria-disabled={disabled}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledBy}
+            aria-describedby={ariaDescribedBy}
+            {...ariaDropdownProps}
+            role={role}
+        >
+            <Icon icon={iconLeft} />
 
-    private renderIcon(icon: string) {
-        if (!icon) {
-            return null;
-        }
+            {effectiveValue ? <span className="gd-button-text">{effectiveValue}</span> : null}
 
-        return (
-            <span className={cx("gd-button-icon", icon)} data-testid="gd-button-icon" aria-hidden="true" />
-        );
-    }
-}
+            <Icon icon={iconRight} />
+        </TagName>
+    );
+});

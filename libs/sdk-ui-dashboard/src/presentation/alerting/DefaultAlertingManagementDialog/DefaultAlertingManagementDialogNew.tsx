@@ -2,7 +2,7 @@
 
 import React, { useCallback, useState } from "react";
 import { defineMessage, FormattedMessage, useIntl } from "react-intl";
-import { Button, Dialog, Hyperlink, Typography, useId } from "@gooddata/sdk-ui-kit";
+import { AutofocusOnMount, Button, Dialog, Hyperlink, Typography, useId } from "@gooddata/sdk-ui-kit";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 
 import { IAlertingManagementDialogProps } from "../types.js";
@@ -12,7 +12,11 @@ import { Alerts } from "./components/AlertsList.js";
 import { DeleteAlertConfirmDialog } from "./components/DeleteAlertConfirmDialog.js";
 import { PauseAlertRunner } from "./components/PauseAlertRunner.js";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
-import { useDashboardSelector, selectIsWhiteLabeled } from "../../../model/index.js";
+import {
+    useDashboardSelector,
+    selectIsWhiteLabeled,
+    selectIsAlertingDialogOpen,
+} from "../../../model/index.js";
 
 /**
  * @alpha
@@ -30,11 +34,17 @@ export const DefaultAlertingManagementDialogNew: React.FC<IAlertingManagementDia
     } = props;
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
     const [alertToPause, setAlertToPause] = useState<[IAutomationMetadataObject, boolean] | null>(null);
+    const isEditingOpen = useDashboardSelector(selectIsAlertingDialogOpen);
+
     const intl = useIntl();
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
 
-    const handleAlertDelete = useCallback((alert: IAutomationMetadataObject) => {
+    const handleAlertDeleteOpen = useCallback((alert: IAutomationMetadataObject) => {
         setAlertToDelete(alert);
+    }, []);
+
+    const handleAlertDeleteClose = useCallback(() => {
+        setAlertToDelete(null);
     }, []);
 
     const handleAlertEdit = useCallback(
@@ -52,7 +62,7 @@ export const DefaultAlertingManagementDialogNew: React.FC<IAlertingManagementDia
         alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
     ) => {
         onDeleteSuccess?.(alert as IAutomationMetadataObject);
-        setAlertToDelete(null);
+        handleAlertDeleteClose();
     };
 
     const handleAlertPauseSuccess = (
@@ -74,6 +84,8 @@ export const DefaultAlertingManagementDialogNew: React.FC<IAlertingManagementDia
 
     const titleElementId = useId();
 
+    const autofocusKey = `${alertToDelete},${isEditingOpen},${isLoadingAlertingData}`;
+
     return (
         <>
             <Dialog
@@ -94,14 +106,16 @@ export const DefaultAlertingManagementDialogNew: React.FC<IAlertingManagementDia
                             <FormattedMessage id={messages.alertingManagementListTitle.id!} />
                         </Typography>
                     </div>
-                    <Alerts
-                        onDelete={handleAlertDelete}
-                        onEdit={handleAlertEdit}
-                        onPause={handleAlertPause}
-                        isLoading={isLoadingAlertingData}
-                        alerts={automations}
-                        noAlertsMessageId={messages.alertingManagementNoAlerts.id!}
-                    />
+                    <AutofocusOnMount refocusKey={autofocusKey}>
+                        <Alerts
+                            onDelete={handleAlertDeleteOpen}
+                            onEdit={handleAlertEdit}
+                            onPause={handleAlertPause}
+                            isLoading={isLoadingAlertingData}
+                            alerts={automations}
+                            noAlertsMessageId={messages.alertingManagementNoAlerts.id!}
+                        />
+                    </AutofocusOnMount>
                 </div>
                 <div className="gd-content-divider"></div>
                 <div className="gd-buttons">
@@ -122,7 +136,7 @@ export const DefaultAlertingManagementDialogNew: React.FC<IAlertingManagementDia
             {alertToDelete ? (
                 <DeleteAlertConfirmDialog
                     alert={alertToDelete}
-                    onCancel={() => setAlertToDelete(null)}
+                    onCancel={handleAlertDeleteClose}
                     onSuccess={handleAlertDeleteSuccess}
                     onError={onDeleteError}
                 />

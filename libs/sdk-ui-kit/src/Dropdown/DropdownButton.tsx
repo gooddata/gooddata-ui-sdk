@@ -88,7 +88,7 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
             iconRight={isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
             disabled={disabled}
             onClick={onClick}
-            buttonRef={buttonRef}
+            ref={buttonRef}
         >
             {children}
         </Button>

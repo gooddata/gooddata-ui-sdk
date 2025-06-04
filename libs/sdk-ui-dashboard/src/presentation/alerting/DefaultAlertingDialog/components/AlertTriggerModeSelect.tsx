@@ -70,7 +70,7 @@ export const AlertTriggerModeSelect = ({
                                 popupId: dropdownId,
                                 isExpanded: isOpen,
                             }}
-                            buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
+                            ref={buttonRef}
                         >
                             {selectedOption ? intl.formatMessage({ id: selectedOption.title }) : ""}
                         </Button>

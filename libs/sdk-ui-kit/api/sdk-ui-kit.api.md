@@ -223,23 +223,7 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React_2.PureCo
 }
 
 // @internal (undocumented)
-export class Button extends React_2.Component<IButtonProps> {
-    // (undocumented)
-    buttonNode: HTMLElement;
-    // (undocumented)
-    static defaultProps: {
-        className: string;
-        disabled: boolean;
-        onClick: (...args: any[]) => void;
-        tabIndex: number;
-        tagName: string;
-        type: string;
-        iconLeft: string;
-        iconRight: string;
-    };
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+export const Button: React_2.ForwardRefExoticComponent<IButtonProps & React_2.RefAttributes<HTMLElement>>;
 
 // @internal (undocumented)
 export const ChartSortingDialog: React_2.FC<ChartSortingOwnProps>;
@@ -1159,9 +1143,7 @@ export interface IButtonProps {
     // (undocumented)
     accessibilityConfig?: IButtonAccessibilityConfig;
     // (undocumented)
-    buttonRef?: React.MutableRefObject<HTMLElement>;
-    // (undocumented)
-    children?: ReactNode;
+    children?: React_2.ReactNode;
     // (undocumented)
     className?: string;
     // (undocumented)
@@ -1179,7 +1161,7 @@ export interface IButtonProps {
     // (undocumented)
     intent?: "action" | "positive" | "negative";
     // (undocumented)
-    onClick?(e: React.MouseEvent): void;
+    onClick?(e: React_2.MouseEvent): void;
     // (undocumented)
     size?: "small" | "medium" | "large";
     // (undocumented)
@@ -1191,7 +1173,7 @@ export interface IButtonProps {
     // (undocumented)
     type?: HTMLButtonElement["type"];
     // (undocumented)
-    value?: ReactNode;
+    value?: React_2.ReactNode;
     // (undocumented)
     variant?: "primary" | "secondary";
 }
@@ -1794,10 +1776,9 @@ export interface IDropdownButtonProps {
 
 // @internal (undocumented)
 export interface IDropdownButtonRenderProps {
-    // (undocumented)
+    accessibilityConfig: Pick<IButtonAccessibilityConfig, "role" | "isExpanded" | "popupId">;
     ariaAttributes: {
-        role: "button" | string;
-        "data-popupId": string;
+        role: React_2.AriaRole;
     } & Pick<React_2.AriaAttributes, "aria-haspopup" | "aria-expanded" | "aria-controls">;
     // (undocumented)
     buttonRef: React_2.MutableRefObject<HTMLElement | null>;
@@ -1894,6 +1875,7 @@ export interface IDropdownListProps<T> extends IListProps<T> {
 export interface IDropdownProps {
     // (undocumented)
     accessibilityConfig?: {
+        triggerRole?: "button" | "combobox";
         popupRole?: "listbox" | "tree" | "grid" | "dialog";
     };
     // (undocumented)
@@ -1921,7 +1903,7 @@ export interface IDropdownProps {
     isOpen?: boolean;
     // (undocumented)
     onOpenStateChanged?: (isOpen: boolean) => void;
-    onToggle?: (desiredState?: boolean | unknown) => void;
+    onToggle?: ((desiredState?: boolean) => void) | (() => void);
     // (undocumented)
     openOnInit?: boolean;
     // (undocumented)
@@ -1932,6 +1914,8 @@ export interface IDropdownProps {
     renderBody: (props: IDropdownBodyRenderProps) => React_2.ReactNode;
     // (undocumented)
     renderButton: (props: IDropdownButtonRenderProps) => React_2.ReactNode;
+    // (undocumented)
+    returnFocusTo?: React_2.RefObject<HTMLElement> | string;
 }
 
 // @internal (undocumented)
@@ -5959,6 +5943,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
     onBlur: React_2.FocusEventHandler<Element>;
     focusedAction: "selectItem" | Action;
     focusedItem: Item;
+    setFocusedAction: React_2.Dispatch<React_2.SetStateAction<"selectItem" | Action>>;
 };
 
 // @internal
