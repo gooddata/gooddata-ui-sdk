@@ -449,7 +449,7 @@ export interface INotificationComponentProps {
     closeNotificationsPanel: () => void;
     markNotificationAsRead: (id: string) => void;
     notification: INotification;
-    onNotificationClick: (notification: INotification) => void;
+    onNotificationClick?: (notification: INotification) => void;
 }
 
 // @public
@@ -474,7 +474,7 @@ export interface INotificationsListComponentProps {
     NotificationSkeletonItem: React_2.ComponentType<INotificationSkeletonItemComponentProps>;
     NotificationsListEmptyState: React_2.ComponentType<INotificationsListEmptyStateComponentProps>;
     NotificationsListErrorState: React_2.ComponentType<INotificationsListErrorStateComponentProps>;
-    onNotificationClick: (notification: INotification) => void;
+    onNotificationClick?: (notification: INotification) => void;
     skeletonItemsCount: number;
     status: UseCancelablePromiseStatus;
 }
@@ -521,7 +521,7 @@ export interface INotificationsPanelComponentProps {
     NotificationsListEmptyState: React_2.ComponentType<INotificationsListEmptyStateComponentProps>;
     NotificationsListErrorState: React_2.ComponentType<INotificationsListErrorStateComponentProps>;
     NotificationsPanelHeader: React_2.ComponentType<INotificationsPanelHeaderComponentProps>;
-    onNotificationClick: (notification: INotification) => void;
+    onNotificationClick?: (notification: INotification) => void;
     openNotificationsPanel: () => void;
     skeletonItemsCount: number;
     status: UseCancelablePromiseStatus;
