@@ -1,15 +1,14 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import {
     areObjRefsEqual,
     IAttributeMetadataObject,
     IDashboardAttributeFilter,
     ObjRef,
 } from "@gooddata/sdk-model";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import {
     useDashboardSelector,
     selectCatalogAttributes,
-    IDashboardAttributeFilterDisplayForms,
     setAttributeFilterDisplayForm,
     useDashboardCommandProcessing,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
@@ -40,56 +39,49 @@ export function useDisplayFormConfiguration(
 
     const originalDisplayForm = displayAsLabel ?? currentFilter.attributeFilter.displayForm;
 
-    const [filterDisplayForms, setFilterDisplayForms] = useState<IDashboardAttributeFilterDisplayForms>(
-        () => {
-            const currentDisplayForm = displayAsLabel ?? currentFilter.attributeFilter.displayForm;
-
-            const availableDisplayForms = catalogAttributes.find((attribute) =>
-                attribute.displayForms.some((df) => areObjRefsEqual(df.ref, currentDisplayForm)),
-            )?.displayForms;
-
-            const attributeAvailableDisplayForms =
-                attributes.find((attribute) =>
-                    attribute.displayForms.some((df) => areObjRefsEqual(df.ref, currentDisplayForm)),
-                )?.displayForms ?? [];
-
-            const result = availableDisplayForms ?? attributeAvailableDisplayForms;
-
-            return {
-                selectedDisplayForm: currentDisplayForm,
-                availableDisplayForms: result,
-            };
-        },
+    const [selectedDisplayForm, setSelectedDisplayForm] = useState<ObjRef>(
+        () => displayAsLabel ?? currentFilter.attributeFilter.displayForm,
     );
+
+    const availableDisplayForms = useMemo(() => {
+        const availableDfs = catalogAttributes.find((attribute) =>
+            attribute.displayForms.some((df) => areObjRefsEqual(df.ref, selectedDisplayForm)),
+        )?.displayForms;
+
+        const attributeAvailableDisplayForms =
+            attributes.find((attribute) =>
+                attribute.displayForms.some((df) => areObjRefsEqual(df.ref, selectedDisplayForm)),
+            )?.displayForms ?? [];
+
+        return availableDfs ?? attributeAvailableDisplayForms;
+    }, [catalogAttributes, attributes, selectedDisplayForm]);
+
+    const filterDisplayForms = useMemo(() => {
+        return {
+            selectedDisplayForm,
+            availableDisplayForms,
+        };
+    }, [selectedDisplayForm, availableDisplayForms]);
 
     const displayFormChanged = !areObjRefsEqual(originalDisplayForm, filterDisplayForms.selectedDisplayForm);
 
     const onDisplayFormSelect = useCallback(
         (displayForm: ObjRef) => {
-            const updatedDisplayForms = { ...filterDisplayForms };
-            updatedDisplayForms.selectedDisplayForm = displayForm;
-
-            setFilterDisplayForms(updatedDisplayForms);
+            setSelectedDisplayForm(displayForm);
         },
-        [filterDisplayForms],
+        [setSelectedDisplayForm],
     );
 
     const onDisplayFormChange = useCallback(() => {
-        if (!areObjRefsEqual(originalDisplayForm, filterDisplayForms.selectedDisplayForm)) {
+        if (!areObjRefsEqual(originalDisplayForm, selectedDisplayForm)) {
             if (enableDuplicatedLabelValuesInAttributeFilter) {
-                changeDisplayAsLabel(
-                    currentFilter.attributeFilter.localIdentifier!,
-                    filterDisplayForms.selectedDisplayForm,
-                );
+                changeDisplayAsLabel(currentFilter.attributeFilter.localIdentifier!, selectedDisplayForm);
             } else {
-                changeDisplayForm(
-                    currentFilter.attributeFilter.localIdentifier!,
-                    filterDisplayForms.selectedDisplayForm,
-                );
+                changeDisplayForm(currentFilter.attributeFilter.localIdentifier!, selectedDisplayForm);
             }
         }
     }, [
-        filterDisplayForms,
+        selectedDisplayForm,
         originalDisplayForm,
         currentFilter,
         changeDisplayForm,
@@ -98,11 +90,8 @@ export function useDisplayFormConfiguration(
     ]);
 
     const onConfigurationClose = useCallback(() => {
-        setFilterDisplayForms((old) => ({
-            ...old,
-            selectedDisplayForm: originalDisplayForm,
-        }));
-    }, [originalDisplayForm]);
+        setSelectedDisplayForm(originalDisplayForm);
+    }, [originalDisplayForm, setSelectedDisplayForm]);
 
     return {
         onDisplayFormSelect,
