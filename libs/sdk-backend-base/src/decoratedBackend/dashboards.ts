@@ -113,8 +113,12 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         return this.decorated.exportDashboardToPresentation(ref, format, filters, options);
     }
 
-    exportDashboardToImage(ref: ObjRef, options?: IDashboardExportImageOptions): Promise<IExportResult> {
-        return this.decorated.exportDashboardToImage(ref, options);
+    exportDashboardToImage(
+        ref: ObjRef,
+        filters?: FilterContextItem[],
+        options?: IDashboardExportImageOptions,
+    ): Promise<IExportResult> {
+        return this.decorated.exportDashboardToImage(ref, filters, options);
     }
 
     exportDashboardToTabular(ref: ObjRef, options?: IDashboardExportTabularOptions): Promise<IExportResult> {

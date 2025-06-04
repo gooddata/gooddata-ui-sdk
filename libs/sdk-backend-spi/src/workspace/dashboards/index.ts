@@ -422,11 +422,16 @@ export interface IWorkspaceDashboardsService {
      * If title is not provided, the dashboard title will be fetched.
      *
      * @param ref - dashboard reference
+     * @param filters - Override stored dashboard filters with custom filters
      * @param options - export options
      * @returns promise with object URL pointing to a Blob data of downloaded exported dashboard
      */
 
-    exportDashboardToImage(ref: ObjRef, options?: IDashboardExportImageOptions): Promise<IExportResult>;
+    exportDashboardToImage(
+        ref: ObjRef,
+        filters?: FilterContextItem[],
+        options?: IDashboardExportImageOptions,
+    ): Promise<IExportResult>;
 
     /**
      * Export dashboard to tabular.

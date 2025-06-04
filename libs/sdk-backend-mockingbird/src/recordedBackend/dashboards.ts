@@ -363,6 +363,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
 
     public exportDashboardToImage(
         _ref: ObjRef,
+        _filters?: FilterContextItem[],
         _options?: IDashboardExportImageOptions,
     ): Promise<IExportResult> {
         throw new NotSupported("recorded backend does not support this call");

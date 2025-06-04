@@ -1452,7 +1452,7 @@ export interface IWorkspaceDashboardsService {
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
     deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string, customOverrides?: IRawExportCustomOverrides): Promise<IExportResult>;
-    exportDashboardToImage(ref: ObjRef, options?: IDashboardExportImageOptions): Promise<IExportResult>;
+    exportDashboardToImage(ref: ObjRef, filters?: FilterContextItem[], options?: IDashboardExportImageOptions): Promise<IExportResult>;
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
     exportDashboardToPresentation(ref: ObjRef, format: "PDF" | "PPTX", filters?: FilterContextItem[], options?: IDashboardExportPresentationOptions): Promise<IExportResult>;
     exportDashboardToTabular(ref: ObjRef, options?: IDashboardExportTabularOptions): Promise<IExportResult>;

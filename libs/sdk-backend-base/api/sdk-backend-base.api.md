@@ -575,7 +575,7 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     exportDashboardToCSVRaw(definition: IExecutionDefinition, fileName: string, customOverrides?: IRawExportCustomOverrides): Promise<IExportResult>;
     // (undocumented)
-    exportDashboardToImage(ref: ObjRef, options?: IDashboardExportImageOptions): Promise<IExportResult>;
+    exportDashboardToImage(ref: ObjRef, filters?: FilterContextItem[], options?: IDashboardExportImageOptions): Promise<IExportResult>;
     // (undocumented)
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<IExportResult>;
     // (undocumented)
