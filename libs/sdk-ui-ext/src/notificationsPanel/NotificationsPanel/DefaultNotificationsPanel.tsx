@@ -104,7 +104,7 @@ export interface INotificationsPanelComponentProps {
     /**
      * The callback to handle a notification click.
      */
-    onNotificationClick: (notification: INotification) => void;
+    onNotificationClick?: (notification: INotification) => void;
 
     /**
      * The status of the notifications loading.
@@ -174,6 +174,7 @@ export function DefaultNotificationsPanel({
     hasUnreadNotifications,
     activeNotifications,
     onNotificationClick,
+    closeNotificationsPanel,
 
     status,
     error,
@@ -213,6 +214,7 @@ export function DefaultNotificationsPanel({
                 itemPadding={itemPadding}
                 skeletonItemsCount={skeletonItemsCount}
                 maxListHeight={maxListHeight}
+                closeNotificationsPanel={closeNotificationsPanel}
             />
         </div>
     );

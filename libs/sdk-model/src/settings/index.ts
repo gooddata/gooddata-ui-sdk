@@ -702,7 +702,7 @@ export interface ISettings {
     enableSnapshotExportAccessibility?: boolean;
 
     /**
-     * Enable widget export to PNG image.
+     * Enable widget export to PDF.
      */
     enableWidgetExportPdf?: boolean;
 

@@ -88,13 +88,13 @@ export type DataSourcePermission = "USE" | "MANAGE";
 export type DataSourcePermissionSubject = "user" | "userGroup";
 
 // @public
-export function DefaultNotification({ notification, markNotificationAsRead, onNotificationClick, }: INotificationComponentProps): React_2.JSX.Element;
+export function DefaultNotification({ notification, markNotificationAsRead, onNotificationClick, closeNotificationsPanel, }: INotificationComponentProps): React_2.JSX.Element;
 
 // @public
 export const DefaultNotificationSkeletonItem: typeof UiSkeleton;
 
 // @public
-export function DefaultNotificationsList({ Notification, NotificationsListEmptyState, NotificationsListErrorState, NotificationSkeletonItem, activeView, status, error, activeNotifications, markNotificationAsRead, onNotificationClick, hasNextPage, loadNextPage, itemHeight, itemsGap, itemPadding, skeletonItemsCount, maxListHeight, }: INotificationsListComponentProps): React_2.JSX.Element;
+export function DefaultNotificationsList({ Notification, NotificationsListEmptyState, NotificationsListErrorState, NotificationSkeletonItem, activeView, status, error, activeNotifications, markNotificationAsRead, onNotificationClick, hasNextPage, loadNextPage, itemHeight, itemsGap, itemPadding, skeletonItemsCount, maxListHeight, closeNotificationsPanel, }: INotificationsListComponentProps): React_2.JSX.Element;
 
 // @public
 export function DefaultNotificationsListEmptyState({ activeView, }: INotificationsListEmptyStateComponentProps): React_2.JSX.Element;
@@ -103,7 +103,7 @@ export function DefaultNotificationsListEmptyState({ activeView, }: INotificatio
 export function DefaultNotificationsListErrorState({ error }: INotificationsListErrorStateComponentProps): React_2.JSX.Element;
 
 // @public
-export function DefaultNotificationsPanel({ NotificationsPanelHeader, NotificationsList, NotificationsListEmptyState, NotificationsListErrorState, Notification, NotificationSkeletonItem, activeView, changeActiveView, markNotificationAsRead, markAllNotificationsAsRead, unreadNotificationsCount, hasUnreadNotifications, activeNotifications, onNotificationClick, status, error, loadNextPage, hasNextPage, itemHeight, itemsGap, itemPadding, skeletonItemsCount, maxListHeight, }: INotificationsPanelComponentProps): React_2.JSX.Element;
+export function DefaultNotificationsPanel({ NotificationsPanelHeader, NotificationsList, NotificationsListEmptyState, NotificationsListErrorState, Notification, NotificationSkeletonItem, activeView, changeActiveView, markNotificationAsRead, markAllNotificationsAsRead, unreadNotificationsCount, hasUnreadNotifications, activeNotifications, onNotificationClick, closeNotificationsPanel, status, error, loadNextPage, hasNextPage, itemHeight, itemsGap, itemPadding, skeletonItemsCount, maxListHeight, }: INotificationsPanelComponentProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export function DefaultNotificationsPanelButton({ buttonRef, isNotificationPanelOpen, toggleNotificationPanel, hasUnreadNotifications, }: INotificationsPanelButtonComponentProps): React_2.JSX.Element;
@@ -446,9 +446,10 @@ export interface ILayoutDescriptor {
 
 // @public
 export interface INotificationComponentProps {
+    closeNotificationsPanel: () => void;
     markNotificationAsRead: (id: string) => void;
     notification: INotification;
-    onNotificationClick: (notification: INotification) => void;
+    onNotificationClick?: (notification: INotification) => void;
 }
 
 // @public
@@ -460,6 +461,7 @@ export interface INotificationSkeletonItemComponentProps {
 export interface INotificationsListComponentProps {
     activeNotifications?: INotification[];
     activeView: INotificationsPanelView;
+    closeNotificationsPanel: () => void;
     error?: GoodDataSdkError;
     hasNextPage: boolean;
     itemHeight: number;
@@ -472,7 +474,7 @@ export interface INotificationsListComponentProps {
     NotificationSkeletonItem: React_2.ComponentType<INotificationSkeletonItemComponentProps>;
     NotificationsListEmptyState: React_2.ComponentType<INotificationsListEmptyStateComponentProps>;
     NotificationsListErrorState: React_2.ComponentType<INotificationsListErrorStateComponentProps>;
-    onNotificationClick: (notification: INotification) => void;
+    onNotificationClick?: (notification: INotification) => void;
     skeletonItemsCount: number;
     status: UseCancelablePromiseStatus;
 }
@@ -519,7 +521,7 @@ export interface INotificationsPanelComponentProps {
     NotificationsListEmptyState: React_2.ComponentType<INotificationsListEmptyStateComponentProps>;
     NotificationsListErrorState: React_2.ComponentType<INotificationsListErrorStateComponentProps>;
     NotificationsPanelHeader: React_2.ComponentType<INotificationsPanelHeaderComponentProps>;
-    onNotificationClick: (notification: INotification) => void;
+    onNotificationClick?: (notification: INotification) => void;
     openNotificationsPanel: () => void;
     skeletonItemsCount: number;
     status: UseCancelablePromiseStatus;
@@ -551,6 +553,7 @@ export interface INotificationsPanelHeaderComponentProps {
 // @public (undocumented)
 export interface INotificationsPanelProps extends INotificationsPanelCustomComponentsProps {
     backend?: IAnalyticalBackend;
+    enableScheduleNotifications?: boolean;
     itemHeight?: number;
     itemPadding?: number;
     itemsGap?: number;

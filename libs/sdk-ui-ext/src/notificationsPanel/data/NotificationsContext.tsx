@@ -1,8 +1,8 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { useNotifications } from "./useNotifications.js";
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
+import React from "react";
+import { useNotifications } from "./useNotifications.js";
 
 /**
  * @internal
@@ -32,6 +32,7 @@ export interface INotificationsProviderProps {
     children?: React.ReactNode;
     refreshInterval: number;
     itemsPerPage: number;
+    enableScheduleNotifications: boolean;
 }
 
 /**
@@ -43,8 +44,15 @@ export const NotificationsProvider: React.FC<INotificationsProviderProps> = ({
     workspace,
     refreshInterval,
     itemsPerPage,
+    enableScheduleNotifications,
 }) => {
-    const notifications = useNotifications({ backend, workspace, refreshInterval, itemsPerPage });
+    const notifications = useNotifications({
+        backend,
+        workspace,
+        refreshInterval,
+        itemsPerPage,
+        enableScheduleNotifications,
+    });
 
     return <NotificationsContext.Provider value={notifications}>{children}</NotificationsContext.Provider>;
 };

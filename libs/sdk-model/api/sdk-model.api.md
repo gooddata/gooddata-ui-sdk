@@ -1961,6 +1961,7 @@ export interface IExportOptions {
 // @public
 export interface IExportResult {
     errorMessage?: string;
+    expiresAt?: string;
     exportId: string;
     fileName: string;
     fileUri?: string;
@@ -4263,6 +4264,7 @@ export interface IVisualizationSwitcherWidgetDefinition extends IVisualizationSw
 
 // @public
 export interface IWebhookAutomationInfo {
+    dashboardTitle?: string;
     dashboardURL: string;
     id: string;
     isCustomDashboardURL?: boolean;
