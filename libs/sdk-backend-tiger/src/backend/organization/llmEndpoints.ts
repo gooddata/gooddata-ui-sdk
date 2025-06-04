@@ -116,7 +116,7 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
                                 llmOrganization: endpoint.organization,
                                 provider: endpoint.provider,
                                 token,
-                            }).filter(([_, value]) => !!value),
+                            }).filter(([_, value]) => value !== undefined),
                         ),
                     },
                 },
