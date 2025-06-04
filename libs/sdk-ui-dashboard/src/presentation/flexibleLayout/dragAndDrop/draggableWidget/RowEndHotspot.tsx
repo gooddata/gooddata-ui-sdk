@@ -24,9 +24,8 @@ export const RowEndHotspot = (props: RowEndHotspotProps<unknown>) => {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const screen = useScreenSize();
     const layoutPath = item.index();
-
-    const isLastInSection = item.isLast();
-    const showEndingHotspot = isLastInSection && isInEditMode;
+    const isLastInRow = item.isLastInRow(screen);
+    const showEndingHotspot = (item.isLastInSection() || isLastInRow) && isInEditMode;
 
     if (!showEndingHotspot) {
         return null;
@@ -38,20 +37,19 @@ export const RowEndHotspot = (props: RowEndHotspotProps<unknown>) => {
         layoutPath[layoutPath.length - 1].itemIndex + 1,
     ); // increment item index manually as end hotspot is rendered as prev type
 
-    const remainingGridWidth = getRemainingWidthInRow(item, screen);
-
-    const isDropZoneVisible = shouldShowRowEndDropZone(remainingGridWidth);
+    const remainingRowGridWidth = getRemainingWidthInRow(item, screen, rowIndex);
+    const isDropZoneVisible = shouldShowRowEndDropZone(remainingRowGridWidth);
 
     return (
         <>
             <GridLayoutElement
                 type="item"
                 layoutItemSize={{
-                    xl: { gridWidth: remainingGridWidth },
-                    lg: { gridWidth: remainingGridWidth },
-                    md: { gridWidth: remainingGridWidth },
-                    sm: { gridWidth: remainingGridWidth },
-                    xs: { gridWidth: remainingGridWidth },
+                    xl: { gridWidth: remainingRowGridWidth },
+                    lg: { gridWidth: remainingRowGridWidth },
+                    md: { gridWidth: remainingRowGridWidth },
+                    sm: { gridWidth: remainingRowGridWidth },
+                    xs: { gridWidth: remainingRowGridWidth },
                 }}
                 className={cx(
                     "gd-fluidlayout-column",
@@ -59,7 +57,7 @@ export const RowEndHotspot = (props: RowEndHotspotProps<unknown>) => {
                     "s-fluid-layout-column",
                     "gd-fluidlayout-column-row-end-hotspot",
                     {
-                        "gd-fluidlayout-column-dropzone__text--hidden": remainingGridWidth < 2,
+                        "gd-fluidlayout-column-dropzone__text--hidden": remainingRowGridWidth < 2,
                         "gd-first-container-row-dropzone": rowIndex === 0,
                     },
                 )}
@@ -68,15 +66,14 @@ export const RowEndHotspot = (props: RowEndHotspotProps<unknown>) => {
                     <WidgetDropZoneColumn
                         layoutPath={layoutPathForEndHotspot}
                         isLastInSection={true}
-                        gridWidthOverride={remainingGridWidth}
+                        gridWidthOverride={remainingRowGridWidth}
                     />
                 ) : null}
                 <Hotspot
                     dropZoneType="prev"
                     isEndingHotspot
                     layoutPath={layoutPathForEndHotspot}
-                    isLastInSection={item.isLast()}
-                    hideBorder={isDropZoneVisible}
+                    hideBorder={isDropZoneVisible || isLastInRow}
                 />
             </GridLayoutElement>
         </>

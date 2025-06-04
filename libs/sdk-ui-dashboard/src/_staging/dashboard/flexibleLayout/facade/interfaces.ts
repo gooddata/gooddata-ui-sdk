@@ -34,8 +34,9 @@ export interface IDashboardLayoutItemFacade<TWidget> {
     ref(): ObjRef | undefined;
     // item predicates
     indexIs(index: ILayoutItemPath): boolean;
-    isFirst(): boolean;
-    isLast(): boolean;
+    isFirstInSection(): boolean;
+    isLastInSection(): boolean;
+    isLastInRow(screen: ScreenSize): boolean;
     isEmpty(): boolean;
     testRaw(pred: (item: IDashboardLayoutItem<TWidget>) => boolean): boolean;
     test(pred: (item: IDashboardLayoutItemFacade<TWidget>) => boolean): boolean;

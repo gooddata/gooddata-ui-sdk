@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 
@@ -26,7 +26,7 @@ export const RenderDashboardEditLayoutItemRenderer: React.FC<IDashboardEditLayou
 
     const content = item.widget();
 
-    const isLastInSection = item.isLast();
+    const isLastInSection = item.isLastInSection();
     const isLastSection = item.section().isLast();
     const isLast = isLastSection && isLastInSection;
 
@@ -37,7 +37,6 @@ export const RenderDashboardEditLayoutItemRenderer: React.FC<IDashboardEditLayou
     const isHidden = content && isHiddenContent(content, hiddenWidgetRef);
 
     return (
-        // @ts-expect-error types are not compatible
         <DashboardLayoutItemViewRenderer isHidden={isHidden} {...props} className={className}>
             {children}
         </DashboardLayoutItemViewRenderer>

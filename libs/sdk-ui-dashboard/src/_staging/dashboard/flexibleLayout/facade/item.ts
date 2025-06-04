@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEqual from "lodash/isEqual.js";
 import isNil from "lodash/isNil.js";
 import {
@@ -64,12 +64,19 @@ export class DashboardLayoutItemFacade<TWidget> implements IDashboardLayoutItemF
         return areLayoutPathsEqual(this.index(), index);
     }
 
-    public isFirst(): boolean {
+    public isFirstInSection(): boolean {
         return this.indexIs(updateItemIndex(this.itemIndex, 0));
     }
 
-    public isLast(): boolean {
+    public isLastInSection(): boolean {
         return this.indexIs(updateItemIndex(this.itemIndex, this.sectionFacade.items().count() - 1));
+    }
+
+    public isLastInRow(screen: ScreenSize): boolean {
+        const rows = this.section().items().asGridRows(screen);
+        return rows.some((rowItems) =>
+            areLayoutPathsEqual(rowItems[rowItems.length - 1].index(), this.index()),
+        );
     }
 
     public widget(): TWidget | undefined {

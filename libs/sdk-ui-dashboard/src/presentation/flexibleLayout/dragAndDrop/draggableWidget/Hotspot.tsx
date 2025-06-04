@@ -19,13 +19,17 @@ import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropH
 import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
 import { useDashboardLayoutPlaceholderDropHandler } from "./useDashboardLayoutPlaceholderDropHandler.js";
 import { ILayoutItemPath } from "../../../../types.js";
-import { areLayoutPathsEqual, updateItem, getItemIndex } from "../../../../_staging/layout/coordinates.js";
+import {
+    areLayoutPathsEqual,
+    updateItem,
+    getItemIndex,
+    serializeLayoutItemPath,
+} from "../../../../_staging/layout/coordinates.js";
 import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget/draggableWidgetDropHandler.js";
 import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 
 interface IHotspotProps {
     layoutPath: ILayoutItemPath;
-    isLastInSection?: boolean;
     isEndingHotspot?: boolean;
     classNames?: string;
     dropZoneType: "prev" | "next";
@@ -126,18 +130,13 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
         [isEndingHotspot, layoutPath],
     );
 
-    const pathItems = layoutPath
-        ? layoutPath.map((pathItem) => `-${pathItem.sectionIndex}_${pathItem.itemIndex}`).join("")
-        : "";
-
-    const testClass = layoutPath ? `s-dropzone${pathItems}` : undefined;
-
     return (
         <div
-            className={cx(classNames, "dropzone", dropZoneType, testClass, {
+            className={cx(classNames, "dropzone", dropZoneType, {
                 hidden: !canDrop || !canDropSafe(item),
                 full: isEndingHotspot,
                 active: isOver,
+                [`s-dropzone-${serializeLayoutItemPath(layoutPath)}`]: !!layoutPath,
             })}
             style={debugStyle}
             ref={dropRef}

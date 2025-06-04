@@ -1,8 +1,9 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
 import { ILayoutSectionPath } from "../../../../types.js";
 import { asLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
+import { ScreenSize } from "@gooddata/sdk-model";
 
 export const buildEmptyItemFacadeWithSetSize = (
     gridWidth: number,
@@ -16,12 +17,13 @@ export const buildEmptyItemFacadeWithSetSize = (
     size: () => ({ xl: { gridWidth } }),
     sizeForScreen: () => ({ gridWidth }),
     sizeForScreenWithFallback: () => ({ gridWidth }),
-    isLast: () => true,
+    isLastInSection: () => true,
+    isLastInRow: (_screen: ScreenSize) => true,
     widgetEquals: () => false,
     widgetIs: () => false,
     hasSizeForScreen: () => false,
     indexIs: () => false,
-    isFirst: () => true,
+    isFirstInSection: () => true,
     test: () => false,
     testRaw: () => false,
     isCustomItem: () => false,

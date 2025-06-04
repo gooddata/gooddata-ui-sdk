@@ -195,7 +195,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
         "gd-first-container-row-dropzone": rowIndex === 0,
     });
 
-    const remainingGridWidth = isCustomWidget(widget) ? 0 : getRemainingWidthInRow(item, screen);
+    const remainingGridWidth = isCustomWidget(widget) ? 0 : getRemainingWidthInRow(item, screen, rowIndex);
 
     const { isValid, parentWidth } = useWidthValidation(item.size());
 
@@ -229,12 +229,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 ])}
             >
                 {canShowHotspot && !isAnyPlaceholderWidget(widget) && !isCustomWidget(widget) ? (
-                    <Hotspot
-                        dropZoneType="prev"
-                        layoutPath={item.index()}
-                        isLastInSection={false}
-                        classNames={hotspotClassNames}
-                    />
+                    <Hotspot dropZoneType="prev" layoutPath={item.index()} classNames={hotspotClassNames} />
                 ) : null}
                 <DashboardItemPathAndSizeProvider itemPath={item.index()} itemSize={item.size()}>
                     <HoverDetector widgetRef={widget.ref}>
@@ -271,9 +266,11 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                                 <Hotspot
                                     dropZoneType="next"
                                     layoutPath={item.index()}
-                                    isLastInSection={item.isLast()}
                                     classNames={hotspotClassNames}
-                                    hideBorder={item.isLast() && shouldShowRowEndDropZone(remainingGridWidth)}
+                                    hideBorder={
+                                        (item.isLastInSection() || item.isLastInRow(screen)) &&
+                                        shouldShowRowEndDropZone(remainingGridWidth)
+                                    }
                                 />
                             </>
                         )}
