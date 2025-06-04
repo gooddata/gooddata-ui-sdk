@@ -1236,11 +1236,11 @@ importers:
         specifier: workspace:*
         version: link:../sdk-model
       axios:
-        specifier: ^1.4.0
-        version: 1.6.2
+        specifier: ^1.9.0
+        version: 1.9.0
       axios-cache-interceptor:
-        specifier: ^1.2.0
-        version: 1.5.1(axios@1.6.2)
+        specifier: ^1.8.0
+        version: 1.8.0(axios@1.9.0)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -1630,8 +1630,8 @@ importers:
         specifier: workspace:*
         version: link:../sdk-model
       axios:
-        specifier: ^1.4.0
-        version: 1.6.2
+        specifier: ^1.9.0
+        version: 1.9.0
       date-fns:
         specifier: ^2.22.1
         version: 2.30.0
@@ -4699,8 +4699,8 @@ importers:
         specifier: ^5.57.1
         version: 5.62.0(eslint@8.55.0)(typescript@5.3.3)
       axios:
-        specifier: ^1.4.0
-        version: 1.6.2
+        specifier: ^1.9.0
+        version: 1.9.0
       babel-loader:
         specifier: ^8.0.5
         version: 8.3.0(@babel/core@7.26.10)(webpack@5.89.0(webpack-cli@4.10.0))
@@ -5605,8 +5605,8 @@ importers:
         specifier: workspace:*
         version: link:../../libs/sdk-model
       axios:
-        specifier: ^1.4.0
-        version: 1.6.2
+        specifier: ^1.9.0
+        version: 1.9.0
       chalk:
         specifier: ^4.1.1
         version: 4.1.2
@@ -6369,8 +6369,8 @@ importers:
         specifier: workspace:*
         version: link:../../libs/sdk-model
       axios:
-        specifier: ^1.4.0
-        version: 1.6.2
+        specifier: ^1.9.0
+        version: 1.9.0
       chalk:
         specifier: ^4.1.1
         version: 4.1.2
@@ -10445,8 +10445,8 @@ packages:
   aws4@1.12.0:
     resolution: {integrity: sha512-NmWvPnx0F1SfrQbYwOi7OeaNGokp9XhzNioJ/CSBs8Qa4vxug81mhJEAVZwxXuBmYB5KDRfMq/F3RR0BIU7sWg==}
 
-  axios-cache-interceptor@1.5.1:
-    resolution: {integrity: sha512-1p/rTi7DSqUghJ5Ck8GKNt47X6f3IB8XnJ+TM4PwIdhimmCgh0jEQiwI8mBvf2kIMIl4Kz5idwbf/ouK75nEHA==}
+  axios-cache-interceptor@1.8.0:
+    resolution: {integrity: sha512-cTNnPGJyQkxnWp0EWvE3NRvgURU5cWw/Qx3dIhXyHSM4Ip0c7EEe0I3an0Jwa549m1CAOg57ibj27YRNLmQCcg==}
     engines: {node: '>=12'}
     peerDependencies:
       axios: ^1
@@ -10456,9 +10456,6 @@ packages:
 
   axios@0.25.0:
     resolution: {integrity: sha512-cD8FOb0tRH3uuEe6+evtAbgJtfxr7ly3fQjYcMcuPlgkwVS9xboaVIpcDV+cYQe+yGykgwZCs1pzjntcGa6l5g==}
-
-  axios@1.6.2:
-    resolution: {integrity: sha512-7i24Ri4pmDRfJTR7LDBhsOTtcm+9kjX5WiY1X3wIisx6G9So3pfMkEiU7emUBe46oceVImccTEM3k6C5dbVW8A==}
 
   axios@1.9.0:
     resolution: {integrity: sha512-re4CqKTJaURpzbLHtIi6XpDv20/CnpXOtjRY5/CU32L8gU8ek9UIivcfvSWvmKEngmVbrUtPpdDwWDWL7DNHvg==}
@@ -10727,8 +10724,8 @@ packages:
     resolution: {integrity: sha512-AKcdTnFSWATd5/GCPRxr2ChwIJ85CeyrEyjRHlKxQ56d4XJMGym0uAiKn0xbLOGOl3+yRpOTi484dVCEc5AUzQ==}
     engines: {node: '>=0.10.0'}
 
-  cache-parser@1.2.4:
-    resolution: {integrity: sha512-O0KwuHuJnbHUrghHi2kGp0SxnWSIBXTYt7M8WVhW0kbPRUNUKoE/Of6e1rRD6AAxmfxFunKnt90yEK09D+sc5g==}
+  cache-parser@1.2.5:
+    resolution: {integrity: sha512-Md/4VhAHByQ9frQ15WD6LrMNiVw9AEl/J7vWIXw+sxT6fSOpbtt6LHTp76vy8+bOESPBO94117Hm2bIjlI7XjA==}
 
   cachedir@2.4.0:
     resolution: {integrity: sha512-9EtFOZR8g22CL7BWjJ9BUx1+A/djkofnyW3aOXZORNW2kxoUpx2h+uN2cOqwPmFhnpVmxg+KW2OjOSgChTEvsQ==}
@@ -12315,10 +12312,6 @@ packages:
   form-data@2.3.3:
     resolution: {integrity: sha512-1lLKB2Mu3aGP1Q/2eCOx0fNbRMe7XdwktwOruhfqqd0rIJWwN4Dh+E3hrPSlDCXnSR7UtZ1N38rVXm+6+MEhJQ==}
     engines: {node: '>= 0.12'}
-
-  form-data@4.0.0:
-    resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
-    engines: {node: '>= 6'}
 
   form-data@4.0.2:
     resolution: {integrity: sha512-hGfm/slu0ZabnNt4oaRZ6uREyfCj6P4fT/n6A1rGV+Z0VdGXjfOhVUpkn6qVQONHGIFwmveGXyDs75+nr6FM8w==}
@@ -14263,8 +14256,8 @@ packages:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
 
-  object-code@1.3.2:
-    resolution: {integrity: sha512-3CVDmQiru7YYVr+4OpCGrqkVE7GogmWinDcgfno1fXlKgIhtW9FhgHTiV98gMPUjQwWuWvijQDCY8sGnqKrhTw==}
+  object-code@1.3.3:
+    resolution: {integrity: sha512-/Ds4Xd5xzrtUOJ+xJQ57iAy0BZsZltOHssnDgcZ8DOhgh41q1YJCnTPnWdWSLkNGNnxYzhYChjc5dgC9mEERCA==}
 
   object-copy@0.1.0:
     resolution: {integrity: sha512-79LYn6VAb63zgtmAteVOWo9Vdj71ZVBy3Pbse+VqxDpEP83XuujMrGqHIwAXJ5I/aM0zU7dIyIAhifVTPrNItQ==}
@@ -18879,7 +18872,7 @@ snapshots:
       combined-stream: 1.0.8
       extend: 3.0.2
       forever-agent: 0.6.1
-      form-data: 4.0.0
+      form-data: 4.0.2
       http-signature: 1.4.0
       is-typedarray: 1.0.0
       isstream: 0.1.2
@@ -20961,7 +20954,7 @@ snapshots:
   '@types/node-fetch@2.6.9':
     dependencies:
       '@types/node': 18.19.3
-      form-data: 4.0.0
+      form-data: 4.0.2
 
   '@types/node-forge@1.3.10':
     dependencies:
@@ -21910,12 +21903,12 @@ snapshots:
 
   aws4@1.12.0: {}
 
-  axios-cache-interceptor@1.5.1(axios@1.6.2):
+  axios-cache-interceptor@1.8.0(axios@1.9.0):
     dependencies:
-      axios: 1.6.2
-      cache-parser: 1.2.4
+      axios: 1.9.0
+      cache-parser: 1.2.5
       fast-defer: 1.1.8
-      object-code: 1.3.2
+      object-code: 1.3.3
 
   axios@0.21.4:
     dependencies:
@@ -21925,15 +21918,7 @@ snapshots:
 
   axios@0.25.0:
     dependencies:
-      follow-redirects: 1.15.3
-    transitivePeerDependencies:
-      - debug
-
-  axios@1.6.2:
-    dependencies:
-      follow-redirects: 1.15.3
-      form-data: 4.0.0
-      proxy-from-env: 1.1.0
+      follow-redirects: 1.15.9
     transitivePeerDependencies:
       - debug
 
@@ -22319,7 +22304,7 @@ snapshots:
       union-value: 1.0.1
       unset-value: 1.0.0
 
-  cache-parser@1.2.4: {}
+  cache-parser@1.2.5: {}
 
   cachedir@2.4.0: {}
 
@@ -24366,12 +24351,6 @@ snapshots:
       combined-stream: 1.0.8
       mime-types: 2.1.35
 
-  form-data@4.0.0:
-    dependencies:
-      asynckit: 0.4.0
-      combined-stream: 1.0.8
-      mime-types: 2.1.35
-
   form-data@4.0.2:
     dependencies:
       asynckit: 0.4.0
@@ -25041,7 +25020,7 @@ snapshots:
   http-proxy@1.18.1:
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.15.3
+      follow-redirects: 1.15.9
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
@@ -26658,7 +26637,7 @@ snapshots:
 
   object-assign@4.1.1: {}
 
-  object-code@1.3.2: {}
+  object-code@1.3.3: {}
 
   object-copy@0.1.0:
     dependencies:

@@ -54,7 +54,7 @@
         "@gooddata/sdk-backend-base": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
-        "axios": "^1.4.0",
+        "axios": "^1.9.0",
         "date-fns": "^2.22.1",
         "exponential-backoff": "^3.1.1",
         "lodash": "^4.17.21",
