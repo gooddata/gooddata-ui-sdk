@@ -209,7 +209,7 @@
 }
 
 .gd-grid-layout-width-resizer-drag-preview {
-    padding: 0 0 0 30px;
+    padding: 0 0 0 10px;
     &.gd-first-container-row-widget {
         .gd-fluidlayout-width-resizer__container {
             padding-top: 0;
@@ -290,7 +290,7 @@
 .gd-grid-layout {
     .dash-width-resizer-container {
         position: relative;
-        left: -25px;
+        left: -10px;
         right: 0;
         width: 0;
         &.gd-first-container-row-widget {
@@ -332,8 +332,8 @@
 .sdk-edit-mode-on .gd-grid-layout {
     .dash-width-resizer-hotspot {
         position: unset;
-        left: unset;
-        padding: 0 0 0 30px;
+        width: 20px;
+        padding: 0 0 0 10px;
     }
 
     .gd-resize-overlay-text {
