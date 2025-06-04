@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import {
     areObjRefsEqual,
@@ -26,7 +26,6 @@ import { useDashboardUserInteraction } from "../useDashboardUserInteraction.js";
  * @internal
  */
 export interface IUseDashboardScheduledEmailsDialogProps {
-    scheduledExportToEdit?: IAutomationMetadataObject;
     setScheduledExportToEdit: (automation?: IAutomationMetadataObject) => void;
 }
 
@@ -34,7 +33,6 @@ export interface IUseDashboardScheduledEmailsDialogProps {
  * @internal
  */
 export const useDashboardScheduledEmailsDialog = ({
-    scheduledExportToEdit,
     setScheduledExportToEdit,
 }: IUseDashboardScheduledEmailsDialogProps) => {
     const { addSuccess, addError } = useToastMessage();
@@ -50,6 +48,8 @@ export const useDashboardScheduledEmailsDialog = ({
 
     const { refreshAutomations } = useDashboardAutomations();
 
+    const [shouldReturnToManagementDialog, setShouldReturnToManagementDialog] = useState<boolean>(false);
+
     /*
      * exports and scheduling are not available when rendering a dashboard that is not persisted.
      * this can happen when a new dashboard is created and is being edited.
@@ -63,32 +63,44 @@ export const useDashboardScheduledEmailsDialog = ({
             }
 
             openScheduleEmailingDialog(widget, "dashboard");
+            setShouldReturnToManagementDialog(false);
         },
-        [dashboardRef, openScheduleEmailingDialog],
+        [dashboardRef, openScheduleEmailingDialog, setShouldReturnToManagementDialog],
     );
 
     // Open / Close
     const onScheduleEmailingOpen = useCallback(
         (widget?: IWidget) => {
             openScheduleEmailingDialog(widget, "widget");
+            setShouldReturnToManagementDialog(false);
         },
-        [openScheduleEmailingDialog],
+        [openScheduleEmailingDialog, setShouldReturnToManagementDialog],
     );
 
     const onScheduleEmailingCancel = useCallback(
         (widget?: IWidget) => {
             closeScheduleEmailingDialog();
-            if (scheduledExportToEdit) {
+            if (shouldReturnToManagementDialog) {
                 openScheduleEmailingManagementDialog(widget);
             }
+
             setScheduledExportToEdit(undefined);
         },
         [
-            scheduledExportToEdit,
+            shouldReturnToManagementDialog,
             closeScheduleEmailingDialog,
             openScheduleEmailingManagementDialog,
             setScheduledExportToEdit,
         ],
+    );
+
+    const onScheduleEmailingBack = useCallback(
+        (widget?: IWidget) => {
+            closeScheduleEmailingDialog();
+            openScheduleEmailingManagementDialog(widget);
+            setScheduledExportToEdit(undefined);
+        },
+        [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog, setScheduledExportToEdit],
     );
 
     // Create
@@ -171,9 +183,11 @@ export const useDashboardScheduledEmailsDialog = ({
         defaultOnScheduleEmailing,
         onScheduleEmailingOpen,
         onScheduleEmailingCancel,
+        onScheduleEmailingBack,
         onScheduleEmailingCreateError,
         onScheduleEmailingCreateSuccess,
         onScheduleEmailingSaveError,
         onScheduleEmailingSaveSuccess,
+        setShouldReturnToManagementDialog,
     };
 };

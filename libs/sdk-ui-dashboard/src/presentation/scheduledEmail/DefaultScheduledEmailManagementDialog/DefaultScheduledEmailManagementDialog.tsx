@@ -49,7 +49,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
     const intl = useIntl();
     const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
 
-    const { scheduleEmailId, returnFocusTo } = useScheduleEmailDialogAccessibility();
+    const { returnFocusTo } = useScheduleEmailDialogAccessibility();
 
     const handleScheduleDelete = useCallback((scheduledEmail: IAutomationMetadataObject) => {
         setScheduledEmailToDelete(scheduledEmail);
@@ -79,6 +79,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
         <>
             <Dialog
                 displayCloseButton={true}
+                autofocusOnOpen={automations.length === 0 ? true : false}
                 onCancel={onClose}
                 className="gd-notifications-channels-management-dialog s-scheduled-email-management-dialog"
                 accessibilityConfig={{ titleElementId, isModal: true }}
@@ -97,7 +98,6 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                         </Typography>
                         {canCreateAutomation ? (
                             <AddButton
-                                id={scheduleEmailId}
                                 onClick={onAdd}
                                 isDisabled={
                                     isLoadingScheduleData || maxAutomationsReached || isExecutionTimestampMode
@@ -146,7 +146,6 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                         onCancel={() => setScheduledEmailToDelete(null)}
                         onSuccess={handleScheduleDeleteSuccess}
                         onError={onDeleteError}
-                        returnFocusTo={scheduleEmailId}
                     />
                 ) : null}
             </Dialog>

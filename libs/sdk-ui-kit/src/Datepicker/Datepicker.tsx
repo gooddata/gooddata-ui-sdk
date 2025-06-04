@@ -34,6 +34,7 @@ import frCA from "date-fns/locale/fr-CA/index.js";
 import fi from "date-fns/locale/fi/index.js";
 import enAU from "date-fns/locale/en-AU/index.js";
 import { IAccessibilityConfigBase } from "../typings/accessibility.js";
+import { isEnterKey } from "../utils/events.js";
 
 const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-day_outside";
 
@@ -56,6 +57,7 @@ export interface IDatePickerOwnProps {
     locale?: string;
     dateFormat?: string;
     weekStart?: WeekStart;
+    onDateInputKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 export type DatePickerProps = IDatePickerOwnProps & WrappedComponentProps;
@@ -370,6 +372,10 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
     private onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === "Escape" || e.key === "Tab") {
             this.setState({ isOpen: false });
+        }
+
+        if (isEnterKey(e)) {
+            this.props.onDateInputKeyDown?.(e);
         }
     }
     private handleWrapperClick(e: React.MouseEvent<HTMLDivElement>) {

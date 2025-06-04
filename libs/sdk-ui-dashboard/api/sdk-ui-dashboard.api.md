@@ -6001,6 +6001,7 @@ export interface IScheduledEmailDialogProps {
     insight?: IInsight;
     isLoading?: boolean;
     notificationChannels: INotificationChannelMetadataObject[];
+    onBack?: () => void;
     onCancel?: () => void;
     onDeleteError?: (error: GoodDataSdkError) => void;
     onDeleteSuccess?: () => void;
@@ -9335,8 +9336,8 @@ export const selectSaveAsVisible: DashboardSelector<boolean>;
 // @alpha (undocumented)
 export const selectScheduleEmailDialogDefaultAttachment: DashboardSelector<ObjRef | undefined>;
 
-// @alpha (undocumented)
-export const selectScheduleEmailDialogOpenedFrom: DashboardSelector<string | undefined>;
+// @internal (undocumented)
+export const selectScheduleEmailDialogReturnFocusTo: DashboardSelector<string | undefined>;
 
 // @public
 export const selectScreen: DashboardSelector<ScreenSize | undefined>;
@@ -10099,13 +10100,12 @@ export interface UiState {
     scheduleEmailDialog: {
         open: boolean;
         defaultAttachmentRef: ObjRef | undefined;
-        openedFrom?: string;
+        returnFocusTo?: string;
         context?: IScheduleEmailContext;
     };
     // (undocumented)
     scheduleEmailManagementDialog: {
         open: boolean;
-        openedFrom?: string;
         context?: IScheduleEmailContext;
     };
     // (undocumented)
@@ -10770,6 +10770,7 @@ export const useDashboardScheduledEmails: () => {
     defaultOnScheduleEmailing: (widget?: IWidget | undefined) => void;
     onScheduleEmailingOpen: (widget?: IWidget | undefined) => void;
     onScheduleEmailingCancel: (widget?: IWidget | undefined) => void;
+    onScheduleEmailingBack: (widget?: IWidget | undefined) => void;
     onScheduleEmailingCreateError: () => void;
     onScheduleEmailingCreateSuccess: (scheduledEmail: IAutomationMetadataObject) => void;
     onScheduleEmailingSaveError: () => void;

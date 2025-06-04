@@ -8,4 +8,6 @@ export const DEFAULT_MENU_BUTTON_ID = "default-menu-button-id";
 /**
  * @internal
  */
-export const DASHBOARD_INSIGHT_MENU_BUTTON_ID = "dashboard-insight-menu-button-id";
+export const getDashboardInsightMenuButtonId = (widgetRef: string) => {
+    return `dashboard-insight-menu-button-${widgetRef}`;
+};

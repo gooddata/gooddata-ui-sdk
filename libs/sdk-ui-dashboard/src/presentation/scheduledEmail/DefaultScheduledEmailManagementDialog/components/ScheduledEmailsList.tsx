@@ -2,7 +2,12 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { IAutomationMetadataObject, INotificationChannelMetadataObject } from "@gooddata/sdk-model";
-import { AutofocusOnMount, LoadingSpinner, useListWithActionsKeyboardNavigation } from "@gooddata/sdk-ui-kit";
+import {
+    AutofocusOnMount,
+    LoadingSpinner,
+    SELECT_ITEM_ACTION,
+    useListWithActionsKeyboardNavigation,
+} from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { ScheduledEmail } from "./ScheduledEmail.js";
@@ -36,18 +41,27 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
         [onDelete],
     );
 
-    const { onKeyboardNavigation, onBlur, focusedItem, focusedAction } = useListWithActionsKeyboardNavigation(
-        {
+    const { onKeyboardNavigation, onBlur, focusedItem, focusedAction, setFocusedAction } =
+        useListWithActionsKeyboardNavigation({
             items: scheduledEmails,
-            getItemAdditionalActions: () => ["scheduleEmail", "delete"],
+            getItemAdditionalActions: () => ["delete"],
             actionHandlers: {
                 selectItem: handleEdit,
                 delete: handleDelete,
-                scheduleEmail: handleEdit,
             },
             isNestedList: true,
-        },
-    );
+        });
+
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === "ArrowRight" || event.key === "ArrowLeft")
+            if (focusedAction === "delete") {
+                setFocusedAction(SELECT_ITEM_ACTION);
+            } else {
+                setFocusedAction("delete");
+            }
+
+        onKeyboardNavigation(event);
+    };
 
     if (isLoading) {
         return (
@@ -74,7 +88,7 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
         <AutofocusOnMount>
             <div
                 className="configuration-category gd-schedule-email__list"
-                onKeyDown={onKeyboardNavigation}
+                onKeyDown={handleKeyDown}
                 onBlur={onBlur}
                 tabIndex={scheduledEmails.length > 0 ? 0 : -1}
             >

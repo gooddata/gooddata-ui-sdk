@@ -791,8 +791,6 @@ export interface IAddButtonProps {
     // (undocumented)
     className?: string;
     // (undocumented)
-    id?: string;
-    // (undocumented)
     isDisabled?: boolean;
     // (undocumented)
     onClick?: () => void;
@@ -1502,6 +1500,8 @@ export interface IDatePickerOwnProps {
     onBlur?: (selectedDate: string) => void;
     // (undocumented)
     onChange?: (selectedData: Date) => void;
+    // (undocumented)
+    onDateInputKeyDown?: (e: React_2.KeyboardEvent<HTMLInputElement>) => void;
     // (undocumented)
     onValidateInput?: (value: string) => void;
     // (undocumented)

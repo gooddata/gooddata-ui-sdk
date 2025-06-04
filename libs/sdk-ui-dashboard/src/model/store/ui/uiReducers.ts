@@ -21,6 +21,7 @@ import {
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
+import { getDashboardInsightMenuButtonId } from "../../../_staging/accessibility/elementId.js";
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
 
@@ -32,13 +33,19 @@ const openScheduleEmailDialog: UiReducer<PayloadAction<IScheduleEmailContext & {
 
     state.scheduleEmailDialog.open = true;
 
-    if (openedFrom) {
-        state.scheduleEmailDialog.openedFrom = openedFrom;
-    }
     if (widgetRef) {
         state.scheduleEmailDialog.context = {
             widgetRef,
         };
+
+        if (openedFrom === "widget") {
+            const returnFocusTo = getDashboardInsightMenuButtonId(objRefToString(widgetRef));
+            state.scheduleEmailDialog.returnFocusTo = returnFocusTo;
+        }
+    }
+
+    if (openedFrom === "dashboard") {
+        state.scheduleEmailDialog.returnFocusTo = undefined;
     }
 };
 
@@ -55,24 +62,25 @@ const resetScheduleEmailDialogDefaultAttachment: UiReducer = (state) => {
     state.scheduleEmailDialog.defaultAttachmentRef = undefined;
 };
 
-/**
- * Opens the schedule email management dialog with the provided context
- * @internal
- */
 const openScheduleEmailManagementDialog: UiReducer<
     PayloadAction<IScheduleEmailContext & { openedFrom?: string }>
 > = (state, action) => {
     const { widgetRef, openedFrom } = action.payload;
 
     state.scheduleEmailManagementDialog.open = true;
-
-    if (openedFrom) {
-        state.scheduleEmailDialog.openedFrom = openedFrom;
-    }
     if (widgetRef) {
         state.scheduleEmailManagementDialog.context = {
             widgetRef,
         };
+
+        if (openedFrom === "widget") {
+            const returnFocusTo = getDashboardInsightMenuButtonId(objRefToString(widgetRef));
+            state.scheduleEmailDialog.returnFocusTo = returnFocusTo;
+        }
+    }
+
+    if (openedFrom === "dashboard") {
+        state.scheduleEmailDialog.returnFocusTo = undefined;
     }
 };
 

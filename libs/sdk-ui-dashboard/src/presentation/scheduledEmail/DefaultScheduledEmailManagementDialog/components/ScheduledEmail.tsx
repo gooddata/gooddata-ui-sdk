@@ -90,12 +90,7 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
                     </Bubble>
                 </BubbleHoverTrigger>
             </div>
-            <div
-                className={cx("gd-notifications-channel-content", {
-                    "gd-schedule-email__item--isFocusedSelectItem": focusedAction === "scheduleEmail",
-                })}
-                onClick={canEdit ? handleClick : undefined}
-            >
+            <div className="gd-notifications-channel-content" onClick={canEdit ? handleClick : undefined}>
                 <div
                     className={cx("gd-notifications-channel-icon", {
                         "gd-notifications-channel-icon-invalid": !isValid,

@@ -398,7 +398,6 @@ export type { IExecutionResultEnvelope } from "./executionResults/types.js";
 export type { UiState, InvalidCustomUrlDrillParameterInfo, FilterViewDialogMode } from "./ui/uiState.js";
 export {
     selectIsScheduleEmailDialogOpen,
-    selectScheduleEmailDialogOpenedFrom,
     selectIsScheduleEmailManagementDialogOpen,
     selectIsScheduleEmailDialogContext,
     selectIsScheduleEmailManagementDialogContext,
@@ -408,6 +407,7 @@ export {
     selectIsKpiAlertOpenedByWidgetRef,
     selectIsKpiAlertHighlightedByWidgetRef,
     selectMenuButtonItemsVisibility,
+    selectScheduleEmailDialogReturnFocusTo,
     selectScheduleEmailDialogDefaultAttachment,
     selectSelectedWidgetRef,
     selectConfigurationPanelOpened,
