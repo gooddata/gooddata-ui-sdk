@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { invariant } from "ts-invariant";
 
@@ -10,15 +10,10 @@ import {
     resolveLocale,
 } from "@gooddata/sdk-ui";
 import { IInsight } from "@gooddata/sdk-model";
-import {
-    CustomElementAdapter,
-    LOAD_COMPONENT,
-    EVENT_HANDLER,
-    GET_VISUALIZATION,
-} from "./CustomElementAdapter.js";
-
-import { CustomElementContext } from "../context.js";
 import type { InsightView } from "@gooddata/sdk-ui-ext";
+import { CustomElementAdapter, LOAD_COMPONENT, EVENT_HANDLER, GET_COMPONENT } from "../common/index.js";
+import { CustomElementContext } from "../context.js";
+
 type IInsightView = typeof InsightView;
 
 export class Insight extends CustomElementAdapter<IInsightView> {
@@ -30,10 +25,7 @@ export class Insight extends CustomElementAdapter<IInsightView> {
         return (await import("@gooddata/sdk-ui-ext")).InsightView;
     }
 
-    [GET_VISUALIZATION](
-        Component: IInsightView,
-        { backend, workspaceId, mapboxToken }: CustomElementContext,
-    ) {
+    [GET_COMPONENT](Component: IInsightView, { backend, workspaceId, mapboxToken }: CustomElementContext) {
         // Ensure mandatory property is provided
         const insight = this.getAttribute("insight");
         invariant(insight, '"insight" is a mandatory attribute and it cannot be empty');

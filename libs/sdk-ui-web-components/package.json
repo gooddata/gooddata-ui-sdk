@@ -63,6 +63,7 @@
         "@gooddata/sdk-ui-geo": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
+        "@gooddata/sdk-ui-gen-ai": "workspace:*",
         "lodash": "^4.17.21",
         "mini-css-extract-plugin": "~2.6.1",
         "react-intl": "^6.4.1",
