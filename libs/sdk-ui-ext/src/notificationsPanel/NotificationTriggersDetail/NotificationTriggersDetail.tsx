@@ -47,7 +47,8 @@ export function NotificationTriggerDetail({ notification }: INotificationTrigger
         <>
             <UiButton
                 ref={ref}
-                onClick={() => {
+                onClick={(e) => {
+                    e.stopPropagation();
                     toggleTriggersDialog();
                 }}
                 variant="tertiary"
