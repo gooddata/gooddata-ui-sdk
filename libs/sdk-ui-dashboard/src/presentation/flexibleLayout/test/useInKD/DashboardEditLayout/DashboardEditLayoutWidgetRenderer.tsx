@@ -1,6 +1,6 @@
-// (C) 2007-2024 GoodData Corporation
-import cx from "classnames";
+// (C) 2007-2025 GoodData Corporation
 import React, { useRef } from "react";
+import cx from "classnames";
 
 import {
     getDashboardLayoutItemHeightForRatioAndScreen,
@@ -29,9 +29,8 @@ export const RenderDashboardEditLayoutWidgetRenderer: React.FC<IDashboardEditLay
 
     const { heightAsRatio = 100, gridHeight = 12 } = currentSize;
 
-    const isLastInSection = item.isLast();
     const isLastSection = item.section().isLast();
-    const isLast = isLastSection && isLastInSection;
+    const isLast = isLastSection && item.isLastInSection();
     const classNames = cx({
         last: widget?.type === "widget" ? isLast : false,
         "custom-height": isEnableKDWidgetCustomHeight,

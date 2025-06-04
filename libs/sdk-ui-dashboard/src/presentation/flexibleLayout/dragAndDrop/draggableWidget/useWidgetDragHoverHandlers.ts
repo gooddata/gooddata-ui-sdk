@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
 
 import { uiActions, useDashboardDispatch } from "../../../../model/index.js";
@@ -11,8 +11,8 @@ export function useWidgetDragHoverHandlers() {
     const dispatch = useDashboardDispatch();
 
     const handleDragHoverStart = useCallback(
-        (coordinations: ILayoutItemPath) => {
-            dispatch(uiActions.setDraggingWidgetTarget(coordinations));
+        (coordinates: ILayoutItemPath) => {
+            dispatch(uiActions.setDraggingWidgetTarget(coordinates));
         },
         [dispatch],
     );

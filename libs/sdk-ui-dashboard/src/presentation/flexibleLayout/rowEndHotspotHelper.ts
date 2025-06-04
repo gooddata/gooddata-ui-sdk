@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import { ScreenSize } from "@gooddata/sdk-model";
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../_staging/dashboard/flexibleLayout/config.js";
@@ -7,11 +7,11 @@ import { IDashboardLayoutItemFacade } from "../../_staging/dashboard/flexibleLay
 export function getRemainingWidthInRow(
     item: IDashboardLayoutItemFacade<unknown>,
     screen: ScreenSize,
+    rowIndex: number,
 ): number {
     const parentWidth = item.section().layout().size()?.gridWidth ?? DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
     const rows = item.section().items().asGridRows(screen);
-    const lastRow = rows[rows.length - 1];
-    const lastRowLength = lastRow.reduce(
+    const lastRowLength = rows[rowIndex].reduce(
         (acc, item) => acc + item.sizeForScreenWithFallback(screen).gridWidth,
         0,
     );
