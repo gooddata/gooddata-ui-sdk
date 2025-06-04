@@ -1,17 +1,13 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { invariant } from "ts-invariant";
 
 import { resolveLocale } from "@gooddata/sdk-ui";
-import {
-    CustomElementAdapter,
-    EVENT_HANDLER,
-    GET_VISUALIZATION,
-    LOAD_COMPONENT,
-} from "./CustomElementAdapter.js";
-
-import { CustomElementContext } from "../context.js";
 import type { Dashboard as OriginalDashboard } from "@gooddata/sdk-ui-dashboard";
+
+import { CustomElementAdapter, EVENT_HANDLER, GET_COMPONENT, LOAD_COMPONENT } from "../common/index.js";
+import { CustomElementContext } from "../context.js";
+
 type IDashboard = typeof OriginalDashboard;
 
 export class Dashboard extends CustomElementAdapter<IDashboard> {
@@ -23,7 +19,7 @@ export class Dashboard extends CustomElementAdapter<IDashboard> {
         return (await import("@gooddata/sdk-ui-dashboard")).Dashboard;
     }
 
-    [GET_VISUALIZATION](Component: IDashboard, { backend, workspaceId, mapboxToken }: CustomElementContext) {
+    [GET_COMPONENT](Component: IDashboard, { backend, workspaceId, mapboxToken }: CustomElementContext) {
         const dashboard = this.getAttribute("dashboard");
 
         // "dashboard" property is mandatory

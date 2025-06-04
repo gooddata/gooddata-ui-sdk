@@ -1,8 +1,9 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { createRoot, Root } from "react-dom/client";
 import { invariant } from "ts-invariant";
 import { LoadingComponent } from "@gooddata/sdk-ui";
+
 import { CustomElementContext, getContext } from "../context.js";
 
 // Since JS does not support private properties natively,
@@ -10,8 +11,9 @@ import { CustomElementContext, getContext } from "../context.js";
 const RENDER = Symbol("render");
 const COMPONENT = Symbol("component");
 const CONTEXT = Symbol("context");
-export const GET_VISUALIZATION = Symbol("getVisualization");
 export const EVENT_HANDLER = Symbol("eventHandler");
+export const EVENT_BUILDER = Symbol("eventBuilder");
+export const GET_COMPONENT = Symbol("getComponent");
 export const LOAD_COMPONENT = Symbol("loadComponent");
 
 export abstract class CustomElementAdapter<C> extends HTMLElement {
@@ -47,7 +49,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
                 this[RENDER]();
             })
             .catch((error) => {
-                console.error("Failed to load dependencies for the visualization", error);
+                console.error("Failed to load dependencies for the component", error);
             });
     }
 
@@ -89,13 +91,27 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
         invariant(workspace, "Workspace must be provided either through script URL or directly in HTML.");
 
         // Get the visualization from implementation
-        const reactElement = this[GET_VISUALIZATION](this[COMPONENT], {
+        const reactElement = this[GET_COMPONENT](this[COMPONENT], {
             ...this[CONTEXT],
             workspaceId: workspace,
         });
 
         // Mount / update the React app
         this.root?.render(reactElement);
+    }
+
+    /**
+     * @remarks
+     * A helper for easier custom event creation.
+     *
+     * @internal
+     */
+    protected [EVENT_BUILDER]<P>(eventName: string, detail: P) {
+        return new CustomEvent(eventName, {
+            detail,
+            cancelable: false,
+            bubbles: false,
+        });
     }
 
     /**
@@ -107,14 +123,7 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
      * @internal
      */
     protected [EVENT_HANDLER]<P>(eventName: string) {
-        return (payload: P) =>
-            this.dispatchEvent(
-                new CustomEvent(eventName, {
-                    detail: payload,
-                    cancelable: false,
-                    bubbles: false,
-                }),
-            );
+        return (payload: P) => this.dispatchEvent(this[EVENT_BUILDER](eventName, payload));
     }
 
     /**
@@ -125,9 +134,9 @@ export abstract class CustomElementAdapter<C> extends HTMLElement {
      *  If you have to - write a thin wrapper around the actual visualization Component.
      *
      * @internal
-     * @returns A ReactElement to be mounted into the Shadow DOM for this visualization
+     * @returns A ReactElement to be mounted into the Shadow DOM for this component
      */
-    abstract [GET_VISUALIZATION](Component: C, context: CustomElementContext): React.ReactElement;
+    abstract [GET_COMPONENT](Component: C, context: CustomElementContext): React.ReactElement;
 
     /**
      * @remarks

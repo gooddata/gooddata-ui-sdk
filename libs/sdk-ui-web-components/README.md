@@ -50,14 +50,17 @@ If you want to customize the authentication flow, you'll need to provide the aut
 
 ## Embedding
 
-Once authentication is set and ready, you can embed Dashboard or a single visualization as follows:
+Once authentication is set and ready, you can embed Dashboard, single visualization or AI Chat as follows:
 
 ```html
 <!-- Embedding dashboard with ID "my-dashboard-id" -->
 <gd-dashboard dashboard="my-dashboard-id"></gd-dashboard>
 
 <!-- Embedding insight with ID "my-insight-id" -->
-<gd-insight dashboard="my-insight-id"></gd-insight>
+<gd-insight insight="my-insight-id"></gd-insight>
+
+<!-- Embedding AI chat -->
+<gd-ai-chat />
 ```
 
 ### Dashboard Custom Element
@@ -121,6 +124,45 @@ InsightView component](https://sdk.gooddata.com/gooddata-ui/docs/visualization_c
 <script>
     const insightEl = document.getElementById("some-dom-id");
     insightEl.addEventListener("drill", (event) => {
+        // See what's in the event payload
+        console.log(event.detail);
+    });
+</script>
+```
+
+### AI chat Custom Element
+
+`gd-ai-chat` supports the following attributes:
+
+-   `workspace` - optional, an ID of the workspace for this dashboard. By default, it's taken from the context (e.g. from the script URL).
+-   `locale` - the localization of the visualization. For available languages, see [the full list of available localizations](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui/src/base/localization/Locale.ts).
+
+```html
+<!-- rewrite currently used workspace -->
+<gd-ai-chat workspace="my-workspace"></gd-ai-chat>
+
+<!-- rewriting used locales in chat -->
+<gd-ai-chat locale="cs-CZ"></gd-ai-chat>
+```
+
+`gd-ai-chat` emits the following events:
+
+-   `linkClick` - when user clicks on a link in the chat.
+-   `chatOpened` - when the chat is opened.
+-   `chatClosed` - when the chat is closed.
+-   `chatReset` - when the chat is reset.
+-   `chatUserMessage` - when user message is added to the chat.
+-   `chatAssistantMessage` - when assistant message is added to the chat.
+-   `chatFeedback` - when user provides feedback on the assistant message.
+-   `chatVisualizationError` - when an error occurs while rendering the visualization in the chat.
+
+All events are not cancellable and do not bubble.
+
+```html
+<gd-ai-chat id="some-dom-id"></gd-ai-chat>
+<script>
+    const chatEl = document.getElementById("some-dom-id");
+    chatEl.addEventListener("linkClick", (event) => {
         // See what's in the event payload
         console.log(event.detail);
     });

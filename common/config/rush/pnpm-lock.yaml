@@ -5186,6 +5186,9 @@ importers:
       '@gooddata/sdk-ui-filters':
         specifier: workspace:*
         version: link:../sdk-ui-filters
+      '@gooddata/sdk-ui-gen-ai':
+        specifier: workspace:*
+        version: link:../sdk-ui-gen-ai
       '@gooddata/sdk-ui-geo':
         specifier: workspace:*
         version: link:../sdk-ui-geo
