@@ -16,7 +16,7 @@ export async function downloadFiles(files: Array<{ url: string; fileName?: strin
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
-            await new Promise((resolve) => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1000)); // so browser doesn't block the next download
         }
     }
 }
