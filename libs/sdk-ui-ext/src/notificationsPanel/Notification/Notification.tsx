@@ -210,7 +210,7 @@ export function Notification({
 
 function mapToDownloadableFile(exportFile: IExportResult) {
     if (!exportFile.fileUri) {
-        return;
+        return undefined;
     }
     return {
         url: exportFile.fileUri,
