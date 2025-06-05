@@ -18,10 +18,6 @@ export const ALIGN_RIGHT = "right";
 
 export interface ICommonHeaderParams {
     getTableDescriptor: () => TableDescriptor;
-    /**
-     * Returns the last sorted column id for focus restoration (table-level responsibility)
-     */
-    getLastSortedColId?: () => string | null;
     onMenuAggregationClick?: (config: IMenuAggregationClickConfig) => void;
     getExecutionDefinition?: () => IExecutionDefinition;
     getColumnTotals?: () => ITotal[];

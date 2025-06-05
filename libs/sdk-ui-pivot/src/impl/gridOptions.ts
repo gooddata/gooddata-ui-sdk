@@ -65,7 +65,6 @@ export function createGridOptions(
     const effectivePageSize = Math.min(pageSize!, totalRowCount + extraTotalsBuffer);
 
     const commonHeaderComponentParams: ICommonHeaderParams = {
-        getLastSortedColId: tableMethods.getLastSortedColId,
         onMenuAggregationClick: tableMethods.onMenuAggregationClick,
         getTableDescriptor: () => table.tableDescriptor,
         getExecutionDefinition: tableMethods.getExecutionDefinition,

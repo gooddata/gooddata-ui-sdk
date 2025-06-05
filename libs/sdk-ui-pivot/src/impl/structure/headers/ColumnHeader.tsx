@@ -25,17 +25,8 @@ export interface IColumnHeaderState {
 }
 
 const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
-    const {
-        className,
-        column,
-        api,
-        getTableDescriptor,
-        displayName,
-        enableSorting,
-        menu,
-        getLastSortedColId,
-        progressSort,
-    } = props;
+    const { className, column, api, getTableDescriptor, displayName, enableSorting, menu, progressSort } =
+        props;
 
     const [sorting, setSorting] = useState<SortDirection | undefined>(column.getSort() as SortDirection);
 
@@ -56,24 +47,6 @@ const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
         progressSort(multiSort);
         api.refreshHeader();
     };
-
-    useEffect(() => {
-        if (!api) {
-            return;
-        }
-        const handleDataReloaded = () => {
-            const lastSortedColId = getLastSortedColId?.();
-            // Restore focus to the header cell
-            if (lastSortedColId) {
-                const colId = getLastSortedColId?.();
-                if (colId) {
-                    api.setFocusedHeader(colId);
-                }
-            }
-        };
-        api.addEventListener("modelUpdated", handleDataReloaded);
-        return () => api.removeEventListener("modelUpdated", handleDataReloaded);
-    }, [api, getLastSortedColId]);
 
     const getColDescriptor = () => {
         return props.getTableDescriptor().getCol(props.column);

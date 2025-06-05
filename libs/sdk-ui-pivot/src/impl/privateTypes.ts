@@ -58,10 +58,6 @@ export type TableDataCallbacks = {
  * Accessors for static and dynamic table configuration.
  */
 export type TableConfigAccessors = {
-    /**
-     * Returns the last sorted column id (for focus/restore)
-     */
-    getLastSortedColId?: () => string | null;
     hasColumnWidths: boolean;
 
     getExecutionDefinition: () => IExecutionDefinition;
@@ -82,7 +78,7 @@ export type TableAgGridCallbacks = {
     onGridReady: (event: GridReadyEvent) => void;
     onFirstDataRendered: (event: AgGridEvent) => Promise<void>;
     onBodyScroll: (event: BodyScrollEvent) => void;
-    onModelUpdated: () => void;
+    onModelUpdated: (event: AgGridEvent) => void;
     onGridColumnsChanged: () => void;
     onGridColumnResized: (columnEvent: ColumnResizedEvent) => Promise<void>;
     onSortChanged: (event: SortChangedEvent) => void;
