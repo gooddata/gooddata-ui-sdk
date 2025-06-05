@@ -93,6 +93,11 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
         [date, onDateChange],
     );
 
+    const handleOnDateInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        validate(e.currentTarget.value);
+        onKeyDownSubmit?.(e);
+    };
+
     const datePickerClassNames = cx("gd-recurrence-form-datetime-date s-recurrence-form-datetime-date", {
         "has-error": errorDate,
     });
@@ -101,7 +106,7 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
         <div className="gd-recurrence-form-datetime s-recurrence-form-datetime gd-input-component">
             <div className="gd-label">{label}</div>
             <div className="gd-recurrence-form-datetime-inner">
-                <div className="gd-recurrence-form-date" onKeyDown={onKeyDownSubmit}>
+                <div className="gd-recurrence-form-date">
                     <Datepicker
                         className={datePickerClassNames}
                         date={date}
@@ -115,6 +120,7 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
                         accessibilityConfig={{
                             ariaDescribedBy: errorDate ? errorId : undefined,
                         }}
+                        onDateInputKeyDown={handleOnDateInputKeyDown}
                     />
                     {errorDate ? (
                         <span id={errorId} className="gd-recurrence-form-datetime-error-message">

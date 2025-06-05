@@ -15,12 +15,12 @@ interface IScheduledEmailDialogHeaderProps {
     placeholder: string;
     onChange: (value: string, isValid: boolean) => void;
     onKeyDownSubmit: (e: React.KeyboardEvent) => void;
-    onCancel?: () => void;
+    onBack?: () => void;
 }
 
 export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, IScheduledEmailDialogHeaderProps>(
     (props, ref) => {
-        const { title, placeholder, onChange, onCancel, onKeyDownSubmit } = props;
+        const { title, placeholder, onChange, onBack, onKeyDownSubmit } = props;
 
         const intl = useIntl();
         const [titleError, setTitleError] = useState<string | null>(null);
@@ -87,7 +87,7 @@ export const ScheduledEmailDialogHeader = forwardRef<HTMLInputElement, ISchedule
             <div className="gd-notifications-channels-dialog-header">
                 <Button
                     className="gd-button-primary gd-button-icon-only gd-icon-navigateleft s-schedule-email-dialog-button"
-                    onClick={onCancel}
+                    onClick={onBack}
                     accessibilityConfig={{
                         ariaLabel: intl.formatMessage({ id: "dialogs.schedule.email.backLabel" }),
                     }}

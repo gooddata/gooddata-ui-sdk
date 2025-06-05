@@ -112,6 +112,11 @@ export interface IScheduledEmailDialogProps {
     onCancel?: () => void;
 
     /**
+     * Callback to be called, when user goes back to the scheduled email management dialog.
+     */
+    onBack?: () => void;
+
+    /**
      * Callback to be called, when error occurs.
      */
     onError?: (error: GoodDataSdkError) => void;

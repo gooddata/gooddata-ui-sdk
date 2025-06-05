@@ -38,12 +38,14 @@ export const useDashboardScheduledEmails = () => {
     const {
         defaultOnScheduleEmailing,
         onScheduleEmailingCancel,
+        onScheduleEmailingBack,
         onScheduleEmailingCreateError,
         onScheduleEmailingCreateSuccess,
         onScheduleEmailingOpen,
         onScheduleEmailingSaveError,
         onScheduleEmailingSaveSuccess,
-    } = useDashboardScheduledEmailsDialog({ scheduledExportToEdit, setScheduledExportToEdit });
+        setShouldReturnToManagementDialog,
+    } = useDashboardScheduledEmailsDialog({ setScheduledExportToEdit });
 
     const {
         defaultOnScheduleEmailingManagement,
@@ -54,7 +56,10 @@ export const useDashboardScheduledEmails = () => {
         onScheduleEmailingManagementEdit,
         onScheduleEmailingManagementLoadingError,
         onScheduleEmailingManagementOpen,
-    } = useDashboardScheduledEmailsManagementDialog({ setScheduledExportToEdit });
+    } = useDashboardScheduledEmailsManagementDialog({
+        setShouldReturnToManagementDialog,
+        setScheduledExportToEdit,
+    });
 
     return {
         // Local state
@@ -75,6 +80,7 @@ export const useDashboardScheduledEmails = () => {
         defaultOnScheduleEmailing,
         onScheduleEmailingOpen,
         onScheduleEmailingCancel,
+        onScheduleEmailingBack,
         onScheduleEmailingCreateError,
         onScheduleEmailingCreateSuccess,
         onScheduleEmailingSaveError,

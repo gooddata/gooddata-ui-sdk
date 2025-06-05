@@ -115,6 +115,7 @@ export function ScheduledMailDialogRenderer({
     widget,
     dashboardFilters,
     widgetFilters,
+    onBack,
     onCancel,
     onDeleteSuccess,
     onDeleteError,
@@ -323,7 +324,7 @@ export function ScheduledMailDialogRenderer({
                             <ScheduledEmailDialogHeader
                                 title={editedAutomation.title ?? ""}
                                 onChange={onTitleChange}
-                                onCancel={onCancel}
+                                onBack={onBack}
                                 placeholder={intl.formatMessage({
                                     id: "dialogs.schedule.email.title.placeholder",
                                 })}

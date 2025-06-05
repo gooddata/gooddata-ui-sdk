@@ -12,6 +12,7 @@ import { useDashboardAutomations } from "../useDashboardAutomations/useDashboard
  * @internal
  */
 export interface IUseDashboardScheduledEmailsManagementDialogProps {
+    setShouldReturnToManagementDialog: (value: boolean) => void;
     setScheduledExportToEdit: (automation?: IAutomationMetadataObject) => void;
 }
 
@@ -19,6 +20,7 @@ export interface IUseDashboardScheduledEmailsManagementDialogProps {
  * @internal
  */
 export const useDashboardScheduledEmailsManagementDialog = ({
+    setShouldReturnToManagementDialog,
     setScheduledExportToEdit,
 }: IUseDashboardScheduledEmailsManagementDialogProps) => {
     const { addSuccess, addError } = useToastMessage();
@@ -61,7 +63,8 @@ export const useDashboardScheduledEmailsManagementDialog = ({
 
     const onScheduleEmailingManagementClose = useCallback(() => {
         closeScheduleEmailingManagementDialog();
-    }, [closeScheduleEmailingManagementDialog]);
+        setShouldReturnToManagementDialog(false);
+    }, [closeScheduleEmailingManagementDialog, setShouldReturnToManagementDialog]);
 
     // Loading
     const onScheduleEmailingManagementLoadingError = useCallback(() => {
@@ -72,20 +75,31 @@ export const useDashboardScheduledEmailsManagementDialog = ({
     // Create
     const onScheduleEmailingManagementAdd = useCallback(
         (widget?: IWidget) => {
+            setShouldReturnToManagementDialog(true);
             closeScheduleEmailingManagementDialog();
             openScheduleEmailingDialog(widget);
         },
-        [closeScheduleEmailingManagementDialog, openScheduleEmailingDialog],
+        [
+            setShouldReturnToManagementDialog,
+            closeScheduleEmailingManagementDialog,
+            openScheduleEmailingDialog,
+        ],
     );
 
     // Edit
     const onScheduleEmailingManagementEdit = useCallback(
         (schedule: IAutomationMetadataObject, widget?: IWidget) => {
+            setShouldReturnToManagementDialog(true);
             closeScheduleEmailingManagementDialog();
             setScheduledExportToEdit(schedule);
             openScheduleEmailingDialog(widget);
         },
-        [closeScheduleEmailingManagementDialog, openScheduleEmailingDialog, setScheduledExportToEdit],
+        [
+            closeScheduleEmailingManagementDialog,
+            openScheduleEmailingDialog,
+            setScheduledExportToEdit,
+            setShouldReturnToManagementDialog,
+        ],
     );
 
     // Delete

@@ -29,6 +29,7 @@ export const ScheduledEmailDialogProvider = () => {
         // Single Schedule Dialog
         isScheduleEmailingDialogOpen,
         onScheduleEmailingCancel,
+        onScheduleEmailingBack,
         onScheduleEmailingCreateSuccess,
         onScheduleEmailingCreateError,
         onScheduleEmailingSaveSuccess,
@@ -79,6 +80,7 @@ export const ScheduledEmailDialogProvider = () => {
                     widgetFilters={widgetFilters}
                     dashboardFilters={dashboardFilters}
                     isLoading={isLoading}
+                    onBack={onScheduleEmailingBack}
                     onCancel={onScheduleEmailingCancel}
                     onError={onScheduleEmailingCreateError}
                     onSuccess={onScheduleEmailingCreateSuccess}

@@ -37,14 +37,6 @@ export const selectIsScheduleEmailDialogOpen: DashboardSelector<boolean> = creat
 /**
  * @alpha
  */
-export const selectScheduleEmailDialogOpenedFrom: DashboardSelector<string | undefined> = createSelector(
-    selectSelf,
-    (state) => state.scheduleEmailDialog.openedFrom ?? undefined,
-);
-
-/**
- * @alpha
- */
 export const selectIsScheduleEmailDialogContext: DashboardSelector<IScheduleEmailContext> = createSelector(
     selectSelf,
     (state) => state.scheduleEmailDialog.context ?? {},
@@ -55,6 +47,14 @@ export const selectIsScheduleEmailDialogContext: DashboardSelector<IScheduleEmai
  */
 export const selectScheduleEmailDialogDefaultAttachment: DashboardSelector<ObjRef | undefined> =
     createSelector(selectSelf, (state) => state.scheduleEmailDialog.defaultAttachmentRef ?? undefined);
+
+/**
+ * @internal
+ */
+export const selectScheduleEmailDialogReturnFocusTo: DashboardSelector<string | undefined> = createSelector(
+    selectSelf,
+    (state) => state.scheduleEmailDialog.returnFocusTo ?? undefined,
+);
 
 /**
  * @alpha
