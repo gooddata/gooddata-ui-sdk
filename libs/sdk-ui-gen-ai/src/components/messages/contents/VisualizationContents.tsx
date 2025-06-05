@@ -272,6 +272,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                                 switch (visualization.visualizationType) {
                                     case "BAR":
                                         return renderBarChart(
+                                            intl.locale,
                                             metrics,
                                             dimensions,
                                             filters,
@@ -281,6 +282,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                                         );
                                     case "COLUMN":
                                         return renderColumnChart(
+                                            intl.locale,
                                             metrics,
                                             dimensions,
                                             filters,
@@ -290,6 +292,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                                         );
                                     case "LINE":
                                         return renderLineChart(
+                                            intl.locale,
                                             metrics,
                                             dimensions,
                                             filters,
@@ -299,6 +302,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                                         );
                                     case "PIE":
                                         return renderPieChart(
+                                            intl.locale,
                                             metrics,
                                             dimensions,
                                             filters,
@@ -308,6 +312,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                                         );
                                     case "TABLE":
                                         return renderTable(
+                                            intl.locale,
                                             metrics,
                                             dimensions,
                                             filters,
@@ -316,6 +321,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                                         );
                                     case "HEADLINE":
                                         return renderHeadline(
+                                            intl.locale,
                                             metrics,
                                             dimensions,
                                             filters,
@@ -403,6 +409,7 @@ const legendTooltipOptions = {
 };
 
 const renderBarChart = (
+    locale: string,
     metrics: IMeasure[],
     dimensions: IAttribute[],
     filters: IFilter[],
@@ -411,6 +418,7 @@ const renderBarChart = (
     onLoadingChanged: OnLoadingChanged,
 ) => (
     <BarChart
+        locale={locale}
         height={VIS_HEIGHT}
         measures={metrics}
         viewBy={[dimensions[0], dimensions[1]].filter(Boolean)}
@@ -429,6 +437,7 @@ const renderBarChart = (
 );
 
 const renderColumnChart = (
+    locale: string,
     metrics: IMeasure[],
     dimensions: IAttribute[],
     filters: IFilter[],
@@ -437,6 +446,7 @@ const renderColumnChart = (
     onLoadingChanged: OnLoadingChanged,
 ) => (
     <ColumnChart
+        locale={locale}
         height={VIS_HEIGHT}
         measures={metrics}
         viewBy={[dimensions[0], dimensions[1]].filter(Boolean)}
@@ -455,6 +465,7 @@ const renderColumnChart = (
 );
 
 const renderLineChart = (
+    locale: string,
     metrics: IMeasure[],
     dimensions: IAttribute[],
     filters: IFilter[],
@@ -463,6 +474,7 @@ const renderLineChart = (
     onLoadingChanged: OnLoadingChanged,
 ) => (
     <LineChart
+        locale={locale}
         height={VIS_HEIGHT}
         measures={metrics}
         trendBy={dimensions[0]}
@@ -479,6 +491,7 @@ const renderLineChart = (
 );
 
 const renderPieChart = (
+    locale: string,
     metrics: IMeasure[],
     dimensions: IAttribute[],
     filters: IFilter[],
@@ -487,6 +500,7 @@ const renderPieChart = (
     onLoadingChanged: OnLoadingChanged,
 ) => (
     <PieChart
+        locale={locale}
         height={VIS_HEIGHT}
         measures={metrics}
         viewBy={metrics.length <= 1 ? dimensions[0] : undefined}
@@ -501,6 +515,7 @@ const renderPieChart = (
 );
 
 const renderTable = (
+    locale: string,
     metrics: IMeasure[],
     dimensions: IAttribute[],
     filters: IFilter[],
@@ -508,6 +523,7 @@ const renderTable = (
     onLoadingChanged: OnLoadingChanged,
 ) => (
     <PivotTable
+        locale={locale}
         measures={metrics}
         rows={dimensions}
         filters={filters}
@@ -517,6 +533,7 @@ const renderTable = (
 );
 
 const renderHeadline = (
+    locale: string,
     metrics: IMeasure[],
     _dimensions: IAttribute[],
     filters: IFilter[],
@@ -525,6 +542,7 @@ const renderHeadline = (
     onLoadingChanged: OnLoadingChanged,
 ) => (
     <Headline
+        locale={locale}
         primaryMeasure={metrics[0]}
         secondaryMeasures={[metrics[1], metrics[2]].filter(Boolean)}
         filters={filters}
