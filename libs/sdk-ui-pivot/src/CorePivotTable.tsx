@@ -652,11 +652,13 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
     private onModelUpdated = (event: AgGridEvent) => {
         this.updateStickyRow();
-
-        const lastSortedColId = this.getLastSortedColId();
-        // Restore focus to the header cell
-        if (lastSortedColId && event.api) {
-            event.api.setFocusedHeader(lastSortedColId);
+        if (this.internal.table?.isPivotTableReady()) {
+            const lastSortedColId = this.getLastSortedColId();
+            // Restore focus to the header cell
+            if (lastSortedColId && event.api) {
+                event.api.setFocusedHeader(lastSortedColId);
+                this.setLastSortedColId(null);
+            }
         }
     };
 
@@ -847,10 +849,6 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     };
 
     private onLoadingChanged = (loadingState: ILoadingState): void => {
-        if (this.state.isLoading && !loadingState.isLoading) {
-            this.setLastSortedColId(null);
-        }
-
         const { onLoadingChanged } = this.props;
 
         if (onLoadingChanged) {

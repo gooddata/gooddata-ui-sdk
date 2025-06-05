@@ -208,23 +208,19 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
     private onMouseEnterHeaderCellText = () => {
         if (this.props.enableSorting) {
             const { sortDirection } = this.props;
+            let newSortDirection: SortDirection | null = null;
             if (sortDirection === null) {
-                return this.setState({
-                    currentSortDirection: this.props.defaultSortDirection ?? null,
-                });
+                newSortDirection = this.props.defaultSortDirection ?? null;
             } else if (sortDirection === "asc") {
-                return this.setState({
-                    currentSortDirection: "desc",
-                });
+                newSortDirection = "desc";
             } else if (sortDirection === "desc") {
-                return this.setState({
-                    currentSortDirection: "asc",
-                });
+                newSortDirection = "asc";
             } else {
-                return this.setState({
-                    currentSortDirection: null,
-                });
+                newSortDirection = null;
             }
+            this.setState({
+                currentSortDirection: newSortDirection,
+            });
         }
     };
 
