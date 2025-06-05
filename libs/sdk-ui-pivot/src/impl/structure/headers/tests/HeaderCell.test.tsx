@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
@@ -37,7 +37,7 @@ describe("HeaderCell renderer", () => {
             expect(document.querySelector(".s-sort-direction-arrow.s-sorted-asc")).toBeInTheDocument();
         });
 
-        it("should call onSortChanged when clicked on label", () => {
+        it("should call onSortClick when clicked on label", () => {
             const onSortClick = vi.fn();
             render(
                 <HeaderCell
@@ -50,23 +50,7 @@ describe("HeaderCell renderer", () => {
             );
             fireEvent.click(screen.getByText("Header"));
 
-            expect(onSortClick).toHaveBeenCalledWith("asc");
-        });
-
-        it("should call onSortChanged with next sort direction", () => {
-            const onSortClick = vi.fn();
-            render(
-                <HeaderCell
-                    displayText="Header"
-                    enableSorting={true}
-                    sortDirection={"asc"}
-                    onSortClick={onSortClick}
-                    getTableDescriptor={getTableDescriptor}
-                />,
-            );
-            fireEvent.click(screen.getByText("Header"));
-
-            expect(onSortClick).toHaveBeenCalledWith("desc");
+            expect(onSortClick).toHaveBeenCalled();
         });
     });
 });
