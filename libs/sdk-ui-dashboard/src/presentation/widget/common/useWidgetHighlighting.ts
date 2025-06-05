@@ -16,7 +16,7 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 
 const selectIsWidgetHighlighted = (widget: IWidget) =>
     createSelector(
@@ -86,26 +86,40 @@ const useOutsideClick = <T extends HTMLElement>(ref: React.RefObject<T>, callbac
     }, [ref, callbackFn]);
 };
 
+const MAX_RETRIES = 25;
+
 export const useWidgetHighlighting = (widget: IWidget) => {
     const { automationId, widgetId, visualizationId } = useDashboardSelector(selectFocusObject);
     const isHighlighted = useDashboardSelector(selectIsWidgetHighlighted(widget));
     const [keepHighlight, setKeepHighlight] = useState(false);
+    const [retries, update] = useReducer((x) => x + 1, 0);
     const elementRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        // If we reach max retries, stop trying to scroll to the element
+        if (retries >= MAX_RETRIES) {
+            setKeepHighlight(false);
+            return;
+        }
+        // If widget is highlighted and keepHighlight not yet set try to scroll
         if (isHighlighted && !keepHighlight) {
             // We only want to scroll to element when one context property is specified at a time
             const shouldScrollTo = [automationId, widgetId, visualizationId].filter(Boolean).length === 1;
 
             if (elementRef.current && shouldScrollTo) {
-                elementRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+                const rect = elementRef.current?.getBoundingClientRect();
+                // Element is not visible, do not scroll and try again
+                if (rect?.width === 0 || rect?.height === 0) {
+                    update();
+                } else {
+                    elementRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+                    setKeepHighlight(true);
+                }
             }
-
-            setKeepHighlight(true);
         }
         // We intentionally exclude keepHighlight
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isHighlighted, automationId, visualizationId, widgetId]);
+    }, [isHighlighted, automationId, visualizationId, widgetId, retries]);
 
     // Remove highlight on outside click
     const removeHighlight = useCallback(() => setKeepHighlight(false), []);
