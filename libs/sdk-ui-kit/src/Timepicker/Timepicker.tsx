@@ -194,7 +194,7 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
                             <UiListbox
                                 shouldKeyboardActionStopPropagation={true}
                                 shouldKeyboardActionPreventDefault={true}
-                                className="gd-timepicker-list s-timepicker-list"
+                                className="s-timepicker-list"
                                 items={listboxItems}
                                 maxWidth={dropdownWidth}
                                 maxHeight={MAX_HEIGHT}
