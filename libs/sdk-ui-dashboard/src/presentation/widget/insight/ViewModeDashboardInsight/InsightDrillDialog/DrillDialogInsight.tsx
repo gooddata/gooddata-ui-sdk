@@ -2,7 +2,7 @@
 import React, { useCallback, useMemo, useState, CSSProperties, useEffect } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
-import { IExecutionConfig, insightSetFilters, insightVisualizationUrl } from "@gooddata/sdk-model";
+import { IExecutionConfig, insightSetFilters } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IPushData,
@@ -30,6 +30,7 @@ import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
 import { CustomError } from "../CustomError/CustomError.js";
 import { IntlWrapper } from "../../../../localization/index.js";
 import { InsightBody } from "../../InsightBody.js";
+import { useInsightPositionStyle } from "../useInsightPositionStyle.js";
 
 const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative", flex: "1 1 auto" };
 
@@ -121,17 +122,7 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
     );
 
     // CSS
-    const insightPositionStyle: CSSProperties = useMemo(() => {
-        return {
-            width: "100%",
-            height: "100%",
-            position:
-                // Headline violates the layout contract.
-                // It should fit parent height and adapt to it as other visualizations.
-                // Now, it works differently for the Headline - parent container adapts to Headline size.
-                insight && insightVisualizationUrl(insight).includes("headline") ? "relative" : "absolute",
-        };
-    }, [insight]);
+    const insightPositionStyle = useInsightPositionStyle(insight);
 
     // Error handling
     const handleError = useCallback<OnError>(

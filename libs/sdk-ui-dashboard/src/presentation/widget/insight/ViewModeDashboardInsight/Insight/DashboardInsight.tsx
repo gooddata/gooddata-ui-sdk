@@ -1,13 +1,15 @@
 // (C) 2020-2025 GoodData Corporation
 import React, { CSSProperties, useRef, useCallback, useEffect, useMemo, useState } from "react";
-import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { FormattedMessage } from "react-intl";
 import { createSelector } from "@reduxjs/toolkit/dist/redux-toolkit.esm.js";
+import stringify from "json-stable-stringify";
+import cx from "classnames";
+import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import {
     IExecutionConfig,
     insightProperties,
     insightSetFilters,
-    insightVisualizationUrl,
     objRefToString,
     widgetRef,
 } from "@gooddata/sdk-model";
@@ -19,8 +21,6 @@ import {
     useBackendStrict,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
-import stringify from "json-stable-stringify";
-import cx from "classnames";
 
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
 import {
@@ -41,18 +41,16 @@ import {
     selectExecutionTimestamp,
     selectEnableSnapshotExportAccessibility,
 } from "../../../../../model/index.js";
-
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
 import { useMinimalSizeValidation, useVisualizationExportData } from "../../../../export/index.js";
-import { DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH } from "../../../../constants/index.js";
 import { IntlWrapper } from "../../../../localization/index.js";
 import { CustomError } from "../CustomError/CustomError.js";
 import { IDashboardInsightProps } from "../../types.js";
 import { InsightBody } from "../../InsightBody.js";
+import { useInsightPositionStyle } from "../useInsightPositionStyle.js";
 
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills.js";
 import { useHandlePropertiesPushData } from "./useHandlePropertiesPushData.js";
-import { FormattedMessage } from "react-intl";
 
 const selectCommonDashboardInsightProps = createSelector(
     [selectLocale, selectSettings, selectColorPalette],
@@ -131,7 +129,6 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
 
     // State props
     const { locale, settings, colorPalette } = useDashboardSelector(selectCommonDashboardInsightProps);
-    const { enableKDWidgetCustomHeight } = useDashboardSelector(selectSettings);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const crossFilteringSelectedPoints = useDashboardSelector(
         selectCrossFilteringSelectedPointsByWidgetRef(ref),
@@ -222,13 +219,6 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         [onPushData, executionsHandler.onPushData, handlePropertiesPushData],
     );
 
-    const isPositionRelative =
-        insight &&
-        insightVisualizationUrl(insight).includes("headline") &&
-        clientWidth &&
-        clientWidth < DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH &&
-        !enableKDWidgetCustomHeight;
-
     // Error handling
     const handleError = useCallback<OnError>(
         (error) => {
@@ -251,17 +241,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     }, [filtersForInsightHash]);
 
     // CSS
-    const insightPositionStyle: CSSProperties = useMemo(() => {
-        return {
-            width: "100%",
-            height: "100%",
-            position:
-                // Headline violates the layout contract.
-                // It should fit parent height and adapt to it as other visualizations.
-                // Now, it works differently for the Headline - parent container adapts to Headline size.
-                isPositionRelative ? "relative" : "absolute",
-        };
-    }, [isPositionRelative]);
+    const insightPositionStyle = useInsightPositionStyle(insight, clientWidth);
 
     const insightWrapperStyle: CSSProperties | undefined = useMemo(() => {
         return isVisualizationLoading || effectiveError ? { height: 0 } : undefined;
