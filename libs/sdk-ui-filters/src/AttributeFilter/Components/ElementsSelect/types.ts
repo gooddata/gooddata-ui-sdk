@@ -170,6 +170,11 @@ export interface IAttributeFilterElementsSelectProps {
      * @beta
      */
     isApplyDisabled?: boolean;
+
+    /**
+     * @internal
+     */
+    enableAttributeFilterVirtualised?: boolean;
 }
 
 /**

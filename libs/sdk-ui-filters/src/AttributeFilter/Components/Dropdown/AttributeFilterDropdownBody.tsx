@@ -49,6 +49,7 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
         onShowFilteredElements,
         irrelevantSelection,
         onClearIrrelevantSelection,
+        enableAttributeFilterVirtualised,
     } = useAttributeFilterContext();
 
     const parentFilterTitles = useMemo(() => {

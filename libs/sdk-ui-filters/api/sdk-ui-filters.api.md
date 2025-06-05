@@ -132,6 +132,7 @@ export type AttributeFilterControllerData = {
     limitingValidationItems?: ObjRef[];
     isFilteredByDependentDateFilters?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
+    enableAttributeFilterVirtualised?: boolean;
 };
 
 // @internal (undocumented)
@@ -407,6 +408,7 @@ export interface IAttributeFilterCoreProps {
     disabled?: boolean;
     // @alpha
     displayAsLabel?: ObjRef;
+    enableAttributeFilterVirtualised?: boolean;
     enableDashboardFiltersApplyModes?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
@@ -569,6 +571,8 @@ export interface IAttributeFilterElementsSelectLoadingProps {
 // @beta
 export interface IAttributeFilterElementsSelectProps {
     attributeTitle?: string;
+    // @internal (undocumented)
+    enableAttributeFilterVirtualised?: boolean;
     enableShowingFilteredElements?: boolean;
     error?: GoodDataSdkError;
     irrelevantSelection?: IAttributeElement[];

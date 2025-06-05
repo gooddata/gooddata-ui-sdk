@@ -173,6 +173,8 @@ export type AttributeFilterControllerData = {
      * Enables duplicated values in secondary labels.
      */
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
+
+    enableAttributeFilterVirtualised?: boolean;
 };
 
 /**

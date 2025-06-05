@@ -51,6 +51,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         EmptyResultComponent,
         StatusBarComponent,
         enableDuplicatedLabelValuesInAttributeFilter = true,
+        enableAttributeFilterVirtualised,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
     } = props;
 
@@ -114,6 +115,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     enableImmediateAttributeFilterDisplayAsLabelMigration={
                         enableImmediateAttributeFilterDisplayAsLabelMigration
                     }
+                    enableAttributeFilterVirtualised={enableAttributeFilterVirtualised}
                     withoutApply={props.withoutApply}
                     enableDashboardFiltersApplyModes={props.enableDashboardFiltersApplyModes}
                     overlayPositionType={props.overlayPositionType}
