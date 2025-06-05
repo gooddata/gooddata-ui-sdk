@@ -110,7 +110,8 @@ export function useCompletion(
     const onWordCompletion = useCallback(
         async (context: CompletionContext): Promise<CompletionResult | null> => {
             // Match the word before the cursor
-            const word = context.matchBefore(/\w+/);
+            const word = context.matchBefore(/\p{L}[\p{L}\p{N}_]*/gu);
+
             const search = word?.text ?? "";
             const length = search.length >= 3;
 
