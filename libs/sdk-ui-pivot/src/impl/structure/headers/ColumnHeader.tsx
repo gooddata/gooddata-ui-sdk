@@ -25,8 +25,17 @@ export interface IColumnHeaderState {
 }
 
 const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
-    const { className, column, api, getTableDescriptor, displayName, enableSorting, menu, progressSort } =
-        props;
+    const {
+        className,
+        column,
+        api,
+        getTableDescriptor,
+        displayName,
+        enableSorting,
+        menu,
+        progressSort,
+        eGridHeader,
+    } = props;
 
     const [sorting, setSorting] = useState<SortDirection | undefined>(column.getSort() as SortDirection);
 
@@ -85,17 +94,26 @@ const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
             const myColId = column.getColId();
             setIsFocused(focusedColId === myColId);
         };
-        const handleCellFocused = () => {
-            setIsFocused(false);
-        };
+
         api.addEventListener("headerFocused", handleFocusChange);
-        api.addEventListener("cellFocused", handleCellFocused);
 
         return () => {
             api.removeEventListener("headerFocused", handleFocusChange);
-            api.removeEventListener("cellFocused", handleCellFocused);
         };
     }, [api, column]);
+
+    useEffect(() => {
+        if (!eGridHeader) {
+            return;
+        }
+        const handleBlur = () => {
+            setIsFocused(false);
+        };
+        eGridHeader.addEventListener("blur", handleBlur);
+        return () => {
+            eGridHeader.removeEventListener("blur", handleBlur);
+        };
+    }, [eGridHeader]);
 
     return (
         <HeaderCell
