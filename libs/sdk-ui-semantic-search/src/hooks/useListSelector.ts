@@ -12,13 +12,15 @@ export const useListSelector = <T>(
     onSelect: (item: T, e: MouseEvent | KeyboardEvent) => void,
 ) => {
     const [selected, setSelected] = React.useState<number>(0);
-    const [direction, setDirection] = React.useState<-1 | 1>(1);
+    const [direction, setDirection] = React.useState<-1 | 1 | 0>(0);
 
     React.useEffect(() => {
         setSelected(0);
+        setDirection(0);
     }, [items]);
     const setSelectedItem = React.useCallback(
         (item: T) => {
+            setDirection(0);
             setSelected(Math.max(Math.min(items.indexOf(item), items.length - 1), 0));
         },
         [items],
@@ -55,5 +57,5 @@ export const useListSelector = <T>(
         };
     }, [items, onSelect, selected]);
 
-    return [items[selected], setSelectedItem, direction] as [T, (item: T) => void, -1 | 1];
+    return [items[selected], setSelectedItem, direction] as [T, (item: T) => void, -1 | 0 | 1];
 };
