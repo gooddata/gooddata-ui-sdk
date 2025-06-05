@@ -13,7 +13,9 @@ export type CustomHyperlinkProps = {
  * used for links management
  */
 export const CustomHyperlink: React.FC<CustomHyperlinkProps> = ({ href, text }) => {
-    const { linkHandler, allowNativeLinks } = useConfig();
+    const { linkHandler, allowNativeLinks, canManage, canAnalyze } = useConfig();
+    const canManageMetrics = canManage || canAnalyze;
+
     const parsedRef = React.useMemo(() => {
         if (!href) {
             return null;
@@ -65,6 +67,12 @@ export const CustomHyperlink: React.FC<CustomHyperlinkProps> = ({ href, text }) 
             preventDefault: e.preventDefault.bind(e),
         });
     };
+
+    // If the link is for a metric and the user cannot manage metrics,
+    // we do not render the link
+    if (parsedRef.type === "metric" && !canManageMetrics) {
+        return text;
+    }
 
     if (allowNativeLinks) {
         return (
