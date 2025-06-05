@@ -65,3 +65,7 @@ jobs:
                 git fetch origin
                 git rebase origin/$TARGET_BRANCH
                 git push origin $TARGET_BRANCH
+
+                # Wait for changes to propagate through GitHub's infrastructure
+                echo "Waiting for changes to propagate..."
+                sleep 10
