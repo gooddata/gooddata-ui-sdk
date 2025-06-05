@@ -254,7 +254,11 @@ const NotificationTime = ({ config }: { config: IDateConfig }) => {
 const FileLink = ({ notification }: { notification: IAlertNotification | IScheduleNotification }) => {
     return (
         <BubbleHoverTrigger eventsOnBubble={true}>
-            <a href={notification.details.data.automation.dashboardURL} className={e("link")}>
+            <a
+                href={notification.details.data.automation.dashboardURL}
+                onClick={(e) => e.stopPropagation()}
+                className={e("link")}
+            >
                 <FormattedMessage
                     id="notifications.panel.dashboardLink"
                     values={{ dashboardTitle: notification.details.data.automation.dashboardTitle }}
