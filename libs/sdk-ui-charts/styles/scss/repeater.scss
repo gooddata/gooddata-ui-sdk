@@ -245,6 +245,10 @@ $subtotal-odd-background-color: var(
             }
 
             overflow: visible;
+
+            &:focus-visible {
+                outline: revert;
+            }
         }
 
         .ag-header {
@@ -253,11 +257,13 @@ $subtotal-odd-background-color: var(
 
         .ag-cell {
             &,
-            &.ag-cell-focus {
+            &.ag-cell-focus,
+            &.ag-cell-focus:focus-within {
                 border-top: $cell-border;
                 border-top-color: $cell-border-color;
                 border-right: none;
                 border-left: none;
+                outline: revert;
             }
 
             &,
