@@ -124,7 +124,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
                 />
             );
         },
-        [resizedItemPositions, widgetRenderer],
+        [resizedItemPositions, widgetRenderer, getLayoutDimensions],
     );
 
     const screenSize = useScreenSize();
