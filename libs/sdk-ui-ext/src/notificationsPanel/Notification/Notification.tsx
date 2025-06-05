@@ -167,7 +167,14 @@ export function Notification({
                                     }
                                 >
                                     {({ toggle, id }) => (
-                                        <u data-id="notification-error" id={id} onClick={toggle}>
+                                        <u
+                                            data-id="notification-error"
+                                            id={id}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                toggle();
+                                            }}
+                                        >
                                             <FormattedMessage id="notifications.panel.error.learnMore" />
                                         </u>
                                     )}
