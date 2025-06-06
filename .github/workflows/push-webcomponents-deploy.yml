@@ -63,7 +63,7 @@ jobs:
           echo "GITHUB_SHORT_SHA=${GITHUB_SHA::8}" >> $GITHUB_ENV
           echo "GITHUB_ESCAPE_REF_NAME=${GITHUB_REF_NAME/\//-}" >> $GITHUB_ENV
       - name: Set up QEMU to add multiplatform support
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
       - name: Create docker context
         run: |
           docker context create builder
