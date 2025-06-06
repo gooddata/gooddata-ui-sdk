@@ -776,12 +776,13 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 format: "PNG",
                 fileName: options?.filename || "export",
                 dashboardId,
-                widgetIds: options?.widgetIds?.map((ref) => {
-                    if ("identifier" in ref) {
-                        return ref.identifier;
-                    }
-                    throw new Error("Only identifier references are supported for widget IDs");
-                }),
+                widgetIds:
+                    options?.widgetIds?.map((ref) => {
+                        if ("identifier" in ref) {
+                            return ref.identifier;
+                        }
+                        throw new Error("Only identifier references are supported for widget IDs");
+                    }) ?? [],
                 metadata: convertToBackendExportMetadata({
                     filters: withoutAllTime,
                     title: options?.filename,

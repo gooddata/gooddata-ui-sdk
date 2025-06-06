@@ -958,6 +958,12 @@ export interface ChatHistoryRequest {
      * @memberof ChatHistoryRequest
      */
     reset?: boolean;
+    /**
+     *
+     * @type {SavedVisualization}
+     * @memberof ChatHistoryRequest
+     */
+    savedVisualization?: SavedVisualization;
 }
 
 export const ChatHistoryRequestUserFeedbackEnum = {
@@ -1177,13 +1183,13 @@ export interface ClusteringResult {
      * @type {Array<number>}
      * @memberof ClusteringResult
      */
-    xcoord: Array<number>;
+    ycoord: Array<number>;
     /**
      *
      * @type {Array<number>}
      * @memberof ClusteringResult
      */
-    ycoord: Array<number>;
+    xcoord: Array<number>;
 }
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
@@ -1310,6 +1316,12 @@ export interface CreatedVisualization {
      * @memberof CreatedVisualization
      */
     suggestions: Array<Suggestion>;
+    /**
+     * Saved visualization ID.
+     * @type {string}
+     * @memberof CreatedVisualization
+     */
+    savedVisualizationId?: string;
 }
 
 export const CreatedVisualizationVisualizationTypeEnum = {
@@ -3116,6 +3128,25 @@ export const RouteResultUseCaseEnum = {
 
 export type RouteResultUseCaseEnum = typeof RouteResultUseCaseEnum[keyof typeof RouteResultUseCaseEnum];
 
+/**
+ * Created and saved visualization IDs.
+ * @export
+ * @interface SavedVisualization
+ */
+export interface SavedVisualization {
+    /**
+     * Created visualization ID.
+     * @type {string}
+     * @memberof SavedVisualization
+     */
+    createdVisualizationId: string;
+    /**
+     * Saved visualization ID.
+     * @type {string}
+     * @memberof SavedVisualization
+     */
+    savedVisualizationId: string;
+}
 /**
  *
  * @export

@@ -185,6 +185,12 @@ export interface AutomationAdHocAutomation {
      */
     rawExports?: Array<AutomationAutomationRawExport>;
     /**
+     *
+     * @type {Array<AutomationAutomationSlidesExport>}
+     * @memberof AutomationAdHocAutomation
+     */
+    slidesExports?: Array<AutomationAutomationSlidesExport>;
+    /**
      * External recipients of the automation action results.
      * @type {Array<AutomationAutomationExternalRecipient>}
      * @memberof AutomationAdHocAutomation
@@ -872,6 +878,19 @@ export interface AutomationAutomationRawExport {
 /**
  *
  * @export
+ * @interface AutomationAutomationSlidesExport
+ */
+export interface AutomationAutomationSlidesExport {
+    /**
+     *
+     * @type {AutomationSlidesExportRequest}
+     * @memberof AutomationAutomationSlidesExport
+     */
+    requestPayload: AutomationSlidesExportRequest;
+}
+/**
+ *
+ * @export
  * @interface AutomationAutomationTabularExport
  */
 export interface AutomationAutomationTabularExport {
@@ -1250,6 +1269,12 @@ export interface AutomationExportResult {
     expiresAt?: string;
     /**
      *
+     * @type {number}
+     * @memberof AutomationExportResult
+     */
+    fileSize?: number;
+    /**
+     *
      * @type {string}
      * @memberof AutomationExportResult
      */
@@ -1329,7 +1354,7 @@ export interface AutomationImageExportRequest {
      * @type {Array<string>}
      * @memberof AutomationImageExportRequest
      */
-    widgetIds?: Array<string>;
+    widgetIds: Array<string>;
     /**
      * Metadata definition in free-form JSON format.
      * @type {object}
@@ -2311,7 +2336,7 @@ export interface AutomationRelativeWrapper {
  */
 export interface AutomationSettings {
     /**
-     * Include export info sheet in the exported file. (XLSX)
+     * Include export info sheet in the exported file. Works only with `visualizationObject`. (XLSX)
      * @type {boolean}
      * @memberof AutomationSettings
      */
@@ -2411,6 +2436,64 @@ export const AutomationSimpleMeasureDefinitionMeasureAggregationEnum = {
 
 export type AutomationSimpleMeasureDefinitionMeasureAggregationEnum =
     typeof AutomationSimpleMeasureDefinitionMeasureAggregationEnum[keyof typeof AutomationSimpleMeasureDefinitionMeasureAggregationEnum];
+
+/**
+ * Export request object describing the export properties and metadata for slides exports.
+ * @export
+ * @interface AutomationSlidesExportRequest
+ */
+export interface AutomationSlidesExportRequest {
+    /**
+     * Requested resulting file type.
+     * @type {string}
+     * @memberof AutomationSlidesExportRequest
+     */
+    format: AutomationSlidesExportRequestFormatEnum;
+    /**
+     * File name to be used for retrieving the pdf document.
+     * @type {string}
+     * @memberof AutomationSlidesExportRequest
+     */
+    fileName: string;
+    /**
+     * Dashboard identifier
+     * @type {string}
+     * @memberof AutomationSlidesExportRequest
+     */
+    dashboardId?: string;
+    /**
+     * List of widget identifiers to be exported. Note that only one widget is currently supported.
+     * @type {Array<string>}
+     * @memberof AutomationSlidesExportRequest
+     */
+    widgetIds?: Array<string>;
+    /**
+     * List of visualization ids to be exported. Note that only one visualization is currently supported.
+     * @type {Array<string>}
+     * @memberof AutomationSlidesExportRequest
+     */
+    visualizationIds?: Array<string>;
+    /**
+     * Metadata definition in free-form JSON format.
+     * @type {object}
+     * @memberof AutomationSlidesExportRequest
+     */
+    metadata?: object | null;
+    /**
+     * Export template identifier.
+     * @type {string}
+     * @memberof AutomationSlidesExportRequest
+     */
+    templateId?: string | null;
+}
+
+export const AutomationSlidesExportRequestFormatEnum = {
+    PDF: "PDF",
+    PPTX: "PPTX",
+} as const;
+
+export type AutomationSlidesExportRequestFormatEnum =
+    typeof AutomationSlidesExportRequestFormatEnum[keyof typeof AutomationSlidesExportRequestFormatEnum];
 
 /**
  * Custom SMTP destination for notifications. The properties host, port, username, and password are required on create and update
@@ -2848,6 +2931,12 @@ export interface AutomationWebhookMessageData {
     rawExports?: Array<AutomationExportResult>;
     /**
      *
+     * @type {Array<AutomationExportResult>}
+     * @memberof AutomationWebhookMessageData
+     */
+    slidesExports?: Array<AutomationExportResult>;
+    /**
+     *
      * @type {AutomationAlertDescription}
      * @memberof AutomationWebhookMessageData
      */
@@ -2858,6 +2947,12 @@ export interface AutomationWebhookMessageData {
      * @memberof AutomationWebhookMessageData
      */
     filters?: Array<AutomationNotificationFilter>;
+    /**
+     *
+     * @type {string}
+     * @memberof AutomationWebhookMessageData
+     */
+    notificationSource?: string;
 }
 /**
  *

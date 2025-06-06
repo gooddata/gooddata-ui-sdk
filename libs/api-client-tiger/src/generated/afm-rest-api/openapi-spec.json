@@ -3277,8 +3277,26 @@
                     "reset": {
                         "type": "boolean",
                         "description": "User feedback."
+                    },
+                    "savedVisualization": {
+                        "$ref": "#/components/schemas/SavedVisualization"
                     }
                 }
+            },
+            "SavedVisualization": {
+                "required": ["createdVisualizationId", "savedVisualizationId"],
+                "type": "object",
+                "properties": {
+                    "createdVisualizationId": {
+                        "type": "string",
+                        "description": "Created visualization ID."
+                    },
+                    "savedVisualizationId": {
+                        "type": "string",
+                        "description": "Saved visualization ID."
+                    }
+                },
+                "description": "Created and saved visualization IDs."
             },
             "AttributeNegativeFilter": {
                 "required": ["exclude", "using"],
@@ -3457,6 +3475,10 @@
                         "items": {
                             "$ref": "#/components/schemas/Suggestion"
                         }
+                    },
+                    "savedVisualizationId": {
+                        "type": "string",
+                        "description": "Saved visualization ID."
                     }
                 },
                 "description": "List of created visualization objects"
@@ -3767,13 +3789,13 @@
                             "nullable": true
                         }
                     },
-                    "xcoord": {
+                    "ycoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
                         }
                     },
-                    "ycoord": {
+                    "xcoord": {
                         "type": "array",
                         "items": {
                             "type": "number"

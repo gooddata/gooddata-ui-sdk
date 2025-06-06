@@ -975,7 +975,7 @@
                 "properties": {
                     "exportInfo": {
                         "type": "boolean",
-                        "description": "Include export info sheet in the exported file. (XLSX)",
+                        "description": "Include export info sheet in the exported file. Works only with `visualizationObject`. (XLSX)",
                         "example": true,
                         "default": false
                     },
@@ -2035,7 +2035,7 @@
                 "description": "Metric defined by referencing a MAQL metric or an LDM fact object with aggregation."
             },
             "ImageExportRequest": {
-                "required": ["dashboardId", "fileName", "format"],
+                "required": ["dashboardId", "fileName", "format", "widgetIds"],
                 "type": "object",
                 "properties": {
                     "format": {
@@ -2056,6 +2056,7 @@
                     },
                     "widgetIds": {
                         "maxItems": 1,
+                        "minItems": 1,
                         "uniqueItems": true,
                         "type": "array",
                         "description": "List of widget identifiers to be exported. Note that only one widget is currently supported.",
@@ -2088,7 +2089,8 @@
                         "type": "array",
                         "description": "List of attribute elements by reference",
                         "items": {
-                            "type": "string"
+                            "type": "string",
+                            "nullable": true
                         }
                     }
                 }
@@ -2101,7 +2103,8 @@
                         "type": "array",
                         "description": "List of attribute elements by value",
                         "items": {
-                            "type": "string"
+                            "type": "string",
+                            "nullable": true
                         }
                     }
                 }

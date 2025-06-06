@@ -2302,7 +2302,6 @@ export interface ILlmEndpoint {
 
 // @alpha
 export interface ILlmEndpointBase {
-    description?: string;
     id: string;
     title: string;
 }
