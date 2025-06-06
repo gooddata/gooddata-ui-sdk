@@ -38,15 +38,13 @@ export const Message: React.FC<IMessageProps> = ({
             <div className="gd-message-text">
                 {children}
                 {onClose ? (
-                    <div className="gd-message-dismiss-container">
-                        <Button
-                            className="gd-message-dismiss gd-icon-cross s-dialog-close-button"
-                            onClick={onClose}
-                            accessibilityConfig={{
-                                ariaLabel: accessibilityAriaLabel,
-                            }}
-                        />
-                    </div>
+                    <Button
+                        className="gd-message-dismiss gd-icon-cross s-dialog-close-button"
+                        onClick={onClose}
+                        accessibilityConfig={{
+                            ariaLabel: accessibilityAriaLabel,
+                        }}
+                    />
                 ) : null}
             </div>
         </div>
