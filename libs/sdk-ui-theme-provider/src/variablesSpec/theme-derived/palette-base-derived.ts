@@ -238,26 +238,17 @@ export const derivedPaletteBaseThemeVariables: ThemeDerivedCssVariable[] = [
     {
         type: "derived",
         variableName: "--gd-palette-warning-dimmed",
-        // Most used:
         defaultValue: "#fce7cc",
-        // Default generated (does not fit with most used):
-        // defaultValue: "#fef7d3",
     },
     {
         type: "derived",
         variableName: "--gd-palette-warning-dimmed40",
-        // Most used:
-        defaultValue: "#8e8642",
-        // Default generated (does not fit with most used):
-        // defaultValue: "#8e8641",
+        defaultValue: "#8a6434",
     },
     {
         type: "derived",
         variableName: "--gd-palette-warning-text-dimmed",
-        // Most used:
-        defaultValue: "#6a6a4c",
-        // Default generated (does not fit with most used):
-        // defaultValue: "#6a6a4b",
+        defaultValue: "#685945",
     },
     {
         type: "derived",
