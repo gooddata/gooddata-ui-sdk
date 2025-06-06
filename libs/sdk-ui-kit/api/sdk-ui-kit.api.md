@@ -1902,6 +1902,8 @@ export interface IDropdownProps {
     // (undocumented)
     isOpen?: boolean;
     // (undocumented)
+    isTabCaught?: boolean;
+    // (undocumented)
     onOpenStateChanged?: (isOpen: boolean) => void;
     onToggle?: ((desiredState?: boolean) => void) | (() => void);
     // (undocumented)
@@ -5800,6 +5802,8 @@ export interface UiFocusTrapProps {
     children: React_2.ReactNode;
     customKeyboardNavigationHandler?: (event: KeyboardEvent) => void;
     initialFocus?: React_2.RefObject<HTMLElement> | string;
+    // (undocumented)
+    isTabCaught?: boolean;
     // (undocumented)
     onDeactivate?: () => void;
     refocusKey?: unknown;

@@ -40,6 +40,7 @@ export interface UiFocusTrapProps {
      * If not provided, the default keyboard navigation handler will be used.
      */
     customKeyboardNavigationHandler?: (event: KeyboardEvent) => void;
+    isTabCaught?: boolean;
 }
 
 /**
@@ -69,11 +70,17 @@ const focusAndEnsureReachableElement = (
     }
 };
 
-const useDialogKeyboardNavigation = (
-    trapRef: React.RefObject<HTMLDivElement>,
-    returnFocus: () => void,
-    onDeactivate?: () => void,
-) => {
+const useDialogKeyboardNavigation = ({
+    trapRef,
+    returnFocus,
+    onDeactivate,
+    isTabCaught = true,
+}: {
+    trapRef: React.RefObject<HTMLDivElement>;
+    returnFocus: () => void;
+    onDeactivate?: () => void;
+    isTabCaught?: boolean;
+}) => {
     const handleFocusNavigation = useCallback(
         (focusableElements: HTMLElement[], direction: NavigationDirection) => {
             const elements = Array.from(focusableElements);
@@ -106,27 +113,39 @@ const useDialogKeyboardNavigation = (
             }
 
             return makeDialogKeyboardNavigation<KeyboardEvent>({
-                onFocusNext: () => {
-                    const { focusableElements } = getFocusableElements(trapRef.current);
-                    if (!focusableElements?.length) {
-                        return;
-                    }
-                    handleFocusNavigation(focusableElements, "forward");
-                },
-                onFocusPrevious: () => {
-                    const { focusableElements } = getFocusableElements(trapRef.current);
-                    if (!focusableElements?.length) {
-                        return;
-                    }
-                    handleFocusNavigation(focusableElements, "backward");
-                },
+                onFocusNext: isTabCaught
+                    ? () => {
+                          const { focusableElements } = getFocusableElements(trapRef.current);
+                          if (!focusableElements?.length) {
+                              return;
+                          }
+                          handleFocusNavigation(focusableElements, "forward");
+                      }
+                    : undefined,
+                onFocusPrevious: isTabCaught
+                    ? () => {
+                          const { focusableElements } = getFocusableElements(trapRef.current);
+                          if (!focusableElements?.length) {
+                              return;
+                          }
+                          handleFocusNavigation(focusableElements, "backward");
+                      }
+                    : undefined,
                 onClose: () => {
+                    onDeactivate?.();
+                    returnFocus();
+                },
+                onUnhandledKeyDown: (e) => {
+                    if (isTabCaught || e.code !== "Tab") {
+                        return;
+                    }
+
                     onDeactivate?.();
                     returnFocus();
                 },
             })(event);
         },
-        [handleFocusNavigation, onDeactivate, returnFocus, trapRef],
+        [handleFocusNavigation, onDeactivate, returnFocus, trapRef, isTabCaught],
     );
 
     return {
@@ -146,6 +165,7 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
     initialFocus,
     refocusKey,
     customKeyboardNavigationHandler,
+    isTabCaught = true,
 }) => {
     const trapRef = useRef<HTMLDivElement | null>(null);
     const [trapElement, setTrapElement] = React.useState<HTMLDivElement | null>(null);
@@ -171,7 +191,12 @@ export const UiFocusTrap: React.FC<UiFocusTrapProps> = ({
         }
     }, [returnFocusTo]);
 
-    const { keyboardNavigationHandler } = useDialogKeyboardNavigation(trapRef, returnFocus, onDeactivate);
+    const { keyboardNavigationHandler } = useDialogKeyboardNavigation({
+        trapRef,
+        returnFocus,
+        onDeactivate,
+        isTabCaught,
+    });
 
     const keyboardHandler = customKeyboardNavigationHandler ?? keyboardNavigationHandler;
 

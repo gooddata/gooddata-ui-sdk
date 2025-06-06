@@ -77,19 +77,6 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
                 "gd-schedule-email__item--isFocusedSelectItem": focusedAction === SELECT_ITEM_ACTION,
             })}
         >
-            <div className="gd-notifications-channel-delete">
-                <BubbleHoverTrigger showDelay={0} hideDelay={0}>
-                    <span
-                        className={cx("gd-notifications-channel-delete-icon s-scheduled-email-delete-icon", {
-                            "gd-schedule-email__item__button--isFocused": focusedAction === "delete",
-                        })}
-                        onClick={() => onDelete(scheduledEmail)}
-                    />
-                    <Bubble className="bubble-primary" alignPoints={ICON_TOOLTIP_ALIGN_POINTS}>
-                        <FormattedMessage id={"dialogs.schedule.management.delete"} />
-                    </Bubble>
-                </BubbleHoverTrigger>
-            </div>
             <div className="gd-notifications-channel-content" onClick={canEdit ? handleClick : undefined}>
                 <div
                     className={cx("gd-notifications-channel-icon", {
@@ -121,6 +108,19 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
                         </span>
                     </div>
                 </div>
+            </div>
+            <div className="gd-notifications-channel-delete">
+                <BubbleHoverTrigger showDelay={0} hideDelay={0}>
+                    <span
+                        className={cx("gd-notifications-channel-delete-icon s-scheduled-email-delete-icon", {
+                            "gd-schedule-email__item__button--isFocused": focusedAction === "delete",
+                        })}
+                        onClick={() => onDelete(scheduledEmail)}
+                    />
+                    <Bubble className="bubble-primary" alignPoints={ICON_TOOLTIP_ALIGN_POINTS}>
+                        <FormattedMessage id={"dialogs.schedule.management.delete"} />
+                    </Bubble>
+                </BubbleHoverTrigger>
             </div>
         </div>
     );
