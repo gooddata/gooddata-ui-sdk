@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { PluggableHeadline } from "../PluggableHeadline.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
@@ -44,10 +44,6 @@ describe("PluggableHeadline2", () => {
         return new PluggableHeadline({
             ...defaultProps,
             ...customProps,
-            featureFlags: {
-                ...customProps.featureFlags,
-                enableNewHeadline: true,
-            },
         });
     }
 
@@ -208,11 +204,7 @@ describe("PluggableHeadline2", () => {
         });
 
         it("should correctly set default comparison configuration", () => {
-            const headline = createComponent({
-                featureFlags: {
-                    enableNewHeadline: true,
-                },
-            });
+            const headline = createComponent();
 
             const options: IVisProps = getTestOptions({
                 lastSavedVisClassUrl: "local:columns",
@@ -233,11 +225,7 @@ describe("PluggableHeadline2", () => {
         });
 
         it("should correctly set default comparison configuration for new insight", () => {
-            const headline = createComponent({
-                featureFlags: {
-                    enableNewHeadline: true,
-                },
-            });
+            const headline = createComponent();
 
             const options: IVisProps = getTestOptions({
                 lastSavedVisClassUrl: "local:headline",
@@ -258,11 +246,7 @@ describe("PluggableHeadline2", () => {
         });
 
         it("should correctly set default comparison configuration for migration in InsightOverlay", () => {
-            const headline = createComponent({
-                featureFlags: {
-                    enableNewHeadline: true,
-                },
-            });
+            const headline = createComponent();
 
             const options: IVisProps = getTestOptions({
                 lastSavedVisClassUrl: "local:headline",
@@ -292,11 +276,7 @@ describe("PluggableHeadline2", () => {
         });
 
         it("should correctly set default comparison configuration for migration", () => {
-            const headline = createComponent({
-                featureFlags: {
-                    enableNewHeadline: true,
-                },
-            });
+            const headline = createComponent();
 
             const options: IVisProps = getTestOptions({
                 lastSavedVisClassUrl: "local:headline",

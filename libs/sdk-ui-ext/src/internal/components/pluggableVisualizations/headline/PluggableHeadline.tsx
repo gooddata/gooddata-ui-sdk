@@ -17,6 +17,7 @@ import {
     isInsight,
     MeasureGroupIdentifier,
     newDimension,
+    ISeparators,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { CoreHeadline, createHeadlineProvider } from "@gooddata/sdk-ui-charts";
@@ -56,7 +57,6 @@ import {
     getHeadlineUiConfig,
 } from "../../../utils/uiConfigHelpers/headlineUiConfigHelper.js";
 import HeadlineConfigurationPanel from "../../configurationPanels/HeadlineConfigurationPanel.js";
-import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 import { setHeadlineRefPointBuckets, tryToMapForeignBuckets } from "./headlineBucketHelper.js";
 import {
@@ -117,7 +117,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         const referencePointCloned = cloneDeep(referencePoint);
         let newReferencePoint: IExtendedReferencePoint = {
             ...referencePointCloned,
-            uiConfig: getDefaultHeadlineUiConfig(this.settings),
+            uiConfig: getDefaultHeadlineUiConfig(),
         };
 
         if (!hasGlobalDateFilter(referencePoint.filters)) {
@@ -166,7 +166,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
 
         configureOverTimeComparison(newReferencePoint, !!this.settings?.["enableWeekFilters"]);
 
-        newReferencePoint.uiConfig = getHeadlineUiConfig(newReferencePoint, this.intl, this.settings);
+        newReferencePoint.uiConfig = getHeadlineUiConfig(newReferencePoint, this.intl);
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,
             this.supportedPropertiesList,
@@ -221,7 +221,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         const buckets = [...(insightBuckets(insight) || [])];
         const headlineConfig = buildHeadlineVisualizationConfig(visualizationProperties, settings, options);
 
-        const provider = createHeadlineProvider(buckets, headlineConfig, settings?.enableNewHeadline);
+        const provider = createHeadlineProvider(buckets, headlineConfig);
         const headlineTransformation = provider.getHeadlineTransformationComponent();
         const execution = provider.createExecution(executionFactory, {
             buckets,
@@ -256,18 +256,14 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         const configPanelElement = this.getConfigPanelElement();
         if (configPanelElement) {
             const comparisonColorPalette = getComparisonColorPalette(options?.theme);
-            const ConfigurationPanel = this.settings?.enableNewHeadline
-                ? HeadlineConfigurationPanel
-                : UnsupportedConfigurationPanel;
 
             this.renderFun(
-                <ConfigurationPanel
+                <HeadlineConfigurationPanel
                     locale={this.locale}
                     insight={insight}
                     panelConfig={{
-                        separators: this.settings?.separators,
+                        separators: this.settings?.separators as ISeparators,
                         comparisonColorPalette,
-                        supportsAttributeHierarchies: false,
                     }}
                     pushData={this.pushData}
                     properties={getHeadlineSupportedProperties(this.visualizationProperties)}
@@ -319,7 +315,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         const hasComparisonProperties = insightProperties(insight).controls?.comparison;
         const currentControls = this.visualizationProperties.controls ?? {};
 
-        if (!hasComparisonProperties && this.settings?.enableNewHeadline) {
+        if (!hasComparisonProperties) {
             const defaultComparisonProperties = this.getDefaultPropertiesForComparison(options, insight);
             const newProperties = {
                 ...this.visualizationProperties,
