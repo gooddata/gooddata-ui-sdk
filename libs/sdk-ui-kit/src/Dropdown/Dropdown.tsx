@@ -128,6 +128,8 @@ export interface IDropdownProps {
         triggerRole?: "button" | "combobox";
         popupRole?: "listbox" | "tree" | "grid" | "dialog";
     };
+
+    isTabCaught?: boolean;
 }
 
 /**
@@ -168,6 +170,8 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
         returnFocusTo,
 
         accessibilityConfig,
+
+        isTabCaught = true,
     } = props;
     const [isOpen, setIsOpen] = usePropState(isOpenProp ?? openOnInit ?? false);
 
@@ -305,6 +309,9 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                     returnFocusTo={returnFocusTo ?? (buttonRef.current ? buttonRef : buttonWrapperRef)}
                     autofocusOnOpen={autofocusOnOpen}
                     initialFocus={initialFocus}
+                    isTabCaught={isTabCaught}
+                    // Used when tabbing out
+                    onDeactivate={closeDropdown}
                 >
                     <div className="overlay dropdown-body">
                         {renderBody({
