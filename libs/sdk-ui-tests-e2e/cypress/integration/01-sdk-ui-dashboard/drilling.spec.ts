@@ -51,8 +51,8 @@ describe("Interaction", () => {
             new CustomURLDialog().hasItem("Created");
             widgetConfig.closeCustomURLDialog().close();
 
-            const widget2 = new Widget(2);
-            const widgetConfig2 = new WidgetConfiguration(2);
+            const widget2 = new Widget(0, 1);
+            const widgetConfig2 = new WidgetConfiguration(0, 1);
             widget2.scrollIntoView().waitChartLoaded().focus();
             widgetConfig2.openInteractions().addInteraction("Sum of Amount", "measure");
             widgetConfig2
@@ -68,7 +68,7 @@ describe("Interaction", () => {
         "should display correct insight name on invalid interaction warning",
         { tags: ["checklist_integrated_tiger"] },
         () => {
-            const widget1 = new Widget(1);
+            const widget1 = new Widget(0, 1);
             const message = new Messages();
 
             Navigation.visit("dashboard/dashboard-many-rows-columns");
@@ -87,7 +87,7 @@ describe("Interaction", () => {
                 .clickShowMore()
                 .hasInsightNameIsBolder(true, "Visualization has invalid interaction rename");
             widget1.waitChartLoaded().scrollIntoView().focus();
-            new WidgetConfiguration(1).removeFromDashboard();
+            new WidgetConfiguration(0, 1).removeFromDashboard();
             message.hasWarningMessage(false);
         },
     );

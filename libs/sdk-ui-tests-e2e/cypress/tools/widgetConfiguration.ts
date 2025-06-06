@@ -13,14 +13,19 @@ import {
 
 export type InteractionType = "measure" | "attribute";
 export class WidgetConfiguration {
-    constructor(private widgetIndex: number) {}
+    constructor(private widgetIndex: number, private section: number = 0) {}
 
     getElement() {
         return cy.get(".s-gd-configuration-bubble");
     }
 
     open() {
-        new Widget(this.widgetIndex).getElement().click().find(".dash-item-action").first().click();
+        new Widget(this.widgetIndex, this.section)
+            .getElement()
+            .click()
+            .find(".dash-item-action")
+            .first()
+            .click();
         this.getElement().should("be.visible");
         return this;
     }
