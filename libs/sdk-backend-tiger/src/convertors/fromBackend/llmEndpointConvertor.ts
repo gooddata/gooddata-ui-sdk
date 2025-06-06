@@ -7,7 +7,6 @@ export function convertLlmEndpoint(endpoint: JsonApiLlmEndpointOutWithLinks): IL
         return {
             id: endpoint.id,
             title: endpoint.attributes?.title,
-            description: endpoint.attributes?.description,
             provider: "OPENAI",
             model: endpoint.attributes?.llmModel,
             organization: endpoint.attributes?.llmOrganization,

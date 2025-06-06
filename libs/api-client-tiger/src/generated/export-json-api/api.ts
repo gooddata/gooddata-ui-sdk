@@ -1044,7 +1044,7 @@ export interface ImageExportRequest {
      * @type {Array<string>}
      * @memberof ImageExportRequest
      */
-    widgetIds?: Array<string>;
+    widgetIds: Array<string>;
     /**
      * Metadata definition in free-form JSON format.
      * @type {object}
@@ -1782,7 +1782,7 @@ export type RelativeDateFilterRelativeDateFilterGranularityEnum =
  */
 export interface Settings {
     /**
-     * Include export info sheet in the exported file. (XLSX)
+     * Include export info sheet in the exported file. Works only with `visualizationObject`. (XLSX)
      * @type {boolean}
      * @memberof Settings
      */

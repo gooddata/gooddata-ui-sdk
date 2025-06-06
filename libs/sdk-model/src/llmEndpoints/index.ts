@@ -14,10 +14,6 @@ export interface ILlmEndpointBase {
      * Endpoint title
      */
     title: string;
-    /**
-     * Endpoint description
-     */
-    description?: string;
 }
 
 /**

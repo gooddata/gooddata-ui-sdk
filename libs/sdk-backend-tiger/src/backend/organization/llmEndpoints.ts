@@ -50,7 +50,6 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
                         id: endpoint.id,
                         attributes: {
                             title: endpoint.title,
-                            description: endpoint.description,
                             llmModel: endpoint.model,
                             llmOrganization: endpoint.organization,
                             provider: "OPENAI",
@@ -80,7 +79,6 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
                         id: endpoint.id,
                         attributes: {
                             title: endpoint.title,
-                            description: endpoint.description,
                             llmModel: endpoint.model,
                             llmOrganization: endpoint.organization,
                             provider: "OPENAI",
@@ -111,7 +109,6 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
                         attributes: Object.fromEntries(
                             Object.entries({
                                 title: endpoint.title,
-                                description: endpoint.description,
                                 llmModel: endpoint.model,
                                 llmOrganization: endpoint.organization,
                                 provider: endpoint.provider,

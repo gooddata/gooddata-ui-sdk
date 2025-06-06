@@ -207,6 +207,7 @@ export type {
     DateRelativeFilter,
     ActionsApiCancelExecutionsRequest,
     AfmCancelTokens,
+    SavedVisualization,
 } from "./generated/afm-rest-api/api.js";
 export {
     AfmObjectIdentifierAttributeIdentifierTypeEnum as AfmModelObjectIdentifierAttributeIdentifierTypeEnum,
@@ -336,11 +337,11 @@ export type {
     ActionsApiCreateSlidesExportRequest,
     ActionsApiGetSlidesExportRequest,
     ActionsApiGetSlidesExportMetadataRequest,
-    SlidesExportRequest,
+    SlidesExportRequest as AfmExportSlidesExportRequest,
     RawCustomOverride as AfmExportRawCustomOverride,
     RawCustomLabel as AfmExportRawCustomLabel,
     RawCustomMetric as AfmExportRawCustomMetric,
-    SlidesExportRequestFormatEnum,
+    SlidesExportRequestFormatEnum as AfmExportSlidesExportRequestFormatEnum,
     ActionsApiCreateImageExportRequest,
     ActionsApiGetImageExportRequest,
     ActionsApiGetImageExportMetadataRequest,
