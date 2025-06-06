@@ -720,11 +720,6 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             return;
         }
 
-        // Find the sorted column id (first column with a sort direction)
-        // This will not work once multi-column sorting is supported
-        const sortedCol = event.columns?.find((col) => col.getSort() !== undefined);
-        this.setLastSortedColId(sortedCol ? sortedCol.getColId() : null);
-
         const sortItems = this.internal.table.createSortItems(event.api.getAllGridColumns()!);
 
         // Changing sort may cause subtotals to no longer be reasonably placed - remove them if that is the case
@@ -1211,6 +1206,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             onPageLoaded: this.onPageLoaded,
             onExecutionTransformed: this.onExecutionTransformed,
             onMenuAggregationClick: this.onMenuAggregationClick,
+            setLastSortedColId: this.setLastSortedColId,
 
             ...this.boundAgGridCallbacks,
         };

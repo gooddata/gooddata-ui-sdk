@@ -35,6 +35,7 @@ const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
         menu,
         progressSort,
         eGridHeader,
+        setLastSortedColId,
     } = props;
 
     const [sorting, setSorting] = useState<SortDirection | undefined>(column.getSort() as SortDirection);
@@ -106,14 +107,23 @@ const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
         if (!eGridHeader) {
             return;
         }
+        const handleKeyDown = (event: KeyboardEvent) => {
+            // set last sorted column id to table only when sort was triggered by keyboard
+            if (event.key === "Enter" && enableSorting && setLastSortedColId) {
+                setLastSortedColId(column.getColId());
+            }
+        };
         const handleBlur = () => {
             setIsFocused(false);
         };
+        eGridHeader.addEventListener("keydown", handleKeyDown);
         eGridHeader.addEventListener("blur", handleBlur);
+
         return () => {
+            eGridHeader.removeEventListener("keydown", handleKeyDown);
             eGridHeader.removeEventListener("blur", handleBlur);
         };
-    }, [eGridHeader]);
+    }, [eGridHeader, column, enableSorting, setLastSortedColId]);
 
     return (
         <HeaderCell

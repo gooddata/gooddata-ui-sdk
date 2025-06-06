@@ -23,6 +23,7 @@ export interface ICommonHeaderParams {
     getColumnTotals?: () => ITotal[];
     getRowTotals?: () => ITotal[];
     intl?: IntlShape;
+    setLastSortedColId?: (colId: string | null) => void;
 }
 
 export interface IHeaderCellProps extends ICommonHeaderParams {

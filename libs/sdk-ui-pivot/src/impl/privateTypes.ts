@@ -69,6 +69,7 @@ export type TableConfigAccessors = {
     getMeasureGroupDimension: () => MeasureGroupDimension;
 
     getResizingConfig: () => ColumnResizingConfig;
+    setLastSortedColId: (colId: string | null) => void;
 };
 
 /**

@@ -71,6 +71,7 @@ export function createGridOptions(
         getColumnTotals: tableMethods.getColumnTotals,
         getRowTotals: tableMethods.getRowTotals,
         intl: props.intl,
+        setLastSortedColId: tableMethods.setLastSortedColId,
     };
 
     // For column headers on left and metrics in rows, all headers are rendered inside regular table cells, therefore complete ag-grid headers are hidden with headerHeight: 0
