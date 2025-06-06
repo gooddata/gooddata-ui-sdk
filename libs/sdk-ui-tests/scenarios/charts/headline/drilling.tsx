@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Headline, IHeadlineProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
@@ -13,9 +13,6 @@ import { comparisonDisabled, comparisonEnabled, HeadlinePositiveComparisonMeasur
 export default scenariosFor<IHeadlineProps>("Headline", Headline)
     .withGroupNames(ScenarioGroupNames.Drilling)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta", "mock-no-insight")
-    .withDefaultBackendSettings({
-        enableNewHeadline: false,
-    })
     .addScenario("drilling on single measure", {
         primaryMeasure: ReferenceMd.Won,
         drillableItems: [WonMeasurePredicate],
@@ -39,9 +36,6 @@ export default scenariosFor<IHeadlineProps>("Headline", Headline)
         config: {
             disableDrillUnderline: true,
         },
-    })
-    .withDefaultBackendSettings({
-        enableNewHeadline: true,
     })
     .addScenario("multi measures with drilling on single measure", {
         primaryMeasure: ReferenceMd.Won,

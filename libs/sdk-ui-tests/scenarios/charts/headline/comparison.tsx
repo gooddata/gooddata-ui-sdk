@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import {
     Headline,
@@ -84,9 +84,6 @@ export const comparisonDisabled: IComparison = {
 export default scenariosFor<IHeadlineProps>("Headline", Headline)
     .withGroupNames("comparison")
     .withDefaultTestTypes("visual")
-    .withDefaultBackendSettings({
-        enableNewHeadline: true,
-    })
     .addScenario("comparison with default config", {
         ...HeadlinePositiveComparisonMeasures,
         config: {

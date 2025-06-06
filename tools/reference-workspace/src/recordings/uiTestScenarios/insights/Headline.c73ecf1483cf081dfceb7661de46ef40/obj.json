@@ -36,7 +36,8 @@
                     }
                 ],
                 "localIdentifier": "secondary_measures"
-            }
+            },
+            { "items": [], "localIdentifier": "comparison_virtual_arithmetic_bucket" }
         ],
         "filters": [],
         "identifier": "Headline.c73ecf1483cf081dfceb7661de46ef40",

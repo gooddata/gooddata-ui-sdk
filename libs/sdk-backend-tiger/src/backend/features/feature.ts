@@ -151,13 +151,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableNewHeadline,
-            "enableNewHeadline",
-            "BOOLEAN",
-            FeatureFlagsValues.enableNewHeadline,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableUnavailableItemsVisible,
             "enableUnavailableItemsVisible",
             "BOOLEAN",
