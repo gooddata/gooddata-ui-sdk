@@ -40,6 +40,8 @@ const VisualizationSaveDialogCore: React.FC<
                 });
             }}
             isPositive
+            autofocusOnOpen={false}
+            submitOnEnterKey={true}
             headline={intl.formatMessage({ id: "gd.gen-ai.save-dialog.title" })}
             cancelButtonText={intl.formatMessage({ id: "gd.gen-ai.button.cancel" })}
             submitButtonText={
@@ -58,6 +60,7 @@ const VisualizationSaveDialogCore: React.FC<
                     : intl.formatMessage({ id: "gd.gen-ai.save-dialog.description.explore" })}
             </Typography>
             <Input
+                autofocus={true}
                 label={intl.formatMessage({ id: "gd.gen-ai.save-dialog.label" })}
                 labelPositionTop
                 placeholder={visualization.title}
