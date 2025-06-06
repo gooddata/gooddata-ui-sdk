@@ -2,16 +2,10 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import {
-    LoadingSpinner,
-    SELECT_ITEM_ACTION,
-    useIdPrefixed,
-    useListWithActionsKeyboardNavigation,
-} from "@gooddata/sdk-ui-kit";
+import { LoadingSpinner, useIdPrefixed, useListWithActionsKeyboardNavigation } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { Alert } from "./Alert.js";
-import noop from "lodash/noop.js";
 
 interface IAlertsProps {
     onDelete: (alert: IAutomationMetadataObject) => void;
@@ -23,7 +17,7 @@ interface IAlertsProps {
 }
 
 const getItemAdditionalActions = () => {
-    return ["dropdown" as const];
+    return ["dropdown" as const, "item" as const];
 };
 
 export const Alerts: React.FC<IAlertsProps> = (props) => {
@@ -41,21 +35,32 @@ export const Alerts: React.FC<IAlertsProps> = (props) => {
         [onDelete],
     );
 
-    const { focusedAction, focusedItem, onKeyboardNavigation, setFocusedAction } =
-        useListWithActionsKeyboardNavigation({
-            items: alerts,
-            getItemAdditionalActions,
-            actionHandlers: {
-                selectItem: handleEdit,
-                dropdown: () => noop,
+    const [dropdownOpenAlertId, setDropdownOpenAlertId] = React.useState<string | null>(null);
+    const handleToggleDropdown = React.useCallback(
+        (alert: IAutomationMetadataObject) => (desiredState?: boolean) => {
+            setDropdownOpenAlertId((prev) => {
+                const nextState = desiredState ?? !prev;
+
+                return nextState ? alert.id : null;
+            });
+        },
+        [],
+    );
+
+    const { focusedAction, focusedItem, onKeyboardNavigation } = useListWithActionsKeyboardNavigation({
+        items: alerts,
+        getItemAdditionalActions,
+        actionHandlers: {
+            selectItem: handleEdit,
+            item: handleEdit,
+            dropdown: (alert) => () => {
+                handleToggleDropdown(alert)(true);
             },
-        });
+        },
+        isNestedList: true,
+    });
 
     const listId = useIdPrefixed("AlertsList");
-
-    const handleCloseDropdown = React.useCallback(() => {
-        setFocusedAction(SELECT_ITEM_ACTION);
-    }, [setFocusedAction]);
 
     if (isLoading) {
         return (
@@ -82,7 +87,7 @@ export const Alerts: React.FC<IAlertsProps> = (props) => {
         <div
             onKeyDown={onKeyboardNavigation}
             tabIndex={0}
-            className={"gd-notifications-channels-list"}
+            className={"gd-alerts-list__items gd-alerts-list--dialog"}
             id={listId}
         >
             {alerts.map((alert) => (
@@ -93,8 +98,10 @@ export const Alerts: React.FC<IAlertsProps> = (props) => {
                     onDelete={handleDelete(alert)}
                     onEdit={handleEdit(alert)}
                     onTogglePause={handleTogglePause(alert)}
-                    onCloseDropdown={handleCloseDropdown}
                     listId={listId}
+                    isDropdownOpen={dropdownOpenAlertId === alert.id}
+                    onToggleDropdown={handleToggleDropdown(alert)}
+                    isSubtitleVisible
                 />
             ))}
         </div>

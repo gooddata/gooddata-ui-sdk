@@ -1,6 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as mixins;
 @use "react-loading-skeleton/dist/skeleton.css";
 
 @use "variables" as dashboard-variables;
@@ -70,66 +71,115 @@
 //
 // Alerts list item
 //
+.gd-alerts-list--widget .gd-alerts-list-item {
+    --icon-size: 13px;
+    --icon-left-padding: 10px;
+    --item-height: 42px;
+}
+
+.gd-alerts-list--dialog .gd-alerts-list-item {
+    --icon-size: 16px;
+    --icon-left-padding: 0;
+    --item-height: 50px;
+}
+
 .gd-alerts-list-item {
+    --item-height: 42px;
+    --icon-size: 26px;
+    --icon-left-padding: 10px;
+
     display: flex;
+    gap: 10px;
     align-items: center;
     cursor: pointer;
     transition: background-color 100ms ease-in-out;
+    height: var(--item-height);
 
-    &:hover {
+    &:hover,
+    &--isActive {
         background-color: kit-variables.$is-focused-background;
     }
 
     &--readonly {
         cursor: default;
     }
-}
 
-.gd-alerts-list-item__content {
-    padding: 5px 0 5px 10px;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    min-width: 0;
-}
+    &__content {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+        padding: 5px 0 5px var(--icon-left-padding);
+    }
 
-.gd-alerts-list-item__icon {
-    background-color: kit-variables.$is-focused-background;
-    width: 26px;
-    height: 26px;
-    border-radius: 51%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    &__icon {
+        background-color: kit-variables.$is-focused-background;
+        padding: calc(var(--icon-size) / 2);
+        border-radius: 51%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-    &.gd-alerts-list-item__icon-invalid {
-        background-color: kit-variables.$gd-palette-error-dimmed;
+        &--invalid {
+            background-color: kit-variables.$gd-palette-error-dimmed;
+        }
+
+        & > * {
+            width: var(--icon-size);
+            height: var(--icon-size);
+        }
+    }
+
+    &__text-content {
+        overflow: hidden;
+        color: kit-variables.$gd-color-text;
+    }
+
+    &__shortened-text {
+        white-space: nowrap;
+        display: inline-block;
+        width: 100%;
+    }
+
+    &__title {
+        font-weight: 700;
+    }
+
+    &__subtitle {
+        color: kit-variables.$gd-color-state-blank;
+    }
+
+    &__menu-icon {
+        border: none;
+        background: transparent;
+        width: var(--item-height);
+        height: var(--item-height);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 100%;
+        transition: background-color 100ms ease-in-out;
+    }
+
+    &__menu-icon:hover,
+    &--isActive &__menu-icon {
+        background-color: kit-variables.$gd-input-text-border;
     }
 }
 
-.gd-alerts-list-item__details {
-    margin-left: 10px;
-    margin-right: 10px;
-    font-size: 12px;
-    line-height: normal;
-    width: 100%;
-    min-width: 0;
-}
+.gd-alerts-list__items:focus-visible {
+    outline: none;
 
-.gd-alerts-list-item__title {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: kit-variables.$gd-color-text;
-    font-weight: 700;
-    max-height: 32px;
-    margin-right: -10px;
-    //stylelint-disable-next-line value-no-vendor-prefix
-    display: -webkit-box;
-    //stylelint-disable-next-line value-no-vendor-prefix
-    -webkit-box-orient: vertical;
-    //stylelint-disable-next-line value-no-vendor-prefix
-    -webkit-line-clamp: 2;
+    .gd-alerts-list-item {
+        &--isFocusedSelectItem {
+            @include mixins.focus-ring;
+        }
+
+        &__menu-icon--isFocused {
+            @include mixins.focus-ring;
+        }
+    }
 }
 
 //

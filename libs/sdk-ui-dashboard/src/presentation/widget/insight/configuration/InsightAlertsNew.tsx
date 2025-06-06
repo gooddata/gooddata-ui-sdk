@@ -36,6 +36,7 @@ import {
 import { useSaveAlertToBackend } from "../../../alerting/DefaultAlertingDialog/hooks/useSaveAlertToBackend.js";
 import { messages } from "../../../alerting/DefaultAlertingDialog/messages.js";
 import { getSupportedInsightMeasuresByInsight } from "../../../alerting/DefaultAlertingDialog/utils/items.js";
+import { AlertDeleteDialog } from "../../../alerting/DefaultAlertingDialog/components/AlertDeleteDialog.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
@@ -60,7 +61,8 @@ export const InsightAlertsNew: React.FC<IInsightMenuSubmenuComponentProps> = ({
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const alerts = useDashboardSelector(selectDashboardUserAutomationAlertsInContext(widget.localIdentifier));
 
-    const [isDeletingAlert, setIsDeletingAlert] = useState(false);
+    const [isDeleteInProgress, setIsDeleteInProgress] = useState(false);
+    const [alertToDelete, setAlertToDelete] = React.useState<null | IAutomationMetadataObject>(null);
 
     const widgetRefSuffix = isInsightWidget(widget)
         ? stringUtils.simplifyText(objRefToString(widget.ref))
@@ -117,9 +119,21 @@ export const InsightAlertsNew: React.FC<IInsightMenuSubmenuComponentProps> = ({
         handleResumeAlert(alertToResume);
     };
 
-    const deleteExistingAlert = async (alert: IAutomationMetadataObject) => {
-        setIsDeletingAlert(true);
-        const alertCreatorId = alert.createdBy?.login;
+    const startDeletingAlert = React.useCallback((alert: IAutomationMetadataObject) => {
+        setAlertToDelete(alert);
+    }, []);
+
+    const cancelDeletingAlert = React.useCallback(() => {
+        setAlertToDelete(null);
+    }, []);
+
+    const deleteExistingAlert = React.useCallback(async () => {
+        if (!alertToDelete) {
+            return;
+        }
+
+        setIsDeleteInProgress(true);
+        const alertCreatorId = alertToDelete.createdBy?.login;
         const currentUserId = currentUser?.login;
         const isAlertCreatedByCurrentUser =
             !!alertCreatorId && !!currentUserId && alertCreatorId === currentUserId;
@@ -132,15 +146,25 @@ export const InsightAlertsNew: React.FC<IInsightMenuSubmenuComponentProps> = ({
                 : automationService.unsubscribeAutomation.bind(automationService);
 
         try {
-            await deleteMethod(alert.id);
+            setAlertToDelete(null);
+            await deleteMethod(alertToDelete.id);
             addSuccess(messages.alertDeleteSuccess);
-            setIsDeletingAlert(false);
+            setIsDeleteInProgress(false);
             refreshAutomations();
         } catch (err) {
             addError(messages.alertDeleteError);
-            setIsDeletingAlert(false);
+            setIsDeleteInProgress(false);
         }
-    };
+    }, [
+        addError,
+        addSuccess,
+        alertToDelete,
+        canManageAutomations,
+        currentUser?.login,
+        effectiveBackend,
+        effectiveWorkspace,
+        refreshAutomations,
+    ]);
 
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
     const maxAutomationsReached = automationsCount >= maxAutomations && !unlimitedAutomationsEntitlement;
@@ -160,13 +184,13 @@ export const InsightAlertsNew: React.FC<IInsightMenuSubmenuComponentProps> = ({
             <OverlayControllerProvider overlayController={overlayController}>
                 {automationsLoading || supportedMeasures.length > 0 ? (
                     <AlertsList
-                        isLoading={automationsLoading || isSavingAlert || isDeletingAlert}
+                        isLoading={automationsLoading || isSavingAlert || isDeleteInProgress}
                         alerts={alerts}
                         onCreateAlert={initiateAlertCreation}
                         onEditAlert={initiateAlertEditing}
                         onPauseAlert={pauseExistingAlert}
                         onResumeAlert={resumeExistingAlert}
-                        onDeleteAlert={deleteExistingAlert}
+                        onDeleteAlert={startDeletingAlert}
                         onClose={onClose}
                         onGoBack={onGoBack}
                         maxAutomationsReached={maxAutomationsReached}
@@ -176,6 +200,14 @@ export const InsightAlertsNew: React.FC<IInsightMenuSubmenuComponentProps> = ({
                 ) : (
                     <NoAvailableMeasures onClose={onClose} onBack={onGoBack} />
                 )}
+
+                {alertToDelete ? (
+                    <AlertDeleteDialog
+                        onCancel={cancelDeletingAlert}
+                        onDelete={deleteExistingAlert}
+                        title={alertToDelete.title}
+                    />
+                ) : null}
             </OverlayControllerProvider>
         </ScrollablePanel>
     );
