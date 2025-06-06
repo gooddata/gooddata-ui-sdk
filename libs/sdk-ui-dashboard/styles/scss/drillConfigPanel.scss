@@ -346,7 +346,7 @@
         .drill-config-target-warning {
             display: inline-block;
             margin-top: 8px;
-            color: kit-variables.$gd-color-warning-text;
+            color: kit-variables.$gd-color-warning;
 
             > span:first-child {
                 font-size: 14px;
@@ -359,7 +359,7 @@
         display: inline-block;
         margin-top: 10px;
         padding: 4px 8px 4px 10px;
-        color: kit-variables.$gd-color-warning-text;
+        color: kit-variables.$gd-color-warning;
         background-color: kit-variables.$gd-palette-warning-dimmed;
         border-radius: 5px;
     }
@@ -587,7 +587,7 @@ $gd-gd-drill-to-url-body-width: 230px;
 
         &.gd-icon-earth::before {
             content: "\E624";
-            color: kit-variables.$gd-color-warning-text;
+            color: kit-variables.$gd-color-warning;
             text-align: center;
         }
     }
@@ -717,11 +717,11 @@ $gd-gd-drill-to-url-body-width: 230px;
         }
 
         .cm-attribute {
-            color: kit-variables.$gd-color-warning-text;
+            color: kit-variables.$gd-color-warning;
         }
 
         .cm-filter {
-            color: kit-variables.$gd-color-warning-text;
+            color: kit-variables.$gd-color-warning;
         }
 
         .cm-invalid-identifier,

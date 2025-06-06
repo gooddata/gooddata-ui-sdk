@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { ITheme } from "@gooddata/sdk-model";
 import { getContrast, shade } from "polished";
 import { getComplementaryPalette } from "../complementaryPalette.js";
@@ -29,7 +29,7 @@ export const prepareBaseColors = (theme: ITheme): ITheme => {
     const defaultPrimary = "#14b2e2";
     const defaultSuccess = "#00c18d";
     const defaultError = "#e54d42";
-    const defaultWarning = "#fada23";
+    const defaultWarning = "#f18600";
 
     if (theme?.palette?.complementary) {
         return {
