@@ -340,7 +340,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
 export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string, selectionMode?: DashboardAttributeFilterSelectionMode, mode?: DashboardAttributeFilterConfigMode, initialSelection?: IAttributeElements, initialIsNegativeSelection?: boolean, localIdentifier?: string, primaryDisplayForm?: ObjRef, title?: string): AddAttributeFilter;
 
 // @internal (undocumented)
-export function AddAttributeFilterButton({ className, isOpen, title, onClick, }: IAddAttributeFilterButtonProps): React_2.JSX.Element;
+export function AddAttributeFilterButton({ className, isOpen, title, buttonRef, onClick, }: IAddAttributeFilterButtonProps): React_2.JSX.Element;
 
 // @beta
 export interface AddAttributeFilterPayload {
@@ -594,7 +594,7 @@ export interface AttributeHierarchyModified extends IDashboardCommand {
 export function attributeHierarchyModified(correlationId?: string): AttributeHierarchyModified;
 
 // @internal (undocumented)
-export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, getCustomItemTitle, }: IDashboardAttributeFilterPlaceholderProps): React_2.JSX.Element;
+export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, renderVirtualisedList, getCustomItemTitle, }: IDashboardAttributeFilterPlaceholderProps): React_2.JSX.Element;
 
 // @alpha (undocumented)
 export type AutomationInteractionData = {
@@ -4338,6 +4338,8 @@ export const HiddenTopBar: (_props: ITopBarProps) => JSX.Element | null;
 // @internal (undocumented)
 export interface IAddAttributeFilterButtonProps {
     // (undocumented)
+    buttonRef?: React_2.MutableRefObject<HTMLElement>;
+    // (undocumented)
     className: string;
     // (undocumented)
     isOpen: boolean;
@@ -4579,6 +4581,8 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     overlayPositionType?: OverlayPositionType;
     // (undocumented)
     renderNoData?: (props: IDropdownListNoDataRenderProps) => React.ReactNode;
+    // (undocumented)
+    renderVirtualisedList?: boolean;
 }
 
 // @public (undocumented)

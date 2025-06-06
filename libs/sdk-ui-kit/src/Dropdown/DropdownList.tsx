@@ -5,6 +5,7 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 import { Input } from "../Form/index.js";
 import { DropdownTabs } from "./DropdownTabs.js";
 import { IListProps, List } from "../List/index.js";
+import { UiPagedVirtualList } from "../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
 import { LoadingMask } from "../LoadingMask/index.js";
 import { NoData } from "../NoData/index.js";
 import { AutoSize } from "../AutoSize/index.js";
@@ -28,6 +29,9 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     height?: number;
     width?: number;
     maxHeight?: number;
+
+    renderVirtualisedList?: boolean;
+    onKeyDownSelect?: (item: T) => void;
 
     isLoading?: boolean;
 
@@ -82,6 +86,16 @@ const defaultNoData = injectIntl(
 
 /**
  * @internal
+ *
+ * This component currently supports rendering both legacy and modern list implementations,
+ * but there is an opportunity to simplify and improve maintainability by splitting it.
+ *
+ * TODO: Consider splitting this component into two separate implementations:
+ *
+ * 1. `List` — Maintained temporarily for backward compatibility with existing consumers that rely on
+ *    the legacy `List` implementation based on `fixed-data-table-2`.
+ *
+ * 2. `UiPagedVirtualised` — Preferred implementation that uses our `UiPagedVirtualList` component
  */
 export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
     const {
@@ -92,6 +106,9 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
         width,
         height,
         maxHeight,
+
+        renderVirtualisedList = false,
+        onKeyDownSelect,
 
         isMobile,
         isLoading,
@@ -115,6 +132,8 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
         onTabSelect,
 
         renderNoData = defaultNoData,
+        footer,
+        closeDropdown,
 
         scrollToItem,
         scrollDirection,
@@ -130,8 +149,6 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
     const searchFieldClassNames = cx("gd-list-searchfield", "gd-flex-item");
 
     const renderFooter = () => {
-        const { footer, closeDropdown } = props;
-
         if (!footer) {
             return null;
         }
@@ -151,11 +168,6 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
         [onSearch],
     );
 
-    useEffect(() => {
-        // update string if dropdown is not getting unmounted on close to not have previous search on re-open
-        setCurrentSearchString(searchString);
-    }, [searchString]);
-
     const onEscKeyPress = useCallback(
         (e) => {
             if (currentSearchString.length > 0) {
@@ -164,6 +176,11 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
         },
         [currentSearchString],
     );
+
+    useEffect(() => {
+        // update string if dropdown is not getting unmounted on close to not have previous search on re-open
+        setCurrentSearchString(searchString);
+    }, [searchString]);
 
     return (
         <React.Fragment>
@@ -201,8 +218,38 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
                     {(autoSize) => {
                         const listWidth = isMobile ? autoSize.width : width;
                         const listHeight = isMobile ? autoSize.height : height;
+                        const effectiveItemHeight = isMobile
+                            ? Math.max(mobileItemHeight, itemHeight)
+                            : itemHeight;
+                        const effectiveMaxHeight = maxHeight || listHeight || 300;
 
-                        return (
+                        return renderVirtualisedList ? (
+                            <div style={{ width: listWidth }} className={listClassNames}>
+                                <UiPagedVirtualList
+                                    maxHeight={effectiveMaxHeight}
+                                    items={items}
+                                    itemHeight={effectiveItemHeight}
+                                    itemsGap={0}
+                                    itemPadding={0}
+                                    skeletonItemsCount={0}
+                                    onKeyDownSelect={onKeyDownSelect}
+                                    closeDropdown={closeDropdown}
+                                >
+                                    {(item) => {
+                                        const rowIndex = items.indexOf(item);
+                                        const listWidth = isMobile ? autoSize.width : width;
+                                        return listProps.renderItem({
+                                            rowIndex,
+                                            item,
+                                            width: listWidth,
+                                            height: effectiveItemHeight,
+                                            isFirst: rowIndex === 0,
+                                            isLast: rowIndex === itemsCount - 1,
+                                        });
+                                    }}
+                                </UiPagedVirtualList>
+                            </div>
+                        ) : (
                             <List
                                 className={listClassNames}
                                 width={listWidth}

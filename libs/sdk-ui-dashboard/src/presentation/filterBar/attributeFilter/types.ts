@@ -110,6 +110,7 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     DropdownTitleComponent?: ComponentType;
     renderNoData?: (props: IDropdownListNoDataRenderProps) => React.ReactNode;
     overlayPositionType?: OverlayPositionType;
+    renderVirtualisedList?: boolean;
     getCustomItemTitle?: (item: ICatalogAttribute | ICatalogDateDataset) => string | undefined;
 }
 

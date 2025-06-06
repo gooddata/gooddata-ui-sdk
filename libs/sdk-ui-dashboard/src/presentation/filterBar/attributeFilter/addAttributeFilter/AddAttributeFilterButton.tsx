@@ -10,6 +10,7 @@ export interface IAddAttributeFilterButtonProps {
     className: string;
     isOpen: boolean;
     title?: string;
+    buttonRef?: React.MutableRefObject<HTMLElement>;
     onClick?: () => void;
 }
 
@@ -20,6 +21,7 @@ export function AddAttributeFilterButton({
     className,
     isOpen,
     title,
+    buttonRef,
     onClick,
 }: IAddAttributeFilterButtonProps) {
     const intl = useIntl();
@@ -30,7 +32,7 @@ export function AddAttributeFilterButton({
     });
 
     return (
-        <div className={rootClassNames} onClick={onClick}>
+        <div ref={buttonRef as React.RefObject<HTMLDivElement>} className={rootClassNames} onClick={onClick}>
             <div className="button-content">
                 <div className="button-title">{title}</div>
             </div>
