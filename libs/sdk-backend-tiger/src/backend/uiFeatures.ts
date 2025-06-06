@@ -373,7 +373,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSnapshotExportAccessibility: false,
     enableWidgetExportPngImage: false,
     enableExportToDocumentStorage: false,
-    enableAttributeFilterVirtualised: false,
+    enableAttributeFilterVirtualised: true,
 };
 
 export const FeatureFlagsValues = {
