@@ -8,21 +8,23 @@ import { styleVariables } from "./styles/variables.js";
 import { isOneOfTypes } from "../_util/common.js";
 import { chartClick } from "./drilldownEventing.js";
 import { setupDrilldown } from "./setupDrilldownToParentAttribute.js";
-import Highcharts from "../../lib/index.js";
+import { DrilldownEventObject, HTMLDOMElement } from "../../lib/index.js";
+import Highcharts from "highcharts/esm/highcharts.js";
 import { supportedDualAxesChartTypes } from "../_chartOptions/chartCapabilities.js";
 import { IChartOptions } from "../../typings/unsafe.js";
 import { ITheme } from "@gooddata/sdk-model";
 import { DEFAULT_CATEGORIES_LIMIT } from "../../constants/limits.js";
 import { IChartConfig } from "../../../interfaces/index.js";
 
-const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+const isTouchDevice =
+    typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);
 const HIGHCHART_PLOT_LIMITED_RANGE = 1e5;
 
 export const MAX_POINT_WIDTH = 100;
 export const HOVER_BRIGHTNESS = 0.1;
 export const MINIMUM_HC_SAFE_BRIGHTNESS = Number.MIN_VALUE;
 
-function handleTooltipOffScreen(renderTo: Highcharts.HTMLDOMElement) {
+function handleTooltipOffScreen(renderTo: HTMLDOMElement) {
     // allow tooltip over the container wrapper
     Highcharts.css(renderTo, { overflow: "visible" });
 }
@@ -155,13 +157,9 @@ function getThemedConfiguration(theme: ITheme, config?: IChartConfig): any {
 }
 
 function registerDrilldownHandler(configuration: any, chartOptions: any, drillConfig: IDrillConfig) {
-    set(
-        configuration,
-        "chart.events.drilldown",
-        function chartDrilldownHandler(event: Highcharts.DrilldownEventObject) {
-            chartClick(drillConfig, event, this.container, chartOptions.type);
-        },
-    );
+    set(configuration, "chart.events.drilldown", function chartDrilldownHandler(event: DrilldownEventObject) {
+        chartClick(drillConfig, event, this.container, chartOptions.type);
+    });
 
     return configuration;
 }

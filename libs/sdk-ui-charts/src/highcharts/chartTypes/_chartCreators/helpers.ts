@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import flatten from "lodash/flatten.js";
 import pick from "lodash/pick.js";
 import map from "lodash/map.js";
@@ -18,9 +18,8 @@ import { VisualizationTypes, VisType } from "@gooddata/sdk-ui";
 import { isInvertedChartType } from "../_util/common.js";
 import { IChartConfig, ChartAlignTypes } from "../../../interfaces/index.js";
 import { BOTTOM, MIDDLE, TOP } from "../../constants/alignments.js";
-import Highcharts from "../../lib/index.js";
+import { ChartOptions, OptionsStackingValue, PlotOptions } from "../../lib/index.js";
 import { ISeriesDataItem, ISeriesItem, UnsafeInternals, IChartOptions } from "../../typings/unsafe.js";
-import { OptionsStackingValue, PlotOptions } from "highcharts";
 
 export interface IRectByPoints {
     left: number;
@@ -419,7 +418,7 @@ export function alignChart(chart: Highcharts.Chart, verticalAlign: ChartAlignTyp
     const type = getChartType(chart);
     const className = `s-highcharts-${type}-aligned-to-${verticalAlign}`;
 
-    let chartOptions: Highcharts.ChartOptions = {};
+    let chartOptions: ChartOptions = {};
     if (isVerticalRectContainer && verticalAlign !== MIDDLE) {
         chartOptions = {
             spacingTop: isAlignedToTop ? 0 : undefined,

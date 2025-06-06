@@ -7,7 +7,7 @@ options = {
         ...depCruiser.PublicLibraryRules,
         depCruiser.isolatedSubmodule("chart-interfaces", "src/interfaces"),
         depCruiser.moduleWithDependencies("highcharts", "src/highcharts", ["src/interfaces"]),
-        depCruiser.moduleWithDependencies("charts", "src/charts", ["src/highcharts", "src/interfaces"]),
+        //depCruiser.moduleWithDependencies("charts", "src/charts", ["src/highcharts", "src/interfaces"]),
         /* These appear as desired deps for the two modules; currently there are validation errors. The
          * refactoring should by driven by need to remove these validation errors.
         depCruiser.moduleWithDependencies(

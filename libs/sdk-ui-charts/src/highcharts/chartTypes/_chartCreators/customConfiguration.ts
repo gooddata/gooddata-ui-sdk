@@ -65,8 +65,12 @@ import {
 } from "../../typings/unsafe.js";
 import { AXIS_LINE_COLOR } from "../_util/color.js";
 import { IntlShape } from "react-intl";
-import { HighchartsOptions, XAxisOptions, YAxisOptions } from "../../lib/index.js";
-import { AxisLabelsFormatterCallbackFunction } from "highcharts";
+import {
+    HighchartsOptions,
+    XAxisOptions,
+    YAxisOptions,
+    AxisLabelsFormatterCallbackFunction,
+} from "../../lib/index.js";
 import { isMeasureFormatInPercent, ITheme } from "@gooddata/sdk-model";
 import { getContinuousLineConfiguration } from "./getContinuousLineConfiguration.js";
 import { getWaterfallXAxisConfiguration } from "./getWaterfallXAxisConfiguration.js";

@@ -1,5 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
-import Highcharts from "../../../../lib/index.js";
+// (C) 2007-2025 GoodData Corporation
+import { Point } from "../../../../lib/index.js";
 import * as autohideColumnLabels from "../autohideColumnLabels.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { ISeriesDataItem, IUnsafeDataLabels, UnsafeInternals } from "../../../../typings/unsafe.js";
@@ -119,10 +119,8 @@ describe("getLabelOrDataLabelForPoints", () => {
         ],
     ])(
         "should return label/dataLabel of data points",
-        (visiblePoints: Highcharts.Point[], expected: IUnsafeDataLabels[]) => {
-            const labels = autohideColumnLabels.getLabelOrDataLabelForPoints(
-                visiblePoints as any as Highcharts.Point[],
-            );
+        (visiblePoints: any[], expected: IUnsafeDataLabels[]) => {
+            const labels = autohideColumnLabels.getLabelOrDataLabelForPoints(visiblePoints as any);
             expect(labels).toEqual(expected);
         },
     );

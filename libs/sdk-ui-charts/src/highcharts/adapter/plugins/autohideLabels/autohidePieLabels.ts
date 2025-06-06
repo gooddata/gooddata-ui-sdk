@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import fill from "lodash/fill.js";
 
 import {
@@ -7,7 +7,7 @@ import {
     isIntersecting,
     IRectBySize,
 } from "../../../chartTypes/_chartCreators/helpers.js";
-import Highcharts from "../../../lib/index.js";
+import Highcharts from "highcharts/esm/highcharts.js";
 
 // delete this plugin once we upgrade to newer highcharts,
 // set allowOverlap: false to get this behaviour

@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 /**
  * Highcharts extension that overwrites 'axis.adjustTickAmount' of Highcharts
  * Original code snippet
@@ -16,13 +16,14 @@
 
 import isNil from "lodash/isNil.js";
 import isArray from "lodash/isArray.js";
-import Highcharts from "../../lib/index.js";
+import { Axis, Series, WrapProceedFunction } from "../../lib/index.js";
 import { isLineChart } from "../../chartTypes/_util/common.js";
 import { UnsafeInternals } from "../../typings/unsafe.js";
+import Highcharts from "highcharts/esm/highcharts.js";
 
 interface IBaseAndAlignedAxes {
-    baseYAxis: Highcharts.Axis;
-    alignedYAxis: Highcharts.Axis;
+    baseYAxis: Axis;
+    alignedYAxis: Axis;
 }
 
 export const ALIGNED = 0;
@@ -35,11 +36,11 @@ export const Y_AXIS_SCORE = {
     NEGATIVE_AND_POSITIVE_DATA: 2,
 };
 
-function getYAxes(chart: Highcharts.Chart): Highcharts.Axis[] {
+function getYAxes(chart: Highcharts.Chart): Axis[] {
     return chart.axes.filter(isYAxis);
 }
 
-function isYAxis(axis: Highcharts.Axis): boolean {
+function isYAxis(axis: Axis): boolean {
     return axis.coll === "yAxis";
 }
 
@@ -63,7 +64,7 @@ function isUserSetExtremesOnAnyAxis(chart: Highcharts.Chart): boolean {
  *      0: it aligns
  *      1: move zero index to right
  */
-export function getDirection(primaryAxis: Highcharts.Axis, secondaryAxis: Highcharts.Axis): number {
+export function getDirection(primaryAxis: Axis, secondaryAxis: Axis): number {
     if (isNil(primaryAxis) || isNil(secondaryAxis)) {
         return ALIGNED;
     }
@@ -105,7 +106,7 @@ function addTick(tickPositions: number[], tickInterval: number, isAddFirst: bool
 /**
  * Add or reduce ticks
  */
-export function adjustTicks(axis: Highcharts.Axis): void {
+export function adjustTicks(axis: Axis): void {
     let tickPositions: number[] = (axis.tickPositions || []).slice();
     const { tickAmount, tickInterval } = axis as UnsafeInternals;
     const { dataMax, dataMin, min, max } = axis.getExtremes();
@@ -139,7 +140,7 @@ export function adjustTicks(axis: Highcharts.Axis): void {
     axis.tickPositions = tickPositions.slice();
 }
 
-export function getSelectionRange(axis: Highcharts.Axis): number[] {
+export function getSelectionRange(axis: Axis): number[] {
     const { tickAmount } = axis as UnsafeInternals;
     const { tickPositions } = axis;
     const { dataMin, dataMax } = axis.getExtremes();
@@ -165,7 +166,7 @@ export function getSelectionRange(axis: Highcharts.Axis): number[] {
 /**
  * Get axis score that increase 1 for data having positive and negative values
  */
-export function getYAxisScore(axis: Highcharts.Axis): number {
+export function getYAxisScore(axis: Axis): number {
     const { dataMin, dataMax } = axis.getExtremes();
     const yAxisMin = Math.min(0, dataMin);
     const yAxisMax = Math.max(0, dataMax);
@@ -187,7 +188,7 @@ export function getYAxisScore(axis: Highcharts.Axis): number {
  *
  * @returns base Y axis and aligned Y axis
  */
-function getBaseYAxis(yAxes: Highcharts.Axis[]): IBaseAndAlignedAxes {
+function getBaseYAxis(yAxes: Axis[]): IBaseAndAlignedAxes {
     const [firstAxisScore, secondAxisScore] = yAxes.map(getYAxisScore);
     if (firstAxisScore >= secondAxisScore) {
         return {
@@ -201,7 +202,7 @@ function getBaseYAxis(yAxes: Highcharts.Axis[]): IBaseAndAlignedAxes {
     };
 }
 
-export function alignToBaseAxis(yAxis: Highcharts.Axis, baseYAxis: Highcharts.Axis): void {
+export function alignToBaseAxis(yAxis: Axis, baseYAxis: Axis): void {
     const { tickInterval } = yAxis as UnsafeInternals;
     for (
         let direction: number = getDirection(baseYAxis, yAxis);
@@ -226,7 +227,7 @@ export function alignToBaseAxis(yAxis: Highcharts.Axis, baseYAxis: Highcharts.Ax
     }
 }
 
-function updateAxis(axis: Highcharts.Axis, currentTickAmount: number): void {
+function updateAxis(axis: Axis, currentTickAmount: number): void {
     const { options, tickPositions } = axis;
     const { tickAmount } = axis as UnsafeInternals;
 
@@ -243,7 +244,7 @@ function updateAxis(axis: Highcharts.Axis, currentTickAmount: number): void {
  * Prevent data is cut off by increasing tick interval to zoom out axis
  * Only apply to chart without user-input min/max
  */
-export function preventDataCutOff(axis: Highcharts.Axis): void {
+export function preventDataCutOff(axis: Axis): void {
     const { chart } = axis;
     const { min, max, dataMin, dataMax } = axis.getExtremes();
 
@@ -261,7 +262,7 @@ export function preventDataCutOff(axis: Highcharts.Axis): void {
  * Align axes once secondary axis is ready
  * Cause at the time HC finishes adjust primary axis, secondary axis has not been done yet
  */
-function alignYAxes(axis: Highcharts.Axis): void {
+function alignYAxes(axis: Axis): void {
     const chart: Highcharts.Chart = axis.chart;
     const yAxes = getYAxes(chart);
     const { baseYAxis, alignedYAxis } = getBaseYAxis(yAxes);
@@ -313,18 +314,18 @@ export function customAdjustTickAmount(): void {
     }
 }
 
-function isAxisWithLineChartType(axis: Highcharts.Axis): boolean {
+function isAxisWithLineChartType(axis: Axis): boolean {
     if (isLineChart(axis?.chart?.userOptions?.chart?.type)) {
         return true;
     }
 
     const { series } = axis;
-    return series.reduce((result: boolean, item: Highcharts.Series) => {
+    return series.reduce((result: boolean, item: Series) => {
         return isLineChart(item.type) ? true : result;
     }, false);
 }
 
-function isSingleAxisChart(axis: Highcharts.Axis): boolean {
+function isSingleAxisChart(axis: Axis): boolean {
     const yAxes = getYAxes(axis.chart);
     return yAxes.length < 2;
 }
@@ -334,7 +335,7 @@ function isSingleAxisChart(axis: Highcharts.Axis): boolean {
  *
  * @returns true as leaving to HC, otherwise false as running custom behavior
  */
-export function shouldBeHandledByHighcharts(axis: Highcharts.Axis): boolean {
+export function shouldBeHandledByHighcharts(axis: Axis): boolean {
     if (!isYAxis(axis) || isSingleAxisChart(axis) || isAxisWithLineChartType(axis)) {
         return true;
     }
@@ -348,7 +349,7 @@ export const adjustTickAmount = (HighchartsInstance: any): void => {
     Highcharts.wrap(
         HighchartsInstance.Axis.prototype,
         "adjustTickAmount",
-        function (proceed: Highcharts.WrapProceedFunction) {
+        function (proceed: WrapProceedFunction) {
             // eslint-disable-next-line @typescript-eslint/no-this-alias
             const axis = this;
 

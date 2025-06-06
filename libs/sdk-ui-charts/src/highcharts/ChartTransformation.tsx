@@ -37,8 +37,8 @@ import {
     validateData,
 } from "./chartTypes/_chartOptions/chartLimits.js";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
-import Highcharts from "./lib/index.js";
 import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common.js";
+import Highcharts from "highcharts/esm/highcharts.js";
 
 export function renderHighCharts(props: IHighChartsRendererProps): JSX.Element {
     const childrenRenderer = (contentRect: ContentRect) => (

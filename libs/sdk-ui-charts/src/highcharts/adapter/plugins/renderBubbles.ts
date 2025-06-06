@@ -10,9 +10,8 @@
  *  - Fix bubbles is not rendered with min/max config
  */
 import isNil from "lodash/isNil.js";
-import Highcharts from "../../lib/index.js";
+import { Series, SeriesBubbleOptions } from "../../lib/index.js";
 import { IHighchartsAxisExtend } from "../../typings/extend.js";
-import { SeriesBubbleOptions } from "highcharts";
 export interface IBubbleAxis extends IHighchartsAxisExtend {
     allowZoomOutside?: boolean;
     dataMin?: number;
@@ -22,13 +21,13 @@ export interface IBubbleAxis extends IHighchartsAxisExtend {
     userMax?: number;
 }
 
-export interface IBubbleSeries extends Highcharts.Series {
+export interface IBubbleSeries extends Series {
     bubblePadding?: boolean;
     minPxSize?: number;
     maxPxSize?: number;
     zData?: Array<number | null>;
     radii?: Array<number | null>;
-    getRadii(zMin: number, zMax: number, series: Highcharts.Series): number | null;
+    getRadii(zMin: number, zMax: number, series: Series): number | null;
     options: SeriesBubbleOptions;
     xData?: Array<number | null>;
     yData?: Array<number | null>;

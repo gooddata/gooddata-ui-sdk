@@ -1,11 +1,11 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import range from "lodash/range.js";
 import set from "lodash/set.js";
 import isNil from "lodash/isNil.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import findIndex from "lodash/findIndex.js";
 import { DefaultColorPalette, VisualizationTypes, HeaderPredicates, DataViewFacade } from "@gooddata/sdk-ui";
-import Highcharts from "../../../lib/index.js";
+import { ColorAxisDataClassesOptions } from "../../../lib/index.js";
 import { findMeasureGroupInDimensions } from "../../_util/executionResultHelper.js";
 import { getHeatmapDataClasses, getTreemapAttributes } from "../chartOptionsBuilder.js";
 import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
@@ -3429,7 +3429,7 @@ describe("chartOptionsBuilder", () => {
                 describe("getHeatmapDataClasses", () => {
                     it("should return empty array when there are no values in series", () => {
                         const series = [{ data: [{ value: null as any }] }];
-                        const expectedDataClasses: Highcharts.ColorAxisDataClassesOptions[] = [];
+                        const expectedDataClasses: ColorAxisDataClassesOptions[] = [];
                         const dataClasses = getHeatmapDataClasses(series, {} as any as IColorStrategy);
 
                         expect(dataClasses).toEqual(expectedDataClasses);

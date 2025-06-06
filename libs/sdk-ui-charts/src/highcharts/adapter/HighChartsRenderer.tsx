@@ -21,7 +21,7 @@ import {
     isWaterfall,
 } from "../chartTypes/_util/common.js";
 import { VisualizationTypes, LoadingComponent } from "@gooddata/sdk-ui";
-import Highcharts, { HighchartsOptions, YAxisOptions, XAxisOptions } from "../lib/index.js";
+import { HighchartsOptions, YAxisOptions, XAxisOptions, HChart } from "../lib/index.js";
 import { alignChart } from "../chartTypes/_chartCreators/helpers.js";
 import {
     ILegendProps,
@@ -43,7 +43,7 @@ import { mergePropertiesWithOverride } from "./propertyMerger.js";
 export const FLUID_LEGEND_THRESHOLD = 768;
 
 export interface IChartHTMLElement extends HTMLElement {
-    getChart(): Highcharts.Chart;
+    getChart(): HChart;
 
     getHighchartRef(): HTMLElement;
 }
@@ -104,7 +104,7 @@ export class HighChartsRenderer extends React.PureComponent<
         chartRenderer: renderChart,
         legendRenderer: renderLegend,
         onLegendReady: noop,
-        documentObj: document,
+        documentObj: typeof document !== "undefined" ? document : null,
     };
 
     private highchartsRendererRef = React.createRef<HTMLDivElement>(); // whole component = legend + chart
@@ -133,7 +133,7 @@ export class HighChartsRenderer extends React.PureComponent<
     public shouldShowFluid(): boolean {
         const { documentObj, legend } = this.props;
         return (
-            documentObj.documentElement.clientWidth < FLUID_LEGEND_THRESHOLD &&
+            documentObj?.documentElement?.clientWidth < FLUID_LEGEND_THRESHOLD &&
             legend?.responsive !== "autoPositionWithPopup"
         );
     }
@@ -376,7 +376,7 @@ export class HighChartsRenderer extends React.PureComponent<
                 : config,
             callback: this.props.afterRender,
         };
-        return this.props.chartRenderer(chartProps);
+        return this.props.chartRenderer(chartProps as any);
     }
 
     private getHighChartsConfigOverride = (): Partial<HighchartsOptions> => {
