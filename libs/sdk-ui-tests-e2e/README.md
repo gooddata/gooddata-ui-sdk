@@ -1,5 +1,7 @@
 # SDK End-to-end tests
 
+# testing
+
 This project contains End-to-End tests for GoodData.UI components.
 
 ## Overview
