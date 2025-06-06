@@ -174,6 +174,8 @@ export type {
     IUiMenuPluggableComponents,
     IUiMenuItemData,
 } from "./@ui/UiMenu/types.js";
+export { UiTabs } from "./@ui/UiTabs/UiTabs.js";
+export type { UiTabsProps, UiTab } from "./@ui/UiTabs/UiTabs.js";
 
 export {
     makeMenuKeyboardNavigation,

@@ -5877,6 +5877,29 @@ export interface UiSkeletonProps {
 }
 
 // @internal (undocumented)
+export interface UiTab {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    label: string;
+}
+
+// @internal (undocumented)
+export const UiTabs: React_2.FC<UiTabsProps>;
+
+// @internal (undocumented)
+export interface UiTabsProps {
+    // (undocumented)
+    onTabSelect: (tab: UiTab) => void;
+    // (undocumented)
+    selectedTabId: string;
+    // (undocumented)
+    size?: SizeSmall | SizeMedium | SizeLarge;
+    // (undocumented)
+    tabs: Array<UiTab>;
+}
+
+// @internal (undocumented)
 export type UnitsType = "px" | "%" | "rem" | "em";
 
 // @internal (undocumented)
