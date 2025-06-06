@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { ThemeDerivedCssVariable } from "../types.js";
 
 export const derivedPaletteBaseThemeVariables: ThemeDerivedCssVariable[] = [
@@ -223,7 +223,7 @@ export const derivedPaletteBaseThemeVariables: ThemeDerivedCssVariable[] = [
     {
         type: "derived",
         variableName: "--gd-palette-warning-base-t50",
-        defaultValue: "rgba(250, 218, 35, 0.5)",
+        defaultValue: "rgba(241, 134, 0, 0.5)",
     },
     {
         type: "derived",
@@ -233,13 +233,13 @@ export const derivedPaletteBaseThemeVariables: ThemeDerivedCssVariable[] = [
     {
         type: "derived",
         variableName: "--gd-palette-warning-base-t85",
-        defaultValue: "rgba(250, 218, 35, 0.15)",
+        defaultValue: "rgba(241, 134, 0, 0.15)",
     },
     {
         type: "derived",
         variableName: "--gd-palette-warning-dimmed",
         // Most used:
-        defaultValue: "#fef8d3",
+        defaultValue: "#fce7cc",
         // Default generated (does not fit with most used):
         // defaultValue: "#fef7d3",
     },
@@ -267,7 +267,7 @@ export const derivedPaletteBaseThemeVariables: ThemeDerivedCssVariable[] = [
     {
         type: "derived",
         variableName: "--gd-palette-warning-medium-base-m80",
-        defaultValue: "#fef8d3",
+        defaultValue: "#fce7cc",
     },
     {
         type: "derived",
