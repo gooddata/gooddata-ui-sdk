@@ -110,6 +110,7 @@
         line-height: 20px;
         color: variables.$gd-color-text;
         transition: background-color 0.2s;
+        box-sizing: border-box;
 
         // Controlled by mouse and has hover
         #{$root}--controlType-mouse &:hover:not(&--isDisabled) {
@@ -120,6 +121,29 @@
         &--isDisabled {
             color: variables.$gd-color-disabled;
             cursor: not-allowed;
+        }
+
+        &--isSelected {
+            font-weight: bold;
+            background-color: variables.$is-selected-background;
+            color: variables.$is-selected-color;
+        }
+
+        #{$root}--controlType-mouse &--isSelected:hover:not(&--isDisabled) {
+            background-color: variables.$is-selected-focused-background;
+            color: variables.$is-selected-color;
+        }
+
+        &--size {
+            &-small {
+                height: 28px;
+                font-size: 12px;
+            }
+
+            &-medium {
+                height: 36px;
+                font-size: 14px;
+            }
         }
     }
 

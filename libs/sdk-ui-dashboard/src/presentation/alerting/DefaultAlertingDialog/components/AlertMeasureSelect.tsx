@@ -84,7 +84,7 @@ export const AlertMeasureSelect = ({
                     <UiListbox
                         shouldKeyboardActionStopPropagation={true}
                         shouldKeyboardActionPreventDefault={true}
-                        className="gd-alert-measure-select__list s-alert-measure-select-list"
+                        className="s-alert-measure-select-list"
                         items={listboxItems}
                         maxWidth={ref.current?.offsetWidth}
                         selectedItemId={selectedId}

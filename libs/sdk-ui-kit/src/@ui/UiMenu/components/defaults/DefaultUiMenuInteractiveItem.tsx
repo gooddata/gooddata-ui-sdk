@@ -94,12 +94,15 @@ export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>
     item,
     isFocused,
     onSelect,
+    size = "medium",
 }: IUiMenuInteractiveItemProps<T>): React.ReactNode {
     return (
         <div
             className={e("item", {
                 isFocused,
+                isSelected: !!item.isSelected,
                 isDisabled: !!item.isDisabled,
+                size,
             })}
             onClick={onSelect}
         >

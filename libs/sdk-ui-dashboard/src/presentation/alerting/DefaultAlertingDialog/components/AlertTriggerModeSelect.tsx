@@ -89,7 +89,7 @@ export const AlertTriggerModeSelect = ({
                         <UiListbox
                             shouldKeyboardActionStopPropagation={true}
                             shouldKeyboardActionPreventDefault={true}
-                            className="gd-alert-trigger-mode-select__list s-alert-trigger-mode-select-list"
+                            className="s-alert-trigger-mode-select-list"
                             items={listboxItems}
                             selectedItemId={selectedTriggerMode}
                             onSelect={(item) => {

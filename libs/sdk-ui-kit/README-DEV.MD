@@ -25,6 +25,8 @@ Always think about how you personally would like to use the component.
 
 Interface should be aligned with Figma as much as possible - design of the interface should be discussed together with respective UX and UI personas.
 
+Components **SHOULD NOT** accept a `className` prop for style overrides. Instead, use specific variant props (like `size`, `variant`, etc.) and follow BEM methodology for styling (see [Styles](#styles) section). This ensures consistent use across applications and prevents uncontrolled style modifications.
+
 ## Styles
 
 Styles should follow the [BEM](https://en.bem.info/methodology/quick-start/) methodology.
