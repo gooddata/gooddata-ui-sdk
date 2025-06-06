@@ -18,8 +18,6 @@ module.exports = {
   }
 };
 
-const JSDOM_VERSION = "^27.4.1";
-
 /**
  * This hook is invoked during installation before a package's dependencies
  * are selected.
@@ -29,15 +27,12 @@ const JSDOM_VERSION = "^27.4.1";
  * The return value is the updated object.
  */
 function readPackage(packageJson, context) {
-  // bump node-forge dependency of heroku-exec-utils to a safer version to fix audit (heroku-exec-utils does not use any of the functions missing in node-forge 0.10.0)
-  if (packageJson.name === 'heroku-exec-util') {
-    packageJson.dependencies['node-forge'] = "0.10.0";
-  }
 
-  // bump urijs dependency of @heroku-cli/plugin-apps-v5 to a safer version (it is a patch upgrade, should be safe)
-  if (packageJson.name === '@heroku-cli/plugin-apps-v5' || packageJson.name === '@heroku-cli/plugin-apps') {
-    packageJson.dependencies['urijs'] = "1.19.11";
-  }
+  // // The karma types have a missing dependency on typings from the log4js package.
+  // if (packageJson.name === '@types/karma') {
+  //  context.log('Fixed up dependencies for @types/karma');
+  //  packageJson.dependencies['log4js'] = '0.6.38';
+  // }
 
   return packageJson;
 }
