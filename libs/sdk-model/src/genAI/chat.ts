@@ -16,6 +16,21 @@ export type GenAIChatRole = "USER" | "AI";
 export type GenAIChatInteractionUserFeedback = "POSITIVE" | "NEGATIVE" | "NONE";
 
 /**
+ * User visualization for the chat interaction.
+ * @internal
+ */
+export type GenAIChatInteractionUserVisualisation = {
+    /**
+     * ID of the visualization that server created.
+     */
+    createdId: string;
+    /**
+     * ID of the visualization that was saved by the user.
+     */
+    savedId: string;
+};
+
+/**
  * A route that was detected by the assistant based on the user question.
  * @internal
  */

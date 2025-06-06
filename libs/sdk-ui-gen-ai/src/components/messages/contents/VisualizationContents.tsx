@@ -28,8 +28,8 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { makeTextContents, makeUserMessage, VisualizationContents } from "../../../model.js";
+import { getAbsoluteVisualizationHref, getVisualizationHref } from "../../../utils.js";
 import { useConfig } from "../../ConfigContext.js";
-import { getVisualizationHref } from "../../../utils.js";
 import {
     RootState,
     newMessageAction,
@@ -176,7 +176,10 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                 break;
             case "button-copy":
                 if (visualization?.savedVisualizationId) {
-                    const link = getVisualizationHref(workspaceId, visualization.savedVisualizationId);
+                    const link = getAbsoluteVisualizationHref(
+                        workspaceId,
+                        visualization.savedVisualizationId,
+                    );
                     copy(link);
                     onCopyToClipboard?.({ content: link });
                 }
