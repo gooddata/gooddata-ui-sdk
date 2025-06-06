@@ -103,6 +103,7 @@ export const useAttributeFilterController = (
         enableDuplicatedLabelValuesInAttributeFilter = true,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
         enableDashboardFiltersApplyModes = false,
+        enableAttributeFilterVirtualised = false,
         withoutApply = false,
     } = props;
 
@@ -161,6 +162,7 @@ export const useAttributeFilterController = (
         handler,
         supportsShowingFilteredElements,
         shouldIncludeLimitingFilters,
+        enableAttributeFilterVirtualised,
     );
 
     const forcedInitErrorProp = isValidSingleSelectionFilter(

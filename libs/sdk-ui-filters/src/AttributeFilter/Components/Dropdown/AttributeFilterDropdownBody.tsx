@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 import React, { useMemo, useCallback } from "react";
-import { useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { isEscapeKey, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { IAttributeFilterDropdownBodyProps } from "./types.js";
@@ -49,6 +49,7 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
         onShowFilteredElements,
         irrelevantSelection,
         onClearIrrelevantSelection,
+        enableAttributeFilterVirtualised,
     } = useAttributeFilterContext();
 
     const parentFilterTitles = useMemo(() => {
@@ -68,8 +69,18 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
         [onSelect, onApplyButtonClick, selectionMode],
     );
 
+    const handleKeyDown = useCallback(
+        (e: React.KeyboardEvent) => {
+            if (isEscapeKey(e)) {
+                e.stopPropagation();
+                onCancelButtonClick();
+            }
+        },
+        [onCancelButtonClick],
+    );
+
     return (
-        <div className="gd-attribute-filter-dropdown-body__next" style={style}>
+        <div className="gd-attribute-filter-dropdown-body__next" style={style} onKeyDown={handleKeyDown}>
             <ElementsSelectComponent
                 isInverted={isWorkingSelectionInverted}
                 isLoading={isLoadingInitialElementsPage}
@@ -78,6 +89,8 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
                 onLoadNextPage={onLoadNextElementsPage}
                 onSearch={onSearch}
                 onSelect={onSelectWithPotentialClose}
+                onApplyButtonClick={onApplyButtonClick}
+                isApplyDisabled={isApplyDisabled}
                 nextPageSize={nextElementsPageSize}
                 searchString={searchString}
                 selectedItems={workingSelectionElements}
@@ -93,6 +106,7 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
                 irrelevantSelection={irrelevantSelection}
                 onClearIrrelevantSelection={onClearIrrelevantSelection}
                 withoutApply={withoutApply}
+                enableAttributeFilterVirtualised={enableAttributeFilterVirtualised}
             />
             <DropdownActionsComponent
                 onApplyButtonClick={onApplyButtonClick}

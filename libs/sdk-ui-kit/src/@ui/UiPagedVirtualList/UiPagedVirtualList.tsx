@@ -27,6 +27,18 @@ export interface UiPagedVirtualListProps<T> {
     hasNextPage?: boolean;
     loadNextPage?: () => void;
     isLoading?: boolean;
+    /**
+     * An item in the list that should be scrolled into view when the component renders.
+     * By default, items are compared by object identity (i.e., `===`).
+     * To customize how the target item is found (e.g., by ID), provide a `scrollToItemKeyExtractor` as well.
+     */
+    scrollToItem?: T;
+    /**
+     * A function that extracts a unique key from each item for comparison with `scrollToItem`.
+     * This is useful when the provided `scrollToItem` may not be the same object reference as items in the list.
+     * If not provided, object identity (`===`) is used for comparison.
+     */
+    scrollToItemKeyExtractor?: (item: T) => string | number;
     children: (item: T) => React.ReactNode;
     SkeletonItem?: React.ComponentType<UiPagedVirtualListSkeletonItemProps>;
 }
@@ -97,6 +109,8 @@ function useVirtualList<T>(props: UiPagedVirtualListProps<T>) {
         loadNextPage,
         isLoading,
         maxHeight,
+        scrollToItem,
+        scrollToItemKeyExtractor,
     } = props;
 
     const scrollContainerRef = React.useRef<HTMLDivElement>(null);
@@ -143,6 +157,33 @@ function useVirtualList<T>(props: UiPagedVirtualListProps<T>) {
             loadNextPage?.();
         }
     }, [hasNextPage, loadNextPage, itemsCount, isLoading, virtualItems, skeletonItemsCount]);
+
+    // Add scroll into view effect
+    useEffect(() => {
+        if (!scrollToItem || !items || items.length === 0) {
+            return;
+        }
+
+        const findItemIndex = () => {
+            if (scrollToItemKeyExtractor) {
+                const targetKey = scrollToItemKeyExtractor(scrollToItem);
+                return items.findIndex((item) => scrollToItemKeyExtractor(item) === targetKey);
+            } else {
+                return items.findIndex((item) => item === scrollToItem);
+            }
+        };
+
+        const index = findItemIndex();
+
+        if (index === -1) {
+            return;
+        }
+
+        rowVirtualizer.scrollToIndex(index, {
+            align: "center",
+            behavior: "smooth",
+        });
+    }, [scrollToItem, items, rowVirtualizer, itemHeight, itemsGap, scrollToItemKeyExtractor]);
 
     return {
         itemsCount,

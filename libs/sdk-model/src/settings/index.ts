@@ -716,6 +716,11 @@ export interface ISettings {
      */
     enableExportToDocumentStorage?: boolean;
 
+    /**
+     * Enable usage of new dropdown list replacing fixed-data-table
+     */
+    enableAttributeFilterVirtualised?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 

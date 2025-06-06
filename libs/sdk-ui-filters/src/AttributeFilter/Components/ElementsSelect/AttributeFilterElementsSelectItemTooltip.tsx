@@ -1,20 +1,29 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+import cx from "classnames";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 /**
- * Tooltip for attribute filter element
- *
+ * Props for the AttributeFilterElementsSelectItemTooltip component
  * @beta
  */
-export const AttributeFilterElementsSelectItemTooltip = ({
-    itemTitle,
-    primaryLabelTitle,
-    itemPrimaryTitle,
-}) => (
+export interface IAttributeFilterElementsSelectItemTooltipProps {
+    itemTitle: string;
+    primaryLabelTitle?: string;
+    itemPrimaryTitle?: string;
+    isFocused?: boolean;
+}
+
+export const AttributeFilterElementsSelectItemTooltip: React.FC<
+    IAttributeFilterElementsSelectItemTooltipProps
+> = ({ itemTitle, primaryLabelTitle, itemPrimaryTitle, isFocused = false }) => (
     <div className="gd-item-title-tooltip-wrapper gd-list-item-only">
         <BubbleHoverTrigger className="gd-empty-list-item-tooltip" showDelay={0} hideDelay={0}>
-            <span className="gd-icon-circle-question gd-empty-value-tooltip-icon" />
+            <span
+                className={cx("gd-icon-circle-question gd-empty-value-tooltip-icon", {
+                    "gd-icon-circle-question--isFocusedSelectItem": isFocused,
+                })}
+            />
             <Bubble
                 className="bubble-light gd-item-title-tooltip"
                 alignTo=".gd-empty-value-tooltip-icon"

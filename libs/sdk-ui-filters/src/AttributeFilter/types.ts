@@ -307,6 +307,11 @@ export interface IAttributeFilterCoreProps {
     enableDashboardFiltersApplyModes?: boolean;
 
     /**
+     * Enables usage of new dropdown list replacing fixed-data-table
+     */
+    enableAttributeFilterVirtualised?: boolean;
+
+    /**
      * Specifies the overlay position type for the attribute filter dropdown.
      */
     overlayPositionType?: OverlayPositionType;

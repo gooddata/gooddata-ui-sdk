@@ -18,6 +18,7 @@ export function useAttributeFilterControllerData(
     handler: IMultiSelectAttributeFilterHandler,
     supportsShowingFilteredElements: boolean,
     shouldIncludeLimitingFilters: boolean,
+    enableAttributeFilterVirtualised: boolean,
 ): AttributeFilterControllerData {
     const handlerState = useAttributeFilterHandlerState(handler);
 
@@ -131,6 +132,7 @@ export function useAttributeFilterControllerData(
         currentDisplayAsDisplayFormRef,
 
         enableShowingFilteredElements: supportsShowingFilteredElements,
+        enableAttributeFilterVirtualised,
 
         irrelevantSelection,
 

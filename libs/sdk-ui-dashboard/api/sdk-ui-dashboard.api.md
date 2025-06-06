@@ -8752,6 +8752,9 @@ export const selectEnableAnalyticalDashboardPermissions: DashboardSelector<boole
 export const selectEnableAttributeFilterValuesValidation: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableAttributeFilterVirtualisedList: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableAutomationFilterContext: DashboardSelector<boolean>;
 
 // @alpha (undocumented)

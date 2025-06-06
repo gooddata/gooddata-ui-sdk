@@ -1,11 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import cx from "classnames";
 import DefaultMeasure from "react-measure";
 
 import { LoadingMask } from "../../LoadingMask/index.js";
-import { IRenderListItemProps } from "../List.js";
-import { AsyncList } from "../AsyncList.js";
 import { useInvertableSelect } from "./useInvertableSelect.js";
 import { InvertableSelectSearchBar } from "./InvertableSelectSearchBar.js";
 import { InvertableSelectAllCheckbox } from "./InvertableSelectAllCheckbox.js";
@@ -14,18 +12,31 @@ import { InvertableSelectNoResultsMatch } from "./InvertableSelectNoResultsMatch
 import { ErrorComponent } from "@gooddata/sdk-ui";
 import { InvertableSelectItem } from "./InvertableSelectItem.js";
 import { defaultImport } from "default-import";
+import { useListWithActionsKeyboardNavigation } from "../../@ui/hooks/useListWithActionsKeyboardNavigation.js";
+import noop from "lodash/noop.js";
+import {
+    IInvertableSelectRenderErrorProps,
+    IInvertableSelectRenderLoadingProps,
+    IInvertableSelectRenderNoDataProps,
+    IInvertableSelectRenderSearchBarProps,
+    IInvertableSelectRenderStatusBarProps,
+} from "./InvertableSelect.js";
+import { isEnterKey, isSpaceKey } from "../../utils/events.js";
+import { UiPagedVirtualList } from "../../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const Measure = defaultImport(DefaultMeasure);
 
+const DEFAULT_VISIBLE_ITEMS_COUNT = 10;
+
 /**
  * Properties of List item component implementation
  *
  * @internal
  */
-export interface IInvertableSelectRenderItemProps<T> {
+export interface IInvertableSelectVirtualisedRenderItemProps<T> {
     /**
      * Item of list
      */
@@ -40,6 +51,10 @@ export interface IInvertableSelectRenderItemProps<T> {
      * Indicate that item is selected
      */
     isSelected: boolean;
+
+    focused: boolean;
+
+    focusedAction?: string;
 
     /**
      * Add item to selection callback
@@ -60,49 +75,7 @@ export interface IInvertableSelectRenderItemProps<T> {
 /**
  * @internal
  */
-export interface IInvertableSelectRenderLoadingProps {
-    height?: number;
-}
-
-/**
- * @internal
- */
-export interface IInvertableSelectRenderErrorProps {
-    error?: any;
-    height?: number;
-}
-
-/**
- * @internal
- */
-export interface IInvertableSelectRenderNoDataProps {
-    error?: any;
-    height?: number;
-}
-
-/**
- * @internal
- */
-export interface IInvertableSelectRenderSearchBarProps {
-    searchString?: string;
-    searchPlaceholder?: string;
-    onSearch: (searchString: string) => void;
-}
-
-/**
- * @internal
- */
-export interface IInvertableSelectRenderStatusBarProps<T> {
-    isInverted: boolean;
-    getItemTitle: (item: T) => string;
-    selectedItems: T[];
-    selectedItemsLimit?: number;
-}
-
-/**
- * @internal
- */
-export interface IInvertableSelectRenderActionsProps {
+export interface IInvertableSelectVirtualisedRenderActionsProps {
     checked: boolean;
     onChange: (value: boolean) => void;
     onToggle: () => void;
@@ -110,12 +83,13 @@ export interface IInvertableSelectRenderActionsProps {
     isFiltered: boolean;
     isPartialSelection: boolean;
     isVisible: boolean;
+    onApplyButtonClick?: () => void;
 }
 
 /**
  * @internal
  */
-export interface IInvertableSelectProps<T> {
+export interface IInvertableSelectVirtualisedProps<T> {
     className?: string;
     width?: number;
     height?: number;
@@ -141,29 +115,30 @@ export interface IInvertableSelectProps<T> {
 
     error?: any;
 
+    canSubmitOnKeyDown?: boolean;
     isLoading?: boolean;
     nextPageItemPlaceholdersCount?: number;
     isLoadingNextPage?: boolean;
     onLoadNextPage?: () => void;
 
+    onApplyButtonClick?: () => void;
+
     renderError?: (props: IInvertableSelectRenderErrorProps) => JSX.Element;
     renderLoading?: (props: IInvertableSelectRenderLoadingProps) => JSX.Element;
     renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => JSX.Element;
     renderNoData?: (props: IInvertableSelectRenderNoDataProps) => JSX.Element;
-    renderItem?: (props: IInvertableSelectRenderItemProps<T>) => JSX.Element;
+    renderItem?: (props: IInvertableSelectVirtualisedRenderItemProps<T>) => JSX.Element;
     renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => JSX.Element;
-    renderActions?: (props: IInvertableSelectRenderActionsProps) => JSX.Element;
+    renderActions?: (props: IInvertableSelectVirtualisedRenderActionsProps) => JSX.Element;
 }
 
 /**
  * @internal
  */
-export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
+export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualisedProps<T>) {
     const {
         className,
-        width,
         height,
-        adaptiveWidth,
         adaptiveHeight,
         isSingleSelect = false,
 
@@ -172,6 +147,7 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
         itemHeight,
 
         getItemTitle,
+        getItemKey,
 
         isInverted = true,
         selectedItems,
@@ -185,7 +161,10 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
         isLoading,
         nextPageItemPlaceholdersCount,
         isLoadingNextPage,
+        canSubmitOnKeyDown,
         onLoadNextPage,
+
+        onApplyButtonClick,
 
         renderError = defaultError,
         renderLoading = defaultLoading,
@@ -206,8 +185,84 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
         getIsItemSelected,
     } = useInvertableSelect(props);
 
+    const [focusedIndex, setFocusedIndex] = useState<number>(0);
+
+    useEffect(() => {
+        if (items.length === 0) {
+            setFocusedIndex(-1);
+        } else {
+            const firstSelectedIndex = items.findIndex((item) => getIsItemSelected(item));
+            if (firstSelectedIndex !== -1) {
+                setFocusedIndex(firstSelectedIndex);
+            } else {
+                setFocusedIndex(0);
+            }
+        }
+    }, [selectedItems, items, getIsItemSelected, setFocusedIndex]);
+
+    const handleSelectItem = React.useCallback(
+        (item: T, e?: React.KeyboardEvent) => () => {
+            if (isSingleSelect) {
+                selectOnly(item);
+            } else {
+                const isSelected = getIsItemSelected(item);
+
+                if (isSpaceKey(e)) {
+                    if (isSelected) {
+                        deselectItems([item]);
+                    } else {
+                        selectItems([item]);
+                    }
+                }
+
+                if (isEnterKey(e) && canSubmitOnKeyDown) {
+                    onApplyButtonClick?.();
+                }
+            }
+        },
+        [
+            isSingleSelect,
+            canSubmitOnKeyDown,
+            selectOnly,
+            getIsItemSelected,
+            deselectItems,
+            selectItems,
+            onApplyButtonClick,
+        ],
+    );
+
+    const handleSelectOnly = React.useCallback(
+        (item: T) => () => {
+            if (isSingleSelect) {
+                return undefined;
+            }
+            selectOnly(item);
+            onApplyButtonClick();
+        },
+        [isSingleSelect, selectOnly, onApplyButtonClick],
+    );
+
+    const getItemAdditionalActions = React.useCallback(() => {
+        if (isSingleSelect) {
+            return [];
+        }
+
+        return ["only", "questionMark"];
+    }, [isSingleSelect]);
+
+    const { onKeyboardNavigation, focusedItem, focusedAction } = useListWithActionsKeyboardNavigation({
+        items,
+        getItemAdditionalActions,
+        actionHandlers: {
+            selectItem: handleSelectItem,
+            only: handleSelectOnly,
+            questionMark: () => noop,
+        },
+        focusedIndex,
+    });
+
     const itemRenderer = useCallback(
-        ({ item }: IRenderListItemProps<T>): JSX.Element => {
+        (item: T): JSX.Element => {
             return renderItem({
                 onSelect: () => {
                     selectItems([item]);
@@ -219,14 +274,25 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
                 item,
                 title: getItemTitle(item),
                 isSelected: getIsItemSelected(item),
+                focused: item === focusedItem,
+                focusedAction: item === focusedItem ? focusedAction : undefined,
             });
         },
-        [renderItem, getIsItemSelected, getItemTitle, selectItems, deselectItems, selectOnly],
+        [
+            renderItem,
+            getIsItemSelected,
+            getItemTitle,
+            selectItems,
+            deselectItems,
+            selectOnly,
+            focusedAction,
+            focusedItem,
+        ],
     );
 
     return (
         <div className="gd-invertable-select">
-            <div className="gd-invertable-select-search-bar">
+            <div className="gd-invertable-select-search-bar" onKeyDown={(e) => e.stopPropagation()}>
                 {renderSearchBar({ onSearch, searchPlaceholder, searchString })}
             </div>
             {isLoading ? (
@@ -247,25 +313,35 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
                     {items.length > 0 && (
                         <Measure client>
                             {({ measureRef, contentRect }) => {
-                                return (
+                                const maxHeight = adaptiveHeight
+                                    ? contentRect?.client.height
+                                    : Math.min(items.length, DEFAULT_VISIBLE_ITEMS_COUNT) * itemHeight;
+
+                                return isLoading ? (
+                                    <LoadingMask height={height} />
+                                ) : (
                                     <div className="gd-invertable-select-list" ref={measureRef}>
-                                        <AsyncList
-                                            className={cx(className, {
-                                                "is-multiselect": !isSingleSelect,
-                                            })}
-                                            width={adaptiveWidth ? contentRect?.client.width : width}
-                                            height={
-                                                adaptiveHeight
-                                                    ? contentRect?.client.height
-                                                    : Math.min(items.length, 10) * itemHeight
-                                            }
-                                            items={items}
-                                            itemHeight={itemHeight}
-                                            renderItem={itemRenderer}
-                                            nextPageItemPlaceholdersCount={nextPageItemPlaceholdersCount}
-                                            isLoadingNextPage={isLoadingNextPage}
-                                            onLoadNextPage={onLoadNextPage}
-                                        />
+                                        <div
+                                            tabIndex={0}
+                                            onKeyDown={onKeyboardNavigation}
+                                            className={cx("gd-async-list", className ? className : "")}
+                                        >
+                                            <UiPagedVirtualList
+                                                items={items}
+                                                itemHeight={itemHeight}
+                                                itemsGap={0}
+                                                itemPadding={0}
+                                                skeletonItemsCount={nextPageItemPlaceholdersCount}
+                                                hasNextPage={nextPageItemPlaceholdersCount > 0}
+                                                loadNextPage={onLoadNextPage}
+                                                isLoading={isLoadingNextPage}
+                                                maxHeight={maxHeight}
+                                                scrollToItem={focusedItem}
+                                                scrollToItemKeyExtractor={getItemKey}
+                                            >
+                                                {itemRenderer}
+                                            </UiPagedVirtualList>
+                                        </div>
                                     </div>
                                 );
                             }}
@@ -309,7 +385,7 @@ function defaultNoData(): JSX.Element {
     return <InvertableSelectNoResultsMatch />;
 }
 
-function defaultItem<T>(props: IInvertableSelectRenderItemProps<T>): JSX.Element {
+function defaultItem<T>(props: IInvertableSelectVirtualisedRenderItemProps<T>): JSX.Element {
     return (
         <InvertableSelectItem
             title={props.title}
@@ -332,7 +408,7 @@ function defaultStatusBar<T>(props: IInvertableSelectRenderStatusBarProps<T>): J
     );
 }
 
-function defaultActions(props: IInvertableSelectRenderActionsProps): JSX.Element {
+function defaultActions(props: IInvertableSelectVirtualisedRenderActionsProps): JSX.Element {
     const { checked, onToggle, onChange, isFiltered, totalItemsCount, isPartialSelection, isVisible } = props;
     return (
         <InvertableSelectAllCheckbox

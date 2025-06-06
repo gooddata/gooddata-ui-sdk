@@ -132,6 +132,7 @@ export type AttributeFilterControllerData = {
     limitingValidationItems?: ObjRef[];
     isFilteredByDependentDateFilters?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
+    enableAttributeFilterVirtualised?: boolean;
 };
 
 // @internal (undocumented)
@@ -407,6 +408,7 @@ export interface IAttributeFilterCoreProps {
     disabled?: boolean;
     // @alpha
     displayAsLabel?: ObjRef;
+    enableAttributeFilterVirtualised?: boolean;
     enableDashboardFiltersApplyModes?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
@@ -500,6 +502,7 @@ export interface IAttributeFilterDropdownButtonProps {
     customIcon?: IFilterButtonCustomIcon;
     // @alpha
     disabled?: boolean;
+    dropdownId?: string;
     icon?: ReactNode;
     isDraggable?: boolean;
     // (undocumented)
@@ -522,9 +525,13 @@ export interface IAttributeFilterDropdownButtonProps {
 // @beta
 export interface IAttributeFilterElementsActionsProps {
     checked: boolean;
+    // (undocumented)
+    isApplyDisabled?: boolean;
     isFiltered: boolean;
     isPartialSelection: boolean;
     isVisible: boolean;
+    // (undocumented)
+    onApplyButtonClick?: () => void;
     onChange: (value: boolean) => void;
     onToggle: () => void;
     totalItemsCount: number;
@@ -545,6 +552,8 @@ export interface IAttributeFilterElementsSelectErrorProps {
 
 // @beta
 export interface IAttributeFilterElementsSelectItemProps {
+    focused?: boolean;
+    focusedAction?: string;
     fullscreenOnMobile?: boolean;
     isSelected: boolean;
     item: IAttributeElement;
@@ -562,9 +571,13 @@ export interface IAttributeFilterElementsSelectLoadingProps {
 // @beta
 export interface IAttributeFilterElementsSelectProps {
     attributeTitle?: string;
+    // @internal (undocumented)
+    enableAttributeFilterVirtualised?: boolean;
     enableShowingFilteredElements?: boolean;
     error?: GoodDataSdkError;
     irrelevantSelection?: IAttributeElement[];
+    // (undocumented)
+    isApplyDisabled?: boolean;
     isFilteredByDependentDateFilters?: boolean;
     isFilteredByParentFilters: boolean;
     isInverted: boolean;
@@ -572,6 +585,8 @@ export interface IAttributeFilterElementsSelectProps {
     isLoadingNextPage: boolean;
     items: IAttributeElement[];
     nextPageSize: number;
+    // (undocumented)
+    onApplyButtonClick?: () => void;
     onClearIrrelevantSelection?: () => void;
     onLoadNextPage: () => void;
     onSearch: (searchString: string) => void;

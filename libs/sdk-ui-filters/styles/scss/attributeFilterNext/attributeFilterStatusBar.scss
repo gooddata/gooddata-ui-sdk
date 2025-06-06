@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 @use "attributeFilterVariables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
@@ -58,6 +58,9 @@
     .gd-action-show-all {
         text-decoration: underline;
         cursor: pointer;
+        background: none;
+        border: none;
+        padding-left: 0;
 
         &:hover {
             color: variables.$gd-palette-primary-base;
@@ -81,5 +84,8 @@
     .gd-action-clear {
         text-decoration: underline;
         cursor: pointer;
+        background: none;
+        border: none;
+        padding-left: 0;
     }
 }

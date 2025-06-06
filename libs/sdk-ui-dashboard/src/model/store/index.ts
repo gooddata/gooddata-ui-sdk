@@ -108,6 +108,7 @@ export {
     selectEnableSlideshowExports,
     selectEnableRichTextDynamicReferences,
     selectEnableDashboardFiltersApplyModes,
+    selectEnableAttributeFilterVirtualisedList,
     selectDashboardFiltersApplyMode,
     selectEnableExecutionCancelling,
     selectEnableOrchestratedTabularExports,

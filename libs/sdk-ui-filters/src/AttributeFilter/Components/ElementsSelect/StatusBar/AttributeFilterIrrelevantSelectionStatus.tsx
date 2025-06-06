@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import React, { ReactNode, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
@@ -26,6 +26,12 @@ export const AttributeFilterIrrelevantSelectionStatus: React.FC<
         return null;
     }
 
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onClear();
+    };
+
     return (
         <Message
             className="gd-attribute-filter-status-irrelevant-message s-attribute-filter-status-irrelevant-message"
@@ -48,9 +54,9 @@ export const AttributeFilterIrrelevantSelectionStatus: React.FC<
                 </Bubble>
             </BubbleHoverTrigger>
             {showClearButton ? (
-                <span className="gd-action-clear s-action-clear" onClick={onClear}>
+                <button className="gd-action-clear s-action-clear" onClick={handleClick}>
                     <FormattedMessage id="attributesDropdown.irrelevantValues.clear" />
-                </span>
+                </button>
             ) : null}
         </Message>
     );
