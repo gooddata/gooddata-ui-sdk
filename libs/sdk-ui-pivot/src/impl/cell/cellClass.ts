@@ -1,31 +1,17 @@
 // (C) 2007-2025 GoodData Corporation
-import { CellClassParams, ColDef } from "ag-grid-community";
+import { CellClassParams } from "ag-grid-community";
 import { TableFacade } from "../tableFacade.js";
-import { ColumnHeadersPosition, ICorePivotTableProps } from "../../publicTypes.js";
+import { ICorePivotTableProps } from "../../publicTypes.js";
 import { IGridRow } from "../data/resultTypes.js";
 import isEmpty from "lodash/isEmpty.js";
 import cx from "classnames";
 import { invariant } from "ts-invariant";
-import {
-    isSeriesCol,
-    isRootCol,
-    isScopeCol,
-    AnyCol,
-    isMixedValuesCol,
-} from "../structure/tableDescriptorTypes.js";
+import { isSeriesCol, isRootCol } from "../structure/tableDescriptorTypes.js";
 import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";
-import { isResultTotalHeader } from "@gooddata/sdk-model";
-import {
-    ROW_SUBTOTAL,
-    ROW_TOTAL,
-    MEASURE_COLUMN,
-    ROW_MEASURE_COLUMN,
-    COLUMN_TOTAL,
-    COLUMN_SUBTOTAL,
-} from "../base/constants.js";
+import { ROW_SUBTOTAL, ROW_TOTAL, MEASURE_COLUMN, ROW_MEASURE_COLUMN } from "../base/constants.js";
 import { isCellDrillable } from "../drilling/cellDrillabilityPredicate.js";
 import last from "lodash/last.js";
-import { getCellClassNames } from "./cellUtils.js";
+import { getCellClassNames, getColumnTotalOrSubTotalInfo } from "./cellUtils.js";
 
 export type CellClassProvider = (cellClassParams: CellClassParams) => string;
 
@@ -135,42 +121,4 @@ export function cellClassFactory(
             isTransposed ? "gd-transpose" : null,
         );
     };
-}
-
-function getColumnTotalOrSubTotalInfo(
-    colDef: ColDef,
-    col: AnyCol,
-    row: IGridRow,
-    isTransposed: boolean,
-    columnHeadersPosition: ColumnHeadersPosition,
-) {
-    if (columnHeadersPosition === "left" && isTransposed) {
-        if (Object.keys(row.headerItemMap).length > 0) {
-            return {
-                isColumnTotal:
-                    isMixedValuesCol(col) &&
-                    isResultTotalHeader(row.headerItemMap[col.id]) &&
-                    col.isTotal === true,
-                isColumnSubtotal:
-                    isMixedValuesCol(col) &&
-                    isResultTotalHeader(row.headerItemMap[col.id]) &&
-                    col.isSubtotal === true,
-            };
-        } else {
-            return {
-                isColumnTotal: isMixedValuesCol(col) && col.isTotal === true,
-                isColumnSubtotal: isMixedValuesCol(col) && col.isSubtotal === true,
-            };
-        }
-    } else if (isTransposed) {
-        return {
-            isColumnTotal: isScopeCol(col) && col.isTotal === true,
-            isColumnSubtotal: isScopeCol(col) && col.isSubtotal === true,
-        };
-    } else {
-        return {
-            isColumnTotal: colDef.type === COLUMN_TOTAL,
-            isColumnSubtotal: colDef.type === COLUMN_SUBTOTAL,
-        };
-    }
 }

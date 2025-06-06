@@ -1,7 +1,7 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { useCallback, useEffect, useRef, MutableRefObject } from "react";
-import { ColDef, CellClickedEvent, GridReadyEvent } from "ag-grid-community";
+import { useCallback, useEffect, useRef, MutableRefObject, KeyboardEvent } from "react";
+import { ColDef, CellClickedEvent, GridReadyEvent, CellKeyDownEvent } from "ag-grid-community";
 import {
     convertDrillableItemsToPredicates,
     isSomeHeaderPredicateMatched,
@@ -12,6 +12,7 @@ import {
     IDrillEvent,
     IDrillEventContext,
 } from "@gooddata/sdk-ui";
+import { isActionKey } from "@gooddata/sdk-ui-kit";
 import { IAttributeOrMeasure, isAttributeDescriptor } from "@gooddata/sdk-model";
 
 import { IRepeaterChartProps } from "../publicTypes.js";
@@ -33,7 +34,7 @@ export function useDrilling(columnDefs: ColDef[], items: IAttributeOrMeasure[], 
         drillingState.current.dataView = props.dataView;
     }, [props.dataView, props.drillableItems, props.onDrill]);
 
-    const onCellClicked = useCallback((cellEvent: CellClickedEvent) => {
+    const onCellClicked = useCallback((cellEvent: CellClickedEvent | CellKeyDownEvent) => {
         const drillableItem = getDrillable(
             drillingState.current.dataView,
             drillingState.current.drillablePredicates,
@@ -64,6 +65,16 @@ export function useDrilling(columnDefs: ColDef[], items: IAttributeOrMeasure[], 
         return fireDrillEvent(drillingState, drillEvent, cellEvent);
     }, []);
 
+    const onCellKeyDown = useCallback(
+        (cellEvent: CellKeyDownEvent) => {
+            if (!isActionKey(cellEvent.event as unknown as KeyboardEvent)) {
+                return false;
+            }
+            return onCellClicked(cellEvent);
+        },
+        [onCellClicked],
+    );
+
     const onGridReady = useCallback(
         (readyEvent: GridReadyEvent) => {
             drillingState.current.columnApi = readyEvent.api;
@@ -78,6 +89,7 @@ export function useDrilling(columnDefs: ColDef[], items: IAttributeOrMeasure[], 
     return {
         onGridReady,
         onCellClicked,
+        onCellKeyDown,
     };
 }
 
@@ -133,7 +145,7 @@ function createDrillEvent(
 function fireDrillEvent(
     drillingState: MutableRefObject<DrillingState>,
     drillEvent: IDrillEvent,
-    cellEvent: CellClickedEvent,
+    cellEvent: CellClickedEvent | CellKeyDownEvent,
 ) {
     if (drillingState.current.onDrill?.(drillEvent)) {
         // This is needed for /analyze/embedded/ drilling with post message

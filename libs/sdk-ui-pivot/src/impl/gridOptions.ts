@@ -12,6 +12,7 @@ import { MIN_WIDTH } from "./resizing/columnSizing.js";
 import { headerClassFactory } from "./structure/colDefHeaderClass.js";
 import ColumnGroupHeader from "./structure/headers/ColumnGroupHeader.js";
 import { onCellClickedFactory } from "./cell/onCellClick.js";
+import { onCellKeyDownFactory } from "./cell/onCellKeyDown.js";
 import {
     COLUMN_ATTRIBUTE_COLUMN,
     DEFAULT_AUTOSIZE_PADDING,
@@ -70,6 +71,7 @@ export function createGridOptions(
         getColumnTotals: tableMethods.getColumnTotals,
         getRowTotals: tableMethods.getRowTotals,
         intl: props.intl,
+        setLastSortedColId: tableMethods.setLastSortedColId,
     };
 
     // For column headers on left and metrics in rows, all headers are rendered inside regular table cells, therefore complete ag-grid headers are hidden with headerHeight: 0
@@ -101,6 +103,7 @@ export function createGridOptions(
             },
         },
         onCellClicked: onCellClickedFactory(table, props),
+        onCellKeyDown: onCellKeyDownFactory(table, props),
         onSortChanged: tableMethods.onSortChanged,
         onColumnResized: tableMethods.onGridColumnResized,
         onGridColumnsChanged: tableMethods.onGridColumnsChanged,
@@ -109,7 +112,8 @@ export function createGridOptions(
 
         // Basic options
         suppressMovableColumns: true,
-        suppressCellFocus: true,
+        suppressCellFocus: false,
+        suppressHeaderFocus: false,
         suppressAutoSize: tableMethods.hasColumnWidths,
 
         // infinite scrolling model

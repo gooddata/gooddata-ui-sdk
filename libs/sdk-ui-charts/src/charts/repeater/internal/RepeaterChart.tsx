@@ -155,7 +155,11 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
         onGridReady: onResizingGridReady,
         containerRef,
     } = useResizing(columnDefs, items, props);
-    const { onCellClicked, onGridReady: onDrillingGridReady } = useDrilling(columnDefs, items, props);
+    const {
+        onCellClicked,
+        onCellKeyDown,
+        onGridReady: onDrillingGridReady,
+    } = useDrilling(columnDefs, items, props);
 
     const { onFirstDataRendered } = useRenderWatcher(afterRender);
 
@@ -179,9 +183,11 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
                 datasource={dataSource}
                 rowModelType="infinite"
                 rowHeight={rowHeight}
-                suppressCellFocus={true}
+                suppressCellFocus={false}
+                suppressHeaderFocus={false}
                 suppressMovableColumns={true}
                 onCellClicked={onCellClicked}
+                onCellKeyDown={onCellKeyDown}
                 onGridReady={(e) => {
                     onResizingGridReady(e);
                     onDrillingGridReady(e);

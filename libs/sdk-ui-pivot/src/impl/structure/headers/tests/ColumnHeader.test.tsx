@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { render } from "@testing-library/react";
 
@@ -24,6 +24,12 @@ const getColumnHeader = (
 ) => {
     const extendedProps: any = {
         getTableDescriptor: () => table,
+        api: {
+            refreshHeader: vi.fn(),
+            setFocusedHeader: vi.fn(),
+            addEventListener: vi.fn(),
+            removeEventListener: vi.fn(),
+        },
         column: {
             addEventListener: vi.fn(),
             removeEventListener: vi.fn(),

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { IntlShape } from "react-intl";
 import cx from "classnames";
@@ -18,12 +18,12 @@ export const ALIGN_RIGHT = "right";
 
 export interface ICommonHeaderParams {
     getTableDescriptor: () => TableDescriptor;
-
     onMenuAggregationClick?: (config: IMenuAggregationClickConfig) => void;
     getExecutionDefinition?: () => IExecutionDefinition;
     getColumnTotals?: () => ITotal[];
     getRowTotals?: () => ITotal[];
     intl?: IntlShape;
+    setLastSortedColId?: (colId: string | null) => void;
 }
 
 export interface IHeaderCellProps extends ICommonHeaderParams {
@@ -34,9 +34,10 @@ export interface IHeaderCellProps extends ICommonHeaderParams {
     menuPosition?: AlignPositions;
     textAlign?: AlignPositions;
     sortDirection?: SortDirection | null;
-    onSortClick?: (direction: SortDirection) => void;
+    onSortClick?: () => void;
     menu?: IMenu | null;
     colId?: string;
+    isFocused?: boolean;
 }
 
 export interface IHeaderCellState {
@@ -51,7 +52,6 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         | "sortDirection"
         | "textAlign"
         | "menuPosition"
-        | "defaultSortDirection"
         | "menu"
         | "enableSorting"
         | "onMenuAggregationClick"
@@ -60,7 +60,6 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
         sortDirection: null,
         textAlign: ALIGN_LEFT,
         menuPosition: ALIGN_LEFT,
-        defaultSortDirection: "desc",
         menu: null,
         enableSorting: false,
         onMenuAggregationClick: () => null,
@@ -81,6 +80,16 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
 
     public componentDidMount(): void {
         this.resetSortDirection();
+    }
+
+    public componentDidUpdate(prevProps: Readonly<IHeaderCellProps>): void {
+        if (prevProps.isFocused !== this.props.isFocused) {
+            if (this.props.isFocused) {
+                this.onMouseEnterHeaderCellText();
+            } else {
+                this.onMouseLeaveHeaderCellText();
+            }
+        }
     }
 
     public UNSAFE_componentWillReceiveProps(nextProps: IHeaderCellProps): void {
@@ -200,23 +209,19 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
     private onMouseEnterHeaderCellText = () => {
         if (this.props.enableSorting) {
             const { sortDirection } = this.props;
+            let newSortDirection: SortDirection | null = null;
             if (sortDirection === null) {
-                return this.setState({
-                    currentSortDirection: this.props.defaultSortDirection!,
-                });
+                newSortDirection = this.props.defaultSortDirection ?? null;
             } else if (sortDirection === "asc") {
-                return this.setState({
-                    currentSortDirection: "desc",
-                });
+                newSortDirection = "desc";
             } else if (sortDirection === "desc") {
-                return this.setState({
-                    currentSortDirection: "asc",
-                });
+                newSortDirection = "asc";
             } else {
-                return this.setState({
-                    currentSortDirection: null,
-                });
+                newSortDirection = null;
             }
+            this.setState({
+                currentSortDirection: newSortDirection,
+            });
         }
     };
 
@@ -225,25 +230,13 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
     };
 
     private onTextClick = () => {
-        const { sortDirection, onSortClick, enableSorting, defaultSortDirection } = this.props;
+        const { onSortClick, enableSorting } = this.props;
 
         if (!enableSorting) {
             return;
         }
-        if (sortDirection === null) {
-            const nextSortDirection = defaultSortDirection!;
-            this.setState({
-                currentSortDirection: nextSortDirection!,
-            });
-            onSortClick!(nextSortDirection);
-            return;
-        }
 
-        const nextSort = sortDirection === "asc" ? "desc" : "asc";
-        this.setState({
-            currentSortDirection: nextSort,
-        });
-        onSortClick!(nextSort);
+        onSortClick!();
     };
 
     private showMenuButton = () => {

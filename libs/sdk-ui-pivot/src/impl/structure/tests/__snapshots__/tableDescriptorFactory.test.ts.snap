@@ -68,6 +68,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with just r
     "field": "r_0",
     "headerName": "Product",
     "headerTooltip": "Product",
+    "sortingOrder": [
+      "asc",
+      "desc",
+    ],
     "type": "ROW_ATTRIBUTE_COLUMN",
   },
 ]
@@ -80,6 +84,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with just t
     "field": "c_0",
     "headerName": "Amount",
     "headerTooltip": "Amount",
+    "sortingOrder": [
+      "desc",
+      "asc",
+    ],
     "type": "MEASURE_COLUMN",
   },
   {
@@ -87,6 +95,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with just t
     "field": "c_1",
     "headerName": "Won",
     "headerTooltip": "Won",
+    "sortingOrder": [
+      "desc",
+      "asc",
+    ],
     "type": "MEASURE_COLUMN",
   },
 ]
@@ -103,6 +115,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with single
             "field": "c_0",
             "headerName": "Amount",
             "headerTooltip": "Amount",
+            "sortingOrder": [
+              "desc",
+              "asc",
+            ],
             "type": "MEASURE_COLUMN",
           },
         ],
@@ -117,6 +133,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with single
             "field": "c_1",
             "headerName": "Amount",
             "headerTooltip": "Amount",
+            "sortingOrder": [
+              "desc",
+              "asc",
+            ],
             "type": "MEASURE_COLUMN",
           },
         ],
@@ -139,6 +159,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with single
     "field": "r_0",
     "headerName": "Product",
     "headerTooltip": "Product",
+    "sortingOrder": [
+      "asc",
+      "desc",
+    ],
     "type": "ROW_ATTRIBUTE_COLUMN",
   },
   {
@@ -150,6 +174,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with single
             "field": "c_0",
             "headerName": "Amount",
             "headerTooltip": "Amount",
+            "sortingOrder": [
+              "desc",
+              "asc",
+            ],
             "type": "MEASURE_COLUMN",
           },
         ],
@@ -164,6 +192,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with single
             "field": "c_1",
             "headerName": "Amount",
             "headerTooltip": "Amount",
+            "sortingOrder": [
+              "desc",
+              "asc",
+            ],
             "type": "MEASURE_COLUMN",
           },
         ],
@@ -186,6 +218,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
     "field": "r_0",
     "headerName": "Product",
     "headerTooltip": "Product",
+    "sortingOrder": [
+      "asc",
+      "desc",
+    ],
     "type": "ROW_ATTRIBUTE_COLUMN",
   },
   {
@@ -193,6 +229,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
     "field": "r_1",
     "headerName": "Department",
     "headerTooltip": "Department",
+    "sortingOrder": [
+      "asc",
+      "desc",
+    ],
     "type": "ROW_ATTRIBUTE_COLUMN",
   },
   {
@@ -206,6 +246,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
                 "field": "c_0",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -220,6 +264,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
                 "field": "c_1",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -241,6 +289,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
                 "field": "c_2",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -255,6 +307,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
                 "field": "c_3",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -276,6 +332,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
                 "field": "c_4",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -290,6 +350,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
                 "field": "c_5",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -311,6 +375,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
                 "field": "c_6",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -325,6 +393,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
                 "field": "c_7",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -346,6 +418,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
                 "field": "c_8",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -360,6 +436,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
                 "field": "c_9",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -381,6 +461,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
                 "field": "c_10",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -395,6 +479,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
                 "field": "c_11",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -416,6 +504,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
                 "field": "c_12",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -430,6 +522,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
                 "field": "c_13",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -451,6 +547,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
                 "field": "c_14",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -465,6 +565,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two at
                 "field": "c_15",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -496,6 +600,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two me
             "field": "c_0",
             "headerName": "Amount",
             "headerTooltip": "Amount",
+            "sortingOrder": [
+              "desc",
+              "asc",
+            ],
             "type": "MEASURE_COLUMN",
           },
           {
@@ -503,6 +611,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two me
             "field": "c_1",
             "headerName": "Won",
             "headerTooltip": "Won",
+            "sortingOrder": [
+              "desc",
+              "asc",
+            ],
             "type": "MEASURE_COLUMN",
           },
         ],
@@ -517,6 +629,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two me
             "field": "c_2",
             "headerName": "Amount",
             "headerTooltip": "Amount",
+            "sortingOrder": [
+              "desc",
+              "asc",
+            ],
             "type": "MEASURE_COLUMN",
           },
           {
@@ -524,6 +640,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two me
             "field": "c_3",
             "headerName": "Won",
             "headerTooltip": "Won",
+            "sortingOrder": [
+              "desc",
+              "asc",
+            ],
             "type": "MEASURE_COLUMN",
           },
         ],
@@ -546,6 +666,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two me
     "field": "r_0",
     "headerName": "Product",
     "headerTooltip": "Product",
+    "sortingOrder": [
+      "asc",
+      "desc",
+    ],
     "type": "ROW_ATTRIBUTE_COLUMN",
   },
   {
@@ -553,6 +677,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two me
     "field": "r_1",
     "headerName": "Department",
     "headerTooltip": "Department",
+    "sortingOrder": [
+      "asc",
+      "desc",
+    ],
     "type": "ROW_ATTRIBUTE_COLUMN",
   },
   {
@@ -566,6 +694,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two me
                 "field": "c_0",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
               {
@@ -573,6 +705,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two me
                 "field": "c_1",
                 "headerName": "Won",
                 "headerTooltip": "Won",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -587,6 +723,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two me
                 "field": "c_2",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
               {
@@ -594,6 +734,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two me
                 "field": "c_3",
                 "headerName": "Won",
                 "headerTooltip": "Won",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -615,6 +759,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two me
                 "field": "c_4",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
               {
@@ -622,6 +770,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two me
                 "field": "c_5",
                 "headerName": "Won",
                 "headerTooltip": "Won",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -636,6 +788,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two me
                 "field": "c_6",
                 "headerName": "Amount",
                 "headerTooltip": "Amount",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
               {
@@ -643,6 +799,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table with two me
                 "field": "c_7",
                 "headerName": "Won",
                 "headerTooltip": "Won",
+                "sortingOrder": [
+                  "desc",
+                  "asc",
+                ],
                 "type": "MEASURE_COLUMN",
               },
             ],
@@ -670,6 +830,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table without piv
     "field": "r_0",
     "headerName": "Product",
     "headerTooltip": "Product",
+    "sortingOrder": [
+      "asc",
+      "desc",
+    ],
     "type": "ROW_ATTRIBUTE_COLUMN",
   },
   {
@@ -677,6 +841,10 @@ exports[`createTableDescriptor > correctly creates colDefs for table without piv
     "field": "c_0",
     "headerName": "Amount",
     "headerTooltip": "Amount",
+    "sortingOrder": [
+      "desc",
+      "asc",
+    ],
     "type": "MEASURE_COLUMN",
   },
 ]

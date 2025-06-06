@@ -13,7 +13,7 @@ export interface IScrollPosition {
 }
 
 export function initializeStickyRow(gridApi: GridApi): void {
-    gridApi.updateGridOptions({ pinnedTopRowData: [{}] });
+    gridApi.updateGridOptions({ pinnedTopRowData: [] });
 }
 
 export function updateStickyRowPosition(gridApi: GridApi | null, apiWrapper: any = ApiWrapper): void {

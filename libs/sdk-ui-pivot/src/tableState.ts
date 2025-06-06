@@ -36,6 +36,7 @@ export class InternalTableState {
     public isAltKeyPressed: boolean = false;
     public lastResizedWidth = 0;
     public lastResizedHeight = 0;
+    public lastSortedColId: string | null = null;
 
     private watchingIntervalId?: number;
 

@@ -1,4 +1,5 @@
 // (C) 2007-2025 GoodData Corporation
+
 import { IExecutionDefinition, ITotal, TotalType, ISeparators } from "@gooddata/sdk-model";
 import { ColumnWidthItem } from "../columnWidths.js";
 import {
@@ -68,6 +69,7 @@ export type TableConfigAccessors = {
     getMeasureGroupDimension: () => MeasureGroupDimension;
 
     getResizingConfig: () => ColumnResizingConfig;
+    setLastSortedColId: (colId: string | null) => void;
 };
 
 /**
@@ -77,7 +79,7 @@ export type TableAgGridCallbacks = {
     onGridReady: (event: GridReadyEvent) => void;
     onFirstDataRendered: (event: AgGridEvent) => Promise<void>;
     onBodyScroll: (event: BodyScrollEvent) => void;
-    onModelUpdated: () => void;
+    onModelUpdated: (event: AgGridEvent) => void;
     onGridColumnsChanged: () => void;
     onGridColumnResized: (columnEvent: ColumnResizedEvent) => Promise<void>;
     onSortChanged: (event: SortChangedEvent) => void;
