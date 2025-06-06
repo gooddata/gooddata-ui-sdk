@@ -5090,6 +5090,16 @@ export const makeMenuKeyboardNavigation: <T extends KeyboardEvent | React_2.Keyb
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
+export const makeTabsKeyboardNavigation: <T extends KeyboardEvent | React_2.KeyboardEvent<Element> = React_2.KeyboardEvent<Element>>(handlers: {
+    onSelect?: (event: T) => void;
+    onFocusPrevious?: (event: T) => void;
+    onFocusNext?: (event: T) => void;
+    onFocusFirst?: (event: T) => void;
+    onFocusLast?: (event: T) => void;
+    onUnhandledKeyDown?: (event: T) => void;
+}, options?: IHandleActionOptions) => (event: T) => void;
+
+// @internal (undocumented)
 export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFormatOwnProps> {
     // (undocumented)
     render(): React_2.JSX.Element;
@@ -5874,6 +5884,37 @@ export interface UiSkeletonProps {
     itemsCount?: number;
     itemsGap?: number;
     itemWidth?: (number | string) | (number | string)[];
+}
+
+// @internal (undocumented)
+export interface UiTab {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    label: string;
+}
+
+// @internal (undocumented)
+export const UiTabs: React_2.FC<UiTabsProps>;
+
+// @internal (undocumented)
+export interface UiTabsAccessibilityConfig extends IAccessibilityConfigBase {
+    // (undocumented)
+    tabRole?: React_2.HTMLAttributes<HTMLElement>["role"];
+}
+
+// @internal (undocumented)
+export interface UiTabsProps {
+    // (undocumented)
+    accessibilityConfig?: UiTabsAccessibilityConfig;
+    // (undocumented)
+    onTabSelect: (tab: UiTab) => void;
+    // (undocumented)
+    selectedTabId: string;
+    // (undocumented)
+    size?: SizeSmall | SizeMedium | SizeLarge;
+    // (undocumented)
+    tabs: Array<UiTab>;
 }
 
 // @internal (undocumented)
