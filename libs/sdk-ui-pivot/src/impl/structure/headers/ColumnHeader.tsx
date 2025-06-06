@@ -117,13 +117,17 @@ const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
             setIsFocused(false);
         };
         eGridHeader.addEventListener("keydown", handleKeyDown);
-        eGridHeader.addEventListener("blur", handleBlur);
+        if (!showMenu) {
+            eGridHeader.addEventListener("blur", handleBlur);
+        }
 
         return () => {
             eGridHeader.removeEventListener("keydown", handleKeyDown);
-            eGridHeader.removeEventListener("blur", handleBlur);
+            if (!showMenu) {
+                eGridHeader.removeEventListener("blur", handleBlur);
+            }
         };
-    }, [eGridHeader, column, enableSorting, setLastSortedColId]);
+    }, [eGridHeader, column, enableSorting, setLastSortedColId, showMenu]);
 
     return (
         <HeaderCell
