@@ -1,6 +1,10 @@
 // (C) 2024-2025 GoodData Corporation
 
-import { GenAIChatInteractionUserFeedback, IGenAIUserContext } from "@gooddata/sdk-model";
+import {
+    GenAIChatInteractionUserFeedback,
+    GenAIChatInteractionUserVisualisation,
+    IGenAIUserContext,
+} from "@gooddata/sdk-model";
 import {
     IChatThread,
     IChatThreadHistory,
@@ -60,6 +64,24 @@ export class ChatThreadService implements IChatThread {
                 chatHistoryRequest: {
                     chatHistoryInteractionId,
                     userFeedback,
+                },
+            });
+        });
+    }
+
+    async saveUserVisualisation(
+        chatHistoryInteractionId: string,
+        savedVisualization: GenAIChatInteractionUserVisualisation,
+    ): Promise<void> {
+        await this.authCall((client) => {
+            return client.genAI.aiChatHistory({
+                workspaceId: this.workspaceId,
+                chatHistoryRequest: {
+                    chatHistoryInteractionId,
+                    savedVisualization: {
+                        createdVisualizationId: savedVisualization.createdId,
+                        savedVisualizationId: savedVisualization.savedId,
+                    },
                 },
             });
         });

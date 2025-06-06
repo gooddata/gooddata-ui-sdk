@@ -26,7 +26,9 @@ export function* onUserFeedback({
         const messages: Message[] = yield select(messagesSelector);
         const message = messages.find((message) => message.localId === payload.assistantMessageId);
 
-        if (!message?.id) return;
+        if (!message?.id) {
+            return;
+        }
 
         const chatThread = backend.workspace(workspace).genAI().getChatThread();
 

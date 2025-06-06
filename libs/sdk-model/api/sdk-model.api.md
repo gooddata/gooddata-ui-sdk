@@ -549,6 +549,12 @@ export type GenAIAbsoluteDateFilter = {
 export type GenAIChatInteractionUserFeedback = "POSITIVE" | "NEGATIVE" | "NONE";
 
 // @internal
+export type GenAIChatInteractionUserVisualisation = {
+    createdId: string;
+    savedId: string;
+};
+
+// @internal
 export type GenAIChatRole = "USER" | "AI";
 
 // @internal

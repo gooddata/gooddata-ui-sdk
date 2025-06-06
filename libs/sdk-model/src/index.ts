@@ -1070,6 +1070,7 @@ export type {
     IGenAISuggestion,
     GenAIChatRoutingUseCase,
     GenAIChatInteractionUserFeedback,
+    GenAIChatInteractionUserVisualisation,
     GenAIChatRole,
     GenAIVisualizationType,
     GenAIMetricAggregation,
