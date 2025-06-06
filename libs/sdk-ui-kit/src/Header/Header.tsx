@@ -309,11 +309,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
             additionalItems.push({
                 key: "gs.header.notifications",
                 className: "gd-icon-header-notifications",
-                icon: (
-                    <span className="gd-header-notifications-icon">
-                        <Icon.Alert width={16} height={16} />
-                    </span>
-                ),
+                icon: <Icon.Alert width={16} height={16} />,
                 onClick: this.toggleNotificationsMenu,
             });
         }
