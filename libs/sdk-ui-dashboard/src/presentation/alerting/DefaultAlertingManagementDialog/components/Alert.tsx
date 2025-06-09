@@ -6,6 +6,7 @@ import cx from "classnames";
 import { IAutomationMetadataObject, isInsightWidget } from "@gooddata/sdk-model";
 
 import {
+    bemFactory,
     Button,
     Dropdown,
     Icon,
@@ -33,9 +34,11 @@ interface IAlertProps {
     onEdit: () => void;
     onTogglePause: () => void;
     alert: IAutomationMetadataObject;
-    focusedAction?: "dropdown" | typeof SELECT_ITEM_ACTION;
-    onCloseDropdown?: () => void;
+    focusedAction?: "dropdown" | "item" | typeof SELECT_ITEM_ACTION;
+    isDropdownOpen: boolean;
+    onToggleDropdown: ((newState?: boolean) => void) | (() => void);
     listId: string;
+    isSubtitleVisible?: boolean;
 }
 
 type IDropdownAction = "edit" | "pause" | "delete";
@@ -52,10 +55,22 @@ const labelMessages = defineMessages({
     edit: { id: "alerting.alert.menu.edit" },
 });
 
+const { b, e } = bemFactory("gd-alerts-list-item");
+
 export const Alert: React.FC<IAlertProps> = (props) => {
     const theme = useTheme();
 
-    const { alert, onDelete, onEdit, onTogglePause, focusedAction, onCloseDropdown, listId } = props;
+    const {
+        alert,
+        onDelete,
+        onEdit,
+        onTogglePause,
+        focusedAction,
+        isDropdownOpen,
+        onToggleDropdown,
+        listId,
+        isSubtitleVisible,
+    } = props;
 
     const intl = useIntl();
     const { formatMessage } = intl;
@@ -63,9 +78,9 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
     const iconColorError = theme?.palette?.error?.base ?? gdColorNegative;
 
-    const iconActive = <Icon.Alert width={16} height={16} color={iconColor} />;
-    const iconPaused = <Icon.AlertPaused width={16} height={16} color={iconColor} />;
-    const iconError = <Icon.Warning width={16} height={16} color={iconColorError} />;
+    const iconActive = <Icon.Alert color={iconColor} />;
+    const iconPaused = <Icon.AlertPaused color={iconColor} />;
+    const iconError = <Icon.Warning color={iconColorError} />;
 
     const isPaused = alert.alert?.trigger.state === "PAUSED";
 
@@ -78,9 +93,6 @@ export const Alert: React.FC<IAlertProps> = (props) => {
 
     const separators = useDashboardSelector(selectSeparators);
     const subtitle = getSubtitle(intl, widgetName, alert, separators);
-
-    const [isDropdownClickedOpen, setIsDropdownClickedOpen] = React.useState(false);
-    const isDropdownOpen = isDropdownClickedOpen || focusedAction === "dropdown";
 
     const currentUser = useDashboardSelector(selectCurrentUser);
     const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
@@ -115,21 +127,6 @@ export const Alert: React.FC<IAlertProps> = (props) => {
             : [deleteItem];
     }, [canEdit, formatMessage, isPaused]);
 
-    const handleToggleDropdown = React.useCallback(
-        (desiredState?: boolean) => {
-            setIsDropdownClickedOpen((oldState) => {
-                const newState = desiredState ?? !oldState;
-
-                if (!newState) {
-                    onCloseDropdown?.();
-                }
-
-                return newState;
-            });
-        },
-        [onCloseDropdown],
-    );
-
     const handleAction = React.useCallback(
         (item: typeof items[number]) => {
             if (item.type !== "interactive") {
@@ -155,62 +152,65 @@ export const Alert: React.FC<IAlertProps> = (props) => {
 
     return (
         <div
-            className={cx("gd-notifications-channel", "s-alert", {
-                editable: false,
-                hover: isDropdownOpen,
-                "gd-notifications-channel--isFocused": !!focusedAction,
-                "gd-notifications-channel--isFocusedSelectItem": focusedAction === SELECT_ITEM_ACTION,
-            })}
+            className={cx(
+                b({
+                    readonly: !canEdit,
+                    isFocused: !!focusedAction,
+                    isFocusedSelectItem: focusedAction === SELECT_ITEM_ACTION || focusedAction === "item",
+                    isActive: isDropdownOpen,
+                }),
+                "s-alert",
+            )}
         >
-            <div className="gd-notifications-channel-content" onClick={canEdit ? onEdit : undefined}>
-                <div
-                    className={cx("gd-notifications-channel-icon", {
-                        "gd-notifications-channel-icon-invalid": !isValid,
-                    })}
-                >
-                    {!isValid ? iconError : isPaused ? iconPaused : iconActive}
-                </div>
-                <div className="gd-notifications-channel-text-content">
-                    <div className="gd-notifications-channel-title">
-                        <strong>
-                            <ShortenedText
-                                className="gd-notifications-channel-shortened-text"
-                                tooltipAlignPoints={TEXT_TOOLTIP_ALIGN_POINTS}
-                            >
-                                {alert.title ??
-                                    intl.formatMessage({ id: "dialogs.alerting.title.placeholder" })}
-                            </ShortenedText>
-                        </strong>
+            <div className={e("content")} onClick={canEdit ? onEdit : undefined}>
+                <div className={cx(e("icon-container"))}>
+                    <div className={cx(e("icon", { invalid: !isValid }))}>
+                        {!isValid ? iconError : isPaused ? iconPaused : iconActive}
                     </div>
-                    <div>
-                        <span className="gd-notifications-channel-subtitle">
+                </div>
+                <div className={e("text-content")}>
+                    <div className={e("title")}>
+                        <ShortenedText
+                            className={e("shortened-text")}
+                            tooltipAlignPoints={TEXT_TOOLTIP_ALIGN_POINTS}
+                        >
+                            {alert.title ?? intl.formatMessage({ id: "dialogs.alerting.title.placeholder" })}
+                        </ShortenedText>
+                    </div>
+                    {isSubtitleVisible ? (
+                        <div className={e("subtitle")}>
                             <ShortenedText
-                                className="gd-notifications-channel-shortened-text"
+                                className={e("shortened-text")}
                                 tooltipAlignPoints={TEXT_TOOLTIP_ALIGN_POINTS}
                             >
                                 {subtitle}
                             </ShortenedText>
-                        </span>
-                    </div>
+                        </div>
+                    ) : null}
                 </div>
             </div>
             <Dropdown
                 isOpen={isDropdownOpen}
-                onToggle={handleToggleDropdown}
-                className={"gd-notifications-channel-menu"}
+                onToggle={onToggleDropdown}
+                className={e("menu")}
                 alignPoints={[{ align: "br tr" }, { align: "tr br" }]}
                 autofocusOnOpen
+                isTabCaught={false}
                 returnFocusTo={listId}
-                renderButton={({ buttonRef, accessibilityConfig, toggleDropdown }) => {
+                renderButton={({ buttonRef, accessibilityConfig, toggleDropdown, isOpen }) => {
                     return (
                         <Button
                             tabIndex={-1}
-                            className="gd-notifications-channel-menu-icon s-alert-menu-icon"
+                            className={cx(
+                                e("menu-icon", { isFocused: focusedAction === "dropdown" && !isOpen }),
+                            )}
                             id={`alert-menu-${alert.id}`}
                             ref={buttonRef}
                             onClick={toggleDropdown}
                             accessibilityConfig={accessibilityConfig}
-                        />
+                        >
+                            <Icon.Ellipsis />
+                        </Button>
                     );
                 }}
                 renderBody={({ ariaAttributes, closeDropdown }) => {

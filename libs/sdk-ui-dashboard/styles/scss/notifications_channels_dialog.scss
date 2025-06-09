@@ -412,16 +412,6 @@ $min-content-height: 110px;
         color: kit-variables.$gd-color-state-blank;
     }
 
-    .gd-notifications-channels-list {
-        &:focus-visible {
-            outline: none;
-
-            & .gd-notifications-channel--isFocusedSelectItem {
-                @include mixins.focus-ring;
-            }
-        }
-    }
-
     .gd-loading-equalizer {
         margin: auto;
     }
@@ -548,9 +538,15 @@ $min-content-height: 110px;
         flex-shrink: 0;
     }
 
+    // Making the row red on delete hover, this affects elements before the delete icon
+    .gd-notifications-channel-content:has(~ .gd-notifications-channel-delete:hover) {
+        background-color: var(--gd-palette-error-lightest, #fff2f1);
+    }
+
     .gd-notifications-channel-delete:hover {
         background-color: var(--gd-palette-error-lightest, #fff2f1);
 
+        // Making the row red on delete hover, this affects elements after the delete icon
         ~ .gd-notifications-channel-content {
             background-color: var(--gd-palette-error-lightest, #fff2f1);
         }

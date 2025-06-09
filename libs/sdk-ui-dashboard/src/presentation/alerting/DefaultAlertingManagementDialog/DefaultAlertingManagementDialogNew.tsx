@@ -94,6 +94,8 @@ export const DefaultAlertingManagementDialogNew: React.FC<IAlertingManagementDia
                 shouldCloseOnClick={() => false}
                 className="gd-notifications-channels-management-dialog s-alerting-management-dialog"
                 accessibilityConfig={{ titleElementId, isModal: true }}
+                returnFocusTo={"default-menu-button-id"}
+                returnFocusAfterClose
             >
                 <div className="gd-notifications-channels-management-dialog-title">
                     <Typography tagName="h3" className="gd-dialog-header" id={titleElementId}>
