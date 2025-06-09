@@ -1,9 +1,7 @@
 #!/usr/bin/env node
 // (C) 2022 GoodData Corporation
-fs = require("fs");
-const { deleteTigerWorkspace } = require("@gooddata/fixtures");
-const { log } = require("@gooddata/fixtures/logger.js");
-
+const fs = require("fs");
+const { deleteTigerWorkspace, log } = require("@gooddata/fixtures");
 require("dotenv").config();
 
 const envFilePath = ".env";

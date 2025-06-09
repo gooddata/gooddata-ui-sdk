@@ -1,8 +1,11 @@
 #!/usr/bin/env node
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { createTigerWorkspaceWithPrefix, setTigerWorkspaceLayoutFromFixtures } from "@gooddata/fixtures";
-import { logLn } from "@gooddata/fixtures/logger.js";
+import {
+    createTigerWorkspaceWithPrefix,
+    logLn,
+    setTigerWorkspaceLayoutFromFixtures,
+} from "@gooddata/fixtures";
 import { E2E_SDK_WORKSPACE_PREFIX, FIXTURE_TYPES, BACKEND, DATA_SOURCE } from "./constants.js";
 import fs from "fs";
 import path from "path";
