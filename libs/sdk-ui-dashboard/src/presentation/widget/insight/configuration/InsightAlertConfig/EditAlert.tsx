@@ -27,7 +27,6 @@ import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
 import { AlertTitle } from "./AlertTitle.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
 import { AlertAttribute, AlertMetric } from "../../../../alerting/types.js";
-import { AlertAttributeSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertAttributeSelect.js";
 import { AlertComparisonOperatorSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertComparisonOperatorSelect.js";
 import { AlertComparisonPeriodSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertComparisonPeriodSelect.js";
 import { AlertDestinationSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertDestinationSelect.js";
@@ -50,6 +49,7 @@ import {
 } from "../../../../alerting/DefaultAlertingDialog/utils/getters.js";
 import { translateGranularity } from "../../../../alerting/DefaultAlertingDialog/utils/granularity.js";
 import { isChangeOrDifferenceOperator } from "../../../../alerting/DefaultAlertingDialog/utils/guards.js";
+import { AlertAttributeSelectOld } from "../../../../alerting/DefaultAlertingDialog/components/AlertAttributeSelectOld.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
 
@@ -205,7 +205,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
 
                         {Boolean(canManageAttributes) && (
                             <>
-                                <AlertAttributeSelect
+                                <AlertAttributeSelectOld
                                     id="alert.attribute"
                                     selectedAttribute={selectedAttribute}
                                     selectedValue={selectedValue}
