@@ -141,7 +141,7 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                     <UiListbox<OperatorItemType<string | IAlertComparisonOperator>, StaticItemData>
                         shouldKeyboardActionStopPropagation={true}
                         shouldKeyboardActionPreventDefault={true}
-                        className="gd-alert-comparison-operator-select__list s-alert-operator-select-list"
+                        className="s-alert-operator-select-list"
                         items={listboxItems}
                         maxWidth={ref.current?.offsetWidth}
                         selectedItemId={selectedItemId}

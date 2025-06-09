@@ -135,7 +135,7 @@ export const AlertComparisonPeriodSelect = (props: IAlertComparisonPeriodSelectP
                     <UiListbox
                         shouldKeyboardActionStopPropagation={true}
                         shouldKeyboardActionPreventDefault={true}
-                        className="gd-alert-comparison-select__list s-alert-comparison-select-list"
+                        className="s-alert-comparison-select-list"
                         items={listboxItems}
                         selectedItemId={selectedComparison?.toString()}
                         onSelect={(item) => {

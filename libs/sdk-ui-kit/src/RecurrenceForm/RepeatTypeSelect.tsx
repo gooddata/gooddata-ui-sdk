@@ -178,7 +178,7 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
                     <UiListbox
                         shouldKeyboardActionStopPropagation={true}
                         shouldKeyboardActionPreventDefault={true}
-                        className="gd-recurrence-form-type-list s-recurrence-form-type-list"
+                        className="s-recurrence-form-type-list"
                         items={listboxItems}
                         maxWidth={DEFAULT_DROPDOWN_WIDTH}
                         selectedItemId={repeatType}
