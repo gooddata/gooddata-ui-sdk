@@ -36,6 +36,7 @@ import {
 } from "./structure/colDefTemplates.js";
 import { TableFacade } from "./tableFacade.js";
 import { ICorePivotTableProps } from "../publicTypes.js";
+import { FocusGridInnerElementParams } from "ag-grid-community";
 
 export function createGridOptions(
     table: TableFacade,
@@ -109,6 +110,28 @@ export function createGridOptions(
         onGridColumnsChanged: tableMethods.onGridColumnsChanged,
         onModelUpdated: tableMethods.onModelUpdated,
         onPinnedRowDataChanged: tableMethods.onPinnedRowDataChanged,
+
+        focusGridInnerElement: (params: FocusGridInnerElementParams) => {
+            // Don't set focused header when table is transposed with headers on left (no header cells to focus)
+            const isTransposedWithNoHeaders =
+                tableMethods.getColumnHeadersPosition() === "left" && table.tableDescriptor.isTransposed();
+            const firstColumn = params.api.getAllDisplayedColumns()[0];
+
+            if (isTransposedWithNoHeaders) {
+                params.api.setFocusedCell(0, firstColumn.getId());
+            } else {
+                params.api.setFocusedHeader(firstColumn.getId());
+            }
+
+            return true;
+        },
+        // fallback of Tab key to browser default
+        tabToNextHeader: () => {
+            return false;
+        },
+        tabToNextCell: () => {
+            return false;
+        },
 
         // Basic options
         suppressMovableColumns: true,

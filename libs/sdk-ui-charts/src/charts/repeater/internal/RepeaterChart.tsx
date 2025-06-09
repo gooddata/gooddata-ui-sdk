@@ -38,6 +38,7 @@ import { RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.j
 import isNil from "lodash/isNil.js";
 import { useDrilling } from "../hooks/useDrilling.js";
 import { useRenderWatcher } from "../hooks/useRenderWatcher.js";
+import { useFocusMng } from "../hooks/useFocusMng.js";
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -163,6 +164,8 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
 
     const { onFirstDataRendered } = useRenderWatcher(afterRender);
 
+    const { switchToBrowserDefault, focusGridInnerElement } = useFocusMng();
+
     return (
         <div className="gd-repeater s-repeater" ref={containerRef}>
             <AgGridReact
@@ -188,6 +191,9 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
                 suppressMovableColumns={true}
                 onCellClicked={onCellClicked}
                 onCellKeyDown={onCellKeyDown}
+                focusGridInnerElement={focusGridInnerElement}
+                tabToNextHeader={switchToBrowserDefault}
+                tabToNextCell={switchToBrowserDefault}
                 onGridReady={(e) => {
                     onResizingGridReady(e);
                     onDrillingGridReady(e);

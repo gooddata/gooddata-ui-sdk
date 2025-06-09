@@ -32,6 +32,9 @@ function createOptions({
         credits: {
             enabled: false,
         },
+        accessibility: {
+            enabled: false,
+        },
         title: {
             text: undefined,
             style: {
