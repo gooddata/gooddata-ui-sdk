@@ -1,15 +1,13 @@
 #!/usr/bin/env node
 // (C) 2022 GoodData Corporation
 
-fs = require("fs");
-
+const fs = require("fs");
 require("dotenv").config();
-
 const {
     createTigerWorkspaceWithPrefix,
+    log,
     setTigerWorkspaceLayoutFromFixtures,
 } = require("@gooddata/fixtures");
-const { log } = require("@gooddata/fixtures/logger.js");
 
 const UISDK_WORKSPACE_PREFIX = "Test UISDK reference workspace";
 

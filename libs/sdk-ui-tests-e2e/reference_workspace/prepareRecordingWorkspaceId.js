@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import fs from "fs";
 import { getRecordingsWorkspaceId } from "../scripts/lib/recordings.js";
-import { log } from "@gooddata/fixtures/logger.js";
+import { log } from "@gooddata/fixtures";
 import "../scripts/env.js";
 import { deleteVariableFromEnv } from "./lib/delete_helper.js";
 

@@ -1,5 +1,5 @@
-// (C) 2021-2024 GoodData Corporation
-import { log } from "@gooddata/fixtures/logger.js";
+// (C) 2021-2025 GoodData Corporation
+import { log } from "@gooddata/fixtures";
 
 export function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));

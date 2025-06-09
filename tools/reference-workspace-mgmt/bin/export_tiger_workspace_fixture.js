@@ -1,10 +1,8 @@
 #!/usr/bin/env node
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { exportTigerFixtureExtension } from "@gooddata/fixtures";
-import { logLn } from "@gooddata/fixtures/logger.js";
+import { exportTigerFixtureExtension, logLn } from "@gooddata/fixtures";
 import { FIXTURE_TYPES, BACKEND } from "./constants.js";
-
 import fs from "fs";
 import path from "path";
 

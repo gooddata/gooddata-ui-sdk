@@ -1,10 +1,8 @@
 #!/usr/bin/env node
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
-import { deleteTigerWorkspace } from "@gooddata/fixtures";
+import { deleteTigerWorkspace, log } from "@gooddata/fixtures";
 import fs from "fs";
-import { log } from "@gooddata/fixtures/logger.js";
-
 import { deleteVariableFromEnv } from "./delete_helper.js";
 import { retryOperation } from "./utils.js";
 
