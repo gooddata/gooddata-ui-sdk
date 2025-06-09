@@ -18,6 +18,9 @@ import {
     isRelativeDateFilter,
     isDashboardDateFilter,
     IDashboardDateFilter,
+    isLocalIdRef,
+    isPositiveAttributeFilter,
+    isNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
 import {
     ExtendedDashboardWidget,
@@ -398,7 +401,10 @@ function validateRemovedFilters(
     for (const savedFilter of savedAutomationFilters) {
         const availableFilter = availableFilters.find((filter) => isFilterMatch(filter, savedFilter));
 
-        if (!availableFilter && !removedFilterIsAppliedInSavedFilters) {
+        // Skip ad-hoc "slice filters" ("For" dropdown in alert dialog) - see `getAlertAttribute` or `transformAlertByAttribute` functions that handle that case
+        const isSliceAttributeFilter = isSliceFilter(savedFilter);
+
+        if (!availableFilter && !removedFilterIsAppliedInSavedFilters && !isSliceAttributeFilter) {
             removedFilterIsAppliedInSavedFilters = true;
         }
     }
@@ -525,4 +531,20 @@ function validateVisibleFilters(
         visibleFilterIsMissingInSavedFilters,
         visibleFiltersAreMissing: false,
     };
+}
+
+function isSliceFilter(filter: IFilter) {
+    if (isPositiveAttributeFilter(filter)) {
+        return (
+            isLocalIdRef(filter.positiveAttributeFilter.displayForm) &&
+            !filter.positiveAttributeFilter.localIdentifier
+        );
+    }
+    if (isNegativeAttributeFilter(filter)) {
+        return (
+            isLocalIdRef(filter.negativeAttributeFilter.displayForm) &&
+            !filter.negativeAttributeFilter.localIdentifier
+        );
+    }
+    return false;
 }

@@ -497,6 +497,7 @@ describe("alert transforms", () => {
                     type: "displayForm",
                     identifier: "region",
                 },
+                showAllValues: false,
             },
         },
         type: "attribute",
@@ -972,6 +973,7 @@ describe("alert transforms", () => {
                                     in: {
                                         values: ["America"],
                                     },
+                                    localIdentifier: undefined,
                                 },
                             },
                         ],
