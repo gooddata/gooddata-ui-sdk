@@ -83,6 +83,7 @@ export type {
     VariantTertiary,
     VariantPopOut,
     VariantDanger,
+    VariantTooltip,
 } from "./@ui/@types/variant.js";
 export type { ThemeColor } from "./@ui/@types/themeColors.js";
 export { useElementSize } from "./@ui/hooks/useElementSize.js";
@@ -176,6 +177,10 @@ export type {
 } from "./@ui/UiMenu/types.js";
 export { UiTabs } from "./@ui/UiTabs/UiTabs.js";
 export type { UiTabsProps, UiTab, UiTabsAccessibilityConfig } from "./@ui/UiTabs/UiTabs.js";
+export { UiTooltip } from "./@ui/UiTooltip/UiTooltip.js";
+export { UiTooltipAnchor } from "./@ui/UiTooltip/UiTooltipAnchor.js";
+export { UiTooltipContent } from "./@ui/UiTooltip/UiTooltipContent.js";
+export type { UiTooltipProps, TooltipArrowPlacement } from "./@ui/UiTooltip/types.js";
 
 export {
     makeMenuKeyboardNavigation,
