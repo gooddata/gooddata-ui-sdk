@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { IAlertDefault, ISeparators } from "@gooddata/sdk-model";
 import { v4 as uuidv4 } from "uuid";
@@ -15,6 +15,10 @@ export class TigerSettingsService<T> {
 
     public async setLocale(locale: string): Promise<void> {
         return this.setSetting("LOCALE", { value: locale });
+    }
+
+    public async setMetadataLocale(locale: string): Promise<void> {
+        return this.setSetting("METADATA_LOCALE", { value: locale });
     }
 
     public async setSeparators(separators: ISeparators): Promise<void> {

@@ -25,6 +25,14 @@ export class OrganizationSettingsService
         return this.setSetting("WHITE_LABELING", whiteLabeling);
     }
 
+    public async setLocale(locale: string): Promise<void> {
+        return this.setSetting("LOCALE", { value: locale });
+    }
+
+    public async setMetadataLocale(locale: string): Promise<void> {
+        return this.setSetting("METADATA_LOCALE", { value: locale });
+    }
+
     public async setTimezone(timezone: string): Promise<void> {
         return this.setSetting("TIMEZONE", { value: timezone });
     }

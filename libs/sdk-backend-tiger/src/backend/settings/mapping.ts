@@ -22,6 +22,8 @@ export function mapTypeToKey(
             return "locale";
         case "MAPBOX_TOKEN":
             return "mapboxToken";
+        case "METADATA_LOCALE":
+            return "metadataLocale";
         case "TIMEZONE":
             return "timezone";
         case "WEEK_START":
@@ -46,7 +48,6 @@ export function mapTypeToKey(
             return "attachmentSizeLimit";
         // These cases are intentionally not mapped to maintain an exhaustive check.
         // This ensures we're notified when new properties are added, allowing us to decide if they need mapping.
-        case "METADATA_LOCALE":
         case "OPERATOR_OVERRIDES":
         case "TIMEZONE_VALIDATION_ENABLED":
         case "ENABLE_FILE_ANALYTICS":

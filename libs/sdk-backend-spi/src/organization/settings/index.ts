@@ -25,13 +25,22 @@ export interface IOrganizationSettingsService {
     setWhiteLabeling(whiteLabeling: IWhiteLabeling): Promise<void>;
 
     /**
-     * Sets locale for current workspace.
+     * Sets locale for organization.
      *
      * @param locale - IETF BCP 47 Code locale ID, for example "en-US", "cs-CZ", etc.
      *
      * @returns promise
      */
     setLocale(locale: string): Promise<void>;
+
+    /**
+     * Sets metadata locale for organization.
+     *
+     * @param locale - IETF BCP 47 Code locale ID, for example "en-US", "cs-CZ", etc.
+     *
+     * @returns promise
+     */
+    setMetadataLocale(locale: string): Promise<void>;
 
     /**
      * Set separators for the organization
