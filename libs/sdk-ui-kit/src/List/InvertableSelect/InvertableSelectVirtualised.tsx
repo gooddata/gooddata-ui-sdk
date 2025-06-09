@@ -21,7 +21,7 @@ import {
     IInvertableSelectRenderSearchBarProps,
     IInvertableSelectRenderStatusBarProps,
 } from "./InvertableSelect.js";
-import { isEnterKey, isSpaceKey } from "../../utils/events.js";
+import { isEnterKey, isEscapeKey, isSpaceKey } from "../../utils/events.js";
 import { UiPagedVirtualList } from "../../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
@@ -186,19 +186,22 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
     } = useInvertableSelect(props);
 
     const [focusedIndex, setFocusedIndex] = useState<number>(0);
+    const [hasInitializedFocus, setHasInitializedFocus] = useState<boolean>(false);
 
     useEffect(() => {
         if (items.length === 0) {
             setFocusedIndex(-1);
-        } else {
+            setHasInitializedFocus(false);
+        } else if (!hasInitializedFocus) {
             const firstSelectedIndex = items.findIndex((item) => getIsItemSelected(item));
+            setHasInitializedFocus(true);
             if (firstSelectedIndex !== -1) {
                 setFocusedIndex(firstSelectedIndex);
             } else {
                 setFocusedIndex(0);
             }
         }
-    }, [selectedItems, items, getIsItemSelected, setFocusedIndex]);
+    }, [items, hasInitializedFocus, getIsItemSelected, setFocusedIndex]);
 
     const handleSelectItem = React.useCallback(
         (item: T, e?: React.KeyboardEvent) => () => {
@@ -237,9 +240,8 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                 return undefined;
             }
             selectOnly(item);
-            onApplyButtonClick();
         },
-        [isSingleSelect, selectOnly, onApplyButtonClick],
+        [isSingleSelect, selectOnly],
     );
 
     const getItemAdditionalActions = React.useCallback(() => {
@@ -292,7 +294,14 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
 
     return (
         <div className="gd-invertable-select">
-            <div className="gd-invertable-select-search-bar" onKeyDown={(e) => e.stopPropagation()}>
+            <div
+                className="gd-invertable-select-search-bar"
+                onKeyDown={(e) => {
+                    if (isEscapeKey(e)) {
+                        e.stopPropagation();
+                    }
+                }}
+            >
                 {renderSearchBar({ onSearch, searchPlaceholder, searchString })}
             </div>
             {isLoading ? (

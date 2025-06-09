@@ -1,8 +1,9 @@
 // (C) 2007-2025 GoodData Corporation
-import React from "react";
+import React, { useCallback } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import { FilterButtonCustomIcon, IFilterButtonCustomIcon } from "../../shared/index.js";
+import { isActionKey } from "@gooddata/sdk-ui-kit";
 
 /**
  * @alpha
@@ -33,6 +34,15 @@ export const DateFilterButton: React.FC<IDateFilterButtonProps> = ({
     buttonRef,
     dropdownId,
 }) => {
+    const handleKeyDown = useCallback(
+        (e: React.KeyboardEvent) => {
+            if (isActionKey(e) && disabled) {
+                e.stopPropagation();
+            }
+        },
+        [disabled],
+    );
+
     return (
         <div
             ref={buttonRef as React.MutableRefObject<HTMLDivElement>}
@@ -50,6 +60,7 @@ export const DateFilterButton: React.FC<IDateFilterButtonProps> = ({
             aria-expanded={isOpen}
             aria-controls={isOpen ? dropdownId : undefined}
             tabIndex={0}
+            onKeyDown={handleKeyDown}
         >
             <div className="button-content">
                 <div className="s-date-filter-title button-title">{title}</div>
