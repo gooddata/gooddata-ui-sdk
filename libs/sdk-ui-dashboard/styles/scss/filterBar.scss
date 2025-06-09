@@ -490,6 +490,10 @@ $attribute-filter-drag-handle-left: 10px;
     padding: 0;
     margin-left: 1px;
 
+    & .gd-icon-reset path {
+        fill: kit-variables.$gd-color-state-blank;
+    }
+
     &:hover .gd-icon-reset {
         path {
             fill: kit-variables.$gd-palette-primary-base;
