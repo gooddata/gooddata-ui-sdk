@@ -22,7 +22,7 @@
             "dashboardTitle": "KD with merge and unmerge insights",
             "dashboardURL": "dashboard/mergeunmerge",
             "fileName": "KD with merge and unmerge insights.pdf",
-            "contents": "RegionStage Name\n\nAmount\nEast CoastNegotiation$651,629.48\nWest CoastNegotiation$1,194,979.99\nEast CoastClosed Won$9,111,442.98\nWest CoastClosed Won$22,577,597.64\nEast CoastClosed Lost$8,825,311.89\nWest CoastClosed Lost$27,144,942.17\nunmerge cells insight\nRegion\n\nStage NameAmount\nWest CoastNegotiation$1,194,979.99\nClosed Won$22,577,597.64\nClosed Lost$27,144,942.17\nEast CoastNegotiation$651,629.48\nClosed Won$9,111,442.98\nClosed Lost$8,825,311.89\nmerge cells insight\nWest Coast\nKD with merge and unmerge insights"
+            "contents": "RegionStage Name\n\nAmount\nEast CoastNegotiation$651,629.48\nWest CoastNegotiation$1,194,979.99\nEast CoastClosed Won$9,111,442.98\nWest CoastClosed Won$22,577,597.64\nEast CoastClosed Lost$8,825,311.89\nWest CoastClosed Lost$27,144,942.17\nunmerge cells insight\nRegion\n\nStage NameAmount\nWest CoastNegotiation$1,194,979.99\nClosed Won$22,577,597.64\nClosed Lost$27,144,942.17\nEast CoastNegotiation$651,629.48\nClosed Won$9,111,442.98\nClosed Lost$8,825,311.89\nmerge cells insight\nKD with merge and unmerge insights"
         }
     ],
     "invalidInsight": [
