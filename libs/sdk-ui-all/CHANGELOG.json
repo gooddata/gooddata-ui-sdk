@@ -2,6 +2,18 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.30.0",
+            "tag": "@gooddata/sdk-ui-all_v10.30.0",
+            "date": "Mon, 09 Jun 2025 16:54:46 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Added method for setting metadata locale to settings services"
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.29.0",
             "tag": "@gooddata/sdk-ui-all_v10.29.0",
             "date": "Thu, 05 Jun 2025 07:23:01 GMT",

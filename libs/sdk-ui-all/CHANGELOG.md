@@ -1,6 +1,14 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 05 Jun 2025 07:23:01 GMT and should not be manually modified.
+This log was last generated on Mon, 09 Jun 2025 16:54:46 GMT and should not be manually modified.
+
+## 10.30.0
+
+Mon, 09 Jun 2025 16:54:46 GMT
+
+### Updates
+
+-   Added method for setting metadata locale to settings services
 
 ## 10.29.0
 
