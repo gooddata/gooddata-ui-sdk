@@ -118,23 +118,29 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
 
             @include mixins.active-states-and-self {
                 text-decoration: none;
-                background-color: var(--gd-palette-complementary-2-from-theme, $dialog-background);
+                background-color: kit-variables.$is-focused-background;
 
                 // refactor?
                 // stylelint-disable-next-line max-nesting-depth
                 &::before {
-                    color: var(--gd-palette-complementary-7-from-theme, kit-variables.$default-gd-color-dark);
+                    color: kit-variables.$gd-color-link;
                 }
             }
 
             &:hover {
+                background-color: var(
+                    --gd-palette-complementary-7-from-theme,
+                    kit-variables.$gd-color-text-dimmed
+                );
+
                 // refactor?
                 // stylelint-disable-next-line max-nesting-depth
                 &::before {
-                    color: kit-variables.$gd-palette-primary-base;
+                    color: kit-variables.$gd-color-text-light;
                 }
             }
 
+            &[aria-disabled="true"],
             &[disabled] {
                 // refactor?
                 // stylelint-disable-next-line max-nesting-depth
@@ -462,12 +468,16 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
     background-color: kit-variables.$is-focused-background;
     cursor: pointer;
 
+    .LegendMenuContent {
+        fill: kit-variables.$gd-color-link;
+    }
+
     &:hover,
     &.legend-popup-icon-active {
-        background-color: kit-variables.$gd-color-disabled;
+        background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
 
         .LegendMenuContent {
-            fill: kit-variables.$gd-color-white;
+            fill: kit-variables.$gd-color-text-light;
         }
     }
 }
