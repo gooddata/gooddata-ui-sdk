@@ -1065,6 +1065,7 @@ export interface IOrganizationSettingsService {
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
+    setMetadataLocale(locale: string): Promise<void>;
     // @alpha
     setOpenAiConfig(config: IOpenAiConfig): Promise<void>;
     setSeparators(separators: ISeparators): Promise<void>;
@@ -1307,6 +1308,7 @@ export interface IUserSettings extends ISettings {
 export interface IUserSettingsService {
     getSettings(): Promise<IUserSettings>;
     setLocale(locale: string): Promise<void>;
+    setMetadataLocale(locale: string): Promise<void>;
     setSeparators(separators: ISeparators): Promise<void>;
 }
 
@@ -1607,6 +1609,7 @@ export interface IWorkspaceSettingsService {
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
+    setMetadataLocale(locale: string): Promise<void>;
     setSeparators(separators: ISeparators): Promise<void>;
     setTheme(themeId: string): Promise<void>;
     setTimezone(timezone: string): Promise<void>;

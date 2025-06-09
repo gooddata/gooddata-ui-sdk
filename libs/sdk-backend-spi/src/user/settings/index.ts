@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { ISeparators } from "@gooddata/sdk-model";
 import { IUserSettings } from "../../common/settings.js";
 
@@ -23,6 +23,15 @@ export interface IUserSettingsService {
      * @returns promise
      */
     setLocale(locale: string): Promise<void>;
+
+    /**
+     * Set metadata locale for the current user
+     *
+     * @param locale - IETF BCP 47 Code locale ID, for example "en-US", "cs-CZ", etc.
+     *
+     * @returns promise
+     */
+    setMetadataLocale(locale: string): Promise<void>;
 
     /**
      * Set separators for the current user

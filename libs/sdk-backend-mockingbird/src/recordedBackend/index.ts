@@ -246,6 +246,9 @@ function recordedWorkspace(
                 async setLocale(): Promise<void> {
                     return Promise.resolve();
                 },
+                async setMetadataLocale(): Promise<void> {
+                    return Promise.resolve();
+                },
                 async setSeparators(): Promise<void> {
                     return Promise.resolve();
                 },
@@ -458,6 +461,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
             return {
                 setWhiteLabeling: () => Promise.resolve(),
                 setLocale: () => Promise.resolve(),
+                setMetadataLocale: () => Promise.resolve(),
                 setSeparators: () => Promise.resolve(),
                 setActiveLlmEndpoint: () => Promise.resolve(),
                 deleteActiveLlmEndpoint: () => Promise.resolve(),
@@ -616,6 +620,7 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
                     ...(implConfig.globalSettings ?? {}),
                 }),
                 setLocale: () => Promise.resolve(),
+                setMetadataLocale: () => Promise.resolve(),
                 setSeparators: () => Promise.resolve(),
             };
         },
