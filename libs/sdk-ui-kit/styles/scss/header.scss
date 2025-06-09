@@ -85,17 +85,6 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
 
 .gd-header-menu {
     flex: 1 0 auto;
-
-    &,
-    li {
-        margin: 0;
-        padding: 0;
-    }
-
-    li {
-        display: block;
-        list-style: none;
-    }
 }
 
 .gd-header-menu-vertical-wrapper {
@@ -140,10 +129,12 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
 }
 
 .gd-header-menu-vertical {
-    li a {
+    .gd-header-menu-item {
+        margin: 0;
         position: relative;
         display: flex;
         align-items: center;
+        gap: 6px;
         height: auto;
         padding: 9px 15px;
         line-height: 24px;
@@ -167,9 +158,9 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
         }
 
         &::after {
-            right: 15px;
+            right: 0;
             bottom: -1px;
-            left: 15px;
+            left: 0;
             height: 1px;
             border-bottom: 1px solid
                 var(
@@ -181,14 +172,6 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
         &:hover {
             border: none;
             color: var(--gd-palette-complementary-9-from-theme, variables.$default-gd-color-text-light);
-
-            &::before {
-                background-color: var(--gd-palette-complementary-6-from-theme, inherit);
-            }
-
-            &::after {
-                display: none;
-            }
         }
 
         &.active {
@@ -242,18 +225,6 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
 
     .gd-header-menu {
         display: block;
-    }
-
-    .gd-header-menu li:last-child a {
-        border-bottom: 1px solid
-            var(
-                --gd-palette-complementary-4-from-theme,
-                color.adjust(variables.$default-gd-color-state-blank, $alpha: -0.8)
-            );
-
-        &::after {
-            display: none;
-        }
     }
 
     .gd-header-menu-trial {
@@ -314,7 +285,6 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     .gd-icon {
         width: 16px;
         height: 16px;
-        margin-right: 10px;
     }
 
     .gd-icon-slack {
@@ -485,10 +455,6 @@ a.gd-list-help-menu-item.gd-list-item {
     }
 }
 
-.gd-header-notifications-icon {
-    padding-right: 5px;
-}
-
 .gd-header-notifications {
     height: 100%;
     margin: 0;
@@ -563,6 +529,7 @@ a.gd-list-help-menu-item.gd-list-item {
 
     &:hover {
         opacity: 1;
+        background: rgba(255, 255, 255, 0.3);
     }
 
     & .gd-button-text {
@@ -697,10 +664,7 @@ a.gd-list-help-menu-item.gd-list-item {
     &:hover,
     &.is-open {
         opacity: 1;
-    }
-
-    &.is-open {
-        background-color: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.3);
     }
 }
 
