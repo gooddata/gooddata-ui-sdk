@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import { AutofocusOnMount, InvertableSelectVirtualised, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { IAttributeElement } from "@gooddata/sdk-model";
@@ -105,6 +105,8 @@ export const AttributeFilterVirtualisedElementsSelect: React.FC<IAttributeFilter
         StatusBarComponent,
     } = useAttributeFilterComponentsContext();
 
+    const [refocusKey, setRefocusKey] = useState<string | undefined>(undefined);
+
     const itemHeight = fullscreenOnMobile && isMobile ? MOBILE_LIST_ITEM_HEIGHT : ITEM_HEIGHT;
     const isAdaptiveHeight = isMobile && fullscreenOnMobile;
 
@@ -126,8 +128,13 @@ export const AttributeFilterVirtualisedElementsSelect: React.FC<IAttributeFilter
         return primaryLabel?.title;
     }, [attribute]);
 
+    const handleShowFilteredElements = useCallback(() => {
+        setRefocusKey("show");
+        onShowFilteredElements();
+    }, [onShowFilteredElements, setRefocusKey]);
+
     return (
-        <AutofocusOnMount>
+        <AutofocusOnMount refocusKey={refocusKey}>
             <InvertableSelectVirtualised<IAttributeElement>
                 className="gd-attribute-filter-elements-select__next"
                 adaptiveWidth
@@ -195,7 +202,7 @@ export const AttributeFilterVirtualisedElementsSelect: React.FC<IAttributeFilter
                         selectedItemsLimit={selectedItemsLimit}
                         attributeTitle={attributeTitle}
                         enableShowingFilteredElements={enableShowingFilteredElements}
-                        onShowFilteredElements={onShowFilteredElements}
+                        onShowFilteredElements={handleShowFilteredElements}
                         irrelevantSelection={irrelevantSelection}
                         onClearIrrelevantSelection={onClearIrrelevantSelection}
                         withoutApply={withoutApply}

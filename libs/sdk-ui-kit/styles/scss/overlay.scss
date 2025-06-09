@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "mixins";
 @use "typo-mixins";
 @use "variables";
@@ -30,6 +30,12 @@
 
 .gd-overlay-content {
     @include mixins.default-styles();
+}
+
+// Fix for UiFocusTrap height issue in fullscreen overlays
+// Ensures focus trap takes full height when used in fixed positioned overlays
+.overlay-wrapper[style*="position: fixed"] .gd-focus-trap {
+    height: 100%;
 }
 
 .gd-error-overlay-content {

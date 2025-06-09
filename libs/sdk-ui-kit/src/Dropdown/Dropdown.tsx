@@ -270,22 +270,28 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
     const renderDropdown = isOpen ? (
         fullscreenOnMobile && isMobileDevice ? (
             <FullScreenOverlay alignTo="body" alignPoints={MOBILE_DROPDOWN_ALIGN_POINTS}>
-                <div className="gd-mobile-dropdown-overlay overlay gd-flex-row-container">
-                    <div className="gd-mobile-dropdown-header gd-flex-item">
-                        {_renderButton({
-                            ...renderButtonProps,
-                            isMobile: true,
-                            buttonRef,
-                        })}
-                    </div>
+                <UiFocusTrap
+                    returnFocusTo={returnFocusTo ?? (buttonRef.current ? buttonRef : buttonWrapperRef)}
+                    autofocusOnOpen={autofocusOnOpen}
+                    initialFocus={initialFocus}
+                >
+                    <div className="gd-mobile-dropdown-overlay overlay gd-flex-row-container">
+                        <div className="gd-mobile-dropdown-header gd-flex-item">
+                            {_renderButton({
+                                ...renderButtonProps,
+                                isMobile: true,
+                                buttonRef: { current: null },
+                            })}
+                        </div>
 
-                    <div className="gd-mobile-dropdown-content gd-flex-item-stretch gd-flex-row-container">
-                        {renderBody({
-                            ...renderBodyProps,
-                            isMobile: true,
-                        })}
+                        <div className="gd-mobile-dropdown-content gd-flex-item-stretch gd-flex-row-container">
+                            {renderBody({
+                                ...renderBodyProps,
+                                isMobile: true,
+                            })}
+                        </div>
                     </div>
-                </div>
+                </UiFocusTrap>
             </FullScreenOverlay>
         ) : (
             <Overlay

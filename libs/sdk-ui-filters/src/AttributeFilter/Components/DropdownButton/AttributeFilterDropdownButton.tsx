@@ -1,9 +1,9 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
-import { ShortenedText } from "@gooddata/sdk-ui-kit";
+import { isActionKey, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { AttributeFilterButtonTooltip } from "./AttributeFilterButtonTooltip.js";
 import { FilterButtonCustomIcon, IFilterButtonCustomIcon } from "../../../shared/index.js";
 
@@ -216,6 +216,15 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
         buttonSubtitle = intl.formatMessage({ id: "filtering" });
     }
 
+    const onKeyDown = useCallback(
+        (event: React.KeyboardEvent) => {
+            if (isActionKey(event) && disabled) {
+                event.stopPropagation();
+            }
+        },
+        [disabled],
+    );
+
     return (
         <div
             className={cx(
@@ -235,6 +244,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
             aria-haspopup="dialog"
             aria-expanded={isOpen}
             onClick={onClick}
+            onKeyDown={onKeyDown}
             aria-controls={isOpen ? dropdownId : undefined}
             role="button"
             tabIndex={0}
