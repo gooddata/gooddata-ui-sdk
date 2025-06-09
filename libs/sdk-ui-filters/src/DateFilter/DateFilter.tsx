@@ -165,7 +165,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
         if (
             nextProps.enableDashboardFiltersApplyModes &&
             nextProps.workingSelectedFilterOption &&
-            nextProps.excludeCurrentPeriod &&
+            nextProps.excludeCurrentPeriod !== undefined &&
             (!isEqual(nextProps.workingSelectedFilterOption, prevState.initWorkingSelectedFilterOption) ||
                 nextProps.excludeCurrentPeriod !== prevState.initWorkingExcludeCurrentPeriod)
         ) {
