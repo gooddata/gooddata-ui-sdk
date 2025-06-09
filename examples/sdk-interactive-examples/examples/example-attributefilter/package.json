@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-attributefilter",
-    "version": "10.30.0-alpha.25",
+    "version": "10.30.0-alpha.26",
     "title": "Attribute Filter Example",
     "description": "This example demonstrates how to use the AttributeFilter component to filter data in a visualization.",
     "author": "GoodData",
