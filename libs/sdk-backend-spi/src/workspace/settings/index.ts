@@ -41,6 +41,15 @@ export interface IWorkspaceSettingsService {
     setLocale(locale: string): Promise<void>;
 
     /**
+     * Sets metadata locale for current workspace.
+     *
+     * @param locale - IETF BCP 47 Code locale ID, for example "en-US", "cs-CZ", etc.
+     *
+     * @returns promise
+     */
+    setMetadataLocale(locale: string): Promise<void>;
+
+    /**
      * Set separators for the current workspace
      *
      * @param separators - separators for the current workspace

@@ -28,6 +28,10 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
         return this.decorated.setLocale(locale);
     }
 
+    async setMetadataLocale(locale: string): Promise<void> {
+        return this.decorated.setMetadataLocale(locale);
+    }
+
     async setSeparators(separators: ISeparators): Promise<void> {
         return this.decorated.setSeparators(separators);
     }
