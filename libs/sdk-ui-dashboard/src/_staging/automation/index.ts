@@ -191,3 +191,14 @@ export const convertUserToAutomationRecipient = (user: IUser): IAutomationRecipi
         type: "user",
     };
 };
+
+export const convertExternalRecipientToAutomationRecipient = (
+    externalRecipient: string,
+): IAutomationRecipient => {
+    return {
+        id: externalRecipient,
+        email: externalRecipient,
+        name: externalRecipient,
+        type: "externalUser",
+    };
+};

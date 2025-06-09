@@ -378,6 +378,13 @@ export interface DashboardConfig {
     workspaceDescriptor?: {
         title: string;
     };
+
+    /**
+     * @alpha
+     *
+     * Customized recipient context for automations
+     */
+    externalRecipient?: string;
 }
 
 /**
@@ -456,6 +463,7 @@ export type ResolvedDashboardConfig = Omit<
     | "hideWidgetTitles"
     | "workspaceDescriptor"
     | "evaluationFrequency"
+    | "externalRecipient"
 > &
     DashboardConfig;
 

@@ -36,6 +36,7 @@ import {
     areAutomationsEqual,
     convertCurrentUserToAutomationRecipient,
     convertCurrentUserToWorkspaceUser,
+    convertExternalRecipientToAutomationRecipient,
     getAutomationVisualizationFilters,
     isCsvVisualizationAutomation,
     isCsvVisualizationExportDefinition,
@@ -76,6 +77,7 @@ export interface IUseEditScheduledEmailProps {
     setStoreFilters: (storeFilters: boolean) => void;
     enableAutomationFilterContext?: boolean;
     filtersForNewAutomation: FilterContextItem[];
+    externalRecipientOverride?: string;
 }
 
 export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
@@ -94,6 +96,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         setStoreFilters,
         enableAutomationFilterContext,
         filtersForNewAutomation,
+        externalRecipientOverride,
     } = props;
 
     const intl = useIntl();
@@ -114,7 +117,9 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     const users = useDashboardSelector(selectUsers);
     const defaultUser = convertCurrentUserToWorkspaceUser(users ?? [], currentUser);
 
-    const defaultRecipient = convertCurrentUserToAutomationRecipient(users ?? [], currentUser);
+    const defaultRecipient = externalRecipientOverride
+        ? convertExternalRecipientToAutomationRecipient(externalRecipientOverride)
+        : convertCurrentUserToAutomationRecipient(users ?? [], currentUser);
     const enabledExternalRecipients = useDashboardSelector(selectEnableExternalRecipients);
 
     const firstChannel = notificationChannels[0]?.id;

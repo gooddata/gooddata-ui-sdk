@@ -1352,6 +1352,7 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         author: string | null;
         user: string | null;
         recipient: string | null;
+        externalRecipient: string | null;
         dashboard: string | null;
         filter: { title?: string };
         sort: NonNullable<unknown>;
@@ -1363,6 +1364,7 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         author: null,
         user: null,
         recipient: null,
+        externalRecipient: null,
         dashboard: null,
         filter: {},
         sort: {},
@@ -1413,6 +1415,11 @@ class DummyAutomationsQuery implements IAutomationsQuery {
 
     withRecipient(recipient: string): IAutomationsQuery {
         this.settings.recipient = recipient;
+        return this;
+    }
+
+    withExternalRecipient(externalRecipient: string): IAutomationsQuery {
+        this.settings.externalRecipient = externalRecipient;
         return this;
     }
 

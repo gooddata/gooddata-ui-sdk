@@ -28,6 +28,7 @@ import {
     selectEntitlementMaxAutomationRecipients,
     selectEntitlementMinimumRecurrenceMinutes,
     selectExecutionTimestamp,
+    selectExternalRecipient,
     selectIsCrossFiltering,
     selectIsWhiteLabeled,
     selectLocale,
@@ -135,6 +136,7 @@ export function ScheduledMailDialogRenderer({
     >(null);
 
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
+    const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
 
     const handleScheduleDeleteSuccess = () => {
         onDeleteSuccess?.();
@@ -207,6 +209,7 @@ export function ScheduledMailDialogRenderer({
         availableFiltersAsVisibleFilters,
         enableAutomationFilterContext,
         filtersForNewAutomation,
+        externalRecipientOverride,
     });
 
     const { isValid } = useValidateExistingAutomationFilters({
@@ -397,6 +400,7 @@ export function ScheduledMailDialogRenderer({
                                 notificationChannels={notificationChannels}
                                 notificationChannelId={editedAutomation.notificationChannel}
                                 onKeyDownSubmit={handleSubmitForm}
+                                externalRecipientOverride={externalRecipientOverride}
                             />
                             {!isInPlatformChannel ? (
                                 <>

@@ -182,6 +182,7 @@ exports[`initialize dashboard handler > for any dashboard > should resolve confi
   "disableDefaultDrills": false,
   "disableUserFilterReset": false,
   "enableFilterValuesResolutionInDrillEvents": false,
+  "externalRecipient": undefined,
   "hideSaveAsNewButton": false,
   "hideShareButton": false,
   "initialRenderMode": "view",

@@ -10,6 +10,7 @@ import { loadDashboardUserAutomations, loadWorkspaceAutomationsCount } from "./l
 import {
     selectEnableAlerting,
     selectEnableScheduling,
+    selectExternalRecipient,
     selectIsReadOnly,
 } from "../../store/config/configSelectors.js";
 import { automationsActions } from "../../store/automations/index.js";
@@ -28,6 +29,9 @@ export function* refreshAutomationsHandlers(ctx: DashboardContext, cmd: RefreshA
     );
     const isReadOnly: ReturnType<typeof selectIsReadOnly> = yield select(selectIsReadOnly);
     const enableAutomations = enableScheduling || enableAlerting;
+    const externalRecipient: ReturnType<typeof selectExternalRecipient> = yield select(
+        selectExternalRecipient,
+    );
 
     if (!dashboardId || !user || !enableAutomations || isReadOnly) {
         return;
@@ -40,7 +44,14 @@ export function* refreshAutomationsHandlers(ctx: DashboardContext, cmd: RefreshA
             PromiseFnReturnType<typeof loadDashboardUserAutomations>,
             PromiseFnReturnType<typeof loadWorkspaceAutomationsCount>,
         ] = yield all([
-            call(loadDashboardUserAutomations, ctx, dashboardId, user.login, !canManageAutomations),
+            call(
+                loadDashboardUserAutomations,
+                ctx,
+                dashboardId,
+                user.login,
+                !canManageAutomations,
+                externalRecipient,
+            ),
             call(loadWorkspaceAutomationsCount, ctx),
         ]);
 

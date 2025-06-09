@@ -39,6 +39,7 @@ import {
 import {
     convertCurrentUserToAutomationRecipient,
     convertCurrentUserToWorkspaceUser,
+    convertExternalRecipientToAutomationRecipient,
 } from "../../../../_staging/automation/index.js";
 import { useIntl } from "react-intl";
 import { getAppliedWidgetFilters, getVisibleFiltersByFilters } from "../../../automationFilters/utils.js";
@@ -83,6 +84,7 @@ export interface IUseEditAlertProps {
     setEditedAutomationFilters: (filters: FilterContextItem[]) => void;
     availableFiltersAsVisibleFilters?: IAutomationVisibleFilter[] | undefined;
     filtersForNewAutomation: FilterContextItem[];
+    externalRecipientOverride?: string;
 }
 
 export function useEditAlert(props: IUseEditAlertProps) {
@@ -96,6 +98,7 @@ export function useEditAlert(props: IUseEditAlertProps) {
         setEditedAutomationFilters,
         availableFiltersAsVisibleFilters,
         filtersForNewAutomation,
+        externalRecipientOverride,
     } = props;
     const intl = useIntl();
 
@@ -144,7 +147,9 @@ export function useEditAlert(props: IUseEditAlertProps) {
     // Default values
     const defaultMeasure = supportedMeasures[0];
     const defaultUser = convertCurrentUserToWorkspaceUser(users ?? [], currentUser);
-    const defaultRecipient = convertCurrentUserToAutomationRecipient(users ?? [], currentUser);
+    const defaultRecipient = externalRecipientOverride
+        ? convertExternalRecipientToAutomationRecipient(externalRecipientOverride)
+        : convertCurrentUserToAutomationRecipient(users ?? [], currentUser);
     const defaultNotificationChannelId = notificationChannels[0]?.id;
 
     // Local state
@@ -164,7 +169,7 @@ export function useEditAlert(props: IUseEditAlertProps) {
                 supportedMeasures,
                 defaultMeasure,
                 defaultNotificationChannelId,
-                convertCurrentUserToAutomationRecipient(users ?? [], currentUser),
+                defaultRecipient,
                 measureFormatMap,
                 undefined,
                 descriptor.evaluationFrequency

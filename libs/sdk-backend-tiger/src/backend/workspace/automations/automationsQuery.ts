@@ -14,6 +14,7 @@ export class AutomationsQuery implements IAutomationsQuery {
     private page = 0;
     private author: string | null = null;
     private recipient: string | null = null;
+    private externalRecipient: string | null = null;
     private user: string | null = null;
     private dashboard: string | null = null;
     private filter: { title?: string } = {};
@@ -64,6 +65,11 @@ export class AutomationsQuery implements IAutomationsQuery {
 
     withRecipient(recipient: string): IAutomationsQuery {
         this.recipient = recipient;
+        return this;
+    }
+
+    withExternalRecipient(externalRecipient: string): IAutomationsQuery {
+        this.externalRecipient = externalRecipient;
         return this;
     }
 
@@ -149,6 +155,10 @@ export class AutomationsQuery implements IAutomationsQuery {
 
         if (this.recipient) {
             allFilters.push(`recipients.id=='${this.recipient}'`);
+        }
+
+        if (this.externalRecipient) {
+            allFilters.push(`externalRecipients.email=='${this.externalRecipient}'`);
         }
 
         if (this.user) {

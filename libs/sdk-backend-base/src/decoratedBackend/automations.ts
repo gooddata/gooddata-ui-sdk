@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import {
     IWorkspaceAutomationService,
@@ -33,6 +33,9 @@ export abstract class DecoratedAutomationsQuery implements IAutomationsQuery {
     }
     withRecipient(recipient: string): IAutomationsQuery {
         return this.decorated.withRecipient(recipient);
+    }
+    withExternalRecipient(externalRecipient: string): IAutomationsQuery {
+        return this.decorated.withExternalRecipient(externalRecipient);
     }
     withUser(user: string): IAutomationsQuery {
         return this.decorated.withUser(user);
