@@ -91,6 +91,18 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@floating-ui/dom",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@floating-ui/react",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@floating-ui/react-dom",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@formatjs/cli-lib",
       "allowedCategories": [ "tools" ]
     },

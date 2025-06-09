@@ -6,6 +6,7 @@ import { SizeLarge, SizeMedium, SizeSmall } from "../@types/size.js";
 import {
     VariantDanger,
     VariantPopOut,
+    VariantTooltip,
     VariantPrimary,
     VariantSecondary,
     VariantTertiary,
@@ -28,7 +29,13 @@ export interface IUiButtonAccessibilityConfig extends IAccessibilityConfigBase {
 export interface UiButtonProps {
     id?: string;
     size?: SizeSmall | SizeMedium | SizeLarge;
-    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger;
+    variant?:
+        | VariantPrimary
+        | VariantSecondary
+        | VariantTertiary
+        | VariantPopOut
+        | VariantDanger
+        | VariantTooltip;
     iconBefore?: IconType;
     iconAfter?: IconType;
     label: string;

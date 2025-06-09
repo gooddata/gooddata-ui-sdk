@@ -210,5 +210,33 @@
                 border-color: transparent;
             }
         }
+
+        &-tooltip {
+            --gd-icon-fill-color: var(--gd-palette-complementary-0);
+            color: var(--gd-palette-complementary-0);
+            opacity: 0.8;
+
+            padding: 0;
+            text-decoration: underline;
+            background-color: transparent;
+            border-color: transparent;
+
+            &:not(&:disabled) {
+                &:hover,
+                &:focus-visible,
+                &:active {
+                    --gd-icon-fill-color: var(--gd-palette-complementary-0);
+                    opacity: 1;
+
+                    color: var(--gd-palette-complementary-0);
+                }
+            }
+
+            &:disabled {
+                color: var(--gd-palette-complementary-0);
+                opacity: 0.5;
+                text-decoration: none;
+            }
+        }
     }
 }
