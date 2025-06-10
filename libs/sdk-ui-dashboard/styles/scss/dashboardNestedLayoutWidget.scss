@@ -47,7 +47,8 @@
 
 .gd-nested-layout-widget-renderer {
     .gd-nested-layout-hotspot.dropzone {
-        width: 10%;
+        width: min(10%, 50px); // 10% of left and right side of the widget, or 50px, whatever is smaller
+        min-width: 24px; // ensure usage in narrow containers, when parent dropzone would cover child one
     }
 }
 
