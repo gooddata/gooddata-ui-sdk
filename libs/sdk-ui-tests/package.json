@@ -99,7 +99,7 @@
         "@storybook/preset-scss": "^1.0.3",
         "@storybook/react": "^7.0.7",
         "@storybook/react-webpack5": "^7.0.7",
-        "@testing-library/dom": "~9.2.0",
+        "@testing-library/dom": "~9.3.0",
         "@testing-library/react": "^14.0.0",
         "@types/json-stable-stringify": "^1.0.32",
         "@types/lodash": "^4.14.202",
