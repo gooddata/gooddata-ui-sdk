@@ -52,6 +52,7 @@ export function rowMeasureTemplate(table: TableFacade, props: Readonly<ICorePivo
             return params.value === undefined ? null : params.value;
         },
         cellRenderer,
+        sortable: false,
     };
 }
 
