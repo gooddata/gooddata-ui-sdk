@@ -1121,6 +1121,7 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         page: number;
         author: string | null;
         recipient: string | null;
+        externalRecipient: string | null;
         user: string | null;
         dashboard: string | null;
         filter: { title?: string };
@@ -1132,6 +1133,7 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         page: 0,
         author: null,
         recipient: null,
+        externalRecipient: null,
         user: null,
         dashboard: null,
         filter: {},
@@ -1188,6 +1190,12 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
     withRecipient(recipient: string): IAutomationsQuery {
         this.settings.recipient = recipient;
         super.withRecipient(recipient);
+        return this;
+    }
+
+    withExternalRecipient(externalRecipient: string): IAutomationsQuery {
+        this.settings.externalRecipient = externalRecipient;
+        super.withExternalRecipient(externalRecipient);
         return this;
     }
 

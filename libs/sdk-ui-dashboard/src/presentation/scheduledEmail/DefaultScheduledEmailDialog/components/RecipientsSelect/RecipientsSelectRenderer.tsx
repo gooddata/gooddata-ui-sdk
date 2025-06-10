@@ -158,6 +158,11 @@ export interface IRecipientsSelectRendererProps {
      * Handle keyboard submit
      */
     onKeyDownSubmit?: (e: React.KeyboardEvent) => void;
+
+    /**
+     * Override recipients with an external recipient
+     */
+    externalRecipientOverride?: string;
 }
 
 interface IRecipientsSelectRendererState {
@@ -245,6 +250,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             usersError,
             allowOnlyLoggedUserRecipients,
             id,
+            externalRecipientOverride,
         } = this.props;
         const creatableSelectComponent: SelectComponentsConfig<
             IAutomationRecipient,
@@ -285,6 +291,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             missingEmailError;
 
         const someExternalRecipients = value.some((v) => v.type === "externalUser");
+        const renderExternalRecipientsNote = someExternalRecipients && !externalRecipientOverride;
 
         return (
             <div
@@ -343,7 +350,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                             maxRecipients,
                             usersError,
                         })
-                    ) : someExternalRecipients ? (
+                    ) : renderExternalRecipientsNote ? (
                         <div className="gd-recipients-field-note">
                             <FormattedMessage id="dialogs.schedule.email.recipients.note" />
                         </div>
@@ -446,6 +453,10 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     }
 
     private renderNoOptionsContainer = (): React.ReactElement | null => {
+        if (this.props.externalRecipientOverride) {
+            return null;
+        }
+
         return (
             <div className="gd-recipients-no-match">
                 <FormattedMessage id="dialogs.schedule.email.user.noMatch" />

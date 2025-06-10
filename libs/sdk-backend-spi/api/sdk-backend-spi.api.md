@@ -339,6 +339,7 @@ export interface IAutomationsQuery {
     queryAll(): Promise<IAutomationMetadataObject[]>;
     withAuthor(author: string): IAutomationsQuery;
     withDashboard(dashboard: string): IAutomationsQuery;
+    withExternalRecipient(externalRecipient: string): IAutomationsQuery;
     withFilter(filter: {
         title?: string;
     }): IAutomationsQuery;

@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging.js";
@@ -190,6 +190,14 @@ export interface IAutomationsQuery {
      * @returns automations query
      */
     withRecipient(recipient: string): IAutomationsQuery;
+
+    /**
+     * Sets external recipient of the automation for the query.
+     *
+     * @param externalRecipient - external recipient of the automation
+     * @returns automations query
+     */
+    withExternalRecipient(externalRecipient: string): IAutomationsQuery;
 
     /**
      * This filter gets automations if either author or recipient of the automation is the provided user.

@@ -12,6 +12,7 @@ import {
     selectEnableInPlatformNotifications,
     selectEnableScheduling,
     selectIsReadOnly,
+    selectExternalRecipient,
 } from "../../store/config/configSelectors.js";
 import { automationsActions } from "../../store/automations/index.js";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
@@ -79,6 +80,9 @@ export function* initializeAutomationsHandler(
     );
     const isReadOnly: ReturnType<typeof selectIsReadOnly> = yield select(selectIsReadOnly);
     const { automationId }: ReturnType<typeof selectFocusObject> = yield select(selectFocusObject);
+    const externalRecipient: ReturnType<typeof selectExternalRecipient> = yield select(
+        selectExternalRecipient,
+    );
 
     if (
         !dashboardId ||
@@ -99,7 +103,14 @@ export function* initializeAutomationsHandler(
             PromiseFnReturnType<typeof loadWorkspaceAutomationsCount>,
             PromiseFnReturnType<typeof loadNotificationChannels>,
         ] = yield all([
-            call(loadDashboardUserAutomations, ctx, dashboardId, user.login, !canManageAutomations),
+            call(
+                loadDashboardUserAutomations,
+                ctx,
+                dashboardId,
+                user.login,
+                !canManageAutomations,
+                externalRecipient,
+            ),
             call(loadWorkspaceAutomationsCount, ctx),
             call(loadNotificationChannels, ctx, enableInPlatformNotifications),
         ]);

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../types/commonTypes.js";
 
@@ -15,6 +15,7 @@ export function loadDashboardUserAutomations(
     dashboardId: string,
     userId: string,
     filterByUser: boolean,
+    externalRecipient: string | undefined,
 ): Promise<IAutomationMetadataObject[]> {
     const { backend, workspace } = ctx;
 
@@ -25,7 +26,10 @@ export function loadDashboardUserAutomations(
         .withSorting(["title,asc", "createdAt,asc"])
         .withDashboard(dashboardId);
 
-    if (filterByUser) {
+    // External recipients from context are prioritized to signed-in user
+    if (externalRecipient) {
+        dashboardQuery = dashboardQuery.withExternalRecipient(externalRecipient);
+    } else if (filterByUser) {
         dashboardQuery = dashboardQuery.withUser(userId);
     }
 

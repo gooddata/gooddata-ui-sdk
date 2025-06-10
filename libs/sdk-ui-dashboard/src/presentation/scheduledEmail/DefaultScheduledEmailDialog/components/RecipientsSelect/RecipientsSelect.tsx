@@ -94,6 +94,11 @@ interface IRecipientsSelectProps {
      * Handle keyboard submit
      */
     onKeyDownSubmit?: (e: React.KeyboardEvent) => void;
+
+    /**
+     * Override recipients with an external recipient
+     */
+    externalRecipientOverride?: string;
 }
 
 export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
@@ -114,6 +119,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
         notificationChannelId,
         showLabel = true,
         onKeyDownSubmit,
+        externalRecipientOverride,
     } = props;
 
     const [search, setSearch] = useState<string>();
@@ -143,7 +149,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
             id={id}
             canListUsersInProject
             isMulti
-            options={options}
+            options={externalRecipientOverride ? [] : options}
             value={value}
             originalValue={originalValue}
             onChange={onChange}
@@ -160,6 +166,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
             usersError={usersError}
             showLabel={showLabel}
             onKeyDownSubmit={onKeyDownSubmit}
+            externalRecipientOverride={externalRecipientOverride}
         />
     );
 };

@@ -19,6 +19,7 @@ import { defineMessage, FormattedMessage, useIntl } from "react-intl";
 import {
     selectEntitlementMaxAutomationRecipients,
     selectExecutionTimestamp,
+    selectExternalRecipient,
     selectIsWhiteLabeled,
     selectLocale,
     useDashboardSelector,
@@ -81,6 +82,7 @@ export function AlertingDialogRenderer({
     const dialogTitleRef = useRef<HTMLInputElement | null>(null);
 
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
+    const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
 
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
 
@@ -151,6 +153,7 @@ export function AlertingDialogRenderer({
         setEditedAutomationFilters,
         notificationChannels,
         filtersForNewAutomation,
+        externalRecipientOverride,
     });
 
     const { isValid } = useValidateExistingAutomationFilters({
@@ -439,6 +442,7 @@ export function AlertingDialogRenderer({
                                         notificationChannels={notificationChannels}
                                         notificationChannelId={editedAutomation.notificationChannel}
                                         showLabel={false}
+                                        externalRecipientOverride={externalRecipientOverride}
                                     />
                                 </FormField>
                             </FormFieldGroup>

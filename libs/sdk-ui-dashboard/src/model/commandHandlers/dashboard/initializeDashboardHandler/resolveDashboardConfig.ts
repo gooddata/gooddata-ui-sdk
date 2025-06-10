@@ -231,6 +231,7 @@ function applyConfigDefaults<T extends DashboardConfig>(config: T) {
         disableCrossFiltering: config.disableCrossFiltering ?? false,
         disableUserFilterReset: config.disableUserFilterReset ?? false,
         widgetsOverlay: config.widgetsOverlay ?? {},
+        externalRecipient: config.externalRecipient ?? undefined,
     };
 }
 

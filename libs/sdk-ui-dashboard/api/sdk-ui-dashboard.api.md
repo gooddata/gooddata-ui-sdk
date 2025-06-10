@@ -1675,6 +1675,8 @@ export interface DashboardConfig {
     // @internal
     exportId?: string;
     exportType?: "visual" | "slides";
+    // @alpha
+    externalRecipient?: string;
     // @beta
     focusObject?: DashboardFocusObject;
     // @internal
@@ -8060,7 +8062,7 @@ export interface ResolveAsyncRenderPayload {
 }
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
@@ -8930,6 +8932,9 @@ export const selectExecutionResultByRef: (ref: ObjRef | undefined) => DashboardS
 
 // @internal (undocumented)
 export const selectExecutionTimestamp: DashboardSelector<string | undefined>;
+
+// @internal
+export const selectExternalRecipient: DashboardSelector<string | undefined>;
 
 // @alpha
 export const selectFilterableWidgetByRef: (ref: ObjRef | undefined) => DashboardSelector<IWidget | ICustomWidget | undefined>;

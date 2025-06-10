@@ -1060,3 +1060,15 @@ export const selectEnableExportToDocumentStorage: DashboardSelector<boolean> = c
         return Boolean(state.settings?.enableExportToDocumentStorage) ?? false;
     },
 );
+
+/**
+ * Returns the external recipient from the dashboard config
+ *
+ * @internal
+ */
+export const selectExternalRecipient: DashboardSelector<string | undefined> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.externalRecipient;
+    },
+);
