@@ -186,6 +186,14 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         return getMeasureFormatsFromExecution(execResult?.executionResult);
     }, [execResult?.executionResult]);
 
+    const [alertToDelete, setAlertToDelete] = useState<null | IAutomationMetadataObject>(null);
+    const startDeletingAlert = useCallback((alert: IAutomationMetadataObject) => {
+        setAlertToDelete(alert);
+    }, []);
+    const cancelDeletingAlert = useCallback(() => {
+        setAlertToDelete(null);
+    }, []);
+
     // Handle async widget filters and catalog state
     useEffect(() => {
         if (
@@ -323,6 +331,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                 : automationService.unsubscribeAutomation.bind(automationService);
 
         try {
+            setAlertToDelete(null);
             await deleteMethod(alert.id);
             addSuccess(messages.alertDeleteSuccess);
             setIsDeletingAlert(false);
@@ -358,6 +367,9 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         saveNewAlert,
         pauseExistingAlert,
         resumeExistingAlert,
+        alertToDelete,
+        startDeletingAlert,
+        cancelDeletingAlert,
         deleteExistingAlert,
         cancelAlertEditing,
         cancelAlertCreation,
