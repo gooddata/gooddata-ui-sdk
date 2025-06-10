@@ -4,6 +4,7 @@ import React from "react";
 import { ILayoutItemPath } from "../../../../types.js";
 
 import { WidgetDropZoneBox } from "./WidgetDropZoneBox.js";
+import { hasParent } from "../../../../_staging/layout/coordinates.js";
 
 export type WidgetDropZoneProps = {
     isLastInSection: boolean;
@@ -11,14 +12,8 @@ export type WidgetDropZoneProps = {
     dropRef: any;
 };
 
-export const WidgetDropZone = (props: WidgetDropZoneProps) => {
-    const { isLastInSection, dropRef, layoutPath } = props;
-
-    const isInContainer = layoutPath.length > 1;
-
-    return (
-        <div className="widget-dropzone" ref={dropRef}>
-            <WidgetDropZoneBox isLast={isLastInSection} isInContainer={isInContainer} />
-        </div>
-    );
-};
+export const WidgetDropZone: React.FC<WidgetDropZoneProps> = ({ isLastInSection, dropRef, layoutPath }) => (
+    <div className="widget-dropzone" ref={dropRef}>
+        <WidgetDropZoneBox isLast={isLastInSection} isInContainer={hasParent(layoutPath)} />
+    </div>
+);

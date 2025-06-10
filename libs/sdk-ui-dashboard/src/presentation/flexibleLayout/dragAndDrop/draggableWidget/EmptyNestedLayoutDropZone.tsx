@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import { FormattedMessage, defineMessages } from "react-intl";
 import cx from "classnames";
 import { Typography } from "@gooddata/sdk-ui-kit";
@@ -7,6 +7,7 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 import { DraggableItemType } from "../../../dragAndDrop/types.js";
 import { useEmptyContentHandlers } from "./useEmptyContentHandlers.js";
 import { useDashboardItemPathAndSize } from "../../../dashboard/components/DashboardItemPathAndSizeContext.js";
+import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 
 const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     "insight-placeholder": "insight",
@@ -56,6 +57,14 @@ export const EmptyNestedLayoutDropZone: React.FC = () => {
     };
 
     const { itemType, canDrop, isOver, dropRef } = useEmptyContentHandlers(sectionPath);
+    const { handleDragHoverEnd } = useWidgetDragHoverHandlers();
+
+    useEffect(() => {
+        if (isOver) {
+            // hide section end drop zone in case when user drags widget to empty nested layout drag zone
+            handleDragHoverEnd();
+        }
+    }, [isOver, handleDragHoverEnd]);
 
     const widgetCategory = widgetCategoryMapping[itemType];
 
