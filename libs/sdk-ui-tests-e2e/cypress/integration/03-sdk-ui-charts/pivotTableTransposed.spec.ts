@@ -44,7 +44,7 @@ describe("Table Component", { tags: ["checklist_integrated_tiger"] }, () => {
 
     it("should display Column header on top", () => {
         Navigation.visit("visualizations/pivot-table/pivot-table-transposed-has-c-left");
-        table.waitLoaded().hasColumnHeaderOnTop("Forecast Category");
+        table.isLoaded().hasColumnHeaderOnTop("Forecast Category");
     });
 });
 
