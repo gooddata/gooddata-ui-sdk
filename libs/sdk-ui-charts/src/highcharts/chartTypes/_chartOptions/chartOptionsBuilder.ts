@@ -49,7 +49,7 @@ import { getCategoriesForTwoAttributes } from "./extendedStackingChartOptions.js
 
 import { ColorFactory } from "./colorFactory.js";
 import { getChartProperties } from "../_chartCreators/helpers.js";
-import Highcharts from "../../lib/index.js";
+import { ColorAxisDataClassesOptions } from "../../lib/index.js";
 import {
     multiMeasuresAlternatingTypes,
     showingNameInLegendWhenViewByPresent,
@@ -170,7 +170,7 @@ export const DEFAULT_HEATMAP_COLOR_INDEX = 1;
 export function getHeatmapDataClasses(
     series: any = [],
     colorStrategy: IColorStrategy,
-): Highcharts.ColorAxisDataClassesOptions[] {
+): ColorAxisDataClassesOptions[] {
     const values: number[] = without(
         (series[0]?.data ?? []).map((item: any) => item.value),
         null,

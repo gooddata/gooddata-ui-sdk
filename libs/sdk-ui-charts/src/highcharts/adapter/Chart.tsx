@@ -5,18 +5,19 @@ import isEqual from "lodash/isEqual.js";
 import noop from "lodash/noop.js";
 import React from "react";
 import { initChartPlugins } from "./chartPlugins.js";
-import Highcharts, { HighchartsOptions } from "../lib/index.js";
+import { HChart, HighchartsOptions } from "../lib/index.js";
+import Highcharts from "highcharts/esm/highcharts.js";
 
-import "highcharts/highcharts-more.js";
-import "highcharts/modules/drilldown.js";
-import "highcharts/modules/treemap.js";
-import "highcharts/modules/bullet.js";
-import "highcharts/modules/funnel.js";
-import "highcharts/modules/heatmap.js";
-import "highcharts/modules/pattern-fill.js";
-import "highcharts/modules/sankey.js";
-import "highcharts/modules/dependency-wheel.js";
-import "highcharts/modules/accessibility.js";
+import "highcharts/esm/highcharts-more.js";
+import "highcharts/esm/modules/drilldown.js";
+import "highcharts/esm/modules/treemap.js";
+import "highcharts/esm/modules/bullet.js";
+import "highcharts/esm/modules/funnel.js";
+import "highcharts/esm/modules/heatmap.js";
+import "highcharts/esm/modules/pattern-fill.js";
+import "highcharts/esm/modules/sankey.js";
+import "highcharts/esm/modules/dependency-wheel.js";
+import "highcharts/esm/modules/accessibility.js";
 
 initChartPlugins(Highcharts);
 
@@ -38,7 +39,7 @@ export class Chart extends React.Component<IChartProps> {
         domProps: {},
     };
 
-    private chart: Highcharts.Chart;
+    private chart: HChart;
     private chartRef: HTMLElement;
 
     public componentDidMount(): void {
@@ -74,7 +75,7 @@ export class Chart extends React.Component<IChartProps> {
         this.chartRef = ref;
     };
 
-    public getChart(): Highcharts.Chart {
+    public getChart(): HChart {
         if (!this.chart) {
             throw new Error("getChart() should not be called before the component is mounted");
         }
@@ -83,7 +84,7 @@ export class Chart extends React.Component<IChartProps> {
     }
 
     public createChart(config: HighchartsOptions): void {
-        const chartConfig = config.chart;
+        const chartConfig = (config as any).chart;
 
         try {
             this.chart = new Highcharts.Chart(

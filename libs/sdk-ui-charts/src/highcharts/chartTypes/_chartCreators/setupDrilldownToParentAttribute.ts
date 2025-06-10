@@ -1,6 +1,6 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import partial from "lodash/partial.js";
-import Highcharts from "../../lib/index.js";
+import Highcharts from "highcharts/esm/highcharts.js";
 import { styleVariables } from "./styles/variables.js";
 import { tickLabelClick } from "./drilldownEventing.js";
 import { ChartType, IDrillConfig, IHighchartsCategoriesTree, IHighchartsParentTick } from "@gooddata/sdk-ui";

@@ -16,7 +16,7 @@ import {
     IDrillPoint,
     OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
-import Highcharts from "../../lib/index.js";
+import { DrilldownEventObject } from "../../lib/index.js";
 import { isBulletChart, isComboChart, isHeatmap, isTreemap } from "../_util/common.js";
 import { IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent.js";
 
@@ -153,12 +153,7 @@ function composeDrillContextPoint(
 }
 
 const chartClickDebounced = debounce(
-    (
-        drillConfig: IDrillConfig,
-        event: Highcharts.DrilldownEventObject,
-        target: EventTarget,
-        chartType: ChartType,
-    ) => {
+    (drillConfig: IDrillConfig, event: DrilldownEventObject, target: EventTarget, chartType: ChartType) => {
         const { dataView, onDrill } = drillConfig;
         const type = getVisualizationType(chartType);
         let drillContext: IDrillEventContext;

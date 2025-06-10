@@ -2,7 +2,7 @@
 import flatMap from "lodash/flatMap.js";
 import isNil from "lodash/isNil.js";
 import isArray from "lodash/isArray.js";
-import Highcharts from "../../lib/index.js";
+import { DataLabelsOptions } from "../../lib/index.js";
 
 import {
     isStacked,
@@ -280,7 +280,7 @@ export function getTotalsVisibilityConfig(type: string, chartConfig?: IChartConf
     return getLabelsVisibilityConfig(!isNil(totalsVisible) ? totalsVisible : defaultTotalsVisibility);
 }
 
-export function getLabelsVisibilityConfig(visible: IDataLabelsVisible): Highcharts.DataLabelsOptions {
+export function getLabelsVisibilityConfig(visible: IDataLabelsVisible): DataLabelsOptions {
     switch (visible) {
         case "auto":
             return {
