@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { TotalTypes } from "./enum/TotalTypes";
 
@@ -21,6 +21,12 @@ export class Table {
 
     public waitLoadStarted() {
         this.getElement().find(".s-loading").should("exist");
+        return this;
+    }
+
+    public isLoaded(): this {
+        this.getElement().find(".s-loading").should("not.exist");
+        cy.get(".s-pivot-table .s-pivot-table-column-group-header").should("exist");
         return this;
     }
 
