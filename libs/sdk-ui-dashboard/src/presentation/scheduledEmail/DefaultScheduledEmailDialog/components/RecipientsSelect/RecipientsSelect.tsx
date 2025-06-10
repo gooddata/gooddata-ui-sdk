@@ -129,6 +129,10 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
     }, [notificationChannelId, notificationChannels]);
 
     const options = useMemo(() => {
+        if (externalRecipientOverride) {
+            return search && isEmail(search) && allowExternalRecipients ? [createUser(search)] : [];
+        }
+
         const validUsers = [
             ...(allowOnlyLoggedUserRecipients ? [] : users),
             ...(allowOnlyLoggedUserRecipients && loggedUser ? [loggedUser] : []),
@@ -142,14 +146,21 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
         }
 
         return mappedUsers;
-    }, [allowOnlyLoggedUserRecipients, loggedUser, search, users, allowExternalRecipients]);
+    }, [
+        allowOnlyLoggedUserRecipients,
+        loggedUser,
+        search,
+        users,
+        allowExternalRecipients,
+        externalRecipientOverride,
+    ]);
 
     return (
         <RecipientsSelectRenderer
             id={id}
             canListUsersInProject
             isMulti
-            options={externalRecipientOverride ? [] : options}
+            options={options}
             value={value}
             originalValue={originalValue}
             onChange={onChange}

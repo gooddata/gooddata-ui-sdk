@@ -684,7 +684,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     };
 
     private renderOptionLabel = (recipient: IAutomationRecipient): React.ReactElement | null => {
-        const { allowExternalRecipients } = this.props;
+        const { allowExternalRecipients, externalRecipientOverride } = this.props;
         const displayName = recipient.name ?? recipient.id;
         const email = isAutomationUserRecipient(recipient) ? recipient.email ?? "" : "";
 
@@ -704,7 +704,9 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                     ) : (
                         value
                     )}
-                    {allowExternalRecipients && recipient.type === "externalUser" ? (
+                    {!externalRecipientOverride &&
+                    allowExternalRecipients &&
+                    recipient.type === "externalUser" ? (
                         <div className="gd-recipient-option-label-external-warning">
                             <Message type="warning">
                                 <FormattedMessage
