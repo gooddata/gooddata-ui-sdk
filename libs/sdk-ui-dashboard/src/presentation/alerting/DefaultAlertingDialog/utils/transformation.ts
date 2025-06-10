@@ -20,6 +20,7 @@ import {
     isMeasureValueFilter,
     isLocalIdRef,
     IAutomationVisibleFilter,
+    IAttribute,
 } from "@gooddata/sdk-model";
 
 import {
@@ -36,6 +37,7 @@ import {
     getMeasureTitle,
     IMeasureFormatMap,
 } from "./getters.js";
+import isEqual from "lodash/isEqual.js";
 
 //alerts transformations
 
@@ -142,7 +144,7 @@ export function transformAlertByAttribute(
         alert,
         alert.alert?.execution.attributes[0],
     );
-    const originalFilters = alert.alert?.execution.filters.filter((f) => f !== filterDefinition) ?? [];
+    const originalFilters = alert.alert?.execution.filters.filter((f) => !isEqual(f, filterDefinition)) ?? [];
 
     const customFilters: IFilter[] = [];
     if (attr) {
@@ -155,6 +157,7 @@ export function transformAlertByAttribute(
                     in: {
                         values: [value.name],
                     },
+                    localIdentifier: undefined,
                 },
             });
         } else {
@@ -166,6 +169,7 @@ export function transformAlertByAttribute(
                     notIn: {
                         values: [],
                     },
+                    localIdentifier: undefined,
                 },
             });
         }
@@ -177,9 +181,20 @@ export function transformAlertByAttribute(
             ...alert.alert!,
             execution: {
                 ...alert.alert!.execution,
-                attributes: attr ? [attr.attribute] : [],
+                attributes: attr ? [ensureAttributeShowAllValues(attr.attribute)] : [],
                 filters: [...originalFilters, ...customFilters],
             },
+        },
+    };
+}
+
+// Fix equality check for attributes (converted from backend, this prop is always there)
+function ensureAttributeShowAllValues(attribute: IAttribute): IAttribute {
+    return {
+        ...attribute,
+        attribute: {
+            ...attribute.attribute,
+            showAllValues: attribute.attribute.showAllValues ?? false,
         },
     };
 }

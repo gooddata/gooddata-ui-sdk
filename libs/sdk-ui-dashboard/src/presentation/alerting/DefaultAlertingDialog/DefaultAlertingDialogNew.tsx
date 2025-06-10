@@ -390,7 +390,7 @@ export function AlertingDialogRenderer({
                             </FormFieldGroup>
                             <ContentDivider className="gd-divider-with-margin" />
                             <FormFieldGroup label={<FormattedMessage id="insightAlert.config.do" />}>
-                                {editedAutomation?.notificationChannel ? (
+                                {notificationChannels.length > 1 && (
                                     <FormField
                                         label={<FormattedMessage id="insightAlert.config.action" />}
                                         htmlFor="alert.destination"
@@ -404,7 +404,7 @@ export function AlertingDialogRenderer({
                                             closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
                                         />
                                     </FormField>
-                                ) : null}
+                                )}
                                 <FormField
                                     label={<FormattedMessage id="insightAlert.config.trigger" />}
                                     htmlFor="alert.trigger"

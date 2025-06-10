@@ -183,6 +183,31 @@ export function useEditAlert(props: IUseEditAlertProps) {
     const [originalAutomation] = useState(editedAutomation);
 
     //
+    // Selected values
+    //
+    const selectedMeasure = getAlertMeasure(supportedMeasures, editedAutomation?.alert);
+    const selectedComparisonOperator = getAlertCompareOperator(editedAutomation?.alert);
+    const selectedRelativeOperator = getAlertRelativeOperator(editedAutomation?.alert);
+    const selectedComparator = getAlertComparison(selectedMeasure, editedAutomation?.alert);
+    const [selectedAttribute, selectedValue] = getAlertAttribute(
+        supportedAttributes,
+        editedAutomation as IAutomationMetadataObject,
+    );
+
+    const selectedNotificationChannel = notificationChannels.find(
+        (channel) => channel.id === editedAutomation.notificationChannel,
+    );
+
+    const allowExternalRecipients =
+        selectedNotificationChannel?.allowedRecipients === "external" && enabledExternalRecipients;
+
+    const allowOnlyLoggedUserRecipients = selectedNotificationChannel?.allowedRecipients === "creator";
+
+    const { isValid: isOriginalAutomationValid } = useAlertValidation(
+        originalAutomation as IAutomationMetadataObject,
+    );
+
+    //
     // Handlers
     //
     const onTitleChange = (value: string, isValid: boolean) => {
@@ -361,7 +386,7 @@ export function useEditAlert(props: IUseEditAlertProps) {
                     true,
                 );
 
-                return {
+                const updatedAutomationWithFilters = {
                     ...s,
                     alert: {
                         ...s.alert!,
@@ -375,6 +400,26 @@ export function useEditAlert(props: IUseEditAlertProps) {
                         visibleFilters,
                     },
                 };
+
+                const updatedAutomationWithAttribute = transformAlertByAttribute(
+                    supportedAttributes,
+                    updatedAutomationWithFilters as IAutomationMetadataObject,
+                    selectedAttribute,
+                    {
+                        name: selectedValue ?? "",
+                        title: "",
+                        value: "",
+                    },
+                );
+
+                return selectedMeasure
+                    ? transformAlertByMetric(
+                          supportedMeasures,
+                          updatedAutomationWithAttribute as IAutomationMetadataObject,
+                          selectedMeasure,
+                          measureFormatMap,
+                      )
+                    : updatedAutomationWithAttribute;
             });
         },
         [
@@ -385,25 +430,20 @@ export function useEditAlert(props: IUseEditAlertProps) {
             insight,
             dashboardHiddenFilters,
             commonDateFilterId,
+            //
+            selectedAttribute,
+            selectedValue,
+            supportedAttributes,
+            //
+            selectedMeasure,
+            supportedMeasures,
+            measureFormatMap,
         ],
     );
 
     const onApplyCurrentFilters = useCallback(() => {
         onFiltersChange(filtersForNewAutomation);
     }, [filtersForNewAutomation, onFiltersChange]);
-
-    //
-    // Selected values
-    //
-
-    const selectedMeasure = getAlertMeasure(supportedMeasures, editedAutomation?.alert);
-    const selectedComparisonOperator = getAlertCompareOperator(editedAutomation?.alert);
-    const selectedRelativeOperator = getAlertRelativeOperator(editedAutomation?.alert);
-    const selectedComparator = getAlertComparison(selectedMeasure, editedAutomation?.alert);
-    const [selectedAttribute, selectedValue] = getAlertAttribute(
-        supportedAttributes,
-        editedAutomation as IAutomationMetadataObject,
-    );
 
     const { value, onChange, onBlur } = useThresholdValue(
         onValueChange,
@@ -414,19 +454,6 @@ export function useEditAlert(props: IUseEditAlertProps) {
         selectedMeasure,
         selectedAttribute,
         selectedValue,
-    );
-
-    const selectedNotificationChannel = notificationChannels.find(
-        (channel) => channel.id === editedAutomation.notificationChannel,
-    );
-
-    const allowExternalRecipients =
-        selectedNotificationChannel?.allowedRecipients === "external" && enabledExternalRecipients;
-
-    const allowOnlyLoggedUserRecipients = selectedNotificationChannel?.allowedRecipients === "creator";
-
-    const { isValid: isOriginalAutomationValid } = useAlertValidation(
-        originalAutomation as IAutomationMetadataObject,
     );
 
     const validationErrorMessage = !isOriginalAutomationValid

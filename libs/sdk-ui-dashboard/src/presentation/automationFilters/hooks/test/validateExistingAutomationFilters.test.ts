@@ -3,6 +3,7 @@ import { createIntlMock } from "@gooddata/sdk-ui";
 import {
     dashboardFilterLocalIdentifier,
     FilterContextItem,
+    IAttributeFilter,
     IAutomationVisibleFilter,
     idRef,
     IFilterableWidget,
@@ -170,6 +171,17 @@ const changedInsightAttributeFilter = newPositiveAttributeFilter(
     ["changedElement"],
     "insightAttribute",
 );
+
+const sliceAttributeFilter: IAttributeFilter = {
+    positiveAttributeFilter: {
+        displayForm: {
+            localIdentifier: "attribute",
+        },
+        in: {
+            values: ["element"],
+        },
+    },
+};
 
 const [
     nonAllTimeCommonDateFilter,
@@ -1071,6 +1083,22 @@ describe("validateExistingAutomationFilters", () => {
         it("should be valid with empty filters", () => {
             const { isValid, removedFilterIsAppliedInSavedFilters } = validateExistingAutomationFilters({
                 savedAutomationFilters: [],
+                savedAutomationVisibleFilters: [],
+                hiddenFilters: [],
+                lockedFilters: [],
+                ignoredFilters: [],
+                dashboardFilters: [],
+                widget,
+                insight,
+            });
+
+            expect(isValid).toBe(true);
+            expect(removedFilterIsAppliedInSavedFilters).toBe(false);
+        });
+
+        it("should be valid with saved ad-hoc slicing attribute filter that is missing in insight", () => {
+            const { isValid, removedFilterIsAppliedInSavedFilters } = validateExistingAutomationFilters({
+                savedAutomationFilters: [sliceAttributeFilter],
                 savedAutomationVisibleFilters: [],
                 hiddenFilters: [],
                 lockedFilters: [],
