@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import {
     ThemeDefinedCssVariable,
     ThemeDeprecatedCssVariable,
@@ -24,6 +24,7 @@ import { derivedPaletteComplementaryThemeVariables } from "./theme-derived/palet
 import { derivedShadowThemeVariables } from "./theme-derived/shadow-derived.js";
 // Internal
 import { internalButtonThemeVariables } from "./internal/button.js";
+import { internalTabsThemeVariables } from "./internal/tabs.js";
 import { internalFontThemeVariables } from "./internal/font.js";
 import { internalIconThemeVariables } from "./internal/icon.js";
 import { internalSpacingThemeVariables } from "./internal/spacing.js";
@@ -69,6 +70,7 @@ export const themeInternalCssVariables: ThemeInternalCssVariable[] = [
     // Components
     ...internalButtonThemeVariables,
     ...internalIconThemeVariables,
+    ...internalTabsThemeVariables,
     // Modeler
     ...internalModelerThemeVariables,
 ];

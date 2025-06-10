@@ -174,11 +174,14 @@ export type {
     IUiMenuPluggableComponents,
     IUiMenuItemData,
 } from "./@ui/UiMenu/types.js";
+export { UiTabs } from "./@ui/UiTabs/UiTabs.js";
+export type { UiTabsProps, UiTab, UiTabsAccessibilityConfig } from "./@ui/UiTabs/UiTabs.js";
 
 export {
     makeMenuKeyboardNavigation,
     makeLinearKeyboardNavigation,
     makeKeyboardNavigation,
+    makeTabsKeyboardNavigation,
     modifierNegator,
 } from "./@ui/@utils/keyboardNavigation.js";
 export type { IHandleActionOptions, IModifier } from "./@ui/@utils/keyboardNavigation.js";

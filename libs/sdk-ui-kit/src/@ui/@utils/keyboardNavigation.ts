@@ -120,3 +120,14 @@ export const makeDialogKeyboardNavigation = makeKeyboardNavigation({
     onFocusPrevious: [{ code: "Tab", modifiers: ["Shift"] }],
     onClose: [{ code: "Escape" }],
 });
+
+/**
+ * @internal
+ */
+export const makeTabsKeyboardNavigation = makeKeyboardNavigation({
+    onFocusPrevious: [{ code: ["ArrowUp", "ArrowLeft"] }],
+    onFocusNext: [{ code: ["ArrowDown", "ArrowRight"] }],
+    onFocusFirst: [{ code: "Home" }],
+    onFocusLast: [{ code: "End" }],
+    onSelect: [{ code: ["Enter", "Space"] }],
+});
