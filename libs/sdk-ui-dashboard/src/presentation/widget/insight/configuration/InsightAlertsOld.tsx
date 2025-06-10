@@ -11,6 +11,7 @@ import { EditAlert } from "./InsightAlertConfig/EditAlert.js";
 import { useInsightWidgetAlerting } from "./InsightAlertConfig/hooks/useInsightWidgetAlerting.js";
 import { CreateAlert } from "./InsightAlertConfig/CreateAlert.js";
 import { NoAvailableMeasures } from "./InsightAlertConfig/NoAvailableAlerts.js";
+import { AlertDeleteDialog } from "../../../alerting/DefaultAlertingDialog/components/AlertDeleteDialog.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
@@ -62,6 +63,10 @@ export const InsightAlertsOld: React.FC<IInsightMenuSubmenuComponentProps> = ({
         updateExistingAlert,
         pauseExistingAlert,
         resumeExistingAlert,
+        //
+        alertToDelete,
+        startDeletingAlert,
+        cancelDeletingAlert,
         deleteExistingAlert,
     } = useInsightWidgetAlerting({ closeInsightWidgetMenu: onClose, widget });
 
@@ -75,7 +80,7 @@ export const InsightAlertsOld: React.FC<IInsightMenuSubmenuComponentProps> = ({
                 onEditAlert={initiateAlertEditing}
                 onPauseAlert={pauseExistingAlert}
                 onResumeAlert={resumeExistingAlert}
-                onDeleteAlert={deleteExistingAlert}
+                onDeleteAlert={startDeletingAlert}
                 onClose={onClose}
                 onGoBack={onGoBack}
                 maxAutomationsReached={maxAutomationsReached}
@@ -139,6 +144,14 @@ export const InsightAlertsOld: React.FC<IInsightMenuSubmenuComponentProps> = ({
             {/* Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be under header */}
             <OverlayControllerProvider overlayController={overlayController}>
                 {content}
+
+                {alertToDelete ? (
+                    <AlertDeleteDialog
+                        onCancel={cancelDeletingAlert}
+                        onDelete={() => deleteExistingAlert(alertToDelete)}
+                        title={alertToDelete.title}
+                    />
+                ) : null}
             </OverlayControllerProvider>
         </ScrollablePanel>
     );
