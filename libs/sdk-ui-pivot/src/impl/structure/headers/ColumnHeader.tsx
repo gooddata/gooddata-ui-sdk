@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { IHeaderParams, HeaderFocusedEvent, ColumnEvent } from "ag-grid-community";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import cx from "classnames";
 import { IMenu } from "../../../publicTypes.js";
 import { SortDirection } from "@gooddata/sdk-model";
@@ -14,6 +14,7 @@ import {
     isMixedHeadersCol,
     isMixedValuesCol,
 } from "../tableDescriptorTypes.js";
+import { isEnterKey, isSpaceKey } from "@gooddata/sdk-ui-kit";
 
 export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {
     className?: string;
@@ -52,11 +53,11 @@ const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
         };
     }, [column]);
 
-    const onSortRequested = (): void => {
+    const onSortRequested = useCallback((): void => {
         const multiSort = false;
         progressSort(multiSort);
         api.refreshHeader();
-    };
+    }, [api, progressSort]);
 
     const getColDescriptor = () => {
         return props.getTableDescriptor().getCol(props.column);
@@ -109,8 +110,19 @@ const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
         }
         const handleKeyDown = (event: KeyboardEvent) => {
             // set last sorted column id to table only when sort was triggered by keyboard
-            if (event.key === "Enter" && enableSorting && setLastSortedColId) {
+            if (
+                isEnterKey(event as unknown as React.KeyboardEvent) &&
+                isSortingEnabled &&
+                setLastSortedColId
+            ) {
                 setLastSortedColId(column.getColId());
+            }
+            if (isSpaceKey(event as unknown as React.KeyboardEvent)) {
+                event.preventDefault();
+                if (isSortingEnabled && setLastSortedColId) {
+                    setLastSortedColId(column.getColId());
+                    onSortRequested();
+                }
             }
         };
         const handleBlur = () => {
@@ -127,7 +139,7 @@ const ColumnHeader: React.FC<IColumnHeaderProps> = (props) => {
                 eGridHeader.removeEventListener("blur", handleBlur);
             }
         };
-    }, [eGridHeader, column, enableSorting, setLastSortedColId, showMenu]);
+    }, [eGridHeader, column, isSortingEnabled, setLastSortedColId, showMenu, onSortRequested]);
 
     return (
         <HeaderCell
