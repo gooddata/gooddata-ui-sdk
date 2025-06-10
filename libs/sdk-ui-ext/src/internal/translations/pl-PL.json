@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "Wyzwolone dla",
     "notifications.panel.error.learnMore": "Dowiedz się więcej",
     "notifications.panel.error.traceId": "Identyfikator śledzenia",
-    "notifications.panel.error.message": "Alert nie mógł zostać przetworzony.",
+    "notifications.panel.error.alert.title": "Alert nie mógł zostać przetworzony.",
     "notifications.panel.button.label": "Powiadomienia",
     "notifications.panel.notifications.list.label": "Powiadomienia",
     "notifications.panel.alert.notification.type.label": "Powiadomienie alarmowe",

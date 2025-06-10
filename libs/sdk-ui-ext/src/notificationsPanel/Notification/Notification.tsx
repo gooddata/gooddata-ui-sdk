@@ -12,7 +12,9 @@ import {
     getDateTimeConfig,
     IDateConfig,
     isActionKey,
+    UiButton,
     UiIcon,
+    UiIconButton,
     useToastMessage,
 } from "@gooddata/sdk-ui-kit";
 
@@ -61,33 +63,29 @@ export function Notification({
     const isSliced = isAlertNotification && !!notification.details.data.alert.attribute;
     const hasTriggers = isAlertNotification && !!notification.details.data.alert.totalValueCount;
 
-    const isError = isAlertNotification && notification.details.data.alert.status !== "SUCCESS";
-    const errorMessage = isAlertNotification && notification.details.data.alert.errorMessage;
-    const traceId = isAlertNotification && notification.details.data.alert.traceId;
+    const exports = compact([
+        notification.details.data.visualExports,
+        notification.details.data.tabularExports,
+        notification.details.data.imageExports,
+        notification.details.data.rawExports,
+        notification.details.data.slidesExports,
+    ]).flatMap((arr) => arr ?? []);
 
-    const hasFile =
-        (notification.details.data.visualExports?.length ?? 0) > 0 ||
-        (notification.details.data.tabularExports?.length ?? 0) > 0;
+    const hasExports = exports.length > 0;
 
-    const fileExpiresAt =
-        notification.details.data.tabularExports?.[0]?.expiresAt ??
-        notification.details.data.visualExports?.[0]?.expiresAt;
-
+    const fileExpiresAt = exports?.[0]?.expiresAt ?? null;
     const isExpired = fileExpiresAt != null && new Date(fileExpiresAt) < new Date();
+
+    const { isError, errorTitle, errorMessage, traceId } = getNotificationErrorInfo(notification, exports);
 
     const actions = compact([
         hasFilters && isAlertNotification && <NotificationFiltersDetail filters={filters} />,
         hasTriggers && isSliced && <NotificationTriggerDetail notification={notification} />,
-        hasFile && <FileLink notification={notification} />,
-        hasFile && fileExpiresAt && <FileExpiration fileExpiresAt={fileExpiresAt} isExpired={isExpired} />,
+        hasExports && <FileLink notification={notification} />,
+        hasExports && fileExpiresAt && <FileExpiration fileExpiresAt={fileExpiresAt} isExpired={isExpired} />,
     ]);
 
-    const onMarkAsReadClick = (e: React.MouseEvent<HTMLSpanElement>) => {
-        e.stopPropagation();
-        markNotificationAsRead(notification.id);
-    };
-
-    const clickNotification = useCallback(() => {
+    const handleNotificationClick = useCallback(() => {
         if (!notification.isRead) {
             markNotificationAsRead(notification.id);
         }
@@ -96,13 +94,9 @@ export function Notification({
                 addWarning(messages.notificationExpired);
                 return;
             }
-            const tabularExportUrls =
-                notification.details.data.tabularExports?.map(mapToDownloadableFile) ?? [];
-            const visualExportUrls =
-                notification.details.data.visualExports?.map(mapToDownloadableFile) ?? [];
-            const allExports = compact([...tabularExportUrls, ...visualExportUrls]);
-            if (allExports.length > 0) {
-                downloadFiles(allExports);
+            const downloadableExports = compact(exports.map(mapToDownloadableFile));
+            if (downloadableExports.length > 0) {
+                downloadFiles(downloadableExports);
             }
         } else {
             closeNotificationsPanel();
@@ -115,20 +109,21 @@ export function Notification({
         markNotificationAsRead,
         closeNotificationsPanel,
         addWarning,
+        exports,
     ]);
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (isActionKey(event)) {
             event.preventDefault();
-            clickNotification();
+            handleNotificationClick();
         }
     };
 
     return (
-        <BubbleHoverTrigger enabled={hasFile && !isExpired}>
+        <BubbleHoverTrigger enabled={hasExports && !isExpired && !isError}>
             <div
                 className={b({ isRead: notification.isRead })}
-                onClick={clickNotification}
+                onClick={handleNotificationClick}
                 onKeyDown={handleKeyDown}
                 role="listitem"
                 tabIndex={0}
@@ -155,7 +150,7 @@ export function Notification({
                                 <UiIcon type="crossCircle" size={12} color="error" />
                             </div>
                             <div>
-                                <FormattedMessage id="notifications.panel.error.message" />{" "}
+                                {errorTitle}{" "}
                                 <Popup
                                     popup={
                                         <div className={e("error-popup")}>
@@ -167,16 +162,22 @@ export function Notification({
                                     }
                                 >
                                     {({ toggle, id }) => (
-                                        <u
-                                            data-id="notification-error"
+                                        <UiButton
+                                            dataId="notification-error"
                                             id={id}
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 toggle();
                                             }}
-                                        >
-                                            <FormattedMessage id="notifications.panel.error.learnMore" />
-                                        </u>
+                                            onKeyDown={(e) => {
+                                                e.stopPropagation();
+                                            }}
+                                            variant="tertiary"
+                                            size="small"
+                                            label={intl.formatMessage({
+                                                id: "notifications.panel.error.learnMore",
+                                            })}
+                                        />
                                     )}
                                 </Popup>
                             </div>
@@ -197,14 +198,19 @@ export function Notification({
                 </div>
                 <div className={e("mark-as-read-button")}>
                     <Tooltip tooltip={intl.formatMessage(messages.markAsRead)}>
-                        <span onClick={onMarkAsReadClick}>
-                            <UiIcon
-                                type="check"
-                                size={14}
-                                color="complementary-7"
-                                label={intl.formatMessage(messages.markAsRead)}
-                            />
-                        </span>
+                        <UiIconButton
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                markNotificationAsRead(notification.id);
+                            }}
+                            onKeyDown={(e) => {
+                                e.stopPropagation();
+                            }}
+                            icon="check"
+                            size="small"
+                            variant="tertiary"
+                            label={intl.formatMessage(messages.markAsRead)}
+                        />
                     </Tooltip>
                 </div>
             </div>
@@ -244,6 +250,41 @@ function getAlertNotificationTitle(alertDescription: IAlertDescription) {
     return `${metric} is ${condition} ${formattedThreshold}`;
 }
 
+function getNotificationErrorInfo(
+    notification: IAlertNotification | IScheduleNotification,
+    exports: IExportResult[],
+) {
+    if (
+        notification.notificationType === "alertNotification" &&
+        notification.details.data.alert?.status !== "SUCCESS"
+    ) {
+        return {
+            isError: true,
+            errorTitle: <FormattedMessage id="notifications.panel.error.alert.title" />,
+            errorMessage: notification.details.data.alert.errorMessage ?? "",
+            traceId: notification.details.data.alert.traceId,
+        };
+    }
+    if (exports.some((exportResult) => exportResult.status !== "SUCCESS")) {
+        return {
+            isError: true,
+            errorTitle: <FormattedMessage id="notifications.panel.error.schedule.title" />,
+            errorMessage:
+                exports.find((exportResult) => exportResult.status !== "SUCCESS")?.errorMessage ?? "",
+            traceId: exports.find((exportResult) => exportResult.status !== "SUCCESS")?.traceId,
+        };
+    }
+    if (notification.details.webhookMessageType === "automation-task.limit-exceeded") {
+        return {
+            isError: true,
+            errorTitle: <FormattedMessage id="notifications.panel.error.schedule.title" />,
+            errorMessage: <FormattedMessage id="notifications.panel.error.limitExceeded.message" />,
+            traceId: undefined,
+        };
+    }
+    return { isError: false, errorTitle: undefined, errorMessage: undefined, traceId: undefined };
+}
+
 const NotificationTime = ({ config }: { config: IDateConfig }) => {
     if (config.isToday) {
         return <FormattedTime value={config.date} format="hhmm" hour12={false} />;
@@ -264,6 +305,7 @@ const FileLink = ({ notification }: { notification: IAlertNotification | ISchedu
             <a
                 href={notification.details.data.automation.dashboardURL}
                 onClick={(e) => e.stopPropagation()}
+                onKeyDown={(e) => e.stopPropagation()}
                 className={e("link")}
             >
                 <FormattedMessage

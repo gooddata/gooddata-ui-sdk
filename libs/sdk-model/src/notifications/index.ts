@@ -200,6 +200,21 @@ export interface IWebhookMessageDataBase {
      * Visual export results
      */
     visualExports?: IExportResult[];
+
+    /**
+     * Image export results
+     */
+    imageExports?: IExportResult[];
+
+    /**
+     * Raw export results
+     */
+    rawExports?: IExportResult[];
+
+    /**
+     * Slides export results
+     */
+    slidesExports?: IExportResult[];
 }
 
 /**

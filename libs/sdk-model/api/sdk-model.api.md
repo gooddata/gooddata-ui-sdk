@@ -4294,8 +4294,11 @@ export interface IWebhookMessageDataBase {
     automation: IWebhookAutomationInfo;
     details?: IAutomationDetails;
     filters?: AlertFilters[];
+    imageExports?: IExportResult[];
+    rawExports?: IExportResult[];
     recipients?: WebhookRecipient[];
     remainingActionCount?: number;
+    slidesExports?: IExportResult[];
     tabularExports?: IExportResult[];
     visualExports?: IExportResult[];
 }

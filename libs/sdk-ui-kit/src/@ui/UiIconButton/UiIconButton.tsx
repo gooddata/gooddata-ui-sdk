@@ -24,6 +24,7 @@ export interface UiIconButtonProps {
     variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger;
     isDisabled?: boolean;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    onKeyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void;
     dataId?: string;
     dataTestId?: string;
 }
@@ -50,18 +51,20 @@ const getSize = (size: SizeXSmall | SizeSmall | SizeMedium | SizeLarge) => {
  */
 export const UiIconButton = forwardRef<HTMLButtonElement, UiIconButtonProps>(
     (
-        { icon, label, size = "medium", variant = "secondary", isDisabled, onClick, dataId, dataTestId },
+        {
+            icon,
+            label,
+            size = "medium",
+            variant = "secondary",
+            isDisabled,
+            onClick,
+            dataId,
+            dataTestId,
+            onKeyDown,
+        },
         ref,
     ) => {
         const iconSize = getSize(size);
-
-        const onClickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-            if (isDisabled) {
-                e.preventDefault();
-                return;
-            }
-            onClick?.(e);
-        };
 
         const testId = dataTestId ? dataTestId : `${stringUtils.simplifyText(label)}`;
 
@@ -72,7 +75,8 @@ export const UiIconButton = forwardRef<HTMLButtonElement, UiIconButtonProps>(
                 className={b({ size, variant })}
                 disabled={isDisabled}
                 aria-disabled={isDisabled}
-                onClick={onClickHandler}
+                onClick={onClick}
+                onKeyDown={onKeyDown}
                 data-id={dataId}
                 data-testid={testId}
             >

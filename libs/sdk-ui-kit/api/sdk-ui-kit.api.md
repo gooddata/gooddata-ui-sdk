@@ -5758,6 +5758,8 @@ export interface UiButtonProps {
     // (undocumented)
     iconBefore?: IconType;
     // (undocumented)
+    id?: string;
+    // (undocumented)
     isDisabled?: boolean;
     // (undocumented)
     isLoading?: boolean;
@@ -5765,6 +5767,8 @@ export interface UiButtonProps {
     label: string;
     // (undocumented)
     onClick?: (e: React_2.MouseEvent<HTMLButtonElement>) => void;
+    // (undocumented)
+    onKeyDown?: (e: React_2.KeyboardEvent<HTMLButtonElement>) => void;
     // (undocumented)
     size?: SizeSmall | SizeMedium | SizeLarge;
     // (undocumented)
@@ -5844,6 +5848,8 @@ export interface UiIconButtonProps {
     label: string;
     // (undocumented)
     onClick?: (e: React_2.MouseEvent<HTMLButtonElement>) => void;
+    // (undocumented)
+    onKeyDown?: (e: React_2.KeyboardEvent<HTMLButtonElement>) => void;
     // (undocumented)
     size?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge;
     // (undocumented)

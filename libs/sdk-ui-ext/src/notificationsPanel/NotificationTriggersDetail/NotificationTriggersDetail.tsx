@@ -51,6 +51,9 @@ export function NotificationTriggerDetail({ notification }: INotificationTrigger
                     e.stopPropagation();
                     toggleTriggersDialog();
                 }}
+                onKeyDown={(e) => {
+                    e.stopPropagation();
+                }}
                 variant="tertiary"
                 size="small"
                 label={triggersTitle}

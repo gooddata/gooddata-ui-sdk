@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "トリガー済み：",
     "notifications.panel.error.learnMore": "詳細",
     "notifications.panel.error.traceId": "トレースID",
-    "notifications.panel.error.message": "警告を処理できませんでした。",
+    "notifications.panel.error.alert.title": "警告を処理できませんでした。",
     "notifications.panel.button.label": "お知らせ",
     "notifications.panel.notifications.list.label": "お知らせ",
     "notifications.panel.alert.notification.type.label": "アラート通知",

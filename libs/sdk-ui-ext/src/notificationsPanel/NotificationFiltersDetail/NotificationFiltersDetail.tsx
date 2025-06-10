@@ -36,17 +36,19 @@ export function NotificationFiltersDetail({ filters }: INotificationFiltersDetai
 
     const closeFiltersDialog = () => setIsFiltersDialogOpen(false);
     const toggleFiltersDialog = () => setIsFiltersDialogOpen((x) => !x);
-    const onButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation();
-        toggleFiltersDialog();
-    };
 
     return (
         <>
             {filters.length ? (
                 <UiButton
                     ref={ref}
-                    onClick={onButtonClick}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        toggleFiltersDialog();
+                    }}
+                    onKeyDown={(e) => {
+                        e.stopPropagation();
+                    }}
                     variant="tertiary"
                     size="small"
                     label={intl.formatMessage(messages.buttonLabel, { count: filters.length })}
