@@ -12,14 +12,14 @@
   {
     "definitionName": "lockStepVersion",
     "policyName": "sdk",
-    "version": "10.31.0-alpha.0",
+    "version": "10.31.0-alpha.1",
     "nextBump": "prerelease",
     "mainProject": "@gooddata/sdk-ui-all"
   },
   {
     "definitionName": "lockStepVersion",
     "policyName": "sdk-examples",
-    "version": "10.31.0-alpha.0",
+    "version": "10.31.0-alpha.1",
     "nextBump": "prerelease",
     "mainProject": "@gooddata/sdk-interactive-examples"
   }
