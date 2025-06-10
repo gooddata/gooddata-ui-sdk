@@ -8,7 +8,7 @@ import { DashboardHeader } from "../../tools/dashboardHeader";
 import { DashboardMenu } from "../../tools/dashboardMenu";
 
 const editMode = new EditMode();
-const widget = new Widget(1);
+const widget = new Widget(0, 1);
 const addedWidget = new Widget(0);
 const header = new DashboardHeader();
 const layoutRow = new LayoutRow(0);

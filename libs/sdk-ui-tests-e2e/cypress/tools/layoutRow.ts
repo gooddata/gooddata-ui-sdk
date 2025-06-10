@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { InsightsCatalog, InsightTitle } from "./insightsCatalog";
 import { SectionHeader } from "./sectionHeader";
@@ -9,7 +9,7 @@ export class LayoutRow {
     constructor(private rowIndex: number) {}
 
     getSelector() {
-        return `.s-fluid-layout-row:nth-child(${this.rowIndex + 1})`;
+        return `.gd-grid-layout__section:nth-child(${this.rowIndex + 1})`;
     }
 
     getElement() {
