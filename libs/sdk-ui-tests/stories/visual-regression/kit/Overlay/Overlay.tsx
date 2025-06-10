@@ -1,14 +1,12 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { injectIntl, FormattedMessage, IntlShape, IntlProvider } from "react-intl";
-import DefaultMediaQuery, { MediaQueryProps } from "react-responsive";
+import { MediaQuery } from "react-responsive";
 import { storiesOf } from "../../../_infra/storyRepository.js";
 import { UiKit } from "../../../_infra/storyGroups.js";
 import { Button, Overlay, FullScreenOverlay } from "@gooddata/sdk-ui-kit";
 
 import "../styles/goodstrap.scss";
-
-const MediaQuery = DefaultMediaQuery as unknown as React.ComponentType<MediaQueryProps>;
 
 /**
  * @internal
