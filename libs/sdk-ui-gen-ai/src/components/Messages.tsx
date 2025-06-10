@@ -12,17 +12,19 @@ import { EmptyState } from "./EmptyState.js";
 type MessagesComponentProps = {
     messages: ReturnType<typeof messagesSelector>;
     loading: ReturnType<typeof asyncProcessSelector>;
+    initializing?: boolean;
 };
 
-const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading }) => {
+const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading, initializing }) => {
     const { scrollerRef } = useMessageScroller(messages);
+    const isLoading = loading === "loading" || loading === "clearing" || initializing;
 
     return (
         <div className="gd-gen-ai-chat__messages" ref={scrollerRef}>
             <div className="gd-gen-ai-chat__messages__scroll" role="log" aria-relevant="additions">
-                {!messages.length && !loading ? <EmptyState /> : null}
-                {loading === "loading" || loading === "clearing" ? <Skeleton count={3} height="2em" /> : null}
-                {loading !== "loading" && loading !== "clearing"
+                {!messages.length && !isLoading ? <EmptyState /> : null}
+                {isLoading ? <Skeleton count={3} height="2em" /> : null}
+                {!isLoading
                     ? messages.map((message, index) => {
                           const isLast = index === messages.length - 1;
 

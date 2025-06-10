@@ -5,6 +5,7 @@ import { BackendProvider, useBackendStrict, useWorkspaceStrict, WorkspaceProvide
 import { CatalogItem, IColorPalette } from "@gooddata/sdk-model";
 import { Provider as StoreProvider } from "react-redux";
 
+import { PermissionsProvider, usePermissions } from "../permissions/index.js";
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { ChatEventHandler } from "../store/events.js";
@@ -52,15 +53,8 @@ export interface GenAIChatProps {
  * UI component that renders the Gen AI chat.
  * @public
  */
-export const GenAIChat: React.FC<GenAIChatProps> = ({
-    backend,
-    workspace,
-    locale,
-    colorPalette,
-    catalogItems,
-    eventHandlers,
-    onLinkClick,
-}) => {
+export const GenAIChat: React.FC<GenAIChatProps> = (props) => {
+    const { backend, workspace, locale, colorPalette, eventHandlers } = props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
     const genAIStore = useGenAIStore(effectiveBackend, effectiveWorkspace, {
@@ -73,18 +67,29 @@ export const GenAIChat: React.FC<GenAIChatProps> = ({
             <StoreProvider store={genAIStore}>
                 <BackendProvider backend={effectiveBackend}>
                     <WorkspaceProvider workspace={effectiveWorkspace}>
-                        <ConfigProvider
-                            allowNativeLinks={false}
-                            linkHandler={onLinkClick}
-                            catalogItems={catalogItems}
-                            canManage={false}
-                            canAnalyze={false}
-                        >
-                            <GenAIChatWrapper />
-                        </ConfigProvider>
+                        <PermissionsProvider>
+                            <GenAIContent {...props} />
+                        </PermissionsProvider>
                     </WorkspaceProvider>
                 </BackendProvider>
             </StoreProvider>
         </IntlWrapper>
+    );
+};
+
+const GenAIContent: React.FC<GenAIChatProps> = (props) => {
+    const { onLinkClick, catalogItems } = props;
+    const { permissions, loading } = usePermissions();
+
+    return (
+        <ConfigProvider
+            allowNativeLinks={!onLinkClick}
+            linkHandler={onLinkClick}
+            catalogItems={catalogItems}
+            canManage={permissions.canManageProject ?? false}
+            canAnalyze={permissions.canCreateVisualization ?? false}
+        >
+            <GenAIChatWrapper initializing={loading} />
+        </ConfigProvider>
     );
 };
