@@ -26,9 +26,9 @@ import {
     Bubble,
     BubbleHoverTrigger,
     IAlignPoint,
-    isEnterKey,
     isEscapeKey,
     LoadingMask,
+    makeKeyboardNavigation,
     Message,
     Overlay,
     OverlayController,
@@ -168,6 +168,7 @@ export interface IRecipientsSelectRendererProps {
 interface IRecipientsSelectRendererState {
     menuOpen: boolean;
     minRecipientsError: boolean;
+    focusedRecipientIndex: number;
 }
 
 export class RecipientsSelectRenderer extends React.PureComponent<
@@ -181,6 +182,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         this.state = {
             menuOpen: false,
             minRecipientsError: false,
+            focusedRecipientIndex: -1,
         };
     }
 
@@ -198,6 +200,13 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             ownerContainer.setAttribute("style", `max-width: ${style.maxWidth}px`);
         }
     }
+
+    private keyboardRecipientNavigationHandler = makeKeyboardNavigation({
+        onFocusPrevious: [{ code: ["ArrowLeft"] }],
+        onFocusNext: [{ code: ["ArrowRight"] }],
+        onSubmit: [{ code: ["Enter"] }],
+        onRecipientRemove: [{ code: ["Delete", "Backspace", "Enter"] }],
+    });
 
     private evaluateErrors() {
         const { value, maxRecipients, allowExternalRecipients, allowOnlyLoggedUserRecipients, loggedUser } =
@@ -539,6 +548,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     private renderMultiValueItemContainer = (
         label: string,
         removeIcon: React.ReactElement | null,
+        recipientIndex: number,
         options: {
             hasEmail?: boolean;
             noExternal?: boolean;
@@ -549,6 +559,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         } = {},
     ): React.ReactElement => {
         const style = this.getStyle();
+        const { focusedRecipientIndex } = this.state;
 
         const render = () => {
             const showErrorIcon =
@@ -556,6 +567,8 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                 options.invalidExternal ||
                 options.invalidLoggedUser ||
                 !options.hasEmail;
+            const isFocused = focusedRecipientIndex === recipientIndex;
+
             return (
                 <div
                     style={{ maxWidth: style.maxWidth }}
@@ -563,6 +576,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                         "invalid-email": !options.hasEmail,
                         "invalid-external": options.noExternal || options.invalidExternal,
                         "invalid-user": options.invalidLoggedUser,
+                        "gd-recipient-focused": isFocused,
                     })}
                 >
                     {showErrorIcon ? (
@@ -662,7 +676,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     private renderMultiValueContainer = (
         multiValueProps: MultiValueGenericProps<IAutomationRecipient>,
     ): React.ReactElement => {
-        const { allowExternalRecipients, allowOnlyLoggedUserRecipients, loggedUser } = this.props;
+        const { allowExternalRecipients, allowOnlyLoggedUserRecipients, loggedUser, value } = this.props;
         const { data, children } = multiValueProps;
 
         // MultiValueRemove component from react-select
@@ -673,7 +687,10 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         const invalidExternal = data.type === "unknownUser";
         const invalidLoggedUser = allowOnlyLoggedUserRecipients ? data.id !== loggedUser?.id : false;
 
-        return this.renderMultiValueItemContainer(name, removeIcon, {
+        // Find the index of this recipient in the value array
+        const recipientIndex = value.findIndex((recipient) => recipient.id === data.id);
+
+        return this.renderMultiValueItemContainer(name, removeIcon, recipientIndex, {
             hasEmail,
             noExternal,
             invalidLoggedUser,
@@ -762,13 +779,13 @@ export class RecipientsSelectRenderer extends React.PureComponent<
 
     private handleKeyDown = (e: React.KeyboardEvent) => {
         const { menuOpen } = this.state;
-        const { onKeyDownSubmit } = this.props;
+
         if (isEscapeKey(e)) {
             e.stopPropagation();
         }
 
-        if (isEnterKey(e) && !menuOpen) {
-            onKeyDownSubmit?.(e);
+        if (!menuOpen) {
+            this.handleKeyboardNavigation(e);
         }
     };
 
@@ -824,7 +841,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     private onMenuOpen = (): void => {
         const { onLoad, canListUsersInProject, options } = this.props;
         const userListCount = options.length;
-        this.setState({ menuOpen: true });
+        this.setState({ menuOpen: true, focusedRecipientIndex: -1 });
         if (!userListCount && canListUsersInProject) {
             onLoad?.();
         }
@@ -838,5 +855,68 @@ export class RecipientsSelectRenderer extends React.PureComponent<
 
     private isRecipientAdded = (value: ReadonlyArray<IAutomationRecipient>, searchKey: string): boolean => {
         return value.some((recipient: IAutomationRecipient) => isEqual(recipient.id, searchKey));
+    };
+
+    private handleKeyboardNavigation = (e: React.KeyboardEvent) => {
+        const { focusedRecipientIndex } = this.state;
+        const { value, onKeyDownSubmit, onChange } = this.props;
+        const totalRecipients = value.length;
+
+        const keyboardHandler = this.keyboardRecipientNavigationHandler({
+            onFocusPrevious: () => {
+                if (focusedRecipientIndex === -1 && totalRecipients > 0) {
+                    const lastIndex = totalRecipients - 1;
+                    this.setState({ focusedRecipientIndex: lastIndex });
+                } else if (focusedRecipientIndex > 0) {
+                    const prevIndex = focusedRecipientIndex - 1;
+                    this.setState({ focusedRecipientIndex: prevIndex });
+                } else {
+                    this.setState({ focusedRecipientIndex: -1 });
+                }
+            },
+            onFocusNext: () => {
+                if (focusedRecipientIndex < totalRecipients - 1) {
+                    const nextIndex = focusedRecipientIndex + 1;
+                    this.setState({ focusedRecipientIndex: nextIndex });
+                } else if (focusedRecipientIndex === totalRecipients - 1) {
+                    this.setState({ focusedRecipientIndex: -1 });
+                }
+            },
+            onSubmit: () => {
+                if (focusedRecipientIndex === -1) {
+                    onKeyDownSubmit?.(e);
+                } else {
+                    this.handleKeyboardRecipientRemove(focusedRecipientIndex);
+                }
+            },
+            onRecipientRemove: () => {
+                if (e.key === "Backspace" && focusedRecipientIndex === -1) {
+                    const newValues = value.slice(0, -1);
+                    onChange?.(newValues);
+                }
+                if (focusedRecipientIndex !== -1) {
+                    this.handleKeyboardRecipientRemove(focusedRecipientIndex);
+                }
+            },
+            onUnhandledKeyDown: () => {
+                this.setState({ focusedRecipientIndex: -1 });
+            },
+        });
+        keyboardHandler(e);
+    };
+
+    private handleKeyboardRecipientRemove = (index: number): void => {
+        const { value, onChange } = this.props;
+
+        if (index < 0 || index >= value.length) {
+            return;
+        }
+
+        const newValues = value.filter((_, i) => i !== index);
+        onChange?.(newValues);
+
+        const newFocusIndex = newValues.length === 0 ? -1 : Math.min(index, newValues.length - 1);
+
+        this.setState({ focusedRecipientIndex: newFocusIndex });
     };
 }
