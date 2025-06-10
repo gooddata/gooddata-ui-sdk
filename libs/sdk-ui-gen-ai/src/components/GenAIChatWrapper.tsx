@@ -13,6 +13,7 @@ type GenAIChatWrapperProps = {
     loadThread: typeof loadThreadAction;
     cancelLoading: typeof cancelAsyncAction;
     autofocus?: boolean;
+    initializing?: boolean;
 };
 
 /**
@@ -23,16 +24,20 @@ const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
     loadThread,
     cancelLoading,
     autofocus,
+    initializing,
 }) => {
     const { catalogItems, canManage, canAnalyze } = useConfig();
 
     React.useEffect(() => {
+        if (initializing) {
+            return;
+        }
         loadThread();
 
         return () => {
             cancelLoading();
         };
-    }, [loadThread, cancelLoading]);
+    }, [loadThread, cancelLoading, initializing]);
 
     return (
         <ErrorBoundary>

@@ -19,6 +19,16 @@
         "comment": "",
         "limit": 0
     },
+    "gd.gen-ai.permission-error": {
+        "value": "Insufficient permissions",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.permission-error.description": {
+        "value": "Sorry you don't have access to chatbot. Ask your administrator to grant you permissions.",
+        "comment": "",
+        "limit": 0
+    },
     "gd.gen-ai.input-placeholder": {
         "value": "Ask here…",
         "comment": "Use ellipsis at the end …",
