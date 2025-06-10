@@ -524,7 +524,11 @@ $attribute-filter-drag-handle-left: 10px;
     color: kit-variables.$gd-color-state-blank;
     background: variables.$gd-dashboards-content-backgroundColor;
     font-size: 14px;
-    margin-top: 7px;
+
+    // can be removed when filters apply modes feature flag is enabled
+    &.deprecated-margin-top {
+        margin-top: 7px;
+    }
 
     // override .button behavior so text and icon does not "jump" (simulate pressed button)
     &:not(.disabled):not(.gd-button-link) {

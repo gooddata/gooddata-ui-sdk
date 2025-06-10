@@ -76,7 +76,10 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                     <FiltersRows rows={rows} />
                     <div
                         className="filter-bar-configuration"
-                        style={{ alignItems: enableDashboardFiltersApplyModes ? "baseline" : undefined }}
+                        style={{
+                            alignItems: enableDashboardFiltersApplyModes ? "center" : undefined,
+                            paddingRight: enableDashboardFiltersApplyModes ? "10px" : undefined,
+                        }}
                     >
                         {filtersApplyMode.mode === "ALL_AT_ONCE" &&
                         enableDashboardFiltersApplyModes &&

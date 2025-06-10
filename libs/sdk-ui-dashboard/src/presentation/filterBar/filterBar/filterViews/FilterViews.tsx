@@ -21,6 +21,7 @@ import {
     selectCanCreateFilterView,
     useDashboardUserInteraction,
     selectIsReadOnly,
+    selectEnableDashboardFiltersApplyModes,
 } from "../../../../model/index.js";
 
 import { FilterViewsList } from "./FilterViewsList.js";
@@ -103,6 +104,7 @@ export const FilterViews: React.FC = () => {
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const canCreateFilterView = useDashboardSelector(selectCanCreateFilterView);
     const isMobile = useMediaQuery("mobileDevice");
+    const enableDashboardFiltersApplyModes = useDashboardSelector(selectEnableDashboardFiltersApplyModes);
     const { toggleDialog, openAddDialog, openListDialog, closeDialog } = useCallbacks(
         isDialogOpen,
         filterViews.length,
@@ -126,6 +128,7 @@ export const FilterViews: React.FC = () => {
 
     const buttonClassNames = cx("gd-filter-views-button", dropdownAnchorClassName, "gd-button-large", {
         "gd-filter-views-button--open": isDialogOpen,
+        "deprecated-margin-top": !enableDashboardFiltersApplyModes,
     });
 
     const triggerId = useIdPrefixed("FilterViewsTrigger");
