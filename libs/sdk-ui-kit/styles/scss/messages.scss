@@ -178,15 +178,6 @@ $gd-message-padding-vertical: 4px;
         opacity: 0;
     }
 
-    // padding: 0;
-    // min-width: 620px;
-    // max-width: 350px;
-
-    // @media #{variables.$small-only} {
-    //     min-width: auto;
-    //     max-width: auto;
-    //}
-
     .gd-message-text {
         display: flex;
         align-items: flex-start;
