@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019 GoodData Corporation
 @use "sass:color";
 @use "@gooddata/sdk-ui/styles/scss/settings";
 @use "@gooddata/sdk-ui-kit/styles/scss/SVGicons";
@@ -33,7 +33,7 @@ $dialog_width: 250px;
             }
 
             &.gd-mvf-warning-message-medium {
-                color: variables.$gd-color-warning;
+                color: variables.$gd-color-warning-text;
                 background: var(
                     --gd-palette-warning-base-t85,
                     color.adjust(variables.$gd-color-warning, $alpha: -0.85)

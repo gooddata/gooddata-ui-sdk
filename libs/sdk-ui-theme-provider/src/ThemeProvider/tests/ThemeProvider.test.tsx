@@ -204,7 +204,7 @@ describe("ThemeProvider", () => {
                     base: "#00c18d",
                 },
                 warning: {
-                    base: "#f18600",
+                    base: "#fada23",
                 },
                 complementary: {
                     c0: "#000",

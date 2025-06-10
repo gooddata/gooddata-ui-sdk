@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024 GoodData Corporation
 import { ThemeDerivedCssVariable } from "../types.js";
 
 export const derivedPaletteBaseThemeVariables: ThemeDerivedCssVariable[] = [
@@ -223,7 +223,7 @@ export const derivedPaletteBaseThemeVariables: ThemeDerivedCssVariable[] = [
     {
         type: "derived",
         variableName: "--gd-palette-warning-base-t50",
-        defaultValue: "rgba(241, 134, 0, 0.5)",
+        defaultValue: "rgba(250, 218, 35, 0.5)",
     },
     {
         type: "derived",
@@ -233,22 +233,31 @@ export const derivedPaletteBaseThemeVariables: ThemeDerivedCssVariable[] = [
     {
         type: "derived",
         variableName: "--gd-palette-warning-base-t85",
-        defaultValue: "rgba(241, 134, 0, 0.15)",
+        defaultValue: "rgba(250, 218, 35, 0.15)",
     },
     {
         type: "derived",
         variableName: "--gd-palette-warning-dimmed",
-        defaultValue: "#fce7cc",
+        // Most used:
+        defaultValue: "#fef8d3",
+        // Default generated (does not fit with most used):
+        // defaultValue: "#fef7d3",
     },
     {
         type: "derived",
         variableName: "--gd-palette-warning-dimmed40",
-        defaultValue: "#8a6434",
+        // Most used:
+        defaultValue: "#8e8642",
+        // Default generated (does not fit with most used):
+        // defaultValue: "#8e8641",
     },
     {
         type: "derived",
         variableName: "--gd-palette-warning-text-dimmed",
-        defaultValue: "#685945",
+        // Most used:
+        defaultValue: "#6a6a4c",
+        // Default generated (does not fit with most used):
+        // defaultValue: "#6a6a4b",
     },
     {
         type: "derived",
@@ -258,7 +267,7 @@ export const derivedPaletteBaseThemeVariables: ThemeDerivedCssVariable[] = [
     {
         type: "derived",
         variableName: "--gd-palette-warning-medium-base-m80",
-        defaultValue: "#fce7cc",
+        defaultValue: "#fef8d3",
     },
     {
         type: "derived",

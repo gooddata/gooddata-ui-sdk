@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2022 GoodData Corporation
 import { ITheme } from "@gooddata/sdk-model";
 import { getContrast } from "polished";
 import { describe, it, expect } from "vitest";
@@ -50,7 +50,7 @@ describe("prepareBaseColors", () => {
         const expectedTheme: ITheme = {
             palette: {
                 primary: { base: "#14b2e2" },
-                warning: { base: "#f18600" },
+                warning: { base: "#fada23" },
                 success: { base: "#00c18d" },
                 error: { base: "#f00", contrast: "#0ff" },
                 complementary: { c0: "#fff", c9: "#000" },
