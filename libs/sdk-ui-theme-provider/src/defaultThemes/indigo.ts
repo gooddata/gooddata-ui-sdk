@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IThemeDefinition } from "@gooddata/sdk-model";
 
 /**
@@ -25,7 +25,7 @@ export const indigoTheme: IThemeDefinition = {
                 base: "#00c18d",
             },
             warning: {
-                base: "#f18600",
+                base: "#fada23",
             },
             complementary: {
                 c0: "#fff",

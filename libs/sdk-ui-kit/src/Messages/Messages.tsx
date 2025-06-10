@@ -8,6 +8,7 @@ import cx from "classnames";
 import { Message } from "./Message.js";
 import { IMessage, IMessagesProps } from "./typings.js";
 import { Overlay } from "../Overlay/index.js";
+import { Typography } from "../Typography/index.js";
 
 /**
  * @internal
@@ -30,12 +31,23 @@ export const Messages: React.FC<IMessagesProps> = ({ messages = [], onMessageClo
                     <CSSTransition classNames="gd-message" timeout={220}>
                         <div>
                             {messages.map((message) => {
-                                const { id, component: Component, type, contrast, intensive } = message;
+                                const {
+                                    id,
+                                    component: Component,
+                                    showMore,
+                                    type,
+                                    contrast,
+                                    intensive,
+                                } = message;
                                 const isExpanded = expandedMessageIds.includes(message.id);
                                 return (
                                     <div key={id}>
                                         <Message
-                                            className="gd-message-overlay"
+                                            className={cx(
+                                                `gd-message-overlay`,
+                                                !showMore && "gd-message-overlay",
+                                                showMore && "gd-message-overlay-custom",
+                                            )}
                                             type={type}
                                             onClose={() => handleMessageClose(id)}
                                             contrast={contrast}
@@ -101,15 +113,17 @@ const MessageWithShowMore: React.FC<MessageWithShowMoreProps> = ({
     const accessibilityId = uuid();
     return (
         <div className="gd-message-text-showmore">
-            <MessageElement message={message} type="span" />
-            <button
-                aria-expanded={shouldShowMore ? "false" : "true"}
-                aria-controls={accessibilityId}
-                className={showMoreLinkClassNames}
-                onClick={handleShowMore}
-            >
-                {shouldShowMore ? showMore : showLess}
-            </button>
+            <Typography tagName="p" className="gd-message-text-header">
+                <MessageElement message={message} type="span" />
+                <button
+                    aria-expanded={shouldShowMore ? "false" : "true"}
+                    aria-controls={accessibilityId}
+                    className={showMoreLinkClassNames}
+                    onClick={handleShowMore}
+                >
+                    {shouldShowMore ? showMore : showLess}
+                </button>
+            </Typography>
             <div id={accessibilityId} className={contentClassNames}>
                 {errorDetail}
             </div>

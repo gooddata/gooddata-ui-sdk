@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024 GoodData Corporation
 import { ThemeDefinedCssVariable } from "../types.js";
 
 export const paletteBaseThemeVariables: ThemeDefinedCssVariable[] = [
@@ -30,6 +30,6 @@ export const paletteBaseThemeVariables: ThemeDefinedCssVariable[] = [
         type: "theme",
         variableName: "--gd-palette-warning-base",
         themePath: ["palette", "warning", "base"],
-        defaultValue: "#f18600",
+        defaultValue: "#fada23",
     },
 ];

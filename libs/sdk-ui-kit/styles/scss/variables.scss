@@ -10,8 +10,8 @@ $include-html-global-classes: false;
 $gd-color-highlight: #14b2e2;
 $gd-color-positive: #00c18d;
 $gd-color-negative: #e54d42;
-$gd-color-warning: #f18600;
-$gd-color-warning-text: #f18600; //FIXME: Remove once nowhere used
+$gd-color-warning: #fada23;
+$gd-color-warning-text: #f18600;
 
 // gray colors
 $default-gd-color-white: #fff;
@@ -73,6 +73,7 @@ $gd-palette-success-dimmed: var(
 
 // warning colors
 $gd-palette-warning-base: var(--gd-palette-warning-base, $gd-color-warning);
+$gd-palette-warning-base-text: var(--gd-palette-warning-base-from-theme, $gd-color-warning-text);
 $gd-palette-warning-dimmed: var(
     --gd-palette-warning-dimmed,
     color.mix($gd-color-warning, $default-gd-color-text-light, 20%)
@@ -136,8 +137,8 @@ $gd-input-text-border: var(--gd-palette-complementary-4, $default-gd-input-text-
 $gd-input-text-border-outline: $gd-palette-primary-base;
 $gd-input-text-hover-border: var(--gd-palette-complementary-5-from-theme, #b1c1d1);
 $gd-input-text-box-shadow-color: #1f354a;
-$gd-input-text-border-warning: $gd-palette-warning-base;
-$gd-input-text-border-warning-outline: $gd-palette-warning-base;
+$gd-input-text-border-warning: $gd-palette-warning-base-text;
+$gd-input-text-border-warning-outline: $gd-palette-warning-base-text;
 $gd-input-text-border-error: $gd-palette-error-base;
 $gd-input-text-border-error-outline: $gd-palette-error-base;
 

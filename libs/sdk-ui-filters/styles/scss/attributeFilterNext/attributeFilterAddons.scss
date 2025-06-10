@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 @use "attributeFilterVariables";
 @use "@gooddata/sdk-ui-kit/styles/scss/button";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
@@ -84,7 +84,7 @@
 
         &.gd-icon-earth::before {
             content: "\E624";
-            color: variables.$gd-color-warning;
+            color: variables.$gd-color-warning-text;
             text-align: center;
         }
     }

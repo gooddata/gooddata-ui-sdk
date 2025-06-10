@@ -10,6 +10,8 @@ $gd-date-range-picker-interval-bgcolor: var(
 );
 $gd-date-range-picker-shadow-color: #1f354a;
 
+$gd-color-warning-text: #888;
+
 $gd-day-picker-width: 267px;
 
 $gd-day-picker-input-width: 126px;
@@ -459,8 +461,8 @@ $gd-day-picker-input-width: 126px;
         margin-top: 5px;
         padding: 2px 10px;
         border-radius: 3px;
-        color: kit-variables.$gd-palette-warning-base;
-        background-color: kit-variables.$gd-palette-warning-dimmed;
+        color: $gd-color-warning-text;
+        background-color: kit-variables.$gd-palette-warning-base;
     }
 }
 

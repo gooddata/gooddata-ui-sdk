@@ -64,7 +64,7 @@ exports[`prepareTheme > should prepare the theme 1`] = `
       "base": "#00c18d",
     },
     "warning": {
-      "base": "#f18600",
+      "base": "#fada23",
     },
   },
 }
