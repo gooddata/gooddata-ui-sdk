@@ -765,5 +765,6 @@
     "dialogs.automation.applyCurrentFilters.confirm.title": "現在のフィルターで編集しますか？",
     "dialogs.automation.applyCurrentFilters.confirm.submit": "編集",
     "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>警告</b> ：このアラートが作成されたときに使用された一部のフィルターは、現在使用できないか、有効ではありません。編集すると、現在のダッシュボードのフィルタが適用されます。",
-    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>警告</b> ：このスケジュールが作成されたときに使用されたいくつかのフィルターは、もはや利用できないか、有効ではありません。編集すると現在のダッシュボードフィルターが適用されます。"
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>警告</b> ：このスケジュールが作成されたときに使用されたいくつかのフィルターは、もはや利用できないか、有効ではありません。編集すると現在のダッシュボードフィルターが適用されます。",
+    "options.menu.unsupported.xlsxOldWidget": "エクスポートできません。ダッシュボードを再保存するか、管理者に連絡してください。"
 }

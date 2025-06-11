@@ -395,5 +395,12 @@
     "notifications.panel.notifications.list.label": "通知",
     "notifications.panel.alert.notification.type.label": "警示通知",
     "properties.rotation.45": "45°",
-    "notifications.panel.triggers.dialog.truncatedValues": "… 同{count}更多"
+    "notifications.panel.triggers.dialog.truncatedValues": "… 同{count}更多",
+    "notifications.panel.download": "下載",
+    "notifications.panel.expiresOn": "過期時間 {date}",
+    "notifications.panel.linkHasExpired": "連結已過期",
+    "notifications.panel.toast.warning.filesExpired": "<strong>下載連結已過期</strong>-等待下一次導出或手動創建一個。",
+    "notifications.panel.dashboardLinkHint": "打開用于此導出嘅儀錶板",
+    "notifications.panel.dashboardLink": "從 {dashboardTitle}",
+    "notifications.panel.downloadFilesHint": "下載導出嘅文件"
 }

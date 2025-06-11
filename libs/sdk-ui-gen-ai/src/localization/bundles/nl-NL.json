@@ -22,7 +22,7 @@
     "gd.gen-ai.global-error.description": "Probeer de chatbot opnieuw op te starten en opnieuw beginnen.",
     "gd.gen-ai.button.send": "Sturen",
     "gd.gen-ai.input-label": "Stel uw vraag",
-    "gd.gen-ai.assistant-icon": "chatbot",
+    "gd.gen-ai.assistant-icon": "Chatbot-antwoord",
     "gd.gen-ai.button.save": "Opslaan",
     "gd.gen-ai.button.cancel": "Annuleren",
     "gd.gen-ai.button.edit": "Bewerken",
@@ -38,5 +38,15 @@
     "gd.gen-ai.autocomplete.id": "Id",
     "gd.gen-ai.autocomplete.date": "Datum",
     "gd.gen-ai.autocomplete.input-info.mac": "<code>^+Spatie</code> of <code>⌘+I</code> voor suggesties",
-    "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Spatie</code> of <code>Ctrl+I</code> voor suggesties"
+    "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Spatie</code> of <code>Ctrl+I</code> voor suggesties",
+    "gd.gen-ai.button.save_and_explore": "Opslaan en openen",
+    "gd.gen-ai.save-dialog.description.explore": "Om deze visualisatie te openen, moet deze eerst worden opgeslagen. Je kunt het hieronder een naam geven.",
+    "gd.gen-ai.visualisation.menu": "Visualisatiemenu",
+    "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "Visualisatie opslaan",
+    "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Opslaan als nieuw…",
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Openen in Analyseren",
+    "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Link naar visualisatie kopiëren",
+    "gd.gen-ai.message.label.user": "Invoer gebruiker",
+    "gd.gen-ai.permission-error": "Onvoldoende rechten",
+    "gd.gen-ai.permission-error.description": "Helaas heb je geen toegang tot de chatbot. Vraag je beheerder om je toestemming te geven."
 }

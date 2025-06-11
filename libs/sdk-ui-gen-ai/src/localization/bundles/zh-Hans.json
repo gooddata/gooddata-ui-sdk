@@ -22,7 +22,7 @@
     "gd.gen-ai.global-error.description": "尝试重新启动聊天机器人并重新开始。",
     "gd.gen-ai.button.send": "发送",
     "gd.gen-ai.input-label": "提出您的问题",
-    "gd.gen-ai.assistant-icon": "聊天机器人",
+    "gd.gen-ai.assistant-icon": "聊天机器人响应",
     "gd.gen-ai.button.save": "保存",
     "gd.gen-ai.button.cancel": "取消",
     "gd.gen-ai.button.edit": "编辑",
@@ -38,5 +38,15 @@
     "gd.gen-ai.autocomplete.id": "ID",
     "gd.gen-ai.autocomplete.date": "日期",
     "gd.gen-ai.autocomplete.input-info.mac": "<code>^+空格</code> 或者<code>⌘+I</code> 寻求建议",
-    "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+空格键</code> 或者<code>Ctrl+I</code> 寻求建议"
+    "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+空格键</code> 或者<code>Ctrl+I</code> 寻求建议",
+    "gd.gen-ai.button.save_and_explore": "保存并打开",
+    "gd.gen-ai.save-dialog.description.explore": "要打开此可视化，需要先保存。您可以在下面为其命名。",
+    "gd.gen-ai.visualisation.menu": "可视化菜单",
+    "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "保存可视化",
+    "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "另存为新…",
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze": "在分析中打开",
+    "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "复制可视化链接",
+    "gd.gen-ai.message.label.user": "用户输入",
+    "gd.gen-ai.permission-error": "权限不足",
+    "gd.gen-ai.permission-error.description": "抱歉，您无权访问聊天机器人。请咨询管理员授予您权限。"
 }

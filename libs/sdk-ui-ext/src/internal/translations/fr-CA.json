@@ -395,5 +395,12 @@
     "notifications.panel.notifications.list.label": "Notifications",
     "notifications.panel.alert.notification.type.label": "Notification d'alerte",
     "properties.rotation.45": "45°",
-    "notifications.panel.triggers.dialog.truncatedValues": "…et {count} de plus"
+    "notifications.panel.triggers.dialog.truncatedValues": "…et {count} de plus",
+    "notifications.panel.download": "Télécharger",
+    "notifications.panel.expiresOn": "Expire le {date}",
+    "notifications.panel.linkHasExpired": "Le lien a expiré",
+    "notifications.panel.toast.warning.filesExpired": "<strong>Lien de téléchargement expiré</strong> — attendez la prochaine exportation ou créez-en une manuellement.",
+    "notifications.panel.dashboardLinkHint": "Ouvrir le tableau de bord utilisé pour cette exportation",
+    "notifications.panel.dashboardLink": "Depuis {dashboardTitle}",
+    "notifications.panel.downloadFilesHint": "Télécharger les fichiers exportés"
 }

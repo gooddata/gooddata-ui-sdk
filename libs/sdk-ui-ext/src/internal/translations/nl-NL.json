@@ -395,5 +395,12 @@
     "notifications.panel.notifications.list.label": "Meldingen",
     "notifications.panel.alert.notification.type.label": "Waarschuwingsmelding",
     "properties.rotation.45": "45°",
-    "notifications.panel.triggers.dialog.truncatedValues": "…en {count} meer"
+    "notifications.panel.triggers.dialog.truncatedValues": "…en {count} meer",
+    "notifications.panel.download": "Downloaden",
+    "notifications.panel.expiresOn": "Verloopt op{date}",
+    "notifications.panel.linkHasExpired": "Link is verlopen",
+    "notifications.panel.toast.warning.filesExpired": "<strong>Downloadlink verlopen</strong> — wacht op de volgende export of maak er handmatig een.",
+    "notifications.panel.dashboardLinkHint": "Open het dashboard dat voor deze export wordt gebruikt",
+    "notifications.panel.dashboardLink": "Van{dashboardTitle}",
+    "notifications.panel.downloadFilesHint": "De geëxporteerde bestanden downloaden"
 }

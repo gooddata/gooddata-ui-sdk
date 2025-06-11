@@ -22,7 +22,7 @@
     "gd.gen-ai.global-error.description": "チャットボットを再起動して、やり直してみてください。",
     "gd.gen-ai.button.send": "送信",
     "gd.gen-ai.input-label": "お問い合わせ",
-    "gd.gen-ai.assistant-icon": "チャットボット",
+    "gd.gen-ai.assistant-icon": "チャットボットの反応",
     "gd.gen-ai.button.save": "保存",
     "gd.gen-ai.button.cancel": "キャンセル",
     "gd.gen-ai.button.edit": "編集",
@@ -38,5 +38,15 @@
     "gd.gen-ai.autocomplete.id": "アイド",
     "gd.gen-ai.autocomplete.date": "日付",
     "gd.gen-ai.autocomplete.input-info.mac": "<code>^+Space</code> または<code>⌘+I</code> 提案のために",
-    "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Space</code> または<code>Ctrl+I</code> 提案のために"
+    "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Space</code> または<code>Ctrl+I</code> 提案のために",
+    "gd.gen-ai.button.save_and_explore": "保存して開く",
+    "gd.gen-ai.save-dialog.description.explore": "この可視化を開くには、まず保存する必要があります。以下に名前を付けることができます。",
+    "gd.gen-ai.visualisation.menu": "ビジュアライゼーション・メニュー",
+    "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "視覚化の保存",
+    "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "新規保存…",
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze": "アナライズで開く",
+    "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "可視化リンクをコピーする",
+    "gd.gen-ai.message.label.user": "ユーザー入力",
+    "gd.gen-ai.permission-error": "権限が不十分です",
+    "gd.gen-ai.permission-error.description": "申し訳ありませんが、チャットボットへのアクセス権がありません。管理者に権限の付与を依頼してください。"
 }

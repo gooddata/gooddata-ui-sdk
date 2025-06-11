@@ -765,5 +765,6 @@
     "dialogs.automation.applyCurrentFilters.confirm.title": "Mit aktuellen Filtern bearbeiten?",
     "dialogs.automation.applyCurrentFilters.confirm.submit": "Bearbeiten",
     "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Warnung</b>: Einige Filter, die bei der Erstellung dieser Warnung verwendet wurden, sind nicht mehr verfügbar oder gültig. Beim Bearbeiten werden die aktuellen Dashboard-Filter angewendet.",
-    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Warnung</b>: Einige Filter, die bei der Erstellung dieses Zeitplans verwendet wurden, sind nicht mehr verfügbar oder gültig. Beim Bearbeiten werden die aktuellen Dashboard-Filter angewendet."
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Warnung</b>: Einige Filter, die bei der Erstellung dieses Zeitplans verwendet wurden, sind nicht mehr verfügbar oder gültig. Beim Bearbeiten werden die aktuellen Dashboard-Filter angewendet.",
+    "options.menu.unsupported.xlsxOldWidget": "Export nicht möglich. Bitte speichern Sie das Dashboard erneut oder wenden Sie sich an Ihren Administrator."
 }

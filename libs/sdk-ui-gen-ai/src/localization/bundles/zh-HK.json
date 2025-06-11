@@ -22,7 +22,7 @@
     "gd.gen-ai.global-error.description": "嘗試重新啟動聊天機械人並重新開始。",
     "gd.gen-ai.button.send": "發送",
     "gd.gen-ai.input-label": "提出您的問題",
-    "gd.gen-ai.assistant-icon": "聊天機械人",
+    "gd.gen-ai.assistant-icon": "Chatbot響應",
     "gd.gen-ai.button.save": "救",
     "gd.gen-ai.button.cancel": "取消",
     "gd.gen-ai.button.edit": "編輯",
@@ -38,5 +38,15 @@
     "gd.gen-ai.autocomplete.id": "ID",
     "gd.gen-ai.autocomplete.date": "日期",
     "gd.gen-ai.autocomplete.input-info.mac": "<code>^+Space</code>或<code>⌘+I</code>提供建議",
-    "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Space</code>或<code>Ctrl+I</code>提供建議"
+    "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Space</code>或<code>Ctrl+I</code>提供建議",
+    "gd.gen-ai.button.save_and_explore": "保存並打開",
+    "gd.gen-ai.save-dialog.description.explore": "要打開此可視化，需要保存它先。 你可以喺下面為其命名。",
+    "gd.gen-ai.visualisation.menu": "可視化餐牌",
+    "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "保存可視化效果",
+    "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "另存為新…",
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze": "在Analyze中打開",
+    "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "複製可視化效果link",
+    "gd.gen-ai.message.label.user": "用戶輸入",
+    "gd.gen-ai.permission-error": "權限不足",
+    "gd.gen-ai.permission-error.description": "抱歉，您無權使用聊天機械人。如需權限，請聯絡系統管理員。"
 }

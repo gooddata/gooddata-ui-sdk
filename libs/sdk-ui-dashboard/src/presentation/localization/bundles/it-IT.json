@@ -765,5 +765,6 @@
     "dialogs.automation.applyCurrentFilters.confirm.title": "Modificare con i filtri attuali?",
     "dialogs.automation.applyCurrentFilters.confirm.submit": "Modifica",
     "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Avviso</b>: Alcuni filtri utilizzati quando è stato creato questo avviso non sono più disponibili o validi. La modifica applicherà i filtri del cruscotto corrente.",
-    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Avviso</b>: Alcuni filtri utilizzati quando è stata creata questa pianificazione non sono più disponibili o validi. La modifica applicherà i filtri del cruscotto corrente."
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Avviso</b>: Alcuni filtri utilizzati quando è stata creata questa pianificazione non sono più disponibili o validi. La modifica applicherà i filtri del cruscotto corrente.",
+    "options.menu.unsupported.xlsxOldWidget": "Impossibile esportare. Salvare nuovamente la dashboard o contattare l'amministratore."
 }

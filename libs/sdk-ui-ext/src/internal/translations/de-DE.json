@@ -395,5 +395,12 @@
     "notifications.panel.notifications.list.label": "Benachrichtigungen",
     "notifications.panel.alert.notification.type.label": "Benachrichtigung",
     "properties.rotation.45": "45°",
-    "notifications.panel.triggers.dialog.truncatedValues": "…und {count} weitere"
+    "notifications.panel.triggers.dialog.truncatedValues": "…und {count} weitere",
+    "notifications.panel.download": "Herunterladen",
+    "notifications.panel.expiresOn": "Läuft ab am {date}",
+    "notifications.panel.linkHasExpired": "Link ist abgelaufen",
+    "notifications.panel.toast.warning.filesExpired": "<strong>Download-Link abgelaufen</strong> – warten Sie auf den nächsten Export oder erstellen Sie manuell einen.",
+    "notifications.panel.dashboardLinkHint": "Öffnen Sie das für diesen Export verwendete Dashboard",
+    "notifications.panel.dashboardLink": "Aus {dashboardTitle}",
+    "notifications.panel.downloadFilesHint": "Exportierte Dateien herunterladen"
 }
