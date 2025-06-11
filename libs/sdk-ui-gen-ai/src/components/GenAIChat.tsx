@@ -47,6 +47,23 @@ export interface GenAIChatProps {
      * Otherwise, the metadata objects will be rendered as plain text (using object title).
      */
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
+
+    /**
+     * When true, allows the chat to render links that open in a new tab or window. This
+     * is handy only when embedding the chat in same environment where GD platform is running because
+     * chat always create full URLs to the links.
+     */
+    allowNativeLinks?: boolean;
+
+    /**
+     * This will disable manage permissions for the user even if the user has them defined.
+     */
+    disableManage?: boolean;
+
+    /**
+     * This will disable analyze permissions for the user even if the user has them defined.
+     */
+    disableAnalyze?: boolean;
 }
 
 /**
@@ -83,11 +100,11 @@ const GenAIContent: React.FC<GenAIChatProps> = (props) => {
 
     return (
         <ConfigProvider
-            allowNativeLinks={!onLinkClick}
             linkHandler={onLinkClick}
             catalogItems={catalogItems}
-            canManage={permissions.canManageProject ?? false}
-            canAnalyze={permissions.canCreateVisualization ?? false}
+            allowNativeLinks={props.allowNativeLinks ?? false}
+            canManage={props.disableManage ? false : permissions.canManageProject ?? false}
+            canAnalyze={props.disableAnalyze ? false : permissions.canCreateVisualization ?? false}
         >
             <GenAIChatWrapper initializing={loading} />
         </ConfigProvider>

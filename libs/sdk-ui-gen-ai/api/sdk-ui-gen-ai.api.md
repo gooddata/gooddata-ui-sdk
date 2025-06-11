@@ -119,9 +119,12 @@ export const GenAIChat: React_2.FC<GenAIChatProps>;
 
 // @public
 export interface GenAIChatProps {
+    allowNativeLinks?: boolean;
     backend?: IAnalyticalBackend;
     catalogItems?: CatalogItem[];
     colorPalette?: IColorPalette;
+    disableAnalyze?: boolean;
+    disableManage?: boolean;
     eventHandlers?: ChatEventHandler[];
     locale?: string;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;

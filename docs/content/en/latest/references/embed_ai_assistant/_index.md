@@ -64,15 +64,18 @@ const App = () => {
 
 ### Props
 
-| Name          | Type                       | Default | Description                                                                                                  |
-| ------------- | -------------------------- | ------- | ------------------------------------------------------------------------------------------------------------ |
-| locale        | ILocale                    | "en-US" | Specifies the locale for internationalization                                                                |
-| backend       | IAnalyticalBackend         | -       | Backend instance. Falls back to BackendProvider context if not specified                                     |
-| workspace     | string                     | -       | Workspace ID. Falls back to WorkspaceProvider context if not specified                                       |
-| colorPalette  | IColorPalette              | -       | Color palette used for rendering the visualizations. If not provided, the default color palette will be used |
-| catalogItems  | CatalogItem[]              | -       | Catalog items used for autocompletion. If not provided - will be lazy-loaded when needed                     |
-| eventHandlers | ChatEventHandler[]         | -       | Event handlers for user interactions with the chat UI                                                        |
-| onLinkClick   | (LinkHandlerEvent) => void | -       | Handle user clicks on the catalog items mentioned in chat.                                                   |
+| Name             | Type                       | Default | Description                                                                                                          |
+| ---------------- | -------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
+| locale           | ILocale                    | "en-US" | Specifies the locale for internationalization                                                                        |
+| backend          | IAnalyticalBackend         | -       | Backend instance. Falls back to BackendProvider context if not specified                                             |
+| workspace        | string                     | -       | Workspace ID. Falls back to WorkspaceProvider context if not specified                                               |
+| colorPalette     | IColorPalette              | -       | Color palette used for rendering the visualizations. If not provided, the default color palette will be used         |
+| catalogItems     | CatalogItem[]              | -       | Catalog items used for autocompletion. If not provided - will be lazy-loaded when needed                             |
+| eventHandlers    | ChatEventHandler[]         | -       | Event handlers for user interactions with the chat UI                                                                |
+| onLinkClick      | (LinkHandlerEvent) => void | -       | Handle user clicks on the catalog items mentioned in chat.                                                           |
+| allowNativeLinks | boolean                    | false   | Whether to allow native links in chat messages. If false, `onLinkClick` handler will be fired when clicking on links |
+| disableManage    | boolean                    | false   | This will disable manage permissions for the user even if the user has them defined.                                 |
+| disableAnalyze   | boolean                    | false   | This will disable analyze permissions for the user even if the user has them defined.                                |
 
 #### eventHandlers
 
@@ -115,6 +118,9 @@ Each event contains the following properties:
 | itemUrl        | string     | The URL of the metadata object, if opened in GoodData Web interface                      |
 | newTab         | boolean    | Whether the link should be opened in a new tab                                           |
 | preventDefault | () => void | Prevent default behavior of the link click                                               |
+
+> Note: If `allowNativeLinks` is set to `false` or keep default, in must be implemented `onLinkClick` handler to handle
+> the links in chat messages. Otherwise, the links will not be clickable and do not have any effect.
 
 ## Resetting the chat thread
 
