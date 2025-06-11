@@ -10,7 +10,6 @@ import {
     selectLayoutHasAnalyticalWidgets,
     selectMenuButtonItemsVisibility,
     selectEnableDashboardTabularExport,
-    selectEnableOrchestratedTabularExports,
     useDashboardDispatch,
     useDashboardScheduledEmails,
     useDashboardSelector,
@@ -181,7 +180,6 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
 
     const isEnableDashboardTabularExport = useDashboardSelector(selectEnableDashboardTabularExport);
-    const isEnableOrchestratedTabularExports = useDashboardSelector(selectEnableOrchestratedTabularExports);
 
     const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
     const isPdfExportVisible = useDashboardSelector(selectPdfExportVisible);
@@ -217,7 +215,6 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isXlsxExportVisible =
         (menuButtonItemsVisibility.excelExportButton ?? true) &&
         isEnableDashboardTabularExport &&
-        isEnableOrchestratedTabularExports &&
         canExportTabular;
 
     return useMemo<IMenuButtonItem[]>(() => {
