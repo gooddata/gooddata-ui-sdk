@@ -128,6 +128,10 @@ export function createCellRenderer(
             "s-loading-done": loadingDone,
         });
 
-        return <span className={className}>{formattedValue || ""}</span>;
+        return (
+            <span className={className} title={formattedValue || ""}>
+                {formattedValue || ""}
+            </span>
+        );
     };
 }
