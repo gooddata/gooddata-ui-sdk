@@ -204,7 +204,7 @@ export const useInsightExport = (config: {
         !isExporting &&
         isInsightExportable &&
         isExportableToXlsx &&
-        (dashboardTabularExportEnabled ? !!widget?.localIdentifier : true);
+        (useNewTabularExport && dashboardTabularExportEnabled ? !!widget?.localIdentifier : true);
     const exportCSVRawEnabled = !isExporting;
 
     const isExportVisible = useDashboardSelector(selectSlideShowExportVisible);
