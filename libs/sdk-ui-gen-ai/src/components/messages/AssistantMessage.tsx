@@ -2,7 +2,7 @@
 
 import React from "react";
 import cx from "classnames";
-import { Icon } from "@gooddata/sdk-ui-kit";
+import { Button, Icon } from "@gooddata/sdk-ui-kit";
 import { defineMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import { connect } from "react-redux";
 
@@ -57,23 +57,25 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
                             "gd-gen-ai-chat__messages__feedback--assigned": message.feedback !== "NONE",
                         })}
                     >
-                        <button
+                        <Button
                             className={cx({
                                 "gd-gen-ai-chat__messages__feedback__button": true,
                                 "gd-gen-ai-chat__messages__feedback__button--positive":
                                     message.feedback === "POSITIVE",
                             })}
-                            type="button"
                             onClick={() =>
                                 setUserFeedback({
                                     assistantMessageId: message.localId,
                                     feedback: message.feedback === "POSITIVE" ? "NONE" : "POSITIVE",
                                 })
                             }
+                            accessibilityConfig={{
+                                ariaLabel: intl.formatMessage({ id: "gd.gen-ai.feedback.like" }),
+                            }}
                         >
                             <Icon.ThumbsUp />
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                             className={cx({
                                 "gd-gen-ai-chat__messages__feedback__button": true,
                                 "gd-gen-ai-chat__messages__feedback__button--negative":
@@ -86,9 +88,12 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
                                     feedback: message.feedback === "NEGATIVE" ? "NONE" : "NEGATIVE",
                                 })
                             }
+                            accessibilityConfig={{
+                                ariaLabel: intl.formatMessage({ id: "gd.gen-ai.feedback.dislike" }),
+                            }}
                         >
                             <Icon.ThumbsDown />
-                        </button>
+                        </Button>
                     </div>
                 ) : null}
             </div>
