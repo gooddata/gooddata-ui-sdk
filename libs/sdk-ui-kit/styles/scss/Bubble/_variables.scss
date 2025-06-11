@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 @use "sass:color";
 @use "../mixins.scss";
 @use "../variables";
@@ -31,7 +31,7 @@ $bubble-secondary-base: var(
 $bubble-light-base: rgba(255, 255, 255, 0.95);
 $bubble-warning-base: var(
     --gd-palette-primary-base-t10-from-theme,
-    color.adjust(variables.$gd-color-warning-text, $alpha: -0.1)
+    color.adjust(variables.$gd-color-warning, $alpha: -0.1)
 );
 $default-bubble-light-border-base: #c9d5e0;
 $bubble-light-border-base: var(--gd-palette-complementary-3-from-theme, $default-bubble-light-border-base);
