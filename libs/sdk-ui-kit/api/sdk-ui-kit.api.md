@@ -2839,9 +2839,6 @@ export interface IInvertableSelectVirtualisedRenderActionsProps {
 
 // @internal
 export interface IInvertableSelectVirtualisedRenderItemProps<T> {
-    // (undocumented)
-    focused: boolean;
-    // (undocumented)
     focusedAction?: string;
     isSelected: boolean;
     item: T;

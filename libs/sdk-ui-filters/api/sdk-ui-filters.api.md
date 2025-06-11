@@ -552,7 +552,6 @@ export interface IAttributeFilterElementsSelectErrorProps {
 
 // @beta
 export interface IAttributeFilterElementsSelectItemProps {
-    focused?: boolean;
     focusedAction?: string;
     fullscreenOnMobile?: boolean;
     isSelected: boolean;

@@ -219,6 +219,7 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
     const onKeyDown = useCallback(
         (event: React.KeyboardEvent) => {
             if (isActionKey(event) && disabled) {
+                event.preventDefault();
                 event.stopPropagation();
             }
         },

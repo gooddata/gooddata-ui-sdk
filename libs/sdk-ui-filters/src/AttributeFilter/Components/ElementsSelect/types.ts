@@ -235,13 +235,6 @@ export interface IAttributeFilterElementsSelectItemProps {
     primaryLabelTitle?: string;
 
     /**
-     * Indicates which item on the list is focused by keyboard.
-     *
-     * @beta
-     */
-    focused?: boolean;
-
-    /**
      * Indicates which element of the list item is focused by keyboard.
      *
      * @beta

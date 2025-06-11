@@ -37,6 +37,7 @@ export const DateFilterButton: React.FC<IDateFilterButtonProps> = ({
     const handleKeyDown = useCallback(
         (e: React.KeyboardEvent) => {
             if (isActionKey(e) && disabled) {
+                e.preventDefault();
                 e.stopPropagation();
             }
         },

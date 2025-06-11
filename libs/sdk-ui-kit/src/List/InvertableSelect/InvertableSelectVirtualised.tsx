@@ -12,7 +12,10 @@ import { InvertableSelectNoResultsMatch } from "./InvertableSelectNoResultsMatch
 import { ErrorComponent } from "@gooddata/sdk-ui";
 import { InvertableSelectItem } from "./InvertableSelectItem.js";
 import { defaultImport } from "default-import";
-import { useListWithActionsKeyboardNavigation } from "../../@ui/hooks/useListWithActionsKeyboardNavigation.js";
+import {
+    SELECT_ITEM_ACTION,
+    useListWithActionsKeyboardNavigation,
+} from "../../@ui/hooks/useListWithActionsKeyboardNavigation.js";
 import noop from "lodash/noop.js";
 import {
     IInvertableSelectRenderErrorProps,
@@ -52,8 +55,9 @@ export interface IInvertableSelectVirtualisedRenderItemProps<T> {
      */
     isSelected: boolean;
 
-    focused: boolean;
-
+    /**
+     * Indicate which action of the list is focused.
+     */
     focusedAction?: string;
 
     /**
@@ -246,22 +250,34 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
 
     const getItemAdditionalActions = React.useCallback(() => {
         if (isSingleSelect) {
-            return [];
+            return ["questionMark"];
         }
 
         return ["only", "questionMark"];
     }, [isSingleSelect]);
 
-    const { onKeyboardNavigation, focusedItem, focusedAction } = useListWithActionsKeyboardNavigation({
-        items,
-        getItemAdditionalActions,
-        actionHandlers: {
-            selectItem: handleSelectItem,
-            only: handleSelectOnly,
-            questionMark: () => noop,
-        },
-        focusedIndex,
-    });
+    const { onKeyboardNavigation, focusedItem, focusedAction, setFocusedAction } =
+        useListWithActionsKeyboardNavigation({
+            items,
+            getItemAdditionalActions,
+            actionHandlers: {
+                selectItem: handleSelectItem,
+                only: handleSelectOnly,
+                questionMark: () => noop,
+            },
+            focusedIndex,
+        });
+
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (isSingleSelect && (event.key === "ArrowRight" || event.key === "ArrowLeft")) {
+            if (focusedAction === "questionMark") {
+                setFocusedAction(SELECT_ITEM_ACTION);
+            } else {
+                setFocusedAction("questionMark");
+            }
+        }
+        onKeyboardNavigation(event);
+    };
 
     const itemRenderer = useCallback(
         (item: T): JSX.Element => {
@@ -276,7 +292,6 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                 item,
                 title: getItemTitle(item),
                 isSelected: getIsItemSelected(item),
-                focused: item === focusedItem,
                 focusedAction: item === focusedItem ? focusedAction : undefined,
             });
         },
@@ -332,7 +347,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                                     <div className="gd-invertable-select-list" ref={measureRef}>
                                         <div
                                             tabIndex={0}
-                                            onKeyDown={onKeyboardNavigation}
+                                            onKeyDown={handleKeyDown}
                                             className={cx("gd-async-list", className ? className : "")}
                                         >
                                             <UiPagedVirtualList
