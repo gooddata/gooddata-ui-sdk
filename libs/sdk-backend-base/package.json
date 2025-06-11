@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-base",
-    "version": "10.31.0-alpha.26",
+    "version": "10.31.0-alpha.27",
     "author": "GoodData",
     "description": "GoodData.UI SDK - Base for backend implementations",
     "repository": {
