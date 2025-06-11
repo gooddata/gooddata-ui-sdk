@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2025-6-9
+Date generated: 2025-6-11
 
-Revision ID: 8eee01c2b08986c2f1ee1b18ec4186c45e41ee76
+Revision ID: ccd064a54d4423623fe51b95b60474be75b01acc
 
 ================================================================================
 ================================================================================
@@ -673,7 +673,7 @@ Revision ID: 8eee01c2b08986c2f1ee1b18ec4186c45e41ee76
 - magic-string (0.30.17) [MIT]
 - make-dir (2.1.0) [MIT]
 - mapbox-gl (2.15.0) [BSD-3-Clause, MIT]
-- matchmediaquery (0.3.1) [MIT]
+- matchmediaquery (0.4.2) [MIT]
 - math-intrinsics (1.1.0) [MIT]
 - mdast-util-find-and-replace (3.0.2) [MIT]
 - mdast-util-from-markdown (2.0.0) [MIT]
@@ -828,7 +828,7 @@ Revision ID: 8eee01c2b08986c2f1ee1b18ec4186c45e41ee76
 - react-native-listener (1.1.0) [MIT, Apache-2.0]
 - react-portal (4.2.2) [MIT]
 - react-redux (7.2.9) [MIT]
-- react-responsive (8.2.0) [MIT, BSD-3-Clause]
+- react-responsive (10.0.1) [MIT, BSD-3-Clause]
 - react-select (5.7.3) [MIT]
 - react-select-async-paginate (0.7.3) [MIT]
 - react-side-effect (2.1.2) [MIT]
@@ -892,7 +892,7 @@ Revision ID: 8eee01c2b08986c2f1ee1b18ec4186c45e41ee76
 - setprototypeof (1.1.0) [ISC]
 - setprototypeof (1.2.0) [ISC]
 - shallow-clone (3.0.1) [MIT]
-- shallow-equal (1.2.1) [MIT]
+- shallow-equal (3.1.0) [MIT]
 - shebang-command (2.0.0) [MIT]
 - shebang-regex (3.0.0) [MIT]
 - shell-quote (1.8.1) [MIT]
@@ -28497,7 +28497,7 @@ SOFTWARE.
 
 * Package Info *
 
-Authors: sbekkhus91@gmail.com, christoph.pojer@gmail.com, operations@openjsf.org
+Authors: aaron@abramov.io, sbekkhus91@gmail.com, rickhanlonii@gmail.com, operations@openjsf.org, christoph.pojer@gmail.com
 
 Package Download URL: https://registry.npmjs.org/jest-worker/-/jest-worker-27.5.1.tgz
 
@@ -30167,9 +30167,9 @@ Authors: accounts@mapbox.com, accounts+npm-mapbox-machine-user@mapbox.com, accou
 Package Download URL: https://registry.npmjs.org/mapbox-gl/-/mapbox-gl-2.15.0.tgz
 
 --------------------------------------------------------------------------------
-Package Title: matchmediaquery (0.3.1)
+Package Title: matchmediaquery (0.4.2)
 
-Package Locator: npm+matchmediaquery$0.3.1
+Package Locator: npm+matchmediaquery$0.4.2
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -30207,7 +30207,7 @@ SOFTWARE.
 
 Authors: nicolas@cochard.co.uk
 
-Package Download URL: https://registry.npmjs.org/matchmediaquery/-/matchmediaquery-0.3.1.tgz
+Package Download URL: https://registry.npmjs.org/matchmediaquery/-/matchmediaquery-0.4.2.tgz
 
 --------------------------------------------------------------------------------
 Package Title: math-intrinsics (1.1.0)
@@ -37153,9 +37153,9 @@ Authors: dan.abramov@gmail.com, timdorr@timdorr.com, mark.erikson@gmail.com
 Package Download URL: https://registry.npmjs.org/react-redux/-/react-redux-7.2.9.tgz
 
 --------------------------------------------------------------------------------
-Package Title: react-responsive (8.2.0)
+Package Title: react-responsive (10.0.1)
 
-Package Locator: npm+react-responsive$8.2.0
+Package Locator: npm+react-responsive$10.0.1
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -37222,7 +37222,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Authors: contra@wearefractal.com, contact@wearefractal.com
 
-Package Download URL: https://registry.npmjs.org/react-responsive/-/react-responsive-8.2.0.tgz
+Package Download URL: https://registry.npmjs.org/react-responsive/-/react-responsive-10.0.1.tgz
 
 --------------------------------------------------------------------------------
 Package Title: react-select (5.7.3)
@@ -42004,9 +42004,9 @@ Authors: brian.woodward@gmail.com, github@sellside.com
 Package Download URL: https://registry.npmjs.org/shallow-clone/-/shallow-clone-3.0.1.tgz
 
 --------------------------------------------------------------------------------
-Package Title: shallow-equal (1.2.1)
+Package Title: shallow-equal (3.1.0)
 
-Package Locator: npm+shallow-equal$1.2.1
+Package Locator: npm+shallow-equal$3.1.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -42017,7 +42017,7 @@ MIT
 
 The MIT License (MIT)
 
-Copyright © 2016 Misha Moroshko
+Copyright © 2023 Misha Moroshko and Philip Su
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the “Software”), to deal in
@@ -42043,7 +42043,7 @@ SOFTWARE.
 
 Authors: michael.moroshko@gmail.com, philip@sparkanvil.com
 
-Package Download URL: https://registry.npmjs.org/shallow-equal/-/shallow-equal-1.2.1.tgz
+Package Download URL: https://registry.npmjs.org/shallow-equal/-/shallow-equal-3.1.0.tgz
 
 --------------------------------------------------------------------------------
 Package Title: shebang-command (2.0.0)
@@ -80621,31 +80621,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 The MIT License (MIT)
 
-Copyright © 2016 Misha Moroshko
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of
-this software and associated documentation files (the “Software”), to deal in
-the Software without restriction, including without limitation the rights to
-use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
-of the Software, and to permit persons to whom the Software is furnished to do
-so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* MIT *
-
-The MIT License (MIT)
-
 Copyright © 2018 Marnus Weststrate
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -80665,6 +80640,31 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
+
+
+* MIT *
+
+The MIT License (MIT)
+
+Copyright © 2023 Misha Moroshko and Philip Su
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the “Software”), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 
 * MIT *
@@ -81748,4 +81748,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2025-6-9
+Report Generated by FOSSA on 2025-6-11
