@@ -58,7 +58,7 @@
         "validate-locales-ci": "i18n-toolkit",
         "validate-theming": "npm run scss && node scripts/validateCss.js",
         "scss": "sass --load-path=node_modules styles/scss:styles/css",
-        "validate-esm": "node --no-warnings ./scripts/validateEsmWithDom.js @gooddata/sdk-ui-dashboard"
+        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-dashboard\"'"
     },
     "dependencies": {
         "@gooddata/number-formatter": "^1.0.6",

@@ -57,7 +57,7 @@
         "validate-ci": "export BROWSERSLIST_IGNORE_OLD_DATA=true && npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check && npm run validate-theming",
         "validate-theming": "npm run scss && node scripts/validateCss.js",
         "scss": "sass --load-path=node_modules styles/scss:styles/css",
-        "validate-esm": "node --no-warnings ./scripts/validateEsmWithDom.js @gooddata/sdk-ui-gen-ai"
+        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-gen-ai\"'"
     },
     "dependencies": {
         "@gooddata/api-client-tiger": "workspace:*",
