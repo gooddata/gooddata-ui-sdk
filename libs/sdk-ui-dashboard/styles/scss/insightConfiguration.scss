@@ -90,6 +90,7 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
 
             .insight-menu-title-wrapper {
                 flex: 1;
+                overflow: hidden;
             }
 
             p.insight-title {
@@ -110,6 +111,8 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
     }
 
     .configuration-panel-header-close-button[class*="gd-icon-"] {
+        height: 23px; // fix icon height to the same as the text before it
+
         &::before {
             font-size: 14px;
         }

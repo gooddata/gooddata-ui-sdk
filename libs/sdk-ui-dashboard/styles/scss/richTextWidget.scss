@@ -102,3 +102,12 @@
     align-items: center;
     gap: 8px;
 }
+
+// can be removed once the menu is rewritten to new UI kit menu component that adds missing padding
+.edit-insight-config {
+    .insight-configuration {
+        .gd-menu-wrapper-small-spacing.gd-menu-wrapper.gd-rich-text-insight-configuration-menu-item {
+            padding-bottom: 8px;
+        }
+    }
+}

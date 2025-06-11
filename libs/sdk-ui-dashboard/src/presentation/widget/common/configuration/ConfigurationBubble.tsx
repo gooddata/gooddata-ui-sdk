@@ -27,6 +27,7 @@ export const defaultAlignPoints: IAlignPoint[] = [
     { align: "tr tl" },
     { align: "br bl" },
     { align: "tl tr" },
+    { align: "bl br" },
     { align: "tr tr" },
     { align: "br br" },
 ];
@@ -40,11 +41,10 @@ export const defaultFluidArrowOffsets: ArrowOffsets = {
 };
 
 export const defaultFlexibleArrowOffsets: ArrowOffsets = {
-    "tr tl": [7, 8],
-    "br bl": [7, -8],
-    "tl tr": [-7, 8],
-    "tr tr": [-76, 8],
-    "br br": [-76, -8],
+    "tr tl": [15, 16],
+    "br bl": [15, -16],
+    "tl tr": [-15, 16],
+    "bl br": [-15, -16],
 };
 
 export const defaultArrowDirections: ArrowDirections = {

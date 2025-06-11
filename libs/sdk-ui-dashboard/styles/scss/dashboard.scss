@@ -814,3 +814,13 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         right: 20px;
     }
 }
+
+.sdk-edit-mode-on {
+    .gd-grid-layout {
+        .item-headline-outer {
+            // Make title headline narrower so the widget option menu does not overlap the widget title.
+            // Top margin is taken from rule this rule overrides. This change is necessary only in edit mode.
+            margin: 10px 50px 0;
+        }
+    }
+}

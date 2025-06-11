@@ -454,6 +454,12 @@ $gd-dashboards-section-description-color: var(
                 color: kit-variables.$gd-color-state-blank;
             }
         }
+
+        .gd-row-header-view {
+            .description {
+                padding: 4px 5px 15px; // add bottom padding after section description, same as fluid layout
+            }
+        }
     }
 
     .gd-fluid-layout-row-header-container--with-headers {
@@ -493,6 +499,11 @@ $gd-dashboards-section-description-color: var(
     display: flex;
     flex-direction: column;
     position: relative;
+
+    .gd-editable-label {
+        // fix height of the title of widget in edit mode, long title is shortened to parent height
+        max-height: inherit;
+    }
 }
 
 // generate classes for grid span from 1 to 12
