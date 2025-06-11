@@ -47,6 +47,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         items,
 
         itemClassName,
+        itemDataTestId,
 
         onSelect,
         onLevelChange,
@@ -197,6 +198,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         items,
         onSelect: handleSelectItem,
         itemClassName,
+        itemDataTestId,
         isItemFocusable,
         makeItemId,
         scrollToView,

@@ -90,6 +90,7 @@ export const AlertTriggerModeSelect = ({
                             shouldKeyboardActionStopPropagation={true}
                             shouldKeyboardActionPreventDefault={true}
                             className="s-alert-trigger-mode-select-list"
+                            dataTestId="s-alert-trigger-mode-select-list"
                             items={listboxItems}
                             selectedItemId={selectedTriggerMode}
                             onSelect={(item) => {

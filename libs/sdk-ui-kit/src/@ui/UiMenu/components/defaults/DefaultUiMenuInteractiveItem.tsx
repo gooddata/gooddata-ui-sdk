@@ -25,6 +25,7 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
         setFocusedId: ctx.setFocusedId,
         makeItemId: ctx.makeItemId,
         itemClassName: ctx.itemClassName,
+        itemDataTestId: ctx.itemDataTestId,
         InteractiveItemComponent: ctx.InteractiveItem,
         isFocused: ctx.focusedItem?.id === item.id,
     }));
@@ -36,6 +37,7 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
         setFocusedId,
         makeItemId,
         itemClassName,
+        itemDataTestId,
         InteractiveItemComponent,
         isFocused,
     } = useContextStore(selector);
@@ -71,6 +73,8 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
         typeof itemClassName === "function" ? itemClassName(item) : itemClassName,
     );
 
+    const dataTestId = typeof itemDataTestId === "function" ? itemDataTestId(item) : itemDataTestId;
+
     return (
         <li
             ref={scrollToItem}
@@ -81,6 +85,7 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
             tabIndex={-1}
             id={makeItemId(item)}
             className={classNames}
+            data-testid={dataTestId}
         >
             <InteractiveItemComponent item={item} isFocused={isFocused} onSelect={handleSelect} />
         </li>

@@ -111,6 +111,7 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
                                 shouldKeyboardActionStopPropagation={true}
                                 shouldKeyboardActionPreventDefault={true}
                                 className="s-gd-notifications-channels-dialog-destination-list"
+                                dataTestId="s-gd-notifications-channels-dialog-destination-list"
                                 items={listboxItems}
                                 maxWidth={DROPDOWN_WIDTH}
                                 selectedItemId={selectedItemId}

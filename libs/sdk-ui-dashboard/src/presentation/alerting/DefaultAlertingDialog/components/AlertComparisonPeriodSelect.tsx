@@ -136,6 +136,7 @@ export const AlertComparisonPeriodSelect = (props: IAlertComparisonPeriodSelectP
                         shouldKeyboardActionStopPropagation={true}
                         shouldKeyboardActionPreventDefault={true}
                         className="s-alert-comparison-select-list"
+                        dataTestId="s-alert-comparison-select-list"
                         items={listboxItems}
                         selectedItemId={selectedComparison?.toString()}
                         onSelect={(item) => {

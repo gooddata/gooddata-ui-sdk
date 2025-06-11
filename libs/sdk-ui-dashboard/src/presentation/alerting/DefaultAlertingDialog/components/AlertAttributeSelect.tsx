@@ -291,6 +291,7 @@ export const AlertAttributeSelect = ({
                             StaticItem={CustomStaticItem}
                             ariaAttributes={ariaAttributes}
                             className="s-alert-attribute-select-list"
+                            dataTestId="s-alert-attribute-select-list"
                         />
                     )}
                     alignPoints={[{ align: "bl tl" }]}
