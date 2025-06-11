@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "Attivato per",
     "notifications.panel.error.learnMore": "Maggiori informazioni",
     "notifications.panel.error.traceId": "Trace ID",
-    "notifications.panel.error.message": "Non è stato possibile elaborare l'avviso.",
+    "notifications.panel.error.alert.title": "Non è stato possibile elaborare l'avviso.",
     "notifications.panel.button.label": "Notifiche",
     "notifications.panel.notifications.list.label": "Notifiche",
     "notifications.panel.alert.notification.type.label": "Notifica di allarme",

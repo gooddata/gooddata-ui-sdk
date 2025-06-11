@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "触发对象：",
     "notifications.panel.error.learnMore": "了解更多",
     "notifications.panel.error.traceId": "轨迹 ID",
-    "notifications.panel.error.message": "无法处理该警报。",
+    "notifications.panel.error.alert.title": "无法处理该警报。",
     "notifications.panel.button.label": "通知",
     "notifications.panel.notifications.list.label": "通知",
     "notifications.panel.alert.notification.type.label": "警报通知",

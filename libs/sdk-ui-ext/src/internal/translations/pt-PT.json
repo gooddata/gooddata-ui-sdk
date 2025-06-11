@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "Acionado para",
     "notifications.panel.error.learnMore": "Saber mais",
     "notifications.panel.error.traceId": "ID de rastreamento",
-    "notifications.panel.error.message": "O alerta não pôde ser processado.",
+    "notifications.panel.error.alert.title": "O alerta não pôde ser processado.",
     "notifications.panel.button.label": "Notificações",
     "notifications.panel.notifications.list.label": "Notificações",
     "notifications.panel.alert.notification.type.label": "Notificação de alerta",

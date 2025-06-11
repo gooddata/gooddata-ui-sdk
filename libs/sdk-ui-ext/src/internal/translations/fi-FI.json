@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "Laukaistu kohteelle",
     "notifications.panel.error.learnMore": "Lue lisää",
     "notifications.panel.error.traceId": "Jäljitystunnus",
-    "notifications.panel.error.message": "Hälytystä ei voitu käsitellä.",
+    "notifications.panel.error.alert.title": "Hälytystä ei voitu käsitellä.",
     "notifications.panel.button.label": "Ilmoitukset",
     "notifications.panel.notifications.list.label": "Ilmoitukset",
     "notifications.panel.alert.notification.type.label": "Hälytysilmoitus",

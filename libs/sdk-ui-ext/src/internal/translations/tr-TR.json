@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "Tetiklendiği için",
     "notifications.panel.error.learnMore": "Daha fazla bilgi edinin",
     "notifications.panel.error.traceId": "İzleme Kimliği",
-    "notifications.panel.error.message": "Uyarı işlenemedi.",
+    "notifications.panel.error.alert.title": "Uyarı işlenemedi.",
     "notifications.panel.button.label": "Bildirimler",
     "notifications.panel.notifications.list.label": "Bildirimler",
     "notifications.panel.alert.notification.type.label": "Uyarı bildirimi",

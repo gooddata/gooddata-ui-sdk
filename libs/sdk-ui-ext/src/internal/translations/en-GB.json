@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "Triggered for",
     "notifications.panel.error.learnMore": "Learn more",
     "notifications.panel.error.traceId": "Trace ID",
-    "notifications.panel.error.message": "The alert could not be processed.",
+    "notifications.panel.error.alert.title": "The alert could not be processed.",
     "notifications.panel.button.label": "Notifications",
     "notifications.panel.notifications.list.label": "Notifications",
     "notifications.panel.alert.notification.type.label": "Alert notification",

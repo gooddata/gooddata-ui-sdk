@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "觸發條件",
     "notifications.panel.error.learnMore": "瞭解更多信息",
     "notifications.panel.error.traceId": "跟蹤ID",
-    "notifications.panel.error.message": "無法處理警報。",
+    "notifications.panel.error.alert.title": "無法處理警報。",
     "notifications.panel.button.label": "通知",
     "notifications.panel.notifications.list.label": "通知",
     "notifications.panel.alert.notification.type.label": "警示通知",

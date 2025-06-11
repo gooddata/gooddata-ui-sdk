@@ -26,6 +26,7 @@ export interface IUiButtonAccessibilityConfig extends IAccessibilityConfigBase {
  * @internal
  */
 export interface UiButtonProps {
+    id?: string;
     size?: SizeSmall | SizeMedium | SizeLarge;
     variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger;
     iconBefore?: IconType;
@@ -35,6 +36,7 @@ export interface UiButtonProps {
     isLoading?: boolean;
     tooltip?: React.ReactNode;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    onKeyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void;
     dataId?: string;
     dataTestId?: string;
     accessibilityConfig?: IUiButtonAccessibilityConfig;
@@ -52,6 +54,7 @@ const getGeneratedTestId = (label: string, ariaLabel: string) => {
 export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
     (
         {
+            id,
             size = "medium",
             variant = "secondary",
             label,
@@ -60,6 +63,7 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
             iconBefore,
             iconAfter,
             onClick,
+            onKeyDown,
             dataId,
             dataTestId,
             accessibilityConfig,
@@ -74,11 +78,13 @@ export const UiButton = forwardRef<HTMLButtonElement, UiButtonProps>(
 
         return (
             <button
+                id={id}
                 ref={ref}
                 className={b({ size, variant, isLoading, hasIconBefore, hasIconAfter })}
                 disabled={isDisabled}
                 tabIndex={0}
                 onClick={onClick}
+                onKeyDown={onKeyDown}
                 data-id={dataId}
                 data-testid={testId}
                 aria-label={accessibilityConfig?.ariaLabel}

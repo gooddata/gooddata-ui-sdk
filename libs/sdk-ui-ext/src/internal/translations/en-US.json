@@ -2158,8 +2158,18 @@
         "comment": "",
         "limit": 0
     },
-    "notifications.panel.error.message": {
+    "notifications.panel.error.alert.title": {
         "value": "The alert could not be processed.",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.error.schedule.title": {
+        "value": "Scheduled export failed.",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.error.limitExceeded.message": {
+        "value": "Your export could not be sent, because your organization has reached the limit for maximum number of daily alerts and scheduled exports. Please contact your administrator.",
         "comment": "",
         "limit": 0
     }

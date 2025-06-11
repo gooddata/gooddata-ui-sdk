@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "Déclenché pour",
     "notifications.panel.error.learnMore": "En savoir plus",
     "notifications.panel.error.traceId": "ID Trace",
-    "notifications.panel.error.message": "L'alerte n'a pas pu être traitée.",
+    "notifications.panel.error.alert.title": "L'alerte n'a pas pu être traitée.",
     "notifications.panel.button.label": "Notifications",
     "notifications.panel.notifications.list.label": "Notifications",
     "notifications.panel.alert.notification.type.label": "Notification d'alerte",

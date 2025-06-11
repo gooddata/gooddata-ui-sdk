@@ -390,7 +390,7 @@
     "notifications.panel.triggers.dialog.title": "트리거됨",
     "notifications.panel.error.learnMore": "자세히 알아보기",
     "notifications.panel.error.traceId": "추적 ID",
-    "notifications.panel.error.message": "경고를 처리할 수 없습니다.",
+    "notifications.panel.error.alert.title": "경고를 처리할 수 없습니다.",
     "notifications.panel.button.label": "알림",
     "notifications.panel.notifications.list.label": "알림",
     "notifications.panel.alert.notification.type.label": "알림 통지",
