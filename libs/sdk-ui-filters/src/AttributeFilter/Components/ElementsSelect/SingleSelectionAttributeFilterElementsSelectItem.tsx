@@ -16,7 +16,14 @@ import { AttributeFilterElementsSelectItemTooltip } from "./AttributeFilterEleme
 export const SingleSelectionAttributeFilterElementsSelectItem: React.VFC<
     IAttributeFilterElementsSelectItemProps
 > = (props) => {
-    const { item, onSelectOnly, isSelected, focused, fullscreenOnMobile = false, primaryLabelTitle } = props;
+    const {
+        item,
+        onSelectOnly,
+        isSelected,
+        focusedAction,
+        fullscreenOnMobile = false,
+        primaryLabelTitle,
+    } = props;
     const intl = useIntl();
 
     // Modify item click behavior to select only this particular item.
@@ -44,7 +51,9 @@ export const SingleSelectionAttributeFilterElementsSelectItem: React.VFC<
             "s-attribute-filter-list-item-selected": isSelected,
         },
         {
-            "gd-attribute-filter-single-selection-list-item--isFocused": focused,
+            "gd-attribute-filter-list-item--isFocused": !!focusedAction,
+            "gd-attribute-filter-single-selection-list-item--isFocusedSelectItem":
+                focusedAction === "selectItem",
         },
     );
 
@@ -60,6 +69,7 @@ export const SingleSelectionAttributeFilterElementsSelectItem: React.VFC<
                 itemTitle={itemTitle}
                 primaryLabelTitle={primaryLabelTitle}
                 itemPrimaryTitle={itemPrimaryTitle}
+                isFocused={focusedAction === "questionMark"}
             />
         </div>
     );
