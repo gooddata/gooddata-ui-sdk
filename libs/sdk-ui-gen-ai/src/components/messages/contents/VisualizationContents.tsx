@@ -86,7 +86,12 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
     const [isHovered, setHovered] = React.useState(false);
 
     const intl = useIntl();
-    const tooltipText = intl.formatMessage({ id: "gd.gen-ai.visualisation.menu" });
+    const tooltipText = intl.formatMessage(
+        { id: "gd.gen-ai.visualisation.menu" },
+        {
+            name: visualization?.title || "",
+        },
+    );
 
     // generate unique IDs for accessibility and dropdown positioning
     const id = useId();
@@ -259,6 +264,34 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                     onPointerEnter={() => setHovered(true)}
                     onPointerLeave={() => setHovered(false)}
                 >
+                    {config.canAnalyze && !hasVisError && !visLoading
+                        ? (() => {
+                              return (
+                                  <>
+                                      <Button
+                                          onClick={() => setMenuButtonOpen(!isMenuButtonOpen)}
+                                          value="&#8943;"
+                                          id={MORE_MENU_BUTTON_ID}
+                                          className={cx(
+                                              "gd-button-primary gd-button",
+                                              "gd-gen-ai-chat__visualization__save",
+                                              dropdownAnchorClassName,
+                                              {
+                                                  hidden: !(isMenuButtonOpen || isHovered),
+                                              },
+                                          )}
+                                          accessibilityConfig={{
+                                              ariaLabel: tooltipText,
+                                              role: "button",
+                                              isExpanded: isMenuButtonOpen,
+                                              popupId: menuId,
+                                          }}
+                                      />
+                                      {isMenuButtonOpen ? renderMenuItems() : null}
+                                  </>
+                              );
+                          })()
+                        : null}
                     <div className="gd-gen-ai-chat__visualization__title">
                         <MarkdownComponent allowMarkdown={useMarkdown}>
                             {visualization.title}
@@ -338,31 +371,6 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
                             })()}
                         </VisualizationErrorBoundary>
                     </div>
-                    {config.canAnalyze && !hasVisError && !visLoading
-                        ? (() => {
-                              return (
-                                  <>
-                                      <Button
-                                          onClick={() => setMenuButtonOpen(!isMenuButtonOpen)}
-                                          value="&#8943;"
-                                          id={MORE_MENU_BUTTON_ID}
-                                          className={cx(
-                                              "gd-button-primary gd-button",
-                                              "gd-gen-ai-chat__visualization__save",
-                                              dropdownAnchorClassName,
-                                          )}
-                                          accessibilityConfig={{
-                                              ariaLabel: tooltipText,
-                                              role: "button",
-                                              isExpanded: isMenuButtonOpen,
-                                              popupId: menuId,
-                                          }}
-                                      />
-                                      {isMenuButtonOpen ? renderMenuItems() : null}
-                                  </>
-                              );
-                          })()
-                        : null}
                     {saveDialogOpen ? (
                         <VisualizationSaveDialog
                             onClose={() => setSaveDialogOpen(null)}

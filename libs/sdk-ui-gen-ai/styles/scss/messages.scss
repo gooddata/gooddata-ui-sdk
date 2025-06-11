@@ -36,27 +36,39 @@
 .gd-gen-ai-chat__messages__feedback {
     display: flex;
     flex-direction: row;
-    visibility: hidden;
-    opacity: 0;
     height: 20px;
+
+    svg {
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
 
     & path {
         fill: kit-variables.$gd-color-link;
+    }
+
+    &:focus-within {
+        svg {
+            opacity: 1;
+        }
     }
 }
 
 .gd-gen-ai-chat__messages__message:last-child .gd-gen-ai-chat__messages__feedback,
 .gd-gen-ai-chat__messages__message:hover .gd-gen-ai-chat__messages__feedback,
 .gd-gen-ai-chat__messages__feedback--assigned {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.2s;
+    svg {
+        opacity: 1;
+    }
 }
 
 .gd-gen-ai-chat__messages__feedback__button {
     background: none;
     border: none;
     cursor: pointer;
+    padding: 0;
+    outline-offset: 3px;
+    border-radius: 2px;
 
     & path {
         opacity: 0.8;
@@ -76,6 +88,11 @@
     &--negative path,
     &--negative:hover path {
         fill: kit-variables.$gd-palette-primary-base;
+    }
+
+    &:focus,
+    &:focus-visible {
+        outline: 1px solid kit-variables.$gd-palette-primary-base;
     }
 }
 
@@ -216,10 +233,10 @@
     }
 
     &__save {
+        display: flex;
         position: absolute;
         top: 0.5em;
         right: 0.5em;
-        display: none;
         align-items: center;
         justify-content: center;
         text-align: center;
@@ -227,10 +244,21 @@
         height: 32px;
         margin-right: 0;
         padding: 0;
+
+        .gd-button-text {
+            opacity: 1;
+            transition: opacity 0.25s ease-in-out;
+        }
     }
 
-    &.active &__save {
-        display: flex;
+    &__save.hidden:not(:focus):not(:focus-visible) {
+        border: transparent;
+        background: transparent;
+        box-shadow: none;
+
+        .gd-button-text {
+            opacity: 0;
+        }
     }
 }
 
