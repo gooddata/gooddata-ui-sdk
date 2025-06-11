@@ -142,6 +142,7 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                         shouldKeyboardActionStopPropagation={true}
                         shouldKeyboardActionPreventDefault={true}
                         className="s-alert-operator-select-list"
+                        dataTestId="s-alert-operator-select-list"
                         items={listboxItems}
                         maxWidth={ref.current?.offsetWidth}
                         selectedItemId={selectedItemId}

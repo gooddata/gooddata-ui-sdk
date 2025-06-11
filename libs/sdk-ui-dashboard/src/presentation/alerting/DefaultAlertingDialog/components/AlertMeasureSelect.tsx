@@ -85,6 +85,7 @@ export const AlertMeasureSelect = ({
                         shouldKeyboardActionStopPropagation={true}
                         shouldKeyboardActionPreventDefault={true}
                         className="s-alert-measure-select-list"
+                        dataTestId="s-alert-measure-select-list"
                         items={listboxItems}
                         maxWidth={ref.current?.offsetWidth}
                         selectedItemId={selectedId}

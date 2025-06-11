@@ -4864,10 +4864,12 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object> 
     focusedItem: IUiMenuFocusableItem<T> | undefined;
     // (undocumented)
     isItemFocusable: (item: IUiMenuItem<T>) => boolean;
-    // (undocumented)
+    // @deprecated (undocumented)
     itemClassName?: ((item: IUiMenuItem<T>) => string | undefined) | string;
     // (undocumented)
     ItemComponent: React_2.ComponentType<IUiMenuItemProps<T>>;
+    // (undocumented)
+    itemDataTestId?: ((item: IUiMenuItem<T>) => string | undefined) | string;
     // (undocumented)
     items: IUiMenuItem<T>[];
     // (undocumented)
@@ -5871,7 +5873,7 @@ export interface UiIconProps {
 }
 
 // @internal
-export function UiListbox<InteractiveItemData, StaticItemData>({ items, className, itemClassName, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, ariaAttributes, }: UiListboxProps<InteractiveItemData, StaticItemData>): React_2.ReactNode;
+export function UiListbox<InteractiveItemData, StaticItemData>({ items, className, dataTestId, itemClassName, itemDataTestId, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, ariaAttributes, }: UiListboxProps<InteractiveItemData, StaticItemData>): React_2.ReactNode;
 
 // @internal (undocumented)
 export interface UiListboxInteractiveItemProps<T> {
@@ -5889,14 +5891,18 @@ export interface UiListboxInteractiveItemProps<T> {
 export interface UiListboxProps<InteractiveItemData, StaticItemData = React_2.ReactNode> {
     // (undocumented)
     ariaAttributes: Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
-    // (undocumented)
+    // @deprecated (undocumented)
     className?: string;
+    // (undocumented)
+    dataTestId?: string;
     // (undocumented)
     InteractiveItemComponent?: React_2.ComponentType<UiListboxInteractiveItemProps<InteractiveItemData>>;
     // (undocumented)
     isDisabledFocusable?: boolean;
-    // (undocumented)
+    // @deprecated (undocumented)
     itemClassName?: string;
+    // (undocumented)
+    itemDataTestId?: string;
     // (undocumented)
     items: IUiListboxItem<InteractiveItemData, StaticItemData>[];
     // (undocumented)
@@ -5934,12 +5940,16 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
 export interface UiMenuProps<T extends IUiMenuItemData = object, M = object> extends Partial<IUiMenuPluggableComponents<T>> {
     // (undocumented)
     ariaAttributes: Omit<IDropdownBodyRenderProps["ariaAttributes"], "role">;
-    // (undocumented)
+    // @deprecated (undocumented)
     className?: ((context: IUiMenuContext<T>) => string | undefined) | string;
     // (undocumented)
-    isDisabledFocusable?: boolean;
+    dataTestId?: ((context: IUiMenuContext<T>) => string | undefined) | string;
     // (undocumented)
+    isDisabledFocusable?: boolean;
+    // @deprecated (undocumented)
     itemClassName?: ((item: IUiMenuItem<T>) => string | undefined) | string;
+    // (undocumented)
+    itemDataTestId?: ((item: IUiMenuItem<T>) => string | undefined) | string;
     // (undocumented)
     items: IUiMenuItem<T>[];
     // (undocumented)

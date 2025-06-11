@@ -20,7 +20,9 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     items,
 
     className,
+    dataTestId,
     itemClassName,
+    itemDataTestId,
     maxWidth,
     maxHeight,
     onSelect,
@@ -168,7 +170,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
     );
 
     return (
-        <div className={cx(b(), className)} style={{ maxWidth, maxHeight }}>
+        <div className={cx(b(), className)} style={{ maxWidth, maxHeight }} data-testid={dataTestId}>
             <ul
                 className={e("items")}
                 tabIndex={0}
@@ -188,6 +190,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                             tabIndex={-1}
                             id={makeItemId(ariaAttributes.id, item)}
                             className={itemClassName}
+                            data-testid={itemDataTestId}
                         >
                             <InteractiveItemComponent
                                 onSelect={() => {
@@ -203,6 +206,7 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                             key={item.id ?? index}
                             ref={(el) => (itemRefs.current[index] = el)}
                             className={itemClassName}
+                            data-testid={itemDataTestId}
                         >
                             <StaticItemComponent item={item} />
                         </li>

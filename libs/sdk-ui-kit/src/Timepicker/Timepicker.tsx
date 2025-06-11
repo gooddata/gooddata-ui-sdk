@@ -195,6 +195,7 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
                                 shouldKeyboardActionStopPropagation={true}
                                 shouldKeyboardActionPreventDefault={true}
                                 className="s-timepicker-list"
+                                dataTestId="s-timepicker-list"
                                 items={listboxItems}
                                 maxWidth={dropdownWidth}
                                 maxHeight={MAX_HEIGHT}

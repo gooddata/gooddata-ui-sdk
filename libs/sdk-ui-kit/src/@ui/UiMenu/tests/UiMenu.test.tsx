@@ -367,6 +367,15 @@ describe("UiMenu", () => {
         expect(items).toHaveLength(7); // All items should have the class (including group and its items)
     });
 
+    it("should add data-test-id to items", () => {
+        renderMenu({
+            itemDataTestId: "item-data-test-id",
+        });
+
+        const items = screen.getByRole("menu").querySelectorAll("[data-testid]");
+        expect(items).toHaveLength(7);
+    });
+
     it("should handle mouse interaction to focus items", () => {
         renderMenu();
 

@@ -88,6 +88,11 @@ export const DrillDialogExportDropdown: React.FC<IDrillDialogShareDropdownProps>
         [],
     );
 
+    const itemDataTestId = React.useCallback(
+        (item: IMenuItem) => (item.type === "interactive" ? item.data.dataTestId : undefined),
+        [],
+    );
+
     return (
         <div className={classNames}>
             <Dropdown
@@ -100,7 +105,9 @@ export const DrillDialogExportDropdown: React.FC<IDrillDialogShareDropdownProps>
                         onSelect={handleSelectItem}
                         items={items}
                         className={"s-drill-modal-export-options"}
+                        dataTestId="s-drill-modal-export-options"
                         itemClassName={itemClassName}
+                        itemDataTestId={itemDataTestId}
                         InteractiveItem={DrillModalExportMenuItem}
                     />
                 )}

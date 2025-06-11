@@ -32,6 +32,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
 ): React.ReactNode {
     const {
         className,
+        dataTestId,
         maxWidth,
         ariaAttributes,
         onUnhandledKeyDown,
@@ -85,6 +86,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
     }, [shownCustomContentItemId, menuComponentRef]);
 
     const menuClassName = typeof className === "function" ? className(contextStoreValue) : className;
+    const menuDataTestId = typeof dataTestId === "function" ? dataTestId(contextStoreValue) : dataTestId;
 
     return (
         <UiMenuContextStore value={contextStoreValue}>
@@ -93,6 +95,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
                 style={{ maxWidth }}
                 onKeyDownCapture={() => setControlType("keyboard")}
                 onMouseMoveCapture={() => setControlType("mouse")}
+                data-testid={menuDataTestId}
             >
                 {shownCustomContentItemId ? (
                     <ContentWrapper keyboardNavigationHandler={handleKeyDownInCustomContent}>

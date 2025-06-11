@@ -15,7 +15,11 @@ export interface IMenuItemData {
     interactive: {
         action: () => void;
         disabledTooltip?: string;
+        /**
+         * @deprecated use `dataTestId` instead. Prop will be removed.
+         */
         className?: string;
+        dataTestId?: string;
     };
 }
 
@@ -72,6 +76,7 @@ export const useDrillDialogExportItems = ({
                 data: {
                     action: onExportXLSX,
                     className: "s-export-drilled-insight-xlsx",
+                    dataTestId: "s-export-drilled-insight-xlsx",
                     disabledTooltip,
                 },
                 id: "xslx",
@@ -83,6 +88,7 @@ export const useDrillDialogExportItems = ({
                 data: {
                     action: onExportCSV,
                     className: "s-export-drilled-insight-csv-formatted",
+                    dataTestId: "s-export-drilled-insight-csv-formatted",
                     disabledTooltip,
                 },
                 id: "csv-formatted",
@@ -94,6 +100,7 @@ export const useDrillDialogExportItems = ({
                 data: {
                     action: onExportCSVRaw,
                     className: "s-export-drilled-insight-csv-raw",
+                    dataTestId: "s-export-drilled-insight-csv-raw",
                     disabledTooltip,
                 },
                 id: "csv-raw",

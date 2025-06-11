@@ -174,7 +174,11 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object>
     setControlType: React.Dispatch<React.SetStateAction<IUiMenuControlType>>;
     scrollToView: (element: HTMLElement | null) => void;
     makeItemId: (item: IUiMenuItem<T>) => string | undefined;
+    /**
+     * @deprecated use `itemDataTestId` instead. Prop will be removed.
+     */
     itemClassName?: ((item: IUiMenuItem<T>) => string | undefined) | string;
+    itemDataTestId?: ((item: IUiMenuItem<T>) => string | undefined) | string;
     ItemComponent: React.ComponentType<IUiMenuItemProps<T>>;
     menuComponentRef: React.RefObject<HTMLElement>;
     itemsContainerRef: React.RefObject<HTMLElement>;
@@ -188,9 +192,18 @@ export interface UiMenuProps<T extends IUiMenuItemData = object, M = object>
     extends Partial<IUiMenuPluggableComponents<T>> {
     items: IUiMenuItem<T>[];
 
+    /**
+     * @deprecated use `dataTestId` instead. Prop will be removed.
+     */
     className?: ((context: IUiMenuContext<T>) => string | undefined) | string;
+    dataTestId?: ((context: IUiMenuContext<T>) => string | undefined) | string;
 
+    /**
+     * @deprecated use `itemDataTestId` instead. Prop will be removed.
+     */
     itemClassName?: ((item: IUiMenuItem<T>) => string | undefined) | string;
+    itemDataTestId?: ((item: IUiMenuItem<T>) => string | undefined) | string;
+
     maxWidth?: number;
 
     onSelect?: (item: IUiMenuInteractiveItem<T>) => void;

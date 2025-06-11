@@ -491,4 +491,17 @@ describe("UiListbox", () => {
         const items = screen.getByRole("listbox").querySelectorAll(".test-item-class");
         expect(items).toHaveLength(2);
     });
+
+    it("should add data-testid to items", () => {
+        renderListbox({
+            itemDataTestId: "item-data-test-id",
+            items: [
+                { type: "interactive", id: "item1", stringTitle: "Item 1", data: "data1" },
+                { type: "static", data: "Static Item" },
+            ],
+        });
+
+        const items = screen.getByRole("listbox").querySelectorAll("[data-testid]");
+        expect(items).toHaveLength(2);
+    });
 });

@@ -21,6 +21,7 @@ export const DefaultUiMenuContentItemWrapper = React.memo(function DefaultUiMenu
         setFocusedId: ctx.setFocusedId,
         makeItemId: ctx.makeItemId,
         itemClassName: ctx.itemClassName,
+        itemDataTestId: ctx.itemDataTestId,
         ContentItemComponent: ctx.ContentItem,
         isFocused: ctx.focusedItem?.id === item.id,
     }));
@@ -32,6 +33,7 @@ export const DefaultUiMenuContentItemWrapper = React.memo(function DefaultUiMenu
         onSelect,
         makeItemId,
         itemClassName,
+        itemDataTestId,
         ContentItemComponent,
         isFocused,
     } = useContextStore(selector);
@@ -66,6 +68,9 @@ export const DefaultUiMenuContentItemWrapper = React.memo(function DefaultUiMenu
         }),
         typeof itemClassName === "function" ? itemClassName(item) : itemClassName,
     );
+
+    const dataTestId = typeof itemDataTestId === "function" ? itemDataTestId(item) : itemDataTestId;
+
     return (
         <li
             ref={scrollToItem}
@@ -76,6 +81,7 @@ export const DefaultUiMenuContentItemWrapper = React.memo(function DefaultUiMenu
             aria-disabled={item.isDisabled}
             id={makeItemId(item)}
             onMouseMove={handleMouseFocus}
+            data-testid={dataTestId}
         >
             <ContentItemComponent item={item} isFocused={isFocused} onSelect={handleSelect} />
         </li>
