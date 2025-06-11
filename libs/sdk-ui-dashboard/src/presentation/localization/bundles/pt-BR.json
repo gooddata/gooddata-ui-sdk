@@ -765,5 +765,6 @@
     "dialogs.automation.applyCurrentFilters.confirm.title": "Editar com filtros atuais?",
     "dialogs.automation.applyCurrentFilters.confirm.submit": "Editar",
     "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Aviso</b>: Alguns filtros usados quando esse alerta foi criado não estão mais disponíveis ou são válidos. A edição aplicará os filtros atuais do painel.",
-    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Aviso</b>: Alguns filtros usados quando essa programação foi criada não estão mais disponíveis ou não são mais válidos. A edição aplicará os filtros atuais do painel."
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Aviso</b>: Alguns filtros usados quando essa programação foi criada não estão mais disponíveis ou não são mais válidos. A edição aplicará os filtros atuais do painel.",
+    "options.menu.unsupported.xlsxOldWidget": "Não foi possível exportar. Salve novamente o painel ou entre em contato com o administrador."
 }

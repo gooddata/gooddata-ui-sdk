@@ -395,5 +395,12 @@
     "notifications.panel.notifications.list.label": "お知らせ",
     "notifications.panel.alert.notification.type.label": "アラート通知",
     "properties.rotation.45": "45°",
-    "notifications.panel.triggers.dialog.truncatedValues": "…及び{count}その他"
+    "notifications.panel.triggers.dialog.truncatedValues": "…及び{count}その他",
+    "notifications.panel.download": "ダウンロード",
+    "notifications.panel.expiresOn": "有効期限{date}",
+    "notifications.panel.linkHasExpired": "リンク切れ",
+    "notifications.panel.toast.warning.filesExpired": "<strong>ダウンロードリンクは期限切れ</strong> - 次のエクスポートを待つか、手動で作成してください。",
+    "notifications.panel.dashboardLinkHint": "このエクスポートに使用するダッシュボードを開く",
+    "notifications.panel.dashboardLink": "より{dashboardTitle}",
+    "notifications.panel.downloadFilesHint": "エクスポートしたファイルをダウンロードする"
 }

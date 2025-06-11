@@ -7,7 +7,7 @@
     "semantic-search.tags": "태그",
     "semantic-search.match": "{score}% 일치",
     "semantic-search.previous-search": "이전 검색",
-    "semantic-search.date.at": "에서",
+    "semantic-search.date.at": "(시각/장소)",
     "gs.date.today": "오늘",
     "gs.date.yesterday": "어제",
     "semantic-search.label": "대시보드 또는 시각화 검색"

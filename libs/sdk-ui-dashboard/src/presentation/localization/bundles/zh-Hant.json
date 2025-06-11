@@ -765,5 +765,6 @@
     "dialogs.automation.applyCurrentFilters.confirm.title": "使用目前過濾器進行編輯？",
     "dialogs.automation.applyCurrentFilters.confirm.submit": "編輯",
     "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>警告</b>：建立此警報時使用的某些過濾器不再可用或有效。編輯將套用目前儀表板過濾器。",
-    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>警告</b>：建立此計劃時使用的某些過濾器不再可用或有效。編輯將套用目前儀表板過濾器。"
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>警告</b>：建立此計劃時使用的某些過濾器不再可用或有效。編輯將套用目前儀表板過濾器。",
+    "options.menu.unsupported.xlsxOldWidget": "無法導出。請重新儲存儀表板或聯絡您的管理員。"
 }

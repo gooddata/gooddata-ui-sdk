@@ -765,5 +765,6 @@
     "dialogs.automation.applyCurrentFilters.confirm.title": "Muokataanko nykyisillä suodattimilla?",
     "dialogs.automation.applyCurrentFilters.confirm.submit": "Muokkaa",
     "dialogs.automation.applyCurrentFilters.alert.confirm": "<b>Varoitus</b>: Jotkin tämän hälytyksen luontihetkellä käytetyt suodattimet eivät ole enää käytettävissä tai voimassa. Muokkauksessa käytetään nykyisiä koontinäytön suodattimia.",
-    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Varoitus</b>: Jotkin tämän aikataulun luomisen aikana käytetyt suodattimet eivät ole enää käytettävissä tai kelvollisia. Muokkauksessa käytetään nykyisiä koontinäytön suodattimia."
+    "dialogs.automation.applyCurrentFilters.schedule.confirm": "<b>Varoitus</b>: Jotkin tämän aikataulun luomisen aikana käytetyt suodattimet eivät ole enää käytettävissä tai kelvollisia. Muokkauksessa käytetään nykyisiä koontinäytön suodattimia.",
+    "options.menu.unsupported.xlsxOldWidget": "Ei voida viedä. Tallenna ohjauspaneeli uudelleen tai ota yhteyttä järjestelmänvalvojaan."
 }

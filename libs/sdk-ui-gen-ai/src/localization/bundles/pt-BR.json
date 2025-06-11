@@ -22,7 +22,7 @@
     "gd.gen-ai.global-error.description": "Tente reiniciar o chatbot e começar de novo.",
     "gd.gen-ai.button.send": "Enviar",
     "gd.gen-ai.input-label": "Faça sua pergunta",
-    "gd.gen-ai.assistant-icon": "chatbot",
+    "gd.gen-ai.assistant-icon": "Resposta do chatbot",
     "gd.gen-ai.button.save": "Salvar",
     "gd.gen-ai.button.cancel": "Cancelar",
     "gd.gen-ai.button.edit": "Editar",
@@ -38,5 +38,15 @@
     "gd.gen-ai.autocomplete.id": "Id",
     "gd.gen-ai.autocomplete.date": "Data",
     "gd.gen-ai.autocomplete.input-info.mac": "<code>^+Espaço</code> ou <code>⌘+I</code> para sugestões",
-    "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Espaço</code> ou <code>Ctrl+I</code> para sugestões"
+    "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+Espaço</code> ou <code>Ctrl+I</code> para sugestões",
+    "gd.gen-ai.button.save_and_explore": "Salvar e abrir",
+    "gd.gen-ai.save-dialog.description.explore": "Para abrir essa visualização, ela precisa ser salva primeiro. Você pode dar um nome abaixo.",
+    "gd.gen-ai.visualisation.menu": "Menu de visualização",
+    "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "Salvar visualização",
+    "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Salvar como novo…",
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Abrir no Analyze",
+    "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Copiar link de visualização",
+    "gd.gen-ai.message.label.user": "Entrada do usuário",
+    "gd.gen-ai.permission-error": "Permissões insuficientes",
+    "gd.gen-ai.permission-error.description": "Lamentamos, mas você não tem acesso ao chatbot. Peça ao seu administrador para lhe conceder permissões."
 }

@@ -22,7 +22,7 @@
     "gd.gen-ai.global-error.description": "Yritä käynnistää chatbotti uudelleen ja aloittaa alusta.",
     "gd.gen-ai.button.send": "Lähetä",
     "gd.gen-ai.input-label": "Esitä kysymyksesi",
-    "gd.gen-ai.assistant-icon": "chatbot",
+    "gd.gen-ai.assistant-icon": "Chatbotin vastaus",
     "gd.gen-ai.button.save": "Tallenna",
     "gd.gen-ai.button.cancel": "Peruuta",
     "gd.gen-ai.button.edit": "Muokkaa",
@@ -38,5 +38,15 @@
     "gd.gen-ai.autocomplete.id": "Tunnus",
     "gd.gen-ai.autocomplete.date": "Päivämäärä",
     "gd.gen-ai.autocomplete.input-info.mac": "<code>^+Välilyönti</code> <code>tai+I ehdotuksia</code> varten",
-    "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+välilyönti</code> tai <code>Ctrl+I ehdotuksia</code> varten"
+    "gd.gen-ai.autocomplete.input-info.win": "<code>Ctrl+välilyönti</code> tai <code>Ctrl+I ehdotuksia</code> varten",
+    "gd.gen-ai.button.save_and_explore": "Tallenna ja avaa",
+    "gd.gen-ai.save-dialog.description.explore": "Tämän visualisoinnin avaamiseksi se on tallennettava ensin. Voit antaa sille nimen alla.",
+    "gd.gen-ai.visualisation.menu": "Visualisointivalikko",
+    "gd.gen-ai.visualisation.menu.button.save_as_visualisation": "Tallenna visualisointi",
+    "gd.gen-ai.visualisation.menu.button.save_as_new_visualisation": "Tallenna uutena…",
+    "gd.gen-ai.visualisation.menu.button.open_in_analyze": "Avaa kohdassa Analysoi",
+    "gd.gen-ai.visualisation.menu.button.copy_visualisation_link": "Kopioi visualisointilinkki",
+    "gd.gen-ai.message.label.user": "Käyttäjän syöttö",
+    "gd.gen-ai.permission-error": "Riittämättömät käyttöoikeudet",
+    "gd.gen-ai.permission-error.description": "Valitettavasti sinulla ei ole pääsyä chatbottiin. Pyydä ylläpitäjää myöntämään sinulle käyttöoikeudet."
 }

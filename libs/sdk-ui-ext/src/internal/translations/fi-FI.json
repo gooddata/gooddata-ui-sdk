@@ -395,5 +395,12 @@
     "notifications.panel.notifications.list.label": "Ilmoitukset",
     "notifications.panel.alert.notification.type.label": "Hälytysilmoitus",
     "properties.rotation.45": "45°",
-    "notifications.panel.triggers.dialog.truncatedValues": "…ja {count} lisää"
+    "notifications.panel.triggers.dialog.truncatedValues": "…ja {count} lisää",
+    "notifications.panel.download": "Lataa",
+    "notifications.panel.expiresOn": "Vanhenee {date}",
+    "notifications.panel.linkHasExpired": "Linkki on vanhentunut",
+    "notifications.panel.toast.warning.filesExpired": "<strong>Latauslinkki vanhentunut</strong> — odota seuraavaa vientiä tai luo se manuaalisesti.",
+    "notifications.panel.dashboardLinkHint": "Avaa tähän vientiin käytetty dashboard",
+    "notifications.panel.dashboardLink": "Alkaen {dashboardTitle}",
+    "notifications.panel.downloadFilesHint": "Lataa viedyt tiedostot"
 }

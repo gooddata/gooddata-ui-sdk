@@ -395,5 +395,12 @@
     "notifications.panel.notifications.list.label": "Notifications",
     "notifications.panel.alert.notification.type.label": "Alert notification",
     "properties.rotation.45": "45°",
-    "notifications.panel.triggers.dialog.truncatedValues": "...and {count} more"
+    "notifications.panel.triggers.dialog.truncatedValues": "...and {count} more",
+    "notifications.panel.download": "Download",
+    "notifications.panel.expiresOn": "Expires on {date}",
+    "notifications.panel.linkHasExpired": "Link has expired",
+    "notifications.panel.toast.warning.filesExpired": "<strong>Download link expired</strong> — please wait for the next export or create one manually.",
+    "notifications.panel.dashboardLinkHint": "Open the dashboard utilised for this export",
+    "notifications.panel.dashboardLink": "From {dashboardTitle}",
+    "notifications.panel.downloadFilesHint": "Download the exported files"
 }
