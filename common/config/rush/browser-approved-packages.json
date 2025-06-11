@@ -435,6 +435,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/react-responsive",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/react-router-dom",
       "allowedCategories": [ "examples", "production" ]
     },

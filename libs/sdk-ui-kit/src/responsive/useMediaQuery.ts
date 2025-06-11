@@ -2,7 +2,9 @@
 import { useResponsiveContext } from "./ResponsiveContext.js";
 import { invariant } from "ts-invariant";
 import { IMediaQueries } from "./interfaces.js";
-import { useMediaQuery as useReactResponsiveMediaQuery } from "react-responsive";
+// The requested module is a CommonJS module, which may not support all module.exports as named exports.
+import * as pkg from "react-responsive";
+const { useMediaQuery: useReactResponsiveMediaQuery } = pkg;
 
 const SCREEN = "only screen";
 
