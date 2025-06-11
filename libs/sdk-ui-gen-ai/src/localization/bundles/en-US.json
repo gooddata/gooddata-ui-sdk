@@ -220,7 +220,7 @@
         "limit": 0
     },
     "gd.gen-ai.visualisation.menu": {
-        "value": "Visualization menu",
+        "value": "{name}, more actions",
         "comment": "",
         "limit": 0
     },
