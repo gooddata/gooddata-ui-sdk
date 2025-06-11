@@ -44,8 +44,23 @@
         "comment": "",
         "limit": 0
     },
+    "gd.gen-ai.feedback.like": {
+        "value": "Mark this message as helpful",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.feedback.dislike": {
+        "value": "Mark this message as not helpful",
+        "comment": "",
+        "limit": 0
+    },
     "gd.gen-ai.disclaimer": {
         "value": "AI assistants can make mistakes. Check before relying on these answers.",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.dialog.label": {
+        "value": "AI assistant chatbot dialog",
         "comment": "",
         "limit": 0
     },
