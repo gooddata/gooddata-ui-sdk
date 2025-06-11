@@ -31,7 +31,7 @@ $gd-message-padding-vertical: 4px;
     margin: 0;
     transform: translateX(-50%);
     pointer-events: none;
-    max-width: 1000px;
+    max-width: 620px;
     text-align: center;
 
     @media #{variables.$small-only} {
@@ -66,7 +66,7 @@ $gd-message-padding-vertical: 4px;
     @extend %gd-message-link;
 
     position: relative;
-    padding: 2px;
+    padding: 0;
     margin-left: 10px;
     background: none;
     border: 0;
@@ -120,7 +120,7 @@ $gd-message-padding-vertical: 4px;
     }
 
     &.warning {
-        color: variables.$gd-palette-warning-base-text;
+        color: variables.$gd-palette-warning-base;
         background: messages-variables.$gd-message-warning-backgroundColor;
     }
 
@@ -146,7 +146,8 @@ $gd-message-padding-vertical: 4px;
 
     &.success,
     &.progress,
-    &.error {
+    &.error,
+    &.warning {
         color: variables.$gd-color-text-light;
     }
 
@@ -163,7 +164,6 @@ $gd-message-padding-vertical: 4px;
     }
 
     &.warning {
-        color: variables.$gd-color-warning-label;
         background: messages-variables.$gd-message-overlay-warning-backgroundColor;
     }
 }
@@ -178,20 +178,9 @@ $gd-message-padding-vertical: 4px;
         opacity: 0;
     }
 
-    &-custom {
-        padding: 0;
-        min-width: 620px;
-        max-width: 350px;
-
-        @media #{variables.$small-only} {
-            min-width: auto;
-            max-width: auto;
-        }
-    }
-
     .gd-message-text {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
 
         > div {
             -ms-flex: 1 1 auto;
@@ -199,19 +188,6 @@ $gd-message-padding-vertical: 4px;
         }
 
         .gd-message-support,
-        .gd-message-dismiss-container {
-            -ms-flex: 1 0 auto;
-            flex: 1 0 auto;
-        }
-
-        &-showmore {
-            & + .gd-message-dismiss-container {
-                position: absolute;
-                top: 5px;
-                right: 5px;
-            }
-        }
-
         &-header {
             margin: 0;
             padding: 5px 10px;
@@ -232,7 +208,7 @@ $gd-message-padding-vertical: 4px;
         }
 
         &-content {
-            padding: 5px 10px;
+            padding-top: 5px;
             color: rgba($color: variables.$gd-color-text-light, $alpha: 0.85);
             font-size: 13px;
             border-top: 1px solid rgba($color: variables.$gd-color-text-light, $alpha: 0.85);
