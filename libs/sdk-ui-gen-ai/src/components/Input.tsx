@@ -11,7 +11,7 @@ import { EditorView } from "@codemirror/view";
 import { asyncProcessSelector, newMessageAction, RootState } from "../store/index.js";
 import { makeTextContents, makeUserMessage } from "../model.js";
 
-import { useCompletion } from "./completion/index.js";
+import { collectReferences, useCompletion } from "./completion/index.js";
 import { useHighlight } from "./highlight/index.js";
 import { SendIcon } from "./SendIcon.js";
 
@@ -58,8 +58,8 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
     const [editorApi, setApi] = React.useState<EditorView | null>(null);
     const [focused, setFocused] = React.useState(false);
 
-    const { onCompletion, selectedItems } = useCompletion(catalogItems, { canManage, canAnalyze });
-    const highlightExtension = useHighlight(selectedItems);
+    const { onCompletion, used } = useCompletion(catalogItems, [], { canManage, canAnalyze });
+    const highlightExtension = useHighlight(used);
 
     const extensions = useMemo(() => [highlightExtension], [highlightExtension]);
 
@@ -76,7 +76,7 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
     }, [isBusy, editorApi]);
 
     const handleSubmit = () => {
-        newMessage(makeUserMessage([makeTextContents(value)]));
+        newMessage(makeUserMessage([makeTextContents(value, collectReferences(value, used.current))]));
         setValue("");
     };
 

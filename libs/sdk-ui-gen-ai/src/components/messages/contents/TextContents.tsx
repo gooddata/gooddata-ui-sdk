@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import { TextContents } from "../../../model.js";
@@ -15,7 +15,9 @@ export const TextContentsComponent: React.FC<TextContentsProps> = ({ content, us
 
     return (
         <div className={className}>
-            <MarkdownComponent allowMarkdown={useMarkdown}>{content.text}</MarkdownComponent>
+            <MarkdownComponent allowMarkdown={useMarkdown} references={content.objects}>
+                {content.text}
+            </MarkdownComponent>
         </div>
     );
 };

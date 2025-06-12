@@ -7,27 +7,6 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/Form/mixins" as form-mixins;
 @use "variables" as variables;
 
-$base_path: "~@gooddata/sdk-ui-kit/styles";
-
-@mixin gd-svg-icon-base {
-    &::before {
-        content: "";
-        display: block;
-        background-repeat: no-repeat;
-        background-position: center;
-        width: 100%;
-        height: 100%;
-    }
-}
-
-@mixin gd-svg-icon($filename) {
-    @include gd-svg-icon-base;
-
-    &::before {
-        background-image: url($base_path + "/icons/" + $filename + ".svg");
-    }
-}
-
 .gd-gen-ai-chat__input {
     position: relative;
     transition: margin-top 0.2s ease-in-out;
@@ -179,16 +158,16 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
                     aspect-ratio: 1 / 1;
 
                     &-metric {
-                        @include gd-svg-icon("metric");
+                        @include variables.gd-svg-icon("metric");
                     }
                     &-attribute {
-                        @include gd-svg-icon("attribute");
+                        @include variables.gd-svg-icon("attribute");
                     }
                     &-fact {
-                        @include gd-svg-icon("measure");
+                        @include variables.gd-svg-icon("measure");
                     }
                     &-date {
-                        @include gd-svg-icon("date");
+                        @include variables.gd-svg-icon("date");
                     }
                 }
 
@@ -301,16 +280,16 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
         margin-right: 5px;
 
         &.metric {
-            @include gd-svg-icon("metric");
+            @include variables.gd-svg-icon("metric");
         }
         &.attribute {
-            @include gd-svg-icon("attribute");
+            @include variables.gd-svg-icon("attribute");
         }
         &.fact {
-            @include gd-svg-icon("measure");
+            @include variables.gd-svg-icon("measure");
         }
         &.date {
-            @include gd-svg-icon("date");
+            @include variables.gd-svg-icon("date");
         }
     }
 }

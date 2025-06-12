@@ -10,9 +10,19 @@ import {
 /**
  * @public
  */
+export type TextContentObject = {
+    id: string;
+    type: "metric" | "attribute" | "fact" | "dataset";
+    title: string;
+};
+
+/**
+ * @public
+ */
 export type TextContents = {
     type: "text";
     text: string;
+    objects: TextContentObject[];
 };
 
 /**
@@ -23,9 +33,10 @@ export const isTextContents = (contents: Contents): contents is TextContents => 
 /**
  * @internal
  */
-export const makeTextContents = (text: string): TextContents => ({
+export const makeTextContents = (text: string, objects: TextContentObject[]): TextContents => ({
     type: "text",
     text,
+    objects,
 });
 
 /**

@@ -3,3 +3,34 @@
 $x-spacing: 15px;
 $y-spacing: 10px;
 $info-height: 35px;
+
+$base_path: "~@gooddata/sdk-ui-kit/styles";
+
+@mixin gd-svg-icon-base {
+    &::before {
+        content: "";
+        display: block;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@mixin gd-svg-icon($filename) {
+    @include gd-svg-icon-base;
+
+    &::before {
+        background-image: url($base_path + "/icons/" + $filename + ".svg");
+    }
+}
+
+@mixin gd-svg-mask($filename) {
+    @include gd-svg-icon-base;
+
+    &::before {
+        mask: url($base_path + "/icons/" + $filename + ".svg");
+        mask-repeat: no-repeat;
+        mask-position: center;
+    }
+}

@@ -19,6 +19,7 @@ export type {
     RoutingContents,
     VisualizationContents,
     ErrorContents,
+    TextContentObject,
 } from "./model.js";
 export {
     type ChatEventHandler,

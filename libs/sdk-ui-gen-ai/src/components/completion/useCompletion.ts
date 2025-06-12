@@ -1,24 +1,27 @@
 // (C) 2025 GoodData Corporation
-import { MutableRefObject, useCallback, useRef, useState } from "react";
+import { useCallback, useRef, useState, MutableRefObject } from "react";
 import { IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { Completion, CompletionContext, CompletionResult, CompletionSource } from "@codemirror/autocomplete";
+import { CompletionContext, CompletionResult, CompletionSource } from "@codemirror/autocomplete";
 import { CatalogItem } from "@gooddata/sdk-model";
 import { useIntl } from "react-intl";
 
-import { getOptions } from "./utils.js";
+import { CompletionItem, getCatalogItemId, getCompletionItemId, getOptions } from "./utils.js";
+
+const WORD_REGEX = /\p{L}[\p{L}\p{N}_]*/u;
 
 export interface IUseCompletion {
     onCompletion: CompletionSource;
-    selectedItems: MutableRefObject<Completion[]>;
+    used: MutableRefObject<CatalogItem[]>;
 }
 
 export function useCompletion(
     items: CatalogItem[] | undefined,
+    selected: CatalogItem[] | undefined,
     { canManage, canAnalyze }: { canManage?: boolean; canAnalyze?: boolean },
 ): IUseCompletion {
     const [catalogItems, setCatalogItems] = useState<CatalogItem[] | undefined>(items);
-    const selectedItems = useRef<Completion[]>([]);
+    const usedItems = useRef<CatalogItem[]>(selected ?? []);
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const intl = useIntl();
@@ -32,10 +35,12 @@ export function useCompletion(
         promise: Promise<IWorkspaceCatalog>;
     } | null>(null);
 
-    const onCompletionSelected = useCallback((completion: Completion) => {
-        selectedItems.current = [
-            ...selectedItems.current.filter((item) => item.label !== completion.label),
-            completion,
+    const onCompletionSelected = useCallback((completion: CompletionItem) => {
+        usedItems.current = [
+            ...usedItems.current.filter((item) => {
+                return getCompletionItemId(completion) !== getCatalogItemId(item);
+            }),
+            completion.item,
         ];
     }, []);
 
@@ -110,7 +115,7 @@ export function useCompletion(
     const onWordCompletion = useCallback(
         async (context: CompletionContext): Promise<CompletionResult | null> => {
             // Match the word before the cursor
-            const word = context.matchBefore(/\p{L}[\p{L}\p{N}_]*/gu);
+            const word = context.matchBefore(WORD_REGEX);
 
             const search = word?.text ?? "";
             const length = search.length >= 3;
@@ -146,6 +151,9 @@ export function useCompletion(
 
     const onExplicitCompletion = useCallback(
         async (context: CompletionContext): Promise<CompletionResult | null> => {
+            // Match the word before the cursor
+            const word = context.matchBefore(WORD_REGEX);
+
             const items = await loadItemsByExplicit();
             // If no items are found, do not show the completion
             if (!items) {
@@ -160,7 +168,7 @@ export function useCompletion(
 
             return {
                 options,
-                from: context.pos,
+                from: word?.from ?? context.pos,
                 validFor: (text) => {
                     return !!options.find((opt) => opt.label.includes(text));
                 },
@@ -182,6 +190,6 @@ export function useCompletion(
 
     return {
         onCompletion,
-        selectedItems,
+        used: usedItems,
     };
 }

@@ -13,7 +13,14 @@ import {
     saveVisualizationSuccessAction,
 } from "../messages/messagesSlice.js";
 import { EventDispatcher } from "../events.js";
-import { isRoutingContents, isTextContents, isUserMessage, Message, RoutingContents } from "../../model.js";
+import {
+    isRoutingContents,
+    isTextContents,
+    isUserMessage,
+    Message,
+    RoutingContents,
+    TextContents,
+} from "../../model.js";
 import { messagesSelector, threadIdSelector } from "../messages/messagesSelectors.js";
 
 export function* onEvent() {
@@ -68,9 +75,9 @@ function* onNewMessage({ payload: message }: ReturnType<typeof newMessageAction>
         return;
     }
 
-    const question = message.content.find((c) => isTextContents(c))?.text;
+    const messageContent = message.content.find((c) => isTextContents(c)) as TextContents | undefined;
 
-    if (!question) {
+    if (!messageContent?.text) {
         return;
     }
 
@@ -80,7 +87,8 @@ function* onNewMessage({ payload: message }: ReturnType<typeof newMessageAction>
     eventDispatcher.dispatch({
         type: "chatUserMessage",
         threadId,
-        question,
+        question: messageContent.text,
+        objects: messageContent.objects,
     });
 }
 

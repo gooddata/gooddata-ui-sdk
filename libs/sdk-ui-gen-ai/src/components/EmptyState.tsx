@@ -49,9 +49,9 @@ const EmptyStateComponent: React.FC<EmptyStateDispatchProps & WrappedComponentPr
                     onClick={() =>
                         setMessagesAction({
                             messages: [
-                                makeUserMessage([makeTextContents(intl.formatMessage(option.question))]),
+                                makeUserMessage([makeTextContents(intl.formatMessage(option.question), [])]),
                                 makeAssistantMessage(
-                                    [makeTextContents(intl.formatMessage(option.answer))],
+                                    [makeTextContents(intl.formatMessage(option.answer), [])],
                                     true,
                                 ),
                             ],

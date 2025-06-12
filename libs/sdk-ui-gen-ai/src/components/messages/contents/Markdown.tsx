@@ -4,6 +4,10 @@ import React from "react";
 import Markdown, { Components } from "react-markdown";
 import remarkEmoji from "remark-emoji";
 import { Typography } from "@gooddata/sdk-ui-kit";
+
+import { remarkReferences, rehypeReferences } from "../../completion/index.js";
+import { TextContentObject } from "../../../model.js";
+
 import { CustomHyperlink } from "./CustomHyperlink.js";
 
 const componentMap: Components = {
@@ -24,14 +28,20 @@ const customUrlTransform = (url: string): string => {
 type MarkdownComponentProps = {
     children: string;
     allowMarkdown?: boolean;
+    references?: TextContentObject[];
     onLinkClick?: (url: string) => void;
 };
 
-export const MarkdownComponent: React.FC<MarkdownComponentProps> = ({ children, allowMarkdown = false }) => {
+export const MarkdownComponent: React.FC<MarkdownComponentProps> = ({
+    children,
+    references,
+    allowMarkdown = false,
+}) => {
     if (allowMarkdown) {
         return (
             <Markdown
-                remarkPlugins={[remarkEmoji]}
+                remarkPlugins={[remarkEmoji, remarkReferences()]}
+                rehypePlugins={[rehypeReferences(references ?? [])]}
                 components={componentMap}
                 urlTransform={customUrlTransform}
             >

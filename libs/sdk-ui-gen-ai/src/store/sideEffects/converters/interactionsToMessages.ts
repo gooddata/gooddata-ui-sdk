@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { IGenAIChatInteraction } from "@gooddata/sdk-model";
 import {
@@ -23,7 +23,7 @@ export const interactionsToMessages = (interactions: IGenAIChatInteraction[]): M
 
         if (interaction.question) {
             // User question
-            messages.push(makeUserMessage([makeTextContents(interaction.question)]));
+            messages.push(makeUserMessage([makeTextContents(interaction.question, [])]));
         }
 
         const assistantMessageContents: Contents[] = processContents(interaction);
@@ -51,7 +51,7 @@ export const processContents = (item: IGenAIChatEvaluation | IGenAIChatInteracti
     }
 
     if (item.textResponse) {
-        contents.push(makeTextContents(item.textResponse));
+        contents.push(makeTextContents(item.textResponse, []));
     }
 
     if (item.foundObjects?.reasoning) {
