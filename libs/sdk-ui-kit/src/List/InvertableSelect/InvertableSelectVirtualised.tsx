@@ -307,16 +307,18 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
         ],
     );
 
+    const handleSearchBarKeyDown = useCallback(
+        (e) => {
+            if (isEscapeKey(e) && searchString.length > 0) {
+                e.stopPropagation();
+            }
+        },
+        [searchString],
+    );
+
     return (
         <div className="gd-invertable-select">
-            <div
-                className="gd-invertable-select-search-bar"
-                onKeyDown={(e) => {
-                    if (isEscapeKey(e)) {
-                        e.stopPropagation();
-                    }
-                }}
-            >
+            <div className="gd-invertable-select-search-bar" onKeyDown={handleSearchBarKeyDown}>
                 {renderSearchBar({ onSearch, searchPlaceholder, searchString })}
             </div>
             {isLoading ? (
