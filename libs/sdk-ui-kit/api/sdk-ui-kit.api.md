@@ -5847,7 +5847,7 @@ export interface UiFocusTrapProps {
     autofocusOnOpen?: boolean;
     // (undocumented)
     children: React_2.ReactNode;
-    customKeyboardNavigationHandler?: (event: KeyboardEvent) => void;
+    customKeyboardNavigationHandler?: (event: React_2.KeyboardEvent) => void;
     initialFocus?: React_2.RefObject<HTMLElement> | string;
     // (undocumented)
     isTabCaught?: boolean;

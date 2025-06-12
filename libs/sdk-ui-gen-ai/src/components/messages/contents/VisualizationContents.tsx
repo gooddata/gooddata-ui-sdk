@@ -226,7 +226,7 @@ const VisualizationContentsComponentCore: React.FC<VisualizationContentsProps> =
             >
                 <UiFocusTrap
                     autofocusOnOpen={true}
-                    customKeyboardNavigationHandler={makeMenuKeyboardNavigation<KeyboardEvent>({
+                    customKeyboardNavigationHandler={makeMenuKeyboardNavigation({
                         onClose: () => setMenuButtonOpen(false),
                     })}
                 >
