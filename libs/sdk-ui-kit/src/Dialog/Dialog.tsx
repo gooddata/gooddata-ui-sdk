@@ -43,7 +43,7 @@ export const Dialog = React.memo<IDialogProps>(function Dialog({
             closeOnMouseDrag={closeOnMouseDrag}
             onClose={onClose}
         >
-            <DialogBase {...dialogProps} isModal={isModal} />
+            <DialogBase {...dialogProps} isModal={isModal} onClose={onClose} />
         </Overlay>
     );
 });
