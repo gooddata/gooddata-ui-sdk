@@ -56,7 +56,7 @@ export const ShowAsTableButton = (props: IShowAsTableButtonProps): JSX.Element |
             aria-label={title}
         >
             <div className={asTableIconClasses}>
-                <UiIcon type={iconType} color="complementary-7" />
+                <UiIcon size={18} type={iconType} color="complementary-7" />
             </div>
         </div>
     );
