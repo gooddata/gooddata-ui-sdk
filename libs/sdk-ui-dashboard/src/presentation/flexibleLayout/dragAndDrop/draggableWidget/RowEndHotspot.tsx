@@ -1,7 +1,7 @@
 // (C) 2007-2025 GoodData Corporation
 import { IDashboardWidget } from "@gooddata/sdk-model";
 import cx from "classnames";
-import React from "react";
+import React, { useMemo } from "react";
 
 import { selectIsInEditMode, useDashboardSelector } from "../../../../model/index.js";
 import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
@@ -27,7 +27,13 @@ export const RowEndHotspot = (props: RowEndHotspotProps<unknown>) => {
     const isLastInRow = item.isLastInRow(screen);
     const showEndingHotspot = (item.isLastInSection() || isLastInRow) && isInEditMode;
 
-    if (!showEndingHotspot) {
+    const remainingRowGridWidth = useMemo(
+        () => getRemainingWidthInRow(item, screen, rowIndex),
+        [item, screen, rowIndex],
+    );
+    const isDropZoneVisible = shouldShowRowEndDropZone(remainingRowGridWidth);
+
+    if (!showEndingHotspot || !isDropZoneVisible) {
         return null;
     }
 
@@ -36,9 +42,6 @@ export const RowEndHotspot = (props: RowEndHotspotProps<unknown>) => {
         layoutPath[layoutPath.length - 1].sectionIndex,
         layoutPath[layoutPath.length - 1].itemIndex + 1,
     ); // increment item index manually as end hotspot is rendered as prev type
-
-    const remainingRowGridWidth = getRemainingWidthInRow(item, screen, rowIndex);
-    const isDropZoneVisible = shouldShowRowEndDropZone(remainingRowGridWidth);
 
     return (
         <>
@@ -62,13 +65,11 @@ export const RowEndHotspot = (props: RowEndHotspotProps<unknown>) => {
                     },
                 )}
             >
-                {isDropZoneVisible ? (
-                    <WidgetDropZoneColumn
-                        layoutPath={layoutPathForEndHotspot}
-                        isLastInSection={true}
-                        gridWidthOverride={remainingRowGridWidth}
-                    />
-                ) : null}
+                <WidgetDropZoneColumn
+                    layoutPath={layoutPathForEndHotspot}
+                    isLastInSection={true}
+                    gridWidthOverride={remainingRowGridWidth}
+                />
                 <Hotspot
                     dropZoneType="prev"
                     isEndingHotspot

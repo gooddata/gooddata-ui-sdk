@@ -20,7 +20,7 @@ export const useWidthValidation = (
     const isValid = !(parentWidthForScreen && itemWidth > parentWidthForScreen);
 
     return {
-        isValid: !(parentWidthForScreen && itemWidth > parentWidthForScreen),
+        isValid,
         parentWidth: parentWidthForScreen,
         validWidth: isValid ? itemWidth : parentWidthForScreen ?? DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
     };
