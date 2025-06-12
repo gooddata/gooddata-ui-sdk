@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-gen-ai",
-    "version": "10.31.0-alpha.34",
+    "version": "10.31.0-alpha.35",
     "description": "GoodData GenAI SDK",
     "repository": {
         "type": "git",
