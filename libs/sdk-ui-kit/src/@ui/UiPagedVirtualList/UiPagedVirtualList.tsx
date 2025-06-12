@@ -31,6 +31,7 @@ export interface UiPagedVirtualListProps<T> {
     onKeyDownSelect?: (item: T) => void;
     closeDropdown?: () => void;
     isLoading?: boolean;
+    tabIndex?: number;
     /**
      * An item in the list that should be scrolled into view when the component renders.
      * By default, items are compared by object identity (i.e., `===`).
@@ -57,6 +58,7 @@ export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>) {
         itemHeight,
         itemsGap,
         itemPadding,
+        tabIndex = 0,
         onKeyDownSelect,
         closeDropdown,
         customKeyboardNavigationHandler,
@@ -77,7 +79,7 @@ export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>) {
             className={b({
                 hasScroll,
             })}
-            tabIndex={0}
+            tabIndex={tabIndex}
             onKeyDown={customKeyboardNavigationHandler ?? onKeyboardNavigation}
         >
             <div

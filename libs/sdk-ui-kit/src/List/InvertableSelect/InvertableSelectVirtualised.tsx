@@ -364,6 +364,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                                                 maxHeight={maxHeight}
                                                 scrollToItem={focusedItem}
                                                 scrollToItemKeyExtractor={getItemKey}
+                                                tabIndex={-1}
                                             >
                                                 {itemRenderer}
                                             </UiPagedVirtualList>

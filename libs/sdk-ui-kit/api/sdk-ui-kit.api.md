@@ -6026,6 +6026,8 @@ export interface UiPagedVirtualListProps<T> {
     SkeletonItem?: React_2.ComponentType<UiPagedVirtualListSkeletonItemProps>;
     // (undocumented)
     skeletonItemsCount: number;
+    // (undocumented)
+    tabIndex?: number;
 }
 
 // @internal (undocumented)
