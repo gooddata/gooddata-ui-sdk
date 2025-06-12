@@ -239,6 +239,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@react-aria/interactions",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@reduxjs/toolkit",
       "allowedCategories": [ "production" ]
     },

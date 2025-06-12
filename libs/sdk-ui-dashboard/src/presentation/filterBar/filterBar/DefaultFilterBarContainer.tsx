@@ -1,9 +1,10 @@
 // (C) 2021-2025 GoodData Corporation
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import DefaultMeasure from "react-measure";
 import cx from "classnames";
 import { defaultImport } from "default-import";
-import { Message, UiButton } from "@gooddata/sdk-ui-kit";
+import { Message, UiButton, makeHorizontalKeyboardNavigation } from "@gooddata/sdk-ui-kit";
+import { isFocusVisible } from "@react-aria/interactions";
 
 import { IntlWrapper } from "../../localization/index.js";
 import {
@@ -58,9 +59,32 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
 
     const intl = useIntl();
 
+    const [expandedAutomatically, setExpandedAutomatically] = useState(false);
+
+    const onContainerFocus = useCallback(() => {
+        // detect if event is mouse
+        if (!isFocusVisible()) {
+            return;
+        }
+        setFilterBarExpanded(true);
+        setExpandedAutomatically(true);
+    }, [setFilterBarExpanded]);
+
+    const onContainerBlur = useCallback(() => {
+        if (isFocusVisible() && expandedAutomatically) {
+            setFilterBarExpanded(false);
+            setExpandedAutomatically(false);
+        }
+    }, [setFilterBarExpanded, expandedAutomatically]);
+
     return (
         <>
-            <div className="dash-filters-wrapper s-gd-dashboard-filter-bar" ref={dropRef}>
+            <div
+                className="dash-filters-wrapper s-gd-dashboard-filter-bar"
+                ref={dropRef}
+                onFocus={onContainerFocus}
+                onBlur={onContainerBlur}
+            >
                 <div
                     style={{ height }}
                     className={cx("dash-filters-visible", {
@@ -149,6 +173,71 @@ const AllFiltersContainer: React.FC<{
     const ref = useRef<Element | null>(null);
     const rowCalculator = useRowsCalculator(ref);
 
+    const containerRef = useRef<HTMLDivElement | null>(null);
+
+    const [activeFilterIndex, setActiveFilterIndex] = useState<number | null>(null);
+
+    const getActiveIndexAndFilterElements = () => {
+        const filterElements = containerRef.current
+            ? Array.from(
+                  containerRef.current.querySelectorAll<HTMLElement>(
+                      'button, [tabindex]:not([tabindex="-1"])',
+                  ),
+              )
+            : [];
+        const activeIndex = filterElements.findIndex((el) => el === document.activeElement);
+        return { activeIndex, filterElements };
+    };
+
+    // Handle arrow/tab key logic
+    const keyboardNavigation = makeHorizontalKeyboardNavigation({
+        onFocusNext: () => {
+            const { activeIndex, filterElements } = getActiveIndexAndFilterElements();
+
+            const next = (activeIndex + 1) % filterElements.length;
+            filterElements[next]?.focus();
+            setActiveFilterIndex(next);
+        },
+        onFocusPrevious: () => {
+            const { activeIndex, filterElements } = getActiveIndexAndFilterElements();
+            const prev = (activeIndex - 1 + filterElements.length) % filterElements.length;
+            filterElements[prev]?.focus();
+            setActiveFilterIndex(prev);
+        },
+        onFocusFirst: () => {
+            const { filterElements } = getActiveIndexAndFilterElements();
+            filterElements[0]?.focus();
+            setActiveFilterIndex(0);
+        },
+        onFocusLast: () => {
+            const { filterElements } = getActiveIndexAndFilterElements();
+            filterElements[filterElements.length - 1]?.focus();
+            setActiveFilterIndex(filterElements.length - 1);
+        },
+        onUnhandledKeyDown(e) {
+            if (e.key === "Tab") {
+                const { filterElements } = getActiveIndexAndFilterElements();
+                if (activeFilterIndex === -1) {
+                    // First tab into bar: focus first filter
+                    e.preventDefault();
+                    filterElements[0]?.focus();
+                } else {
+                    // move away from filter bar to next/previous element
+                    // by letting the event bubble up to the browser with focus moved to the edge of container already
+                    if (e.shiftKey) {
+                        const first = filterElements[0];
+                        first?.focus();
+                    } else {
+                        const last = filterElements.length - 1;
+                        filterElements[last]?.focus();
+                    }
+                }
+            }
+        },
+    });
+
+    const intl = useIntl();
+
     return (
         <Measure
             bounds
@@ -156,7 +245,16 @@ const AllFiltersContainer: React.FC<{
             onResize={(dimensions) => setCalculatedRows(rowCalculator(dimensions))}
         >
             {({ measureRef }) => (
-                <div className="dash-filters-all" ref={measureRef}>
+                <div
+                    className="dash-filters-all"
+                    role="region"
+                    aria-label={intl.formatMessage({ id: "filterBar.label" })}
+                    ref={(ref) => {
+                        measureRef(ref);
+                        containerRef.current = ref;
+                    }}
+                    onKeyDown={keyboardNavigation}
+                >
                     {children}
                 </div>
             )}

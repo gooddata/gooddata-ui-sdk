@@ -5195,6 +5195,15 @@ export const LoadingSpinner: React_2.FC<ILoadingSpinner>;
 export const LocaleSetting: React_2.VFC<ILocaleSettingProps>;
 
 // @internal (undocumented)
+export const makeHorizontalKeyboardNavigation: <T extends KeyboardEvent | React_2.KeyboardEvent<Element> = React_2.KeyboardEvent<Element>>(handlers: {
+    onFocusPrevious?: (event: T) => void;
+    onFocusNext?: (event: T) => void;
+    onFocusFirst?: (event: T) => void;
+    onFocusLast?: (event: T) => void;
+    onUnhandledKeyDown?: (event: T) => void;
+}, options?: IHandleActionOptions) => (event: T) => void;
+
+// @internal (undocumented)
 export const makeKeyboardNavigation: <ActionKeysMap extends {
     [action: string]: {
         code: string | string[];
